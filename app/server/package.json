@@ -1,0 +1,24 @@
+{
+	"name": "@dinorpg/server",
+	"version": "0.0.0",
+	"description": "",
+	"private": "true",
+	"type": "module",
+	"main": "main.js",
+	"scripts": {
+		"build": "tsc -b",
+		"start": "node dist/main.js",
+		"dev": "yarn tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\""
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.12.1",
+	"dependencies": {
+		"fastify": "^4.28.1"
+	},
+	"devDependencies": {
+		"@types/node": "^20.14.12",
+		"tsc-watch": "^6.2.0"
+	}
+}
