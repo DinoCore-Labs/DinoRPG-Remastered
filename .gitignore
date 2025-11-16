@@ -1,0 +1,47 @@
+# Node modules (tous les packages)
+node_modules/
+**/node_modules/
+
+# pnpm store (optionnel, si utilisé)
+.pnpm-store/
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+.tmp/
+**/.tmp/
+
+# Vite / Vue cache
+.vite/
+**/.vite/
+
+# TypeScript
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Optional: test coverage
+coverage/
+**/coverage/
