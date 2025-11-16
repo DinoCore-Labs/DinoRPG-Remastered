@@ -10,9 +10,6 @@
 		"start": "node dist/main.js",
 		"dev": "yarn tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\""
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
 	"packageManager": "pnpm@10.12.1",
 	"dependencies": {
 		"fastify": "^4.28.1"
