@@ -1,6 +1,4 @@
-import { type Config } from 'prettier';
-
-const config: Config = {
+export default {
 	plugins: [],
 	printWidth: 120,
 	semi: true,
@@ -10,5 +8,3 @@ const config: Config = {
 	bracketSpacing: true,
 	arrowParens: 'avoid'
 };
-
-export default config;

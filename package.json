@@ -3,10 +3,16 @@
 	"version": "0.0.0",
 	"description": "Re-développement du jeu DinoRPG de Motion Twin",
 	"private": "true",
+	"type": "module",
+	"engines": {
+		"node": ">=22"
+	},
 	"scripts": {
 		"client:dev": "pnpm --filter @dinorpg/client run dev",
 		"server:dev": "pnpm --filter @dinorpg/server run dev",
-		"dev": "pnpm --recursive --parallel --stream run dev"
+		"dev": "pnpm --recursive --parallel --stream run dev",
+		"check": "pnpm eslint . --ext .ts,.tsx,.vue && prettier --check \"**/*.{ts,tsx,js,vue,css,json,md}\"",
+		"fix": "pnpm eslint . --ext .ts,.tsx,.vue --fix && prettier --write ."
 	},
 	"keywords": [],
 	"author": "Matthieu83600",
@@ -17,10 +23,14 @@
 		"@typescript-eslint/parser": "^8.46.4",
 		"eslint": "^9.39.1",
 		"eslint-config-prettier": "^10.1.8",
+		"eslint-define-config": "^2.1.0",
 		"eslint-plugin-import": "^2.32.0",
+		"eslint-plugin-prettier": "^5.5.4",
 		"eslint-plugin-simple-import-sort": "^12.1.1",
 		"eslint-plugin-vue": "^10.5.1",
+		"globals": "^16.5.0",
 		"prettier": "^3.6.2",
-		"typescript": "~5.9.3"
+		"typescript": "~5.9.3",
+		"vue-eslint-parser": "^10.2.0"
 	}
 }
