@@ -5,7 +5,7 @@
 	"private": "true",
 	"scripts": {
 		"client:dev": "pnpm --filter @dinorpg/client run dev",
-		"dev": "pnpm --recursive --parallel run dev"
+		"dev": "pnpm --recursive --parallel --stream run dev"
 	},
 	"keywords": [],
 	"author": "Matthieu83600",
