@@ -12,7 +12,7 @@
 		"./src/"
 	],
 	"scripts": {
-		"dev": "tsc --build ./tsconfig.json"
+		"dev": "tsc --build ./tsconfig.json --watch"
 	},
 	"keywords": [],
 	"author": "",
