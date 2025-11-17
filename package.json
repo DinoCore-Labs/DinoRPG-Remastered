@@ -13,7 +13,8 @@
 		"core:dev": "pnpm --filter @dinorpg/core run dev",
 		"dev": "pnpm --recursive --parallel --stream run dev",
 		"check": "pnpm eslint . --ext .ts,.tsx,.vue && prettier --check \"**/*.{ts,tsx,js,vue,css,json,md}\"",
-		"fix": "pnpm eslint . --ext .ts,.tsx,.vue --fix && prettier --write ."
+		"fix": "pnpm eslint . --ext .ts,.tsx,.vue --fix && prettier --write .",
+		"build": "pnpm --recursive run build"
 	},
 	"keywords": [],
 	"author": "Matthieu83600",

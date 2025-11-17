@@ -12,7 +12,8 @@
 		"./src/"
 	],
 	"scripts": {
-		"dev": "tsc --build ./tsconfig.json --watch"
+		"dev": "tsc --build ./tsconfig.json --watch",
+		"build": "yarn tsc --build ./tsconfig.json"
 	},
 	"keywords": [],
 	"author": "",

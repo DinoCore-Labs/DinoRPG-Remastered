@@ -11,17 +11,24 @@ a {
 		padding-top: 5.5px;
 		font-variant: small-caps;
 		font-size: 10.5pt;
-		color: #fff1ad;
+		color: #ffeb7a;
 		font-weight: bold;
 		text-decoration: none;
 		text-align: center;
 		cursor: pointer;
 		background-image: url('../assets/button/button.webp');
 		background-repeat: no-repeat;
-		border-radius: 0px;
+		&:first-letter {
+			color: white;
+		}
+		& > span:first-letter {
+			color: white;
+		}
 	}
 	&.button:hover {
 		background-image: url('../assets/button/button_hover.webp');
+		color: white;
+		background-color: transparent;
 	}
 	&.bSmall {
 		width: 95px;
