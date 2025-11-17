@@ -2,6 +2,7 @@ import type { RouteRecord } from '@dinorpg/core/models/router/Router';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import HomePage from '../pages/HomePage.vue';
+import { convertRoutes } from '../utils/convertRoutes';
 
 const routes: RouteRecord[] = [
 	{
@@ -13,10 +14,10 @@ const routes: RouteRecord[] = [
 
 const router = createRouter({
 	history: createWebHistory(),
-	routes,
-	scrollBehavior(to, from, savedPosition) {
+	routes: convertRoutes(routes)
+	/*scrollBehavior(to, from, savedPosition) {
 		return { top: 0 };
-	}
+	}*/
 });
 
 export default router;
