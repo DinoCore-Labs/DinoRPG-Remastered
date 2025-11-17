@@ -13,7 +13,7 @@
 	],
 	"scripts": {
 		"dev": "tsc --build ./tsconfig.json --watch",
-		"build": "yarn tsc --build ./tsconfig.json"
+		"build": "tsc --build ./tsconfig.json"
 	},
 	"keywords": [],
 	"author": "",
