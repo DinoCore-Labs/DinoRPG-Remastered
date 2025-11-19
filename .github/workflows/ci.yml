@@ -14,15 +14,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
       - uses: pnpm/action-setup@v4
 
       - name: Add pnpm to PATH
         run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
@@ -35,15 +35,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
       - uses: pnpm/action-setup@v4
 
       - name: Add pnpm to PATH
         run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
@@ -59,15 +59,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
       - uses: pnpm/action-setup@v4
 
       - name: Add pnpm to PATH
         run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
