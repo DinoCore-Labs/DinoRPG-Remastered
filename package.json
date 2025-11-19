@@ -14,13 +14,17 @@
 		"dev": "pnpm --recursive --parallel --stream run dev",
 		"check": "pnpm eslint . --ext .ts,.tsx,.vue && prettier --check \"**/*.{ts,tsx,js,vue,css,json,md}\"",
 		"fix": "pnpm eslint . --ext .ts,.tsx,.vue --fix && prettier --write .",
-		"build": "pnpm --recursive run build"
+		"build": "pnpm --recursive run build",
+		"changeset": "changeset",
+		"version-packages": "changeset version",
+		"release": "changeset publish"
 	},
 	"keywords": [],
 	"author": "Matthieu83600",
 	"license": "ISC",
 	"packageManager": "pnpm@10.12.1",
 	"devDependencies": {
+		"@changesets/cli": "^2.29.7",
 		"@typescript-eslint/eslint-plugin": "^8.46.4",
 		"@typescript-eslint/parser": "^8.46.4",
 		"eslint": "^9.39.1",
