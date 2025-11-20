@@ -4,8 +4,8 @@
 			<img class="homepage-banner" :src="getImgURL('background', 'background_alpha')" alt="DinoRPG" />
 			<div class="homepage-content">
 				<div class="homepage-menu">
-					<a class="button" href="#">Connexion</a>
-					<a class="button" href="#last-news">News</a>
+					<Button href="" :disabled="true">Connexion</Button>
+					<Button href="#last-news" :disabled="true">News</Button>
 				</div>
 				<!--
 				<Suspense>
@@ -30,9 +30,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { getImgURL } from '../utils/getImgURL';
+import Button from '../components/utils/Button.vue';
 
 export default defineComponent({
 	name: 'HomePage',
+	components: { Button },
 	methods: {
 		getImgURL
 	}

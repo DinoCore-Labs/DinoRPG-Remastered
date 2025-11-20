@@ -1,0 +1,43 @@
+input,
+a {
+	border: none;
+	&.button {
+		display: block;
+		width: 145px;
+		height: 28px;
+		margin-top: 3px;
+		margin-bottom: 2px;
+		padding-top: 5.5px;
+		font-variant: small-caps;
+		font-size: 10.5pt;
+		color: #ffeb7a;
+		font-weight: bold;
+		text-decoration: none;
+		text-align: center;
+		cursor: pointer;
+		background-image: url('../../assets/button/button.webp');
+		background-repeat: no-repeat;
+		&:first-letter {
+			color: white;
+		}
+		& > span:first-letter {
+			color: white;
+		}
+		&--disabled {
+			opacity: 0.7;
+		}
+	}
+	&.button:hover {
+		background-image: url('../../assets/button/button_hover.webp');
+		color: white;
+		background-color: transparent;
+	}
+	&.bSmall {
+		width: 95px;
+		padding-top: 5px;
+		background-image: url('../../assets/button/button_small.webp');
+	}
+	&.bSmall:hover {
+		background-image: url('../../assets/button/button_small_hover.webp');
+	}
+}
