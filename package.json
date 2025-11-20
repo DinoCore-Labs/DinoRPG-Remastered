@@ -1,6 +1,6 @@
 {
 	"name": "dinorpg",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"description": "Re-développement du jeu DinoRPG de Motion Twin",
 	"private": "true",
 	"type": "module",
@@ -17,7 +17,6 @@
 		"build": "pnpm --recursive run build",
 		"changeset": "changeset",
 		"version-packages": "changeset version",
-		"release": "changeset publish",
 		"prepare": "husky"
 	},
 	"lint-staged": {

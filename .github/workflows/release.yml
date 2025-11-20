@@ -8,13 +8,12 @@ on:
       - '.changeset/**'
 
 jobs:
-  release:
+  changelog:
+    name: Release
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
       pull-requests: write
-
     steps:
       - uses: actions/checkout@v4
 
@@ -23,8 +22,10 @@ jobs:
       - name: Add pnpm to PATH
         run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
+          cache: 'pnpm'
           node-version: 22
 
       - name: Install dependencies
@@ -33,7 +34,8 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
-          publish: pnpm release
-          create-github-release: true
+          version: pnpm version-packages
+          commit: '🚀 chore: release'
+          title: '🚀 Release'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
