@@ -1,13 +1,10 @@
 # @dinorpg/client
 
-## 0.0.2
-
-### Patch Changes
-
-- e84a47f: test release v2
-
 ## 0.0.1
 
 ### Patch Changes
 
-- b5a1e6f: setup monorepo tooling
+- [3effdb3](3effdb3): setup VueDevTools
+- [ea6c230](ea6c230): feat HomePage
+- [139ebff](139ebff): fix correct dev script to properly launch client
+- [da7cc2c](da7cc2c): setup Vue 3 + Vite setup with TypeScript, ESLint and Prettier
