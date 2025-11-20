@@ -1,13 +1,7 @@
 # @dinorpg/server
 
-## 0.0.2
-
-### Patch Changes
-
-- e84a47f: test release v2
-
 ## 0.0.1
 
 ### Patch Changes
 
-- b5a1e6f: setup monorepo tooling
+- [26f9f95](26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
