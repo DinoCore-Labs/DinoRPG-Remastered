@@ -4,4 +4,4 @@
 '@dinorpg/core': patch
 ---
 
-test release
+test release v2
