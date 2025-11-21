@@ -17,7 +17,8 @@
 		"build": "pnpm --recursive run build",
 		"changeset": "changeset",
 		"version-packages": "changeset version",
-		"prepare": "husky"
+		"prepare": "husky",
+		"build-changelog": "node scripts/generate-root-changelog.js"
 	},
 	"lint-staged": {
 		"*.{ts,tsx,vue,js,json,css,md}": [
