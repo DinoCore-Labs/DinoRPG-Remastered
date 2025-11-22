@@ -15,7 +15,7 @@
 		<div class="boxRoot">
 			<hr class="separator" />
 			<a class="connectLink">
-				<button class="connectBadge">Connexion</button>
+				<button class="connectBadge" @click="openCreateAccountMenu">Se connecter</button>
 			</a>
 			<!--
       <span v-else class="playerLogged">
@@ -29,19 +29,37 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
+import eventBus from '../../events';
 export default defineComponent({
 	name: 'TopBar',
 	components: {},
 	data() {
 		return {
-			time: '' as string
+			time: '' as string,
+			timer: null as number | null
 		};
 	},
 	methods: {
+		openCreateAccountMenu() {
+			eventBus.emit('authMenu', true);
+		},
 		getTime(): void {
 			const day = new Date();
 			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'GMT' });
+		}
+	},
+	mounted() {
+		// Initial display
+		this.getTime();
+
+		// Update every second
+		this.timer = window.setInterval(() => {
+			this.getTime();
+		}, 1000);
+	},
+	beforeUnmount() {
+		if (this.timer) {
+			clearInterval(this.timer);
 		}
 	}
 });

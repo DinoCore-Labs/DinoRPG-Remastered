@@ -34,6 +34,14 @@ jobs:
       - name: Build root CHANGELOG
         run: pnpm build-changelog
 
+      - name: Commit root CHANGELOG
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add CHANGELOG.md
+          git commit -m "chore: update root changelog" || echo "No changes to commit"
+
       - name: Create Release Pull Request
         uses: changesets/action@v1
         with:
