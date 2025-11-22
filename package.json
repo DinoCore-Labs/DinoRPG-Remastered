@@ -10,6 +10,7 @@
 	"scripts": {
 		"client:dev": "pnpm --filter @dinorpg/client run dev",
 		"server:dev": "pnpm --filter @dinorpg/server run dev",
+		"db:sync": "pnpm --filter @dinorpg/server db:sync:dev",
 		"core:dev": "pnpm --filter @dinorpg/core run dev",
 		"dev": "pnpm --recursive --parallel --stream run dev",
 		"check": "pnpm eslint . --ext .ts,.tsx,.vue && prettier --check \"**/*.{ts,tsx,js,vue,css,json,md}\"",
