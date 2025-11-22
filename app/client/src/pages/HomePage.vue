@@ -4,7 +4,7 @@
 			<img class="homepage-banner" :src="getImgURL('background', 'background_alpha')" alt="DinoRPG" />
 			<div class="homepage-content">
 				<div class="homepage-menu">
-					<Button href="" :disabled="true">Connexion</Button>
+					<Button href="" @click="openCreateAccountMenu">Connexion</Button>
 					<Button href="#last-news" :disabled="true">News</Button>
 				</div>
 				<!--
@@ -30,13 +30,18 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { getImgURL } from '../utils/getImgURL';
+import eventBus from '../events';
 import Button from '../components/utils/Button.vue';
 
 export default defineComponent({
 	name: 'HomePage',
 	components: { Button },
 	methods: {
-		getImgURL
+		getImgURL,
+		openCreateAccountMenu(e: any) {
+			e.preventDefault();
+			eventBus.emit('authMenu', true);
+		}
 	}
 });
 </script>
