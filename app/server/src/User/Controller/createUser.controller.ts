@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { prisma } from '../prisma.js';
-import { CreateUserInput } from '../schema/user.schema.js';
+import { prisma } from '../../prisma.js';
+import { CreateUserInput } from '../Schema/user.schema.js';
 
 const SALT_ROUNDS = 10;
 

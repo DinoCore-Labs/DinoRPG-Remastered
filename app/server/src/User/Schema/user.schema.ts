@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 // data that we need from user to register
 const createUserSchema = z.object({
-	name: z.string(),
+	name: z.string().min(3).max(20),
 	password: z.string().min(6)
 });
 
