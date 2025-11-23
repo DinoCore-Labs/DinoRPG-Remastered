@@ -13,5 +13,13 @@ model User {
   id          String   @id @default(uuid())
   name        String   @unique
   password    String
+  role        Role     @default(PLAYER)
   createdDate DateTime @default(now())
+}
+
+enum Role {
+  PLAYER
+  MODERATOR
+  ADMIN
+  SUPER_ADMIN
 }
