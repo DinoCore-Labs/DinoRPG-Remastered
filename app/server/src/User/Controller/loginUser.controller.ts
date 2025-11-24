@@ -35,7 +35,8 @@ export async function loginUser(
 	reply.setCookie('access_token', token, {
 		path: '/',
 		httpOnly: true,
-		secure: true
+		secure: true,
+		sameSite: 'lax'
 	});
 
 	return { accessToken: token };
