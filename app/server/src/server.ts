@@ -3,7 +3,6 @@ import cors from '@fastify/cors';
 import fjwt, { FastifyJWT } from '@fastify/jwt';
 import dotenv from 'dotenv';
 import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
-import { withRefResolver } from 'fastify-zod';
 
 import { userRoutes } from './User/Routes/user.routes.js';
 import { userSchemas } from './User/Schema/user.schema.js';
