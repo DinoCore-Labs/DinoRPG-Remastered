@@ -12,7 +12,9 @@
 						</svg>
 					</button>
 				</div>
-				<h2 class="menu-name">Créer un compte</h2>
+				<h2 class="menu-name">
+					{{ mode === 'register' ? 'Créer un compte' : 'Connexion' }}
+				</h2>
 			</div>
 			<div class="formWrapper">
 				<form @submit.prevent="submitAccount">
@@ -22,7 +24,9 @@
 					<label for="password">Mot de passe :</label>
 					<input v-model="password" type="password" id="password" placeholder="votre mot de passe" />
 
-					<button type="submit">Créer le compte</button>
+					<button type="submit">
+						{{ mode === 'register' ? 'Créer le compte' : 'Se connecter' }}
+					</button>
 				</form>
 			</div>
 		</div>
@@ -32,12 +36,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import eventBus from '../../events';
+import { userStore } from '../../store/userStore';
+import { UserService } from '../../services/user.service';
 
 export default defineComponent({
 	name: 'AuthMenu',
 	data() {
 		return {
 			authMenuCalled: false,
+			mode: 'register',
 			name: '',
 			password: ''
 		};
@@ -46,15 +53,31 @@ export default defineComponent({
 		close() {
 			this.authMenuCalled = false;
 		},
-		submitAccount() {
-			console.log('Pseudo', this.name);
-			console.log('Mot de passe', this.password);
-			// 🔥 API
+		async submitAccount() {
+			try {
+				const store = userStore();
+				let result;
+
+				if (this.mode === 'register') {
+					result = await UserService.register(this.name, this.password);
+				} else {
+					result = await UserService.login(this.name, this.password);
+				}
+
+				store.setUser(result.id, result.name, result.role);
+
+				this.close();
+				this.$router.push('/main');
+			} catch (e: any) {
+				console.error(e);
+				alert(e.response?.data?.message ?? 'Erreur');
+			}
 		}
 	},
 	mounted() {
-		eventBus.on('authMenu', async e => {
-			this.authMenuCalled = e;
+		eventBus.on('authMenu', e => {
+			this.authMenuCalled = e.show;
+			this.mode = e.mode; // "login" ou "register"
 		});
 	}
 });

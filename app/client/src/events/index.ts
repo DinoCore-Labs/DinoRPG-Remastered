@@ -1,7 +1,10 @@
 import mitt from 'mitt';
 
 type Events = {
-	authMenu: boolean;
+	authMenu: {
+		show: boolean;
+		mode: string;
+	};
 };
 
 const eventBus = mitt<Events>();
