@@ -4,7 +4,7 @@
 			<img class="homepage-banner" :src="getImgURL('background', 'background_alpha')" alt="DinoRPG" />
 			<div class="homepage-content">
 				<div class="homepage-menu">
-					<Button href="" @click="openCreateAccountMenu">Connexion</Button>
+					<Button href="" @click="openAuthMenu">Connexion</Button>
 					<Button href="#last-news" :disabled="true">News</Button>
 				</div>
 				<!--
@@ -38,9 +38,12 @@ export default defineComponent({
 	components: { Button },
 	methods: {
 		getImgURL,
-		openCreateAccountMenu(e: any) {
+		openAuthMenu(e: any) {
 			e.preventDefault();
-			eventBus.emit('authMenu', true);
+			eventBus.emit('authMenu', {
+				show: true,
+				mode: 'login'
+			});
 		}
 	}
 });
