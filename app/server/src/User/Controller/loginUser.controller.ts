@@ -12,14 +12,10 @@ export async function loginUser(
 ) {
 	const { name, password } = req.body;
 
-	/*
-   MAKE SURE TO VALIDATE (according to you needs) user data
-   before performing the db query
-  */
-
 	const user = await prisma.user.findUnique({ where: { name: name } });
 
 	const isMatch = user && (await bcrypt.compare(password, user.password));
+
 	if (!user || !isMatch) {
 		return reply.code(401).send({
 			message: 'Invalid email or password'
@@ -28,9 +24,11 @@ export async function loginUser(
 
 	const payload = {
 		id: user.id,
-		name: user.name
+		name: user.name,
+		role: user.role
 	};
-	const token = req.jwt.sign(payload);
+
+	const token = req.jwt.sign(payload, { expiresIn: '7d' });
 
 	reply.setCookie('access_token', token, {
 		path: '/',
@@ -39,5 +37,9 @@ export async function loginUser(
 		sameSite: 'lax'
 	});
 
-	return { accessToken: token };
+	return {
+		id: user.id,
+		name: user.name,
+		role: user.role
+	};
 }

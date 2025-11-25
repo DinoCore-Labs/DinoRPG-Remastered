@@ -13,9 +13,12 @@
 			<span class="time">{{ time }}</span>
 		</div>
 		<div class="boxRoot">
+			<a class="connectLink">
+				<button class="connectBadge" @click="openRegisterMenu">Créer un compte</button>
+			</a>
 			<hr class="separator" />
 			<a class="connectLink">
-				<button class="connectBadge" @click="openCreateAccountMenu">Se connecter</button>
+				<button class="connectBadge" @click="openAuthMenu">Se connecter</button>
 			</a>
 			<!--
       <span v-else class="playerLogged">
@@ -40,8 +43,17 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		openCreateAccountMenu() {
-			eventBus.emit('authMenu', true);
+		openRegisterMenu() {
+			eventBus.emit('authMenu', {
+				show: true,
+				mode: 'register'
+			});
+		},
+		openAuthMenu() {
+			eventBus.emit('authMenu', {
+				show: true,
+				mode: 'login'
+			});
 		},
 		getTime(): void {
 			const day = new Date();
