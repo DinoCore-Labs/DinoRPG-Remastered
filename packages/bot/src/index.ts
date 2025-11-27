@@ -10,23 +10,31 @@ import {
 } from 'discord.js';
 import dotenv from 'dotenv';
 
+import { fixRolesCommand } from './commands/fixroles.js';
 import { pingCommand } from './commands/ping.js';
+import registerGuildMemberAddEvent from './events/guildMemberAdd.js';
+import { handleXp } from './leveling/leveling.js';
 
 dotenv.config();
 
 // --- Types ---
 type Command = {
 	data: SlashCommandBuilder;
-	execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
+	execute: (interaction: ChatInputCommandInteraction) => Promise<any>;
 };
 
 // --- Client ---
 const client = new Client({
-	intents: [GatewayIntentBits.Guilds]
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMembers,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent
+	]
 });
 
 // --- Commandes ---
-const commands: Command[] = [pingCommand];
+const commands: Command[] = [pingCommand, fixRolesCommand];
 const commandsMap = new Collection<string, Command>();
 
 for (const cmd of commands) {
@@ -56,6 +64,12 @@ client.on(Events.InteractionCreate, async interaction => {
 	if (!cmd) return;
 
 	await cmd.execute(interaction);
+});
+
+registerGuildMemberAddEvent(client);
+
+client.on(Events.MessageCreate, async message => {
+	handleXp(message);
 });
 
 // --- Start ---
