@@ -29,10 +29,7 @@
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^6.0.0",
-		"@types/node": "^20.14.12",
 		"@types/pg": "^8.15.6",
-		"dotenv": "^17.2.3",
-		"prisma": "^7.0.0",
-		"tsc-watch": "^6.2.0"
+		"prisma": "^7.0.0"
 	}
 }
