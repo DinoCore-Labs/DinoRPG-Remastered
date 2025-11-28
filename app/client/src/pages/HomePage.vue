@@ -4,8 +4,8 @@
 			<img class="homepage-banner" :src="getImgURL('background', 'background_alpha')" alt="DinoRPG" />
 			<div class="homepage-content">
 				<div class="homepage-menu">
-					<Button href="" @click="openAuthMenu">Connexion</Button>
-					<Button href="#last-news" :disabled="true">News</Button>
+					<Button href="" @click="openAuthMenu">{{ $t('homepage.connexion') }}</Button>
+					<Button href="#last-news" :disabled="true">{{ $t('homepage.news') }}</Button>
 				</div>
 				<!--
 				<Suspense>
