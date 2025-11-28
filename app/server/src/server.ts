@@ -20,7 +20,9 @@ function buildServer() {
 	//------------------------------------------------------
 	server.register(cors, {
 		origin: 'http://localhost:8080', // ton FRONT
-		credentials: true // indispensable pour cookies JWT
+		credentials: true, // indispensable pour cookies JWT
+		methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+		allowedHeaders: ['Content-Type', 'Authorization']
 	});
 
 	//------------------------------------------------------

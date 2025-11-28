@@ -1,9 +1,8 @@
 <template>
 	<TopBar />
 	<div id="dynamic">
-		<Transition name="slide">
-			<AuthMenu />
-		</Transition>
+		<AuthMenu />
+		<UserMenu />
 	</div>
 	<RouterView />
 	<Footer />
@@ -15,12 +14,14 @@ import { defineComponent } from 'vue';
 import TopBar from './components/tools/TopBar.vue';
 import Footer from './components/common/Footer.vue';
 import AuthMenu from './components/tools/AuthMenu.vue';
+import UserMenu from './components/tools/UserMenu.vue';
 
 export default defineComponent({
 	name: 'App',
 	components: {
 		TopBar,
 		AuthMenu,
+		UserMenu,
 		Footer
 	}
 });
@@ -35,18 +36,5 @@ export default defineComponent({
 	position: absolute;
 	flex-direction: column;
 	gap: 74px;
-}
-/* Styles pour l'animation slide */
-.slide-enter-active,
-.slide-leave-active {
-	transition: all 0.5s ease;
-}
-.slide-enter-from,
-.slide-leave-to {
-	transform: translateX(100%);
-}
-.slide-enter-to,
-.slide-leave-from {
-	transform: translateX(0);
 }
 </style>

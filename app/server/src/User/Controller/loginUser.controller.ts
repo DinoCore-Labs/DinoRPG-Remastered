@@ -34,7 +34,8 @@ export async function loginUser(
 		path: '/',
 		httpOnly: true,
 		secure: true,
-		sameSite: 'lax'
+		sameSite: 'lax',
+		signed: true
 	});
 
 	return {
