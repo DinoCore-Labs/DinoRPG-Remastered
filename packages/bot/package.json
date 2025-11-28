@@ -1,0 +1,18 @@
+{
+	"name": "@dinorpg/bot",
+	"version": "0.0.0",
+	"description": "",
+	"type": "module",
+	"main": "dist/index.js",
+	"scripts": {
+		"dev": "tsc-watch --build ./tsconfig.json --onSuccess \"node dist/index.js\"",
+		"deploy": "tsc src/deploy.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.12.1",
+	"dependencies": {
+		"discord.js": "^14.25.1"
+	}
+}
