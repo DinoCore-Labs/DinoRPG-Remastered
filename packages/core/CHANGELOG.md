@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 8a149d9: [d2c5d3d](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/d2c5d3d): feat: create interface router, userStore, UserRole
+- [d2c5d3d](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/d2c5d3d): feat: create interface router, userStore, UserRole
 
 ## 0.0.1
 
