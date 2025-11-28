@@ -19,7 +19,7 @@ function formatPackageName(pkg) {
 }
 
 function mergeChangelogs() {
-	const workspaces = ['packages/core', 'app/server', 'app/client'];
+	const workspaces = ['packages/core', 'packages/bot', 'app/server', 'app/client'];
 
 	let output = `# 📦 Global CHANGELOG\n\n`;
 
