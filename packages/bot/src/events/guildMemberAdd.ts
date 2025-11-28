@@ -1,4 +1,4 @@
-import { type Client, EmbedBuilder, Events, TextChannel } from 'discord.js';
+import { type Client, EmbedBuilder, Events, NewsChannel } from 'discord.js';
 
 export default function registerGuildMemberAddEvent(client: Client) {
 	client.on(Events.GuildMemberAdd, async member => {
@@ -25,9 +25,13 @@ export default function registerGuildMemberAddEvent(client: Client) {
 		// 2) Salon de bienvenue
 		//
 		const welcomeChannelId = process.env.WELCOME_CHANNEL_ID!;
-		const channel = member.guild.channels.cache.get(welcomeChannelId);
+		console.log('WELCOME_CHANNEL_ID =', process.env.WELCOME_CHANNEL_ID);
 
-		if (!channel || !(channel instanceof TextChannel)) {
+		const channel = member.guild.channels.cache.get(welcomeChannelId);
+		console.log('CHANNEL TYPE =', channel?.type);
+		console.log('CHANNEL EXISTS =', member.guild.channels.cache.has(process.env.WELCOME_CHANNEL_ID!));
+
+		if (!channel || !(channel instanceof NewsChannel)) {
 			console.error('❌ Salon de bienvenue introuvable.');
 			return;
 		}
