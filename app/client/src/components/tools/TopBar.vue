@@ -12,30 +12,41 @@
 		<div class="boxRoot">
 			<span class="time">{{ time }}</span>
 		</div>
-		<div class="boxRoot">
-			<a class="connectLink">
-				<button class="connectBadge" @click="openRegisterMenu">Créer un compte</button>
-			</a>
-			<hr class="separator" />
-			<a class="connectLink">
-				<button class="connectBadge" @click="openAuthMenu">Se connecter</button>
-			</a>
-			<!--
-      <span v-else class="playerLogged">
-				<button @click="openMenu" class="playerBadge">Menu</button>
-				<span class="notifications" v-if="notification > 0">{{ notification }}</span>
-			</span>
-      -->
-		</div>
+		<template v-if="!uStore.isLogged">
+			<div class="boxRoot">
+				<hr class="separator" />
+				<a class="connectLink">
+					<button class="connectBadge" @click="openRegisterMenu">Créer un compte</button>
+				</a>
+				<hr class="separator" />
+				<a class="connectLink">
+					<button class="connectBadge" @click="openAuthMenu">Se connecter</button>
+				</a>
+			</div>
+		</template>
+		<template v-else>
+			<div class="boxRoot">
+				<hr class="separator" />
+				<button @click="openUserMenu" class="playerBadge">Menu</button>
+				<!--
+				span class="notifications" v-if="notification > 0">{{ notification }}</span>
+    	-->
+			</div>
+		</template>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import eventBus from '../../events';
+import { userStore } from '../../store/userStore';
 export default defineComponent({
 	name: 'TopBar',
 	components: {},
+	setup() {
+		const uStore = userStore();
+		return { uStore };
+	},
 	data() {
 		return {
 			time: '' as string,
@@ -55,6 +66,10 @@ export default defineComponent({
 				mode: 'login'
 			});
 		},
+		openUserMenu() {
+			eventBus.emit('userMenu', true);
+		},
+
 		getTime(): void {
 			const day = new Date();
 			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'GMT' });
@@ -63,7 +78,6 @@ export default defineComponent({
 	mounted() {
 		// Initial display
 		this.getTime();
-
 		// Update every second
 		this.timer = window.setInterval(() => {
 			this.getTime();
@@ -226,7 +240,7 @@ export default defineComponent({
 	text-decoration: none;
 	font-family: arial, sans-serif;
 	font-weight: 500;
-	font-size: 1rem;
+	font-size: 0.6rem;
 	line-height: 1.75;
 	text-transform: uppercase;
 	min-width: 64px;

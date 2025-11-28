@@ -5,6 +5,7 @@ type Events = {
 		show: boolean;
 		mode: string;
 	};
+	userMenu: boolean;
 };
 
 const eventBus = mitt<Events>();
