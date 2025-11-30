@@ -10,7 +10,7 @@ import { initI18n } from './i18n';
 import router from './router';
 
 const vueToastProps = {
-	position: 'top',
+	position: 'bottom',
 	duration: 10000
 };
 
