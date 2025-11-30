@@ -25,8 +25,14 @@
 			"welcomeBack": "Content de te revoir Maître {name} !"
 		},
 		"userMenu": {
+			"disconnect": "Déconnexion",
 			"goodbye": "Au revoir Maître {name}..."
 		}
+	},
+	"footer": {
+		"dev": "Développeurs :",
+		"version": "Alpha Version",
+		"thanks": "Remerciements :"
 	},
 	"toast": {
 		"User already exists with this name": "Ce pseudo est déjà utilisé.",
