@@ -1,26 +1,26 @@
 import fCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fjwt, { FastifyJWT } from '@fastify/jwt';
-import dotenv from 'dotenv';
 import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 
+import { loadConfig } from './config/config.js';
 import { userRoutes } from './User/Routes/user.routes.js';
 import { userSchemas } from './User/Schema/user.schema.js';
 import version from './utils/version.js';
 
-dotenv.config();
+const cfg = loadConfig();
 
 function buildServer() {
 	const server = Fastify({
 		logger: true
 	});
 
-	///------------------------------------------------------
-	// 1. CORS — doit être en tout premier pour les cookies
-	//------------------------------------------------------
+	//-------------------------------------------------------
+	// 1. CORS
+	//-------------------------------------------------------
 	server.register(cors, {
-		origin: 'http://localhost:8080', // ton FRONT
-		credentials: true, // indispensable pour cookies JWT
+		origin: cfg.selfUrl.origin, // ex: http://localhost:8080/
+		credentials: true,
 		methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 		allowedHeaders: ['Content-Type', 'Authorization']
 	});
@@ -29,7 +29,7 @@ function buildServer() {
 	// 2. Cookies (avant JWT)
 	//------------------------------------------------------
 	server.register(fCookie, {
-		secret: process.env.DINORPG_SECRET_KEY_COOKIE,
+		secret: cfg.secrets.cookie,
 		hook: 'preHandler'
 	});
 
@@ -37,7 +37,7 @@ function buildServer() {
 	// 3. JWT
 	//------------------------------------------------------
 	server.register(fjwt, {
-		secret: process.env.DINORPG_SECRET_KEY_JWT as string,
+		secret: cfg.secrets.jwt,
 		cookie: {
 			cookieName: 'access_token',
 			signed: false
@@ -76,7 +76,7 @@ function buildServer() {
 	server.get('/healthcheck', async () => ({ status: 'OK' }));
 
 	//------------------------------------------------------
-	// 7. Swagger modern (Fastify 4)
+	// 7. Swagger
 	//------------------------------------------------------
 	server.register(import('@fastify/swagger'), {
 		openapi: {
