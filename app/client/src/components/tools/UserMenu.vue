@@ -224,6 +224,7 @@ export default defineComponent({
 	},
 	methods: {
 		async logOff() {
+			this.$toast.success(this.$t('topBar.userMenu.goodbye', { name: this.uStore.getUserName }));
 			await UserService.logout();
 			this.uStore.clearUser();
 			this.menuCalled = false;

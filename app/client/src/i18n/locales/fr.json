@@ -20,7 +20,18 @@
 			"password": "Mot de passe :",
 			"passwordPlaceholder": "Votre mot de passe...",
 			"nameOk": "✔ Pseudo disponible",
-			"nameBad": "✖ Pseudo déjà utilisé"
+			"nameBad": "✖ Pseudo déjà utilisé",
+			"accountCreatedWithSuccess": "Votre compte a été créé !",
+			"welcomeBack": "Content de te revoir Maître {name} !"
+		},
+		"userMenu": {
+			"goodbye": "Au revoir Maître {name}..."
 		}
+	},
+	"toast": {
+		"User already exists with this name": "Ce pseudo est déjà utilisé.",
+		"Invalid email or password": "Email ou mot de passe invalide",
+		"Invalid credentials": "Identifiants incorrects.",
+		"unknown": "Une erreur est survenue."
 	}
 }

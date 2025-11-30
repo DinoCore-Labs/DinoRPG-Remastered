@@ -61,7 +61,7 @@ export default defineComponent({
 		canSubmit(): boolean {
 			if (this.mode === 'login') return true;
 
-			// en mode register → pseudo dispo + password ok
+			// mode register → pseudo dispo + password ok
 			return this.name.length >= 3 && this.password.length >= 6 && this.nameStatus?.available === true;
 		}
 	},
@@ -74,15 +74,17 @@ export default defineComponent({
 			try {
 				if (this.mode === 'register') {
 					await UserService.register(this.name, this.password);
+					this.$toast.success(this.$t('topBar.authMenu.accountCreatedWithSuccess'));
 					this.close();
 				} else {
 					await UserService.login(this.name, this.password);
+					this.$toast.success(this.$t('topBar.authMenu.welcomeBack', { name: this.name }));
 					this.close();
 					this.$router.push('/main');
 				}
 			} catch (e: any) {
-				console.error(e);
-				alert(e.response?.data?.message ?? 'Erreur');
+				const msg = e.response?.data?.message ?? 'unknown';
+				this.$toast.error(this.$t(`toast.${msg}`, { name: this.name }));
 			}
 		}
 	},
@@ -95,12 +97,6 @@ export default defineComponent({
 	watch: {
 		name(newVal: string) {
 			clearTimeout(this.debounceTimer);
-
-			// Trop court → reset
-			if (!newVal || newVal.length < 3) {
-				this.nameStatus = null;
-				return;
-			}
 
 			// Debounce 300ms pour éviter le spam
 			this.debounceTimer = setTimeout(async () => {
