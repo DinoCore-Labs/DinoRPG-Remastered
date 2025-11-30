@@ -133,6 +133,13 @@ exports.Prisma.RelationLoadStrategy = {
   join: 'join'
 };
 
+exports.Prisma.WalletScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  amount: 'amount',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -149,8 +156,13 @@ exports.Role = exports.$Enums.Role = {
   SUPER_ADMIN: 'SUPER_ADMIN'
 };
 
+exports.MoneyType = exports.$Enums.MoneyType = {
+  GOLD: 'GOLD'
+};
+
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Wallet: 'Wallet'
 };
 
 /**

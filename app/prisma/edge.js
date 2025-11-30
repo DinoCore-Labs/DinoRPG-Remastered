@@ -105,6 +105,13 @@ exports.Prisma.RelationLoadStrategy = {
   join: 'join'
 };
 
+exports.Prisma.WalletScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  amount: 'amount',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -114,6 +121,10 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+exports.MoneyType = exports.$Enums.MoneyType = {
+  GOLD: 'GOLD'
+};
+
 exports.Role = exports.$Enums.Role = {
   PLAYER: 'PLAYER',
   MODERATOR: 'MODERATOR',
@@ -122,7 +133,8 @@ exports.Role = exports.$Enums.Role = {
 };
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Wallet: 'Wallet'
 };
 /**
  * Create the Client
@@ -135,10 +147,10 @@ const config = {
   "clientVersion": "7.0.0",
   "engineVersion": "0c19ccc313cf9911a90d99d2ac2eb0280c76c513",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"../../prisma\"\n  previewFeatures = [\"nativeDistinct\", \"relationJoins\"]\n  binaryTargets   = [\"native\", \"debian-openssl-3.0.x\", \"debian-openssl-1.1.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id          String   @id @default(uuid())\n  name        String   @unique\n  password    String\n  role        Role     @default(PLAYER)\n  createdDate DateTime @default(now())\n}\n\nenum Role {\n  PLAYER\n  MODERATOR\n  ADMIN\n  SUPER_ADMIN\n}\n"
+  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"../../prisma\"\n  previewFeatures = [\"nativeDistinct\", \"relationJoins\"]\n  binaryTargets   = [\"native\", \"debian-openssl-3.0.x\", \"debian-openssl-1.1.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id          String   @id @default(uuid())\n  name        String   @unique\n  password    String\n  role        Role     @default(PLAYER)\n  createdDate DateTime @default(now())\n\n  wallets Wallet[]\n}\n\nmodel Wallet {\n  id     String    @id @default(uuid())\n  type   MoneyType\n  amount Int       @default(0)\n  userId String\n  user   User      @relation(fields: [userId], references: [id])\n\n  @@unique([userId, type])\n}\n\nenum MoneyType {\n  GOLD\n}\n\nenum Role {\n  PLAYER\n  MODERATOR\n  ADMIN\n  SUPER_ADMIN\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"createdDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"createdDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"wallets\",\"kind\":\"object\",\"type\":\"Wallet\",\"relationName\":\"UserToWallet\"}],\"dbName\":null},\"Wallet\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"MoneyType\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToWallet\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.compilerWasm = {
   getRuntime: async () => require('./query_compiler_bg.js'),

@@ -1,7 +1,7 @@
 <template>
 	<div id="accountList">
 		<div class="money">
-			{{ beautifulNumber(15845454500) }}
+			{{ beautifulNumber(user.gold) }}
 			<img :src="getImgURL('icons', 'gold')" alt="or" />
 		</div>
 		<div class="iconMenu">
@@ -46,9 +46,14 @@
 import { defineComponent } from 'vue';
 import { getImgURL } from '../../utils/getImgURL';
 import { beautifulNumber } from '../../utils/beautifulNumber';
+import { userStore } from '../../store/userStore';
 
 export default defineComponent({
 	name: 'LeftPanel',
+	setup() {
+		const user = userStore();
+		return { user };
+	},
 	data() {},
 	components: {},
 	methods: {

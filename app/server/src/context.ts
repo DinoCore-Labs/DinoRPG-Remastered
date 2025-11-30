@@ -1,5 +1,6 @@
-import { PrismaClient } from '../../prisma/client.js';
+import type { PrismaClient } from '../../prisma/client.js';
 import { Config, loadConfig } from './config/config.js';
+import { prisma } from './prisma.js';
 
 export class ServerContext {
 	public readonly config: Config;
@@ -7,7 +8,7 @@ export class ServerContext {
 
 	constructor(config: Config) {
 		this.config = config;
-		this.prisma = new PrismaClient();
+		this.prisma = prisma;
 	}
 
 	async close(): Promise<void> {
