@@ -9,5 +9,18 @@
 			"message4": "Enfin !",
 			"message5": "Salut toi ! Prêt à rejoindre l'aventure ?"
 		}
+	},
+	"topBar": {
+		"createAccount": "Créer un compte",
+		"login": "Se connecter",
+		"menu": "Menu",
+		"authMenu": {
+			"name": "Pseudo :",
+			"namePlaceholder": "Votre pseudo...",
+			"password": "Mot de passe :",
+			"passwordPlaceholder": "Votre mot de passe...",
+			"nameOk": "✔ Pseudo disponible",
+			"nameBad": "✖ Pseudo déjà utilisé"
+		}
 	}
 }

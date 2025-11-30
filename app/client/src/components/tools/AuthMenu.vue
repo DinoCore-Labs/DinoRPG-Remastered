@@ -13,19 +13,26 @@
 					</button>
 				</div>
 				<h2 class="menu-name">
-					{{ mode === 'register' ? 'Créer un compte' : 'Connexion' }}
+					{{ mode === 'register' ? $t('topBar.createAccount') : $t('topBar.login') }}
 				</h2>
 			</div>
 			<div class="formWrapper">
 				<form @submit.prevent="submitAccount">
-					<label for="name">Pseudo :</label>
-					<input v-model="name" type="text" id="name" placeholder="votre pseudo" />
-
-					<label for="password">Mot de passe :</label>
-					<input v-model="password" type="password" id="password" placeholder="votre mot de passe" />
-
-					<button type="submit">
-						{{ mode === 'register' ? 'Créer le compte' : 'Se connecter' }}
+					<label for="name">{{ $t('topBar.authMenu.name') }}</label>
+					<input v-model="name" type="text" id="name" :placeholder="$t('topBar.authMenu.namePlaceholder')" />
+					<div v-if="mode === 'register' && nameStatus" :class="nameStatus.available ? 'name-ok' : 'name-bad'">
+						<template v-if="nameStatus.reason === 'ok'">{{ $t('topBar.authMenu.nameOk') }}</template>
+						<template v-if="nameStatus.reason === 'taken'">{{ $t('topBar.authMenu.nameBad') }}</template>
+					</div>
+					<label for="password">{{ $t('topBar.authMenu.password') }}</label>
+					<input
+						v-model="password"
+						type="password"
+						id="password"
+						:placeholder="$t('topBar.authMenu.passwordPlaceholder')"
+					/>
+					<button type="submit" :disabled="!canSubmit">
+						{{ mode === 'register' ? $t('topBar.createAccount') : $t('topBar.login') }}
 					</button>
 				</form>
 			</div>
@@ -45,9 +52,20 @@ export default defineComponent({
 			authMenuCalled: false,
 			mode: 'register',
 			name: '',
-			password: ''
+			password: '',
+			nameStatus: null as null | { available: boolean; reason: string },
+			debounceTimer: null as any
 		};
 	},
+	computed: {
+		canSubmit(): boolean {
+			if (this.mode === 'login') return true;
+
+			// en mode register → pseudo dispo + password ok
+			return this.name.length >= 3 && this.password.length >= 6 && this.nameStatus?.available === true;
+		}
+	},
+
 	methods: {
 		close() {
 			this.authMenuCalled = false;
@@ -73,6 +91,27 @@ export default defineComponent({
 			this.authMenuCalled = e.show;
 			this.mode = e.mode; // "login" ou "register"
 		});
+	},
+	watch: {
+		name(newVal: string) {
+			clearTimeout(this.debounceTimer);
+
+			// Trop court → reset
+			if (!newVal || newVal.length < 3) {
+				this.nameStatus = null;
+				return;
+			}
+
+			// Debounce 300ms pour éviter le spam
+			this.debounceTimer = setTimeout(async () => {
+				try {
+					const result = await UserService.checkName(newVal);
+					this.nameStatus = result; // { available, reason }
+				} catch {
+					this.nameStatus = null;
+				}
+			}, 300);
+		}
 	}
 });
 </script>
@@ -227,6 +266,20 @@ button[type='submit'] {
 		background-color: rgb(230, 110, 0);
 		transform: scale(0.98);
 	}
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+.name-ok {
+	color: #52ff70;
+	font-size: 12px;
+	margin-top: -10px;
+}
+.name-bad {
+	color: #ff5252;
+	font-size: 12px;
+	margin-top: -10px;
 }
 .slide-enter-active,
 .slide-leave-active {

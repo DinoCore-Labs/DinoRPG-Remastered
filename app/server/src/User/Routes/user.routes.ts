@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 
+import { checkNameUser } from '../Controller/checkNameUser.controller.js';
 import { createUser } from '../Controller/createUser.controller.js';
 import { loginUser } from '../Controller/loginUser.controller.js';
 import { logoutUser } from '../Controller/logoutUser.controller.js';
@@ -7,6 +8,7 @@ import { meUser } from '../Controller/meUser.controller.js';
 import { $ref } from '../Schema/user.schema.js';
 
 export async function userRoutes(app: FastifyInstance) {
+	app.get('/check-name/:name', checkNameUser);
 	app.post(
 		'/register',
 		{

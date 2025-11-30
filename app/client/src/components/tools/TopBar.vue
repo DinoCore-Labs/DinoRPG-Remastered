@@ -16,18 +16,18 @@
 			<div class="boxRoot">
 				<hr class="separator" />
 				<a class="connectLink">
-					<button class="connectBadge" @click="openRegisterMenu">Créer un compte</button>
+					<button class="connectBadge" @click="openRegisterMenu">{{ $t('topBar.createAccount') }}</button>
 				</a>
 				<hr class="separator" />
 				<a class="connectLink">
-					<button class="connectBadge" @click="openAuthMenu">Se connecter</button>
+					<button class="connectBadge" @click="openAuthMenu">{{ $t('topBar.login') }}</button>
 				</a>
 			</div>
 		</template>
 		<template v-else>
 			<div class="boxRoot">
 				<hr class="separator" />
-				<button @click="openUserMenu" class="playerBadge">Menu</button>
+				<button @click="openUserMenu" class="playerBadge">{{ $t('topBar.menu') }}</button>
 				<!--
 				span class="notifications" v-if="notification > 0">{{ notification }}</span>
     	-->

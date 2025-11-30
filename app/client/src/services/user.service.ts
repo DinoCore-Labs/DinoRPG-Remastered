@@ -23,13 +23,12 @@ export const UserService = {
 		return http()
 			.get('/users/me')
 			.then(res => Promise.resolve(res.data))
-			.catch(err => {
-				// 🔇 ne pas remonter l’erreur pour un 401
-				if (err?.response?.status === 401) {
-					return null;
-				}
-				// pour toute autre erreur, on remonte
-				return Promise.reject(err);
-			});
+			.catch(err => Promise.reject(err));
+	},
+	checkName(name: string) {
+		return http()
+			.get(`/users/check-name/${name}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
