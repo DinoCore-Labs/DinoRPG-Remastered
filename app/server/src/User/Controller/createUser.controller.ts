@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import gameConfig from '../../config/game.config.js';
 import { prisma } from '../../prisma.js';
 import { CreateUserInput } from '../Schema/user.schema.js';
 
@@ -30,7 +31,16 @@ export async function createUser(
 		const user = await prisma.user.create({
 			data: {
 				password: hash,
-				name
+				name,
+				wallets: {
+					create: {
+						type: 'GOLD',
+						amount: gameConfig.general.initialMoney
+					}
+				}
+			},
+			include: {
+				wallets: true
 			}
 		});
 

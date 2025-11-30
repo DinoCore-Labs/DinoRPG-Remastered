@@ -11,7 +11,11 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			select: {
 				id: true,
 				name: true,
-				role: true
+				role: true,
+				wallets: {
+					where: { type: 'GOLD' },
+					select: { amount: true }
+				}
 			}
 		});
 
@@ -19,7 +23,14 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			return reply.status(404).send({ message: 'User not found' });
 		}
 
-		return reply.send(user);
+		const gold = user.wallets[0]?.amount ?? 0;
+
+		return reply.send({
+			id: user.id,
+			name: user.name,
+			role: user.role,
+			gold
+		});
 	} catch (err) {
 		return reply.status(401).send({ message: 'Invalid token' });
 	}

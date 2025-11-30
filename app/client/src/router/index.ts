@@ -1,5 +1,5 @@
 import type { RouteRecord } from '@dinorpg/core/models/router/Router';
-import type { UserRole } from '@dinorpg/core/models/user/UserRole';
+import type { UserData } from '@dinorpg/core/models/user/UserData';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import HomePage from '../pages/HomePage.vue';
@@ -44,10 +44,10 @@ router.beforeEach(async to => {
 	if (to.meta.auth) {
 		if (!user.isLogged) {
 			// On tente de récupérer les données utilisateur
-			const data = await UserService.me().catch(() => null);
+			const data: UserData = await UserService.me().catch(() => null);
 
 			if (data) {
-				user.setUser(data.id, data.name, data.role);
+				user.setUser(data);
 			} else {
 				user.clearUser();
 				return {

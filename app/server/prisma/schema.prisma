@@ -15,6 +15,22 @@ model User {
   password    String
   role        Role     @default(PLAYER)
   createdDate DateTime @default(now())
+
+  wallets     Wallet[]
+}
+
+model Wallet {
+  id          String    @id @default(uuid())
+  type        MoneyType
+  amount      Int       @default(0)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@unique([userId, type])
+}
+
+enum MoneyType {
+  GOLD
 }
 
 enum Role {

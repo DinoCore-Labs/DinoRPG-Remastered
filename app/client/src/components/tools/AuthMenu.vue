@@ -36,7 +36,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import eventBus from '../../events';
-import { userStore } from '../../store/userStore';
 import { UserService } from '../../services/user.service';
 
 export default defineComponent({
@@ -55,19 +54,14 @@ export default defineComponent({
 		},
 		async submitAccount() {
 			try {
-				const store = userStore();
-				let result;
-
 				if (this.mode === 'register') {
-					result = await UserService.register(this.name, this.password);
+					await UserService.register(this.name, this.password);
+					this.close();
 				} else {
-					result = await UserService.login(this.name, this.password);
+					await UserService.login(this.name, this.password);
+					this.close();
+					this.$router.push('/main');
 				}
-
-				store.setUser(result.id, result.name, result.role);
-
-				this.close();
-				this.$router.push('/main');
 			} catch (e: any) {
 				console.error(e);
 				alert(e.response?.data?.message ?? 'Erreur');
