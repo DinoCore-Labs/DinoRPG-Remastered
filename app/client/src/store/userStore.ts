@@ -27,6 +27,7 @@ export const userStore = defineStore('userStore', {
 			this.id = null;
 			this.name = null;
 			this.role = null;
+			this.gold = 0;
 		}
 	},
 	persist: {
