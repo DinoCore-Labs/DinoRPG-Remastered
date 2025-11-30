@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import HomePage from '../pages/HomePage.vue';
 import MainPage from '../pages/MainPage.vue';
+import { UserService } from '../services';
 import { userStore } from '../store/userStore';
 import { is_granted } from '../utils/permission';
 
@@ -31,29 +32,35 @@ const router = createRouter({
 	}*/
 });
 
-let initialized = false;
-
 router.beforeEach(async to => {
 	const user = userStore();
 
-	// 1) Premier passage → vérifier le cookie via /me
-	if (!initialized) {
-		initialized = true;
-	}
-
-	// 2) Page publique → OK
+	// page publique -> OK
 	if (to.meta.public) {
 		return true;
 	}
 
-	// 3) Page protégée → vérifier login
-	if (to.meta.auth && !user.isLogged) {
-		return { name: 'HomePage', query: { returnUrl: to.fullPath } };
+	// page protégée -> si pas loggé, tenter /me
+	if (to.meta.auth) {
+		if (!user.isLogged) {
+			// On tente de récupérer les données utilisateur
+			const data = await UserService.me().catch(() => null);
+
+			if (data) {
+				user.setUser(data.id, data.name, data.role);
+			} else {
+				user.clearUser();
+				return {
+					name: 'HomePage',
+					query: { returnUrl: to.fullPath }
+				};
+			}
+		}
 	}
 
-	// 4) Rôles (si tu l'actives)
+	// Roles
 	if (to.meta.roles && user.role) {
-		const ok = to.meta.roles.some((r: UserRole) => is_granted(r, user.role!));
+		const ok = to.meta.roles.some(r => is_granted(r, user.role!));
 		if (!ok) return { name: 'HomePage' };
 	}
 

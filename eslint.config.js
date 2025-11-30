@@ -13,7 +13,7 @@ export default defineConfig([
 	/*                           IGNORE BUILD + NODE                              */
 	/* -------------------------------------------------------------------------- */
 	{
-		ignores: ['**/dist/**', 'dist/**', '**/node_modules/**', 'node_modules/**']
+		ignores: ['**/dist/**', 'dist/**', '**/node_modules/**', 'node_modules/**', 'app/client/public/ruffle/**']
 	},
 	/* -------------------------------------------------------------------------- */
 	/*                        CONFIG CORE + SERVER (TS/MTS)                       */

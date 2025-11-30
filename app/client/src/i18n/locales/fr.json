@@ -1,6 +1,13 @@
 {
 	"homepage": {
 		"connexion": "Connexion",
-		"news": "News"
+		"news": "Dernière News",
+		"fight": {
+			"message1": "Aaah, Dinoville, le joyaux de Dinoland, le point de départ de toute aventure qui se respecte.",
+			"message2": "Après un long périple, vous êtes enfin arrivé à votre destination, attiré par des rumeurs d'aventures palpitantes, de richesses, et de gloire.",
+			"message3": "C'est ici que vous pourrez recruter votre premier compagnon et...",
+			"message4": "Enfin !",
+			"message5": "Salut toi ! Prêt à rejoindre l'aventure ?"
+		}
 	}
 }

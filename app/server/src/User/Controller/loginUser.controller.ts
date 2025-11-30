@@ -14,6 +14,10 @@ export async function loginUser(
 
 	const user = await prisma.user.findUnique({ where: { name: name } });
 
+	if (!user) {
+		return reply.status(401).send({ message: 'Invalid credentials' });
+	}
+
 	const isMatch = user && (await bcrypt.compare(password, user.password));
 
 	if (!user || !isMatch) {
@@ -24,8 +28,7 @@ export async function loginUser(
 
 	const payload = {
 		id: user.id,
-		name: user.name,
-		role: user.role
+		name: user.name
 	};
 
 	const token = req.jwt.sign(payload, { expiresIn: '7d' });
@@ -34,13 +37,8 @@ export async function loginUser(
 		path: '/',
 		httpOnly: true,
 		secure: true,
-		sameSite: 'lax',
-		signed: true
+		sameSite: 'lax'
 	});
 
-	return {
-		id: user.id,
-		name: user.name,
-		role: user.role
-	};
+	return reply.send({ success: true });
 }
