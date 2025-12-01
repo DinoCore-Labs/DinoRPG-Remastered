@@ -7,6 +7,7 @@ import ToastPlugin from 'vue-toast-notification';
 
 import App from './App.vue';
 import { initI18n } from './i18n';
+import { mixins } from './mixins/mixins';
 import router from './router';
 
 const vueToastProps = {
@@ -21,5 +22,6 @@ app.use(pinia);
 app.use(await initI18n());
 app.use(router);
 app.use(ToastPlugin, vueToastProps);
+app.mixin(mixins);
 
 app.mount('#app');

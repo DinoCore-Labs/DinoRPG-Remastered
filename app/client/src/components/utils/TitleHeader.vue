@@ -33,14 +33,14 @@ export default defineComponent({
 	background-image: url('../../assets/design/title/title_h1.webp');
 	background-position: left bottom;
 	background-repeat: no-repeat;
-	padding-bottom: 16px;
+	padding-bottom: 2px;
 	.titlePage {
 		color: #71b703;
 		display: inline;
 		float: left;
 		font-family: 'Berlin Sans FB Demi';
 		font-variant: small-caps;
-		font-size: 19px;
+		font-size: 25px;
 		text-shadow:
 			1px 0px #fdf1bf,
 			0px 1px #fdf1bf,

@@ -134,6 +134,9 @@ importers:
 
   app/server:
     dependencies:
+      '@dinorpg/core':
+        specifier: workspace:^
+        version: link:../../packages/core
       '@fastify/cookie':
         specifier: ^11.0.2
         version: 11.0.2

@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Ranking
+ * 
+ */
+export type Ranking = $Result.DefaultSelection<Prisma.$RankingPayload>
+/**
  * Model Wallet
  * 
  */
@@ -180,6 +185,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.ranking`: Exposes CRUD operations for the **Ranking** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Rankings
+    * const rankings = await prisma.ranking.findMany()
+    * ```
+    */
+  get ranking(): Prisma.RankingDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.wallet`: Exposes CRUD operations for the **Wallet** model.
@@ -625,6 +640,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    Ranking: 'Ranking',
     Wallet: 'Wallet'
   };
 
@@ -641,7 +657,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "wallet"
+      modelProps: "user" | "ranking" | "wallet"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -716,6 +732,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Ranking: {
+        payload: Prisma.$RankingPayload<ExtArgs>
+        fields: Prisma.RankingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RankingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RankingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          findFirst: {
+            args: Prisma.RankingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RankingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          findMany: {
+            args: Prisma.RankingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>[]
+          }
+          create: {
+            args: Prisma.RankingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          createMany: {
+            args: Prisma.RankingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RankingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>[]
+          }
+          delete: {
+            args: Prisma.RankingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          update: {
+            args: Prisma.RankingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          deleteMany: {
+            args: Prisma.RankingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RankingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RankingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>[]
+          }
+          upsert: {
+            args: Prisma.RankingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          aggregate: {
+            args: Prisma.RankingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRanking>
+          }
+          groupBy: {
+            args: Prisma.RankingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RankingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RankingCountArgs<ExtArgs>
+            result: $Utils.Optional<RankingCountAggregateOutputType> | number
           }
         }
       }
@@ -886,6 +976,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    ranking?: RankingOmit
     wallet?: WalletOmit
   }
 
@@ -1161,6 +1252,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     createdDate?: boolean
+    ranking?: boolean | User$rankingArgs<ExtArgs>
     wallets?: boolean | User$walletsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1191,6 +1283,7 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "role" | "createdDate", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ranking?: boolean | User$rankingArgs<ExtArgs>
     wallets?: boolean | User$walletsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -1200,6 +1293,7 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
+      ranking: Prisma.$RankingPayload<ExtArgs> | null
       wallets: Prisma.$WalletPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -1602,6 +1696,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    ranking<T extends User$rankingArgs<ExtArgs> = {}>(args?: Subset<T, User$rankingArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     wallets<T extends User$walletsArgs<ExtArgs> = {}>(args?: Subset<T, User$walletsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2034,6 +2129,25 @@ export namespace Prisma {
   }
 
   /**
+   * User.ranking
+   */
+  export type User$rankingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    where?: RankingWhereInput
+  }
+
+  /**
    * User.wallets
    */
   export type User$walletsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2073,6 +2187,1153 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Ranking
+   */
+
+  export type AggregateRanking = {
+    _count: RankingCountAggregateOutputType | null
+    _avg: RankingAvgAggregateOutputType | null
+    _sum: RankingSumAggregateOutputType | null
+    _min: RankingMinAggregateOutputType | null
+    _max: RankingMaxAggregateOutputType | null
+  }
+
+  export type RankingAvgAggregateOutputType = {
+    id: number | null
+    dinozCount: number | null
+    points: number | null
+    average: number | null
+    completion: number | null
+    dojo: number | null
+  }
+
+  export type RankingSumAggregateOutputType = {
+    id: number | null
+    dinozCount: number | null
+    points: number | null
+    average: number | null
+    completion: number | null
+    dojo: number | null
+  }
+
+  export type RankingMinAggregateOutputType = {
+    id: number | null
+    dinozCount: number | null
+    points: number | null
+    average: number | null
+    completion: number | null
+    dojo: number | null
+    userId: string | null
+  }
+
+  export type RankingMaxAggregateOutputType = {
+    id: number | null
+    dinozCount: number | null
+    points: number | null
+    average: number | null
+    completion: number | null
+    dojo: number | null
+    userId: string | null
+  }
+
+  export type RankingCountAggregateOutputType = {
+    id: number
+    dinozCount: number
+    points: number
+    average: number
+    completion: number
+    dojo: number
+    userId: number
+    _all: number
+  }
+
+
+  export type RankingAvgAggregateInputType = {
+    id?: true
+    dinozCount?: true
+    points?: true
+    average?: true
+    completion?: true
+    dojo?: true
+  }
+
+  export type RankingSumAggregateInputType = {
+    id?: true
+    dinozCount?: true
+    points?: true
+    average?: true
+    completion?: true
+    dojo?: true
+  }
+
+  export type RankingMinAggregateInputType = {
+    id?: true
+    dinozCount?: true
+    points?: true
+    average?: true
+    completion?: true
+    dojo?: true
+    userId?: true
+  }
+
+  export type RankingMaxAggregateInputType = {
+    id?: true
+    dinozCount?: true
+    points?: true
+    average?: true
+    completion?: true
+    dojo?: true
+    userId?: true
+  }
+
+  export type RankingCountAggregateInputType = {
+    id?: true
+    dinozCount?: true
+    points?: true
+    average?: true
+    completion?: true
+    dojo?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type RankingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Ranking to aggregate.
+     */
+    where?: RankingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rankings to fetch.
+     */
+    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RankingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rankings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rankings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Rankings
+    **/
+    _count?: true | RankingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RankingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RankingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RankingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RankingMaxAggregateInputType
+  }
+
+  export type GetRankingAggregateType<T extends RankingAggregateArgs> = {
+        [P in keyof T & keyof AggregateRanking]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRanking[P]>
+      : GetScalarType<T[P], AggregateRanking[P]>
+  }
+
+
+
+
+  export type RankingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RankingWhereInput
+    orderBy?: RankingOrderByWithAggregationInput | RankingOrderByWithAggregationInput[]
+    by: RankingScalarFieldEnum[] | RankingScalarFieldEnum
+    having?: RankingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RankingCountAggregateInputType | true
+    _avg?: RankingAvgAggregateInputType
+    _sum?: RankingSumAggregateInputType
+    _min?: RankingMinAggregateInputType
+    _max?: RankingMaxAggregateInputType
+  }
+
+  export type RankingGroupByOutputType = {
+    id: number
+    dinozCount: number
+    points: number
+    average: number
+    completion: number
+    dojo: number
+    userId: string
+    _count: RankingCountAggregateOutputType | null
+    _avg: RankingAvgAggregateOutputType | null
+    _sum: RankingSumAggregateOutputType | null
+    _min: RankingMinAggregateOutputType | null
+    _max: RankingMaxAggregateOutputType | null
+  }
+
+  type GetRankingGroupByPayload<T extends RankingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RankingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RankingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RankingGroupByOutputType[P]>
+            : GetScalarType<T[P], RankingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RankingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dinozCount?: boolean
+    points?: boolean
+    average?: boolean
+    completion?: boolean
+    dojo?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ranking"]>
+
+  export type RankingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dinozCount?: boolean
+    points?: boolean
+    average?: boolean
+    completion?: boolean
+    dojo?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ranking"]>
+
+  export type RankingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dinozCount?: boolean
+    points?: boolean
+    average?: boolean
+    completion?: boolean
+    dojo?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ranking"]>
+
+  export type RankingSelectScalar = {
+    id?: boolean
+    dinozCount?: boolean
+    points?: boolean
+    average?: boolean
+    completion?: boolean
+    dojo?: boolean
+    userId?: boolean
+  }
+
+  export type RankingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dinozCount" | "points" | "average" | "completion" | "dojo" | "userId", ExtArgs["result"]["ranking"]>
+  export type RankingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type RankingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type RankingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $RankingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Ranking"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      dinozCount: number
+      points: number
+      average: number
+      completion: number
+      dojo: number
+      userId: string
+    }, ExtArgs["result"]["ranking"]>
+    composites: {}
+  }
+
+  type RankingGetPayload<S extends boolean | null | undefined | RankingDefaultArgs> = $Result.GetResult<Prisma.$RankingPayload, S>
+
+  type RankingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RankingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: RankingCountAggregateInputType | true
+    }
+
+  export interface RankingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Ranking'], meta: { name: 'Ranking' } }
+    /**
+     * Find zero or one Ranking that matches the filter.
+     * @param {RankingFindUniqueArgs} args - Arguments to find a Ranking
+     * @example
+     * // Get one Ranking
+     * const ranking = await prisma.ranking.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RankingFindUniqueArgs>(args: SelectSubset<T, RankingFindUniqueArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Ranking that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RankingFindUniqueOrThrowArgs} args - Arguments to find a Ranking
+     * @example
+     * // Get one Ranking
+     * const ranking = await prisma.ranking.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RankingFindUniqueOrThrowArgs>(args: SelectSubset<T, RankingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Ranking that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingFindFirstArgs} args - Arguments to find a Ranking
+     * @example
+     * // Get one Ranking
+     * const ranking = await prisma.ranking.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RankingFindFirstArgs>(args?: SelectSubset<T, RankingFindFirstArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Ranking that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingFindFirstOrThrowArgs} args - Arguments to find a Ranking
+     * @example
+     * // Get one Ranking
+     * const ranking = await prisma.ranking.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RankingFindFirstOrThrowArgs>(args?: SelectSubset<T, RankingFindFirstOrThrowArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Rankings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Rankings
+     * const rankings = await prisma.ranking.findMany()
+     * 
+     * // Get first 10 Rankings
+     * const rankings = await prisma.ranking.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const rankingWithIdOnly = await prisma.ranking.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RankingFindManyArgs>(args?: SelectSubset<T, RankingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Ranking.
+     * @param {RankingCreateArgs} args - Arguments to create a Ranking.
+     * @example
+     * // Create one Ranking
+     * const Ranking = await prisma.ranking.create({
+     *   data: {
+     *     // ... data to create a Ranking
+     *   }
+     * })
+     * 
+     */
+    create<T extends RankingCreateArgs>(args: SelectSubset<T, RankingCreateArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Rankings.
+     * @param {RankingCreateManyArgs} args - Arguments to create many Rankings.
+     * @example
+     * // Create many Rankings
+     * const ranking = await prisma.ranking.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RankingCreateManyArgs>(args?: SelectSubset<T, RankingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Rankings and returns the data saved in the database.
+     * @param {RankingCreateManyAndReturnArgs} args - Arguments to create many Rankings.
+     * @example
+     * // Create many Rankings
+     * const ranking = await prisma.ranking.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Rankings and only return the `id`
+     * const rankingWithIdOnly = await prisma.ranking.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RankingCreateManyAndReturnArgs>(args?: SelectSubset<T, RankingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Ranking.
+     * @param {RankingDeleteArgs} args - Arguments to delete one Ranking.
+     * @example
+     * // Delete one Ranking
+     * const Ranking = await prisma.ranking.delete({
+     *   where: {
+     *     // ... filter to delete one Ranking
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RankingDeleteArgs>(args: SelectSubset<T, RankingDeleteArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Ranking.
+     * @param {RankingUpdateArgs} args - Arguments to update one Ranking.
+     * @example
+     * // Update one Ranking
+     * const ranking = await prisma.ranking.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RankingUpdateArgs>(args: SelectSubset<T, RankingUpdateArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Rankings.
+     * @param {RankingDeleteManyArgs} args - Arguments to filter Rankings to delete.
+     * @example
+     * // Delete a few Rankings
+     * const { count } = await prisma.ranking.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RankingDeleteManyArgs>(args?: SelectSubset<T, RankingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Rankings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Rankings
+     * const ranking = await prisma.ranking.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RankingUpdateManyArgs>(args: SelectSubset<T, RankingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Rankings and returns the data updated in the database.
+     * @param {RankingUpdateManyAndReturnArgs} args - Arguments to update many Rankings.
+     * @example
+     * // Update many Rankings
+     * const ranking = await prisma.ranking.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Rankings and only return the `id`
+     * const rankingWithIdOnly = await prisma.ranking.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RankingUpdateManyAndReturnArgs>(args: SelectSubset<T, RankingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Ranking.
+     * @param {RankingUpsertArgs} args - Arguments to update or create a Ranking.
+     * @example
+     * // Update or create a Ranking
+     * const ranking = await prisma.ranking.upsert({
+     *   create: {
+     *     // ... data to create a Ranking
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Ranking we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RankingUpsertArgs>(args: SelectSubset<T, RankingUpsertArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Rankings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingCountArgs} args - Arguments to filter Rankings to count.
+     * @example
+     * // Count the number of Rankings
+     * const count = await prisma.ranking.count({
+     *   where: {
+     *     // ... the filter for the Rankings we want to count
+     *   }
+     * })
+    **/
+    count<T extends RankingCountArgs>(
+      args?: Subset<T, RankingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RankingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Ranking.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RankingAggregateArgs>(args: Subset<T, RankingAggregateArgs>): Prisma.PrismaPromise<GetRankingAggregateType<T>>
+
+    /**
+     * Group by Ranking.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RankingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RankingGroupByArgs['orderBy'] }
+        : { orderBy?: RankingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RankingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRankingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Ranking model
+   */
+  readonly fields: RankingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Ranking.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RankingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Ranking model
+   */
+  interface RankingFieldRefs {
+    readonly id: FieldRef<"Ranking", 'Int'>
+    readonly dinozCount: FieldRef<"Ranking", 'Int'>
+    readonly points: FieldRef<"Ranking", 'Int'>
+    readonly average: FieldRef<"Ranking", 'Int'>
+    readonly completion: FieldRef<"Ranking", 'Int'>
+    readonly dojo: FieldRef<"Ranking", 'Int'>
+    readonly userId: FieldRef<"Ranking", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Ranking findUnique
+   */
+  export type RankingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter, which Ranking to fetch.
+     */
+    where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking findUniqueOrThrow
+   */
+  export type RankingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter, which Ranking to fetch.
+     */
+    where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking findFirst
+   */
+  export type RankingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter, which Ranking to fetch.
+     */
+    where?: RankingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rankings to fetch.
+     */
+    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Rankings.
+     */
+    cursor?: RankingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rankings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rankings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rankings.
+     */
+    distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking findFirstOrThrow
+   */
+  export type RankingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter, which Ranking to fetch.
+     */
+    where?: RankingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rankings to fetch.
+     */
+    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Rankings.
+     */
+    cursor?: RankingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rankings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rankings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rankings.
+     */
+    distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking findMany
+   */
+  export type RankingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter, which Rankings to fetch.
+     */
+    where?: RankingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rankings to fetch.
+     */
+    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Rankings.
+     */
+    cursor?: RankingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rankings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rankings.
+     */
+    skip?: number
+    distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking create
+   */
+  export type RankingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Ranking.
+     */
+    data: XOR<RankingCreateInput, RankingUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking createMany
+   */
+  export type RankingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Rankings.
+     */
+    data: RankingCreateManyInput | RankingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Ranking createManyAndReturn
+   */
+  export type RankingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * The data used to create many Rankings.
+     */
+    data: RankingCreateManyInput | RankingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Ranking update
+   */
+  export type RankingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Ranking.
+     */
+    data: XOR<RankingUpdateInput, RankingUncheckedUpdateInput>
+    /**
+     * Choose, which Ranking to update.
+     */
+    where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking updateMany
+   */
+  export type RankingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Rankings.
+     */
+    data: XOR<RankingUpdateManyMutationInput, RankingUncheckedUpdateManyInput>
+    /**
+     * Filter which Rankings to update
+     */
+    where?: RankingWhereInput
+    /**
+     * Limit how many Rankings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Ranking updateManyAndReturn
+   */
+  export type RankingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * The data used to update Rankings.
+     */
+    data: XOR<RankingUpdateManyMutationInput, RankingUncheckedUpdateManyInput>
+    /**
+     * Filter which Rankings to update
+     */
+    where?: RankingWhereInput
+    /**
+     * Limit how many Rankings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Ranking upsert
+   */
+  export type RankingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Ranking to update in case it exists.
+     */
+    where: RankingWhereUniqueInput
+    /**
+     * In case the Ranking found by the `where` argument doesn't exist, create a new Ranking with this data.
+     */
+    create: XOR<RankingCreateInput, RankingUncheckedCreateInput>
+    /**
+     * In case the Ranking was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RankingUpdateInput, RankingUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking delete
+   */
+  export type RankingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter which Ranking to delete.
+     */
+    where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking deleteMany
+   */
+  export type RankingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Rankings to delete
+     */
+    where?: RankingWhereInput
+    /**
+     * Limit how many Rankings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Ranking without action
+   */
+  export type RankingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
   }
 
 
@@ -3197,6 +4458,19 @@ export namespace Prisma {
   export type RelationLoadStrategy = (typeof RelationLoadStrategy)[keyof typeof RelationLoadStrategy]
 
 
+  export const RankingScalarFieldEnum: {
+    id: 'id',
+    dinozCount: 'dinozCount',
+    points: 'points',
+    average: 'average',
+    completion: 'completion',
+    dojo: 'dojo',
+    userId: 'userId'
+  };
+
+  export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeof RankingScalarFieldEnum]
+
+
   export const WalletScalarFieldEnum: {
     id: 'id',
     type: 'type',
@@ -3271,20 +4545,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'MoneyType'
-   */
-  export type EnumMoneyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MoneyType'>
-    
-
-
-  /**
-   * Reference to a field of type 'MoneyType[]'
-   */
-  export type ListEnumMoneyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MoneyType[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -3295,6 +4555,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'MoneyType'
+   */
+  export type EnumMoneyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MoneyType'>
+    
+
+
+  /**
+   * Reference to a field of type 'MoneyType[]'
+   */
+  export type ListEnumMoneyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MoneyType[]'>
     
 
 
@@ -3324,6 +4598,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdDate?: DateTimeFilter<"User"> | Date | string
+    ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
     wallets?: WalletListRelationFilter
   }
 
@@ -3333,6 +4608,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdDate?: SortOrder
+    ranking?: RankingOrderByWithRelationInput
     wallets?: WalletOrderByRelationAggregateInput
   }
 
@@ -3345,6 +4621,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdDate?: DateTimeFilter<"User"> | Date | string
+    ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
     wallets?: WalletListRelationFilter
   }, "id" | "name">
 
@@ -3368,6 +4645,73 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     createdDate?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type RankingWhereInput = {
+    AND?: RankingWhereInput | RankingWhereInput[]
+    OR?: RankingWhereInput[]
+    NOT?: RankingWhereInput | RankingWhereInput[]
+    id?: IntFilter<"Ranking"> | number
+    dinozCount?: IntFilter<"Ranking"> | number
+    points?: IntFilter<"Ranking"> | number
+    average?: IntFilter<"Ranking"> | number
+    completion?: IntFilter<"Ranking"> | number
+    dojo?: IntFilter<"Ranking"> | number
+    userId?: StringFilter<"Ranking"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type RankingOrderByWithRelationInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type RankingWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId?: string
+    AND?: RankingWhereInput | RankingWhereInput[]
+    OR?: RankingWhereInput[]
+    NOT?: RankingWhereInput | RankingWhereInput[]
+    dinozCount?: IntFilter<"Ranking"> | number
+    points?: IntFilter<"Ranking"> | number
+    average?: IntFilter<"Ranking"> | number
+    completion?: IntFilter<"Ranking"> | number
+    dojo?: IntFilter<"Ranking"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type RankingOrderByWithAggregationInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+    userId?: SortOrder
+    _count?: RankingCountOrderByAggregateInput
+    _avg?: RankingAvgOrderByAggregateInput
+    _max?: RankingMaxOrderByAggregateInput
+    _min?: RankingMinOrderByAggregateInput
+    _sum?: RankingSumOrderByAggregateInput
+  }
+
+  export type RankingScalarWhereWithAggregatesInput = {
+    AND?: RankingScalarWhereWithAggregatesInput | RankingScalarWhereWithAggregatesInput[]
+    OR?: RankingScalarWhereWithAggregatesInput[]
+    NOT?: RankingScalarWhereWithAggregatesInput | RankingScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Ranking"> | number
+    dinozCount?: IntWithAggregatesFilter<"Ranking"> | number
+    points?: IntWithAggregatesFilter<"Ranking"> | number
+    average?: IntWithAggregatesFilter<"Ranking"> | number
+    completion?: IntWithAggregatesFilter<"Ranking"> | number
+    dojo?: IntWithAggregatesFilter<"Ranking"> | number
+    userId?: StringWithAggregatesFilter<"Ranking"> | string
   }
 
   export type WalletWhereInput = {
@@ -3429,6 +4773,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     createdDate?: Date | string
+    ranking?: RankingCreateNestedOneWithoutUserInput
     wallets?: WalletCreateNestedManyWithoutUserInput
   }
 
@@ -3438,6 +4783,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     createdDate?: Date | string
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     wallets?: WalletUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -3447,6 +4793,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    ranking?: RankingUpdateOneWithoutUserNestedInput
     wallets?: WalletUpdateManyWithoutUserNestedInput
   }
 
@@ -3456,6 +4803,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     wallets?: WalletUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -3481,6 +4829,72 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RankingCreateInput = {
+    dinozCount?: number
+    points?: number
+    average?: number
+    completion?: number
+    dojo?: number
+    user: UserCreateNestedOneWithoutRankingInput
+  }
+
+  export type RankingUncheckedCreateInput = {
+    id?: number
+    dinozCount?: number
+    points?: number
+    average?: number
+    completion?: number
+    dojo?: number
+    userId: string
+  }
+
+  export type RankingUpdateInput = {
+    dinozCount?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutRankingNestedInput
+  }
+
+  export type RankingUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dinozCount?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type RankingCreateManyInput = {
+    id?: number
+    dinozCount?: number
+    points?: number
+    average?: number
+    completion?: number
+    dojo?: number
+    userId: string
+  }
+
+  export type RankingUpdateManyMutationInput = {
+    dinozCount?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type RankingUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dinozCount?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type WalletCreateInput = {
@@ -3564,6 +4978,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type RankingNullableScalarRelationFilter = {
+    is?: RankingWhereInput | null
+    isNot?: RankingWhereInput | null
+  }
+
   export type WalletListRelationFilter = {
     every?: WalletWhereInput
     some?: WalletWhereInput
@@ -3640,13 +5059,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type EnumMoneyTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.MoneyType | EnumMoneyTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumMoneyTypeFilter<$PrismaModel> | $Enums.MoneyType
-  }
-
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -3661,6 +5073,77 @@ export namespace Prisma {
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type RankingCountOrderByAggregateInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RankingAvgOrderByAggregateInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+  }
+
+  export type RankingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RankingMinOrderByAggregateInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RankingSumOrderByAggregateInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type EnumMoneyTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MoneyType | EnumMoneyTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMoneyTypeFilter<$PrismaModel> | $Enums.MoneyType
   }
 
   export type WalletUserIdTypeCompoundUniqueInput = {
@@ -3707,20 +5190,10 @@ export namespace Prisma {
     _max?: NestedEnumMoneyTypeFilter<$PrismaModel>
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+  export type RankingCreateNestedOneWithoutUserInput = {
+    create?: XOR<RankingCreateWithoutUserInput, RankingUncheckedCreateWithoutUserInput>
+    connectOrCreate?: RankingCreateOrConnectWithoutUserInput
+    connect?: RankingWhereUniqueInput
   }
 
   export type WalletCreateNestedManyWithoutUserInput = {
@@ -3728,6 +5201,12 @@ export namespace Prisma {
     connectOrCreate?: WalletCreateOrConnectWithoutUserInput | WalletCreateOrConnectWithoutUserInput[]
     createMany?: WalletCreateManyUserInputEnvelope
     connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
+  }
+
+  export type RankingUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<RankingCreateWithoutUserInput, RankingUncheckedCreateWithoutUserInput>
+    connectOrCreate?: RankingCreateOrConnectWithoutUserInput
+    connect?: RankingWhereUniqueInput
   }
 
   export type WalletUncheckedCreateNestedManyWithoutUserInput = {
@@ -3749,6 +5228,16 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type RankingUpdateOneWithoutUserNestedInput = {
+    create?: XOR<RankingCreateWithoutUserInput, RankingUncheckedCreateWithoutUserInput>
+    connectOrCreate?: RankingCreateOrConnectWithoutUserInput
+    upsert?: RankingUpsertWithoutUserInput
+    disconnect?: RankingWhereInput | boolean
+    delete?: RankingWhereInput | boolean
+    connect?: RankingWhereUniqueInput
+    update?: XOR<XOR<RankingUpdateToOneWithWhereWithoutUserInput, RankingUpdateWithoutUserInput>, RankingUncheckedUpdateWithoutUserInput>
+  }
+
   export type WalletUpdateManyWithoutUserNestedInput = {
     create?: XOR<WalletCreateWithoutUserInput, WalletUncheckedCreateWithoutUserInput> | WalletCreateWithoutUserInput[] | WalletUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WalletCreateOrConnectWithoutUserInput | WalletCreateOrConnectWithoutUserInput[]
@@ -3761,6 +5250,16 @@ export namespace Prisma {
     update?: WalletUpdateWithWhereUniqueWithoutUserInput | WalletUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: WalletUpdateManyWithWhereWithoutUserInput | WalletUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: WalletScalarWhereInput | WalletScalarWhereInput[]
+  }
+
+  export type RankingUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<RankingCreateWithoutUserInput, RankingUncheckedCreateWithoutUserInput>
+    connectOrCreate?: RankingCreateOrConnectWithoutUserInput
+    upsert?: RankingUpsertWithoutUserInput
+    disconnect?: RankingWhereInput | boolean
+    delete?: RankingWhereInput | boolean
+    connect?: RankingWhereUniqueInput
+    update?: XOR<XOR<RankingUpdateToOneWithWhereWithoutUserInput, RankingUpdateWithoutUserInput>, RankingUncheckedUpdateWithoutUserInput>
   }
 
   export type WalletUncheckedUpdateManyWithoutUserNestedInput = {
@@ -3777,14 +5276,10 @@ export namespace Prisma {
     deleteMany?: WalletScalarWhereInput | WalletScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutWalletsInput = {
-    create?: XOR<UserCreateWithoutWalletsInput, UserUncheckedCreateWithoutWalletsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWalletsInput
+  export type UserCreateNestedOneWithoutRankingInput = {
+    create?: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRankingInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type EnumMoneyTypeFieldUpdateOperationsInput = {
-    set?: $Enums.MoneyType
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -3793,6 +5288,24 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutRankingNestedInput = {
+    create?: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRankingInput
+    upsert?: UserUpsertWithoutRankingInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRankingInput, UserUpdateWithoutRankingInput>, UserUncheckedUpdateWithoutRankingInput>
+  }
+
+  export type UserCreateNestedOneWithoutWalletsInput = {
+    create?: XOR<UserCreateWithoutWalletsInput, UserUncheckedCreateWithoutWalletsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWalletsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumMoneyTypeFieldUpdateOperationsInput = {
+    set?: $Enums.MoneyType
   }
 
   export type UserUpdateOneRequiredWithoutWalletsNestedInput = {
@@ -3887,23 +5400,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedEnumMoneyTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.MoneyType | EnumMoneyTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumMoneyTypeFilter<$PrismaModel> | $Enums.MoneyType
-  }
-
-  export type NestedEnumMoneyTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MoneyType | EnumMoneyTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumMoneyTypeWithAggregatesFilter<$PrismaModel> | $Enums.MoneyType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMoneyTypeFilter<$PrismaModel>
-    _max?: NestedEnumMoneyTypeFilter<$PrismaModel>
-  }
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -3931,6 +5427,45 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumMoneyTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.MoneyType | EnumMoneyTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMoneyTypeFilter<$PrismaModel> | $Enums.MoneyType
+  }
+
+  export type NestedEnumMoneyTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MoneyType | EnumMoneyTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumMoneyTypeWithAggregatesFilter<$PrismaModel> | $Enums.MoneyType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMoneyTypeFilter<$PrismaModel>
+    _max?: NestedEnumMoneyTypeFilter<$PrismaModel>
+  }
+
+  export type RankingCreateWithoutUserInput = {
+    dinozCount?: number
+    points?: number
+    average?: number
+    completion?: number
+    dojo?: number
+  }
+
+  export type RankingUncheckedCreateWithoutUserInput = {
+    id?: number
+    dinozCount?: number
+    points?: number
+    average?: number
+    completion?: number
+    dojo?: number
+  }
+
+  export type RankingCreateOrConnectWithoutUserInput = {
+    where: RankingWhereUniqueInput
+    create: XOR<RankingCreateWithoutUserInput, RankingUncheckedCreateWithoutUserInput>
+  }
+
   export type WalletCreateWithoutUserInput = {
     id?: string
     type: $Enums.MoneyType
@@ -3951,6 +5486,34 @@ export namespace Prisma {
   export type WalletCreateManyUserInputEnvelope = {
     data: WalletCreateManyUserInput | WalletCreateManyUserInput[]
     skipDuplicates?: boolean
+  }
+
+  export type RankingUpsertWithoutUserInput = {
+    update: XOR<RankingUpdateWithoutUserInput, RankingUncheckedUpdateWithoutUserInput>
+    create: XOR<RankingCreateWithoutUserInput, RankingUncheckedCreateWithoutUserInput>
+    where?: RankingWhereInput
+  }
+
+  export type RankingUpdateToOneWithWhereWithoutUserInput = {
+    where?: RankingWhereInput
+    data: XOR<RankingUpdateWithoutUserInput, RankingUncheckedUpdateWithoutUserInput>
+  }
+
+  export type RankingUpdateWithoutUserInput = {
+    dinozCount?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type RankingUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dinozCount?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
   }
 
   export type WalletUpsertWithWhereUniqueWithoutUserInput = {
@@ -3979,12 +5542,65 @@ export namespace Prisma {
     userId?: StringFilter<"Wallet"> | string
   }
 
+  export type UserCreateWithoutRankingInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    wallets?: WalletCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutRankingInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    wallets?: WalletUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutRankingInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
+  }
+
+  export type UserUpsertWithoutRankingInput = {
+    update: XOR<UserUpdateWithoutRankingInput, UserUncheckedUpdateWithoutRankingInput>
+    create: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutRankingInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRankingInput, UserUncheckedUpdateWithoutRankingInput>
+  }
+
+  export type UserUpdateWithoutRankingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    wallets?: WalletUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRankingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    wallets?: WalletUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutWalletsInput = {
     id?: string
     name: string
     password: string
     role?: $Enums.Role
     createdDate?: Date | string
+    ranking?: RankingCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWalletsInput = {
@@ -3993,6 +5609,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     createdDate?: Date | string
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWalletsInput = {
@@ -4017,6 +5634,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    ranking?: RankingUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWalletsInput = {
@@ -4025,6 +5643,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type WalletCreateManyUserInput = {

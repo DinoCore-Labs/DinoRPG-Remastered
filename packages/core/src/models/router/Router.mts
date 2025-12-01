@@ -7,6 +7,7 @@ export interface RouteRecord {
 	meta?: RouteMeta;
 	redirect?: { name: string } | string;
 	children?: RouteRecord[];
+	props?: boolean | Record<string, any> | ((route: any) => Record<string, any>);
 	beforeEnter?: (_to: any, _from: any, next: any) => void;
 }
 

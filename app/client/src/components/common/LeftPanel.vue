@@ -6,13 +6,13 @@
 		</div>
 		<div class="iconMenu">
 			<RouterLink to="/shop/flying" class="link">
-				<img :src="getImgURL('icons', 'act_boutique')" alt="shop" />
+				<img :src="getImgURL('act', 'act_boutique')" alt="shop" />
 			</RouterLink>
 			<RouterLink :to="`/clan/`" class="link">
-				<img :src="getImgURL('icons', 'act_castle')" alt="dojo" />
+				<img :src="getImgURL('act', 'act_castle')" alt="dojo" />
 			</RouterLink>
 			<RouterLink class="link" :to="`/dojo`">
-				<img :src="getImgURL('icons', 'act_dojo')" alt="dojo" />
+				<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 			</RouterLink>
 		</div>
 		<div class="place">

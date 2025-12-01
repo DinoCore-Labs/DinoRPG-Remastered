@@ -4,8 +4,8 @@
 			<img class="homepage-banner" :src="getImgURL('background', 'background_alpha')" alt="DinoRPG" />
 			<div class="homepage-content">
 				<div class="homepage-menu">
-					<Button href="" @click="openAuthMenu">{{ $t('homepage.connexion') }}</Button>
-					<Button href="#last-news" :disabled="true">{{ $t('homepage.news') }}</Button>
+					<DZButton href="" @click="openAuthMenu">{{ $t('homepage.connexion') }}</DZButton>
+					<DZButton href="#last-news" :disabled="true">{{ $t('homepage.news') }}</DZButton>
 				</div>
 				<Suspense>
 					<FightAnimation :key="$i18n.locale" :fight="getFight()" />
@@ -22,7 +22,7 @@
 import { defineAsyncComponent, defineComponent } from 'vue';
 import { getImgURL } from '../utils/getImgURL';
 import eventBus from '../events';
-import Button from '../components/utils/Button.vue';
+import DZButton from '../components/utils/DZButton.vue';
 import {
 	DinoAction,
 	EmoteBehaviour,
@@ -34,7 +34,10 @@ import {
 
 export default defineComponent({
 	name: 'HomePage',
-	components: { Button, FightAnimation: defineAsyncComponent(() => import('../components/fight/FightAnimation.vue')) },
+	components: {
+		DZButton,
+		FightAnimation: defineAsyncComponent(() => import('../components/fight/FightAnimation.vue'))
+	},
 	methods: {
 		getImgURL,
 		openAuthMenu(e: any) {

@@ -3,7 +3,7 @@ import mitt from 'mitt';
 type ToastEventPayload = {
 	message: string;
 	type: 'error' | 'success' | 'notif' | 'reward';
-	params?: Record<string, unknown>;
+	params: Record<string, unknown>;
 	value?: string;
 	effect?: string;
 };

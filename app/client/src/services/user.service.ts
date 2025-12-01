@@ -1,3 +1,6 @@
+import type { UserToolTip } from '@dinorpg/core/models/user/UserToolTip';
+import type { EntitySearch } from '@dinorpg/core/models/utils/EntitySearch';
+
 import { http } from '../utils/http';
 
 export const UserService = {
@@ -28,6 +31,18 @@ export const UserService = {
 	checkName(name: string) {
 		return http()
 			.get(`/users/check-name/${name}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	search: async (name: string): Promise<EntitySearch[]> => {
+		return http()
+			.get(`/users/search/${name}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getToolTip: async (id: string): Promise<UserToolTip> => {
+		return http()
+			.get(`/users/tooltip/${id}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

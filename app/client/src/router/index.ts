@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import HomePage from '../pages/HomePage.vue';
 import MainPage from '../pages/MainPage.vue';
+import RankingPage from '../pages/RankingPage.vue';
 import { UserService } from '../services';
 import { userStore } from '../store/userStore';
 import { is_granted } from '../utils/permission';
@@ -16,10 +17,37 @@ const routes: RouteRecord[] = [
 		meta: { public: true }
 	},
 	{
-		path: '/main',
+		path: '/game',
 		name: 'MainPage',
 		component: MainPage,
-		meta: { auth: true }
+		meta: { auth: true },
+		children: [
+			{
+				path: '/ranking',
+				name: 'Ranking',
+				component: RankingPage,
+				children: [
+					{
+						path: 'player/:pageLoaded',
+						name: 'RankingPlayers',
+						component: () => import('../components/rankings/PlayerRanking.vue'),
+						props: route => ({
+							sort: 'classic',
+							pageLoaded: Number(route.params.pageLoaded)
+						})
+					},
+					{
+						path: 'average/:pageLoaded',
+						name: 'RankingAverage',
+						component: () => import('../components/rankings/PlayerRanking.vue'),
+						props: route => ({
+							sort: 'average',
+							pageLoaded: Number(route.params.pageLoaded)
+						})
+					}
+				]
+			}
+		]
 	}
 ];
 
