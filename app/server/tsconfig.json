@@ -4,8 +4,12 @@
 		"esModuleInterop": true,
 		"composite": true,
 		"rootDir": "src",
-		"outDir": "dist"
+		"outDir": "dist",
+		"moduleResolution": "nodenext",
+		"module": "nodenext",
+		"target": "es2022"
 	},
 	"include": ["./src/**/*.ts"],
-	"exclude": []
+	"exclude": [],
+	"references": [{ "path": "../../packages/core" }]
 }

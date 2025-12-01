@@ -16,7 +16,22 @@ model User {
   role        Role     @default(PLAYER)
   createdDate DateTime @default(now())
 
+  ranking Ranking?
   wallets Wallet[]
+}
+
+model Ranking {
+  id         Int @id @default(autoincrement())
+  dinozCount Int @default(0)
+  points     Int @default(0)
+  average    Int @default(0)
+  completion Int @default(0)
+  dojo       Int @default(0)
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Wallet {

@@ -4,6 +4,7 @@ import fjwt, { FastifyJWT } from '@fastify/jwt';
 import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 
 import { loadConfig } from './config/config.js';
+import { rankingRoutes } from './Ranking/Routes/ranking.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
 import { userSchemas } from './User/Schema/user.schema.js';
 import version from './utils/version.js';
@@ -109,6 +110,7 @@ function buildServer() {
 	// 9. Routes
 	//------------------------------------------------------
 	server.register(userRoutes, { prefix: 'api/users' });
+	server.register(rankingRoutes, { prefix: 'api/ranking' });
 
 	return server;
 }

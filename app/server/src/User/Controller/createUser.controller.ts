@@ -28,6 +28,7 @@ export async function createUser(
 
 	try {
 		const hash = await bcrypt.hash(password, SALT_ROUNDS);
+		// ➜ 1. Créer le user
 		const user = await prisma.user.create({
 			data: {
 				password: hash,
@@ -41,6 +42,13 @@ export async function createUser(
 			},
 			include: {
 				wallets: true
+			}
+		});
+
+		// ➜ 2. Créer automatiquement le ranking associé
+		await prisma.ranking.create({
+			data: {
+				userId: user.id
 			}
 		});
 

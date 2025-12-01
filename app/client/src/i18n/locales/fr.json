@@ -25,6 +25,7 @@
 			"welcomeBack": "Content de te revoir Maître {name} !"
 		},
 		"userMenu": {
+			"ranking": "Classements",
 			"disconnect": "Déconnexion",
 			"goodbye": "Au revoir Maître {name}..."
 		}
@@ -34,10 +35,44 @@
 		"version": "Alpha Version",
 		"thanks": "Remerciements :"
 	},
+	"pageTitle": {
+		"ranking": "DinoRPG [ Grand Hall de la Gloire ]"
+	},
 	"toast": {
 		"User already exists with this name": "Ce pseudo est déjà utilisé.",
 		"Invalid email or password": "Email ou mot de passe invalide",
 		"Invalid credentials": "Identifiants incorrects.",
 		"unknown": "Une erreur est survenue."
+	},
+	"ranking": {
+		"th": {
+			"pos": "Pos.",
+			"player": "Maître",
+			"dinoz": "Dinoz",
+			"points": "Pts",
+			"average": "Moy.",
+			"completion": "Comp.",
+			"clans": "Clans",
+			"treasure": "Trésor du Clan"
+		},
+		"disclaimer": {
+			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
+			"average": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la moyenne des niveaux de tous les Dinoz du joueur."
+		},
+		"page": {
+			"previous": "Page précedente",
+			"next": "Page suivante"
+		},
+		"placeholder": {
+			"searchUser": "Rechercher un joueur",
+			"searchClan": "Rechercher un clan"
+		}
+	},
+	"tabs": {
+		"players": "Joueurs",
+		"average": "Moyenne"
+	},
+	"userCard": {
+		"title": "Aller sur le profil DinoRPG de {user}"
 	}
 }

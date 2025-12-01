@@ -43,7 +43,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import eventBus from '../../events';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../services';
 
 export default defineComponent({
 	name: 'AuthMenu',
@@ -80,7 +80,7 @@ export default defineComponent({
 					await UserService.login(this.name, this.password);
 					this.$toast.success(this.$t('topBar.authMenu.welcomeBack', { name: this.name }));
 					this.close();
-					this.$router.push('/main');
+					this.$router.push('/game');
 				}
 			} catch (e: any) {
 				const msg = e.response?.data?.message ?? 'unknown';

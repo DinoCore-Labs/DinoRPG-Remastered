@@ -6,6 +6,7 @@
 	</div>
 	<RouterView />
 	<Footer />
+	<Toast />
 </template>
 
 <script lang="ts">
@@ -15,6 +16,7 @@ import TopBar from './components/tools/TopBar.vue';
 import Footer from './components/common/Footer.vue';
 import AuthMenu from './components/tools/AuthMenu.vue';
 import UserMenu from './components/tools/UserMenu.vue';
+import Toast from './components/utils/Toast.vue';
 
 export default defineComponent({
 	name: 'App',
@@ -22,7 +24,8 @@ export default defineComponent({
 		TopBar,
 		AuthMenu,
 		UserMenu,
-		Footer
+		Footer,
+		Toast
 	}
 });
 </script>

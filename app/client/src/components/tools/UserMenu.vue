@@ -64,7 +64,7 @@
 							></path>
 						</svg>
 						<span>{{ $t('topBar.rightMenu.ingredients') }}</span>
-					</RouterLink>
+					</RouterLink>-->
 					<RouterLink
 						class="link"
 						:to="{
@@ -83,9 +83,9 @@
 								d="M17 10.43V2H7v8.43c0 .35.18.68.49.86l4.18 2.51-.99 2.34-3.41.29 2.59 2.24L9.07 22 12 20.23 14.93 22l-.78-3.33 2.59-2.24-3.41-.29-.99-2.34 4.18-2.51c.3-.18.48-.5.48-.86m-4 1.8-1 .6-1-.6V3h2z"
 							></path>
 						</svg>
-						<span>{{ $t('topBar.rightMenu.ranking') }}</span>
+						<span>{{ $t('topBar.userMenu.ranking') }}</span>
 					</RouterLink>
-					<a class="link" href="https://gerardufoin.github.io/DinoRPG-Legacy-Paradino/">
+					<!--<a class="link" href="https://gerardufoin.github.io/DinoRPG-Legacy-Paradino/">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon">
 							<path
 								d="m18 4 2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4z"

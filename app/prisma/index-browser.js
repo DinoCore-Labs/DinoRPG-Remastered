@@ -133,6 +133,16 @@ exports.Prisma.RelationLoadStrategy = {
   join: 'join'
 };
 
+exports.Prisma.RankingScalarFieldEnum = {
+  id: 'id',
+  dinozCount: 'dinozCount',
+  points: 'points',
+  average: 'average',
+  completion: 'completion',
+  dojo: 'dojo',
+  userId: 'userId'
+};
+
 exports.Prisma.WalletScalarFieldEnum = {
   id: 'id',
   type: 'type',
@@ -162,6 +172,7 @@ exports.MoneyType = exports.$Enums.MoneyType = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Ranking: 'Ranking',
   Wallet: 'Wallet'
 };
 
