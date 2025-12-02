@@ -11,7 +11,7 @@ async function main() {
 			host: '0.0.0.0'
 		});
 		console.log(`🚀 Server ready at ${cfg.selfUrl.origin.replace(/\/$/, '')}`);
-		console.log(`📚 API docs at ${cfg.selfUrl.origin.replace(/\/$/, '')}/docs`);
+		console.log(`📚 API docs at ${cfg.apiUrl.origin.replace(/\/$/, '')}/docs`);
 	} catch (e) {
 		console.log(e);
 		process.exit(1);
