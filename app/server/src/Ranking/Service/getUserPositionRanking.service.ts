@@ -1,4 +1,4 @@
-import { ExpectedError } from '@dinorpg/core/models/utils/ExpectedError';
+import { ExpectedError } from '@dinorpg/core/models/utils/ExpectedError.mjs';
 
 import { prisma } from '../../prisma.js';
 

@@ -1,4 +1,4 @@
-import { ExpectedError } from '@dinorpg/core/models/utils/ExpectedError';
+import { ExpectedError } from '@dinorpg/core/models/utils/ExpectedError.mjs';
 import type { FastifyRequest } from 'fastify';
 
 import { prisma } from '../../prisma.js';
