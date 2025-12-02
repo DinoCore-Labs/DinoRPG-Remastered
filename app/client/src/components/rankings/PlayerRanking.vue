@@ -55,7 +55,8 @@
 </template>
 
 <script lang="ts">
-import type { RankingGetResponse } from '@dinorpg/core/models/ranking/RankingGetResponse';
+import type { RankingGetResponses } from '@dinorpg/core/models/ranking/rankingGetResponse.js';
+
 import { defineComponent, type PropType } from 'vue';
 //import eventBus from '../../events/index.js';
 import { RankingService } from '../../services';
@@ -80,7 +81,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			rankings: [] as RankingGetResponse,
+			rankings: [] as RankingGetResponses,
 			page: 1 as number,
 			me: userStore().id,
 			seeUser: false,

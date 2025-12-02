@@ -18,6 +18,6 @@
 		"composite": true,
 		"useUnknownInCatchVariables": false
 	},
-	"include": ["./src/**/*.mts"],
+	"include": ["./src/**/*.ts"],
 	"exclude": []
 }

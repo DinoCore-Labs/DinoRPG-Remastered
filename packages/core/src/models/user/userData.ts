@@ -1,4 +1,4 @@
-import { UserRole } from './UserRole.mjs';
+import { UserRole } from './userRole.js';
 
 export interface UserData {
 	id: string;

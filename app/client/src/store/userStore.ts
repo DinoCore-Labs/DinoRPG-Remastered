@@ -1,6 +1,6 @@
-import { type UserStore } from '@dinorpg/core/models/store/UserStore';
-import { type UserData } from '@dinorpg/core/models/user/UserData';
-import type { UserRole } from '@dinorpg/core/models/user/UserRole';
+import { type UserStore } from '@dinorpg/core/models/store/userStore.js';
+import { type UserData } from '@dinorpg/core/models/user/userData.js';
+import type { UserRole } from '@dinorpg/core/models/user/userRole.js';
 import { defineStore } from 'pinia';
 
 export const userStore = defineStore('userStore', {

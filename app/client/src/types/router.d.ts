@@ -1,6 +1,6 @@
 import 'vue-router';
 
-import type { UserRole } from '@dinorpg/core/models/user/UserRole';
+import type { UserRole } from '@dinorpg/core/models/user/userRole.d.ts';
 
 declare module 'vue-router' {
 	interface RouteMeta {

@@ -28,7 +28,7 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
 import UserCard from '../modal/UserCard.vue';
-import type { UserData } from '@dinorpg/core/models/user/UserData';
+import type { UserData } from '@dinorpg/core/models/user/userData.js';
 
 export default defineComponent({
 	name: 'DZUser',

@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import type { EntitySearch } from '@dinorpg/core/models/utils/EntitySearch';
+import type { EntitySearch } from '@dinorpg/core/models/utils/entitySearch.js';
 import { defineComponent } from 'vue';
 import { UserService } from '../../services/index.js';
 

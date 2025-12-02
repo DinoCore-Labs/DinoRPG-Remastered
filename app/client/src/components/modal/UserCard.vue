@@ -36,7 +36,7 @@ import { defineComponent } from 'vue';
 import { UserService } from '../../services';
 import { errorHandler } from '../../utils/errorHandler.js';
 //import eventBus from '../../events/index.js';
-import type { UserData } from '@dinorpg/core/models/user/UserData';
+import type { UserData } from '@dinorpg/core/models/user/userData.js';
 
 export default defineComponent({
 	name: 'UserCard',
