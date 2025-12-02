@@ -2,14 +2,13 @@
 	"name": "@dinorpg/core",
 	"version": "0.0.2",
 	"description": "",
-	"main": "index.js",
 	"type": "module",
+	"main": "dist/index.mjs",
 	"exports": {
 		"./*": "./dist/*.mjs"
 	},
 	"files": [
-		"./dist/**/*.(mjs|map|mts|js|ts)",
-		"./src/"
+		"dist"
 	],
 	"scripts": {
 		"dev": "tsc --build ./tsconfig.json --watch",
