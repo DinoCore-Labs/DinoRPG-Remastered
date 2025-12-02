@@ -1,4 +1,4 @@
-import { type UserRole } from '@dinorpg/core/models/user/UserRole';
+import { type UserRole } from '@dinorpg/core/models/user/userRole.js';
 
 const ROLE_ORDER: UserRole[] = ['PLAYER', 'MODERATOR', 'ADMIN', 'SUPER_ADMIN'];
 

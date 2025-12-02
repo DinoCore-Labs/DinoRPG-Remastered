@@ -1,4 +1,4 @@
-import { UserRole } from '../user/UserRole.mjs';
+import { UserRole } from '../user/userRole.js';
 
 export interface RouteRecord {
 	path: string;

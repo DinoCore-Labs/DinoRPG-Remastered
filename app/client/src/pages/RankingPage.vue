@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import type { UserData } from '@dinorpg/core/models/user/UserData';
+import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import { defineComponent } from 'vue';
 import { RouterView } from 'vue-router';
 import TitleHeader from '../components/utils/TitleHeader.vue';

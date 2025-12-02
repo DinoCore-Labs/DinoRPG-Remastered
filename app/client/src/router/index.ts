@@ -1,5 +1,5 @@
-import type { RouteRecord } from '@dinorpg/core/models/router/Router';
-import type { UserData } from '@dinorpg/core/models/user/UserData';
+import type { RouteRecord } from '@dinorpg/core/models/router/router.js';
+import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import HomePage from '../pages/HomePage.vue';

@@ -30,7 +30,7 @@ import {
 	EntranceEffect,
 	FinishState,
 	type preFightLoader
-} from '@dinorpg/core/models/fight/transpiler';
+} from '@dinorpg/core/models/fight/transpiler.js';
 
 export default defineComponent({
 	name: 'HomePage',

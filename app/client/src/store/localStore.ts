@@ -1,4 +1,4 @@
-import type { StateLocalStore } from '@dinorpg/core/models/store/StateLocalStore';
+import type { StateLocalStore } from '@dinorpg/core/models/store/stateLocalStore.js';
 import { defineStore } from 'pinia';
 
 export const localStore = defineStore('localStore', {

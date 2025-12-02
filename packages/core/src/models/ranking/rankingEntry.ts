@@ -1,4 +1,4 @@
-import type { UserData } from '../user/UserData.mjs';
+import type { UserData } from '../user/userData.js';
 
 export interface RankingEntry {
 	points: number;

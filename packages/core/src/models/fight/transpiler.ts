@@ -1,4 +1,4 @@
-import { SkillVisualEffect } from './SkillVisualEffect.mjs';
+import { SkillVisualEffect } from './skillVisualEffect.js';
 
 export type preFightLoader = {
 	bg?: string;

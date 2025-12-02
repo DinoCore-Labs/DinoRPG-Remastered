@@ -1,5 +1,5 @@
-import type { UserToolTip } from '@dinorpg/core/models/user/UserToolTip';
-import type { EntitySearch } from '@dinorpg/core/models/utils/EntitySearch';
+import type { UserToolTip } from '@dinorpg/core/models/user/userToolTip.js';
+import type { EntitySearch } from '@dinorpg/core/models/utils/entitySearch.js';
 
 import { http } from '../utils/http';
 

@@ -1,4 +1,4 @@
-import { type UserRole } from '../user/UserRole.mjs';
+import { type UserRole } from '../user/userRole.js';
 
 export interface UserStore {
 	id: string | null;
