@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.1.1
+
+### Patch Changes
+
+- 6858444: - [bb0ad18](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/bb0ad18): feat rankings
+- Updated dependencies [6858444]
+  - @dinorpg/core@0.0.3
+
 ## 0.1.0
 
 ### Minor Changes
