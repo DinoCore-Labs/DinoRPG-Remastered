@@ -1,21 +1,20 @@
 {
 	"name": "@dinorpg/core",
 	"version": "0.0.2",
-	"description": "",
 	"type": "module",
-	"main": "dist/index.mjs",
 	"exports": {
-		"./*": "./dist/*.mjs"
+		"./*": "./dist/*"
 	},
 	"files": [
-		"dist"
+		"./dist/**/*.(mjs|map|mts|js|ts)",
+		"./src/"
 	],
 	"scripts": {
 		"dev": "tsc --build ./tsconfig.json --watch",
 		"build": "tsc --build ./tsconfig.json"
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"packageManager": "pnpm@10.12.1"
+	"packageManager": "pnpm@10.12.1",
+	"include": [
+		"src"
+	]
 }

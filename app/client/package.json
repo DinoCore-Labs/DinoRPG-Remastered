@@ -21,7 +21,7 @@
 		"vue-toast-notification": "^3.1.3"
 	},
 	"devDependencies": {
-		"@dinorpg/core": "workspace:^",
+		"@dinorpg/core": "workspace:^*",
 		"@types/node": "^24.10.0",
 		"@vitejs/plugin-vue": "^6.0.1",
 		"@vue/tsconfig": "^0.8.1",
