@@ -1,6 +1,6 @@
 <template>
 	<div class="user-card" v-if="loadedUser">
-		<RouterLink class="playerLink" :to="`/user/${loadedUser.id}`">
+		<RouterLink class="playerLink" :to="getProfileRoute(loadedUser.id)">
 			{{ $t('userCard.title', { user: loadedUser.name }) }}
 		</RouterLink>
 		<span class="dashed"></span>
@@ -35,8 +35,9 @@
 import { defineComponent } from 'vue';
 import { UserService } from '../../services';
 import { errorHandler } from '../../utils/errorHandler.js';
-//import eventBus from '../../events/index.js';
+import { userStore } from '../../store/userStore.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
+//import eventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'UserCard',
@@ -54,6 +55,14 @@ export default defineComponent({
 	methods: {
 		leave() {
 			this.$emit('leaveUserCard');
+		},
+		getProfileRoute(id: string) {
+			const uStore = userStore();
+			if (uStore.id === id) {
+				return '/user';
+			} else {
+				return `/user/${id}`;
+			}
 		}
 		/*sendMessage() {
 			if (!this.loadedPlayer) return;

@@ -52,6 +52,19 @@ export async function createUser(
 			}
 		});
 
+		// 3) Créer automatiquement le userProfile associé
+		await prisma.userProfile.create({
+			data: {
+				userId: user.id,
+				description: null,
+				language: null,
+				gender: null,
+				age: null,
+				avatar: null,
+				avatarType: null
+			}
+		});
+
 		return reply.code(201).send(user);
 	} catch (e) {
 		return reply.code(500).send(e);

@@ -2,6 +2,7 @@ import type { RouteRecord } from '@dinorpg/core/models/router/router.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
+import AccountPage from '../pages/AccountPage.vue';
 import HomePage from '../pages/HomePage.vue';
 import MainPage from '../pages/MainPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
@@ -22,6 +23,20 @@ const routes: RouteRecord[] = [
 		component: MainPage,
 		meta: { auth: true },
 		children: [
+			// ⭐️ PAGE COMPTE (mon compte)
+			{
+				path: '/user',
+				name: 'MyAccount',
+				component: AccountPage,
+				meta: { auth: true }
+			},
+			// ⭐️ PAGE PROFIL PUBLIC (autre joueur)
+			{
+				path: '/user/:id',
+				name: 'UserAccount',
+				component: AccountPage,
+				meta: { public: true } // profil public → mais appeler backend public
+			},
 			{
 				path: '/ranking',
 				name: 'Ranking',

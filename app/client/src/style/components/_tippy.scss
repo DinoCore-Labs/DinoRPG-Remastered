@@ -1,0 +1,145 @@
+.tippy-box[data-theme~='small'] {
+	background-color: #bc683c;
+	outline: 2px solid #86401e;
+	box-sizing: content-box;
+	box-shadow: 4px 4px 12px var(--clr-shadow);
+	position: sticky;
+	pointer-events: none;
+	z-index: 10;
+	max-width: 250px !important;
+	margin: 0;
+	padding: 0.5em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	color: white;
+	font-size: 10pt;
+	text-align: justify;
+	line-height: 10.5pt;
+	border: 1px solid #ffcb3d;
+	strong {
+		color: #fbf261;
+	}
+	em {
+		color: #f9f1a6;
+		font-size: 9pt;
+		font-style: italic;
+	}
+	h2 {
+		margin: 0;
+		padding: 0;
+		background: none;
+		border-radius: 0;
+		font-size: 9pt;
+		font-variant: normal;
+		height: auto;
+		letter-spacing: 0;
+		margin-top: -4px;
+		margin-bottom: 5px;
+		text-align: right;
+		padding-right: 0.8em;
+		color: #fbf261;
+	}
+}
+.tippy-box[data-theme~='normal'] {
+	width: 250px;
+	min-height: 56px;
+	background-color: #bc683c;
+	background:
+		url('../../assets/background/tip_header.webp') no-repeat,
+		url('../../assets/background/tip_footer.webp') no-repeat,
+		url('../../assets/background/tip_bg.webp') repeat-y;
+	background-position: top, bottom, center;
+	box-sizing: content-box;
+	box-shadow: 4px 4px 12px var(--clr-shadow);
+	position: sticky;
+	pointer-events: none;
+	z-index: 10;
+	max-width: 250px !important;
+	padding-bottom: 1em;
+	h1 {
+		margin: 0;
+		padding-bottom: 4px;
+		font-size: 10pt !important;
+		font-weight: bold;
+		font-variant: small-caps;
+		text-align: right;
+		padding-right: 0.8em;
+		color: #fbf261;
+	}
+	h2 {
+		margin: 0;
+		padding: 0;
+		background: none;
+		border-radius: 0;
+		font-size: 9pt;
+		font-variant: normal;
+		height: auto;
+		letter-spacing: 0;
+		margin-top: -4px;
+		margin-bottom: 5px;
+		text-align: right;
+		padding-right: 0.8em;
+		color: #fbf261;
+	}
+	h3 {
+		margin: 0;
+		font-size: 10pt !important;
+		line-height: 10.5pt;
+		padding-right: 1em;
+		padding-left: 1em;
+		padding-bottom: 2px;
+		font-weight: normal;
+		color: white;
+		font-size: 10pt;
+		text-align: justify;
+	}
+	p {
+		margin: 0;
+		font-size: 10pt !important;
+		line-height: 10.5pt;
+		padding-right: 1em;
+		padding-left: 1em;
+		padding-bottom: 2px;
+		font-weight: normal;
+		color: white;
+		font-size: 10pt;
+		text-align: justify;
+	}
+	strong {
+		color: #fbf261 !important;
+	}
+	img {
+		vertical-align: top;
+		width: 14px;
+	}
+	em {
+		color: #f9f1a6;
+	}
+}
+
+.tippy-box[data-theme~='map'] {
+	//Waiting for someone to do it
+	background-color: #bc683c;
+	border: 2px solid #86401e;
+	border-radius: 25px;
+	position: sticky;
+	pointer-events: none;
+	z-index: 10;
+	p {
+		margin: 0;
+		padding: 7px;
+		color: yellow;
+		font-size: 10pt;
+		font-family: Arial;
+		text-align: left;
+		line-height: 10.5pt;
+	}
+	strong {
+		color: #fbf261;
+	}
+	em {
+		color: #f9f1a6;
+		font-size: 9pt;
+		font-style: italic;
+	}
+}

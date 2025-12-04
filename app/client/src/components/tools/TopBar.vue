@@ -171,14 +171,12 @@ export default defineComponent({
 		rgba(0, 0, 0, 0.14) 0px 1px 1px 0px,
 		rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
 	color: rgb(183, 185, 198);
-	//padding: 4px 8px;
 	display: flex;
 	-moz-box-align: center;
 	align-items: center;
 	-moz-box-pack: justify;
 	justify-content: space-between;
 	gap: 8px;
-	//overflow: hidden;
 }
 .connectLink {
 	display: inline-flex;

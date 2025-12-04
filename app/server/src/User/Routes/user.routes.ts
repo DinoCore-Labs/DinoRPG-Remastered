@@ -7,10 +7,17 @@ import { logoutUser } from '../Controller/logoutUser.controller.js';
 import { meUser } from '../Controller/meUser.controller.js';
 import { searchUsersByName } from '../Controller/searchUsersByName.controller.js';
 import { userToolTip } from '../Controller/toolTipInfosUser.controller.js';
+import {
+	getOwnProfileController,
+	getUserProfileController,
+	updateProfileController,
+	uploadAvatarController
+} from '../Controller/userProfile.controller.js';
 import { $ref } from '../Schema/user.schema.js';
 
 export async function userRoutes(app: FastifyInstance) {
 	// Routes GET
+	// Me infos
 	app.get(
 		'/me',
 		{
@@ -18,17 +25,24 @@ export async function userRoutes(app: FastifyInstance) {
 		},
 		meUser
 	);
+	// Me profile
+	app.get('/me/profile', { preHandler: [app.authenticate] }, getOwnProfileController);
+	// Check name of account creation
 	app.get('/check-name/:name', checkNameUser);
+	// Search name of ranking
 	app.get('/search/:name', async (req, reply) => {
 		const name = (req.params as any).name;
 		const users = await searchUsersByName(name);
 		reply.send(users);
 	});
+	// UserCard
 	app.get('/tooltip/:id', async (req, reply) => {
 		const res = await userToolTip(req);
 		reply.send(res);
 	});
-	// Routes POST/PATCH
+	// Profil public d'un autre joueur
+	app.get('/:id/profile', getUserProfileController);
+	// Routes POST/PUT/PATCH
 	app.post(
 		'/register',
 		{
@@ -53,6 +67,8 @@ export async function userRoutes(app: FastifyInstance) {
 		},
 		loginUser
 	);
+	app.put('/me/profile', { preHandler: [app.authenticate] }, updateProfileController);
+	app.post('/me/avatar', { preHandler: [app.authenticate] }, uploadAvatarController);
 	// Routes DELETE
 	app.delete('/logout', logoutUser);
 

@@ -109,7 +109,6 @@ export default defineComponent({
 			//EventBus.emit('isLoading', true);
 			try {
 				this.rankings = await RankingService.getRanking(this.sort, this.page);
-				console.log(this.rankings);
 				//EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

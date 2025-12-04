@@ -125,12 +125,37 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name',
   password: 'password',
   role: 'role',
-  createdDate: 'createdDate'
+  createdDate: 'createdDate',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.RelationLoadStrategy = {
   query: 'query',
   join: 'join'
+};
+
+exports.Prisma.UserProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  avatar: 'avatar',
+  avatarType: 'avatarType',
+  language: 'language',
+  gender: 'gender',
+  age: 'age',
+  description: 'description'
+};
+
+exports.Prisma.UserRewardsScalarFieldEnum = {
+  id: 'id',
+  rewardId: 'rewardId',
+  userId: 'userId'
+};
+
+exports.Prisma.UserWalletScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  amount: 'amount',
+  userId: 'userId'
 };
 
 exports.Prisma.RankingScalarFieldEnum = {
@@ -143,13 +168,6 @@ exports.Prisma.RankingScalarFieldEnum = {
   userId: 'userId'
 };
 
-exports.Prisma.WalletScalarFieldEnum = {
-  id: 'id',
-  type: 'type',
-  amount: 'amount',
-  userId: 'userId'
-};
-
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -159,11 +177,29 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
 exports.Role = exports.$Enums.Role = {
   PLAYER: 'PLAYER',
   MODERATOR: 'MODERATOR',
   ADMIN: 'ADMIN',
   SUPER_ADMIN: 'SUPER_ADMIN'
+};
+
+exports.Language = exports.$Enums.Language = {
+  FR: 'FR',
+  EN: 'EN',
+  ES: 'ES',
+  DE: 'DE'
+};
+
+exports.Gender = exports.$Enums.Gender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE',
+  OTHER: 'OTHER'
 };
 
 exports.MoneyType = exports.$Enums.MoneyType = {
@@ -172,8 +208,10 @@ exports.MoneyType = exports.$Enums.MoneyType = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Ranking: 'Ranking',
-  Wallet: 'Wallet'
+  UserProfile: 'UserProfile',
+  UserRewards: 'UserRewards',
+  UserWallet: 'UserWallet',
+  Ranking: 'Ranking'
 };
 
 /**

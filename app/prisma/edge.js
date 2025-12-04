@@ -97,12 +97,37 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name',
   password: 'password',
   role: 'role',
-  createdDate: 'createdDate'
+  createdDate: 'createdDate',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.RelationLoadStrategy = {
   query: 'query',
   join: 'join'
+};
+
+exports.Prisma.UserProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  avatar: 'avatar',
+  avatarType: 'avatarType',
+  language: 'language',
+  gender: 'gender',
+  age: 'age',
+  description: 'description'
+};
+
+exports.Prisma.UserRewardsScalarFieldEnum = {
+  id: 'id',
+  rewardId: 'rewardId',
+  userId: 'userId'
+};
+
+exports.Prisma.UserWalletScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  amount: 'amount',
+  userId: 'userId'
 };
 
 exports.Prisma.RankingScalarFieldEnum = {
@@ -115,13 +140,6 @@ exports.Prisma.RankingScalarFieldEnum = {
   userId: 'userId'
 };
 
-exports.Prisma.WalletScalarFieldEnum = {
-  id: 'id',
-  type: 'type',
-  amount: 'amount',
-  userId: 'userId'
-};
-
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -131,6 +149,24 @@ exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 };
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+exports.Language = exports.$Enums.Language = {
+  FR: 'FR',
+  EN: 'EN',
+  ES: 'ES',
+  DE: 'DE'
+};
+
+exports.Gender = exports.$Enums.Gender = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE',
+  OTHER: 'OTHER'
+};
+
 exports.MoneyType = exports.$Enums.MoneyType = {
   GOLD: 'GOLD'
 };
@@ -144,8 +180,10 @@ exports.Role = exports.$Enums.Role = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Ranking: 'Ranking',
-  Wallet: 'Wallet'
+  UserProfile: 'UserProfile',
+  UserRewards: 'UserRewards',
+  UserWallet: 'UserWallet',
+  Ranking: 'Ranking'
 };
 /**
  * Create the Client
@@ -158,10 +196,10 @@ const config = {
   "clientVersion": "7.0.0",
   "engineVersion": "0c19ccc313cf9911a90d99d2ac2eb0280c76c513",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"../../prisma\"\n  previewFeatures = [\"nativeDistinct\", \"relationJoins\"]\n  binaryTargets   = [\"native\", \"debian-openssl-3.0.x\", \"debian-openssl-1.1.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id          String   @id @default(uuid())\n  name        String   @unique\n  password    String\n  role        Role     @default(PLAYER)\n  createdDate DateTime @default(now())\n\n  ranking Ranking?\n  wallets Wallet[]\n}\n\nmodel Ranking {\n  id         Int @id @default(autoincrement())\n  dinozCount Int @default(0)\n  points     Int @default(0)\n  average    Int @default(0)\n  completion Int @default(0)\n  dojo       Int @default(0)\n\n  userId String @unique\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([userId])\n}\n\nmodel Wallet {\n  id     String    @id @default(uuid())\n  type   MoneyType\n  amount Int       @default(0)\n  userId String\n  user   User      @relation(fields: [userId], references: [id])\n\n  @@unique([userId, type])\n}\n\nenum MoneyType {\n  GOLD\n}\n\nenum Role {\n  PLAYER\n  MODERATOR\n  ADMIN\n  SUPER_ADMIN\n}\n"
+  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"../../prisma\"\n  previewFeatures = [\"nativeDistinct\", \"relationJoins\"]\n  binaryTargets   = [\"native\", \"debian-openssl-3.0.x\", \"debian-openssl-1.1.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id          String    @id @default(uuid())\n  name        String    @unique\n  password    String\n  role        Role      @default(PLAYER)\n  createdDate DateTime  @default(now())\n  updatedAt   DateTime? @updatedAt\n\n  profile UserProfile?\n  ranking Ranking?\n  rewards UserRewards[]\n  wallets UserWallet[]\n}\n\nmodel UserProfile {\n  id     String @id @default(cuid())\n  userId String @unique\n  user   User   @relation(fields: [userId], references: [id])\n\n  avatar      Bytes?\n  avatarType  String?\n  language    Language?\n  gender      Gender?\n  age         Int?\n  description String?\n}\n\nmodel UserRewards {\n  id       Int     @id @default(autoincrement())\n  rewardId Int\n  userId   String?\n  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([rewardId, userId])\n}\n\nmodel UserWallet {\n  id     String    @id @default(uuid())\n  type   MoneyType\n  amount Int       @default(0)\n  userId String\n  user   User      @relation(fields: [userId], references: [id])\n\n  @@unique([userId, type])\n}\n\nmodel Ranking {\n  id         Int @id @default(autoincrement())\n  dinozCount Int @default(0)\n  points     Int @default(0)\n  average    Int @default(0)\n  completion Int @default(0)\n  dojo       Int @default(0)\n\n  userId String @unique\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([userId])\n}\n\nenum Language {\n  FR\n  EN\n  ES\n  DE\n}\n\nenum Gender {\n  MALE\n  FEMALE\n  OTHER\n}\n\nenum MoneyType {\n  GOLD\n}\n\nenum Role {\n  PLAYER\n  MODERATOR\n  ADMIN\n  SUPER_ADMIN\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"createdDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"ranking\",\"kind\":\"object\",\"type\":\"Ranking\",\"relationName\":\"RankingToUser\"},{\"name\":\"wallets\",\"kind\":\"object\",\"type\":\"Wallet\",\"relationName\":\"UserToWallet\"}],\"dbName\":null},\"Ranking\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"dinozCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"points\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"average\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"completion\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"dojo\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"RankingToUser\"}],\"dbName\":null},\"Wallet\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"MoneyType\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToWallet\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"createdDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"profile\",\"kind\":\"object\",\"type\":\"UserProfile\",\"relationName\":\"UserToUserProfile\"},{\"name\":\"ranking\",\"kind\":\"object\",\"type\":\"Ranking\",\"relationName\":\"RankingToUser\"},{\"name\":\"rewards\",\"kind\":\"object\",\"type\":\"UserRewards\",\"relationName\":\"UserToUserRewards\"},{\"name\":\"wallets\",\"kind\":\"object\",\"type\":\"UserWallet\",\"relationName\":\"UserToUserWallet\"}],\"dbName\":null},\"UserProfile\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserProfile\"},{\"name\":\"avatar\",\"kind\":\"scalar\",\"type\":\"Bytes\"},{\"name\":\"avatarType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"language\",\"kind\":\"enum\",\"type\":\"Language\"},{\"name\":\"gender\",\"kind\":\"enum\",\"type\":\"Gender\"},{\"name\":\"age\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"UserRewards\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"rewardId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserRewards\"}],\"dbName\":null},\"UserWallet\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"MoneyType\"},{\"name\":\"amount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"UserToUserWallet\"}],\"dbName\":null},\"Ranking\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"dinozCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"points\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"average\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"completion\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"dojo\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"RankingToUser\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.compilerWasm = {
   getRuntime: async () => require('./query_compiler_bg.js'),

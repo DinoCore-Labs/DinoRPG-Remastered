@@ -33,7 +33,7 @@ export default defineComponent({
 	background-image: url('../assets/background/bg_ciel.webp');
 	background-repeat: repeat-x;
 	&-header {
-		min-height: 100vh;
+		min-height: 100%;
 		background:
 			url('../assets/background/full_bg.webp') no-repeat,
 			url('../assets/background/full_core_bg.webp') repeat-y;
@@ -43,7 +43,7 @@ export default defineComponent({
 		.linkHome {
 			grid-area: top;
 			cursor: pointer;
-			height: 11rem;
+			height: 6rem;
 			width: 100%;
 			max-width: 540px;
 		}
@@ -55,6 +55,7 @@ export default defineComponent({
 		display: flex;
 		flex-direction: column;
 		z-index: 1;
+		margin-top: -15px;
 	}
 	&-footer {
 		background-image: url('../assets/background/full_footer.webp');

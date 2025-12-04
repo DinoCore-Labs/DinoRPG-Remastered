@@ -10,14 +10,49 @@ datasource db {
 }
 
 model User {
-  id          String   @id @default(uuid())
-  name        String   @unique
+  id          String    @id @default(uuid())
+  name        String    @unique
   password    String
-  role        Role     @default(PLAYER)
-  createdDate DateTime @default(now())
+  role        Role      @default(PLAYER)
+  createdDate DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
 
+  profile UserProfile?
   ranking Ranking?
-  wallets Wallet[]
+  rewards UserRewards[]
+  wallets UserWallet[]
+}
+
+model UserProfile {
+  id     String @id @default(cuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  avatar      Bytes?
+  avatarType  String?
+  language    Language?
+  gender      Gender?
+  age         Int?
+  description String?
+}
+
+model UserRewards {
+  id       Int     @id @default(autoincrement())
+  rewardId Int
+  userId   String?
+  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([rewardId, userId])
+}
+
+model UserWallet {
+  id     String    @id @default(uuid())
+  type   MoneyType
+  amount Int       @default(0)
+  userId String
+  user   User      @relation(fields: [userId], references: [id])
+
+  @@unique([userId, type])
 }
 
 model Ranking {
@@ -34,14 +69,17 @@ model Ranking {
   @@index([userId])
 }
 
-model Wallet {
-  id     String    @id @default(uuid())
-  type   MoneyType
-  amount Int       @default(0)
-  userId String
-  user   User      @relation(fields: [userId], references: [id])
+enum Language {
+  FR
+  EN
+  ES
+  DE
+}
 
-  @@unique([userId, type])
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
 }
 
 enum MoneyType {

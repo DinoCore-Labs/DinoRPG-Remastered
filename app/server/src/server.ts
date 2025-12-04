@@ -1,6 +1,7 @@
 import fCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fjwt, { FastifyJWT } from '@fastify/jwt';
+import multipart from '@fastify/multipart';
 import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 
 import { loadConfig } from './config/config.js';
@@ -72,6 +73,15 @@ function buildServer() {
 	});
 
 	//------------------------------------------------------
+	// EXTRA : Multipart pour les uploads
+	//------------------------------------------------------
+	server.register(multipart, {
+		limits: {
+			fileSize: 1_000_000 // 1MB max
+		}
+	});
+
+	//------------------------------------------------------
 	// 6. Healthcheck
 	//------------------------------------------------------
 	server.get('/healthcheck', async () => ({ status: 'OK' }));
@@ -111,6 +121,21 @@ function buildServer() {
 	//------------------------------------------------------
 	server.register(userRoutes, { prefix: 'api/users' });
 	server.register(rankingRoutes, { prefix: 'api/ranking' });
+
+	//------------------------------------------------------
+	// EXTRA: Test multipart
+	//------------------------------------------------------
+	server.post('/test-upload', async (req, reply) => {
+		const file = await req.file();
+
+		console.log('UPLOAD:', {
+			filename: file?.filename,
+			mimetype: file?.mimetype,
+			truncated: file?.file.truncated // <--- la vraie propriété utile
+		});
+
+		reply.send({ ok: true });
+	});
 
 	return server;
 }
