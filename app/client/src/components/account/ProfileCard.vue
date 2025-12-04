@@ -5,39 +5,36 @@
 		<!-- ===================== -->
 		<div v-if="editing" class="edit-mode">
 			<!-- Avatar -->
-			<div class="avatar-section">
-				<img v-if="previewAvatar" :src="previewAvatar" class="avatar" alt="avatar" />
-				<img v-else-if="profile.avatar" :src="profile.avatar" class="avatar" alt="avatar" />
-				<div v-else class="avatar placeholder"></div>
-
-				<label class="avatar-upload">
-					<input type="file" accept="image/*" @change="onAvatarSelect" />
+			<div class="avatar-edit">
+				<div class="avatar-wrapper">
+					<img v-if="previewAvatar" :src="previewAvatar" class="avatar-image" />
+					<img v-else-if="profile.avatar" :src="profile.avatar" class="avatar-image" />
+					<div v-else class="avatar-placeholder">?</div>
+				</div>
+				<label class="avatar-button">
 					{{ $t('accountPage.changeAvatar') }}
+					<input type="file" accept="image/*" @change="onAvatarSelect" />
 				</label>
 			</div>
-
 			<!-- Form -->
-			<div class="form-section">
+			<div class="edit-form">
 				<select v-model="form.language">
 					<option value="FR">🇫🇷 Français</option>
 					<option value="EN">🇬🇧 English</option>
 					<option value="ES">🇪🇸 Español</option>
 					<option value="DE">🇩🇪 Deutsch</option>
 				</select>
-
 				<select v-model="form.gender">
 					<option value="MALE">{{ $t('accountPage.gender_male') }}</option>
-					<option value="FEMALE"></option>
-					<option value="OTHER"></option>
+					<option value="FEMALE">{{ $t('accountPage.gender_female') }}</option>
+					<option value="OTHER">{{ $t('accountPage.gender_other') }}</option>
 				</select>
-
 				<input type="number" v-model="form.age" min="1" max="120" placeholder="Age" />
-
 				<textarea v-model="form.description" maxlength="500" placeholder="Description..."></textarea>
 			</div>
 
 			<!-- Buttons -->
-			<div class="buttons">
+			<div class="buttons-edit">
 				<button class="btn save" @click="saveProfile">
 					{{ $t('accountPage.save') }}
 				</button>
@@ -64,8 +61,8 @@
 					<div class="tags">
 						<span v-if="profile.language">🌍 {{ profile.language }}</span>
 						<span v-if="profile.gender === 'MALE'">{{ $t('accountPage.gender_male') }}</span>
-						<span v-if="profile.gender === 'FEMALE'">♀ Femme</span>
-						<span v-if="profile.gender === 'OTHER'">⚪ Autre</span>
+						<span v-if="profile.gender === 'FEMALE'">{{ $t('accountPage.gender_female') }}</span>
+						<span v-if="profile.gender === 'OTHER'">{{ $t('accountPage.gender_other') }}</span>
 						<span v-if="profile.age">🎂 {{ profile.age }} ans</span>
 					</div>
 				</div>
@@ -186,32 +183,126 @@ export default defineComponent({
 		rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
 	color: rgb(183, 185, 198);
 }
-
-/* AVATAR */
+/* EDIT MODE */
+.edit-mode {
+	padding: 20px;
+}
+// Avatar => Edit-mode
+.avatar-edit {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+}
+.avatar-wrapper {
+	width: 110px;
+	height: 110px;
+	border-radius: 50%;
+	overflow: hidden;
+	border: 3px solid #444;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.avatar-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.avatar-placeholder {
+	width: 100%;
+	height: 100%;
+	background: #222;
+	color: #999;
+	font-size: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+}
+.avatar-button {
+	background: #2c2c2c;
+	color: #eee;
+	padding: 6px 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 12px;
+	border: 1px solid rgba(2, 136, 209, 0.5);
+	color: rgb(2, 136, 209);
+	position: relative;
+	&:hover {
+		background: #3a3a3a;
+	}
+	input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+		position: absolute;
+	}
+}
+// Form => Edit-mode
+.edit-form {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	select,
+	input,
+	textarea {
+		background: #1d1d1f;
+		border: 1px solid #444;
+		padding: 10px;
+		color: white;
+		border-radius: 6px;
+		font-size: 14px;
+		&:focus {
+			border-color: #0084ff;
+			outline: none;
+		}
+	}
+	textarea {
+		resize: none;
+		min-height: 80px;
+	}
+}
+// Buttons => Edit-mode
+.buttons-edit {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 12px;
+}
+/* View Mode */
+.view-mode {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	justify-content: space-between;
+	padding: 20px;
+	&-profile {
+		display: flex;
+		justify-content: space-between;
+	}
+}
+// AVATAR => View-mode
 .avatar-section {
 	display: flex;
 	justify-content: center;
 }
-
 .avatar {
 	width: 110px;
 	height: 110px;
 	object-fit: cover;
 	border: 3px solid #fff3;
 }
-
 .avatar.placeholder {
 	width: 110px;
 	height: 110px;
 	background: #333;
 	border: 3px solid #444;
 }
-
-/* VIEW MODE */
 .view-mode .info {
 	text-align: center;
 }
-
 .tags {
 	margin-top: 8px;
 	display: flex;
@@ -220,7 +311,6 @@ export default defineComponent({
 	justify-content: center;
 	opacity: 0.9;
 }
-
 .description-text {
 	margin-top: 10px;
 	padding: 10px;
@@ -229,27 +319,9 @@ export default defineComponent({
 	font-size: 14px;
 	font-style: italic;
 }
-
 .description-text.empty {
 	opacity: 0.5;
 	font-style: italic;
-}
-
-/* EDIT MODE */
-.form-section {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-}
-
-textarea,
-select,
-input {
-	background: #1c1c1c;
-	border: none;
-	color: white;
-	padding: 8px;
-	border-radius: 6px;
 }
 
 /* BUTTONS */
@@ -285,24 +357,12 @@ input {
 	border: 1px solid rgba(2, 136, 209, 0.5);
 	color: rgb(2, 136, 209);
 }
-
 .btn.save {
-	background: #0072ff;
+	color: rgb(255, 255, 255);
+	background-color: rgb(46, 125, 50);
 }
-
 .btn.cancel {
-	background: #555;
-}
-
-.view-mode {
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-	justify-content: space-between;
-	padding: 20px;
-	&-profile {
-		display: flex;
-		justify-content: space-between;
-	}
+	color: rgb(255, 255, 255);
+	background-color: rgb(112, 22, 22);
 }
 </style>
