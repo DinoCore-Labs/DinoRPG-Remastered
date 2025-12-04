@@ -36,7 +36,8 @@
 		"thanks": "Remerciements :"
 	},
 	"pageTitle": {
-		"ranking": "DinoRPG [ Grand Hall de la Gloire ]"
+		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
+		"account": "DinoRPG [ Informations personnelles ]"
 	},
 	"toast": {
 		"User already exists with this name": "Ce pseudo est déjà utilisé.",
@@ -72,7 +73,32 @@
 		"players": "Joueurs",
 		"average": "Moyenne"
 	},
+	"accountPage": {
+		"title": "Mon Compte",
+		"userTitle": "Joueur : {name}",
+		"noDescription": "Aucune description sur ce profil...",
+		"editProfile": "Editer mon profil",
+		"gender_male": "♂ Homme",
+		"gender_female": "♀ Femme",
+		"gender_other": "Autre",
+		"profil": "Profil DinoRPG",
+		"player": "Joueur :",
+		"dinoz": "Dinoz :",
+		"ranking": "Classement :",
+		"inscription": "Inscrit le",
+		"clan": "Clan :",
+		"completion": "Complétion",
+		"rewards": "Récompenses épiques"
+	},
 	"userCard": {
 		"title": "Aller sur le profil DinoRPG de {user}"
+	},
+	"rewards": {
+		"name": {
+			"beta": "Trophée Beta"
+		},
+		"description": {
+			"beta": "Ce trophée vous a été remis pour votre précieuse aide lors de la mise de en place de la version Bêta du jeu."
+		}
 	}
 }

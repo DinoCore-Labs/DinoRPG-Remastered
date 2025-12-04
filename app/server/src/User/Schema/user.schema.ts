@@ -1,3 +1,5 @@
+import { Language } from '@dinorpg/core/models/config/language.js';
+import { Gender } from '@dinorpg/core/models/user/userGender.js';
 import { buildJsonSchemas } from 'fastify-zod';
 import { z } from 'zod';
 
@@ -27,11 +29,35 @@ const loginResponseSchema = z.object({
 	accessToken: z.string()
 });
 
+// user profile
+export const updateUserProfileSchema = z.object({
+	description: z.string().max(500).optional(),
+	language: z.nativeEnum(Language).nullable().optional(),
+	gender: z.nativeEnum(Gender).nullable().optional(),
+	age: z.number().int().min(1).max(120).nullable().optional()
+});
+
+export type UpdateUserProfileInput = z.infer<typeof updateUserProfileSchema>;
+
+export const updateUserProfileResponseSchema = z.object({
+	success: z.literal(true),
+	profile: z.object({
+		description: z.string().max(500).nullable().optional(),
+		language: z.nativeEnum(Language).nullable().optional(),
+		gender: z.nativeEnum(Gender).nullable().optional(),
+		age: z.number().int().min(1).max(120).nullable().optional()
+	})
+});
+
+export type UpdateUserProfileResponse = z.infer<typeof updateUserProfileResponseSchema>;
+
 // to build our JSON schema, we use buildJsonSchemas from fastify-zod
 // it returns all the schemas to register and a ref to refer these schemas
 export const { schemas: userSchemas, $ref } = buildJsonSchemas({
 	createUserSchema,
 	createUserResponseSchema,
 	loginSchema,
-	loginResponseSchema
+	loginResponseSchema,
+	updateUserProfileSchema,
+	updateUserProfileResponseSchema
 });
