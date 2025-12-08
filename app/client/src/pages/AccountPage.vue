@@ -11,7 +11,9 @@
 				<EpicRewardsCard :epicRewards="profile.rewards" :isOwner="isOwner" />
 			</div>
 		</div>
-		<!--<MyDinoz :accountData="accountData"></MyDinoz>-->
+		<!-- Tabs : dinoz & friends -->
+		<!--<MyDinoz :profile="profile" :isOwner="isOwner" />-->
+		<!--<MyFriends :profile="profile" :isOwner="isOwner" />-->
 		<div class="mandragore">
 			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" />
 		</div>
@@ -20,10 +22,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-//import { errorHandler } from '../utils/errorHandler.js';
-//import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
-//import { userStore } from '../store/userStore.js';
-//import eventBus from '../events/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import ProfileCard from '../components/account/ProfileCard.vue';
 import GoalsCard from '../components/account/GoalsCard.vue';
@@ -74,11 +72,11 @@ export default defineComponent({
 				profile = await UserService.getMyProfile();
 			}
 			this.profile = profile;
-			console.log(profile);
+			//console.log(profile);
 			this.isOwner = this.profile.userId === this.uStore.id;
-			console.log(this.profile.userId);
-			console.log(this.uStore.id);
-			console.log(this.isOwner);
+			//console.log(this.profile.userId);
+			//console.log(this.uStore.id);
+			//console.log(this.isOwner);
 			this.dataLoaded = true;
 		},
 		async onProfileUpdated() {

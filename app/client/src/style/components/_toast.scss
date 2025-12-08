@@ -1,19 +1,5 @@
-/*.v-toast__item--success {
-	background-color: #181a6c;
-}
-.v-toast__item--info {
-	background-color: #181a6c;
-}
-.v-toast__item--warning {
-	background-color: #181a6c;
-}
-.v-toast__item--error {
-	background-color: #181a6c;
-}
-.v-toast__item--default {
-	background-color: #181a6c;
-}*/
 .v-toast {
+	display: flex;
 	opacity: 1;
 	min-width: 250px; /* Set a default minimum width */
 	margin-left: -125px; /* Divide value of min-width by 2 */
@@ -26,9 +12,6 @@
 	left: 50%; /* Center the snackbar */
 	bottom: 30px; /* 30px from the bottom */
 }
-.v-toast__text {
-	margin: 1em;
-}
 .v-toast__item {
 	background: rgb(201, 124, 72);
 	background: linear-gradient(0deg, rgba(201, 124, 72, 1) 15%, rgba(178, 96, 58, 1) 100%);
@@ -38,11 +21,32 @@
 		inset 0 0 0 1px #f9c825,
 		inset 0 0 4px 1px #8d3e17;
 	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 10px;
 	padding-left: 1em;
 	padding-right: 1em;
-}
-.v-toast__item .v-toast__text {
-	padding: 0;
+	.v-toast__icon {
+		background: url('../../assets/icons/small_edit.webp') no-repeat;
+		width: 12px;
+		min-width: auto;
+		height: 12px;
+		background-size: 12px;
+		margin-left: 0;
+	}
+	.v-toast__text {
+		padding: 0;
+		.text-icon {
+			width: 18px;
+			vertical-align: bottom;
+		}
+	}
+	&.v-toast__item--error .v-toast__icon {
+		background: url('../../assets/icons/small_delete.webp') no-repeat;
+	}
+	&.v-toast__item--success .v-toast__icon {
+		background: url('../../assets/icons/small_missDone.webp') no-repeat;
+	}
 }
 .v-enter-active {
 	transition:

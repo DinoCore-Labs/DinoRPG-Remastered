@@ -4,17 +4,12 @@ import { createPinia } from 'pinia';
 import piniaPersist from 'pinia-plugin-persistedstate';
 import { createApp } from 'vue';
 import { plugin as VueTippy } from 'vue-tippy';
-import ToastPlugin from 'vue-toast-notification';
 
 import App from './App.vue';
 import { initI18n } from './i18n';
 import { mixins } from './mixins/mixins';
 import router from './router';
-
-const vueToastProps = {
-	position: 'bottom',
-	duration: 10000
-};
+import { createToastPlugin } from './utils/toast';
 
 const vueTippyProps = {
 	directive: 'tippy',
@@ -36,7 +31,12 @@ const app = createApp(App);
 app.use(pinia);
 app.use(await initI18n());
 app.use(router);
-app.use(ToastPlugin, vueToastProps);
+app.use(
+	createToastPlugin({
+		position: 'bottom',
+		duration: 100000
+	})
+);
 app.use(VueTippy, vueTippyProps);
 app.mixin(mixins);
 
