@@ -56,13 +56,13 @@
 				</div>
 				<!-- Info -->
 				<div class="info">
-					<h2>{{ profile.name }}</h2>
+					<h2>{{ profile.name }}, <span>Chirurgien du chaos</span></h2>
 
 					<div class="tags">
 						<span v-if="profile.language">🌍 {{ profile.language }}</span>
-						<span v-if="profile.gender === 'MALE'">{{ $t('accountPage.gender_male') }}</span>
-						<span v-if="profile.gender === 'FEMALE'">{{ $t('accountPage.gender_female') }}</span>
-						<span v-if="profile.gender === 'OTHER'">{{ $t('accountPage.gender_other') }}</span>
+						<span v-if="profile.gender === 'MALE'"><img :src="getImgURL('icons', 'male')" alt="Male" /></span>
+						<span v-if="profile.gender === 'FEMALE'"><img :src="getImgURL('icons', 'female')" alt="Female" /></span>
+						<span v-if="profile.gender === 'OTHER'"></span>
 						<span v-if="profile.age">🎂 {{ profile.age }} ans</span>
 					</div>
 				</div>
