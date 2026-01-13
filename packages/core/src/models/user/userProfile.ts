@@ -5,6 +5,7 @@ import { Gender } from './userGender.js';
 export interface UserProfile {
 	id: string;
 	name: string;
+	createdAt: Date;
 	avatar: string | null; // Base64 depuis le backend
 	avatarType: string | null; // ex: "image/webp"
 	description: string | null;

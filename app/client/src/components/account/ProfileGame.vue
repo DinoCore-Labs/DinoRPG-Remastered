@@ -17,27 +17,27 @@
 					{{ $t(`accountPage.dinoz`) }}
 				</dt>
 				<dd>
-					<!--{{ accountData.dinozCount }}-->
+					{{ userDinozCount !== null ? userDinozCount : '-' }}
 				</dd>
 				<dt>
 					{{ $t(`accountPage.ranking`) }}
 				</dt>
 				<dd>
-					<!--<RouterLink
-						v-if="playerPosition"
+					<RouterLink
+						v-if="userPosition !== null"
 						:to="{
 							name: 'RankingPlayers',
-							params: { pageLoaded: Math.floor(playerPosition / 20) + 1 }
+							params: { pageLoaded: Math.floor(userPosition / 20) + 1 }
 						}"
-						>{{ playerPosition }}</RouterLink
+						>{{ userPosition }}</RouterLink
 					>
-					({{ accountData.pointCount }} points)-->
+					<span v-if="userPoints !== null"> ({{ userPoints }} points)</span>
 				</dd>
 				<dt>
 					{{ $t(`accountPage.inscription`) }}
 				</dt>
 				<dd>
-					<!--{{ accountData.subscribeAt }}-->
+					{{ formatDate(profile.createdAt) }}
 				</dd>
 				<!--
 				<dt v-if="accountData.clan">
@@ -105,13 +105,14 @@
 import { defineComponent, type PropType } from 'vue';
 import { userStore } from '../../store/userStore.js';
 //import eventBus from '../../events/index.js';
-//import { PlayerService } from '../../services/index.js';
-//import { errorHandler } from '../../utils/errorHandler.js';
+import { errorHandler } from '../../utils/errorHandler.js';
+import { RankingService } from '../../services/ranking.service.js';
 //import { dinozStore, localStore, playerStore } from '../../store/index.js';
 //import { goTo } from '../../utils/goTo.js';
 //import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import DZButton from '../utils/DZButton.vue';
 //import { formatText } from '../../utils/formatText.js';
+import { formatDate } from '../../utils/formatDate.js';
 import DZUser from '../utils/DZUser.vue';
 import { type UserProfile } from '@dinorpg/core/models/user/UserProfile.js';
 
@@ -123,7 +124,9 @@ export default defineComponent({
 			isEditOn: false as boolean,
 			//customText: this.accountData?.customText as string | null,
 			//customTextEdit: this.accountData?.customText ?? '',
-			playerPosition: null as number | null,
+			userPosition: null as number | null,
+			userPoints: null as number | null,
+			userDinozCount: null as number | null,
 			option: false as boolean
 			//localStore: localStore(),
 			//dinozStore: dinozStore()
@@ -144,8 +147,28 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		formatDate,
 		isMyAccount(): boolean {
 			return this.uStore.id === this.profile.id;
+		},
+		async fetchUserPosition() {
+			if (!this.profile?.id) {
+				this.userPosition = null;
+				this.userPoints = null;
+				return;
+			}
+			try {
+				const res = await RankingService.getPositionRanking(this.profile.id);
+				console.log('API ranking response =', res);
+				this.userPosition = res.data.position ?? null;
+				this.userPoints = res.data.points ?? null;
+				this.userDinozCount = res.data.dinozCount ?? null;
+			} catch (err) {
+				this.userPosition = null;
+				this.userPoints = null;
+				this.userDinozCount = null;
+				errorHandler.handle(err, this.$toast);
+			}
 		} /*,
 		hasPlume(): boolean {
 			return this.accountData.epicRewards.includes(Reward.PLUME);
@@ -195,26 +218,15 @@ export default defineComponent({
 		goToClan(id: number) {
 			this.$router.push({ name: 'Clan', params: { id } });
 		},
-		async fetchPlayerPosition() {
-			// Fetch player position
-			try {
-				const { position } = await PlayerService.getPosition(this.$route.params.id as string);
-				this.playerPosition = position;
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
+	}*/
+	},
+	watch: {
+		'profile.id': {
+			immediate: true,
+			handler() {
+				this.fetchUserPosition();
 			}
 		}
-	},
-	beforeRouteUpdate(to, from, next) {
-		this.fetchPlayerPosition();
-		next();
-	},
-	mounted() {
-		this.fetchPlayerPosition();
-
-		if (this.customText) {
-			this.customText = this.customText.replace(/\n/g, '<br>');
-		}*/
 	}
 });
 </script>
@@ -250,7 +262,7 @@ export default defineComponent({
 	}
 	dl {
 		width: 245px;
-		margin-left: 30px;
+		margin-left: 28px;
 		margin-top: 10px;
 		dt {
 			float: left;
