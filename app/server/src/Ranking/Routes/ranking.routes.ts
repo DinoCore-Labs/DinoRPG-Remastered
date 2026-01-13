@@ -1,17 +1,21 @@
 import { FastifyInstance } from 'fastify';
 
-import { getMyRanking, getRanking } from '../Controller/ranking.controller.js';
+import { getRanking } from '../Controller/ranking.controller.js';
+import { getUserRankingSummary } from '../Service/getUserPositionRanking.service.js';
 
 export async function rankingRoutes(app: FastifyInstance) {
 	app.get<{
 		Params: { sort: string; page: string };
-	}>('/:sort/:page', async (req, reply) => {
+	}>('/list/:sort/:page', async (req, reply) => {
 		const res = await getRanking(req);
 		reply.send(res);
 	});
+	app.get('/position/:userId', async (req, reply) => {
+		const { userId } = req.params as { userId?: string };
 
-	app.get('/me', { preHandler: [app.authenticate] }, async (req, reply) => {
-		const res = await getMyRanking(req);
-		reply.send(res);
+		if (!userId) return reply.code(400).send({ message: 'Invalid userId' });
+
+		const data = await getUserRankingSummary(userId);
+		return reply.send({ data });
 	});
 }

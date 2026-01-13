@@ -19,6 +19,7 @@ export async function getOwnProfileService(userId: string) {
 	return {
 		id: user.id,
 		name: user.name,
+		createdAt: user.createdDate,
 		description: user.profile.description,
 		language: user.profile.language,
 		gender: user.profile.gender,
@@ -46,6 +47,7 @@ export async function getUserProfileService(id: string) {
 	return {
 		id: user.id,
 		name: user.name,
+		createdAt: user.createdDate,
 		description: user.profile.description,
 		language: user.profile.language,
 		gender: user.profile.gender,
