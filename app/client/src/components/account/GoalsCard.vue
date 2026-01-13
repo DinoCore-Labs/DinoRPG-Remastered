@@ -2,9 +2,9 @@
 	<div class="profil">
 		<img class="headProfil" :src="getImgURL('background', 'ugoals_crown')" alt="info_button" />
 		<h3>
-			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
-			{{ $t(`account.goals.name`) }}
-			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+			<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
+			{{ $t(`accountPage.goals.title`) }}
+			<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 		</h3>
 		<div class="userGoals">
 			<!--<div class="userGoals_points">{{ achievementsPoints + ' ' + $t(`account.goals.points`) }}</div>
@@ -59,10 +59,10 @@
 			</div>-->
 			<div class="userGoals_list">
 				<a id="statsLink" :class="tab === 1 ? 'active-link' : ''" @click="tab = 1">{{
-					$t('myAccount.twinoidgoals.linkStats')
+					$t('accountPage.goals.linkStats')
 				}}</a>
 				<a id="gainsLink" :class="tab === 2 ? 'active-link' : ''" @click="tab = 2">{{
-					$t('myAccount.twinoidgoals.linkGains')
+					$t('accountPage.goals.linkGains')
 				}}</a>
 				<!--<div style="width: 100%" class="cadrelist_goals drpg-scrollbar">
 					<table style="width: 100%" class="list_goals" v-if="tab === 1">
@@ -113,10 +113,10 @@
 			<template class="userGoals_help">
 				<Tippy theme="small" tag="a">
 					<a
-						><u>{{ $t(`myAccount.twinoidgoals.help.question`) }}</u></a
+						><u>{{ $t(`accountPage.goals.help.question`) }}</u></a
 					>
 					<template #content>
-						<p v-html="formatContent($t(`myAccount.twinoidgoals.help.response`))" />
+						<p v-html="formatContent($t(`accountPage.goals.help.response`))" />
 						<p></p>
 					</template>
 				</Tippy>

@@ -17,7 +17,7 @@ export async function getOwnProfileService(userId: string) {
 		: null;
 
 	return {
-		userId: user.id,
+		id: user.id,
 		name: user.name,
 		description: user.profile.description,
 		language: user.profile.language,

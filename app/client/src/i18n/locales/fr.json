@@ -91,7 +91,24 @@
 		"inscription": "Inscrit le",
 		"clan": "Clan :",
 		"completion": "Complétion",
-		"rewards": "Récompenses épiques"
+		"rewards": "Récompenses épiques",
+		"editAccount": "Modifier le profil",
+		"options": {
+			"title": "Options du compte",
+			"todo": "à venir...",
+			"reset": "Réinitialiser le compte",
+			"retour": "Retour"
+		},
+		"goals": {
+			"title": "Statistiques DinoRPG",
+			"linkStats": "Statistiques",
+			"linkGains": "Gains",
+			"help": {
+				"question": "Vous avez des questions sur les statistiques ?",
+				"response": "Ces compteurs augmentent en réalisant certaines actions sur DinoRPG. && **Vous gagnez des icônes, des titres et des points en franchissant certains paliers de compteurs.** && Les compteurs **dorés** représentent des gains rares ou difficiles à obtenir !"
+			},
+			"todo": "à venir..."
+		}
 	},
 	"userCard": {
 		"title": "Aller sur le profil DinoRPG de {user}"

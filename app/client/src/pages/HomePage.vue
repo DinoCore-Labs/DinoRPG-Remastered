@@ -4,7 +4,7 @@
 			<img class="homepage-banner" :src="getImgURL('background', 'background_alpha')" alt="DinoRPG" />
 			<div class="homepage-content">
 				<div class="homepage-menu">
-					<DZButton href="" @click="openAuthMenu">{{ $t('homepage.connexion') }}</DZButton>
+					<DZButton @click="openAuthMenu">{{ $t('homepage.connexion') }}</DZButton>
 					<DZButton href="#last-news" :disabled="true">{{ $t('homepage.news') }}</DZButton>
 				</div>
 				<Suspense>
