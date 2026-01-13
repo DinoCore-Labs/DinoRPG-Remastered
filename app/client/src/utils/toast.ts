@@ -6,65 +6,64 @@ interface ToastInstance {
 	dismiss: () => void;
 }
 
+// Le type attendu par l'overload "options"
+type ToastPropsWithMessage = ToastProps & { message: string };
+
+// options pour success/error/etc (sans message/type)
+type ToastOptions = Omit<ToastProps, 'message' | 'type'>;
+
 const MAX_TOASTS = 4;
 const activeToasts: ToastInstance[] = [];
 
 export const createToastPlugin = (options: ToastProps) => {
 	return {
 		install(app: App) {
-			// Install the original toast plugin
 			app.use(ToastPlugin, options);
 
-			// Get the original toast instance
-			const originalToast = app.config.globalProperties.$toast;
+			const originalToast = app.config.globalProperties.$toast as ToastPluginApi;
 
-			// Create a wrapper that tracks toasts
+			const open = (params: string | ToastPropsWithMessage) => {
+				if (activeToasts.length >= MAX_TOASTS) {
+					activeToasts.shift()?.dismiss();
+				}
+
+				// ✅ Narrowing pour satisfaire les overloads TS
+				const toastInstance =
+					typeof params === 'string'
+						? (originalToast.open(params) as ToastInstance)
+						: (originalToast.open(params) as ToastInstance);
+
+				activeToasts.push(toastInstance);
+
+				const originalDismiss = toastInstance.dismiss;
+				toastInstance.dismiss = () => {
+					const i = activeToasts.indexOf(toastInstance);
+					if (i !== -1) activeToasts.splice(i, 1);
+					originalDismiss.call(toastInstance);
+				};
+
+				return toastInstance;
+			};
+
 			const wrappedToast: ToastPluginApi = {
-				open: params => {
-					// If we have 4 toasts, dismiss the oldest one
-					if (activeToasts.length >= MAX_TOASTS) {
-						const oldestToast = activeToasts.shift();
-						oldestToast?.dismiss();
-					}
+				open: open as ToastPluginApi['open'],
 
-					// Open the new toast
-					const toastInstance = originalToast.open(params);
-					activeToasts.push(toastInstance);
+				success: (message, opts?: ToastOptions) => open({ message, type: 'success', ...(opts ?? {}) }),
 
-					// Remove from tracking when dismissed
-					const originalDismiss = toastInstance.dismiss;
-					toastInstance.dismiss = () => {
-						const index = activeToasts.indexOf(toastInstance);
-						if (index > -1) {
-							activeToasts.splice(index, 1);
-						}
-						originalDismiss.call(toastInstance);
-					};
+				error: (message, opts?: ToastOptions) => open({ message, type: 'error', ...(opts ?? {}) }),
 
-					return toastInstance;
-				},
-				success: (message, options) => {
-					return wrappedToast.open({ message, type: 'success', ...options });
-				},
-				error: (message, options) => {
-					return wrappedToast.open({ message, type: 'error', ...options });
-				},
-				info: (message, options) => {
-					return wrappedToast.open({ message, type: 'info', ...options });
-				},
-				warning: (message, options) => {
-					return wrappedToast.open({ message, type: 'warning', ...options });
-				},
-				default: (message, options) => {
-					return wrappedToast.open({ message, type: 'default', ...options });
-				},
+				info: (message, opts?: ToastOptions) => open({ message, type: 'info', ...(opts ?? {}) }),
+
+				warning: (message, opts?: ToastOptions) => open({ message, type: 'warning', ...(opts ?? {}) }),
+
+				default: (message, opts?: ToastOptions) => open({ message, type: 'default', ...(opts ?? {}) }),
+
 				clear: () => {
 					activeToasts.length = 0;
 					originalToast.clear();
 				}
 			};
 
-			// Replace the original $toast with our wrapper using defineProperty
 			Object.defineProperty(app.config.globalProperties, '$toast', {
 				get: () => wrappedToast,
 				configurable: true

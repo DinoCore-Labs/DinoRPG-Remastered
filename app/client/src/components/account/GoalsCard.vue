@@ -127,7 +127,7 @@
 
 <script lang="ts">
 //import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
-import { type PropType, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 //import { localStore } from '../../store/index.js';
 //import { Unlock } from '@drpg/core/models/goals/GoalsType';
 //import { getGoal, getUnlockedGoals } from '@drpg/core/utils/twinoidGoals';

@@ -1,5 +1,7 @@
 .v-toast {
 	display: flex;
+	flex-direction: column;
+	gap: 5px;
 	opacity: 1;
 	min-width: 250px; /* Set a default minimum width */
 	margin-left: -125px; /* Divide value of min-width by 2 */

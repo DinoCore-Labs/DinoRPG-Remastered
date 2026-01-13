@@ -34,7 +34,7 @@ app.use(router);
 app.use(
 	createToastPlugin({
 		position: 'bottom',
-		duration: 100000
+		duration: 50000
 	})
 );
 app.use(VueTippy, vueTippyProps);

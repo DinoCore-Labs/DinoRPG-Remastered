@@ -114,7 +114,7 @@ import DZButton from '../utils/DZButton.vue';
 //import { formatText } from '../../utils/formatText.js';
 import { formatDate } from '../../utils/formatDate.js';
 import DZUser from '../utils/DZUser.vue';
-import { type UserProfile } from '@dinorpg/core/models/user/UserProfile.js';
+import { type UserProfile } from '@dinorpg/core/models/user/userProfile.js';
 
 export default defineComponent({
 	name: 'Profile',
