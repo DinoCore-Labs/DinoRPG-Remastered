@@ -2,7 +2,10 @@ input,
 a {
 	border: none;
 	&.button {
-		display: block;
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		width: 145px;
 		height: 28px;
 		margin-top: 3px;
@@ -31,6 +34,14 @@ a {
 		background-image: url('../../assets/button/button_hover.webp');
 		color: white;
 		background-color: transparent;
+	}
+	&.back {
+		margin-left: 15px;
+		img {
+			position: absolute;
+			left: -15px;
+			top: 0;
+		}
 	}
 	&.bSmall {
 		width: 95px;

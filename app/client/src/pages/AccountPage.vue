@@ -64,7 +64,7 @@ export default defineComponent({
 		getImgURL,
 		async loadProfile() {
 			this.dataLoaded = false;
-			const routeId = this.$route.params.id;
+			const routeId = this.$route.params.id as string | undefined;
 			let profile: UserProfile;
 			if (routeId) {
 				profile = await UserService.getPublicProfile(routeId as string);
@@ -73,8 +73,8 @@ export default defineComponent({
 			}
 			this.profile = profile;
 			//console.log(profile);
-			this.isOwner = this.profile.userId === this.uStore.id;
-			//console.log(this.profile.userId);
+			this.isOwner = this.profile.id === this.uStore.id;
+			//console.log(this.profile.id);
 			//console.log(this.uStore.id);
 			//console.log(this.isOwner);
 			this.dataLoaded = true;

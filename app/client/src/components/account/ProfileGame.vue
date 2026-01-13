@@ -57,46 +57,46 @@
 			<div class="profilContent" v-if="!isEditOn">
 				<!--<div v-html="customText" class="contentTexte" />-->
 			</div>
-			<!--<textarea v-if="isEditOn" v-model="customTextEdit" class="editTexte" />
+			<!--<textarea v-if="isEditOn" v-model="customTextEdit" class="editTexte" />-->
 			<div class="buttonLand" v-if="isMyAccount()">
-				<a v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)" class="tinybutton">OK</a>
+				<DZButton @click="option = true">{{ $t(`accountPage.editAccount`) }}</DZButton>
+				<!--<a v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)" class="tinybutton">OK</a>
 				<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
-				<DZButton href="" @click="option = true">{{ $t(`myAccount.editAccount`) }}</DZButton>
-				<DZButton href="" v-if="hasPMI()">{{ $t(`myAccount.quest`) }}</DZButton>
-			</div>-->
+				<DZButton href="" v-if="hasPMI()">{{ $t(`myAccount.quest`) }}</DZButton>-->
+			</div>
 		</div>
 		<div class="profil" v-else>
 			<h3>
-				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
-				{{ $t(`myAccount.options.title`) }}
-				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+				<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
+				{{ $t(`accountPage.options.title`) }}
+				<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 			</h3>
 			<dl>
 				<dt>
-					{{ $t(`myAccount.options.todo`) }}
+					{{ $t(`accountPage.options.todo`) }}
 				</dt>
 				<dd></dd>
 				<dt>
-					{{ $t(`myAccount.options.todo`) }}
+					{{ $t(`accountPage.options.todo`) }}
 				</dt>
 				<dd></dd>
 				<dt>
-					{{ $t(`myAccount.options.todo`) }}
+					{{ $t(`accountPage.options.todo`) }}
 				</dt>
 				<dd></dd>
 				<dt>
-					{{ $t(`myAccount.options.todo`) }}
+					{{ $t(`accountPage.options.todo`) }}
 				</dt>
 				<dd></dd>
 				<dt>
-					{{ $t(`myAccount.options.todo`) }}
+					{{ $t(`accountPage.options.todo`) }}
 				</dt>
 				<dd></dd>
 			</dl>
-			<!--<div class="buttonLand" v-if="isMyAccount()">
-				<DZButton href="" @click="resetAccount()">{{ $t(`myAccount.options.reset`) }}</DZButton>
-				<DZButton href="" @click="option = false">{{ $t(`myAccount.options.retour`) }}</DZButton>
-			</div>-->
+			<div class="buttonLand" v-if="isMyAccount()">
+				<!--<DZButton href="" @click="resetAccount()">{{ $t(`myAccount.options.reset`) }}</DZButton>-->
+				<DZButton class="bSmall" back @click="option = false">{{ $t(`accountPage.options.retour`) }}</DZButton>
+			</div>
 		</div>
 	</transition>
 </template>
@@ -104,15 +104,16 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
 import { userStore } from '../../store/userStore.js';
-import eventBus from '../../events/index.js';
+//import eventBus from '../../events/index.js';
 //import { PlayerService } from '../../services/index.js';
-import { errorHandler } from '../../utils/errorHandler.js';
+//import { errorHandler } from '../../utils/errorHandler.js';
 //import { dinozStore, localStore, playerStore } from '../../store/index.js';
 //import { goTo } from '../../utils/goTo.js';
-import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
+//import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import DZButton from '../utils/DZButton.vue';
-import { formatText } from '../../utils/formatText.js';
+//import { formatText } from '../../utils/formatText.js';
 import DZUser from '../utils/DZUser.vue';
+import { type UserProfile } from '@dinorpg/core/models/user/UserProfile.js';
 
 export default defineComponent({
 	name: 'Profile',
@@ -143,9 +144,16 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		/*hasPlume(): boolean {
+		isMyAccount(): boolean {
+			return this.uStore.id === this.profile.id;
+		} /*,
+		hasPlume(): boolean {
 			return this.accountData.epicRewards.includes(Reward.PLUME);
 		},
+		hasPMI(): boolean {
+			return this.accountData.epicRewards.includes(Reward.PMI);
+		}*/
+		/*
 		async resetAccount() {
 			const res: boolean = await this.$confirm({
 				message: this.$t('popup.confirm'),
@@ -167,26 +175,6 @@ export default defineComponent({
 				}
 			}
 			EventBus.emit('isLoading', true);
-		},
-		hasPMI(): boolean {
-			return this.accountData.epicRewards.includes(Reward.PMI);
-		},
-		isMyAccount(): boolean {
-			return this.playerStore.getPlayerId === (this.$route.params.id as string);
-		},
-		async goLB(): Promise<void> {
-			EventBus.emit('isLoading', true);
-			try {
-				const irma = await PlayerService.getLBRewards();
-				EventBus.emit('isLoading', false);
-				this.$toast.open({
-					message: formatText(this.$t(`toast.labrute`, { quantity: irma.quantity }, irma.quantity)),
-					type: 'info'
-				});
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
-				return;
-			}
 		},
 		async setCustomText(message: string): Promise<void> {
 			EventBus.emit('isLoading', true);
@@ -240,6 +228,7 @@ export default defineComponent({
 	background-position-y: top, bottom;
 	width: 305px;
 	margin-bottom: 10px;
+	text-shadow: 1px 1px 1px #383522;
 	h3 {
 		display: flex;
 		justify-content: space-evenly;
@@ -260,7 +249,6 @@ export default defineComponent({
 		}
 	}
 	dl {
-		// position: absolute;
 		width: 245px;
 		margin-left: 30px;
 		margin-top: 10px;

@@ -3,7 +3,7 @@ import { Reward } from '../rewards/rewardList.js';
 import { Gender } from './userGender.js';
 
 export interface UserProfile {
-	userId: string;
+	id: string;
 	name: string;
 	avatar: string | null; // Base64 depuis le backend
 	avatarType: string | null; // ex: "image/webp"
