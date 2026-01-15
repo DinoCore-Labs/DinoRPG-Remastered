@@ -6,7 +6,13 @@ export async function getOwnProfileService(userId: string) {
 		where: { id: userId },
 		include: {
 			profile: true,
-			rewards: true
+			rewards: true,
+			statsTracking: {
+				select: {
+					stat: true,
+					quantity: true
+				}
+			}
 		}
 	});
 
@@ -25,7 +31,8 @@ export async function getOwnProfileService(userId: string) {
 		gender: user.profile.gender,
 		age: user.profile.age,
 		avatar,
-		rewards: user.rewards.map(r => r.rewardId)
+		rewards: user.rewards.map(r => r.rewardId),
+		stats: user.statsTracking.map(s => ({ stat: s.stat, quantity: s.quantity }))
 	};
 }
 
@@ -34,7 +41,13 @@ export async function getUserProfileService(id: string) {
 		where: { id },
 		include: {
 			profile: true,
-			rewards: true
+			rewards: true,
+			statsTracking: {
+				select: {
+					stat: true,
+					quantity: true
+				}
+			}
 		}
 	});
 
@@ -53,7 +66,8 @@ export async function getUserProfileService(id: string) {
 		gender: user.profile.gender,
 		age: user.profile.age,
 		avatar,
-		rewards: user.rewards.map(r => r.rewardId)
+		rewards: user.rewards.map(r => r.rewardId),
+		stats: user.statsTracking.map(s => ({ stat: s.stat, quantity: s.quantity }))
 	};
 }
 

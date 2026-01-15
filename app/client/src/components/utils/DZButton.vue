@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-type ButtonSize = 'normal' | 'small' | 'big'; // adapte à tes classes
+type ButtonSize = 'normal' | 'small' | 'big';
 
 const props = withDefaults(
 	defineProps<{

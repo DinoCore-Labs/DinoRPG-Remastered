@@ -161,7 +161,8 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   role: 'role',
   createdDate: 'createdDate',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  lastLogin: 'lastLogin'
 };
 
 exports.Prisma.UserProfileScalarFieldEnum = {
@@ -178,6 +179,13 @@ exports.Prisma.UserProfileScalarFieldEnum = {
 exports.Prisma.UserRewardsScalarFieldEnum = {
   id: 'id',
   rewardId: 'rewardId',
+  userId: 'userId'
+};
+
+exports.Prisma.UserTrackingScalarFieldEnum = {
+  id: 'id',
+  stat: 'stat',
+  quantity: 'quantity',
   userId: 'userId'
 };
 
@@ -233,6 +241,7 @@ exports.Prisma.ModelName = {
   User: 'User',
   UserProfile: 'UserProfile',
   UserRewards: 'UserRewards',
+  UserTracking: 'UserTracking',
   UserWallet: 'UserWallet'
 };
 
