@@ -1,3 +1,4 @@
+import { Language } from '@dinorpg/core/models/config/language.js';
 import type { StateLocalStore } from '@dinorpg/core/models/store/stateLocalStore.js';
 import { defineStore } from 'pinia';
 
@@ -9,7 +10,7 @@ export const localStore = defineStore('localStore', {
 		getLanguage: (state: StateLocalStore) => state.langue
 	},
 	actions: {
-		setLanguage(langue: string): void {
+		setLanguage(langue: Language): void {
 			this.langue = langue;
 		}
 	},

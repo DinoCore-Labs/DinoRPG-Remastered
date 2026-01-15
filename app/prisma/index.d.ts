@@ -44,6 +44,11 @@ export type UserProfile = $Result.DefaultSelection<Prisma.$UserProfilePayload>
  */
 export type UserRewards = $Result.DefaultSelection<Prisma.$UserRewardsPayload>
 /**
+ * Model UserTracking
+ * 
+ */
+export type UserTracking = $Result.DefaultSelection<Prisma.$UserTrackingPayload>
+/**
  * Model UserWallet
  * 
  */
@@ -282,6 +287,16 @@ export class PrismaClient<
     * ```
     */
   get userRewards(): Prisma.UserRewardsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userTracking`: Exposes CRUD operations for the **UserTracking** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserTrackings
+    * const userTrackings = await prisma.userTracking.findMany()
+    * ```
+    */
+  get userTracking(): Prisma.UserTrackingDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.userWallet`: Exposes CRUD operations for the **UserWallet** model.
@@ -732,6 +747,7 @@ export namespace Prisma {
     User: 'User',
     UserProfile: 'UserProfile',
     UserRewards: 'UserRewards',
+    UserTracking: 'UserTracking',
     UserWallet: 'UserWallet'
   };
 
@@ -748,7 +764,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userProfile" | "userRewards" | "userWallet"
+      modelProps: "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1196,6 +1212,80 @@ export namespace Prisma {
           }
         }
       }
+      UserTracking: {
+        payload: Prisma.$UserTrackingPayload<ExtArgs>
+        fields: Prisma.UserTrackingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserTrackingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTrackingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserTrackingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTrackingPayload>
+          }
+          findFirst: {
+            args: Prisma.UserTrackingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTrackingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserTrackingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTrackingPayload>
+          }
+          findMany: {
+            args: Prisma.UserTrackingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTrackingPayload>[]
+          }
+          create: {
+            args: Prisma.UserTrackingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTrackingPayload>
+          }
+          createMany: {
+            args: Prisma.UserTrackingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserTrackingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTrackingPayload>[]
+          }
+          delete: {
+            args: Prisma.UserTrackingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTrackingPayload>
+          }
+          update: {
+            args: Prisma.UserTrackingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTrackingPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserTrackingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserTrackingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserTrackingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTrackingPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserTrackingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTrackingPayload>
+          }
+          aggregate: {
+            args: Prisma.UserTrackingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserTracking>
+          }
+          groupBy: {
+            args: Prisma.UserTrackingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserTrackingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserTrackingCountArgs<ExtArgs>
+            result: $Utils.Optional<UserTrackingCountAggregateOutputType> | number
+          }
+        }
+      }
       UserWallet: {
         payload: Prisma.$UserWalletPayload<ExtArgs>
         fields: Prisma.UserWalletFieldRefs
@@ -1368,6 +1458,7 @@ export namespace Prisma {
     user?: UserOmit
     userProfile?: UserProfileOmit
     userRewards?: UserRewardsOmit
+    userTracking?: UserTrackingOmit
     userWallet?: UserWalletOmit
   }
 
@@ -1450,11 +1541,13 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     rewards: number
+    statsTracking: number
     wallets: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     rewards?: boolean | UserCountOutputTypeCountRewardsArgs
+    statsTracking?: boolean | UserCountOutputTypeCountStatsTrackingArgs
     wallets?: boolean | UserCountOutputTypeCountWalletsArgs
   }
 
@@ -1474,6 +1567,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountRewardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserRewardsWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountStatsTrackingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserTrackingWhereInput
   }
 
   /**
@@ -4788,6 +4888,7 @@ export namespace Prisma {
     role: $Enums.Role | null
     createdDate: Date | null
     updatedAt: Date | null
+    lastLogin: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -4797,6 +4898,7 @@ export namespace Prisma {
     role: $Enums.Role | null
     createdDate: Date | null
     updatedAt: Date | null
+    lastLogin: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -4806,6 +4908,7 @@ export namespace Prisma {
     role: number
     createdDate: number
     updatedAt: number
+    lastLogin: number
     _all: number
   }
 
@@ -4817,6 +4920,7 @@ export namespace Prisma {
     role?: true
     createdDate?: true
     updatedAt?: true
+    lastLogin?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -4826,6 +4930,7 @@ export namespace Prisma {
     role?: true
     createdDate?: true
     updatedAt?: true
+    lastLogin?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -4835,6 +4940,7 @@ export namespace Prisma {
     role?: true
     createdDate?: true
     updatedAt?: true
+    lastLogin?: true
     _all?: true
   }
 
@@ -4917,6 +5023,7 @@ export namespace Prisma {
     role: $Enums.Role
     createdDate: Date
     updatedAt: Date | null
+    lastLogin: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -4943,9 +5050,11 @@ export namespace Prisma {
     role?: boolean
     createdDate?: boolean
     updatedAt?: boolean
+    lastLogin?: boolean
     profile?: boolean | User$profileArgs<ExtArgs>
     ranking?: boolean | User$rankingArgs<ExtArgs>
     rewards?: boolean | User$rewardsArgs<ExtArgs>
+    statsTracking?: boolean | User$statsTrackingArgs<ExtArgs>
     wallets?: boolean | User$walletsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -4957,6 +5066,7 @@ export namespace Prisma {
     role?: boolean
     createdDate?: boolean
     updatedAt?: boolean
+    lastLogin?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4966,6 +5076,7 @@ export namespace Prisma {
     role?: boolean
     createdDate?: boolean
     updatedAt?: boolean
+    lastLogin?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -4975,13 +5086,15 @@ export namespace Prisma {
     role?: boolean
     createdDate?: boolean
     updatedAt?: boolean
+    lastLogin?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "role" | "createdDate" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "role" | "createdDate" | "updatedAt" | "lastLogin", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     profile?: boolean | User$profileArgs<ExtArgs>
     ranking?: boolean | User$rankingArgs<ExtArgs>
     rewards?: boolean | User$rewardsArgs<ExtArgs>
+    statsTracking?: boolean | User$statsTrackingArgs<ExtArgs>
     wallets?: boolean | User$walletsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -4994,6 +5107,7 @@ export namespace Prisma {
       profile: Prisma.$UserProfilePayload<ExtArgs> | null
       ranking: Prisma.$RankingPayload<ExtArgs> | null
       rewards: Prisma.$UserRewardsPayload<ExtArgs>[]
+      statsTracking: Prisma.$UserTrackingPayload<ExtArgs>[]
       wallets: Prisma.$UserWalletPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5003,6 +5117,7 @@ export namespace Prisma {
       role: $Enums.Role
       createdDate: Date
       updatedAt: Date | null
+      lastLogin: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -5400,6 +5515,7 @@ export namespace Prisma {
     profile<T extends User$profileArgs<ExtArgs> = {}>(args?: Subset<T, User$profileArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     ranking<T extends User$rankingArgs<ExtArgs> = {}>(args?: Subset<T, User$rankingArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     rewards<T extends User$rewardsArgs<ExtArgs> = {}>(args?: Subset<T, User$rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRewardsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    statsTracking<T extends User$statsTrackingArgs<ExtArgs> = {}>(args?: Subset<T, User$statsTrackingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     wallets<T extends User$walletsArgs<ExtArgs> = {}>(args?: Subset<T, User$walletsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserWalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5436,6 +5552,7 @@ export namespace Prisma {
     readonly role: FieldRef<"User", 'Role'>
     readonly createdDate: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly lastLogin: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -5892,6 +6009,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserRewardsScalarFieldEnum | UserRewardsScalarFieldEnum[]
+  }
+
+  /**
+   * User.statsTracking
+   */
+  export type User$statsTrackingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingInclude<ExtArgs> | null
+    where?: UserTrackingWhereInput
+    orderBy?: UserTrackingOrderByWithRelationInput | UserTrackingOrderByWithRelationInput[]
+    cursor?: UserTrackingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserTrackingScalarFieldEnum | UserTrackingScalarFieldEnum[]
   }
 
   /**
@@ -8176,6 +8317,1098 @@ export namespace Prisma {
 
 
   /**
+   * Model UserTracking
+   */
+
+  export type AggregateUserTracking = {
+    _count: UserTrackingCountAggregateOutputType | null
+    _avg: UserTrackingAvgAggregateOutputType | null
+    _sum: UserTrackingSumAggregateOutputType | null
+    _min: UserTrackingMinAggregateOutputType | null
+    _max: UserTrackingMaxAggregateOutputType | null
+  }
+
+  export type UserTrackingAvgAggregateOutputType = {
+    id: number | null
+    quantity: number | null
+  }
+
+  export type UserTrackingSumAggregateOutputType = {
+    id: number | null
+    quantity: number | null
+  }
+
+  export type UserTrackingMinAggregateOutputType = {
+    id: number | null
+    stat: string | null
+    quantity: number | null
+    userId: string | null
+  }
+
+  export type UserTrackingMaxAggregateOutputType = {
+    id: number | null
+    stat: string | null
+    quantity: number | null
+    userId: string | null
+  }
+
+  export type UserTrackingCountAggregateOutputType = {
+    id: number
+    stat: number
+    quantity: number
+    userId: number
+    _all: number
+  }
+
+
+  export type UserTrackingAvgAggregateInputType = {
+    id?: true
+    quantity?: true
+  }
+
+  export type UserTrackingSumAggregateInputType = {
+    id?: true
+    quantity?: true
+  }
+
+  export type UserTrackingMinAggregateInputType = {
+    id?: true
+    stat?: true
+    quantity?: true
+    userId?: true
+  }
+
+  export type UserTrackingMaxAggregateInputType = {
+    id?: true
+    stat?: true
+    quantity?: true
+    userId?: true
+  }
+
+  export type UserTrackingCountAggregateInputType = {
+    id?: true
+    stat?: true
+    quantity?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type UserTrackingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserTracking to aggregate.
+     */
+    where?: UserTrackingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserTrackings to fetch.
+     */
+    orderBy?: UserTrackingOrderByWithRelationInput | UserTrackingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserTrackingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserTrackings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserTrackings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserTrackings
+    **/
+    _count?: true | UserTrackingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserTrackingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserTrackingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserTrackingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserTrackingMaxAggregateInputType
+  }
+
+  export type GetUserTrackingAggregateType<T extends UserTrackingAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserTracking]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserTracking[P]>
+      : GetScalarType<T[P], AggregateUserTracking[P]>
+  }
+
+
+
+
+  export type UserTrackingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserTrackingWhereInput
+    orderBy?: UserTrackingOrderByWithAggregationInput | UserTrackingOrderByWithAggregationInput[]
+    by: UserTrackingScalarFieldEnum[] | UserTrackingScalarFieldEnum
+    having?: UserTrackingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserTrackingCountAggregateInputType | true
+    _avg?: UserTrackingAvgAggregateInputType
+    _sum?: UserTrackingSumAggregateInputType
+    _min?: UserTrackingMinAggregateInputType
+    _max?: UserTrackingMaxAggregateInputType
+  }
+
+  export type UserTrackingGroupByOutputType = {
+    id: number
+    stat: string
+    quantity: number
+    userId: string
+    _count: UserTrackingCountAggregateOutputType | null
+    _avg: UserTrackingAvgAggregateOutputType | null
+    _sum: UserTrackingSumAggregateOutputType | null
+    _min: UserTrackingMinAggregateOutputType | null
+    _max: UserTrackingMaxAggregateOutputType | null
+  }
+
+  type GetUserTrackingGroupByPayload<T extends UserTrackingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserTrackingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserTrackingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserTrackingGroupByOutputType[P]>
+            : GetScalarType<T[P], UserTrackingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserTrackingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    stat?: boolean
+    quantity?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userTracking"]>
+
+  export type UserTrackingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    stat?: boolean
+    quantity?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userTracking"]>
+
+  export type UserTrackingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    stat?: boolean
+    quantity?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userTracking"]>
+
+  export type UserTrackingSelectScalar = {
+    id?: boolean
+    stat?: boolean
+    quantity?: boolean
+    userId?: boolean
+  }
+
+  export type UserTrackingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "stat" | "quantity" | "userId", ExtArgs["result"]["userTracking"]>
+  export type UserTrackingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserTrackingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserTrackingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserTrackingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserTracking"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      stat: string
+      quantity: number
+      userId: string
+    }, ExtArgs["result"]["userTracking"]>
+    composites: {}
+  }
+
+  type UserTrackingGetPayload<S extends boolean | null | undefined | UserTrackingDefaultArgs> = $Result.GetResult<Prisma.$UserTrackingPayload, S>
+
+  type UserTrackingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserTrackingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: UserTrackingCountAggregateInputType | true
+    }
+
+  export interface UserTrackingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserTracking'], meta: { name: 'UserTracking' } }
+    /**
+     * Find zero or one UserTracking that matches the filter.
+     * @param {UserTrackingFindUniqueArgs} args - Arguments to find a UserTracking
+     * @example
+     * // Get one UserTracking
+     * const userTracking = await prisma.userTracking.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserTrackingFindUniqueArgs>(args: SelectSubset<T, UserTrackingFindUniqueArgs<ExtArgs>>): Prisma__UserTrackingClient<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserTracking that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserTrackingFindUniqueOrThrowArgs} args - Arguments to find a UserTracking
+     * @example
+     * // Get one UserTracking
+     * const userTracking = await prisma.userTracking.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserTrackingFindUniqueOrThrowArgs>(args: SelectSubset<T, UserTrackingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserTrackingClient<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserTracking that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTrackingFindFirstArgs} args - Arguments to find a UserTracking
+     * @example
+     * // Get one UserTracking
+     * const userTracking = await prisma.userTracking.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserTrackingFindFirstArgs>(args?: SelectSubset<T, UserTrackingFindFirstArgs<ExtArgs>>): Prisma__UserTrackingClient<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserTracking that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTrackingFindFirstOrThrowArgs} args - Arguments to find a UserTracking
+     * @example
+     * // Get one UserTracking
+     * const userTracking = await prisma.userTracking.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserTrackingFindFirstOrThrowArgs>(args?: SelectSubset<T, UserTrackingFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserTrackingClient<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserTrackings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTrackingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserTrackings
+     * const userTrackings = await prisma.userTracking.findMany()
+     * 
+     * // Get first 10 UserTrackings
+     * const userTrackings = await prisma.userTracking.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userTrackingWithIdOnly = await prisma.userTracking.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserTrackingFindManyArgs>(args?: SelectSubset<T, UserTrackingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserTracking.
+     * @param {UserTrackingCreateArgs} args - Arguments to create a UserTracking.
+     * @example
+     * // Create one UserTracking
+     * const UserTracking = await prisma.userTracking.create({
+     *   data: {
+     *     // ... data to create a UserTracking
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserTrackingCreateArgs>(args: SelectSubset<T, UserTrackingCreateArgs<ExtArgs>>): Prisma__UserTrackingClient<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserTrackings.
+     * @param {UserTrackingCreateManyArgs} args - Arguments to create many UserTrackings.
+     * @example
+     * // Create many UserTrackings
+     * const userTracking = await prisma.userTracking.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserTrackingCreateManyArgs>(args?: SelectSubset<T, UserTrackingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserTrackings and returns the data saved in the database.
+     * @param {UserTrackingCreateManyAndReturnArgs} args - Arguments to create many UserTrackings.
+     * @example
+     * // Create many UserTrackings
+     * const userTracking = await prisma.userTracking.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserTrackings and only return the `id`
+     * const userTrackingWithIdOnly = await prisma.userTracking.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserTrackingCreateManyAndReturnArgs>(args?: SelectSubset<T, UserTrackingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserTracking.
+     * @param {UserTrackingDeleteArgs} args - Arguments to delete one UserTracking.
+     * @example
+     * // Delete one UserTracking
+     * const UserTracking = await prisma.userTracking.delete({
+     *   where: {
+     *     // ... filter to delete one UserTracking
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserTrackingDeleteArgs>(args: SelectSubset<T, UserTrackingDeleteArgs<ExtArgs>>): Prisma__UserTrackingClient<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserTracking.
+     * @param {UserTrackingUpdateArgs} args - Arguments to update one UserTracking.
+     * @example
+     * // Update one UserTracking
+     * const userTracking = await prisma.userTracking.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserTrackingUpdateArgs>(args: SelectSubset<T, UserTrackingUpdateArgs<ExtArgs>>): Prisma__UserTrackingClient<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserTrackings.
+     * @param {UserTrackingDeleteManyArgs} args - Arguments to filter UserTrackings to delete.
+     * @example
+     * // Delete a few UserTrackings
+     * const { count } = await prisma.userTracking.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserTrackingDeleteManyArgs>(args?: SelectSubset<T, UserTrackingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserTrackings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTrackingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserTrackings
+     * const userTracking = await prisma.userTracking.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserTrackingUpdateManyArgs>(args: SelectSubset<T, UserTrackingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserTrackings and returns the data updated in the database.
+     * @param {UserTrackingUpdateManyAndReturnArgs} args - Arguments to update many UserTrackings.
+     * @example
+     * // Update many UserTrackings
+     * const userTracking = await prisma.userTracking.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserTrackings and only return the `id`
+     * const userTrackingWithIdOnly = await prisma.userTracking.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserTrackingUpdateManyAndReturnArgs>(args: SelectSubset<T, UserTrackingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserTracking.
+     * @param {UserTrackingUpsertArgs} args - Arguments to update or create a UserTracking.
+     * @example
+     * // Update or create a UserTracking
+     * const userTracking = await prisma.userTracking.upsert({
+     *   create: {
+     *     // ... data to create a UserTracking
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserTracking we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserTrackingUpsertArgs>(args: SelectSubset<T, UserTrackingUpsertArgs<ExtArgs>>): Prisma__UserTrackingClient<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserTrackings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTrackingCountArgs} args - Arguments to filter UserTrackings to count.
+     * @example
+     * // Count the number of UserTrackings
+     * const count = await prisma.userTracking.count({
+     *   where: {
+     *     // ... the filter for the UserTrackings we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserTrackingCountArgs>(
+      args?: Subset<T, UserTrackingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserTrackingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserTracking.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTrackingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserTrackingAggregateArgs>(args: Subset<T, UserTrackingAggregateArgs>): Prisma.PrismaPromise<GetUserTrackingAggregateType<T>>
+
+    /**
+     * Group by UserTracking.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTrackingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserTrackingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserTrackingGroupByArgs['orderBy'] }
+        : { orderBy?: UserTrackingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserTrackingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserTrackingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserTracking model
+   */
+  readonly fields: UserTrackingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserTracking.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserTrackingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserTracking model
+   */
+  interface UserTrackingFieldRefs {
+    readonly id: FieldRef<"UserTracking", 'Int'>
+    readonly stat: FieldRef<"UserTracking", 'String'>
+    readonly quantity: FieldRef<"UserTracking", 'Int'>
+    readonly userId: FieldRef<"UserTracking", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserTracking findUnique
+   */
+  export type UserTrackingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingInclude<ExtArgs> | null
+    /**
+     * Filter, which UserTracking to fetch.
+     */
+    where: UserTrackingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserTracking findUniqueOrThrow
+   */
+  export type UserTrackingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingInclude<ExtArgs> | null
+    /**
+     * Filter, which UserTracking to fetch.
+     */
+    where: UserTrackingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserTracking findFirst
+   */
+  export type UserTrackingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingInclude<ExtArgs> | null
+    /**
+     * Filter, which UserTracking to fetch.
+     */
+    where?: UserTrackingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserTrackings to fetch.
+     */
+    orderBy?: UserTrackingOrderByWithRelationInput | UserTrackingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserTrackings.
+     */
+    cursor?: UserTrackingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserTrackings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserTrackings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserTrackings.
+     */
+    distinct?: UserTrackingScalarFieldEnum | UserTrackingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserTracking findFirstOrThrow
+   */
+  export type UserTrackingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingInclude<ExtArgs> | null
+    /**
+     * Filter, which UserTracking to fetch.
+     */
+    where?: UserTrackingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserTrackings to fetch.
+     */
+    orderBy?: UserTrackingOrderByWithRelationInput | UserTrackingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserTrackings.
+     */
+    cursor?: UserTrackingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserTrackings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserTrackings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserTrackings.
+     */
+    distinct?: UserTrackingScalarFieldEnum | UserTrackingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserTracking findMany
+   */
+  export type UserTrackingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingInclude<ExtArgs> | null
+    /**
+     * Filter, which UserTrackings to fetch.
+     */
+    where?: UserTrackingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserTrackings to fetch.
+     */
+    orderBy?: UserTrackingOrderByWithRelationInput | UserTrackingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserTrackings.
+     */
+    cursor?: UserTrackingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserTrackings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserTrackings.
+     */
+    skip?: number
+    distinct?: UserTrackingScalarFieldEnum | UserTrackingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserTracking create
+   */
+  export type UserTrackingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserTracking.
+     */
+    data: XOR<UserTrackingCreateInput, UserTrackingUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserTracking createMany
+   */
+  export type UserTrackingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserTrackings.
+     */
+    data: UserTrackingCreateManyInput | UserTrackingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserTracking createManyAndReturn
+   */
+  export type UserTrackingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserTrackings.
+     */
+    data: UserTrackingCreateManyInput | UserTrackingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserTracking update
+   */
+  export type UserTrackingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserTracking.
+     */
+    data: XOR<UserTrackingUpdateInput, UserTrackingUncheckedUpdateInput>
+    /**
+     * Choose, which UserTracking to update.
+     */
+    where: UserTrackingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserTracking updateMany
+   */
+  export type UserTrackingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserTrackings.
+     */
+    data: XOR<UserTrackingUpdateManyMutationInput, UserTrackingUncheckedUpdateManyInput>
+    /**
+     * Filter which UserTrackings to update
+     */
+    where?: UserTrackingWhereInput
+    /**
+     * Limit how many UserTrackings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserTracking updateManyAndReturn
+   */
+  export type UserTrackingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * The data used to update UserTrackings.
+     */
+    data: XOR<UserTrackingUpdateManyMutationInput, UserTrackingUncheckedUpdateManyInput>
+    /**
+     * Filter which UserTrackings to update
+     */
+    where?: UserTrackingWhereInput
+    /**
+     * Limit how many UserTrackings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserTracking upsert
+   */
+  export type UserTrackingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserTracking to update in case it exists.
+     */
+    where: UserTrackingWhereUniqueInput
+    /**
+     * In case the UserTracking found by the `where` argument doesn't exist, create a new UserTracking with this data.
+     */
+    create: XOR<UserTrackingCreateInput, UserTrackingUncheckedCreateInput>
+    /**
+     * In case the UserTracking was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserTrackingUpdateInput, UserTrackingUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserTracking delete
+   */
+  export type UserTrackingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingInclude<ExtArgs> | null
+    /**
+     * Filter which UserTracking to delete.
+     */
+    where: UserTrackingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserTracking deleteMany
+   */
+  export type UserTrackingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserTrackings to delete
+     */
+    where?: UserTrackingWhereInput
+    /**
+     * Limit how many UserTrackings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserTracking without action
+   */
+  export type UserTrackingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTracking
+     */
+    select?: UserTrackingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTracking
+     */
+    omit?: UserTrackingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTrackingInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model UserWallet
    */
 
@@ -9330,7 +10563,8 @@ export namespace Prisma {
     password: 'password',
     role: 'role',
     createdDate: 'createdDate',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    lastLogin: 'lastLogin'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -9357,6 +10591,16 @@ export namespace Prisma {
   };
 
   export type UserRewardsScalarFieldEnum = (typeof UserRewardsScalarFieldEnum)[keyof typeof UserRewardsScalarFieldEnum]
+
+
+  export const UserTrackingScalarFieldEnum: {
+    id: 'id',
+    stat: 'stat',
+    quantity: 'quantity',
+    userId: 'userId'
+  };
+
+  export type UserTrackingScalarFieldEnum = (typeof UserTrackingScalarFieldEnum)[keyof typeof UserTrackingScalarFieldEnum]
 
 
   export const UserWalletScalarFieldEnum: {
@@ -9734,9 +10978,11 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdDate?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    lastLogin?: DateTimeFilter<"User"> | Date | string
     profile?: XOR<UserProfileNullableScalarRelationFilter, UserProfileWhereInput> | null
     ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
     rewards?: UserRewardsListRelationFilter
+    statsTracking?: UserTrackingListRelationFilter
     wallets?: UserWalletListRelationFilter
   }
 
@@ -9747,9 +10993,11 @@ export namespace Prisma {
     role?: SortOrder
     createdDate?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
+    lastLogin?: SortOrder
     profile?: UserProfileOrderByWithRelationInput
     ranking?: RankingOrderByWithRelationInput
     rewards?: UserRewardsOrderByRelationAggregateInput
+    statsTracking?: UserTrackingOrderByRelationAggregateInput
     wallets?: UserWalletOrderByRelationAggregateInput
   }
 
@@ -9763,9 +11011,11 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdDate?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    lastLogin?: DateTimeFilter<"User"> | Date | string
     profile?: XOR<UserProfileNullableScalarRelationFilter, UserProfileWhereInput> | null
     ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
     rewards?: UserRewardsListRelationFilter
+    statsTracking?: UserTrackingListRelationFilter
     wallets?: UserWalletListRelationFilter
   }, "id" | "name">
 
@@ -9776,6 +11026,7 @@ export namespace Prisma {
     role?: SortOrder
     createdDate?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
+    lastLogin?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -9791,6 +11042,7 @@ export namespace Prisma {
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     createdDate?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    lastLogin?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
   export type UserProfileWhereInput = {
@@ -9911,6 +11163,59 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"UserRewards"> | number
     rewardId?: IntWithAggregatesFilter<"UserRewards"> | number
     userId?: StringNullableWithAggregatesFilter<"UserRewards"> | string | null
+  }
+
+  export type UserTrackingWhereInput = {
+    AND?: UserTrackingWhereInput | UserTrackingWhereInput[]
+    OR?: UserTrackingWhereInput[]
+    NOT?: UserTrackingWhereInput | UserTrackingWhereInput[]
+    id?: IntFilter<"UserTracking"> | number
+    stat?: StringFilter<"UserTracking"> | string
+    quantity?: IntFilter<"UserTracking"> | number
+    userId?: StringFilter<"UserTracking"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserTrackingOrderByWithRelationInput = {
+    id?: SortOrder
+    stat?: SortOrder
+    quantity?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserTrackingWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId?: string
+    stat_userId?: UserTrackingStatUserIdCompoundUniqueInput
+    AND?: UserTrackingWhereInput | UserTrackingWhereInput[]
+    OR?: UserTrackingWhereInput[]
+    NOT?: UserTrackingWhereInput | UserTrackingWhereInput[]
+    stat?: StringFilter<"UserTracking"> | string
+    quantity?: IntFilter<"UserTracking"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId" | "stat_userId">
+
+  export type UserTrackingOrderByWithAggregationInput = {
+    id?: SortOrder
+    stat?: SortOrder
+    quantity?: SortOrder
+    userId?: SortOrder
+    _count?: UserTrackingCountOrderByAggregateInput
+    _avg?: UserTrackingAvgOrderByAggregateInput
+    _max?: UserTrackingMaxOrderByAggregateInput
+    _min?: UserTrackingMinOrderByAggregateInput
+    _sum?: UserTrackingSumOrderByAggregateInput
+  }
+
+  export type UserTrackingScalarWhereWithAggregatesInput = {
+    AND?: UserTrackingScalarWhereWithAggregatesInput | UserTrackingScalarWhereWithAggregatesInput[]
+    OR?: UserTrackingScalarWhereWithAggregatesInput[]
+    NOT?: UserTrackingScalarWhereWithAggregatesInput | UserTrackingScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserTracking"> | number
+    stat?: StringWithAggregatesFilter<"UserTracking"> | string
+    quantity?: IntWithAggregatesFilter<"UserTracking"> | number
+    userId?: StringWithAggregatesFilter<"UserTracking"> | string
   }
 
   export type UserWalletWhereInput = {
@@ -10173,9 +11478,11 @@ export namespace Prisma {
     role?: $Enums.Role
     createdDate?: Date | string
     updatedAt?: Date | string | null
+    lastLogin?: Date | string
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
   }
 
@@ -10186,9 +11493,11 @@ export namespace Prisma {
     role?: $Enums.Role
     createdDate?: Date | string
     updatedAt?: Date | string | null
+    lastLogin?: Date | string
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -10199,9 +11508,11 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
   }
 
@@ -10212,9 +11523,11 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -10225,6 +11538,7 @@ export namespace Prisma {
     role?: $Enums.Role
     createdDate?: Date | string
     updatedAt?: Date | string | null
+    lastLogin?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -10234,6 +11548,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -10243,6 +11558,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserProfileCreateInput = {
@@ -10357,6 +11673,51 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     rewardId?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserTrackingCreateInput = {
+    stat: string
+    quantity?: number
+    user: UserCreateNestedOneWithoutStatsTrackingInput
+  }
+
+  export type UserTrackingUncheckedCreateInput = {
+    id?: number
+    stat: string
+    quantity?: number
+    userId: string
+  }
+
+  export type UserTrackingUpdateInput = {
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutStatsTrackingNestedInput
+  }
+
+  export type UserTrackingUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserTrackingCreateManyInput = {
+    id?: number
+    stat: string
+    quantity?: number
+    userId: string
+  }
+
+  export type UserTrackingUpdateManyMutationInput = {
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserTrackingUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserWalletCreateInput = {
@@ -10669,6 +12030,12 @@ export namespace Prisma {
     none?: UserRewardsWhereInput
   }
 
+  export type UserTrackingListRelationFilter = {
+    every?: UserTrackingWhereInput
+    some?: UserTrackingWhereInput
+    none?: UserTrackingWhereInput
+  }
+
   export type UserWalletListRelationFilter = {
     every?: UserWalletWhereInput
     some?: UserWalletWhereInput
@@ -10684,6 +12051,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type UserTrackingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserWalletOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -10695,6 +12066,7 @@ export namespace Prisma {
     role?: SortOrder
     createdDate?: SortOrder
     updatedAt?: SortOrder
+    lastLogin?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -10704,6 +12076,7 @@ export namespace Prisma {
     role?: SortOrder
     createdDate?: SortOrder
     updatedAt?: SortOrder
+    lastLogin?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -10713,6 +12086,7 @@ export namespace Prisma {
     role?: SortOrder
     createdDate?: SortOrder
     updatedAt?: SortOrder
+    lastLogin?: SortOrder
   }
 
   export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -10929,6 +12303,42 @@ export namespace Prisma {
     rewardId?: SortOrder
   }
 
+  export type UserTrackingStatUserIdCompoundUniqueInput = {
+    stat: string
+    userId: string
+  }
+
+  export type UserTrackingCountOrderByAggregateInput = {
+    id?: SortOrder
+    stat?: SortOrder
+    quantity?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserTrackingAvgOrderByAggregateInput = {
+    id?: SortOrder
+    quantity?: SortOrder
+  }
+
+  export type UserTrackingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    stat?: SortOrder
+    quantity?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserTrackingMinOrderByAggregateInput = {
+    id?: SortOrder
+    stat?: SortOrder
+    quantity?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserTrackingSumOrderByAggregateInput = {
+    id?: SortOrder
+    quantity?: SortOrder
+  }
+
   export type EnumMoneyTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.MoneyType | EnumMoneyTypeFieldRefInput<$PrismaModel>
     in?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
@@ -11029,6 +12439,13 @@ export namespace Prisma {
     connect?: UserRewardsWhereUniqueInput | UserRewardsWhereUniqueInput[]
   }
 
+  export type UserTrackingCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserTrackingCreateWithoutUserInput, UserTrackingUncheckedCreateWithoutUserInput> | UserTrackingCreateWithoutUserInput[] | UserTrackingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserTrackingCreateOrConnectWithoutUserInput | UserTrackingCreateOrConnectWithoutUserInput[]
+    createMany?: UserTrackingCreateManyUserInputEnvelope
+    connect?: UserTrackingWhereUniqueInput | UserTrackingWhereUniqueInput[]
+  }
+
   export type UserWalletCreateNestedManyWithoutUserInput = {
     create?: XOR<UserWalletCreateWithoutUserInput, UserWalletUncheckedCreateWithoutUserInput> | UserWalletCreateWithoutUserInput[] | UserWalletUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserWalletCreateOrConnectWithoutUserInput | UserWalletCreateOrConnectWithoutUserInput[]
@@ -11053,6 +12470,13 @@ export namespace Prisma {
     connectOrCreate?: UserRewardsCreateOrConnectWithoutUserInput | UserRewardsCreateOrConnectWithoutUserInput[]
     createMany?: UserRewardsCreateManyUserInputEnvelope
     connect?: UserRewardsWhereUniqueInput | UserRewardsWhereUniqueInput[]
+  }
+
+  export type UserTrackingUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserTrackingCreateWithoutUserInput, UserTrackingUncheckedCreateWithoutUserInput> | UserTrackingCreateWithoutUserInput[] | UserTrackingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserTrackingCreateOrConnectWithoutUserInput | UserTrackingCreateOrConnectWithoutUserInput[]
+    createMany?: UserTrackingCreateManyUserInputEnvelope
+    connect?: UserTrackingWhereUniqueInput | UserTrackingWhereUniqueInput[]
   }
 
   export type UserWalletUncheckedCreateNestedManyWithoutUserInput = {
@@ -11104,6 +12528,20 @@ export namespace Prisma {
     deleteMany?: UserRewardsScalarWhereInput | UserRewardsScalarWhereInput[]
   }
 
+  export type UserTrackingUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserTrackingCreateWithoutUserInput, UserTrackingUncheckedCreateWithoutUserInput> | UserTrackingCreateWithoutUserInput[] | UserTrackingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserTrackingCreateOrConnectWithoutUserInput | UserTrackingCreateOrConnectWithoutUserInput[]
+    upsert?: UserTrackingUpsertWithWhereUniqueWithoutUserInput | UserTrackingUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserTrackingCreateManyUserInputEnvelope
+    set?: UserTrackingWhereUniqueInput | UserTrackingWhereUniqueInput[]
+    disconnect?: UserTrackingWhereUniqueInput | UserTrackingWhereUniqueInput[]
+    delete?: UserTrackingWhereUniqueInput | UserTrackingWhereUniqueInput[]
+    connect?: UserTrackingWhereUniqueInput | UserTrackingWhereUniqueInput[]
+    update?: UserTrackingUpdateWithWhereUniqueWithoutUserInput | UserTrackingUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserTrackingUpdateManyWithWhereWithoutUserInput | UserTrackingUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserTrackingScalarWhereInput | UserTrackingScalarWhereInput[]
+  }
+
   export type UserWalletUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserWalletCreateWithoutUserInput, UserWalletUncheckedCreateWithoutUserInput> | UserWalletCreateWithoutUserInput[] | UserWalletUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserWalletCreateOrConnectWithoutUserInput | UserWalletCreateOrConnectWithoutUserInput[]
@@ -11150,6 +12588,20 @@ export namespace Prisma {
     update?: UserRewardsUpdateWithWhereUniqueWithoutUserInput | UserRewardsUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserRewardsUpdateManyWithWhereWithoutUserInput | UserRewardsUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserRewardsScalarWhereInput | UserRewardsScalarWhereInput[]
+  }
+
+  export type UserTrackingUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserTrackingCreateWithoutUserInput, UserTrackingUncheckedCreateWithoutUserInput> | UserTrackingCreateWithoutUserInput[] | UserTrackingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserTrackingCreateOrConnectWithoutUserInput | UserTrackingCreateOrConnectWithoutUserInput[]
+    upsert?: UserTrackingUpsertWithWhereUniqueWithoutUserInput | UserTrackingUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserTrackingCreateManyUserInputEnvelope
+    set?: UserTrackingWhereUniqueInput | UserTrackingWhereUniqueInput[]
+    disconnect?: UserTrackingWhereUniqueInput | UserTrackingWhereUniqueInput[]
+    delete?: UserTrackingWhereUniqueInput | UserTrackingWhereUniqueInput[]
+    connect?: UserTrackingWhereUniqueInput | UserTrackingWhereUniqueInput[]
+    update?: UserTrackingUpdateWithWhereUniqueWithoutUserInput | UserTrackingUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserTrackingUpdateManyWithWhereWithoutUserInput | UserTrackingUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserTrackingScalarWhereInput | UserTrackingScalarWhereInput[]
   }
 
   export type UserWalletUncheckedUpdateManyWithoutUserNestedInput = {
@@ -11218,6 +12670,20 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRewardsInput, UserUpdateWithoutRewardsInput>, UserUncheckedUpdateWithoutRewardsInput>
+  }
+
+  export type UserCreateNestedOneWithoutStatsTrackingInput = {
+    create?: XOR<UserCreateWithoutStatsTrackingInput, UserUncheckedCreateWithoutStatsTrackingInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStatsTrackingInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutStatsTrackingNestedInput = {
+    create?: XOR<UserCreateWithoutStatsTrackingInput, UserUncheckedCreateWithoutStatsTrackingInput>
+    connectOrCreate?: UserCreateOrConnectWithoutStatsTrackingInput
+    upsert?: UserUpsertWithoutStatsTrackingInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutStatsTrackingInput, UserUpdateWithoutStatsTrackingInput>, UserUncheckedUpdateWithoutStatsTrackingInput>
   }
 
   export type UserCreateNestedOneWithoutWalletsInput = {
@@ -11518,8 +12984,10 @@ export namespace Prisma {
     role?: $Enums.Role
     createdDate?: Date | string
     updatedAt?: Date | string | null
+    lastLogin?: Date | string
     profile?: UserProfileCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
   }
 
@@ -11530,8 +12998,10 @@ export namespace Prisma {
     role?: $Enums.Role
     createdDate?: Date | string
     updatedAt?: Date | string | null
+    lastLogin?: Date | string
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -11558,8 +13028,10 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
   }
 
@@ -11570,8 +13042,10 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -11638,6 +13112,27 @@ export namespace Prisma {
 
   export type UserRewardsCreateManyUserInputEnvelope = {
     data: UserRewardsCreateManyUserInput | UserRewardsCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserTrackingCreateWithoutUserInput = {
+    stat: string
+    quantity?: number
+  }
+
+  export type UserTrackingUncheckedCreateWithoutUserInput = {
+    id?: number
+    stat: string
+    quantity?: number
+  }
+
+  export type UserTrackingCreateOrConnectWithoutUserInput = {
+    where: UserTrackingWhereUniqueInput
+    create: XOR<UserTrackingCreateWithoutUserInput, UserTrackingUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserTrackingCreateManyUserInputEnvelope = {
+    data: UserTrackingCreateManyUserInput | UserTrackingCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -11747,6 +13242,32 @@ export namespace Prisma {
     userId?: StringNullableFilter<"UserRewards"> | string | null
   }
 
+  export type UserTrackingUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserTrackingWhereUniqueInput
+    update: XOR<UserTrackingUpdateWithoutUserInput, UserTrackingUncheckedUpdateWithoutUserInput>
+    create: XOR<UserTrackingCreateWithoutUserInput, UserTrackingUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserTrackingUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserTrackingWhereUniqueInput
+    data: XOR<UserTrackingUpdateWithoutUserInput, UserTrackingUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserTrackingUpdateManyWithWhereWithoutUserInput = {
+    where: UserTrackingScalarWhereInput
+    data: XOR<UserTrackingUpdateManyMutationInput, UserTrackingUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserTrackingScalarWhereInput = {
+    AND?: UserTrackingScalarWhereInput | UserTrackingScalarWhereInput[]
+    OR?: UserTrackingScalarWhereInput[]
+    NOT?: UserTrackingScalarWhereInput | UserTrackingScalarWhereInput[]
+    id?: IntFilter<"UserTracking"> | number
+    stat?: StringFilter<"UserTracking"> | string
+    quantity?: IntFilter<"UserTracking"> | number
+    userId?: StringFilter<"UserTracking"> | string
+  }
+
   export type UserWalletUpsertWithWhereUniqueWithoutUserInput = {
     where: UserWalletWhereUniqueInput
     update: XOR<UserWalletUpdateWithoutUserInput, UserWalletUncheckedUpdateWithoutUserInput>
@@ -11780,8 +13301,10 @@ export namespace Prisma {
     role?: $Enums.Role
     createdDate?: Date | string
     updatedAt?: Date | string | null
+    lastLogin?: Date | string
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
   }
 
@@ -11792,8 +13315,10 @@ export namespace Prisma {
     role?: $Enums.Role
     createdDate?: Date | string
     updatedAt?: Date | string | null
+    lastLogin?: Date | string
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -11820,8 +13345,10 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
   }
 
@@ -11832,8 +13359,10 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -11844,8 +13373,10 @@ export namespace Prisma {
     role?: $Enums.Role
     createdDate?: Date | string
     updatedAt?: Date | string | null
+    lastLogin?: Date | string
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
   }
 
@@ -11856,8 +13387,10 @@ export namespace Prisma {
     role?: $Enums.Role
     createdDate?: Date | string
     updatedAt?: Date | string | null
+    lastLogin?: Date | string
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -11884,8 +13417,10 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
   }
 
@@ -11896,8 +13431,82 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutStatsTrackingInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutStatsTrackingInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutStatsTrackingInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutStatsTrackingInput, UserUncheckedCreateWithoutStatsTrackingInput>
+  }
+
+  export type UserUpsertWithoutStatsTrackingInput = {
+    update: XOR<UserUpdateWithoutStatsTrackingInput, UserUncheckedUpdateWithoutStatsTrackingInput>
+    create: XOR<UserCreateWithoutStatsTrackingInput, UserUncheckedCreateWithoutStatsTrackingInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutStatsTrackingInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutStatsTrackingInput, UserUncheckedUpdateWithoutStatsTrackingInput>
+  }
+
+  export type UserUpdateWithoutStatsTrackingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutStatsTrackingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -11908,9 +13517,11 @@ export namespace Prisma {
     role?: $Enums.Role
     createdDate?: Date | string
     updatedAt?: Date | string | null
+    lastLogin?: Date | string
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWalletsInput = {
@@ -11920,9 +13531,11 @@ export namespace Prisma {
     role?: $Enums.Role
     createdDate?: Date | string
     updatedAt?: Date | string | null
+    lastLogin?: Date | string
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWalletsInput = {
@@ -11948,9 +13561,11 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWalletsInput = {
@@ -11960,14 +13575,22 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserRewardsCreateManyUserInput = {
     id?: number
     rewardId: number
+  }
+
+  export type UserTrackingCreateManyUserInput = {
+    id?: number
+    stat: string
+    quantity?: number
   }
 
   export type UserWalletCreateManyUserInput = {
@@ -11988,6 +13611,23 @@ export namespace Prisma {
   export type UserRewardsUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     rewardId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserTrackingUpdateWithoutUserInput = {
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserTrackingUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserTrackingUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    stat?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserWalletUpdateWithoutUserInput = {

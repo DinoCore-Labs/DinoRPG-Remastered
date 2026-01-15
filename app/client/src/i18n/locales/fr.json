@@ -103,6 +103,7 @@
 		},
 		"goals": {
 			"title": "Statistiques DinoRPG",
+			"points": "points",
 			"linkStats": "Statistiques",
 			"linkGains": "Gains",
 			"help": {

@@ -159,7 +159,7 @@ export default defineComponent({
 			}
 			try {
 				const res = await RankingService.getPositionRanking(this.profile.id);
-				console.log('API ranking response =', res);
+				//console.log('API ranking response =', res);
 				this.userPosition = res.data.position ?? null;
 				this.userPoints = res.data.points ?? null;
 				this.userDinozCount = res.data.dinozCount ?? null;

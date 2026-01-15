@@ -52,17 +52,19 @@ model SignupIpMonthCounter {
 }
 
 model User {
-  id          String    @id @default(uuid())
-  name        String    @unique
-  password    String
-  role        Role      @default(PLAYER)
-  createdDate DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
+  id            String    @id @default(uuid())
+  name          String    @unique
+  password      String
+  role          Role      @default(PLAYER)
+  createdDate   DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+  lastLogin     DateTime  @default(now())
 
-  profile     UserProfile?
-  ranking     Ranking?
-  rewards     UserRewards[]
-  wallets     UserWallet[]
+  profile       UserProfile?
+  ranking       Ranking?
+  rewards       UserRewards[]
+  statsTracking UserTracking[]
+  wallets       UserWallet[]
 }
 
 model UserProfile {
@@ -72,7 +74,7 @@ model UserProfile {
 
   avatar      Bytes?
   avatarType  String?
-  language    Language?   
+  language    Language? @default(FR)  
   gender      Gender?   
   age         Int?
   description String?
@@ -85,6 +87,19 @@ model UserRewards {
   user     User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([rewardId, userId])
+}
+
+model UserTracking {
+  id       Int    @id @default(autoincrement())
+  stat     String
+  quantity Int    @default(0)
+  userId   String @unique
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([stat, userId])
+  @@index([userId])
+  @@index([stat])
+  @@map("statsTracking")
 }
 
 model UserWallet {
