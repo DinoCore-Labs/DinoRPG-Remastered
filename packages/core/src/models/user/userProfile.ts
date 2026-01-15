@@ -1,6 +1,7 @@
 import { Language } from '../config/language.js';
 import { Reward } from '../rewards/rewardList.js';
 import { Gender } from './userGender.js';
+import { UserStats } from './userStats.js';
 
 export interface UserProfile {
 	id: string;
@@ -13,6 +14,7 @@ export interface UserProfile {
 	gender: Gender | null;
 	age: number | null;
 	rewards: Reward[];
+	stats: UserStats[];
 }
 
 export interface UserProfileUpdate {

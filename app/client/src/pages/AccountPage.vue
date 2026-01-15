@@ -5,7 +5,7 @@
 			<ProfileCard :profile="profile" :isOwner="isOwner" @updated="onProfileUpdated" />
 		</div>
 		<div class="cards">
-			<GoalsCard />
+			<GoalsCard :profileStats="profile.stats" :isOwner="isOwner" />
 			<div class="profilCard">
 				<ProfileGame :profile="profile" :isOwner="isOwner" />
 				<EpicRewardsCard :epicRewards="profile.rewards" :isOwner="isOwner" />
@@ -72,7 +72,7 @@ export default defineComponent({
 				profile = await UserService.getMyProfile();
 			}
 			this.profile = profile;
-			//console.log(profile);
+			console.log(profile);
 			this.isOwner = this.profile.id === this.uStore.id;
 			//console.log(this.profile.id);
 			//console.log(this.uStore.id);

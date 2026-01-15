@@ -56,7 +56,7 @@
 				</div>
 				<!-- Info -->
 				<div class="info">
-					<h2>{{ profile.name }}, <span>Chirurgien du chaos</span></h2>
+					<h2>{{ profile.name }}</h2>
 
 					<div class="tags">
 						<span v-if="profile.language">🌍 {{ profile.language }}</span>

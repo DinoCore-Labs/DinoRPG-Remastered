@@ -7,11 +7,11 @@
 			<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 		</h3>
 		<div class="userGoals">
-			<!--<div class="userGoals_points">{{ achievementsPoints + ' ' + $t(`account.goals.points`) }}</div>
+			<div class="userGoals_points">{{ achievementsPoints + ' ' + $t(`accountPage.goals.points`) }}</div>
 			<div class="userGoals_top" v-if="topStats.length > 0">
 				<template v-for="(stat, index) in topStats" :key="index">
-					<div class="top_goals">
-						<div class="top_countWrapper">
+					<div class="top_goals dz-golden-box">
+						<div class="top_countWrapper dz-golden-box">
 							<span class="top_points">{{ stat.quantity }}</span>
 						</div>
 						<div class="top_desc">
@@ -29,8 +29,8 @@
 				</template>
 			</div>
 			<div class="userGoals_top" v-else>
-				<div class="top_goals">
-					<div class="top_countWrapper">
+				<div class="top_goals dz-golden-box">
+					<div class="top_countWrapper dz-golden-box">
 						<span class="top_points">...</span>
 					</div>
 					<div class="top_desc">
@@ -56,7 +56,7 @@
 						<p></p>
 					</div>
 				</div>
-			</div>-->
+			</div>
 			<div class="userGoals_list">
 				<a id="statsLink" :class="tab === 1 ? 'active-link' : ''" @click="tab = 1">{{
 					$t('accountPage.goals.linkStats')
@@ -64,10 +64,10 @@
 				<a id="gainsLink" :class="tab === 2 ? 'active-link' : ''" @click="tab = 2">{{
 					$t('accountPage.goals.linkGains')
 				}}</a>
-				<!--<div style="width: 100%" class="cadrelist_goals drpg-scrollbar">
+				<div style="width: 100%" class="cadrelist_goals drpg-scrollbar">
 					<table style="width: 100%" class="list_goals" v-if="tab === 1">
 						<tbody>
-							<Tippy theme="small" tag="tr" class="list" v-for="(stats, index) in accountStats" :key="index">
+							<Tippy theme="small" tag="tr" class="list" v-for="(stats, index) in profileStats" :key="index">
 								<td class="icon">
 									<img class="achievements" :src="getImgURL('achievements', `${stats.stat}`)" alt="achievements" />
 								</td>
@@ -77,7 +77,7 @@
 								<td v-else class="name">
 									{{ getStatDetails(stats, 'name') }}
 								</td>
-								<td class="x">X</td>
+								<td class="x">x</td>
 								<td class="numb">{{ stats.quantity }}</td>
 								<template #content>
 									<p>{{ getStatDetails(stats, 'description') }}</p>
@@ -86,8 +86,8 @@
 						</tbody>
 					</table>
 					<template v-if="tab === 2">
-						<ul style="width: 100%" class="list_gains" v-for="(stats, index) in accountStats" :key="index">
-							<Tippy theme="small" tag="li" style="color: #ffee92">
+						<ul style="width: 100%" class="list_gains" v-for="(stats, index) in profileStats" :key="index">
+							<Tippy theme="small" tag="li" class="stat-name">
 								<img class="achievements" :src="getImgURL('achievements', `${stats.stat}`)" alt="achievements" />
 								{{ getStatDetails(stats, 'name') }}
 								<template #content>
@@ -108,7 +108,7 @@
 							</template>
 						</ul>
 					</template>
-				</div>-->
+				</div>
 			</div>
 			<template class="userGoals_help">
 				<Tippy theme="small" tag="a">
@@ -126,40 +126,42 @@
 </template>
 
 <script lang="ts">
-//import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
-import { defineComponent } from 'vue';
-//import { localStore } from '../../store/index.js';
-//import { Unlock } from '@drpg/core/models/goals/GoalsType';
-//import { getGoal, getUnlockedGoals } from '@drpg/core/utils/twinoidGoals';
+import { type UserStats } from '@dinorpg/core/models/user/userStats.js';
+import { type PropType, defineComponent } from 'vue';
+import { localStore } from '../../store/localStore';
+import { type Unlock } from '@dinorpg/core/models/goals/goalsType.js';
+import { getGoal, getUnlockedGoals } from '@dinorpg/core/utils/goals.js';
+import type { Language } from '@dinorpg/core/models/config/language.js';
 
 export default defineComponent({
 	name: 'TwinoidGoals',
 	data() {
 		return {
-			//topStats: [] as PlayerStats[],
-			//language: localStore().getLanguage ?? 'fr',
+			topStats: [] as UserStats[],
+			language: (localStore().getLanguage ?? 'FR') as Language,
 			achievementsPoints: 0 as number,
-			tab: 1 as number
-			//wonRewards: [] as { stat: string; unlock: Unlock }[]
+			tab: 1 as number,
+			wonRewards: [] as { stat: string; unlock: Unlock }[]
 		};
-	}
-	/*props: {
-		accountStats: {
-			type: Object as PropType<PlayerStats[]>,
+	},
+	props: {
+		profileStats: {
+			type: Array as PropType<UserStats[]>,
+			default: () => [],
 			required: true
 		}
 	},
 	methods: {
 		getTopStats(): void {
-			const sortedStats = [...this.accountStats];
+			const sortedStats = [...this.profileStats];
 			sortedStats.sort((a, b) => b.quantity - a.quantity);
 			this.topStats = sortedStats.slice(0, 3);
 		},
-		isLastAchievement(stat: PlayerStats): boolean {
+		isLastAchievement(stat: UserStats): boolean {
 			const last = getGoal(stat.stat).unlocks[getGoal(stat.stat).unlocks.length - 1];
 			return (last?.count ?? 0) <= stat.quantity;
 		},
-		getStatDetails(stat: PlayerStats, detail: string) {
+		getStatDetails(stat: UserStats, detail: string) {
 			const goal = getGoal(stat.stat);
 			switch (detail) {
 				case 'name':
@@ -180,19 +182,19 @@ export default defineComponent({
 					break;
 			}
 		},
-		getRewards(stat: PlayerStats): Unlock[] {
+		getRewards(stat: UserStats): Unlock[] {
 			return this.wonRewards
 				.filter(r => r.stat === stat.stat)
 				.map(a => {
 					return a.unlock;
 				});
 		},
-		isUnlock(stat: PlayerStats): boolean {
+		isUnlock(stat: UserStats): boolean {
 			return this.wonRewards.find(r => r.stat === stat.stat) !== undefined;
 		},
 		updateStats() {
 			this.getTopStats();
-			this.achievementsPoints = this.accountStats
+			this.achievementsPoints = this.profileStats
 				.map(stat => {
 					return getUnlockedGoals(stat)
 						.map(a => {
@@ -209,14 +211,14 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		accountStats: {
+		profileStats: {
 			handler() {
 				this.updateStats();
 			},
 			deep: true,
 			immediate: true
 		}
-	}*/
+	}
 });
 </script>
 
@@ -232,6 +234,7 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	text-shadow: 1px 1px 1px #383522;
 	.headProfil {
 		flex-shrink: 0;
 		width: 125px;
@@ -251,7 +254,7 @@ export default defineComponent({
 		color: #ffee92;
 		text-shadow: 1px 1px 1px #383522;
 		position: relative;
-		top: -16px;
+		top: -28px;
 		gap: 5px;
 		img {
 			height: 7px;
@@ -267,7 +270,7 @@ export default defineComponent({
 			margin-bottom: 15px;
 			text-align: center;
 			position: relative;
-			top: -12px;
+			top: -25px;
 		}
 		&_top {
 			color: #ffee92;
@@ -276,8 +279,6 @@ export default defineComponent({
 			justify-content: space-evenly;
 			margin-bottom: 15px;
 			.top_goals {
-				background-color: #9a4029;
-				border: 3px solid #ffee92;
 				position: relative;
 				height: 92px;
 				width: 85px;
@@ -285,13 +286,12 @@ export default defineComponent({
 				.top_countWrapper {
 					font-size-adjust: none;
 					text-align: center;
-					background-color: #9a4029;
-					border: 3px solid #ffee92;
 					z-index: 1;
 					width: 66px;
 					position: absolute;
 					top: -10px;
-					left: 7px;
+					left: 50%;
+					transform: translateX(-50%);
 					overflow: hidden;
 					white-space: nowrap;
 					text-overflow: ellipsis;
@@ -317,6 +317,8 @@ export default defineComponent({
 				color: #ffee92;
 				cursor: pointer;
 				margin-right: 5px;
+				padding: 3px;
+				font-size: 14px;
 			}
 			.cadrelist_goals {
 				background-color: #9a4029;
@@ -343,26 +345,36 @@ export default defineComponent({
 						.name {
 							color: #fce3bb;
 							min-width: 182px;
+							font-size: 12px;
 						}
 						.x {
 							color: #fce3bb;
-							width: 12px;
+							width: 10px;
+							font-size: 12px;
 						}
 						.numb {
 							color: #fce3bb;
 							width: 50px;
+							font-size: 12px;
 						}
 					}
 				}
 				.list_gains {
 					list-style: none;
+					font-size: 12px;
+					&:not(:first-child) {
+						margin-top: 4px;
+					}
+					.stat-name {
+						color: #ffee92;
+					}
 					.icon {
 						width: 20px;
 					}
 					.name {
 						color: #fce3bb;
 						min-width: 200px;
-						margin-left: 20px;
+						margin-left: 18px;
 					}
 					.x {
 						color: #fce3bb;
@@ -391,7 +403,6 @@ export default defineComponent({
 		color: #ffee92;
 		background-color: #9a4029;
 		border-radius: 3px;
-		padding: 3px;
 	}
 	.achievements {
 		height: 14px;
