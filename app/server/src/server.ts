@@ -1,11 +1,12 @@
+import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import fCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fjwt, { FastifyJWT } from '@fastify/jwt';
 import multipart from '@fastify/multipart';
-import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
+import { randomUUID } from 'crypto';
+import Fastify, { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 
 import { loadConfig } from './config/config.js';
-import { deviceCookiePlugin } from './plugins/deviceCookie.plugin.js';
 import { rankingRoutes } from './Ranking/Routes/ranking.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
 import { userSchemas } from './User/Schema/user.schema.js';
@@ -36,7 +37,25 @@ function buildServer() {
 		secret: cfg.secrets.cookie,
 		hook: 'preHandler'
 	});
-	server.register(deviceCookiePlugin);
+	server.addHook('preHandler', async (req, reply) => {
+		const DEVICE_COOKIE = cfg.secrets.deviceCookie;
+
+		let deviceId = req.cookies?.[DEVICE_COOKIE];
+
+		if (!deviceId || typeof deviceId !== 'string') {
+			deviceId = randomUUID();
+
+			reply.setCookie(DEVICE_COOKIE, deviceId, {
+				path: '/',
+				httpOnly: true,
+				sameSite: 'lax',
+				secure: cfg.isProduction,
+				maxAge: 60 * 60 * 24 * 400
+			});
+		}
+
+		(req as any).deviceId = deviceId;
+	});
 
 	//------------------------------------------------------
 	// 3. JWT
@@ -138,6 +157,29 @@ function buildServer() {
 		});
 
 		reply.send({ ok: true });
+	});
+
+	server.setErrorHandler((err, req, reply) => {
+		// 1) Erreurs "attendues"
+		if (err instanceof ExpectedError) {
+			return reply.code(err.statusCode ?? 400).send({ message: err.message });
+		}
+		// 2) Erreurs Fastify (validation, etc.)
+		const fe = err as FastifyError;
+		if (typeof fe?.statusCode === 'number') {
+			return reply.code(fe.statusCode).send({ message: fe.message });
+		}
+		// 3) Fallback 500
+		req.log.error(err);
+		return reply.code(500).send({ message: 'Internal Server Error' });
+	});
+
+	server.get('/debug-device', async (req, reply) => {
+		return {
+			cookieIn: req.cookies?.dz_device ?? null,
+			deviceId: (req as any).deviceId ?? null,
+			ip: req.ip
+		};
 	});
 
 	return server;
