@@ -1,5 +1,8 @@
 export class ExpectedError extends Error {
-	constructor(message = '') {
+	statusCode: number;
+
+	constructor(message = '', statusCode = 400) {
 		super(message);
+		this.statusCode = statusCode;
 	}
 }

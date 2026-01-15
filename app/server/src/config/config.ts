@@ -3,6 +3,7 @@ import * as dotenv from 'dotenv';
 export interface Secrets {
 	jwt: string;
 	cookie: string;
+	deviceCookie: string;
 }
 
 export interface Config {
@@ -65,7 +66,8 @@ export function config(env: Record<string, string | undefined>): Config {
 
 	const secrets: Secrets = {
 		jwt: env.DINORPG_SECRET_KEY_JWT ?? 'dev_jwt_secret',
-		cookie: env.DINORPG_SECRET_KEY_COOKIE ?? 'dev_cookie_secret'
+		cookie: env.DINORPG_SECRET_KEY_COOKIE ?? 'dev_cookie_secret',
+		deviceCookie: env.DEVICE_COOKIE ?? 'dz_device_cookie'
 	};
 
 	return {
