@@ -120,6 +120,41 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.RankingScalarFieldEnum = {
+  id: 'id',
+  dinozCount: 'dinozCount',
+  points: 'points',
+  average: 'average',
+  completion: 'completion',
+  dojo: 'dojo',
+  userId: 'userId'
+};
+
+exports.Prisma.RelationLoadStrategy = {
+  query: 'query',
+  join: 'join'
+};
+
+exports.Prisma.SignupDeviceMonthCounterScalarFieldEnum = {
+  id: 'id',
+  monthKey: 'monthKey',
+  deviceToken: 'deviceToken',
+  count: 'count',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SignupIpMonthCounterScalarFieldEnum = {
+  id: 'id',
+  monthKey: 'monthKey',
+  ipToken: 'ipToken',
+  count: 'count',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -127,11 +162,6 @@ exports.Prisma.UserScalarFieldEnum = {
   role: 'role',
   createdDate: 'createdDate',
   updatedAt: 'updatedAt'
-};
-
-exports.Prisma.RelationLoadStrategy = {
-  query: 'query',
-  join: 'join'
 };
 
 exports.Prisma.UserProfileScalarFieldEnum = {
@@ -155,16 +185,6 @@ exports.Prisma.UserWalletScalarFieldEnum = {
   id: 'id',
   type: 'type',
   amount: 'amount',
-  userId: 'userId'
-};
-
-exports.Prisma.RankingScalarFieldEnum = {
-  id: 'id',
-  dinozCount: 'dinozCount',
-  points: 'points',
-  average: 'average',
-  completion: 'completion',
-  dojo: 'dojo',
   userId: 'userId'
 };
 
@@ -207,11 +227,13 @@ exports.MoneyType = exports.$Enums.MoneyType = {
 };
 
 exports.Prisma.ModelName = {
+  Ranking: 'Ranking',
+  SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
+  SignupIpMonthCounter: 'SignupIpMonthCounter',
   User: 'User',
   UserProfile: 'UserProfile',
   UserRewards: 'UserRewards',
-  UserWallet: 'UserWallet',
-  Ranking: 'Ranking'
+  UserWallet: 'UserWallet'
 };
 
 /**

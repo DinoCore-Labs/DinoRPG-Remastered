@@ -9,6 +9,48 @@ datasource db {
   provider = "postgresql"
 }
 
+model Ranking {
+  id         Int @id @default(autoincrement())
+  dinozCount Int @default(0)
+  points     Int @default(0)
+  average    Int @default(0)
+  completion Int @default(0)
+  dojo       Int @default(0)
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model SignupDeviceMonthCounter {
+  id          Int      @id @default(autoincrement())
+  monthKey    String
+  deviceToken String
+  count       Int      @default(0)
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([monthKey, deviceToken])
+  @@index([monthKey])
+  @@index([expiresAt])
+}
+
+model SignupIpMonthCounter {
+  id        Int      @id @default(autoincrement())
+  monthKey  String
+  ipToken   String
+  count     Int      @default(0)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([monthKey, ipToken])
+  @@index([monthKey])
+  @@index([expiresAt])
+}
+
 model User {
   id          String    @id @default(uuid())
   name        String    @unique
@@ -53,20 +95,6 @@ model UserWallet {
   user   User      @relation(fields: [userId], references: [id])
 
   @@unique([userId, type])
-}
-
-model Ranking {
-  id         Int @id @default(autoincrement())
-  dinozCount Int @default(0)
-  points     Int @default(0)
-  average    Int @default(0)
-  completion Int @default(0)
-  dojo       Int @default(0)
-
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
 }
 
 enum Language {
