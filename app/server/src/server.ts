@@ -14,7 +14,8 @@ const cfg = loadConfig();
 
 function buildServer() {
 	const server = Fastify({
-		logger: true
+		logger: true,
+		trustProxy: true
 	});
 
 	//-------------------------------------------------------
