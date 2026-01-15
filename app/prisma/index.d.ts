@@ -14,6 +14,21 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model Ranking
+ * 
+ */
+export type Ranking = $Result.DefaultSelection<Prisma.$RankingPayload>
+/**
+ * Model SignupDeviceMonthCounter
+ * 
+ */
+export type SignupDeviceMonthCounter = $Result.DefaultSelection<Prisma.$SignupDeviceMonthCounterPayload>
+/**
+ * Model SignupIpMonthCounter
+ * 
+ */
+export type SignupIpMonthCounter = $Result.DefaultSelection<Prisma.$SignupIpMonthCounterPayload>
+/**
  * Model User
  * 
  */
@@ -33,11 +48,6 @@ export type UserRewards = $Result.DefaultSelection<Prisma.$UserRewardsPayload>
  * 
  */
 export type UserWallet = $Result.DefaultSelection<Prisma.$UserWalletPayload>
-/**
- * Model Ranking
- * 
- */
-export type Ranking = $Result.DefaultSelection<Prisma.$RankingPayload>
 
 /**
  * Enums
@@ -103,8 +113,8 @@ export const Role: typeof $Enums.Role
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Rankings
+ * const rankings = await prisma.ranking.findMany()
  * ```
  *
  *
@@ -124,8 +134,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Users
-   * const users = await prisma.user.findMany()
+   * // Fetch zero or more Rankings
+   * const rankings = await prisma.ranking.findMany()
    * ```
    *
    *
@@ -214,6 +224,36 @@ export class PrismaClient<
   }>>
 
       /**
+   * `prisma.ranking`: Exposes CRUD operations for the **Ranking** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Rankings
+    * const rankings = await prisma.ranking.findMany()
+    * ```
+    */
+  get ranking(): Prisma.RankingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.signupDeviceMonthCounter`: Exposes CRUD operations for the **SignupDeviceMonthCounter** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SignupDeviceMonthCounters
+    * const signupDeviceMonthCounters = await prisma.signupDeviceMonthCounter.findMany()
+    * ```
+    */
+  get signupDeviceMonthCounter(): Prisma.SignupDeviceMonthCounterDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.signupIpMonthCounter`: Exposes CRUD operations for the **SignupIpMonthCounter** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SignupIpMonthCounters
+    * const signupIpMonthCounters = await prisma.signupIpMonthCounter.findMany()
+    * ```
+    */
+  get signupIpMonthCounter(): Prisma.SignupIpMonthCounterDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
@@ -252,16 +292,6 @@ export class PrismaClient<
     * ```
     */
   get userWallet(): Prisma.UserWalletDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.ranking`: Exposes CRUD operations for the **Ranking** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more Rankings
-    * const rankings = await prisma.ranking.findMany()
-    * ```
-    */
-  get ranking(): Prisma.RankingDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -696,11 +726,13 @@ export namespace Prisma {
 
 
   export const ModelName: {
+    Ranking: 'Ranking',
+    SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
+    SignupIpMonthCounter: 'SignupIpMonthCounter',
     User: 'User',
     UserProfile: 'UserProfile',
     UserRewards: 'UserRewards',
-    UserWallet: 'UserWallet',
-    Ranking: 'Ranking'
+    UserWallet: 'UserWallet'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -716,10 +748,232 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "userProfile" | "userRewards" | "userWallet" | "ranking"
+      modelProps: "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userProfile" | "userRewards" | "userWallet"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
+      Ranking: {
+        payload: Prisma.$RankingPayload<ExtArgs>
+        fields: Prisma.RankingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RankingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RankingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          findFirst: {
+            args: Prisma.RankingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RankingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          findMany: {
+            args: Prisma.RankingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>[]
+          }
+          create: {
+            args: Prisma.RankingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          createMany: {
+            args: Prisma.RankingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RankingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>[]
+          }
+          delete: {
+            args: Prisma.RankingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          update: {
+            args: Prisma.RankingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          deleteMany: {
+            args: Prisma.RankingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RankingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RankingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>[]
+          }
+          upsert: {
+            args: Prisma.RankingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
+          }
+          aggregate: {
+            args: Prisma.RankingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRanking>
+          }
+          groupBy: {
+            args: Prisma.RankingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RankingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RankingCountArgs<ExtArgs>
+            result: $Utils.Optional<RankingCountAggregateOutputType> | number
+          }
+        }
+      }
+      SignupDeviceMonthCounter: {
+        payload: Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>
+        fields: Prisma.SignupDeviceMonthCounterFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SignupDeviceMonthCounterFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupDeviceMonthCounterPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SignupDeviceMonthCounterFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupDeviceMonthCounterPayload>
+          }
+          findFirst: {
+            args: Prisma.SignupDeviceMonthCounterFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupDeviceMonthCounterPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SignupDeviceMonthCounterFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupDeviceMonthCounterPayload>
+          }
+          findMany: {
+            args: Prisma.SignupDeviceMonthCounterFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupDeviceMonthCounterPayload>[]
+          }
+          create: {
+            args: Prisma.SignupDeviceMonthCounterCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupDeviceMonthCounterPayload>
+          }
+          createMany: {
+            args: Prisma.SignupDeviceMonthCounterCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SignupDeviceMonthCounterCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupDeviceMonthCounterPayload>[]
+          }
+          delete: {
+            args: Prisma.SignupDeviceMonthCounterDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupDeviceMonthCounterPayload>
+          }
+          update: {
+            args: Prisma.SignupDeviceMonthCounterUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupDeviceMonthCounterPayload>
+          }
+          deleteMany: {
+            args: Prisma.SignupDeviceMonthCounterDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SignupDeviceMonthCounterUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SignupDeviceMonthCounterUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupDeviceMonthCounterPayload>[]
+          }
+          upsert: {
+            args: Prisma.SignupDeviceMonthCounterUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupDeviceMonthCounterPayload>
+          }
+          aggregate: {
+            args: Prisma.SignupDeviceMonthCounterAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSignupDeviceMonthCounter>
+          }
+          groupBy: {
+            args: Prisma.SignupDeviceMonthCounterGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SignupDeviceMonthCounterGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SignupDeviceMonthCounterCountArgs<ExtArgs>
+            result: $Utils.Optional<SignupDeviceMonthCounterCountAggregateOutputType> | number
+          }
+        }
+      }
+      SignupIpMonthCounter: {
+        payload: Prisma.$SignupIpMonthCounterPayload<ExtArgs>
+        fields: Prisma.SignupIpMonthCounterFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SignupIpMonthCounterFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupIpMonthCounterPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SignupIpMonthCounterFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupIpMonthCounterPayload>
+          }
+          findFirst: {
+            args: Prisma.SignupIpMonthCounterFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupIpMonthCounterPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SignupIpMonthCounterFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupIpMonthCounterPayload>
+          }
+          findMany: {
+            args: Prisma.SignupIpMonthCounterFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupIpMonthCounterPayload>[]
+          }
+          create: {
+            args: Prisma.SignupIpMonthCounterCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupIpMonthCounterPayload>
+          }
+          createMany: {
+            args: Prisma.SignupIpMonthCounterCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SignupIpMonthCounterCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupIpMonthCounterPayload>[]
+          }
+          delete: {
+            args: Prisma.SignupIpMonthCounterDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupIpMonthCounterPayload>
+          }
+          update: {
+            args: Prisma.SignupIpMonthCounterUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupIpMonthCounterPayload>
+          }
+          deleteMany: {
+            args: Prisma.SignupIpMonthCounterDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SignupIpMonthCounterUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SignupIpMonthCounterUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupIpMonthCounterPayload>[]
+          }
+          upsert: {
+            args: Prisma.SignupIpMonthCounterUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SignupIpMonthCounterPayload>
+          }
+          aggregate: {
+            args: Prisma.SignupIpMonthCounterAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSignupIpMonthCounter>
+          }
+          groupBy: {
+            args: Prisma.SignupIpMonthCounterGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SignupIpMonthCounterGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SignupIpMonthCounterCountArgs<ExtArgs>
+            result: $Utils.Optional<SignupIpMonthCounterCountAggregateOutputType> | number
+          }
+        }
+      }
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
@@ -1016,80 +1270,6 @@ export namespace Prisma {
           }
         }
       }
-      Ranking: {
-        payload: Prisma.$RankingPayload<ExtArgs>
-        fields: Prisma.RankingFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.RankingFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RankingPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.RankingFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
-          }
-          findFirst: {
-            args: Prisma.RankingFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RankingPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.RankingFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
-          }
-          findMany: {
-            args: Prisma.RankingFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RankingPayload>[]
-          }
-          create: {
-            args: Prisma.RankingCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
-          }
-          createMany: {
-            args: Prisma.RankingCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.RankingCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RankingPayload>[]
-          }
-          delete: {
-            args: Prisma.RankingDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
-          }
-          update: {
-            args: Prisma.RankingUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
-          }
-          deleteMany: {
-            args: Prisma.RankingDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.RankingUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.RankingUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RankingPayload>[]
-          }
-          upsert: {
-            args: Prisma.RankingUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$RankingPayload>
-          }
-          aggregate: {
-            args: Prisma.RankingAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateRanking>
-          }
-          groupBy: {
-            args: Prisma.RankingGroupByArgs<ExtArgs>
-            result: $Utils.Optional<RankingGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.RankingCountArgs<ExtArgs>
-            result: $Utils.Optional<RankingCountAggregateOutputType> | number
-          }
-        }
-      }
     }
   } & {
     other: {
@@ -1182,11 +1362,13 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
+    ranking?: RankingOmit
+    signupDeviceMonthCounter?: SignupDeviceMonthCounterOmit
+    signupIpMonthCounter?: SignupIpMonthCounterOmit
     user?: UserOmit
     userProfile?: UserProfileOmit
     userRewards?: UserRewardsOmit
     userWallet?: UserWalletOmit
-    ranking?: RankingOmit
   }
 
   /* Types for Logging */
@@ -1305,6 +1487,3289 @@ export namespace Prisma {
   /**
    * Models
    */
+
+  /**
+   * Model Ranking
+   */
+
+  export type AggregateRanking = {
+    _count: RankingCountAggregateOutputType | null
+    _avg: RankingAvgAggregateOutputType | null
+    _sum: RankingSumAggregateOutputType | null
+    _min: RankingMinAggregateOutputType | null
+    _max: RankingMaxAggregateOutputType | null
+  }
+
+  export type RankingAvgAggregateOutputType = {
+    id: number | null
+    dinozCount: number | null
+    points: number | null
+    average: number | null
+    completion: number | null
+    dojo: number | null
+  }
+
+  export type RankingSumAggregateOutputType = {
+    id: number | null
+    dinozCount: number | null
+    points: number | null
+    average: number | null
+    completion: number | null
+    dojo: number | null
+  }
+
+  export type RankingMinAggregateOutputType = {
+    id: number | null
+    dinozCount: number | null
+    points: number | null
+    average: number | null
+    completion: number | null
+    dojo: number | null
+    userId: string | null
+  }
+
+  export type RankingMaxAggregateOutputType = {
+    id: number | null
+    dinozCount: number | null
+    points: number | null
+    average: number | null
+    completion: number | null
+    dojo: number | null
+    userId: string | null
+  }
+
+  export type RankingCountAggregateOutputType = {
+    id: number
+    dinozCount: number
+    points: number
+    average: number
+    completion: number
+    dojo: number
+    userId: number
+    _all: number
+  }
+
+
+  export type RankingAvgAggregateInputType = {
+    id?: true
+    dinozCount?: true
+    points?: true
+    average?: true
+    completion?: true
+    dojo?: true
+  }
+
+  export type RankingSumAggregateInputType = {
+    id?: true
+    dinozCount?: true
+    points?: true
+    average?: true
+    completion?: true
+    dojo?: true
+  }
+
+  export type RankingMinAggregateInputType = {
+    id?: true
+    dinozCount?: true
+    points?: true
+    average?: true
+    completion?: true
+    dojo?: true
+    userId?: true
+  }
+
+  export type RankingMaxAggregateInputType = {
+    id?: true
+    dinozCount?: true
+    points?: true
+    average?: true
+    completion?: true
+    dojo?: true
+    userId?: true
+  }
+
+  export type RankingCountAggregateInputType = {
+    id?: true
+    dinozCount?: true
+    points?: true
+    average?: true
+    completion?: true
+    dojo?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type RankingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Ranking to aggregate.
+     */
+    where?: RankingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rankings to fetch.
+     */
+    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RankingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rankings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rankings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Rankings
+    **/
+    _count?: true | RankingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RankingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RankingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RankingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RankingMaxAggregateInputType
+  }
+
+  export type GetRankingAggregateType<T extends RankingAggregateArgs> = {
+        [P in keyof T & keyof AggregateRanking]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRanking[P]>
+      : GetScalarType<T[P], AggregateRanking[P]>
+  }
+
+
+
+
+  export type RankingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RankingWhereInput
+    orderBy?: RankingOrderByWithAggregationInput | RankingOrderByWithAggregationInput[]
+    by: RankingScalarFieldEnum[] | RankingScalarFieldEnum
+    having?: RankingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RankingCountAggregateInputType | true
+    _avg?: RankingAvgAggregateInputType
+    _sum?: RankingSumAggregateInputType
+    _min?: RankingMinAggregateInputType
+    _max?: RankingMaxAggregateInputType
+  }
+
+  export type RankingGroupByOutputType = {
+    id: number
+    dinozCount: number
+    points: number
+    average: number
+    completion: number
+    dojo: number
+    userId: string
+    _count: RankingCountAggregateOutputType | null
+    _avg: RankingAvgAggregateOutputType | null
+    _sum: RankingSumAggregateOutputType | null
+    _min: RankingMinAggregateOutputType | null
+    _max: RankingMaxAggregateOutputType | null
+  }
+
+  type GetRankingGroupByPayload<T extends RankingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RankingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RankingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RankingGroupByOutputType[P]>
+            : GetScalarType<T[P], RankingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RankingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dinozCount?: boolean
+    points?: boolean
+    average?: boolean
+    completion?: boolean
+    dojo?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ranking"]>
+
+  export type RankingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dinozCount?: boolean
+    points?: boolean
+    average?: boolean
+    completion?: boolean
+    dojo?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ranking"]>
+
+  export type RankingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dinozCount?: boolean
+    points?: boolean
+    average?: boolean
+    completion?: boolean
+    dojo?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ranking"]>
+
+  export type RankingSelectScalar = {
+    id?: boolean
+    dinozCount?: boolean
+    points?: boolean
+    average?: boolean
+    completion?: boolean
+    dojo?: boolean
+    userId?: boolean
+  }
+
+  export type RankingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dinozCount" | "points" | "average" | "completion" | "dojo" | "userId", ExtArgs["result"]["ranking"]>
+  export type RankingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type RankingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type RankingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $RankingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Ranking"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      dinozCount: number
+      points: number
+      average: number
+      completion: number
+      dojo: number
+      userId: string
+    }, ExtArgs["result"]["ranking"]>
+    composites: {}
+  }
+
+  type RankingGetPayload<S extends boolean | null | undefined | RankingDefaultArgs> = $Result.GetResult<Prisma.$RankingPayload, S>
+
+  type RankingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RankingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: RankingCountAggregateInputType | true
+    }
+
+  export interface RankingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Ranking'], meta: { name: 'Ranking' } }
+    /**
+     * Find zero or one Ranking that matches the filter.
+     * @param {RankingFindUniqueArgs} args - Arguments to find a Ranking
+     * @example
+     * // Get one Ranking
+     * const ranking = await prisma.ranking.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RankingFindUniqueArgs>(args: SelectSubset<T, RankingFindUniqueArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Ranking that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RankingFindUniqueOrThrowArgs} args - Arguments to find a Ranking
+     * @example
+     * // Get one Ranking
+     * const ranking = await prisma.ranking.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RankingFindUniqueOrThrowArgs>(args: SelectSubset<T, RankingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Ranking that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingFindFirstArgs} args - Arguments to find a Ranking
+     * @example
+     * // Get one Ranking
+     * const ranking = await prisma.ranking.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RankingFindFirstArgs>(args?: SelectSubset<T, RankingFindFirstArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Ranking that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingFindFirstOrThrowArgs} args - Arguments to find a Ranking
+     * @example
+     * // Get one Ranking
+     * const ranking = await prisma.ranking.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RankingFindFirstOrThrowArgs>(args?: SelectSubset<T, RankingFindFirstOrThrowArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Rankings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Rankings
+     * const rankings = await prisma.ranking.findMany()
+     * 
+     * // Get first 10 Rankings
+     * const rankings = await prisma.ranking.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const rankingWithIdOnly = await prisma.ranking.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RankingFindManyArgs>(args?: SelectSubset<T, RankingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Ranking.
+     * @param {RankingCreateArgs} args - Arguments to create a Ranking.
+     * @example
+     * // Create one Ranking
+     * const Ranking = await prisma.ranking.create({
+     *   data: {
+     *     // ... data to create a Ranking
+     *   }
+     * })
+     * 
+     */
+    create<T extends RankingCreateArgs>(args: SelectSubset<T, RankingCreateArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Rankings.
+     * @param {RankingCreateManyArgs} args - Arguments to create many Rankings.
+     * @example
+     * // Create many Rankings
+     * const ranking = await prisma.ranking.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RankingCreateManyArgs>(args?: SelectSubset<T, RankingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Rankings and returns the data saved in the database.
+     * @param {RankingCreateManyAndReturnArgs} args - Arguments to create many Rankings.
+     * @example
+     * // Create many Rankings
+     * const ranking = await prisma.ranking.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Rankings and only return the `id`
+     * const rankingWithIdOnly = await prisma.ranking.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RankingCreateManyAndReturnArgs>(args?: SelectSubset<T, RankingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Ranking.
+     * @param {RankingDeleteArgs} args - Arguments to delete one Ranking.
+     * @example
+     * // Delete one Ranking
+     * const Ranking = await prisma.ranking.delete({
+     *   where: {
+     *     // ... filter to delete one Ranking
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RankingDeleteArgs>(args: SelectSubset<T, RankingDeleteArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Ranking.
+     * @param {RankingUpdateArgs} args - Arguments to update one Ranking.
+     * @example
+     * // Update one Ranking
+     * const ranking = await prisma.ranking.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RankingUpdateArgs>(args: SelectSubset<T, RankingUpdateArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Rankings.
+     * @param {RankingDeleteManyArgs} args - Arguments to filter Rankings to delete.
+     * @example
+     * // Delete a few Rankings
+     * const { count } = await prisma.ranking.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RankingDeleteManyArgs>(args?: SelectSubset<T, RankingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Rankings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Rankings
+     * const ranking = await prisma.ranking.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RankingUpdateManyArgs>(args: SelectSubset<T, RankingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Rankings and returns the data updated in the database.
+     * @param {RankingUpdateManyAndReturnArgs} args - Arguments to update many Rankings.
+     * @example
+     * // Update many Rankings
+     * const ranking = await prisma.ranking.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Rankings and only return the `id`
+     * const rankingWithIdOnly = await prisma.ranking.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RankingUpdateManyAndReturnArgs>(args: SelectSubset<T, RankingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Ranking.
+     * @param {RankingUpsertArgs} args - Arguments to update or create a Ranking.
+     * @example
+     * // Update or create a Ranking
+     * const ranking = await prisma.ranking.upsert({
+     *   create: {
+     *     // ... data to create a Ranking
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Ranking we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RankingUpsertArgs>(args: SelectSubset<T, RankingUpsertArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Rankings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingCountArgs} args - Arguments to filter Rankings to count.
+     * @example
+     * // Count the number of Rankings
+     * const count = await prisma.ranking.count({
+     *   where: {
+     *     // ... the filter for the Rankings we want to count
+     *   }
+     * })
+    **/
+    count<T extends RankingCountArgs>(
+      args?: Subset<T, RankingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RankingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Ranking.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RankingAggregateArgs>(args: Subset<T, RankingAggregateArgs>): Prisma.PrismaPromise<GetRankingAggregateType<T>>
+
+    /**
+     * Group by Ranking.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RankingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RankingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RankingGroupByArgs['orderBy'] }
+        : { orderBy?: RankingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RankingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRankingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Ranking model
+   */
+  readonly fields: RankingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Ranking.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RankingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Ranking model
+   */
+  interface RankingFieldRefs {
+    readonly id: FieldRef<"Ranking", 'Int'>
+    readonly dinozCount: FieldRef<"Ranking", 'Int'>
+    readonly points: FieldRef<"Ranking", 'Int'>
+    readonly average: FieldRef<"Ranking", 'Int'>
+    readonly completion: FieldRef<"Ranking", 'Int'>
+    readonly dojo: FieldRef<"Ranking", 'Int'>
+    readonly userId: FieldRef<"Ranking", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Ranking findUnique
+   */
+  export type RankingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter, which Ranking to fetch.
+     */
+    where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking findUniqueOrThrow
+   */
+  export type RankingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter, which Ranking to fetch.
+     */
+    where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking findFirst
+   */
+  export type RankingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter, which Ranking to fetch.
+     */
+    where?: RankingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rankings to fetch.
+     */
+    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Rankings.
+     */
+    cursor?: RankingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rankings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rankings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rankings.
+     */
+    distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking findFirstOrThrow
+   */
+  export type RankingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter, which Ranking to fetch.
+     */
+    where?: RankingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rankings to fetch.
+     */
+    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Rankings.
+     */
+    cursor?: RankingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rankings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rankings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rankings.
+     */
+    distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking findMany
+   */
+  export type RankingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter, which Rankings to fetch.
+     */
+    where?: RankingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Rankings to fetch.
+     */
+    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Rankings.
+     */
+    cursor?: RankingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Rankings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Rankings.
+     */
+    skip?: number
+    distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking create
+   */
+  export type RankingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Ranking.
+     */
+    data: XOR<RankingCreateInput, RankingUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking createMany
+   */
+  export type RankingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Rankings.
+     */
+    data: RankingCreateManyInput | RankingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Ranking createManyAndReturn
+   */
+  export type RankingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * The data used to create many Rankings.
+     */
+    data: RankingCreateManyInput | RankingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Ranking update
+   */
+  export type RankingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Ranking.
+     */
+    data: XOR<RankingUpdateInput, RankingUncheckedUpdateInput>
+    /**
+     * Choose, which Ranking to update.
+     */
+    where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking updateMany
+   */
+  export type RankingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Rankings.
+     */
+    data: XOR<RankingUpdateManyMutationInput, RankingUncheckedUpdateManyInput>
+    /**
+     * Filter which Rankings to update
+     */
+    where?: RankingWhereInput
+    /**
+     * Limit how many Rankings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Ranking updateManyAndReturn
+   */
+  export type RankingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * The data used to update Rankings.
+     */
+    data: XOR<RankingUpdateManyMutationInput, RankingUncheckedUpdateManyInput>
+    /**
+     * Filter which Rankings to update
+     */
+    where?: RankingWhereInput
+    /**
+     * Limit how many Rankings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Ranking upsert
+   */
+  export type RankingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Ranking to update in case it exists.
+     */
+    where: RankingWhereUniqueInput
+    /**
+     * In case the Ranking found by the `where` argument doesn't exist, create a new Ranking with this data.
+     */
+    create: XOR<RankingCreateInput, RankingUncheckedCreateInput>
+    /**
+     * In case the Ranking was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RankingUpdateInput, RankingUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking delete
+   */
+  export type RankingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+    /**
+     * Filter which Ranking to delete.
+     */
+    where: RankingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Ranking deleteMany
+   */
+  export type RankingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Rankings to delete
+     */
+    where?: RankingWhereInput
+    /**
+     * Limit how many Rankings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Ranking without action
+   */
+  export type RankingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Ranking
+     */
+    select?: RankingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Ranking
+     */
+    omit?: RankingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RankingInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SignupDeviceMonthCounter
+   */
+
+  export type AggregateSignupDeviceMonthCounter = {
+    _count: SignupDeviceMonthCounterCountAggregateOutputType | null
+    _avg: SignupDeviceMonthCounterAvgAggregateOutputType | null
+    _sum: SignupDeviceMonthCounterSumAggregateOutputType | null
+    _min: SignupDeviceMonthCounterMinAggregateOutputType | null
+    _max: SignupDeviceMonthCounterMaxAggregateOutputType | null
+  }
+
+  export type SignupDeviceMonthCounterAvgAggregateOutputType = {
+    id: number | null
+    count: number | null
+  }
+
+  export type SignupDeviceMonthCounterSumAggregateOutputType = {
+    id: number | null
+    count: number | null
+  }
+
+  export type SignupDeviceMonthCounterMinAggregateOutputType = {
+    id: number | null
+    monthKey: string | null
+    deviceToken: string | null
+    count: number | null
+    expiresAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SignupDeviceMonthCounterMaxAggregateOutputType = {
+    id: number | null
+    monthKey: string | null
+    deviceToken: string | null
+    count: number | null
+    expiresAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SignupDeviceMonthCounterCountAggregateOutputType = {
+    id: number
+    monthKey: number
+    deviceToken: number
+    count: number
+    expiresAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SignupDeviceMonthCounterAvgAggregateInputType = {
+    id?: true
+    count?: true
+  }
+
+  export type SignupDeviceMonthCounterSumAggregateInputType = {
+    id?: true
+    count?: true
+  }
+
+  export type SignupDeviceMonthCounterMinAggregateInputType = {
+    id?: true
+    monthKey?: true
+    deviceToken?: true
+    count?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SignupDeviceMonthCounterMaxAggregateInputType = {
+    id?: true
+    monthKey?: true
+    deviceToken?: true
+    count?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SignupDeviceMonthCounterCountAggregateInputType = {
+    id?: true
+    monthKey?: true
+    deviceToken?: true
+    count?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SignupDeviceMonthCounterAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SignupDeviceMonthCounter to aggregate.
+     */
+    where?: SignupDeviceMonthCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SignupDeviceMonthCounters to fetch.
+     */
+    orderBy?: SignupDeviceMonthCounterOrderByWithRelationInput | SignupDeviceMonthCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SignupDeviceMonthCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SignupDeviceMonthCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SignupDeviceMonthCounters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SignupDeviceMonthCounters
+    **/
+    _count?: true | SignupDeviceMonthCounterCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SignupDeviceMonthCounterAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SignupDeviceMonthCounterSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SignupDeviceMonthCounterMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SignupDeviceMonthCounterMaxAggregateInputType
+  }
+
+  export type GetSignupDeviceMonthCounterAggregateType<T extends SignupDeviceMonthCounterAggregateArgs> = {
+        [P in keyof T & keyof AggregateSignupDeviceMonthCounter]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSignupDeviceMonthCounter[P]>
+      : GetScalarType<T[P], AggregateSignupDeviceMonthCounter[P]>
+  }
+
+
+
+
+  export type SignupDeviceMonthCounterGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SignupDeviceMonthCounterWhereInput
+    orderBy?: SignupDeviceMonthCounterOrderByWithAggregationInput | SignupDeviceMonthCounterOrderByWithAggregationInput[]
+    by: SignupDeviceMonthCounterScalarFieldEnum[] | SignupDeviceMonthCounterScalarFieldEnum
+    having?: SignupDeviceMonthCounterScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SignupDeviceMonthCounterCountAggregateInputType | true
+    _avg?: SignupDeviceMonthCounterAvgAggregateInputType
+    _sum?: SignupDeviceMonthCounterSumAggregateInputType
+    _min?: SignupDeviceMonthCounterMinAggregateInputType
+    _max?: SignupDeviceMonthCounterMaxAggregateInputType
+  }
+
+  export type SignupDeviceMonthCounterGroupByOutputType = {
+    id: number
+    monthKey: string
+    deviceToken: string
+    count: number
+    expiresAt: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: SignupDeviceMonthCounterCountAggregateOutputType | null
+    _avg: SignupDeviceMonthCounterAvgAggregateOutputType | null
+    _sum: SignupDeviceMonthCounterSumAggregateOutputType | null
+    _min: SignupDeviceMonthCounterMinAggregateOutputType | null
+    _max: SignupDeviceMonthCounterMaxAggregateOutputType | null
+  }
+
+  type GetSignupDeviceMonthCounterGroupByPayload<T extends SignupDeviceMonthCounterGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SignupDeviceMonthCounterGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SignupDeviceMonthCounterGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SignupDeviceMonthCounterGroupByOutputType[P]>
+            : GetScalarType<T[P], SignupDeviceMonthCounterGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SignupDeviceMonthCounterSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    monthKey?: boolean
+    deviceToken?: boolean
+    count?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["signupDeviceMonthCounter"]>
+
+  export type SignupDeviceMonthCounterSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    monthKey?: boolean
+    deviceToken?: boolean
+    count?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["signupDeviceMonthCounter"]>
+
+  export type SignupDeviceMonthCounterSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    monthKey?: boolean
+    deviceToken?: boolean
+    count?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["signupDeviceMonthCounter"]>
+
+  export type SignupDeviceMonthCounterSelectScalar = {
+    id?: boolean
+    monthKey?: boolean
+    deviceToken?: boolean
+    count?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SignupDeviceMonthCounterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "monthKey" | "deviceToken" | "count" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["signupDeviceMonthCounter"]>
+
+  export type $SignupDeviceMonthCounterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SignupDeviceMonthCounter"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      monthKey: string
+      deviceToken: string
+      count: number
+      expiresAt: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["signupDeviceMonthCounter"]>
+    composites: {}
+  }
+
+  type SignupDeviceMonthCounterGetPayload<S extends boolean | null | undefined | SignupDeviceMonthCounterDefaultArgs> = $Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload, S>
+
+  type SignupDeviceMonthCounterCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SignupDeviceMonthCounterFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: SignupDeviceMonthCounterCountAggregateInputType | true
+    }
+
+  export interface SignupDeviceMonthCounterDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SignupDeviceMonthCounter'], meta: { name: 'SignupDeviceMonthCounter' } }
+    /**
+     * Find zero or one SignupDeviceMonthCounter that matches the filter.
+     * @param {SignupDeviceMonthCounterFindUniqueArgs} args - Arguments to find a SignupDeviceMonthCounter
+     * @example
+     * // Get one SignupDeviceMonthCounter
+     * const signupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SignupDeviceMonthCounterFindUniqueArgs>(args: SelectSubset<T, SignupDeviceMonthCounterFindUniqueArgs<ExtArgs>>): Prisma__SignupDeviceMonthCounterClient<$Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SignupDeviceMonthCounter that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SignupDeviceMonthCounterFindUniqueOrThrowArgs} args - Arguments to find a SignupDeviceMonthCounter
+     * @example
+     * // Get one SignupDeviceMonthCounter
+     * const signupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SignupDeviceMonthCounterFindUniqueOrThrowArgs>(args: SelectSubset<T, SignupDeviceMonthCounterFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SignupDeviceMonthCounterClient<$Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SignupDeviceMonthCounter that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupDeviceMonthCounterFindFirstArgs} args - Arguments to find a SignupDeviceMonthCounter
+     * @example
+     * // Get one SignupDeviceMonthCounter
+     * const signupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SignupDeviceMonthCounterFindFirstArgs>(args?: SelectSubset<T, SignupDeviceMonthCounterFindFirstArgs<ExtArgs>>): Prisma__SignupDeviceMonthCounterClient<$Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SignupDeviceMonthCounter that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupDeviceMonthCounterFindFirstOrThrowArgs} args - Arguments to find a SignupDeviceMonthCounter
+     * @example
+     * // Get one SignupDeviceMonthCounter
+     * const signupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SignupDeviceMonthCounterFindFirstOrThrowArgs>(args?: SelectSubset<T, SignupDeviceMonthCounterFindFirstOrThrowArgs<ExtArgs>>): Prisma__SignupDeviceMonthCounterClient<$Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SignupDeviceMonthCounters that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupDeviceMonthCounterFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SignupDeviceMonthCounters
+     * const signupDeviceMonthCounters = await prisma.signupDeviceMonthCounter.findMany()
+     * 
+     * // Get first 10 SignupDeviceMonthCounters
+     * const signupDeviceMonthCounters = await prisma.signupDeviceMonthCounter.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const signupDeviceMonthCounterWithIdOnly = await prisma.signupDeviceMonthCounter.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SignupDeviceMonthCounterFindManyArgs>(args?: SelectSubset<T, SignupDeviceMonthCounterFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SignupDeviceMonthCounter.
+     * @param {SignupDeviceMonthCounterCreateArgs} args - Arguments to create a SignupDeviceMonthCounter.
+     * @example
+     * // Create one SignupDeviceMonthCounter
+     * const SignupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.create({
+     *   data: {
+     *     // ... data to create a SignupDeviceMonthCounter
+     *   }
+     * })
+     * 
+     */
+    create<T extends SignupDeviceMonthCounterCreateArgs>(args: SelectSubset<T, SignupDeviceMonthCounterCreateArgs<ExtArgs>>): Prisma__SignupDeviceMonthCounterClient<$Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SignupDeviceMonthCounters.
+     * @param {SignupDeviceMonthCounterCreateManyArgs} args - Arguments to create many SignupDeviceMonthCounters.
+     * @example
+     * // Create many SignupDeviceMonthCounters
+     * const signupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SignupDeviceMonthCounterCreateManyArgs>(args?: SelectSubset<T, SignupDeviceMonthCounterCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SignupDeviceMonthCounters and returns the data saved in the database.
+     * @param {SignupDeviceMonthCounterCreateManyAndReturnArgs} args - Arguments to create many SignupDeviceMonthCounters.
+     * @example
+     * // Create many SignupDeviceMonthCounters
+     * const signupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SignupDeviceMonthCounters and only return the `id`
+     * const signupDeviceMonthCounterWithIdOnly = await prisma.signupDeviceMonthCounter.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SignupDeviceMonthCounterCreateManyAndReturnArgs>(args?: SelectSubset<T, SignupDeviceMonthCounterCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SignupDeviceMonthCounter.
+     * @param {SignupDeviceMonthCounterDeleteArgs} args - Arguments to delete one SignupDeviceMonthCounter.
+     * @example
+     * // Delete one SignupDeviceMonthCounter
+     * const SignupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.delete({
+     *   where: {
+     *     // ... filter to delete one SignupDeviceMonthCounter
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SignupDeviceMonthCounterDeleteArgs>(args: SelectSubset<T, SignupDeviceMonthCounterDeleteArgs<ExtArgs>>): Prisma__SignupDeviceMonthCounterClient<$Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SignupDeviceMonthCounter.
+     * @param {SignupDeviceMonthCounterUpdateArgs} args - Arguments to update one SignupDeviceMonthCounter.
+     * @example
+     * // Update one SignupDeviceMonthCounter
+     * const signupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SignupDeviceMonthCounterUpdateArgs>(args: SelectSubset<T, SignupDeviceMonthCounterUpdateArgs<ExtArgs>>): Prisma__SignupDeviceMonthCounterClient<$Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SignupDeviceMonthCounters.
+     * @param {SignupDeviceMonthCounterDeleteManyArgs} args - Arguments to filter SignupDeviceMonthCounters to delete.
+     * @example
+     * // Delete a few SignupDeviceMonthCounters
+     * const { count } = await prisma.signupDeviceMonthCounter.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SignupDeviceMonthCounterDeleteManyArgs>(args?: SelectSubset<T, SignupDeviceMonthCounterDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SignupDeviceMonthCounters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupDeviceMonthCounterUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SignupDeviceMonthCounters
+     * const signupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SignupDeviceMonthCounterUpdateManyArgs>(args: SelectSubset<T, SignupDeviceMonthCounterUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SignupDeviceMonthCounters and returns the data updated in the database.
+     * @param {SignupDeviceMonthCounterUpdateManyAndReturnArgs} args - Arguments to update many SignupDeviceMonthCounters.
+     * @example
+     * // Update many SignupDeviceMonthCounters
+     * const signupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SignupDeviceMonthCounters and only return the `id`
+     * const signupDeviceMonthCounterWithIdOnly = await prisma.signupDeviceMonthCounter.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SignupDeviceMonthCounterUpdateManyAndReturnArgs>(args: SelectSubset<T, SignupDeviceMonthCounterUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SignupDeviceMonthCounter.
+     * @param {SignupDeviceMonthCounterUpsertArgs} args - Arguments to update or create a SignupDeviceMonthCounter.
+     * @example
+     * // Update or create a SignupDeviceMonthCounter
+     * const signupDeviceMonthCounter = await prisma.signupDeviceMonthCounter.upsert({
+     *   create: {
+     *     // ... data to create a SignupDeviceMonthCounter
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SignupDeviceMonthCounter we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SignupDeviceMonthCounterUpsertArgs>(args: SelectSubset<T, SignupDeviceMonthCounterUpsertArgs<ExtArgs>>): Prisma__SignupDeviceMonthCounterClient<$Result.GetResult<Prisma.$SignupDeviceMonthCounterPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SignupDeviceMonthCounters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupDeviceMonthCounterCountArgs} args - Arguments to filter SignupDeviceMonthCounters to count.
+     * @example
+     * // Count the number of SignupDeviceMonthCounters
+     * const count = await prisma.signupDeviceMonthCounter.count({
+     *   where: {
+     *     // ... the filter for the SignupDeviceMonthCounters we want to count
+     *   }
+     * })
+    **/
+    count<T extends SignupDeviceMonthCounterCountArgs>(
+      args?: Subset<T, SignupDeviceMonthCounterCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SignupDeviceMonthCounterCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SignupDeviceMonthCounter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupDeviceMonthCounterAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SignupDeviceMonthCounterAggregateArgs>(args: Subset<T, SignupDeviceMonthCounterAggregateArgs>): Prisma.PrismaPromise<GetSignupDeviceMonthCounterAggregateType<T>>
+
+    /**
+     * Group by SignupDeviceMonthCounter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupDeviceMonthCounterGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SignupDeviceMonthCounterGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SignupDeviceMonthCounterGroupByArgs['orderBy'] }
+        : { orderBy?: SignupDeviceMonthCounterGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SignupDeviceMonthCounterGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSignupDeviceMonthCounterGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SignupDeviceMonthCounter model
+   */
+  readonly fields: SignupDeviceMonthCounterFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SignupDeviceMonthCounter.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SignupDeviceMonthCounterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SignupDeviceMonthCounter model
+   */
+  interface SignupDeviceMonthCounterFieldRefs {
+    readonly id: FieldRef<"SignupDeviceMonthCounter", 'Int'>
+    readonly monthKey: FieldRef<"SignupDeviceMonthCounter", 'String'>
+    readonly deviceToken: FieldRef<"SignupDeviceMonthCounter", 'String'>
+    readonly count: FieldRef<"SignupDeviceMonthCounter", 'Int'>
+    readonly expiresAt: FieldRef<"SignupDeviceMonthCounter", 'DateTime'>
+    readonly createdAt: FieldRef<"SignupDeviceMonthCounter", 'DateTime'>
+    readonly updatedAt: FieldRef<"SignupDeviceMonthCounter", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SignupDeviceMonthCounter findUnique
+   */
+  export type SignupDeviceMonthCounterFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which SignupDeviceMonthCounter to fetch.
+     */
+    where: SignupDeviceMonthCounterWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupDeviceMonthCounter findUniqueOrThrow
+   */
+  export type SignupDeviceMonthCounterFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which SignupDeviceMonthCounter to fetch.
+     */
+    where: SignupDeviceMonthCounterWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupDeviceMonthCounter findFirst
+   */
+  export type SignupDeviceMonthCounterFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which SignupDeviceMonthCounter to fetch.
+     */
+    where?: SignupDeviceMonthCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SignupDeviceMonthCounters to fetch.
+     */
+    orderBy?: SignupDeviceMonthCounterOrderByWithRelationInput | SignupDeviceMonthCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SignupDeviceMonthCounters.
+     */
+    cursor?: SignupDeviceMonthCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SignupDeviceMonthCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SignupDeviceMonthCounters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SignupDeviceMonthCounters.
+     */
+    distinct?: SignupDeviceMonthCounterScalarFieldEnum | SignupDeviceMonthCounterScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupDeviceMonthCounter findFirstOrThrow
+   */
+  export type SignupDeviceMonthCounterFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which SignupDeviceMonthCounter to fetch.
+     */
+    where?: SignupDeviceMonthCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SignupDeviceMonthCounters to fetch.
+     */
+    orderBy?: SignupDeviceMonthCounterOrderByWithRelationInput | SignupDeviceMonthCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SignupDeviceMonthCounters.
+     */
+    cursor?: SignupDeviceMonthCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SignupDeviceMonthCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SignupDeviceMonthCounters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SignupDeviceMonthCounters.
+     */
+    distinct?: SignupDeviceMonthCounterScalarFieldEnum | SignupDeviceMonthCounterScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupDeviceMonthCounter findMany
+   */
+  export type SignupDeviceMonthCounterFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which SignupDeviceMonthCounters to fetch.
+     */
+    where?: SignupDeviceMonthCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SignupDeviceMonthCounters to fetch.
+     */
+    orderBy?: SignupDeviceMonthCounterOrderByWithRelationInput | SignupDeviceMonthCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SignupDeviceMonthCounters.
+     */
+    cursor?: SignupDeviceMonthCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SignupDeviceMonthCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SignupDeviceMonthCounters.
+     */
+    skip?: number
+    distinct?: SignupDeviceMonthCounterScalarFieldEnum | SignupDeviceMonthCounterScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupDeviceMonthCounter create
+   */
+  export type SignupDeviceMonthCounterCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SignupDeviceMonthCounter.
+     */
+    data: XOR<SignupDeviceMonthCounterCreateInput, SignupDeviceMonthCounterUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupDeviceMonthCounter createMany
+   */
+  export type SignupDeviceMonthCounterCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SignupDeviceMonthCounters.
+     */
+    data: SignupDeviceMonthCounterCreateManyInput | SignupDeviceMonthCounterCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SignupDeviceMonthCounter createManyAndReturn
+   */
+  export type SignupDeviceMonthCounterCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+    /**
+     * The data used to create many SignupDeviceMonthCounters.
+     */
+    data: SignupDeviceMonthCounterCreateManyInput | SignupDeviceMonthCounterCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SignupDeviceMonthCounter update
+   */
+  export type SignupDeviceMonthCounterUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SignupDeviceMonthCounter.
+     */
+    data: XOR<SignupDeviceMonthCounterUpdateInput, SignupDeviceMonthCounterUncheckedUpdateInput>
+    /**
+     * Choose, which SignupDeviceMonthCounter to update.
+     */
+    where: SignupDeviceMonthCounterWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupDeviceMonthCounter updateMany
+   */
+  export type SignupDeviceMonthCounterUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SignupDeviceMonthCounters.
+     */
+    data: XOR<SignupDeviceMonthCounterUpdateManyMutationInput, SignupDeviceMonthCounterUncheckedUpdateManyInput>
+    /**
+     * Filter which SignupDeviceMonthCounters to update
+     */
+    where?: SignupDeviceMonthCounterWhereInput
+    /**
+     * Limit how many SignupDeviceMonthCounters to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SignupDeviceMonthCounter updateManyAndReturn
+   */
+  export type SignupDeviceMonthCounterUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+    /**
+     * The data used to update SignupDeviceMonthCounters.
+     */
+    data: XOR<SignupDeviceMonthCounterUpdateManyMutationInput, SignupDeviceMonthCounterUncheckedUpdateManyInput>
+    /**
+     * Filter which SignupDeviceMonthCounters to update
+     */
+    where?: SignupDeviceMonthCounterWhereInput
+    /**
+     * Limit how many SignupDeviceMonthCounters to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SignupDeviceMonthCounter upsert
+   */
+  export type SignupDeviceMonthCounterUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SignupDeviceMonthCounter to update in case it exists.
+     */
+    where: SignupDeviceMonthCounterWhereUniqueInput
+    /**
+     * In case the SignupDeviceMonthCounter found by the `where` argument doesn't exist, create a new SignupDeviceMonthCounter with this data.
+     */
+    create: XOR<SignupDeviceMonthCounterCreateInput, SignupDeviceMonthCounterUncheckedCreateInput>
+    /**
+     * In case the SignupDeviceMonthCounter was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SignupDeviceMonthCounterUpdateInput, SignupDeviceMonthCounterUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupDeviceMonthCounter delete
+   */
+  export type SignupDeviceMonthCounterDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter which SignupDeviceMonthCounter to delete.
+     */
+    where: SignupDeviceMonthCounterWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupDeviceMonthCounter deleteMany
+   */
+  export type SignupDeviceMonthCounterDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SignupDeviceMonthCounters to delete
+     */
+    where?: SignupDeviceMonthCounterWhereInput
+    /**
+     * Limit how many SignupDeviceMonthCounters to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SignupDeviceMonthCounter without action
+   */
+  export type SignupDeviceMonthCounterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupDeviceMonthCounter
+     */
+    select?: SignupDeviceMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupDeviceMonthCounter
+     */
+    omit?: SignupDeviceMonthCounterOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SignupIpMonthCounter
+   */
+
+  export type AggregateSignupIpMonthCounter = {
+    _count: SignupIpMonthCounterCountAggregateOutputType | null
+    _avg: SignupIpMonthCounterAvgAggregateOutputType | null
+    _sum: SignupIpMonthCounterSumAggregateOutputType | null
+    _min: SignupIpMonthCounterMinAggregateOutputType | null
+    _max: SignupIpMonthCounterMaxAggregateOutputType | null
+  }
+
+  export type SignupIpMonthCounterAvgAggregateOutputType = {
+    id: number | null
+    count: number | null
+  }
+
+  export type SignupIpMonthCounterSumAggregateOutputType = {
+    id: number | null
+    count: number | null
+  }
+
+  export type SignupIpMonthCounterMinAggregateOutputType = {
+    id: number | null
+    monthKey: string | null
+    ipToken: string | null
+    count: number | null
+    expiresAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SignupIpMonthCounterMaxAggregateOutputType = {
+    id: number | null
+    monthKey: string | null
+    ipToken: string | null
+    count: number | null
+    expiresAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SignupIpMonthCounterCountAggregateOutputType = {
+    id: number
+    monthKey: number
+    ipToken: number
+    count: number
+    expiresAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SignupIpMonthCounterAvgAggregateInputType = {
+    id?: true
+    count?: true
+  }
+
+  export type SignupIpMonthCounterSumAggregateInputType = {
+    id?: true
+    count?: true
+  }
+
+  export type SignupIpMonthCounterMinAggregateInputType = {
+    id?: true
+    monthKey?: true
+    ipToken?: true
+    count?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SignupIpMonthCounterMaxAggregateInputType = {
+    id?: true
+    monthKey?: true
+    ipToken?: true
+    count?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SignupIpMonthCounterCountAggregateInputType = {
+    id?: true
+    monthKey?: true
+    ipToken?: true
+    count?: true
+    expiresAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SignupIpMonthCounterAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SignupIpMonthCounter to aggregate.
+     */
+    where?: SignupIpMonthCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SignupIpMonthCounters to fetch.
+     */
+    orderBy?: SignupIpMonthCounterOrderByWithRelationInput | SignupIpMonthCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SignupIpMonthCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SignupIpMonthCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SignupIpMonthCounters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SignupIpMonthCounters
+    **/
+    _count?: true | SignupIpMonthCounterCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SignupIpMonthCounterAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SignupIpMonthCounterSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SignupIpMonthCounterMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SignupIpMonthCounterMaxAggregateInputType
+  }
+
+  export type GetSignupIpMonthCounterAggregateType<T extends SignupIpMonthCounterAggregateArgs> = {
+        [P in keyof T & keyof AggregateSignupIpMonthCounter]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSignupIpMonthCounter[P]>
+      : GetScalarType<T[P], AggregateSignupIpMonthCounter[P]>
+  }
+
+
+
+
+  export type SignupIpMonthCounterGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SignupIpMonthCounterWhereInput
+    orderBy?: SignupIpMonthCounterOrderByWithAggregationInput | SignupIpMonthCounterOrderByWithAggregationInput[]
+    by: SignupIpMonthCounterScalarFieldEnum[] | SignupIpMonthCounterScalarFieldEnum
+    having?: SignupIpMonthCounterScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SignupIpMonthCounterCountAggregateInputType | true
+    _avg?: SignupIpMonthCounterAvgAggregateInputType
+    _sum?: SignupIpMonthCounterSumAggregateInputType
+    _min?: SignupIpMonthCounterMinAggregateInputType
+    _max?: SignupIpMonthCounterMaxAggregateInputType
+  }
+
+  export type SignupIpMonthCounterGroupByOutputType = {
+    id: number
+    monthKey: string
+    ipToken: string
+    count: number
+    expiresAt: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: SignupIpMonthCounterCountAggregateOutputType | null
+    _avg: SignupIpMonthCounterAvgAggregateOutputType | null
+    _sum: SignupIpMonthCounterSumAggregateOutputType | null
+    _min: SignupIpMonthCounterMinAggregateOutputType | null
+    _max: SignupIpMonthCounterMaxAggregateOutputType | null
+  }
+
+  type GetSignupIpMonthCounterGroupByPayload<T extends SignupIpMonthCounterGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SignupIpMonthCounterGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SignupIpMonthCounterGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SignupIpMonthCounterGroupByOutputType[P]>
+            : GetScalarType<T[P], SignupIpMonthCounterGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SignupIpMonthCounterSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    monthKey?: boolean
+    ipToken?: boolean
+    count?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["signupIpMonthCounter"]>
+
+  export type SignupIpMonthCounterSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    monthKey?: boolean
+    ipToken?: boolean
+    count?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["signupIpMonthCounter"]>
+
+  export type SignupIpMonthCounterSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    monthKey?: boolean
+    ipToken?: boolean
+    count?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["signupIpMonthCounter"]>
+
+  export type SignupIpMonthCounterSelectScalar = {
+    id?: boolean
+    monthKey?: boolean
+    ipToken?: boolean
+    count?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SignupIpMonthCounterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "monthKey" | "ipToken" | "count" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["signupIpMonthCounter"]>
+
+  export type $SignupIpMonthCounterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SignupIpMonthCounter"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      monthKey: string
+      ipToken: string
+      count: number
+      expiresAt: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["signupIpMonthCounter"]>
+    composites: {}
+  }
+
+  type SignupIpMonthCounterGetPayload<S extends boolean | null | undefined | SignupIpMonthCounterDefaultArgs> = $Result.GetResult<Prisma.$SignupIpMonthCounterPayload, S>
+
+  type SignupIpMonthCounterCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SignupIpMonthCounterFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: SignupIpMonthCounterCountAggregateInputType | true
+    }
+
+  export interface SignupIpMonthCounterDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SignupIpMonthCounter'], meta: { name: 'SignupIpMonthCounter' } }
+    /**
+     * Find zero or one SignupIpMonthCounter that matches the filter.
+     * @param {SignupIpMonthCounterFindUniqueArgs} args - Arguments to find a SignupIpMonthCounter
+     * @example
+     * // Get one SignupIpMonthCounter
+     * const signupIpMonthCounter = await prisma.signupIpMonthCounter.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SignupIpMonthCounterFindUniqueArgs>(args: SelectSubset<T, SignupIpMonthCounterFindUniqueArgs<ExtArgs>>): Prisma__SignupIpMonthCounterClient<$Result.GetResult<Prisma.$SignupIpMonthCounterPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SignupIpMonthCounter that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SignupIpMonthCounterFindUniqueOrThrowArgs} args - Arguments to find a SignupIpMonthCounter
+     * @example
+     * // Get one SignupIpMonthCounter
+     * const signupIpMonthCounter = await prisma.signupIpMonthCounter.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SignupIpMonthCounterFindUniqueOrThrowArgs>(args: SelectSubset<T, SignupIpMonthCounterFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SignupIpMonthCounterClient<$Result.GetResult<Prisma.$SignupIpMonthCounterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SignupIpMonthCounter that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupIpMonthCounterFindFirstArgs} args - Arguments to find a SignupIpMonthCounter
+     * @example
+     * // Get one SignupIpMonthCounter
+     * const signupIpMonthCounter = await prisma.signupIpMonthCounter.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SignupIpMonthCounterFindFirstArgs>(args?: SelectSubset<T, SignupIpMonthCounterFindFirstArgs<ExtArgs>>): Prisma__SignupIpMonthCounterClient<$Result.GetResult<Prisma.$SignupIpMonthCounterPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SignupIpMonthCounter that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupIpMonthCounterFindFirstOrThrowArgs} args - Arguments to find a SignupIpMonthCounter
+     * @example
+     * // Get one SignupIpMonthCounter
+     * const signupIpMonthCounter = await prisma.signupIpMonthCounter.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SignupIpMonthCounterFindFirstOrThrowArgs>(args?: SelectSubset<T, SignupIpMonthCounterFindFirstOrThrowArgs<ExtArgs>>): Prisma__SignupIpMonthCounterClient<$Result.GetResult<Prisma.$SignupIpMonthCounterPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SignupIpMonthCounters that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupIpMonthCounterFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SignupIpMonthCounters
+     * const signupIpMonthCounters = await prisma.signupIpMonthCounter.findMany()
+     * 
+     * // Get first 10 SignupIpMonthCounters
+     * const signupIpMonthCounters = await prisma.signupIpMonthCounter.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const signupIpMonthCounterWithIdOnly = await prisma.signupIpMonthCounter.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SignupIpMonthCounterFindManyArgs>(args?: SelectSubset<T, SignupIpMonthCounterFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SignupIpMonthCounterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SignupIpMonthCounter.
+     * @param {SignupIpMonthCounterCreateArgs} args - Arguments to create a SignupIpMonthCounter.
+     * @example
+     * // Create one SignupIpMonthCounter
+     * const SignupIpMonthCounter = await prisma.signupIpMonthCounter.create({
+     *   data: {
+     *     // ... data to create a SignupIpMonthCounter
+     *   }
+     * })
+     * 
+     */
+    create<T extends SignupIpMonthCounterCreateArgs>(args: SelectSubset<T, SignupIpMonthCounterCreateArgs<ExtArgs>>): Prisma__SignupIpMonthCounterClient<$Result.GetResult<Prisma.$SignupIpMonthCounterPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SignupIpMonthCounters.
+     * @param {SignupIpMonthCounterCreateManyArgs} args - Arguments to create many SignupIpMonthCounters.
+     * @example
+     * // Create many SignupIpMonthCounters
+     * const signupIpMonthCounter = await prisma.signupIpMonthCounter.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SignupIpMonthCounterCreateManyArgs>(args?: SelectSubset<T, SignupIpMonthCounterCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SignupIpMonthCounters and returns the data saved in the database.
+     * @param {SignupIpMonthCounterCreateManyAndReturnArgs} args - Arguments to create many SignupIpMonthCounters.
+     * @example
+     * // Create many SignupIpMonthCounters
+     * const signupIpMonthCounter = await prisma.signupIpMonthCounter.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SignupIpMonthCounters and only return the `id`
+     * const signupIpMonthCounterWithIdOnly = await prisma.signupIpMonthCounter.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SignupIpMonthCounterCreateManyAndReturnArgs>(args?: SelectSubset<T, SignupIpMonthCounterCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SignupIpMonthCounterPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SignupIpMonthCounter.
+     * @param {SignupIpMonthCounterDeleteArgs} args - Arguments to delete one SignupIpMonthCounter.
+     * @example
+     * // Delete one SignupIpMonthCounter
+     * const SignupIpMonthCounter = await prisma.signupIpMonthCounter.delete({
+     *   where: {
+     *     // ... filter to delete one SignupIpMonthCounter
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SignupIpMonthCounterDeleteArgs>(args: SelectSubset<T, SignupIpMonthCounterDeleteArgs<ExtArgs>>): Prisma__SignupIpMonthCounterClient<$Result.GetResult<Prisma.$SignupIpMonthCounterPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SignupIpMonthCounter.
+     * @param {SignupIpMonthCounterUpdateArgs} args - Arguments to update one SignupIpMonthCounter.
+     * @example
+     * // Update one SignupIpMonthCounter
+     * const signupIpMonthCounter = await prisma.signupIpMonthCounter.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SignupIpMonthCounterUpdateArgs>(args: SelectSubset<T, SignupIpMonthCounterUpdateArgs<ExtArgs>>): Prisma__SignupIpMonthCounterClient<$Result.GetResult<Prisma.$SignupIpMonthCounterPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SignupIpMonthCounters.
+     * @param {SignupIpMonthCounterDeleteManyArgs} args - Arguments to filter SignupIpMonthCounters to delete.
+     * @example
+     * // Delete a few SignupIpMonthCounters
+     * const { count } = await prisma.signupIpMonthCounter.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SignupIpMonthCounterDeleteManyArgs>(args?: SelectSubset<T, SignupIpMonthCounterDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SignupIpMonthCounters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupIpMonthCounterUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SignupIpMonthCounters
+     * const signupIpMonthCounter = await prisma.signupIpMonthCounter.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SignupIpMonthCounterUpdateManyArgs>(args: SelectSubset<T, SignupIpMonthCounterUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SignupIpMonthCounters and returns the data updated in the database.
+     * @param {SignupIpMonthCounterUpdateManyAndReturnArgs} args - Arguments to update many SignupIpMonthCounters.
+     * @example
+     * // Update many SignupIpMonthCounters
+     * const signupIpMonthCounter = await prisma.signupIpMonthCounter.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SignupIpMonthCounters and only return the `id`
+     * const signupIpMonthCounterWithIdOnly = await prisma.signupIpMonthCounter.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SignupIpMonthCounterUpdateManyAndReturnArgs>(args: SelectSubset<T, SignupIpMonthCounterUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SignupIpMonthCounterPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SignupIpMonthCounter.
+     * @param {SignupIpMonthCounterUpsertArgs} args - Arguments to update or create a SignupIpMonthCounter.
+     * @example
+     * // Update or create a SignupIpMonthCounter
+     * const signupIpMonthCounter = await prisma.signupIpMonthCounter.upsert({
+     *   create: {
+     *     // ... data to create a SignupIpMonthCounter
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SignupIpMonthCounter we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SignupIpMonthCounterUpsertArgs>(args: SelectSubset<T, SignupIpMonthCounterUpsertArgs<ExtArgs>>): Prisma__SignupIpMonthCounterClient<$Result.GetResult<Prisma.$SignupIpMonthCounterPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SignupIpMonthCounters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupIpMonthCounterCountArgs} args - Arguments to filter SignupIpMonthCounters to count.
+     * @example
+     * // Count the number of SignupIpMonthCounters
+     * const count = await prisma.signupIpMonthCounter.count({
+     *   where: {
+     *     // ... the filter for the SignupIpMonthCounters we want to count
+     *   }
+     * })
+    **/
+    count<T extends SignupIpMonthCounterCountArgs>(
+      args?: Subset<T, SignupIpMonthCounterCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SignupIpMonthCounterCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SignupIpMonthCounter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupIpMonthCounterAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SignupIpMonthCounterAggregateArgs>(args: Subset<T, SignupIpMonthCounterAggregateArgs>): Prisma.PrismaPromise<GetSignupIpMonthCounterAggregateType<T>>
+
+    /**
+     * Group by SignupIpMonthCounter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SignupIpMonthCounterGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SignupIpMonthCounterGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SignupIpMonthCounterGroupByArgs['orderBy'] }
+        : { orderBy?: SignupIpMonthCounterGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SignupIpMonthCounterGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSignupIpMonthCounterGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SignupIpMonthCounter model
+   */
+  readonly fields: SignupIpMonthCounterFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SignupIpMonthCounter.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SignupIpMonthCounterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SignupIpMonthCounter model
+   */
+  interface SignupIpMonthCounterFieldRefs {
+    readonly id: FieldRef<"SignupIpMonthCounter", 'Int'>
+    readonly monthKey: FieldRef<"SignupIpMonthCounter", 'String'>
+    readonly ipToken: FieldRef<"SignupIpMonthCounter", 'String'>
+    readonly count: FieldRef<"SignupIpMonthCounter", 'Int'>
+    readonly expiresAt: FieldRef<"SignupIpMonthCounter", 'DateTime'>
+    readonly createdAt: FieldRef<"SignupIpMonthCounter", 'DateTime'>
+    readonly updatedAt: FieldRef<"SignupIpMonthCounter", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SignupIpMonthCounter findUnique
+   */
+  export type SignupIpMonthCounterFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which SignupIpMonthCounter to fetch.
+     */
+    where: SignupIpMonthCounterWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupIpMonthCounter findUniqueOrThrow
+   */
+  export type SignupIpMonthCounterFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which SignupIpMonthCounter to fetch.
+     */
+    where: SignupIpMonthCounterWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupIpMonthCounter findFirst
+   */
+  export type SignupIpMonthCounterFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which SignupIpMonthCounter to fetch.
+     */
+    where?: SignupIpMonthCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SignupIpMonthCounters to fetch.
+     */
+    orderBy?: SignupIpMonthCounterOrderByWithRelationInput | SignupIpMonthCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SignupIpMonthCounters.
+     */
+    cursor?: SignupIpMonthCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SignupIpMonthCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SignupIpMonthCounters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SignupIpMonthCounters.
+     */
+    distinct?: SignupIpMonthCounterScalarFieldEnum | SignupIpMonthCounterScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupIpMonthCounter findFirstOrThrow
+   */
+  export type SignupIpMonthCounterFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which SignupIpMonthCounter to fetch.
+     */
+    where?: SignupIpMonthCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SignupIpMonthCounters to fetch.
+     */
+    orderBy?: SignupIpMonthCounterOrderByWithRelationInput | SignupIpMonthCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SignupIpMonthCounters.
+     */
+    cursor?: SignupIpMonthCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SignupIpMonthCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SignupIpMonthCounters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SignupIpMonthCounters.
+     */
+    distinct?: SignupIpMonthCounterScalarFieldEnum | SignupIpMonthCounterScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupIpMonthCounter findMany
+   */
+  export type SignupIpMonthCounterFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which SignupIpMonthCounters to fetch.
+     */
+    where?: SignupIpMonthCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SignupIpMonthCounters to fetch.
+     */
+    orderBy?: SignupIpMonthCounterOrderByWithRelationInput | SignupIpMonthCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SignupIpMonthCounters.
+     */
+    cursor?: SignupIpMonthCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SignupIpMonthCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SignupIpMonthCounters.
+     */
+    skip?: number
+    distinct?: SignupIpMonthCounterScalarFieldEnum | SignupIpMonthCounterScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupIpMonthCounter create
+   */
+  export type SignupIpMonthCounterCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SignupIpMonthCounter.
+     */
+    data: XOR<SignupIpMonthCounterCreateInput, SignupIpMonthCounterUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupIpMonthCounter createMany
+   */
+  export type SignupIpMonthCounterCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SignupIpMonthCounters.
+     */
+    data: SignupIpMonthCounterCreateManyInput | SignupIpMonthCounterCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SignupIpMonthCounter createManyAndReturn
+   */
+  export type SignupIpMonthCounterCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+    /**
+     * The data used to create many SignupIpMonthCounters.
+     */
+    data: SignupIpMonthCounterCreateManyInput | SignupIpMonthCounterCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SignupIpMonthCounter update
+   */
+  export type SignupIpMonthCounterUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SignupIpMonthCounter.
+     */
+    data: XOR<SignupIpMonthCounterUpdateInput, SignupIpMonthCounterUncheckedUpdateInput>
+    /**
+     * Choose, which SignupIpMonthCounter to update.
+     */
+    where: SignupIpMonthCounterWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupIpMonthCounter updateMany
+   */
+  export type SignupIpMonthCounterUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SignupIpMonthCounters.
+     */
+    data: XOR<SignupIpMonthCounterUpdateManyMutationInput, SignupIpMonthCounterUncheckedUpdateManyInput>
+    /**
+     * Filter which SignupIpMonthCounters to update
+     */
+    where?: SignupIpMonthCounterWhereInput
+    /**
+     * Limit how many SignupIpMonthCounters to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SignupIpMonthCounter updateManyAndReturn
+   */
+  export type SignupIpMonthCounterUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+    /**
+     * The data used to update SignupIpMonthCounters.
+     */
+    data: XOR<SignupIpMonthCounterUpdateManyMutationInput, SignupIpMonthCounterUncheckedUpdateManyInput>
+    /**
+     * Filter which SignupIpMonthCounters to update
+     */
+    where?: SignupIpMonthCounterWhereInput
+    /**
+     * Limit how many SignupIpMonthCounters to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SignupIpMonthCounter upsert
+   */
+  export type SignupIpMonthCounterUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SignupIpMonthCounter to update in case it exists.
+     */
+    where: SignupIpMonthCounterWhereUniqueInput
+    /**
+     * In case the SignupIpMonthCounter found by the `where` argument doesn't exist, create a new SignupIpMonthCounter with this data.
+     */
+    create: XOR<SignupIpMonthCounterCreateInput, SignupIpMonthCounterUncheckedCreateInput>
+    /**
+     * In case the SignupIpMonthCounter was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SignupIpMonthCounterUpdateInput, SignupIpMonthCounterUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupIpMonthCounter delete
+   */
+  export type SignupIpMonthCounterDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+    /**
+     * Filter which SignupIpMonthCounter to delete.
+     */
+    where: SignupIpMonthCounterWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * SignupIpMonthCounter deleteMany
+   */
+  export type SignupIpMonthCounterDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SignupIpMonthCounters to delete
+     */
+    where?: SignupIpMonthCounterWhereInput
+    /**
+     * Limit how many SignupIpMonthCounters to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SignupIpMonthCounter without action
+   */
+  export type SignupIpMonthCounterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SignupIpMonthCounter
+     */
+    select?: SignupIpMonthCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SignupIpMonthCounter
+     */
+    omit?: SignupIpMonthCounterOmit<ExtArgs> | null
+  }
+
 
   /**
    * Model User
@@ -5799,1153 +9264,6 @@ export namespace Prisma {
 
 
   /**
-   * Model Ranking
-   */
-
-  export type AggregateRanking = {
-    _count: RankingCountAggregateOutputType | null
-    _avg: RankingAvgAggregateOutputType | null
-    _sum: RankingSumAggregateOutputType | null
-    _min: RankingMinAggregateOutputType | null
-    _max: RankingMaxAggregateOutputType | null
-  }
-
-  export type RankingAvgAggregateOutputType = {
-    id: number | null
-    dinozCount: number | null
-    points: number | null
-    average: number | null
-    completion: number | null
-    dojo: number | null
-  }
-
-  export type RankingSumAggregateOutputType = {
-    id: number | null
-    dinozCount: number | null
-    points: number | null
-    average: number | null
-    completion: number | null
-    dojo: number | null
-  }
-
-  export type RankingMinAggregateOutputType = {
-    id: number | null
-    dinozCount: number | null
-    points: number | null
-    average: number | null
-    completion: number | null
-    dojo: number | null
-    userId: string | null
-  }
-
-  export type RankingMaxAggregateOutputType = {
-    id: number | null
-    dinozCount: number | null
-    points: number | null
-    average: number | null
-    completion: number | null
-    dojo: number | null
-    userId: string | null
-  }
-
-  export type RankingCountAggregateOutputType = {
-    id: number
-    dinozCount: number
-    points: number
-    average: number
-    completion: number
-    dojo: number
-    userId: number
-    _all: number
-  }
-
-
-  export type RankingAvgAggregateInputType = {
-    id?: true
-    dinozCount?: true
-    points?: true
-    average?: true
-    completion?: true
-    dojo?: true
-  }
-
-  export type RankingSumAggregateInputType = {
-    id?: true
-    dinozCount?: true
-    points?: true
-    average?: true
-    completion?: true
-    dojo?: true
-  }
-
-  export type RankingMinAggregateInputType = {
-    id?: true
-    dinozCount?: true
-    points?: true
-    average?: true
-    completion?: true
-    dojo?: true
-    userId?: true
-  }
-
-  export type RankingMaxAggregateInputType = {
-    id?: true
-    dinozCount?: true
-    points?: true
-    average?: true
-    completion?: true
-    dojo?: true
-    userId?: true
-  }
-
-  export type RankingCountAggregateInputType = {
-    id?: true
-    dinozCount?: true
-    points?: true
-    average?: true
-    completion?: true
-    dojo?: true
-    userId?: true
-    _all?: true
-  }
-
-  export type RankingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Ranking to aggregate.
-     */
-    where?: RankingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Rankings to fetch.
-     */
-    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: RankingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Rankings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Rankings.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned Rankings
-    **/
-    _count?: true | RankingCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: RankingAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: RankingSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: RankingMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: RankingMaxAggregateInputType
-  }
-
-  export type GetRankingAggregateType<T extends RankingAggregateArgs> = {
-        [P in keyof T & keyof AggregateRanking]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateRanking[P]>
-      : GetScalarType<T[P], AggregateRanking[P]>
-  }
-
-
-
-
-  export type RankingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RankingWhereInput
-    orderBy?: RankingOrderByWithAggregationInput | RankingOrderByWithAggregationInput[]
-    by: RankingScalarFieldEnum[] | RankingScalarFieldEnum
-    having?: RankingScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: RankingCountAggregateInputType | true
-    _avg?: RankingAvgAggregateInputType
-    _sum?: RankingSumAggregateInputType
-    _min?: RankingMinAggregateInputType
-    _max?: RankingMaxAggregateInputType
-  }
-
-  export type RankingGroupByOutputType = {
-    id: number
-    dinozCount: number
-    points: number
-    average: number
-    completion: number
-    dojo: number
-    userId: string
-    _count: RankingCountAggregateOutputType | null
-    _avg: RankingAvgAggregateOutputType | null
-    _sum: RankingSumAggregateOutputType | null
-    _min: RankingMinAggregateOutputType | null
-    _max: RankingMaxAggregateOutputType | null
-  }
-
-  type GetRankingGroupByPayload<T extends RankingGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<RankingGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof RankingGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], RankingGroupByOutputType[P]>
-            : GetScalarType<T[P], RankingGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type RankingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    dinozCount?: boolean
-    points?: boolean
-    average?: boolean
-    completion?: boolean
-    dojo?: boolean
-    userId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["ranking"]>
-
-  export type RankingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    dinozCount?: boolean
-    points?: boolean
-    average?: boolean
-    completion?: boolean
-    dojo?: boolean
-    userId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["ranking"]>
-
-  export type RankingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    dinozCount?: boolean
-    points?: boolean
-    average?: boolean
-    completion?: boolean
-    dojo?: boolean
-    userId?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["ranking"]>
-
-  export type RankingSelectScalar = {
-    id?: boolean
-    dinozCount?: boolean
-    points?: boolean
-    average?: boolean
-    completion?: boolean
-    dojo?: boolean
-    userId?: boolean
-  }
-
-  export type RankingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dinozCount" | "points" | "average" | "completion" | "dojo" | "userId", ExtArgs["result"]["ranking"]>
-  export type RankingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type RankingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type RankingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-
-  export type $RankingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "Ranking"
-    objects: {
-      user: Prisma.$UserPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      dinozCount: number
-      points: number
-      average: number
-      completion: number
-      dojo: number
-      userId: string
-    }, ExtArgs["result"]["ranking"]>
-    composites: {}
-  }
-
-  type RankingGetPayload<S extends boolean | null | undefined | RankingDefaultArgs> = $Result.GetResult<Prisma.$RankingPayload, S>
-
-  type RankingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<RankingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
-      select?: RankingCountAggregateInputType | true
-    }
-
-  export interface RankingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Ranking'], meta: { name: 'Ranking' } }
-    /**
-     * Find zero or one Ranking that matches the filter.
-     * @param {RankingFindUniqueArgs} args - Arguments to find a Ranking
-     * @example
-     * // Get one Ranking
-     * const ranking = await prisma.ranking.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends RankingFindUniqueArgs>(args: SelectSubset<T, RankingFindUniqueArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one Ranking that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {RankingFindUniqueOrThrowArgs} args - Arguments to find a Ranking
-     * @example
-     * // Get one Ranking
-     * const ranking = await prisma.ranking.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends RankingFindUniqueOrThrowArgs>(args: SelectSubset<T, RankingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Ranking that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RankingFindFirstArgs} args - Arguments to find a Ranking
-     * @example
-     * // Get one Ranking
-     * const ranking = await prisma.ranking.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends RankingFindFirstArgs>(args?: SelectSubset<T, RankingFindFirstArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first Ranking that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RankingFindFirstOrThrowArgs} args - Arguments to find a Ranking
-     * @example
-     * // Get one Ranking
-     * const ranking = await prisma.ranking.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends RankingFindFirstOrThrowArgs>(args?: SelectSubset<T, RankingFindFirstOrThrowArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more Rankings that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RankingFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all Rankings
-     * const rankings = await prisma.ranking.findMany()
-     * 
-     * // Get first 10 Rankings
-     * const rankings = await prisma.ranking.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const rankingWithIdOnly = await prisma.ranking.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends RankingFindManyArgs>(args?: SelectSubset<T, RankingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a Ranking.
-     * @param {RankingCreateArgs} args - Arguments to create a Ranking.
-     * @example
-     * // Create one Ranking
-     * const Ranking = await prisma.ranking.create({
-     *   data: {
-     *     // ... data to create a Ranking
-     *   }
-     * })
-     * 
-     */
-    create<T extends RankingCreateArgs>(args: SelectSubset<T, RankingCreateArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many Rankings.
-     * @param {RankingCreateManyArgs} args - Arguments to create many Rankings.
-     * @example
-     * // Create many Rankings
-     * const ranking = await prisma.ranking.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends RankingCreateManyArgs>(args?: SelectSubset<T, RankingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many Rankings and returns the data saved in the database.
-     * @param {RankingCreateManyAndReturnArgs} args - Arguments to create many Rankings.
-     * @example
-     * // Create many Rankings
-     * const ranking = await prisma.ranking.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many Rankings and only return the `id`
-     * const rankingWithIdOnly = await prisma.ranking.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends RankingCreateManyAndReturnArgs>(args?: SelectSubset<T, RankingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a Ranking.
-     * @param {RankingDeleteArgs} args - Arguments to delete one Ranking.
-     * @example
-     * // Delete one Ranking
-     * const Ranking = await prisma.ranking.delete({
-     *   where: {
-     *     // ... filter to delete one Ranking
-     *   }
-     * })
-     * 
-     */
-    delete<T extends RankingDeleteArgs>(args: SelectSubset<T, RankingDeleteArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one Ranking.
-     * @param {RankingUpdateArgs} args - Arguments to update one Ranking.
-     * @example
-     * // Update one Ranking
-     * const ranking = await prisma.ranking.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends RankingUpdateArgs>(args: SelectSubset<T, RankingUpdateArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more Rankings.
-     * @param {RankingDeleteManyArgs} args - Arguments to filter Rankings to delete.
-     * @example
-     * // Delete a few Rankings
-     * const { count } = await prisma.ranking.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends RankingDeleteManyArgs>(args?: SelectSubset<T, RankingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Rankings.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RankingUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many Rankings
-     * const ranking = await prisma.ranking.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends RankingUpdateManyArgs>(args: SelectSubset<T, RankingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more Rankings and returns the data updated in the database.
-     * @param {RankingUpdateManyAndReturnArgs} args - Arguments to update many Rankings.
-     * @example
-     * // Update many Rankings
-     * const ranking = await prisma.ranking.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more Rankings and only return the `id`
-     * const rankingWithIdOnly = await prisma.ranking.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends RankingUpdateManyAndReturnArgs>(args: SelectSubset<T, RankingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one Ranking.
-     * @param {RankingUpsertArgs} args - Arguments to update or create a Ranking.
-     * @example
-     * // Update or create a Ranking
-     * const ranking = await prisma.ranking.upsert({
-     *   create: {
-     *     // ... data to create a Ranking
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the Ranking we want to update
-     *   }
-     * })
-     */
-    upsert<T extends RankingUpsertArgs>(args: SelectSubset<T, RankingUpsertArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of Rankings.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RankingCountArgs} args - Arguments to filter Rankings to count.
-     * @example
-     * // Count the number of Rankings
-     * const count = await prisma.ranking.count({
-     *   where: {
-     *     // ... the filter for the Rankings we want to count
-     *   }
-     * })
-    **/
-    count<T extends RankingCountArgs>(
-      args?: Subset<T, RankingCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], RankingCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a Ranking.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RankingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends RankingAggregateArgs>(args: Subset<T, RankingAggregateArgs>): Prisma.PrismaPromise<GetRankingAggregateType<T>>
-
-    /**
-     * Group by Ranking.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {RankingGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends RankingGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: RankingGroupByArgs['orderBy'] }
-        : { orderBy?: RankingGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, RankingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRankingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the Ranking model
-   */
-  readonly fields: RankingFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for Ranking.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__RankingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the Ranking model
-   */
-  interface RankingFieldRefs {
-    readonly id: FieldRef<"Ranking", 'Int'>
-    readonly dinozCount: FieldRef<"Ranking", 'Int'>
-    readonly points: FieldRef<"Ranking", 'Int'>
-    readonly average: FieldRef<"Ranking", 'Int'>
-    readonly completion: FieldRef<"Ranking", 'Int'>
-    readonly dojo: FieldRef<"Ranking", 'Int'>
-    readonly userId: FieldRef<"Ranking", 'String'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * Ranking findUnique
-   */
-  export type RankingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingInclude<ExtArgs> | null
-    /**
-     * Filter, which Ranking to fetch.
-     */
-    where: RankingWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * Ranking findUniqueOrThrow
-   */
-  export type RankingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingInclude<ExtArgs> | null
-    /**
-     * Filter, which Ranking to fetch.
-     */
-    where: RankingWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * Ranking findFirst
-   */
-  export type RankingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingInclude<ExtArgs> | null
-    /**
-     * Filter, which Ranking to fetch.
-     */
-    where?: RankingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Rankings to fetch.
-     */
-    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Rankings.
-     */
-    cursor?: RankingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Rankings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Rankings.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Rankings.
-     */
-    distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * Ranking findFirstOrThrow
-   */
-  export type RankingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingInclude<ExtArgs> | null
-    /**
-     * Filter, which Ranking to fetch.
-     */
-    where?: RankingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Rankings to fetch.
-     */
-    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for Rankings.
-     */
-    cursor?: RankingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Rankings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Rankings.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of Rankings.
-     */
-    distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * Ranking findMany
-   */
-  export type RankingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingInclude<ExtArgs> | null
-    /**
-     * Filter, which Rankings to fetch.
-     */
-    where?: RankingWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of Rankings to fetch.
-     */
-    orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing Rankings.
-     */
-    cursor?: RankingWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` Rankings from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` Rankings.
-     */
-    skip?: number
-    distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * Ranking create
-   */
-  export type RankingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingInclude<ExtArgs> | null
-    /**
-     * The data needed to create a Ranking.
-     */
-    data: XOR<RankingCreateInput, RankingUncheckedCreateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * Ranking createMany
-   */
-  export type RankingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many Rankings.
-     */
-    data: RankingCreateManyInput | RankingCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * Ranking createManyAndReturn
-   */
-  export type RankingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * The data used to create many Rankings.
-     */
-    data: RankingCreateManyInput | RankingCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Ranking update
-   */
-  export type RankingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingInclude<ExtArgs> | null
-    /**
-     * The data needed to update a Ranking.
-     */
-    data: XOR<RankingUpdateInput, RankingUncheckedUpdateInput>
-    /**
-     * Choose, which Ranking to update.
-     */
-    where: RankingWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * Ranking updateMany
-   */
-  export type RankingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update Rankings.
-     */
-    data: XOR<RankingUpdateManyMutationInput, RankingUncheckedUpdateManyInput>
-    /**
-     * Filter which Rankings to update
-     */
-    where?: RankingWhereInput
-    /**
-     * Limit how many Rankings to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * Ranking updateManyAndReturn
-   */
-  export type RankingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * The data used to update Rankings.
-     */
-    data: XOR<RankingUpdateManyMutationInput, RankingUncheckedUpdateManyInput>
-    /**
-     * Filter which Rankings to update
-     */
-    where?: RankingWhereInput
-    /**
-     * Limit how many Rankings to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * Ranking upsert
-   */
-  export type RankingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingInclude<ExtArgs> | null
-    /**
-     * The filter to search for the Ranking to update in case it exists.
-     */
-    where: RankingWhereUniqueInput
-    /**
-     * In case the Ranking found by the `where` argument doesn't exist, create a new Ranking with this data.
-     */
-    create: XOR<RankingCreateInput, RankingUncheckedCreateInput>
-    /**
-     * In case the Ranking was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<RankingUpdateInput, RankingUncheckedUpdateInput>
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * Ranking delete
-   */
-  export type RankingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingInclude<ExtArgs> | null
-    /**
-     * Filter which Ranking to delete.
-     */
-    where: RankingWhereUniqueInput
-    relationLoadStrategy?: RelationLoadStrategy
-  }
-
-  /**
-   * Ranking deleteMany
-   */
-  export type RankingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which Rankings to delete
-     */
-    where?: RankingWhereInput
-    /**
-     * Limit how many Rankings to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * Ranking without action
-   */
-  export type RankingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Ranking
-     */
-    select?: RankingSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Ranking
-     */
-    omit?: RankingOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RankingInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Enums
    */
 
@@ -6959,6 +9277,53 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const RankingScalarFieldEnum: {
+    id: 'id',
+    dinozCount: 'dinozCount',
+    points: 'points',
+    average: 'average',
+    completion: 'completion',
+    dojo: 'dojo',
+    userId: 'userId'
+  };
+
+  export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeof RankingScalarFieldEnum]
+
+
+  export const RelationLoadStrategy: {
+    query: 'query',
+    join: 'join'
+  };
+
+  export type RelationLoadStrategy = (typeof RelationLoadStrategy)[keyof typeof RelationLoadStrategy]
+
+
+  export const SignupDeviceMonthCounterScalarFieldEnum: {
+    id: 'id',
+    monthKey: 'monthKey',
+    deviceToken: 'deviceToken',
+    count: 'count',
+    expiresAt: 'expiresAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SignupDeviceMonthCounterScalarFieldEnum = (typeof SignupDeviceMonthCounterScalarFieldEnum)[keyof typeof SignupDeviceMonthCounterScalarFieldEnum]
+
+
+  export const SignupIpMonthCounterScalarFieldEnum: {
+    id: 'id',
+    monthKey: 'monthKey',
+    ipToken: 'ipToken',
+    count: 'count',
+    expiresAt: 'expiresAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SignupIpMonthCounterScalarFieldEnum = (typeof SignupIpMonthCounterScalarFieldEnum)[keyof typeof SignupIpMonthCounterScalarFieldEnum]
+
+
   export const UserScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -6969,14 +9334,6 @@ export namespace Prisma {
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
-  export const RelationLoadStrategy: {
-    query: 'query',
-    join: 'join'
-  };
-
-  export type RelationLoadStrategy = (typeof RelationLoadStrategy)[keyof typeof RelationLoadStrategy]
 
 
   export const UserProfileScalarFieldEnum: {
@@ -7012,19 +9369,6 @@ export namespace Prisma {
   export type UserWalletScalarFieldEnum = (typeof UserWalletScalarFieldEnum)[keyof typeof UserWalletScalarFieldEnum]
 
 
-  export const RankingScalarFieldEnum: {
-    id: 'id',
-    dinozCount: 'dinozCount',
-    points: 'points',
-    average: 'average',
-    completion: 'completion',
-    dojo: 'dojo',
-    userId: 'userId'
-  };
-
-  export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeof RankingScalarFieldEnum]
-
-
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -7055,6 +9399,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -7069,20 +9427,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Role'
-   */
-  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
-    
-
-
-  /**
-   * Reference to a field of type 'Role[]'
-   */
-  export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
-    
-
-
-  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -7093,6 +9437,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Role'
+   */
+  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+  /**
+   * Reference to a field of type 'Role[]'
+   */
+  export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
     
 
 
@@ -7139,20 +9497,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'MoneyType'
    */
   export type EnumMoneyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MoneyType'>
@@ -7182,6 +9526,203 @@ export namespace Prisma {
    * Deep Input Types
    */
 
+
+  export type RankingWhereInput = {
+    AND?: RankingWhereInput | RankingWhereInput[]
+    OR?: RankingWhereInput[]
+    NOT?: RankingWhereInput | RankingWhereInput[]
+    id?: IntFilter<"Ranking"> | number
+    dinozCount?: IntFilter<"Ranking"> | number
+    points?: IntFilter<"Ranking"> | number
+    average?: IntFilter<"Ranking"> | number
+    completion?: IntFilter<"Ranking"> | number
+    dojo?: IntFilter<"Ranking"> | number
+    userId?: StringFilter<"Ranking"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type RankingOrderByWithRelationInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type RankingWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId?: string
+    AND?: RankingWhereInput | RankingWhereInput[]
+    OR?: RankingWhereInput[]
+    NOT?: RankingWhereInput | RankingWhereInput[]
+    dinozCount?: IntFilter<"Ranking"> | number
+    points?: IntFilter<"Ranking"> | number
+    average?: IntFilter<"Ranking"> | number
+    completion?: IntFilter<"Ranking"> | number
+    dojo?: IntFilter<"Ranking"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type RankingOrderByWithAggregationInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+    userId?: SortOrder
+    _count?: RankingCountOrderByAggregateInput
+    _avg?: RankingAvgOrderByAggregateInput
+    _max?: RankingMaxOrderByAggregateInput
+    _min?: RankingMinOrderByAggregateInput
+    _sum?: RankingSumOrderByAggregateInput
+  }
+
+  export type RankingScalarWhereWithAggregatesInput = {
+    AND?: RankingScalarWhereWithAggregatesInput | RankingScalarWhereWithAggregatesInput[]
+    OR?: RankingScalarWhereWithAggregatesInput[]
+    NOT?: RankingScalarWhereWithAggregatesInput | RankingScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Ranking"> | number
+    dinozCount?: IntWithAggregatesFilter<"Ranking"> | number
+    points?: IntWithAggregatesFilter<"Ranking"> | number
+    average?: IntWithAggregatesFilter<"Ranking"> | number
+    completion?: IntWithAggregatesFilter<"Ranking"> | number
+    dojo?: IntWithAggregatesFilter<"Ranking"> | number
+    userId?: StringWithAggregatesFilter<"Ranking"> | string
+  }
+
+  export type SignupDeviceMonthCounterWhereInput = {
+    AND?: SignupDeviceMonthCounterWhereInput | SignupDeviceMonthCounterWhereInput[]
+    OR?: SignupDeviceMonthCounterWhereInput[]
+    NOT?: SignupDeviceMonthCounterWhereInput | SignupDeviceMonthCounterWhereInput[]
+    id?: IntFilter<"SignupDeviceMonthCounter"> | number
+    monthKey?: StringFilter<"SignupDeviceMonthCounter"> | string
+    deviceToken?: StringFilter<"SignupDeviceMonthCounter"> | string
+    count?: IntFilter<"SignupDeviceMonthCounter"> | number
+    expiresAt?: DateTimeFilter<"SignupDeviceMonthCounter"> | Date | string
+    createdAt?: DateTimeFilter<"SignupDeviceMonthCounter"> | Date | string
+    updatedAt?: DateTimeFilter<"SignupDeviceMonthCounter"> | Date | string
+  }
+
+  export type SignupDeviceMonthCounterOrderByWithRelationInput = {
+    id?: SortOrder
+    monthKey?: SortOrder
+    deviceToken?: SortOrder
+    count?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SignupDeviceMonthCounterWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    monthKey_deviceToken?: SignupDeviceMonthCounterMonthKeyDeviceTokenCompoundUniqueInput
+    AND?: SignupDeviceMonthCounterWhereInput | SignupDeviceMonthCounterWhereInput[]
+    OR?: SignupDeviceMonthCounterWhereInput[]
+    NOT?: SignupDeviceMonthCounterWhereInput | SignupDeviceMonthCounterWhereInput[]
+    monthKey?: StringFilter<"SignupDeviceMonthCounter"> | string
+    deviceToken?: StringFilter<"SignupDeviceMonthCounter"> | string
+    count?: IntFilter<"SignupDeviceMonthCounter"> | number
+    expiresAt?: DateTimeFilter<"SignupDeviceMonthCounter"> | Date | string
+    createdAt?: DateTimeFilter<"SignupDeviceMonthCounter"> | Date | string
+    updatedAt?: DateTimeFilter<"SignupDeviceMonthCounter"> | Date | string
+  }, "id" | "monthKey_deviceToken">
+
+  export type SignupDeviceMonthCounterOrderByWithAggregationInput = {
+    id?: SortOrder
+    monthKey?: SortOrder
+    deviceToken?: SortOrder
+    count?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SignupDeviceMonthCounterCountOrderByAggregateInput
+    _avg?: SignupDeviceMonthCounterAvgOrderByAggregateInput
+    _max?: SignupDeviceMonthCounterMaxOrderByAggregateInput
+    _min?: SignupDeviceMonthCounterMinOrderByAggregateInput
+    _sum?: SignupDeviceMonthCounterSumOrderByAggregateInput
+  }
+
+  export type SignupDeviceMonthCounterScalarWhereWithAggregatesInput = {
+    AND?: SignupDeviceMonthCounterScalarWhereWithAggregatesInput | SignupDeviceMonthCounterScalarWhereWithAggregatesInput[]
+    OR?: SignupDeviceMonthCounterScalarWhereWithAggregatesInput[]
+    NOT?: SignupDeviceMonthCounterScalarWhereWithAggregatesInput | SignupDeviceMonthCounterScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SignupDeviceMonthCounter"> | number
+    monthKey?: StringWithAggregatesFilter<"SignupDeviceMonthCounter"> | string
+    deviceToken?: StringWithAggregatesFilter<"SignupDeviceMonthCounter"> | string
+    count?: IntWithAggregatesFilter<"SignupDeviceMonthCounter"> | number
+    expiresAt?: DateTimeWithAggregatesFilter<"SignupDeviceMonthCounter"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"SignupDeviceMonthCounter"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SignupDeviceMonthCounter"> | Date | string
+  }
+
+  export type SignupIpMonthCounterWhereInput = {
+    AND?: SignupIpMonthCounterWhereInput | SignupIpMonthCounterWhereInput[]
+    OR?: SignupIpMonthCounterWhereInput[]
+    NOT?: SignupIpMonthCounterWhereInput | SignupIpMonthCounterWhereInput[]
+    id?: IntFilter<"SignupIpMonthCounter"> | number
+    monthKey?: StringFilter<"SignupIpMonthCounter"> | string
+    ipToken?: StringFilter<"SignupIpMonthCounter"> | string
+    count?: IntFilter<"SignupIpMonthCounter"> | number
+    expiresAt?: DateTimeFilter<"SignupIpMonthCounter"> | Date | string
+    createdAt?: DateTimeFilter<"SignupIpMonthCounter"> | Date | string
+    updatedAt?: DateTimeFilter<"SignupIpMonthCounter"> | Date | string
+  }
+
+  export type SignupIpMonthCounterOrderByWithRelationInput = {
+    id?: SortOrder
+    monthKey?: SortOrder
+    ipToken?: SortOrder
+    count?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SignupIpMonthCounterWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    monthKey_ipToken?: SignupIpMonthCounterMonthKeyIpTokenCompoundUniqueInput
+    AND?: SignupIpMonthCounterWhereInput | SignupIpMonthCounterWhereInput[]
+    OR?: SignupIpMonthCounterWhereInput[]
+    NOT?: SignupIpMonthCounterWhereInput | SignupIpMonthCounterWhereInput[]
+    monthKey?: StringFilter<"SignupIpMonthCounter"> | string
+    ipToken?: StringFilter<"SignupIpMonthCounter"> | string
+    count?: IntFilter<"SignupIpMonthCounter"> | number
+    expiresAt?: DateTimeFilter<"SignupIpMonthCounter"> | Date | string
+    createdAt?: DateTimeFilter<"SignupIpMonthCounter"> | Date | string
+    updatedAt?: DateTimeFilter<"SignupIpMonthCounter"> | Date | string
+  }, "id" | "monthKey_ipToken">
+
+  export type SignupIpMonthCounterOrderByWithAggregationInput = {
+    id?: SortOrder
+    monthKey?: SortOrder
+    ipToken?: SortOrder
+    count?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SignupIpMonthCounterCountOrderByAggregateInput
+    _avg?: SignupIpMonthCounterAvgOrderByAggregateInput
+    _max?: SignupIpMonthCounterMaxOrderByAggregateInput
+    _min?: SignupIpMonthCounterMinOrderByAggregateInput
+    _sum?: SignupIpMonthCounterSumOrderByAggregateInput
+  }
+
+  export type SignupIpMonthCounterScalarWhereWithAggregatesInput = {
+    AND?: SignupIpMonthCounterScalarWhereWithAggregatesInput | SignupIpMonthCounterScalarWhereWithAggregatesInput[]
+    OR?: SignupIpMonthCounterScalarWhereWithAggregatesInput[]
+    NOT?: SignupIpMonthCounterScalarWhereWithAggregatesInput | SignupIpMonthCounterScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SignupIpMonthCounter"> | number
+    monthKey?: StringWithAggregatesFilter<"SignupIpMonthCounter"> | string
+    ipToken?: StringWithAggregatesFilter<"SignupIpMonthCounter"> | string
+    count?: IntWithAggregatesFilter<"SignupIpMonthCounter"> | number
+    expiresAt?: DateTimeWithAggregatesFilter<"SignupIpMonthCounter"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"SignupIpMonthCounter"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SignupIpMonthCounter"> | Date | string
+  }
 
   export type UserWhereInput = {
     AND?: UserWhereInput | UserWhereInput[]
@@ -7425,71 +9966,204 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"UserWallet"> | string
   }
 
-  export type RankingWhereInput = {
-    AND?: RankingWhereInput | RankingWhereInput[]
-    OR?: RankingWhereInput[]
-    NOT?: RankingWhereInput | RankingWhereInput[]
-    id?: IntFilter<"Ranking"> | number
-    dinozCount?: IntFilter<"Ranking"> | number
-    points?: IntFilter<"Ranking"> | number
-    average?: IntFilter<"Ranking"> | number
-    completion?: IntFilter<"Ranking"> | number
-    dojo?: IntFilter<"Ranking"> | number
-    userId?: StringFilter<"Ranking"> | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  export type RankingCreateInput = {
+    dinozCount?: number
+    points?: number
+    average?: number
+    completion?: number
+    dojo?: number
+    user: UserCreateNestedOneWithoutRankingInput
   }
 
-  export type RankingOrderByWithRelationInput = {
-    id?: SortOrder
-    dinozCount?: SortOrder
-    points?: SortOrder
-    average?: SortOrder
-    completion?: SortOrder
-    dojo?: SortOrder
-    userId?: SortOrder
-    user?: UserOrderByWithRelationInput
-  }
-
-  export type RankingWhereUniqueInput = Prisma.AtLeast<{
+  export type RankingUncheckedCreateInput = {
     id?: number
-    userId?: string
-    AND?: RankingWhereInput | RankingWhereInput[]
-    OR?: RankingWhereInput[]
-    NOT?: RankingWhereInput | RankingWhereInput[]
-    dinozCount?: IntFilter<"Ranking"> | number
-    points?: IntFilter<"Ranking"> | number
-    average?: IntFilter<"Ranking"> | number
-    completion?: IntFilter<"Ranking"> | number
-    dojo?: IntFilter<"Ranking"> | number
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "userId">
-
-  export type RankingOrderByWithAggregationInput = {
-    id?: SortOrder
-    dinozCount?: SortOrder
-    points?: SortOrder
-    average?: SortOrder
-    completion?: SortOrder
-    dojo?: SortOrder
-    userId?: SortOrder
-    _count?: RankingCountOrderByAggregateInput
-    _avg?: RankingAvgOrderByAggregateInput
-    _max?: RankingMaxOrderByAggregateInput
-    _min?: RankingMinOrderByAggregateInput
-    _sum?: RankingSumOrderByAggregateInput
+    dinozCount?: number
+    points?: number
+    average?: number
+    completion?: number
+    dojo?: number
+    userId: string
   }
 
-  export type RankingScalarWhereWithAggregatesInput = {
-    AND?: RankingScalarWhereWithAggregatesInput | RankingScalarWhereWithAggregatesInput[]
-    OR?: RankingScalarWhereWithAggregatesInput[]
-    NOT?: RankingScalarWhereWithAggregatesInput | RankingScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Ranking"> | number
-    dinozCount?: IntWithAggregatesFilter<"Ranking"> | number
-    points?: IntWithAggregatesFilter<"Ranking"> | number
-    average?: IntWithAggregatesFilter<"Ranking"> | number
-    completion?: IntWithAggregatesFilter<"Ranking"> | number
-    dojo?: IntWithAggregatesFilter<"Ranking"> | number
-    userId?: StringWithAggregatesFilter<"Ranking"> | string
+  export type RankingUpdateInput = {
+    dinozCount?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutRankingNestedInput
+  }
+
+  export type RankingUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dinozCount?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type RankingCreateManyInput = {
+    id?: number
+    dinozCount?: number
+    points?: number
+    average?: number
+    completion?: number
+    dojo?: number
+    userId: string
+  }
+
+  export type RankingUpdateManyMutationInput = {
+    dinozCount?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type RankingUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dinozCount?: IntFieldUpdateOperationsInput | number
+    points?: IntFieldUpdateOperationsInput | number
+    average?: IntFieldUpdateOperationsInput | number
+    completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SignupDeviceMonthCounterCreateInput = {
+    monthKey: string
+    deviceToken: string
+    count?: number
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SignupDeviceMonthCounterUncheckedCreateInput = {
+    id?: number
+    monthKey: string
+    deviceToken: string
+    count?: number
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SignupDeviceMonthCounterUpdateInput = {
+    monthKey?: StringFieldUpdateOperationsInput | string
+    deviceToken?: StringFieldUpdateOperationsInput | string
+    count?: IntFieldUpdateOperationsInput | number
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SignupDeviceMonthCounterUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    monthKey?: StringFieldUpdateOperationsInput | string
+    deviceToken?: StringFieldUpdateOperationsInput | string
+    count?: IntFieldUpdateOperationsInput | number
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SignupDeviceMonthCounterCreateManyInput = {
+    id?: number
+    monthKey: string
+    deviceToken: string
+    count?: number
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SignupDeviceMonthCounterUpdateManyMutationInput = {
+    monthKey?: StringFieldUpdateOperationsInput | string
+    deviceToken?: StringFieldUpdateOperationsInput | string
+    count?: IntFieldUpdateOperationsInput | number
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SignupDeviceMonthCounterUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    monthKey?: StringFieldUpdateOperationsInput | string
+    deviceToken?: StringFieldUpdateOperationsInput | string
+    count?: IntFieldUpdateOperationsInput | number
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SignupIpMonthCounterCreateInput = {
+    monthKey: string
+    ipToken: string
+    count?: number
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SignupIpMonthCounterUncheckedCreateInput = {
+    id?: number
+    monthKey: string
+    ipToken: string
+    count?: number
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SignupIpMonthCounterUpdateInput = {
+    monthKey?: StringFieldUpdateOperationsInput | string
+    ipToken?: StringFieldUpdateOperationsInput | string
+    count?: IntFieldUpdateOperationsInput | number
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SignupIpMonthCounterUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    monthKey?: StringFieldUpdateOperationsInput | string
+    ipToken?: StringFieldUpdateOperationsInput | string
+    count?: IntFieldUpdateOperationsInput | number
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SignupIpMonthCounterCreateManyInput = {
+    id?: number
+    monthKey: string
+    ipToken: string
+    count?: number
+    expiresAt: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SignupIpMonthCounterUpdateManyMutationInput = {
+    monthKey?: StringFieldUpdateOperationsInput | string
+    ipToken?: StringFieldUpdateOperationsInput | string
+    count?: IntFieldUpdateOperationsInput | number
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SignupIpMonthCounterUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    monthKey?: StringFieldUpdateOperationsInput | string
+    ipToken?: StringFieldUpdateOperationsInput | string
+    count?: IntFieldUpdateOperationsInput | number
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateInput = {
@@ -7733,70 +10407,15 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
-  export type RankingCreateInput = {
-    dinozCount?: number
-    points?: number
-    average?: number
-    completion?: number
-    dojo?: number
-    user: UserCreateNestedOneWithoutRankingInput
-  }
-
-  export type RankingUncheckedCreateInput = {
-    id?: number
-    dinozCount?: number
-    points?: number
-    average?: number
-    completion?: number
-    dojo?: number
-    userId: string
-  }
-
-  export type RankingUpdateInput = {
-    dinozCount?: IntFieldUpdateOperationsInput | number
-    points?: IntFieldUpdateOperationsInput | number
-    average?: IntFieldUpdateOperationsInput | number
-    completion?: IntFieldUpdateOperationsInput | number
-    dojo?: IntFieldUpdateOperationsInput | number
-    user?: UserUpdateOneRequiredWithoutRankingNestedInput
-  }
-
-  export type RankingUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    dinozCount?: IntFieldUpdateOperationsInput | number
-    points?: IntFieldUpdateOperationsInput | number
-    average?: IntFieldUpdateOperationsInput | number
-    completion?: IntFieldUpdateOperationsInput | number
-    dojo?: IntFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type RankingCreateManyInput = {
-    id?: number
-    dinozCount?: number
-    points?: number
-    average?: number
-    completion?: number
-    dojo?: number
-    userId: string
-  }
-
-  export type RankingUpdateManyMutationInput = {
-    dinozCount?: IntFieldUpdateOperationsInput | number
-    points?: IntFieldUpdateOperationsInput | number
-    average?: IntFieldUpdateOperationsInput | number
-    completion?: IntFieldUpdateOperationsInput | number
-    dojo?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type RankingUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    dinozCount?: IntFieldUpdateOperationsInput | number
-    points?: IntFieldUpdateOperationsInput | number
-    average?: IntFieldUpdateOperationsInput | number
-    completion?: IntFieldUpdateOperationsInput | number
-    dojo?: IntFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -7814,11 +10433,91 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type EnumRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type RankingCountOrderByAggregateInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RankingAvgOrderByAggregateInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+  }
+
+  export type RankingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RankingMinOrderByAggregateInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type RankingSumOrderByAggregateInput = {
+    id?: SortOrder
+    dinozCount?: SortOrder
+    points?: SortOrder
+    average?: SortOrder
+    completion?: SortOrder
+    dojo?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -7830,6 +10529,117 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type SignupDeviceMonthCounterMonthKeyDeviceTokenCompoundUniqueInput = {
+    monthKey: string
+    deviceToken: string
+  }
+
+  export type SignupDeviceMonthCounterCountOrderByAggregateInput = {
+    id?: SortOrder
+    monthKey?: SortOrder
+    deviceToken?: SortOrder
+    count?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SignupDeviceMonthCounterAvgOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+  }
+
+  export type SignupDeviceMonthCounterMaxOrderByAggregateInput = {
+    id?: SortOrder
+    monthKey?: SortOrder
+    deviceToken?: SortOrder
+    count?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SignupDeviceMonthCounterMinOrderByAggregateInput = {
+    id?: SortOrder
+    monthKey?: SortOrder
+    deviceToken?: SortOrder
+    count?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SignupDeviceMonthCounterSumOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type SignupIpMonthCounterMonthKeyIpTokenCompoundUniqueInput = {
+    monthKey: string
+    ipToken: string
+  }
+
+  export type SignupIpMonthCounterCountOrderByAggregateInput = {
+    id?: SortOrder
+    monthKey?: SortOrder
+    ipToken?: SortOrder
+    count?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SignupIpMonthCounterAvgOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+  }
+
+  export type SignupIpMonthCounterMaxOrderByAggregateInput = {
+    id?: SortOrder
+    monthKey?: SortOrder
+    ipToken?: SortOrder
+    count?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SignupIpMonthCounterMinOrderByAggregateInput = {
+    id?: SortOrder
+    monthKey?: SortOrder
+    ipToken?: SortOrder
+    count?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SignupIpMonthCounterSumOrderByAggregateInput = {
+    id?: SortOrder
+    count?: SortOrder
+  }
+
+  export type EnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -7905,24 +10715,6 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
   export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
     in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
@@ -7931,20 +10723,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -8006,11 +10784,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type UserProfileCountOrderByAggregateInput = {
@@ -8118,17 +10891,6 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
@@ -8165,22 +10927,6 @@ export namespace Prisma {
   export type UserRewardsSumOrderByAggregateInput = {
     id?: SortOrder
     rewardId?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type EnumMoneyTypeFilter<$PrismaModel = never> = {
@@ -8234,52 +10980,34 @@ export namespace Prisma {
     _max?: NestedEnumMoneyTypeFilter<$PrismaModel>
   }
 
-  export type RankingCountOrderByAggregateInput = {
-    id?: SortOrder
-    dinozCount?: SortOrder
-    points?: SortOrder
-    average?: SortOrder
-    completion?: SortOrder
-    dojo?: SortOrder
-    userId?: SortOrder
+  export type UserCreateNestedOneWithoutRankingInput = {
+    create?: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRankingInput
+    connect?: UserWhereUniqueInput
   }
 
-  export type RankingAvgOrderByAggregateInput = {
-    id?: SortOrder
-    dinozCount?: SortOrder
-    points?: SortOrder
-    average?: SortOrder
-    completion?: SortOrder
-    dojo?: SortOrder
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
-  export type RankingMaxOrderByAggregateInput = {
-    id?: SortOrder
-    dinozCount?: SortOrder
-    points?: SortOrder
-    average?: SortOrder
-    completion?: SortOrder
-    dojo?: SortOrder
-    userId?: SortOrder
+  export type UserUpdateOneRequiredWithoutRankingNestedInput = {
+    create?: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRankingInput
+    upsert?: UserUpsertWithoutRankingInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRankingInput, UserUpdateWithoutRankingInput>, UserUncheckedUpdateWithoutRankingInput>
   }
 
-  export type RankingMinOrderByAggregateInput = {
-    id?: SortOrder
-    dinozCount?: SortOrder
-    points?: SortOrder
-    average?: SortOrder
-    completion?: SortOrder
-    dojo?: SortOrder
-    userId?: SortOrder
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
   }
 
-  export type RankingSumOrderByAggregateInput = {
-    id?: SortOrder
-    dinozCount?: SortOrder
-    points?: SortOrder
-    average?: SortOrder
-    completion?: SortOrder
-    dojo?: SortOrder
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type UserProfileCreateNestedOneWithoutUserInput = {
@@ -8334,16 +11062,8 @@ export namespace Prisma {
     connect?: UserWalletWhereUniqueInput | UserWalletWhereUniqueInput[]
   }
 
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
   export type EnumRoleFieldUpdateOperationsInput = {
     set?: $Enums.Role
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -8490,14 +11210,6 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type UserUpdateOneWithoutRewardsNestedInput = {
     create?: XOR<UserCreateWithoutRewardsInput, UserUncheckedCreateWithoutRewardsInput>
     connectOrCreate?: UserCreateOrConnectWithoutRewardsInput
@@ -8526,18 +11238,15 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWalletsInput, UserUpdateWithoutWalletsInput>, UserUncheckedUpdateWithoutWalletsInput>
   }
 
-  export type UserCreateNestedOneWithoutRankingInput = {
-    create?: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
-    connectOrCreate?: UserCreateOrConnectWithoutRankingInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type UserUpdateOneRequiredWithoutRankingNestedInput = {
-    create?: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
-    connectOrCreate?: UserCreateOrConnectWithoutRankingInput
-    upsert?: UserUpsertWithoutRankingInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRankingInput, UserUpdateWithoutRankingInput>, UserUncheckedUpdateWithoutRankingInput>
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -8554,33 +11263,31 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedEnumRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -8600,25 +11307,15 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumRoleFilter<$PrismaModel>
-    _max?: NestedEnumRoleFilter<$PrismaModel>
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -8633,6 +11330,34 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -8769,33 +11494,6 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type NestedEnumMoneyTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.MoneyType | EnumMoneyTypeFieldRefInput<$PrismaModel>
     in?: $Enums.MoneyType[] | ListEnumMoneyTypeFieldRefInput<$PrismaModel>
@@ -8811,6 +11509,70 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMoneyTypeFilter<$PrismaModel>
     _max?: NestedEnumMoneyTypeFilter<$PrismaModel>
+  }
+
+  export type UserCreateWithoutRankingInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutRankingInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutRankingInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
+  }
+
+  export type UserUpsertWithoutRankingInput = {
+    update: XOR<UserUpdateWithoutRankingInput, UserUncheckedUpdateWithoutRankingInput>
+    create: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutRankingInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRankingInput, UserUncheckedUpdateWithoutRankingInput>
+  }
+
+  export type UserUpdateWithoutRankingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRankingInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserProfileCreateWithoutUserInput = {
@@ -9201,70 +11963,6 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserCreateWithoutRankingInput = {
-    id?: string
-    name: string
-    password: string
-    role?: $Enums.Role
-    createdDate?: Date | string
-    updatedAt?: Date | string | null
-    profile?: UserProfileCreateNestedOneWithoutUserInput
-    rewards?: UserRewardsCreateNestedManyWithoutUserInput
-    wallets?: UserWalletCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutRankingInput = {
-    id?: string
-    name: string
-    password: string
-    role?: $Enums.Role
-    createdDate?: Date | string
-    updatedAt?: Date | string | null
-    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
-    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
-    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutRankingInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
-  }
-
-  export type UserUpsertWithoutRankingInput = {
-    update: XOR<UserUpdateWithoutRankingInput, UserUncheckedUpdateWithoutRankingInput>
-    create: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutRankingInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutRankingInput, UserUncheckedUpdateWithoutRankingInput>
-  }
-
-  export type UserUpdateWithoutRankingInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    profile?: UserProfileUpdateOneWithoutUserNestedInput
-    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
-    wallets?: UserWalletUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutRankingInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
-    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
-    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserRewardsCreateManyUserInput = {
