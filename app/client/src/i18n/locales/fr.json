@@ -40,9 +40,11 @@
 		"account": "DinoRPG [ Informations personnelles ]"
 	},
 	"toast": {
-		"User already exists with this name": "Ce pseudo est déjà utilisé.",
-		"Invalid email or password": "Email ou mot de passe invalide",
-		"Invalid credentials": "Identifiants incorrects.",
+		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
+		"Invalid_credentials": "Identifiants incorrects.",
+		"Missing_device_cookie": "Impossible d’identifier votre navigateur. Veuillez autoriser les cookies et réessayer.",
+		"Too_many_accounts_created_from_this_device_this_month": "Trop de comptes ont été créés depuis ce navigateur ce mois-ci. Veuillez réessayer le mois prochain.",
+		"Too_many_accounts_created_from_this_network_this_month": "Trop de comptes ont été créés depuis ce réseau ce mois-ci. Veuillez réessayer le mois prochain.",
 		"unknown": "Une erreur est survenue."
 	},
 	"ranking": {

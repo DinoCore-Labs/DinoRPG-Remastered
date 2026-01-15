@@ -1,3 +1,4 @@
+import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import bcrypt from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -15,15 +16,13 @@ export async function loginUser(
 	const user = await prisma.user.findUnique({ where: { name: name } });
 
 	if (!user) {
-		return reply.status(401).send({ message: 'Invalid credentials' });
+		throw new ExpectedError('Invalid_credentials', 401);
 	}
 
 	const isMatch = user && (await bcrypt.compare(password, user.password));
 
 	if (!user || !isMatch) {
-		return reply.code(401).send({
-			message: 'Invalid email or password'
-		});
+		throw new ExpectedError('Invalid_email_or_password', 401);
 	}
 
 	const payload = {

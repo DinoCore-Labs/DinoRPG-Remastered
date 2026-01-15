@@ -1,9 +1,11 @@
+import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import bcrypt from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import gameConfig from '../../config/game.config.js';
 import { prisma } from '../../prisma.js';
 import { CreateUserInput } from '../Schema/user.schema.js';
+import { enforceSignupLimits } from '../Service/signupLimiter.service.js';
 
 const SALT_ROUNDS = 10;
 
@@ -15,6 +17,18 @@ export async function createUser(
 ) {
 	const { password, name } = req.body;
 
+	// 1) Anti multi-signup protection
+	try {
+		await enforceSignupLimits(req);
+	} catch (e: any) {
+		if (e instanceof ExpectedError) {
+			return reply.code(e.statusCode ?? 400).send({ message: e.message });
+		}
+		req.log.error(e);
+		return reply.code(500).send({ message: 'Internal Server Error' });
+	}
+
+	// 2) Vérifier que le user n'existe pas déjà
 	const user = await prisma.user.findUnique({
 		where: {
 			name: name
