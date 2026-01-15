@@ -9,7 +9,7 @@
 		<div class="userGoals">
 			<div class="userGoals_points">{{ achievementsPoints + ' ' + $t(`accountPage.goals.points`) }}</div>
 			<div class="userGoals_top" v-if="topStats.length > 0">
-				<template v-for="(stat, index) in topStats" :key="index">
+				<template v-for="stat in topStats" :key="stat.stat">
 					<div class="top_goals dz-golden-box">
 						<div class="top_countWrapper dz-golden-box">
 							<span class="top_points">{{ stat.quantity }}</span>
@@ -67,7 +67,7 @@
 				<div style="width: 100%" class="cadrelist_goals drpg-scrollbar">
 					<table style="width: 100%" class="list_goals" v-if="tab === 1">
 						<tbody>
-							<Tippy theme="small" tag="tr" class="list" v-for="(stats, index) in profileStats" :key="index">
+							<Tippy theme="small" tag="tr" class="list" v-for="stats in profileStats" :key="stats.stat">
 								<td class="icon">
 									<img class="achievements" :src="getImgURL('achievements', `${stats.stat}`)" alt="achievements" />
 								</td>
@@ -86,7 +86,7 @@
 						</tbody>
 					</table>
 					<template v-if="tab === 2">
-						<ul style="width: 100%" class="list_gains" v-for="(stats, index) in profileStats" :key="index">
+						<ul style="width: 100%" class="list_gains" v-for="stats in profileStats" :key="stats.stat">
 							<Tippy theme="small" tag="li" class="stat-name">
 								<img class="achievements" :src="getImgURL('achievements', `${stats.stat}`)" alt="achievements" />
 								{{ getStatDetails(stats, 'name') }}
