@@ -60,11 +60,23 @@ model User {
   updatedAt   DateTime? @updatedAt
   lastLogin   DateTime  @default(now())
 
+  items         UserItems[]
   profile       UserProfile?
   ranking       Ranking?
   rewards       UserRewards[]
   statsTracking UserTracking[]
   wallets       UserWallet[]
+}
+
+model UserItems {
+  id       Int    @default(autoincrement())
+  itemId   Int
+  quantity Int
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([itemId, userId])
+  @@index([itemId])
 }
 
 model UserProfile {
@@ -93,7 +105,7 @@ model UserTracking {
   id       Int    @id @default(autoincrement())
   stat     String
   quantity Int    @default(0)
-  userId   String @unique
+  userId   String
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([stat, userId])
