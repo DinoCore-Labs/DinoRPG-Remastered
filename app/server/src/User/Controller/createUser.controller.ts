@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import gameConfig from '../../config/game.config.js';
+import { addItemToInventory } from '../../Inventory/Service/addItem.service.js';
 import { prisma } from '../../prisma.js';
 import { CreateUserInput } from '../Schema/user.schema.js';
 import { enforceSignupLimits } from '../Service/signupLimiter.service.js';
@@ -78,6 +79,11 @@ export async function createUser(
 				avatarType: null
 			}
 		});
+
+		// 4) Ajouter les items de départ dans l'inventaire
+		for (const starterItem of gameConfig.general.starterPack) {
+			await addItemToInventory(user.id, starterItem.itemId, starterItem.quantity);
+		}
 
 		return reply.code(201).send(user);
 	} catch (e) {
