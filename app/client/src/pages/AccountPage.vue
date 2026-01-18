@@ -72,7 +72,7 @@ export default defineComponent({
 				profile = await UserService.getMyProfile();
 			}
 			this.profile = profile;
-			console.log(profile);
+			//console.log(profile);
 			this.isOwner = this.profile.id === this.uStore.id;
 			//console.log(this.profile.id);
 			//console.log(this.uStore.id);

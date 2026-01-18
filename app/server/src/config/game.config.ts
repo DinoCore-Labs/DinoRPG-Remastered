@@ -17,6 +17,12 @@ interface ShopConfig {
 interface GeneralConfig {
 	initialMoney: number;
 	dailyGridRewards: number;
+	starterPack: StarterItem[];
+}
+
+interface StarterItem {
+	itemId: number;
+	quantity: number;
 }
 
 export interface GameConfig {
@@ -39,7 +45,14 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		},
 		general: {
 			initialMoney: 1_000_000,
-			dailyGridRewards: 10
+			dailyGridRewards: 10,
+			starterPack: [
+				{ itemId: 1, quantity: 999 }, // potion irma
+				{ itemId: 2, quantity: 10 }, // potion d'ange
+				{ itemId: 3, quantity: 10 }, // nuage burger
+				{ itemId: 4, quantity: 10 }, // pain chaud
+				{ itemId: 5, quantity: 10 } // tarte
+			]
 		}
 	},
 
@@ -56,7 +69,14 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		},
 		general: {
 			initialMoney: 200_000,
-			dailyGridRewards: 5
+			dailyGridRewards: 5,
+			starterPack: [
+				{ itemId: 1, quantity: 50 }, // potion irma
+				{ itemId: 2, quantity: 5 }, // potion d'ange
+				{ itemId: 3, quantity: 10 }, // nuage burger
+				{ itemId: 4, quantity: 5 }, // pain chaud
+				{ itemId: 5, quantity: 5 } // tarte
+			]
 		}
 	}
 };
