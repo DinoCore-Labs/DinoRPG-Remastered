@@ -27,6 +27,7 @@
 		"userMenu": {
 			"ranking": "Classements",
 			"items": "Inventaire",
+			"ingredients": "Ingrédients",
 			"disconnect": "Déconnexion",
 			"goodbye": "Au revoir Maître {name}..."
 		}
@@ -39,7 +40,8 @@
 	"pageTitle": {
 		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
 		"account": "DinoRPG [ Informations personnelles ]",
-		"items": "DinoRPG [ Inventaire ]"
+		"items": "DinoRPG [ Inventaire ]",
+		"ingredients": "DinoRPG [ Ingrédients ]"
 	},
 	"toast": {
 		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
@@ -387,6 +389,83 @@
 			"undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
 		},
 		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//"
+	},
+	"ingredients": {
+		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
+		"tname": "Ingrédients",
+		"tstock": "Stock",
+		"name": {
+			"merou_lujidane": "Mérou Lujidané",
+			"poisson_vengeur": "Poisson-Vengeur",
+			"an_guili_guilille": "An-Guili-Guilille",
+			"globulos": "Globulos",
+			"super_poisson": "Super-Poisson",
+			"touffe_de_fourrure": "Touffe de fourrure",
+			"roche_radio_active": "Roche radio-active",
+			"griffes_acerees": "Griffes acérées",
+			"corne_en_chocolat": "Corne en chocolat",
+			"oeil_visqueux": "Oeil visqueux",
+			"langue_monstrueuse": "Langue monstrueuse",
+			"energie_foudre": "Energie Foudre",
+			"energie_air": "Energie Air",
+			"energie_eau": "Energie Eau",
+			"energie_feu": "Energie Feu",
+			"energie_bois": "Energie Bois",
+			"silex_taille": "Silex Taillé",
+			"fragment_de_texte_ancien": "Fragment de Texte Ancien",
+			"vieil_anneau_precieux": "Vieil Anneau Précieux",
+			"calice_cisele": "Calice ciselé",
+			"collier_karat": "Collier Karat",
+			"broche_en_parfait_etat": "Broche en parfait état",
+			"superbe_couronne_royale": "Superbe Couronne Royale",
+			"feuilles_de_pelinae": "Feuilles de Pelinae",
+			"bolet_phalisk_blanc": "Bolet Phalisk Blanc",
+			"orchidee_fantasque": "Orchidée Fantasque",
+			"racine_de_figonicia": "Racines de Figonicia",
+			"sadiquae_mordicus": "Sadiquae Mordicus",
+			"flaureole": "Flauréole",
+			"spore_etheral": "Spore éthéral",
+			"pousse_sombre": "Pousse sombre",
+			"graine_de_devoreuse": "Graîne de Dévoreuse",
+			"dent_de_dorogon": "Dent de Dorogon",
+			"bras_mecanique": "Bras Mécanique"
+		},
+		"description": {
+			"merou_lujidane": "Cette espèce très commune dans les eaux de Dinoland est toujours appréciée pour son goût caramélisé.",
+			"poisson_vengeur": "Il vole aux Liches pour donner aux pauvres.",
+			"an_guili_guilille": "Alors que la plupart des Anguilles sont \"électriques\", cette espèce-ci est réfrigérante. On l'utilise souvent pour rafraîchir les boissons ou conserver des aliments en les entourant avec.",
+			"globulos": "Le Globulos est particulièrement visqueux et mou mais il rebondit étonnamment bien si on le projette contre un mur. Cette propriété amusante en fait un jouet très apprécié !",
+			"super_poisson": "Le défenseur des Mérou et des Globulos ! Personne ne connaît la véritable identité de Super-Poisson. En fait, personne ne s'y est jamais intéressé... Super-Poisson est un héros bien méconnu.",
+			"touffe_de_fourrure": "Une pleine poignée de fourrure d'assez bonne qualité ! Pas de quoi se faire un manteau, mais c'est toujours ça de pris...",
+			"roche_radio_active": "Cette roche, extraite d'un Groulem ayant mué, a subi l'influence de l'éther et possède désormais une fluorescence étrange, il est déconseillé de la porter plus d'une journée sur soi au risque de perdre ses cheveux.",
+			"griffes_acerees": "Ces griffes sont bien moins effrayantes enfilées sur une ficelle qu'au bout d'une patte velue ! Attention à ne pas vous piquer tout de même.",
+			"corne_en_chocolat": "Même si c'est un phénomène très rare, il arrive que certains animaux naissent avec une corne en chocolat (noir ou noisette, ça dépend). Généralement, ces animaux ne survivent pas très longtemps tant ils sont l'objet de toutes les convoitises.",
+			"oeil_visqueux": "Cet oeil fait un bruit vraiment dégoûtant dans votre sac...",
+			"langue_monstrueuse": "Un trophée de chasse qui ferait pâlir de jalousies la plupart des maîtres de Dinoland ! Cette langue de monstre en parfait état devrait se vendre à un très bon prix.",
+			"energie_foudre": "Facile à capter, l'énergie Foudre est partout autour de nous. Il suffit de savoir la révéler en tapant sur un caillou ou en agitant une barre en fer par temps d'orage.",
+			"energie_air": "Bien que l'air soit présent sur tout Dinoland, seul certaines brises peuvent être transformées en énergie pure.",
+			"energie_eau": "Les Énergies Eau sont présentes en très grand nombre dans toutes les surfaces d'eau, mais elles filent si vite que presque personne n'arrive jamais à les capter ! D'où leur prix très élevé.",
+			"energie_feu": "Le feu naturel, rarissime à l'état naturel, est une énergie de grande valeur.",
+			"energie_bois": "Si trouver un arbre est chose aisée, puiser une Énergie Bois relève du défi surhumain ! Il faut souvent grimper très haut dans les feuillages pour en trouver...",
+			"silex_taille": "Un joli caillou taillé par on-ne-sait-qui pour faire on-ne-sait-quoi.",
+			"fragment_de_texte_ancien": "Le texte inscrit sur ce fragment d'une tablette en pierre est illisible. Mais il ne fait aucun doute qu'un collectionneur paiera bien pour mettre la main dessus.",
+			"vieil_anneau_precieux": "Ce très joli anneau en or date probablement d'une époque lointaine et ferait une belle pièce dans un musée !",
+			"calice_cisele": "Ce Calice faisait partie autrefois de tout un ensemble de vaisselle qu'il ne tient qu'à vous de trouver... Il vous tarde de mettre la main sur le chaudron !",
+			"collier_karat": "Cette superbe pièce de collection confère à son porteur classe et élégance lors de n'importe quelle soirée mondaine.",
+			"broche_en_parfait_etat": "Vous avez une chance incroyable ! Cette broche d'une très grande valeur semble tout juste sortie de son écrin et n'est quasiment pas abîmée, malgré son âge.",
+			"superbe_couronne_royale": "Cet artefact rarissime a probablement appartenu à un grand Roi de Dinoland (pour peu que Dinoland ait eut un roi un jour).",
+			"feuilles_de_pelinae": "La Pelinae est appréciée pour le délicat parfum frais qu'elle dégage et il n'est pas rare d'en trouver dans les habitations de Dinoland.",
+			"bolet_phalisk_blanc": "Un champignon de la famille des Champibons qui se cuisine bien dans une sauce verte. Certains le préfèrent en omelette, d'autres l'aiment en soupe, mais tout le monde s'accorde à dire que le Phalisk est délicieux sauté à la poêle.",
+			"orchidee_fantasque": "Une fusion improbable entre plusieurs espèces rares d'Orchidées a donné naissance à la Fantasque. Elle pousse généralement à l'envers, son dos étant recouvert d'une couche d'herbe qui lui permet de passer inaperçue.",
+			"racine_de_figonicia": "La Figonicia est une plante acariâtre au caractère absolument imbuvable. C'est pour cette raison que ces racines sont très recherchées, ça leur évite de repousser.",
+			"sadiquae_mordicus": "La Sadiquae Mordicus est très dangereuse à l'âge adulte ! Mesurant généralement plusieurs mètres de haut, elles digèrent un humain en quelques heures. A l'état de pousse, elles peuvent tout au plus vous digérer un doigt.",
+			"flaureole": "La Flauréole ne se trouve que sur Nimbao. Elle est très dure à cueillir, le moindre faux pas et elle s'envole vers les cieux...",
+			"spore_etheral": "Le spore éthéral pousse sur les îlots Caushemeshens grâce à l'ether qui traverse leur roche. Immangeable, il dégage cependant une agréable odeur s'il est correctement préparé.",
+			"pousse_sombre": "La pousse sombre se nourrit des ténèbres du monde sombre pour se développer, une fois en contact avec les rayons du soleil, elle s'évapore très vite, mieux vaut en prendre soin et ne pas l'exposer à la lumière du jour. Une fois séchée, elle peut être conservée de nombreuses années.",
+			"graine_de_devoreuse": "Les graînes de Dévoreuse sont des ingrédients trés rares que l'on ne peut obtenir que dans les Steppes Magnétiques. En plus de sa grande rareté, elle est trés appréciée des plus fins gourmets, ce qui leur donne un prix inestimable.",
+			"dent_de_dorogon": "Peu de personnes peuvent se vanter de possèder ce trophée de chasse ! Cette dent de Dorogon fraîchement tombée devrait se vendre à un très bon prix.",
+			"bras_mecanique": "Cet artefact ressemble à une main, elle doit être issu d'une technologie oubliée, même si elle ne fonctionne plus, elle conserve une grande valeur.."
+		}
 	},
 	"rewards": {
 		"name": {

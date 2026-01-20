@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import AccountPage from '../pages/AccountPage.vue';
 import HomePage from '../pages/HomePage.vue';
+import Ingredients from '../pages/Ingredients.vue';
 import Inventory from '../pages/Inventory.vue';
 import MainPage from '../pages/MainPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
@@ -42,6 +43,12 @@ const routes: RouteRecord[] = [
 				path: '/inventory',
 				name: 'MyInventory',
 				component: Inventory,
+				meta: { auth: true }
+			},
+			{
+				path: '/ingredients',
+				name: 'MyIngredients',
+				component: Ingredients,
 				meta: { auth: true }
 			},
 			{
