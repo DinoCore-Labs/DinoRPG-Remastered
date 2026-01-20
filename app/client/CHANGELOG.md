@@ -1,5 +1,12 @@
 # @dinorpg/client
 
+## 0.1.2
+
+### Patch Changes
+
+- 370e56a: add user profile, user items, user ingredients
+- 370e56a: chore: vue-tippy
+
 ## 0.1.1
 
 ### Patch Changes

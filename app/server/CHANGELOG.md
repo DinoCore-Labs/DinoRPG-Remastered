@@ -1,5 +1,14 @@
 # @dinorpg/server
 
+## 0.1.2
+
+### Patch Changes
+
+- 370e56a: add user profile, user items, user ingredients
+- 370e56a: add device and network limits on account signup
+- Updated dependencies [370e56a]
+  - @dinorpg/core@0.0.4
+
 ## 0.1.1
 
 ### Patch Changes

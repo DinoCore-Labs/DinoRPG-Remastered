@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.0.4
+
+### Patch Changes
+
+- 370e56a: add user profile, user items, user ingredients
+
 ## 0.0.3
 
 ### Patch Changes
