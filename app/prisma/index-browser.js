@@ -165,6 +165,13 @@ exports.Prisma.UserScalarFieldEnum = {
   lastLogin: 'lastLogin'
 };
 
+exports.Prisma.UserIngredientsScalarFieldEnum = {
+  id: 'id',
+  ingredientId: 'ingredientId',
+  quantity: 'quantity',
+  userId: 'userId'
+};
+
 exports.Prisma.UserItemsScalarFieldEnum = {
   id: 'id',
   itemId: 'itemId',
@@ -246,6 +253,7 @@ exports.Prisma.ModelName = {
   SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
   SignupIpMonthCounter: 'SignupIpMonthCounter',
   User: 'User',
+  UserIngredients: 'UserIngredients',
   UserItems: 'UserItems',
   UserProfile: 'UserProfile',
   UserRewards: 'UserRewards',

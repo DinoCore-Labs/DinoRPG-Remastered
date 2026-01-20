@@ -34,6 +34,11 @@ export type SignupIpMonthCounter = $Result.DefaultSelection<Prisma.$SignupIpMont
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model UserIngredients
+ * 
+ */
+export type UserIngredients = $Result.DefaultSelection<Prisma.$UserIngredientsPayload>
+/**
  * Model UserItems
  * 
  */
@@ -272,6 +277,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userIngredients`: Exposes CRUD operations for the **UserIngredients** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserIngredients
+    * const userIngredients = await prisma.userIngredients.findMany()
+    * ```
+    */
+  get userIngredients(): Prisma.UserIngredientsDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.userItems`: Exposes CRUD operations for the **UserItems** model.
@@ -760,6 +775,7 @@ export namespace Prisma {
     SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
     SignupIpMonthCounter: 'SignupIpMonthCounter',
     User: 'User',
+    UserIngredients: 'UserIngredients',
     UserItems: 'UserItems',
     UserProfile: 'UserProfile',
     UserRewards: 'UserRewards',
@@ -780,7 +796,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
+      modelProps: "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1077,6 +1093,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserIngredients: {
+        payload: Prisma.$UserIngredientsPayload<ExtArgs>
+        fields: Prisma.UserIngredientsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserIngredientsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserIngredientsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserIngredientsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserIngredientsPayload>
+          }
+          findFirst: {
+            args: Prisma.UserIngredientsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserIngredientsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserIngredientsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserIngredientsPayload>
+          }
+          findMany: {
+            args: Prisma.UserIngredientsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserIngredientsPayload>[]
+          }
+          create: {
+            args: Prisma.UserIngredientsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserIngredientsPayload>
+          }
+          createMany: {
+            args: Prisma.UserIngredientsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserIngredientsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserIngredientsPayload>[]
+          }
+          delete: {
+            args: Prisma.UserIngredientsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserIngredientsPayload>
+          }
+          update: {
+            args: Prisma.UserIngredientsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserIngredientsPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserIngredientsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserIngredientsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserIngredientsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserIngredientsPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserIngredientsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserIngredientsPayload>
+          }
+          aggregate: {
+            args: Prisma.UserIngredientsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserIngredients>
+          }
+          groupBy: {
+            args: Prisma.UserIngredientsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserIngredientsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserIngredientsCountArgs<ExtArgs>
+            result: $Utils.Optional<UserIngredientsCountAggregateOutputType> | number
           }
         }
       }
@@ -1546,6 +1636,7 @@ export namespace Prisma {
     signupDeviceMonthCounter?: SignupDeviceMonthCounterOmit
     signupIpMonthCounter?: SignupIpMonthCounterOmit
     user?: UserOmit
+    userIngredients?: UserIngredientsOmit
     userItems?: UserItemsOmit
     userProfile?: UserProfileOmit
     userRewards?: UserRewardsOmit
@@ -1631,6 +1722,7 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
+    ingredients: number
     items: number
     rewards: number
     statsTracking: number
@@ -1638,6 +1730,7 @@ export namespace Prisma {
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ingredients?: boolean | UserCountOutputTypeCountIngredientsArgs
     items?: boolean | UserCountOutputTypeCountItemsArgs
     rewards?: boolean | UserCountOutputTypeCountRewardsArgs
     statsTracking?: boolean | UserCountOutputTypeCountStatsTrackingArgs
@@ -1653,6 +1746,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the UserCountOutputType
      */
     select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountIngredientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserIngredientsWhereInput
   }
 
   /**
@@ -5151,6 +5251,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedAt?: boolean
     lastLogin?: boolean
+    ingredients?: boolean | User$ingredientsArgs<ExtArgs>
     items?: boolean | User$itemsArgs<ExtArgs>
     profile?: boolean | User$profileArgs<ExtArgs>
     ranking?: boolean | User$rankingArgs<ExtArgs>
@@ -5192,6 +5293,7 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "role" | "createdDate" | "updatedAt" | "lastLogin", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ingredients?: boolean | User$ingredientsArgs<ExtArgs>
     items?: boolean | User$itemsArgs<ExtArgs>
     profile?: boolean | User$profileArgs<ExtArgs>
     ranking?: boolean | User$rankingArgs<ExtArgs>
@@ -5206,6 +5308,7 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
+      ingredients: Prisma.$UserIngredientsPayload<ExtArgs>[]
       items: Prisma.$UserItemsPayload<ExtArgs>[]
       profile: Prisma.$UserProfilePayload<ExtArgs> | null
       ranking: Prisma.$RankingPayload<ExtArgs> | null
@@ -5615,6 +5718,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    ingredients<T extends User$ingredientsArgs<ExtArgs> = {}>(args?: Subset<T, User$ingredientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     items<T extends User$itemsArgs<ExtArgs> = {}>(args?: Subset<T, User$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserItemsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     profile<T extends User$profileArgs<ExtArgs> = {}>(args?: Subset<T, User$profileArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     ranking<T extends User$rankingArgs<ExtArgs> = {}>(args?: Subset<T, User$rankingArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -6054,6 +6158,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.ingredients
+   */
+  export type User$ingredientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsInclude<ExtArgs> | null
+    where?: UserIngredientsWhereInput
+    orderBy?: UserIngredientsOrderByWithRelationInput | UserIngredientsOrderByWithRelationInput[]
+    cursor?: UserIngredientsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserIngredientsScalarFieldEnum | UserIngredientsScalarFieldEnum[]
+  }
+
+  /**
    * User.items
    */
   export type User$itemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6203,6 +6331,1102 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserIngredients
+   */
+
+  export type AggregateUserIngredients = {
+    _count: UserIngredientsCountAggregateOutputType | null
+    _avg: UserIngredientsAvgAggregateOutputType | null
+    _sum: UserIngredientsSumAggregateOutputType | null
+    _min: UserIngredientsMinAggregateOutputType | null
+    _max: UserIngredientsMaxAggregateOutputType | null
+  }
+
+  export type UserIngredientsAvgAggregateOutputType = {
+    id: number | null
+    ingredientId: number | null
+    quantity: number | null
+  }
+
+  export type UserIngredientsSumAggregateOutputType = {
+    id: number | null
+    ingredientId: number | null
+    quantity: number | null
+  }
+
+  export type UserIngredientsMinAggregateOutputType = {
+    id: number | null
+    ingredientId: number | null
+    quantity: number | null
+    userId: string | null
+  }
+
+  export type UserIngredientsMaxAggregateOutputType = {
+    id: number | null
+    ingredientId: number | null
+    quantity: number | null
+    userId: string | null
+  }
+
+  export type UserIngredientsCountAggregateOutputType = {
+    id: number
+    ingredientId: number
+    quantity: number
+    userId: number
+    _all: number
+  }
+
+
+  export type UserIngredientsAvgAggregateInputType = {
+    id?: true
+    ingredientId?: true
+    quantity?: true
+  }
+
+  export type UserIngredientsSumAggregateInputType = {
+    id?: true
+    ingredientId?: true
+    quantity?: true
+  }
+
+  export type UserIngredientsMinAggregateInputType = {
+    id?: true
+    ingredientId?: true
+    quantity?: true
+    userId?: true
+  }
+
+  export type UserIngredientsMaxAggregateInputType = {
+    id?: true
+    ingredientId?: true
+    quantity?: true
+    userId?: true
+  }
+
+  export type UserIngredientsCountAggregateInputType = {
+    id?: true
+    ingredientId?: true
+    quantity?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type UserIngredientsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserIngredients to aggregate.
+     */
+    where?: UserIngredientsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserIngredients to fetch.
+     */
+    orderBy?: UserIngredientsOrderByWithRelationInput | UserIngredientsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserIngredientsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserIngredients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserIngredients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserIngredients
+    **/
+    _count?: true | UserIngredientsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserIngredientsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserIngredientsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserIngredientsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserIngredientsMaxAggregateInputType
+  }
+
+  export type GetUserIngredientsAggregateType<T extends UserIngredientsAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserIngredients]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserIngredients[P]>
+      : GetScalarType<T[P], AggregateUserIngredients[P]>
+  }
+
+
+
+
+  export type UserIngredientsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserIngredientsWhereInput
+    orderBy?: UserIngredientsOrderByWithAggregationInput | UserIngredientsOrderByWithAggregationInput[]
+    by: UserIngredientsScalarFieldEnum[] | UserIngredientsScalarFieldEnum
+    having?: UserIngredientsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserIngredientsCountAggregateInputType | true
+    _avg?: UserIngredientsAvgAggregateInputType
+    _sum?: UserIngredientsSumAggregateInputType
+    _min?: UserIngredientsMinAggregateInputType
+    _max?: UserIngredientsMaxAggregateInputType
+  }
+
+  export type UserIngredientsGroupByOutputType = {
+    id: number
+    ingredientId: number
+    quantity: number
+    userId: string
+    _count: UserIngredientsCountAggregateOutputType | null
+    _avg: UserIngredientsAvgAggregateOutputType | null
+    _sum: UserIngredientsSumAggregateOutputType | null
+    _min: UserIngredientsMinAggregateOutputType | null
+    _max: UserIngredientsMaxAggregateOutputType | null
+  }
+
+  type GetUserIngredientsGroupByPayload<T extends UserIngredientsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserIngredientsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserIngredientsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserIngredientsGroupByOutputType[P]>
+            : GetScalarType<T[P], UserIngredientsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserIngredientsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ingredientId?: boolean
+    quantity?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userIngredients"]>
+
+  export type UserIngredientsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ingredientId?: boolean
+    quantity?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userIngredients"]>
+
+  export type UserIngredientsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ingredientId?: boolean
+    quantity?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userIngredients"]>
+
+  export type UserIngredientsSelectScalar = {
+    id?: boolean
+    ingredientId?: boolean
+    quantity?: boolean
+    userId?: boolean
+  }
+
+  export type UserIngredientsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ingredientId" | "quantity" | "userId", ExtArgs["result"]["userIngredients"]>
+  export type UserIngredientsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserIngredientsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserIngredientsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserIngredientsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserIngredients"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      ingredientId: number
+      quantity: number
+      userId: string
+    }, ExtArgs["result"]["userIngredients"]>
+    composites: {}
+  }
+
+  type UserIngredientsGetPayload<S extends boolean | null | undefined | UserIngredientsDefaultArgs> = $Result.GetResult<Prisma.$UserIngredientsPayload, S>
+
+  type UserIngredientsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserIngredientsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: UserIngredientsCountAggregateInputType | true
+    }
+
+  export interface UserIngredientsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserIngredients'], meta: { name: 'UserIngredients' } }
+    /**
+     * Find zero or one UserIngredients that matches the filter.
+     * @param {UserIngredientsFindUniqueArgs} args - Arguments to find a UserIngredients
+     * @example
+     * // Get one UserIngredients
+     * const userIngredients = await prisma.userIngredients.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserIngredientsFindUniqueArgs>(args: SelectSubset<T, UserIngredientsFindUniqueArgs<ExtArgs>>): Prisma__UserIngredientsClient<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserIngredients that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserIngredientsFindUniqueOrThrowArgs} args - Arguments to find a UserIngredients
+     * @example
+     * // Get one UserIngredients
+     * const userIngredients = await prisma.userIngredients.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserIngredientsFindUniqueOrThrowArgs>(args: SelectSubset<T, UserIngredientsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserIngredientsClient<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserIngredients that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserIngredientsFindFirstArgs} args - Arguments to find a UserIngredients
+     * @example
+     * // Get one UserIngredients
+     * const userIngredients = await prisma.userIngredients.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserIngredientsFindFirstArgs>(args?: SelectSubset<T, UserIngredientsFindFirstArgs<ExtArgs>>): Prisma__UserIngredientsClient<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserIngredients that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserIngredientsFindFirstOrThrowArgs} args - Arguments to find a UserIngredients
+     * @example
+     * // Get one UserIngredients
+     * const userIngredients = await prisma.userIngredients.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserIngredientsFindFirstOrThrowArgs>(args?: SelectSubset<T, UserIngredientsFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserIngredientsClient<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserIngredients that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserIngredientsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserIngredients
+     * const userIngredients = await prisma.userIngredients.findMany()
+     * 
+     * // Get first 10 UserIngredients
+     * const userIngredients = await prisma.userIngredients.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userIngredientsWithIdOnly = await prisma.userIngredients.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserIngredientsFindManyArgs>(args?: SelectSubset<T, UserIngredientsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserIngredients.
+     * @param {UserIngredientsCreateArgs} args - Arguments to create a UserIngredients.
+     * @example
+     * // Create one UserIngredients
+     * const UserIngredients = await prisma.userIngredients.create({
+     *   data: {
+     *     // ... data to create a UserIngredients
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserIngredientsCreateArgs>(args: SelectSubset<T, UserIngredientsCreateArgs<ExtArgs>>): Prisma__UserIngredientsClient<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserIngredients.
+     * @param {UserIngredientsCreateManyArgs} args - Arguments to create many UserIngredients.
+     * @example
+     * // Create many UserIngredients
+     * const userIngredients = await prisma.userIngredients.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserIngredientsCreateManyArgs>(args?: SelectSubset<T, UserIngredientsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserIngredients and returns the data saved in the database.
+     * @param {UserIngredientsCreateManyAndReturnArgs} args - Arguments to create many UserIngredients.
+     * @example
+     * // Create many UserIngredients
+     * const userIngredients = await prisma.userIngredients.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserIngredients and only return the `id`
+     * const userIngredientsWithIdOnly = await prisma.userIngredients.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserIngredientsCreateManyAndReturnArgs>(args?: SelectSubset<T, UserIngredientsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserIngredients.
+     * @param {UserIngredientsDeleteArgs} args - Arguments to delete one UserIngredients.
+     * @example
+     * // Delete one UserIngredients
+     * const UserIngredients = await prisma.userIngredients.delete({
+     *   where: {
+     *     // ... filter to delete one UserIngredients
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserIngredientsDeleteArgs>(args: SelectSubset<T, UserIngredientsDeleteArgs<ExtArgs>>): Prisma__UserIngredientsClient<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserIngredients.
+     * @param {UserIngredientsUpdateArgs} args - Arguments to update one UserIngredients.
+     * @example
+     * // Update one UserIngredients
+     * const userIngredients = await prisma.userIngredients.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserIngredientsUpdateArgs>(args: SelectSubset<T, UserIngredientsUpdateArgs<ExtArgs>>): Prisma__UserIngredientsClient<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserIngredients.
+     * @param {UserIngredientsDeleteManyArgs} args - Arguments to filter UserIngredients to delete.
+     * @example
+     * // Delete a few UserIngredients
+     * const { count } = await prisma.userIngredients.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserIngredientsDeleteManyArgs>(args?: SelectSubset<T, UserIngredientsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserIngredients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserIngredientsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserIngredients
+     * const userIngredients = await prisma.userIngredients.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserIngredientsUpdateManyArgs>(args: SelectSubset<T, UserIngredientsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserIngredients and returns the data updated in the database.
+     * @param {UserIngredientsUpdateManyAndReturnArgs} args - Arguments to update many UserIngredients.
+     * @example
+     * // Update many UserIngredients
+     * const userIngredients = await prisma.userIngredients.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserIngredients and only return the `id`
+     * const userIngredientsWithIdOnly = await prisma.userIngredients.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserIngredientsUpdateManyAndReturnArgs>(args: SelectSubset<T, UserIngredientsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserIngredients.
+     * @param {UserIngredientsUpsertArgs} args - Arguments to update or create a UserIngredients.
+     * @example
+     * // Update or create a UserIngredients
+     * const userIngredients = await prisma.userIngredients.upsert({
+     *   create: {
+     *     // ... data to create a UserIngredients
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserIngredients we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserIngredientsUpsertArgs>(args: SelectSubset<T, UserIngredientsUpsertArgs<ExtArgs>>): Prisma__UserIngredientsClient<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserIngredients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserIngredientsCountArgs} args - Arguments to filter UserIngredients to count.
+     * @example
+     * // Count the number of UserIngredients
+     * const count = await prisma.userIngredients.count({
+     *   where: {
+     *     // ... the filter for the UserIngredients we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserIngredientsCountArgs>(
+      args?: Subset<T, UserIngredientsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserIngredientsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserIngredients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserIngredientsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserIngredientsAggregateArgs>(args: Subset<T, UserIngredientsAggregateArgs>): Prisma.PrismaPromise<GetUserIngredientsAggregateType<T>>
+
+    /**
+     * Group by UserIngredients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserIngredientsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserIngredientsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserIngredientsGroupByArgs['orderBy'] }
+        : { orderBy?: UserIngredientsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserIngredientsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserIngredientsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserIngredients model
+   */
+  readonly fields: UserIngredientsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserIngredients.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserIngredientsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserIngredients model
+   */
+  interface UserIngredientsFieldRefs {
+    readonly id: FieldRef<"UserIngredients", 'Int'>
+    readonly ingredientId: FieldRef<"UserIngredients", 'Int'>
+    readonly quantity: FieldRef<"UserIngredients", 'Int'>
+    readonly userId: FieldRef<"UserIngredients", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserIngredients findUnique
+   */
+  export type UserIngredientsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsInclude<ExtArgs> | null
+    /**
+     * Filter, which UserIngredients to fetch.
+     */
+    where: UserIngredientsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserIngredients findUniqueOrThrow
+   */
+  export type UserIngredientsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsInclude<ExtArgs> | null
+    /**
+     * Filter, which UserIngredients to fetch.
+     */
+    where: UserIngredientsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserIngredients findFirst
+   */
+  export type UserIngredientsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsInclude<ExtArgs> | null
+    /**
+     * Filter, which UserIngredients to fetch.
+     */
+    where?: UserIngredientsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserIngredients to fetch.
+     */
+    orderBy?: UserIngredientsOrderByWithRelationInput | UserIngredientsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserIngredients.
+     */
+    cursor?: UserIngredientsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserIngredients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserIngredients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserIngredients.
+     */
+    distinct?: UserIngredientsScalarFieldEnum | UserIngredientsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserIngredients findFirstOrThrow
+   */
+  export type UserIngredientsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsInclude<ExtArgs> | null
+    /**
+     * Filter, which UserIngredients to fetch.
+     */
+    where?: UserIngredientsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserIngredients to fetch.
+     */
+    orderBy?: UserIngredientsOrderByWithRelationInput | UserIngredientsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserIngredients.
+     */
+    cursor?: UserIngredientsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserIngredients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserIngredients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserIngredients.
+     */
+    distinct?: UserIngredientsScalarFieldEnum | UserIngredientsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserIngredients findMany
+   */
+  export type UserIngredientsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsInclude<ExtArgs> | null
+    /**
+     * Filter, which UserIngredients to fetch.
+     */
+    where?: UserIngredientsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserIngredients to fetch.
+     */
+    orderBy?: UserIngredientsOrderByWithRelationInput | UserIngredientsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserIngredients.
+     */
+    cursor?: UserIngredientsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserIngredients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserIngredients.
+     */
+    skip?: number
+    distinct?: UserIngredientsScalarFieldEnum | UserIngredientsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserIngredients create
+   */
+  export type UserIngredientsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserIngredients.
+     */
+    data: XOR<UserIngredientsCreateInput, UserIngredientsUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserIngredients createMany
+   */
+  export type UserIngredientsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserIngredients.
+     */
+    data: UserIngredientsCreateManyInput | UserIngredientsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserIngredients createManyAndReturn
+   */
+  export type UserIngredientsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserIngredients.
+     */
+    data: UserIngredientsCreateManyInput | UserIngredientsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserIngredients update
+   */
+  export type UserIngredientsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserIngredients.
+     */
+    data: XOR<UserIngredientsUpdateInput, UserIngredientsUncheckedUpdateInput>
+    /**
+     * Choose, which UserIngredients to update.
+     */
+    where: UserIngredientsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserIngredients updateMany
+   */
+  export type UserIngredientsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserIngredients.
+     */
+    data: XOR<UserIngredientsUpdateManyMutationInput, UserIngredientsUncheckedUpdateManyInput>
+    /**
+     * Filter which UserIngredients to update
+     */
+    where?: UserIngredientsWhereInput
+    /**
+     * Limit how many UserIngredients to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserIngredients updateManyAndReturn
+   */
+  export type UserIngredientsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * The data used to update UserIngredients.
+     */
+    data: XOR<UserIngredientsUpdateManyMutationInput, UserIngredientsUncheckedUpdateManyInput>
+    /**
+     * Filter which UserIngredients to update
+     */
+    where?: UserIngredientsWhereInput
+    /**
+     * Limit how many UserIngredients to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserIngredients upsert
+   */
+  export type UserIngredientsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserIngredients to update in case it exists.
+     */
+    where: UserIngredientsWhereUniqueInput
+    /**
+     * In case the UserIngredients found by the `where` argument doesn't exist, create a new UserIngredients with this data.
+     */
+    create: XOR<UserIngredientsCreateInput, UserIngredientsUncheckedCreateInput>
+    /**
+     * In case the UserIngredients was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserIngredientsUpdateInput, UserIngredientsUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserIngredients delete
+   */
+  export type UserIngredientsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsInclude<ExtArgs> | null
+    /**
+     * Filter which UserIngredients to delete.
+     */
+    where: UserIngredientsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserIngredients deleteMany
+   */
+  export type UserIngredientsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserIngredients to delete
+     */
+    where?: UserIngredientsWhereInput
+    /**
+     * Limit how many UserIngredients to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserIngredients without action
+   */
+  export type UserIngredientsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserIngredients
+     */
+    select?: UserIngredientsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserIngredients
+     */
+    omit?: UserIngredientsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIngredientsInclude<ExtArgs> | null
   }
 
 
@@ -11794,6 +13018,16 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const UserIngredientsScalarFieldEnum: {
+    id: 'id',
+    ingredientId: 'ingredientId',
+    quantity: 'quantity',
+    userId: 'userId'
+  };
+
+  export type UserIngredientsScalarFieldEnum = (typeof UserIngredientsScalarFieldEnum)[keyof typeof UserIngredientsScalarFieldEnum]
+
+
   export const UserItemsScalarFieldEnum: {
     id: 'id',
     itemId: 'itemId',
@@ -12213,6 +13447,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     lastLogin?: DateTimeFilter<"User"> | Date | string
+    ingredients?: UserIngredientsListRelationFilter
     items?: UserItemsListRelationFilter
     profile?: XOR<UserProfileNullableScalarRelationFilter, UserProfileWhereInput> | null
     ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
@@ -12229,6 +13464,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     lastLogin?: SortOrder
+    ingredients?: UserIngredientsOrderByRelationAggregateInput
     items?: UserItemsOrderByRelationAggregateInput
     profile?: UserProfileOrderByWithRelationInput
     ranking?: RankingOrderByWithRelationInput
@@ -12248,6 +13484,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     lastLogin?: DateTimeFilter<"User"> | Date | string
+    ingredients?: UserIngredientsListRelationFilter
     items?: UserItemsListRelationFilter
     profile?: XOR<UserProfileNullableScalarRelationFilter, UserProfileWhereInput> | null
     ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
@@ -12280,6 +13517,59 @@ export namespace Prisma {
     createdDate?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     lastLogin?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type UserIngredientsWhereInput = {
+    AND?: UserIngredientsWhereInput | UserIngredientsWhereInput[]
+    OR?: UserIngredientsWhereInput[]
+    NOT?: UserIngredientsWhereInput | UserIngredientsWhereInput[]
+    id?: IntFilter<"UserIngredients"> | number
+    ingredientId?: IntFilter<"UserIngredients"> | number
+    quantity?: IntFilter<"UserIngredients"> | number
+    userId?: StringFilter<"UserIngredients"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserIngredientsOrderByWithRelationInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserIngredientsWhereUniqueInput = Prisma.AtLeast<{
+    ingredientId_userId?: UserIngredientsIngredientIdUserIdCompoundUniqueInput
+    AND?: UserIngredientsWhereInput | UserIngredientsWhereInput[]
+    OR?: UserIngredientsWhereInput[]
+    NOT?: UserIngredientsWhereInput | UserIngredientsWhereInput[]
+    id?: IntFilter<"UserIngredients"> | number
+    ingredientId?: IntFilter<"UserIngredients"> | number
+    quantity?: IntFilter<"UserIngredients"> | number
+    userId?: StringFilter<"UserIngredients"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "ingredientId_userId">
+
+  export type UserIngredientsOrderByWithAggregationInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    userId?: SortOrder
+    _count?: UserIngredientsCountOrderByAggregateInput
+    _avg?: UserIngredientsAvgOrderByAggregateInput
+    _max?: UserIngredientsMaxOrderByAggregateInput
+    _min?: UserIngredientsMinOrderByAggregateInput
+    _sum?: UserIngredientsSumOrderByAggregateInput
+  }
+
+  export type UserIngredientsScalarWhereWithAggregatesInput = {
+    AND?: UserIngredientsScalarWhereWithAggregatesInput | UserIngredientsScalarWhereWithAggregatesInput[]
+    OR?: UserIngredientsScalarWhereWithAggregatesInput[]
+    NOT?: UserIngredientsScalarWhereWithAggregatesInput | UserIngredientsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserIngredients"> | number
+    ingredientId?: IntWithAggregatesFilter<"UserIngredients"> | number
+    quantity?: IntWithAggregatesFilter<"UserIngredients"> | number
+    userId?: StringWithAggregatesFilter<"UserIngredients"> | string
   }
 
   export type UserItemsWhereInput = {
@@ -12769,6 +14059,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
@@ -12785,6 +14076,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
@@ -12801,6 +14093,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
@@ -12817,6 +14110,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
@@ -12853,6 +14147,54 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserIngredientsCreateInput = {
+    id?: number
+    ingredientId: number
+    quantity: number
+    user: UserCreateNestedOneWithoutIngredientsInput
+  }
+
+  export type UserIngredientsUncheckedCreateInput = {
+    id?: number
+    ingredientId: number
+    quantity: number
+    userId: string
+  }
+
+  export type UserIngredientsUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutIngredientsNestedInput
+  }
+
+  export type UserIngredientsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserIngredientsCreateManyInput = {
+    id?: number
+    ingredientId: number
+    quantity: number
+    userId: string
+  }
+
+  export type UserIngredientsUpdateManyMutationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserIngredientsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserItemsCreateInput = {
@@ -13356,6 +14698,12 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type UserIngredientsListRelationFilter = {
+    every?: UserIngredientsWhereInput
+    some?: UserIngredientsWhereInput
+    none?: UserIngredientsWhereInput
+  }
+
   export type UserItemsListRelationFilter = {
     every?: UserItemsWhereInput
     some?: UserItemsWhereInput
@@ -13393,6 +14741,10 @@ export namespace Prisma {
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type UserIngredientsOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type UserItemsOrderByRelationAggregateInput = {
@@ -13463,6 +14815,44 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type UserIngredientsIngredientIdUserIdCompoundUniqueInput = {
+    ingredientId: number
+    userId: string
+  }
+
+  export type UserIngredientsCountOrderByAggregateInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserIngredientsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+  }
+
+  export type UserIngredientsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserIngredientsMinOrderByAggregateInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserIngredientsSumOrderByAggregateInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
   }
 
   export type UserItemsItemIdUserIdCompoundUniqueInput = {
@@ -13810,6 +15200,13 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type UserIngredientsCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserIngredientsCreateWithoutUserInput, UserIngredientsUncheckedCreateWithoutUserInput> | UserIngredientsCreateWithoutUserInput[] | UserIngredientsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserIngredientsCreateOrConnectWithoutUserInput | UserIngredientsCreateOrConnectWithoutUserInput[]
+    createMany?: UserIngredientsCreateManyUserInputEnvelope
+    connect?: UserIngredientsWhereUniqueInput | UserIngredientsWhereUniqueInput[]
+  }
+
   export type UserItemsCreateNestedManyWithoutUserInput = {
     create?: XOR<UserItemsCreateWithoutUserInput, UserItemsUncheckedCreateWithoutUserInput> | UserItemsCreateWithoutUserInput[] | UserItemsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserItemsCreateOrConnectWithoutUserInput | UserItemsCreateOrConnectWithoutUserInput[]
@@ -13848,6 +15245,13 @@ export namespace Prisma {
     connectOrCreate?: UserWalletCreateOrConnectWithoutUserInput | UserWalletCreateOrConnectWithoutUserInput[]
     createMany?: UserWalletCreateManyUserInputEnvelope
     connect?: UserWalletWhereUniqueInput | UserWalletWhereUniqueInput[]
+  }
+
+  export type UserIngredientsUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserIngredientsCreateWithoutUserInput, UserIngredientsUncheckedCreateWithoutUserInput> | UserIngredientsCreateWithoutUserInput[] | UserIngredientsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserIngredientsCreateOrConnectWithoutUserInput | UserIngredientsCreateOrConnectWithoutUserInput[]
+    createMany?: UserIngredientsCreateManyUserInputEnvelope
+    connect?: UserIngredientsWhereUniqueInput | UserIngredientsWhereUniqueInput[]
   }
 
   export type UserItemsUncheckedCreateNestedManyWithoutUserInput = {
@@ -13896,6 +15300,20 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type UserIngredientsUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserIngredientsCreateWithoutUserInput, UserIngredientsUncheckedCreateWithoutUserInput> | UserIngredientsCreateWithoutUserInput[] | UserIngredientsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserIngredientsCreateOrConnectWithoutUserInput | UserIngredientsCreateOrConnectWithoutUserInput[]
+    upsert?: UserIngredientsUpsertWithWhereUniqueWithoutUserInput | UserIngredientsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserIngredientsCreateManyUserInputEnvelope
+    set?: UserIngredientsWhereUniqueInput | UserIngredientsWhereUniqueInput[]
+    disconnect?: UserIngredientsWhereUniqueInput | UserIngredientsWhereUniqueInput[]
+    delete?: UserIngredientsWhereUniqueInput | UserIngredientsWhereUniqueInput[]
+    connect?: UserIngredientsWhereUniqueInput | UserIngredientsWhereUniqueInput[]
+    update?: UserIngredientsUpdateWithWhereUniqueWithoutUserInput | UserIngredientsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserIngredientsUpdateManyWithWhereWithoutUserInput | UserIngredientsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserIngredientsScalarWhereInput | UserIngredientsScalarWhereInput[]
   }
 
   export type UserItemsUpdateManyWithoutUserNestedInput = {
@@ -13974,6 +15392,20 @@ export namespace Prisma {
     deleteMany?: UserWalletScalarWhereInput | UserWalletScalarWhereInput[]
   }
 
+  export type UserIngredientsUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserIngredientsCreateWithoutUserInput, UserIngredientsUncheckedCreateWithoutUserInput> | UserIngredientsCreateWithoutUserInput[] | UserIngredientsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserIngredientsCreateOrConnectWithoutUserInput | UserIngredientsCreateOrConnectWithoutUserInput[]
+    upsert?: UserIngredientsUpsertWithWhereUniqueWithoutUserInput | UserIngredientsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserIngredientsCreateManyUserInputEnvelope
+    set?: UserIngredientsWhereUniqueInput | UserIngredientsWhereUniqueInput[]
+    disconnect?: UserIngredientsWhereUniqueInput | UserIngredientsWhereUniqueInput[]
+    delete?: UserIngredientsWhereUniqueInput | UserIngredientsWhereUniqueInput[]
+    connect?: UserIngredientsWhereUniqueInput | UserIngredientsWhereUniqueInput[]
+    update?: UserIngredientsUpdateWithWhereUniqueWithoutUserInput | UserIngredientsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserIngredientsUpdateManyWithWhereWithoutUserInput | UserIngredientsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserIngredientsScalarWhereInput | UserIngredientsScalarWhereInput[]
+  }
+
   export type UserItemsUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserItemsCreateWithoutUserInput, UserItemsUncheckedCreateWithoutUserInput> | UserItemsCreateWithoutUserInput[] | UserItemsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserItemsCreateOrConnectWithoutUserInput | UserItemsCreateOrConnectWithoutUserInput[]
@@ -14048,6 +15480,20 @@ export namespace Prisma {
     update?: UserWalletUpdateWithWhereUniqueWithoutUserInput | UserWalletUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserWalletUpdateManyWithWhereWithoutUserInput | UserWalletUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserWalletScalarWhereInput | UserWalletScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutIngredientsInput = {
+    create?: XOR<UserCreateWithoutIngredientsInput, UserUncheckedCreateWithoutIngredientsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutIngredientsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutIngredientsNestedInput = {
+    create?: XOR<UserCreateWithoutIngredientsInput, UserUncheckedCreateWithoutIngredientsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutIngredientsInput
+    upsert?: UserUpsertWithoutIngredientsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutIngredientsInput, UserUpdateWithoutIngredientsInput>, UserUncheckedUpdateWithoutIngredientsInput>
   }
 
   export type UserCreateNestedOneWithoutItemsInput = {
@@ -14431,6 +15877,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
@@ -14446,6 +15893,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
@@ -14477,6 +15925,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
@@ -14492,11 +15941,34 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserIngredientsCreateWithoutUserInput = {
+    id?: number
+    ingredientId: number
+    quantity: number
+  }
+
+  export type UserIngredientsUncheckedCreateWithoutUserInput = {
+    id?: number
+    ingredientId: number
+    quantity: number
+  }
+
+  export type UserIngredientsCreateOrConnectWithoutUserInput = {
+    where: UserIngredientsWhereUniqueInput
+    create: XOR<UserIngredientsCreateWithoutUserInput, UserIngredientsUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserIngredientsCreateManyUserInputEnvelope = {
+    data: UserIngredientsCreateManyUserInput | UserIngredientsCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserItemsCreateWithoutUserInput = {
@@ -14628,6 +16100,32 @@ export namespace Prisma {
   export type UserWalletCreateManyUserInputEnvelope = {
     data: UserWalletCreateManyUserInput | UserWalletCreateManyUserInput[]
     skipDuplicates?: boolean
+  }
+
+  export type UserIngredientsUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserIngredientsWhereUniqueInput
+    update: XOR<UserIngredientsUpdateWithoutUserInput, UserIngredientsUncheckedUpdateWithoutUserInput>
+    create: XOR<UserIngredientsCreateWithoutUserInput, UserIngredientsUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserIngredientsUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserIngredientsWhereUniqueInput
+    data: XOR<UserIngredientsUpdateWithoutUserInput, UserIngredientsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserIngredientsUpdateManyWithWhereWithoutUserInput = {
+    where: UserIngredientsScalarWhereInput
+    data: XOR<UserIngredientsUpdateManyMutationInput, UserIngredientsUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserIngredientsScalarWhereInput = {
+    AND?: UserIngredientsScalarWhereInput | UserIngredientsScalarWhereInput[]
+    OR?: UserIngredientsScalarWhereInput[]
+    NOT?: UserIngredientsScalarWhereInput | UserIngredientsScalarWhereInput[]
+    id?: IntFilter<"UserIngredients"> | number
+    ingredientId?: IntFilter<"UserIngredients"> | number
+    quantity?: IntFilter<"UserIngredients"> | number
+    userId?: StringFilter<"UserIngredients"> | string
   }
 
   export type UserItemsUpsertWithWhereUniqueWithoutUserInput = {
@@ -14792,6 +16290,86 @@ export namespace Prisma {
     userId?: StringFilter<"UserWallet"> | string
   }
 
+  export type UserCreateWithoutIngredientsInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutIngredientsInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutIngredientsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutIngredientsInput, UserUncheckedCreateWithoutIngredientsInput>
+  }
+
+  export type UserUpsertWithoutIngredientsInput = {
+    update: XOR<UserUpdateWithoutIngredientsInput, UserUncheckedUpdateWithoutIngredientsInput>
+    create: XOR<UserCreateWithoutIngredientsInput, UserUncheckedCreateWithoutIngredientsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutIngredientsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutIngredientsInput, UserUncheckedUpdateWithoutIngredientsInput>
+  }
+
+  export type UserUpdateWithoutIngredientsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutIngredientsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutItemsInput = {
     id?: string
     name: string
@@ -14800,6 +16378,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
@@ -14815,6 +16394,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
@@ -14846,6 +16426,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
@@ -14861,6 +16442,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
@@ -14876,6 +16458,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
@@ -14891,6 +16474,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
@@ -14922,6 +16506,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
@@ -14937,6 +16522,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
@@ -14952,6 +16538,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
@@ -14967,6 +16554,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
@@ -14998,6 +16586,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
@@ -15013,6 +16602,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
@@ -15028,6 +16618,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
@@ -15043,6 +16634,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
@@ -15074,6 +16666,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
@@ -15089,6 +16682,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
@@ -15104,6 +16698,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
@@ -15119,6 +16714,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
@@ -15150,6 +16746,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
@@ -15165,11 +16762,18 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserIngredientsCreateManyUserInput = {
+    id?: number
+    ingredientId: number
+    quantity: number
   }
 
   export type UserItemsCreateManyUserInput = {
@@ -15193,6 +16797,24 @@ export namespace Prisma {
     id?: string
     type: $Enums.MoneyType
     amount?: number
+  }
+
+  export type UserIngredientsUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserIngredientsUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserIngredientsUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserItemsUpdateWithoutUserInput = {
