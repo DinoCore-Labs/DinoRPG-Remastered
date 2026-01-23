@@ -3,6 +3,7 @@ import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import AccountPage from '../pages/AccountPage.vue';
+import HelpPage from '../pages/HelpPage.vue';
 import HomePage from '../pages/HomePage.vue';
 import Ingredients from '../pages/Ingredients.vue';
 import Inventory from '../pages/Inventory.vue';
@@ -37,7 +38,7 @@ const routes: RouteRecord[] = [
 				path: '/user/:id',
 				name: 'UserAccount',
 				component: AccountPage,
-				meta: { public: true } // profil public → mais appeler backend public
+				meta: { public: true, showLeftPanel: false }
 			},
 			{
 				path: '/inventory',
@@ -75,6 +76,12 @@ const routes: RouteRecord[] = [
 						})
 					}
 				]
+			},
+			{
+				path: '/help',
+				name: 'HelpPage',
+				component: HelpPage,
+				meta: { public: true, showLeftPanel: false }
 			}
 		]
 	}

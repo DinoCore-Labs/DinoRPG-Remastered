@@ -2,7 +2,7 @@
 	<div class="mainpage">
 		<div class="mainpage-header">
 			<a @click="goToMainPage()" class="linkHome"></a>
-			<LeftPanel />
+			<LeftPanel v-if="showLeftPanel" />
 			<div class="mainpage-center">
 				<RouterView />
 			</div>
@@ -14,10 +14,18 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import LeftPanel from '../components/common/LeftPanel.vue';
+import { userStore } from '../store/userStore';
 
 export default defineComponent({
 	name: 'MainPage',
 	components: { LeftPanel },
+	computed: {
+		showLeftPanel(): boolean {
+			const user = userStore();
+			const hide = this.$route.matched.some(r => r.meta.showLeftPanel === false);
+			return user.isLogged ? true : !hide;
+		}
+	},
 	methods: {
 		async goToMainPage() {
 			this.$router.push({

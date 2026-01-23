@@ -4,8 +4,12 @@
 			<img class="homepage-banner" :src="getImgURL('background', 'background_alpha')" alt="DinoRPG" />
 			<div class="homepage-content">
 				<div class="homepage-menu">
-					<DZButton @click="openAuthMenu">{{ $t('homepage.connexion') }}</DZButton>
-					<DZButton href="#last-news" :disabled="true">{{ $t('homepage.news') }}</DZButton>
+					<div>
+						<DZButton @click="openAuthMenu">{{ $t('homepage.connexion') }}</DZButton>
+						<DZButton href="#last-news" :disabled="true">{{ $t('homepage.news') }}</DZButton>
+					</div>
+
+					<DZButton class="helpButton" href="/help">{{ $t('homepage.help') }}</DZButton>
 				</div>
 				<Suspense>
 					<FightAnimation :key="$i18n.locale" :fight="getFight()" />
@@ -239,7 +243,14 @@ export default defineComponent({
 	}
 	&-menu {
 		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		gap: 12px;
+		& > div {
+			display: flex;
+			gap: 12px;
+		}
 	}
 	&-lastNews {
 		background-color: #000;
