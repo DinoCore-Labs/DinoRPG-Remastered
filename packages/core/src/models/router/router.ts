@@ -20,4 +20,7 @@ export interface RouteMeta {
 
 	/** Rôles autorisés */
 	roles?: UserRole[];
+
+	/** Afficher le panneau gauche **/
+	showLeftPanel?: boolean;
 }

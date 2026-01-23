@@ -49,4 +49,17 @@ a {
 	&.bSmall:hover {
 		background-image: url('../../assets/button/button_small_hover.webp');
 	}
+	&.helpButton {
+		background-image: url('../../assets/button/button_help.gif');
+		width: 95px;
+		height: 50px;
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		box-sizing: border-box;
+		padding-bottom: 4px;
+	}
+	&.helpButton:hover {
+		background-image: url('../../assets/button/button_help_hover.gif');
+	}
 }

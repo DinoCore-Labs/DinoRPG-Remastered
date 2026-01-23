@@ -63,7 +63,7 @@ export default defineComponent({
 			-1px 0px #fdf1bf,
 			0px -1px #fdf1bf,
 			0px -1px 2px #b25d21;
-		line-height: 28px;
+		line-height: 32px;
 		margin-left: 12px;
 	}
 }
