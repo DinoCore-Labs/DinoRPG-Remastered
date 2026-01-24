@@ -24,10 +24,7 @@
 						<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 						<span>{{ $t('topBar.leftUserMenu.dojo') }}</span>
 					</RouterLink>
-					<!--<a class="link" :href="CINEMA_LINK" target="_blank">
-						<img :src="getImgURL('icons', 'act_historique')" alt="cine" />
-						<span>{{ $t('topBar.rightMenu.cinema') }}</span>
-					</a>
+					<!--
 					<RouterLink class="link" :to="`/manage`" v-if="playerStore.playerOptions.hasPDA">
 						<img :src="getImgURL('icons', 'act_pda')" alt="pda" />
 						<span>{{ $t('topBar.leftMenu.order') }}</span>
@@ -181,7 +178,6 @@ import EventBus from '../../events/index.js';
 import { beautifulNumber } from '../../utils/beautifulNumber.js';
 //import { Action } from '@drpg/core/models/dinoz/ActionList';
 //import { placeList } from '../../constants/index.js';
-//import { CINEMA_LINK } from '../../utils/goTo.js';
 import { userStore } from '../../store/userStore.js';
 
 export default defineComponent({
@@ -193,8 +189,7 @@ export default defineComponent({
 			//localStore: localStore(),
 			//dinozStore: dinozStore(),
 			userStore: userStore()
-			//dinozList: dinozStore().getDinozList as Array<DinozFiche>,
-			//CINEMA_LINK
+			//dinozList: dinozStore().getDinozList as Array<DinozFiche>
 		};
 	},
 	computed: {
@@ -507,49 +502,40 @@ export default defineComponent({
 		.lead {
 			place-self: center;
 		}
-
 		&.exhausted .tinyBar {
 			opacity: 0.5;
 		}
 	}
-
 	.group {
 		background-color: rgb(150, 114, 10);
 		color: rgb(255, 255, 255);
 		box-shadow: rgb(150, 114, 10) 0px 0px 8px;
 	}
-
 	.selected {
 		background-color: rgb(193, 146, 12);
 		color: rgb(255, 255, 255);
 		box-shadow: rgb(150, 114, 10) 0px 0px 8px;
 	}
 }
-
 .slide-enter-active,
 .slide-leave-active {
 	transition: all 0.5s ease;
 }
-
 .slide-enter-from,
 .slide-leave-to {
 	transform: translateX(-100%);
 }
-
 .slide-enter-to,
 .slide-leave-from {
 	transform: translateX(0);
 }
-
 .opacity-enter-active {
 	transition: all 0.3s ease-out;
 }
-
 .opacity-enter-from,
 .opacity-leave-to {
 	opacity: 0;
 }
-
 .opacity-enter-to,
 .opacity-leave-from {
 	opacity: 1;
