@@ -1,41 +1,39 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.ingredients')" :header="$t(`topBar.userMenu.ingredients`)" />
 	<DZDisclaimer help round content="ingredients.disclaimer" />
-	<table>
-		<tbody>
-			<tr>
-				<th class="icon"></th>
-				<th class="name">{{ $t('ingredients.tname') }}</th>
-				<th class="stock">{{ $t('ingredients.tstock') }}</th>
-				<!--<th v-if="isClan" class="clan"></th>-->
-			</tr>
+	<DZTable>
+		<tr>
+			<th class="thIcon"></th>
+			<th class="thName">{{ $t('ingredients.tname') }}</th>
+			<th class="thStock">{{ $t('ingredients.tstock') }}</th>
+			<!--<th v-if="isClan" class="clan"></th>-->
+		</tr>
 
-			<Tippy
-				theme="normal"
-				tag="tr"
-				v-for="(ingredient, index) in ingredientList"
-				:key="ingredient.ingredientId"
-				:class="{
-					full: (ingredient.quantity ?? 0) >= ingredient.maxQuantity,
-					even: (index + 1) % 2 == 0
-				}"
-			>
-				<td class="icon">
-					<img :src="getImgURL('ingredients', ingredient.name)" :alt="ingredient.name" />
-				</td>
-				<td class="name">{{ $t(`ingredients.name.${ingredient.name}`) }}</td>
-				<td class="stock" v-if="ingredient.quantity !== 0">{{ ingredient.quantity }}/{{ ingredient.maxQuantity }}</td>
-				<!--<td v-if="isClan" class="stock">
+		<Tippy
+			theme="normal"
+			tag="tr"
+			v-for="(ingredient, index) in ingredientList"
+			:key="ingredient.ingredientId"
+			:class="{
+				full: (ingredient.quantity ?? 0) >= ingredient.maxQuantity,
+				even: (index + 1) % 2 == 0
+			}"
+		>
+			<td class="tdIcon">
+				<img :src="getImgURL('ingredients', ingredient.name)" :alt="ingredient.name" />
+			</td>
+			<td class="tdName">{{ $t(`ingredients.name.${ingredient.name}`) }}</td>
+			<td class="tdStock" v-if="ingredient.quantity !== 0">{{ ingredient.quantity }}/{{ ingredient.maxQuantity }}</td>
+			<!--<td v-if="isClan" class="stock">
 					<DZInput type="number" v-model="giveAway[index].quantity" :max="ingredient.quantity" min="0" />
 				</td>
 				<td class="stock" v-else>--</td>-->
-				<template #content>
-					<h1 v-html="formatContent($t(`ingredients.name.${ingredient.name}`))" />
-					<p v-html="formatContent($t(`ingredients.description.${ingredient.name}`))" />
-				</template>
-			</Tippy>
-		</tbody>
-	</table>
+			<template #content>
+				<h1 v-html="formatContent($t(`ingredients.name.${ingredient.name}`))" />
+				<p v-html="formatContent($t(`ingredients.description.${ingredient.name}`))" />
+			</template>
+		</Tippy>
+	</DZTable>
 	<!--<DZButton v-if="isClan" @click="giveToClan()">{{ $t(`clan.ingredients.giveAway`) }}</DZButton>-->
 </template>
 
@@ -49,7 +47,7 @@ import { errorHandler } from '../utils/errorHandler.js';
 //import { userStore } from '../store/userStore.js';
 import DZInput from '../components/utils/DZInput.vue';
 import DZButton from '../components/utils/DZButton.vue';
-
+import DZTable from '../components/utils/DZTable.vue';
 import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
 
 export default defineComponent({
@@ -58,6 +56,7 @@ export default defineComponent({
 		DZDisclaimer,
 		DZButton,
 		DZInput,
+		DZTable,
 		TitleHeader
 	},
 	data() {
@@ -75,13 +74,11 @@ export default defineComponent({
 		async load() {
 			try {
 				const data = await InventoryService.getAllIngredientsData();
-				// data = [{ id, quantity, maxQuantity }]
 
 				const ingredientsById = new Map(Object.values(ingredientList).map(ing => [ing.ingredientId, ing]));
 
 				this.ingredientList = data.map((row: { id: number; quantity: number; maxQuantity: number }) => {
 					const ref = ingredientsById.get(row.id);
-
 					if (!ref) {
 						// fallback si l'id n'existe pas dans le core
 						return {
@@ -91,7 +88,6 @@ export default defineComponent({
 							maxQuantity: row.maxQuantity
 						} as unknown as IngredientFiche;
 					}
-
 					return {
 						ingredientId: ref.ingredientId,
 						name: ref.name.toLowerCase(),
@@ -104,7 +100,6 @@ export default defineComponent({
 				return;
 			}
 		}
-
 		/*async giveToClan() {
       const gold = this.giveAway
         .filter(a => (a.quantity ?? 0) > 0)
@@ -158,74 +153,33 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-table {
-	width: 100%;
-	margin-top: 10px;
-	margin-bottom: 5px;
-	background-color: #ecbd84;
-	border-collapse: separate;
-	border-spacing: 1px;
-	tr {
-		display: table-row;
-		cursor: help;
-		th {
-			font-size: 8pt;
-			text-shadow: 1px 1px 0px #356847;
-			height: 41px;
-			vertical-align: bottom;
-			color: #fffdba;
-			text-transform: uppercase;
-			font-weight: bold;
-			letter-spacing: 1pt;
-			text-align: left;
-			white-space: nowrap;
-			border: 1px solid #356847;
-			background-color: #c64e36;
-			background-image: url('../assets/background/table_header.webp');
-			background-position: left bottom;
-			max-width: 222px;
-			&.name {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-				max-width: 200px;
-			}
-			&.icon {
-				width: 32px;
-			}
-			&.stock {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-				max-width: 15px;
-			}
-		}
-		td {
-			font-size: 16px;
-			font-family: 'Trebuchet MS', Arial, sans-serif;
-			color: #710;
-			background-color: #f3ca92;
-			border: 1px solid #c88f44;
-			background-image: url('../assets/background/table_cell.webp');
-			background-position: -10px 0px;
-			&.name {
-				padding: 1px 5px;
-				max-width: 222px;
-			}
-			&.stock {
-				padding: 1px 5px;
-				width: 52px;
-			}
-		}
-		&.full td {
-			background-image: url('../assets/background/table_cell_hover.webp') !important;
-			background-position: -10px 0px;
-			color: #fffdba;
-		}
-		&.even td {
-			background-image: url('../assets/background/table_cell_even.webp');
-			background-position: -10px 0px;
-		}
-	}
+.thName {
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-bottom: 8px;
+	max-width: 200px;
+}
+.thIcon,
+.tdIcon {
+	width: 32px;
+}
+.thStock {
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-bottom: 8px;
+	max-width: 15px;
+}
+.tdIcon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.tdName {
+	padding: 1px 5px;
+	max-width: 222px;
+}
+.tdStock {
+	padding: 1px 5px;
+	width: 52px;
 }
 </style>
