@@ -3,6 +3,7 @@ import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import AccountPage from '../pages/AccountPage.vue';
+import FAQPage from '../pages/FAQPage.vue';
 import HelpPage from '../pages/HelpPage.vue';
 import HomePage from '../pages/HomePage.vue';
 import Ingredients from '../pages/Ingredients.vue';
@@ -76,6 +77,12 @@ const routes: RouteRecord[] = [
 						})
 					}
 				]
+			},
+			{
+				path: '/faq',
+				name: 'FAQPage',
+				component: FAQPage,
+				meta: { public: true, showLeftPanel: false }
 			},
 			{
 				path: '/help',
