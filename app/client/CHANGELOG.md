@@ -11,7 +11,7 @@
 
 ### Patch Changes
 
-- 6858444: - [bb0ad18](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/bb0ad18): feat rankings
+- [bb0ad18](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/bb0ad18): feat rankings
 
 ## 0.1.0
 

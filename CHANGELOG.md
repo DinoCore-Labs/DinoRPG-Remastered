@@ -2,6 +2,20 @@
 
 ## 🔹 Core
 
+## 0.0.4
+
+### Patch Changes
+
+- 370e56a: add user profile, user items, user ingredients
+
+## 0.0.3
+
+### Patch Changes
+
+- [2a84f0d](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/2a84f0d): feat dinorpg_animations
+  - [40e1dca](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/40e1dca): feat user wallet
+  - [bb0ad18](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/bb0ad18): feat rankings
+
 ## 0.0.2
 
 ### Patch Changes
@@ -24,6 +38,23 @@
 
 ## 🔹 Server
 
+## 0.1.2
+
+### Patch Changes
+
+- 370e56a: add user profile, user items, user ingredients
+- 370e56a: add device and network limits on account signup
+- Updated dependencies [370e56a]
+  - @dinorpg/core@0.0.4
+
+## 0.1.1
+
+### Patch Changes
+
+- [bb0ad18](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/bb0ad18): feat rankings
+- Updated dependencies [6858444]
+  - @dinorpg/core@0.0.3
+
 ## 0.1.0
 
 ### Minor Changes
@@ -39,6 +70,19 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.1.2
+
+### Patch Changes
+
+- 370e56a: add user profile, user items, user ingredients
+- 370e56a: chore: vue-tippy
+
+## 0.1.1
+
+### Patch Changes
+
+- [bb0ad18](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/bb0ad18): feat rankings
 
 ## 0.1.0
 
