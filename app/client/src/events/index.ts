@@ -14,6 +14,7 @@ type Events = {
 		mode: string;
 	};
 	userMenu: boolean;
+	leftUserMenu: boolean;
 	toast: ToastEventPayload;
 };
 
