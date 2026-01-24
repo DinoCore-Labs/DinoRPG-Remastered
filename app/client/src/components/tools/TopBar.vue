@@ -1,13 +1,11 @@
 <template>
 	<div id="topBar">
 		<div class="boxRoot">
-			<!--
-      <a v-if="playerStore.getPlayerId" class="connectLink" @click="openDinoz()">
+			<a v-if="uStore.isLogged" class="connectLink" @click="openLeftMenu()">
 				<svg class="svgIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="AddIcon">
 					<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"></path>
 				</svg>
 			</a>
-      -->
 		</div>
 		<div class="boxRoot">
 			<span class="time">{{ time }}</span>
@@ -69,7 +67,9 @@ export default defineComponent({
 		openUserMenu() {
 			eventBus.emit('userMenu', true);
 		},
-
+		openLeftMenu() {
+			eventBus.emit('leftUserMenu', true);
+		},
 		getTime(): void {
 			const day = new Date();
 			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'GMT' });
@@ -197,7 +197,7 @@ export default defineComponent({
 	text-decoration: none;
 	text-align: center;
 	flex: 0 0 auto;
-	font-size: 1.23214rem;
+	font-size: 1.2rem;
 	padding: 8px;
 	border-radius: 50%;
 	overflow: visible;
@@ -206,8 +206,8 @@ export default defineComponent({
 }
 .svgIcon {
 	user-select: none;
-	width: 1em;
-	height: 1em;
+	width: 0.8em;
+	height: 0.8em;
 	display: inline-block;
 	fill: currentcolor;
 	flex-shrink: 0;

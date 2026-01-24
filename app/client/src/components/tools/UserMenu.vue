@@ -520,7 +520,6 @@ export default defineComponent({
 			}
 		}
 	}
-
 	.notification {
 		transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
 		justify-content: space-between;
@@ -621,7 +620,7 @@ export default defineComponent({
 	}
 }
 .shortCutMenu {
-	padding: 16px;
+	padding: 10px;
 	background-color: rgb(29, 32, 40);
 	.shortCuts {
 		display: flex;
@@ -637,11 +636,12 @@ export default defineComponent({
 			justify-content: center;
 			-moz-box-align: center;
 			align-items: center;
-			height: 64px;
+			height: auto;
 			color: rgb(108, 113, 136);
 			border-radius: 3px;
 			text-decoration: none;
 			cursor: pointer;
+			width: 31%;
 			span {
 				margin: 0px;
 				font-family: arial, sans-serif;
@@ -757,7 +757,7 @@ export default defineComponent({
 	top: 0px;
 	outline: 0px;
 	right: 0px;
-	width: 310px;
+	width: 320px;
 	background-color: rgb(17, 19, 23);
 	color: rgb(183, 185, 198);
 	background-image: none;

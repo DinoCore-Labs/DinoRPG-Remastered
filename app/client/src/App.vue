@@ -1,6 +1,7 @@
 <template>
 	<TopBar />
 	<div id="dynamic">
+		<LeftUserMenu />
 		<AuthMenu />
 		<UserMenu />
 	</div>
@@ -16,12 +17,14 @@ import TopBar from './components/tools/TopBar.vue';
 import Footer from './components/common/Footer.vue';
 import AuthMenu from './components/tools/AuthMenu.vue';
 import UserMenu from './components/tools/UserMenu.vue';
+import LeftUserMenu from './components/tools/LeftUserMenu.vue';
 import Toast from './components/utils/Toast.vue';
 
 export default defineComponent({
 	name: 'App',
 	components: {
 		TopBar,
+		LeftUserMenu,
 		AuthMenu,
 		UserMenu,
 		Footer,
