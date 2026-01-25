@@ -15,7 +15,3 @@ updates:
       - '/app/client'
     schedule:
       interval: 'weekly'
-    groups:
-      deps:
-        patterns:
-          - '*'
