@@ -1,5 +1,14 @@
 # @dinorpg/client
 
+## 0.1.3
+
+### Patch Changes
+
+- 22a9b7c: refactor: add DZTable component
+- efb8bc3: feat: user left menu
+- 37e834f: feat: faq page
+- 1c28126: feat: help page
+
 ## 0.1.2
 
 ### Patch Changes
