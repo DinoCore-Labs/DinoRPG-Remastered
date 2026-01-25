@@ -31,7 +31,7 @@ model Dinoz {
   createdDate        DateTime @default(now())
   updatedDate        DateTime @updatedAt
 
-  userId String
+  userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([userId])
@@ -45,7 +45,7 @@ model Ranking {
   completion Int @default(0)
   dojo       Int @default(0)
 
-  userId String @unique
+  userId String @unique @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
@@ -80,7 +80,7 @@ model SignupIpMonthCounter {
 }
 
 model User {
-  id          String    @id @default(uuid())
+  id          String    @id @default(uuid()) @db.Uuid
   name        String    @unique
   password    String
   role        Role      @default(PLAYER)
@@ -96,14 +96,25 @@ model User {
   statsTracking UserTracking[]
   wallets       UserWallet[]
 
-  dinoz Dinoz[]
+  dinoz     Dinoz[]
+  dinozShop UserDinozShop[]
+}
+
+model UserDinozShop {
+  id      Int     @id @default(autoincrement())
+  raceId  Int
+  display String  @db.VarChar
+  userId  String? @db.Uuid
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("user_dinoz_shop")
 }
 
 model UserIngredients {
   id           Int    @default(autoincrement())
   ingredientId Int
   quantity     Int
-  userId       String
+  userId       String @db.Uuid
   user         User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([ingredientId, userId])
@@ -115,7 +126,7 @@ model UserItems {
   id       Int    @default(autoincrement())
   itemId   Int
   quantity Int
-  userId   String
+  userId   String @db.Uuid
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([itemId, userId])
@@ -125,7 +136,7 @@ model UserItems {
 
 model UserProfile {
   id     String @id @default(cuid())
-  userId String @unique
+  userId String @unique @db.Uuid
   user   User   @relation(fields: [userId], references: [id])
 
   avatar      Bytes?
@@ -139,7 +150,7 @@ model UserProfile {
 model UserRewards {
   id       Int     @id @default(autoincrement())
   rewardId Int
-  userId   String?
+  userId   String? @db.Uuid
   user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([rewardId, userId])
@@ -149,7 +160,7 @@ model UserTracking {
   id       Int    @id @default(autoincrement())
   stat     String
   quantity Int    @default(0)
-  userId   String
+  userId   String @db.Uuid
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([stat, userId])
@@ -159,10 +170,10 @@ model UserTracking {
 }
 
 model UserWallet {
-  id     String    @id @default(uuid())
+  id     String    @id @default(uuid()) @db.Uuid
   type   MoneyType
   amount Int       @default(0)
-  userId String
+  userId String    @db.Uuid
   user   User      @relation(fields: [userId], references: [id])
 
   @@unique([userId, type])
