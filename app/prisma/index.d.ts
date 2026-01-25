@@ -39,6 +39,11 @@ export type SignupIpMonthCounter = $Result.DefaultSelection<Prisma.$SignupIpMont
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model UserDinozShop
+ * 
+ */
+export type UserDinozShop = $Result.DefaultSelection<Prisma.$UserDinozShopPayload>
+/**
  * Model UserIngredients
  * 
  */
@@ -138,7 +143,7 @@ export const Role: typeof $Enums.Role
  * ```
  *
  *
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
@@ -159,7 +164,7 @@ export class PrismaClient<
    * ```
    *
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   * Read more in our [docs](https://pris.ly/d/client).
    */
 
   constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
@@ -182,7 +187,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -194,7 +199,7 @@ export class PrismaClient<
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -205,7 +210,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -217,7 +222,7 @@ export class PrismaClient<
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
    *
-   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   * Read more in our [docs](https://pris.ly/d/raw-queries).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -292,6 +297,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userDinozShop`: Exposes CRUD operations for the **UserDinozShop** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserDinozShops
+    * const userDinozShops = await prisma.userDinozShop.findMany()
+    * ```
+    */
+  get userDinozShop(): Prisma.UserDinozShopDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.userIngredients`: Exposes CRUD operations for the **UserIngredients** model.
@@ -402,8 +417,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.0.0
-   * Query Engine version: 0c19ccc313cf9911a90d99d2ac2eb0280c76c513
+   * Prisma Client JS version: 7.3.0
+   * Query Engine version: 9d6ad21cbbceab97458517b147a6a09ff43aa735
    */
   export type PrismaVersion = {
     client: string
@@ -791,6 +806,7 @@ export namespace Prisma {
     SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
     SignupIpMonthCounter: 'SignupIpMonthCounter',
     User: 'User',
+    UserDinozShop: 'UserDinozShop',
     UserIngredients: 'UserIngredients',
     UserItems: 'UserItems',
     UserProfile: 'UserProfile',
@@ -812,7 +828,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dinoz" | "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
+      modelProps: "dinoz" | "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1183,6 +1199,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserDinozShop: {
+        payload: Prisma.$UserDinozShopPayload<ExtArgs>
+        fields: Prisma.UserDinozShopFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserDinozShopFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserDinozShopPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserDinozShopFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserDinozShopPayload>
+          }
+          findFirst: {
+            args: Prisma.UserDinozShopFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserDinozShopPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserDinozShopFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserDinozShopPayload>
+          }
+          findMany: {
+            args: Prisma.UserDinozShopFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserDinozShopPayload>[]
+          }
+          create: {
+            args: Prisma.UserDinozShopCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserDinozShopPayload>
+          }
+          createMany: {
+            args: Prisma.UserDinozShopCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserDinozShopCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserDinozShopPayload>[]
+          }
+          delete: {
+            args: Prisma.UserDinozShopDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserDinozShopPayload>
+          }
+          update: {
+            args: Prisma.UserDinozShopUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserDinozShopPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserDinozShopDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserDinozShopUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserDinozShopUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserDinozShopPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserDinozShopUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserDinozShopPayload>
+          }
+          aggregate: {
+            args: Prisma.UserDinozShopAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserDinozShop>
+          }
+          groupBy: {
+            args: Prisma.UserDinozShopGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserDinozShopGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserDinozShopCountArgs<ExtArgs>
+            result: $Utils.Optional<UserDinozShopCountAggregateOutputType> | number
           }
         }
       }
@@ -1684,7 +1774,7 @@ export namespace Prisma {
      *  { emit: 'stdout', level: 'error' }
      * 
      * ```
-     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+     * Read more in our [docs](https://pris.ly/d/logging).
      */
     log?: (LogLevel | LogDefinition)[]
     /**
@@ -1720,6 +1810,22 @@ export namespace Prisma {
      * ```
      */
     omit?: Prisma.GlobalOmitConfig
+    /**
+     * SQL commenter plugins that add metadata to SQL queries as comments.
+     * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
+     * 
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   adapter,
+     *   comments: [
+     *     traceContext(),
+     *     queryInsights(),
+     *   ],
+     * })
+     * ```
+     */
+    comments?: runtime.SqlCommenterPlugin[]
   }
   export type GlobalOmitConfig = {
     dinoz?: DinozOmit
@@ -1727,6 +1833,7 @@ export namespace Prisma {
     signupDeviceMonthCounter?: SignupDeviceMonthCounterOmit
     signupIpMonthCounter?: SignupIpMonthCounterOmit
     user?: UserOmit
+    userDinozShop?: UserDinozShopOmit
     userIngredients?: UserIngredientsOmit
     userItems?: UserItemsOmit
     userProfile?: UserProfileOmit
@@ -1819,6 +1926,7 @@ export namespace Prisma {
     statsTracking: number
     wallets: number
     dinoz: number
+    dinozShop: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1828,6 +1936,7 @@ export namespace Prisma {
     statsTracking?: boolean | UserCountOutputTypeCountStatsTrackingArgs
     wallets?: boolean | UserCountOutputTypeCountWalletsArgs
     dinoz?: boolean | UserCountOutputTypeCountDinozArgs
+    dinozShop?: boolean | UserCountOutputTypeCountDinozShopArgs
   }
 
   // Custom InputTypes
@@ -1881,6 +1990,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DinozWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDinozShopArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserDinozShopWhereInput
   }
 
 
@@ -6724,6 +6840,7 @@ export namespace Prisma {
     statsTracking?: boolean | User$statsTrackingArgs<ExtArgs>
     wallets?: boolean | User$walletsArgs<ExtArgs>
     dinoz?: boolean | User$dinozArgs<ExtArgs>
+    dinozShop?: boolean | User$dinozShopArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -6767,6 +6884,7 @@ export namespace Prisma {
     statsTracking?: boolean | User$statsTrackingArgs<ExtArgs>
     wallets?: boolean | User$walletsArgs<ExtArgs>
     dinoz?: boolean | User$dinozArgs<ExtArgs>
+    dinozShop?: boolean | User$dinozShopArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -6783,6 +6901,7 @@ export namespace Prisma {
       statsTracking: Prisma.$UserTrackingPayload<ExtArgs>[]
       wallets: Prisma.$UserWalletPayload<ExtArgs>[]
       dinoz: Prisma.$DinozPayload<ExtArgs>[]
+      dinozShop: Prisma.$UserDinozShopPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7194,6 +7313,7 @@ export namespace Prisma {
     statsTracking<T extends User$statsTrackingArgs<ExtArgs> = {}>(args?: Subset<T, User$statsTrackingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     wallets<T extends User$walletsArgs<ExtArgs> = {}>(args?: Subset<T, User$walletsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserWalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dinoz<T extends User$dinozArgs<ExtArgs> = {}>(args?: Subset<T, User$dinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dinozShop<T extends User$dinozShopArgs<ExtArgs> = {}>(args?: Subset<T, User$dinozShopArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7809,6 +7929,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.dinozShop
+   */
+  export type User$dinozShopArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopInclude<ExtArgs> | null
+    where?: UserDinozShopWhereInput
+    orderBy?: UserDinozShopOrderByWithRelationInput | UserDinozShopOrderByWithRelationInput[]
+    cursor?: UserDinozShopWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserDinozShopScalarFieldEnum | UserDinozShopScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7824,6 +7968,1117 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserDinozShop
+   */
+
+  export type AggregateUserDinozShop = {
+    _count: UserDinozShopCountAggregateOutputType | null
+    _avg: UserDinozShopAvgAggregateOutputType | null
+    _sum: UserDinozShopSumAggregateOutputType | null
+    _min: UserDinozShopMinAggregateOutputType | null
+    _max: UserDinozShopMaxAggregateOutputType | null
+  }
+
+  export type UserDinozShopAvgAggregateOutputType = {
+    id: number | null
+    raceId: number | null
+  }
+
+  export type UserDinozShopSumAggregateOutputType = {
+    id: number | null
+    raceId: number | null
+  }
+
+  export type UserDinozShopMinAggregateOutputType = {
+    id: number | null
+    raceId: number | null
+    display: string | null
+    userId: string | null
+  }
+
+  export type UserDinozShopMaxAggregateOutputType = {
+    id: number | null
+    raceId: number | null
+    display: string | null
+    userId: string | null
+  }
+
+  export type UserDinozShopCountAggregateOutputType = {
+    id: number
+    raceId: number
+    display: number
+    userId: number
+    _all: number
+  }
+
+
+  export type UserDinozShopAvgAggregateInputType = {
+    id?: true
+    raceId?: true
+  }
+
+  export type UserDinozShopSumAggregateInputType = {
+    id?: true
+    raceId?: true
+  }
+
+  export type UserDinozShopMinAggregateInputType = {
+    id?: true
+    raceId?: true
+    display?: true
+    userId?: true
+  }
+
+  export type UserDinozShopMaxAggregateInputType = {
+    id?: true
+    raceId?: true
+    display?: true
+    userId?: true
+  }
+
+  export type UserDinozShopCountAggregateInputType = {
+    id?: true
+    raceId?: true
+    display?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type UserDinozShopAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserDinozShop to aggregate.
+     */
+    where?: UserDinozShopWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserDinozShops to fetch.
+     */
+    orderBy?: UserDinozShopOrderByWithRelationInput | UserDinozShopOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserDinozShopWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserDinozShops from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserDinozShops.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserDinozShops
+    **/
+    _count?: true | UserDinozShopCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserDinozShopAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserDinozShopSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserDinozShopMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserDinozShopMaxAggregateInputType
+  }
+
+  export type GetUserDinozShopAggregateType<T extends UserDinozShopAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserDinozShop]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserDinozShop[P]>
+      : GetScalarType<T[P], AggregateUserDinozShop[P]>
+  }
+
+
+
+
+  export type UserDinozShopGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserDinozShopWhereInput
+    orderBy?: UserDinozShopOrderByWithAggregationInput | UserDinozShopOrderByWithAggregationInput[]
+    by: UserDinozShopScalarFieldEnum[] | UserDinozShopScalarFieldEnum
+    having?: UserDinozShopScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserDinozShopCountAggregateInputType | true
+    _avg?: UserDinozShopAvgAggregateInputType
+    _sum?: UserDinozShopSumAggregateInputType
+    _min?: UserDinozShopMinAggregateInputType
+    _max?: UserDinozShopMaxAggregateInputType
+  }
+
+  export type UserDinozShopGroupByOutputType = {
+    id: number
+    raceId: number
+    display: string
+    userId: string | null
+    _count: UserDinozShopCountAggregateOutputType | null
+    _avg: UserDinozShopAvgAggregateOutputType | null
+    _sum: UserDinozShopSumAggregateOutputType | null
+    _min: UserDinozShopMinAggregateOutputType | null
+    _max: UserDinozShopMaxAggregateOutputType | null
+  }
+
+  type GetUserDinozShopGroupByPayload<T extends UserDinozShopGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserDinozShopGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserDinozShopGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserDinozShopGroupByOutputType[P]>
+            : GetScalarType<T[P], UserDinozShopGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserDinozShopSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    raceId?: boolean
+    display?: boolean
+    userId?: boolean
+    user?: boolean | UserDinozShop$userArgs<ExtArgs>
+  }, ExtArgs["result"]["userDinozShop"]>
+
+  export type UserDinozShopSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    raceId?: boolean
+    display?: boolean
+    userId?: boolean
+    user?: boolean | UserDinozShop$userArgs<ExtArgs>
+  }, ExtArgs["result"]["userDinozShop"]>
+
+  export type UserDinozShopSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    raceId?: boolean
+    display?: boolean
+    userId?: boolean
+    user?: boolean | UserDinozShop$userArgs<ExtArgs>
+  }, ExtArgs["result"]["userDinozShop"]>
+
+  export type UserDinozShopSelectScalar = {
+    id?: boolean
+    raceId?: boolean
+    display?: boolean
+    userId?: boolean
+  }
+
+  export type UserDinozShopOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "raceId" | "display" | "userId", ExtArgs["result"]["userDinozShop"]>
+  export type UserDinozShopInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDinozShop$userArgs<ExtArgs>
+  }
+  export type UserDinozShopIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDinozShop$userArgs<ExtArgs>
+  }
+  export type UserDinozShopIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDinozShop$userArgs<ExtArgs>
+  }
+
+  export type $UserDinozShopPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserDinozShop"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      raceId: number
+      display: string
+      userId: string | null
+    }, ExtArgs["result"]["userDinozShop"]>
+    composites: {}
+  }
+
+  type UserDinozShopGetPayload<S extends boolean | null | undefined | UserDinozShopDefaultArgs> = $Result.GetResult<Prisma.$UserDinozShopPayload, S>
+
+  type UserDinozShopCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserDinozShopFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: UserDinozShopCountAggregateInputType | true
+    }
+
+  export interface UserDinozShopDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserDinozShop'], meta: { name: 'UserDinozShop' } }
+    /**
+     * Find zero or one UserDinozShop that matches the filter.
+     * @param {UserDinozShopFindUniqueArgs} args - Arguments to find a UserDinozShop
+     * @example
+     * // Get one UserDinozShop
+     * const userDinozShop = await prisma.userDinozShop.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserDinozShopFindUniqueArgs>(args: SelectSubset<T, UserDinozShopFindUniqueArgs<ExtArgs>>): Prisma__UserDinozShopClient<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserDinozShop that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserDinozShopFindUniqueOrThrowArgs} args - Arguments to find a UserDinozShop
+     * @example
+     * // Get one UserDinozShop
+     * const userDinozShop = await prisma.userDinozShop.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserDinozShopFindUniqueOrThrowArgs>(args: SelectSubset<T, UserDinozShopFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserDinozShopClient<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserDinozShop that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserDinozShopFindFirstArgs} args - Arguments to find a UserDinozShop
+     * @example
+     * // Get one UserDinozShop
+     * const userDinozShop = await prisma.userDinozShop.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserDinozShopFindFirstArgs>(args?: SelectSubset<T, UserDinozShopFindFirstArgs<ExtArgs>>): Prisma__UserDinozShopClient<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserDinozShop that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserDinozShopFindFirstOrThrowArgs} args - Arguments to find a UserDinozShop
+     * @example
+     * // Get one UserDinozShop
+     * const userDinozShop = await prisma.userDinozShop.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserDinozShopFindFirstOrThrowArgs>(args?: SelectSubset<T, UserDinozShopFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserDinozShopClient<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserDinozShops that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserDinozShopFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserDinozShops
+     * const userDinozShops = await prisma.userDinozShop.findMany()
+     * 
+     * // Get first 10 UserDinozShops
+     * const userDinozShops = await prisma.userDinozShop.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userDinozShopWithIdOnly = await prisma.userDinozShop.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserDinozShopFindManyArgs>(args?: SelectSubset<T, UserDinozShopFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserDinozShop.
+     * @param {UserDinozShopCreateArgs} args - Arguments to create a UserDinozShop.
+     * @example
+     * // Create one UserDinozShop
+     * const UserDinozShop = await prisma.userDinozShop.create({
+     *   data: {
+     *     // ... data to create a UserDinozShop
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserDinozShopCreateArgs>(args: SelectSubset<T, UserDinozShopCreateArgs<ExtArgs>>): Prisma__UserDinozShopClient<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserDinozShops.
+     * @param {UserDinozShopCreateManyArgs} args - Arguments to create many UserDinozShops.
+     * @example
+     * // Create many UserDinozShops
+     * const userDinozShop = await prisma.userDinozShop.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserDinozShopCreateManyArgs>(args?: SelectSubset<T, UserDinozShopCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserDinozShops and returns the data saved in the database.
+     * @param {UserDinozShopCreateManyAndReturnArgs} args - Arguments to create many UserDinozShops.
+     * @example
+     * // Create many UserDinozShops
+     * const userDinozShop = await prisma.userDinozShop.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserDinozShops and only return the `id`
+     * const userDinozShopWithIdOnly = await prisma.userDinozShop.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserDinozShopCreateManyAndReturnArgs>(args?: SelectSubset<T, UserDinozShopCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserDinozShop.
+     * @param {UserDinozShopDeleteArgs} args - Arguments to delete one UserDinozShop.
+     * @example
+     * // Delete one UserDinozShop
+     * const UserDinozShop = await prisma.userDinozShop.delete({
+     *   where: {
+     *     // ... filter to delete one UserDinozShop
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserDinozShopDeleteArgs>(args: SelectSubset<T, UserDinozShopDeleteArgs<ExtArgs>>): Prisma__UserDinozShopClient<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserDinozShop.
+     * @param {UserDinozShopUpdateArgs} args - Arguments to update one UserDinozShop.
+     * @example
+     * // Update one UserDinozShop
+     * const userDinozShop = await prisma.userDinozShop.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserDinozShopUpdateArgs>(args: SelectSubset<T, UserDinozShopUpdateArgs<ExtArgs>>): Prisma__UserDinozShopClient<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserDinozShops.
+     * @param {UserDinozShopDeleteManyArgs} args - Arguments to filter UserDinozShops to delete.
+     * @example
+     * // Delete a few UserDinozShops
+     * const { count } = await prisma.userDinozShop.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserDinozShopDeleteManyArgs>(args?: SelectSubset<T, UserDinozShopDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserDinozShops.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserDinozShopUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserDinozShops
+     * const userDinozShop = await prisma.userDinozShop.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserDinozShopUpdateManyArgs>(args: SelectSubset<T, UserDinozShopUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserDinozShops and returns the data updated in the database.
+     * @param {UserDinozShopUpdateManyAndReturnArgs} args - Arguments to update many UserDinozShops.
+     * @example
+     * // Update many UserDinozShops
+     * const userDinozShop = await prisma.userDinozShop.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserDinozShops and only return the `id`
+     * const userDinozShopWithIdOnly = await prisma.userDinozShop.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserDinozShopUpdateManyAndReturnArgs>(args: SelectSubset<T, UserDinozShopUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserDinozShop.
+     * @param {UserDinozShopUpsertArgs} args - Arguments to update or create a UserDinozShop.
+     * @example
+     * // Update or create a UserDinozShop
+     * const userDinozShop = await prisma.userDinozShop.upsert({
+     *   create: {
+     *     // ... data to create a UserDinozShop
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserDinozShop we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserDinozShopUpsertArgs>(args: SelectSubset<T, UserDinozShopUpsertArgs<ExtArgs>>): Prisma__UserDinozShopClient<$Result.GetResult<Prisma.$UserDinozShopPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserDinozShops.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserDinozShopCountArgs} args - Arguments to filter UserDinozShops to count.
+     * @example
+     * // Count the number of UserDinozShops
+     * const count = await prisma.userDinozShop.count({
+     *   where: {
+     *     // ... the filter for the UserDinozShops we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserDinozShopCountArgs>(
+      args?: Subset<T, UserDinozShopCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserDinozShopCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserDinozShop.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserDinozShopAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserDinozShopAggregateArgs>(args: Subset<T, UserDinozShopAggregateArgs>): Prisma.PrismaPromise<GetUserDinozShopAggregateType<T>>
+
+    /**
+     * Group by UserDinozShop.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserDinozShopGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserDinozShopGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserDinozShopGroupByArgs['orderBy'] }
+        : { orderBy?: UserDinozShopGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserDinozShopGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserDinozShopGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserDinozShop model
+   */
+  readonly fields: UserDinozShopFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserDinozShop.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserDinozShopClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDinozShop$userArgs<ExtArgs> = {}>(args?: Subset<T, UserDinozShop$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserDinozShop model
+   */
+  interface UserDinozShopFieldRefs {
+    readonly id: FieldRef<"UserDinozShop", 'Int'>
+    readonly raceId: FieldRef<"UserDinozShop", 'Int'>
+    readonly display: FieldRef<"UserDinozShop", 'String'>
+    readonly userId: FieldRef<"UserDinozShop", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserDinozShop findUnique
+   */
+  export type UserDinozShopFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopInclude<ExtArgs> | null
+    /**
+     * Filter, which UserDinozShop to fetch.
+     */
+    where: UserDinozShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserDinozShop findUniqueOrThrow
+   */
+  export type UserDinozShopFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopInclude<ExtArgs> | null
+    /**
+     * Filter, which UserDinozShop to fetch.
+     */
+    where: UserDinozShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserDinozShop findFirst
+   */
+  export type UserDinozShopFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopInclude<ExtArgs> | null
+    /**
+     * Filter, which UserDinozShop to fetch.
+     */
+    where?: UserDinozShopWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserDinozShops to fetch.
+     */
+    orderBy?: UserDinozShopOrderByWithRelationInput | UserDinozShopOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserDinozShops.
+     */
+    cursor?: UserDinozShopWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserDinozShops from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserDinozShops.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserDinozShops.
+     */
+    distinct?: UserDinozShopScalarFieldEnum | UserDinozShopScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserDinozShop findFirstOrThrow
+   */
+  export type UserDinozShopFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopInclude<ExtArgs> | null
+    /**
+     * Filter, which UserDinozShop to fetch.
+     */
+    where?: UserDinozShopWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserDinozShops to fetch.
+     */
+    orderBy?: UserDinozShopOrderByWithRelationInput | UserDinozShopOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserDinozShops.
+     */
+    cursor?: UserDinozShopWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserDinozShops from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserDinozShops.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserDinozShops.
+     */
+    distinct?: UserDinozShopScalarFieldEnum | UserDinozShopScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserDinozShop findMany
+   */
+  export type UserDinozShopFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopInclude<ExtArgs> | null
+    /**
+     * Filter, which UserDinozShops to fetch.
+     */
+    where?: UserDinozShopWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserDinozShops to fetch.
+     */
+    orderBy?: UserDinozShopOrderByWithRelationInput | UserDinozShopOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserDinozShops.
+     */
+    cursor?: UserDinozShopWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserDinozShops from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserDinozShops.
+     */
+    skip?: number
+    distinct?: UserDinozShopScalarFieldEnum | UserDinozShopScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserDinozShop create
+   */
+  export type UserDinozShopCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserDinozShop.
+     */
+    data: XOR<UserDinozShopCreateInput, UserDinozShopUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserDinozShop createMany
+   */
+  export type UserDinozShopCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserDinozShops.
+     */
+    data: UserDinozShopCreateManyInput | UserDinozShopCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserDinozShop createManyAndReturn
+   */
+  export type UserDinozShopCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserDinozShops.
+     */
+    data: UserDinozShopCreateManyInput | UserDinozShopCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserDinozShop update
+   */
+  export type UserDinozShopUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserDinozShop.
+     */
+    data: XOR<UserDinozShopUpdateInput, UserDinozShopUncheckedUpdateInput>
+    /**
+     * Choose, which UserDinozShop to update.
+     */
+    where: UserDinozShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserDinozShop updateMany
+   */
+  export type UserDinozShopUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserDinozShops.
+     */
+    data: XOR<UserDinozShopUpdateManyMutationInput, UserDinozShopUncheckedUpdateManyInput>
+    /**
+     * Filter which UserDinozShops to update
+     */
+    where?: UserDinozShopWhereInput
+    /**
+     * Limit how many UserDinozShops to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserDinozShop updateManyAndReturn
+   */
+  export type UserDinozShopUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * The data used to update UserDinozShops.
+     */
+    data: XOR<UserDinozShopUpdateManyMutationInput, UserDinozShopUncheckedUpdateManyInput>
+    /**
+     * Filter which UserDinozShops to update
+     */
+    where?: UserDinozShopWhereInput
+    /**
+     * Limit how many UserDinozShops to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserDinozShop upsert
+   */
+  export type UserDinozShopUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserDinozShop to update in case it exists.
+     */
+    where: UserDinozShopWhereUniqueInput
+    /**
+     * In case the UserDinozShop found by the `where` argument doesn't exist, create a new UserDinozShop with this data.
+     */
+    create: XOR<UserDinozShopCreateInput, UserDinozShopUncheckedCreateInput>
+    /**
+     * In case the UserDinozShop was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserDinozShopUpdateInput, UserDinozShopUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserDinozShop delete
+   */
+  export type UserDinozShopDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopInclude<ExtArgs> | null
+    /**
+     * Filter which UserDinozShop to delete.
+     */
+    where: UserDinozShopWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserDinozShop deleteMany
+   */
+  export type UserDinozShopDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserDinozShops to delete
+     */
+    where?: UserDinozShopWhereInput
+    /**
+     * Limit how many UserDinozShops to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserDinozShop.user
+   */
+  export type UserDinozShop$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * UserDinozShop without action
+   */
+  export type UserDinozShopDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserDinozShop
+     */
+    select?: UserDinozShopSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserDinozShop
+     */
+    omit?: UserDinozShopOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserDinozShopInclude<ExtArgs> | null
   }
 
 
@@ -14538,6 +15793,16 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const UserDinozShopScalarFieldEnum: {
+    id: 'id',
+    raceId: 'raceId',
+    display: 'display',
+    userId: 'userId'
+  };
+
+  export type UserDinozShopScalarFieldEnum = (typeof UserDinozShopScalarFieldEnum)[keyof typeof UserDinozShopScalarFieldEnum]
+
+
   export const UserIngredientsScalarFieldEnum: {
     id: 'id',
     ingredientId: 'ingredientId',
@@ -14790,7 +16055,7 @@ export namespace Prisma {
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
-    userId?: StringFilter<"Dinoz"> | string
+    userId?: UuidFilter<"Dinoz"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -14843,7 +16108,7 @@ export namespace Prisma {
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
-    userId?: StringFilter<"Dinoz"> | string
+    userId?: UuidFilter<"Dinoz"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
@@ -14900,7 +16165,7 @@ export namespace Prisma {
     remaining?: IntWithAggregatesFilter<"Dinoz"> | number
     createdDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
-    userId?: StringWithAggregatesFilter<"Dinoz"> | string
+    userId?: UuidWithAggregatesFilter<"Dinoz"> | string
   }
 
   export type RankingWhereInput = {
@@ -14913,7 +16178,7 @@ export namespace Prisma {
     average?: IntFilter<"Ranking"> | number
     completion?: IntFilter<"Ranking"> | number
     dojo?: IntFilter<"Ranking"> | number
-    userId?: StringFilter<"Ranking"> | string
+    userId?: UuidFilter<"Ranking"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -14967,7 +16232,7 @@ export namespace Prisma {
     average?: IntWithAggregatesFilter<"Ranking"> | number
     completion?: IntWithAggregatesFilter<"Ranking"> | number
     dojo?: IntWithAggregatesFilter<"Ranking"> | number
-    userId?: StringWithAggregatesFilter<"Ranking"> | string
+    userId?: UuidWithAggregatesFilter<"Ranking"> | string
   }
 
   export type SignupDeviceMonthCounterWhereInput = {
@@ -15104,7 +16369,7 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    id?: StringFilter<"User"> | string
+    id?: UuidFilter<"User"> | string
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
@@ -15119,6 +16384,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingListRelationFilter
     wallets?: UserWalletListRelationFilter
     dinoz?: DinozListRelationFilter
+    dinozShop?: UserDinozShopListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -15137,6 +16403,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingOrderByRelationAggregateInput
     wallets?: UserWalletOrderByRelationAggregateInput
     dinoz?: DinozOrderByRelationAggregateInput
+    dinozShop?: UserDinozShopOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -15158,6 +16425,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingListRelationFilter
     wallets?: UserWalletListRelationFilter
     dinoz?: DinozListRelationFilter
+    dinozShop?: UserDinozShopListRelationFilter
   }, "id" | "name">
 
   export type UserOrderByWithAggregationInput = {
@@ -15177,13 +16445,65 @@ export namespace Prisma {
     AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"User"> | string
+    id?: UuidWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     createdDate?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     lastLogin?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type UserDinozShopWhereInput = {
+    AND?: UserDinozShopWhereInput | UserDinozShopWhereInput[]
+    OR?: UserDinozShopWhereInput[]
+    NOT?: UserDinozShopWhereInput | UserDinozShopWhereInput[]
+    id?: IntFilter<"UserDinozShop"> | number
+    raceId?: IntFilter<"UserDinozShop"> | number
+    display?: StringFilter<"UserDinozShop"> | string
+    userId?: UuidNullableFilter<"UserDinozShop"> | string | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type UserDinozShopOrderByWithRelationInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserDinozShopWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: UserDinozShopWhereInput | UserDinozShopWhereInput[]
+    OR?: UserDinozShopWhereInput[]
+    NOT?: UserDinozShopWhereInput | UserDinozShopWhereInput[]
+    raceId?: IntFilter<"UserDinozShop"> | number
+    display?: StringFilter<"UserDinozShop"> | string
+    userId?: UuidNullableFilter<"UserDinozShop"> | string | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type UserDinozShopOrderByWithAggregationInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    _count?: UserDinozShopCountOrderByAggregateInput
+    _avg?: UserDinozShopAvgOrderByAggregateInput
+    _max?: UserDinozShopMaxOrderByAggregateInput
+    _min?: UserDinozShopMinOrderByAggregateInput
+    _sum?: UserDinozShopSumOrderByAggregateInput
+  }
+
+  export type UserDinozShopScalarWhereWithAggregatesInput = {
+    AND?: UserDinozShopScalarWhereWithAggregatesInput | UserDinozShopScalarWhereWithAggregatesInput[]
+    OR?: UserDinozShopScalarWhereWithAggregatesInput[]
+    NOT?: UserDinozShopScalarWhereWithAggregatesInput | UserDinozShopScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserDinozShop"> | number
+    raceId?: IntWithAggregatesFilter<"UserDinozShop"> | number
+    display?: StringWithAggregatesFilter<"UserDinozShop"> | string
+    userId?: UuidNullableWithAggregatesFilter<"UserDinozShop"> | string | null
   }
 
   export type UserIngredientsWhereInput = {
@@ -15193,7 +16513,7 @@ export namespace Prisma {
     id?: IntFilter<"UserIngredients"> | number
     ingredientId?: IntFilter<"UserIngredients"> | number
     quantity?: IntFilter<"UserIngredients"> | number
-    userId?: StringFilter<"UserIngredients"> | string
+    userId?: UuidFilter<"UserIngredients"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -15213,7 +16533,7 @@ export namespace Prisma {
     id?: IntFilter<"UserIngredients"> | number
     ingredientId?: IntFilter<"UserIngredients"> | number
     quantity?: IntFilter<"UserIngredients"> | number
-    userId?: StringFilter<"UserIngredients"> | string
+    userId?: UuidFilter<"UserIngredients"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "ingredientId_userId">
 
@@ -15236,7 +16556,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"UserIngredients"> | number
     ingredientId?: IntWithAggregatesFilter<"UserIngredients"> | number
     quantity?: IntWithAggregatesFilter<"UserIngredients"> | number
-    userId?: StringWithAggregatesFilter<"UserIngredients"> | string
+    userId?: UuidWithAggregatesFilter<"UserIngredients"> | string
   }
 
   export type UserItemsWhereInput = {
@@ -15246,7 +16566,7 @@ export namespace Prisma {
     id?: IntFilter<"UserItems"> | number
     itemId?: IntFilter<"UserItems"> | number
     quantity?: IntFilter<"UserItems"> | number
-    userId?: StringFilter<"UserItems"> | string
+    userId?: UuidFilter<"UserItems"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -15266,7 +16586,7 @@ export namespace Prisma {
     id?: IntFilter<"UserItems"> | number
     itemId?: IntFilter<"UserItems"> | number
     quantity?: IntFilter<"UserItems"> | number
-    userId?: StringFilter<"UserItems"> | string
+    userId?: UuidFilter<"UserItems"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "itemId_userId">
 
@@ -15289,7 +16609,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"UserItems"> | number
     itemId?: IntWithAggregatesFilter<"UserItems"> | number
     quantity?: IntWithAggregatesFilter<"UserItems"> | number
-    userId?: StringWithAggregatesFilter<"UserItems"> | string
+    userId?: UuidWithAggregatesFilter<"UserItems"> | string
   }
 
   export type UserProfileWhereInput = {
@@ -15297,7 +16617,7 @@ export namespace Prisma {
     OR?: UserProfileWhereInput[]
     NOT?: UserProfileWhereInput | UserProfileWhereInput[]
     id?: StringFilter<"UserProfile"> | string
-    userId?: StringFilter<"UserProfile"> | string
+    userId?: UuidFilter<"UserProfile"> | string
     avatar?: BytesNullableFilter<"UserProfile"> | Bytes | null
     avatarType?: StringNullableFilter<"UserProfile"> | string | null
     language?: EnumLanguageNullableFilter<"UserProfile"> | $Enums.Language | null
@@ -15355,7 +16675,7 @@ export namespace Prisma {
     OR?: UserProfileScalarWhereWithAggregatesInput[]
     NOT?: UserProfileScalarWhereWithAggregatesInput | UserProfileScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"UserProfile"> | string
-    userId?: StringWithAggregatesFilter<"UserProfile"> | string
+    userId?: UuidWithAggregatesFilter<"UserProfile"> | string
     avatar?: BytesNullableWithAggregatesFilter<"UserProfile"> | Bytes | null
     avatarType?: StringNullableWithAggregatesFilter<"UserProfile"> | string | null
     language?: EnumLanguageNullableWithAggregatesFilter<"UserProfile"> | $Enums.Language | null
@@ -15370,7 +16690,7 @@ export namespace Prisma {
     NOT?: UserRewardsWhereInput | UserRewardsWhereInput[]
     id?: IntFilter<"UserRewards"> | number
     rewardId?: IntFilter<"UserRewards"> | number
-    userId?: StringNullableFilter<"UserRewards"> | string | null
+    userId?: UuidNullableFilter<"UserRewards"> | string | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
@@ -15388,7 +16708,7 @@ export namespace Prisma {
     OR?: UserRewardsWhereInput[]
     NOT?: UserRewardsWhereInput | UserRewardsWhereInput[]
     rewardId?: IntFilter<"UserRewards"> | number
-    userId?: StringNullableFilter<"UserRewards"> | string | null
+    userId?: UuidNullableFilter<"UserRewards"> | string | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id" | "rewardId_userId">
 
@@ -15409,7 +16729,7 @@ export namespace Prisma {
     NOT?: UserRewardsScalarWhereWithAggregatesInput | UserRewardsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"UserRewards"> | number
     rewardId?: IntWithAggregatesFilter<"UserRewards"> | number
-    userId?: StringNullableWithAggregatesFilter<"UserRewards"> | string | null
+    userId?: UuidNullableWithAggregatesFilter<"UserRewards"> | string | null
   }
 
   export type UserTrackingWhereInput = {
@@ -15419,7 +16739,7 @@ export namespace Prisma {
     id?: IntFilter<"UserTracking"> | number
     stat?: StringFilter<"UserTracking"> | string
     quantity?: IntFilter<"UserTracking"> | number
-    userId?: StringFilter<"UserTracking"> | string
+    userId?: UuidFilter<"UserTracking"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -15439,7 +16759,7 @@ export namespace Prisma {
     NOT?: UserTrackingWhereInput | UserTrackingWhereInput[]
     stat?: StringFilter<"UserTracking"> | string
     quantity?: IntFilter<"UserTracking"> | number
-    userId?: StringFilter<"UserTracking"> | string
+    userId?: UuidFilter<"UserTracking"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "stat_userId">
 
@@ -15462,17 +16782,17 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"UserTracking"> | number
     stat?: StringWithAggregatesFilter<"UserTracking"> | string
     quantity?: IntWithAggregatesFilter<"UserTracking"> | number
-    userId?: StringWithAggregatesFilter<"UserTracking"> | string
+    userId?: UuidWithAggregatesFilter<"UserTracking"> | string
   }
 
   export type UserWalletWhereInput = {
     AND?: UserWalletWhereInput | UserWalletWhereInput[]
     OR?: UserWalletWhereInput[]
     NOT?: UserWalletWhereInput | UserWalletWhereInput[]
-    id?: StringFilter<"UserWallet"> | string
+    id?: UuidFilter<"UserWallet"> | string
     type?: EnumMoneyTypeFilter<"UserWallet"> | $Enums.MoneyType
     amount?: IntFilter<"UserWallet"> | number
-    userId?: StringFilter<"UserWallet"> | string
+    userId?: UuidFilter<"UserWallet"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -15492,7 +16812,7 @@ export namespace Prisma {
     NOT?: UserWalletWhereInput | UserWalletWhereInput[]
     type?: EnumMoneyTypeFilter<"UserWallet"> | $Enums.MoneyType
     amount?: IntFilter<"UserWallet"> | number
-    userId?: StringFilter<"UserWallet"> | string
+    userId?: UuidFilter<"UserWallet"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId_type">
 
@@ -15512,10 +16832,10 @@ export namespace Prisma {
     AND?: UserWalletScalarWhereWithAggregatesInput | UserWalletScalarWhereWithAggregatesInput[]
     OR?: UserWalletScalarWhereWithAggregatesInput[]
     NOT?: UserWalletScalarWhereWithAggregatesInput | UserWalletScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"UserWallet"> | string
+    id?: UuidWithAggregatesFilter<"UserWallet"> | string
     type?: EnumMoneyTypeWithAggregatesFilter<"UserWallet"> | $Enums.MoneyType
     amount?: IntWithAggregatesFilter<"UserWallet"> | number
-    userId?: StringWithAggregatesFilter<"UserWallet"> | string
+    userId?: UuidWithAggregatesFilter<"UserWallet"> | string
   }
 
   export type DinozCreateInput = {
@@ -15898,6 +17218,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -15916,6 +17237,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -15934,6 +17256,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -15952,6 +17275,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -15982,6 +17306,51 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserDinozShopCreateInput = {
+    raceId: number
+    display: string
+    user?: UserCreateNestedOneWithoutDinozShopInput
+  }
+
+  export type UserDinozShopUncheckedCreateInput = {
+    id?: number
+    raceId: number
+    display: string
+    userId?: string | null
+  }
+
+  export type UserDinozShopUpdateInput = {
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneWithoutDinozShopNestedInput
+  }
+
+  export type UserDinozShopUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserDinozShopCreateManyInput = {
+    id?: number
+    raceId: number
+    display: string
+    userId?: string | null
+  }
+
+  export type UserDinozShopUpdateManyMutationInput = {
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserDinozShopUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserIngredientsCreateInput = {
@@ -16329,6 +17698,18 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type UuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -16496,6 +17877,21 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type RankingCountOrderByAggregateInput = {
@@ -16700,6 +18096,12 @@ export namespace Prisma {
     none?: DinozWhereInput
   }
 
+  export type UserDinozShopListRelationFilter = {
+    every?: UserDinozShopWhereInput
+    some?: UserDinozShopWhereInput
+    none?: UserDinozShopWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -16726,6 +18128,10 @@ export namespace Prisma {
   }
 
   export type DinozOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserDinozShopOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -16781,6 +18187,69 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type UuidNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type UserDinozShopCountOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserDinozShopAvgOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+  }
+
+  export type UserDinozShopMaxOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserDinozShopMinOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserDinozShopSumOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+  }
+
+  export type UuidNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type UserIngredientsIngredientIdUserIdCompoundUniqueInput = {
@@ -17011,11 +18480,6 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
-  }
-
   export type UserRewardsRewardIdUserIdCompoundUniqueInput = {
     rewardId: number
     userId: string
@@ -17238,6 +18702,13 @@ export namespace Prisma {
     connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
   }
 
+  export type UserDinozShopCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserDinozShopCreateWithoutUserInput, UserDinozShopUncheckedCreateWithoutUserInput> | UserDinozShopCreateWithoutUserInput[] | UserDinozShopUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserDinozShopCreateOrConnectWithoutUserInput | UserDinozShopCreateOrConnectWithoutUserInput[]
+    createMany?: UserDinozShopCreateManyUserInputEnvelope
+    connect?: UserDinozShopWhereUniqueInput | UserDinozShopWhereUniqueInput[]
+  }
+
   export type UserIngredientsUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserIngredientsCreateWithoutUserInput, UserIngredientsUncheckedCreateWithoutUserInput> | UserIngredientsCreateWithoutUserInput[] | UserIngredientsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserIngredientsCreateOrConnectWithoutUserInput | UserIngredientsCreateOrConnectWithoutUserInput[]
@@ -17290,6 +18761,13 @@ export namespace Prisma {
     connectOrCreate?: DinozCreateOrConnectWithoutUserInput | DinozCreateOrConnectWithoutUserInput[]
     createMany?: DinozCreateManyUserInputEnvelope
     connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+  }
+
+  export type UserDinozShopUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserDinozShopCreateWithoutUserInput, UserDinozShopUncheckedCreateWithoutUserInput> | UserDinozShopCreateWithoutUserInput[] | UserDinozShopUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserDinozShopCreateOrConnectWithoutUserInput | UserDinozShopCreateOrConnectWithoutUserInput[]
+    createMany?: UserDinozShopCreateManyUserInputEnvelope
+    connect?: UserDinozShopWhereUniqueInput | UserDinozShopWhereUniqueInput[]
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
@@ -17404,6 +18882,20 @@ export namespace Prisma {
     deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
   }
 
+  export type UserDinozShopUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserDinozShopCreateWithoutUserInput, UserDinozShopUncheckedCreateWithoutUserInput> | UserDinozShopCreateWithoutUserInput[] | UserDinozShopUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserDinozShopCreateOrConnectWithoutUserInput | UserDinozShopCreateOrConnectWithoutUserInput[]
+    upsert?: UserDinozShopUpsertWithWhereUniqueWithoutUserInput | UserDinozShopUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserDinozShopCreateManyUserInputEnvelope
+    set?: UserDinozShopWhereUniqueInput | UserDinozShopWhereUniqueInput[]
+    disconnect?: UserDinozShopWhereUniqueInput | UserDinozShopWhereUniqueInput[]
+    delete?: UserDinozShopWhereUniqueInput | UserDinozShopWhereUniqueInput[]
+    connect?: UserDinozShopWhereUniqueInput | UserDinozShopWhereUniqueInput[]
+    update?: UserDinozShopUpdateWithWhereUniqueWithoutUserInput | UserDinozShopUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserDinozShopUpdateManyWithWhereWithoutUserInput | UserDinozShopUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserDinozShopScalarWhereInput | UserDinozShopScalarWhereInput[]
+  }
+
   export type UserIngredientsUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserIngredientsCreateWithoutUserInput, UserIngredientsUncheckedCreateWithoutUserInput> | UserIngredientsCreateWithoutUserInput[] | UserIngredientsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserIngredientsCreateOrConnectWithoutUserInput | UserIngredientsCreateOrConnectWithoutUserInput[]
@@ -17508,6 +19000,40 @@ export namespace Prisma {
     deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
   }
 
+  export type UserDinozShopUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserDinozShopCreateWithoutUserInput, UserDinozShopUncheckedCreateWithoutUserInput> | UserDinozShopCreateWithoutUserInput[] | UserDinozShopUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserDinozShopCreateOrConnectWithoutUserInput | UserDinozShopCreateOrConnectWithoutUserInput[]
+    upsert?: UserDinozShopUpsertWithWhereUniqueWithoutUserInput | UserDinozShopUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserDinozShopCreateManyUserInputEnvelope
+    set?: UserDinozShopWhereUniqueInput | UserDinozShopWhereUniqueInput[]
+    disconnect?: UserDinozShopWhereUniqueInput | UserDinozShopWhereUniqueInput[]
+    delete?: UserDinozShopWhereUniqueInput | UserDinozShopWhereUniqueInput[]
+    connect?: UserDinozShopWhereUniqueInput | UserDinozShopWhereUniqueInput[]
+    update?: UserDinozShopUpdateWithWhereUniqueWithoutUserInput | UserDinozShopUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserDinozShopUpdateManyWithWhereWithoutUserInput | UserDinozShopUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserDinozShopScalarWhereInput | UserDinozShopScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutDinozShopInput = {
+    create?: XOR<UserCreateWithoutDinozShopInput, UserUncheckedCreateWithoutDinozShopInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDinozShopInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutDinozShopNestedInput = {
+    create?: XOR<UserCreateWithoutDinozShopInput, UserUncheckedCreateWithoutDinozShopInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDinozShopInput
+    upsert?: UserUpsertWithoutDinozShopInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDinozShopInput, UserUpdateWithoutDinozShopInput>, UserUncheckedUpdateWithoutDinozShopInput>
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type UserCreateNestedOneWithoutIngredientsInput = {
     create?: XOR<UserCreateWithoutIngredientsInput, UserUncheckedCreateWithoutIngredientsInput>
     connectOrCreate?: UserCreateOrConnectWithoutIngredientsInput
@@ -17544,10 +19070,6 @@ export namespace Prisma {
 
   export type NullableBytesFieldUpdateOperationsInput = {
     set?: Bytes | null
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type NullableEnumLanguageFieldUpdateOperationsInput = {
@@ -17663,6 +19185,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedUuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -17729,6 +19262,20 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
   export type NestedEnumRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
     in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
@@ -17782,11 +19329,29 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedBytesNullableFilter<$PrismaModel = never> = {
-    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
-    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableFilter<$PrismaModel> | Bytes | null
+  export type NestedUuidNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -17801,6 +19366,13 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedBytesNullableFilter<$PrismaModel = never> = {
+    equals?: Bytes | BytesFieldRefInput<$PrismaModel> | null
+    in?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Bytes[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Bytes | null
   }
 
   export type NestedEnumLanguageNullableFilter<$PrismaModel = never> = {
@@ -17923,6 +19495,7 @@ export namespace Prisma {
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDinozInput = {
@@ -17940,6 +19513,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDinozInput = {
@@ -17973,6 +19547,7 @@ export namespace Prisma {
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDinozInput = {
@@ -17990,6 +19565,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutRankingInput = {
@@ -18007,6 +19583,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRankingInput = {
@@ -18024,6 +19601,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRankingInput = {
@@ -18057,6 +19635,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRankingInput = {
@@ -18074,6 +19653,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserIngredientsCreateWithoutUserInput = {
@@ -18284,6 +19864,27 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserDinozShopCreateWithoutUserInput = {
+    raceId: number
+    display: string
+  }
+
+  export type UserDinozShopUncheckedCreateWithoutUserInput = {
+    id?: number
+    raceId: number
+    display: string
+  }
+
+  export type UserDinozShopCreateOrConnectWithoutUserInput = {
+    where: UserDinozShopWhereUniqueInput
+    create: XOR<UserDinozShopCreateWithoutUserInput, UserDinozShopUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserDinozShopCreateManyUserInputEnvelope = {
+    data: UserDinozShopCreateManyUserInput | UserDinozShopCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserIngredientsUpsertWithWhereUniqueWithoutUserInput = {
     where: UserIngredientsWhereUniqueInput
     update: XOR<UserIngredientsUpdateWithoutUserInput, UserIngredientsUncheckedUpdateWithoutUserInput>
@@ -18307,7 +19908,7 @@ export namespace Prisma {
     id?: IntFilter<"UserIngredients"> | number
     ingredientId?: IntFilter<"UserIngredients"> | number
     quantity?: IntFilter<"UserIngredients"> | number
-    userId?: StringFilter<"UserIngredients"> | string
+    userId?: UuidFilter<"UserIngredients"> | string
   }
 
   export type UserItemsUpsertWithWhereUniqueWithoutUserInput = {
@@ -18333,7 +19934,7 @@ export namespace Prisma {
     id?: IntFilter<"UserItems"> | number
     itemId?: IntFilter<"UserItems"> | number
     quantity?: IntFilter<"UserItems"> | number
-    userId?: StringFilter<"UserItems"> | string
+    userId?: UuidFilter<"UserItems"> | string
   }
 
   export type UserProfileUpsertWithoutUserInput = {
@@ -18417,7 +20018,7 @@ export namespace Prisma {
     NOT?: UserRewardsScalarWhereInput | UserRewardsScalarWhereInput[]
     id?: IntFilter<"UserRewards"> | number
     rewardId?: IntFilter<"UserRewards"> | number
-    userId?: StringNullableFilter<"UserRewards"> | string | null
+    userId?: UuidNullableFilter<"UserRewards"> | string | null
   }
 
   export type UserTrackingUpsertWithWhereUniqueWithoutUserInput = {
@@ -18443,7 +20044,7 @@ export namespace Prisma {
     id?: IntFilter<"UserTracking"> | number
     stat?: StringFilter<"UserTracking"> | string
     quantity?: IntFilter<"UserTracking"> | number
-    userId?: StringFilter<"UserTracking"> | string
+    userId?: UuidFilter<"UserTracking"> | string
   }
 
   export type UserWalletUpsertWithWhereUniqueWithoutUserInput = {
@@ -18466,10 +20067,10 @@ export namespace Prisma {
     AND?: UserWalletScalarWhereInput | UserWalletScalarWhereInput[]
     OR?: UserWalletScalarWhereInput[]
     NOT?: UserWalletScalarWhereInput | UserWalletScalarWhereInput[]
-    id?: StringFilter<"UserWallet"> | string
+    id?: UuidFilter<"UserWallet"> | string
     type?: EnumMoneyTypeFilter<"UserWallet"> | $Enums.MoneyType
     amount?: IntFilter<"UserWallet"> | number
-    userId?: StringFilter<"UserWallet"> | string
+    userId?: UuidFilter<"UserWallet"> | string
   }
 
   export type DinozUpsertWithWhereUniqueWithoutUserInput = {
@@ -18512,7 +20113,121 @@ export namespace Prisma {
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
-    userId?: StringFilter<"Dinoz"> | string
+    userId?: UuidFilter<"Dinoz"> | string
+  }
+
+  export type UserDinozShopUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserDinozShopWhereUniqueInput
+    update: XOR<UserDinozShopUpdateWithoutUserInput, UserDinozShopUncheckedUpdateWithoutUserInput>
+    create: XOR<UserDinozShopCreateWithoutUserInput, UserDinozShopUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserDinozShopUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserDinozShopWhereUniqueInput
+    data: XOR<UserDinozShopUpdateWithoutUserInput, UserDinozShopUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserDinozShopUpdateManyWithWhereWithoutUserInput = {
+    where: UserDinozShopScalarWhereInput
+    data: XOR<UserDinozShopUpdateManyMutationInput, UserDinozShopUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserDinozShopScalarWhereInput = {
+    AND?: UserDinozShopScalarWhereInput | UserDinozShopScalarWhereInput[]
+    OR?: UserDinozShopScalarWhereInput[]
+    NOT?: UserDinozShopScalarWhereInput | UserDinozShopScalarWhereInput[]
+    id?: IntFilter<"UserDinozShop"> | number
+    raceId?: IntFilter<"UserDinozShop"> | number
+    display?: StringFilter<"UserDinozShop"> | string
+    userId?: UuidNullableFilter<"UserDinozShop"> | string | null
+  }
+
+  export type UserCreateWithoutDinozShopInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutDinozShopInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutDinozShopInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDinozShopInput, UserUncheckedCreateWithoutDinozShopInput>
+  }
+
+  export type UserUpsertWithoutDinozShopInput = {
+    update: XOR<UserUpdateWithoutDinozShopInput, UserUncheckedUpdateWithoutDinozShopInput>
+    create: XOR<UserCreateWithoutDinozShopInput, UserUncheckedCreateWithoutDinozShopInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDinozShopInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDinozShopInput, UserUncheckedUpdateWithoutDinozShopInput>
+  }
+
+  export type UserUpdateWithoutDinozShopInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDinozShopInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutIngredientsInput = {
@@ -18530,6 +20245,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutIngredientsInput = {
@@ -18547,6 +20263,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutIngredientsInput = {
@@ -18580,6 +20297,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutIngredientsInput = {
@@ -18597,6 +20315,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutItemsInput = {
@@ -18614,6 +20333,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutItemsInput = {
@@ -18631,6 +20351,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutItemsInput = {
@@ -18664,6 +20385,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutItemsInput = {
@@ -18681,6 +20403,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutProfileInput = {
@@ -18698,6 +20421,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProfileInput = {
@@ -18715,6 +20439,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProfileInput = {
@@ -18748,6 +20473,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfileInput = {
@@ -18765,6 +20491,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutRewardsInput = {
@@ -18782,6 +20509,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRewardsInput = {
@@ -18799,6 +20527,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRewardsInput = {
@@ -18832,6 +20561,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRewardsInput = {
@@ -18849,6 +20579,7 @@ export namespace Prisma {
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutStatsTrackingInput = {
@@ -18866,6 +20597,7 @@ export namespace Prisma {
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStatsTrackingInput = {
@@ -18883,6 +20615,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStatsTrackingInput = {
@@ -18916,6 +20649,7 @@ export namespace Prisma {
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStatsTrackingInput = {
@@ -18933,6 +20667,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutWalletsInput = {
@@ -18950,6 +20685,7 @@ export namespace Prisma {
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWalletsInput = {
@@ -18967,6 +20703,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWalletsInput = {
@@ -19000,6 +20737,7 @@ export namespace Prisma {
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWalletsInput = {
@@ -19017,6 +20755,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserIngredientsCreateManyUserInput = {
@@ -19069,6 +20808,12 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
+  }
+
+  export type UserDinozShopCreateManyUserInput = {
+    id?: number
+    raceId: number
+    display: string
   }
 
   export type UserIngredientsUpdateWithoutUserInput = {
@@ -19222,6 +20967,23 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserDinozShopUpdateWithoutUserInput = {
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserDinozShopUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserDinozShopUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
   }
 
 

@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.0.0
- * Query Engine version: 0c19ccc313cf9911a90d99d2ac2eb0280c76c513
+ * Prisma Client JS version: 7.3.0
+ * Query Engine version: 9d6ad21cbbceab97458517b147a6a09ff43aa735
  */
 Prisma.prismaVersion = {
-  client: "7.0.0",
-  engine: "0c19ccc313cf9911a90d99d2ac2eb0280c76c513"
+  client: "7.3.0",
+  engine: "9d6ad21cbbceab97458517b147a6a09ff43aa735"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -189,6 +189,13 @@ exports.Prisma.UserScalarFieldEnum = {
   lastLogin: 'lastLogin'
 };
 
+exports.Prisma.UserDinozShopScalarFieldEnum = {
+  id: 'id',
+  raceId: 'raceId',
+  display: 'display',
+  userId: 'userId'
+};
+
 exports.Prisma.UserIngredientsScalarFieldEnum = {
   id: 'id',
   ingredientId: 'ingredientId',
@@ -278,6 +285,7 @@ exports.Prisma.ModelName = {
   SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
   SignupIpMonthCounter: 'SignupIpMonthCounter',
   User: 'User',
+  UserDinozShop: 'UserDinozShop',
   UserIngredients: 'UserIngredients',
   UserItems: 'UserItems',
   UserProfile: 'UserProfile',
