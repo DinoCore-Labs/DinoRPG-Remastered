@@ -21,7 +21,6 @@ export const fixRolesCommand = {
 
 		await interaction.reply('⏳ Synchronisation des membres…');
 
-		// 🔥 méthode PRO
 		const members = await fetchAllMembers(guild.id, process.env.DISCORD_TOKEN!);
 
 		console.log('→ Membres récupérés via REST :', members.length);

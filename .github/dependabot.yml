@@ -4,8 +4,54 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
+
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # Root workspace
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
+    groups:
+      root-deps:
+        patterns:
+          - '*'
+
+  # Core
+  - package-ecosystem: 'npm'
+    directory: '/packages/core'
+    schedule:
+      interval: 'weekly'
+    groups:
+      core-deps:
+        patterns:
+          - '*'
+
+  # Server
+  - package-ecosystem: 'npm'
+    directory: '/app/server'
+    schedule:
+      interval: 'weekly'
+    groups:
+      server-deps:
+        patterns:
+          - '*'
+
+  # Client
+  - package-ecosystem: 'npm'
+    directory: '/app/client'
+    schedule:
+      interval: 'weekly'
+    groups:
+      client-deps:
+        patterns:
+          - '*'
+
+  # Bot
+  - package-ecosystem: 'npm'
+    directory: '/packages/bot'
+    schedule:
+      interval: 'weekly'
+    groups:
+      bot-deps:
+        patterns:
+          - '*'
