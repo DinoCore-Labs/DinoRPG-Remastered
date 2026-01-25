@@ -16,24 +16,24 @@
 	"dependencies": {
 		"@dinorpg/core": "workspace:^*",
 		"@fastify/cookie": "^11.0.2",
-		"@fastify/cors": "^11.1.0",
+		"@fastify/cors": "^11.2.0",
 		"@fastify/jwt": "^10.0.0",
-		"@fastify/multipart": "^9.3.0",
+		"@fastify/multipart": "^9.4.0",
 		"@fastify/swagger": "^9.6.1",
-		"@fastify/swagger-ui": "^5.2.3",
-		"@prisma/adapter-pg": "^7.0.0",
-		"@prisma/client": "^7.0.0",
+		"@fastify/swagger-ui": "^5.2.4",
+		"@prisma/adapter-pg": "^7.3.0",
+		"@prisma/client": "^7.3.0",
 		"bcrypt": "^6.0.0",
 		"dayjs": "^1.11.19",
-		"fastify": "^5.6.2",
+		"fastify": "^5.7.1",
 		"fastify-zod": "^1.4.0",
-		"pg": "^8.16.3",
+		"pg": "^8.17.2",
 		"sharp": "^0.34.5",
-		"zod": "^3.23.8"
+		"zod": "^4.3.6"
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^6.0.0",
-		"@types/pg": "^8.15.6",
-		"prisma": "^7.0.0"
+		"@types/pg": "^8.16.0",
+		"prisma": "^7.3.0"
 	}
 }

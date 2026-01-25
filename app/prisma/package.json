@@ -112,7 +112,7 @@
   "version": "7.0.0",
   "sideEffects": false,
   "dependencies": {
-    "@prisma/client-runtime-utils": "7.0.0"
+    "@prisma/client-runtime-utils": "7.3.0"
   },
   "imports": {
     "#wasm-compiler-loader": {
