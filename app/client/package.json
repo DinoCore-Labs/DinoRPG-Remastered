@@ -16,7 +16,7 @@
 		"pinia-plugin-persistedstate": "^4.7.1",
 		"pixi.js": "^8.15.0",
 		"vue": "^3.5.24",
-		"vue-i18n": "^11.2.2",
+		"vue-i18n": "^11.2.8",
 		"vue-router": "^4.6.3",
 		"vue-tippy": "^6.7.1",
 		"vue-toast-notification": "^3.1.3"
