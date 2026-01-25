@@ -14,6 +14,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model Dinoz
+ * 
+ */
+export type Dinoz = $Result.DefaultSelection<Prisma.$DinozPayload>
+/**
  * Model Ranking
  * 
  */
@@ -128,8 +133,8 @@ export const Role: typeof $Enums.Role
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Rankings
- * const rankings = await prisma.ranking.findMany()
+ * // Fetch zero or more Dinozs
+ * const dinozs = await prisma.dinoz.findMany()
  * ```
  *
  *
@@ -149,8 +154,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Rankings
-   * const rankings = await prisma.ranking.findMany()
+   * // Fetch zero or more Dinozs
+   * const dinozs = await prisma.dinoz.findMany()
    * ```
    *
    *
@@ -239,6 +244,16 @@ export class PrismaClient<
   }>>
 
       /**
+   * `prisma.dinoz`: Exposes CRUD operations for the **Dinoz** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Dinozs
+    * const dinozs = await prisma.dinoz.findMany()
+    * ```
+    */
+  get dinoz(): Prisma.DinozDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.ranking`: Exposes CRUD operations for the **Ranking** model.
     * Example usage:
     * ```ts
@@ -771,6 +786,7 @@ export namespace Prisma {
 
 
   export const ModelName: {
+    Dinoz: 'Dinoz',
     Ranking: 'Ranking',
     SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
     SignupIpMonthCounter: 'SignupIpMonthCounter',
@@ -796,10 +812,84 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
+      modelProps: "dinoz" | "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
+      Dinoz: {
+        payload: Prisma.$DinozPayload<ExtArgs>
+        fields: Prisma.DinozFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DinozFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DinozFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozPayload>
+          }
+          findFirst: {
+            args: Prisma.DinozFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DinozFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozPayload>
+          }
+          findMany: {
+            args: Prisma.DinozFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozPayload>[]
+          }
+          create: {
+            args: Prisma.DinozCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozPayload>
+          }
+          createMany: {
+            args: Prisma.DinozCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DinozCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozPayload>[]
+          }
+          delete: {
+            args: Prisma.DinozDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozPayload>
+          }
+          update: {
+            args: Prisma.DinozUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozPayload>
+          }
+          deleteMany: {
+            args: Prisma.DinozDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DinozUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DinozUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozPayload>[]
+          }
+          upsert: {
+            args: Prisma.DinozUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozPayload>
+          }
+          aggregate: {
+            args: Prisma.DinozAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDinoz>
+          }
+          groupBy: {
+            args: Prisma.DinozGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DinozGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DinozCountArgs<ExtArgs>
+            result: $Utils.Optional<DinozCountAggregateOutputType> | number
+          }
+        }
+      }
       Ranking: {
         payload: Prisma.$RankingPayload<ExtArgs>
         fields: Prisma.RankingFieldRefs
@@ -1632,6 +1722,7 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
+    dinoz?: DinozOmit
     ranking?: RankingOmit
     signupDeviceMonthCounter?: SignupDeviceMonthCounterOmit
     signupIpMonthCounter?: SignupIpMonthCounterOmit
@@ -1727,6 +1818,7 @@ export namespace Prisma {
     rewards: number
     statsTracking: number
     wallets: number
+    dinoz: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1735,6 +1827,7 @@ export namespace Prisma {
     rewards?: boolean | UserCountOutputTypeCountRewardsArgs
     statsTracking?: boolean | UserCountOutputTypeCountStatsTrackingArgs
     wallets?: boolean | UserCountOutputTypeCountWalletsArgs
+    dinoz?: boolean | UserCountOutputTypeCountDinozArgs
   }
 
   // Custom InputTypes
@@ -1783,10 +1876,1382 @@ export namespace Prisma {
     where?: UserWalletWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozWhereInput
+  }
+
 
   /**
    * Models
    */
+
+  /**
+   * Model Dinoz
+   */
+
+  export type AggregateDinoz = {
+    _count: DinozCountAggregateOutputType | null
+    _avg: DinozAvgAggregateOutputType | null
+    _sum: DinozSumAggregateOutputType | null
+    _min: DinozMinAggregateOutputType | null
+    _max: DinozMaxAggregateOutputType | null
+  }
+
+  export type DinozAvgAggregateOutputType = {
+    id: number | null
+    raceId: number | null
+    level: number | null
+    life: number | null
+    maxLife: number | null
+    experience: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+    nextUpElementId: number | null
+    nextUpAltElementId: number | null
+    placeId: number | null
+    remaining: number | null
+  }
+
+  export type DinozSumAggregateOutputType = {
+    id: number | null
+    raceId: number | null
+    level: number | null
+    life: number | null
+    maxLife: number | null
+    experience: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+    nextUpElementId: number | null
+    nextUpAltElementId: number | null
+    placeId: number | null
+    remaining: number | null
+  }
+
+  export type DinozMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    canRename: boolean | null
+    raceId: number | null
+    display: string | null
+    level: number | null
+    life: number | null
+    maxLife: number | null
+    experience: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+    nextUpElementId: number | null
+    nextUpAltElementId: number | null
+    placeId: number | null
+    remaining: number | null
+    createdDate: Date | null
+    updatedDate: Date | null
+    userId: string | null
+  }
+
+  export type DinozMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    canRename: boolean | null
+    raceId: number | null
+    display: string | null
+    level: number | null
+    life: number | null
+    maxLife: number | null
+    experience: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+    nextUpElementId: number | null
+    nextUpAltElementId: number | null
+    placeId: number | null
+    remaining: number | null
+    createdDate: Date | null
+    updatedDate: Date | null
+    userId: string | null
+  }
+
+  export type DinozCountAggregateOutputType = {
+    id: number
+    name: number
+    canRename: number
+    raceId: number
+    display: number
+    level: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining: number
+    createdDate: number
+    updatedDate: number
+    userId: number
+    _all: number
+  }
+
+
+  export type DinozAvgAggregateInputType = {
+    id?: true
+    raceId?: true
+    level?: true
+    life?: true
+    maxLife?: true
+    experience?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    nextUpElementId?: true
+    nextUpAltElementId?: true
+    placeId?: true
+    remaining?: true
+  }
+
+  export type DinozSumAggregateInputType = {
+    id?: true
+    raceId?: true
+    level?: true
+    life?: true
+    maxLife?: true
+    experience?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    nextUpElementId?: true
+    nextUpAltElementId?: true
+    placeId?: true
+    remaining?: true
+  }
+
+  export type DinozMinAggregateInputType = {
+    id?: true
+    name?: true
+    canRename?: true
+    raceId?: true
+    display?: true
+    level?: true
+    life?: true
+    maxLife?: true
+    experience?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    nextUpElementId?: true
+    nextUpAltElementId?: true
+    placeId?: true
+    remaining?: true
+    createdDate?: true
+    updatedDate?: true
+    userId?: true
+  }
+
+  export type DinozMaxAggregateInputType = {
+    id?: true
+    name?: true
+    canRename?: true
+    raceId?: true
+    display?: true
+    level?: true
+    life?: true
+    maxLife?: true
+    experience?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    nextUpElementId?: true
+    nextUpAltElementId?: true
+    placeId?: true
+    remaining?: true
+    createdDate?: true
+    updatedDate?: true
+    userId?: true
+  }
+
+  export type DinozCountAggregateInputType = {
+    id?: true
+    name?: true
+    canRename?: true
+    raceId?: true
+    display?: true
+    level?: true
+    life?: true
+    maxLife?: true
+    experience?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    nextUpElementId?: true
+    nextUpAltElementId?: true
+    placeId?: true
+    remaining?: true
+    createdDate?: true
+    updatedDate?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type DinozAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dinoz to aggregate.
+     */
+    where?: DinozWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dinozs to fetch.
+     */
+    orderBy?: DinozOrderByWithRelationInput | DinozOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DinozWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dinozs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dinozs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Dinozs
+    **/
+    _count?: true | DinozCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DinozAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DinozSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DinozMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DinozMaxAggregateInputType
+  }
+
+  export type GetDinozAggregateType<T extends DinozAggregateArgs> = {
+        [P in keyof T & keyof AggregateDinoz]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDinoz[P]>
+      : GetScalarType<T[P], AggregateDinoz[P]>
+  }
+
+
+
+
+  export type DinozGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozWhereInput
+    orderBy?: DinozOrderByWithAggregationInput | DinozOrderByWithAggregationInput[]
+    by: DinozScalarFieldEnum[] | DinozScalarFieldEnum
+    having?: DinozScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DinozCountAggregateInputType | true
+    _avg?: DinozAvgAggregateInputType
+    _sum?: DinozSumAggregateInputType
+    _min?: DinozMinAggregateInputType
+    _max?: DinozMaxAggregateInputType
+  }
+
+  export type DinozGroupByOutputType = {
+    id: number
+    name: string
+    canRename: boolean
+    raceId: number
+    display: string
+    level: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining: number
+    createdDate: Date
+    updatedDate: Date
+    userId: string
+    _count: DinozCountAggregateOutputType | null
+    _avg: DinozAvgAggregateOutputType | null
+    _sum: DinozSumAggregateOutputType | null
+    _min: DinozMinAggregateOutputType | null
+    _max: DinozMaxAggregateOutputType | null
+  }
+
+  type GetDinozGroupByPayload<T extends DinozGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DinozGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DinozGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DinozGroupByOutputType[P]>
+            : GetScalarType<T[P], DinozGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DinozSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    canRename?: boolean
+    raceId?: boolean
+    display?: boolean
+    level?: boolean
+    life?: boolean
+    maxLife?: boolean
+    experience?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    nextUpElementId?: boolean
+    nextUpAltElementId?: boolean
+    placeId?: boolean
+    remaining?: boolean
+    createdDate?: boolean
+    updatedDate?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dinoz"]>
+
+  export type DinozSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    canRename?: boolean
+    raceId?: boolean
+    display?: boolean
+    level?: boolean
+    life?: boolean
+    maxLife?: boolean
+    experience?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    nextUpElementId?: boolean
+    nextUpAltElementId?: boolean
+    placeId?: boolean
+    remaining?: boolean
+    createdDate?: boolean
+    updatedDate?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dinoz"]>
+
+  export type DinozSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    canRename?: boolean
+    raceId?: boolean
+    display?: boolean
+    level?: boolean
+    life?: boolean
+    maxLife?: boolean
+    experience?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    nextUpElementId?: boolean
+    nextUpAltElementId?: boolean
+    placeId?: boolean
+    remaining?: boolean
+    createdDate?: boolean
+    updatedDate?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dinoz"]>
+
+  export type DinozSelectScalar = {
+    id?: boolean
+    name?: boolean
+    canRename?: boolean
+    raceId?: boolean
+    display?: boolean
+    level?: boolean
+    life?: boolean
+    maxLife?: boolean
+    experience?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    nextUpElementId?: boolean
+    nextUpAltElementId?: boolean
+    placeId?: boolean
+    remaining?: boolean
+    createdDate?: boolean
+    updatedDate?: boolean
+    userId?: boolean
+  }
+
+  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "canRename" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "remaining" | "createdDate" | "updatedDate" | "userId", ExtArgs["result"]["dinoz"]>
+  export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type DinozIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type DinozIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $DinozPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Dinoz"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      canRename: boolean
+      raceId: number
+      display: string
+      level: number
+      life: number
+      maxLife: number
+      experience: number
+      nbrUpFire: number
+      nbrUpWood: number
+      nbrUpWater: number
+      nbrUpLightning: number
+      nbrUpAir: number
+      nextUpElementId: number
+      nextUpAltElementId: number
+      placeId: number
+      remaining: number
+      createdDate: Date
+      updatedDate: Date
+      userId: string
+    }, ExtArgs["result"]["dinoz"]>
+    composites: {}
+  }
+
+  type DinozGetPayload<S extends boolean | null | undefined | DinozDefaultArgs> = $Result.GetResult<Prisma.$DinozPayload, S>
+
+  type DinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DinozFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DinozCountAggregateInputType | true
+    }
+
+  export interface DinozDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Dinoz'], meta: { name: 'Dinoz' } }
+    /**
+     * Find zero or one Dinoz that matches the filter.
+     * @param {DinozFindUniqueArgs} args - Arguments to find a Dinoz
+     * @example
+     * // Get one Dinoz
+     * const dinoz = await prisma.dinoz.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DinozFindUniqueArgs>(args: SelectSubset<T, DinozFindUniqueArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Dinoz that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DinozFindUniqueOrThrowArgs} args - Arguments to find a Dinoz
+     * @example
+     * // Get one Dinoz
+     * const dinoz = await prisma.dinoz.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DinozFindUniqueOrThrowArgs>(args: SelectSubset<T, DinozFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Dinoz that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozFindFirstArgs} args - Arguments to find a Dinoz
+     * @example
+     * // Get one Dinoz
+     * const dinoz = await prisma.dinoz.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DinozFindFirstArgs>(args?: SelectSubset<T, DinozFindFirstArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Dinoz that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozFindFirstOrThrowArgs} args - Arguments to find a Dinoz
+     * @example
+     * // Get one Dinoz
+     * const dinoz = await prisma.dinoz.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DinozFindFirstOrThrowArgs>(args?: SelectSubset<T, DinozFindFirstOrThrowArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Dinozs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Dinozs
+     * const dinozs = await prisma.dinoz.findMany()
+     * 
+     * // Get first 10 Dinozs
+     * const dinozs = await prisma.dinoz.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dinozWithIdOnly = await prisma.dinoz.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DinozFindManyArgs>(args?: SelectSubset<T, DinozFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Dinoz.
+     * @param {DinozCreateArgs} args - Arguments to create a Dinoz.
+     * @example
+     * // Create one Dinoz
+     * const Dinoz = await prisma.dinoz.create({
+     *   data: {
+     *     // ... data to create a Dinoz
+     *   }
+     * })
+     * 
+     */
+    create<T extends DinozCreateArgs>(args: SelectSubset<T, DinozCreateArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Dinozs.
+     * @param {DinozCreateManyArgs} args - Arguments to create many Dinozs.
+     * @example
+     * // Create many Dinozs
+     * const dinoz = await prisma.dinoz.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DinozCreateManyArgs>(args?: SelectSubset<T, DinozCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Dinozs and returns the data saved in the database.
+     * @param {DinozCreateManyAndReturnArgs} args - Arguments to create many Dinozs.
+     * @example
+     * // Create many Dinozs
+     * const dinoz = await prisma.dinoz.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Dinozs and only return the `id`
+     * const dinozWithIdOnly = await prisma.dinoz.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DinozCreateManyAndReturnArgs>(args?: SelectSubset<T, DinozCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Dinoz.
+     * @param {DinozDeleteArgs} args - Arguments to delete one Dinoz.
+     * @example
+     * // Delete one Dinoz
+     * const Dinoz = await prisma.dinoz.delete({
+     *   where: {
+     *     // ... filter to delete one Dinoz
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DinozDeleteArgs>(args: SelectSubset<T, DinozDeleteArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Dinoz.
+     * @param {DinozUpdateArgs} args - Arguments to update one Dinoz.
+     * @example
+     * // Update one Dinoz
+     * const dinoz = await prisma.dinoz.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DinozUpdateArgs>(args: SelectSubset<T, DinozUpdateArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Dinozs.
+     * @param {DinozDeleteManyArgs} args - Arguments to filter Dinozs to delete.
+     * @example
+     * // Delete a few Dinozs
+     * const { count } = await prisma.dinoz.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DinozDeleteManyArgs>(args?: SelectSubset<T, DinozDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dinozs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Dinozs
+     * const dinoz = await prisma.dinoz.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DinozUpdateManyArgs>(args: SelectSubset<T, DinozUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dinozs and returns the data updated in the database.
+     * @param {DinozUpdateManyAndReturnArgs} args - Arguments to update many Dinozs.
+     * @example
+     * // Update many Dinozs
+     * const dinoz = await prisma.dinoz.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Dinozs and only return the `id`
+     * const dinozWithIdOnly = await prisma.dinoz.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DinozUpdateManyAndReturnArgs>(args: SelectSubset<T, DinozUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Dinoz.
+     * @param {DinozUpsertArgs} args - Arguments to update or create a Dinoz.
+     * @example
+     * // Update or create a Dinoz
+     * const dinoz = await prisma.dinoz.upsert({
+     *   create: {
+     *     // ... data to create a Dinoz
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Dinoz we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DinozUpsertArgs>(args: SelectSubset<T, DinozUpsertArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Dinozs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCountArgs} args - Arguments to filter Dinozs to count.
+     * @example
+     * // Count the number of Dinozs
+     * const count = await prisma.dinoz.count({
+     *   where: {
+     *     // ... the filter for the Dinozs we want to count
+     *   }
+     * })
+    **/
+    count<T extends DinozCountArgs>(
+      args?: Subset<T, DinozCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DinozCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Dinoz.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DinozAggregateArgs>(args: Subset<T, DinozAggregateArgs>): Prisma.PrismaPromise<GetDinozAggregateType<T>>
+
+    /**
+     * Group by Dinoz.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DinozGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DinozGroupByArgs['orderBy'] }
+        : { orderBy?: DinozGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DinozGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDinozGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Dinoz model
+   */
+  readonly fields: DinozFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Dinoz.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DinozClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Dinoz model
+   */
+  interface DinozFieldRefs {
+    readonly id: FieldRef<"Dinoz", 'Int'>
+    readonly name: FieldRef<"Dinoz", 'String'>
+    readonly canRename: FieldRef<"Dinoz", 'Boolean'>
+    readonly raceId: FieldRef<"Dinoz", 'Int'>
+    readonly display: FieldRef<"Dinoz", 'String'>
+    readonly level: FieldRef<"Dinoz", 'Int'>
+    readonly life: FieldRef<"Dinoz", 'Int'>
+    readonly maxLife: FieldRef<"Dinoz", 'Int'>
+    readonly experience: FieldRef<"Dinoz", 'Int'>
+    readonly nbrUpFire: FieldRef<"Dinoz", 'Int'>
+    readonly nbrUpWood: FieldRef<"Dinoz", 'Int'>
+    readonly nbrUpWater: FieldRef<"Dinoz", 'Int'>
+    readonly nbrUpLightning: FieldRef<"Dinoz", 'Int'>
+    readonly nbrUpAir: FieldRef<"Dinoz", 'Int'>
+    readonly nextUpElementId: FieldRef<"Dinoz", 'Int'>
+    readonly nextUpAltElementId: FieldRef<"Dinoz", 'Int'>
+    readonly placeId: FieldRef<"Dinoz", 'Int'>
+    readonly remaining: FieldRef<"Dinoz", 'Int'>
+    readonly createdDate: FieldRef<"Dinoz", 'DateTime'>
+    readonly updatedDate: FieldRef<"Dinoz", 'DateTime'>
+    readonly userId: FieldRef<"Dinoz", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Dinoz findUnique
+   */
+  export type DinozFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    /**
+     * Filter, which Dinoz to fetch.
+     */
+    where: DinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dinoz findUniqueOrThrow
+   */
+  export type DinozFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    /**
+     * Filter, which Dinoz to fetch.
+     */
+    where: DinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dinoz findFirst
+   */
+  export type DinozFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    /**
+     * Filter, which Dinoz to fetch.
+     */
+    where?: DinozWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dinozs to fetch.
+     */
+    orderBy?: DinozOrderByWithRelationInput | DinozOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dinozs.
+     */
+    cursor?: DinozWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dinozs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dinozs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dinozs.
+     */
+    distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dinoz findFirstOrThrow
+   */
+  export type DinozFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    /**
+     * Filter, which Dinoz to fetch.
+     */
+    where?: DinozWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dinozs to fetch.
+     */
+    orderBy?: DinozOrderByWithRelationInput | DinozOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dinozs.
+     */
+    cursor?: DinozWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dinozs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dinozs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dinozs.
+     */
+    distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dinoz findMany
+   */
+  export type DinozFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    /**
+     * Filter, which Dinozs to fetch.
+     */
+    where?: DinozWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dinozs to fetch.
+     */
+    orderBy?: DinozOrderByWithRelationInput | DinozOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Dinozs.
+     */
+    cursor?: DinozWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dinozs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dinozs.
+     */
+    skip?: number
+    distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dinoz create
+   */
+  export type DinozCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Dinoz.
+     */
+    data: XOR<DinozCreateInput, DinozUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dinoz createMany
+   */
+  export type DinozCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Dinozs.
+     */
+    data: DinozCreateManyInput | DinozCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Dinoz createManyAndReturn
+   */
+  export type DinozCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * The data used to create many Dinozs.
+     */
+    data: DinozCreateManyInput | DinozCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Dinoz update
+   */
+  export type DinozUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Dinoz.
+     */
+    data: XOR<DinozUpdateInput, DinozUncheckedUpdateInput>
+    /**
+     * Choose, which Dinoz to update.
+     */
+    where: DinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dinoz updateMany
+   */
+  export type DinozUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Dinozs.
+     */
+    data: XOR<DinozUpdateManyMutationInput, DinozUncheckedUpdateManyInput>
+    /**
+     * Filter which Dinozs to update
+     */
+    where?: DinozWhereInput
+    /**
+     * Limit how many Dinozs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dinoz updateManyAndReturn
+   */
+  export type DinozUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * The data used to update Dinozs.
+     */
+    data: XOR<DinozUpdateManyMutationInput, DinozUncheckedUpdateManyInput>
+    /**
+     * Filter which Dinozs to update
+     */
+    where?: DinozWhereInput
+    /**
+     * Limit how many Dinozs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Dinoz upsert
+   */
+  export type DinozUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Dinoz to update in case it exists.
+     */
+    where: DinozWhereUniqueInput
+    /**
+     * In case the Dinoz found by the `where` argument doesn't exist, create a new Dinoz with this data.
+     */
+    create: XOR<DinozCreateInput, DinozUncheckedCreateInput>
+    /**
+     * In case the Dinoz was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DinozUpdateInput, DinozUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dinoz delete
+   */
+  export type DinozDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    /**
+     * Filter which Dinoz to delete.
+     */
+    where: DinozWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dinoz deleteMany
+   */
+  export type DinozDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dinozs to delete
+     */
+    where?: DinozWhereInput
+    /**
+     * Limit how many Dinozs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dinoz without action
+   */
+  export type DinozDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+  }
+
 
   /**
    * Model Ranking
@@ -5258,6 +6723,7 @@ export namespace Prisma {
     rewards?: boolean | User$rewardsArgs<ExtArgs>
     statsTracking?: boolean | User$statsTrackingArgs<ExtArgs>
     wallets?: boolean | User$walletsArgs<ExtArgs>
+    dinoz?: boolean | User$dinozArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -5300,6 +6766,7 @@ export namespace Prisma {
     rewards?: boolean | User$rewardsArgs<ExtArgs>
     statsTracking?: boolean | User$statsTrackingArgs<ExtArgs>
     wallets?: boolean | User$walletsArgs<ExtArgs>
+    dinoz?: boolean | User$dinozArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5315,6 +6782,7 @@ export namespace Prisma {
       rewards: Prisma.$UserRewardsPayload<ExtArgs>[]
       statsTracking: Prisma.$UserTrackingPayload<ExtArgs>[]
       wallets: Prisma.$UserWalletPayload<ExtArgs>[]
+      dinoz: Prisma.$DinozPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5725,6 +7193,7 @@ export namespace Prisma {
     rewards<T extends User$rewardsArgs<ExtArgs> = {}>(args?: Subset<T, User$rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRewardsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     statsTracking<T extends User$statsTrackingArgs<ExtArgs> = {}>(args?: Subset<T, User$statsTrackingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     wallets<T extends User$walletsArgs<ExtArgs> = {}>(args?: Subset<T, User$walletsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserWalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dinoz<T extends User$dinozArgs<ExtArgs> = {}>(args?: Subset<T, User$dinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6313,6 +7782,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserWalletScalarFieldEnum | UserWalletScalarFieldEnum[]
+  }
+
+  /**
+   * User.dinoz
+   */
+  export type User$dinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
+    orderBy?: DinozOrderByWithRelationInput | DinozOrderByWithRelationInput[]
+    cursor?: DinozWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
   }
 
   /**
@@ -12958,6 +14451,41 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const DinozScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    canRename: 'canRename',
+    raceId: 'raceId',
+    display: 'display',
+    level: 'level',
+    life: 'life',
+    maxLife: 'maxLife',
+    experience: 'experience',
+    nbrUpFire: 'nbrUpFire',
+    nbrUpWood: 'nbrUpWood',
+    nbrUpWater: 'nbrUpWater',
+    nbrUpLightning: 'nbrUpLightning',
+    nbrUpAir: 'nbrUpAir',
+    nextUpElementId: 'nextUpElementId',
+    nextUpAltElementId: 'nextUpAltElementId',
+    placeId: 'placeId',
+    remaining: 'remaining',
+    createdDate: 'createdDate',
+    updatedDate: 'updatedDate',
+    userId: 'userId'
+  };
+
+  export type DinozScalarFieldEnum = (typeof DinozScalarFieldEnum)[keyof typeof DinozScalarFieldEnum]
+
+
+  export const RelationLoadStrategy: {
+    query: 'query',
+    join: 'join'
+  };
+
+  export type RelationLoadStrategy = (typeof RelationLoadStrategy)[keyof typeof RelationLoadStrategy]
+
+
   export const RankingScalarFieldEnum: {
     id: 'id',
     dinozCount: 'dinozCount',
@@ -12969,14 +14497,6 @@ export namespace Prisma {
   };
 
   export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeof RankingScalarFieldEnum]
-
-
-  export const RelationLoadStrategy: {
-    query: 'query',
-    join: 'join'
-  };
-
-  export type RelationLoadStrategy = (typeof RelationLoadStrategy)[keyof typeof RelationLoadStrategy]
 
 
   export const SignupDeviceMonthCounterScalarFieldEnum: {
@@ -13139,6 +14659,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -13238,6 +14765,143 @@ export namespace Prisma {
    * Deep Input Types
    */
 
+
+  export type DinozWhereInput = {
+    AND?: DinozWhereInput | DinozWhereInput[]
+    OR?: DinozWhereInput[]
+    NOT?: DinozWhereInput | DinozWhereInput[]
+    id?: IntFilter<"Dinoz"> | number
+    name?: StringFilter<"Dinoz"> | string
+    canRename?: BoolFilter<"Dinoz"> | boolean
+    raceId?: IntFilter<"Dinoz"> | number
+    display?: StringFilter<"Dinoz"> | string
+    level?: IntFilter<"Dinoz"> | number
+    life?: IntFilter<"Dinoz"> | number
+    maxLife?: IntFilter<"Dinoz"> | number
+    experience?: IntFilter<"Dinoz"> | number
+    nbrUpFire?: IntFilter<"Dinoz"> | number
+    nbrUpWood?: IntFilter<"Dinoz"> | number
+    nbrUpWater?: IntFilter<"Dinoz"> | number
+    nbrUpLightning?: IntFilter<"Dinoz"> | number
+    nbrUpAir?: IntFilter<"Dinoz"> | number
+    nextUpElementId?: IntFilter<"Dinoz"> | number
+    nextUpAltElementId?: IntFilter<"Dinoz"> | number
+    placeId?: IntFilter<"Dinoz"> | number
+    remaining?: IntFilter<"Dinoz"> | number
+    createdDate?: DateTimeFilter<"Dinoz"> | Date | string
+    updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
+    userId?: StringFilter<"Dinoz"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type DinozOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    canRename?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    placeId?: SortOrder
+    remaining?: SortOrder
+    createdDate?: SortOrder
+    updatedDate?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type DinozWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: DinozWhereInput | DinozWhereInput[]
+    OR?: DinozWhereInput[]
+    NOT?: DinozWhereInput | DinozWhereInput[]
+    name?: StringFilter<"Dinoz"> | string
+    canRename?: BoolFilter<"Dinoz"> | boolean
+    raceId?: IntFilter<"Dinoz"> | number
+    display?: StringFilter<"Dinoz"> | string
+    level?: IntFilter<"Dinoz"> | number
+    life?: IntFilter<"Dinoz"> | number
+    maxLife?: IntFilter<"Dinoz"> | number
+    experience?: IntFilter<"Dinoz"> | number
+    nbrUpFire?: IntFilter<"Dinoz"> | number
+    nbrUpWood?: IntFilter<"Dinoz"> | number
+    nbrUpWater?: IntFilter<"Dinoz"> | number
+    nbrUpLightning?: IntFilter<"Dinoz"> | number
+    nbrUpAir?: IntFilter<"Dinoz"> | number
+    nextUpElementId?: IntFilter<"Dinoz"> | number
+    nextUpAltElementId?: IntFilter<"Dinoz"> | number
+    placeId?: IntFilter<"Dinoz"> | number
+    remaining?: IntFilter<"Dinoz"> | number
+    createdDate?: DateTimeFilter<"Dinoz"> | Date | string
+    updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
+    userId?: StringFilter<"Dinoz"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type DinozOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    canRename?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    placeId?: SortOrder
+    remaining?: SortOrder
+    createdDate?: SortOrder
+    updatedDate?: SortOrder
+    userId?: SortOrder
+    _count?: DinozCountOrderByAggregateInput
+    _avg?: DinozAvgOrderByAggregateInput
+    _max?: DinozMaxOrderByAggregateInput
+    _min?: DinozMinOrderByAggregateInput
+    _sum?: DinozSumOrderByAggregateInput
+  }
+
+  export type DinozScalarWhereWithAggregatesInput = {
+    AND?: DinozScalarWhereWithAggregatesInput | DinozScalarWhereWithAggregatesInput[]
+    OR?: DinozScalarWhereWithAggregatesInput[]
+    NOT?: DinozScalarWhereWithAggregatesInput | DinozScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Dinoz"> | number
+    name?: StringWithAggregatesFilter<"Dinoz"> | string
+    canRename?: BoolWithAggregatesFilter<"Dinoz"> | boolean
+    raceId?: IntWithAggregatesFilter<"Dinoz"> | number
+    display?: StringWithAggregatesFilter<"Dinoz"> | string
+    level?: IntWithAggregatesFilter<"Dinoz"> | number
+    life?: IntWithAggregatesFilter<"Dinoz"> | number
+    maxLife?: IntWithAggregatesFilter<"Dinoz"> | number
+    experience?: IntWithAggregatesFilter<"Dinoz"> | number
+    nbrUpFire?: IntWithAggregatesFilter<"Dinoz"> | number
+    nbrUpWood?: IntWithAggregatesFilter<"Dinoz"> | number
+    nbrUpWater?: IntWithAggregatesFilter<"Dinoz"> | number
+    nbrUpLightning?: IntWithAggregatesFilter<"Dinoz"> | number
+    nbrUpAir?: IntWithAggregatesFilter<"Dinoz"> | number
+    nextUpElementId?: IntWithAggregatesFilter<"Dinoz"> | number
+    nextUpAltElementId?: IntWithAggregatesFilter<"Dinoz"> | number
+    placeId?: IntWithAggregatesFilter<"Dinoz"> | number
+    remaining?: IntWithAggregatesFilter<"Dinoz"> | number
+    createdDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
+    updatedDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
+    userId?: StringWithAggregatesFilter<"Dinoz"> | string
+  }
 
   export type RankingWhereInput = {
     AND?: RankingWhereInput | RankingWhereInput[]
@@ -13454,6 +15118,7 @@ export namespace Prisma {
     rewards?: UserRewardsListRelationFilter
     statsTracking?: UserTrackingListRelationFilter
     wallets?: UserWalletListRelationFilter
+    dinoz?: DinozListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -13471,6 +15136,7 @@ export namespace Prisma {
     rewards?: UserRewardsOrderByRelationAggregateInput
     statsTracking?: UserTrackingOrderByRelationAggregateInput
     wallets?: UserWalletOrderByRelationAggregateInput
+    dinoz?: DinozOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -13491,6 +15157,7 @@ export namespace Prisma {
     rewards?: UserRewardsListRelationFilter
     statsTracking?: UserTrackingListRelationFilter
     wallets?: UserWalletListRelationFilter
+    dinoz?: DinozListRelationFilter
   }, "id" | "name">
 
   export type UserOrderByWithAggregationInput = {
@@ -13851,6 +15518,170 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"UserWallet"> | string
   }
 
+  export type DinozCreateInput = {
+    name: string
+    canRename?: boolean
+    raceId: number
+    display: string
+    level?: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    user: UserCreateNestedOneWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateInput = {
+    id?: number
+    name: string
+    canRename?: boolean
+    raceId: number
+    display: string
+    level?: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    userId: string
+  }
+
+  export type DinozUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    canRename?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    canRename?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DinozCreateManyInput = {
+    id?: number
+    name: string
+    canRename?: boolean
+    raceId: number
+    display: string
+    level?: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    userId: string
+  }
+
+  export type DinozUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    canRename?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DinozUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    canRename?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type RankingCreateInput = {
     dinozCount?: number
     points?: number
@@ -14066,6 +15897,7 @@ export namespace Prisma {
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -14083,6 +15915,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -14100,6 +15933,7 @@ export namespace Prisma {
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -14117,6 +15951,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -14478,9 +16313,189 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type DinozCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    canRename?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    placeId?: SortOrder
+    remaining?: SortOrder
+    createdDate?: SortOrder
+    updatedDate?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type DinozAvgOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    placeId?: SortOrder
+    remaining?: SortOrder
+  }
+
+  export type DinozMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    canRename?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    placeId?: SortOrder
+    remaining?: SortOrder
+    createdDate?: SortOrder
+    updatedDate?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type DinozMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    canRename?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    placeId?: SortOrder
+    remaining?: SortOrder
+    createdDate?: SortOrder
+    updatedDate?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type DinozSumOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    placeId?: SortOrder
+    remaining?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type RankingCountOrderByAggregateInput = {
@@ -14531,51 +16546,6 @@ export namespace Prisma {
     dojo?: SortOrder
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type SignupDeviceMonthCounterMonthKeyDeviceTokenCompoundUniqueInput = {
     monthKey: string
     deviceToken: string
@@ -14619,20 +16589,6 @@ export namespace Prisma {
   export type SignupDeviceMonthCounterSumOrderByAggregateInput = {
     id?: SortOrder
     count?: SortOrder
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type SignupIpMonthCounterMonthKeyIpTokenCompoundUniqueInput = {
@@ -14738,6 +16694,12 @@ export namespace Prisma {
     none?: UserWalletWhereInput
   }
 
+  export type DinozListRelationFilter = {
+    every?: DinozWhereInput
+    some?: DinozWhereInput
+    none?: DinozWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -14760,6 +16722,10 @@ export namespace Prisma {
   }
 
   export type UserWalletOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DinozOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -15170,10 +17136,18 @@ export namespace Prisma {
     _max?: NestedEnumMoneyTypeFilter<$PrismaModel>
   }
 
-  export type UserCreateNestedOneWithoutRankingInput = {
-    create?: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
-    connectOrCreate?: UserCreateOrConnectWithoutRankingInput
+  export type UserCreateNestedOneWithoutDinozInput = {
+    create?: XOR<UserCreateWithoutDinozInput, UserUncheckedCreateWithoutDinozInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDinozInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -15184,20 +17158,30 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type UserUpdateOneRequiredWithoutDinozNestedInput = {
+    create?: XOR<UserCreateWithoutDinozInput, UserUncheckedCreateWithoutDinozInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDinozInput
+    upsert?: UserUpsertWithoutDinozInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDinozInput, UserUpdateWithoutDinozInput>, UserUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type UserCreateNestedOneWithoutRankingInput = {
+    create?: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRankingInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type UserUpdateOneRequiredWithoutRankingNestedInput = {
     create?: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
     connectOrCreate?: UserCreateOrConnectWithoutRankingInput
     upsert?: UserUpsertWithoutRankingInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRankingInput, UserUpdateWithoutRankingInput>, UserUncheckedUpdateWithoutRankingInput>
-  }
-
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type UserIngredientsCreateNestedManyWithoutUserInput = {
@@ -15247,6 +17231,13 @@ export namespace Prisma {
     connect?: UserWalletWhereUniqueInput | UserWalletWhereUniqueInput[]
   }
 
+  export type DinozCreateNestedManyWithoutUserInput = {
+    create?: XOR<DinozCreateWithoutUserInput, DinozUncheckedCreateWithoutUserInput> | DinozCreateWithoutUserInput[] | DinozUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutUserInput | DinozCreateOrConnectWithoutUserInput[]
+    createMany?: DinozCreateManyUserInputEnvelope
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+  }
+
   export type UserIngredientsUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserIngredientsCreateWithoutUserInput, UserIngredientsUncheckedCreateWithoutUserInput> | UserIngredientsCreateWithoutUserInput[] | UserIngredientsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserIngredientsCreateOrConnectWithoutUserInput | UserIngredientsCreateOrConnectWithoutUserInput[]
@@ -15292,6 +17283,13 @@ export namespace Prisma {
     connectOrCreate?: UserWalletCreateOrConnectWithoutUserInput | UserWalletCreateOrConnectWithoutUserInput[]
     createMany?: UserWalletCreateManyUserInputEnvelope
     connect?: UserWalletWhereUniqueInput | UserWalletWhereUniqueInput[]
+  }
+
+  export type DinozUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<DinozCreateWithoutUserInput, DinozUncheckedCreateWithoutUserInput> | DinozCreateWithoutUserInput[] | DinozUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutUserInput | DinozCreateOrConnectWithoutUserInput[]
+    createMany?: DinozCreateManyUserInputEnvelope
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
@@ -15392,6 +17390,20 @@ export namespace Prisma {
     deleteMany?: UserWalletScalarWhereInput | UserWalletScalarWhereInput[]
   }
 
+  export type DinozUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DinozCreateWithoutUserInput, DinozUncheckedCreateWithoutUserInput> | DinozCreateWithoutUserInput[] | DinozUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutUserInput | DinozCreateOrConnectWithoutUserInput[]
+    upsert?: DinozUpsertWithWhereUniqueWithoutUserInput | DinozUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DinozCreateManyUserInputEnvelope
+    set?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    disconnect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    delete?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    update?: DinozUpdateWithWhereUniqueWithoutUserInput | DinozUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DinozUpdateManyWithWhereWithoutUserInput | DinozUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
+  }
+
   export type UserIngredientsUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserIngredientsCreateWithoutUserInput, UserIngredientsUncheckedCreateWithoutUserInput> | UserIngredientsCreateWithoutUserInput[] | UserIngredientsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserIngredientsCreateOrConnectWithoutUserInput | UserIngredientsCreateOrConnectWithoutUserInput[]
@@ -15480,6 +17492,20 @@ export namespace Prisma {
     update?: UserWalletUpdateWithWhereUniqueWithoutUserInput | UserWalletUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserWalletUpdateManyWithWhereWithoutUserInput | UserWalletUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserWalletScalarWhereInput | UserWalletScalarWhereInput[]
+  }
+
+  export type DinozUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DinozCreateWithoutUserInput, DinozUncheckedCreateWithoutUserInput> | DinozCreateWithoutUserInput[] | DinozUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DinozCreateOrConnectWithoutUserInput | DinozCreateOrConnectWithoutUserInput[]
+    upsert?: DinozUpsertWithWhereUniqueWithoutUserInput | DinozUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DinozCreateManyUserInputEnvelope
+    set?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    disconnect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    delete?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+    update?: DinozUpdateWithWhereUniqueWithoutUserInput | DinozUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DinozUpdateManyWithWhereWithoutUserInput | DinozUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutIngredientsInput = {
@@ -15621,6 +17647,22 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -15665,15 +17707,12 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -15869,6 +17908,90 @@ export namespace Prisma {
     _max?: NestedEnumMoneyTypeFilter<$PrismaModel>
   }
 
+  export type UserCreateWithoutDinozInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutDinozInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutDinozInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDinozInput, UserUncheckedCreateWithoutDinozInput>
+  }
+
+  export type UserUpsertWithoutDinozInput = {
+    update: XOR<UserUpdateWithoutDinozInput, UserUncheckedUpdateWithoutDinozInput>
+    create: XOR<UserCreateWithoutDinozInput, UserUncheckedCreateWithoutDinozInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDinozInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDinozInput, UserUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type UserUpdateWithoutDinozInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDinozInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutRankingInput = {
     id?: string
     name: string
@@ -15883,6 +18006,7 @@ export namespace Prisma {
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRankingInput = {
@@ -15899,6 +18023,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRankingInput = {
@@ -15931,6 +18056,7 @@ export namespace Prisma {
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRankingInput = {
@@ -15947,6 +18073,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserIngredientsCreateWithoutUserInput = {
@@ -16099,6 +18226,61 @@ export namespace Prisma {
 
   export type UserWalletCreateManyUserInputEnvelope = {
     data: UserWalletCreateManyUserInput | UserWalletCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DinozCreateWithoutUserInput = {
+    name: string
+    canRename?: boolean
+    raceId: number
+    display: string
+    level?: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+  }
+
+  export type DinozUncheckedCreateWithoutUserInput = {
+    id?: number
+    name: string
+    canRename?: boolean
+    raceId: number
+    display: string
+    level?: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+  }
+
+  export type DinozCreateOrConnectWithoutUserInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutUserInput, DinozUncheckedCreateWithoutUserInput>
+  }
+
+  export type DinozCreateManyUserInputEnvelope = {
+    data: DinozCreateManyUserInput | DinozCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -16290,6 +18472,49 @@ export namespace Prisma {
     userId?: StringFilter<"UserWallet"> | string
   }
 
+  export type DinozUpsertWithWhereUniqueWithoutUserInput = {
+    where: DinozWhereUniqueInput
+    update: XOR<DinozUpdateWithoutUserInput, DinozUncheckedUpdateWithoutUserInput>
+    create: XOR<DinozCreateWithoutUserInput, DinozUncheckedCreateWithoutUserInput>
+  }
+
+  export type DinozUpdateWithWhereUniqueWithoutUserInput = {
+    where: DinozWhereUniqueInput
+    data: XOR<DinozUpdateWithoutUserInput, DinozUncheckedUpdateWithoutUserInput>
+  }
+
+  export type DinozUpdateManyWithWhereWithoutUserInput = {
+    where: DinozScalarWhereInput
+    data: XOR<DinozUpdateManyMutationInput, DinozUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type DinozScalarWhereInput = {
+    AND?: DinozScalarWhereInput | DinozScalarWhereInput[]
+    OR?: DinozScalarWhereInput[]
+    NOT?: DinozScalarWhereInput | DinozScalarWhereInput[]
+    id?: IntFilter<"Dinoz"> | number
+    name?: StringFilter<"Dinoz"> | string
+    canRename?: BoolFilter<"Dinoz"> | boolean
+    raceId?: IntFilter<"Dinoz"> | number
+    display?: StringFilter<"Dinoz"> | string
+    level?: IntFilter<"Dinoz"> | number
+    life?: IntFilter<"Dinoz"> | number
+    maxLife?: IntFilter<"Dinoz"> | number
+    experience?: IntFilter<"Dinoz"> | number
+    nbrUpFire?: IntFilter<"Dinoz"> | number
+    nbrUpWood?: IntFilter<"Dinoz"> | number
+    nbrUpWater?: IntFilter<"Dinoz"> | number
+    nbrUpLightning?: IntFilter<"Dinoz"> | number
+    nbrUpAir?: IntFilter<"Dinoz"> | number
+    nextUpElementId?: IntFilter<"Dinoz"> | number
+    nextUpAltElementId?: IntFilter<"Dinoz"> | number
+    placeId?: IntFilter<"Dinoz"> | number
+    remaining?: IntFilter<"Dinoz"> | number
+    createdDate?: DateTimeFilter<"Dinoz"> | Date | string
+    updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
+    userId?: StringFilter<"Dinoz"> | string
+  }
+
   export type UserCreateWithoutIngredientsInput = {
     id?: string
     name: string
@@ -16304,6 +18529,7 @@ export namespace Prisma {
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutIngredientsInput = {
@@ -16320,6 +18546,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutIngredientsInput = {
@@ -16352,6 +18579,7 @@ export namespace Prisma {
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutIngredientsInput = {
@@ -16368,6 +18596,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutItemsInput = {
@@ -16384,6 +18613,7 @@ export namespace Prisma {
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutItemsInput = {
@@ -16400,6 +18630,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutItemsInput = {
@@ -16432,6 +18663,7 @@ export namespace Prisma {
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutItemsInput = {
@@ -16448,6 +18680,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutProfileInput = {
@@ -16464,6 +18697,7 @@ export namespace Prisma {
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProfileInput = {
@@ -16480,6 +18714,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProfileInput = {
@@ -16512,6 +18747,7 @@ export namespace Prisma {
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfileInput = {
@@ -16528,6 +18764,7 @@ export namespace Prisma {
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutRewardsInput = {
@@ -16544,6 +18781,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRewardsInput = {
@@ -16560,6 +18798,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRewardsInput = {
@@ -16592,6 +18831,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRewardsInput = {
@@ -16608,6 +18848,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutStatsTrackingInput = {
@@ -16624,6 +18865,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStatsTrackingInput = {
@@ -16640,6 +18882,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStatsTrackingInput = {
@@ -16672,6 +18915,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStatsTrackingInput = {
@@ -16688,6 +18932,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutWalletsInput = {
@@ -16704,6 +18949,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWalletsInput = {
@@ -16720,6 +18966,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWalletsInput = {
@@ -16752,6 +18999,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWalletsInput = {
@@ -16768,6 +19016,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserIngredientsCreateManyUserInput = {
@@ -16797,6 +19046,29 @@ export namespace Prisma {
     id?: string
     type: $Enums.MoneyType
     amount?: number
+  }
+
+  export type DinozCreateManyUserInput = {
+    id?: number
+    name: string
+    canRename?: boolean
+    raceId: number
+    display: string
+    level?: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
   }
 
   export type UserIngredientsUpdateWithoutUserInput = {
@@ -16882,6 +19154,74 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     type?: EnumMoneyTypeFieldUpdateOperationsInput | $Enums.MoneyType
     amount?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DinozUpdateWithoutUserInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    canRename?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DinozUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    canRename?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DinozUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    canRename?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

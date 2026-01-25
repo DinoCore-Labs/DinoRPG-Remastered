@@ -120,6 +120,35 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.DinozScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  canRename: 'canRename',
+  raceId: 'raceId',
+  display: 'display',
+  level: 'level',
+  life: 'life',
+  maxLife: 'maxLife',
+  experience: 'experience',
+  nbrUpFire: 'nbrUpFire',
+  nbrUpWood: 'nbrUpWood',
+  nbrUpWater: 'nbrUpWater',
+  nbrUpLightning: 'nbrUpLightning',
+  nbrUpAir: 'nbrUpAir',
+  nextUpElementId: 'nextUpElementId',
+  nextUpAltElementId: 'nextUpAltElementId',
+  placeId: 'placeId',
+  remaining: 'remaining',
+  createdDate: 'createdDate',
+  updatedDate: 'updatedDate',
+  userId: 'userId'
+};
+
+exports.Prisma.RelationLoadStrategy = {
+  query: 'query',
+  join: 'join'
+};
+
 exports.Prisma.RankingScalarFieldEnum = {
   id: 'id',
   dinozCount: 'dinozCount',
@@ -128,11 +157,6 @@ exports.Prisma.RankingScalarFieldEnum = {
   completion: 'completion',
   dojo: 'dojo',
   userId: 'userId'
-};
-
-exports.Prisma.RelationLoadStrategy = {
-  query: 'query',
-  join: 'join'
 };
 
 exports.Prisma.SignupDeviceMonthCounterScalarFieldEnum = {
@@ -249,6 +273,7 @@ exports.MoneyType = exports.$Enums.MoneyType = {
 };
 
 exports.Prisma.ModelName = {
+  Dinoz: 'Dinoz',
   Ranking: 'Ranking',
   SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
   SignupIpMonthCounter: 'SignupIpMonthCounter',
