@@ -133,8 +133,8 @@ importers:
   app/prisma:
     dependencies:
       '@prisma/client-runtime-utils':
-        specifier: 7.0.0
-        version: 7.0.0
+        specifier: 7.3.0
+        version: 7.3.0
 
   app/server:
     dependencies:
@@ -1356,6 +1356,9 @@ packages:
 
   '@prisma/client-runtime-utils@7.0.0':
     resolution: {integrity: sha512-PAiFgMBPrLSaakBwUpML5NevipuKSL3rtNr8pZ8CZ3OBXo0BFcdeGcBIKw/CxJP6H4GNa4+l5bzJPrk8Iq6tDw==}
+
+  '@prisma/client-runtime-utils@7.3.0':
+    resolution: {integrity: sha512-dG/ceD9c+tnXATPk8G+USxxYM9E6UdMTnQeQ+1SZUDxTz7SgQcfxEqafqIQHcjdlcNK/pvmmLfSwAs3s2gYwUw==}
 
   '@prisma/client@7.0.0':
     resolution: {integrity: sha512-FM1NtJezl0zH3CybLxcbJwShJt7xFGSRg+1tGhy3sCB8goUDnxnBR+RC/P35EAW8gjkzx7kgz7bvb0MerY2VSw==}
@@ -5589,6 +5592,8 @@ snapshots:
       - pg-native
 
   '@prisma/client-runtime-utils@7.0.0': {}
+
+  '@prisma/client-runtime-utils@7.3.0': {}
 
   '@prisma/client@7.0.0(prisma@7.0.0(@types/react@19.2.6)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3))(typescript@5.9.3)':
     dependencies:
