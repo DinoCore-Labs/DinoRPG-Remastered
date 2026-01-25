@@ -9,6 +9,34 @@ datasource db {
   provider = "postgresql"
 }
 
+model Dinoz {
+  id                 Int      @id @default(autoincrement())
+  name               String   @db.VarChar(32)
+  canRename          Boolean  @default(false)
+  raceId             Int
+  display            String   @db.VarChar
+  level              Int      @default(1)
+  life               Int
+  maxLife            Int
+  experience         Int
+  nbrUpFire          Int
+  nbrUpWood          Int
+  nbrUpWater         Int
+  nbrUpLightning     Int
+  nbrUpAir           Int
+  nextUpElementId    Int
+  nextUpAltElementId Int
+  placeId            Int
+  remaining          Int      @default(3)
+  createdDate        DateTime @default(now())
+  updatedDate        DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId])
+}
+
 model Ranking {
   id         Int @id @default(autoincrement())
   dinozCount Int @default(0)
@@ -67,6 +95,8 @@ model User {
   rewards       UserRewards[]
   statsTracking UserTracking[]
   wallets       UserWallet[]
+
+  dinoz Dinoz[]
 }
 
 model UserIngredients {
