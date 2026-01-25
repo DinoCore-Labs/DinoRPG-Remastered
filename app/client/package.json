@@ -23,7 +23,7 @@
 	},
 	"devDependencies": {
 		"@dinorpg/core": "workspace:^*",
-		"@types/node": "^24.10.0",
+		"@types/node": "^25.0.10",
 		"@vitejs/plugin-vue": "^6.0.3",
 		"@vue/tsconfig": "^0.8.1",
 		"sass": "^1.94.0",
