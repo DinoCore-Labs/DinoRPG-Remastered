@@ -10,6 +10,7 @@ import Ingredients from '../pages/Ingredients.vue';
 import Inventory from '../pages/Inventory.vue';
 import MainPage from '../pages/MainPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
+import ShopDinoz from '../pages/ShopDinoz.vue';
 import { UserService } from '../services';
 import { userStore } from '../store/userStore';
 import { is_granted } from '../utils/permission';
@@ -77,6 +78,12 @@ const routes: RouteRecord[] = [
 						})
 					}
 				]
+			},
+			{
+				path: 'shop/dinoz',
+				name: 'ShopDinoz',
+				component: ShopDinoz,
+				meta: { auth: true }
 			},
 			{
 				path: '/faq',

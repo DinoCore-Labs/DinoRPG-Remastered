@@ -5,3 +5,10 @@ export enum FighterType {
 	CLONE = 'clone',
 	REINFORCEMENT = 'reinforcement'
 }
+
+export const AllFighterTypeExceptBoss = [
+	FighterType.DINOZ,
+	FighterType.MONSTER,
+	FighterType.CLONE,
+	FighterType.REINFORCEMENT
+];
