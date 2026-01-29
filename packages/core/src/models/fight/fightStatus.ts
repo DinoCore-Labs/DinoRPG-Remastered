@@ -1,3 +1,5 @@
+import { FIGHT_INFINITE } from '../../utils/fightConstants.js';
+
 export enum FightStatus {
 	// Bad
 	ASLEEP = 'asleep',
@@ -39,3 +41,41 @@ export enum FightStatus {
 	// Only used for when fights are too long
 	OVERTIME_POISON = 'overtime_poison'
 }
+
+export const GoodFightStatus = [
+	FightStatus.TORCHED,
+	FightStatus.INTANGIBLE,
+	FightStatus.FLYING,
+	FightStatus.QUICKENED,
+	FightStatus.SHIELDED,
+	FightStatus.BLESSED,
+	FightStatus.HEALING
+];
+
+export const BadFightStatus = [
+	FightStatus.ASLEEP,
+	FightStatus.SLOWED,
+	FightStatus.PETRIFIED,
+	FightStatus.POISONED,
+	FightStatus.BURNED,
+	FightStatus.LOCKED,
+	FightStatus.DAZZLED,
+	FightStatus.STUNNED
+];
+
+export const IncapacitatingStatus = [FightStatus.ASLEEP, FightStatus.PETRIFIED, FightStatus.STUNNED];
+
+export enum FightStatusLength {
+	SUPER_SHORT = 6,
+	SHORT = 15,
+	MEDIUM = 30,
+	LONG = 80,
+	INFINITE = FIGHT_INFINITE
+}
+
+export type FighterStatusData = {
+	type: FightStatus;
+	time: number;
+	timeSinceLastCycle: number;
+	cycle: boolean;
+};

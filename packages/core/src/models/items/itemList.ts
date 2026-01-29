@@ -1,7 +1,7 @@
 import { ElementType } from '../enums/ElementType.js';
 import { ItemEffect } from '../enums/ItemEffect.js';
 import { ItemType } from '../enums/ItemType.js';
-import { Operator } from '../enums/Parser.js';
+import { MathOperator, Operator } from '../enums/Parser.js';
 import { RaceEnum } from '../enums/Race.js';
 import { Stat } from '../enums/SkillStat.js';
 import { FightStatus } from '../fight/fightStatus.js';
@@ -2170,7 +2170,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 0,
 		display: 'cgold',
 		passiveEffect: {
-			[Stat.CRITICAL_HIT_CHANCE]: ['x', 1.01]
+			[Stat.CRITICAL_HIT_CHANCE]: { operator: MathOperator.MULTIPLY, value: 1.01 }
 		}
 	},
 	// Brings a little bamboo with you in each fight

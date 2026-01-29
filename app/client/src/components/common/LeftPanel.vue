@@ -35,18 +35,18 @@
 			<img :src="getImgURL('icons', `clipboard`)" alt="skills" />
 			<span>{{ $t('button.skills') }}</span>
 		</a>
-		<a class="button" @click="goToPage('DinozShopPage')">
+		-->
+		<DZButton @click="goToPage('ShopDinoz')">
 			{{ $t('button.buyDinoz') }}
-		</a>
-    -->
+		</DZButton>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { getImgURL } from '../../utils/getImgURL';
 import { beautifulNumber } from '../../utils/beautifulNumber';
 import { userStore } from '../../store/userStore';
+import DZButton from '../utils/DZButton.vue';
 
 export default defineComponent({
 	name: 'LeftPanel',
@@ -55,10 +55,14 @@ export default defineComponent({
 		return { user };
 	},
 	data() {},
-	components: {},
+	components: {
+		DZButton
+	},
 	methods: {
 		beautifulNumber,
-		getImgURL
+		goToPage(pageName: string) {
+			this.$router.push({ name: pageName });
+		}
 	}
 });
 </script>
@@ -133,7 +137,6 @@ export default defineComponent({
 		background-repeat: no-repeat;
 		cursor: help;
 		font-weight: bold;
-
 		img {
 			vertical-align: -5%;
 		}
@@ -159,25 +162,21 @@ export default defineComponent({
 	background-color: #fbdca5;
 	margin-bottom: 8px;
 	cursor: pointer;
-
 	.img-wrapper {
 		height: 109px;
 		overflow: hidden;
 		width: 140px;
-
 		img {
 			width: 100%;
 			border: 1px solid #9a4029;
 			box-sizing: border-box;
 		}
 	}
-
 	.place-name {
 		color: #bc683c;
 		text-align: center;
 		font-size: 9pt;
 		font-style: italic;
-
 		&:first-letter {
 			font-weight: normal;
 			font-size: 9pt;
