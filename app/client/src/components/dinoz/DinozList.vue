@@ -38,7 +38,7 @@
 							}"
 							alt="leader"
 						/>-->
-						<template v-for="i in dinoz.remaining" :key="i">
+						<template v-for="_ in dinoz.remaining" :key="_">
 							<img
 								:src="getImgURL('icons', `small_hourglass`)"
 								v-tippy="{
