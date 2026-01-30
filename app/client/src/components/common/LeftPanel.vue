@@ -49,6 +49,7 @@ import { dinozStore } from '../../store/dinozStore';
 import DZButton from '../utils/DZButton.vue';
 import DinozList from '../dinoz/DinozList.vue';
 import { placeList } from '../../constants/place';
+import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 
 export default defineComponent({
 	name: 'LeftPanel',
