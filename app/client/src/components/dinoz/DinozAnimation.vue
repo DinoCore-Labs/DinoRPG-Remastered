@@ -4,7 +4,21 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dino } from '@eternaltwin/dinorpg_animations/';
+import { dino as DinoCtor } from '@eternaltwin/dinorpg_animations';
+
+type DinoInstance = {
+	toRawImage: (callback: (base64: string) => void, width?: number, height?: number) => void;
+};
+
+type DinoConstructor = new (options: {
+	data: string;
+	flip?: boolean;
+	damages?: number;
+	dark?: boolean;
+	scale?: number;
+	shadow?: boolean;
+	congel?: boolean;
+}) => DinoInstance;
 
 export default defineComponent({
 	name: 'DinozAnimation',
@@ -21,7 +35,9 @@ export default defineComponent({
 		isFrozen: { type: Boolean, required: false }
 	},
 	mounted() {
-		const dinos = new dino({
+		const Dino = DinoCtor as unknown as DinoConstructor;
+
+		const dinos = new Dino({
 			data: this.display,
 			flip: this.flip,
 			damages: this.life > 0.5 ? 0 : this.life > 0.1 ? 1 : 2,
