@@ -4,6 +4,10 @@ import { formatText } from '../utils/formatText';
 import { getImgURL } from '../utils/getImgURL';
 import { refreshGold } from '../utils/refreshGold';
 
+type ConfirmHost = {
+	$globalConfirm?: (options: ConfirmOptions) => Promise<boolean>;
+};
+
 export const mixins = {
 	methods: {
 		formatContent(value: string): string {
@@ -11,7 +15,7 @@ export const mixins = {
 		},
 		formatDateTime,
 		getImgURL,
-		$confirm(options: ConfirmOptions): Promise<boolean> {
+		$confirm(this: ConfirmHost, options: ConfirmOptions): Promise<boolean> {
 			if (this.$globalConfirm) {
 				return this.$globalConfirm(options);
 			}

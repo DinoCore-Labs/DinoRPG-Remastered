@@ -1,4 +1,4 @@
-declare module '@eternaltwin/dinorpg_animations' {
+declare module '@eternaltwin/dinorpg_animations/' {
 	export class dino {
 		constructor(options: {
 			data: string;
