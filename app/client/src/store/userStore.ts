@@ -23,6 +23,9 @@ export const userStore = defineStore('userStore', {
 			this.role = data.role;
 			this.gold = data.gold;
 		},
+		setGold(gold: number) {
+			this.gold = gold;
+		},
 		clearUser() {
 			this.id = null;
 			this.name = null;

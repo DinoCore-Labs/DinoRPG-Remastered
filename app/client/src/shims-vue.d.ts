@@ -13,5 +13,8 @@ declare module 'vue' {
 		formatContent(value: string): string;
 		getImgURL(path: string, imgName: string, pixel?: boolean): string;
 		$t: (key: string, options?: Record<string, unknown>) => string;
+		$globalConfirm: typeof mixins.methods.$confirm;
+		$confirm: typeof mixins.methods.$confirm;
+		$refreshGold(): Promise<void>;
 	}
 }

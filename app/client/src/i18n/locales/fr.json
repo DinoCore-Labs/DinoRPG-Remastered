@@ -60,6 +60,13 @@
 		"buyDinoz": "Acheter un Dinoz !",
 		"chose": "Choisir"
 	},
+	"popup": {
+		"confirm": "Confirmer cette action ?",
+		"confirmBanAction": "Confirmer ce ban ?",
+		"attention": "Attention",
+		"accept": "Oui",
+		"reject": "Non"
+	},
 	"toast": {
 		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
 		"Invalid_credentials": "Identifiants incorrects.",
