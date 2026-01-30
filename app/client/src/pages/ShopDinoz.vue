@@ -69,7 +69,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
 import { dinozStore } from '../store/dinozStore';
-import type { DinozFiche, DinozFicheLite } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import type { DinozShopFicheLite } from '@dinorpg/core/models/shop/dinozShopFiche.js';
 import { raceList } from '@dinorpg/core/models/dinoz/raceList.js';
 import { skillList } from '@dinorpg/core/models/skills/skillList.js';
@@ -87,7 +87,6 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
-			//playerStore: playerStore(),
 			dinozList: [] as Array<DinozShopFicheLite>,
 			raceList,
 			skillList
@@ -129,7 +128,8 @@ export default defineComponent({
 
 				// Update dinoz list
 				this.dinozStore.setDinozList(dinozStore);
-				console.log(this.dinozStore);
+				//console.log(this.dinozStore);
+
 				// Go to dinoz page
 				await this.$router.push({
 					name: 'DinozPage',
