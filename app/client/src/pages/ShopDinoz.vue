@@ -68,8 +68,8 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-//import { playerStore, dinozStore } from '../store/index.js';
-//import type { DinozFiche, DinozFicheLite } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { dinozStore } from '../store/dinozStore';
+import type { DinozFiche, DinozFicheLite } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import type { DinozShopFicheLite } from '@dinorpg/core/models/shop/dinozShopFiche.js';
 import { raceList } from '@dinorpg/core/models/dinoz/raceList.js';
 import { skillList } from '@dinorpg/core/models/skills/skillList.js';
@@ -86,7 +86,7 @@ export default defineComponent({
 	name: 'ShopDinoz',
 	data() {
 		return {
-			//dinozStore: dinozStore(),
+			dinozStore: dinozStore(),
 			//playerStore: playerStore(),
 			dinozList: [] as Array<DinozShopFicheLite>,
 			raceList,
@@ -104,8 +104,8 @@ export default defineComponent({
 		beautifulNumber,
 		getSkill(id: number): SkillDetails | undefined {
 			return (skillList as unknown as Readonly<Record<number, SkillDetails>>)[id];
-		}
-		/*async openPopinConfirmChoice(dinoz: DinozShopFicheLite): Promise<void> {
+		},
+		async openPopinConfirmChoice(dinoz: DinozShopFicheLite): Promise<void> {
 			const res: boolean = await this.$confirm({
 				message: this.$t('popup.confirm'),
 				header: this.$t('popup.attention'),
@@ -116,7 +116,7 @@ export default defineComponent({
 			if (res) {
 				let dinozCreated: DinozFiche;
 				try {
-					dinozCreated = await DinozService.buyDinoz(parseInt(dinoz.id));
+					dinozCreated = await ShopService.buyDinoz(parseInt(dinoz.id));
 					await this.$refreshGold();
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
@@ -129,7 +129,7 @@ export default defineComponent({
 
 				// Update dinoz list
 				this.dinozStore.setDinozList(dinozStore);
-
+				console.log(this.dinozStore);
 				// Go to dinoz page
 				await this.$router.push({
 					name: 'DinozPage',
@@ -138,7 +138,7 @@ export default defineComponent({
 					}
 				});
 			}
-		}*/
+		}
 	},
 	async mounted(): Promise<void> {
 		// Get dinoz to display

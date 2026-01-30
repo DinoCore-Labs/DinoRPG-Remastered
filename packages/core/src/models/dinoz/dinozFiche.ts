@@ -1,4 +1,6 @@
 import { DinozRace } from './dinozRace.js';
+import { DinozSkillsDTO } from './dinozSkills.js';
+import { DinozStatusDTO } from './dinozStatus.js';
 
 // This is the model to use to communicate with the front
 export interface DinozFiche {
@@ -20,8 +22,8 @@ export interface DinozFiche {
 	//actions: ActionFiche[];
 	//items: number[];
 	//maxItems: number;
-	//skills: Pick<DinozSkill, 'skillId' | 'state'>[];
-	//status: Pick<DinozStatus, 'statusId'>[];
+	skills: DinozSkillsDTO[];
+	status: DinozStatusDTO[];
 	borderPlace: number[];
 	nbrUpFire: number;
 	nbrUpWood: number;
@@ -73,8 +75,8 @@ export interface DinozAdminFiche {
 	nbrUpWater: number;
 	nbrUpLightning: number;
 	nbrUpAir: number;
-	//status: number[];
-	//skills: number[];
+	status: number[];
+	skills: number[];
 	//unlockableSkills: number[];
 }
 
@@ -82,11 +84,11 @@ export interface DinozPublicFiche {
 	id: number;
 	name: string;
 	display: string;
-	isFrozen: boolean;
+	//isFrozen: boolean;
 	life: number;
 	level: number;
 	race: DinozRace;
-	//: number[];
+	status: number[];
 	//order: number | null;
 }
 

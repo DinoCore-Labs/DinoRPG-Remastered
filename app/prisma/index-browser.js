@@ -141,12 +141,32 @@ exports.Prisma.DinozScalarFieldEnum = {
   remaining: 'remaining',
   createdDate: 'createdDate',
   updatedDate: 'updatedDate',
+  seed: 'seed',
   userId: 'userId'
 };
 
 exports.Prisma.RelationLoadStrategy = {
   query: 'query',
   join: 'join'
+};
+
+exports.Prisma.DinozSkillsScalarFieldEnum = {
+  id: 'id',
+  skillId: 'skillId',
+  state: 'state',
+  dinozId: 'dinozId'
+};
+
+exports.Prisma.DinozSkillsUnlockableScalarFieldEnum = {
+  id: 'id',
+  skillId: 'skillId',
+  dinozId: 'dinozId'
+};
+
+exports.Prisma.DinozStatusScalarFieldEnum = {
+  id: 'id',
+  statusId: 'statusId',
+  dinozId: 'dinozId'
 };
 
 exports.Prisma.RankingScalarFieldEnum = {
@@ -281,6 +301,9 @@ exports.MoneyType = exports.$Enums.MoneyType = {
 
 exports.Prisma.ModelName = {
   Dinoz: 'Dinoz',
+  DinozSkills: 'DinozSkills',
+  DinozSkillsUnlockable: 'DinozSkillsUnlockable',
+  DinozStatus: 'DinozStatus',
   Ranking: 'Ranking',
   SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
   SignupIpMonthCounter: 'SignupIpMonthCounter',

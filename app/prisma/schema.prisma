@@ -30,11 +30,48 @@ model Dinoz {
   remaining          Int      @default(3)
   createdDate        DateTime @default(now())
   updatedDate        DateTime @updatedAt
+  seed               String   @db.Uuid
+
+  skills           DinozSkills[]
+  unlockableSkills DinozSkillsUnlockable[]
+  status           DinozStatus[]
 
   userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([userId])
+}
+
+model DinozSkills {
+  id      Int     @id @default(autoincrement())
+  skillId Int
+  state   Boolean @default(true)
+  dinozId Int?
+  dinoz   Dinoz?  @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([skillId, dinozId])
+  @@index([dinozId])
+  @@map("dinoz_skill")
+}
+
+model DinozSkillsUnlockable {
+  id      Int    @id @default(autoincrement())
+  skillId Int
+  dinozId Int?
+  dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("dinoz_skill_unlockable")
+}
+
+model DinozStatus {
+  id       Int    @id @default(autoincrement())
+  statusId Int
+  dinozId  Int?
+  dinoz    Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([statusId, dinozId])
+  @@index([dinozId])
+  @@map("dinoz_status")
 }
 
 model Ranking {

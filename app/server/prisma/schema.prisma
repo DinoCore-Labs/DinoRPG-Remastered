@@ -10,12 +10,12 @@ datasource db {
 }
 
 model Dinoz {
-  id                 Int       @id @default(autoincrement())
-  name               String    @db.VarChar(32)
-  canRename          Boolean   @default(false)
+  id                 Int        @id @default(autoincrement())
+  name               String     @db.VarChar(32)
+  canRename          Boolean    @default(false)
   raceId             Int
-  display            String    @db.VarChar
-  level              Int       @default(1)
+  display            String     @db.VarChar
+  level              Int        @default(1)
   life               Int
   maxLife            Int
   experience         Int
@@ -27,14 +27,51 @@ model Dinoz {
   nextUpElementId    Int
   nextUpAltElementId Int
   placeId            Int
-  remaining          Int       @default(3)
-  createdDate        DateTime  @default(now()) 
-  updatedDate        DateTime  @updatedAt 
+  remaining          Int        @default(3)
+  createdDate        DateTime   @default(now()) 
+  updatedDate        DateTime   @updatedAt 
+  seed               String     @db.Uuid
 
-  userId            String    @db.Uuid
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)  
+  skills             DinozSkills[] 
+  unlockableSkills   DinozSkillsUnlockable[] 
+  status             DinozStatus[]
+
+  userId             String     @db.Uuid
+  user               User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)  
 
   @@index([userId])  
+}
+
+model DinozSkills {
+  id        Int          @id  @default(autoincrement())
+  skillId   Int
+  state     Boolean      @default(true)
+  dinozId   Int?
+  dinoz     Dinoz?       @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([skillId, dinozId])
+  @@index([dinozId])
+  @@map("dinoz_skill")
+}
+
+model DinozSkillsUnlockable {
+  id          Int        @id  @default(autoincrement())
+  skillId     Int
+  dinozId     Int?
+  dinoz       Dinoz?     @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("dinoz_skill_unlockable")
+}
+
+model DinozStatus {
+  id          Int        @id  @default(autoincrement())
+  statusId    Int
+  dinozId     Int?
+  dinoz       Dinoz?     @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([statusId, dinozId])
+  @@index([dinozId])
+  @@map("dinoz_status")
 }
 
 model Ranking {
