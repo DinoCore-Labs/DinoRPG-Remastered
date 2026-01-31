@@ -1,3 +1,4 @@
+import { UserRole } from '@dinorpg/core/models/user/userRole.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import fCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
@@ -6,8 +7,12 @@ import multipart from '@fastify/multipart';
 import { randomUUID } from 'crypto';
 import Fastify, { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 
+import { adminJobsRoutes } from './Admin/Routes/adminJobs.routes.js';
 import { loadConfig } from './config/config.js';
 import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
+import { ensureJobsExist } from './jobs/ensureJobs.js';
+import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
+import { startScheduler } from './jobs/scheduler.js';
 import { rankingRoutes } from './Ranking/Routes/ranking.routes.js';
 import { shopRoutes } from './Shop/Routes/shop.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
@@ -16,7 +21,7 @@ import version from './utils/version.js';
 
 const cfg = loadConfig();
 
-function buildServer() {
+async function buildServer() {
 	const server = Fastify({
 		logger: true,
 		trustProxy: true
@@ -96,6 +101,14 @@ function buildServer() {
 		}
 	});
 
+	server.decorate('admin', async (req: FastifyRequest, reply: FastifyReply) => {
+		const role = (req.user as any)?.role as UserRole;
+
+		if (role !== 'ADMIN' && role !== 'SUPER_ADMIN') {
+			return reply.code(403).send({ message: 'Forbidden' });
+		}
+	});
+
 	//------------------------------------------------------
 	// EXTRA : Multipart pour les uploads
 	//------------------------------------------------------
@@ -148,6 +161,22 @@ function buildServer() {
 	server.register(inventoryRoutes, { prefix: 'api/inventory' });
 	server.register(shopRoutes, { prefix: 'api/shop' });
 
+	server.register(adminJobsRoutes, { prefix: 'api/admin' });
+	//------------------------------------------------------
+	// 10. Scheduler
+	//------------------------------------------------------
+	await ensureJobsExist();
+
+	const stopScheduler = startScheduler(
+		{
+			'reset-dinoz-shop': resetDinozShopAtMidnight
+		},
+		server.log
+	);
+
+	server.addHook('onClose', async () => {
+		stopScheduler();
+	});
 	//------------------------------------------------------
 	// EXTRA: Test multipart
 	//------------------------------------------------------

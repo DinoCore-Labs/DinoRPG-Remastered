@@ -2,7 +2,7 @@ import { loadConfig } from './config/config.js';
 import buildServer from './server.js';
 
 const cfg = loadConfig();
-const server = buildServer();
+const server = await buildServer();
 
 async function main() {
 	try {

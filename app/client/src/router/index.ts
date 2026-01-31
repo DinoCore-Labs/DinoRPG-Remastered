@@ -1,8 +1,10 @@
 import type { RouteRecord } from '@dinorpg/core/models/router/router.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
+import type { UserRole } from '@dinorpg/core/models/user/userRole.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import AccountPage from '../pages/AccountPage.vue';
+import AdminJobsPage from '../pages/Admin/AdminJobsPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
 import HelpPage from '../pages/HelpPage.vue';
 import HomePage from '../pages/HomePage.vue';
@@ -97,6 +99,12 @@ const routes: RouteRecord[] = [
 				name: 'HelpPage',
 				component: HelpPage,
 				meta: { public: true, showLeftPanel: false }
+			},
+			{
+				path: '/admin/jobs',
+				name: 'AdminJobs',
+				component: AdminJobsPage,
+				meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
 			}
 		]
 	}
