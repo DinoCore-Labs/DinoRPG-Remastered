@@ -12,6 +12,7 @@ import MainPage from '../pages/MainPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
 import ShopDinoz from '../pages/ShopDinoz.vue';
 import { UserService } from '../services';
+import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
 import { is_granted } from '../utils/permission';
 
@@ -112,6 +113,7 @@ const router = createRouter({
 
 router.beforeEach(async to => {
 	const user = userStore();
+	const dinoz = dinozStore();
 
 	// page publique -> OK
 	if (to.meta.public) {
@@ -125,7 +127,9 @@ router.beforeEach(async to => {
 			const data: UserData = await UserService.me().catch(() => null);
 
 			if (data) {
+				//console.log(data);
 				user.setUser(data);
+				dinoz.setDinozList(data.dinoz);
 			} else {
 				user.clearUser();
 				return {
