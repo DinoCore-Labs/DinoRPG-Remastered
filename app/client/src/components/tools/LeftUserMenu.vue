@@ -44,15 +44,15 @@
 				</div>
 			</div>
 			<div class="dinozList">
-				<!--<RouterLink
+				<RouterLink
 					v-for="(dinoz, index) in dinozList"
 					:key="index"
 					:to="`/dino/${dinoz.id}`"
 					class="dinoz"
 					:class="{
-						selected: currentDinozId() ? dinoz.id === currentDinozId() : dinoz.id === pageId,
-						group: getLeaderGroup(dinoz),
-						exhausted: dinoz.remaining === 0 && !dinoz.fight
+						selected: currentDinozId() ? dinoz.id === currentDinozId() : dinoz.id === pageId
+						//group: getLeaderGroup(dinoz),
+						//exhausted: dinoz.remaining === 0 && !dinoz.fight
 					}"
 				>
 					<DinozMini class="display" :display="dinoz.display" :key="dinoz.display" />
@@ -76,11 +76,11 @@
 						</span>
 					</div>
 					<div class="icons">
-						<template v-for="i in dinoz.remaining" :key="i">
+						<template v-for="_ in dinoz.remaining" :key="_">
 							<img
 								:src="getImgURL('icons', `small_hourglass`)"
 								v-tippy="{
-									content: formatContent($t('hud.remainingActions')),
+									content: formatContent($t('dinoz.hud.remainingActions')),
 									theme: 'small'
 								}"
 								alt="actions"
@@ -97,11 +97,11 @@
 						/>
 					</div>
 					<div class="icons">
-						<img
+						<!--<img
 							v-if="dinoz.fight"
 							:src="getImgURL('icons', 'small_attack')"
 							v-tippy="{
-								content: formatContent($t('hud.following')),
+								content: formatContent($t('dinoz.hud.following')),
 								theme: 'small'
 							}"
 							alt="fight"
@@ -110,7 +110,7 @@
 							v-if="dinoz.actions.some(a => a.imgName === 'act_gather')"
 							:src="getImgURL('icons', 'small_gather')"
 							v-tippy="{
-								content: formatContent($t('hud.gather')),
+								content: formatContent($t('dinoz.hud.gather')),
 								theme: 'small'
 							}"
 							alt="gather"
@@ -118,7 +118,7 @@
 						<svg
 							v-if="dinoz.actions.some(a => a.name === Action.STOP_REST)"
 							v-tippy="{
-								content: formatContent($t('hud.rest')),
+								content: formatContent($t('dinoz.hud.rest')),
 								theme: 'small'
 							}"
 							xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -140,14 +140,14 @@
 									stroke="none"
 								/>
 							</g>
-						</svg>
+						</svg>-->
 					</div>
 					<div class="lead">
-						<img
+						<!--<img
 							v-if="dinoz.leaderId"
 							:src="getImgURL('icons', 'small_follow')"
 							v-tippy="{
-								content: formatContent($t('hud.following')),
+								content: formatContent($t('dinoz.hud.following')),
 								theme: 'small'
 							}"
 							alt="lvlup"
@@ -156,13 +156,13 @@
 							v-if="dinoz.followers.length > 0"
 							:src="getImgURL('icons', 'crown', true)"
 							v-tippy="{
-								content: formatContent($t('hud.followed')),
+								content: formatContent($t('dinoz.hud.followed')),
 								theme: 'small'
 							}"
 							alt="lvlup"
-						/>
+						/>-->
 					</div>
-				</RouterLink>-->
+				</RouterLink>
 			</div>
 		</div>
 	</Transition>
@@ -171,25 +171,26 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
-//import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 //import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 //import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
-//import DinozMini from '../dinoz/DinozMini.vue';
+import DinozMini from '../dinoz/DinozMini.vue';
 import { beautifulNumber } from '../../utils/beautifulNumber.js';
 //import { Action } from '@drpg/core/models/dinoz/ActionList';
-//import { placeList } from '../../constants/index.js';
+import { placeList } from '../../constants/place.js';
 import { userStore } from '../../store/userStore.js';
+import { dinozStore } from '../../store/dinozStore.js';
 
 export default defineComponent({
 	name: 'LeftUserMenu',
-	//components: { DinozMini },
+	components: { DinozMini },
 	data() {
 		return {
 			menuCalled: false,
 			//localStore: localStore(),
-			//dinozStore: dinozStore(),
-			userStore: userStore()
-			//dinozList: dinozStore().getDinozList as Array<DinozFiche>
+			dinozStore: dinozStore(),
+			userStore: userStore(),
+			dinozList: dinozStore().getDinozList as Array<DinozFiche>
 		};
 	},
 	computed: {
@@ -209,15 +210,18 @@ export default defineComponent({
 	methods: {
 		close() {
 			this.menuCalled = false;
-		}
-		/*getBarWidth(actual: number, max: number): string {
+		},
+		getBarWidth(actual: number, max: number): string {
 			if (actual > max) actual = max;
 			const width: number = Math.round((actual / max) * 36);
 			return `width : ${width}px`;
 		},
-		currentDinozId(): number {
-			return +this.$route.params.id;
+		getPlaceName(placeId: number): string {
+			return placeList.find(place => place.placeId === placeId)?.name ?? '';
 		},
+		currentDinozId(): number {
+			return this.dinozStore.currentDinozId ?? 0;
+		} /*,
 		getLeaderGroup(dinoz: DinozFiche) {
 			const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId());
 			if (!selectedDinoz) return false;
@@ -241,9 +245,6 @@ export default defineComponent({
 				return true;
 			}
 			return !!selectedDinoz?.followers.map(d => d.id).includes(dinoz.id);
-		},
-		getPlaceName(placeId: number): string {
-			return placeList.find(place => place.placeId === placeId)?.name ?? '';
 		}*/
 	},
 	/*watch: {

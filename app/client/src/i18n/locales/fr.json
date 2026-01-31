@@ -144,6 +144,20 @@
 	"userCard": {
 		"title": "Aller sur le profil DinoRPG de {user}"
 	},
+	"dinoz": {
+		"hud": {
+			"following": "Ce Dinoz suit son chef de groupe.",
+			"gather": "Ce Dinoz peut récolter en ce lieu.",
+			"rest": "Ce Dinoz se repose.",
+			"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
+			"remainingActions": "Votre Dinoz peut encore effectuer des actions gratuites.",
+			"follow": "Le chef de groupe est {leader}.",
+			"followed": "Ce Dinoz est chef de groupe.",
+			"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
+			"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
+			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}"
+		}
+	},
 	"race": {
 		"race": "Race :",
 		"name": {

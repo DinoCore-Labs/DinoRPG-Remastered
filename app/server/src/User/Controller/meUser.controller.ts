@@ -33,6 +33,38 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				id: true,
 				name: true,
 				role: true,
+				dinoz: {
+					select: {
+						id: true,
+						//leaderId: true,
+						display: true,
+						name: true,
+						life: true,
+						maxLife: true,
+						experience: true,
+						placeId: true,
+						level: true,
+						//order: true,
+						raceId: true,
+						//unavailableReason: true,
+						//missions: true,
+						nbrUpFire: true,
+						nbrUpWood: true,
+						nbrUpWater: true,
+						nbrUpLightning: true,
+						nbrUpAir: true,
+						remaining: true,
+						//fight: true,
+						//gather: true,
+						//items: { select: { itemId: true } },
+						status: { select: { statusId: true } },
+						skills: { select: { skillId: true, state: true } }
+						//followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
+						//TournamentTeam: { select: { tournamentId: true } },
+						//concentration: true,
+						//build: true
+					}
+				},
 				wallets: {
 					where: { type: 'GOLD' },
 					select: { amount: true }
@@ -48,7 +80,8 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			id: user.id,
 			name: user.name,
 			role: user.role,
-			gold: user.wallets[0]?.amount ?? 0
+			gold: user.wallets[0]?.amount ?? 0,
+			dinoz: user.dinoz
 		});
 	} catch (err) {
 		return reply.status(401).send({ message: 'Invalid token' });
