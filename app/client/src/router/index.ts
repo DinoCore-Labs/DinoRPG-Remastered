@@ -1,6 +1,5 @@
 import type { RouteRecord } from '@dinorpg/core/models/router/router.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
-import type { UserRole } from '@dinorpg/core/models/user/userRole.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import AccountPage from '../pages/AccountPage.vue';
@@ -151,7 +150,7 @@ router.beforeEach(async to => {
 	// Roles
 	if (to.meta.roles && user.role) {
 		const ok = to.meta.roles.some(r => is_granted(r, user.role!));
-		if (!ok) return { name: 'HomePage' };
+		if (!ok) return { name: 'MainPage' };
 	}
 
 	return true;
