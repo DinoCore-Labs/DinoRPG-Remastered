@@ -27,9 +27,9 @@ model Dinoz {
   nextUpElementId    Int
   nextUpAltElementId Int
   placeId            Int
-  remaining          Int        @default(3)
-  createdDate        DateTime   @default(now()) 
-  updatedDate        DateTime   @updatedAt 
+  remaining          Int        @default(3)      
+  createdDate        DateTime   @default(now())   @db.Timestamptz(3)
+  updatedDate        DateTime   @updatedAt        @db.Timestamptz(3)
   seed               String     @db.Uuid
 
   skills             DinozSkills[] 
@@ -74,6 +74,53 @@ model DinozStatus {
   @@map("dinoz_status")
 }
 
+model JobDefinition {
+  id           String    @id @default(cuid())
+  key          String    @unique // ex: "reset-dinoz-shop"
+  name         String
+  type         JobType
+  enabled      Boolean   @default(true)
+
+  // Scheduling
+  timezone     String    @default("UTC")
+  dailyHour    Int?
+  dailyMinute  Int?
+  intervalMs   Int?
+
+  // State
+  status       JobStatus @default(IDLE)
+  lastRunAt    DateTime? @db.Timestamptz(3)
+  nextRunAt    DateTime? @db.Timestamptz(3)
+  lastError    String?
+
+  // Locking (multi-instance safe)
+  lockedAt     DateTime? @db.Timestamptz(3)
+  lockedBy     String?
+  lockTimeoutS Int       @default(300)
+
+  runs         JobRun[]
+
+  createdAt    DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt    DateTime  @updatedAt      @db.Timestamptz(3)
+
+  @@map("job_definition")
+}
+
+model JobRun {
+  id          String   @id @default(cuid())
+  jobId       String
+  job         JobDefinition @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  startedAt   DateTime @default(now()) @db.Timestamptz(3)
+  endedAt     DateTime? @db.Timestamptz(3)
+  success     Boolean?
+  error       String?
+  triggeredBy String? 
+
+  @@index([jobId, startedAt])
+  @@map("job_run")
+}
+
 model Ranking {
   id         Int    @id @default(autoincrement())
   dinozCount Int    @default(0)
@@ -93,9 +140,9 @@ model SignupDeviceMonthCounter {
   monthKey    String
   deviceToken String
   count       Int      @default(0)
-  expiresAt   DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  expiresAt   DateTime                    @db.Timestamptz(3)
+  createdAt   DateTime @default(now())    @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt         @db.Timestamptz(3)
 
   @@unique([monthKey, deviceToken])
   @@index([monthKey])
@@ -107,9 +154,9 @@ model SignupIpMonthCounter {
   monthKey  String
   ipToken   String
   count     Int      @default(0)
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  expiresAt DateTime                    @db.Timestamptz(3)
+  createdAt DateTime @default(now())    @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt         @db.Timestamptz(3)
 
   @@unique([monthKey, ipToken])
   @@index([monthKey])
@@ -121,9 +168,9 @@ model User {
   name          String    @unique
   password      String
   role          Role      @default(PLAYER)
-  createdDate   DateTime  @default(now())
-  updatedAt     DateTime? @updatedAt
-  lastLogin     DateTime  @default(now())
+  createdDate   DateTime  @default(now())      @db.Timestamptz(3)
+  updatedAt     DateTime? @updatedAt           @db.Timestamptz(3)
+  lastLogin     DateTime  @default(now())      @db.Timestamptz(3)
 
   ingredients   UserIngredients[]
   items         UserItems[]
@@ -238,4 +285,16 @@ enum Role {
   MODERATOR
   ADMIN
   SUPER_ADMIN
+}
+
+enum JobType {
+  DAILY_AT
+  INTERVAL
+}
+
+enum JobStatus {
+  IDLE
+  RUNNING
+  SUCCESS
+  FAILED
 }

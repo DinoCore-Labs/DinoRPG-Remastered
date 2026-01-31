@@ -169,6 +169,37 @@ exports.Prisma.DinozStatusScalarFieldEnum = {
   dinozId: 'dinozId'
 };
 
+exports.Prisma.JobDefinitionScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  name: 'name',
+  type: 'type',
+  enabled: 'enabled',
+  timezone: 'timezone',
+  dailyHour: 'dailyHour',
+  dailyMinute: 'dailyMinute',
+  intervalMs: 'intervalMs',
+  status: 'status',
+  lastRunAt: 'lastRunAt',
+  nextRunAt: 'nextRunAt',
+  lastError: 'lastError',
+  lockedAt: 'lockedAt',
+  lockedBy: 'lockedBy',
+  lockTimeoutS: 'lockTimeoutS',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.JobRunScalarFieldEnum = {
+  id: 'id',
+  jobId: 'jobId',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  success: 'success',
+  error: 'error',
+  triggeredBy: 'triggeredBy'
+};
+
 exports.Prisma.RankingScalarFieldEnum = {
   id: 'id',
   dinozCount: 'dinozCount',
@@ -275,6 +306,18 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.JobType = exports.$Enums.JobType = {
+  DAILY_AT: 'DAILY_AT',
+  INTERVAL: 'INTERVAL'
+};
+
+exports.JobStatus = exports.$Enums.JobStatus = {
+  IDLE: 'IDLE',
+  RUNNING: 'RUNNING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED'
+};
+
 exports.Role = exports.$Enums.Role = {
   PLAYER: 'PLAYER',
   MODERATOR: 'MODERATOR',
@@ -304,6 +347,8 @@ exports.Prisma.ModelName = {
   DinozSkills: 'DinozSkills',
   DinozSkillsUnlockable: 'DinozSkillsUnlockable',
   DinozStatus: 'DinozStatus',
+  JobDefinition: 'JobDefinition',
+  JobRun: 'JobRun',
   Ranking: 'Ranking',
   SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
   SignupIpMonthCounter: 'SignupIpMonthCounter',

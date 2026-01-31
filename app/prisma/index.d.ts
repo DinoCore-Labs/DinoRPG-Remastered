@@ -34,6 +34,16 @@ export type DinozSkillsUnlockable = $Result.DefaultSelection<Prisma.$DinozSkills
  */
 export type DinozStatus = $Result.DefaultSelection<Prisma.$DinozStatusPayload>
 /**
+ * Model JobDefinition
+ * 
+ */
+export type JobDefinition = $Result.DefaultSelection<Prisma.$JobDefinitionPayload>
+/**
+ * Model JobRun
+ * 
+ */
+export type JobRun = $Result.DefaultSelection<Prisma.$JobRunPayload>
+/**
  * Model Ranking
  * 
  */
@@ -128,6 +138,24 @@ export const Role: {
 
 export type Role = (typeof Role)[keyof typeof Role]
 
+
+export const JobType: {
+  DAILY_AT: 'DAILY_AT',
+  INTERVAL: 'INTERVAL'
+};
+
+export type JobType = (typeof JobType)[keyof typeof JobType]
+
+
+export const JobStatus: {
+  IDLE: 'IDLE',
+  RUNNING: 'RUNNING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED'
+};
+
+export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]
+
 }
 
 export type Language = $Enums.Language
@@ -145,6 +173,14 @@ export const MoneyType: typeof $Enums.MoneyType
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
+
+export type JobType = $Enums.JobType
+
+export const JobType: typeof $Enums.JobType
+
+export type JobStatus = $Enums.JobStatus
+
+export const JobStatus: typeof $Enums.JobStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -302,6 +338,26 @@ export class PrismaClient<
     * ```
     */
   get dinozStatus(): Prisma.DinozStatusDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.jobDefinition`: Exposes CRUD operations for the **JobDefinition** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more JobDefinitions
+    * const jobDefinitions = await prisma.jobDefinition.findMany()
+    * ```
+    */
+  get jobDefinition(): Prisma.JobDefinitionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.jobRun`: Exposes CRUD operations for the **JobRun** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more JobRuns
+    * const jobRuns = await prisma.jobRun.findMany()
+    * ```
+    */
+  get jobRun(): Prisma.JobRunDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.ranking`: Exposes CRUD operations for the **Ranking** model.
@@ -850,6 +906,8 @@ export namespace Prisma {
     DinozSkills: 'DinozSkills',
     DinozSkillsUnlockable: 'DinozSkillsUnlockable',
     DinozStatus: 'DinozStatus',
+    JobDefinition: 'JobDefinition',
+    JobRun: 'JobRun',
     Ranking: 'Ranking',
     SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
     SignupIpMonthCounter: 'SignupIpMonthCounter',
@@ -876,7 +934,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dinoz" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
+      modelProps: "dinoz" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "jobDefinition" | "jobRun" | "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1173,6 +1231,154 @@ export namespace Prisma {
           count: {
             args: Prisma.DinozStatusCountArgs<ExtArgs>
             result: $Utils.Optional<DinozStatusCountAggregateOutputType> | number
+          }
+        }
+      }
+      JobDefinition: {
+        payload: Prisma.$JobDefinitionPayload<ExtArgs>
+        fields: Prisma.JobDefinitionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.JobDefinitionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobDefinitionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.JobDefinitionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobDefinitionPayload>
+          }
+          findFirst: {
+            args: Prisma.JobDefinitionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobDefinitionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.JobDefinitionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobDefinitionPayload>
+          }
+          findMany: {
+            args: Prisma.JobDefinitionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobDefinitionPayload>[]
+          }
+          create: {
+            args: Prisma.JobDefinitionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobDefinitionPayload>
+          }
+          createMany: {
+            args: Prisma.JobDefinitionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.JobDefinitionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobDefinitionPayload>[]
+          }
+          delete: {
+            args: Prisma.JobDefinitionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobDefinitionPayload>
+          }
+          update: {
+            args: Prisma.JobDefinitionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobDefinitionPayload>
+          }
+          deleteMany: {
+            args: Prisma.JobDefinitionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.JobDefinitionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.JobDefinitionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobDefinitionPayload>[]
+          }
+          upsert: {
+            args: Prisma.JobDefinitionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobDefinitionPayload>
+          }
+          aggregate: {
+            args: Prisma.JobDefinitionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateJobDefinition>
+          }
+          groupBy: {
+            args: Prisma.JobDefinitionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<JobDefinitionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.JobDefinitionCountArgs<ExtArgs>
+            result: $Utils.Optional<JobDefinitionCountAggregateOutputType> | number
+          }
+        }
+      }
+      JobRun: {
+        payload: Prisma.$JobRunPayload<ExtArgs>
+        fields: Prisma.JobRunFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.JobRunFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobRunPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.JobRunFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobRunPayload>
+          }
+          findFirst: {
+            args: Prisma.JobRunFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobRunPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.JobRunFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobRunPayload>
+          }
+          findMany: {
+            args: Prisma.JobRunFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobRunPayload>[]
+          }
+          create: {
+            args: Prisma.JobRunCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobRunPayload>
+          }
+          createMany: {
+            args: Prisma.JobRunCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.JobRunCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobRunPayload>[]
+          }
+          delete: {
+            args: Prisma.JobRunDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobRunPayload>
+          }
+          update: {
+            args: Prisma.JobRunUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobRunPayload>
+          }
+          deleteMany: {
+            args: Prisma.JobRunDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.JobRunUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.JobRunUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobRunPayload>[]
+          }
+          upsert: {
+            args: Prisma.JobRunUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobRunPayload>
+          }
+          aggregate: {
+            args: Prisma.JobRunAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateJobRun>
+          }
+          groupBy: {
+            args: Prisma.JobRunGroupByArgs<ExtArgs>
+            result: $Utils.Optional<JobRunGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.JobRunCountArgs<ExtArgs>
+            result: $Utils.Optional<JobRunCountAggregateOutputType> | number
           }
         }
       }
@@ -2102,6 +2308,8 @@ export namespace Prisma {
     dinozSkills?: DinozSkillsOmit
     dinozSkillsUnlockable?: DinozSkillsUnlockableOmit
     dinozStatus?: DinozStatusOmit
+    jobDefinition?: JobDefinitionOmit
+    jobRun?: JobRunOmit
     ranking?: RankingOmit
     signupDeviceMonthCounter?: SignupDeviceMonthCounterOmit
     signupIpMonthCounter?: SignupIpMonthCounterOmit
@@ -2234,6 +2442,37 @@ export namespace Prisma {
    */
   export type DinozCountOutputTypeCountStatusArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DinozStatusWhereInput
+  }
+
+
+  /**
+   * Count Type JobDefinitionCountOutputType
+   */
+
+  export type JobDefinitionCountOutputType = {
+    runs: number
+  }
+
+  export type JobDefinitionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    runs?: boolean | JobDefinitionCountOutputTypeCountRunsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * JobDefinitionCountOutputType without action
+   */
+  export type JobDefinitionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinitionCountOutputType
+     */
+    select?: JobDefinitionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * JobDefinitionCountOutputType without action
+   */
+  export type JobDefinitionCountOutputTypeCountRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobRunWhereInput
   }
 
 
@@ -7106,6 +7345,2393 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: DinozStatusInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model JobDefinition
+   */
+
+  export type AggregateJobDefinition = {
+    _count: JobDefinitionCountAggregateOutputType | null
+    _avg: JobDefinitionAvgAggregateOutputType | null
+    _sum: JobDefinitionSumAggregateOutputType | null
+    _min: JobDefinitionMinAggregateOutputType | null
+    _max: JobDefinitionMaxAggregateOutputType | null
+  }
+
+  export type JobDefinitionAvgAggregateOutputType = {
+    dailyHour: number | null
+    dailyMinute: number | null
+    intervalMs: number | null
+    lockTimeoutS: number | null
+  }
+
+  export type JobDefinitionSumAggregateOutputType = {
+    dailyHour: number | null
+    dailyMinute: number | null
+    intervalMs: number | null
+    lockTimeoutS: number | null
+  }
+
+  export type JobDefinitionMinAggregateOutputType = {
+    id: string | null
+    key: string | null
+    name: string | null
+    type: $Enums.JobType | null
+    enabled: boolean | null
+    timezone: string | null
+    dailyHour: number | null
+    dailyMinute: number | null
+    intervalMs: number | null
+    status: $Enums.JobStatus | null
+    lastRunAt: Date | null
+    nextRunAt: Date | null
+    lastError: string | null
+    lockedAt: Date | null
+    lockedBy: string | null
+    lockTimeoutS: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type JobDefinitionMaxAggregateOutputType = {
+    id: string | null
+    key: string | null
+    name: string | null
+    type: $Enums.JobType | null
+    enabled: boolean | null
+    timezone: string | null
+    dailyHour: number | null
+    dailyMinute: number | null
+    intervalMs: number | null
+    status: $Enums.JobStatus | null
+    lastRunAt: Date | null
+    nextRunAt: Date | null
+    lastError: string | null
+    lockedAt: Date | null
+    lockedBy: string | null
+    lockTimeoutS: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type JobDefinitionCountAggregateOutputType = {
+    id: number
+    key: number
+    name: number
+    type: number
+    enabled: number
+    timezone: number
+    dailyHour: number
+    dailyMinute: number
+    intervalMs: number
+    status: number
+    lastRunAt: number
+    nextRunAt: number
+    lastError: number
+    lockedAt: number
+    lockedBy: number
+    lockTimeoutS: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type JobDefinitionAvgAggregateInputType = {
+    dailyHour?: true
+    dailyMinute?: true
+    intervalMs?: true
+    lockTimeoutS?: true
+  }
+
+  export type JobDefinitionSumAggregateInputType = {
+    dailyHour?: true
+    dailyMinute?: true
+    intervalMs?: true
+    lockTimeoutS?: true
+  }
+
+  export type JobDefinitionMinAggregateInputType = {
+    id?: true
+    key?: true
+    name?: true
+    type?: true
+    enabled?: true
+    timezone?: true
+    dailyHour?: true
+    dailyMinute?: true
+    intervalMs?: true
+    status?: true
+    lastRunAt?: true
+    nextRunAt?: true
+    lastError?: true
+    lockedAt?: true
+    lockedBy?: true
+    lockTimeoutS?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type JobDefinitionMaxAggregateInputType = {
+    id?: true
+    key?: true
+    name?: true
+    type?: true
+    enabled?: true
+    timezone?: true
+    dailyHour?: true
+    dailyMinute?: true
+    intervalMs?: true
+    status?: true
+    lastRunAt?: true
+    nextRunAt?: true
+    lastError?: true
+    lockedAt?: true
+    lockedBy?: true
+    lockTimeoutS?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type JobDefinitionCountAggregateInputType = {
+    id?: true
+    key?: true
+    name?: true
+    type?: true
+    enabled?: true
+    timezone?: true
+    dailyHour?: true
+    dailyMinute?: true
+    intervalMs?: true
+    status?: true
+    lastRunAt?: true
+    nextRunAt?: true
+    lastError?: true
+    lockedAt?: true
+    lockedBy?: true
+    lockTimeoutS?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type JobDefinitionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JobDefinition to aggregate.
+     */
+    where?: JobDefinitionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobDefinitions to fetch.
+     */
+    orderBy?: JobDefinitionOrderByWithRelationInput | JobDefinitionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: JobDefinitionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobDefinitions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobDefinitions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned JobDefinitions
+    **/
+    _count?: true | JobDefinitionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: JobDefinitionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: JobDefinitionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: JobDefinitionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: JobDefinitionMaxAggregateInputType
+  }
+
+  export type GetJobDefinitionAggregateType<T extends JobDefinitionAggregateArgs> = {
+        [P in keyof T & keyof AggregateJobDefinition]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateJobDefinition[P]>
+      : GetScalarType<T[P], AggregateJobDefinition[P]>
+  }
+
+
+
+
+  export type JobDefinitionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobDefinitionWhereInput
+    orderBy?: JobDefinitionOrderByWithAggregationInput | JobDefinitionOrderByWithAggregationInput[]
+    by: JobDefinitionScalarFieldEnum[] | JobDefinitionScalarFieldEnum
+    having?: JobDefinitionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: JobDefinitionCountAggregateInputType | true
+    _avg?: JobDefinitionAvgAggregateInputType
+    _sum?: JobDefinitionSumAggregateInputType
+    _min?: JobDefinitionMinAggregateInputType
+    _max?: JobDefinitionMaxAggregateInputType
+  }
+
+  export type JobDefinitionGroupByOutputType = {
+    id: string
+    key: string
+    name: string
+    type: $Enums.JobType
+    enabled: boolean
+    timezone: string
+    dailyHour: number | null
+    dailyMinute: number | null
+    intervalMs: number | null
+    status: $Enums.JobStatus
+    lastRunAt: Date | null
+    nextRunAt: Date | null
+    lastError: string | null
+    lockedAt: Date | null
+    lockedBy: string | null
+    lockTimeoutS: number
+    createdAt: Date
+    updatedAt: Date
+    _count: JobDefinitionCountAggregateOutputType | null
+    _avg: JobDefinitionAvgAggregateOutputType | null
+    _sum: JobDefinitionSumAggregateOutputType | null
+    _min: JobDefinitionMinAggregateOutputType | null
+    _max: JobDefinitionMaxAggregateOutputType | null
+  }
+
+  type GetJobDefinitionGroupByPayload<T extends JobDefinitionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<JobDefinitionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof JobDefinitionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], JobDefinitionGroupByOutputType[P]>
+            : GetScalarType<T[P], JobDefinitionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type JobDefinitionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    name?: boolean
+    type?: boolean
+    enabled?: boolean
+    timezone?: boolean
+    dailyHour?: boolean
+    dailyMinute?: boolean
+    intervalMs?: boolean
+    status?: boolean
+    lastRunAt?: boolean
+    nextRunAt?: boolean
+    lastError?: boolean
+    lockedAt?: boolean
+    lockedBy?: boolean
+    lockTimeoutS?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    runs?: boolean | JobDefinition$runsArgs<ExtArgs>
+    _count?: boolean | JobDefinitionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jobDefinition"]>
+
+  export type JobDefinitionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    name?: boolean
+    type?: boolean
+    enabled?: boolean
+    timezone?: boolean
+    dailyHour?: boolean
+    dailyMinute?: boolean
+    intervalMs?: boolean
+    status?: boolean
+    lastRunAt?: boolean
+    nextRunAt?: boolean
+    lastError?: boolean
+    lockedAt?: boolean
+    lockedBy?: boolean
+    lockTimeoutS?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["jobDefinition"]>
+
+  export type JobDefinitionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    name?: boolean
+    type?: boolean
+    enabled?: boolean
+    timezone?: boolean
+    dailyHour?: boolean
+    dailyMinute?: boolean
+    intervalMs?: boolean
+    status?: boolean
+    lastRunAt?: boolean
+    nextRunAt?: boolean
+    lastError?: boolean
+    lockedAt?: boolean
+    lockedBy?: boolean
+    lockTimeoutS?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["jobDefinition"]>
+
+  export type JobDefinitionSelectScalar = {
+    id?: boolean
+    key?: boolean
+    name?: boolean
+    type?: boolean
+    enabled?: boolean
+    timezone?: boolean
+    dailyHour?: boolean
+    dailyMinute?: boolean
+    intervalMs?: boolean
+    status?: boolean
+    lastRunAt?: boolean
+    nextRunAt?: boolean
+    lastError?: boolean
+    lockedAt?: boolean
+    lockedBy?: boolean
+    lockTimeoutS?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type JobDefinitionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "key" | "name" | "type" | "enabled" | "timezone" | "dailyHour" | "dailyMinute" | "intervalMs" | "status" | "lastRunAt" | "nextRunAt" | "lastError" | "lockedAt" | "lockedBy" | "lockTimeoutS" | "createdAt" | "updatedAt", ExtArgs["result"]["jobDefinition"]>
+  export type JobDefinitionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    runs?: boolean | JobDefinition$runsArgs<ExtArgs>
+    _count?: boolean | JobDefinitionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type JobDefinitionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type JobDefinitionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $JobDefinitionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "JobDefinition"
+    objects: {
+      runs: Prisma.$JobRunPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      key: string
+      name: string
+      type: $Enums.JobType
+      enabled: boolean
+      timezone: string
+      dailyHour: number | null
+      dailyMinute: number | null
+      intervalMs: number | null
+      status: $Enums.JobStatus
+      lastRunAt: Date | null
+      nextRunAt: Date | null
+      lastError: string | null
+      lockedAt: Date | null
+      lockedBy: string | null
+      lockTimeoutS: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["jobDefinition"]>
+    composites: {}
+  }
+
+  type JobDefinitionGetPayload<S extends boolean | null | undefined | JobDefinitionDefaultArgs> = $Result.GetResult<Prisma.$JobDefinitionPayload, S>
+
+  type JobDefinitionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<JobDefinitionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: JobDefinitionCountAggregateInputType | true
+    }
+
+  export interface JobDefinitionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['JobDefinition'], meta: { name: 'JobDefinition' } }
+    /**
+     * Find zero or one JobDefinition that matches the filter.
+     * @param {JobDefinitionFindUniqueArgs} args - Arguments to find a JobDefinition
+     * @example
+     * // Get one JobDefinition
+     * const jobDefinition = await prisma.jobDefinition.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends JobDefinitionFindUniqueArgs>(args: SelectSubset<T, JobDefinitionFindUniqueArgs<ExtArgs>>): Prisma__JobDefinitionClient<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one JobDefinition that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {JobDefinitionFindUniqueOrThrowArgs} args - Arguments to find a JobDefinition
+     * @example
+     * // Get one JobDefinition
+     * const jobDefinition = await prisma.jobDefinition.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends JobDefinitionFindUniqueOrThrowArgs>(args: SelectSubset<T, JobDefinitionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__JobDefinitionClient<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first JobDefinition that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobDefinitionFindFirstArgs} args - Arguments to find a JobDefinition
+     * @example
+     * // Get one JobDefinition
+     * const jobDefinition = await prisma.jobDefinition.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends JobDefinitionFindFirstArgs>(args?: SelectSubset<T, JobDefinitionFindFirstArgs<ExtArgs>>): Prisma__JobDefinitionClient<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first JobDefinition that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobDefinitionFindFirstOrThrowArgs} args - Arguments to find a JobDefinition
+     * @example
+     * // Get one JobDefinition
+     * const jobDefinition = await prisma.jobDefinition.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends JobDefinitionFindFirstOrThrowArgs>(args?: SelectSubset<T, JobDefinitionFindFirstOrThrowArgs<ExtArgs>>): Prisma__JobDefinitionClient<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more JobDefinitions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobDefinitionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all JobDefinitions
+     * const jobDefinitions = await prisma.jobDefinition.findMany()
+     * 
+     * // Get first 10 JobDefinitions
+     * const jobDefinitions = await prisma.jobDefinition.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const jobDefinitionWithIdOnly = await prisma.jobDefinition.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends JobDefinitionFindManyArgs>(args?: SelectSubset<T, JobDefinitionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a JobDefinition.
+     * @param {JobDefinitionCreateArgs} args - Arguments to create a JobDefinition.
+     * @example
+     * // Create one JobDefinition
+     * const JobDefinition = await prisma.jobDefinition.create({
+     *   data: {
+     *     // ... data to create a JobDefinition
+     *   }
+     * })
+     * 
+     */
+    create<T extends JobDefinitionCreateArgs>(args: SelectSubset<T, JobDefinitionCreateArgs<ExtArgs>>): Prisma__JobDefinitionClient<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many JobDefinitions.
+     * @param {JobDefinitionCreateManyArgs} args - Arguments to create many JobDefinitions.
+     * @example
+     * // Create many JobDefinitions
+     * const jobDefinition = await prisma.jobDefinition.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends JobDefinitionCreateManyArgs>(args?: SelectSubset<T, JobDefinitionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many JobDefinitions and returns the data saved in the database.
+     * @param {JobDefinitionCreateManyAndReturnArgs} args - Arguments to create many JobDefinitions.
+     * @example
+     * // Create many JobDefinitions
+     * const jobDefinition = await prisma.jobDefinition.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many JobDefinitions and only return the `id`
+     * const jobDefinitionWithIdOnly = await prisma.jobDefinition.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends JobDefinitionCreateManyAndReturnArgs>(args?: SelectSubset<T, JobDefinitionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a JobDefinition.
+     * @param {JobDefinitionDeleteArgs} args - Arguments to delete one JobDefinition.
+     * @example
+     * // Delete one JobDefinition
+     * const JobDefinition = await prisma.jobDefinition.delete({
+     *   where: {
+     *     // ... filter to delete one JobDefinition
+     *   }
+     * })
+     * 
+     */
+    delete<T extends JobDefinitionDeleteArgs>(args: SelectSubset<T, JobDefinitionDeleteArgs<ExtArgs>>): Prisma__JobDefinitionClient<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one JobDefinition.
+     * @param {JobDefinitionUpdateArgs} args - Arguments to update one JobDefinition.
+     * @example
+     * // Update one JobDefinition
+     * const jobDefinition = await prisma.jobDefinition.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends JobDefinitionUpdateArgs>(args: SelectSubset<T, JobDefinitionUpdateArgs<ExtArgs>>): Prisma__JobDefinitionClient<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more JobDefinitions.
+     * @param {JobDefinitionDeleteManyArgs} args - Arguments to filter JobDefinitions to delete.
+     * @example
+     * // Delete a few JobDefinitions
+     * const { count } = await prisma.jobDefinition.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends JobDefinitionDeleteManyArgs>(args?: SelectSubset<T, JobDefinitionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JobDefinitions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobDefinitionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many JobDefinitions
+     * const jobDefinition = await prisma.jobDefinition.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends JobDefinitionUpdateManyArgs>(args: SelectSubset<T, JobDefinitionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JobDefinitions and returns the data updated in the database.
+     * @param {JobDefinitionUpdateManyAndReturnArgs} args - Arguments to update many JobDefinitions.
+     * @example
+     * // Update many JobDefinitions
+     * const jobDefinition = await prisma.jobDefinition.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more JobDefinitions and only return the `id`
+     * const jobDefinitionWithIdOnly = await prisma.jobDefinition.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends JobDefinitionUpdateManyAndReturnArgs>(args: SelectSubset<T, JobDefinitionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one JobDefinition.
+     * @param {JobDefinitionUpsertArgs} args - Arguments to update or create a JobDefinition.
+     * @example
+     * // Update or create a JobDefinition
+     * const jobDefinition = await prisma.jobDefinition.upsert({
+     *   create: {
+     *     // ... data to create a JobDefinition
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the JobDefinition we want to update
+     *   }
+     * })
+     */
+    upsert<T extends JobDefinitionUpsertArgs>(args: SelectSubset<T, JobDefinitionUpsertArgs<ExtArgs>>): Prisma__JobDefinitionClient<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of JobDefinitions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobDefinitionCountArgs} args - Arguments to filter JobDefinitions to count.
+     * @example
+     * // Count the number of JobDefinitions
+     * const count = await prisma.jobDefinition.count({
+     *   where: {
+     *     // ... the filter for the JobDefinitions we want to count
+     *   }
+     * })
+    **/
+    count<T extends JobDefinitionCountArgs>(
+      args?: Subset<T, JobDefinitionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], JobDefinitionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a JobDefinition.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobDefinitionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends JobDefinitionAggregateArgs>(args: Subset<T, JobDefinitionAggregateArgs>): Prisma.PrismaPromise<GetJobDefinitionAggregateType<T>>
+
+    /**
+     * Group by JobDefinition.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobDefinitionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends JobDefinitionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: JobDefinitionGroupByArgs['orderBy'] }
+        : { orderBy?: JobDefinitionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, JobDefinitionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJobDefinitionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the JobDefinition model
+   */
+  readonly fields: JobDefinitionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for JobDefinition.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__JobDefinitionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    runs<T extends JobDefinition$runsArgs<ExtArgs> = {}>(args?: Subset<T, JobDefinition$runsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the JobDefinition model
+   */
+  interface JobDefinitionFieldRefs {
+    readonly id: FieldRef<"JobDefinition", 'String'>
+    readonly key: FieldRef<"JobDefinition", 'String'>
+    readonly name: FieldRef<"JobDefinition", 'String'>
+    readonly type: FieldRef<"JobDefinition", 'JobType'>
+    readonly enabled: FieldRef<"JobDefinition", 'Boolean'>
+    readonly timezone: FieldRef<"JobDefinition", 'String'>
+    readonly dailyHour: FieldRef<"JobDefinition", 'Int'>
+    readonly dailyMinute: FieldRef<"JobDefinition", 'Int'>
+    readonly intervalMs: FieldRef<"JobDefinition", 'Int'>
+    readonly status: FieldRef<"JobDefinition", 'JobStatus'>
+    readonly lastRunAt: FieldRef<"JobDefinition", 'DateTime'>
+    readonly nextRunAt: FieldRef<"JobDefinition", 'DateTime'>
+    readonly lastError: FieldRef<"JobDefinition", 'String'>
+    readonly lockedAt: FieldRef<"JobDefinition", 'DateTime'>
+    readonly lockedBy: FieldRef<"JobDefinition", 'String'>
+    readonly lockTimeoutS: FieldRef<"JobDefinition", 'Int'>
+    readonly createdAt: FieldRef<"JobDefinition", 'DateTime'>
+    readonly updatedAt: FieldRef<"JobDefinition", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * JobDefinition findUnique
+   */
+  export type JobDefinitionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter, which JobDefinition to fetch.
+     */
+    where: JobDefinitionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobDefinition findUniqueOrThrow
+   */
+  export type JobDefinitionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter, which JobDefinition to fetch.
+     */
+    where: JobDefinitionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobDefinition findFirst
+   */
+  export type JobDefinitionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter, which JobDefinition to fetch.
+     */
+    where?: JobDefinitionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobDefinitions to fetch.
+     */
+    orderBy?: JobDefinitionOrderByWithRelationInput | JobDefinitionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JobDefinitions.
+     */
+    cursor?: JobDefinitionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobDefinitions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobDefinitions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JobDefinitions.
+     */
+    distinct?: JobDefinitionScalarFieldEnum | JobDefinitionScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobDefinition findFirstOrThrow
+   */
+  export type JobDefinitionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter, which JobDefinition to fetch.
+     */
+    where?: JobDefinitionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobDefinitions to fetch.
+     */
+    orderBy?: JobDefinitionOrderByWithRelationInput | JobDefinitionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JobDefinitions.
+     */
+    cursor?: JobDefinitionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobDefinitions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobDefinitions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JobDefinitions.
+     */
+    distinct?: JobDefinitionScalarFieldEnum | JobDefinitionScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobDefinition findMany
+   */
+  export type JobDefinitionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter, which JobDefinitions to fetch.
+     */
+    where?: JobDefinitionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobDefinitions to fetch.
+     */
+    orderBy?: JobDefinitionOrderByWithRelationInput | JobDefinitionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing JobDefinitions.
+     */
+    cursor?: JobDefinitionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobDefinitions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobDefinitions.
+     */
+    skip?: number
+    distinct?: JobDefinitionScalarFieldEnum | JobDefinitionScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobDefinition create
+   */
+  export type JobDefinitionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobDefinitionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a JobDefinition.
+     */
+    data: XOR<JobDefinitionCreateInput, JobDefinitionUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobDefinition createMany
+   */
+  export type JobDefinitionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many JobDefinitions.
+     */
+    data: JobDefinitionCreateManyInput | JobDefinitionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * JobDefinition createManyAndReturn
+   */
+  export type JobDefinitionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * The data used to create many JobDefinitions.
+     */
+    data: JobDefinitionCreateManyInput | JobDefinitionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * JobDefinition update
+   */
+  export type JobDefinitionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobDefinitionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a JobDefinition.
+     */
+    data: XOR<JobDefinitionUpdateInput, JobDefinitionUncheckedUpdateInput>
+    /**
+     * Choose, which JobDefinition to update.
+     */
+    where: JobDefinitionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobDefinition updateMany
+   */
+  export type JobDefinitionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update JobDefinitions.
+     */
+    data: XOR<JobDefinitionUpdateManyMutationInput, JobDefinitionUncheckedUpdateManyInput>
+    /**
+     * Filter which JobDefinitions to update
+     */
+    where?: JobDefinitionWhereInput
+    /**
+     * Limit how many JobDefinitions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * JobDefinition updateManyAndReturn
+   */
+  export type JobDefinitionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * The data used to update JobDefinitions.
+     */
+    data: XOR<JobDefinitionUpdateManyMutationInput, JobDefinitionUncheckedUpdateManyInput>
+    /**
+     * Filter which JobDefinitions to update
+     */
+    where?: JobDefinitionWhereInput
+    /**
+     * Limit how many JobDefinitions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * JobDefinition upsert
+   */
+  export type JobDefinitionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobDefinitionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the JobDefinition to update in case it exists.
+     */
+    where: JobDefinitionWhereUniqueInput
+    /**
+     * In case the JobDefinition found by the `where` argument doesn't exist, create a new JobDefinition with this data.
+     */
+    create: XOR<JobDefinitionCreateInput, JobDefinitionUncheckedCreateInput>
+    /**
+     * In case the JobDefinition was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<JobDefinitionUpdateInput, JobDefinitionUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobDefinition delete
+   */
+  export type JobDefinitionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobDefinitionInclude<ExtArgs> | null
+    /**
+     * Filter which JobDefinition to delete.
+     */
+    where: JobDefinitionWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobDefinition deleteMany
+   */
+  export type JobDefinitionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JobDefinitions to delete
+     */
+    where?: JobDefinitionWhereInput
+    /**
+     * Limit how many JobDefinitions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * JobDefinition.runs
+   */
+  export type JobDefinition$runsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunInclude<ExtArgs> | null
+    where?: JobRunWhereInput
+    orderBy?: JobRunOrderByWithRelationInput | JobRunOrderByWithRelationInput[]
+    cursor?: JobRunWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: JobRunScalarFieldEnum | JobRunScalarFieldEnum[]
+  }
+
+  /**
+   * JobDefinition without action
+   */
+  export type JobDefinitionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobDefinition
+     */
+    select?: JobDefinitionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobDefinition
+     */
+    omit?: JobDefinitionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobDefinitionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model JobRun
+   */
+
+  export type AggregateJobRun = {
+    _count: JobRunCountAggregateOutputType | null
+    _min: JobRunMinAggregateOutputType | null
+    _max: JobRunMaxAggregateOutputType | null
+  }
+
+  export type JobRunMinAggregateOutputType = {
+    id: string | null
+    jobId: string | null
+    startedAt: Date | null
+    endedAt: Date | null
+    success: boolean | null
+    error: string | null
+    triggeredBy: string | null
+  }
+
+  export type JobRunMaxAggregateOutputType = {
+    id: string | null
+    jobId: string | null
+    startedAt: Date | null
+    endedAt: Date | null
+    success: boolean | null
+    error: string | null
+    triggeredBy: string | null
+  }
+
+  export type JobRunCountAggregateOutputType = {
+    id: number
+    jobId: number
+    startedAt: number
+    endedAt: number
+    success: number
+    error: number
+    triggeredBy: number
+    _all: number
+  }
+
+
+  export type JobRunMinAggregateInputType = {
+    id?: true
+    jobId?: true
+    startedAt?: true
+    endedAt?: true
+    success?: true
+    error?: true
+    triggeredBy?: true
+  }
+
+  export type JobRunMaxAggregateInputType = {
+    id?: true
+    jobId?: true
+    startedAt?: true
+    endedAt?: true
+    success?: true
+    error?: true
+    triggeredBy?: true
+  }
+
+  export type JobRunCountAggregateInputType = {
+    id?: true
+    jobId?: true
+    startedAt?: true
+    endedAt?: true
+    success?: true
+    error?: true
+    triggeredBy?: true
+    _all?: true
+  }
+
+  export type JobRunAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JobRun to aggregate.
+     */
+    where?: JobRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobRuns to fetch.
+     */
+    orderBy?: JobRunOrderByWithRelationInput | JobRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: JobRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned JobRuns
+    **/
+    _count?: true | JobRunCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: JobRunMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: JobRunMaxAggregateInputType
+  }
+
+  export type GetJobRunAggregateType<T extends JobRunAggregateArgs> = {
+        [P in keyof T & keyof AggregateJobRun]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateJobRun[P]>
+      : GetScalarType<T[P], AggregateJobRun[P]>
+  }
+
+
+
+
+  export type JobRunGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobRunWhereInput
+    orderBy?: JobRunOrderByWithAggregationInput | JobRunOrderByWithAggregationInput[]
+    by: JobRunScalarFieldEnum[] | JobRunScalarFieldEnum
+    having?: JobRunScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: JobRunCountAggregateInputType | true
+    _min?: JobRunMinAggregateInputType
+    _max?: JobRunMaxAggregateInputType
+  }
+
+  export type JobRunGroupByOutputType = {
+    id: string
+    jobId: string
+    startedAt: Date
+    endedAt: Date | null
+    success: boolean | null
+    error: string | null
+    triggeredBy: string | null
+    _count: JobRunCountAggregateOutputType | null
+    _min: JobRunMinAggregateOutputType | null
+    _max: JobRunMaxAggregateOutputType | null
+  }
+
+  type GetJobRunGroupByPayload<T extends JobRunGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<JobRunGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof JobRunGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], JobRunGroupByOutputType[P]>
+            : GetScalarType<T[P], JobRunGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type JobRunSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobId?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+    success?: boolean
+    error?: boolean
+    triggeredBy?: boolean
+    job?: boolean | JobDefinitionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jobRun"]>
+
+  export type JobRunSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobId?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+    success?: boolean
+    error?: boolean
+    triggeredBy?: boolean
+    job?: boolean | JobDefinitionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jobRun"]>
+
+  export type JobRunSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobId?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+    success?: boolean
+    error?: boolean
+    triggeredBy?: boolean
+    job?: boolean | JobDefinitionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jobRun"]>
+
+  export type JobRunSelectScalar = {
+    id?: boolean
+    jobId?: boolean
+    startedAt?: boolean
+    endedAt?: boolean
+    success?: boolean
+    error?: boolean
+    triggeredBy?: boolean
+  }
+
+  export type JobRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jobId" | "startedAt" | "endedAt" | "success" | "error" | "triggeredBy", ExtArgs["result"]["jobRun"]>
+  export type JobRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    job?: boolean | JobDefinitionDefaultArgs<ExtArgs>
+  }
+  export type JobRunIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    job?: boolean | JobDefinitionDefaultArgs<ExtArgs>
+  }
+  export type JobRunIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    job?: boolean | JobDefinitionDefaultArgs<ExtArgs>
+  }
+
+  export type $JobRunPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "JobRun"
+    objects: {
+      job: Prisma.$JobDefinitionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      jobId: string
+      startedAt: Date
+      endedAt: Date | null
+      success: boolean | null
+      error: string | null
+      triggeredBy: string | null
+    }, ExtArgs["result"]["jobRun"]>
+    composites: {}
+  }
+
+  type JobRunGetPayload<S extends boolean | null | undefined | JobRunDefaultArgs> = $Result.GetResult<Prisma.$JobRunPayload, S>
+
+  type JobRunCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<JobRunFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: JobRunCountAggregateInputType | true
+    }
+
+  export interface JobRunDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['JobRun'], meta: { name: 'JobRun' } }
+    /**
+     * Find zero or one JobRun that matches the filter.
+     * @param {JobRunFindUniqueArgs} args - Arguments to find a JobRun
+     * @example
+     * // Get one JobRun
+     * const jobRun = await prisma.jobRun.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends JobRunFindUniqueArgs>(args: SelectSubset<T, JobRunFindUniqueArgs<ExtArgs>>): Prisma__JobRunClient<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one JobRun that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {JobRunFindUniqueOrThrowArgs} args - Arguments to find a JobRun
+     * @example
+     * // Get one JobRun
+     * const jobRun = await prisma.jobRun.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends JobRunFindUniqueOrThrowArgs>(args: SelectSubset<T, JobRunFindUniqueOrThrowArgs<ExtArgs>>): Prisma__JobRunClient<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first JobRun that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobRunFindFirstArgs} args - Arguments to find a JobRun
+     * @example
+     * // Get one JobRun
+     * const jobRun = await prisma.jobRun.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends JobRunFindFirstArgs>(args?: SelectSubset<T, JobRunFindFirstArgs<ExtArgs>>): Prisma__JobRunClient<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first JobRun that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobRunFindFirstOrThrowArgs} args - Arguments to find a JobRun
+     * @example
+     * // Get one JobRun
+     * const jobRun = await prisma.jobRun.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends JobRunFindFirstOrThrowArgs>(args?: SelectSubset<T, JobRunFindFirstOrThrowArgs<ExtArgs>>): Prisma__JobRunClient<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more JobRuns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobRunFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all JobRuns
+     * const jobRuns = await prisma.jobRun.findMany()
+     * 
+     * // Get first 10 JobRuns
+     * const jobRuns = await prisma.jobRun.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const jobRunWithIdOnly = await prisma.jobRun.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends JobRunFindManyArgs>(args?: SelectSubset<T, JobRunFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a JobRun.
+     * @param {JobRunCreateArgs} args - Arguments to create a JobRun.
+     * @example
+     * // Create one JobRun
+     * const JobRun = await prisma.jobRun.create({
+     *   data: {
+     *     // ... data to create a JobRun
+     *   }
+     * })
+     * 
+     */
+    create<T extends JobRunCreateArgs>(args: SelectSubset<T, JobRunCreateArgs<ExtArgs>>): Prisma__JobRunClient<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many JobRuns.
+     * @param {JobRunCreateManyArgs} args - Arguments to create many JobRuns.
+     * @example
+     * // Create many JobRuns
+     * const jobRun = await prisma.jobRun.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends JobRunCreateManyArgs>(args?: SelectSubset<T, JobRunCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many JobRuns and returns the data saved in the database.
+     * @param {JobRunCreateManyAndReturnArgs} args - Arguments to create many JobRuns.
+     * @example
+     * // Create many JobRuns
+     * const jobRun = await prisma.jobRun.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many JobRuns and only return the `id`
+     * const jobRunWithIdOnly = await prisma.jobRun.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends JobRunCreateManyAndReturnArgs>(args?: SelectSubset<T, JobRunCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a JobRun.
+     * @param {JobRunDeleteArgs} args - Arguments to delete one JobRun.
+     * @example
+     * // Delete one JobRun
+     * const JobRun = await prisma.jobRun.delete({
+     *   where: {
+     *     // ... filter to delete one JobRun
+     *   }
+     * })
+     * 
+     */
+    delete<T extends JobRunDeleteArgs>(args: SelectSubset<T, JobRunDeleteArgs<ExtArgs>>): Prisma__JobRunClient<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one JobRun.
+     * @param {JobRunUpdateArgs} args - Arguments to update one JobRun.
+     * @example
+     * // Update one JobRun
+     * const jobRun = await prisma.jobRun.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends JobRunUpdateArgs>(args: SelectSubset<T, JobRunUpdateArgs<ExtArgs>>): Prisma__JobRunClient<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more JobRuns.
+     * @param {JobRunDeleteManyArgs} args - Arguments to filter JobRuns to delete.
+     * @example
+     * // Delete a few JobRuns
+     * const { count } = await prisma.jobRun.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends JobRunDeleteManyArgs>(args?: SelectSubset<T, JobRunDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JobRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobRunUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many JobRuns
+     * const jobRun = await prisma.jobRun.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends JobRunUpdateManyArgs>(args: SelectSubset<T, JobRunUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JobRuns and returns the data updated in the database.
+     * @param {JobRunUpdateManyAndReturnArgs} args - Arguments to update many JobRuns.
+     * @example
+     * // Update many JobRuns
+     * const jobRun = await prisma.jobRun.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more JobRuns and only return the `id`
+     * const jobRunWithIdOnly = await prisma.jobRun.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends JobRunUpdateManyAndReturnArgs>(args: SelectSubset<T, JobRunUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one JobRun.
+     * @param {JobRunUpsertArgs} args - Arguments to update or create a JobRun.
+     * @example
+     * // Update or create a JobRun
+     * const jobRun = await prisma.jobRun.upsert({
+     *   create: {
+     *     // ... data to create a JobRun
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the JobRun we want to update
+     *   }
+     * })
+     */
+    upsert<T extends JobRunUpsertArgs>(args: SelectSubset<T, JobRunUpsertArgs<ExtArgs>>): Prisma__JobRunClient<$Result.GetResult<Prisma.$JobRunPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of JobRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobRunCountArgs} args - Arguments to filter JobRuns to count.
+     * @example
+     * // Count the number of JobRuns
+     * const count = await prisma.jobRun.count({
+     *   where: {
+     *     // ... the filter for the JobRuns we want to count
+     *   }
+     * })
+    **/
+    count<T extends JobRunCountArgs>(
+      args?: Subset<T, JobRunCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], JobRunCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a JobRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobRunAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends JobRunAggregateArgs>(args: Subset<T, JobRunAggregateArgs>): Prisma.PrismaPromise<GetJobRunAggregateType<T>>
+
+    /**
+     * Group by JobRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobRunGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends JobRunGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: JobRunGroupByArgs['orderBy'] }
+        : { orderBy?: JobRunGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, JobRunGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJobRunGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the JobRun model
+   */
+  readonly fields: JobRunFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for JobRun.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__JobRunClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    job<T extends JobDefinitionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobDefinitionDefaultArgs<ExtArgs>>): Prisma__JobDefinitionClient<$Result.GetResult<Prisma.$JobDefinitionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the JobRun model
+   */
+  interface JobRunFieldRefs {
+    readonly id: FieldRef<"JobRun", 'String'>
+    readonly jobId: FieldRef<"JobRun", 'String'>
+    readonly startedAt: FieldRef<"JobRun", 'DateTime'>
+    readonly endedAt: FieldRef<"JobRun", 'DateTime'>
+    readonly success: FieldRef<"JobRun", 'Boolean'>
+    readonly error: FieldRef<"JobRun", 'String'>
+    readonly triggeredBy: FieldRef<"JobRun", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * JobRun findUnique
+   */
+  export type JobRunFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunInclude<ExtArgs> | null
+    /**
+     * Filter, which JobRun to fetch.
+     */
+    where: JobRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobRun findUniqueOrThrow
+   */
+  export type JobRunFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunInclude<ExtArgs> | null
+    /**
+     * Filter, which JobRun to fetch.
+     */
+    where: JobRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobRun findFirst
+   */
+  export type JobRunFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunInclude<ExtArgs> | null
+    /**
+     * Filter, which JobRun to fetch.
+     */
+    where?: JobRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobRuns to fetch.
+     */
+    orderBy?: JobRunOrderByWithRelationInput | JobRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JobRuns.
+     */
+    cursor?: JobRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JobRuns.
+     */
+    distinct?: JobRunScalarFieldEnum | JobRunScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobRun findFirstOrThrow
+   */
+  export type JobRunFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunInclude<ExtArgs> | null
+    /**
+     * Filter, which JobRun to fetch.
+     */
+    where?: JobRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobRuns to fetch.
+     */
+    orderBy?: JobRunOrderByWithRelationInput | JobRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JobRuns.
+     */
+    cursor?: JobRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JobRuns.
+     */
+    distinct?: JobRunScalarFieldEnum | JobRunScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobRun findMany
+   */
+  export type JobRunFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunInclude<ExtArgs> | null
+    /**
+     * Filter, which JobRuns to fetch.
+     */
+    where?: JobRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobRuns to fetch.
+     */
+    orderBy?: JobRunOrderByWithRelationInput | JobRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing JobRuns.
+     */
+    cursor?: JobRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobRuns.
+     */
+    skip?: number
+    distinct?: JobRunScalarFieldEnum | JobRunScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobRun create
+   */
+  export type JobRunCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunInclude<ExtArgs> | null
+    /**
+     * The data needed to create a JobRun.
+     */
+    data: XOR<JobRunCreateInput, JobRunUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobRun createMany
+   */
+  export type JobRunCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many JobRuns.
+     */
+    data: JobRunCreateManyInput | JobRunCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * JobRun createManyAndReturn
+   */
+  export type JobRunCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * The data used to create many JobRuns.
+     */
+    data: JobRunCreateManyInput | JobRunCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * JobRun update
+   */
+  export type JobRunUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunInclude<ExtArgs> | null
+    /**
+     * The data needed to update a JobRun.
+     */
+    data: XOR<JobRunUpdateInput, JobRunUncheckedUpdateInput>
+    /**
+     * Choose, which JobRun to update.
+     */
+    where: JobRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobRun updateMany
+   */
+  export type JobRunUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update JobRuns.
+     */
+    data: XOR<JobRunUpdateManyMutationInput, JobRunUncheckedUpdateManyInput>
+    /**
+     * Filter which JobRuns to update
+     */
+    where?: JobRunWhereInput
+    /**
+     * Limit how many JobRuns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * JobRun updateManyAndReturn
+   */
+  export type JobRunUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * The data used to update JobRuns.
+     */
+    data: XOR<JobRunUpdateManyMutationInput, JobRunUncheckedUpdateManyInput>
+    /**
+     * Filter which JobRuns to update
+     */
+    where?: JobRunWhereInput
+    /**
+     * Limit how many JobRuns to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * JobRun upsert
+   */
+  export type JobRunUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunInclude<ExtArgs> | null
+    /**
+     * The filter to search for the JobRun to update in case it exists.
+     */
+    where: JobRunWhereUniqueInput
+    /**
+     * In case the JobRun found by the `where` argument doesn't exist, create a new JobRun with this data.
+     */
+    create: XOR<JobRunCreateInput, JobRunUncheckedCreateInput>
+    /**
+     * In case the JobRun was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<JobRunUpdateInput, JobRunUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobRun delete
+   */
+  export type JobRunDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunInclude<ExtArgs> | null
+    /**
+     * Filter which JobRun to delete.
+     */
+    where: JobRunWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * JobRun deleteMany
+   */
+  export type JobRunDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JobRuns to delete
+     */
+    where?: JobRunWhereInput
+    /**
+     * Limit how many JobRuns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * JobRun without action
+   */
+  export type JobRunDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobRun
+     */
+    select?: JobRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobRun
+     */
+    omit?: JobRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobRunInclude<ExtArgs> | null
   }
 
 
@@ -19510,6 +22136,43 @@ export namespace Prisma {
   export type DinozStatusScalarFieldEnum = (typeof DinozStatusScalarFieldEnum)[keyof typeof DinozStatusScalarFieldEnum]
 
 
+  export const JobDefinitionScalarFieldEnum: {
+    id: 'id',
+    key: 'key',
+    name: 'name',
+    type: 'type',
+    enabled: 'enabled',
+    timezone: 'timezone',
+    dailyHour: 'dailyHour',
+    dailyMinute: 'dailyMinute',
+    intervalMs: 'intervalMs',
+    status: 'status',
+    lastRunAt: 'lastRunAt',
+    nextRunAt: 'nextRunAt',
+    lastError: 'lastError',
+    lockedAt: 'lockedAt',
+    lockedBy: 'lockedBy',
+    lockTimeoutS: 'lockTimeoutS',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type JobDefinitionScalarFieldEnum = (typeof JobDefinitionScalarFieldEnum)[keyof typeof JobDefinitionScalarFieldEnum]
+
+
+  export const JobRunScalarFieldEnum: {
+    id: 'id',
+    jobId: 'jobId',
+    startedAt: 'startedAt',
+    endedAt: 'endedAt',
+    success: 'success',
+    error: 'error',
+    triggeredBy: 'triggeredBy'
+  };
+
+  export type JobRunScalarFieldEnum = (typeof JobRunScalarFieldEnum)[keyof typeof JobRunScalarFieldEnum]
+
+
   export const RankingScalarFieldEnum: {
     id: 'id',
     dinozCount: 'dinozCount',
@@ -19710,6 +22373,34 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'JobType'
+   */
+  export type EnumJobTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobType'>
+    
+
+
+  /**
+   * Reference to a field of type 'JobType[]'
+   */
+  export type ListEnumJobTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'JobStatus'
+   */
+  export type EnumJobStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'JobStatus[]'
+   */
+  export type ListEnumJobStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobStatus[]'>
     
 
 
@@ -20097,6 +22788,193 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"DinozStatus"> | number
     statusId?: IntWithAggregatesFilter<"DinozStatus"> | number
     dinozId?: IntNullableWithAggregatesFilter<"DinozStatus"> | number | null
+  }
+
+  export type JobDefinitionWhereInput = {
+    AND?: JobDefinitionWhereInput | JobDefinitionWhereInput[]
+    OR?: JobDefinitionWhereInput[]
+    NOT?: JobDefinitionWhereInput | JobDefinitionWhereInput[]
+    id?: StringFilter<"JobDefinition"> | string
+    key?: StringFilter<"JobDefinition"> | string
+    name?: StringFilter<"JobDefinition"> | string
+    type?: EnumJobTypeFilter<"JobDefinition"> | $Enums.JobType
+    enabled?: BoolFilter<"JobDefinition"> | boolean
+    timezone?: StringFilter<"JobDefinition"> | string
+    dailyHour?: IntNullableFilter<"JobDefinition"> | number | null
+    dailyMinute?: IntNullableFilter<"JobDefinition"> | number | null
+    intervalMs?: IntNullableFilter<"JobDefinition"> | number | null
+    status?: EnumJobStatusFilter<"JobDefinition"> | $Enums.JobStatus
+    lastRunAt?: DateTimeNullableFilter<"JobDefinition"> | Date | string | null
+    nextRunAt?: DateTimeNullableFilter<"JobDefinition"> | Date | string | null
+    lastError?: StringNullableFilter<"JobDefinition"> | string | null
+    lockedAt?: DateTimeNullableFilter<"JobDefinition"> | Date | string | null
+    lockedBy?: StringNullableFilter<"JobDefinition"> | string | null
+    lockTimeoutS?: IntFilter<"JobDefinition"> | number
+    createdAt?: DateTimeFilter<"JobDefinition"> | Date | string
+    updatedAt?: DateTimeFilter<"JobDefinition"> | Date | string
+    runs?: JobRunListRelationFilter
+  }
+
+  export type JobDefinitionOrderByWithRelationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    enabled?: SortOrder
+    timezone?: SortOrder
+    dailyHour?: SortOrderInput | SortOrder
+    dailyMinute?: SortOrderInput | SortOrder
+    intervalMs?: SortOrderInput | SortOrder
+    status?: SortOrder
+    lastRunAt?: SortOrderInput | SortOrder
+    nextRunAt?: SortOrderInput | SortOrder
+    lastError?: SortOrderInput | SortOrder
+    lockedAt?: SortOrderInput | SortOrder
+    lockedBy?: SortOrderInput | SortOrder
+    lockTimeoutS?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    runs?: JobRunOrderByRelationAggregateInput
+  }
+
+  export type JobDefinitionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    key?: string
+    AND?: JobDefinitionWhereInput | JobDefinitionWhereInput[]
+    OR?: JobDefinitionWhereInput[]
+    NOT?: JobDefinitionWhereInput | JobDefinitionWhereInput[]
+    name?: StringFilter<"JobDefinition"> | string
+    type?: EnumJobTypeFilter<"JobDefinition"> | $Enums.JobType
+    enabled?: BoolFilter<"JobDefinition"> | boolean
+    timezone?: StringFilter<"JobDefinition"> | string
+    dailyHour?: IntNullableFilter<"JobDefinition"> | number | null
+    dailyMinute?: IntNullableFilter<"JobDefinition"> | number | null
+    intervalMs?: IntNullableFilter<"JobDefinition"> | number | null
+    status?: EnumJobStatusFilter<"JobDefinition"> | $Enums.JobStatus
+    lastRunAt?: DateTimeNullableFilter<"JobDefinition"> | Date | string | null
+    nextRunAt?: DateTimeNullableFilter<"JobDefinition"> | Date | string | null
+    lastError?: StringNullableFilter<"JobDefinition"> | string | null
+    lockedAt?: DateTimeNullableFilter<"JobDefinition"> | Date | string | null
+    lockedBy?: StringNullableFilter<"JobDefinition"> | string | null
+    lockTimeoutS?: IntFilter<"JobDefinition"> | number
+    createdAt?: DateTimeFilter<"JobDefinition"> | Date | string
+    updatedAt?: DateTimeFilter<"JobDefinition"> | Date | string
+    runs?: JobRunListRelationFilter
+  }, "id" | "key">
+
+  export type JobDefinitionOrderByWithAggregationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    enabled?: SortOrder
+    timezone?: SortOrder
+    dailyHour?: SortOrderInput | SortOrder
+    dailyMinute?: SortOrderInput | SortOrder
+    intervalMs?: SortOrderInput | SortOrder
+    status?: SortOrder
+    lastRunAt?: SortOrderInput | SortOrder
+    nextRunAt?: SortOrderInput | SortOrder
+    lastError?: SortOrderInput | SortOrder
+    lockedAt?: SortOrderInput | SortOrder
+    lockedBy?: SortOrderInput | SortOrder
+    lockTimeoutS?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: JobDefinitionCountOrderByAggregateInput
+    _avg?: JobDefinitionAvgOrderByAggregateInput
+    _max?: JobDefinitionMaxOrderByAggregateInput
+    _min?: JobDefinitionMinOrderByAggregateInput
+    _sum?: JobDefinitionSumOrderByAggregateInput
+  }
+
+  export type JobDefinitionScalarWhereWithAggregatesInput = {
+    AND?: JobDefinitionScalarWhereWithAggregatesInput | JobDefinitionScalarWhereWithAggregatesInput[]
+    OR?: JobDefinitionScalarWhereWithAggregatesInput[]
+    NOT?: JobDefinitionScalarWhereWithAggregatesInput | JobDefinitionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"JobDefinition"> | string
+    key?: StringWithAggregatesFilter<"JobDefinition"> | string
+    name?: StringWithAggregatesFilter<"JobDefinition"> | string
+    type?: EnumJobTypeWithAggregatesFilter<"JobDefinition"> | $Enums.JobType
+    enabled?: BoolWithAggregatesFilter<"JobDefinition"> | boolean
+    timezone?: StringWithAggregatesFilter<"JobDefinition"> | string
+    dailyHour?: IntNullableWithAggregatesFilter<"JobDefinition"> | number | null
+    dailyMinute?: IntNullableWithAggregatesFilter<"JobDefinition"> | number | null
+    intervalMs?: IntNullableWithAggregatesFilter<"JobDefinition"> | number | null
+    status?: EnumJobStatusWithAggregatesFilter<"JobDefinition"> | $Enums.JobStatus
+    lastRunAt?: DateTimeNullableWithAggregatesFilter<"JobDefinition"> | Date | string | null
+    nextRunAt?: DateTimeNullableWithAggregatesFilter<"JobDefinition"> | Date | string | null
+    lastError?: StringNullableWithAggregatesFilter<"JobDefinition"> | string | null
+    lockedAt?: DateTimeNullableWithAggregatesFilter<"JobDefinition"> | Date | string | null
+    lockedBy?: StringNullableWithAggregatesFilter<"JobDefinition"> | string | null
+    lockTimeoutS?: IntWithAggregatesFilter<"JobDefinition"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"JobDefinition"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"JobDefinition"> | Date | string
+  }
+
+  export type JobRunWhereInput = {
+    AND?: JobRunWhereInput | JobRunWhereInput[]
+    OR?: JobRunWhereInput[]
+    NOT?: JobRunWhereInput | JobRunWhereInput[]
+    id?: StringFilter<"JobRun"> | string
+    jobId?: StringFilter<"JobRun"> | string
+    startedAt?: DateTimeFilter<"JobRun"> | Date | string
+    endedAt?: DateTimeNullableFilter<"JobRun"> | Date | string | null
+    success?: BoolNullableFilter<"JobRun"> | boolean | null
+    error?: StringNullableFilter<"JobRun"> | string | null
+    triggeredBy?: StringNullableFilter<"JobRun"> | string | null
+    job?: XOR<JobDefinitionScalarRelationFilter, JobDefinitionWhereInput>
+  }
+
+  export type JobRunOrderByWithRelationInput = {
+    id?: SortOrder
+    jobId?: SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrderInput | SortOrder
+    success?: SortOrderInput | SortOrder
+    error?: SortOrderInput | SortOrder
+    triggeredBy?: SortOrderInput | SortOrder
+    job?: JobDefinitionOrderByWithRelationInput
+  }
+
+  export type JobRunWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: JobRunWhereInput | JobRunWhereInput[]
+    OR?: JobRunWhereInput[]
+    NOT?: JobRunWhereInput | JobRunWhereInput[]
+    jobId?: StringFilter<"JobRun"> | string
+    startedAt?: DateTimeFilter<"JobRun"> | Date | string
+    endedAt?: DateTimeNullableFilter<"JobRun"> | Date | string | null
+    success?: BoolNullableFilter<"JobRun"> | boolean | null
+    error?: StringNullableFilter<"JobRun"> | string | null
+    triggeredBy?: StringNullableFilter<"JobRun"> | string | null
+    job?: XOR<JobDefinitionScalarRelationFilter, JobDefinitionWhereInput>
+  }, "id">
+
+  export type JobRunOrderByWithAggregationInput = {
+    id?: SortOrder
+    jobId?: SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrderInput | SortOrder
+    success?: SortOrderInput | SortOrder
+    error?: SortOrderInput | SortOrder
+    triggeredBy?: SortOrderInput | SortOrder
+    _count?: JobRunCountOrderByAggregateInput
+    _max?: JobRunMaxOrderByAggregateInput
+    _min?: JobRunMinOrderByAggregateInput
+  }
+
+  export type JobRunScalarWhereWithAggregatesInput = {
+    AND?: JobRunScalarWhereWithAggregatesInput | JobRunScalarWhereWithAggregatesInput[]
+    OR?: JobRunScalarWhereWithAggregatesInput[]
+    NOT?: JobRunScalarWhereWithAggregatesInput | JobRunScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"JobRun"> | string
+    jobId?: StringWithAggregatesFilter<"JobRun"> | string
+    startedAt?: DateTimeWithAggregatesFilter<"JobRun"> | Date | string
+    endedAt?: DateTimeNullableWithAggregatesFilter<"JobRun"> | Date | string | null
+    success?: BoolNullableWithAggregatesFilter<"JobRun"> | boolean | null
+    error?: StringNullableWithAggregatesFilter<"JobRun"> | string | null
+    triggeredBy?: StringNullableWithAggregatesFilter<"JobRun"> | string | null
   }
 
   export type RankingWhereInput = {
@@ -21071,6 +23949,226 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type JobDefinitionCreateInput = {
+    id?: string
+    key: string
+    name: string
+    type: $Enums.JobType
+    enabled?: boolean
+    timezone?: string
+    dailyHour?: number | null
+    dailyMinute?: number | null
+    intervalMs?: number | null
+    status?: $Enums.JobStatus
+    lastRunAt?: Date | string | null
+    nextRunAt?: Date | string | null
+    lastError?: string | null
+    lockedAt?: Date | string | null
+    lockedBy?: string | null
+    lockTimeoutS?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    runs?: JobRunCreateNestedManyWithoutJobInput
+  }
+
+  export type JobDefinitionUncheckedCreateInput = {
+    id?: string
+    key: string
+    name: string
+    type: $Enums.JobType
+    enabled?: boolean
+    timezone?: string
+    dailyHour?: number | null
+    dailyMinute?: number | null
+    intervalMs?: number | null
+    status?: $Enums.JobStatus
+    lastRunAt?: Date | string | null
+    nextRunAt?: Date | string | null
+    lastError?: string | null
+    lockedAt?: Date | string | null
+    lockedBy?: string | null
+    lockTimeoutS?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    runs?: JobRunUncheckedCreateNestedManyWithoutJobInput
+  }
+
+  export type JobDefinitionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: StringFieldUpdateOperationsInput | string
+    dailyHour?: NullableIntFieldUpdateOperationsInput | number | null
+    dailyMinute?: NullableIntFieldUpdateOperationsInput | number | null
+    intervalMs?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lockedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lockTimeoutS?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    runs?: JobRunUpdateManyWithoutJobNestedInput
+  }
+
+  export type JobDefinitionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: StringFieldUpdateOperationsInput | string
+    dailyHour?: NullableIntFieldUpdateOperationsInput | number | null
+    dailyMinute?: NullableIntFieldUpdateOperationsInput | number | null
+    intervalMs?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lockedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lockTimeoutS?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    runs?: JobRunUncheckedUpdateManyWithoutJobNestedInput
+  }
+
+  export type JobDefinitionCreateManyInput = {
+    id?: string
+    key: string
+    name: string
+    type: $Enums.JobType
+    enabled?: boolean
+    timezone?: string
+    dailyHour?: number | null
+    dailyMinute?: number | null
+    intervalMs?: number | null
+    status?: $Enums.JobStatus
+    lastRunAt?: Date | string | null
+    nextRunAt?: Date | string | null
+    lastError?: string | null
+    lockedAt?: Date | string | null
+    lockedBy?: string | null
+    lockTimeoutS?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type JobDefinitionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: StringFieldUpdateOperationsInput | string
+    dailyHour?: NullableIntFieldUpdateOperationsInput | number | null
+    dailyMinute?: NullableIntFieldUpdateOperationsInput | number | null
+    intervalMs?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lockedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lockTimeoutS?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type JobDefinitionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: StringFieldUpdateOperationsInput | string
+    dailyHour?: NullableIntFieldUpdateOperationsInput | number | null
+    dailyMinute?: NullableIntFieldUpdateOperationsInput | number | null
+    intervalMs?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lockedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lockTimeoutS?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type JobRunCreateInput = {
+    id?: string
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    success?: boolean | null
+    error?: string | null
+    triggeredBy?: string | null
+    job: JobDefinitionCreateNestedOneWithoutRunsInput
+  }
+
+  export type JobRunUncheckedCreateInput = {
+    id?: string
+    jobId: string
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    success?: boolean | null
+    error?: string | null
+    triggeredBy?: string | null
+  }
+
+  export type JobRunUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    success?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    triggeredBy?: NullableStringFieldUpdateOperationsInput | string | null
+    job?: JobDefinitionUpdateOneRequiredWithoutRunsNestedInput
+  }
+
+  export type JobRunUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobId?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    success?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    triggeredBy?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type JobRunCreateManyInput = {
+    id?: string
+    jobId: string
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    success?: boolean | null
+    error?: string | null
+    triggeredBy?: string | null
+  }
+
+  export type JobRunUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    success?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    triggeredBy?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type JobRunUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobId?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    success?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    triggeredBy?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type RankingCreateInput = {
@@ -22138,6 +25236,233 @@ export namespace Prisma {
     dinozId?: SortOrder
   }
 
+  export type EnumJobTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobType | EnumJobTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobTypeFilter<$PrismaModel> | $Enums.JobType
+  }
+
+  export type EnumJobStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobStatus | EnumJobStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobStatusFilter<$PrismaModel> | $Enums.JobStatus
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type JobRunListRelationFilter = {
+    every?: JobRunWhereInput
+    some?: JobRunWhereInput
+    none?: JobRunWhereInput
+  }
+
+  export type JobRunOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type JobDefinitionCountOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    enabled?: SortOrder
+    timezone?: SortOrder
+    dailyHour?: SortOrder
+    dailyMinute?: SortOrder
+    intervalMs?: SortOrder
+    status?: SortOrder
+    lastRunAt?: SortOrder
+    nextRunAt?: SortOrder
+    lastError?: SortOrder
+    lockedAt?: SortOrder
+    lockedBy?: SortOrder
+    lockTimeoutS?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type JobDefinitionAvgOrderByAggregateInput = {
+    dailyHour?: SortOrder
+    dailyMinute?: SortOrder
+    intervalMs?: SortOrder
+    lockTimeoutS?: SortOrder
+  }
+
+  export type JobDefinitionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    enabled?: SortOrder
+    timezone?: SortOrder
+    dailyHour?: SortOrder
+    dailyMinute?: SortOrder
+    intervalMs?: SortOrder
+    status?: SortOrder
+    lastRunAt?: SortOrder
+    nextRunAt?: SortOrder
+    lastError?: SortOrder
+    lockedAt?: SortOrder
+    lockedBy?: SortOrder
+    lockTimeoutS?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type JobDefinitionMinOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    enabled?: SortOrder
+    timezone?: SortOrder
+    dailyHour?: SortOrder
+    dailyMinute?: SortOrder
+    intervalMs?: SortOrder
+    status?: SortOrder
+    lastRunAt?: SortOrder
+    nextRunAt?: SortOrder
+    lastError?: SortOrder
+    lockedAt?: SortOrder
+    lockedBy?: SortOrder
+    lockTimeoutS?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type JobDefinitionSumOrderByAggregateInput = {
+    dailyHour?: SortOrder
+    dailyMinute?: SortOrder
+    intervalMs?: SortOrder
+    lockTimeoutS?: SortOrder
+  }
+
+  export type EnumJobTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobType | EnumJobTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobTypeWithAggregatesFilter<$PrismaModel> | $Enums.JobType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumJobTypeFilter<$PrismaModel>
+    _max?: NestedEnumJobTypeFilter<$PrismaModel>
+  }
+
+  export type EnumJobStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobStatus | EnumJobStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobStatusWithAggregatesFilter<$PrismaModel> | $Enums.JobStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumJobStatusFilter<$PrismaModel>
+    _max?: NestedEnumJobStatusFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type JobDefinitionScalarRelationFilter = {
+    is?: JobDefinitionWhereInput
+    isNot?: JobDefinitionWhereInput
+  }
+
+  export type JobRunCountOrderByAggregateInput = {
+    id?: SortOrder
+    jobId?: SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrder
+    success?: SortOrder
+    error?: SortOrder
+    triggeredBy?: SortOrder
+  }
+
+  export type JobRunMaxOrderByAggregateInput = {
+    id?: SortOrder
+    jobId?: SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrder
+    success?: SortOrder
+    error?: SortOrder
+    triggeredBy?: SortOrder
+  }
+
+  export type JobRunMinOrderByAggregateInput = {
+    id?: SortOrder
+    jobId?: SortOrder
+    startedAt?: SortOrder
+    endedAt?: SortOrder
+    success?: SortOrder
+    error?: SortOrder
+    triggeredBy?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
   export type RankingCountOrderByAggregateInput = {
     id?: SortOrder
     dinozCount?: SortOrder
@@ -22283,17 +25608,6 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type UserIngredientsListRelationFilter = {
     every?: UserIngredientsWhereInput
     some?: UserIngredientsWhereInput
@@ -22412,20 +25726,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
     _max?: NestedEnumRoleFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type UuidNullableFilter<$PrismaModel = never> = {
@@ -22574,21 +25874,6 @@ export namespace Prisma {
     not?: NestedBytesNullableFilter<$PrismaModel> | Bytes | null
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type EnumLanguageNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel> | null
     in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel> | null
@@ -22652,24 +25937,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBytesNullableFilter<$PrismaModel>
     _max?: NestedBytesNullableFilter<$PrismaModel>
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumLanguageNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -23028,6 +26295,82 @@ export namespace Prisma {
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutStatusInput, DinozUpdateWithoutStatusInput>, DinozUncheckedUpdateWithoutStatusInput>
   }
 
+  export type JobRunCreateNestedManyWithoutJobInput = {
+    create?: XOR<JobRunCreateWithoutJobInput, JobRunUncheckedCreateWithoutJobInput> | JobRunCreateWithoutJobInput[] | JobRunUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: JobRunCreateOrConnectWithoutJobInput | JobRunCreateOrConnectWithoutJobInput[]
+    createMany?: JobRunCreateManyJobInputEnvelope
+    connect?: JobRunWhereUniqueInput | JobRunWhereUniqueInput[]
+  }
+
+  export type JobRunUncheckedCreateNestedManyWithoutJobInput = {
+    create?: XOR<JobRunCreateWithoutJobInput, JobRunUncheckedCreateWithoutJobInput> | JobRunCreateWithoutJobInput[] | JobRunUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: JobRunCreateOrConnectWithoutJobInput | JobRunCreateOrConnectWithoutJobInput[]
+    createMany?: JobRunCreateManyJobInputEnvelope
+    connect?: JobRunWhereUniqueInput | JobRunWhereUniqueInput[]
+  }
+
+  export type EnumJobTypeFieldUpdateOperationsInput = {
+    set?: $Enums.JobType
+  }
+
+  export type EnumJobStatusFieldUpdateOperationsInput = {
+    set?: $Enums.JobStatus
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type JobRunUpdateManyWithoutJobNestedInput = {
+    create?: XOR<JobRunCreateWithoutJobInput, JobRunUncheckedCreateWithoutJobInput> | JobRunCreateWithoutJobInput[] | JobRunUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: JobRunCreateOrConnectWithoutJobInput | JobRunCreateOrConnectWithoutJobInput[]
+    upsert?: JobRunUpsertWithWhereUniqueWithoutJobInput | JobRunUpsertWithWhereUniqueWithoutJobInput[]
+    createMany?: JobRunCreateManyJobInputEnvelope
+    set?: JobRunWhereUniqueInput | JobRunWhereUniqueInput[]
+    disconnect?: JobRunWhereUniqueInput | JobRunWhereUniqueInput[]
+    delete?: JobRunWhereUniqueInput | JobRunWhereUniqueInput[]
+    connect?: JobRunWhereUniqueInput | JobRunWhereUniqueInput[]
+    update?: JobRunUpdateWithWhereUniqueWithoutJobInput | JobRunUpdateWithWhereUniqueWithoutJobInput[]
+    updateMany?: JobRunUpdateManyWithWhereWithoutJobInput | JobRunUpdateManyWithWhereWithoutJobInput[]
+    deleteMany?: JobRunScalarWhereInput | JobRunScalarWhereInput[]
+  }
+
+  export type JobRunUncheckedUpdateManyWithoutJobNestedInput = {
+    create?: XOR<JobRunCreateWithoutJobInput, JobRunUncheckedCreateWithoutJobInput> | JobRunCreateWithoutJobInput[] | JobRunUncheckedCreateWithoutJobInput[]
+    connectOrCreate?: JobRunCreateOrConnectWithoutJobInput | JobRunCreateOrConnectWithoutJobInput[]
+    upsert?: JobRunUpsertWithWhereUniqueWithoutJobInput | JobRunUpsertWithWhereUniqueWithoutJobInput[]
+    createMany?: JobRunCreateManyJobInputEnvelope
+    set?: JobRunWhereUniqueInput | JobRunWhereUniqueInput[]
+    disconnect?: JobRunWhereUniqueInput | JobRunWhereUniqueInput[]
+    delete?: JobRunWhereUniqueInput | JobRunWhereUniqueInput[]
+    connect?: JobRunWhereUniqueInput | JobRunWhereUniqueInput[]
+    update?: JobRunUpdateWithWhereUniqueWithoutJobInput | JobRunUpdateWithWhereUniqueWithoutJobInput[]
+    updateMany?: JobRunUpdateManyWithWhereWithoutJobInput | JobRunUpdateManyWithWhereWithoutJobInput[]
+    deleteMany?: JobRunScalarWhereInput | JobRunScalarWhereInput[]
+  }
+
+  export type JobDefinitionCreateNestedOneWithoutRunsInput = {
+    create?: XOR<JobDefinitionCreateWithoutRunsInput, JobDefinitionUncheckedCreateWithoutRunsInput>
+    connectOrCreate?: JobDefinitionCreateOrConnectWithoutRunsInput
+    connect?: JobDefinitionWhereUniqueInput
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
+  export type JobDefinitionUpdateOneRequiredWithoutRunsNestedInput = {
+    create?: XOR<JobDefinitionCreateWithoutRunsInput, JobDefinitionUncheckedCreateWithoutRunsInput>
+    connectOrCreate?: JobDefinitionCreateOrConnectWithoutRunsInput
+    upsert?: JobDefinitionUpsertWithoutRunsInput
+    connect?: JobDefinitionWhereUniqueInput
+    update?: XOR<XOR<JobDefinitionUpdateToOneWithWhereWithoutRunsInput, JobDefinitionUpdateWithoutRunsInput>, JobDefinitionUncheckedUpdateWithoutRunsInput>
+  }
+
   export type UserCreateNestedOneWithoutRankingInput = {
     create?: XOR<UserCreateWithoutRankingInput, UserUncheckedCreateWithoutRankingInput>
     connectOrCreate?: UserCreateOrConnectWithoutRankingInput
@@ -23166,10 +26509,6 @@ export namespace Prisma {
 
   export type EnumRoleFieldUpdateOperationsInput = {
     set?: $Enums.Role
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type UserIngredientsUpdateManyWithoutUserNestedInput = {
@@ -23422,10 +26761,6 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDinozShopInput, UserUpdateWithoutDinozShopInput>, UserUncheckedUpdateWithoutDinozShopInput>
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type UserCreateNestedOneWithoutIngredientsInput = {
@@ -23700,11 +27035,18 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedEnumRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  export type NestedEnumJobTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobType | EnumJobTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobTypeFilter<$PrismaModel> | $Enums.JobType
+  }
+
+  export type NestedEnumJobStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobStatus | EnumJobStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobStatusFilter<$PrismaModel> | $Enums.JobStatus
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -23718,14 +27060,38 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedEnumJobTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobType | EnumJobTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobTypeWithAggregatesFilter<$PrismaModel> | $Enums.JobType
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumRoleFilter<$PrismaModel>
-    _max?: NestedEnumRoleFilter<$PrismaModel>
+    _min?: NestedEnumJobTypeFilter<$PrismaModel>
+    _max?: NestedEnumJobTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumJobStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobStatus | EnumJobStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobStatusWithAggregatesFilter<$PrismaModel> | $Enums.JobStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumJobStatusFilter<$PrismaModel>
+    _max?: NestedEnumJobStatusFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -23740,6 +27106,53 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
+  }
+
+  export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRoleFilter<$PrismaModel>
+    _max?: NestedEnumRoleFilter<$PrismaModel>
   }
 
   export type NestedUuidNullableFilter<$PrismaModel = never> = {
@@ -23765,20 +27178,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedBytesNullableFilter<$PrismaModel = never> = {
@@ -23810,23 +27209,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBytesNullableFilter<$PrismaModel>
     _max?: NestedBytesNullableFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumLanguageNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -24453,6 +27835,163 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type JobRunCreateWithoutJobInput = {
+    id?: string
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    success?: boolean | null
+    error?: string | null
+    triggeredBy?: string | null
+  }
+
+  export type JobRunUncheckedCreateWithoutJobInput = {
+    id?: string
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    success?: boolean | null
+    error?: string | null
+    triggeredBy?: string | null
+  }
+
+  export type JobRunCreateOrConnectWithoutJobInput = {
+    where: JobRunWhereUniqueInput
+    create: XOR<JobRunCreateWithoutJobInput, JobRunUncheckedCreateWithoutJobInput>
+  }
+
+  export type JobRunCreateManyJobInputEnvelope = {
+    data: JobRunCreateManyJobInput | JobRunCreateManyJobInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type JobRunUpsertWithWhereUniqueWithoutJobInput = {
+    where: JobRunWhereUniqueInput
+    update: XOR<JobRunUpdateWithoutJobInput, JobRunUncheckedUpdateWithoutJobInput>
+    create: XOR<JobRunCreateWithoutJobInput, JobRunUncheckedCreateWithoutJobInput>
+  }
+
+  export type JobRunUpdateWithWhereUniqueWithoutJobInput = {
+    where: JobRunWhereUniqueInput
+    data: XOR<JobRunUpdateWithoutJobInput, JobRunUncheckedUpdateWithoutJobInput>
+  }
+
+  export type JobRunUpdateManyWithWhereWithoutJobInput = {
+    where: JobRunScalarWhereInput
+    data: XOR<JobRunUpdateManyMutationInput, JobRunUncheckedUpdateManyWithoutJobInput>
+  }
+
+  export type JobRunScalarWhereInput = {
+    AND?: JobRunScalarWhereInput | JobRunScalarWhereInput[]
+    OR?: JobRunScalarWhereInput[]
+    NOT?: JobRunScalarWhereInput | JobRunScalarWhereInput[]
+    id?: StringFilter<"JobRun"> | string
+    jobId?: StringFilter<"JobRun"> | string
+    startedAt?: DateTimeFilter<"JobRun"> | Date | string
+    endedAt?: DateTimeNullableFilter<"JobRun"> | Date | string | null
+    success?: BoolNullableFilter<"JobRun"> | boolean | null
+    error?: StringNullableFilter<"JobRun"> | string | null
+    triggeredBy?: StringNullableFilter<"JobRun"> | string | null
+  }
+
+  export type JobDefinitionCreateWithoutRunsInput = {
+    id?: string
+    key: string
+    name: string
+    type: $Enums.JobType
+    enabled?: boolean
+    timezone?: string
+    dailyHour?: number | null
+    dailyMinute?: number | null
+    intervalMs?: number | null
+    status?: $Enums.JobStatus
+    lastRunAt?: Date | string | null
+    nextRunAt?: Date | string | null
+    lastError?: string | null
+    lockedAt?: Date | string | null
+    lockedBy?: string | null
+    lockTimeoutS?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type JobDefinitionUncheckedCreateWithoutRunsInput = {
+    id?: string
+    key: string
+    name: string
+    type: $Enums.JobType
+    enabled?: boolean
+    timezone?: string
+    dailyHour?: number | null
+    dailyMinute?: number | null
+    intervalMs?: number | null
+    status?: $Enums.JobStatus
+    lastRunAt?: Date | string | null
+    nextRunAt?: Date | string | null
+    lastError?: string | null
+    lockedAt?: Date | string | null
+    lockedBy?: string | null
+    lockTimeoutS?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type JobDefinitionCreateOrConnectWithoutRunsInput = {
+    where: JobDefinitionWhereUniqueInput
+    create: XOR<JobDefinitionCreateWithoutRunsInput, JobDefinitionUncheckedCreateWithoutRunsInput>
+  }
+
+  export type JobDefinitionUpsertWithoutRunsInput = {
+    update: XOR<JobDefinitionUpdateWithoutRunsInput, JobDefinitionUncheckedUpdateWithoutRunsInput>
+    create: XOR<JobDefinitionCreateWithoutRunsInput, JobDefinitionUncheckedCreateWithoutRunsInput>
+    where?: JobDefinitionWhereInput
+  }
+
+  export type JobDefinitionUpdateToOneWithWhereWithoutRunsInput = {
+    where?: JobDefinitionWhereInput
+    data: XOR<JobDefinitionUpdateWithoutRunsInput, JobDefinitionUncheckedUpdateWithoutRunsInput>
+  }
+
+  export type JobDefinitionUpdateWithoutRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: StringFieldUpdateOperationsInput | string
+    dailyHour?: NullableIntFieldUpdateOperationsInput | number | null
+    dailyMinute?: NullableIntFieldUpdateOperationsInput | number | null
+    intervalMs?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lockedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lockTimeoutS?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type JobDefinitionUncheckedUpdateWithoutRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    timezone?: StringFieldUpdateOperationsInput | string
+    dailyHour?: NullableIntFieldUpdateOperationsInput | number | null
+    dailyMinute?: NullableIntFieldUpdateOperationsInput | number | null
+    intervalMs?: NullableIntFieldUpdateOperationsInput | number | null
+    status?: EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+    lastRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    nextRunAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+    lockedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lockedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lockTimeoutS?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserCreateWithoutRankingInput = {
@@ -25713,6 +29252,42 @@ export namespace Prisma {
   export type DinozStatusUncheckedUpdateManyWithoutDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type JobRunCreateManyJobInput = {
+    id?: string
+    startedAt?: Date | string
+    endedAt?: Date | string | null
+    success?: boolean | null
+    error?: string | null
+    triggeredBy?: string | null
+  }
+
+  export type JobRunUpdateWithoutJobInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    success?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    triggeredBy?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type JobRunUncheckedUpdateWithoutJobInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    success?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    triggeredBy?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type JobRunUncheckedUpdateManyWithoutJobInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    endedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    success?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    triggeredBy?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserIngredientsCreateManyUserInput = {

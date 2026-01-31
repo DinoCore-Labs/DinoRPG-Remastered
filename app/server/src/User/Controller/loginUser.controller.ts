@@ -27,7 +27,8 @@ export async function loginUser(
 
 	const payload = {
 		id: user.id,
-		name: user.name
+		name: user.name,
+		role: user.role
 	};
 
 	const token = req.jwt.sign(payload, { expiresIn: '7d' });
