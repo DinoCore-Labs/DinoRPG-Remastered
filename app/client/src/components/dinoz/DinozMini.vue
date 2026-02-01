@@ -1,5 +1,5 @@
 <template>
-	<div ref="dino" />
+	<div ref="dino" class="dinoWrap" />
 </template>
 
 <script lang="ts">
@@ -10,8 +10,8 @@ export default defineComponent({
 	name: 'DinozMini',
 	props: {
 		display: { type: String, required: true },
-		width: { type: Number, default: 45 },
-		height: { type: Number, default: 55 },
+		width: { type: Number, default: 55 },
+		height: { type: Number, default: 65 },
 		flip: { type: Boolean, default: false }
 	},
 	data() {
@@ -25,29 +25,34 @@ export default defineComponent({
 				width: `${this.width}px`,
 				height: `${this.height}px`,
 				animationLength: `${(this.imageCount * 1000) / 24}ms`,
-				maxMargin: `-${this.width * this.imageCount}px`
+				maxMargin: `-${this.width * this.imageCount}px`,
+				offsetY: `13px` // 👈 remplace ton -13 ici
 			};
 		}
 	},
 	mounted() {
 		const dinoAnimDiv = this.$refs.dino as HTMLDivElement | null;
 		if (!dinoAnimDiv) return;
-		new sdino({
+
+		const anim = new sdino({
 			data: this.display,
 			flip: this.flip ? 0 : 1,
 			pflag: true
-		}).toAnimation(
-			div => {
-				div.querySelectorAll('img').forEach(img => {
+		});
+
+		anim.toAnimation(
+			(div: HTMLElement) => {
+				div.querySelectorAll('img').forEach((img: HTMLImageElement) => {
 					img.removeAttribute('hidden');
 				});
+
+				dinoAnimDiv.innerHTML = '';
 				dinoAnimDiv.appendChild(div);
-				this.imageCount = +(div.getAttribute('data-length') ?? '0');
+
+				this.imageCount = Number(div.getAttribute('data-length') ?? '0');
 			},
 			this.width,
-			this.height,
-			0,
-			-13
+			this.height
 		);
 	}
 });
@@ -63,10 +68,13 @@ export default defineComponent({
 	}
 }
 
-div {
+.dinoWrap {
 	width: v-bind('styleVars.width');
 	height: v-bind('styleVars.height');
 	overflow: hidden;
+
+	transform: translateY(v-bind('styleVars.offsetY'));
+
 	:deep(.DinoRPG-Animation) {
 		display: flex;
 		margin-left: 0;
