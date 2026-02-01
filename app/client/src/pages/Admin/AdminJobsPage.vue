@@ -109,7 +109,7 @@ export default defineComponent({
 			try {
 				this.jobs = await AdminJobsService.list();
 				if (!this.selectedKey && this.jobs.length) {
-					await this.select(this.jobs[0].key);
+					await this.select(this.jobs[0]!.key);
 				}
 			} catch (err: any) {
 				this.error = err?.message ?? String(err);
