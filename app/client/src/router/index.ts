@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import AccountPage from '../pages/AccountPage.vue';
 import AdminJobsPage from '../pages/Admin/AdminJobsPage.vue';
+import DinozPage from '../pages/DinozPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
 import HelpPage from '../pages/HelpPage.vue';
 import HomePage from '../pages/HomePage.vue';
@@ -54,6 +55,12 @@ const routes: RouteRecord[] = [
 				path: '/ingredients',
 				name: 'MyIngredients',
 				component: Ingredients,
+				meta: { auth: true }
+			},
+			{
+				path: '/dinoz/:id',
+				name: 'DinozPage',
+				component: DinozPage,
 				meta: { auth: true }
 			},
 			{

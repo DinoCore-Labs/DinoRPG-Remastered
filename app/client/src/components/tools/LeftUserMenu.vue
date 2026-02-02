@@ -47,7 +47,7 @@
 				<RouterLink
 					v-for="(dinoz, index) in dinozList"
 					:key="index"
-					:to="`/dino/${dinoz.id}`"
+					:to="`/dinoz/${dinoz.id}`"
 					class="dinoz"
 					:class="{
 						selected: currentDinozId() ? dinoz.id === currentDinozId() : dinoz.id === pageId

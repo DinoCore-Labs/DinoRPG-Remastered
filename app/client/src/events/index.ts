@@ -16,6 +16,7 @@ type Events = {
 	userMenu: boolean;
 	leftUserMenu: boolean;
 	toast: ToastEventPayload;
+	refreshDinoz: boolean;
 };
 
 const eventBus = mitt<Events>();
