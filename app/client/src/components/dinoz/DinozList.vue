@@ -11,7 +11,7 @@
 				//exhausted: dinoz.remaining === 0 && !dinoz.fight
 			}"
 		>
-			<RouterLink :to="`/dino/${dinoz.id}`">
+			<RouterLink :to="`/dinoz/${dinoz.id}`">
 				<span class="icon">
 					<span class="tinyBar">
 						<span class="life" :style="getBarWidth(dinoz.life, dinoz.maxLife)"></span>

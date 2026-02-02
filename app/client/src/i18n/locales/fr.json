@@ -47,6 +47,16 @@
 		"version": "Alpha Version",
 		"thanks": "Remerciements :"
 	},
+	"chooseDinoz": {
+		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
+		"nomDuDinoz": "Nom du Dinoz :",
+		"pageName": "Choix du Nom"
+	},
+	"dinozPage": {
+		"fx": "Statuts",
+		"elements": "Informations",
+		"level": "Ce niveau reflète la puissance de votre Dinoz."
+	},
 	"pageTitle": {
 		"account": "DinoRPG [ Informations personnelles ]",
 		"faq": "DinoRPG [ FAQ ]",
@@ -54,11 +64,14 @@
 		"items": "DinoRPG [ Inventaire ]",
 		"ingredients": "DinoRPG [ Ingrédients ]",
 		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
-		"dinozShop": "DinoRPG [ Enclos des Dinoz ]"
+		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
+		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
+		"dinozNaming": "DinoRPG [ Choix du Nom ]"
 	},
 	"button": {
 		"buyDinoz": "Acheter un Dinoz !",
-		"chose": "Choisir"
+		"chose": "Choisir",
+		"name": "Nommer !"
 	},
 	"popup": {
 		"confirm": "Confirmer cette action ?",

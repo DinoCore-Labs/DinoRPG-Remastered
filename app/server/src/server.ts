@@ -9,6 +9,7 @@ import Fastify, { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 
 import { adminJobsRoutes } from './Admin/Routes/adminJobs.routes.js';
 import { loadConfig } from './config/config.js';
+import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
 import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
 import { ensureJobsExist } from './jobs/ensureJobs.js';
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
@@ -160,6 +161,7 @@ async function buildServer() {
 	server.register(rankingRoutes, { prefix: 'api/ranking' });
 	server.register(inventoryRoutes, { prefix: 'api/inventory' });
 	server.register(shopRoutes, { prefix: 'api/shop' });
+	server.register(dinozRoutes, { prefix: 'api/dinoz' });
 
 	server.register(adminJobsRoutes, { prefix: 'api/admin' });
 	//------------------------------------------------------
