@@ -9,17 +9,17 @@
 			:dinozData="dinozData"
 			:key="dinozData.display" /><template #fallback> <Loading /> </template
 	></Suspense>
-	<!--<div class="dinozPanels" v-if="nameChoosen === true">
-		<DinozActions
+	<div class="dinozPanels" v-if="nameChoosen === true">
+		<!--<DinozActions
 			v-show="isReady"
 			:dinoz="dinozData"
 			:refresh-dinoz="refreshDinoz"
 			@continueMission="continueMission()"
 			@endMission="getFiche()"
-		/>
-		<TabPanel v-if="isReady" :dinozData="dinozData" />
+		/>-->
+		<TabPanels v-if="isReady" :dinozData="dinozData" />
 		<div class="footer" />
-	</div>-->
+	</div>
 </template>
 
 <script lang="ts">
@@ -32,7 +32,7 @@ import { userStore } from '../store/userStore';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import DinozName from '../components/dinoz/DinozName.vue';
 //import DinozActions from '../components/dinoz/DinozActions.vue';
-//import TabPanel from '../components/common/TabPanel.vue';
+import TabPanels from '../components/common/TabPanels.vue';
 
 export default defineComponent({
 	name: 'DinozPage',
@@ -48,7 +48,7 @@ export default defineComponent({
 	components: {
 		DinozName,
 		//DinozActions,
-		//TabPanel,
+		TabPanels,
 		DinozDisplay: defineAsyncComponent(() => import('../components/dinoz/DinozDisplay.vue'))
 	},
 	methods: {

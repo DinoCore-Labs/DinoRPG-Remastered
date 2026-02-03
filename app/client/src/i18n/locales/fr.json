@@ -55,7 +55,18 @@
 	"dinozPage": {
 		"fx": "Statuts",
 		"elements": "Informations",
-		"level": "Ce niveau reflète la puissance de votre Dinoz."
+		"level": "Ce niveau reflète la puissance de votre Dinoz.",
+		"tabs": {
+			"map": "Carte",
+			"inventory": "Inventaire",
+			"details": "Détails",
+			"players": "Joueurs",
+			"average": "Moyenne",
+			"clans": "Clans",
+			"completion": "Complétion",
+			"pantheon": "Pantheon",
+			"stats": "Stats"
+		}
 	},
 	"pageTitle": {
 		"account": "DinoRPG [ Informations personnelles ]",
