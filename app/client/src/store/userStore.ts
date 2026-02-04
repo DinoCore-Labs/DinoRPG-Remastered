@@ -8,13 +8,15 @@ export const userStore = defineStore('userStore', {
 		id: null,
 		name: null,
 		role: null as UserRole | null,
-		gold: 0
+		gold: 0,
+		sortOption: 'default'
 	}),
 	getters: {
 		isLogged: state => !!state.id,
 		getUserName: state => state.name,
 		isAdmin: state => state.role === 'ADMIN' || state.role === 'SUPER_ADMIN',
-		isModerator: state => state.role === 'MODERATOR' || state.role === 'ADMIN' || state.role === 'SUPER_ADMIN'
+		isModerator: state => state.role === 'MODERATOR' || state.role === 'ADMIN' || state.role === 'SUPER_ADMIN',
+		getSortOption: (state: UserStore) => state.sortOption
 	},
 	actions: {
 		setUser(data: UserData) {
@@ -25,6 +27,9 @@ export const userStore = defineStore('userStore', {
 		},
 		setGold(gold: number) {
 			this.gold = gold;
+		},
+		setSortOption(sortOption: string): void {
+			this.sortOption = sortOption;
 		},
 		clearUser() {
 			this.id = null;

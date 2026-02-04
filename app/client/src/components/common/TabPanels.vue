@@ -12,8 +12,8 @@
 			</li>
 		</ul>
 		<MapTab v-if="tabSelected === 1" :dinozData="dinozData" />
-		<!--<InventoryTab v-if="tabSelected === 2" />
-		<DetailsTab v-if="tabSelected === 3" :dinozData="dinozData" />-->
+		<InventoryTab v-if="tabSelected === 2" />
+		<!--<DetailsTab v-if="tabSelected === 3" :dinozData="dinozData" />-->
 	</div>
 </template>
 
@@ -21,7 +21,7 @@
 import { defineComponent, type PropType } from 'vue';
 import { sessionStore } from '../../store/sessionStore';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
-//import InventoryTab from '../../components/common/InventoryTab.vue';
+import InventoryTab from './InventoryTab.vue';
 //import DetailsTab from '../../components/common/DetailsTab.vue';
 import MapTab from './MapTab.vue';
 
@@ -29,7 +29,7 @@ export default defineComponent({
 	name: 'TabPanels',
 	props: { dinozData: { type: Object as PropType<DinozFiche>, required: true } },
 	components: {
-		//InventoryTab,
+		InventoryTab,
 		//DetailsTab,
 		MapTab
 	},
