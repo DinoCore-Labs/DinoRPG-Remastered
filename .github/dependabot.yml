@@ -7,11 +7,6 @@ version: 2
 
 updates:
   - package-ecosystem: 'npm'
-    directories:
-      - '/'
-      - '/packages/core'
-      - '/packages/bot'
-      - '/app/server'
-      - '/app/client'
+    directory: '/'
     schedule:
       interval: 'weekly'
