@@ -66,6 +66,22 @@
 			"completion": "Complétion",
 			"pantheon": "Pantheon",
 			"stats": "Stats"
+		},
+		"inventory": {
+			"itemName": "Nom de l'objet",
+			"stock": "Stock",
+			"actions": "Actions",
+			"full": "Stock plein",
+			"sortBy": "Trier par",
+			"sort": {
+				"default": "Par défaut",
+				"nameAsc": "Nom (A → Z)",
+				"nameDesc": "Nom (Z → A)",
+				"priceAsc": "Prix (croissant)",
+				"priceDesc": "Prix (décroissant)",
+				"qtyAsc": "Quantité (croissante)",
+				"qtyDesc": "Quantité (décroissante)"
+			}
 		}
 	},
 	"pageTitle": {
@@ -82,7 +98,11 @@
 	"button": {
 		"buyDinoz": "Acheter un Dinoz !",
 		"chose": "Choisir",
-		"name": "Nommer !"
+		"name": "Nommer !",
+		"shop": "Boutique",
+		"search": "Rechercher",
+		"loading": "Chargement...",
+		"noResults": "Aucun résultat"
 	},
 	"popup": {
 		"confirm": "Confirmer cette action ?",
@@ -98,6 +118,25 @@
 		"Too_many_accounts_created_from_this_device_this_month": "Trop de comptes ont été créés depuis ce navigateur ce mois-ci. Veuillez réessayer le mois prochain.",
 		"Too_many_accounts_created_from_this_network_this_month": "Trop de comptes ont été créés depuis ce réseau ce mois-ci. Veuillez réessayer le mois prochain.",
 		"unknown": "Une erreur est survenue."
+	},
+	"tooltip": {
+		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
+		"item": {
+			"use": "Utiliser **immédiatement**",
+			"useOff": "Cet objet ne peut pas être **utilisé**",
+			"equipTitle": "Placer dans **l'équipement de combat**&&//Les objets équipés pourront être utilisés pendant les combats par votre Dinoz//",
+			"equipDescription": "//Les objets équipés pourront être utilisés pendant les combats par votre Dinoz//",
+			"equip": "Cet objet peut être placé dans **l'équipement de combat**",
+			"equipOff": "Cet objet **ne peut pas être placé** dans l'équipement de combat",
+			"maxQuantity": "Quantité maximale :"
+		},
+		"shop": {
+			"buyMaxTopNote": "Vous possédez {own} exemplaire(s) de cet objet, sur {max} maximum.",
+			"buyMaxBottomNote": "//Cliquez ici pour remplir votre stock de cet objet.//",
+			"invalidQuantity": "Veuillez entrer une quantité **valide**.",
+			"invalidQuantity_foot": "//Vérifiez que vous avez bien entré un nombre ou que vous avez assez de place.//"
+		},
+		"serverTime": "Temps du serveur"
 	},
 	"ranking": {
 		"th": {
