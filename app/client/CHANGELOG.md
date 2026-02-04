@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.1.4
+
+### Patch Changes
+
+- 449be3b: chore: update dependencies
+
 ## 0.1.3
 
 ### Patch Changes

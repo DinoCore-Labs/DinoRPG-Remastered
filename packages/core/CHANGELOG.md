@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.0.5
+
+### Patch Changes
+
+- 449be3b: chore: update dependencies
+
 ## 0.0.4
 
 ### Patch Changes
