@@ -68,7 +68,7 @@
 				style="z-index: 100; position: absolute"
 				id="svgDraw"
 			>
-				<template v-for="(line, index) in svgLines" :key="index">
+				<template v-for="line in svgLines">
 					<line :x1="line.x1" :y1="line.y1" :x2="line.x2" :y2="line.y2" :id="line.name" class="svgLine" />
 				</template>
 			</svg>
