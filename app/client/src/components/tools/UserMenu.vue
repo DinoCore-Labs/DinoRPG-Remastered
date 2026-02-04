@@ -125,14 +125,7 @@
 						</svg>
 						<span>{{ $t('topBar.userMenu.guide') }}</span>
 					</RouterLink>
-					<!--
-					<RouterLink class="link" to="/events">
-						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
-							<path d="M4 10v7h3v-7zm6 0v7h3v-7zM2 22h19v-3H2zm14-12v7h3v-7zm-4.5-9L2 6v2h19V6z"></path>
-						</svg>
-						<span>{{ $t('topBar.rightMenu.events') }}</span>
-					</RouterLink>
-					<RouterLink v-if="playerStore.isAdmin" class="link" to="/admin">
+					<RouterLink v-if="uStore.isAdmin" class="link" to="/admin">
 						<svg
 							class="svgLinkIcon admin"
 							focusable="false"
@@ -146,6 +139,13 @@
 							<circle cx="12" cy="12" r="3"></circle>
 						</svg>
 						<span>Admin</span>
+					</RouterLink>
+					<!--
+					<RouterLink class="link" to="/events">
+						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
+							<path d="M4 10v7h3v-7zm6 0v7h3v-7zM2 22h19v-3H2zm14-12v7h3v-7zm-4.5-9L2 6v2h19V6z"></path>
+						</svg>
+						<span>{{ $t('topBar.rightMenu.events') }}</span>
 					</RouterLink>
 					<RouterLink v-if="playerStore.isAdmin" class="link" to="/forum">
 						<svg
