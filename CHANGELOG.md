@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.0.5
+
+### Patch Changes
+
+- 449be3b: chore: update dependencies
+
 ## 0.0.4
 
 ### Patch Changes
@@ -30,6 +36,12 @@
 
 ## 🔹 Bot
 
+## 0.1.1
+
+### Patch Changes
+
+- 449be3b: chore: update dependencies
+
 ## 0.1.0
 
 ### Minor Changes
@@ -37,6 +49,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.1.3
+
+### Patch Changes
+
+- 449be3b: chore: update dependencies
+- Updated dependencies [449be3b]
+  - @dinorpg/core@0.0.5
 
 ## 0.1.2
 
@@ -70,6 +90,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.1.4
+
+### Patch Changes
+
+- 449be3b: chore: update dependencies
 
 ## 0.1.3
 
