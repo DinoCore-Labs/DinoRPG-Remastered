@@ -16,13 +16,13 @@ export async function loginUser(
 	const user = await prisma.user.findUnique({ where: { name: name } });
 
 	if (!user) {
-		throw new ExpectedError('Invalid_credentials', 401);
+		throw new ExpectedError('Invalid_credentials', { statusCode: 401 });
 	}
 
 	const isMatch = user && (await bcrypt.compare(password, user.password));
 
 	if (!user || !isMatch) {
-		throw new ExpectedError('Invalid_email_or_password', 401);
+		throw new ExpectedError('Invalid_email_or_password', { statusCode: 401 });
 	}
 
 	const payload = {

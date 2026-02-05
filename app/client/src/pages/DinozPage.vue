@@ -10,13 +10,7 @@
 			:key="dinozData.display" /><template #fallback> <Loading /> </template
 	></Suspense>
 	<div class="dinozPanels" v-if="nameChoosen === true">
-		<!--<DinozActions
-			v-show="isReady"
-			:dinoz="dinozData"
-			:refresh-dinoz="refreshDinoz"
-			@continueMission="continueMission()"
-			@endMission="getFiche()"
-		/>-->
+		<DinozActions v-show="isReady" :dinoz="dinozData" :refresh-dinoz="refreshDinoz" />
 		<TabPanels v-if="isReady" :dinozData="dinozData" />
 		<div class="footer" />
 	</div>
@@ -31,7 +25,7 @@ import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import DinozName from '../components/dinoz/DinozName.vue';
-//import DinozActions from '../components/dinoz/DinozActions.vue';
+import DinozActions from '../components/dinoz/DinozActions.vue';
 import TabPanels from '../components/common/TabPanels.vue';
 
 export default defineComponent({
@@ -47,7 +41,7 @@ export default defineComponent({
 	},
 	components: {
 		DinozName,
-		//DinozActions,
+		DinozActions,
 		TabPanels,
 		DinozDisplay: defineAsyncComponent(() => import('../components/dinoz/DinozDisplay.vue'))
 	},
@@ -116,12 +110,12 @@ export default defineComponent({
 				await this.refreshDinoz();
 			}
 		});
-		/*eventBus.on('equipItem', items => {
+		eventBus.on('equipItem', items => {
 			this.dinozData.items = items.map(i => {
 				return i.itemId;
 			});
 			eventBus.emit('refreshDinozStats', true);
-		});*/
+		});
 		try {
 			await this.getFiche();
 		} catch (err) {
@@ -130,10 +124,10 @@ export default defineComponent({
 		}
 		this.nameChoosen = this.dinozData.name !== '?';
 	},
-	/*unmounted() {
-		EventBus.off('equipItem');
-		EventBus.off('refreshDinoz');
-	},*/
+	unmounted() {
+		eventBus.off('equipItem');
+		eventBus.off('refreshDinoz');
+	},
 	watch: {
 		// Reload page if player go on another dinoz page
 		'$route.params.id': async function (to) {
@@ -163,7 +157,6 @@ export default defineComponent({
 .dinoz {
 	background-image: url('../assets/background/dinoz_bg_cut.webp');
 	background-repeat: no-repeat;
-	//min-height: 265px;
 	display: grid;
 	padding-top: 15px;
 	height: 250px;

@@ -192,7 +192,7 @@ export default defineComponent({
 					await this.resfreshInventory();
 					eventBus.emit('equipItem', items);
 				} catch (error) {
-					errorHandler.handle(error, this.$toast);
+					errorHandler.handle(error, this.$toast, this.$t);
 					return;
 				}
 			}

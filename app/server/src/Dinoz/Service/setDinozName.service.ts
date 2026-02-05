@@ -2,7 +2,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { canDinozRename } from '../Controller/canDinozRename.js';
-import { updateDinoz } from '../Controller/updateDinoz.js';
+import { updateDinoz } from '../Controller/updateDinoz.controller.js';
 
 export const regexName = /^(?=.{1,32}$)[A-Za-zÀ-ÿ0-9]+( [A-Za-zÀ-ÿ0-9]+)*$/;
 
@@ -23,7 +23,7 @@ export async function setDinozName(req: FastifyRequest<{ Params: Params; Body: B
 	const dinoz = await canDinozRename(dinozId);
 
 	if (!dinoz) {
-		throw new ExpectedError('dinozNotFound', dinozId);
+		throw new ExpectedError('dinozNotFound', { params: { dinozId } });
 	}
 
 	// Vérifie ownership

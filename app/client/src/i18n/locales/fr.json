@@ -51,6 +51,7 @@
 		"fx": "Statuts",
 		"elements": "Informations",
 		"level": "Ce niveau reflète la puissance de votre Dinoz.",
+		"action": "Actions",
 		"tabs": {
 			"map": "Carte",
 			"inventory": "Inventaire",
@@ -193,6 +194,11 @@
 		"Missing_device_cookie": "Impossible d’identifier votre navigateur. Veuillez autoriser les cookies et réessayer.",
 		"Too_many_accounts_created_from_this_device_this_month": "Trop de comptes ont été créés depuis ce navigateur ce mois-ci. Veuillez réessayer le mois prochain.",
 		"Too_many_accounts_created_from_this_network_this_month": "Trop de comptes ont été créés depuis ce réseau ce mois-ci. Veuillez réessayer le mois prochain.",
+		"userNotFound": "Le joueur {{authedId}} n'a pas été trouvé.",
+		"dinozNotFound": "Le Dinoz {{dinozId}} n'a pas été trouvé.",
+		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz {dinozId}.",
+		"tooManyMagicItemEquiped": "Votre Dinoz ne peut pas équiper plus d'objets magiques.",
+		"maxQuantityInventory": "Vous avez déjà trop de cet objet dans votre inventaire",
 		"unknown": "Une erreur est survenue."
 	},
 	"tooltip": {

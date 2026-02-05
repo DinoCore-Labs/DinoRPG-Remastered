@@ -27,6 +27,7 @@
 					:src="getImgURL('map/icon', place.icon)"
 					:alt="place.icon"
 					:style="{ left: place.posLeft + 'px', top: place.posTop + 'px' }"
+					@click="moveTo(place.placeId)"
 					@mouseenter="isHover(place.name, place.placeId, true)"
 					@mouseleave="isHover(place.name, place.placeId, false)"
 					v-tippy="{
@@ -84,14 +85,15 @@ import type { PlaceDisplayed } from '@dinorpg/core/models/place/placeDisplayed.j
 import type { svgLines } from '@dinorpg/core/models/place/svgLines.js';
 import { dinozStore } from '../../store/dinozStore.js';
 //import { sessionStore } from '../../store/sessionStore.js';
-//import { DinozService } from '../../services/index.js';
-//import { errorHandler } from '../../utils/errorHandler.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 //import { UnavailableReason } from '@drpg/prisma/enums';
 //import { formatText } from '../../utils/formatText.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { SWAMP_FLOODED_DAYS, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeList.js';
+import { errorHandler } from '../../utils/errorHandler.js';
+import { formatText } from '../../utils/formatText.js';
+import { DinozService } from '../../services/dinoz.service.js';
 
 export default defineComponent({
 	name: 'WorldMap',
@@ -213,20 +215,20 @@ export default defineComponent({
 				this.left = centerMapX;
 			}
 		},
-		/*async moveTo(placeId: number): Promise<void> {
+		async moveTo(placeId: number): Promise<void> {
 			if (!this.dinozData.borderPlace?.includes(placeId)) {
 				return;
 			}
 
 			// Check if dinoz is being sold
-			if (this.dinozData.unavailableReason === UnavailableReason.selling) {
+			/*if (this.dinozData.unavailableReason === UnavailableReason.selling) {
 				this.$toast.open({ message: formatText(this.$t(`toast.isSelling`)), type: 'error' });
 				return;
-			}
+			}*/
 
 			try {
-				const moveTry = await DinozService.betaMove(this.dinozData.id, placeId);
-				this.sessionStore.setFightResult(moveTry);
+				/*const moveTry = */ await DinozService.move(this.dinozData.id, placeId);
+				//this.sessionStore.setFightResult(moveTry);
 				// Update Dinoz Place in the store if fight is win
 				const dinozId = this.dinozData.id;
 				const dinozList = this.dinozStore.getDinozList;
@@ -241,7 +243,7 @@ export default defineComponent({
 					return;
 				}
 
-				if (moveTry.result) {
+				/*if (moveTry.result) {
 					this.dinozStore.setDinozList(
 						dinozList.map(dinoz => {
 							if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
@@ -264,12 +266,16 @@ export default defineComponent({
 				this.$router.push({
 					name: 'Fight',
 					params: { dinozId: this.dinozData.id?.toString() }
+				});*/
+				this.$router.push({
+					name: 'DinozPage',
+					params: { dinozId: this.dinozData.id.toString() }
 				});
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
-		},*/
+		},
 		myPos(placeId: number): boolean {
 			return placeId === this.dinozData.placeId;
 		},
@@ -308,7 +314,7 @@ export default defineComponent({
 			const img = new Image();
 			const map = placeList.find(p => p.placeId === this.dinozData.placeId)?.map;
 			img.src = this.getImgURL('map/map', map ?? '');
-			console.log(img);
+			//console.log(img);
 			img.onload = () => {
 				// We only keep places that belong to the current map and places that dinoz can reach (useful for hidden ones)
 				this.placeMap = placeList.filter(

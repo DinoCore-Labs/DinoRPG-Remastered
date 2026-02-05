@@ -40,7 +40,7 @@ export async function setSkillStateHandler(req: FastifyRequest<{ Params: Params;
 	});
 
 	if (!dinoz) {
-		throw new ExpectedError('dinozNotFound', dinozId);
+		throw new ExpectedError('dinozNotFound', { params: { dinozId } });
 	}
 
 	// 2) Skill exists + activatable

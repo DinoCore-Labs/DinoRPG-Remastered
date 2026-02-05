@@ -23,5 +23,14 @@ export const DinozService = {
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	async move(dinozId: number, placeId: number): Promise<void> {
+		return http()
+			.put(`/dinoz/move`, {
+				placeId: placeId,
+				dinozId: dinozId
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
