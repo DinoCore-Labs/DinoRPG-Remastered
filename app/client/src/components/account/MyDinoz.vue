@@ -36,7 +36,6 @@ import { raceList } from '../../constants/race.js';
 import { statusList } from '../../constants/status.js';
 import { dinozPlacement } from '../../constants/dinozPlacement.js';
 import type { DinozPublicFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
-import { userStore } from '../../store/userStore.js';
 import type { UserProfile } from '@dinorpg/core/models/user/userProfile.js';
 import type { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 
@@ -91,10 +90,6 @@ export default defineComponent({
 			}
 
 			return 'top: -15px; left: -15px;';
-		},
-		goToDinoz(dinozId: number) {
-			if (!this.myAccount) return;
-			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 		},
 		unsortedDinozList() {
 			this.sortedDinozList =
