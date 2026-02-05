@@ -47,11 +47,6 @@
 		"version": "Alpha Version",
 		"thanks": "Remerciements :"
 	},
-	"chooseDinoz": {
-		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
-		"nomDuDinoz": "Nom du Dinoz :",
-		"pageName": "Choix du Nom"
-	},
 	"dinozPage": {
 		"fx": "Statuts",
 		"elements": "Informations",
@@ -59,13 +54,12 @@
 		"tabs": {
 			"map": "Carte",
 			"inventory": "Inventaire",
-			"details": "Détails",
-			"players": "Joueurs",
-			"average": "Moyenne",
-			"clans": "Clans",
-			"completion": "Complétion",
-			"pantheon": "Pantheon",
-			"stats": "Stats"
+			"details": "Détails"
+		},
+		"chooseDinoz": {
+			"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
+			"nomDuDinoz": "Nom du Dinoz :",
+			"pageName": "Choix du Nom"
 		},
 		"inventory": {
 			"itemName": "Nom de l'objet",
@@ -82,6 +76,88 @@
 				"qtyAsc": "Quantité (croissante)",
 				"qtyDesc": "Quantité (décroissante)"
 			}
+		},
+		"details": {
+			"asc": "Ascendant",
+			"desc": "Descendant",
+			"th": {
+				"comp": "Compétence",
+				"type": "Type",
+				"active": "Actif"
+			},
+			"type": {
+				"name": {
+					"E": "Événement",
+					"P": "Permanent",
+					"A": "Attaque",
+					"S": "Spécial",
+					"U": "Unique",
+					"I": "Invocation",
+					"C": "Collecte"
+				},
+				"description": {
+					"E": "Cette compétence **peut se déclencher avant chaque attaque**",
+					"P": "Cette compétence s'applique **à tout moment**",
+					"A": "Cette compétence **peut remplacer** une attaque",
+					"S": "Cette compétence a un **effet particulier**",
+					"U": "Cette compétence ne s'appliquera qu'**une seule fois pour l'ensemble des Dinoz**",
+					"I": "Cette compétence permet d'**invoquer la divinité** avec laquelle le Dinoz a pactisé pendant le combat",
+					"C": "Cette compétence **permet de collecter des ingrédients** dans différents lieux"
+				}
+			},
+			"activate": {
+				"false": "Actuellement **INACTIF** &&//Une compétence inactive ne sera plus utilisée par votre Dinoz. Cliquez pour activer//",
+				"true": "Actuellement **ACTIF** &&//Cliquez pour désactiver//",
+				"locked": "Ne peut pas être désactivé"
+			},
+			"sort": {
+				"default": "Défaut",
+				"energy": "Énergie",
+				"type": "Type",
+				"state": "État",
+				"title": "Trier les compétences"
+			},
+			"statistics": "Caractéristiques",
+			"assaults": "Assauts",
+			"defenses": "Défenses",
+			"specials": "Spéciales",
+			"base": "Base",
+			"skill": "Skill",
+			"fireAssault": "Assaut de Feu",
+			"woodAssault": "Assaut de Bois",
+			"waterAssault": "Assaut d'Eau",
+			"lightningAssault": "Assaut de Foudre",
+			"airAssault": "Assaut d'Air",
+			"fireDefense": "Défense de Feu",
+			"woodDefense": "Défense de Bois",
+			"waterDefense": "Défense d'Eau",
+			"lightningDefense": "Défense de Foudre",
+			"airDefense": "Défense d'Air",
+			"voidDefense": "Défense Neutre",
+			"baseElementContribution": "Contribution de l'élément de base",
+			"hpRegen": "Régénération de PV",
+			"initiative": "Initiative",
+			"energy": "Énergie",
+			"energyRecovery": "Récupération d'énergie",
+			"maxFollowers": "Nombre maximum de suiveurs",
+			"armor": "Armure",
+			"armorBreak": "Perforation",
+			"multihit": "Multi-coups",
+			"evasion": "Esquive",
+			"superEvasion": "Super Esquive",
+			"counter": "Contre",
+			"speed": "Durée d'un tour",
+			"fireSpeed": "Durée d'un tour :fire:",
+			"woodSpeed": "Durée d'un tour :wood:",
+			"waterSpeed": "Durée d'un tour :water:",
+			"lightningSpeed": "Durée d'un tour :lightning:",
+			"airSpeed": "Durée d'un tour :air:",
+			"bubbleRate": "Taux de bulle",
+			"torchDamage": "Dégâts de la torche",
+			"acidBloodDamage": "Dégâts de sang acide",
+			"baseValue": "Valeur de base",
+			"criticalHitChance": "Chance de coup critique",
+			"criticalHitDamage": "Bonus de coup critique"
 		}
 	},
 	"pageTitle": {

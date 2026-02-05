@@ -1,4 +1,5 @@
 import { DinozFiche, DinozFicheLite, DinozPublicFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { placeList } from '@dinorpg/core/models/place/placeList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getMaxXp, getRace } from '@dinorpg/core/utils/dinozUtils.js';
@@ -158,4 +159,17 @@ export const toDinozPublicFiche = (
 		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b)
 		//order: dinoz.order
 	};
+};
+
+export const canChangeSkillState = (dinoz: { status: Pick<DinozStatus, 'statusId'>[] }) => {
+	return dinoz.status.some(status => status.statusId === DinozStatusId.STRATEGY_IN_130_LESSONS);
+};
+
+export const knowSkillId = (
+	dinoz: {
+		skills: Pick<DinozSkills, 'skillId'>[];
+	},
+	skillId: number
+) => {
+	return dinoz.skills.some(skill => skill.skillId === skillId);
 };
