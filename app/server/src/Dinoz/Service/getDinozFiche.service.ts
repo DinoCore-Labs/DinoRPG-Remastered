@@ -22,11 +22,11 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 	const playerData = await getDinozFicheRequest(dinozId, authedId);
 
 	if (!playerData) {
-		throw new ExpectedError('playerNotFound');
+		throw new ExpectedError('userNotFound', { params: { authedId } });
 	}
 
 	if (playerData.dinoz.length === 0) {
-		throw new ExpectedError('dinozNotFound', dinozId);
+		throw new ExpectedError('dinozNotFound', { params: { dinozId } });
 	}
 
 	const myDinoz = playerData.dinoz.find(d => d.id === dinozId);

@@ -188,7 +188,7 @@ async function buildServer() {
 		console.log('UPLOAD:', {
 			filename: file?.filename,
 			mimetype: file?.mimetype,
-			truncated: file?.file.truncated // <--- la vraie propriété utile
+			truncated: file?.file.truncated
 		});
 
 		reply.send({ ok: true });
@@ -197,7 +197,10 @@ async function buildServer() {
 	server.setErrorHandler((err, req, reply) => {
 		// 1) Erreurs "attendues"
 		if (err instanceof ExpectedError) {
-			return reply.code(err.statusCode ?? 400).send({ message: err.message });
+			return reply.code(err.statusCode).send({
+				message: err.message,
+				params: err.params ?? {}
+			});
 		}
 		// 2) Erreurs Fastify (validation, etc.)
 		const fe = err as FastifyError;

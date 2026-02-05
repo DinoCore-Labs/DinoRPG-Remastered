@@ -1,0 +1,17 @@
+export enum GatherType {
+	FISH,
+	CUEILLE1,
+	CUEILLE2,
+	CUEILLE3,
+	CUEILLE4,
+	ENERGY1,
+	ENERGY2,
+	HUNT,
+	SEEK,
+	XMAS,
+	TICTAC,
+	LABO,
+	ANNIV,
+	PARTY,
+	DAILY
+}

@@ -28,7 +28,7 @@ export async function getDinozSkillHandler(req: FastifyRequest<{ Params: Params 
 	});
 
 	if (!dinoz) {
-		throw new ExpectedError('dinozNotFound', dinozId);
+		throw new ExpectedError('dinozNotFound', { params: { dinozId } });
 	}
 
 	if (!dinoz.user || dinoz.user.id !== authed.id) {
