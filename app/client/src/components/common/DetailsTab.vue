@@ -24,8 +24,8 @@
 				<DZSelect class="sort-select" id="sort" v-model="selectedSort" :options="sortOptions" @change="sort()" />
 			</div>
 			<div class="label">
-				<DZRadio id="asc" :label="$t('details.asc')" value="asc" v-model="picked" @change="reverse()" />
-				<DZRadio id="desc" :label="$t('details.desc')" value="desc" v-model="picked" @change="reverse()" />
+				<DZRadio id="asc" :label="$t('dinozPage.details.asc')" value="asc" v-model="picked" @change="reverse()" />
+				<DZRadio id="desc" :label="$t('dinozPage.details.desc')" value="desc" v-model="picked" @change="reverse()" />
 			</div>
 		</div>
 		<DZTable>
@@ -56,8 +56,8 @@
 					<Tippy theme="normal">
 						{{ skill.type }}
 						<template #content>
-							<h1 v-html="formatContent($t(`details.type.name.${skill.type}`))" />
-							<p v-html="formatContent($t(`details.type.description.${skill.type}`))" />
+							<h1 v-html="formatContent($t(`dinozPage.details.type.name.${skill.type}`))" />
+							<p v-html="formatContent($t(`dinozPage.details.type.description.${skill.type}`))" />
 						</template>
 					</Tippy>
 				</td>
@@ -103,10 +103,10 @@
 					<img :src="getImgURL('elements', `elem_${stat.name}`)" :alt="stat.name" />
 					<span>{{ stat.value }}</span>
 					<template #content>
-						<h1 v-html="formatContent($t(`details.${stat.name}Assault`))" />
+						<h1 v-html="formatContent($t(`dinozPage.details.${stat.name}Assault`))" />
 						<ul class="stat-details">
 							<li v-for="(detail, i) in stat.details" :key="i">
-								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 								<span v-if="detail.type === 'element'">{{ detail.value }}</span>
 								<span v-if="detail.type === 'element'" class="detail-name"
 									>x 5 ({{ $t('dinozPage.details.baseElementContribution') }})</span
@@ -152,37 +152,37 @@
 						<h1 v-html="formatContent($t(`dinozPage.details.${stat.name}Defense`))" />
 						<ul class="stat-details">
 							<li v-if="!stat.neutral">
-								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 								<img :src="getImgURL('elements', `elem_${stat.weak2?.name}`)" alt="info_button" class="ml-4" />
 								<span>{{ stat.weak2?.value }}</span>
 								<span class="detail-name"> x 0.5</span>
 							</li>
 							<li v-if="!stat.neutral">
-								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 								<img :src="getImgURL('elements', `elem_${stat.weak1?.name}`)" alt="info_button" class="ml-4" />
 								<span>{{ stat.weak1?.value }}</span>
 								<span class="detail-name"> x 0.5</span>
 							</li>
 							<li v-if="!stat.neutral">
-								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 								<img :src="getImgURL('elements', `elem_${stat.element?.name}`)" alt="info_button" class="ml-4" />
 								<span>{{ stat.element?.value }}</span>
 								<span class="detail-name"> x 1</span>
 							</li>
 							<li v-if="!stat.neutral">
-								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 								<img :src="getImgURL('elements', `elem_${stat.strong1?.name}`)" alt="info_button" class="ml-4" />
 								<span>{{ stat.strong1?.value }}</span>
 								<span class="detail-name"> x 1.5</span>
 							</li>
 							<li v-if="!stat.neutral">
-								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 								<img :src="getImgURL('elements', `elem_${stat.strong2?.name}`)" alt="info_button" class="ml-4" />
 								<span>{{ stat.strong2?.value }}</span>
 								<span class="detail-name"> x 1.5</span>
 							</li>
 							<li v-for="(detail, i) in stat.details" :key="i">
-								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 								<span v-if="detail.type === 'element'">{{ detail.value }}</span>
 								<img
 									v-if="detail.type === 'element'"
@@ -233,10 +233,10 @@
 						{{ stat.percent ? Math.round((stat.value - 1) * 100) : stat.value }}{{ stat.percent ? '%' : '' }}
 					</span>
 					<template #content>
-						<h1 v-html="formatContent($t(`details.${stat.name}`))" />
+						<h1 v-html="formatContent($t(`dinozPage.details.${stat.name}`))" />
 						<ul class="stat-details">
 							<li v-if="stat.name === SpecialStat.BUBBLE_RATE">
-								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 								<span>
 									<span />
 									<img :src="getImgURL('elements', 'elem_water')" />
@@ -250,7 +250,7 @@
 								</span>
 							</li>
 							<li v-for="(detail, i) in stat.details" :key="i">
-								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 								<span v-if="detail.type === 'base'">
 									{{ detail.value }}{{ detail.percent ? '%' : '' }}
 									<span class="detail-name">
@@ -299,11 +299,11 @@ import type { SkillDetails } from '@dinorpg/core/models/skills/skillDetails.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { DinozService } from '../../services/dinoz.service.js';
 import { errorHandler } from '../../utils/errorHandler.js';
-//import eventBus from '../../events/index.js';
+import eventBus from '../../events/index.js';
 import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
 import { AssaultElement, getAssaultStat } from '@dinorpg/core/models/skills/getAssaultStats.js';
 import { DefenseElement, getDefenseStat } from '@dinorpg/core/models/skills/getDefenseStats.js';
-//import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
+import { SpecialStat, getSpecialStat } from '@dinorpg/core/models/skills/getSpecialStats.js';
 import { skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import { userStore } from '../../store/userStore.js';
@@ -313,7 +313,7 @@ import { toSkillDetails } from '@dinorpg/core/models/skills/toSkillDetails.js';
 import DZSelect from '../utils/DZSelect.vue';
 import DZTable from '../utils/DZTable.vue';
 import DZRadio from '../utils/DZRadio.vue';
-//import { TIME_BASE } from '@drpg/core/utils/fightConstants';
+import { TIME_BASE } from '@dinorpg/core/utils/fightConstants.js';
 
 //import { GetOwnDinozBuildResponse } from '@drpg/core/returnTypes/DinozBuild';
 //import { DinozBuildService } from '../../services/DinozBuildService.js';
@@ -344,9 +344,9 @@ export default defineComponent({
 			DefenseElement: DefenseElement,
 			getDefenseStat,
 			defenseStats: [] as ReturnType<typeof getDefenseStat>[],
-			//SpecialStat: SpecialStat,
-			//getSpecialStat,
-			//specialStats: [] as NonNullable<ReturnType<typeof getSpecialStat>>[],
+			SpecialStat: SpecialStat,
+			getSpecialStat,
+			specialStats: [] as NonNullable<ReturnType<typeof getSpecialStat>>[],
 			userStore: userStore(),
 			goTo,
 			sortOptions: [
@@ -419,7 +419,7 @@ export default defineComponent({
 			const key = id as keyof typeof statusList.imgName;
 			return statusList.imgName[key] ?? 'unknown';
 		},
-		/*refreshStats() {
+		refreshStats() {
 			// Get stats
 			this.assaultStats = Object.values(AssaultElement).map(stat =>
 				getAssaultStat(
@@ -439,15 +439,15 @@ export default defineComponent({
 				)
 			);
 
-			const priest = this.playerStore.isPriest;
+			//const priest = this.userStore.isPriest;
 
 			// Find global speed value to compute it with elemental speed
 			const global_speed_special = getSpecialStat(
 				this.dinozData,
 				this.dinozData.status.map(s => s.statusId),
 				this.dinozSkill,
-				SpecialStat.SPEED,
-				priest
+				SpecialStat.SPEED
+				//priest
 			);
 
 			// Find global critical value
@@ -455,8 +455,8 @@ export default defineComponent({
 				this.dinozData,
 				this.dinozData.status.map(s => s.statusId),
 				this.dinozSkill,
-				SpecialStat.CRITICAL_HIT_CHANCE,
-				priest
+				SpecialStat.CRITICAL_HIT_CHANCE
+				//priest
 			);
 
 			let global_speed = 1;
@@ -470,8 +470,8 @@ export default defineComponent({
 						this.dinozData,
 						this.dinozData.status.map(s => s.statusId),
 						this.dinozSkill,
-						stat as SpecialStat,
-						priest
+						stat as SpecialStat
+						//priest
 					);
 
 					// Add +1 to bubble for proper display
@@ -541,7 +541,8 @@ export default defineComponent({
 					}
 				})
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
-		}*/ async loadComponent(): Promise<void> {
+		},
+		async loadComponent(): Promise<void> {
 			try {
 				this.dinozSkill = toSkillDetails(this.dinozData.skills);
 				this.sort();
@@ -560,12 +561,12 @@ export default defineComponent({
 				}
 			}*/
 
-			//this.refreshStats();
+			this.refreshStats();
 
 			// Refresh special stats on EventBus `refreshDinozStats`
-			/*EventBus.on('refreshDinozStats', () => {
+			eventBus.on('refreshDinozStats', () => {
 				this.refreshStats();
-			});*/
+			});
 		} /*,
 		async changeDinozBuild() {
 			if (!this.dinozBuild || !this.dinozStore.currentDinozId) {
@@ -602,10 +603,10 @@ export default defineComponent({
 		dinozData() {
 			this.loadComponent();
 		}
-	} /*,
+	},
 	unmounted() {
-		EventBus.off('refreshDinozStats');
-	}*/
+		eventBus.off('refreshDinozStats');
+	}
 });
 </script>
 
@@ -756,7 +757,7 @@ export default defineComponent({
 		}
 		.stat-values {
 			list-style-type: none;
-			padding: 4px 8px;
+			padding: 2px 4px;
 			padding-bottom: 0;
 			li {
 				position: relative;
@@ -797,7 +798,7 @@ export default defineComponent({
 .stat-details {
 	list-style-type: none;
 	color: white;
-	font-size: 9pt;
+	font-size: 10.5pt;
 	li {
 		display: flex;
 		align-items: center;
@@ -805,7 +806,7 @@ export default defineComponent({
 			margin-right: 4px;
 			&:first-child {
 				width: 7px;
-				margin-left: 8px;
+				margin-left: -10px;
 			}
 		}
 		.detail-name {
