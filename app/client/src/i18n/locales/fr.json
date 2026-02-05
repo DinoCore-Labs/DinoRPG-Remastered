@@ -278,7 +278,12 @@
 				"response": "Ces compteurs augmentent en réalisant certaines actions sur DinoRPG. && **Vous gagnez des icônes, des titres et des points en franchissant certains paliers de compteurs.** && Les compteurs **dorés** représentent des gains rares ou difficiles à obtenir !"
 			},
 			"todo": "à venir..."
-		}
+		},
+		"tabs": {
+			"dinoz": "Mes Dinoz",
+			"friends": "Mes Amis"
+		},
+		"level": "Niveau"
 	},
 	"userCard": {
 		"title": "Aller sur le profil DinoRPG de {user}"
