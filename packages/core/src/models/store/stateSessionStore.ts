@@ -3,7 +3,8 @@
 
 export interface StateSessionStore {
 	//fight?: FightResult;
-	tab: number;
+	tabDinoz: number;
+	tabAccount: number;
 	//fromFight: boolean;
 	//liveStats: LiveStatsType;
 }

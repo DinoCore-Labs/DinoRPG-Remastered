@@ -2,13 +2,13 @@
 	<div class="tabPanel">
 		<ul class="tabs">
 			<li :class="tabSelected === 1 ? 'active' : ''">
-				<a @click="sessionStore.setTab(1)">{{ $t('dinozPage.tabs.map') }}</a>
+				<a @click="sessionStore.setTabDinoz(1)">{{ $t('dinozPage.tabs.map') }}</a>
 			</li>
 			<li :class="tabSelected === 2 ? 'active' : ''">
-				<a @click="sessionStore.setTab(2)">{{ $t('dinozPage.tabs.inventory') }}</a>
+				<a @click="sessionStore.setTabDinoz(2)">{{ $t('dinozPage.tabs.inventory') }}</a>
 			</li>
 			<li :class="tabSelected === 3 ? 'active' : ''">
-				<a @click="sessionStore.setTab(3)">{{ $t('dinozPage.tabs.details') }}</a>
+				<a @click="sessionStore.setTabDinoz(3)">{{ $t('dinozPage.tabs.details') }}</a>
 			</li>
 		</ul>
 		<MapTab v-if="tabSelected === 1" :dinozData="dinozData" />
@@ -40,7 +40,7 @@ export default defineComponent({
 	},
 	computed: {
 		tabSelected(): number {
-			return this.sessionStore.getTab;
+			return this.sessionStore.getTabDinoz;
 		}
 	}
 });

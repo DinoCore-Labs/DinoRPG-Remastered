@@ -6,7 +6,8 @@ import { defineStore } from 'pinia';
 export const sessionStore = defineStore('sessionStore', {
 	state: (): StateSessionStore => ({
 		//fight: undefined,
-		tab: 1
+		tabDinoz: 1,
+		tabAccount: 1
 		//fromFight: false,
 		/*liveStats: {
 			connectedPlayers: 0,
@@ -16,15 +17,19 @@ export const sessionStore = defineStore('sessionStore', {
 	}),
 	getters: {
 		//getFightResult: (state: StateSessionStore) => state.fight,
-		getTab: (state: StateSessionStore) => state.tab
+		getTabDinoz: (state: StateSessionStore) => state.tabDinoz,
+		getTabAccount: (state: StateSessionStore) => state.tabAccount
 		//getLiveStats: (state: StateSessionStore) => state.liveStats
 	},
 	actions: {
 		/*setFightResult(fight: FightResult | undefined): void {
 			this.fight = fight;
 		},*/
-		setTab(tab: number): void {
-			this.tab = tab;
+		setTabDinoz(tab: number): void {
+			this.tabDinoz = tab;
+		},
+		setTabAccount(tab: number): void {
+			this.tabAccount = tab;
 		} /*,
 		setLiveStats(stats: LiveStatsType): void {
 			this.liveStats = stats;
