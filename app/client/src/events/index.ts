@@ -18,6 +18,7 @@ type Events = {
 	leftUserMenu: boolean;
 	toast: ToastEventPayload;
 	refreshDinoz: boolean;
+	refreshDinozStats: boolean;
 	refreshInventory: boolean;
 	equipItem: Array<DinozItems>;
 	unEquipItem: number;

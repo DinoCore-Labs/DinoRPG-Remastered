@@ -94,7 +94,7 @@ export default defineComponent({
 				const backPack = await InventoryService.equipInventoryItem(dinozId, item, false);
 				this.items = new Array(this.dinozData.maxItems);
 				backPack.forEach((item, index) => (this.items[index] = item.itemId));
-				//eventBus.emit('refreshDinozStats', true);
+				eventBus.emit('refreshDinozStats', true);
 				eventBus.emit('refreshInventory', true);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);

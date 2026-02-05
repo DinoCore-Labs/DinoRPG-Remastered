@@ -173,7 +173,7 @@ export const BaseSpecialStats = {
 	[SpecialStat.CRITICAL_HIT_DAMAGE]: 0.5
 };
 
-/*export const getSpecialStat = (
+export const getSpecialStat = (
 	dinoz: Pick<DinozFiche, 'items' | 'nbrUpFire' | 'nbrUpWood' | 'nbrUpLightning' | 'nbrUpAir' | 'nbrUpWater'>,
 	statuses: DinozStatusId[],
 	skills: Pick<SkillDetails, 'id' | 'effects' | 'name' | 'element'>[],
@@ -354,9 +354,9 @@ export const BaseSpecialStats = {
 	dinoz.items.forEach(item_id => {
 		const item = itemList[item_id as Item];
 
-		if (!item.passiveEffects) return;
+		if (!item.passiveEffect) return;
 
-		const effect = item.passiveEffects[stat];
+		const effect = item.passiveEffect[stat];
 		const isAddition = typeof effect === 'number';
 
 		if (effect) {
@@ -423,4 +423,4 @@ export const BaseSpecialStats = {
 		value: +(value * multiplier),
 		details
 	};
-};*/
+};
