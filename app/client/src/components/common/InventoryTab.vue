@@ -250,7 +250,7 @@ export default defineComponent({
 					quantity: i.quantity
 				};
 			});
-			console.log(this.allItemsData);
+			//console.log(this.allItemsData);
 			this.sortOption = this.userStore.getSortOption;
 			this.sortItems();
 		}

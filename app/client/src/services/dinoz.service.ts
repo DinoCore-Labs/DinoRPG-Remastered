@@ -14,5 +14,14 @@ export const DinozService = {
 			.get(`/dinoz/fiche/${id}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	async setSkillState(id: number, skillId: number, skillState: boolean): Promise<boolean> {
+		return http()
+			.put(`/dinoz/setskillstate/${id}`, {
+				skillId,
+				skillState
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

@@ -1,6 +1,6 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.dinozNaming')}`" :header="$t(`chooseDinoz.pageName`)"></TitleHeader>
-	<DZDisclaimer help round content="chooseDinoz.information" />
+	<TitleHeader :title="`${$t('pageTitle.dinozNaming')}`" :header="$t(`dinozPage.chooseDinoz.pageName`)"></TitleHeader>
+	<DZDisclaimer help round content="dinozPage.chooseDinoz.information" />
 	<div id="chooseDinozName">
 		<div class="dinoz_display">
 			<Suspense>
@@ -15,7 +15,7 @@
 			</Suspense>
 		</div>
 		<div class="naming">
-			<p class="name">{{ $t('chooseDinoz.nomDuDinoz') }}</p>
+			<p class="name">{{ $t('dinozPage.chooseDinoz.nomDuDinoz') }}</p>
 			<DZInput type="text" v-model="dinozName" />
 			<DZButton @click="nameDinoz()">{{ $t('button.name') }}</DZButton>
 		</div>
