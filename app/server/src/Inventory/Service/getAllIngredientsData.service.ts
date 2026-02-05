@@ -2,7 +2,7 @@ import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { getUserIngredientDataRequest } from '../Service/getUserIngredient.service.js';
+import { getUserIngredientDataRequest } from '../Controller/getUserIngredient.controller.js';
 
 export async function getAllIngredientsData(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;

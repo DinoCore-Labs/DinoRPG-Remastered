@@ -65,6 +65,7 @@
 								content: formatContent($t('tooltip.item.equipTitle')),
 								theme: 'small'
 							}"
+							@click="equipItem(item)"
 						>
 							<img :src="getImgURL('icons', 'small_equip')" alt="small_equip" />
 						</a>
@@ -91,7 +92,7 @@ import { defineComponent } from 'vue';
 import type { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 import { InventoryService } from '../../services/inventory.service.js';
 import { errorHandler } from '../../utils/errorHandler.js';
-//import eventBus from '../../events/index.js';
+import eventBus from '../../events/index.js';
 //import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 //import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { dinozStore } from '../../store/dinozStore.js';
@@ -131,17 +132,6 @@ export default defineComponent({
 		isFull(item: ItemFiche): boolean {
 			return (item.quantity ?? 0) >= (item.maxQuantity ?? 0);
 		},
-		/*async refreshDinozList(): Promise<void> {
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
-
-			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
-
-			const newDinozList = commonData.dinoz.map(d => d.id);
-			const oldDinozList = dinozList.map(d => d.id);
-			this.dinozStore.setDinozList(commonData.dinoz);
-
-			this.$router.push({ name: 'DinozPage', params: { id: newDinozList.find(x => !oldDinozList.includes(x)) } });
-		},*/
 		/*async useItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
 				const dinozId = this.$route.params.id as string;
@@ -194,19 +184,19 @@ export default defineComponent({
 				}
 			}
 		},*/
-		/*async equipItem(item: ItemFiche): Promise<void> {
+		async equipItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
 				const dinozId = parseInt(this.$route.params.id as string);
 				try {
 					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
 					await this.resfreshInventory();
-					EventBus.emit('equipItem', items);
+					eventBus.emit('equipItem', items);
 				} catch (error) {
 					errorHandler.handle(error, this.$toast);
 					return;
 				}
 			}
-		},*/
+		},
 		sortItems() {
 			switch (this.sortOption) {
 				case 'nameAsc':
@@ -262,13 +252,13 @@ export default defineComponent({
 			errorHandler.handle(err, this.$toast);
 			return;
 		}
-		/*EventBus.on('refreshInventory', async () => {
+		eventBus.on('refreshInventory', async () => {
 			await this.resfreshInventory();
-		});*/
-	} /*,
+		});
+	},
 	unmounted() {
-		EventBus.off('refreshInventory');
-	}*/
+		eventBus.off('refreshInventory');
+	}
 });
 </script>
 

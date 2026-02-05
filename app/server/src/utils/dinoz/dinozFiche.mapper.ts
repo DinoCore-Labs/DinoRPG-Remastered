@@ -1,10 +1,20 @@
 import { DinozFiche, DinozFicheLite, DinozPublicFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { placeList } from '@dinorpg/core/models/place/placeList.js';
+import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getMaxXp, getRace } from '@dinorpg/core/utils/dinozUtils.js';
 
-import { Dinoz, DinozSkills, DinozStatus, Ranking, User, UserItems, UserRewards } from '../../../../prisma/index.js';
+import {
+	Dinoz,
+	DinozItems,
+	DinozSkills,
+	DinozStatus,
+	Ranking,
+	User,
+	UserItems,
+	UserRewards
+} from '../../../../prisma/index.js';
 
 export type UserForDinozFiche = Parameters<typeof toDinozFiche>[0];
 export const toDinozFiche = (
@@ -37,7 +47,7 @@ export const toDinozFiche = (
 			//| 'gather'
 		> & {
 			//missions: DinozMission[];
-			//items: Pick<DinozItem, 'itemId'>[];
+			items: Pick<DinozItems, 'itemId'>[];
 			status: Pick<DinozStatus, 'statusId'>[];
 			skills: Pick<DinozSkills, 'skillId' | 'state'>[];
 			//followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
@@ -70,8 +80,8 @@ export const toDinozFiche = (
 		maxExperience: getMaxXp(dinoz),
 		race: getRace(dinoz.raceId),
 		placeId: dinoz.placeId,
-		//items: dinoz.items?.map(item => item.itemId),
-		//maxItems: backpackSlot(player.engineer, dinoz),
+		items: dinoz.items?.map(item => item.itemId),
+		maxItems: backpackSlot(/*player.engineer,*/ dinoz),
 		status: dinoz.status?.sort((a, b) => a.statusId - b.statusId),
 		borderPlace:
 			//dinoz.unavailableReason !== null || !dinoz.fight || dinoz.leaderId
@@ -172,4 +182,21 @@ export const knowSkillId = (
 	skillId: number
 ) => {
 	return dinoz.skills.some(skill => skill.skillId === skillId);
+};
+
+export const backpackSlot = (
+	//engineer: boolean,
+	dinoz: Pick<Dinoz, 'id'> & {
+		skills: Pick<DinozSkills, 'skillId'>[];
+		status: Pick<DinozStatus, 'statusId'>[];
+	}
+) => {
+	let total = 2;
+	if (dinoz.skills.find(skill => skill.skillId === skillList[Skill.POCHE_VENTRALE].id)) total++;
+	if (dinoz.skills.find(skill => skill.skillId === skillList[Skill.SURPLIS_DHADES].id)) total++;
+	if (dinoz.status.find(status => status.statusId === DinozStatusId.BACKPACK)) total++;
+	//if (engineer) total++;
+
+	// TODO: Check for other dinoz storekeeper here
+	return total;
 };
