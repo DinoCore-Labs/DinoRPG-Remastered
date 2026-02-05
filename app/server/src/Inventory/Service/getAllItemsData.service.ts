@@ -2,7 +2,7 @@ import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { getUserInventoryDataRequest } from '../Service/getUserInventory.service.js';
+import { getUserInventoryDataRequest } from '../Controller/getUserInventory.controller.js';
 
 export async function getAllItemsData(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;

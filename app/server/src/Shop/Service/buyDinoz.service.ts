@@ -79,9 +79,9 @@ export async function buyDinoz(req: FastifyRequest<{ Params: BuyDinozParams }>, 
 			{
 				...dinozCreated,
 				status: [],
-				skills: []
+				skills: [],
 				//missions: [],
-				//items: [],
+				items: []
 				//followers: [],
 				//concentration: null,
 				//TournamentTeam: [],

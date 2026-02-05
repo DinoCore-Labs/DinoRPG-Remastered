@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import gameConfig from '../../config/game.config.js';
-import { addItemToInventory } from '../../Inventory/Service/addItem.service.js';
+import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { prisma } from '../../prisma.js';
 import { CreateUserInput } from '../Schema/user.schema.js';
 import { enforceSignupLimits } from '../Service/signupLimiter.service.js';

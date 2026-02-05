@@ -150,6 +150,12 @@ exports.Prisma.RelationLoadStrategy = {
   join: 'join'
 };
 
+exports.Prisma.DinozItemsScalarFieldEnum = {
+  id: 'id',
+  itemId: 'itemId',
+  dinozId: 'dinozId'
+};
+
 exports.Prisma.DinozSkillsScalarFieldEnum = {
   id: 'id',
   skillId: 'skillId',
@@ -344,6 +350,7 @@ exports.MoneyType = exports.$Enums.MoneyType = {
 
 exports.Prisma.ModelName = {
   Dinoz: 'Dinoz',
+  DinozItems: 'DinozItems',
   DinozSkills: 'DinozSkills',
   DinozSkillsUnlockable: 'DinozSkillsUnlockable',
   DinozStatus: 'DinozStatus',

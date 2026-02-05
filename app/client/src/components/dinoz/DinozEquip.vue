@@ -7,15 +7,16 @@
 				v-if="item"
 				:src="getImgURL('item', `item_${itemNameList[item]}`)"
 				:alt="itemNameList[item]"
+				@click="unequip(item)"
 			>
 				<template #content>
-					<h1 v-html="formatContent($t(`item.name.${itemNameList[item]}`))" />
-					<p v-html="formatContent($t(`item.description.${itemNameList[item]}`))" />
+					<h1 v-html="formatContent($t(`items.name.${itemNameList[item]}`))" />
+					<p v-html="formatContent($t(`items.description.${itemNameList[item]}`))" />
 				</template>
 			</Tippy>
 			<Tippy theme="small" tag="img" v-else :src="getImgURL('item', `item_empty`)" alt="empty">
 				<template #content>
-					<p v-html="formatContent($t(`item.empty`))" />
+					<p v-html="formatContent($t(`items.empty`))" />
 				</template>
 			</Tippy>
 		</template>
@@ -25,12 +26,13 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
 import { itemNameList } from '@dinorpg/core/models/items/itemNameList.js';
-//import { errorHandler } from '../../utils/errorHandler.js';
-//import { InventoryService } from '../../services/InventoryService.js';
-//import EventBus from '../../events/index.js';
+import { errorHandler } from '../../utils/errorHandler.js';
+import { InventoryService } from '../../services/inventory.service.js';
+import eventBus from '../../events/index.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
-//import { formatText } from '../../utils/formatText.js';
+import { formatText } from '../../utils/formatText.js';
+import type { DinozItems } from '@dinorpg/core/models/dinoz/dinozItems.js';
 
 export default defineComponent({
 	name: 'DinozEquip',
@@ -47,8 +49,8 @@ export default defineComponent({
 		itemNameList() {
 			return itemNameList;
 		}
-	}
-	/*watch: {
+	},
+	watch: {
 		'dinozData.items': {
 			handler(newItems: number[] | undefined) {
 				if (!this.dinozData || newItems === undefined) {
@@ -71,8 +73,14 @@ export default defineComponent({
 			},
 			immediate: true
 		}
-	},*/
-	/*methods: {
+	},
+	methods: {
+		applyEquippedItems(backPack: Array<DinozItems>) {
+			if (!this.dinozData?.maxItems) return;
+
+			this.items = new Array(this.dinozData.maxItems);
+			backPack.forEach((it, index) => (this.items[index] = it.itemId));
+		},
 		async unequip(item: number) {
 			if (!this.dinozData) {
 				this.$toast.open({
@@ -81,21 +89,20 @@ export default defineComponent({
 				});
 				return;
 			}
-
 			const dinozId = parseInt(this.$route.params.id as string);
 			try {
 				const backPack = await InventoryService.equipInventoryItem(dinozId, item, false);
 				this.items = new Array(this.dinozData.maxItems);
 				backPack.forEach((item, index) => (this.items[index] = item.itemId));
-				EventBus.emit('refreshDinozStats', true);
-				EventBus.emit('refreshInventory', true);
+				//eventBus.emit('refreshDinozStats', true);
+				eventBus.emit('refreshInventory', true);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;
 			}
 		}
-	},*/
-	/*mounted() {
+	},
+	mounted() {
 		if (!this.dinozData) {
 			this.$toast.open({
 				message: formatText(this.$t(`toast.dinozDataMissing`)),
@@ -103,10 +110,14 @@ export default defineComponent({
 			});
 			return;
 		}
-
 		this.items = new Array(this.dinozData.maxItems);
 		this.dinozData.items.forEach((item, index) => (this.items[index] = item));
-	}*/
+		// ✅ écoute l’event envoyé par InventoryTab
+		eventBus.on('equipItem', this.applyEquippedItems);
+	},
+	unmounted() {
+		eventBus.off('equipItem', this.applyEquippedItems);
+	}
 });
 </script>
 

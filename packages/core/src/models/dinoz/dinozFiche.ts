@@ -20,8 +20,8 @@ export interface DinozFiche {
 	race: DinozRace;
 	placeId: number;
 	//actions: ActionFiche[];
-	//items: number[];
-	//maxItems: number;
+	items: number[];
+	maxItems: number;
 	skills: DinozSkillsDTO[];
 	status: DinozStatusDTO[];
 	borderPlace: number[];

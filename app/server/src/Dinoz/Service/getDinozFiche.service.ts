@@ -4,7 +4,6 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { getDinozFicheRequest } from '../Controller/getDinozFiche.controller.js';
 
-// import { getDinozFicheRequest } from './getDinozFicheRequest.js';
 // import { TournamentManager } from '../../tournament/TournamentManager.js';
 // import { isDinozInTournament } from '../../tournament/isDinozInTournament.js';
 // import { getAvailableActions } from '../../actions/getAvailableActions.js';
