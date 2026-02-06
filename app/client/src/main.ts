@@ -9,6 +9,7 @@ import App from './App.vue';
 import { initI18n } from './i18n';
 import { mixins } from './mixins/mixins';
 import router from './router';
+import ConfirmPlugin from './utils/confirmPlugin';
 import { createToastPlugin } from './utils/toast';
 
 const vueTippyProps = {
@@ -31,10 +32,11 @@ const app = createApp(App);
 app.use(pinia);
 app.use(await initI18n());
 app.use(router);
+app.use(ConfirmPlugin);
 app.use(
 	createToastPlugin({
 		position: 'bottom',
-		duration: 50000
+		duration: 20000
 	})
 );
 app.use(VueTippy, vueTippyProps);

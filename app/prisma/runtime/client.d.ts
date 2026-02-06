@@ -1,4 +1,7 @@
-import { AnyNull , DbNull , Decimal , empty , isAnyNull , isDbNull , isJsonNull , join , JsonNull , NullTypes , ObjectEnumValue , PrismaClientInitializationError , PrismaClientKnownRequestError , PrismaClientRustPanicError , PrismaClientUnknownRequestError , PrismaClientValidationError , raw , RawValue , Sql , sql as sqltag , Value } from '@prisma/client-runtime-utils';
+import { AnyNull , AnyNullClass , DbNull , DbNullClass , Decimal , empty , isAnyNull , isDbNull , isJsonNull , join , JsonNull , JsonNullClass , NullTypes , ObjectEnumValue , PrismaClientInitializationError , PrismaClientKnownRequestError , PrismaClientRustPanicError , PrismaClientUnknownRequestError , PrismaClientValidationError , raw , RawValue , Sql , sql as sqltag , Value } from '@prisma/client-runtime-utils';
+
+
+
 
 
 
@@ -86,6 +89,8 @@ export declare type AllModelsToStringIndex<TypeMap extends TypeMapDef, Args exte
 } : {};
 
 export { AnyNull }
+
+export { AnyNullClass }
 
 export declare type ApplyOmit<T, OmitConfig> = Compute<{
     [K in keyof T as OmitValue<OmitConfig, K> extends true ? never : K]: T[K];
@@ -271,6 +276,7 @@ declare type CompilerWasmLoadingConfig = {
      * @remarks only used by ClientEngine
      */
     getQueryCompilerWasmModule: () => Promise<unknown>;
+    importName: string;
 };
 
 export declare type Compute<T> = T extends Function ? T : {
@@ -384,13 +390,6 @@ declare type DatamodelEnum = ReadonlyDeep_2<{
 
 declare function datamodelEnumToSchemaEnum(datamodelEnum: DatamodelEnum): SchemaEnum;
 
-declare type DatamodelSchemaEnum = ReadonlyDeep_2<{
-    name: string;
-    values: string[];
-}>;
-
-declare function datamodelSchemaEnumToSchemaEnum(datamodelSchemaEnum: DatamodelSchemaEnum): SchemaEnum;
-
 declare type DataRule = {
     type: 'rowCountEq';
     args: number;
@@ -405,6 +404,8 @@ declare type DataRule = {
 };
 
 export { DbNull }
+
+export { DbNullClass }
 
 export declare const Debug: typeof debugCreate & {
     enable(namespace: any): void;
@@ -499,8 +500,6 @@ export declare namespace DMMF {
         Datamodel,
         DatamodelEnum,
         datamodelEnumToSchemaEnum,
-        DatamodelSchemaEnum,
-        datamodelSchemaEnumToSchemaEnum,
         Deprecation,
         Document_2 as Document,
         EnumValue,
@@ -542,8 +541,6 @@ declare namespace DMMF_2 {
         Datamodel,
         DatamodelEnum,
         datamodelEnumToSchemaEnum,
-        DatamodelSchemaEnum,
-        datamodelSchemaEnumToSchemaEnum,
         Deprecation,
         Document_2 as Document,
         EnumValue,
@@ -793,6 +790,11 @@ declare interface EngineConfig {
      * Web Assembly module loading configuration
      */
     compilerWasm?: CompilerWasmLoadingConfig;
+    /**
+     * SQL commenter plugins that add metadata to SQL queries as comments.
+     * Each plugin receives query context and returns key-value pairs.
+     */
+    sqlCommenters?: SqlCommenterPlugin[];
 }
 
 declare type EngineEvent<E extends EngineEventType> = E extends QueryEventType ? QueryEvent : LogEvent;
@@ -859,7 +861,7 @@ declare interface ExceptionWithName {
 
 declare type ExtendedEventType = LogLevel | 'beforeExit';
 
-declare type ExtendedSpanOptions = SpanOptions & {
+declare interface ExtendedSpanOptions extends SpanOptions {
     /** The name of the span */
     name: string;
     internal?: boolean;
@@ -867,7 +869,7 @@ declare type ExtendedSpanOptions = SpanOptions & {
     active?: boolean;
     /** The context to append the span to */
     context?: Context;
-};
+}
 
 /** $extends, defineExtension */
 export declare interface ExtendsHook<Variant extends 'extends' | 'define', TypeMapCb extends TypeMapCbDef, ExtArgs extends Record<string, any>, TypeMap extends TypeMapDef = Call<TypeMapCb, {
@@ -1589,6 +1591,8 @@ declare type JsonFieldSelection = {
 
 export { JsonNull }
 
+export { JsonNullClass }
+
 /**
  * From https://github.com/sindresorhus/type-fest/
  * Matches a JSON object.
@@ -1600,11 +1604,13 @@ export declare type JsonObject = {
 
 export declare type JsonQuery = {
     modelName?: string;
-    action: JsonQueryAction;
+    action: JsonQueryAction_2;
     query: JsonFieldSelection;
 };
 
 declare type JsonQueryAction = 'findUnique' | 'findUniqueOrThrow' | 'findFirst' | 'findFirstOrThrow' | 'findMany' | 'createOne' | 'createMany' | 'createManyAndReturn' | 'updateOne' | 'updateMany' | 'updateManyAndReturn' | 'deleteOne' | 'deleteMany' | 'upsertOne' | 'aggregate' | 'groupBy' | 'executeRaw' | 'queryRaw' | 'runCommandRaw' | 'findRaw' | 'aggregateRaw';
+
+declare type JsonQueryAction_2 = 'findUnique' | 'findUniqueOrThrow' | 'findFirst' | 'findFirstOrThrow' | 'findMany' | 'createOne' | 'createMany' | 'createManyAndReturn' | 'updateOne' | 'updateMany' | 'updateManyAndReturn' | 'deleteOne' | 'deleteMany' | 'upsertOne' | 'aggregate' | 'groupBy' | 'executeRaw' | 'queryRaw' | 'runCommandRaw' | 'findRaw' | 'aggregateRaw';
 
 declare type JsonSelectionSet = {
     $scalars?: boolean;
@@ -2002,10 +2008,26 @@ export declare type PrismaClientOptions = PrismaClientMutuallyExclusiveOptions &
      *  { emit: 'stdout', level: 'warn' }
      * ]
      * \`\`\`
-     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+     * Read more in our [docs](https://pris.ly/d/logging).
      */
     log?: Array<LogLevel | LogDefinition>;
     omit?: GlobalOmitOptions;
+    /**
+     * SQL commenter plugins that add metadata to SQL queries as comments.
+     * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
+     *
+     * @example
+     * ```ts
+     * new PrismaClient({
+     *   adapter: new PrismaPg({ connectionString }),
+     *   comments: [
+     *     traceContext(),
+     *     queryInsights(),
+     *   ],
+     * })
+     * ```
+     */
+    comments?: SqlCommenterPlugin[];
     /**
      * @internal
      * You probably don't want to use this. \`__internal\` is used by internal tooling.
@@ -2536,8 +2558,8 @@ declare type Schema = ReadonlyDeep_2<{
         prisma: OutputType[];
     };
     enumTypes: {
-        model?: DatamodelSchemaEnum[];
-        prisma: DatamodelSchemaEnum[];
+        model?: SchemaEnum[];
+        prisma: SchemaEnum[];
     };
     fieldRefTypes: {
         prisma?: FieldRefType[];
@@ -2556,10 +2578,7 @@ declare type SchemaArg = ReadonlyDeep_2<{
 
 declare type SchemaEnum = ReadonlyDeep_2<{
     name: string;
-    data: {
-        key: string;
-        value: string;
-    }[];
+    values: string[];
 }>;
 
 declare type SchemaField = ReadonlyDeep_2<{
@@ -2868,6 +2887,111 @@ declare enum SpanStatusCode {
 }
 
 export { Sql }
+
+/**
+ * Information about a compacted batch query (e.g. multiple independent
+ * `findUnique` queries automatically merged into a single `SELECT` SQL
+ * statement).
+ */
+declare interface SqlCommenterCompactedQueryInfo {
+    /**
+     * The model name (e.g., "User", "Post").
+     */
+    readonly modelName: string;
+    /**
+     * The Prisma operation (e.g., "findUnique").
+     */
+    readonly action: SqlCommenterQueryAction;
+    /**
+     * The full query objects (selections, arguments, etc.).
+     * Specifics of the query representation are not part of the public API yet.
+     */
+    readonly queries: ReadonlyArray<unknown>;
+}
+
+/**
+ * Context provided to SQL commenter plugins.
+ */
+export declare interface SqlCommenterContext {
+    /**
+     * Information about the Prisma query being executed.
+     */
+    readonly query: SqlCommenterQueryInfo;
+    /**
+     * Raw SQL query generated from this Prisma query.
+     *
+     * It is always available when `PrismaClient` connects to the database and
+     * renders SQL queries directly.
+     *
+     * When using Prisma Accelerate, SQL rendering happens on Accelerate side and the raw
+     * SQL strings are not yet available when SQL commenter plugins are executed.
+     */
+    readonly sql?: string;
+}
+
+/**
+ * A SQL commenter plugin that returns key-value pairs to be added as comments.
+ * Return an empty object to add no comments. Keys with undefined values will be omitted.
+ *
+ * @example
+ * ```ts
+ * const myPlugin: SqlCommenterPlugin = (context) => {
+ *   return {
+ *     application: 'my-app',
+ *     model: context.query.modelName ?? 'raw',
+ *     // Conditional key - will be omitted if ctx.sql is undefined
+ *     sqlLength: context.sql ? String(context.sql.length) : undefined,
+ *   }
+ * }
+ * ```
+ */
+export declare interface SqlCommenterPlugin {
+    (context: SqlCommenterContext): SqlCommenterTags;
+}
+
+/**
+ * Prisma query type corresponding to this SQL query.
+ */
+declare type SqlCommenterQueryAction = JsonQueryAction;
+
+/**
+ * Information about the query or queries being executed.
+ *
+ * - `single`: A single query is being executed
+ * - `compacted`: Multiple queries have been compacted into a single SQL statement
+ */
+export declare type SqlCommenterQueryInfo = ({
+    readonly type: 'single';
+} & SqlCommenterSingleQueryInfo) | ({
+    readonly type: 'compacted';
+} & SqlCommenterCompactedQueryInfo);
+
+/**
+ * Information about a single Prisma query.
+ */
+export declare interface SqlCommenterSingleQueryInfo {
+    /**
+     * The model name (e.g., "User", "Post"). Undefined for raw queries.
+     */
+    readonly modelName?: string;
+    /**
+     * The Prisma operation (e.g., "findMany", "createOne", "queryRaw").
+     */
+    readonly action: SqlCommenterQueryAction;
+    /**
+     * The full query object (selection, arguments, etc.).
+     * Specifics of the query representation are not part of the public API yet.
+     */
+    readonly query: unknown;
+}
+
+/**
+ * Key-value pairs to add as SQL comments.
+ * Keys with undefined values will be omitted from the final comment.
+ */
+export declare type SqlCommenterTags = {
+    readonly [key: string]: string | undefined;
+};
 
 declare interface SqlDriverAdapter extends SqlQueryable {
     /**

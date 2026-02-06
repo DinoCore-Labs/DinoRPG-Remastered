@@ -1,10 +1,26 @@
 import { prisma } from '../../prisma.js';
+import { toDinozPublicFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { UpdateUserProfileInput } from '../Schema/user.schema.js';
 
 export async function getOwnProfileService(userId: string) {
 	const user = await prisma.user.findUnique({
 		where: { id: userId },
 		include: {
+			dinoz: {
+				select: {
+					id: true,
+					name: true,
+					display: true,
+					life: true,
+					level: true,
+					raceId: true,
+					status: {
+						select: {
+							statusId: true
+						}
+					}
+				}
+			},
 			profile: true,
 			rewards: true,
 			statsTracking: {
@@ -31,6 +47,11 @@ export async function getOwnProfileService(userId: string) {
 		gender: user.profile.gender,
 		age: user.profile.age,
 		avatar,
+		dinoz: user.dinoz.map(d => {
+			return toDinozPublicFiche({
+				...d
+			});
+		}),
 		rewards: user.rewards.map(r => r.rewardId),
 		stats: user.statsTracking.map(s => ({ stat: s.stat, quantity: s.quantity }))
 	};
@@ -40,6 +61,21 @@ export async function getUserProfileService(id: string) {
 	const user = await prisma.user.findUnique({
 		where: { id },
 		include: {
+			dinoz: {
+				select: {
+					id: true,
+					name: true,
+					display: true,
+					life: true,
+					level: true,
+					raceId: true,
+					status: {
+						select: {
+							statusId: true
+						}
+					}
+				}
+			},
 			profile: true,
 			rewards: true,
 			statsTracking: {
@@ -66,6 +102,11 @@ export async function getUserProfileService(id: string) {
 		gender: user.profile.gender,
 		age: user.profile.age,
 		avatar,
+		dinoz: user.dinoz.map(d => {
+			return toDinozPublicFiche({
+				...d
+			});
+		}),
 		rewards: user.rewards.map(r => r.rewardId),
 		stats: user.statsTracking.map(s => ({ stat: s.stat, quantity: s.quantity }))
 	};

@@ -11,7 +11,7 @@ interface DinozConfig {
 
 interface ShopConfig {
 	dinozNumber: number;
-	buyableQuetzu: number;
+	//buyableQuetzu: number;
 }
 
 interface GeneralConfig {
@@ -40,8 +40,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 			initialMaxLevel: 50
 		},
 		shop: {
-			dinozNumber: 10,
-			buyableQuetzu: 6
+			dinozNumber: 30
+			//buyableQuetzu: 6
 		},
 		general: {
 			initialMoney: 1_000_000,
@@ -64,8 +64,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 			initialMaxLevel: 50
 		},
 		shop: {
-			dinozNumber: 30,
-			buyableQuetzu: 6
+			dinozNumber: 20
+			//buyableQuetzu: 6
 		},
 		general: {
 			initialMoney: 200_000,

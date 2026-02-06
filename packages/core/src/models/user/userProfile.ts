@@ -1,4 +1,5 @@
 import { Language } from '../config/language.js';
+import { DinozPublicFiche } from '../dinoz/dinozFiche.js';
 import { Reward } from '../rewards/rewardList.js';
 import { Gender } from './userGender.js';
 import { UserStats } from './userStats.js';
@@ -13,6 +14,7 @@ export interface UserProfile {
 	language: Language | null;
 	gender: Gender | null;
 	age: number | null;
+	dinoz: DinozPublicFiche[];
 	rewards: Reward[];
 	stats: UserStats[];
 }

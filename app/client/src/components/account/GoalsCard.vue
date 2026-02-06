@@ -101,7 +101,12 @@
 									{{ won.title?.[language] }}
 									<template #content>
 										<p>
-											{{ $t(`achievements.reward`, { name: getStatDetails(stats, 'name'), quantity: won.count }) }}
+											{{
+												$t(`accountPage.goals.achievements.reward`, {
+													name: getStatDetails(stats, 'name'),
+													quantity: won.count
+												})
+											}}
 										</p>
 									</template>
 								</Tippy>
@@ -361,7 +366,8 @@ export default defineComponent({
 				}
 				.list_gains {
 					list-style: none;
-					font-size: 12px;
+					font-size: 13px;
+					margin-left: -40px;
 					&:not(:first-child) {
 						margin-top: 4px;
 					}

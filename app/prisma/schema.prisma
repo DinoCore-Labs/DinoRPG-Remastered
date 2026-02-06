@@ -9,6 +9,130 @@ datasource db {
   provider = "postgresql"
 }
 
+model Dinoz {
+  id                 Int      @id @default(autoincrement())
+  name               String   @db.VarChar(32)
+  canRename          Boolean  @default(false)
+  raceId             Int
+  display            String   @db.VarChar
+  level              Int      @default(1)
+  life               Int
+  maxLife            Int
+  experience         Int
+  nbrUpFire          Int
+  nbrUpWood          Int
+  nbrUpWater         Int
+  nbrUpLightning     Int
+  nbrUpAir           Int
+  nextUpElementId    Int
+  nextUpAltElementId Int
+  placeId            Int
+  remaining          Int      @default(3)
+  createdDate        DateTime @default(now()) @db.Timestamptz(3)
+  updatedDate        DateTime @updatedAt @db.Timestamptz(3)
+  seed               String   @db.Uuid
+
+  fight            Boolean                 @default(true)
+  items            DinozItems[]
+  skills           DinozSkills[]
+  unlockableSkills DinozSkillsUnlockable[]
+  status           DinozStatus[]
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId])
+}
+
+model DinozItems {
+  id      Int    @id() @default(autoincrement())
+  itemId  Int
+  dinozId Int?
+  dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([dinozId])
+  @@map("dinoz_item")
+}
+
+model DinozSkills {
+  id      Int     @id @default(autoincrement())
+  skillId Int
+  state   Boolean @default(true)
+  dinozId Int?
+  dinoz   Dinoz?  @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([skillId, dinozId])
+  @@index([dinozId])
+  @@map("dinoz_skill")
+}
+
+model DinozSkillsUnlockable {
+  id      Int    @id @default(autoincrement())
+  skillId Int
+  dinozId Int?
+  dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("dinoz_skill_unlockable")
+}
+
+model DinozStatus {
+  id       Int    @id @default(autoincrement())
+  statusId Int
+  dinozId  Int?
+  dinoz    Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([statusId, dinozId])
+  @@index([dinozId])
+  @@map("dinoz_status")
+}
+
+model JobDefinition {
+  id      String  @id @default(cuid())
+  key     String  @unique // ex: "reset-dinoz-shop"
+  name    String
+  type    JobType
+  enabled Boolean @default(true)
+
+  // Scheduling
+  timezone    String @default("UTC")
+  dailyHour   Int?
+  dailyMinute Int?
+  intervalMs  Int?
+
+  // State
+  status    JobStatus @default(IDLE)
+  lastRunAt DateTime? @db.Timestamptz(3)
+  nextRunAt DateTime? @db.Timestamptz(3)
+  lastError String?
+
+  // Locking (multi-instance safe)
+  lockedAt     DateTime? @db.Timestamptz(3)
+  lockedBy     String?
+  lockTimeoutS Int       @default(300)
+
+  runs JobRun[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@map("job_definition")
+}
+
+model JobRun {
+  id    String        @id @default(cuid())
+  jobId String
+  job   JobDefinition @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  startedAt   DateTime  @default(now()) @db.Timestamptz(3)
+  endedAt     DateTime? @db.Timestamptz(3)
+  success     Boolean?
+  error       String?
+  triggeredBy String?
+
+  @@index([jobId, startedAt])
+  @@map("job_run")
+}
+
 model Ranking {
   id         Int @id @default(autoincrement())
   dinozCount Int @default(0)
@@ -17,7 +141,7 @@ model Ranking {
   completion Int @default(0)
   dojo       Int @default(0)
 
-  userId String @unique
+  userId String @unique @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
@@ -28,9 +152,9 @@ model SignupDeviceMonthCounter {
   monthKey    String
   deviceToken String
   count       Int      @default(0)
-  expiresAt   DateTime
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  expiresAt   DateTime @db.Timestamptz(3)
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
 
   @@unique([monthKey, deviceToken])
   @@index([monthKey])
@@ -42,9 +166,9 @@ model SignupIpMonthCounter {
   monthKey  String
   ipToken   String
   count     Int      @default(0)
-  expiresAt DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  expiresAt DateTime @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
 
   @@unique([monthKey, ipToken])
   @@index([monthKey])
@@ -52,13 +176,13 @@ model SignupIpMonthCounter {
 }
 
 model User {
-  id          String    @id @default(uuid())
+  id          String    @id @default(uuid()) @db.Uuid
   name        String    @unique
   password    String
   role        Role      @default(PLAYER)
-  createdDate DateTime  @default(now())
-  updatedAt   DateTime? @updatedAt
-  lastLogin   DateTime  @default(now())
+  createdDate DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime? @updatedAt @db.Timestamptz(3)
+  lastLogin   DateTime  @default(now()) @db.Timestamptz(3)
 
   ingredients   UserIngredients[]
   items         UserItems[]
@@ -67,13 +191,26 @@ model User {
   rewards       UserRewards[]
   statsTracking UserTracking[]
   wallets       UserWallet[]
+
+  dinoz     Dinoz[]
+  dinozShop UserDinozShop[]
+}
+
+model UserDinozShop {
+  id      Int     @id @default(autoincrement())
+  raceId  Int
+  display String  @db.VarChar
+  userId  String? @db.Uuid
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("user_dinoz_shop")
 }
 
 model UserIngredients {
   id           Int    @default(autoincrement())
   ingredientId Int
   quantity     Int
-  userId       String
+  userId       String @db.Uuid
   user         User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([ingredientId, userId])
@@ -85,7 +222,7 @@ model UserItems {
   id       Int    @default(autoincrement())
   itemId   Int
   quantity Int
-  userId   String
+  userId   String @db.Uuid
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([itemId, userId])
@@ -95,7 +232,7 @@ model UserItems {
 
 model UserProfile {
   id     String @id @default(cuid())
-  userId String @unique
+  userId String @unique @db.Uuid
   user   User   @relation(fields: [userId], references: [id])
 
   avatar      Bytes?
@@ -109,7 +246,7 @@ model UserProfile {
 model UserRewards {
   id       Int     @id @default(autoincrement())
   rewardId Int
-  userId   String?
+  userId   String? @db.Uuid
   user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([rewardId, userId])
@@ -119,7 +256,7 @@ model UserTracking {
   id       Int    @id @default(autoincrement())
   stat     String
   quantity Int    @default(0)
-  userId   String
+  userId   String @db.Uuid
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([stat, userId])
@@ -129,10 +266,10 @@ model UserTracking {
 }
 
 model UserWallet {
-  id     String    @id @default(uuid())
+  id     String    @id @default(uuid()) @db.Uuid
   type   MoneyType
   amount Int       @default(0)
-  userId String
+  userId String    @db.Uuid
   user   User      @relation(fields: [userId], references: [id])
 
   @@unique([userId, type])
@@ -160,4 +297,16 @@ enum Role {
   MODERATOR
   ADMIN
   SUPER_ADMIN
+}
+
+enum JobType {
+  DAILY_AT
+  INTERVAL
+}
+
+enum JobStatus {
+  IDLE
+  RUNNING
+  SUCCESS
+  FAILED
 }

@@ -1,3 +1,4 @@
+import { UserRole } from '@dinorpg/core/models/user/userRole.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import fCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
@@ -6,16 +7,22 @@ import multipart from '@fastify/multipart';
 import { randomUUID } from 'crypto';
 import Fastify, { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 
+import { adminJobsRoutes } from './Admin/Routes/adminJobs.routes.js';
 import { loadConfig } from './config/config.js';
+import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
 import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
+import { ensureJobsExist } from './jobs/ensureJobs.js';
+import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
+import { startScheduler } from './jobs/scheduler.js';
 import { rankingRoutes } from './Ranking/Routes/ranking.routes.js';
+import { shopRoutes } from './Shop/Routes/shop.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
 import { userSchemas } from './User/Schema/user.schema.js';
 import version from './utils/version.js';
 
 const cfg = loadConfig();
 
-function buildServer() {
+async function buildServer() {
 	const server = Fastify({
 		logger: true,
 		trustProxy: true
@@ -95,6 +102,14 @@ function buildServer() {
 		}
 	});
 
+	server.decorate('admin', async (req: FastifyRequest, reply: FastifyReply) => {
+		const role = (req.user as any)?.role as UserRole;
+
+		if (role !== 'ADMIN' && role !== 'SUPER_ADMIN') {
+			return reply.code(403).send({ message: 'Forbidden' });
+		}
+	});
+
 	//------------------------------------------------------
 	// EXTRA : Multipart pour les uploads
 	//------------------------------------------------------
@@ -145,7 +160,25 @@ function buildServer() {
 	server.register(userRoutes, { prefix: 'api/users' });
 	server.register(rankingRoutes, { prefix: 'api/ranking' });
 	server.register(inventoryRoutes, { prefix: 'api/inventory' });
+	server.register(shopRoutes, { prefix: 'api/shop' });
+	server.register(dinozRoutes, { prefix: 'api/dinoz' });
 
+	server.register(adminJobsRoutes, { prefix: 'api/admin' });
+	//------------------------------------------------------
+	// 10. Scheduler
+	//------------------------------------------------------
+	await ensureJobsExist();
+
+	const stopScheduler = startScheduler(
+		{
+			'reset-dinoz-shop': resetDinozShopAtMidnight
+		},
+		server.log
+	);
+
+	server.addHook('onClose', async () => {
+		stopScheduler();
+	});
 	//------------------------------------------------------
 	// EXTRA: Test multipart
 	//------------------------------------------------------
@@ -155,7 +188,7 @@ function buildServer() {
 		console.log('UPLOAD:', {
 			filename: file?.filename,
 			mimetype: file?.mimetype,
-			truncated: file?.file.truncated // <--- la vraie propriété utile
+			truncated: file?.file.truncated
 		});
 
 		reply.send({ ok: true });
@@ -164,7 +197,10 @@ function buildServer() {
 	server.setErrorHandler((err, req, reply) => {
 		// 1) Erreurs "attendues"
 		if (err instanceof ExpectedError) {
-			return reply.code(err.statusCode ?? 400).send({ message: err.message });
+			return reply.code(err.statusCode).send({
+				message: err.message,
+				params: err.params ?? {}
+			});
 		}
 		// 2) Erreurs Fastify (validation, etc.)
 		const fe = err as FastifyError;

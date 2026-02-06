@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.0.0
- * Query Engine version: 0c19ccc313cf9911a90d99d2ac2eb0280c76c513
+ * Prisma Client JS version: 7.3.0
+ * Query Engine version: 9d6ad21cbbceab97458517b147a6a09ff43aa735
  */
 Prisma.prismaVersion = {
-  client: "7.0.0",
-  engine: "0c19ccc313cf9911a90d99d2ac2eb0280c76c513"
+  client: "7.3.0",
+  engine: "9d6ad21cbbceab97458517b147a6a09ff43aa735"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -120,6 +120,93 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.DinozScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  canRename: 'canRename',
+  raceId: 'raceId',
+  display: 'display',
+  level: 'level',
+  life: 'life',
+  maxLife: 'maxLife',
+  experience: 'experience',
+  nbrUpFire: 'nbrUpFire',
+  nbrUpWood: 'nbrUpWood',
+  nbrUpWater: 'nbrUpWater',
+  nbrUpLightning: 'nbrUpLightning',
+  nbrUpAir: 'nbrUpAir',
+  nextUpElementId: 'nextUpElementId',
+  nextUpAltElementId: 'nextUpAltElementId',
+  placeId: 'placeId',
+  remaining: 'remaining',
+  createdDate: 'createdDate',
+  updatedDate: 'updatedDate',
+  seed: 'seed',
+  fight: 'fight',
+  userId: 'userId'
+};
+
+exports.Prisma.RelationLoadStrategy = {
+  query: 'query',
+  join: 'join'
+};
+
+exports.Prisma.DinozItemsScalarFieldEnum = {
+  id: 'id',
+  itemId: 'itemId',
+  dinozId: 'dinozId'
+};
+
+exports.Prisma.DinozSkillsScalarFieldEnum = {
+  id: 'id',
+  skillId: 'skillId',
+  state: 'state',
+  dinozId: 'dinozId'
+};
+
+exports.Prisma.DinozSkillsUnlockableScalarFieldEnum = {
+  id: 'id',
+  skillId: 'skillId',
+  dinozId: 'dinozId'
+};
+
+exports.Prisma.DinozStatusScalarFieldEnum = {
+  id: 'id',
+  statusId: 'statusId',
+  dinozId: 'dinozId'
+};
+
+exports.Prisma.JobDefinitionScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  name: 'name',
+  type: 'type',
+  enabled: 'enabled',
+  timezone: 'timezone',
+  dailyHour: 'dailyHour',
+  dailyMinute: 'dailyMinute',
+  intervalMs: 'intervalMs',
+  status: 'status',
+  lastRunAt: 'lastRunAt',
+  nextRunAt: 'nextRunAt',
+  lastError: 'lastError',
+  lockedAt: 'lockedAt',
+  lockedBy: 'lockedBy',
+  lockTimeoutS: 'lockTimeoutS',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.JobRunScalarFieldEnum = {
+  id: 'id',
+  jobId: 'jobId',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  success: 'success',
+  error: 'error',
+  triggeredBy: 'triggeredBy'
+};
+
 exports.Prisma.RankingScalarFieldEnum = {
   id: 'id',
   dinozCount: 'dinozCount',
@@ -128,11 +215,6 @@ exports.Prisma.RankingScalarFieldEnum = {
   completion: 'completion',
   dojo: 'dojo',
   userId: 'userId'
-};
-
-exports.Prisma.RelationLoadStrategy = {
-  query: 'query',
-  join: 'join'
 };
 
 exports.Prisma.SignupDeviceMonthCounterScalarFieldEnum = {
@@ -163,6 +245,13 @@ exports.Prisma.UserScalarFieldEnum = {
   createdDate: 'createdDate',
   updatedAt: 'updatedAt',
   lastLogin: 'lastLogin'
+};
+
+exports.Prisma.UserDinozShopScalarFieldEnum = {
+  id: 'id',
+  raceId: 'raceId',
+  display: 'display',
+  userId: 'userId'
 };
 
 exports.Prisma.UserIngredientsScalarFieldEnum = {
@@ -224,6 +313,18 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.JobType = exports.$Enums.JobType = {
+  DAILY_AT: 'DAILY_AT',
+  INTERVAL: 'INTERVAL'
+};
+
+exports.JobStatus = exports.$Enums.JobStatus = {
+  IDLE: 'IDLE',
+  RUNNING: 'RUNNING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED'
+};
+
 exports.Role = exports.$Enums.Role = {
   PLAYER: 'PLAYER',
   MODERATOR: 'MODERATOR',
@@ -249,10 +350,18 @@ exports.MoneyType = exports.$Enums.MoneyType = {
 };
 
 exports.Prisma.ModelName = {
+  Dinoz: 'Dinoz',
+  DinozItems: 'DinozItems',
+  DinozSkills: 'DinozSkills',
+  DinozSkillsUnlockable: 'DinozSkillsUnlockable',
+  DinozStatus: 'DinozStatus',
+  JobDefinition: 'JobDefinition',
+  JobRun: 'JobRun',
   Ranking: 'Ranking',
   SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
   SignupIpMonthCounter: 'SignupIpMonthCounter',
   User: 'User',
+  UserDinozShop: 'UserDinozShop',
   UserIngredients: 'UserIngredients',
   UserItems: 'UserItems',
   UserProfile: 'UserProfile',

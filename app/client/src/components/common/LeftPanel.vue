@@ -15,15 +15,14 @@
 				<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 			</RouterLink>
 		</div>
-		<div class="place">
+		<div class="place" v-if="place" @click="goToDinozPage()">
 			<div class="img-wrapper">
-				<!--<img :src="getPlaceImage(place)" :alt="$t(`place.name.${place}`)" />-->
+				<img :src="getPlaceImage(place)" :alt="$t(`place.name.${place}`)" />
 			</div>
-			<p class="place-name">Dinoville</p>
+			<p class="place-name">{{ $t(`place.name.${place}`) }}</p>
 		</div>
-		<!--
-    <DinozList :currentDinozId="currentDinozId()"></DinozList>
-		<a v-if="hasPDA" class="overviewButton" @click="goToPage('ManageDinoz')">
+		<DinozList :currentDinozId="currentDinozId()"></DinozList>
+		<!--<a v-if="hasPDA" class="overviewButton" @click="goToPage('ManageDinoz')">
 			<img :src="getImgURL('icons', `small_edit`)" alt="edit" />
 			<span>{{ $t('button.sortDinoz') }}</span>
 		</a>
@@ -35,30 +34,80 @@
 			<img :src="getImgURL('icons', `clipboard`)" alt="skills" />
 			<span>{{ $t('button.skills') }}</span>
 		</a>
-		<a class="button" @click="goToPage('DinozShopPage')">
+		-->
+		<DZButton @click="goToPage('ShopDinoz')">
 			{{ $t('button.buyDinoz') }}
-		</a>
-    -->
+		</DZButton>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { getImgURL } from '../../utils/getImgURL';
 import { beautifulNumber } from '../../utils/beautifulNumber';
 import { userStore } from '../../store/userStore';
+import { dinozStore } from '../../store/dinozStore';
+import DZButton from '../utils/DZButton.vue';
+import DinozList from '../dinoz/DinozList.vue';
+import { placeList } from '../../constants/place';
+import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 
 export default defineComponent({
 	name: 'LeftPanel',
 	setup() {
 		const user = userStore();
-		return { user };
+		const dinoz = dinozStore();
+		return { user, dinoz };
 	},
 	data() {},
-	components: {},
+	components: {
+		DZButton,
+		DinozList
+	},
 	methods: {
 		beautifulNumber,
-		getImgURL
+		goToPage(pageName: string) {
+			this.$router.push({ name: pageName });
+		},
+		goToDinozPage() {
+			this.$router.push({
+				name: 'DinozPage',
+				params: { id: this.currentDinozId() }
+			});
+		},
+		currentDinozId(): number | undefined {
+			return this.dinoz.getCurrentDinozId;
+		},
+		changeTimezone(date: Date, ianatz: string) {
+			const invdate = new Date(
+				date.toLocaleString('en-US', {
+					timeZone: ianatz
+				})
+			);
+			const diff = date.getTime() - invdate.getTime();
+			return new Date(date.getTime() - diff); // needs to substract
+		},
+		getPlaceImage(place: string | null) {
+			if (!place) return;
+			const today = this.changeTimezone(new Date(), 'GMT').getDay();
+			if (place === 'marais' && !(today === 1 || today === 2 || today === 5)) {
+				return new URL(`/src/assets/place/marais_fog.webp`, import.meta.url).toString();
+			}
+			return new URL(`/src/assets/place/${place}.webp`, import.meta.url).toString();
+		}
+	},
+	computed: {
+		place(): string | null {
+			const currentDinozId = this.currentDinozId();
+			if (!currentDinozId) return this.place;
+
+			const currentDinoz = this.dinoz.getDinoz(currentDinozId) as DinozFiche | undefined;
+			if (!currentDinoz) return this.place;
+
+			const place = Object.values(placeList).find(place => place.placeId === currentDinoz.placeId);
+			if (!place) return this.place;
+
+			return place.name;
+		}
 	}
 });
 </script>
@@ -133,7 +182,6 @@ export default defineComponent({
 		background-repeat: no-repeat;
 		cursor: help;
 		font-weight: bold;
-
 		img {
 			vertical-align: -5%;
 		}
@@ -159,25 +207,21 @@ export default defineComponent({
 	background-color: #fbdca5;
 	margin-bottom: 8px;
 	cursor: pointer;
-
 	.img-wrapper {
 		height: 109px;
 		overflow: hidden;
 		width: 140px;
-
 		img {
 			width: 100%;
 			border: 1px solid #9a4029;
 			box-sizing: border-box;
 		}
 	}
-
 	.place-name {
 		color: #bc683c;
 		text-align: center;
 		font-size: 9pt;
 		font-style: italic;
-
 		&:first-letter {
 			font-weight: normal;
 			font-size: 9pt;

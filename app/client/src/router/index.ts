@@ -3,6 +3,8 @@ import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import AccountPage from '../pages/AccountPage.vue';
+import AdminJobsPage from '../pages/Admin/AdminJobsPage.vue';
+import DinozPage from '../pages/DinozPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
 import HelpPage from '../pages/HelpPage.vue';
 import HomePage from '../pages/HomePage.vue';
@@ -10,7 +12,9 @@ import Ingredients from '../pages/Ingredients.vue';
 import Inventory from '../pages/Inventory.vue';
 import MainPage from '../pages/MainPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
+import ShopDinoz from '../pages/ShopDinoz.vue';
 import { UserService } from '../services';
+import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
 import { is_granted } from '../utils/permission';
 
@@ -54,6 +58,12 @@ const routes: RouteRecord[] = [
 				meta: { auth: true }
 			},
 			{
+				path: '/dinoz/:id',
+				name: 'DinozPage',
+				component: DinozPage,
+				meta: { auth: true }
+			},
+			{
 				path: '/ranking',
 				name: 'Ranking',
 				component: RankingPage,
@@ -79,6 +89,12 @@ const routes: RouteRecord[] = [
 				]
 			},
 			{
+				path: 'shop/dinoz',
+				name: 'ShopDinoz',
+				component: ShopDinoz,
+				meta: { auth: true }
+			},
+			{
 				path: '/faq',
 				name: 'FAQPage',
 				component: FAQPage,
@@ -89,6 +105,12 @@ const routes: RouteRecord[] = [
 				name: 'HelpPage',
 				component: HelpPage,
 				meta: { public: true, showLeftPanel: false }
+			},
+			{
+				path: '/admin/jobs',
+				name: 'AdminJobs',
+				component: AdminJobsPage,
+				meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
 			}
 		]
 	}
@@ -105,6 +127,7 @@ const router = createRouter({
 
 router.beforeEach(async to => {
 	const user = userStore();
+	const dinoz = dinozStore();
 
 	// page publique -> OK
 	if (to.meta.public) {
@@ -118,7 +141,9 @@ router.beforeEach(async to => {
 			const data: UserData = await UserService.me().catch(() => null);
 
 			if (data) {
+				//console.log(data);
 				user.setUser(data);
+				dinoz.setDinozList(data.dinoz);
 			} else {
 				user.clearUser();
 				return {
@@ -132,7 +157,7 @@ router.beforeEach(async to => {
 	// Roles
 	if (to.meta.roles && user.role) {
 		const ok = to.meta.roles.some(r => is_granted(r, user.role!));
-		if (!ok) return { name: 'HomePage' };
+		if (!ok) return { name: 'MainPage' };
 	}
 
 	return true;

@@ -341,25 +341,6 @@ export default defineComponent({
 		margin-bottom: 5px;
 	}
 }
-.smallbutton {
-	background-image: url('../../assets/design/button_small.webp');
-	font-size: 9pt;
-	line-height: 7pt;
-	width: 80px;
-	padding-top: 5px;
-	padding-right: 5px;
-	color: white;
-	font-weight: normal;
-	font-variant: small-caps;
-	height: 24px;
-	margin-top: 3px;
-	margin-bottom: 2px;
-	padding-left: 10px;
-	cursor: pointer;
-	&:hover {
-		background-image: url('../../assets/design/button_small_hover.webp');
-	}
-}
 .tinybutton {
 	padding-left: 5px;
 	padding-right: 5px;

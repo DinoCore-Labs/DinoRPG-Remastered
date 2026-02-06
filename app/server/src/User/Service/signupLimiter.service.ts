@@ -83,7 +83,7 @@ export async function enforceSignupLimits(req: FastifyRequest) {
 
 	// 1) Device limit (le plus efficace)
 	const deviceId = getDeviceId(req);
-	if (!deviceId) throw new ExpectedError('Missing_device_cookie', 400);
+	if (!deviceId) throw new ExpectedError('Missing_device_cookie', { statusCode: 400 });
 
 	const deviceTok = hmacToken(deviceSecret, deviceId);
 	const okDevice = await incrementMonthlyCounter({
@@ -95,7 +95,7 @@ export async function enforceSignupLimits(req: FastifyRequest) {
 	});
 
 	if (!okDevice) {
-		throw new ExpectedError('Too_many_accounts_created_from_this_device_this_month', 429);
+		throw new ExpectedError('Too_many_accounts_created_from_this_device_this_month', { statusCode: 429 });
 	}
 
 	// 2) IP limit (backup)
@@ -116,7 +116,7 @@ export async function enforceSignupLimits(req: FastifyRequest) {
 	});
 
 	if (!okIp) {
-		throw new ExpectedError('Too_many_accounts_created_from_this_network_this_month', 429);
+		throw new ExpectedError('Too_many_accounts_created_from_this_network_this_month', { statusCode: 429 });
 	}
 }
 

@@ -1,3 +1,4 @@
+import { DinozFiche } from '../dinoz/dinozFiche.js';
 import { UserRole } from './userRole.js';
 
 export interface UserData {
@@ -5,4 +6,5 @@ export interface UserData {
 	name: string;
 	role: UserRole;
 	gold: number;
+	dinoz: DinozFiche[];
 }

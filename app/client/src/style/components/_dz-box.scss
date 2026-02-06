@@ -1,0 +1,31 @@
+.dz-box {
+	background:
+		url('../../assets/background/desc_shop_top_left.webp'), url('../../assets/background/desc_shop_top_right.webp'),
+		url('../../assets/background/desc_shop_top_center.webp'), url('../../assets/background/desc_shop_bottom_left.webp'),
+		url('../../assets/background/desc_shop_bottom_right.webp'),
+		url('../../assets/background/desc_shop_bottom_center.webp'),
+		url('../../assets/background/desc_shop_center_left.webp'),
+		url('../../assets/background/desc_shop_center_right.webp'),
+		url('../../assets/background/desc_shop_center_center.webp');
+	background-position-x: left, right, center, left, right, center, left, right, center;
+	background-position-y: top, top, top, bottom, bottom, bottom, 35px, 35px, 35px;
+	background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
+	h3 {
+		display: flex;
+		justify-content: center;
+		padding-top: 3px;
+		font-family: Arial, sans-serif;
+		font-size: 10pt;
+		font-style: normal;
+		font-variant-caps: small-caps;
+		font-weight: 400;
+		text-align: center;
+		color: #ffee92;
+		text-shadow: 1px 1px 1px #383522;
+		img {
+			height: 7px;
+			width: 7px;
+			padding-top: 5px;
+		}
+	}
+}
