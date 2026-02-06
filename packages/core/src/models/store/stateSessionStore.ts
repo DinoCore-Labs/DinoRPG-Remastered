@@ -1,10 +1,11 @@
-//import { FightResult } from '../fight/FightResult.mjs';
+import { FightResult } from '../fight/fightResult.js';
 //import { LiveStatsType } from './LiveStats.mjs';
 
 export interface StateSessionStore {
-	//fight?: FightResult;
+	fight?: FightResult;
+	fromFight: boolean;
 	tabDinoz: number;
 	tabAccount: number;
-	//fromFight: boolean;
+
 	//liveStats: LiveStatsType;
 }

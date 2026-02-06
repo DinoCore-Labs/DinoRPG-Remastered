@@ -32,7 +32,7 @@ export interface DinozFiche {
 	nbrUpAir: number;
 	//order: number | null;
 	remaining: number;
-	//fight: boolean;
+	fight: boolean;
 	//gather: boolean;
 	//missions: DinozMission[];
 	//concentration: Concentration | null;

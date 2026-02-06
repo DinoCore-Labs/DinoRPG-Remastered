@@ -43,7 +43,7 @@ export const toDinozFiche = (
 			| 'nbrUpAir'
 			//| 'order'
 			| 'remaining'
-			//| 'fight'
+			| 'fight'
 			//| 'gather'
 		> & {
 			//missions: DinozMission[];
@@ -105,8 +105,8 @@ export const toDinozFiche = (
 		//actions: [],
 		skills: dinoz.skills,
 		//order: dinoz.order,
-		remaining: dinoz.remaining
-		//fight: dinoz.fight,
+		remaining: dinoz.remaining,
+		fight: dinoz.fight
 		//gather: dinoz.gather,
 		//missions: dinoz.missions,
 		//concentration: dinoz.concentration,
@@ -199,4 +199,25 @@ export const backpackSlot = (
 
 	// TODO: Check for other dinoz storekeeper here
 	return total;
+};
+
+export const isAlive = (dinoz: Pick<Dinoz, 'life'>) => dinoz.life > 0;
+
+export const calculateXPBonus = (
+	dinoz: Pick<Dinoz, 'id'> & {
+		skills: Pick<DinozSkills, 'skillId'>[];
+		status: Pick<DinozStatus, 'statusId'>[];
+	},
+	xp: number,
+	player: Pick<User, 'id' /*'teacher'*/>
+) => {
+	let f = 1.0;
+	if (dinoz.skills.some(s => s.skillId === Skill.INTELLIGENCE)) f *= 1.05;
+	//if (player.teacher) f *= 1.05;
+	//TODO encyclopedie et maudit
+	/*if( d.hasEquip(Data.OBJECTS.list.mencly) )
+		f *= 1.15;
+	if( d.hasEffect(Data.EFFECTS.list.maudit) )
+		f = 0;*/
+	return Math.round(xp * f);
 };
