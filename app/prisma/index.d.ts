@@ -2735,6 +2735,7 @@ export namespace Prisma {
     createdDate: Date | null
     updatedDate: Date | null
     seed: string | null
+    fight: boolean | null
     userId: string | null
   }
 
@@ -2760,6 +2761,7 @@ export namespace Prisma {
     createdDate: Date | null
     updatedDate: Date | null
     seed: string | null
+    fight: boolean | null
     userId: string | null
   }
 
@@ -2785,6 +2787,7 @@ export namespace Prisma {
     createdDate: number
     updatedDate: number
     seed: number
+    fight: number
     userId: number
     _all: number
   }
@@ -2848,6 +2851,7 @@ export namespace Prisma {
     createdDate?: true
     updatedDate?: true
     seed?: true
+    fight?: true
     userId?: true
   }
 
@@ -2873,6 +2877,7 @@ export namespace Prisma {
     createdDate?: true
     updatedDate?: true
     seed?: true
+    fight?: true
     userId?: true
   }
 
@@ -2898,6 +2903,7 @@ export namespace Prisma {
     createdDate?: true
     updatedDate?: true
     seed?: true
+    fight?: true
     userId?: true
     _all?: true
   }
@@ -3010,6 +3016,7 @@ export namespace Prisma {
     createdDate: Date
     updatedDate: Date
     seed: string
+    fight: boolean
     userId: string
     _count: DinozCountAggregateOutputType | null
     _avg: DinozAvgAggregateOutputType | null
@@ -3054,6 +3061,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedDate?: boolean
     seed?: boolean
+    fight?: boolean
     userId?: boolean
     items?: boolean | Dinoz$itemsArgs<ExtArgs>
     skills?: boolean | Dinoz$skillsArgs<ExtArgs>
@@ -3085,6 +3093,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedDate?: boolean
     seed?: boolean
+    fight?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
@@ -3111,6 +3120,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedDate?: boolean
     seed?: boolean
+    fight?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
@@ -3137,10 +3147,11 @@ export namespace Prisma {
     createdDate?: boolean
     updatedDate?: boolean
     seed?: boolean
+    fight?: boolean
     userId?: boolean
   }
 
-  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "canRename" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "remaining" | "createdDate" | "updatedDate" | "seed" | "userId", ExtArgs["result"]["dinoz"]>
+  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "canRename" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "remaining" | "createdDate" | "updatedDate" | "seed" | "fight" | "userId", ExtArgs["result"]["dinoz"]>
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     items?: boolean | Dinoz$itemsArgs<ExtArgs>
     skills?: boolean | Dinoz$skillsArgs<ExtArgs>
@@ -3187,6 +3198,7 @@ export namespace Prisma {
       createdDate: Date
       updatedDate: Date
       seed: string
+      fight: boolean
       userId: string
     }, ExtArgs["result"]["dinoz"]>
     composites: {}
@@ -3637,6 +3649,7 @@ export namespace Prisma {
     readonly createdDate: FieldRef<"Dinoz", 'DateTime'>
     readonly updatedDate: FieldRef<"Dinoz", 'DateTime'>
     readonly seed: FieldRef<"Dinoz", 'String'>
+    readonly fight: FieldRef<"Dinoz", 'Boolean'>
     readonly userId: FieldRef<"Dinoz", 'String'>
   }
     
@@ -23324,6 +23337,7 @@ export namespace Prisma {
     createdDate: 'createdDate',
     updatedDate: 'updatedDate',
     seed: 'seed',
+    fight: 'fight',
     userId: 'userId'
   };
 
@@ -23755,6 +23769,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     seed?: UuidFilter<"Dinoz"> | string
+    fight?: BoolFilter<"Dinoz"> | boolean
     userId?: UuidFilter<"Dinoz"> | string
     items?: DinozItemsListRelationFilter
     skills?: DinozSkillsListRelationFilter
@@ -23785,6 +23800,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedDate?: SortOrder
     seed?: SortOrder
+    fight?: SortOrder
     userId?: SortOrder
     items?: DinozItemsOrderByRelationAggregateInput
     skills?: DinozSkillsOrderByRelationAggregateInput
@@ -23818,6 +23834,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     seed?: UuidFilter<"Dinoz"> | string
+    fight?: BoolFilter<"Dinoz"> | boolean
     userId?: UuidFilter<"Dinoz"> | string
     items?: DinozItemsListRelationFilter
     skills?: DinozSkillsListRelationFilter
@@ -23848,6 +23865,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedDate?: SortOrder
     seed?: SortOrder
+    fight?: SortOrder
     userId?: SortOrder
     _count?: DinozCountOrderByAggregateInput
     _avg?: DinozAvgOrderByAggregateInput
@@ -23881,6 +23899,7 @@ export namespace Prisma {
     createdDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     seed?: UuidWithAggregatesFilter<"Dinoz"> | string
+    fight?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     userId?: UuidWithAggregatesFilter<"Dinoz"> | string
   }
 
@@ -24957,6 +24976,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     items?: DinozItemsCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillsUnlockableCreateNestedManyWithoutDinozInput
@@ -24986,6 +25006,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     userId: string
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
@@ -25014,6 +25035,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUpdateManyWithoutDinozNestedInput
@@ -25043,6 +25065,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
@@ -25072,6 +25095,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     userId: string
   }
 
@@ -25096,6 +25120,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DinozUncheckedUpdateManyInput = {
@@ -25120,6 +25145,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -26277,6 +26303,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedDate?: SortOrder
     seed?: SortOrder
+    fight?: SortOrder
     userId?: SortOrder
   }
 
@@ -26320,6 +26347,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedDate?: SortOrder
     seed?: SortOrder
+    fight?: SortOrder
     userId?: SortOrder
   }
 
@@ -26345,6 +26373,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedDate?: SortOrder
     seed?: SortOrder
+    fight?: SortOrder
     userId?: SortOrder
   }
 
@@ -28965,6 +28994,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     skills?: DinozSkillsCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillsUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
@@ -28993,6 +29023,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     userId: string
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedCreateNestedManyWithoutDinozInput
@@ -29036,6 +29067,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
@@ -29064,6 +29096,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
@@ -29091,6 +29124,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     items?: DinozItemsCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillsUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
@@ -29119,6 +29153,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     userId: string
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedCreateNestedManyWithoutDinozInput
@@ -29162,6 +29197,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
@@ -29190,6 +29226,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
@@ -29217,6 +29254,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     items?: DinozItemsCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
@@ -29245,6 +29283,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     userId: string
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
@@ -29288,6 +29327,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
@@ -29316,6 +29356,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
@@ -29343,6 +29384,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     items?: DinozItemsCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillsUnlockableCreateNestedManyWithoutDinozInput
@@ -29371,6 +29413,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     userId: string
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
@@ -29414,6 +29457,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUpdateManyWithoutDinozNestedInput
@@ -29442,6 +29486,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
@@ -29867,6 +29912,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     items?: DinozItemsCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillsUnlockableCreateNestedManyWithoutDinozInput
@@ -29895,6 +29941,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedCreateNestedManyWithoutDinozInput
@@ -30161,6 +30208,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     seed?: UuidFilter<"Dinoz"> | string
+    fight?: BoolFilter<"Dinoz"> | boolean
     userId?: UuidFilter<"Dinoz"> | string
   }
 
@@ -30973,6 +31021,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    fight?: boolean
   }
 
   export type UserDinozShopCreateManyUserInput = {
@@ -31087,6 +31136,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUpdateManyWithoutDinozNestedInput
@@ -31115,6 +31165,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
@@ -31143,6 +31194,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserDinozShopUpdateWithoutUserInput = {

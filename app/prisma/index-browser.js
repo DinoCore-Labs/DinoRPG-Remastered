@@ -142,6 +142,7 @@ exports.Prisma.DinozScalarFieldEnum = {
   createdDate: 'createdDate',
   updatedDate: 'updatedDate',
   seed: 'seed',
+  fight: 'fight',
   userId: 'userId'
 };
 

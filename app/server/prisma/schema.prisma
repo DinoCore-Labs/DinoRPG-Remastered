@@ -32,6 +32,7 @@ model Dinoz {
   updatedDate        DateTime   @updatedAt        @db.Timestamptz(3)
   seed               String     @db.Uuid
 
+  fight              Boolean    @default(true)
   items              DinozItems[] 
   skills             DinozSkills[] 
   unlockableSkills   DinozSkillsUnlockable[] 

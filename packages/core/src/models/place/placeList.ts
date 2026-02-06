@@ -1,8 +1,8 @@
-import { DinozStatusId } from '../dinoz/statusList.js';
+//import { DinozStatusId } from '../dinoz/statusList.js';
 //import { GatherType } from '../enums/GatherType.mjs';
 import { GroundEnum } from '../enums/GroundEnum.js';
 import { MapZone } from '../enums/MapZone.js';
-import { Comparator, ConditionEnum, Operator } from '../enums/Parser.js';
+//import { Comparator, ConditionEnum, Operator } from '../enums/Parser.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
 //import { Scenario } from '../enums/Scenario.mjs';
 //import { MissionID } from '../missions/missionList.mjs';
