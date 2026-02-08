@@ -31,18 +31,18 @@
 				:content="$t('hud.unfreezeCountdown', { time: timeUntilMidnight })"
 				help
 			/>-->
-			<!--<DZDisclaimer
+			<DZDisclaimer
 				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life < dinoz.maxLife / 2"
 				:content="$t('hud.resting', { hp: hpRegen, min: minutesBeforeHour })"
 				timer
-			/>-->
-			<!--<DZDisclaimer
+			/>
+			<DZDisclaimer
 				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life >= dinoz.maxLife / 2"
 				:content="$t('hud.restEnd')"
 				help
-			/>-->
+			/>
 			<!--<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :key="dinoz.id"></DZFollow>-->
-			<!--<Tippy
+			<Tippy
 				tag="div"
 				theme="normal"
 				class="action"
@@ -51,18 +51,19 @@
 				:id="action.imgName"
 				@click="launch(action)"
 			>
-				<img :src="getImgURL('icons', action.imgName)" :alt="action.imgName" />
-				<p v-if="action.name === 'shop'">{{ $t(`shop.item.${shopNameList[action.prop ?? '']}.name`) }}</p>
+				<img :src="getImgURL('act', action.imgName)" :alt="action.imgName" />
+				<!--<p v-if="action.name === 'shop'">{{ $t(`shop.item.${shopNameList[action.prop ?? '']}.name`) }}</p>
 				<p v-else-if="action.name === 'npc'">{{ $t(`npc.name.${npcDisplayName(+(action.prop ?? '0'))}`) }}</p>
 				<p v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION">
 					{{ $t(`missions.actions.terminate`) }}
-				</p>
-				<p v-else-if="action.name === 'mission'">{{ $t(`missions.npc.${action.prop}`) }}</p>
-				<p v-else>
-					{{ action.forDinoz ? `${dinoz.followers.find(f => f.id === action.forDinoz)?.name}: ` : '' }}
+				</p>-->
+				<!--<p v-else-if="action.name === 'mission'">{{ $t(`missions.npc.${action.prop}`) }}</p>-->
+				<p>
+					<!--{{ action.forDinoz ? `${dinoz.followers.find(f => f.id === action.forDinoz)?.name}: ` : '' }}-->
 					{{ $t(`action.name.${action.name}`) }}
 				</p>
 				<template #content>
+					<!--
 					<h1
 						v-if="action.name === 'shop'"
 						v-html="formatContent($t(`shop.item.${shopNameList[action.prop ?? '']}.name`))"
@@ -75,9 +76,11 @@
 						v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION"
 						v-html="formatContent($t(`missions.actions.terminate`))"
 					/>
-					<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />
-					<h1 v-else v-html="formatContent($t(`action.name.${action.name}`))" />
-					<p
+					<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />-->
+					<h1 v-html="formatContent($t(`action.name.${action.name}`))" />
+
+					<!-- DESCRIPTION ACTIONS -->
+					<!--<p
 						v-if="action.name === 'shop'"
 						v-html="formatContent($t(`shop.item.${shopNameList[action.prop ?? '']}.description`))"
 					/>
@@ -85,66 +88,68 @@
 					<p
 						v-else-if="action.name === 'mission'"
 						v-html="formatContent($t(`missions.tooltip`, { mission: $t(`missions.name.${missionName}`) }))"
-					/>
-					<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
+					/>-->
+					<p v-html="formatContent($t(`action.description.${action.name}`))" />
 				</template>
-			</Tippy>-->
+			</Tippy>
 			<!--<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />-->
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-//import { Action, type ActionFiche } from '@dinorpg/core/models/dinoz/dinozActions.js';
-//import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { Action, type ActionFiche } from '@dinorpg/core/models/dinoz/dinozActions.js';
+import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 //import { UnavailableReason } from '@drpg/prisma/enums';
-//import { GatherType } from '@dinorpg/core/models/enums/GatherType.js';
-//import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
+import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 //import { ConditionEnum, RewardEnum } from '@dinorpg/core/models/enums/Parser.js';
 //import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 //import { npcList } from '@drpg/core/models/npc/NpcList';
-//import { Rewarder } from '@dinorpg/core/models/rewards/rewarder.js';
+//import type { Rewarder } from '@dinorpg/core/models/rewards/rewarder.js';
 //import { orderDinozList, toSkillDetails } from '@drpg/core/utils/DinozUtils';
 //import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
-import { defineComponent /*type PropType*/ } from 'vue';
-//import DZFollow from '../../components/dinoz/DZFollow.vue';
+import { defineComponent, type PropType } from 'vue';
+//import DZFollow from '../utils/DZFollow.vue';
 //import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
 //import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 //import NPCModal from '../../components/modal/NPCModal.vue';
 //import Resurect from '../../components/modal/ResurrectModal.vue';
 //import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
 //import { mixin } from '../../mixin/mixin.js';
-//import { DinozService, FightService, MissionService } from '../../services/index.js';
-//import { playerStore, sessionStore } from '../../store/index.js';
-//import { dinozStore } from '../../store/dinozStore';
-//import { errorHandler } from '../../utils/errorHandler';
-//import { formatText } from '../../utils/formatText';
-//import DZDisclaimer from '../utils/DZDisclaimer.vue';
+import { FightService } from '../../services';
+import { DinozService } from '../../services';
+//import { MissionService } from '../../services/index.js';
+import { dinozStore } from '../../store/dinozStore';
+import { sessionStore } from '../../store/sessionStore';
+import { userStore } from '../../store/userStore';
+import { errorHandler } from '../../utils/errorHandler';
+import DZDisclaimer from '../utils/DZDisclaimer.vue';
+import { GatherType } from '@dinorpg/core/models/enums/GatherType.js';
+import { formatText } from '../../utils/formatText';
 //import { DigResponse } from '@drpg/core/returnTypes/Dinoz';
 
 export default defineComponent({
 	name: 'DinozActions',
 	data() {
 		return {
+			dinozId: this.dinoz.id,
 			//shopNameList: shopNameList,
 			//itinerantShopNameList: itinerantShopNameList,
 			//resurect: false as boolean,
 			//NPCModal: undefined as string | undefined,
-			// mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
-			// 	.missionHUD,
 			//npcName: undefined as string | undefined,
 			//missionReward: undefined as Rewarder[] | undefined,
-			//sessionStore: sessionStore(),
-			//dinozStore: dinozStore(),
+			sessionStore: sessionStore(),
+			dinozStore: dinozStore(),
 			//MissionEnum: ConditionEnum,
 			//digRewards: undefined as DigResponse | undefined,
-			//Action,
-			//hpRegen: 1,
+			Action,
+			hpRegen: 1,
 			//itinerantName: '' as string,
 			//dinozFullParty: [] as DinozFiche[],
-			//playerStore: playerStore(),
+			uStore: userStore(),
 			//timeUntilMidnight: '',
-			//minutesBeforeHour: 60 - new Date().getMinutes(),
+			minutesBeforeHour: 60 - new Date().getMinutes()
 			//intervals: [] as number[],
 			//mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
 			//	?.missionHUD
@@ -155,18 +160,18 @@ export default defineComponent({
 		//MissionHUDVue,
 		//NPCModal,
 		//MissionRewardModal,
-		//DZDisclaimer,
+		DZDisclaimer
 		//DZFollow
 	},
 	props: {
-		/*dinoz: {
+		dinoz: {
 			type: Object as PropType<DinozFiche>,
 			required: true
 		},
 		refreshDinoz: {
 			type: Function as PropType<() => Promise<void>>,
 			required: true
-		}*/
+		}
 	},
 	methods: {
 		/*computeTimeUntilMidnight() {
@@ -194,13 +199,13 @@ export default defineComponent({
 				this.refreshDinoz();
 			}
 		},*/
-		/*async launch(action: ActionFiche) {
+		async launch(action: ActionFiche) {
 			switch (action.name) {
 				case Action.IRMA:
 				case Action.IRMAS:
 				case Action.ACTION:
 					try {
-						const toast = await DinozService.useIrma(parseInt(this.$route.params.id.toString()));
+						const toast = await DinozService.useIrma(this.dinozId.toString());
 						if (toast.category === ItemEffect.ACTION && toast.value > 0) {
 							const message = this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value);
 							this.$toast.open({
@@ -216,36 +221,36 @@ export default defineComponent({
 				case Action.LEVEL_UP:
 					this.$router.push({
 						name: 'Leveling',
-						params: { id: this.$route.params.id.toString() }
+						params: { id: this.dinozId.toString() }
 					});
 					break;
 				case Action.SHOP:
-					this.$router.push({
+					/*this.$router.push({
 						name: 'ItemShopPage',
 						params: { name: shopNameList[action.prop as number] }
-					});
+					});*/
 					break;
 				case Action.ITINERANTSHOP:
-					this.$router.push({
+					/*this.$router.push({
 						name: 'ItinerantMerchantPage',
 						params: { itinerantId: action.prop }
-					});
+					});*/
 					break;
 				case Action.NPC:
-					this.dinozStore.clearNpc(+this.$route.params.id);
+					/*this.dinozStore.clearNpc(+this.$route.params.id);
 					this.$router.push({
 						name: 'NPC',
 						params: { id: this.$route.params.id.toString(), npc: this.npcDisplayName(action.prop as number) }
-					});
+					});*/
 					break;
 				case Action.FIGHT: {
 					try {
-						const fight = await FightService.processFight(+this.$route.params.id);
+						const fight = await FightService.processFight(this.dinozId);
 						this.sessionStore.setFightResult(fight);
 
 						this.$router.push({
-							name: 'Fight',
-							params: { dinozId: this.$route.params.id.toString() }
+							name: 'FightPage',
+							params: { dinozId: this.dinozId.toString() }
 						});
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -253,10 +258,10 @@ export default defineComponent({
 					break;
 				}
 				case Action.RESURRECT:
-					this.resurect = true;
+					//this.resurect = true;
 					break;
 				case Action.MISSION:
-					if (typeof this.dinoz.missionId !== 'number') {
+					/*if (typeof this.dinoz.missionId !== 'number') {
 						this.$toast.open({
 							message: this.$t('toast.missingData'),
 							type: 'error'
@@ -309,10 +314,10 @@ export default defineComponent({
 						} catch (e) {
 							errorHandler.handle(e, this.$toast);
 						}
-					}
+					}*/
 					break;
 				case Action.DIG:
-					try {
+					/*try {
 						this.digRewards = await DinozService.dig(parseInt(this.$route.params.id.toString()));
 
 						if (this.digRewards.fight) {
@@ -353,7 +358,7 @@ export default defineComponent({
 						}
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}
+					}*/
 					await this.refreshDinoz();
 					break;
 				case Action.FISH:
@@ -370,33 +375,33 @@ export default defineComponent({
 				case GatherType.ANNIV:
 				case GatherType.PARTY:
 				case Action.DAILY:
-					this.$router.push({
+				/*this.$router.push({
 						name: 'Gather',
 						params: {
 							dinozId: action.forDinoz ? action.forDinoz.toString() : this.$route.params.id.toString(),
 							type: action.name
 						}
 					});
-					break;
+					break;*/
 				case Action.CONCENTRATE:
-					await DinozService.cancelConcentration(parseInt(this.$route.params.id.toString()));
+					//await DinozService.cancelConcentration(parseInt(this.$route.params.id.toString()));
 					await this.refreshDinoz();
 					break;
 				case Action.MARKET:
-					this.$router.push({
+					/*this.$router.push({
 						name: 'MarketPage',
 						params: { tab: 0 }
-					});
+					});*/
 					break;
 				case Action.FOLLOW: {
-					if (!this.dinozStore.getDinozList) {
+					/*if (!this.dinozStore.getDinozList) {
 						this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 						return;
-					}
+					}*/
 					break;
 				}
 				case Action.UNFOLLOW: {
-					try {
+					/*try {
 						await DinozService.unfollow(+this.$route.params.id);
 
 						// Refresh followed and following status
@@ -425,12 +430,12 @@ export default defineComponent({
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}
+					}*/
 					await this.refreshDinoz();
 					break;
 				}
 				case Action.DISBAND:
-					try {
+					/*try {
 						await DinozService.disband(+this.$route.params.id);
 
 						let currentDinozList = this.dinozStore.getDinozList;
@@ -463,10 +468,10 @@ export default defineComponent({
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}
+					}*/
 					break;
 				case Action.CHANGE_LEADER:
-					try {
+					/*try {
 						const followerId = +this.$route.params.id;
 						const currentLeader = this.dinozStore.getDinozList.find(d => d.id === followerId)?.leaderId;
 
@@ -490,10 +495,10 @@ export default defineComponent({
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}
+					}*/
 					break;
 				case Action.CONGEL:
-					try {
+					/*try {
 						await DinozService.frozeDinoz(+this.$route.params.id);
 
 						const currentDinozList = this.dinozStore.getDinozList;
@@ -512,34 +517,34 @@ export default defineComponent({
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}
+					}*/
 					break;
 				case Action.STOP_CONGEL:
-					try {
+					/*try {
 						await DinozService.unfrozeDinoz(+this.$route.params.id);
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}
+					}*/
 					break;
 				case Action.REST:
-					try {
+					/*try {
 						await DinozService.restDinoz(+this.$route.params.id, true);
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}
+					}*/
 					break;
 				case Action.STOP_REST:
-					try {
+					/*try {
 						await DinozService.restDinoz(+this.$route.params.id, false);
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}
+					}*/
 					break;
 				case Action.REINCARNATION:
-					try {
+					/*try {
 						await DinozService.reincarnate(+this.$route.params.id);
 						await this.refreshDinoz();
 						this.$toast.open({
@@ -548,13 +553,13 @@ export default defineComponent({
 						});
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}
+					}*/
 					break;
 				case Action.FB_TOURNAMENT:
-					this.$router.push({
+					/*this.$router.push({
 						name: 'Forcebrute',
 						query: { dinozId: +this.$route.params.id }
-					});
+					});*/
 					break;
 				default:
 					console.log(action.name);
@@ -607,17 +612,17 @@ export default defineComponent({
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 			const regen = specialStats.find(s => s.name === SpecialStat.HP_REGEN);
 			regen ? (this.hpRegen = regen.value) : 1;
-		},
+		}*/,
 		async loadComponent() {
-			if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
+			/*if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
 				await this.regenRate();
 			}
 			this.dinozFullParty = dinozStore().getDinozList.filter(dinoz =>
 				this.dinoz?.followers.some(a => a.id === dinoz.id)
 			);
-			this.dinozFullParty.push(this.dinoz);
-		}*/
-	}
+			this.dinozFullParty.push(this.dinoz);*/
+		}
+	},
 	/*computed: {
 		UnavailableReason() {
 			return UnavailableReason;
@@ -636,14 +641,14 @@ export default defineComponent({
 			return dinozStore().getDinoz(this.dinoz.leaderId);
 		}
 	},*/
-	/*watch: {
-		storeMission: function (mission: MissionHUD) {
+	watch: {
+		/*storeMission: function (mission: MissionHUD) {
 			this.mission = mission;
-		},
+		},*/
 		dinoz() {
 			this.loadComponent();
 		}
-	},*/
+	}
 	/*async mounted() {
 		await this.loadComponent();
 		const intervalId = window.setInterval(() => this.computeTimeUntilMidnight(), 1000);
@@ -701,6 +706,9 @@ export default defineComponent({
 		line-height: 10.5pt;
 		font-weight: 700;
 		width: 100%;
+		& img {
+			margin-left: 5px;
+		}
 		&:hover {
 			background-color: #9a4029;
 			cursor: pointer;
@@ -737,18 +745,15 @@ export default defineComponent({
 	.actions {
 		width: 95%;
 		max-width: 100%;
-
 		.action_content {
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
 			flex-wrap: wrap;
 			gap: 0.2rem;
-
 			.action {
 				width: 46%;
 			}
-
 			.follow {
 				width: 100%;
 			}
