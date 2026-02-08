@@ -1,5 +1,5 @@
 import { DinozStatusId } from '../dinoz/statusList.js';
-import { SkillVisualEffect } from './skillVisualEffect.js';
+import { SkillVisualEffect } from '../enums/SkillVisualEffect.js';
 
 export type preFightLoader = {
 	bg?: string;
@@ -218,6 +218,8 @@ export type transpiled =
 				size?: number;
 			};
 			effect?: DamagesEffect;
+			textColor?: number;
+			textScaleFactor?: number;
 	  }
 	| {
 			action: DinoAction.RETURN;
@@ -232,6 +234,7 @@ export type transpiled =
 				col1?: number;
 				col2?: number;
 			};
+			saveStartPosition?: boolean;
 	  }
 	| {
 			action: DinoAction.ANNOUNCE;

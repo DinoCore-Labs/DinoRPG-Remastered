@@ -1,4 +1,5 @@
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import type { ItemFeedBack } from '@dinorpg/core/models/items/itemFeedback.js';
 
 import { http } from '../utils/http';
 
@@ -21,6 +22,12 @@ export const DinozService = {
 				skillId,
 				skillState
 			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	async useIrma(dinozId: number): Promise<ItemFeedBack> {
+		return http()
+			.post(`/dinoz/${dinozId}/irma`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},

@@ -6,6 +6,7 @@ import AccountPage from '../pages/AccountPage.vue';
 import AdminJobsPage from '../pages/Admin/AdminJobsPage.vue';
 import DinozPage from '../pages/DinozPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
+import FightPage from '../pages/FightPage.vue';
 import HelpPage from '../pages/HelpPage.vue';
 import HomePage from '../pages/HomePage.vue';
 import Ingredients from '../pages/Ingredients.vue';
@@ -64,6 +65,12 @@ const routes: RouteRecord[] = [
 				meta: { auth: true }
 			},
 			{
+				path: '/fight/:dinozId',
+				name: 'FightPage',
+				component: FightPage,
+				meta: { auth: true }
+			},
+			{
 				path: '/ranking',
 				name: 'Ranking',
 				component: RankingPage,
@@ -75,7 +82,8 @@ const routes: RouteRecord[] = [
 						props: route => ({
 							sort: 'classic',
 							pageLoaded: Number(route.params.pageLoaded)
-						})
+						}),
+						meta: { public: true, showLeftPanel: false }
 					},
 					{
 						path: 'average/:pageLoaded',
@@ -84,7 +92,8 @@ const routes: RouteRecord[] = [
 						props: route => ({
 							sort: 'average',
 							pageLoaded: Number(route.params.pageLoaded)
-						})
+						}),
+						meta: { public: true, showLeftPanel: false }
 					}
 				]
 			},

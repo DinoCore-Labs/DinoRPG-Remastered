@@ -4,8 +4,8 @@ import { $fightRef } from '../Schema/fight.schema.js';
 import { processFight } from '../Service/fight.service.js';
 
 export async function fightRoutes(app: FastifyInstance) {
-	app.post(
-		'/process',
+	app.put(
+		'/:id',
 		{
 			preHandler: app.authenticate,
 			schema: {

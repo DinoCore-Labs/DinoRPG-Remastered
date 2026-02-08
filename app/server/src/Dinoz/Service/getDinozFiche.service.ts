@@ -3,6 +3,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { getDinozFicheRequest } from '../Controller/getDinozFiche.controller.js';
+import { getAvailableActions } from './getDinozActions.service.js';
 
 // import { TournamentManager } from '../../tournament/TournamentManager.js';
 // import { isDinozInTournament } from '../../tournament/isDinozInTournament.js';
@@ -42,7 +43,7 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 
 	// Create the answer that will be sent back
 	const ret = toDinozFiche(playerData, dinozId /*isInTournament ? currentTournament : null*/);
-	//ret.actions = await getAvailableActions(myDinoz, playerData);
+	ret.actions = await getAvailableActions(myDinoz, playerData);
 
 	return reply.send(ret);
 }

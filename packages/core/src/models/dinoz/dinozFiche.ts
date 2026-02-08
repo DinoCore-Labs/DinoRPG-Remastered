@@ -1,3 +1,4 @@
+import { ActionFiche } from './dinozActions.js';
 import { DinozRace } from './dinozRace.js';
 import { DinozSkillsDTO } from './dinozSkills.js';
 import { DinozStatusDTO } from './dinozStatus.js';
@@ -19,7 +20,7 @@ export interface DinozFiche {
 	maxExperience: number;
 	race: DinozRace;
 	placeId: number;
-	//actions: ActionFiche[];
+	actions: ActionFiche[];
 	items: number[];
 	maxItems: number;
 	skills: DinozSkillsDTO[];

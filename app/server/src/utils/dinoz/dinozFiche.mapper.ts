@@ -16,6 +16,12 @@ import {
 	UserRewards
 } from '../../../../prisma/index.js';
 
+type Config = {
+	dinoz: {
+		maxLevel: number;
+	};
+};
+
 export type UserForDinozFiche = Parameters<typeof toDinozFiche>[0];
 export const toDinozFiche = (
 	user: Pick<User, 'id' /*| 'engineer'*/> & {
@@ -102,7 +108,7 @@ export const toDinozFiche = (
 		nbrUpLightning: dinoz.nbrUpLightning,
 		nbrUpAir: dinoz.nbrUpAir,
 		//missionHUD: getHUDObjective(dinoz),
-		//actions: [],
+		actions: [],
 		skills: dinoz.skills,
 		//order: dinoz.order,
 		remaining: dinoz.remaining,
@@ -182,6 +188,25 @@ export const knowSkillId = (
 	skillId: number
 ) => {
 	return dinoz.skills.some(skill => skill.skillId === skillId);
+};
+
+export const remainingXPToLevelUp = (
+	dinoz: Pick<Dinoz, 'experience' | 'level'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+	}
+) => {
+	return getMaxXp(dinoz) - dinoz.experience;
+};
+
+export const isMaxLevel = (dinoz: Pick<Dinoz, 'level'>, config: Config) => dinoz.level >= config.dinoz.maxLevel;
+
+export const canLevelUp = (
+	dinoz: Pick<Dinoz, 'experience' | 'level'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+	},
+	config: Config
+) => {
+	return remainingXPToLevelUp(dinoz) <= 0 && !isMaxLevel(dinoz, config);
 };
 
 export const backpackSlot = (
