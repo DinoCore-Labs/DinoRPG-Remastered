@@ -36,7 +36,7 @@ export const toDinozFiche = (
 			| 'display'
 			//| 'unavailableReason'
 			| 'level'
-			//| 'leaderId'
+			| 'leaderId'
 			| 'life'
 			| 'maxLife'
 			| 'experience'
@@ -47,7 +47,7 @@ export const toDinozFiche = (
 			| 'nbrUpWater'
 			| 'nbrUpLightning'
 			| 'nbrUpAir'
-			//| 'order'
+			| 'order'
 			| 'remaining'
 			| 'fight'
 			//| 'gather'
@@ -56,7 +56,7 @@ export const toDinozFiche = (
 			items: Pick<DinozItems, 'itemId'>[];
 			status: Pick<DinozStatus, 'statusId'>[];
 			skills: Pick<DinozSkills, 'skillId' | 'state'>[];
-			//followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
+			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | /*'gather' |*/ 'name'>[];
 			//concentration: Concentration | null;
 			//TournamentTeam: Pick<TournamentTeam, 'tournamentId'>[];
 			//build: DinozBuild | null;
@@ -78,8 +78,8 @@ export const toDinozFiche = (
 		//unavailableReason: dinoz.unavailableReason,
 		level: dinoz.level,
 		//missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId ?? null,
-		//leaderId: dinoz.leaderId,
-		//followers: dinoz.followers,
+		leaderId: dinoz.leaderId,
+		followers: dinoz.followers,
 		life: dinoz.life,
 		maxLife: dinoz.maxLife,
 		experience: dinoz.experience,
@@ -110,7 +110,7 @@ export const toDinozFiche = (
 		//missionHUD: getHUDObjective(dinoz),
 		actions: [],
 		skills: dinoz.skills,
-		//order: dinoz.order,
+		order: dinoz.order,
 		remaining: dinoz.remaining,
 		fight: dinoz.fight
 		//gather: dinoz.gather,
@@ -129,12 +129,12 @@ export const toDinozFicheLite = (
 		| 'id'
 		| 'name'
 		| 'display'
-		//| 'leaderId'
+		| 'leaderId'
 		| 'life'
 		| 'maxLife'
 		| 'experience'
 		| 'placeId'
-		//| 'order'
+		| 'order'
 		//| 'unavailableReason'
 		| 'level'
 	> & {
@@ -145,22 +145,19 @@ export const toDinozFicheLite = (
 		id: dinoz.id,
 		name: dinoz.name,
 		display: dinoz.display,
-		//leaderId: dinoz.leaderId,
+		leaderId: dinoz.leaderId,
 		life: dinoz.life,
 		maxLife: dinoz.maxLife,
 		experience: dinoz.experience,
 		maxExperience: getMaxXp(dinoz),
-		placeId: dinoz.placeId
-		//order: dinoz.order,
+		placeId: dinoz.placeId,
+		order: dinoz.order
 		//unavailableReason: dinoz.unavailableReason
 	};
 };
 
 export const toDinozPublicFiche = (
-	dinoz: Pick<
-		Dinoz,
-		'id' | 'name' | 'display' /*| 'unavailableReason' */ | 'level' | 'raceId' | 'life' /*| 'order'*/
-	> & {
+	dinoz: Pick<Dinoz, 'id' | 'name' | 'display' /*| 'unavailableReason' */ | 'level' | 'raceId' | 'life' | 'order'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 	}
 ): DinozPublicFiche => {
@@ -172,8 +169,8 @@ export const toDinozPublicFiche = (
 		level: dinoz.level,
 		life: dinoz.life,
 		race: getRace(dinoz.raceId),
-		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b)
-		//order: dinoz.order
+		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b),
+		order: dinoz.order
 	};
 };
 

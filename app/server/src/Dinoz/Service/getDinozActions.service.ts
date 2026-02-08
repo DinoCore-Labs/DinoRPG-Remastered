@@ -3,10 +3,11 @@ import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
-import { actualPlace } from '@dinorpg/core/utils/dinozUtils.js';
+import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.js';
 
 import { Dinoz, DinozSkills, DinozStatus } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
+import { prisma } from '../../prisma.js';
 import { canLevelUp, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { PlayerForConditionCheck } from '../../utils/user/userConditionCheck.js';
 
@@ -19,7 +20,7 @@ export async function getAvailableActions(
 		| 'level'
 		| 'id'
 		| 'experience'
-		//| 'leaderId'
+		| 'leaderId'
 		| 'fight'
 		//| 'gather'
 		| 'remaining'
@@ -30,7 +31,7 @@ export async function getAvailableActions(
 	> & {
 		//missions: DinozMission[];
 		//concentration: Concentration | null;
-		//followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather'>[];
+		followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' /*| 'gather'*/>[];
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkills, 'skillId'>[];
 	},
@@ -60,12 +61,27 @@ export async function getAvailableActions(
 	}*/
 
 	// Leaders actions
-	/*if (dinoz.leaderId) {
+	if (dinoz.leaderId) {
 		availableActions.push(actionList[Action.UNFOLLOW]);
 		availableActions.push(actionList[Action.CHANGE_LEADER]);
 	} else {
 		// Check if there is a dinoz to follow
-		const potentialDinozToFollow = await getAvailableDinozToFollow(player.id, dinoz.id);
+		const potentialDinozToFollow = await prisma.dinoz.findMany({
+			where: {
+				id: { not: dinoz.id },
+				userId: user.id
+				//unavailableReason: null
+			},
+			select: {
+				id: true,
+				placeId: true,
+				leaderId: true,
+				//unavailableReason: true,
+				life: true,
+				followers: { select: { id: true, fight: true, remaining: true, /*gather: true,*/ name: true } },
+				skills: { select: { skillId: true, state: true } }
+			}
+		});
 		const dinozToFollow = getFollowableDinoz(
 			potentialDinozToFollow.map(dinoz => ({
 				...dinoz,
@@ -81,7 +97,7 @@ export async function getAvailableActions(
 	if (dinoz.followers.length > 0) {
 		availableActions.push(actionList[Action.DISBAND]);
 
-		for (const follower of dinoz.followers) {
+		/*for (const follower of dinoz.followers) {
 			// Follower gather
 			if (
 				follower.gather &&
@@ -98,8 +114,8 @@ export async function getAvailableActions(
 				}
 				availableActions.push({ ...actionList[gatherFound.action], forDinoz: follower.id });
 			}
-		}
-	}*/
+		}*/
+	}
 
 	// Death related actions
 	if (!isAlive(dinoz)) {
@@ -127,7 +143,7 @@ export async function getAvailableActions(
 	}*/
 
 	// Refresh action
-	if (/*!dinoz.leaderId &&*/ !dinoz.fight /*|| !dinoz.gather*/) {
+	if (!dinoz.leaderId && !dinoz.fight /*|| !dinoz.gather*/) {
 		if (dinoz.remaining > 0) {
 			availableActions.push(actionList[Action.ACTION]);
 		} else {
@@ -136,9 +152,9 @@ export async function getAvailableActions(
 	}
 
 	// Refresh actions in party
-	/*if (
+	if (
 		dinoz.followers.length > 0 &&
-		(!dinoz.fight || !dinoz.gather || dinoz.followers.filter(f => !f.fight).length > 0)
+		(!dinoz.fight || /*!dinoz.gather ||*/ dinoz.followers.filter(f => !f.fight).length > 0)
 	) {
 		let index = availableActions.indexOf(actionList[Action.IRMA]);
 		if (index >= 0) {
@@ -155,10 +171,10 @@ export async function getAvailableActions(
 				availableActions.push(actionList[Action.IRMAS]);
 			}
 		}
-	}*/
+	}
 
 	// Fight
-	if (/*!dinoz.leaderId &&*/ dinoz.fight /*&& dinoz.followers.filter(f => !f.fight).length <= 0*/) {
+	if (!dinoz.leaderId && dinoz.fight && dinoz.followers.filter(f => !f.fight).length <= 0) {
 		availableActions.push(actionList[Action.FIGHT]);
 	}
 

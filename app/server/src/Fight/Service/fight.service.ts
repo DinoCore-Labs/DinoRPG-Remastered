@@ -84,7 +84,7 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 
 	if (unavailableFollowers.length > 0) {
 		for (const d of unavailableFollowers) {
-			//await updateDinoz(d.id, { leader: { disconnect: true } });
+			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
 		team = team.filter(d => d.life > 0 /*&& d.unavailableReason === null*/);
 	}

@@ -6,15 +6,15 @@
 			<p>{{ $t('dinozPage.action') }}</p>
 		</div>
 		<div class="action_content">
-			<!--<template v-for="didi in dinozFullParty" :key="didi">
-				<MissionHUDVue
+			<template v-for="didi in dinozFullParty" :key="didi">
+				<!--<MissionHUDVue
 					v-if="didi.missionHUD && didi.missionId"
 					:missionId="didi.missionId"
 					:dinozName="didi.name"
 					:dinozId="didi.id"
 					@abort="endMission(didi.id)"
-				/>
-			</template>-->
+				/>-->
+			</template>
 			<!--<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />-->
 			<!--<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
 				{{ $t('hud.following') }}
@@ -41,7 +41,7 @@
 				:content="$t('hud.restEnd')"
 				help
 			/>
-			<!--<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :key="dinoz.id"></DZFollow>-->
+			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :dinoz="dinozId" :key="dinoz.id"></DZFollow>
 			<Tippy
 				tag="div"
 				theme="normal"
@@ -109,7 +109,7 @@ import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 //import { orderDinozList, toSkillDetails } from '@drpg/core/utils/DinozUtils';
 //import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { defineComponent, type PropType } from 'vue';
-//import DZFollow from '../utils/DZFollow.vue';
+import DZFollow from '../utils/DZFollow.vue';
 //import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
 //import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 //import NPCModal from '../../components/modal/NPCModal.vue';
@@ -146,7 +146,7 @@ export default defineComponent({
 			Action,
 			hpRegen: 1,
 			//itinerantName: '' as string,
-			//dinozFullParty: [] as DinozFiche[],
+			dinozFullParty: [] as DinozFiche[],
 			uStore: userStore(),
 			//timeUntilMidnight: '',
 			minutesBeforeHour: 60 - new Date().getMinutes()
@@ -160,8 +160,8 @@ export default defineComponent({
 		//MissionHUDVue,
 		//NPCModal,
 		//MissionRewardModal,
-		DZDisclaimer
-		//DZFollow
+		DZDisclaimer,
+		DZFollow
 	},
 	props: {
 		dinoz: {
@@ -205,7 +205,7 @@ export default defineComponent({
 				case Action.IRMAS:
 				case Action.ACTION:
 					try {
-						const toast = await DinozService.useIrma(this.dinozId.toString());
+						const toast = await DinozService.useIrma(this.dinozId);
 						if (toast.category === ItemEffect.ACTION && toast.value > 0) {
 							const message = this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value);
 							this.$toast.open({
@@ -402,7 +402,7 @@ export default defineComponent({
 				}
 				case Action.UNFOLLOW: {
 					/*try {
-						await DinozService.unfollow(+this.$route.params.id);
+						await DinozService.unfollow(this.dinozId);
 
 						// Refresh followed and following status
 						const currentDinozList = this.dinozStore.getDinozList;
@@ -616,11 +616,11 @@ export default defineComponent({
 		async loadComponent() {
 			/*if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
 				await this.regenRate();
-			}
+			}*/
 			this.dinozFullParty = dinozStore().getDinozList.filter(dinoz =>
 				this.dinoz?.followers.some(a => a.id === dinoz.id)
 			);
-			this.dinozFullParty.push(this.dinoz);*/
+			this.dinozFullParty.push(this.dinoz);
 		}
 	},
 	/*computed: {
@@ -645,8 +645,13 @@ export default defineComponent({
 		/*storeMission: function (mission: MissionHUD) {
 			this.mission = mission;
 		},*/
-		dinoz() {
-			this.loadComponent();
+		dinoz: {
+			handler() {
+				this.dinozId = this.dinoz.id;
+				this.loadComponent();
+			},
+			deep: false,
+			immediate: true
 		}
 	}
 	/*async mounted() {

@@ -1,9 +1,14 @@
+import { DinozFiche } from '../models/dinoz/dinozFiche.js';
 import { levelList } from '../models/dinoz/dinozLevel.js';
 import { DinozForMaxXp } from '../models/dinoz/dinozXP.js';
 import { raceList } from '../models/dinoz/raceList.js';
 import { DinozStatusId } from '../models/dinoz/statusList.js';
+import { Stat } from '../models/enums/SkillStat.js';
 import { placeList } from '../models/place/placeList.js';
+import { BaseSpecialStats, SpecialStat } from '../models/skills/getSpecialStats.js';
+import { Skill, skillList } from '../models/skills/skillList.js';
 import { ExpectedError } from '../models/utils/expectedError.js';
+import { operatorProcess } from '../models/utils/operatorProcess.js';
 
 export const getRace = (raceId: number) => {
 	const race = Object.values(raceList).find(r => r.raceId === raceId);
@@ -98,4 +103,119 @@ export const calculatePvExp = (
 	if (maxLevel / initialMaxLevel > xpFactor) xpFactor = maxLevel / initialMaxLevel;
 
 	return Math.round(totalMonsterXp * xpFactor * XP_MULTIPLICATOR);
+};
+
+// Types "purs" (structurels) : juste ce dont la fonction a besoin
+export type DinozSkillLike = {
+	skillId: number; // ou Skill si ton enum est accessible dans core
+};
+
+export type HasSkillsLike = {
+	skills: readonly DinozSkillLike[];
+};
+
+export type FollowableDinozLike = {
+	id: number;
+	placeId: number;
+	leaderId: number | null;
+	//unavailableReason: unknown | null;
+	followers: readonly unknown[];
+	skills: readonly DinozSkillLike[];
+	life: number;
+};
+
+export type PotentialFollowerLike = {
+	id: number;
+	placeId: number;
+	fight: boolean;
+	remaining: number;
+	skills: readonly DinozSkillLike[];
+};
+
+export const getFollowableDinoz = <T extends FollowableDinozLike>(
+	dinozList: readonly T[],
+	potentialFollower: PotentialFollowerLike
+): T[] => {
+	// Brave dinoz cannot follow others
+	if (potentialFollower.skills.some(s => s.skillId === Skill.BRAVE)) return [];
+
+	return dinozList.filter(dinoz => {
+		// Filter out current dinoz
+		if (dinoz.id === potentialFollower.id) return false;
+
+		// Filter out unavailable Dinoz (selling, resting...)
+		//if (dinoz.unavailableReason !== null) return false;
+
+		// Filter out Dinoz that already have a leader
+		if (dinoz.leaderId !== null) return false;
+
+		// Filter out Dinoz that are not in the same place
+		if (dinoz.placeId !== potentialFollower.placeId) return false;
+
+		// Filter out brave Dinoz
+		if (dinoz.skills.some(s => s.skillId === Skill.BRAVE)) return false;
+
+		// Filter out dead Dinoz
+		if (dinoz.life <= 0) return false;
+
+		const maxFollowers = getMaxFollowers(dinoz);
+
+		// Filter out Dinoz that have too many followers
+		if (dinoz.followers.length >= maxFollowers) return false;
+
+		return true;
+	});
+};
+
+export const getMaxFollowers = (dinoz: HasSkillsLike) => {
+	let max = BaseSpecialStats[SpecialStat.MAX_FOLLOWERS];
+
+	const skillsAffectingMaxFollowers = Object.values(skillList).filter(skill => skill.effects?.[Stat.MAX_FOLLOWERS]);
+
+	for (const skill of skillsAffectingMaxFollowers) {
+		if (dinoz.skills.some(s => s.skillId === skill.id)) {
+			const effect = skill.effects?.[Stat.MAX_FOLLOWERS];
+			if (effect) {
+				max = operatorProcess(max, effect);
+			}
+		}
+	}
+
+	return max;
+};
+
+export const orderDinozList = <T extends Pick<DinozFiche, 'id' | 'order' | 'name' | 'leaderId' | 'followers'>[]>(
+	dinozList: T
+) => {
+	const sortedByOrderAndName = [...dinozList].sort((a, b) => {
+		if (a.order === null) {
+			a.order = a.id;
+		}
+		if (b.order === null) {
+			b.order = b.id;
+		}
+		if (a.order === b.order) {
+			return a.name.localeCompare(b.name);
+		}
+		return a.order - b.order;
+	});
+
+	// Group by leader
+	for (const leader of sortedByOrderAndName.filter(dinoz => dinoz.followers.length)) {
+		// Find all dinoz that follow this leader
+		const followers = sortedByOrderAndName.filter(dinoz => dinoz.leaderId === leader.id);
+
+		// Remove them from the list
+		for (const follower of followers) {
+			sortedByOrderAndName.splice(
+				sortedByOrderAndName.findIndex(dinoz => dinoz.id === follower.id),
+				1
+			);
+		}
+
+		// Add them after the leader
+		sortedByOrderAndName.splice(sortedByOrderAndName.findIndex(dinoz => dinoz.id === leader.id) + 1, 0, ...followers);
+	}
+
+	return sortedByOrderAndName;
 };
