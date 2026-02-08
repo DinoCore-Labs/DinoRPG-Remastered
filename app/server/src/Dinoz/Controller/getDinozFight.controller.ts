@@ -35,7 +35,7 @@ export async function getDinozFightDataRequest(dinozId: number, userId: string) 
 					placeId: true,
 					//leaderId: true,
 					canRename: true,
-					//fight: true,
+					fight: true,
 					items: { select: { itemId: true } },
 					skills: {
 						select: { skillId: true },

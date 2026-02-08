@@ -11,7 +11,7 @@ import { FighterStatusData } from './fightStatus.js';
 
 export interface DetailedFighter {
 	// Metadata
-	playerId: string | null;
+	userId: string | null;
 	id: number;
 	name: string;
 	level: number;
@@ -121,7 +121,7 @@ export interface DetailedFighter {
 }
 
 export interface FighterResultFiche {
-	playerId: string | null;
+	userId: string | null;
 	dinozId: number;
 	hpLost: number;
 	itemsUsed: Item[];

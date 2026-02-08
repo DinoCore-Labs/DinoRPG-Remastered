@@ -53,11 +53,14 @@ export type UpdateUserProfileResponse = z.infer<typeof updateUserProfileResponse
 
 // to build our JSON schema, we use buildJsonSchemas from fastify-zod
 // it returns all the schemas to register and a ref to refer these schemas
-export const { schemas: userSchemas, $ref } = buildJsonSchemas({
-	createUserSchema,
-	createUserResponseSchema,
-	loginSchema,
-	loginResponseSchema,
-	updateUserProfileSchema,
-	updateUserProfileResponseSchema
-});
+export const { schemas: userSchemas, $ref: $userRef } = buildJsonSchemas(
+	{
+		createUserSchema,
+		createUserResponseSchema,
+		loginSchema,
+		loginResponseSchema,
+		updateUserProfileSchema,
+		updateUserProfileResponseSchema
+	},
+	{ $id: 'userSchema' } // this will prefix all the schema $id with userSchema to avoid conflicts with other schemas);
+);

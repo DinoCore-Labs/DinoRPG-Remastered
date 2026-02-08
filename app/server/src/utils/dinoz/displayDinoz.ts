@@ -25,4 +25,22 @@ function getRandomLetter(maxLetter: string): string {
 	return lettersAvailable[Math.floor(Math.random() * lettersAvailable.length)];
 }
 
-export { getRandomLetter, getRandomNumber };
+/**
+ * @summary Returns a random string of a given size.
+ *
+ * @param length {number}
+ * @return string
+ */
+function generateString(length: number): string {
+	let result = '';
+	const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	const charactersLength = characters.length;
+	let counter = 0;
+	while (counter < length) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		counter += 1;
+	}
+	return result;
+}
+
+export { generateString, getRandomLetter, getRandomNumber };

@@ -13,7 +13,7 @@ import {
 	updateProfileController,
 	uploadAvatarController
 } from '../Controller/userProfile.controller.js';
-import { $ref } from '../Schema/user.schema.js';
+import { $userRef } from '../Schema/user.schema.js';
 
 export async function userRoutes(app: FastifyInstance) {
 	// Routes GET
@@ -47,9 +47,9 @@ export async function userRoutes(app: FastifyInstance) {
 		'/register',
 		{
 			schema: {
-				body: $ref('createUserSchema'),
+				body: $userRef('createUserSchema'),
 				response: {
-					201: $ref('createUserResponseSchema')
+					201: $userRef('createUserResponseSchema')
 				}
 			}
 		},
@@ -59,9 +59,9 @@ export async function userRoutes(app: FastifyInstance) {
 		'/login',
 		{
 			schema: {
-				body: $ref('loginSchema'),
+				body: $userRef('loginSchema'),
 				response: {
-					201: $ref('loginResponseSchema')
+					201: $userRef('loginResponseSchema')
 				}
 			}
 		},

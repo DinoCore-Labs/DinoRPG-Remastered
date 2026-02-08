@@ -10,6 +10,8 @@ import Fastify, { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 import { adminJobsRoutes } from './Admin/Routes/adminJobs.routes.js';
 import { loadConfig } from './config/config.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
+import { fightRoutes } from './Fight/Routes/fight.routes.js';
+import { fightSchemas } from './Fight/Schema/fight.schema.js';
 import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
 import { ensureJobsExist } from './jobs/ensureJobs.js';
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
@@ -150,8 +152,11 @@ async function buildServer() {
 	//------------------------------------------------------
 	// 8. Schemas Zod
 	//------------------------------------------------------
-	for (const schema of userSchemas) {
-		server.addSchema(schema);
+	for (const user of userSchemas) {
+		server.addSchema(user);
+	}
+	for (const fight of fightSchemas) {
+		server.addSchema(fight);
 	}
 
 	//------------------------------------------------------
@@ -162,6 +167,7 @@ async function buildServer() {
 	server.register(inventoryRoutes, { prefix: 'api/inventory' });
 	server.register(shopRoutes, { prefix: 'api/shop' });
 	server.register(dinozRoutes, { prefix: 'api/dinoz' });
+	server.register(fightRoutes, { prefix: 'api/fight' });
 
 	server.register(adminJobsRoutes, { prefix: 'api/admin' });
 	//------------------------------------------------------
