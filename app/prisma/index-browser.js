@@ -139,10 +139,12 @@ exports.Prisma.DinozScalarFieldEnum = {
   nextUpAltElementId: 'nextUpAltElementId',
   placeId: 'placeId',
   remaining: 'remaining',
+  order: 'order',
   createdDate: 'createdDate',
   updatedDate: 'updatedDate',
   seed: 'seed',
   fight: 'fight',
+  leaderId: 'leaderId',
   userId: 'userId'
 };
 

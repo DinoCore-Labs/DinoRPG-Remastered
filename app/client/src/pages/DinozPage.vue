@@ -58,6 +58,7 @@ export default defineComponent({
 		async getFiche(): Promise<void> {
 			const dinozId = this.$route.params.id as string;
 			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
+			console.log(this.dinozData);
 			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
 			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id.toString() === dinozId);
 			if (dinozToUpdate === -1) {
@@ -69,7 +70,7 @@ export default defineComponent({
 					...this.dinozData
 				});
 			}
-			/*if (this.dinozData.followers.length >= 1) {
+			if (this.dinozData.followers.length >= 1) {
 				for (const follower of this.dinozData.followers) {
 					const followerToUpdate = await DinozService.getDinozFiche(follower.id);
 					const followerIndex = dinozList.findIndex(dinoz => dinoz.id === followerToUpdate.id);
@@ -78,15 +79,15 @@ export default defineComponent({
 						...followerToUpdate
 					});
 				}
-			}*/
-			/*const storedFollowers = dinozList.filter(d => d.leaderId === +dinozId);
+			}
+			const storedFollowers = dinozList.filter(d => d.leaderId === +dinozId);
 			if (storedFollowers.length > 0) {
 				storedFollowers.map(d => {
 					if (!this.dinozData.followers.some(f => f.id === d.id)) {
 						d.leaderId = null;
 					}
 				});
-			}*/
+			}
 			this.dinozStore.setDinozList(dinozList);
 			/*this.userStore.setPlayerOptions({
 				...this.userStore.playerOptions

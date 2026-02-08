@@ -39,7 +39,7 @@
 import { defineComponent } from 'vue';
 import { DinozService } from '../../services/index.js';
 import eventBus from '../../events/index.js';
-//import { getFollowableDinoz, orderDinozList } from '@drpg/core/utils/DinozUtils';
+import { getFollowableDinoz, orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
@@ -56,20 +56,23 @@ export default defineComponent({
 			display: false as boolean
 		};
 	},
+	props: {
+		dinozId: {
+			type: Number,
+			required: true
+		}
+	},
 	methods: {
 		displayFollow(): void {
 			if (!this.dinozStore.getDinozList) {
 				this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 				return;
 			}
-
 			if (this.dinozAvailableToFollow.length > 0) {
 				this.dinozAvailableToFollow = [];
 				return;
 			}
-
-			const currentDinoz = this.dinozStore.getDinoz(+this.$route.params.id);
-
+			const currentDinoz = this.dinozStore.getDinoz(this.dinozId);
 			if (!currentDinoz) {
 				this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 				return;
@@ -81,7 +84,7 @@ export default defineComponent({
 		},
 		async followDinoz(targetId: number) {
 			try {
-				await DinozService.follow(+this.$route.params.id, targetId);
+				//await DinozService.follow(this.dinozId, targetId);
 
 				// Reset the list of dinoz available to follow
 				this.dinozAvailableToFollow = [];
@@ -102,11 +105,12 @@ export default defineComponent({
 				this.dinozStore.setDinozList(
 					orderDinozList(
 						currentDinozList.map(dinoz => {
-							if (dinoz.id === +this.$route.params.id) {
+							if (dinoz.id === this.dinozId) {
 								dinoz.leaderId = targetId;
 							} else if (dinoz.id === targetId) {
 								dinoz.followers.push({
-									id: +this.$route.params.id,
+									name: targetDinoz.name,
+									id: this.dinozId,
 									fight: targetDinoz.fight,
 									remaining: targetDinoz.remaining
 								});

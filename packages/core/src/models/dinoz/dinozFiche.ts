@@ -12,8 +12,8 @@ export interface DinozFiche {
 	level: number;
 	//missionId: number | undefined | null;
 	//missionHUD: MissionHUD | null;
-	//leaderId: number | null;
-	//followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
+	leaderId: number | null;
+	followers: Pick<DinozFiche, 'id' | 'fight' | 'remaining' | /*'gather' |*/ 'name'>[];
 	life: number;
 	maxLife: number;
 	experience: number;
@@ -31,7 +31,7 @@ export interface DinozFiche {
 	nbrUpWater: number;
 	nbrUpLightning: number;
 	nbrUpAir: number;
-	//order: number | null;
+	order: number | null;
 	remaining: number;
 	fight: boolean;
 	//gather: boolean;
@@ -49,13 +49,13 @@ export interface DinozFicheLite {
 	id: number;
 	name: string;
 	display: string;
-	//leaderId: number | null;
+	leaderId: number | null;
 	life: number;
 	maxLife: number;
 	experience: number;
 	maxExperience: number;
 	placeId: number;
-	//order: number | null;
+	order: number | null;
 	//unavailableReason: UnavailableReason | null;
 }
 
@@ -90,7 +90,7 @@ export interface DinozPublicFiche {
 	level: number;
 	race: DinozRace;
 	status: number[];
-	//order: number | null;
+	order: number | null;
 }
 
 export interface DinozDojoFiche {

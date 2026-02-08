@@ -33,25 +33,25 @@ export async function getDinozFicheRequest(dinozId: number, userId: string) {
 					level: true,
 					placeId: true,
 					raceId: true,
-					//leaderId: true,
+					leaderId: true,
 					//unavailableReason: true,
 					fight: true,
 					//gather: true,
 					remaining: true,
-					//order: true,
+					order: true,
 					canRename: true,
 					items: { select: { itemId: true } },
 					status: { select: { statusId: true } },
 					//missions: true,
-					skills: { select: { skillId: true, state: true } }
-					//followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
+					skills: { select: { skillId: true, state: true } },
+					followers: { select: { id: true, fight: true, remaining: true, /*gather: true,*/ name: true } }
 					//concentration: true,
 					//TournamentTeam: { select: { tournamentId: true } },
 					//build: true
-				}
-				/*where: {
+				},
+				where: {
 					OR: [{ id: dinozId }, { leaderId: dinozId }]
-				}*/
+				}
 			}
 		}
 	});

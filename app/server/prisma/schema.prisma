@@ -10,12 +10,12 @@ datasource db {
 }
 
 model Dinoz {
-  id                 Int        @id @default(autoincrement())
-  name               String     @db.VarChar(32)
-  canRename          Boolean    @default(false)
+  id                 Int                    @id @default(autoincrement())
+  name               String                 @db.VarChar(32)
+  canRename          Boolean                @default(false)
   raceId             Int
-  display            String     @db.VarChar
-  level              Int        @default(1)
+  display            String                 @db.VarChar
+  level              Int                    @default(1)
   life               Int
   maxLife            Int
   experience         Int
@@ -27,19 +27,23 @@ model Dinoz {
   nextUpElementId    Int
   nextUpAltElementId Int
   placeId            Int
-  remaining          Int        @default(3)      
-  createdDate        DateTime   @default(now())   @db.Timestamptz(3)
-  updatedDate        DateTime   @updatedAt        @db.Timestamptz(3)
-  seed               String     @db.Uuid
+  remaining          Int                    @default(3)
+  order              Int?      
+  createdDate        DateTime               @default(now())   @db.Timestamptz(3)
+  updatedDate        DateTime               @updatedAt        @db.Timestamptz(3)
+  seed               String                 @db.Uuid
 
-  fight              Boolean    @default(true)
+  fight              Boolean                @default(true)
+  leaderId           Int?                   @map("following")
+  leader             Dinoz?                 @relation("DinozFollowers", fields: [leaderId], references: [id])
+  followers          Dinoz[]                @relation("DinozFollowers")
   items              DinozItems[] 
   skills             DinozSkills[] 
   unlockableSkills   DinozSkillsUnlockable[] 
   status             DinozStatus[]
 
-  userId             String     @db.Uuid
-  user               User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)  
+  userId             String                 @db.Uuid
+  user               User                   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)  
 
   @@index([userId])  
 }

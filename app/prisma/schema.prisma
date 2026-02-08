@@ -28,11 +28,15 @@ model Dinoz {
   nextUpAltElementId Int
   placeId            Int
   remaining          Int      @default(3)
+  order              Int?
   createdDate        DateTime @default(now()) @db.Timestamptz(3)
   updatedDate        DateTime @updatedAt @db.Timestamptz(3)
   seed               String   @db.Uuid
 
   fight            Boolean                 @default(true)
+  leaderId         Int?                    @map("following")
+  leader           Dinoz?                  @relation("DinozFollowers", fields: [leaderId], references: [id])
+  followers        Dinoz[]                 @relation("DinozFollowers")
   items            DinozItems[]
   skills           DinozSkills[]
   unlockableSkills DinozSkillsUnlockable[]

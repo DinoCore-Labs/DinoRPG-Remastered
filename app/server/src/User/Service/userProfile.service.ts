@@ -18,7 +18,8 @@ export async function getOwnProfileService(userId: string) {
 						select: {
 							statusId: true
 						}
-					}
+					},
+					order: true
 				}
 			},
 			profile: true,
@@ -73,7 +74,8 @@ export async function getUserProfileService(id: string) {
 						select: {
 							statusId: true
 						}
-					}
+					},
+					order: true
 				}
 			},
 			profile: true,

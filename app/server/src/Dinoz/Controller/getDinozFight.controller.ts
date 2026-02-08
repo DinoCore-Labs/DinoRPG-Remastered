@@ -33,7 +33,7 @@ export async function getDinozFightDataRequest(dinozId: number, userId: string) 
 					nbrUpLightning: true,
 					nbrUpAir: true,
 					placeId: true,
-					//leaderId: true,
+					leaderId: true,
 					canRename: true,
 					fight: true,
 					items: { select: { itemId: true } },
@@ -45,10 +45,10 @@ export async function getDinozFightDataRequest(dinozId: number, userId: string) 
 					//catches: { select: { id: true, hp: true, monsterId: true } },
 					//missions: true,
 					//concentration: true
-				} /*,
+				},
 				where: {
 					OR: [{ id: dinozId }, { leaderId: dinozId }]
-				}*/
+				}
 			}
 		}
 	});
