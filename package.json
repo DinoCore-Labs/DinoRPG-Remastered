@@ -30,7 +30,7 @@
 	"keywords": [],
 	"author": "Matthieu83600",
 	"license": "ISC",
-	"packageManager": "pnpm@10.29.2",
+	"packageManager": "pnpm@10.12.1",
 	"devDependencies": {
 		"@changesets/cli": "^2.29.7",
 		"@commitlint/cli": "^20.3.1",
