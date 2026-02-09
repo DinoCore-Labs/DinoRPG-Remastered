@@ -1,6 +1,6 @@
 {
 	"name": "dinorpg",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "Re-développement du jeu DinoRPG de Motion Twin",
 	"private": "true",
 	"type": "module",
