@@ -1,5 +1,5 @@
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
-import { Item, itemList } from '@dinorpg/core/models/items/ItemList.js'; // adapte si besoin
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -9,7 +9,7 @@ import { ownsDinoz } from '../../User/Controller/ownsDinoz.controller.js';
 import { updateDinoz } from '../Controller/updateDinoz.controller.js';
 
 type UseIrmaParams = {
-	id: string; // Fastify params = string
+	id: string;
 };
 
 export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, reply: FastifyReply) {
@@ -33,7 +33,7 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 			remaining: true,
 			fight: true,
 			//gather: true,
-			//followers: { select: { id: true, remaining: true, fight: true, gather: true } },
+			followers: { select: { id: true, remaining: true, fight: true /*gather: true*/ } },
 			user: {
 				select: {
 					id: true,
@@ -46,7 +46,7 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 		throw new ExpectedError('No dinoz found', { statusCode: 404 });
 	}
 
-	const team = [dinoz /*, ...(dinoz.followers ?? [])*/];
+	const team = [dinoz, ...(dinoz.followers ?? [])];
 
 	const irmaItemId = itemList[Item.POTION_IRMA].itemId;
 	const irmaQuantity = dinoz.user.items?.find(i => i.itemId === irmaItemId);

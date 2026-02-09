@@ -9,19 +9,8 @@
 			<p v-html="formatContent($t(`action.description.follow`))" />
 		</template>
 	</Tippy>
-	<!--	<div v-if="display" class="followList">
-			<span
-				v-for="dinozToFollow in dinozAvailableToFollow"
-				:key="dinozToFollow"
-				class="dinoz-to-follow"
-				@click="followDinoz(dinozToFollow.id)"
-			>
-				<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
-				{{ dinozToFollow.name }}
-			</span>
-	</div>-->
 	<div v-if="display" class="followList">
-		<template v-for="dinozToFollow in dinozAvailableToFollow" :key="dinozToFollow">
+		<template v-for="dinozToFollow in dinozAvailableToFollow" :key="dinozToFollow.id">
 			<DinozMini
 				v-tippy="{
 					content: dinozToFollow.name,
@@ -37,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { DinozService } from '../../services/index.js';
+//import { DinozService } from '../../services/index.js';
 import eventBus from '../../events/index.js';
 import { getFollowableDinoz, orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { errorHandler } from '../../utils/errorHandler.js';
@@ -57,7 +46,7 @@ export default defineComponent({
 		};
 	},
 	props: {
-		dinozId: {
+		dinoz: {
 			type: Number,
 			required: true
 		}
@@ -72,7 +61,7 @@ export default defineComponent({
 				this.dinozAvailableToFollow = [];
 				return;
 			}
-			const currentDinoz = this.dinozStore.getDinoz(this.dinozId);
+			const currentDinoz = this.dinozStore.getDinoz(this.dinoz);
 			if (!currentDinoz) {
 				this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 				return;
@@ -105,12 +94,12 @@ export default defineComponent({
 				this.dinozStore.setDinozList(
 					orderDinozList(
 						currentDinozList.map(dinoz => {
-							if (dinoz.id === this.dinozId) {
+							if (dinoz.id === this.dinoz) {
 								dinoz.leaderId = targetId;
 							} else if (dinoz.id === targetId) {
 								dinoz.followers.push({
 									name: targetDinoz.name,
-									id: this.dinozId,
+									id: this.dinoz,
 									fight: targetDinoz.fight,
 									remaining: targetDinoz.remaining
 								});
