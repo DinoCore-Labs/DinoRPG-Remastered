@@ -41,7 +41,7 @@
 				:content="$t('hud.restEnd')"
 				help
 			/>
-			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :dinoz="dinozId" :key="dinoz.id"></DZFollow>
+			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :dinoz="dinozId"></DZFollow>
 			<Tippy
 				tag="div"
 				theme="normal"
