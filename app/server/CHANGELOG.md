@@ -1,5 +1,23 @@
 # @dinorpg/server
 
+## 0.2.0
+
+### Minor Changes
+
+- 4893ac4: feat: fight
+- babb181: feat: buy dinoz
+
+### Patch Changes
+
+- d12f917: feat: dinoz shop
+- ff359da: feat: model dinoz shop
+- ac47736: chore: update prisma dependencies
+- ac47736: feat: model dinoz
+- Updated dependencies [d12f917]
+- Updated dependencies [4893ac4]
+- Updated dependencies [babb181]
+  - @dinorpg/core@0.1.0
+
 ## 0.1.3
 
 ### Patch Changes

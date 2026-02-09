@@ -1,5 +1,16 @@
 # @dinorpg/client
 
+## 0.2.0
+
+### Minor Changes
+
+- 4893ac4: feat: fight
+- babb181: feat: buy dinoz
+
+### Patch Changes
+
+- d12f917: feat: dinoz shop
+
 ## 0.1.4
 
 ### Patch Changes

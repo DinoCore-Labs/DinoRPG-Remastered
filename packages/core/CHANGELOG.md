@@ -1,5 +1,16 @@
 # @dinorpg/core
 
+## 0.1.0
+
+### Minor Changes
+
+- 4893ac4: feat: fight
+- babb181: feat: buy dinoz
+
+### Patch Changes
+
+- d12f917: feat: dinoz shop
+
 ## 0.0.5
 
 ### Patch Changes
