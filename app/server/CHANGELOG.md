@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.3.0
+
+### Minor Changes
+
+- 98da614: chore: update dependencies and dev dependencies
+
+### Patch Changes
+
+- Updated dependencies [98da614]
+  - @dinorpg/core@0.2.0
+
 ## 0.2.0
 
 ### Minor Changes
