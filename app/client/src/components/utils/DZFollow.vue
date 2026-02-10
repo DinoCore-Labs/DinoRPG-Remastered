@@ -1,6 +1,6 @@
 <template>
 	<Tippy v-if="!display" class="action" tag="div" id="act_follow" theme="normal" @click="displayFollow()">
-		<img class="arrow" :src="getImgURL('icons', 'act_follow')" alt="act_follow" />
+		<img class="arrow" :src="getImgURL('act', 'act_follow')" alt="act_follow" />
 		<p>
 			{{ $t(`action.name.follow`) }}
 		</p>
@@ -130,6 +130,9 @@ export default defineComponent({
 	line-height: 10.5pt;
 	font-weight: 700;
 	width: 100%;
+	& img {
+		margin-left: 5px;
+	}
 	&:hover {
 		background-color: #9a4029;
 		cursor: pointer;
