@@ -394,10 +394,10 @@ export default defineComponent({
 					});*/
 					break;
 				case Action.FOLLOW: {
-					/*if (!this.dinozStore.getDinozList) {
+					if (!this.dinozStore.getDinozList) {
 						this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 						return;
-					}*/
+					}
 					break;
 				}
 				case Action.UNFOLLOW: {
