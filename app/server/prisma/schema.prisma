@@ -34,6 +34,7 @@ model Dinoz {
   seed               String                 @db.Uuid
 
   fight              Boolean                @default(true)
+  gather             Boolean                @default(true)
   leaderId           Int?                   @map("following")
   leader             Dinoz?                 @relation("DinozFollowers", fields: [leaderId], references: [id])
   followers          Dinoz[]                @relation("DinozFollowers")
@@ -188,6 +189,7 @@ model User {
   updatedAt     DateTime? @updatedAt           @db.Timestamptz(3)
   lastLogin     DateTime  @default(now())      @db.Timestamptz(3)
 
+  gathers       UserGather[]
   ingredients   UserIngredients[]
   items         UserItems[]
   profile       UserProfile?
@@ -208,6 +210,18 @@ model UserDinozShop {
   user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("user_dinoz_shop")
+}
+
+model UserGather {
+  id       Int     @id @default(autoincrement())
+  place    Int
+  type     Int
+  grid     Int[]
+  userId   String? @db.Uuid
+  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId])
+  @@map("user_gather")
 }
 
 model UserIngredients {
