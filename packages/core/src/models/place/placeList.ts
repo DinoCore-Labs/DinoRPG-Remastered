@@ -1,5 +1,5 @@
 //import { DinozStatusId } from '../dinoz/statusList.js';
-//import { GatherType } from '../enums/GatherType.mjs';
+import { GatherType } from '../enums/GatherType.js';
 import { GroundEnum } from '../enums/GroundEnum.js';
 import { MapZone } from '../enums/MapZone.js';
 //import { Comparator, ConditionEnum, Operator } from '../enums/Parser.js';
@@ -22,8 +22,8 @@ export const placeList: Record<
 		map: MapZone;
 		//conditions?: Condition;
 		alias?: number;
-		//gather?: GatherType;
-		//specialGather?: GatherType;
+		gather?: GatherType;
+		specialGather?: GatherType;
 		ground?: GroundEnum;
 		background?: string;
 		top?: number;
@@ -43,8 +43,8 @@ export const placeList: Record<
 		name: 'port',
 		borderPlace: [7, 10, 11, 13],
 		map: MapZone.DINOLAND,
-		//gather: GatherType.FISH,
-		//specialGather: GatherType.ANNIV,
+		gather: GatherType.FISH,
+		specialGather: GatherType.ANNIV,
 		ground: GroundEnum.DIRT,
 		background: 's_port',
 		top: 140,
@@ -65,7 +65,7 @@ export const placeList: Record<
 		name: 'papy',
 		borderPlace: [4, 6, 7],
 		map: MapZone.DINOLAND,
-		//gather: GatherType.HUNT,
+		gather: GatherType.HUNT,
 		ground: GroundEnum.DIRT,
 		background: 's_papy',
 		top: 165,
@@ -76,7 +76,7 @@ export const placeList: Record<
 		name: 'forcebrut',
 		borderPlace: [2, 3, 7],
 		map: MapZone.DINOLAND,
-		//gather: GatherType.ENERGY1,
+		gather: GatherType.ENERGY1,
 		ground: GroundEnum.DIRT,
 		background: 's_frcbrt',
 		top: 120,
@@ -87,8 +87,8 @@ export const placeList: Record<
 		name: 'dnv',
 		borderPlace: [6, 7, 12],
 		map: MapZone.DINOLAND,
-		//gather: GatherType.SEEK,
-		//specialGather: GatherType.XMAS,
+		gather: GatherType.SEEK,
+		specialGather: GatherType.XMAS,
 		ground: GroundEnum.NONE,
 		background: 's_dnv',
 		top: 155,
@@ -99,8 +99,8 @@ export const placeList: Record<
 		name: 'universite',
 		borderPlace: [3, 5, 8],
 		map: MapZone.DINOLAND,
-		//gather: GatherType.CUEILLE1,
-		//specialGather: GatherType.DAILY,
+		gather: GatherType.CUEILLE1,
+		specialGather: GatherType.DAILY,
 		ground: GroundEnum.NONE,
 		background: 's_univ',
 		itinerant: true
@@ -110,7 +110,7 @@ export const placeList: Record<
 		name: 'fountj',
 		borderPlace: [1, 3, 4, 5],
 		map: MapZone.DINOLAND,
-		//gather: GatherType.CUEILLE1,
+		gather: GatherType.CUEILLE1,
 		ground: GroundEnum.NONE,
 		background: 's_fountj',
 		top: 170,
@@ -121,7 +121,7 @@ export const placeList: Record<
 		name: 'colesc',
 		borderPlace: [6, 9],
 		map: MapZone.DINOLAND,
-		//gather: GatherType.HUNT,
+		gather: GatherType.HUNT,
 		ground: GroundEnum.DIRT,
 		background: 's_colesc',
 		top: 130,
@@ -188,7 +188,7 @@ export const placeList: Record<
 		name: 'auree',
 		borderPlace: [15, 23],
 		map: MapZone.JUNGLE,
-		//gather: GatherType.CUEILLE1,
+		gather: GatherType.CUEILLE1,
 		ground: GroundEnum.DIRT,
 		background: 's_auree',
 		top: 120
@@ -198,7 +198,7 @@ export const placeList: Record<
 		name: 'chemin',
 		borderPlace: [14, 16, 17],
 		map: MapZone.JUNGLE,
-		//gather: GatherType.CUEILLE1,
+		gather: GatherType.CUEILLE1,
 		ground: GroundEnum.DIRT,
 		background: 's_chemin',
 		top: 175
@@ -208,7 +208,7 @@ export const placeList: Record<
 		name: 'collin',
 		borderPlace: [15, 17],
 		map: MapZone.JUNGLE,
-		//gather: GatherType.SEEK,
+		gather: GatherType.SEEK,
 		ground: GroundEnum.DIRT,
 		background: 's_collin',
 		top: 175
@@ -218,7 +218,7 @@ export const placeList: Record<
 		name: 'fleuve',
 		borderPlace: [15, 16, 19, 18],
 		map: MapZone.JUNGLE,
-		//gather: GatherType.FISH,
+		gather: GatherType.FISH,
 		ground: GroundEnum.NONE,
 		background: 's_fleuve',
 		top: 140
@@ -244,7 +244,7 @@ export const placeList: Record<
 			[ConditionEnum.STATUS]: DinozStatusId.FLIPPERS
 		},*/
 		map: MapZone.JUNGLE,
-		//gather: GatherType.HUNT,
+		gather: GatherType.HUNT,
 		ground: GroundEnum.ROCK,
 		background: 's_camp',
 		top: 150
@@ -257,7 +257,7 @@ export const placeList: Record<
 			[ConditionEnum.STATUS]: DinozStatusId.FLIPPERS
 		},*/
 		map: MapZone.JUNGLE,
-		//gather: GatherType.HUNT,
+		gather: GatherType.HUNT,
 		ground: GroundEnum.NONE,
 		background: 's_jungle',
 		top: 120
@@ -267,7 +267,7 @@ export const placeList: Record<
 		name: 'garde',
 		borderPlace: [19, 21],
 		map: MapZone.JUNGLE,
-		//gather: GatherType.ENERGY1,
+		gather: GatherType.ENERGY1,
 		ground: GroundEnum.DIRT,
 		background: 's_garde',
 		top: 120
@@ -315,7 +315,7 @@ export const placeList: Record<
 		name: 'chutes',
 		borderPlace: [24, 26, 27, 29],
 		map: MapZone.ILES,
-		//gather: GatherType.FISH,
+		gather: GatherType.FISH,
 		ground: GroundEnum.DIRT,
 		background: 's_chutes',
 		top: 110,
@@ -336,7 +336,7 @@ export const placeList: Record<
 		name: 'baobob',
 		borderPlace: [25],
 		map: MapZone.ILES,
-		//gather: GatherType.HUNT,
+		gather: GatherType.HUNT,
 		ground: GroundEnum.DIRT,
 		background: 's_baobob',
 		top: 130,
@@ -350,7 +350,7 @@ export const placeList: Record<
 			[ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY
 		},*/
 		map: MapZone.ILES,
-		//gather: GatherType.ENERGY1,
+		gather: GatherType.ENERGY1,
 		ground: GroundEnum.NONE,
 		background: 's_dome',
 		top: 110
@@ -360,7 +360,7 @@ export const placeList: Record<
 		name: 'marais',
 		borderPlace: [25, 30, 31, 33],
 		map: MapZone.ILES,
-		//gather: GatherType.CUEILLE1,
+		gather: GatherType.CUEILLE1,
 		ground: GroundEnum.WATER,
 		background: 'swp_clear',
 		top: 160,
@@ -371,7 +371,7 @@ export const placeList: Record<
 		name: 'corail',
 		borderPlace: [29, 31],
 		map: MapZone.ILES,
-		//gather: GatherType.SEEK,
+		gather: GatherType.SEEK,
 		ground: GroundEnum.DIRT,
 		background: 's_corail',
 		top: 150,
@@ -382,7 +382,7 @@ export const placeList: Record<
 		name: 'ilewkk',
 		borderPlace: [29, 30, 32],
 		map: MapZone.ILES,
-		//gather: GatherType.FISH,
+		gather: GatherType.FISH,
 		ground: GroundEnum.DIRT,
 		background: 's_ilewkk',
 		top: 110,
@@ -486,7 +486,7 @@ export const placeList: Record<
 		name: 'bslt',
 		borderPlace: [42, 44],
 		map: MapZone.GTOUTCHAUD,
-		//gather: GatherType.ENERGY1,
+		gather: GatherType.ENERGY1,
 		ground: GroundEnum.NONE,
 		background: 's_pentes',
 		top: 130,
@@ -497,7 +497,7 @@ export const placeList: Record<
 		name: 'forges',
 		borderPlace: [43, 45, 46, 47],
 		map: MapZone.GTOUTCHAUD,
-		//gather: GatherType.CUEILLE1,
+		gather: GatherType.CUEILLE1,
 		ground: GroundEnum.NONE,
 		background: 's_forges',
 		top: 110,
@@ -508,7 +508,7 @@ export const placeList: Record<
 		name: 'rashpk',
 		borderPlace: [44],
 		map: MapZone.GTOUTCHAUD,
-		//gather: GatherType.SEEK,
+		gather: GatherType.SEEK,
 		ground: GroundEnum.DIRT,
 		background: 's_rashpk',
 		top: 160,
@@ -519,7 +519,7 @@ export const placeList: Record<
 		name: 'fosslv',
 		borderPlace: [44, 48],
 		map: MapZone.GTOUTCHAUD,
-		//gather: GatherType.SEEK,
+		gather: GatherType.SEEK,
 		ground: GroundEnum.NONE,
 		background: 's_fosslv',
 		top: 110,
@@ -530,7 +530,7 @@ export const placeList: Record<
 		name: 'vener',
 		borderPlace: [44, 52],
 		map: MapZone.GTOUTCHAUD,
-		//gather: GatherType.HUNT,
+		gather: GatherType.HUNT,
 		ground: GroundEnum.NONE,
 		background: 's_vener',
 		top: 130,
@@ -599,8 +599,8 @@ export const placeList: Record<
 		placeId: PlaceEnum.FRONTIERE_CREPITANTE,
 		name: 'senter',
 		borderPlace: [54, 56, 57],
-		map: MapZone.STEPPE
-		//gather: GatherType.CUEILLE1
+		map: MapZone.STEPPE,
+		gather: GatherType.CUEILLE1
 	},
 	[PlaceEnum.CROISEE_DES_NOMADES]: {
 		placeId: PlaceEnum.CROISEE_DES_NOMADES,
@@ -612,36 +612,36 @@ export const placeList: Record<
 		placeId: PlaceEnum.AVANT_POSTE_ROCKY,
 		name: 'svillg',
 		borderPlace: [55, 58],
-		map: MapZone.STEPPE
-		//gather: GatherType.HUNT
+		map: MapZone.STEPPE,
+		gather: GatherType.HUNT
 	},
 	[PlaceEnum.CITADELLE_DU_ROI]: {
 		placeId: PlaceEnum.CITADELLE_DU_ROI,
 		name: 'sking',
 		borderPlace: [56, 57, 59, 62],
-		map: MapZone.STEPPE
-		//gather: GatherType.SEEK
+		map: MapZone.STEPPE,
+		gather: GatherType.SEEK
 	},
 	[PlaceEnum.PYLONES_DE_MAGNETITES]: {
 		placeId: PlaceEnum.PYLONES_DE_MAGNETITES,
 		name: 'spylon',
 		borderPlace: [58, 60, 63],
-		map: MapZone.STEPPE
-		//gather: GatherType.ENERGY1
+		map: MapZone.STEPPE,
+		gather: GatherType.ENERGY1
 	},
 	[PlaceEnum.SYPHON_SIFFLEUR]: {
 		placeId: PlaceEnum.SYPHON_SIFFLEUR,
 		name: 'slake',
 		borderPlace: [59, 61, 64, 65, 101],
-		map: MapZone.STEPPE
-		//gather: GatherType.FISH
+		map: MapZone.STEPPE,
+		gather: GatherType.FISH
 	},
 	[PlaceEnum.SENTIER_DE_TOUTEMBA]: {
 		placeId: PlaceEnum.SENTIER_DE_TOUTEMBA,
 		name: 'scanyo',
 		borderPlace: [56, 60],
-		map: MapZone.STEPPE
-		//gather: GatherType.ENERGY1
+		map: MapZone.STEPPE,
+		gather: GatherType.ENERGY1
 	},
 	[PlaceEnum.DEVOREUSE_DE_L_EST]: {
 		placeId: PlaceEnum.DEVOREUSE_DE_L_EST,
@@ -683,22 +683,22 @@ export const placeList: Record<
 		placeId: PlaceEnum.REPAIRE_DE_LA_TEAM_W,
 		name: 'scampw',
 		borderPlace: [67],
-		map: MapZone.STEPPE
-		//gather: GatherType.SEEK
+		map: MapZone.STEPPE,
+		gather: GatherType.SEEK
 	},
 	[PlaceEnum.CONFINS_DES_STEPPES]: {
 		placeId: PlaceEnum.CONFINS_DES_STEPPES,
 		name: 'scaush',
 		borderPlace: [66, 70, 71],
-		map: MapZone.STEPPE
-		//gather: GatherType.CUEILLE1
+		map: MapZone.STEPPE,
+		gather: GatherType.CUEILLE1
 	},
 	[PlaceEnum.PORTES_DE_CAUSHEMESH]: {
 		placeId: PlaceEnum.PORTES_DE_CAUSHEMESH,
 		name: 'sport',
 		borderPlace: [66, 69],
-		map: MapZone.STEPPE
-		//gather: GatherType.CUEILLE1
+		map: MapZone.STEPPE,
+		gather: GatherType.CUEILLE1
 	},
 	[PlaceEnum.APPROCHER_SYPHON]: {
 		placeId: PlaceEnum.APPROCHER_SYPHON,
@@ -711,8 +711,8 @@ export const placeList: Record<
 		placeId: PlaceEnum.TETE_DE_L_ILE,
 		name: 'iroche',
 		borderPlace: [73],
-		map: MapZone.NIMBAO
-		//gather: GatherType.SEEK
+		map: MapZone.NIMBAO,
+		gather: GatherType.SEEK
 	},
 	[PlaceEnum.PONT]: {
 		placeId: PlaceEnum.PONT,
@@ -736,8 +736,8 @@ export const placeList: Record<
 		placeId: PlaceEnum.LAC_CELESTE,
 		name: 'ilacro',
 		borderPlace: [75, 88, 90],
-		map: MapZone.NIMBAO
-		//gather: GatherType.HUNT
+		map: MapZone.NIMBAO,
+		gather: GatherType.HUNT
 	},
 	[PlaceEnum.PLAINES_ENNEIGEES]: {
 		placeId: PlaceEnum.PLAINES_ENNEIGEES,
@@ -749,8 +749,8 @@ export const placeList: Record<
 		placeId: PlaceEnum.BOIS_GIVRES,
 		name: 'isnow2',
 		borderPlace: [77, 79],
-		map: MapZone.NIMBAO
-		//gather: GatherType.CUEILLE2
+		map: MapZone.NIMBAO,
+		gather: GatherType.CUEILLE2
 	},
 	[PlaceEnum.MONT_SACRE_D_EVEROUEST]: {
 		placeId: PlaceEnum.MONT_SACRE_D_EVEROUEST,
@@ -810,8 +810,8 @@ export const placeList: Record<
 		placeId: PlaceEnum.CHUTES_DE_NIRVANA,
 		name: 'ilac',
 		borderPlace: [74, 76],
-		map: MapZone.NIMBAO
-		//gather: GatherType.ENERGY2
+		map: MapZone.NIMBAO,
+		gather: GatherType.ENERGY2
 	},
 	[PlaceEnum.PRIRANESE]: {
 		placeId: PlaceEnum.PRIRANESE,
