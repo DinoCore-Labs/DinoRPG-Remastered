@@ -74,6 +74,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type UserDinozShop = $Result.DefaultSelection<Prisma.$UserDinozShopPayload>
 /**
+ * Model UserGather
+ * 
+ */
+export type UserGather = $Result.DefaultSelection<Prisma.$UserGatherPayload>
+/**
  * Model UserIngredients
  * 
  */
@@ -423,6 +428,16 @@ export class PrismaClient<
     * ```
     */
   get userDinozShop(): Prisma.UserDinozShopDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userGather`: Exposes CRUD operations for the **UserGather** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserGathers
+    * const userGathers = await prisma.userGather.findMany()
+    * ```
+    */
+  get userGather(): Prisma.UserGatherDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.userIngredients`: Exposes CRUD operations for the **UserIngredients** model.
@@ -929,6 +944,7 @@ export namespace Prisma {
     SignupIpMonthCounter: 'SignupIpMonthCounter',
     User: 'User',
     UserDinozShop: 'UserDinozShop',
+    UserGather: 'UserGather',
     UserIngredients: 'UserIngredients',
     UserItems: 'UserItems',
     UserProfile: 'UserProfile',
@@ -950,7 +966,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dinoz" | "dinozItems" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "jobDefinition" | "jobRun" | "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
+      modelProps: "dinoz" | "dinozItems" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "jobDefinition" | "jobRun" | "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1842,6 +1858,80 @@ export namespace Prisma {
           }
         }
       }
+      UserGather: {
+        payload: Prisma.$UserGatherPayload<ExtArgs>
+        fields: Prisma.UserGatherFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserGatherFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGatherPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserGatherFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGatherPayload>
+          }
+          findFirst: {
+            args: Prisma.UserGatherFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGatherPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserGatherFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGatherPayload>
+          }
+          findMany: {
+            args: Prisma.UserGatherFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGatherPayload>[]
+          }
+          create: {
+            args: Prisma.UserGatherCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGatherPayload>
+          }
+          createMany: {
+            args: Prisma.UserGatherCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserGatherCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGatherPayload>[]
+          }
+          delete: {
+            args: Prisma.UserGatherDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGatherPayload>
+          }
+          update: {
+            args: Prisma.UserGatherUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGatherPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserGatherDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserGatherUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserGatherUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGatherPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserGatherUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserGatherPayload>
+          }
+          aggregate: {
+            args: Prisma.UserGatherAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserGather>
+          }
+          groupBy: {
+            args: Prisma.UserGatherGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGatherGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserGatherCountArgs<ExtArgs>
+            result: $Utils.Optional<UserGatherCountAggregateOutputType> | number
+          }
+        }
+      }
       UserIngredients: {
         payload: Prisma.$UserIngredientsPayload<ExtArgs>
         fields: Prisma.UserIngredientsFieldRefs
@@ -2406,6 +2496,7 @@ export namespace Prisma {
     signupIpMonthCounter?: SignupIpMonthCounterOmit
     user?: UserOmit
     userDinozShop?: UserDinozShopOmit
+    userGather?: UserGatherOmit
     userIngredients?: UserIngredientsOmit
     userItems?: UserItemsOmit
     userProfile?: UserProfileOmit
@@ -2590,6 +2681,7 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
+    gathers: number
     ingredients: number
     items: number
     rewards: number
@@ -2600,6 +2692,7 @@ export namespace Prisma {
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    gathers?: boolean | UserCountOutputTypeCountGathersArgs
     ingredients?: boolean | UserCountOutputTypeCountIngredientsArgs
     items?: boolean | UserCountOutputTypeCountItemsArgs
     rewards?: boolean | UserCountOutputTypeCountRewardsArgs
@@ -2618,6 +2711,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the UserCountOutputType
      */
     select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountGathersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserGatherWhereInput
   }
 
   /**
@@ -2750,6 +2850,7 @@ export namespace Prisma {
     updatedDate: Date | null
     seed: string | null
     fight: boolean | null
+    gather: boolean | null
     leaderId: number | null
     userId: string | null
   }
@@ -2778,6 +2879,7 @@ export namespace Prisma {
     updatedDate: Date | null
     seed: string | null
     fight: boolean | null
+    gather: boolean | null
     leaderId: number | null
     userId: string | null
   }
@@ -2806,6 +2908,7 @@ export namespace Prisma {
     updatedDate: number
     seed: number
     fight: number
+    gather: number
     leaderId: number
     userId: number
     _all: number
@@ -2876,6 +2979,7 @@ export namespace Prisma {
     updatedDate?: true
     seed?: true
     fight?: true
+    gather?: true
     leaderId?: true
     userId?: true
   }
@@ -2904,6 +3008,7 @@ export namespace Prisma {
     updatedDate?: true
     seed?: true
     fight?: true
+    gather?: true
     leaderId?: true
     userId?: true
   }
@@ -2932,6 +3037,7 @@ export namespace Prisma {
     updatedDate?: true
     seed?: true
     fight?: true
+    gather?: true
     leaderId?: true
     userId?: true
     _all?: true
@@ -3047,6 +3153,7 @@ export namespace Prisma {
     updatedDate: Date
     seed: string
     fight: boolean
+    gather: boolean
     leaderId: number | null
     userId: string
     _count: DinozCountAggregateOutputType | null
@@ -3094,6 +3201,7 @@ export namespace Prisma {
     updatedDate?: boolean
     seed?: boolean
     fight?: boolean
+    gather?: boolean
     leaderId?: boolean
     userId?: boolean
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
@@ -3130,6 +3238,7 @@ export namespace Prisma {
     updatedDate?: boolean
     seed?: boolean
     fight?: boolean
+    gather?: boolean
     leaderId?: boolean
     userId?: boolean
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
@@ -3160,6 +3269,7 @@ export namespace Prisma {
     updatedDate?: boolean
     seed?: boolean
     fight?: boolean
+    gather?: boolean
     leaderId?: boolean
     userId?: boolean
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
@@ -3190,11 +3300,12 @@ export namespace Prisma {
     updatedDate?: boolean
     seed?: boolean
     fight?: boolean
+    gather?: boolean
     leaderId?: boolean
     userId?: boolean
   }
 
-  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "canRename" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "remaining" | "order" | "createdDate" | "updatedDate" | "seed" | "fight" | "leaderId" | "userId", ExtArgs["result"]["dinoz"]>
+  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "canRename" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "remaining" | "order" | "createdDate" | "updatedDate" | "seed" | "fight" | "gather" | "leaderId" | "userId", ExtArgs["result"]["dinoz"]>
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
     followers?: boolean | Dinoz$followersArgs<ExtArgs>
@@ -3249,6 +3360,7 @@ export namespace Prisma {
       updatedDate: Date
       seed: string
       fight: boolean
+      gather: boolean
       leaderId: number | null
       userId: string
     }, ExtArgs["result"]["dinoz"]>
@@ -3704,6 +3816,7 @@ export namespace Prisma {
     readonly updatedDate: FieldRef<"Dinoz", 'DateTime'>
     readonly seed: FieldRef<"Dinoz", 'String'>
     readonly fight: FieldRef<"Dinoz", 'Boolean'>
+    readonly gather: FieldRef<"Dinoz", 'Boolean'>
     readonly leaderId: FieldRef<"Dinoz", 'Int'>
     readonly userId: FieldRef<"Dinoz", 'String'>
   }
@@ -14539,6 +14652,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedAt?: boolean
     lastLogin?: boolean
+    gathers?: boolean | User$gathersArgs<ExtArgs>
     ingredients?: boolean | User$ingredientsArgs<ExtArgs>
     items?: boolean | User$itemsArgs<ExtArgs>
     profile?: boolean | User$profileArgs<ExtArgs>
@@ -14583,6 +14697,7 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "role" | "createdDate" | "updatedAt" | "lastLogin", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    gathers?: boolean | User$gathersArgs<ExtArgs>
     ingredients?: boolean | User$ingredientsArgs<ExtArgs>
     items?: boolean | User$itemsArgs<ExtArgs>
     profile?: boolean | User$profileArgs<ExtArgs>
@@ -14600,6 +14715,7 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
+      gathers: Prisma.$UserGatherPayload<ExtArgs>[]
       ingredients: Prisma.$UserIngredientsPayload<ExtArgs>[]
       items: Prisma.$UserItemsPayload<ExtArgs>[]
       profile: Prisma.$UserProfilePayload<ExtArgs> | null
@@ -15012,6 +15128,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    gathers<T extends User$gathersArgs<ExtArgs> = {}>(args?: Subset<T, User$gathersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ingredients<T extends User$ingredientsArgs<ExtArgs> = {}>(args?: Subset<T, User$ingredientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     items<T extends User$itemsArgs<ExtArgs> = {}>(args?: Subset<T, User$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserItemsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     profile<T extends User$profileArgs<ExtArgs> = {}>(args?: Subset<T, User$profileArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -15451,6 +15568,30 @@ export namespace Prisma {
      * Limit how many Users to delete.
      */
     limit?: number
+  }
+
+  /**
+   * User.gathers
+   */
+  export type User$gathersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherInclude<ExtArgs> | null
+    where?: UserGatherWhereInput
+    orderBy?: UserGatherOrderByWithRelationInput | UserGatherOrderByWithRelationInput[]
+    cursor?: UserGatherWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserGatherScalarFieldEnum | UserGatherScalarFieldEnum[]
   }
 
   /**
@@ -16786,6 +16927,1134 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserDinozShopInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserGather
+   */
+
+  export type AggregateUserGather = {
+    _count: UserGatherCountAggregateOutputType | null
+    _avg: UserGatherAvgAggregateOutputType | null
+    _sum: UserGatherSumAggregateOutputType | null
+    _min: UserGatherMinAggregateOutputType | null
+    _max: UserGatherMaxAggregateOutputType | null
+  }
+
+  export type UserGatherAvgAggregateOutputType = {
+    id: number | null
+    place: number | null
+    type: number | null
+    grid: number | null
+  }
+
+  export type UserGatherSumAggregateOutputType = {
+    id: number | null
+    place: number | null
+    type: number | null
+    grid: number[]
+  }
+
+  export type UserGatherMinAggregateOutputType = {
+    id: number | null
+    place: number | null
+    type: number | null
+    userId: string | null
+  }
+
+  export type UserGatherMaxAggregateOutputType = {
+    id: number | null
+    place: number | null
+    type: number | null
+    userId: string | null
+  }
+
+  export type UserGatherCountAggregateOutputType = {
+    id: number
+    place: number
+    type: number
+    grid: number
+    userId: number
+    _all: number
+  }
+
+
+  export type UserGatherAvgAggregateInputType = {
+    id?: true
+    place?: true
+    type?: true
+    grid?: true
+  }
+
+  export type UserGatherSumAggregateInputType = {
+    id?: true
+    place?: true
+    type?: true
+    grid?: true
+  }
+
+  export type UserGatherMinAggregateInputType = {
+    id?: true
+    place?: true
+    type?: true
+    userId?: true
+  }
+
+  export type UserGatherMaxAggregateInputType = {
+    id?: true
+    place?: true
+    type?: true
+    userId?: true
+  }
+
+  export type UserGatherCountAggregateInputType = {
+    id?: true
+    place?: true
+    type?: true
+    grid?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type UserGatherAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserGather to aggregate.
+     */
+    where?: UserGatherWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserGathers to fetch.
+     */
+    orderBy?: UserGatherOrderByWithRelationInput | UserGatherOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserGatherWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserGathers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserGathers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserGathers
+    **/
+    _count?: true | UserGatherCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserGatherAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserGatherSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserGatherMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserGatherMaxAggregateInputType
+  }
+
+  export type GetUserGatherAggregateType<T extends UserGatherAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserGather]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserGather[P]>
+      : GetScalarType<T[P], AggregateUserGather[P]>
+  }
+
+
+
+
+  export type UserGatherGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserGatherWhereInput
+    orderBy?: UserGatherOrderByWithAggregationInput | UserGatherOrderByWithAggregationInput[]
+    by: UserGatherScalarFieldEnum[] | UserGatherScalarFieldEnum
+    having?: UserGatherScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserGatherCountAggregateInputType | true
+    _avg?: UserGatherAvgAggregateInputType
+    _sum?: UserGatherSumAggregateInputType
+    _min?: UserGatherMinAggregateInputType
+    _max?: UserGatherMaxAggregateInputType
+  }
+
+  export type UserGatherGroupByOutputType = {
+    id: number
+    place: number
+    type: number
+    grid: number[]
+    userId: string | null
+    _count: UserGatherCountAggregateOutputType | null
+    _avg: UserGatherAvgAggregateOutputType | null
+    _sum: UserGatherSumAggregateOutputType | null
+    _min: UserGatherMinAggregateOutputType | null
+    _max: UserGatherMaxAggregateOutputType | null
+  }
+
+  type GetUserGatherGroupByPayload<T extends UserGatherGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserGatherGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGatherGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGatherGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGatherGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserGatherSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    place?: boolean
+    type?: boolean
+    grid?: boolean
+    userId?: boolean
+    user?: boolean | UserGather$userArgs<ExtArgs>
+  }, ExtArgs["result"]["userGather"]>
+
+  export type UserGatherSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    place?: boolean
+    type?: boolean
+    grid?: boolean
+    userId?: boolean
+    user?: boolean | UserGather$userArgs<ExtArgs>
+  }, ExtArgs["result"]["userGather"]>
+
+  export type UserGatherSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    place?: boolean
+    type?: boolean
+    grid?: boolean
+    userId?: boolean
+    user?: boolean | UserGather$userArgs<ExtArgs>
+  }, ExtArgs["result"]["userGather"]>
+
+  export type UserGatherSelectScalar = {
+    id?: boolean
+    place?: boolean
+    type?: boolean
+    grid?: boolean
+    userId?: boolean
+  }
+
+  export type UserGatherOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "place" | "type" | "grid" | "userId", ExtArgs["result"]["userGather"]>
+  export type UserGatherInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserGather$userArgs<ExtArgs>
+  }
+  export type UserGatherIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserGather$userArgs<ExtArgs>
+  }
+  export type UserGatherIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserGather$userArgs<ExtArgs>
+  }
+
+  export type $UserGatherPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserGather"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      place: number
+      type: number
+      grid: number[]
+      userId: string | null
+    }, ExtArgs["result"]["userGather"]>
+    composites: {}
+  }
+
+  type UserGatherGetPayload<S extends boolean | null | undefined | UserGatherDefaultArgs> = $Result.GetResult<Prisma.$UserGatherPayload, S>
+
+  type UserGatherCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserGatherFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: UserGatherCountAggregateInputType | true
+    }
+
+  export interface UserGatherDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserGather'], meta: { name: 'UserGather' } }
+    /**
+     * Find zero or one UserGather that matches the filter.
+     * @param {UserGatherFindUniqueArgs} args - Arguments to find a UserGather
+     * @example
+     * // Get one UserGather
+     * const userGather = await prisma.userGather.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserGatherFindUniqueArgs>(args: SelectSubset<T, UserGatherFindUniqueArgs<ExtArgs>>): Prisma__UserGatherClient<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserGather that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserGatherFindUniqueOrThrowArgs} args - Arguments to find a UserGather
+     * @example
+     * // Get one UserGather
+     * const userGather = await prisma.userGather.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserGatherFindUniqueOrThrowArgs>(args: SelectSubset<T, UserGatherFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserGatherClient<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserGather that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGatherFindFirstArgs} args - Arguments to find a UserGather
+     * @example
+     * // Get one UserGather
+     * const userGather = await prisma.userGather.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserGatherFindFirstArgs>(args?: SelectSubset<T, UserGatherFindFirstArgs<ExtArgs>>): Prisma__UserGatherClient<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserGather that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGatherFindFirstOrThrowArgs} args - Arguments to find a UserGather
+     * @example
+     * // Get one UserGather
+     * const userGather = await prisma.userGather.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserGatherFindFirstOrThrowArgs>(args?: SelectSubset<T, UserGatherFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserGatherClient<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserGathers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGatherFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserGathers
+     * const userGathers = await prisma.userGather.findMany()
+     * 
+     * // Get first 10 UserGathers
+     * const userGathers = await prisma.userGather.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userGatherWithIdOnly = await prisma.userGather.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserGatherFindManyArgs>(args?: SelectSubset<T, UserGatherFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserGather.
+     * @param {UserGatherCreateArgs} args - Arguments to create a UserGather.
+     * @example
+     * // Create one UserGather
+     * const UserGather = await prisma.userGather.create({
+     *   data: {
+     *     // ... data to create a UserGather
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserGatherCreateArgs>(args: SelectSubset<T, UserGatherCreateArgs<ExtArgs>>): Prisma__UserGatherClient<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserGathers.
+     * @param {UserGatherCreateManyArgs} args - Arguments to create many UserGathers.
+     * @example
+     * // Create many UserGathers
+     * const userGather = await prisma.userGather.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserGatherCreateManyArgs>(args?: SelectSubset<T, UserGatherCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserGathers and returns the data saved in the database.
+     * @param {UserGatherCreateManyAndReturnArgs} args - Arguments to create many UserGathers.
+     * @example
+     * // Create many UserGathers
+     * const userGather = await prisma.userGather.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserGathers and only return the `id`
+     * const userGatherWithIdOnly = await prisma.userGather.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserGatherCreateManyAndReturnArgs>(args?: SelectSubset<T, UserGatherCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserGather.
+     * @param {UserGatherDeleteArgs} args - Arguments to delete one UserGather.
+     * @example
+     * // Delete one UserGather
+     * const UserGather = await prisma.userGather.delete({
+     *   where: {
+     *     // ... filter to delete one UserGather
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserGatherDeleteArgs>(args: SelectSubset<T, UserGatherDeleteArgs<ExtArgs>>): Prisma__UserGatherClient<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserGather.
+     * @param {UserGatherUpdateArgs} args - Arguments to update one UserGather.
+     * @example
+     * // Update one UserGather
+     * const userGather = await prisma.userGather.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserGatherUpdateArgs>(args: SelectSubset<T, UserGatherUpdateArgs<ExtArgs>>): Prisma__UserGatherClient<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserGathers.
+     * @param {UserGatherDeleteManyArgs} args - Arguments to filter UserGathers to delete.
+     * @example
+     * // Delete a few UserGathers
+     * const { count } = await prisma.userGather.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserGatherDeleteManyArgs>(args?: SelectSubset<T, UserGatherDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserGathers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGatherUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserGathers
+     * const userGather = await prisma.userGather.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserGatherUpdateManyArgs>(args: SelectSubset<T, UserGatherUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserGathers and returns the data updated in the database.
+     * @param {UserGatherUpdateManyAndReturnArgs} args - Arguments to update many UserGathers.
+     * @example
+     * // Update many UserGathers
+     * const userGather = await prisma.userGather.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserGathers and only return the `id`
+     * const userGatherWithIdOnly = await prisma.userGather.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserGatherUpdateManyAndReturnArgs>(args: SelectSubset<T, UserGatherUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserGather.
+     * @param {UserGatherUpsertArgs} args - Arguments to update or create a UserGather.
+     * @example
+     * // Update or create a UserGather
+     * const userGather = await prisma.userGather.upsert({
+     *   create: {
+     *     // ... data to create a UserGather
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserGather we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserGatherUpsertArgs>(args: SelectSubset<T, UserGatherUpsertArgs<ExtArgs>>): Prisma__UserGatherClient<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserGathers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGatherCountArgs} args - Arguments to filter UserGathers to count.
+     * @example
+     * // Count the number of UserGathers
+     * const count = await prisma.userGather.count({
+     *   where: {
+     *     // ... the filter for the UserGathers we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserGatherCountArgs>(
+      args?: Subset<T, UserGatherCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserGatherCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserGather.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGatherAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserGatherAggregateArgs>(args: Subset<T, UserGatherAggregateArgs>): Prisma.PrismaPromise<GetUserGatherAggregateType<T>>
+
+    /**
+     * Group by UserGather.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGatherGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGatherGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGatherGroupByArgs['orderBy'] }
+        : { orderBy?: UserGatherGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGatherGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGatherGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserGather model
+   */
+  readonly fields: UserGatherFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserGather.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserGatherClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserGather$userArgs<ExtArgs> = {}>(args?: Subset<T, UserGather$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserGather model
+   */
+  interface UserGatherFieldRefs {
+    readonly id: FieldRef<"UserGather", 'Int'>
+    readonly place: FieldRef<"UserGather", 'Int'>
+    readonly type: FieldRef<"UserGather", 'Int'>
+    readonly grid: FieldRef<"UserGather", 'Int[]'>
+    readonly userId: FieldRef<"UserGather", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserGather findUnique
+   */
+  export type UserGatherFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherInclude<ExtArgs> | null
+    /**
+     * Filter, which UserGather to fetch.
+     */
+    where: UserGatherWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserGather findUniqueOrThrow
+   */
+  export type UserGatherFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherInclude<ExtArgs> | null
+    /**
+     * Filter, which UserGather to fetch.
+     */
+    where: UserGatherWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserGather findFirst
+   */
+  export type UserGatherFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherInclude<ExtArgs> | null
+    /**
+     * Filter, which UserGather to fetch.
+     */
+    where?: UserGatherWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserGathers to fetch.
+     */
+    orderBy?: UserGatherOrderByWithRelationInput | UserGatherOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserGathers.
+     */
+    cursor?: UserGatherWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserGathers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserGathers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserGathers.
+     */
+    distinct?: UserGatherScalarFieldEnum | UserGatherScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserGather findFirstOrThrow
+   */
+  export type UserGatherFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherInclude<ExtArgs> | null
+    /**
+     * Filter, which UserGather to fetch.
+     */
+    where?: UserGatherWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserGathers to fetch.
+     */
+    orderBy?: UserGatherOrderByWithRelationInput | UserGatherOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserGathers.
+     */
+    cursor?: UserGatherWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserGathers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserGathers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserGathers.
+     */
+    distinct?: UserGatherScalarFieldEnum | UserGatherScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserGather findMany
+   */
+  export type UserGatherFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherInclude<ExtArgs> | null
+    /**
+     * Filter, which UserGathers to fetch.
+     */
+    where?: UserGatherWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserGathers to fetch.
+     */
+    orderBy?: UserGatherOrderByWithRelationInput | UserGatherOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserGathers.
+     */
+    cursor?: UserGatherWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserGathers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserGathers.
+     */
+    skip?: number
+    distinct?: UserGatherScalarFieldEnum | UserGatherScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserGather create
+   */
+  export type UserGatherCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserGather.
+     */
+    data: XOR<UserGatherCreateInput, UserGatherUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserGather createMany
+   */
+  export type UserGatherCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserGathers.
+     */
+    data: UserGatherCreateManyInput | UserGatherCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserGather createManyAndReturn
+   */
+  export type UserGatherCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserGathers.
+     */
+    data: UserGatherCreateManyInput | UserGatherCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserGather update
+   */
+  export type UserGatherUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserGather.
+     */
+    data: XOR<UserGatherUpdateInput, UserGatherUncheckedUpdateInput>
+    /**
+     * Choose, which UserGather to update.
+     */
+    where: UserGatherWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserGather updateMany
+   */
+  export type UserGatherUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserGathers.
+     */
+    data: XOR<UserGatherUpdateManyMutationInput, UserGatherUncheckedUpdateManyInput>
+    /**
+     * Filter which UserGathers to update
+     */
+    where?: UserGatherWhereInput
+    /**
+     * Limit how many UserGathers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserGather updateManyAndReturn
+   */
+  export type UserGatherUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * The data used to update UserGathers.
+     */
+    data: XOR<UserGatherUpdateManyMutationInput, UserGatherUncheckedUpdateManyInput>
+    /**
+     * Filter which UserGathers to update
+     */
+    where?: UserGatherWhereInput
+    /**
+     * Limit how many UserGathers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserGather upsert
+   */
+  export type UserGatherUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserGather to update in case it exists.
+     */
+    where: UserGatherWhereUniqueInput
+    /**
+     * In case the UserGather found by the `where` argument doesn't exist, create a new UserGather with this data.
+     */
+    create: XOR<UserGatherCreateInput, UserGatherUncheckedCreateInput>
+    /**
+     * In case the UserGather was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserGatherUpdateInput, UserGatherUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserGather delete
+   */
+  export type UserGatherDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherInclude<ExtArgs> | null
+    /**
+     * Filter which UserGather to delete.
+     */
+    where: UserGatherWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserGather deleteMany
+   */
+  export type UserGatherDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserGathers to delete
+     */
+    where?: UserGatherWhereInput
+    /**
+     * Limit how many UserGathers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserGather.user
+   */
+  export type UserGather$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * UserGather without action
+   */
+  export type UserGatherDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserGather
+     */
+    select?: UserGatherSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserGather
+     */
+    omit?: UserGatherOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserGatherInclude<ExtArgs> | null
   }
 
 
@@ -23437,6 +24706,7 @@ export namespace Prisma {
     updatedDate: 'updatedDate',
     seed: 'seed',
     fight: 'fight',
+    gather: 'gather',
     leaderId: 'leaderId',
     userId: 'userId'
   };
@@ -23586,6 +24856,17 @@ export namespace Prisma {
   };
 
   export type UserDinozShopScalarFieldEnum = (typeof UserDinozShopScalarFieldEnum)[keyof typeof UserDinozShopScalarFieldEnum]
+
+
+  export const UserGatherScalarFieldEnum: {
+    id: 'id',
+    place: 'place',
+    type: 'type',
+    grid: 'grid',
+    userId: 'userId'
+  };
+
+  export type UserGatherScalarFieldEnum = (typeof UserGatherScalarFieldEnum)[keyof typeof UserGatherScalarFieldEnum]
 
 
   export const UserIngredientsScalarFieldEnum: {
@@ -23871,6 +25152,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     seed?: UuidFilter<"Dinoz"> | string
     fight?: BoolFilter<"Dinoz"> | boolean
+    gather?: BoolFilter<"Dinoz"> | boolean
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
     userId?: UuidFilter<"Dinoz"> | string
     leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
@@ -23906,6 +25188,7 @@ export namespace Prisma {
     updatedDate?: SortOrder
     seed?: SortOrder
     fight?: SortOrder
+    gather?: SortOrder
     leaderId?: SortOrderInput | SortOrder
     userId?: SortOrder
     leader?: DinozOrderByWithRelationInput
@@ -23944,6 +25227,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     seed?: UuidFilter<"Dinoz"> | string
     fight?: BoolFilter<"Dinoz"> | boolean
+    gather?: BoolFilter<"Dinoz"> | boolean
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
     userId?: UuidFilter<"Dinoz"> | string
     leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
@@ -23979,6 +25263,7 @@ export namespace Prisma {
     updatedDate?: SortOrder
     seed?: SortOrder
     fight?: SortOrder
+    gather?: SortOrder
     leaderId?: SortOrderInput | SortOrder
     userId?: SortOrder
     _count?: DinozCountOrderByAggregateInput
@@ -24015,6 +25300,7 @@ export namespace Prisma {
     updatedDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     seed?: UuidWithAggregatesFilter<"Dinoz"> | string
     fight?: BoolWithAggregatesFilter<"Dinoz"> | boolean
+    gather?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     leaderId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
     userId?: UuidWithAggregatesFilter<"Dinoz"> | string
   }
@@ -24609,6 +25895,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     lastLogin?: DateTimeFilter<"User"> | Date | string
+    gathers?: UserGatherListRelationFilter
     ingredients?: UserIngredientsListRelationFilter
     items?: UserItemsListRelationFilter
     profile?: XOR<UserProfileNullableScalarRelationFilter, UserProfileWhereInput> | null
@@ -24628,6 +25915,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     lastLogin?: SortOrder
+    gathers?: UserGatherOrderByRelationAggregateInput
     ingredients?: UserIngredientsOrderByRelationAggregateInput
     items?: UserItemsOrderByRelationAggregateInput
     profile?: UserProfileOrderByWithRelationInput
@@ -24650,6 +25938,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     lastLogin?: DateTimeFilter<"User"> | Date | string
+    gathers?: UserGatherListRelationFilter
     ingredients?: UserIngredientsListRelationFilter
     items?: UserItemsListRelationFilter
     profile?: XOR<UserProfileNullableScalarRelationFilter, UserProfileWhereInput> | null
@@ -24737,6 +26026,63 @@ export namespace Prisma {
     raceId?: IntWithAggregatesFilter<"UserDinozShop"> | number
     display?: StringWithAggregatesFilter<"UserDinozShop"> | string
     userId?: UuidNullableWithAggregatesFilter<"UserDinozShop"> | string | null
+  }
+
+  export type UserGatherWhereInput = {
+    AND?: UserGatherWhereInput | UserGatherWhereInput[]
+    OR?: UserGatherWhereInput[]
+    NOT?: UserGatherWhereInput | UserGatherWhereInput[]
+    id?: IntFilter<"UserGather"> | number
+    place?: IntFilter<"UserGather"> | number
+    type?: IntFilter<"UserGather"> | number
+    grid?: IntNullableListFilter<"UserGather">
+    userId?: UuidNullableFilter<"UserGather"> | string | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type UserGatherOrderByWithRelationInput = {
+    id?: SortOrder
+    place?: SortOrder
+    type?: SortOrder
+    grid?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserGatherWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: UserGatherWhereInput | UserGatherWhereInput[]
+    OR?: UserGatherWhereInput[]
+    NOT?: UserGatherWhereInput | UserGatherWhereInput[]
+    place?: IntFilter<"UserGather"> | number
+    type?: IntFilter<"UserGather"> | number
+    grid?: IntNullableListFilter<"UserGather">
+    userId?: UuidNullableFilter<"UserGather"> | string | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type UserGatherOrderByWithAggregationInput = {
+    id?: SortOrder
+    place?: SortOrder
+    type?: SortOrder
+    grid?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    _count?: UserGatherCountOrderByAggregateInput
+    _avg?: UserGatherAvgOrderByAggregateInput
+    _max?: UserGatherMaxOrderByAggregateInput
+    _min?: UserGatherMinOrderByAggregateInput
+    _sum?: UserGatherSumOrderByAggregateInput
+  }
+
+  export type UserGatherScalarWhereWithAggregatesInput = {
+    AND?: UserGatherScalarWhereWithAggregatesInput | UserGatherScalarWhereWithAggregatesInput[]
+    OR?: UserGatherScalarWhereWithAggregatesInput[]
+    NOT?: UserGatherScalarWhereWithAggregatesInput | UserGatherScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserGather"> | number
+    place?: IntWithAggregatesFilter<"UserGather"> | number
+    type?: IntWithAggregatesFilter<"UserGather"> | number
+    grid?: IntNullableListFilter<"UserGather">
+    userId?: UuidNullableWithAggregatesFilter<"UserGather"> | string | null
   }
 
   export type UserIngredientsWhereInput = {
@@ -25094,6 +26440,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -25127,6 +26474,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leaderId?: number | null
     userId: string
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -25159,6 +26507,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -25192,6 +26541,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -25225,6 +26575,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leaderId?: number | null
     userId: string
   }
@@ -25252,6 +26603,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DinozUncheckedUpdateManyInput = {
@@ -25278,6 +26630,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
   }
@@ -25869,6 +27222,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -25888,6 +27242,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -25907,6 +27262,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -25926,6 +27282,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -26009,6 +27366,58 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     raceId?: IntFieldUpdateOperationsInput | number
     display?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserGatherCreateInput = {
+    place: number
+    type: number
+    grid?: UserGatherCreategridInput | number[]
+    user?: UserCreateNestedOneWithoutGathersInput
+  }
+
+  export type UserGatherUncheckedCreateInput = {
+    id?: number
+    place: number
+    type: number
+    grid?: UserGatherCreategridInput | number[]
+    userId?: string | null
+  }
+
+  export type UserGatherUpdateInput = {
+    place?: IntFieldUpdateOperationsInput | number
+    type?: IntFieldUpdateOperationsInput | number
+    grid?: UserGatherUpdategridInput | number[]
+    user?: UserUpdateOneWithoutGathersNestedInput
+  }
+
+  export type UserGatherUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    place?: IntFieldUpdateOperationsInput | number
+    type?: IntFieldUpdateOperationsInput | number
+    grid?: UserGatherUpdategridInput | number[]
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserGatherCreateManyInput = {
+    id?: number
+    place: number
+    type: number
+    grid?: UserGatherCreategridInput | number[]
+    userId?: string | null
+  }
+
+  export type UserGatherUpdateManyMutationInput = {
+    place?: IntFieldUpdateOperationsInput | number
+    type?: IntFieldUpdateOperationsInput | number
+    grid?: UserGatherUpdategridInput | number[]
+  }
+
+  export type UserGatherUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    place?: IntFieldUpdateOperationsInput | number
+    type?: IntFieldUpdateOperationsInput | number
+    grid?: UserGatherUpdategridInput | number[]
     userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -26469,6 +27878,7 @@ export namespace Prisma {
     updatedDate?: SortOrder
     seed?: SortOrder
     fight?: SortOrder
+    gather?: SortOrder
     leaderId?: SortOrder
     userId?: SortOrder
   }
@@ -26517,6 +27927,7 @@ export namespace Prisma {
     updatedDate?: SortOrder
     seed?: SortOrder
     fight?: SortOrder
+    gather?: SortOrder
     leaderId?: SortOrder
     userId?: SortOrder
   }
@@ -26545,6 +27956,7 @@ export namespace Prisma {
     updatedDate?: SortOrder
     seed?: SortOrder
     fight?: SortOrder
+    gather?: SortOrder
     leaderId?: SortOrder
     userId?: SortOrder
   }
@@ -27161,6 +28573,12 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
+  export type UserGatherListRelationFilter = {
+    every?: UserGatherWhereInput
+    some?: UserGatherWhereInput
+    none?: UserGatherWhereInput
+  }
+
   export type UserIngredientsListRelationFilter = {
     every?: UserIngredientsWhereInput
     some?: UserIngredientsWhereInput
@@ -27205,6 +28623,10 @@ export namespace Prisma {
     every?: UserDinozShopWhereInput
     some?: UserDinozShopWhereInput
     none?: UserDinozShopWhereInput
+  }
+
+  export type UserGatherOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type UserIngredientsOrderByRelationAggregateInput = {
@@ -27332,6 +28754,50 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type IntNullableListFilter<$PrismaModel = never> = {
+    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    has?: number | IntFieldRefInput<$PrismaModel> | null
+    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
+    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type UserGatherCountOrderByAggregateInput = {
+    id?: SortOrder
+    place?: SortOrder
+    type?: SortOrder
+    grid?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserGatherAvgOrderByAggregateInput = {
+    id?: SortOrder
+    place?: SortOrder
+    type?: SortOrder
+    grid?: SortOrder
+  }
+
+  export type UserGatherMaxOrderByAggregateInput = {
+    id?: SortOrder
+    place?: SortOrder
+    type?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserGatherMinOrderByAggregateInput = {
+    id?: SortOrder
+    place?: SortOrder
+    type?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserGatherSumOrderByAggregateInput = {
+    id?: SortOrder
+    place?: SortOrder
+    type?: SortOrder
+    grid?: SortOrder
   }
 
   export type UserIngredientsIngredientIdUserIdCompoundUniqueInput = {
@@ -28044,6 +29510,13 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRankingInput, UserUpdateWithoutRankingInput>, UserUncheckedUpdateWithoutRankingInput>
   }
 
+  export type UserGatherCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput> | UserGatherCreateWithoutUserInput[] | UserGatherUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserGatherCreateOrConnectWithoutUserInput | UserGatherCreateOrConnectWithoutUserInput[]
+    createMany?: UserGatherCreateManyUserInputEnvelope
+    connect?: UserGatherWhereUniqueInput | UserGatherWhereUniqueInput[]
+  }
+
   export type UserIngredientsCreateNestedManyWithoutUserInput = {
     create?: XOR<UserIngredientsCreateWithoutUserInput, UserIngredientsUncheckedCreateWithoutUserInput> | UserIngredientsCreateWithoutUserInput[] | UserIngredientsUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserIngredientsCreateOrConnectWithoutUserInput | UserIngredientsCreateOrConnectWithoutUserInput[]
@@ -28103,6 +29576,13 @@ export namespace Prisma {
     connectOrCreate?: UserDinozShopCreateOrConnectWithoutUserInput | UserDinozShopCreateOrConnectWithoutUserInput[]
     createMany?: UserDinozShopCreateManyUserInputEnvelope
     connect?: UserDinozShopWhereUniqueInput | UserDinozShopWhereUniqueInput[]
+  }
+
+  export type UserGatherUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput> | UserGatherCreateWithoutUserInput[] | UserGatherUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserGatherCreateOrConnectWithoutUserInput | UserGatherCreateOrConnectWithoutUserInput[]
+    createMany?: UserGatherCreateManyUserInputEnvelope
+    connect?: UserGatherWhereUniqueInput | UserGatherWhereUniqueInput[]
   }
 
   export type UserIngredientsUncheckedCreateNestedManyWithoutUserInput = {
@@ -28168,6 +29648,20 @@ export namespace Prisma {
 
   export type EnumRoleFieldUpdateOperationsInput = {
     set?: $Enums.Role
+  }
+
+  export type UserGatherUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput> | UserGatherCreateWithoutUserInput[] | UserGatherUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserGatherCreateOrConnectWithoutUserInput | UserGatherCreateOrConnectWithoutUserInput[]
+    upsert?: UserGatherUpsertWithWhereUniqueWithoutUserInput | UserGatherUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserGatherCreateManyUserInputEnvelope
+    set?: UserGatherWhereUniqueInput | UserGatherWhereUniqueInput[]
+    disconnect?: UserGatherWhereUniqueInput | UserGatherWhereUniqueInput[]
+    delete?: UserGatherWhereUniqueInput | UserGatherWhereUniqueInput[]
+    connect?: UserGatherWhereUniqueInput | UserGatherWhereUniqueInput[]
+    update?: UserGatherUpdateWithWhereUniqueWithoutUserInput | UserGatherUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserGatherUpdateManyWithWhereWithoutUserInput | UserGatherUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserGatherScalarWhereInput | UserGatherScalarWhereInput[]
   }
 
   export type UserIngredientsUpdateManyWithoutUserNestedInput = {
@@ -28286,6 +29780,20 @@ export namespace Prisma {
     update?: UserDinozShopUpdateWithWhereUniqueWithoutUserInput | UserDinozShopUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserDinozShopUpdateManyWithWhereWithoutUserInput | UserDinozShopUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserDinozShopScalarWhereInput | UserDinozShopScalarWhereInput[]
+  }
+
+  export type UserGatherUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput> | UserGatherCreateWithoutUserInput[] | UserGatherUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserGatherCreateOrConnectWithoutUserInput | UserGatherCreateOrConnectWithoutUserInput[]
+    upsert?: UserGatherUpsertWithWhereUniqueWithoutUserInput | UserGatherUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserGatherCreateManyUserInputEnvelope
+    set?: UserGatherWhereUniqueInput | UserGatherWhereUniqueInput[]
+    disconnect?: UserGatherWhereUniqueInput | UserGatherWhereUniqueInput[]
+    delete?: UserGatherWhereUniqueInput | UserGatherWhereUniqueInput[]
+    connect?: UserGatherWhereUniqueInput | UserGatherWhereUniqueInput[]
+    update?: UserGatherUpdateWithWhereUniqueWithoutUserInput | UserGatherUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserGatherUpdateManyWithWhereWithoutUserInput | UserGatherUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserGatherScalarWhereInput | UserGatherScalarWhereInput[]
   }
 
   export type UserIngredientsUncheckedUpdateManyWithoutUserNestedInput = {
@@ -28420,6 +29928,31 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDinozShopInput, UserUpdateWithoutDinozShopInput>, UserUncheckedUpdateWithoutDinozShopInput>
+  }
+
+  export type UserGatherCreategridInput = {
+    set: number[]
+  }
+
+  export type UserCreateNestedOneWithoutGathersInput = {
+    create?: XOR<UserCreateWithoutGathersInput, UserUncheckedCreateWithoutGathersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGathersInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserGatherUpdategridInput = {
+    set?: number[]
+    push?: number | number[]
+  }
+
+  export type UserUpdateOneWithoutGathersNestedInput = {
+    create?: XOR<UserCreateWithoutGathersInput, UserUncheckedCreateWithoutGathersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutGathersInput
+    upsert?: UserUpsertWithoutGathersInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutGathersInput, UserUpdateWithoutGathersInput>, UserUncheckedUpdateWithoutGathersInput>
   }
 
   export type UserCreateNestedOneWithoutIngredientsInput = {
@@ -28930,6 +30463,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsCreateNestedManyWithoutDinozInput
@@ -28962,6 +30496,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leaderId?: number | null
     userId: string
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
@@ -28998,6 +30533,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsCreateNestedManyWithoutDinozInput
@@ -29030,6 +30566,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     userId: string
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
@@ -29134,6 +30671,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -29152,6 +30690,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -29201,6 +30740,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
@@ -29233,6 +30773,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
@@ -29284,6 +30825,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     seed?: UuidFilter<"Dinoz"> | string
     fight?: BoolFilter<"Dinoz"> | boolean
+    gather?: BoolFilter<"Dinoz"> | boolean
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
     userId?: UuidFilter<"Dinoz"> | string
   }
@@ -29408,6 +30950,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -29426,6 +30969,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -29459,6 +31003,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     skills?: DinozSkillsCreateNestedManyWithoutDinozInput
@@ -29491,6 +31036,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leaderId?: number | null
     userId: string
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -29538,6 +31084,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
@@ -29570,6 +31117,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -29601,6 +31149,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -29633,6 +31182,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leaderId?: number | null
     userId: string
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -29680,6 +31230,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -29712,6 +31263,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -29743,6 +31295,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -29775,6 +31328,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leaderId?: number | null
     userId: string
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -29822,6 +31376,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -29854,6 +31409,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -29885,6 +31441,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -29917,6 +31474,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leaderId?: number | null
     userId: string
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -29964,6 +31522,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -29996,6 +31555,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -30169,6 +31729,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -30187,6 +31748,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -30221,6 +31783,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -30239,6 +31802,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -30247,6 +31811,29 @@ export namespace Prisma {
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
     dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserGatherCreateWithoutUserInput = {
+    place: number
+    type: number
+    grid?: UserGatherCreategridInput | number[]
+  }
+
+  export type UserGatherUncheckedCreateWithoutUserInput = {
+    id?: number
+    place: number
+    type: number
+    grid?: UserGatherCreategridInput | number[]
+  }
+
+  export type UserGatherCreateOrConnectWithoutUserInput = {
+    where: UserGatherWhereUniqueInput
+    create: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserGatherCreateManyUserInputEnvelope = {
+    data: UserGatherCreateManyUserInput | UserGatherCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserIngredientsCreateWithoutUserInput = {
@@ -30425,6 +32012,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -30457,6 +32045,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leaderId?: number | null
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
@@ -30494,6 +32083,33 @@ export namespace Prisma {
   export type UserDinozShopCreateManyUserInputEnvelope = {
     data: UserDinozShopCreateManyUserInput | UserDinozShopCreateManyUserInput[]
     skipDuplicates?: boolean
+  }
+
+  export type UserGatherUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserGatherWhereUniqueInput
+    update: XOR<UserGatherUpdateWithoutUserInput, UserGatherUncheckedUpdateWithoutUserInput>
+    create: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserGatherUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserGatherWhereUniqueInput
+    data: XOR<UserGatherUpdateWithoutUserInput, UserGatherUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserGatherUpdateManyWithWhereWithoutUserInput = {
+    where: UserGatherScalarWhereInput
+    data: XOR<UserGatherUpdateManyMutationInput, UserGatherUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserGatherScalarWhereInput = {
+    AND?: UserGatherScalarWhereInput | UserGatherScalarWhereInput[]
+    OR?: UserGatherScalarWhereInput[]
+    NOT?: UserGatherScalarWhereInput | UserGatherScalarWhereInput[]
+    id?: IntFilter<"UserGather"> | number
+    place?: IntFilter<"UserGather"> | number
+    type?: IntFilter<"UserGather"> | number
+    grid?: IntNullableListFilter<"UserGather">
+    userId?: UuidNullableFilter<"UserGather"> | string | null
   }
 
   export type UserIngredientsUpsertWithWhereUniqueWithoutUserInput = {
@@ -30734,6 +32350,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -30752,6 +32369,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -30786,6 +32404,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -30804,6 +32423,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -30814,6 +32434,98 @@ export namespace Prisma {
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type UserCreateWithoutGathersInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutGathersInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutGathersInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutGathersInput, UserUncheckedCreateWithoutGathersInput>
+  }
+
+  export type UserUpsertWithoutGathersInput = {
+    update: XOR<UserUpdateWithoutGathersInput, UserUncheckedUpdateWithoutGathersInput>
+    create: XOR<UserCreateWithoutGathersInput, UserUncheckedCreateWithoutGathersInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutGathersInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutGathersInput, UserUncheckedUpdateWithoutGathersInput>
+  }
+
+  export type UserUpdateWithoutGathersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutGathersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutIngredientsInput = {
     id?: string
     name: string
@@ -30822,6 +32534,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
@@ -30840,6 +32553,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
@@ -30874,6 +32588,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
@@ -30892,6 +32607,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
@@ -30910,6 +32626,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
@@ -30928,6 +32645,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
@@ -30962,6 +32680,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
@@ -30980,6 +32699,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
@@ -30998,6 +32718,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
@@ -31016,6 +32737,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
@@ -31050,6 +32772,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
@@ -31068,6 +32791,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
@@ -31086,6 +32810,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -31104,6 +32829,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -31138,6 +32864,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -31156,6 +32883,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -31174,6 +32902,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -31192,6 +32921,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -31226,6 +32956,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -31244,6 +32975,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -31262,6 +32994,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -31280,6 +33013,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -31314,6 +33048,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -31332,6 +33067,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -31366,6 +33102,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     userId: string
   }
 
@@ -31413,6 +33150,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
@@ -31445,6 +33183,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
@@ -31477,6 +33216,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -31575,6 +33315,13 @@ export namespace Prisma {
     triggeredBy?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type UserGatherCreateManyUserInput = {
+    id?: number
+    place: number
+    type: number
+    grid?: UserGatherCreategridInput | number[]
+  }
+
   export type UserIngredientsCreateManyUserInput = {
     id?: number
     ingredientId: number
@@ -31628,6 +33375,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     seed: string
     fight?: boolean
+    gather?: boolean
     leaderId?: number | null
   }
 
@@ -31635,6 +33383,26 @@ export namespace Prisma {
     id?: number
     raceId: number
     display: string
+  }
+
+  export type UserGatherUpdateWithoutUserInput = {
+    place?: IntFieldUpdateOperationsInput | number
+    type?: IntFieldUpdateOperationsInput | number
+    grid?: UserGatherUpdategridInput | number[]
+  }
+
+  export type UserGatherUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    place?: IntFieldUpdateOperationsInput | number
+    type?: IntFieldUpdateOperationsInput | number
+    grid?: UserGatherUpdategridInput | number[]
+  }
+
+  export type UserGatherUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    place?: IntFieldUpdateOperationsInput | number
+    type?: IntFieldUpdateOperationsInput | number
+    grid?: UserGatherUpdategridInput | number[]
   }
 
   export type UserIngredientsUpdateWithoutUserInput = {
@@ -31745,6 +33513,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -31777,6 +33546,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
@@ -31809,6 +33579,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
     fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
