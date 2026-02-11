@@ -50,13 +50,13 @@ export const toDinozFiche = (
 			| 'order'
 			| 'remaining'
 			| 'fight'
-			//| 'gather'
+			| 'gather'
 		> & {
 			//missions: DinozMission[];
 			items: Pick<DinozItems, 'itemId'>[];
 			status: Pick<DinozStatus, 'statusId'>[];
 			skills: Pick<DinozSkills, 'skillId' | 'state'>[];
-			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | /*'gather' |*/ 'name'>[];
+			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
 			//concentration: Concentration | null;
 			//TournamentTeam: Pick<TournamentTeam, 'tournamentId'>[];
 			//build: DinozBuild | null;
@@ -112,8 +112,8 @@ export const toDinozFiche = (
 		skills: dinoz.skills,
 		order: dinoz.order,
 		remaining: dinoz.remaining,
-		fight: dinoz.fight
-		//gather: dinoz.gather,
+		fight: dinoz.fight,
+		gather: dinoz.gather
 		//missions: dinoz.missions,
 		//concentration: dinoz.concentration,
 		/*tournament: dinoz.TournamentTeam.find(team => team.tournamentId === currentTournament?.id)
