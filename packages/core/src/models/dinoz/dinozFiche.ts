@@ -13,7 +13,7 @@ export interface DinozFiche {
 	//missionId: number | undefined | null;
 	//missionHUD: MissionHUD | null;
 	leaderId: number | null;
-	followers: Pick<DinozFiche, 'id' | 'fight' | 'remaining' | /*'gather' |*/ 'name'>[];
+	followers: Pick<DinozFiche, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
 	life: number;
 	maxLife: number;
 	experience: number;
@@ -34,7 +34,7 @@ export interface DinozFiche {
 	order: number | null;
 	remaining: number;
 	fight: boolean;
-	//gather: boolean;
+	gather: boolean;
 	//missions: DinozMission[];
 	//concentration: Concentration | null;
 	//tournament: Pick<TournamentState, 'id' | 'levelLimit'> | null;
