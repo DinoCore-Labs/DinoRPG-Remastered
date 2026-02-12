@@ -144,6 +144,7 @@ exports.Prisma.DinozScalarFieldEnum = {
   updatedDate: 'updatedDate',
   seed: 'seed',
   fight: 'fight',
+  gather: 'gather',
   leaderId: 'leaderId',
   userId: 'userId'
 };
@@ -256,6 +257,14 @@ exports.Prisma.UserDinozShopScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.UserGatherScalarFieldEnum = {
+  id: 'id',
+  place: 'place',
+  type: 'type',
+  grid: 'grid',
+  userId: 'userId'
+};
+
 exports.Prisma.UserIngredientsScalarFieldEnum = {
   id: 'id',
   ingredientId: 'ingredientId',
@@ -364,6 +373,7 @@ exports.Prisma.ModelName = {
   SignupIpMonthCounter: 'SignupIpMonthCounter',
   User: 'User',
   UserDinozShop: 'UserDinozShop',
+  UserGather: 'UserGather',
   UserIngredients: 'UserIngredients',
   UserItems: 'UserItems',
   UserProfile: 'UserProfile',
