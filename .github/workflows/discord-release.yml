@@ -8,37 +8,34 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Send message to Discord
+      - name: Post to Discord
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           RELEASE_NAME: ${{ github.event.release.name }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
           RELEASE_URL: ${{ github.event.release.html_url }}
           RELEASE_BODY: ${{ github.event.release.body }}
-          REPO: ${{ github.repository }}
         run: |
-          # Discord limite, donc on tronque un peu si besoin
-          BODY=$(python - << 'PY'
-            import os
-            b = os.environ.get("RELEASE_BODY","").strip()
-            # garde ~1500 chars pour éviter les limites Discord
-            print((b[:1500] + "…") if len(b) > 1500 else b)
-            PY
-                      )
+          set -e
 
-                      payload=$(python - << 'PY'
-            import json, os
-            name = os.environ["RELEASE_NAME"] or os.environ["RELEASE_TAG"]
-            tag = os.environ["RELEASE_TAG"]
-            url = os.environ["RELEASE_URL"]
-            repo = os.environ["REPO"]
-            body = os.environ.get("BODY","")
-            content = f"📦 **Nouvelle release : {name}** (`{tag}`)\n{url}\n\n{body}"
-            print(json.dumps({"content": content}))
-            PY
-          )
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "Missing DISCORD_WEBHOOK_URL secret"
+            exit 1
+          fi
+
+          NAME="${RELEASE_NAME:-$RELEASE_TAG}"
+
+          # Tronque pour éviter les limites Discord
+          BODY="$(printf "%s" "$RELEASE_BODY" | head -c 1500)"
+          if [ "$(printf "%s" "$RELEASE_BODY" | wc -c | tr -d ' ')" -gt 1500 ]; then
+            BODY="${BODY}…"
+          fi
+
+          # Build JSON propre (escape via python en one-liner, sans heredoc)
+          CONTENT="📦 **Nouvelle release : ${NAME}** (\`${RELEASE_TAG}\`)\n${RELEASE_URL}\n\n${BODY}"
+          JSON=$(python -c 'import json,os; print(json.dumps({"content": os.environ["CONTENT"]}))' )
 
           curl -sS -X POST \
             -H "Content-Type: application/json" \
-            -d "$payload" \
+            -d "$JSON" \
             "$DISCORD_WEBHOOK_URL"
