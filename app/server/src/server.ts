@@ -12,6 +12,7 @@ import { loadConfig } from './config/config.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
 import { fightRoutes } from './Fight/Routes/fight.routes.js';
 import { fightSchemas } from './Fight/Schema/fight.schema.js';
+import { gatherRoutes } from './Gather/Routes/gather.routes.js';
 import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
 import { ensureJobsExist } from './jobs/ensureJobs.js';
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
@@ -168,6 +169,7 @@ async function buildServer() {
 	server.register(shopRoutes, { prefix: 'api/shop' });
 	server.register(dinozRoutes, { prefix: 'api/dinoz' });
 	server.register(fightRoutes, { prefix: 'api/fight' });
+	server.register(gatherRoutes, { prefix: 'api/gather' });
 
 	server.register(adminJobsRoutes, { prefix: 'api/admin' });
 	//------------------------------------------------------
