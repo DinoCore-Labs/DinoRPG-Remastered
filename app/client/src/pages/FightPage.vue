@@ -121,10 +121,9 @@ export default defineComponent({
 			});
 			return;
 		}
-
 		this.dinozStore.setDinozList(
 			dinozList.map(dinoz => {
-				if (dinoz.id === this.dinozId /*|| dinoz.leaderId === this.dinozId*/) {
+				if (dinoz.id === this.dinozId || dinoz.leaderId === this.dinozId) {
 					// Update dinoz HP
 					dinoz.life -= this.fight?.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
 				}
