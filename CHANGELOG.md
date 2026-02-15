@@ -2,6 +2,13 @@
 
 ## 🔹 Core
 
+## 0.3.0
+
+### Minor Changes
+
+- c2a2b6b: feat: gather
+- b39d3bb: feat: completion and completion ranking
+
 ## 0.2.0
 
 ### Minor Changes
@@ -53,6 +60,12 @@
 
 ## 🔹 Bot
 
+## 0.2.1
+
+### Patch Changes
+
+- 4319096: fix: remove console log
+
 ## 0.2.0
 
 ### Minor Changes
@@ -72,6 +85,19 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.4.0
+
+### Minor Changes
+
+- c2a2b6b: feat: gather
+- b39d3bb: feat: completion and completion ranking
+
+### Patch Changes
+
+- Updated dependencies [c2a2b6b]
+- Updated dependencies [b39d3bb]
+  - @dinorpg/core@0.3.0
 
 ## 0.3.0
 
@@ -142,6 +168,13 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.4.0
+
+### Minor Changes
+
+- c2a2b6b: feat: gather
+- b39d3bb: feat: completion and completion ranking
 
 ## 0.3.0
 
