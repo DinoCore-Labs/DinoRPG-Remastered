@@ -38,8 +38,8 @@
 						<p></p>
 					</div>
 				</div>
-				<div class="top_goals">
-					<div class="top_countWrapper">
+				<div class="top_goals dz-golden-box">
+					<div class="top_countWrapper dz-golden-box">
 						<span class="top_points">...</span>
 					</div>
 					<div class="top_desc">
@@ -47,8 +47,8 @@
 						<p></p>
 					</div>
 				</div>
-				<div class="top_goals">
-					<div class="top_countWrapper">
+				<div class="top_goals dz-golden-box">
+					<div class="top_countWrapper dz-golden-box">
 						<span class="top_points">...</span>
 					</div>
 					<div class="top_desc">
