@@ -1,5 +1,18 @@
 # @dinorpg/server
 
+## 0.4.0
+
+### Minor Changes
+
+- c2a2b6b: feat: gather
+- b39d3bb: feat: completion and completion ranking
+
+### Patch Changes
+
+- Updated dependencies [c2a2b6b]
+- Updated dependencies [b39d3bb]
+  - @dinorpg/core@0.3.0
+
 ## 0.3.0
 
 ### Minor Changes

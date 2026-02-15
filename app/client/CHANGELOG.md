@@ -1,5 +1,12 @@
 # @dinorpg/client
 
+## 0.4.0
+
+### Minor Changes
+
+- c2a2b6b: feat: gather
+- b39d3bb: feat: completion and completion ranking
+
 ## 0.3.0
 
 ### Minor Changes
