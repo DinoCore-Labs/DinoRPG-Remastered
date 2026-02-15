@@ -1,7 +1,9 @@
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
+import { Item } from '@dinorpg/core/models/items/itemList.js';
 import dayjs from 'dayjs';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 
@@ -19,6 +21,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 
 			if (isFirstLoginToday) {
 				await incrementUserStat(StatTracking.P_DAYS, userId, 1);
+				await addItemToInventory(userId, Item.DAILY_TICKET, 1);
 
 				await tx.user.update({
 					where: { id: userId },
