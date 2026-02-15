@@ -80,7 +80,7 @@ export async function getAvailableActions(
 				leaderId: true,
 				//unavailableReason: true,
 				life: true,
-				followers: { select: { id: true, fight: true, remaining: true, /*gather: true,*/ name: true } },
+				followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
 				skills: { select: { skillId: true, state: true } }
 			}
 		});

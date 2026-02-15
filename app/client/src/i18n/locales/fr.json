@@ -170,7 +170,8 @@
 		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
 		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
 		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
-		"dinozNaming": "DinoRPG [ Choix du Nom ]"
+		"dinozNaming": "DinoRPG [ Choix du Nom ]",
+		"gather": "DinoRPG [ {type} ]"
 	},
 	"button": {
 		"buyDinoz": "Acheter un Dinoz !",
@@ -2177,6 +2178,36 @@
 		},
 		"player": "Maître",
 		"vs": "VS"
+	},
+	"gather": {
+		"action": {
+			"cueille": "Cueillir",
+			"fish": "Pêcher",
+			"hunt": "Trophées de Chasse",
+			"seek": "Artefacts",
+			"energy": "Energétiser",
+			"anniv": "Anniversaire",
+			"xmas": "Chasse-Neige",
+			"tictac": "Trésor de Papy Joe",
+			"labo": "Laboratoire de l'Archidorogon",
+			"party": "Feu d'artifice",
+			"daily": "Grille Quotidienne"
+		},
+		"type": {
+			"cueille": "plantes",
+			"fish": "poissons",
+			"hunt": "Chasser",
+			"seek": "Fouiller",
+			"energy": "énergie",
+			"anniv": "trésors fabuleux",
+			"xmas": "Cadeaux de Noël",
+			"tictac": "trésors dans le jardin de Papy Joe",
+			"labo": "ressources dans le laboratoire de l'Archidorogon",
+			"party": "trésors fabuleux",
+			"daily": "récompenses quotidiennes"
+		},
+		"disclaimer": "Cliquez sur {number} case(s) de la grille pour trouver des {search}",
+		"nothing": "Votre Dinoz n'a rien trouvé..."
 	},
 	"shop": {
 		"dinoz": {
