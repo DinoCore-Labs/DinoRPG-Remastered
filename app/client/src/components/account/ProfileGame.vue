@@ -50,7 +50,7 @@
 					{{ $t(`accountPage.completion`) }}
 				</dt>
 				<dd>
-					<!--{{ accountData.completion.toFixed(2) }}-->
+					{{ profile.completion.toFixed(2) }}
 					%
 				</dd>
 			</dl>
