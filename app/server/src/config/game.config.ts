@@ -51,7 +51,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 				{ itemId: 2, quantity: 10 }, // potion d'ange
 				{ itemId: 3, quantity: 10 }, // nuage burger
 				{ itemId: 4, quantity: 10 }, // pain chaud
-				{ itemId: 5, quantity: 10 } // tarte
+				{ itemId: 5, quantity: 10 }, // tarte
+				{ itemId: 997, quantity: 50 } // daily ticket
 			]
 		}
 	},
@@ -75,7 +76,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 				{ itemId: 2, quantity: 5 }, // potion d'ange
 				{ itemId: 3, quantity: 10 }, // nuage burger
 				{ itemId: 4, quantity: 5 }, // pain chaud
-				{ itemId: 5, quantity: 5 } // tarte
+				{ itemId: 5, quantity: 5 }, // tarte
+				{ itemId: 997, quantity: 5 } // daily ticket
 			]
 		}
 	}
