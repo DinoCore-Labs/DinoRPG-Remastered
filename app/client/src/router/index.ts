@@ -80,6 +80,7 @@ const routes: RouteRecord[] = [
 				path: '/ranking',
 				name: 'Ranking',
 				component: RankingPage,
+				meta: { public: true, showLeftPanel: false },
 				children: [
 					{
 						path: 'player/:pageLoaded',

@@ -6,9 +6,11 @@
 				<div class="homepage-menu">
 					<div>
 						<DZButton @click="openAuthMenu">{{ $t('homepage.connexion') }}</DZButton>
-						<DZButton href="#last-news" :disabled="true">{{ $t('homepage.news') }}</DZButton>
+						<DZButton :disabled="true">{{ $t('homepage.news') }}</DZButton>
 					</div>
-
+					<div>
+						<DZButton href="/ranking">{{ $t('homepage.ranking') }}</DZButton>
+					</div>
 					<DZButton class="helpButton" href="/help">{{ $t('homepage.help') }}</DZButton>
 				</div>
 				<Suspense>
@@ -234,7 +236,6 @@ export default defineComponent({
 		top: 68%;
 		left: 50%;
 		transform: translateX(-50%);
-		z-index: 2;
 		width: 100%;
 		display: flex;
 		flex-direction: column;
