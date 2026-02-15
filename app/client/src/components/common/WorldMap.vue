@@ -84,7 +84,7 @@ import { placeList } from '../../constants/place.js';
 import type { PlaceDisplayed } from '@dinorpg/core/models/place/placeDisplayed.js';
 import type { svgLines } from '@dinorpg/core/models/place/svgLines.js';
 import { dinozStore } from '../../store/dinozStore.js';
-//import { sessionStore } from '../../store/sessionStore.js';
+import { sessionStore } from '../../store/sessionStore.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 //import { UnavailableReason } from '@drpg/prisma/enums';
 //import { formatText } from '../../utils/formatText.js';
@@ -102,7 +102,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			//sessionStore: sessionStore(),
+			sessionStore: sessionStore(),
 			dinozStore: dinozStore(),
 			placeMap: [] as Array<PlaceDisplayed>,
 			translation: {
@@ -227,8 +227,8 @@ export default defineComponent({
 			}*/
 
 			try {
-				/*const moveTry = */ await DinozService.move(this.dinozData.id, placeId);
-				//this.sessionStore.setFightResult(moveTry);
+				const moveTry = await DinozService.move(this.dinozData.id, placeId);
+				this.sessionStore.setFightResult(moveTry);
 				// Update Dinoz Place in the store if fight is win
 				const dinozId = this.dinozData.id;
 				const dinozList = this.dinozStore.getDinozList;
@@ -243,11 +243,11 @@ export default defineComponent({
 					return;
 				}
 
-				/*if (moveTry.result) {
+				if (moveTry.result) {
 					this.dinozStore.setDinozList(
 						dinozList.map(dinoz => {
 							if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
-								this.dinozStore.clearNpc(dinoz.id);
+								//this.dinozStore.clearNpc(dinoz.id);
 								if (dinoz.life !== 0) {
 									// Update dinoz place
 									dinoz.placeId = place.alias || placeId;
@@ -264,12 +264,8 @@ export default defineComponent({
 					);
 				}
 				this.$router.push({
-					name: 'Fight',
+					name: 'FightPage',
 					params: { dinozId: this.dinozData.id?.toString() }
-				});*/
-				this.$router.push({
-					name: 'DinozPage',
-					params: { dinozId: this.dinozData.id.toString() }
 				});
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

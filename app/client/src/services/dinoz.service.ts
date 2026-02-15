@@ -1,4 +1,5 @@
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import type { ItemFeedBack } from '@dinorpg/core/models/items/itemFeedback.js';
 
 import { http } from '../utils/http';
@@ -31,7 +32,7 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	async move(dinozId: number, placeId: number): Promise<void> {
+	async move(dinozId: number, placeId: number): Promise<FightResult> {
 		return http()
 			.put(`/dinoz/move`, {
 				placeId: placeId,
