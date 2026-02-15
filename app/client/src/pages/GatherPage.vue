@@ -80,14 +80,19 @@ export default defineComponent({
 		async selectBox(row: number, box: number): Promise<void> {
 			if (!this.grid) return;
 			if (this.gatherOver) return;
-			const isNotDiscover = this.grid.grid[row][box] === 0;
+			const grid = this.grid.grid;
+			const rowArr = grid[row];
+			if (!rowArr) return; // sécurité (TS + runtime)
+			const cell = rowArr[box];
+			if (typeof cell !== 'number') return;
+			const isNotDiscover = cell === 0;
 			const toPush = [row, box];
 			const isInArray = this.clickedBox.some(a => a.every((val, index) => val === toPush[index]));
 			if (isNotDiscover && !isInArray) {
 				this.clickedBox.push(toPush);
 				this.grid.gatherTurn--;
 			}
-			const leftSquare = Math.pow(this.grid.grid[0].length, 2) + this.sumOfArrays(this.grid.grid);
+			const leftSquare = Math.pow(grid[0]?.length ?? 0, 2) + this.sumOfArrays(this.grid.grid);
 			if (this.grid.gatherTurn <= 0 || leftSquare - this.clickedBox.length == 0) {
 				try {
 					this.gatherResult = await GatherService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
@@ -115,21 +120,14 @@ export default defineComponent({
 			const toTest = [row, box];
 			return this.clickedBox.some(a => a.every((val, index) => val === toTest[index]));
 		},
-		sumOfArrays(arrays: Array<Array<number>>) {
-			let sum = 0;
-
-			for (let i = 0; i < arrays.length; i++) {
-				for (let j = 0; j < arrays[i].length; j++) {
-					sum += arrays[i][j];
-				}
-			}
-
-			return sum;
+		sumOfArrays(arrays: number[][]): number {
+			return arrays.reduce((sum, row) => sum + row.reduce((s, v) => s + v, 0), 0);
 		}
 	},
 	computed: {
 		gatherType(): string {
-			return this.$route.params.type.toString();
+			const type = this.$route.params.type;
+			return typeof type === 'string' ? type : '';
 		},
 		dinozId(): number {
 			return parseInt(this.$route.params.dinozId as string);
