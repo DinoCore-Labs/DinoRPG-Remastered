@@ -375,14 +375,14 @@ export default defineComponent({
 				case GatherType.ANNIV:
 				case GatherType.PARTY:
 				case Action.DAILY:
-				/*this.$router.push({
+					this.$router.push({
 						name: 'Gather',
 						params: {
-							dinozId: action.forDinoz ? action.forDinoz.toString() : this.$route.params.id.toString(),
+							dinozId: action.forDinoz ? action.forDinoz.toString() : this.dinozId.toString(),
 							type: action.name
 						}
 					});
-					break;*/
+					break;
 				case Action.CONCENTRATE:
 					//await DinozService.cancelConcentration(parseInt(this.$route.params.id.toString()));
 					await this.refreshDinoz();

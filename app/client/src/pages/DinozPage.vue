@@ -58,7 +58,7 @@ export default defineComponent({
 		async getFiche(): Promise<void> {
 			const dinozId = this.$route.params.id as string;
 			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-			console.log(this.dinozData);
+			//console.log(this.dinozData);
 			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
 			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id.toString() === dinozId);
 			if (dinozToUpdate === -1) {

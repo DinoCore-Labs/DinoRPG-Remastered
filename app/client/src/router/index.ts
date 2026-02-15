@@ -7,6 +7,7 @@ import AdminJobsPage from '../pages/Admin/AdminJobsPage.vue';
 import DinozPage from '../pages/DinozPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
 import FightPage from '../pages/FightPage.vue';
+import GatherPage from '../pages/GatherPage.vue';
 import HelpPage from '../pages/HelpPage.vue';
 import HomePage from '../pages/HomePage.vue';
 import Ingredients from '../pages/Ingredients.vue';
@@ -69,6 +70,11 @@ const routes: RouteRecord[] = [
 				name: 'FightPage',
 				component: FightPage,
 				meta: { auth: true }
+			},
+			{
+				path: '/gather/grid/:type/:dinozId',
+				name: 'Gather',
+				component: GatherPage
 			},
 			{
 				path: '/ranking',
