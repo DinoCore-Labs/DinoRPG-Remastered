@@ -23,7 +23,7 @@ export const fixRolesCommand = {
 
 		const members = await fetchAllMembers(guild.id, process.env.DISCORD_TOKEN!);
 
-		console.log('→ Membres récupérés via REST :', members.length);
+		//console.log('→ Membres récupérés via REST :', members.length);
 
 		let count = 0;
 
