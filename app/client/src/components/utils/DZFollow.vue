@@ -101,7 +101,8 @@ export default defineComponent({
 									name: targetDinoz.name,
 									id: this.dinoz,
 									fight: targetDinoz.fight,
-									remaining: targetDinoz.remaining
+									remaining: targetDinoz.remaining,
+									gather: targetDinoz.gather
 								});
 							}
 							return dinoz;
