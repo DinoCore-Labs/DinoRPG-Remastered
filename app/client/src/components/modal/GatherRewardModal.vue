@@ -32,22 +32,18 @@
 				<Tippy
 					theme="normal"
 					tag="img"
-					:src="getImgURL('item', `item_${itemList[item.id].name.toLowerCase()}`)"
-					:alt="itemList[item.id].name.toLowerCase()"
+					:src="getImgURL('items', `item_${getItemName(item.id)}`)"
+					:alt="getItemName(item.id)"
 				>
 					<template #content>
-						<h1 v-html="formatContent($t(`item.name.${itemList[item.id].name.toLowerCase()}`))" />
-						<p
-							v-html="
-								formatContent($t(`item.description.${itemList[item.id].name.toLowerCase()}`, { quantity: item.price }))
-							"
-						/>
+						<h1 v-html="formatContent($t(`items.name.${getItemName(item.id)}`))" />
+						<p v-html="formatContent($t(`items.description.${getItemName(item.id)}`, { quantity: item.price }))" />
 					</template>
 				</Tippy>
 				<div class="name-info">
 					<span v-if="item.quantity && item.quantity > 1">x{{ item.quantity }}{{ ' ' }}</span>
-					<span v-if="itemList[item.id].name === 'gold'">{{ item.price }}{{ ' ' }}</span>
-					<span>{{ formatContent($t(`item.name.${itemList[item.id].name.toLowerCase()}`)) }}</span>
+					<span v-if="getItemName(item.id) === 'gold'">{{ item.price }}{{ ' ' }}</span>
+					<span>{{ formatContent($t(`items.name.${getItemName(item.id)}`)) }}</span>
 				</div>
 			</div>
 			<a class="button" @click="$emit('close')">
@@ -99,6 +95,9 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		getItemName(itemId: Item): string {
+			return this.itemList[itemId].name.toLowerCase();
+		},
 		isMaxQuantity(ingredientId: number) {
 			const ingredient = this.ingredientsAtMaxQuantity.find(ingre => ingre.ingredientId === ingredientId);
 			if (ingredient) {
