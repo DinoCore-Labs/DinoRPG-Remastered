@@ -1,5 +1,11 @@
 # @dinorpg/bot
 
+## 0.2.1
+
+### Patch Changes
+
+- 4319096: fix: remove console log
+
 ## 0.2.0
 
 ### Minor Changes
