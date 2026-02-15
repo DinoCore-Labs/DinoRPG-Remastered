@@ -1,14 +1,13 @@
 <template>
-	<DZDisclaimer content="ranking.disclaimer.classic" help v-if="sort === 'classic'" />
-	<DZDisclaimer content="ranking.disclaimer.average" help v-if="sort === 'average'" />
+	<DZDisclaimer content="ranking.disclaimer.completion" />
 	<div class="wrapper">
 		<DZTable>
 			<tr>
 				<th class="thPos">{{ $t('ranking.th.pos') }}</th>
 				<th class="thPlayer">{{ $t('ranking.th.player') }}</th>
-				<th class="thDinoz">Dinoz</th>
+				<th class="thDinoz">{{ $t('ranking.th.dinoz') }}</th>
 				<th class="thPoints">{{ $t('ranking.th.points') }}</th>
-				<th class="thPoints">{{ $t('ranking.th.average') }}</th>
+				<th class="thPoints">{{ $t('ranking.th.completion') }}</th>
 			</tr>
 			<tr class="select" @click="changePage(-1)" v-if="page > 1">
 				<td class="pos" colspan="5" style="text-align: center">
@@ -19,9 +18,7 @@
 				v-for="(ranking, index) in rankings"
 				:key="ranking.user.id"
 				class="select"
-				:class="{
-					even: (index + 1) % 2 === 0
-				}"
+				:class="(index + 1) % 2 === 0 ? 'even' : ''"
 				@click="selectedUser = ranking.user.id"
 			>
 				<td class="tdPos">
@@ -37,7 +34,7 @@
 					{{ ranking.points }}
 				</td>
 				<td class="tdOther">
-					{{ ranking.average }}
+					{{ ranking.completion }}
 				</td>
 			</tr>
 			<UserCard v-if="seeUser && selectedUser" :userId="selectedUser" />
@@ -49,16 +46,15 @@
 			</tr>
 		</DZTable>
 	</div>
-	<DZSearch background entityType="user" placeHolder="ranking.placeholder.searchUser" @entity="goToAccount" />
+	<SearchEntity background entityType="player" placeHolder="ranking.placeholder.searchPlayer" @entity="goToAccount" />
 </template>
 
 <script lang="ts">
 import type { RankingGetResponses } from '@dinorpg/core/models/ranking/rankingGetResponse.js';
-
-import { defineComponent, type PropType } from 'vue';
-import { RankingService } from '../../services';
-import { userStore } from '../../store/userStore';
-import { errorHandler } from '../../utils/errorHandler';
+import { defineComponent } from 'vue';
+import { RankingService } from '../../services/ranking.service.js';
+import { errorHandler } from '../../utils/errorHandler.js';
+import { userStore } from '../../store/userStore.js';
 import DZUser from '../utils/DZUser.vue';
 import DZDisclaimer from '../utils/DZDisclaimer.vue';
 import DZSearch from '../utils/DZSearch.vue';
@@ -66,14 +62,8 @@ import DZTable from '../utils/DZTable.vue';
 import UserCard from '../modal/UserCard.vue';
 
 export default defineComponent({
-	name: 'PlayerRanking',
-	components: {
-		DZSearch,
-		DZDisclaimer,
-		DZTable,
-		DZUser,
-		UserCard
-	},
+	name: 'CompletionRanking',
+	components: { DZSearch, DZDisclaimer, DZUser, DZTable, UserCard },
 	setup() {
 		const uStore = userStore();
 		return { uStore };
@@ -81,55 +71,31 @@ export default defineComponent({
 	data() {
 		return {
 			rankings: [] as RankingGetResponses,
-			page: 1 as number,
 			me: userStore().id,
+			page: 1 as number,
 			seeUser: false,
 			selectedUser: undefined as undefined | string
 		};
 	},
-	props: {
-		sort: {
-			type: String as PropType<'classic' | 'average'>,
-			required: true
-		},
-		pageLoaded: {
-			type: Number,
-			required: true
-		}
-	},
 	methods: {
-		leave() {
-			this.seeUser = false;
-		},
 		goToAccount(user: { id: string; name: string }) {
 			this.$router.push({ name: 'MyAccount', params: { id: user.id } });
 		},
 		async getRanking(): Promise<void> {
 			try {
-				this.rankings = await RankingService.getRanking(this.sort, this.page);
+				this.rankings = await RankingService.getRanking('completion', this.page);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		changePage(i: number) {
-			this.$router.push({ name: this.$route.name ?? '', params: { pageLoaded: (this.page += i) } });
+			this.page += i;
+			this.getRanking();
 		}
 	},
 	async created(): Promise<void> {
-		this.page = Number(this.$route.params.pageLoaded ?? 1);
 		await this.getRanking();
-	},
-	watch: {
-		sort: 'getRanking',
-		'$route.params.pageLoaded': async function (to) {
-			if (to !== undefined && this.$route.name === 'RankingPlayers') {
-				this.page = Number(to ?? 1);
-			}
-		},
-		page() {
-			this.getRanking();
-		}
 	}
 });
 </script>
