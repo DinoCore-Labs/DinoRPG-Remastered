@@ -189,6 +189,9 @@
 		"accept": "Oui",
 		"reject": "Non"
 	},
+	"modal": {
+		"continue": "Continuer"
+	},
 	"toast": {
 		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
 		"Invalid_credentials": "Identifiants incorrects.",

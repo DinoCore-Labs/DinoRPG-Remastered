@@ -32,7 +32,7 @@
 				<Tippy
 					theme="normal"
 					tag="img"
-					:src="getImgURL('items', `item_${getItemName(item.id)}`)"
+					:src="getImgURL('item', `item_${getItemImageKey(item.id)}`)"
 					:alt="getItemName(item.id)"
 				>
 					<template #content>
@@ -47,7 +47,7 @@
 				</div>
 			</div>
 			<a class="button" @click="$emit('close')">
-				{{ $t('missions.continue') }}
+				{{ $t('modal.continue') }}
 			</a>
 		</div>
 	</Transition>
@@ -95,6 +95,24 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		isGoldItem(itemId: number): boolean {
+			const goldIds = [
+				Item.GOLD100,
+				Item.GOLD500,
+				Item.GOLD1000,
+				Item.GOLD2000,
+				Item.GOLD2500,
+				Item.GOLD3000,
+				Item.GOLD5000,
+				Item.GOLD10000,
+				Item.GOLD20000
+			];
+			return goldIds.includes(itemId);
+		},
+		getItemImageKey(itemId: Item): string {
+			if (this.isGoldItem(itemId)) return 'gold';
+			return this.itemList[itemId].name.toLowerCase();
+		},
 		getItemName(itemId: Item): string {
 			return this.itemList[itemId].name.toLowerCase();
 		},
