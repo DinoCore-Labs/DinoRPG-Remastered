@@ -1,6 +1,7 @@
 import { Action, ActionFiche, actionList } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { gatherList } from '@dinorpg/core/models/gather/gatherList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.js';
@@ -8,6 +9,7 @@ import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.
 import { Dinoz, DinozSkills, DinozStatus } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { prisma } from '../../prisma.js';
+import { checkCondition } from '../../utils/checkCondition.js';
 import { canLevelUp, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { PlayerForConditionCheck } from '../../utils/user/userConditionCheck.js';
 
@@ -22,7 +24,7 @@ export async function getAvailableActions(
 		| 'experience'
 		| 'leaderId'
 		| 'fight'
-		//| 'gather'
+		| 'gather'
 		| 'remaining'
 		| 'maxLife'
 		//| 'unavailableReason'
@@ -31,7 +33,7 @@ export async function getAvailableActions(
 	> & {
 		//missions: DinozMission[];
 		//concentration: Concentration | null;
-		followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' /*| 'gather'*/>[];
+		followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkills, 'skillId'>[];
 	},
@@ -97,14 +99,14 @@ export async function getAvailableActions(
 	if (dinoz.followers.length > 0) {
 		availableActions.push(actionList[Action.DISBAND]);
 
-		/*for (const follower of dinoz.followers) {
+		for (const follower of dinoz.followers) {
 			// Follower gather
 			if (
 				follower.gather &&
 				dinozPlace.gather !== undefined &&
 				checkCondition(
 					Object.values(gatherList).find(grid => grid.type === dinozPlace.gather)?.condition,
-					player,
+					user,
 					follower.id
 				)
 			) {
@@ -114,7 +116,7 @@ export async function getAvailableActions(
 				}
 				availableActions.push({ ...actionList[gatherFound.action], forDinoz: follower.id });
 			}
-		}*/
+		}
 	}
 
 	// Death related actions
@@ -179,24 +181,24 @@ export async function getAvailableActions(
 	}
 
 	//Gather
-	/*if (
+	if (
 		dinoz.gather &&
 		dinozPlace.gather !== undefined &&
-		checkCondition(Object.values(gatherList).find(grid => grid.type === dinozPlace.gather)?.condition, player, dinoz.id)
+		checkCondition(Object.values(gatherList).find(grid => grid.type === dinozPlace.gather)?.condition, user, dinoz.id)
 	) {
 		const gatherFound = Object.values(gatherList).find(grid => grid.type === dinozPlace.gather);
 		if (!gatherFound) {
 			throw new ExpectedError(`Gather ${dinozPlace.gather} doesn't exist.`);
 		}
 		availableActions.push(actionList[gatherFound.action]);
-	}*/
+	}
 
 	// Special Gather
-	/*if (
+	if (
 		dinozPlace.specialGather !== undefined &&
 		checkCondition(
 			Object.values(gatherList).find(grid => grid.type === dinozPlace.specialGather)?.condition,
-			player,
+			user,
 			dinoz.id
 		)
 	) {
@@ -208,7 +210,7 @@ export async function getAvailableActions(
 			name: gatherFound.action,
 			imgName: 'act_gather'
 		});
-	}*/
+	}
 
 	// Forcebrute Tournament
 	if (dinoz.placeId === PlaceEnum.FORCEBRUT && dinoz.status.some(s => s.statusId === DinozStatusId.TOURNA)) {
