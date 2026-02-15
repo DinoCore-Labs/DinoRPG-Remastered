@@ -1,5 +1,11 @@
 # @dinorpg/bot
 
+## 0.2.2
+
+### Patch Changes
+
+- ac3fd27: chore: update dependencies
+
 ## 0.2.1
 
 ### Patch Changes
