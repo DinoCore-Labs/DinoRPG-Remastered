@@ -1,5 +1,9 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.ranking')}`" :header="$t(`topBar.userMenu.ranking`)"></TitleHeader>
+	<TitleHeader
+		:title="`${$t('pageTitle.ranking')}`"
+		:header="$t('ranking.title')"
+		:sub-header="$t(subHeader)"
+	></TitleHeader>
 	<ul class="onglets">
 		<li :class="{ active: $route.name === 'RankingPlayers' }">
 			<RouterLink
@@ -7,7 +11,7 @@
 					name: 'RankingPlayers',
 					params: { pageLoaded: 1 }
 				}"
-				><img :src="getImgURL('icons', 'small_member')" alt="member" /> {{ $t('tabs.players') }}</RouterLink
+				><img :src="getImgURL('icons', 'small_member')" alt="member" /> {{ $t('ranking.tabs.players') }}</RouterLink
 			>
 		</li>
 		<li :class="{ active: $route.name === 'RankingAverage' }">
@@ -16,19 +20,19 @@
 					name: 'RankingAverage',
 					params: { pageLoaded: 1 }
 				}"
-				>{{ $t('tabs.average') }}</RouterLink
+				>{{ $t('ranking.tabs.average') }}</RouterLink
 			>
 		</li>
-		<!--<li>
+		<li :class="{ active: $route.name === 'RankingCompletion' }">
 			<RouterLink
 				:to="{
 					name: 'RankingCompletion',
 					params: { pageLoaded: 1 }
 				}"
-				>{{ $t('tabs.completion') }}</RouterLink
+				>{{ $t('ranking.tabs.completion') }}</RouterLink
 			>
 		</li>
-		<li>
+		<!--<li>
 			<RouterLink
 				:to="{
 					name: 'RankingClans',
@@ -59,7 +63,8 @@
 
 <script lang="ts">
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import { RouterView } from 'vue-router';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { getImgURL } from '../utils/getImgURL';
@@ -69,6 +74,26 @@ export default defineComponent({
 	components: {
 		TitleHeader,
 		RouterView
+	},
+	setup() {
+		const route = useRoute();
+
+		const subHeader = computed(() => {
+			switch (route.name) {
+				case 'RankingPlayers':
+					return 'ranking.tabs.players';
+				case 'RankingAverage':
+					return 'ranking.tabs.average';
+				case 'RankingCompletion':
+					return 'ranking.tabs.completion';
+				default:
+					return 'ranking.tabs.players';
+			}
+		});
+
+		return {
+			subHeader
+		};
 	},
 	methods: {
 		getImgURL,

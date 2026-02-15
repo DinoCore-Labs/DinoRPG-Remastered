@@ -225,6 +225,12 @@
 		"serverTime": "Temps du serveur"
 	},
 	"ranking": {
+		"title": "Classement :",
+		"tabs": {
+			"players": "Joueurs",
+			"average": "Moyenne",
+			"completion": "Complétion"
+		},
 		"th": {
 			"pos": "Pos.",
 			"player": "Maître",
@@ -237,7 +243,8 @@
 		},
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
-			"average": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la moyenne des niveaux de tous les Dinoz du joueur."
+			"average": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la moyenne des niveaux de tous les Dinoz du joueur.",
+			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les Dinoz actifs et la progression dans l'histoire du jeu."
 		},
 		"page": {
 			"previous": "Page précedente",
@@ -247,10 +254,6 @@
 			"searchUser": "Rechercher un joueur",
 			"searchClan": "Rechercher un clan"
 		}
-	},
-	"tabs": {
-		"players": "Joueurs",
-		"average": "Moyenne"
 	},
 	"accountPage": {
 		"title": "Mon Compte",

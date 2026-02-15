@@ -1,7 +1,8 @@
 import { FastifyRequest } from 'fastify';
 
-import { getAverageRanking } from '../Service/getAverageRanking.service.js';
-import { getClassicRanking } from '../Service/getClassicRanking.service.js';
+import { getAverageRanking } from '../Controller/getAverageRanking.controller.js';
+import { getClassicRanking } from '../Controller/getClassicRanking.controller.js';
+import { getCompletionRanking } from '../Controller/getCompletionRanking.controller.js';
 
 export async function getRanking(
 	req: FastifyRequest<{
@@ -17,11 +18,12 @@ export async function getRanking(
 		case 'classic':
 			ranking = await getClassicRanking(pageNum);
 			break;
-
 		case 'average':
 			ranking = await getAverageRanking(pageNum);
 			break;
-
+		case 'completion':
+			ranking = await getCompletionRanking(pageNum);
+			break;
 		default:
 			ranking = await getClassicRanking(pageNum);
 			break;
