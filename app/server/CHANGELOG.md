@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.4.1
+
+### Patch Changes
+
+- ac3fd27: chore: update dependencies
+- Updated dependencies [ac3fd27]
+  - @dinorpg/core@0.3.1
+
 ## 0.4.0
 
 ### Minor Changes
