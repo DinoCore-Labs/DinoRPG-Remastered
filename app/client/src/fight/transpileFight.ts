@@ -18,7 +18,7 @@ import {
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { bossList } from '@dinorpg/core/models/monster/bossList.js';
 import { monsterList } from '@dinorpg/core/models/monster/monsterList.js';
-import type { PlaceDisplayed } from '@dinorpg/core/models/place/placeDisplayed.js';
+import { placeList } from '@dinorpg/core/models/place/placeList.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import {
 	BASE_ASSAULT_ENERGY_COST,
@@ -26,25 +26,11 @@ import {
 	ENERGY_RECOVERY_BASE_FACTOR
 } from '@dinorpg/core/utils/fightConstants.js';
 
-import { placeList } from '../constants/place';
 import type { TFunction } from './translateFightStep';
-
-type PlaceDisplayedWithFight = PlaceDisplayed & {
-	background?: string;
-	top?: number;
-	bottom?: number;
-	ground?: GroundEnum;
-};
-
-function hasFightProps(p: PlaceDisplayed): p is PlaceDisplayedWithFight {
-	// background est celui qui t'intéresse vraiment
-	return typeof (p as any).background === 'string';
-}
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
 	if (!place) return;
-	if (!hasFightProps(place)) return;
 	return {
 		bg: place.background,
 		top: place.top ?? 120,
