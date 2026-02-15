@@ -17,6 +17,7 @@ export interface UserProfile {
 	dinoz: DinozPublicFiche[];
 	rewards: Reward[];
 	stats: UserStats[];
+	completion: number;
 }
 
 export interface UserProfileUpdate {

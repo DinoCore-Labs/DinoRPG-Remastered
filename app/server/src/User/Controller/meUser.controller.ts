@@ -2,14 +2,16 @@ import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import dayjs from 'dayjs';
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { ca } from 'zod/v4/locales';
 
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
+import { calculatePlayerCompletion } from '../../utils/user/calculatePlayerCompletion.js';
 
 export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 	try {
-		const userId = req.user.id; // OK → issu du JWT
+		const userId = req.user.id;
 
 		await prisma.$transaction(async tx => {
 			const user = await tx.user.findUnique({
@@ -20,7 +22,29 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			const isFirstLoginToday = !user?.lastLogin || !dayjs().isSame(user.lastLogin, 'day');
 
 			if (isFirstLoginToday) {
+				// Update completion
+				const completion = await calculatePlayerCompletion(userId);
+				try {
+					await tx.ranking.update({
+						where: { userId },
+						data: { completion }
+					});
+				} catch (err: any) {
+					// If ranking entry doesn't exist, create it
+					if (err.code === 'P2025') {
+						await tx.ranking.create({
+							data: {
+								userId,
+								completion
+							}
+						});
+					} else {
+						throw err;
+					}
+				}
+				// Update stat
 				await incrementUserStat(StatTracking.P_DAYS, userId, 1);
+				// Give 1 daily ticket
 				await addItemToInventory(userId, Item.DAILY_TICKET, 1);
 
 				await tx.user.update({
@@ -39,7 +63,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				dinoz: {
 					select: {
 						id: true,
-						//leaderId: true,
+						leaderId: true,
 						display: true,
 						name: true,
 						life: true,
@@ -47,7 +71,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 						experience: true,
 						placeId: true,
 						level: true,
-						//order: true,
+						order: true,
 						raceId: true,
 						//unavailableReason: true,
 						//missions: true,
@@ -57,12 +81,12 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 						nbrUpLightning: true,
 						nbrUpAir: true,
 						remaining: true,
-						//fight: true,
-						//gather: true,
-						//items: { select: { itemId: true } },
+						fight: true,
+						gather: true,
+						items: { select: { itemId: true } },
 						status: { select: { statusId: true } },
-						skills: { select: { skillId: true, state: true } }
-						//followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
+						skills: { select: { skillId: true, state: true } },
+						followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } }
 						//TournamentTeam: { select: { tournamentId: true } },
 						//concentration: true,
 						//build: true

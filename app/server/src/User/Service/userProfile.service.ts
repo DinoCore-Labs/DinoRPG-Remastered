@@ -29,6 +29,11 @@ export async function getOwnProfileService(userId: string) {
 					stat: true,
 					quantity: true
 				}
+			},
+			ranking: {
+				select: {
+					completion: true
+				}
 			}
 		}
 	});
@@ -48,6 +53,7 @@ export async function getOwnProfileService(userId: string) {
 		gender: user.profile.gender,
 		age: user.profile.age,
 		avatar,
+		completion: user.ranking?.completion ?? 0,
 		dinoz: user.dinoz.map(d => {
 			return toDinozPublicFiche({
 				...d
@@ -85,6 +91,11 @@ export async function getUserProfileService(id: string) {
 					stat: true,
 					quantity: true
 				}
+			},
+			ranking: {
+				select: {
+					completion: true
+				}
 			}
 		}
 	});
@@ -104,6 +115,7 @@ export async function getUserProfileService(id: string) {
 		gender: user.profile.gender,
 		age: user.profile.age,
 		avatar,
+		completion: user.ranking?.completion ?? 0,
 		dinoz: user.dinoz.map(d => {
 			return toDinozPublicFiche({
 				...d
