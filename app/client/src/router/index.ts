@@ -100,6 +100,16 @@ const routes: RouteRecord[] = [
 							pageLoaded: Number(route.params.pageLoaded)
 						}),
 						meta: { public: true, showLeftPanel: false }
+					},
+					{
+						path: 'completion/:pageLoaded',
+						name: 'RankingCompletion',
+						component: () => import('../components/rankings/CompletionRanking.vue'),
+						props: route => ({
+							sort: 'completion',
+							pageLoaded: Number(route.params.pageLoaded)
+						}),
+						meta: { public: true, showLeftPanel: false }
 					}
 				]
 			},

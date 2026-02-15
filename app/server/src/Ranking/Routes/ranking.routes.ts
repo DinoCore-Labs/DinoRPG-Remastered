@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
-import { getRanking } from '../Controller/ranking.controller.js';
-import { getUserRankingSummary } from '../Service/getUserPositionRanking.service.js';
+import { getUserRankingSummary } from '../Controller/getUserPositionRanking.controller.js';
+import { getRanking } from '../Service/ranking.service.js';
 
 export async function rankingRoutes(app: FastifyInstance) {
 	app.get<{
