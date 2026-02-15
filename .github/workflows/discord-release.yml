@@ -1,0 +1,44 @@
+name: Post release to Discord
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message to Discord
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          RELEASE_NAME: ${{ github.event.release.name }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_URL: ${{ github.event.release.html_url }}
+          RELEASE_BODY: ${{ github.event.release.body }}
+          REPO: ${{ github.repository }}
+        run: |
+          # Discord limite, donc on tronque un peu si besoin
+          BODY=$(python - << 'PY'
+            import os
+            b = os.environ.get("RELEASE_BODY","").strip()
+            # garde ~1500 chars pour éviter les limites Discord
+            print((b[:1500] + "…") if len(b) > 1500 else b)
+            PY
+                      )
+
+                      payload=$(python - << 'PY'
+            import json, os
+            name = os.environ["RELEASE_NAME"] or os.environ["RELEASE_TAG"]
+            tag = os.environ["RELEASE_TAG"]
+            url = os.environ["RELEASE_URL"]
+            repo = os.environ["REPO"]
+            body = os.environ.get("BODY","")
+            content = f"📦 **Nouvelle release : {name}** (`{tag}`)\n{url}\n\n{body}"
+            print(json.dumps({"content": content}))
+            PY
+          )
+
+          curl -sS -X POST \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "$DISCORD_WEBHOOK_URL"
