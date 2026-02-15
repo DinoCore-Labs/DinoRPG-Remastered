@@ -172,6 +172,7 @@
 		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
 		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
 		"dinozNaming": "DinoRPG [ Choix du Nom ]",
+		"levelup": "DinoRPG [ Niveau supplémentaire pour {dinoz} ]",
 		"gather": "DinoRPG [ {type} ]"
 	},
 	"button": {
@@ -999,6 +1000,29 @@
 			"GrosDormeur": "Permet à votre Dinoz de récupérer une action supplémentaire chaque jour.",
 			"Veilleuse": "Permet à tous les Dinoz suivant votre Dinoz de récupérer également une action supplémentaire chaque jour.",
 			"Matelasseur": "Tous vos Dinoz récupèrent une action supplémentaire chaque jour (non cumulable)."
+		}
+	},
+	"levelup": {
+		"disclaimer": "{name} a atteint le niveau {level} ! Quel élément va-t-il améliorer ?",
+		"title": "Niveau supplémentaire pour {name}",
+		"helper": "Choisissez une compétence à apprendre :",
+		"fire": "Gagne +1 en :feu: Feu",
+		"wood": "Gagne +1 en :bois: Bois",
+		"water": "Gagne +1 en :eau: Eau",
+		"lightning": "Gagne +1 en :foudre: Foudre",
+		"air": "Gagne +1 en :air: Air",
+		"void": "Gagne +1 en :neutre: Vide",
+		"level": "Niv.",
+		"learn": "Apprendre",
+		"confirmSkill": "Désirez-vous apprendre {skill} pour votre passage au niveau {level} ?",
+		"confirmUnlock": "Désirez-vous débloquer {quantity} nouvelles compétences ?",
+		"unlockSkills": "Débloquer {count} compétences supplémentaires",
+		"unlock": "Une fois débloquée, cette compétence pourra être choisie dès le prochain niveau",
+		"small": "Ce Dinoz a gagné un niveau !",
+		"pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre deux possibilités de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
+		"helperUnlock": {
+			"title": "Débloquer",
+			"description": "Vous pouvez choisir entre apprendre une nouvelle compétence à votre Dinoz ou en débloquer plusieurs nouvelles que votre Dinoz **pourra apprendre dès son prochain gain de niveau**."
 		}
 	},
 	"items": {
