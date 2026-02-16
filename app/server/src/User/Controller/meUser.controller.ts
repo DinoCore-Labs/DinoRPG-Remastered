@@ -2,7 +2,6 @@ import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import dayjs from 'dayjs';
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { ca } from 'zod/v4/locales';
 
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { prisma } from '../../prisma.js';
@@ -12,6 +11,7 @@ import { calculatePlayerCompletion } from '../../utils/user/calculatePlayerCompl
 export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 	try {
 		const userId = req.user.id;
+		if (!userId) return reply.code(401).send({ message: 'Authentication required' });
 
 		await prisma.$transaction(async tx => {
 			const user = await tx.user.findUnique({
@@ -24,24 +24,12 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			if (isFirstLoginToday) {
 				// Update completion
 				const completion = await calculatePlayerCompletion(userId);
-				try {
-					await tx.ranking.update({
-						where: { userId },
-						data: { completion }
-					});
-				} catch (err: any) {
-					// If ranking entry doesn't exist, create it
-					if (err.code === 'P2025') {
-						await tx.ranking.create({
-							data: {
-								userId,
-								completion
-							}
-						});
-					} else {
-						throw err;
-					}
-				}
+
+				await tx.ranking.upsert({
+					where: { userId },
+					update: { completion },
+					create: { userId, completion }
+				});
 				// Update stat
 				await incrementUserStat(StatTracking.P_DAYS, userId, 1);
 				// Give 1 daily ticket
@@ -111,6 +99,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			dinoz: user.dinoz
 		});
 	} catch (err) {
-		return reply.status(401).send({ message: 'Invalid token' });
+		req.log.error(err);
+		return reply.code(500).send({ message: 'Internal Server Error' });
 	}
 }
