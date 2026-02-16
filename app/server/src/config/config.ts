@@ -13,7 +13,7 @@ export interface Config {
 	readonly apiUrl: URL;
 	readonly selfUrl: URL;
 	readonly databaseUrl: string;
-	//readonly salt: string;
+	readonly salt: string;
 	readonly secrets: Secrets;
 }
 
@@ -62,7 +62,7 @@ export function config(env: Record<string, string | undefined>): Config {
 
 	const databaseUrl = env.DATABASE_URL ?? '';
 	// Internal keys
-	//const salt = env.SALT ?? 'dev_salt';
+	const salt = env.SALT ?? 'dev_salt';
 
 	const secrets: Secrets = {
 		jwt: env.DINORPG_SECRET_KEY_JWT ?? 'dev_jwt_secret',
@@ -77,7 +77,7 @@ export function config(env: Record<string, string | undefined>): Config {
 		apiUrl,
 		selfUrl,
 		databaseUrl,
-		//salt,
+		salt: salt,
 		secrets
 	};
 }
