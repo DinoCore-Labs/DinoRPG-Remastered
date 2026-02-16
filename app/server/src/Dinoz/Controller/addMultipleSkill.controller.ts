@@ -1,3 +1,4 @@
+import { Prisma } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
 export async function addMultipleSkillToDinoz(dinozId: number, skillIds: number[] /*, event?: GameDinozUsage*/) {
@@ -22,4 +23,19 @@ export async function addMultipleSkillToDinoz(dinozId: number, skillIds: number[
 			skillId
 		}))
 	});
+}
+
+export async function addMultipleUnlockableSkills(
+	skills: Prisma.DinozSkillsUnlockableCreateManyInput[]
+	//event?: GameDinozUsage
+) {
+	/*if (event) {
+		await prisma.dinozSkillsUnlockable.createMany({
+			data: skills
+		});
+	} else {*/
+	await prisma.dinozSkillsUnlockable.createMany({
+		data: skills
+	});
+	//}
 }
