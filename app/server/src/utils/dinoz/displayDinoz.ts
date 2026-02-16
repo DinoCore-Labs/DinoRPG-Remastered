@@ -43,4 +43,27 @@ function generateString(length: number): string {
 	return result;
 }
 
-export { generateString, getRandomLetter, getRandomNumber };
+/**
+ * @summary Return the letter that corresponds to the provided index
+ * 			The letter will be part of '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+ * @return string
+ */
+function getLetter(index: number): string {
+	const allLetters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	return allLetters[index];
+}
+
+export function fromBase62(s: string) {
+	const digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	let result = 0;
+	for (let i = 0; i < s.length; i++) {
+		const p = digits.indexOf(s[i]);
+		if (p < 0) {
+			return NaN;
+		}
+		result += p * Math.pow(digits.length, s.length - i - 1);
+	}
+	return result;
+}
+
+export { generateString, getLetter, getRandomLetter, getRandomNumber };
