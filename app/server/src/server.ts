@@ -17,6 +17,7 @@ import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
 import { ensureJobsExist } from './jobs/ensureJobs.js';
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
 import { startScheduler } from './jobs/scheduler.js';
+import { levelRoutes } from './Level/Routes/level.routes.js';
 import { rankingRoutes } from './Ranking/Routes/ranking.routes.js';
 import { shopRoutes } from './Shop/Routes/shop.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
@@ -169,6 +170,7 @@ async function buildServer() {
 	server.register(shopRoutes, { prefix: 'api/shop' });
 	server.register(dinozRoutes, { prefix: 'api/dinoz' });
 	server.register(fightRoutes, { prefix: 'api/fight' });
+	server.register(levelRoutes, { prefix: 'api/level' });
 	server.register(gatherRoutes, { prefix: 'api/gather' });
 
 	server.register(adminJobsRoutes, { prefix: 'api/admin' });
