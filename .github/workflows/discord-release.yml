@@ -39,14 +39,25 @@ jobs:
           if [ -n "$INPUT_TAG" ]; then
             echo "Manual run: fetching release for tag $INPUT_TAG"
             DATA="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${INPUT_TAG}")"
-            echo "tag=$(echo "$DATA" | jq -r '.tag_name')" >> "$GITHUB_OUTPUT"
-            echo "name=$(echo "$DATA" | jq -r '.name // .tag_name')" >> "$GITHUB_OUTPUT"
-            echo "url=$(echo "$DATA" | jq -r '.html_url')" >> "$GITHUB_OUTPUT"
-            echo "body=$(echo "$DATA" | jq -r '.body // ""')" >> "$GITHUB_OUTPUT"
+
+            TAG="$(echo "$DATA" | jq -r '.tag_name')"
+            NAME="$(echo "$DATA" | jq -r '.name // .tag_name')"
+            URL="$(echo "$DATA" | jq -r '.html_url')"
+            BODY="$(echo "$DATA" | jq -r '.body // ""')"
+
+            echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+            echo "name=$NAME" >> "$GITHUB_OUTPUT"
+            echo "url=$URL" >> "$GITHUB_OUTPUT"
+
+            # IMPORTANT: multiline output safe
+            echo "body<<EOF" >> "$GITHUB_OUTPUT"
+            printf "%s\n" "$BODY" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
           else
             echo "tag=${{ github.event.release.tag_name }}" >> "$GITHUB_OUTPUT"
             echo "name=${{ github.event.release.name }}" >> "$GITHUB_OUTPUT"
             echo "url=${{ github.event.release.html_url }}" >> "$GITHUB_OUTPUT"
+
             echo "body<<EOF" >> "$GITHUB_OUTPUT"
             echo "${{ github.event.release.body }}" >> "$GITHUB_OUTPUT"
             echo "EOF" >> "$GITHUB_OUTPUT"
@@ -63,15 +74,20 @@ jobs:
         run: |
           set -e
 
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "Missing DISCORD_WEBHOOK_URL secret"
+            exit 1
+          fi
+
           NAME="${RELEASE_NAME:-$RELEASE_TAG}"
 
-          # Tronque la description (Discord embed description max ~4096, on reste safe)
+          # Tronque la description (Discord embed description max 4096, on reste safe)
           DESC="$(printf "%s" "$RELEASE_BODY" | head -c 3500)"
           if [ "$(printf "%s" "$RELEASE_BODY" | wc -c | tr -d ' ')" -gt 3500 ]; then
             DESC="${DESC}…"
           fi
 
-          # Ping optionnel
+          # Ping optionnel (uniquement en manual run, sinon vide)
           if [ -n "$PING_ROLE_ID" ]; then
             CONTENT="<@&${PING_ROLE_ID}>"
           else
@@ -81,7 +97,7 @@ jobs:
           # Embed + lien + footer repo
           JSON="$(jq -n \
             --arg content "$CONTENT" \
-            --arg title "📦 Release ${NAME}" \
+            --arg title "📦 Release ${NAME} (${RELEASE_TAG})" \
             --arg url "$RELEASE_URL" \
             --arg desc "$DESC" \
             --arg footer "${GITHUB_REPOSITORY}" \
