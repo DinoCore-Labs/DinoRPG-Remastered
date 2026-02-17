@@ -9,24 +9,24 @@ export async function getBoxHandlerInformations(playerId: string) {
 			id: true,
 			_count: {
 				select: {
-					dinoz: {
-						/*where: {
+					dinoz: true /*{
+						where: {
 							OR: [
 								{ unavailableReason: null },
 								{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
 							]
-						}*/
-					}
+						}
+					}*/
 				}
 			},
 			dinoz: {
 				select: {
-					level: true,
-					_count: {
+					level: true
+					/*_count: {
 						select: {
 							//missions: { where: { isFinished: true } }
 						}
-					}
+					}*/
 				}
 				/*where: {
 					OR: [
