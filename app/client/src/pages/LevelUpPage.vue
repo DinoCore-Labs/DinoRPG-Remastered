@@ -1,5 +1,5 @@
 <template>
-	<!--<TitleHeader
+	<TitleHeader
 		v-if="availableSkills"
 		:title="`${$t('pageTitle.levelup', { dinoz: availableSkills.name })}`"
 		:header="$t(`levelup.title`, { name: availableSkills.name })"
@@ -18,7 +18,7 @@
 			/>
 			<div class="dinozWrapper">
 				<Suspense>
-					<DinozWithoutFlash
+					<DinozAnimation
 						:style="{
 							position: `relative`,
 							top: `45px`
@@ -216,21 +216,21 @@
 					</tbody>
 				</table>
 			</div>
-			<SkillTree
-				v-if="playerStore.playerOptions.hasPAC"
+			<!--<SkillTree
+				v-if="userStore.playerOptions.hasPAC"
 				:type="availableSkills.element"
 				:dinoz="dinoz"
 				:buildSkills="dinoz?.build?.skills"
-			/>
+			/>-->
 		</div>
-	</div>-->
+	</div>
 </template>
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from 'vue';
-//import { DinozService } from '../services/index.js';
-//import { errorHandler } from '../utils/errorHandler.js';
-//import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
+import { LevelService } from '../services/level.service.js';
+import { errorHandler } from '../utils/errorHandler.js';
+import type { DinozSkillOwnAndUnlockable } from '@dinorpg/core/models/skills/dinozSkillOwnAndUnlockable.js';
 import { dinozPlacement } from '../constants/dinozPlacement.js';
 import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
 import { userStore } from '../store/userStore.js';
@@ -253,7 +253,7 @@ export default defineComponent({
 		//LevelUpGrid,
 		TitleHeader,
 		Elements,
-		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/DinozAnimation.vue')),
+		DinozAnimation: defineAsyncComponent(() => import('../components/dinoz/DinozAnimation.vue')),
 		DZButton
 		//SkillTree
 	},
@@ -261,7 +261,7 @@ export default defineComponent({
 		return {
 			dinozStore: dinozStore(),
 			userStore: userStore(),
-			//availableSkills: null as DinozSkillOwnAndUnlockable | null,
+			availableSkills: null as DinozSkillOwnAndUnlockable | null,
 			tryNumber: 1 as number,
 			skillList,
 			SkillType,
@@ -292,8 +292,8 @@ export default defineComponent({
 			try {
 				const prompt = await this.$confirm({
 					message: this.$t('levelup.confirmSkill', {
-						skill: this.$t(`skill.name.${skillList[skillId as Skill].name}`)
-						//level: (this.availableSkills?.level ?? 0) + 1
+						skill: this.$t(`skill.name.${skillList[skillId as Skill].name}`),
+						level: (this.availableSkills?.level ?? 0) + 1
 					}),
 					header: this.$t('popup.attention'),
 					acceptLabel: this.$t('popup.accept'),
@@ -325,16 +325,16 @@ export default defineComponent({
 		async learnSkillAndSetStore(skillIdList: Array<number>): Promise<void> {
 			const dinozId: number = +this.id;
 
-			/*try {
-				if (!this.event) {
-					const { discoveredSkill } = await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
+			try {
+				//if (!this.event) {
+				/*const { discoveredSkill } = */ await LevelService.learnSkill(dinozId, skillIdList, this.tryNumber);
 
-					if (discoveredSkill) {
+				/*if (discoveredSkill) {
 						this.userStore.setDiscoveredSkills(this.userStore.getDiscoveredSkills.concat(discoveredSkill));
-					}
+					}*/
 
-					this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
-				} else {
+				this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
+				/*} else {
 					const { discoveredSkill } = await FBService.learnSkill(dinozId, skillIdList, this.tryNumber, this.event);
 
 					if (discoveredSkill) {
@@ -342,11 +342,11 @@ export default defineComponent({
 					}
 
 					this.$router.push({ name: 'FBTournament', query: { id: this.eventId } });
-				}
+				}*/
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
-			}*/
+			}
 		},
 		retry(): void {
 			this.isSpinOver = false;
@@ -355,16 +355,16 @@ export default defineComponent({
 			this.getLearnableSkills(+this.id, this.tryNumber);
 		},
 		async getLearnableSkills(dinozId: number, tryNumber: number): Promise<void> {
-			/*try {
-				if (this.event) {
+			try {
+				/*if (this.event) {
 					this.availableSkills = await FBService.levelUp(dinozId, tryNumber, this.event);
-				} else {
-					this.availableSkills = await DinozService.levelUp(dinozId, tryNumber.toString());
-				}
+				} else {*/
+				this.availableSkills = await LevelService.levelUp(dinozId, tryNumber.toString());
+				//}
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
-			}*/
+			}
 		},
 		getLanguage() {
 			return this.$i18n.locale.toLocaleUpperCase();
@@ -372,7 +372,6 @@ export default defineComponent({
 	},
 	async created(): Promise<void> {
 		await this.getLearnableSkills(+this.id, 1);
-
 		this.dinoz = this.dinozStore.getDinoz(+this.id);
 	}
 });
