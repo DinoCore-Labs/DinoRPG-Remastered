@@ -33,7 +33,7 @@
 		<div class="slide-bottom" :class="isSpinOver ? '' : 'hidden'" v-if="availableSkills">
 			<div class="result" v-if="ElementType[availableSkills.element]">
 				{{ availableSkills.name }}
-				<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element].toLowerCase()}`))" />
+				<p v-html="formatContent($t(`levelup.${(ElementType[availableSkills.element] ?? '').toLowerCase()}`))" />
 				<Elements
 					:fire="
 						ElementType[availableSkills.element] === 'fire' ? availableSkills.nbrUpFire + 1 : availableSkills.nbrUpFire
@@ -78,28 +78,24 @@
 							<th class="type">{{ $t('levelup.level') }}</th>
 							<th class="type"></th>
 						</tr>
-						<tr
-							v-for="skill in availableSkills.learnableSkills"
-							:key="skill.skillId"
-							:class="{ 'in-build': dinoz?.build?.skills.some(bs => bs === skill.skillId) }"
-						>
+						<tr v-for="skill in availableSkills.learnableSkills" :key="skill.skillId">
 							<Tippy
 								theme="normal"
 								tag="td"
 								class="name"
-								v-if="skillList[skill.skillId].type === SkillType.A || skillList[skill.skillId].type === SkillType.E"
+								v-if="skillById(skill.skillId)?.type === SkillType.A || skillById(skill.skillId)?.type === SkillType.E"
 							>
 								<div>
 									<div class="skillName">
 										<img
 											v-for="element in skill.element"
 											:key="element"
-											:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
+											:src="getImgURL('elements', `elem_${elementKey(element)}`)"
 											alt="elementUp"
 										/>
-										<p>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</p>
+										<p>{{ $t(`skill.name.${skillById(skill.skillId)?.name}`) }}</p>
 									</div>
-									<p class="desc" v-html="formatContent($t(`skill.description.${skillList[skill.skillId].name}`))" />
+									<p class="desc" v-html="formatContent($t(`skill.description.${skillById(skill.skillId)?.name}`))" />
 								</div>
 								<template #content>
 									<h1>{{ $t('skill.properties') }}</h1>
@@ -109,7 +105,7 @@
 											v-html="
 												formatContent(
 													$t(`skill.energy`, {
-														energy: skillList[skill.skillId].energy
+														energy: skillById(skill.skillId)?.energy
 													})
 												)
 											"
@@ -117,12 +113,12 @@
 										<p
 											class="desc"
 											v-if="
-												skillList[skill.skillId].priority !== undefined && skillList[skill.skillId].priority !== null
+												skillById(skill.skillId)?.priority !== undefined && skillById(skill.skillId)?.priority !== null
 											"
 											v-html="
 												formatContent(
 													$t(`skill.priority`, {
-														priority: skillList[skill.skillId].priority
+														priority: skillById(skill.skillId)?.priority
 													})
 												)
 											"
@@ -130,13 +126,13 @@
 										<p
 											class="desc"
 											v-if="
-												skillList[skill.skillId].probability !== undefined &&
-												skillList[skill.skillId].probability !== null
+												skillById(skill.skillId)?.probability !== undefined &&
+												skillById(skill.skillId)?.probability !== null
 											"
 											v-html="
 												formatContent(
 													$t(`skill.probability`, {
-														probability: skillList[skill.skillId].probability
+														probability: skillById(skill.skillId)?.probability
 													})
 												)
 											"
@@ -146,19 +142,19 @@
 							</Tippy>
 							<td
 								class="name"
-								v-if="skillList[skill.skillId].type !== SkillType.A && skillList[skill.skillId].type !== SkillType.E"
+								v-if="skillById(skill.skillId)?.type !== SkillType.A && skillById(skill.skillId)?.type !== SkillType.E"
 							>
 								<div>
 									<div class="skillName">
 										<img
 											v-for="element in skill.element"
 											:key="element"
-											:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
+											:src="getImgURL('elements', `elem_${(ElementType[element] ?? '').toLowerCase()}`)"
 											alt="elementUp"
 										/>
-										<p>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</p>
+										<p>{{ $t(`skill.name.${skillById(skill.skillId)?.name}`) }}</p>
 									</div>
-									<p class="desc" v-html="formatContent($t(`skill.description.${skillList[skill.skillId].name}`))" />
+									<p class="desc" v-html="formatContent($t(`skill.description.${skillById(skill.skillId)?.name}`))" />
 								</div>
 							</td>
 							<Tippy theme="normal" tag="td" class="type">
@@ -201,10 +197,10 @@
 											<img
 												v-for="element in skill.element"
 												:key="element"
-												:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
+												:src="getImgURL('elements', `elem_${(ElementType[element] ?? '').toLowerCase()}`)"
 												alt="elementUp"
 											/>
-											{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}
+											{{ $t(`skill.name.${skillById(skill.skillId)?.name}`) }}
 											<template #content>
 												{{ $t(`levelup.unlock`) }}
 											</template>
@@ -285,6 +281,14 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		elementKey(element?: number | null): string | null {
+			if (element == null) return null;
+			const key = ElementType[element];
+			return typeof key === 'string' ? key.toLowerCase() : null;
+		},
+		skillById(id: number) {
+			return (skillList as any)[id] as (typeof skillList)[Skill] | undefined;
+		},
 		spinOver(): void {
 			this.isSpinOver = true;
 		},
