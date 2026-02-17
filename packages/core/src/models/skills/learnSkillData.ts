@@ -1,4 +1,4 @@
 export type LearnSkillData = {
 	newMaxExperience: number;
-	discoveredSkill: number;
+	discoveredSkill?: number;
 };

@@ -49,8 +49,8 @@ export async function learnSkill(
 	const tryNumber = Number(req.body.tryNumber);
 
 	const result: LearnSkillData = {
-		newMaxExperience: 0,
-		discoveredSkill: 0
+		newMaxExperience: 0
+		//discoveredSkill: 0
 	};
 
 	// --- Fetch dinoz for level up ---
@@ -160,7 +160,7 @@ export async function learnSkill(
 				s.unlockedFrom?.every(id => skillIdList.includes(id) || dinozSkills.skills.some(ds => ds.skillId === id))
 			)
 			.filter(s => !s.raceId || s.raceId.includes(dinozSkills.raceId))
-			.map(s => (event ? { skillId: s.id, gameDinozId: dinozId } : { skillId: s.id, dinozId }));
+			.map(s => /*event ? { skillId: s.id, gameDinozId: dinozId } : */ ({ skillId: s.id, dinozId }));
 
 		// Keep local data in sync
 		dinozSkills.skills.push({ skillId: wantedSkillId });

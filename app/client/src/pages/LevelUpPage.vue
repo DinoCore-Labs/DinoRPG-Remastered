@@ -310,7 +310,7 @@ export default defineComponent({
 			}
 		},
 		unlockSkill(): void {
-			/*if (!this.availableSkills) {
+			if (!this.availableSkills) {
 				return;
 			}
 			if (confirm(this.$t('levelup.confirmUnlock', { quantity: this.availableSkills.unlockableSkills?.length }))) {
@@ -320,7 +320,7 @@ export default defineComponent({
 				const skillIdList: Array<number> = this.availableSkills.unlockableSkills.map(skill => skill.skillId);
 
 				this.learnSkillAndSetStore(skillIdList);
-			}*/
+			}
 		},
 		async learnSkillAndSetStore(skillIdList: Array<number>): Promise<void> {
 			const dinozId: number = +this.id;
@@ -350,7 +350,7 @@ export default defineComponent({
 		},
 		retry(): void {
 			this.isSpinOver = false;
-			//this.availableSkills = null;
+			this.availableSkills = null;
 			this.tryNumber = this.tryNumber === 1 ? 2 : 1;
 			this.getLearnableSkills(+this.id, this.tryNumber);
 		},
