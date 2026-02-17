@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.5.0
+
+### Minor Changes
+
+- 33c02ca: feat: level up
+
 ## 0.4.1
 
 ### Patch Changes

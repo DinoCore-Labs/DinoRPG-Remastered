@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.4.0
+
+### Minor Changes
+
+- 33c02ca: feat: level up
+
 ## 0.3.1
 
 ### Patch Changes
