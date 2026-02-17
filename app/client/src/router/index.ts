@@ -12,6 +12,7 @@ import HelpPage from '../pages/HelpPage.vue';
 import HomePage from '../pages/HomePage.vue';
 import Ingredients from '../pages/Ingredients.vue';
 import Inventory from '../pages/Inventory.vue';
+import LevelUpPage from '../pages/LevelUpPage.vue';
 import MainPage from '../pages/MainPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
 import ShopDinoz from '../pages/ShopDinoz.vue';
@@ -64,6 +65,16 @@ const routes: RouteRecord[] = [
 				name: 'DinozPage',
 				component: DinozPage,
 				meta: { auth: true }
+			},
+			{
+				path: '/level/:id',
+				name: 'Leveling',
+				component: LevelUpPage,
+				props: route => ({
+					id: route.params.id,
+					event: route.query.event,
+					eventId: route.query.eventId
+				})
 			},
 			{
 				path: '/fight/:dinozId',
