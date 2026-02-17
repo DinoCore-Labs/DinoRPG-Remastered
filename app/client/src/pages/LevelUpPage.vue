@@ -235,7 +235,7 @@ import { dinozPlacement } from '../constants/dinozPlacement.js';
 import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
 import { userStore } from '../store/userStore.js';
 import { dinozStore } from '../store/dinozStore.js';
-//import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
+import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/dinoz/Elements.vue';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
@@ -250,7 +250,7 @@ export default defineComponent({
 	name: 'LevelUp',
 	components: {
 		DZDisclaimer,
-		//LevelUpGrid,
+		LevelUpGrid,
 		TitleHeader,
 		Elements,
 		DinozAnimation: defineAsyncComponent(() => import('../components/dinoz/DinozAnimation.vue')),
