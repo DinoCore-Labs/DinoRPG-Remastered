@@ -443,9 +443,6 @@ export default defineComponent({
 			box-shadow: rgb(189, 61, 0) 0px 0px 8px;
 			color: rgb(255, 255, 255);
 		}
-		.display {
-			//height: 40px;
-		}
 		.dinozName {
 			place-self: center;
 			display: flex;
