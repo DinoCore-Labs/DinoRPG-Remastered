@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.5.0
+
+### Minor Changes
+
+- 33c02ca: feat: level up
+
+### Patch Changes
+
+- Updated dependencies [33c02ca]
+  - @dinorpg/core@0.4.0
+
 ## 0.4.1
 
 ### Patch Changes
