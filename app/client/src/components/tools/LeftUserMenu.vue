@@ -50,9 +50,9 @@
 					:to="`/dinoz/${dinoz.id}`"
 					class="dinoz"
 					:class="{
-						selected: currentDinozId() ? dinoz.id === currentDinozId() : dinoz.id === pageId
-						//group: getLeaderGroup(dinoz),
-						//exhausted: dinoz.remaining === 0 && !dinoz.fight
+						selected: currentDinozId() ? dinoz.id === currentDinozId() : dinoz.id === pageId,
+						group: getLeaderGroup(dinoz),
+						exhausted: dinoz.remaining === 0 && !dinoz.fight
 					}"
 				>
 					<DinozMini class="display" :display="dinoz.display" :key="dinoz.display" />
@@ -97,7 +97,7 @@
 						/>
 					</div>
 					<div class="icons">
-						<!--<img
+						<img
 							v-if="dinoz.fight"
 							:src="getImgURL('icons', 'small_attack')"
 							v-tippy="{
@@ -140,10 +140,10 @@
 									stroke="none"
 								/>
 							</g>
-						</svg>-->
+						</svg>
 					</div>
 					<div class="lead">
-						<!--<img
+						<img
 							v-if="dinoz.leaderId"
 							:src="getImgURL('icons', 'small_follow')"
 							v-tippy="{
@@ -160,7 +160,7 @@
 								theme: 'small'
 							}"
 							alt="lvlup"
-						/>-->
+						/>
 					</div>
 				</RouterLink>
 			</div>
@@ -170,16 +170,17 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import EventBus from '../../events/index.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 //import { orderDinozList } from '@drpg/core/utils/DinozUtils';
 //import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { beautifulNumber } from '../../utils/beautifulNumber.js';
-//import { Action } from '@drpg/core/models/dinoz/ActionList';
 import { placeList } from '../../constants/place.js';
 import { userStore } from '../../store/userStore.js';
 import { dinozStore } from '../../store/dinozStore.js';
+//import { localStore } from '../../store/localStore.js';
+import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
+import eventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'LeftUserMenu',
@@ -194,14 +195,17 @@ export default defineComponent({
 		};
 	},
 	computed: {
-		/*Action() {
+		Action() {
 			return Action;
-		},*/
+		},
 		beautifulMoney(): string | undefined {
 			if (!this.userStore.gold) {
 				return;
 			}
 			return beautifulNumber(this.userStore.gold);
+		},
+		dinozList(): Array<DinozFiche> {
+			return this.dinozStore.getDinozList as Array<DinozFiche>;
 		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
@@ -221,7 +225,7 @@ export default defineComponent({
 		},
 		currentDinozId(): number {
 			return this.dinozStore.currentDinozId ?? 0;
-		} /*,
+		},
 		getLeaderGroup(dinoz: DinozFiche) {
 			const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId());
 			if (!selectedDinoz) return false;
@@ -245,19 +249,10 @@ export default defineComponent({
 				return true;
 			}
 			return !!selectedDinoz?.followers.map(d => d.id).includes(dinoz.id);
-		}*/
-	},
-	/*watch: {
-		'dinozStore.getDinozList': {
-			handler(dinozList: Array<DinozFiche>) {
-				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReasonFront.frozen));
-			},
-			deep: true
 		}
-		// Removed watcher for currentDinozId as it's a computed property and should not be assigned directly
-	},*/
+	},
 	mounted() {
-		EventBus.on('leftUserMenu', async e => {
+		eventBus.on('leftUserMenu', async e => {
 			this.menuCalled = e;
 		});
 	}

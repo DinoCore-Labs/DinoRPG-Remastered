@@ -53,12 +53,12 @@ import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 
 export default defineComponent({
 	name: 'LeftPanel',
-	setup() {
-		const user = userStore();
-		const dinoz = dinozStore();
-		return { user, dinoz };
+	data() {
+		return {
+			user: userStore(),
+			dinoz: dinozStore()
+		};
 	},
-	data() {},
 	components: {
 		DZButton,
 		DinozList

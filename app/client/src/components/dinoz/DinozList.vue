@@ -1,14 +1,14 @@
 <template>
 	<ul>
 		<li
-			v-for="(dinoz, index) in dinozList"
-			:key="index"
+			v-for="dinoz in dinozList"
+			:key="dinoz.id"
 			:class="{
 				dead: dinoz.life === 0,
 				selected: currentDinozId ? dinoz.id === currentDinozId : dinoz.id === pageId,
-				light: true
-				//group: getLeaderGroup(dinoz),
-				//exhausted: dinoz.remaining === 0 && !dinoz.fight
+				light: true,
+				group: getLeaderGroup(dinoz),
+				exhausted: dinoz.remaining === 0 && !dinoz.fight
 			}"
 		>
 			<RouterLink :to="`/dinoz/${dinoz.id}`">
@@ -20,7 +20,7 @@
 						<span class="xp" :style="getBarWidth(dinoz.experience, dinoz.maxExperience)"></span>
 					</span>
 					<div class="icons">
-						<!--<img
+						<img
 							v-if="dinoz.leaderId"
 							:src="getImgURL('icons', 'small_follow')"
 							v-tippy="{
@@ -37,7 +37,7 @@
 								theme: 'small'
 							}"
 							alt="leader"
-						/>-->
+						/>
 						<template v-for="_ in dinoz.remaining" :key="_">
 							<img
 								:src="getImgURL('icons', `small_hourglass`)"
@@ -98,7 +98,7 @@ export default defineComponent({
 		},
 		getPlaceName(placeId: number): string {
 			return placeList.find(place => place.placeId === placeId)?.name ?? '';
-		} /*,
+		},
 		getLeaderGroup(dinoz: DinozFiche) {
 			if (!this.currentDinozId) return false;
 			const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId);
@@ -123,21 +123,16 @@ export default defineComponent({
 				return true;
 			}
 			return !!selectedDinoz?.followers.map(d => d.id).includes(dinoz.id);
-		}*/
+		}
 	},
 	computed: {
+		dinozList(): Array<DinozFiche> {
+			return this.dinozStore.getDinozList as Array<DinozFiche>;
+		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
 		}
-	}
-	/*watch: {
-		'dinozStore.getDinozList': {
-			handler(dinozList: Array<DinozFiche>) {
-				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReason.frozen));
-			},
-			deep: true
-		}
-	}
+	} /*,
 	mounted(): void {
 		this.hasPDA = this.playerStore.getPlayerOptions.hasPDA;
 	}*/
