@@ -166,32 +166,46 @@ router.beforeEach(async to => {
 	const user = userStore();
 	const dinoz = dinozStore();
 
-	// page publique -> OK
+	// Helper: hydrate une fois si pas loggé
+	const tryHydrate = async (): Promise<boolean> => {
+		if (user.isLogged) return true;
+
+		const data: UserData | null = await UserService.me().catch(() => null);
+		if (!data) return false;
+
+		user.setUser(data);
+		dinoz.setDinozList(data.dinoz);
+		return true;
+	};
+
+	// ✅ Pages publiques
 	if (to.meta.public) {
+		// si on arrive sur la home publique (ou toute page publique) et que la session est valide,
+		// on redirige vers le jeu.
+		const ok = await tryHydrate();
+
+		// tu peux limiter uniquement à HomePage si tu veux éviter de rediriger depuis /ranking, /faq, etc.
+		if (ok && to.name === 'HomePage') {
+			return { name: 'MainPage' };
+		}
+
 		return true;
 	}
 
-	// page protégée -> si pas loggé, tenter /me
+	// ✅ Pages protégées
 	if (to.meta.auth) {
-		if (!user.isLogged) {
-			// On tente de récupérer les données utilisateur
-			const data: UserData = await UserService.me().catch(() => null);
+		const ok = await tryHydrate();
 
-			if (data) {
-				//console.log(data);
-				user.setUser(data);
-				dinoz.setDinozList(data.dinoz);
-			} else {
-				user.clearUser();
-				return {
-					name: 'HomePage',
-					query: { returnUrl: to.fullPath }
-				};
-			}
+		if (!ok) {
+			user.clearUser();
+			return {
+				name: 'HomePage',
+				query: { returnUrl: to.fullPath }
+			};
 		}
 	}
 
-	// Roles
+	// ✅ Roles
 	if (to.meta.roles && user.role) {
 		const ok = to.meta.roles.some(r => is_granted(r, user.role!));
 		if (!ok) return { name: 'MainPage' };

@@ -236,6 +236,7 @@ export default defineComponent({
 			await UserService.logout();
 			this.uStore.clearUser();
 			this.menuCalled = false;
+			await this.$router.replace({ name: 'HomePage' });
 		},
 		close() {
 			this.menuCalled = false;
