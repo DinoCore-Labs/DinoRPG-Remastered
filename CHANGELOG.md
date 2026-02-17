@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.4.0
+
+### Minor Changes
+
+- 33c02ca: feat: level up
+
 ## 0.3.1
 
 ### Patch Changes
@@ -98,6 +104,17 @@
 
 ## 🔹 Server
 
+## 0.5.0
+
+### Minor Changes
+
+- 33c02ca: feat: level up
+
+### Patch Changes
+
+- Updated dependencies [33c02ca]
+  - @dinorpg/core@0.4.0
+
 ## 0.4.1
 
 ### Patch Changes
@@ -188,6 +205,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.5.0
+
+### Minor Changes
+
+- 33c02ca: feat: level up
 
 ## 0.4.1
 
