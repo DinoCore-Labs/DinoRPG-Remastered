@@ -62,21 +62,21 @@ export default defineComponent({
 			this.increment = 0;
 			// Points de transition en % de progression
 			// (début rapide, ralentissement progressif)
-			const phases = [0.2, 0.4, 0.6, 0.75, 0.9, 1];
-
+			const phases = [0.2, 0.4, 0.6, 0.75, 0.9, 1] as const;
 			// Facteurs de vitesse: élevés au début (rapide),
 			// puis diminuant progressivement (ralentissement)
-			const speeds = [2, 1.5, 1.3, 1.0, 0.7, 0.3];
+			const speeds = [2, 1.5, 1.3, 1.0, 0.7, 0.3] as const;
 			const totalSteps = 80 + this.selectedIndex;
 			const baseSpeed = duration / totalSteps;
 			const spinStep = () => {
 				if (this.isSpinOver) return;
 				// Détermine la phase actuelle
-				let phase = 0;
 				const progress = this.increment / totalSteps;
-				while (phase < phases.length && progress >= phases[phase]) phase++;
-				// Calcule la vitesse pour cette phase
-				const speedFactor = phase < speeds.length ? speeds[phase] : 0.3;
+				// Trouve la 1ère phase dont progress est inférieur au seuil
+				let phaseIndex = phases.findIndex(p => progress < p);
+				// Si on a dépassé toutes les phases, on prend la dernière
+				if (phaseIndex === -1) phaseIndex = phases.length - 1;
+				const speedFactor = speeds[phaseIndex] ?? 0.3;
 				this.speed = baseSpeed / speedFactor;
 				setTimeout(() => {
 					this.increment++;
@@ -101,11 +101,13 @@ export default defineComponent({
 
 		this.levelUpGrid = this.levelUpGrid.concat(fire).concat(wood).concat(water).concat(lightning).concat(air);
 
-		const selectElement = this.levelUpGrid.reduce((a: Array<number>, e: string, i: number) => {
-			if (e === ElementType[this.element].toLowerCase()) a.push(i);
+		const target = ElementType[this.element]?.toLowerCase();
+		const selectElement = this.levelUpGrid.reduce((a: number[], e: string, i: number) => {
+			if (target && e === target) a.push(i);
 			return a;
 		}, []);
-		this.selectedIndex = selectElement[Math.floor(Math.random() * selectElement.length)];
+		const randomIdx = Math.floor(Math.random() * selectElement.length);
+		this.selectedIndex = selectElement[randomIdx] ?? 0;
 		this.isSpinning = !this.isSpinning;
 		/*if (this.userStore.getPlayerOptions.skipLevel) {
 			this.increment = this.selectedIndex;
