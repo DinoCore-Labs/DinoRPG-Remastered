@@ -3,37 +3,100 @@ name: Post release to Discord
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag de la release à envoyer (ex: 0.0.9)'
+        required: true
+        type: string
+      ping_role_id:
+        description: 'Optionnel : ID du rôle à ping (sans @). Ex: 123456789012345678'
+        required: false
+        type: string
 
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Post to Discord
+      - name: Validate webhook secret
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          RELEASE_NAME: ${{ github.event.release.name }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
-          RELEASE_URL: ${{ github.event.release.html_url }}
-          RELEASE_BODY: ${{ github.event.release.body }}
         run: |
           set -e
-
           if [ -z "$DISCORD_WEBHOOK_URL" ]; then
             echo "Missing DISCORD_WEBHOOK_URL secret"
             exit 1
           fi
 
-          NAME="${RELEASE_NAME:-$RELEASE_TAG}"
+      - name: Resolve release data (published or manual tag)
+        id: rel
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          set -e
 
-          # Tronque pour éviter les limites Discord
-          BODY="$(printf "%s" "$RELEASE_BODY" | head -c 1500)"
-          if [ "$(printf "%s" "$RELEASE_BODY" | wc -c | tr -d ' ')" -gt 1500 ]; then
-            BODY="${BODY}…"
+          if [ -n "$INPUT_TAG" ]; then
+            echo "Manual run: fetching release for tag $INPUT_TAG"
+            DATA="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${INPUT_TAG}")"
+            echo "tag=$(echo "$DATA" | jq -r '.tag_name')" >> "$GITHUB_OUTPUT"
+            echo "name=$(echo "$DATA" | jq -r '.name // .tag_name')" >> "$GITHUB_OUTPUT"
+            echo "url=$(echo "$DATA" | jq -r '.html_url')" >> "$GITHUB_OUTPUT"
+            echo "body=$(echo "$DATA" | jq -r '.body // ""')" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=${{ github.event.release.tag_name }}" >> "$GITHUB_OUTPUT"
+            echo "name=${{ github.event.release.name }}" >> "$GITHUB_OUTPUT"
+            echo "url=${{ github.event.release.html_url }}" >> "$GITHUB_OUTPUT"
+            echo "body<<EOF" >> "$GITHUB_OUTPUT"
+            echo "${{ github.event.release.body }}" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
           fi
 
-          # Build JSON propre (escape via python en one-liner, sans heredoc)
-          CONTENT="📦 **Nouvelle release : ${NAME}** (\`${RELEASE_TAG}\`)\n${RELEASE_URL}\n\n${BODY}"
-          JSON=$(python -c 'import json,os; print(json.dumps({"content": os.environ["CONTENT"]}))' )
+      - name: Post to Discord (embed)
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          RELEASE_TAG: ${{ steps.rel.outputs.tag }}
+          RELEASE_NAME: ${{ steps.rel.outputs.name }}
+          RELEASE_URL: ${{ steps.rel.outputs.url }}
+          RELEASE_BODY: ${{ steps.rel.outputs.body }}
+          PING_ROLE_ID: ${{ github.event.inputs.ping_role_id }}
+        run: |
+          set -e
+
+          NAME="${RELEASE_NAME:-$RELEASE_TAG}"
+
+          # Tronque la description (Discord embed description max ~4096, on reste safe)
+          DESC="$(printf "%s" "$RELEASE_BODY" | head -c 3500)"
+          if [ "$(printf "%s" "$RELEASE_BODY" | wc -c | tr -d ' ')" -gt 3500 ]; then
+            DESC="${DESC}…"
+          fi
+
+          # Ping optionnel
+          if [ -n "$PING_ROLE_ID" ]; then
+            CONTENT="<@&${PING_ROLE_ID}>"
+          else
+            CONTENT=""
+          fi
+
+          # Embed + lien + footer repo
+          JSON="$(jq -n \
+            --arg content "$CONTENT" \
+            --arg title "📦 Release ${NAME}" \
+            --arg url "$RELEASE_URL" \
+            --arg desc "$DESC" \
+            --arg footer "${GITHUB_REPOSITORY}" \
+            '{
+              content: $content,
+              embeds: [
+                {
+                  title: $title,
+                  url: $url,
+                  description: $desc,
+                  footer: { text: $footer }
+                }
+              ]
+            }'
+          )"
 
           curl -sS -X POST \
             -H "Content-Type: application/json" \
