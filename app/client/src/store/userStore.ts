@@ -9,6 +9,7 @@ export const userStore = defineStore('userStore', {
 		name: null,
 		role: null as UserRole | null,
 		gold: 0,
+		treasureTicket: 0,
 		sortOption: 'default'
 	}),
 	getters: {
@@ -24,6 +25,7 @@ export const userStore = defineStore('userStore', {
 			this.name = data.name;
 			this.role = data.role;
 			this.gold = data.gold;
+			this.treasureTicket = data.treasureTicket;
 		},
 		setGold(gold: number) {
 			this.gold = gold;
@@ -36,6 +38,7 @@ export const userStore = defineStore('userStore', {
 			this.name = null;
 			this.role = null;
 			this.gold = 0;
+			this.treasureTicket = 0;
 		}
 	},
 	persist: {

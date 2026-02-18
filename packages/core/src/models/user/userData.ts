@@ -6,5 +6,6 @@ export interface UserData {
 	name: string;
 	role: UserRole;
 	gold: number;
+	treasureTicket: number;
 	dinoz: DinozFiche[];
 }

@@ -16,7 +16,7 @@ interface ShopConfig {
 
 interface GeneralConfig {
 	initialMoney: number;
-	dailyGridRewards: number;
+	initialTreasureTicket: number;
 	starterPack: StarterItem[];
 }
 
@@ -45,7 +45,7 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		},
 		general: {
 			initialMoney: 1_000_000,
-			dailyGridRewards: 10,
+			initialTreasureTicket: 500,
 			starterPack: [
 				{ itemId: 1, quantity: 999 }, // potion irma
 				{ itemId: 2, quantity: 10 }, // potion d'ange
@@ -70,7 +70,7 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		},
 		general: {
 			initialMoney: 200_000,
-			dailyGridRewards: 5,
+			initialTreasureTicket: 15,
 			starterPack: [
 				{ itemId: 1, quantity: 50 }, // potion irma
 				{ itemId: 2, quantity: 5 }, // potion d'ange

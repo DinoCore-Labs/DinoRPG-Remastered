@@ -308,6 +308,7 @@ enum Gender {
 
 enum MoneyType {
   GOLD
+  TREASURE_TICKET
 }
 
 enum Role {

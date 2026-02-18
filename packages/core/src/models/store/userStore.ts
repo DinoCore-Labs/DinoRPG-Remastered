@@ -5,6 +5,7 @@ export interface UserStore {
 	name: string | null;
 	role: UserRole | null;
 	gold: number;
+	treasureTicket: number;
 	sortOption: string;
 	// clanId
 }

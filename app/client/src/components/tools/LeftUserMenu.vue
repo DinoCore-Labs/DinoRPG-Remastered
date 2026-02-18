@@ -6,6 +6,7 @@
 		<div v-show="menuCalled" class="root">
 			<div class="player">
 				<div class="money">{{ beautifulMoney }} <img :src="getImgURL('icons', 'small_gold')" alt="or" /></div>
+				<div class="money">{{ beautifulTreasureTicket }} <img :src="getImgURL('icons', 'ticket')" alt="ticket" /></div>
 				<div class="close">
 					<button @click="close" class="burgerClose">
 						<svg class="svgIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="MenuIcon">
@@ -202,6 +203,12 @@ export default defineComponent({
 				return;
 			}
 			return beautifulNumber(this.userStore.gold);
+		},
+		beautifulTreasureTicket(): string | undefined {
+			if (!this.userStore.treasureTicket) {
+				return;
+			}
+			return beautifulNumber(this.userStore.treasureTicket);
 		},
 		dinozList(): Array<DinozFiche> {
 			return this.dinozStore.getDinozList as Array<DinozFiche>;
