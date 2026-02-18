@@ -60,12 +60,10 @@ export default defineComponent({
 	computed: {
 		canSubmit(): boolean {
 			if (this.mode === 'login') return true;
-
 			// mode register → pseudo dispo + password ok
 			return this.name.length >= 3 && this.password.length >= 6 && this.nameStatus?.available === true;
 		}
 	},
-
 	methods: {
 		close() {
 			this.authMenuCalled = false;
@@ -92,12 +90,28 @@ export default defineComponent({
 		eventBus.on('authMenu', e => {
 			this.authMenuCalled = e.show;
 			this.mode = e.mode; // "login" ou "register"
+			if (e.show) {
+				this.name = '';
+				this.password = '';
+				this.nameStatus = null;
+				clearTimeout(this.debounceTimer);
+			}
 		});
 	},
 	watch: {
 		name(newVal: string) {
 			clearTimeout(this.debounceTimer);
-
+			// ✅ pas de check en login (et si le menu n'est pas ouvert)
+			if (!this.authMenuCalled || this.mode !== 'register') {
+				this.nameStatus = null;
+				return;
+			}
+			// ✅ évite de spammer l’API si trop court / vide
+			const trimmed = newVal.trim();
+			if (trimmed.length < 3) {
+				this.nameStatus = null;
+				return;
+			}
 			// Debounce 300ms pour éviter le spam
 			this.debounceTimer = setTimeout(async () => {
 				try {
@@ -107,6 +121,10 @@ export default defineComponent({
 					this.nameStatus = null;
 				}
 			}, 300);
+		},
+		mode() {
+			this.nameStatus = null;
+			clearTimeout(this.debounceTimer);
 		}
 	}
 });
