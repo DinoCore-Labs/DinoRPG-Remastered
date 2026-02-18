@@ -5,9 +5,9 @@
 			<router-link v-if="getDinozId(-1)" :to="{ name: 'DinozPage', params: { id: prevId } }" class="see-button">
 				<img :src="getImgURL('background', 'left')" />
 			</router-link>
-			<span class="title">
-				{{ dinozData.name }}
-			</span>
+			<div class="title">
+				<span class="dinozName">{{ dinozData.name }}</span>
+			</div>
 			<router-link v-if="getDinozId(1)" :to="{ name: 'DinozPage', params: { id: nextId } }" class="see-button">
 				<img :src="getImgURL('background', 'right')" />
 			</router-link>
@@ -187,6 +187,14 @@ export default defineComponent({
 		text-shadow:
 			-1px -1px 0px #68361b,
 			1px 1px 0px #ddad8c;
+		.dinozName {
+			display: inline-block;
+			max-width: 17ch;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			vertical-align: bottom;
+		}
 	}
 }
 #dinozVisual {
