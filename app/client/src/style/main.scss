@@ -1,2 +1,12 @@
 @use './normalize.css';
 @use './components';
+
+body {
+	font-family:
+		Trebuchet MS,
+		Arial,
+		sans-serif;
+	font-size: 12pt;
+	text-align: left;
+	color: #52646b;
+}
