@@ -91,15 +91,13 @@ export default defineComponent({
 		background-position-y: 6px;
 		background-position-x: 7px;
 		padding-right: 4px;
-
 		cursor: help;
 		.numb {
 			width: 100%;
-			justify-content: center;
 			span {
 				color: white;
 				font-size: 13.3px;
-				text-align: left;
+				margin-left: 2.5px;
 				letter-spacing: -0.2pt;
 				margin-bottom: 2px;
 				&.max {
