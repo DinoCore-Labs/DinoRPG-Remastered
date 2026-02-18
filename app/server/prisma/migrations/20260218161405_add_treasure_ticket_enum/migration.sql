@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "MoneyType" ADD VALUE 'TREASURE_TICKET';

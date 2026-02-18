@@ -138,8 +138,8 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 					}
 				},
 				wallets: {
-					where: { type: 'GOLD' },
-					select: { amount: true }
+					where: { type: { in: ['GOLD', 'TREASURE_TICKET'] } },
+					select: { type: true, amount: true }
 				}
 			}
 		});
@@ -148,11 +148,15 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			return reply.status(404).send({ message: 'User not found' });
 		}
 
+		const gold = user.wallets.find(w => w.type === 'GOLD')?.amount ?? 0;
+		const treasureTicket = user.wallets.find(w => w.type === 'TREASURE_TICKET')?.amount ?? 0;
+
 		return reply.send({
 			id: user.id,
 			name: user.name,
 			role: user.role,
-			gold: user.wallets[0]?.amount ?? 0,
+			gold,
+			treasureTicket,
 			dinoz: user.dinoz
 		});
 	} catch (err) {

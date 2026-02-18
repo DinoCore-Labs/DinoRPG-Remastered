@@ -795,6 +795,15 @@ declare interface EngineConfig {
      * Each plugin receives query context and returns key-value pairs.
      */
     sqlCommenters?: SqlCommenterPlugin[];
+    /**
+     * Parameterization schema (ParamGraph) for schema-aware query parameterization.
+     * Enables precise parameterization based on DMMF metadata.
+     */
+    parameterizationSchema: SerializedParamGraph;
+    /**
+     * Runtime data model for enum lookups during parameterization.
+     */
+    runtimeDataModel: RuntimeDataModel;
 }
 
 declare type EngineEvent<E extends EngineEventType> = E extends QueryEventType ? QueryEvent : LogEvent;
@@ -1294,6 +1303,11 @@ export declare type GetPrismaClientConfig = {
      * Optional wasm loading configuration
      */
     compilerWasm?: CompilerWasmLoadingConfig;
+    /**
+     * Parameterization schema for schema-aware query parameterization.
+     * Enables precise parameterization based on DMMF metadata.
+     */
+    parameterizationSchema: SerializedParamGraph;
 };
 
 export declare type GetResult<Payload extends OperationPayload, Args, OperationName extends Operation = 'findUniqueOrThrow', GlobalOmitOptions = {}> = {
@@ -2572,6 +2586,7 @@ declare type SchemaArg = ReadonlyDeep_2<{
     isNullable: boolean;
     isRequired: boolean;
     inputTypes: InputTypeRef[];
+    isParameterizable: boolean;
     requiresOtherFields?: string[];
     deprecation?: Deprecation;
 }>;
@@ -2611,7 +2626,17 @@ export declare type SelectField<P extends SelectablePayloadFields<any, any>, K e
 declare type Selection_2 = Record<string, boolean | Skip | JsArgs>;
 export { Selection_2 as Selection }
 
-export declare function serializeJsonQuery({ modelName, action, args, runtimeDataModel, extensions, callsite, clientMethod, errorFormat, clientVersion, previewFeatures, globalOmit, }: SerializeParams): JsonQuery;
+/**
+ * Serialized format stored in the generated client.
+ */
+declare interface SerializedParamGraph {
+    /** String table (field names, enum names, root keys) */
+    strings: string[];
+    /** Base64url-encoded binary blob for structural data */
+    graph: string;
+}
+
+export declare function serializeJsonQuery({ modelName, action, args, runtimeDataModel, extensions, callsite, clientMethod, errorFormat, clientVersion, previewFeatures, globalOmit, wrapRawValues, }: SerializeParams): JsonQuery;
 
 declare type SerializeParams = {
     runtimeDataModel: RuntimeDataModel;
@@ -2625,6 +2650,7 @@ declare type SerializeParams = {
     errorFormat: ErrorFormat;
     previewFeatures: string[];
     globalOmit?: GlobalOmitOptions;
+    wrapRawValues?: boolean;
 };
 
 declare class Skip {

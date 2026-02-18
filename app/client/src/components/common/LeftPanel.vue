@@ -1,9 +1,12 @@
 <template>
 	<div id="accountList">
 		<div class="money">
-			{{ beautifulNumber(user.gold) }}
-			<img :src="getImgURL('icons', 'gold')" alt="or" />
+			<span class="moneyValue">
+				{{ beautifulNumber(displayedAmount) }}
+			</span>
+			<img :src="walletIcon" :alt="selectedWallet" />
 		</div>
+		<DZSelect id="wallet-select" class="moneySelect" v-model="selectedWallet" :options="walletOptions" />
 		<div class="iconMenu">
 			<RouterLink to="/shop/flying" class="link">
 				<img :src="getImgURL('act', 'act_boutique')" alt="shop" />
@@ -47,20 +50,25 @@ import { beautifulNumber } from '../../utils/beautifulNumber';
 import { userStore } from '../../store/userStore';
 import { dinozStore } from '../../store/dinozStore';
 import DZButton from '../utils/DZButton.vue';
+import DZSelect from '../utils/DZSelect.vue';
 import DinozList from '../dinoz/DinozList.vue';
 import { placeList } from '../../constants/place';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+
+type WalletKey = 'GOLD' | 'TREASURE_TICKET';
 
 export default defineComponent({
 	name: 'LeftPanel',
 	data() {
 		return {
 			user: userStore(),
-			dinoz: dinozStore()
+			dinoz: dinozStore(),
+			selectedWallet: 'GOLD' as WalletKey
 		};
 	},
 	components: {
 		DZButton,
+		DZSelect,
 		DinozList
 	},
 	methods: {
@@ -96,6 +104,21 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		walletOptions() {
+			return [
+				{ value: 'GOLD' as const, label: this.$t('leftPanel.wallets.gold') },
+				{ value: 'TREASURE_TICKET' as const, label: this.$t('leftPanel.wallets.treasureTicket') }
+			];
+		},
+		displayedAmount(): number {
+			if (this.selectedWallet === 'TREASURE_TICKET') return (this.user as any).treasureTicket ?? 0;
+			return (this.user as any).gold ?? 0;
+		},
+		walletIcon(): string {
+			return this.selectedWallet === 'TREASURE_TICKET'
+				? this.getImgURL('icons', 'ticket')
+				: this.getImgURL('icons', 'gold');
+		},
 		place(): string | null {
 			const currentDinozId = this.currentDinozId();
 			if (!currentDinozId) return this.place;
@@ -185,6 +208,10 @@ export default defineComponent({
 		img {
 			vertical-align: -5%;
 		}
+	}
+	.moneySelect {
+		margin-top: -12px;
+		margin-bottom: 10px;
 	}
 	.iconMenu {
 		width: 143px;

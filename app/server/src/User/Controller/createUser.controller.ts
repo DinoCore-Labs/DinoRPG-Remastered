@@ -49,10 +49,16 @@ export async function createUser(
 				password: hash,
 				name,
 				wallets: {
-					create: {
-						type: 'GOLD',
-						amount: gameConfig.general.initialMoney
-					}
+					create: [
+						{
+							type: 'GOLD',
+							amount: gameConfig.general.initialMoney
+						},
+						{
+							type: 'TREASURE_TICKET',
+							amount: gameConfig.general.initialTreasureTicket
+						}
+					]
 				}
 			},
 			include: {

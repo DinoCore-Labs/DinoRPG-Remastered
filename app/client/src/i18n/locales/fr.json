@@ -43,6 +43,12 @@
 			"goodbye": "Au revoir Maître {name}..."
 		}
 	},
+	"leftPanel": {
+		"wallets": {
+			"gold": "Pièces d'or",
+			"treasureTicket": "Bons du trésor"
+		}
+	},
 	"footer": {
 		"dev": "Développeurs :",
 		"version": "Alpha Version",
