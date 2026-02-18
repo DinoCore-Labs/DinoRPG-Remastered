@@ -201,7 +201,12 @@
 		"continue": "Continuer"
 	},
 	"toast": {
+		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
+		"gold": "Vous avez obtenu {value} :gold:.",
+		"sphere": "Votre Dinoz a appris la compétence {value}.",
 		"action": "Vous avez consommé {value} :irma: et pouvez refaire des actions.",
+		"resurrect": "Votre Dinoz est ressuscité.",
+		"egg": "Vous avez ouvert un œuf de {value}.",
 		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
 		"Invalid_credentials": "Identifiants incorrects.",
 		"Missing_device_cookie": "Impossible d’identifier votre navigateur. Veuillez autoriser les cookies et réessayer.",

@@ -45,6 +45,7 @@
 								content: formatContent($t('tooltip.item.use')),
 								theme: 'small'
 							}"
+							@click="useItem(item)"
 						>
 							<img :src="getImgURL('icons', 'small_use')" alt="small_use" />
 						</a>
@@ -93,15 +94,13 @@ import type { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 import { InventoryService } from '../../services/inventory.service.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import eventBus from '../../events/index.js';
-//import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
-//import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import { userStore } from '../../store/userStore.js';
-//import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { itemNameList } from '@dinorpg/core/models/items/itemNameList.js';
-//import { formatText } from '../../utils/formatText.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import DZSelect from '../utils/DZSelect.vue';
+import { formatText } from '../../utils/formatText.js';
+import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 
 export default defineComponent({
 	name: 'InventoryTab',
@@ -132,18 +131,18 @@ export default defineComponent({
 		isFull(item: ItemFiche): boolean {
 			return (item.quantity ?? 0) >= (item.maxQuantity ?? 0);
 		},
-		/*async useItem(item: ItemFiche): Promise<void> {
+		async useItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
 				const dinozId = this.$route.params.id as string;
 				try {
 					const toast = await InventoryService.useInventoryItem(item.itemId, +dinozId);
 					await this.resfreshInventory();
 					if (toast.category === ItemEffect.EGG) {
-						await this.refreshDinozList();
+						await this.dinozStore.setDinozList;
 					} else if (toast.category === ItemEffect.GOLD) {
 						await this.$refreshGold();
 					} else {
-						EventBus.emit('refreshDinoz', true);
+						eventBus.emit('refreshDinoz', true);
 					}
 
 					let message: string;
@@ -183,7 +182,7 @@ export default defineComponent({
 					return;
 				}
 			}
-		},*/
+		},
 		async equipItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
 				const dinozId = parseInt(this.$route.params.id as string);
