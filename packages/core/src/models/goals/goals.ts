@@ -2,6 +2,7 @@ import { StatTracking } from '../enums/StatsTracking.js';
 import { Goal } from './goalsType.js';
 
 export const goals: Record<StatTracking, Goal> = {
+	// EPIC REWARDS
 	[StatTracking.PERLE]: {
 		id: StatTracking.PERLE,
 		name: {
@@ -504,6 +505,190 @@ export const goals: Record<StatTracking, Goal> = {
 			FR: 'Ce trophée prouve que vous avez terminé la quête du Smog.',
 			DE: '',
 			ES: 'Este medallón prueba que has terminado la búsqueda del Smog.'
+		}
+	},
+	[StatTracking.CARD]: {
+		id: StatTracking.CARD,
+		name: {
+			EN: 'Merguez Deluxe Loyalty Card', // TODO: Translation pending review
+			FR: 'Carte DE Fidélité Merguez Deluxe',
+			DE: 'Merguez-Deluxe-Treuekarte', // TODO: Translation pending review
+			ES: 'Tarjeta DE Fidelidad Salchichas Deluxe'
+		},
+		rare: 0,
+		hidden: true,
+		unlocks: [
+			{
+				count: 1,
+				points: 100,
+				icon: 'collec_card.webp'
+			}
+		],
+		description: {
+			EN: 'Grillée à la perfection et tamponnée par le Vendeur DE Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
+			FR: 'Grillée à la perfection et tamponnée par le Vendeur DE Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.',
+			DE: 'Grillée à la perfection et tamponnée par le Vendeur DE Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
+			ES: 'Asada a la perfección y sellada por el Vendedor DE Salchichas EN persona. Esta carta sagrada recompensa a los estómagos más resistentes. Después DE haber devorado una cantidad indecente DE salchichas, ahora has sido ascendido al rango DE Gran Glotón Oficial.'
+		}
+	},
+	[StatTracking.PAC]: {
+		id: StatTracking.PAC,
+		name: {
+			EN: 'Scroll of Compiled Abilities',
+			FR: 'Parchemin des Aptitudes Compilées',
+			DE: 'Schriftrolle der Gesammelten Fähigkeiten',
+			ES: 'Pergamino DE Competencias Compiladas'
+		},
+		rare: 0,
+		hidden: true,
+		unlocks: [
+			{
+				count: 1,
+				points: 100,
+				icon: 'collec_pac.webp'
+			}
+		],
+		description: {
+			EN: 'The Scroll of Compiled Abilities is a sophisticated artifact that lists instantly all the skills mastered by your Dinoz. It gives a clear overview and a detailed breakdown of each talent in one look.',
+			FR: "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé DE leurs talents EN un seul regard.",
+			DE: 'Die Schriftrolle der Gesammelten Fähigkeiten ist ein elegantes Artefakt, das alle von deinen Dinoz beherrschten Fähigkeiten auflistet und dir auf einen Blick eine klare und detaillierte Übersicht über deren Talente verschafft.',
+			ES: 'El Pergamino DE Competencias Compiladas ES un artefacto elegante que registra instantáneamente todas las competencias dominadas por tus Dinos, ofreciendo una visión clara y detallada DE sus talentos DE un solo vistazo.'
+		}
+	},
+	// DAILY STATS
+	[StatTracking.GET_DINOZ]: {
+		id: StatTracking.GET_DINOZ,
+		name: {
+			EN: 'The Menagerie',
+			FR: 'La Ménagerie',
+			DE: 'Die Menagerie',
+			ES: 'La Menagerie'
+		},
+		rare: 2,
+		unlocks: [
+			{
+				count: 1,
+				points: 1,
+				icon: 'r_egg.webp',
+				title: {
+					EN: 'First Hatch',
+					FR: 'Première Éclosion',
+					DE: 'Erstes Schlüpfen',
+					ES: 'Primera Eclosión'
+				},
+				description: {
+					EN: 'A new life follows you. Try not to lose it on day one.',
+					FR: 'Une nouvelle vie te suit. Essaie de ne pas la perdre dès le premier jour.',
+					DE: 'Ein neues Leben folgt dir. Versuch es nicht gleich zu verlieren.',
+					ES: 'Una nueva vida te sigue. Intenta no perderla el primer día.'
+				}
+			},
+			{
+				count: 3,
+				points: 3,
+				title: {
+					EN: 'Nest Keeper',
+					FR: 'Gardien du Nid',
+					DE: 'Nestwächter',
+					ES: 'Guardián del Nido'
+				},
+				description: {
+					EN: 'Your little pack is growing.',
+					FR: 'Ta petite troupe grandit.',
+					DE: 'Dein kleiner Trupp wächst.',
+					ES: 'Tu pequeña tropa crece.'
+				}
+			},
+			{
+				count: 5,
+				points: 5,
+				title: {
+					EN: 'Leash Master',
+					FR: 'Maître des Laisses',
+					DE: 'Leinenmeister',
+					ES: 'Maestro de Correas'
+				}
+			},
+			{
+				count: 20,
+				points: 8,
+				title: {
+					EN: 'Stable Architect',
+					FR: 'Architecte de l’Étable',
+					DE: 'Stallarchitekt',
+					ES: 'Arquitecto del Establo'
+				}
+			},
+			{
+				count: 30,
+				points: 10,
+				title: {
+					EN: 'Herd Whisperer',
+					FR: 'Chuchoteur de Troupeau',
+					DE: 'Herdenflüsterer',
+					ES: 'Susurrador de Manadas'
+				}
+			},
+			{
+				count: 60,
+				points: 13,
+				title: {
+					EN: 'Arena Promoter',
+					FR: 'Promoteur d’Arène',
+					DE: 'Arenapromoter',
+					ES: 'Promotor de Arena'
+				},
+				description: {
+					EN: 'At this point, it’s less a hobby and more a lifestyle.',
+					FR: 'Là, ce n’est plus un passe-temps… c’est un mode de vie.',
+					DE: 'Das ist kein Hobby mehr. Das ist ein Lebensstil.',
+					ES: 'Esto ya no es un hobby. Es un estilo de vida.'
+				}
+			},
+			{
+				count: 125,
+				points: 15,
+				prefix: true,
+				title: {
+					EN: 'Lord',
+					FR: 'Seigneur',
+					DE: 'Fürst',
+					ES: 'Señor'
+				}
+			},
+			{
+				count: 250,
+				points: 18,
+				suffix: true,
+				title: {
+					EN: 'of Dinoland',
+					FR: 'de Dinoland',
+					DE: 'von Dinoland',
+					ES: 'de Dinoland'
+				}
+			},
+			{
+				count: 500,
+				points: 20,
+				title: {
+					EN: 'Living Menagerie',
+					FR: 'Ménagerie Vivante',
+					DE: 'Lebende Menagerie',
+					ES: 'Menagerie Viviente'
+				},
+				description: {
+					EN: 'Legends say you can’t walk two steps without stepping on a tail.',
+					FR: 'La légende dit que tu ne fais pas deux pas sans marcher sur une queue.',
+					DE: 'Legenden sagen: Zwei Schritte, ein Schwanz.',
+					ES: 'La leyenda dice que no das dos pasos sin pisar una cola.'
+				}
+			}
+		],
+		description: {
+			EN: 'Number of dinoz obtained.',
+			FR: 'Nombre de dinoz obtenus.',
+			DE: 'Anzahl erhaltener Dinoz.',
+			ES: 'Cantidad de dinos obtenidos.'
 		}
 	},
 	[StatTracking.MOVES]: {
@@ -3057,54 +3242,6 @@ export const goals: Record<StatTracking, Goal> = {
 			FR: 'Vos dinoz ont évolué !',
 			DE: 'Your dinoz have evolved!',
 			ES: '¡Tus dinos han evolucionado!'
-		}
-	},
-	[StatTracking.CARD]: {
-		id: StatTracking.CARD,
-		name: {
-			EN: 'Merguez Deluxe Loyalty Card', // TODO: Translation pending review
-			FR: 'Carte DE Fidélité Merguez Deluxe',
-			DE: 'Merguez-Deluxe-Treuekarte', // TODO: Translation pending review
-			ES: 'Tarjeta DE Fidelidad Salchichas Deluxe'
-		},
-		rare: 0,
-		hidden: true,
-		unlocks: [
-			{
-				count: 1,
-				points: 100,
-				icon: 'collec_card.webp'
-			}
-		],
-		description: {
-			EN: 'Grillée à la perfection et tamponnée par le Vendeur DE Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
-			FR: 'Grillée à la perfection et tamponnée par le Vendeur DE Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.',
-			DE: 'Grillée à la perfection et tamponnée par le Vendeur DE Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
-			ES: 'Asada a la perfección y sellada por el Vendedor DE Salchichas EN persona. Esta carta sagrada recompensa a los estómagos más resistentes. Después DE haber devorado una cantidad indecente DE salchichas, ahora has sido ascendido al rango DE Gran Glotón Oficial.'
-		}
-	},
-	[StatTracking.PAC]: {
-		id: StatTracking.PAC,
-		name: {
-			EN: 'Scroll of Compiled Abilities',
-			FR: 'Parchemin des Aptitudes Compilées',
-			DE: 'Schriftrolle der Gesammelten Fähigkeiten',
-			ES: 'Pergamino DE Competencias Compiladas'
-		},
-		rare: 0,
-		hidden: true,
-		unlocks: [
-			{
-				count: 1,
-				points: 100,
-				icon: 'collec_pac.webp'
-			}
-		],
-		description: {
-			EN: 'The Scroll of Compiled Abilities is a sophisticated artifact that lists instantly all the skills mastered by your Dinoz. It gives a clear overview and a detailed breakdown of each talent in one look.',
-			FR: "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé DE leurs talents EN un seul regard.",
-			DE: 'Die Schriftrolle der Gesammelten Fähigkeiten ist ein elegantes Artefakt, das alle von deinen Dinoz beherrschten Fähigkeiten auflistet und dir auf einen Blick eine klare und detaillierte Übersicht über deren Talente verschafft.',
-			ES: 'El Pergamino DE Competencias Compiladas ES un artefacto elegante que registra instantáneamente todas las competencias dominadas por tus Dinos, ofreciendo una visión clara y detallada DE sus talentos DE un solo vistazo.'
 		}
 	}
 };
