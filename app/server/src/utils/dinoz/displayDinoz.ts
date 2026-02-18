@@ -53,6 +53,23 @@ function getLetter(index: number): string {
 	return allLetters[index];
 }
 
+export function generateDinozDisplay(race: DinozRace, palette: string, rare_1: string, rare_2: string) {
+	// Generate display:
+	// - the first 2 chars are the race's chars
+	// - the next 11 chars are random between '0' and 'z'
+	// - the next (14th) is the provided color palette
+	// - the next (15th) is the provided 1st rare visual attribute
+	// - the last one (16h) is the provided 2nd rare visual attribute
+	let randomDisplay = race.swfLetter;
+
+	for (let i = 0; i < 11; i++) {
+		randomDisplay += getRandomLetter('z');
+	}
+
+	randomDisplay += palette + rare_1 + rare_2;
+	return randomDisplay;
+}
+
 export function fromBase62(s: string) {
 	const digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	let result = 0;
