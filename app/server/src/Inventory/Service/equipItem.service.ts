@@ -9,7 +9,6 @@ import type { FastifyRequest } from 'fastify';
 import { getDinozEquipItemRequest } from '../../Dinoz/Controller/getDinozEquipItem.controller.js';
 import { backpackSlot } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { getItemMaxQuantity } from '../../utils/user/getItemMaxQuantity.js';
-//import { backpackSlot } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { addItemToInventory } from '../Controller/addItem.controller.js';
 import { addItemToDinoz } from '../Controller/addItemToDinoz.controller.js';
 import { removeItem } from '../Controller/removeItem.controller.js';
@@ -29,7 +28,7 @@ export async function equipItem(
 ): Promise<DinozItems[]> {
 	const dinozId = Number(req.params.dinozId);
 	if (!Number.isFinite(dinozId)) {
-		throw new ExpectedError('Invalid dinozId');
+		throw new ExpectedError('invalidId');
 	}
 
 	const authed = req.user;

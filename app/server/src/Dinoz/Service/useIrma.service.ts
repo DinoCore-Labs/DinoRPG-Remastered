@@ -15,10 +15,10 @@ type UseIrmaParams = {
 export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, reply: FastifyReply) {
 	const dinozId = Number(req.params.id);
 	if (!Number.isFinite(dinozId)) {
-		throw new ExpectedError('Invalid dinoz id', { statusCode: 400 });
+		throw new ExpectedError('invalidId', { statusCode: 400 });
 	}
 
-	const userId = req.user.id; // via app.authenticate
+	const userId = req.user.id;
 
 	// Check ownership
 	const isOwner = await ownsDinoz(userId, dinozId);
@@ -32,8 +32,8 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 			id: true,
 			remaining: true,
 			fight: true,
-			//gather: true,
-			followers: { select: { id: true, remaining: true, fight: true /*gather: true*/ } },
+			gather: true,
+			followers: { select: { id: true, remaining: true, fight: true, gather: true } },
 			user: {
 				select: {
 					id: true,
@@ -43,7 +43,7 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 		}
 	});
 	if (!dinoz || !dinoz.user) {
-		throw new ExpectedError('No dinoz found', { statusCode: 404 });
+		throw new ExpectedError('dinozNotFound', { statusCode: 404 });
 	}
 
 	const team = [dinoz, ...(dinoz.followers ?? [])];
@@ -52,24 +52,24 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 	const irmaQuantity = dinoz.user.items?.find(i => i.itemId === irmaItemId);
 
 	// On consomme une Irma seulement quand remaining === 0 ET (fight=false OU gather=false)
-	const neededIrma = team.filter(d => d.remaining === 0 && !d.fight /*|| !d.gather*/).length;
+	const neededIrma = team.filter(d => d.remaining === 0 && (!d.fight || !d.gather)).length;
 
 	if (neededIrma > 0 && (!irmaQuantity || irmaQuantity.quantity < neededIrma)) {
 		throw new ExpectedError('notEnoughIrma', { statusCode: 400 });
 	}
 
 	// Réactive fight/gather. Si remaining > 0, on décrémente.
-	for (const dino of team.filter(d => !d.fight /*|| !d.gather*/)) {
+	for (const dino of team.filter(d => !d.fight || !d.gather)) {
 		if (dino.remaining > 0) {
 			await updateDinoz(dino.id, {
 				fight: true,
-				//gather: true,
+				gather: true,
 				remaining: { decrement: 1 }
 			});
 		} else {
 			await updateDinoz(dino.id, {
-				fight: true
-				//gather: true
+				fight: true,
+				gather: true
 			});
 		}
 	}

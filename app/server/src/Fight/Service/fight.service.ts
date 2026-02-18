@@ -42,6 +42,7 @@ import randomBetween from '../../utils/fight/randomBetween.js';
 import weightedRandom from '../../utils/fight/weightedRandom.js';
 import { createXorShift32, hashStringToInt } from '../../utils/prng.js';
 import { ProcessFightInput } from '../Schema/fight.schema.js';
+import { movementListener } from './movementListener.service.js';
 
 /**
  * @summary Process a fight
@@ -56,10 +57,10 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 
 	// Get Dinoz info
 	const user = await getDinozFightDataRequest(dinozId, authed.id);
-	if (!user) throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+	if (!user) throw new ExpectedError('userNotFound', { params: { id: authed.id } });
 
 	const dinozData = user.dinoz.find(d => d.id === dinozId);
-	if (!dinozData) throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+	if (!dinozData) throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
 
 	// Marais Collant - No fight days
 	if (SWAMP_FOG_DAYS.includes(dayOfWeek) && dinozData.placeId === PlaceEnum.MARAIS_COLLANT) {
@@ -102,8 +103,7 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 	}
 
 	// Look for a special action that happens on the fight.
-	let fight;
-	//let fight = await movementListener(player, team, dinozData.placeId, dinozId);
+	let fight = await movementListener(user, team, dinozData.placeId, dinozId);
 
 	// If no fight happened, trigger a regular fight.
 	if (!fight) {
@@ -298,7 +298,7 @@ export async function rewardFight(
 	user: Pick<User, 'id' /*| 'teacher'*/>
 ) {
 	if (!team.length) {
-		throw new ExpectedError('No user found');
+		throw new ExpectedError('userNotFound');
 	}
 
 	const userId = user.id;
@@ -400,16 +400,13 @@ export async function rewardFight(
 		gold += (getRandomNumber(0, 36) + 43) * 10; // Gold base average: 610
 	}
 
-	const fprob = getRandomNumber(0, 100);
+	const napo = team.filter(d => d.items.filter(i => i.itemId === Item.GOLDEN_NAPODINO)).length;
+	const fprob = getRandomNumber(0, 100) - 10 * napo;
 
 	let goldMultiplier = 1;
 	if (fprob < 1) goldMultiplier = 10;
 	else if (fprob < 11) goldMultiplier = 3;
-	// Gold multiplier average: 1.29
-	// Gold base * multiplier: 610 * 1.29 = 786.9
 
-	// Malus based on size of team starting size 2
-	// Size 2: 0.5 - Size 3: 0.45 - Size 4: 0.445 - Size 5: 0.4445 etc.
 	let teamSizeMalus = 1;
 	for (let i = 2; i <= team.length; i++) {
 		teamSizeMalus -= 0.5 * Math.pow(0.1, i - 2);

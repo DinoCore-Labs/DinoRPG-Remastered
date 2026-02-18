@@ -12,7 +12,7 @@ type Body = { newName: string };
 export async function setDinozName(req: FastifyRequest<{ Params: Params; Body: Body }>, reply: FastifyReply) {
 	const dinozId = Number(req.params.id);
 	if (!Number.isFinite(dinozId)) {
-		throw new ExpectedError('Invalid dinoz id');
+		throw new ExpectedError('invalidId');
 	}
 
 	// newName (trim important pour éviter " Dino" / "Dino ")

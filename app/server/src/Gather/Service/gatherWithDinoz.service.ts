@@ -42,7 +42,7 @@ export async function gatherWithDinozHandler(
 
 	const user = await getDinozGatherData(dinozId, authed.id);
 	if (!user) {
-		throw new ExpectedError('playerNotFound', { params: { name: authed.name } });
+		throw new ExpectedError('userNotFound', { params: { id: authed.id } });
 	}
 
 	const dinozData = user.dinoz.find(d => d.id === dinozId);
@@ -218,11 +218,8 @@ export async function gatherWithDinozHandler(
 		if (myGrid.grid.every(box => box === -1)) {
 			returnGrid.isGridComplete = true;
 
-			//if (user.dailyGridRewards > 0) {
 			returnGrid.goldReward = GRID_FINISHED_GOLD_REWARD;
 			await addMoney(user.id, returnGrid.goldReward);
-			//await removeDailyGridRewards(user.id, 1);
-			//}
 
 			//await createLog(LogType.GridFinished, user.id, undefined, returnGrid.goldReward);
 		}
