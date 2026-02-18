@@ -130,8 +130,8 @@ importers:
   app/prisma:
     dependencies:
       '@prisma/client-runtime-utils':
-        specifier: 7.3.0
-        version: 7.3.0
+        specifier: 7.4.0
+        version: 7.4.0
 
   app/server:
     dependencies:
@@ -1368,9 +1368,6 @@ packages:
 
   '@prisma/adapter-pg@7.4.0':
     resolution: {integrity: sha512-LWwTHaio0bMxvzahmpwpWqsZM0vTfMqwF8zo06YvILL/o47voaSfKzCVxZw/o9awf4fRgS5Vgthobikj9Dusaw==}
-
-  '@prisma/client-runtime-utils@7.3.0':
-    resolution: {integrity: sha512-dG/ceD9c+tnXATPk8G+USxxYM9E6UdMTnQeQ+1SZUDxTz7SgQcfxEqafqIQHcjdlcNK/pvmmLfSwAs3s2gYwUw==}
 
   '@prisma/client-runtime-utils@7.4.0':
     resolution: {integrity: sha512-jTmWAOBGBSCT8n7SMbpjCpHjELgcDW9GNP/CeK6CeqjUFlEL6dn8Cl81t/NBDjJdXDm85XDJmc+PEQqqQee3xw==}
@@ -5822,8 +5819,6 @@ snapshots:
       postgres-array: 3.0.4
     transitivePeerDependencies:
       - pg-native
-
-  '@prisma/client-runtime-utils@7.3.0': {}
 
   '@prisma/client-runtime-utils@7.4.0': {}
 
