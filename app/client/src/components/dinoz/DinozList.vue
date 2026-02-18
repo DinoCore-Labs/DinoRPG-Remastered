@@ -24,7 +24,7 @@
 							v-if="dinoz.leaderId"
 							:src="getImgURL('icons', 'small_follow')"
 							v-tippy="{
-								content: formatContent($t('hud.following')),
+								content: formatContent($t('dinoz.hud.following')),
 								theme: 'small'
 							}"
 							alt="follower"
@@ -33,7 +33,7 @@
 							v-if="dinoz.followers.length > 0"
 							:src="getImgURL('icons', 'crown', true)"
 							v-tippy="{
-								content: formatContent($t('hud.followed')),
+								content: formatContent($t('dinoz.hud.followed')),
 								theme: 'small'
 							}"
 							alt="leader"
@@ -42,7 +42,7 @@
 							<img
 								:src="getImgURL('icons', `small_hourglass`)"
 								v-tippy="{
-									content: formatContent($t('hud.remainingActions')),
+									content: formatContent($t('dinoz.hud.remainingActions')),
 									theme: 'small'
 								}"
 								alt="actions"
@@ -85,8 +85,7 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
-			userStore: userStore(),
-			dinozList: dinozStore().getDinozList as Array<DinozFiche>
+			userStore: userStore()
 			//hasPDA: false as boolean
 		};
 	},
@@ -109,7 +108,6 @@ export default defineComponent({
 			}
 			// Le dinoz n'est pas suiveur
 			if (!dinoz.leaderId) return false;
-
 			const leader = this.dinozStore.getDinoz(dinoz.leaderId);
 			if (!leader) return false;
 			// Si le dinoz est follower et que le dinoz courrant est son leader
