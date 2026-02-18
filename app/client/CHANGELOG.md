@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.6.0
+
+### Minor Changes
+
+- db8c871: feat: items
+
 ## 0.5.1
 
 ### Patch Changes

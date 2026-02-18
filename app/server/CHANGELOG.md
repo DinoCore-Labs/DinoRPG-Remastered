@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.6.0
+
+### Minor Changes
+
+- db8c871: feat: items
+
+### Patch Changes
+
+- Updated dependencies [db8c871]
+  - @dinorpg/core@0.5.0
+
 ## 0.5.1
 
 ### Patch Changes

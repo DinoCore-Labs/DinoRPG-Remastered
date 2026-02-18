@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.5.0
+
+### Minor Changes
+
+- db8c871: feat: items
+
 ## 0.4.0
 
 ### Minor Changes
