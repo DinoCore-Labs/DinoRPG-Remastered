@@ -1,10 +1,12 @@
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
+import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { removeItem } from '../../Inventory/Controller/removeItem.controller.js';
 import { prisma } from '../../prisma.js';
+import { incrementUserStat } from '../../Stats/stats.service.js';
 import { ownsDinoz } from '../../User/Controller/ownsDinoz.controller.js';
 import { updateDinoz } from '../Controller/updateDinoz.controller.js';
 
@@ -76,6 +78,7 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 
 	if (neededIrma > 0) {
 		await removeItem(dinoz.user.id, irmaItemId, neededIrma);
+		await incrementUserStat(StatTracking.ITEM_USED, dinoz.user.id, neededIrma);
 	}
 
 	return reply.send({
