@@ -95,7 +95,7 @@ export async function gatherWithDinozHandler(
 		if (!userToken) throw new ExpectedError(`You don't have the needed token to gather here.`);
 
 		await removeItem(user.id, gatherPlace.cost.itemId, 1);
-		//await createLog(LogType.ItemUsed, user.id, dinozData.id, gatherPlace.cost.itemId.toString(), '1');
+		await incrementUserStat(StatTracking.ITEM_USED, user.id, 1);
 	}
 
 	// Sanitize the box to open
