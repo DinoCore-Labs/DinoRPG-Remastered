@@ -67,7 +67,7 @@
 				<div style="width: 100%" class="cadrelist_goals drpg-scrollbar">
 					<table style="width: 100%" class="list_goals" v-if="tab === 1">
 						<tbody>
-							<Tippy theme="small" tag="tr" class="list" v-for="stats in profileStats" :key="stats.stat">
+							<Tippy theme="small" tag="tr" class="list" v-for="stats in sortedProfileStats" :key="stats.stat">
 								<td class="icon">
 									<img class="achievements" :src="getImgURL('achievements', `${stats.stat}`)" alt="achievements" />
 								</td>
@@ -156,11 +156,14 @@ export default defineComponent({
 			required: true
 		}
 	},
+	computed: {
+		sortedProfileStats(): UserStats[] {
+			return [...this.profileStats].sort((a, b) => b.quantity - a.quantity);
+		}
+	},
 	methods: {
 		getTopStats(): void {
-			const sortedStats = [...this.profileStats];
-			sortedStats.sort((a, b) => b.quantity - a.quantity);
-			this.topStats = sortedStats.slice(0, 3);
+			this.topStats = this.sortedProfileStats.slice(0, 3);
 		},
 		isLastAchievement(stat: UserStats): boolean {
 			const last = getGoal(stat.stat).unlocks[getGoal(stat.stat).unlocks.length - 1];
@@ -198,6 +201,7 @@ export default defineComponent({
 			return this.wonRewards.find(r => r.stat === stat.stat) !== undefined;
 		},
 		updateStats() {
+			this.wonRewards = [];
 			this.getTopStats();
 			this.achievementsPoints = this.profileStats
 				.map(stat => {
