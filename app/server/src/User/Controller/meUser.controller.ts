@@ -1,5 +1,6 @@
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
+import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import dayjs from 'dayjs';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -16,7 +17,21 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 		await prisma.$transaction(async tx => {
 			const user = await tx.user.findUnique({
 				where: { id: userId },
-				select: { lastLogin: true }
+				select: {
+					lastLogin: true,
+					//matelasseur: true,
+					dinoz: {
+						select: {
+							id: true,
+							life: true,
+							maxLife: true,
+							remaining: true,
+							items: { select: { itemId: true } },
+							skills: { select: { skillId: true, state: true } },
+							followers: { select: { id: true } }
+						}
+					}
+				}
 			});
 
 			const isFirstLoginToday = !user?.lastLogin || !dayjs().isSame(user.lastLogin, 'day');
@@ -34,6 +49,48 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				await incrementUserStat(StatTracking.P_DAYS, userId, 1);
 				// Give 1 daily ticket
 				await addItemToInventory(userId, Item.DAILY_TICKET, 1);
+
+				// Tik bracelet regen (& alive)
+				const dinozWithTikBracelet =
+					user?.dinoz.filter(d => d.life > 0 && d.items.some(i => i.itemId === Item.TIK_BRACELET)) ?? [];
+
+				for (const d of dinozWithTikBracelet) {
+					const newHp = Math.min(d.life + 10, d.maxLife);
+					await tx.dinoz.update({
+						where: { id: d.id },
+						data: { life: newHp }
+					});
+				}
+
+				/*const event = currentEvents()[0];
+				if (event && event.name === GameEvent.CHRISTMAS) {
+					await increaseItemQuantity(userId, Item.CHRISTMAS_TICKET, 1);
+				}*/
+
+				// Give 3 action for active dinoz
+				const leadersWithVeilleuse = (user?.dinoz ?? []).filter(d =>
+					d.skills.some(s => s.skillId === Skill.VEILLEUSE && s.state === true)
+				);
+
+				// 3) Reset remaining for each dinoz
+				for (const d of user?.dinoz ?? []) {
+					let remaining = 3;
+
+					//if (user?.matelasseur) remaining++;
+
+					if (d.skills.some(s => s.skillId === Skill.GROS_DORMEUR && s.state === true)) {
+						remaining++;
+					}
+
+					// if this dinoz is a follower of a leader with veilleuse
+					const hasLeaderVeilleuse = leadersWithVeilleuse.some(leader => leader.followers.some(f => f.id === d.id));
+					if (hasLeaderVeilleuse) remaining++;
+
+					await tx.dinoz.update({
+						where: { id: d.id },
+						data: { remaining }
+					});
+				}
 
 				await tx.user.update({
 					where: { id: userId },

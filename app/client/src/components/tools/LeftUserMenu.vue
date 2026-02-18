@@ -96,7 +96,7 @@
 							alt="lvlup"
 						/>
 					</div>
-					<div class="icons">
+					<div class="icons" v-if="dinoz.actions">
 						<img
 							v-if="dinoz.fight"
 							:src="getImgURL('icons', 'small_attack')"
