@@ -1,18 +1,19 @@
+import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
+import { incrementUserStat } from '../../Stats/stats.service.js';
 
 export async function createDinoz(dinoz: Prisma.DinozCreateInput) {
-	if (!dinoz.user?.connect?.id) {
-		throw new ExpectedError('Missing user id');
-	}
+	const userId = dinoz.user?.connect?.id;
+	if (!userId) throw new ExpectedError('Missing user id');
 
 	const newDinoz = await prisma.dinoz.create({
-		data: dinoz as Prisma.DinozCreateInput
+		data: dinoz
 	});
 
-	//await createLog(LogType.CreateDinoz, dinoz.user.connect.id, newDinoz.id);
+	await incrementUserStat(StatTracking.GET_DINOZ, userId, 1);
 
 	//GLOBAL.liveStats.incrementDinoz();
 

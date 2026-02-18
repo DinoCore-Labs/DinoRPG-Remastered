@@ -25,6 +25,7 @@ export enum StatTracking {
 	GDC_DEF = 'gdcdef',
 	BGUM = 'bgum',
 	MERGUEZ = 'merguez',
+	GET_DINOZ = 'getdnz',
 	// EPIC REWARDS
 	PERLE = 'perle',
 	PTEROZ = 'pteroz',
