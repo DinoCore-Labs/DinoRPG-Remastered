@@ -24,6 +24,10 @@ export const dinozStore = defineStore('dinozStore', {
 		},
 		setCurrentDinozId(dinozId: number): void {
 			this.currentDinozId = dinozId;
+		},
+		clearDinoz() {
+			this.dinozList = [];
+			this.currentDinozId = undefined;
 		}
 	},
 	persist: {

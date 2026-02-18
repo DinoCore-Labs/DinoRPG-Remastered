@@ -217,17 +217,16 @@ import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { userStore } from '../../store/userStore.js';
 import { UserService } from '../../services/user.service.js';
+import { dinozStore } from '../../store/dinozStore.js';
 
 export default defineComponent({
 	name: 'UserMenu',
 	components: {},
-	setup() {
-		const uStore = userStore();
-		return { uStore };
-	},
 	data() {
 		return {
-			menuCalled: false
+			menuCalled: false,
+			uStore: userStore(),
+			dStore: dinozStore()
 		};
 	},
 	methods: {
@@ -235,6 +234,7 @@ export default defineComponent({
 			this.$toast.success(this.$t('topBar.userMenu.goodbye', { name: this.uStore.getUserName }));
 			await UserService.logout();
 			this.uStore.clearUser();
+			this.dStore.clearDinoz();
 			this.menuCalled = false;
 			await this.$router.replace({ name: 'HomePage' });
 		},

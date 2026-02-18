@@ -190,8 +190,7 @@ export default defineComponent({
 			menuCalled: false,
 			//localStore: localStore(),
 			dinozStore: dinozStore(),
-			userStore: userStore(),
-			dinozList: dinozStore().getDinozList as Array<DinozFiche>
+			userStore: userStore()
 		};
 	},
 	computed: {
