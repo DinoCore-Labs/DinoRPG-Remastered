@@ -153,6 +153,7 @@ ul {
 			font-size: 10pt;
 			line-height: 11pt;
 			text-decoration: none;
+			color: #bc683c;
 			cursor: pointer;
 			&:hover {
 				background-color: rgb(154 64 41);
