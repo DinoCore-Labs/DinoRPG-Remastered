@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.5.1
+
+### Patch Changes
+
+- c9de971: some fixes
+
 ## 0.5.0
 
 ### Minor Changes
