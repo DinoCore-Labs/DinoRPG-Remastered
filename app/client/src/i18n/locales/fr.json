@@ -195,6 +195,7 @@
 		"continue": "Continuer"
 	},
 	"toast": {
+		"action": "Vous avez consommé {value} :irma: et pouvez refaire des actions.",
 		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
 		"Invalid_credentials": "Identifiants incorrects.",
 		"Missing_device_cookie": "Impossible d’identifier votre navigateur. Veuillez autoriser les cookies et réessayer.",
