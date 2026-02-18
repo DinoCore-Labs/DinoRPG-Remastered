@@ -45,8 +45,8 @@ export async function useItemHandler(
 ): Promise<ItemFeedBack> {
 	const authed = req.user;
 
-	const dinozId = req.params.dinozId;
-	const itemId = req.params.itemId;
+	const dinozId = +req.params.dinozId;
+	const itemId = +req.params.itemId;
 
 	const dinoz = await getDinozFicheItemRequest(dinozId);
 	if (!dinoz || !dinoz.user) {
