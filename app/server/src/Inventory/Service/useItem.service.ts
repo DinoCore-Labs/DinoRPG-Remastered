@@ -171,7 +171,7 @@ export async function useItemHandler(
 	}
 
 	await removeItem(dinoz.user.id, itemData.itemId, 1);
-	//await createLog(LogType.ItemUsed, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
+	await incrementUserStat(StatTracking.ITEM_USED, dinoz.user.id, 1);
 
 	return feedback;
 }

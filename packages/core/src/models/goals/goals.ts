@@ -556,6 +556,131 @@ export const goals: Record<StatTracking, Goal> = {
 		}
 	},
 	// DAILY STATS
+	[StatTracking.ITEM_USED]: {
+		id: StatTracking.ITEM_USED,
+		name: {
+			EN: 'Potion Popper',
+			FR: 'Accro aux objets',
+			DE: 'Trankschlucker',
+			ES: 'Consumidor Compulsivo'
+		},
+		rare: 2,
+		unlocks: [
+			{
+				count: 1,
+				points: 1,
+				icon: 'r_potion.gif',
+				title: {
+					EN: 'First Sip',
+					FR: 'Première gorgée',
+					DE: 'Erster Schluck',
+					ES: 'Primer Sorbo'
+				},
+				description: {
+					EN: 'You pressed the button. There is no turning back.',
+					FR: 'Tu as appuyé sur le bouton. Il n’y a plus de retour en arrière.',
+					DE: 'Du hast gedrückt. Jetzt gibt es kein Zurück.',
+					ES: 'Has pulsado el botón. No hay vuelta atrás.'
+				}
+			},
+			{
+				count: 10,
+				points: 2,
+				title: {
+					EN: 'Pocket Alchemist',
+					FR: 'Alchimiste de poche',
+					DE: 'Taschenalchemist',
+					ES: 'Alquimista de Bolsillo'
+				},
+				description: {
+					EN: 'If it has a label, you’ll drink it.',
+					FR: 'Si ça a une étiquette, tu le bois.',
+					DE: 'Hat es ein Etikett, wird’s getrunken.',
+					ES: 'Si tiene etiqueta… te lo tomas.'
+				}
+			},
+			{
+				count: 50,
+				points: 3,
+				title: {
+					EN: 'Quick-Use Enjoyer',
+					FR: 'Spam-clicker certifié',
+					DE: 'Schnellnutzer',
+					ES: 'Uso Rápido'
+				}
+			},
+			{
+				count: 200,
+				points: 5,
+				title: {
+					EN: 'Backpack Surgeon',
+					FR: 'Chirurgien du sac',
+					DE: 'Rucksackchirurg',
+					ES: 'Cirujano de Mochila'
+				},
+				description: {
+					EN: 'You operate with one hand and click with the other.',
+					FR: 'Tu opères d’une main et tu cliques de l’autre.',
+					DE: 'Du operierst mit der einen Hand und klickst mit der anderen.',
+					ES: 'Operas con una mano y haces clic con la otra.'
+				}
+			},
+			{
+				count: 500,
+				points: 8,
+				title: {
+					EN: 'Consumable Connoisseur',
+					FR: 'Connaisseur de consommables',
+					DE: 'Verbrauchsgourmet',
+					ES: 'Catador de Consumibles'
+				}
+			},
+			{
+				count: 1000,
+				points: 10,
+				prefix: true,
+				title: {
+					EN: 'Grand',
+					FR: 'Grand',
+					DE: 'Großer',
+					ES: 'Gran'
+				}
+			},
+			{
+				count: 5000,
+				points: 0,
+				suffix: true,
+				title: {
+					EN: 'User',
+					FR: 'Utilisateur',
+					DE: 'Nutzer',
+					ES: 'Usuario'
+				}
+			},
+			{
+				count: 10000,
+				points: 15,
+				title: {
+					EN: 'Button Masher of Dinoland',
+					FR: 'Mitrailleur de Dinoland',
+					DE: 'Button-Masher von Dinoland',
+					ES: 'Aplastabotones de Dinoland'
+				},
+				description: {
+					EN: 'Your inventory fears you.',
+					FR: 'Ton inventaire te craint.',
+					DE: 'Dein Inventar hat Angst vor dir.',
+					ES: 'Tu inventario te teme.'
+				}
+			}
+		],
+		description: {
+			EN: 'Number of items used.',
+			FR: "Nombre d'objets utilisés.",
+			DE: 'Anzahl verwendeter Gegenstände.',
+			ES: 'Cantidad de objetos utilizados.'
+		}
+	},
 	[StatTracking.GET_DINOZ]: {
 		id: StatTracking.GET_DINOZ,
 		name: {
