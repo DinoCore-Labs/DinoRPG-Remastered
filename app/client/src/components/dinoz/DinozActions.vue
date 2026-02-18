@@ -126,6 +126,7 @@ import { errorHandler } from '../../utils/errorHandler';
 import DZDisclaimer from '../utils/DZDisclaimer.vue';
 import { GatherType } from '@dinorpg/core/models/enums/GatherType.js';
 import { formatText } from '../../utils/formatText';
+import eventBus from '../../events';
 //import { DigResponse } from '@drpg/core/returnTypes/Dinoz';
 
 export default defineComponent({
@@ -206,6 +207,7 @@ export default defineComponent({
 				case Action.ACTION:
 					try {
 						const toast = await DinozService.useIrma(this.dinozId);
+						eventBus.emit('refreshInventory', true);
 						if (toast.category === ItemEffect.ACTION && toast.value > 0) {
 							const message = this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value);
 							this.$toast.open({
