@@ -27,7 +27,7 @@ export async function moveDinozHandler(req: Req, reply: FastifyReply) {
 	const dayOfWeek = new Date().getDay();
 
 	const user = await getDinozFightDataRequest(dinozId, authedId);
-	if (!user) throw new ExpectedError('playerNotFound', { params: { authedId } });
+	if (!user) throw new ExpectedError('userNotFound', { params: { authedId } });
 
 	const dinoz = user.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) throw new ExpectedError('dinozNotFound', { params: { dinozId } });

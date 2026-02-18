@@ -9,7 +9,7 @@ import { applySkillToDinoz } from '../../utils/dinoz/skillParser.js';
 export async function applySkillEffect(
 	dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>,
 	skill: SkillDetails,
-	playerId: string
+	userId: string
 	//event?: GameDinozUsage
 ) {
 	if (skill.effects) {
@@ -20,8 +20,8 @@ export async function applySkillEffect(
 		await updateDinoz(dinoz.id, updates);
 		//}
 	}
-	/*if (playerId && skill.type === SkillType.U && !event) {
-		const player = await getPlayerUSkills(playerId);
+	/*if (userId && skill.type === SkillType.U && !event) {
+		const player = await getPlayerUSkills(userId);
 		if (!player) {
 			throw new ExpectedError(`This player doesn't exist.`);
 		}

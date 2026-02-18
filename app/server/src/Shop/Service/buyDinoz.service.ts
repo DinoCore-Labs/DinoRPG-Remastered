@@ -28,7 +28,7 @@ export async function buyDinoz(req: FastifyRequest<{ Params: BuyDinozParams }>, 
 		const player = dinozActive[0].user;
 
 		if (!player) {
-			throw new ExpectedError('playerNotFound');
+			throw new ExpectedError('userNotFound');
 		}
 
 		const maxDinoz = gameConfig.dinoz.maxQuantity; /*+ (player.leader ? 3 : 0) + (player.messie ? 3 : 0)*/

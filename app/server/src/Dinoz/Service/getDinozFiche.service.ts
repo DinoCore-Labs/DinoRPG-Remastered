@@ -14,7 +14,7 @@ type Params = { id: string };
 export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, reply: FastifyReply) {
 	const dinozId = Number(req.params.id);
 	if (!Number.isFinite(dinozId)) {
-		throw new ExpectedError('Invalid dinoz id');
+		throw new ExpectedError('invalidId');
 	}
 
 	const authedId = req.user.id;
