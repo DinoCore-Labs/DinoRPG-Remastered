@@ -9,7 +9,7 @@
 						<DZButton :disabled="true">{{ $t('homepage.news') }}</DZButton>
 					</div>
 					<div>
-						<DZButton href="/ranking">{{ $t('homepage.ranking') }}</DZButton>
+						<DZButton href="/ranking/player/1">{{ $t('homepage.ranking') }}</DZButton>
 					</div>
 					<DZButton class="helpButton" href="/help">{{ $t('homepage.help') }}</DZButton>
 				</div>
