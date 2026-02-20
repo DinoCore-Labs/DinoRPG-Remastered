@@ -3184,7 +3184,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41310],
+		unlockedFrom: [Skill.PUREE_SALVATRICE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
