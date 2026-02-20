@@ -439,15 +439,15 @@ export default defineComponent({
 				)
 			);
 
-			//const priest = this.userStore.isPriest;
+			const priest = this.userStore.isPriest;
 
 			// Find global speed value to compute it with elemental speed
 			const global_speed_special = getSpecialStat(
 				this.dinozData,
 				this.dinozData.status.map(s => s.statusId),
 				this.dinozSkill,
-				SpecialStat.SPEED
-				//priest
+				SpecialStat.SPEED,
+				priest
 			);
 
 			// Find global critical value
@@ -455,8 +455,8 @@ export default defineComponent({
 				this.dinozData,
 				this.dinozData.status.map(s => s.statusId),
 				this.dinozSkill,
-				SpecialStat.CRITICAL_HIT_CHANCE
-				//priest
+				SpecialStat.CRITICAL_HIT_CHANCE,
+				priest
 			);
 
 			let global_speed = 1;
@@ -470,8 +470,8 @@ export default defineComponent({
 						this.dinozData,
 						this.dinozData.status.map(s => s.statusId),
 						this.dinozSkill,
-						stat as SpecialStat
-						//priest
+						stat as SpecialStat,
+						priest
 					);
 
 					// Add +1 to bubble for proper display
