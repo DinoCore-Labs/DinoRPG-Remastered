@@ -1,9 +1,9 @@
 import { Stat } from '@dinorpg/core/models/enums/SkillStat.js';
 import { EffectDescriptor, PassiveEffects, SkillDetails } from '@dinorpg/core/models/skills/skillDetails.js';
-//import { Skill, uSkillsToPlayerFieldMap } from '@dinorpg/core/models/skills/skillList.js';
+import { Skill, uSkillsToPlayerFieldMap } from '@dinorpg/core/models/skills/skillList.js';
 import { operatorProcess } from '@dinorpg/core/models/utils/operatorProcess.js';
 
-import { Dinoz /*User*/ } from '../../../../prisma/index.js';
+import { Dinoz, User } from '../../../../prisma/index.js';
 
 function applySkillToDinoz(
 	effects: PassiveEffects,
@@ -83,7 +83,7 @@ function deApplySkillFromDinoz(
 	};
 }
 
-/*function applyUSkillEffect(
+function applyUSkillEffect(
 	user: Pick<
 		User,
 		'leader' | 'engineer' | 'shopKeeper' | 'cooker' | 'merchant' | 'priest' | 'teacher' | 'messie' | 'matelasseur'
@@ -121,7 +121,7 @@ function deApplySkillFromDinoz(
 		default:
 			break;
 	}
-}*/
+}
 
 /**
  * Set player U skills based on given skills
@@ -129,7 +129,7 @@ function deApplySkillFromDinoz(
  * @param player the player to update
  * @param skills the skills to compute U skills
  */
-/*function computeUSkillEffects(
+function computeUSkillEffects(
 	user: Pick<
 		User,
 		'leader' | 'engineer' | 'shopKeeper' | 'cooker' | 'merchant' | 'priest' | 'teacher' | 'messie' | 'matelasseur'
@@ -139,6 +139,6 @@ function deApplySkillFromDinoz(
 	uSkillsToPlayerFieldMap.forEach((field, skill) => {
 		user[field] = Boolean(skills.find(s => s === skill));
 	});
-}*/
+}
 
-export { applySkillToDinoz, /*applyUSkillEffect, computeUSkillEffects,*/ deApplySkillFromDinoz };
+export { applySkillToDinoz, applyUSkillEffect, computeUSkillEffects, deApplySkillFromDinoz };
