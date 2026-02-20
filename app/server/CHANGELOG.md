@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.6.1
+
+### Patch Changes
+
+- f85d657: user unique skills
+- Updated dependencies [f85d657]
+  - @dinorpg/core@0.5.1
+
 ## 0.6.0
 
 ### Minor Changes
