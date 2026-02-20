@@ -70,7 +70,7 @@ export async function buyDinoz(req: FastifyRequest<{ Params: BuyDinozParams }>, 
 	const dinozCreated = await createDinoz(newDinozProps);
 	const newDinoz: UserForDinozFiche = {
 		id: userId,
-		//engineer: false,
+		engineer: false,
 		items: [],
 		rewards: [],
 		//quests: [],

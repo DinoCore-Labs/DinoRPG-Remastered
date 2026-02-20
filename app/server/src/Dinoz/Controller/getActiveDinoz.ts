@@ -13,9 +13,9 @@ export async function getActiveDinoz(userId: string) {
 			//unavailableReason: true,
 			user: {
 				select: {
-					id: true
-					//leader: true,
-					//messie: true
+					id: true,
+					leader: true,
+					messie: true
 				}
 			}
 		}

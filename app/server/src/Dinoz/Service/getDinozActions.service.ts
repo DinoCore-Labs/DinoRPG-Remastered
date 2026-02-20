@@ -156,7 +156,7 @@ export async function getAvailableActions(
 	// Refresh actions in party
 	if (
 		dinoz.followers.length > 0 &&
-		(!dinoz.fight || /*!dinoz.gather ||*/ dinoz.followers.filter(f => !f.fight).length > 0)
+		(!dinoz.fight || !dinoz.gather || dinoz.followers.filter(f => !f.fight).length > 0)
 	) {
 		let index = availableActions.indexOf(actionList[Action.IRMA]);
 		if (index >= 0) {

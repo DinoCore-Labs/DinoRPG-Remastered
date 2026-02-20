@@ -105,6 +105,8 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				id: true,
 				name: true,
 				role: true,
+				priest: true,
+				shopKeeper: true,
 				dinoz: {
 					select: {
 						id: true,
@@ -157,6 +159,8 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			role: user.role,
 			gold,
 			treasureTicket,
+			priest: user.priest,
+			shopKeeper: user.shopKeeper,
 			dinoz: user.dinoz
 		});
 	} catch (err) {

@@ -192,7 +192,7 @@ async function hatchEgg(item: ItemFiche, authed: Pick<User, 'id' /*| 'lang'*/>) 
 	}
 
 	if (dinozActive.length > 0) {
-		const maxDinoz = gameConfig.dinoz.maxQuantity; /*+ (player.leader ? 3 : 0) + (player.messie ? 3 : 0)*/
+		const maxDinoz = gameConfig.dinoz.maxQuantity + (player.leader ? 3 : 0) + (player.messie ? 3 : 0);
 		if (dinozActive.length >= maxDinoz) {
 			throw new ExpectedError('tooManyActiveDinoz');
 		}

@@ -139,7 +139,7 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 export async function fightMonstersAtPlace(
 	team: (DinozToGetFighter & DinozToRewardFight) /*& DinozToCheckMissionFight*/[],
 	placeId: PlaceEnum,
-	user: Pick<User, 'id' /*| 'teacher' | 'cooker'*/>
+	user: Pick<User, 'id' | 'teacher' | 'cooker'>
 ) {
 	const dayOfWeek = new Date().getDay();
 	let monsters = await generateMonsterList(team, placeId);
@@ -295,7 +295,7 @@ export async function rewardFight(
 	monsters: MonsterFiche[],
 	fightResult: FightProcessResult,
 	place: PlaceEnum,
-	user: Pick<User, 'id' /*| 'teacher'*/>
+	user: Pick<User, 'id' | 'teacher'>
 ) {
 	if (!team.length) {
 		throw new ExpectedError('userNotFound');
