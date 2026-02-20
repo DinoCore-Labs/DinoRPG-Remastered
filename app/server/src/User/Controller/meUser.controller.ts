@@ -19,7 +19,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				where: { id: userId },
 				select: {
 					lastLogin: true,
-					//matelasseur: true,
+					matelasseur: true,
 					dinoz: {
 						select: {
 							id: true,
@@ -72,11 +72,11 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 					d.skills.some(s => s.skillId === Skill.VEILLEUSE && s.state === true)
 				);
 
-				// 3) Reset remaining for each dinoz
+				// Reset remaining for each dinoz
 				for (const d of user?.dinoz ?? []) {
 					let remaining = 3;
 
-					//if (user?.matelasseur) remaining++;
+					if (user?.matelasseur) remaining++;
 
 					if (d.skills.some(s => s.skillId === Skill.GROS_DORMEUR && s.state === true)) {
 						remaining++;
