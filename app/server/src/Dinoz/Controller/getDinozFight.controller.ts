@@ -14,8 +14,8 @@ export async function getDinozFightDataRequest(dinozId: number, userId: string) 
 			//quests: { select: { questId: true, progression: true } },
 			ranking: { select: { dinozCount: true, points: true } },
 			ingredients: { select: { ingredientId: true, quantity: true } },
-			//teacher: true,
-			//cooker: true,
+			teacher: true,
+			cooker: true,
 			dinoz: {
 				select: {
 					id: true,

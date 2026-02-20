@@ -5,7 +5,7 @@ export async function getUserInventoryDataRequest(userId: string) {
 		where: { id: userId },
 		select: {
 			id: true,
-			//shopKeeper: true,
+			shopKeeper: true,
 			items: {
 				select: {
 					itemId: true,
