@@ -10,6 +10,8 @@ export const userStore = defineStore('userStore', {
 		role: null as UserRole | null,
 		gold: 0,
 		treasureTicket: 0,
+		priest: false,
+		shopKeeper: false,
 		sortOption: 'default'
 	}),
 	getters: {
@@ -17,6 +19,8 @@ export const userStore = defineStore('userStore', {
 		getUserName: state => state.name,
 		isAdmin: state => state.role === 'ADMIN' || state.role === 'SUPER_ADMIN',
 		isModerator: state => state.role === 'MODERATOR' || state.role === 'ADMIN' || state.role === 'SUPER_ADMIN',
+		isPriest: (state: UserStore) => state.priest,
+		isShopkeeper: (state: UserStore) => state.shopKeeper,
 		getSortOption: (state: UserStore) => state.sortOption
 	},
 	actions: {
@@ -29,6 +33,12 @@ export const userStore = defineStore('userStore', {
 		},
 		setGold(gold: number) {
 			this.gold = gold;
+		},
+		setPriest(priest: boolean): void {
+			this.priest = priest;
+		},
+		setShopkeeper(shopKeeper: boolean): void {
+			this.shopKeeper = shopKeeper;
 		},
 		setSortOption(sortOption: string): void {
 			this.sortOption = sortOption;
