@@ -9,7 +9,7 @@ export async function getDinozFicheRequest(dinozId: number, userId: string) {
 				where: { type: 'GOLD' },
 				select: { amount: true }
 			},
-			//engineer: true,
+			engineer: true,
 			items: {
 				select: { itemId: true, quantity: true }
 			},

@@ -24,7 +24,7 @@ type Config = {
 
 export type UserForDinozFiche = Parameters<typeof toDinozFiche>[0];
 export const toDinozFiche = (
-	user: Pick<User, 'id' /*| 'engineer'*/> & {
+	user: Pick<User, 'id' | 'engineer'> & {
 		items: Pick<UserItems, 'itemId' | 'quantity'>[];
 		rewards: Pick<UserRewards, 'rewardId'>[];
 		//quests: Pick<PlayerQuest, 'questId' | 'progression'>[];
@@ -87,7 +87,7 @@ export const toDinozFiche = (
 		race: getRace(dinoz.raceId),
 		placeId: dinoz.placeId,
 		items: dinoz.items?.map(item => item.itemId),
-		maxItems: backpackSlot(/*player.engineer,*/ dinoz),
+		maxItems: backpackSlot(user.engineer, dinoz),
 		status: dinoz.status?.sort((a, b) => a.statusId - b.statusId),
 		borderPlace:
 			//dinoz.unavailableReason !== null || !dinoz.fight || dinoz.leaderId
@@ -207,7 +207,7 @@ export const canLevelUp = (
 };
 
 export const backpackSlot = (
-	//engineer: boolean,
+	engineer: boolean,
 	dinoz: Pick<Dinoz, 'id'> & {
 		skills: Pick<DinozSkills, 'skillId'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
@@ -217,7 +217,7 @@ export const backpackSlot = (
 	if (dinoz.skills.find(skill => skill.skillId === skillList[Skill.POCHE_VENTRALE].id)) total++;
 	if (dinoz.skills.find(skill => skill.skillId === skillList[Skill.SURPLIS_DHADES].id)) total++;
 	if (dinoz.status.find(status => status.statusId === DinozStatusId.BACKPACK)) total++;
-	//if (engineer) total++;
+	if (engineer) total++;
 
 	// TODO: Check for other dinoz storekeeper here
 	return total;
@@ -231,11 +231,11 @@ export const calculateXPBonus = (
 		status: Pick<DinozStatus, 'statusId'>[];
 	},
 	xp: number,
-	player: Pick<User, 'id' /*'teacher'*/>
+	user: Pick<User, 'id' | 'teacher'>
 ) => {
 	let f = 1.0;
 	if (dinoz.skills.some(s => s.skillId === Skill.INTELLIGENCE)) f *= 1.05;
-	//if (player.teacher) f *= 1.05;
+	if (user.teacher) f *= 1.05;
 	//TODO encyclopedie et maudit
 	/*if( d.hasEquip(Data.OBJECTS.list.mencly) )
 		f *= 1.15;

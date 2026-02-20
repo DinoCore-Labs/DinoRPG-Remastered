@@ -8,8 +8,8 @@ export async function getDinozEquipItemRequest(dinozId: number) {
 			user: {
 				select: {
 					id: true,
-					//engineer: true,
-					//shopKeeper: true,
+					engineer: true,
+					shopKeeper: true,
 					items: {
 						select: { id: true, itemId: true, quantity: true }
 					},

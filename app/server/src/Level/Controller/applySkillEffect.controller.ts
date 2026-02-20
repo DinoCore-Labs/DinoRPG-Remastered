@@ -3,6 +3,7 @@ import { SkillDetails } from '@dinorpg/core/models/skills/skillDetails.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Dinoz } from '../../../../prisma/index.js';
+import { getAllDinozFromAccount } from '../../Dinoz/Controller/getAllDinozFromAccount.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { getUserUniqueSkills } from '../../User/Controller/getUserUniqueSkills.controller.js';
 import { setUser } from '../../User/Controller/setUser.controller.js';
