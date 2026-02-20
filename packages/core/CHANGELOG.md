@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.5.1
+
+### Patch Changes
+
+- f85d657: user unique skills
+
 ## 0.5.0
 
 ### Minor Changes
