@@ -247,7 +247,16 @@ exports.Prisma.UserScalarFieldEnum = {
   role: 'role',
   createdDate: 'createdDate',
   updatedAt: 'updatedAt',
-  lastLogin: 'lastLogin'
+  lastLogin: 'lastLogin',
+  leader: 'leader',
+  engineer: 'engineer',
+  cooker: 'cooker',
+  shopKeeper: 'shopKeeper',
+  merchant: 'merchant',
+  priest: 'priest',
+  teacher: 'teacher',
+  matelasseur: 'matelasseur',
+  messie: 'messie'
 };
 
 exports.Prisma.UserDinozShopScalarFieldEnum = {

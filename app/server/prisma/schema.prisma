@@ -200,6 +200,16 @@ model User {
 
   dinoz         Dinoz[]
   dinozShop     UserDinozShop[]
+
+  leader        Boolean            @default(false)
+  engineer      Boolean            @default(false)
+  cooker        Boolean            @default(false)
+  shopKeeper    Boolean            @default(false)
+  merchant      Boolean            @default(false)
+  priest        Boolean            @default(false)
+  teacher       Boolean            @default(false)
+  matelasseur   Boolean            @default(false)
+  messie        Boolean            @default(false)
 }
 
 model UserDinozShop {

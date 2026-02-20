@@ -1,0 +1,10 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "cooker" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "engineer" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "leader" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "matelasseur" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "merchant" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "messie" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "priest" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "shopKeeper" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "teacher" BOOLEAN NOT NULL DEFAULT false;

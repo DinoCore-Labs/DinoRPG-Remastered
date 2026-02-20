@@ -14491,6 +14491,15 @@ export namespace Prisma {
     createdDate: Date | null
     updatedAt: Date | null
     lastLogin: Date | null
+    leader: boolean | null
+    engineer: boolean | null
+    cooker: boolean | null
+    shopKeeper: boolean | null
+    merchant: boolean | null
+    priest: boolean | null
+    teacher: boolean | null
+    matelasseur: boolean | null
+    messie: boolean | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -14501,6 +14510,15 @@ export namespace Prisma {
     createdDate: Date | null
     updatedAt: Date | null
     lastLogin: Date | null
+    leader: boolean | null
+    engineer: boolean | null
+    cooker: boolean | null
+    shopKeeper: boolean | null
+    merchant: boolean | null
+    priest: boolean | null
+    teacher: boolean | null
+    matelasseur: boolean | null
+    messie: boolean | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -14511,6 +14529,15 @@ export namespace Prisma {
     createdDate: number
     updatedAt: number
     lastLogin: number
+    leader: number
+    engineer: number
+    cooker: number
+    shopKeeper: number
+    merchant: number
+    priest: number
+    teacher: number
+    matelasseur: number
+    messie: number
     _all: number
   }
 
@@ -14523,6 +14550,15 @@ export namespace Prisma {
     createdDate?: true
     updatedAt?: true
     lastLogin?: true
+    leader?: true
+    engineer?: true
+    cooker?: true
+    shopKeeper?: true
+    merchant?: true
+    priest?: true
+    teacher?: true
+    matelasseur?: true
+    messie?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -14533,6 +14569,15 @@ export namespace Prisma {
     createdDate?: true
     updatedAt?: true
     lastLogin?: true
+    leader?: true
+    engineer?: true
+    cooker?: true
+    shopKeeper?: true
+    merchant?: true
+    priest?: true
+    teacher?: true
+    matelasseur?: true
+    messie?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -14543,6 +14588,15 @@ export namespace Prisma {
     createdDate?: true
     updatedAt?: true
     lastLogin?: true
+    leader?: true
+    engineer?: true
+    cooker?: true
+    shopKeeper?: true
+    merchant?: true
+    priest?: true
+    teacher?: true
+    matelasseur?: true
+    messie?: true
     _all?: true
   }
 
@@ -14626,6 +14680,15 @@ export namespace Prisma {
     createdDate: Date
     updatedAt: Date | null
     lastLogin: Date
+    leader: boolean
+    engineer: boolean
+    cooker: boolean
+    shopKeeper: boolean
+    merchant: boolean
+    priest: boolean
+    teacher: boolean
+    matelasseur: boolean
+    messie: boolean
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -14653,6 +14716,15 @@ export namespace Prisma {
     createdDate?: boolean
     updatedAt?: boolean
     lastLogin?: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: boolean | User$gathersArgs<ExtArgs>
     ingredients?: boolean | User$ingredientsArgs<ExtArgs>
     items?: boolean | User$itemsArgs<ExtArgs>
@@ -14674,6 +14746,15 @@ export namespace Prisma {
     createdDate?: boolean
     updatedAt?: boolean
     lastLogin?: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14684,6 +14765,15 @@ export namespace Prisma {
     createdDate?: boolean
     updatedAt?: boolean
     lastLogin?: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -14694,9 +14784,18 @@ export namespace Prisma {
     createdDate?: boolean
     updatedAt?: boolean
     lastLogin?: boolean
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "role" | "createdDate" | "updatedAt" | "lastLogin", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "role" | "createdDate" | "updatedAt" | "lastLogin" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "matelasseur" | "messie", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     gathers?: boolean | User$gathersArgs<ExtArgs>
     ingredients?: boolean | User$ingredientsArgs<ExtArgs>
@@ -14735,6 +14834,15 @@ export namespace Prisma {
       createdDate: Date
       updatedAt: Date | null
       lastLogin: Date
+      leader: boolean
+      engineer: boolean
+      cooker: boolean
+      shopKeeper: boolean
+      merchant: boolean
+      priest: boolean
+      teacher: boolean
+      matelasseur: boolean
+      messie: boolean
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -15175,6 +15283,15 @@ export namespace Prisma {
     readonly createdDate: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly lastLogin: FieldRef<"User", 'DateTime'>
+    readonly leader: FieldRef<"User", 'Boolean'>
+    readonly engineer: FieldRef<"User", 'Boolean'>
+    readonly cooker: FieldRef<"User", 'Boolean'>
+    readonly shopKeeper: FieldRef<"User", 'Boolean'>
+    readonly merchant: FieldRef<"User", 'Boolean'>
+    readonly priest: FieldRef<"User", 'Boolean'>
+    readonly teacher: FieldRef<"User", 'Boolean'>
+    readonly matelasseur: FieldRef<"User", 'Boolean'>
+    readonly messie: FieldRef<"User", 'Boolean'>
   }
     
 
@@ -24843,7 +24960,16 @@ export namespace Prisma {
     role: 'role',
     createdDate: 'createdDate',
     updatedAt: 'updatedAt',
-    lastLogin: 'lastLogin'
+    lastLogin: 'lastLogin',
+    leader: 'leader',
+    engineer: 'engineer',
+    cooker: 'cooker',
+    shopKeeper: 'shopKeeper',
+    merchant: 'merchant',
+    priest: 'priest',
+    teacher: 'teacher',
+    matelasseur: 'matelasseur',
+    messie: 'messie'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -25896,6 +26022,15 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     lastLogin?: DateTimeFilter<"User"> | Date | string
+    leader?: BoolFilter<"User"> | boolean
+    engineer?: BoolFilter<"User"> | boolean
+    cooker?: BoolFilter<"User"> | boolean
+    shopKeeper?: BoolFilter<"User"> | boolean
+    merchant?: BoolFilter<"User"> | boolean
+    priest?: BoolFilter<"User"> | boolean
+    teacher?: BoolFilter<"User"> | boolean
+    matelasseur?: BoolFilter<"User"> | boolean
+    messie?: BoolFilter<"User"> | boolean
     gathers?: UserGatherListRelationFilter
     ingredients?: UserIngredientsListRelationFilter
     items?: UserItemsListRelationFilter
@@ -25916,6 +26051,15 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     lastLogin?: SortOrder
+    leader?: SortOrder
+    engineer?: SortOrder
+    cooker?: SortOrder
+    shopKeeper?: SortOrder
+    merchant?: SortOrder
+    priest?: SortOrder
+    teacher?: SortOrder
+    matelasseur?: SortOrder
+    messie?: SortOrder
     gathers?: UserGatherOrderByRelationAggregateInput
     ingredients?: UserIngredientsOrderByRelationAggregateInput
     items?: UserItemsOrderByRelationAggregateInput
@@ -25939,6 +26083,15 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     lastLogin?: DateTimeFilter<"User"> | Date | string
+    leader?: BoolFilter<"User"> | boolean
+    engineer?: BoolFilter<"User"> | boolean
+    cooker?: BoolFilter<"User"> | boolean
+    shopKeeper?: BoolFilter<"User"> | boolean
+    merchant?: BoolFilter<"User"> | boolean
+    priest?: BoolFilter<"User"> | boolean
+    teacher?: BoolFilter<"User"> | boolean
+    matelasseur?: BoolFilter<"User"> | boolean
+    messie?: BoolFilter<"User"> | boolean
     gathers?: UserGatherListRelationFilter
     ingredients?: UserIngredientsListRelationFilter
     items?: UserItemsListRelationFilter
@@ -25959,6 +26112,15 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     lastLogin?: SortOrder
+    leader?: SortOrder
+    engineer?: SortOrder
+    cooker?: SortOrder
+    shopKeeper?: SortOrder
+    merchant?: SortOrder
+    priest?: SortOrder
+    teacher?: SortOrder
+    matelasseur?: SortOrder
+    messie?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -25975,6 +26137,15 @@ export namespace Prisma {
     createdDate?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     lastLogin?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    leader?: BoolWithAggregatesFilter<"User"> | boolean
+    engineer?: BoolWithAggregatesFilter<"User"> | boolean
+    cooker?: BoolWithAggregatesFilter<"User"> | boolean
+    shopKeeper?: BoolWithAggregatesFilter<"User"> | boolean
+    merchant?: BoolWithAggregatesFilter<"User"> | boolean
+    priest?: BoolWithAggregatesFilter<"User"> | boolean
+    teacher?: BoolWithAggregatesFilter<"User"> | boolean
+    matelasseur?: BoolWithAggregatesFilter<"User"> | boolean
+    messie?: BoolWithAggregatesFilter<"User"> | boolean
   }
 
   export type UserDinozShopWhereInput = {
@@ -27223,6 +27394,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -27243,6 +27423,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -27263,6 +27452,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -27283,6 +27481,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -27303,6 +27510,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
   }
 
   export type UserUpdateManyMutationInput = {
@@ -27313,6 +27529,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -27323,6 +27548,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserDinozShopCreateInput = {
@@ -28662,6 +28896,15 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrder
     lastLogin?: SortOrder
+    leader?: SortOrder
+    engineer?: SortOrder
+    cooker?: SortOrder
+    shopKeeper?: SortOrder
+    merchant?: SortOrder
+    priest?: SortOrder
+    teacher?: SortOrder
+    matelasseur?: SortOrder
+    messie?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -28672,6 +28915,15 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrder
     lastLogin?: SortOrder
+    leader?: SortOrder
+    engineer?: SortOrder
+    cooker?: SortOrder
+    shopKeeper?: SortOrder
+    merchant?: SortOrder
+    priest?: SortOrder
+    teacher?: SortOrder
+    matelasseur?: SortOrder
+    messie?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -28682,6 +28934,15 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrder
     lastLogin?: SortOrder
+    leader?: SortOrder
+    engineer?: SortOrder
+    cooker?: SortOrder
+    shopKeeper?: SortOrder
+    merchant?: SortOrder
+    priest?: SortOrder
+    teacher?: SortOrder
+    matelasseur?: SortOrder
+    messie?: SortOrder
   }
 
   export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -30672,6 +30933,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -30691,6 +30961,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -30951,6 +31230,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -30970,6 +31258,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -31730,6 +32027,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -31749,6 +32055,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -31784,6 +32099,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -31803,6 +32127,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -32351,6 +32684,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -32370,6 +32712,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -32405,6 +32756,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -32424,6 +32784,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -32443,6 +32812,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -32462,6 +32840,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -32497,6 +32884,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -32516,6 +32912,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -32535,6 +32940,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -32554,6 +32968,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -32589,6 +33012,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -32608,6 +33040,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -32627,6 +33068,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -32646,6 +33096,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -32681,6 +33140,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -32700,6 +33168,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -32719,6 +33196,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -32738,6 +33224,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -32773,6 +33268,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -32792,6 +33296,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -32811,6 +33324,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -32830,6 +33352,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -32865,6 +33396,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -32884,6 +33424,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -32903,6 +33452,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -32922,6 +33480,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -32957,6 +33524,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -32976,6 +33552,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -32995,6 +33580,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -33014,6 +33608,15 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -33049,6 +33652,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -33068,6 +33680,15 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
