@@ -80,6 +80,7 @@ export default defineComponent({
 							maxQuantity: item.maxQuantity
 						};
 					})
+					.sort((a, b) => (a?.itemId ?? 0) - (b?.itemId ?? 0))
 					.filter(Boolean) as Array<ItemFiche>;
 				//console.log(this.allItemsData);
 			} catch (err) {
