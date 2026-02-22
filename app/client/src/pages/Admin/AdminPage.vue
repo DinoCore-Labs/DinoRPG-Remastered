@@ -1,8 +1,7 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.admin')"></TitleHeader>
-
 	<ul class="tabs" style="margin-top: 10px">
-		<li>
+		<li :class="{ active: $route.path.startsWith('/admin/jobs') }">
 			<RouterLink to="/admin/jobs">Jobs</RouterLink>
 		</li>
 	</ul>
@@ -18,40 +17,12 @@ export default defineComponent({
 	components: {
 		TitleHeader
 	},
-	data() {
-		return {
-			tabSelected: 1 as number
-			//AdminRole: AdminRole
-		};
-	},
-	methods: {
-		//playerStore,
-		async setTab(value: number): Promise<void> {
-			this.tabSelected = value;
-		}
-	}
-	/*async mounted(): Promise<void> {
-		if (!(playerStore().getRole === AdminRole.ADMIN || playerStore().getRole === AdminRole.AMPHI)) {
-			this.$router.push({
-				name: 'News'
-			});
-		}
-		try {
-			await AdminService.getDashBoard();
-		} catch (err) {
-			errorHandler.handle(err, this.$toast);
-			return;
-		}
-	}*/
+	data() {},
+	methods: {}
 });
 </script>
 
 <style lang="scss" scoped>
-.active {
-	background-color: #f3ca92;
-	color: #710;
-	padding: 4px;
-}
 .red {
 	color: red;
 }
@@ -91,22 +62,5 @@ export default defineComponent({
 			border-radius: 0px;
 		}
 	}
-}
-input[type='text'],
-select {
-	padding: 5px;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 1px solid #c88f44;
-	background-color: #f3ca92;
-	color: #710;
-}
-input[type='submit'] {
-	margin-top: 20px;
-	background-color: #c64e36;
-	color: #fffdba;
-	border: 1px solid #c64e36;
-	padding: 5px 20px;
-	cursor: pointer;
 }
 </style>
