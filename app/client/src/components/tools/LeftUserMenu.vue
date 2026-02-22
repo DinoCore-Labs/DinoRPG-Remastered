@@ -172,14 +172,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
-//import { orderDinozList } from '@drpg/core/utils/DinozUtils';
-//import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { beautifulNumber } from '../../utils/beautifulNumber.js';
 import { placeList } from '../../constants/place.js';
 import { userStore } from '../../store/userStore.js';
 import { dinozStore } from '../../store/dinozStore.js';
-//import { localStore } from '../../store/localStore.js';
 import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import eventBus from '../../events/index.js';
 
@@ -189,9 +187,9 @@ export default defineComponent({
 	data() {
 		return {
 			menuCalled: false,
-			//localStore: localStore(),
 			dinozStore: dinozStore(),
-			userStore: userStore()
+			userStore: userStore(),
+			DINOZ_STATE
 		};
 	},
 	computed: {

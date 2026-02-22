@@ -86,13 +86,12 @@ import type { svgLines } from '@dinorpg/core/models/place/svgLines.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import { sessionStore } from '../../store/sessionStore.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
-//import { UnavailableReason } from '@drpg/prisma/enums';
-//import { formatText } from '../../utils/formatText.js';
+import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
+import { formatText } from '../../utils/formatText.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { SWAMP_FLOODED_DAYS, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeList.js';
 import { errorHandler } from '../../utils/errorHandler.js';
-import { formatText } from '../../utils/formatText.js';
 import { DinozService } from '../../services/dinoz.service.js';
 
 export default defineComponent({
@@ -221,10 +220,10 @@ export default defineComponent({
 			}
 
 			// Check if dinoz is being sold
-			/*if (this.dinozData.unavailableReason === UnavailableReason.selling) {
+			if (this.dinozData.state === DINOZ_STATE.selling) {
 				this.$toast.open({ message: formatText(this.$t(`toast.isSelling`)), type: 'error' });
 				return;
-			}*/
+			}
 
 			try {
 				const moveTry = await DinozService.move(this.dinozData.id, placeId);

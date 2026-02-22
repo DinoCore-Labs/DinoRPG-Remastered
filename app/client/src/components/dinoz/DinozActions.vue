@@ -16,21 +16,21 @@
 				/>-->
 			</template>
 			<!--<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />-->
-			<!--<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
+			<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
 				{{ $t('hud.following') }}
 				<template #content>
 					{{ $t(`hud.follow`, { leader: leaderDinoz.name }) }}
 				</template>
-			</Tippy>-->
+			</Tippy>
 			<!--
 			<p class="follow" v-if="dinoz.tournament && dinoz.level >= dinoz.tournament.levelLimit">
 				{{ $t('hud.dojoTeam', { max: dinoz.tournament.levelLimit }) }}
 			</p>-->
-			<!--<DZDisclaimer
-				v-if="dinoz.unavailableReason === UnavailableReason.unfreezing"
+			<DZDisclaimer
+				v-if="dinoz.state === DINOZ_STATE.unfreezing"
 				:content="$t('hud.unfreezeCountdown', { time: timeUntilMidnight })"
 				help
-			/>-->
+			/>
 			<DZDisclaimer
 				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life < dinoz.maxLife / 2"
 				:content="$t('hud.resting', { hp: hpRegen, min: minutesBeforeHour })"
@@ -59,7 +59,7 @@
 				</p>-->
 				<!--<p v-else-if="action.name === 'mission'">{{ $t(`missions.npc.${action.prop}`) }}</p>-->
 				<p>
-					<!--{{ action.forDinoz ? `${dinoz.followers.find(f => f.id === action.forDinoz)?.name}: ` : '' }}-->
+					{{ action.forDinoz ? `${dinoz.followers.find(f => f.id === action.forDinoz)?.name}: ` : '' }}
 					{{ $t(`action.name.${action.name}`) }}
 				</p>
 				<template #content>
@@ -100,7 +100,7 @@
 <script lang="ts">
 import { Action, type ActionFiche } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
-//import { UnavailableReason } from '@drpg/prisma/enums';
+import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 //import { ConditionEnum, RewardEnum } from '@dinorpg/core/models/enums/Parser.js';
 //import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
@@ -149,9 +149,10 @@ export default defineComponent({
 			//itinerantName: '' as string,
 			dinozFullParty: [] as DinozFiche[],
 			uStore: userStore(),
-			//timeUntilMidnight: '',
-			minutesBeforeHour: 60 - new Date().getMinutes()
-			//intervals: [] as number[],
+			timeUntilMidnight: '',
+			minutesBeforeHour: 60 - new Date().getMinutes(),
+			intervals: [] as number[],
+			DINOZ_STATE
 			//mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
 			//	?.missionHUD
 		};
@@ -175,7 +176,7 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		/*computeTimeUntilMidnight() {
+		computeTimeUntilMidnight() {
 			const now = new Date();
 			const nowMs = now.getTime();
 			const midnightMs = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1);
@@ -199,7 +200,7 @@ export default defineComponent({
 			if (this.minutesBeforeHour === 0) {
 				this.refreshDinoz();
 			}
-		},*/
+		},
 		async launch(action: ActionFiche) {
 			switch (action.name) {
 				case Action.IRMA:
@@ -514,7 +515,7 @@ export default defineComponent({
 							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 							return;
 						}
-						currentDinozList[currentDinoz].unavailableReason = UnavailableReason.frozen;
+						currentDinozList[currentDinoz].state = DINOZ_STATE.frozen;
 						this.dinozStore.setDinozList(currentDinozList);
 						await this.refreshDinoz();
 					} catch (e) {
@@ -591,12 +592,12 @@ export default defineComponent({
 		isSelling() {
 			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 			if (!dinoz) return false;
-			return dinoz.unavailableReason === UnavailableReason.selling;
-		},
+			return dinoz.state === DINOZ_STATE.selling;
+		},*/,
 		goToLeader() {
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
-		},
+		} /*,
 		async regenRate() {
 			const data = this.dinoz;
 			const skills = toSkillDetails(data.skills);
@@ -625,11 +626,8 @@ export default defineComponent({
 			this.dinozFullParty.push(this.dinoz);
 		}
 	},
-	/*computed: {
-		UnavailableReason() {
-			return UnavailableReason;
-		},
-		missionName() {
+	computed: {
+		/*missionName() {
 			if (this.dinoz.missionId) {
 				return missionsList[this.dinoz.missionId];
 			}
@@ -637,12 +635,12 @@ export default defineComponent({
 		},
 		storeMission() {
 			return dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id)?.missionHUD || null;
-		},
+		},*/
 		leaderDinoz() {
 			if (!this.dinoz.leaderId) return;
 			return dinozStore().getDinoz(this.dinoz.leaderId);
 		}
-	},*/
+	},
 	watch: {
 		/*storeMission: function (mission: MissionHUD) {
 			this.mission = mission;
@@ -655,8 +653,8 @@ export default defineComponent({
 			deep: false,
 			immediate: true
 		}
-	}
-	/*async mounted() {
+	},
+	async mounted() {
 		await this.loadComponent();
 		const intervalId = window.setInterval(() => this.computeTimeUntilMidnight(), 1000);
 		const intervalId2 = window.setInterval(() => this.computeTimeUntilNextHour(), 1000);
@@ -664,7 +662,7 @@ export default defineComponent({
 	},
 	unmounted() {
 		this.intervals.forEach(clearInterval);
-	}*/
+	}
 });
 </script>
 
