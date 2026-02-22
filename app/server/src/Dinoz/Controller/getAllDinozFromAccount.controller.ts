@@ -9,7 +9,7 @@ export async function getAllDinozFromAccount(userId: string) {
 			id: true,
 			leaderId: true,
 			name: true,
-			//unavailableReason: true,
+			state: true,
 			level: true,
 			placeId: true,
 			canRename: true,

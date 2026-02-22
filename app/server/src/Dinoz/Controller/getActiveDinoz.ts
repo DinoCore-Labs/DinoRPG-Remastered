@@ -1,16 +1,14 @@
+import { DinozState } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
 export async function getActiveDinoz(userId: string) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
-			userId
-			/*OR: [
-				{ unavailableReason: null },
-				{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
-			]*/
+			userId,
+			OR: [{ state: null }, { state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }]
 		},
 		select: {
-			//unavailableReason: true,
+			state: true,
 			user: {
 				select: {
 					id: true,

@@ -19,6 +19,7 @@ export async function getOwnProfileService(userId: string) {
 							statusId: true
 						}
 					},
+					state: true,
 					order: true
 				}
 			},
@@ -81,6 +82,7 @@ export async function getUserProfileService(id: string) {
 							statusId: true
 						}
 					},
+					state: true,
 					order: true
 				}
 			},

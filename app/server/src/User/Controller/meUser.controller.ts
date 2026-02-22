@@ -120,7 +120,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 						level: true,
 						order: true,
 						raceId: true,
-						//unavailableReason: true,
+						state: true,
 						//missions: true,
 						nbrUpFire: true,
 						nbrUpWood: true,
