@@ -1,11 +1,11 @@
 import { type DinozItems } from '@dinorpg/core/models/dinoz/dinozItems.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
-//import { UnavailableReason } from '@dinorpg/core/models/enums/UnavailableReason.js';
 import { type Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyRequest } from 'fastify';
 
+import { DinozState } from '../../../../prisma/index.js';
 import { getDinozEquipItemRequest } from '../../Dinoz/Controller/getDinozEquipItem.controller.js';
 import { backpackSlot } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { getItemMaxQuantity } from '../../utils/user/getItemMaxQuantity.js';
@@ -38,9 +38,9 @@ export async function equipItem(
 		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 	}
 
-	/*if (dinoz.unavailableReason === UnavailableReason.selling) {
-		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
-	}*/
+	if (dinoz.state === DinozState.selling) {
+		throw new ExpectedError(`dinoz.stateReason.${dinoz.state}`);
+	}
 
 	const itemId = Number(req.body.itemId);
 	const equip = Boolean(req.body.equip);

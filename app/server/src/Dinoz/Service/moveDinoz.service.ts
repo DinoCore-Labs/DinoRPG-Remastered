@@ -41,14 +41,14 @@ export async function moveDinozHandler(req: Req, reply: FastifyReply) {
 	let team = user.dinoz;
 
 	// Go through followers and make those that are unavailable leave the group.
-	//const unavailableFollowers = team.filter(d => d.life <= 0 || d.unavailableReason !== null);
+	const unavailableFollowers = team.filter(d => d.life <= 0 || d.state !== null);
 
-	/*if (unavailableFollowers.length > 0) {
+	if (unavailableFollowers.length > 0) {
 		for (const d of unavailableFollowers) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
-		team = team.filter(d => d.life > 0 && d.unavailableReason === null);
-	}*/
+		team = team.filter(d => d.life > 0 && d.state === null);
+	}
 
 	for (const dinozData of team) {
 		//Remove temporary status

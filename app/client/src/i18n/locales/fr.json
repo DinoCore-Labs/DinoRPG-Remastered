@@ -342,6 +342,13 @@
 			"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 			"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
 			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}"
+		},
+		"stateReason": {
+			"frozen": "Votre Dinoz est congelé",
+			"sacrificed": "Votre Dinoz est sacrifié",
+			"selling": "Votre Dinoz est en vente",
+			"superdom": "Votre Dinoz est au superdom",
+			"resting": "Votre Dinoz se repose"
 		}
 	},
 	"race": {

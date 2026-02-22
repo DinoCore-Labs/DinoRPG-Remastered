@@ -1,6 +1,7 @@
 import { ActionFiche } from './dinozActions.js';
 import { DinozRace } from './dinozRace.js';
 import { DinozSkillsDTO } from './dinozSkills.js';
+import { DinozState } from './dinozState.js';
 import { DinozStatusDTO } from './dinozStatus.js';
 
 // This is the model to use to communicate with the front
@@ -8,7 +9,7 @@ export interface DinozFiche {
 	id: number;
 	name: string;
 	display: string;
-	//unavailableReason: UnavailableReason | null;
+	state: DinozState | null;
 	level: number;
 	//missionId: number | undefined | null;
 	//missionHUD: MissionHUD | null;
@@ -56,14 +57,14 @@ export interface DinozFicheLite {
 	maxExperience: number;
 	placeId: number;
 	order: number | null;
-	//unavailableReason: UnavailableReason | null;
+	state: DinozState | null;
 }
 
 // This is the model to use to communicate with the admin panel
 export interface DinozAdminFiche {
 	id: number;
 	name: string;
-	//unavailableReason: UnavailableReason | null;
+	state: DinozState | null;
 	level: number;
 	canChangeName: boolean;
 	leaderId: number | null;
@@ -85,7 +86,7 @@ export interface DinozPublicFiche {
 	id: number;
 	name: string;
 	display: string;
-	//isFrozen: boolean;
+	isFrozen: boolean;
 	life: number;
 	level: number;
 	race: DinozRace;

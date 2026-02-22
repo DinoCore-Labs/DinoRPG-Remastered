@@ -1,3 +1,4 @@
+import { DinozState } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
 export async function getBoxHandlerInformations(playerId: string) {
@@ -9,14 +10,11 @@ export async function getBoxHandlerInformations(playerId: string) {
 			id: true,
 			_count: {
 				select: {
-					dinoz: true /*{
+					dinoz: {
 						where: {
-							OR: [
-								{ unavailableReason: null },
-								{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
-							]
+							OR: [{ state: null }, { state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }]
 						}
-					}*/
+					}
 				}
 			},
 			dinoz: {
@@ -27,13 +25,10 @@ export async function getBoxHandlerInformations(playerId: string) {
 							//missions: { where: { isFinished: true } }
 						}
 					}*/
+				},
+				where: {
+					OR: [{ state: null }, { state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }]
 				}
-				/*where: {
-					OR: [
-						{ unavailableReason: null },
-						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
-					]
-				}*/
 			},
 			rewards: true,
 			cooker: true,

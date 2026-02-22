@@ -9,6 +9,7 @@ import {
 	Dinoz,
 	DinozItems,
 	DinozSkills,
+	DinozState,
 	DinozStatus,
 	Ranking,
 	User,
@@ -34,7 +35,7 @@ export const toDinozFiche = (
 			| 'id'
 			| 'name'
 			| 'display'
-			//| 'unavailableReason'
+			| 'state'
 			| 'level'
 			| 'leaderId'
 			| 'life'
@@ -75,7 +76,7 @@ export const toDinozFiche = (
 		id: dinoz.id,
 		name: dinoz.name,
 		display: dinoz.display,
-		//unavailableReason: dinoz.unavailableReason,
+		state: dinoz.state,
 		level: dinoz.level,
 		//missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId ?? null,
 		leaderId: dinoz.leaderId,
@@ -90,18 +91,18 @@ export const toDinozFiche = (
 		maxItems: backpackSlot(user.engineer, dinoz),
 		status: dinoz.status?.sort((a, b) => a.statusId - b.statusId),
 		borderPlace:
-			//dinoz.unavailableReason !== null || !dinoz.fight || dinoz.leaderId
-			//? []
-			/*:*/ actualPlace(dinoz)
-				.borderPlace.map(placeId => {
-					const place = Object.values(placeList).find(place => place.placeId === placeId);
-					if (!place) {
-						throw new Error(`Place ${placeId} doesn't exist.`);
-					}
-					return place;
-				})
-				//.filter(place => !place.conditions || checkCondition(place.conditions, playerForCondition, dinoz.id))
-				.map(place => place.placeId),
+			dinoz.state !== null || !dinoz.fight || dinoz.leaderId
+				? []
+				: actualPlace(dinoz)
+						.borderPlace.map(placeId => {
+							const place = Object.values(placeList).find(place => place.placeId === placeId);
+							if (!place) {
+								throw new Error(`Place ${placeId} doesn't exist.`);
+							}
+							return place;
+						})
+						//.filter(place => !place.conditions || checkCondition(place.conditions, playerForCondition, dinoz.id))
+						.map(place => place.placeId),
 		nbrUpFire: dinoz.nbrUpFire,
 		nbrUpWood: dinoz.nbrUpWood,
 		nbrUpWater: dinoz.nbrUpWater,
@@ -126,17 +127,7 @@ export const toDinozFiche = (
 export const toDinozFicheLite = (
 	dinoz: Pick<
 		Dinoz,
-		| 'id'
-		| 'name'
-		| 'display'
-		| 'leaderId'
-		| 'life'
-		| 'maxLife'
-		| 'experience'
-		| 'placeId'
-		| 'order'
-		//| 'unavailableReason'
-		| 'level'
+		'id' | 'name' | 'display' | 'leaderId' | 'life' | 'maxLife' | 'experience' | 'placeId' | 'order' | 'state' | 'level'
 	> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 	}
@@ -151,13 +142,13 @@ export const toDinozFicheLite = (
 		experience: dinoz.experience,
 		maxExperience: getMaxXp(dinoz),
 		placeId: dinoz.placeId,
-		order: dinoz.order
-		//unavailableReason: dinoz.unavailableReason
+		order: dinoz.order,
+		state: dinoz.state
 	};
 };
 
 export const toDinozPublicFiche = (
-	dinoz: Pick<Dinoz, 'id' | 'name' | 'display' /*| 'unavailableReason' */ | 'level' | 'raceId' | 'life' | 'order'> & {
+	dinoz: Pick<Dinoz, 'id' | 'name' | 'display' | 'state' | 'level' | 'raceId' | 'life' | 'order'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 	}
 ): DinozPublicFiche => {
@@ -165,7 +156,7 @@ export const toDinozPublicFiche = (
 		id: dinoz.id,
 		name: dinoz.name,
 		display: dinoz.display,
-		//isFrozen: dinoz.unavailableReason === UnavailableReason.frozen,
+		isFrozen: dinoz.state === DinozState.frozen,
 		level: dinoz.level,
 		life: dinoz.life,
 		race: getRace(dinoz.raceId),

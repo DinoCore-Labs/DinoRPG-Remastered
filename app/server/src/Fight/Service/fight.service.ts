@@ -74,20 +74,20 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 		throw new ExpectedError(`Dinoz has to be named.`);
 	}
 
-	/*if (dinozData.unavailableReason !== null) {
+	if (dinozData.state !== null) {
 		throw new ExpectedError(`Dinoz is not able to fight.`);
-	}*/
+	}
 
 	let team = user.dinoz;
 
 	// Go through followers and make those that are unavailable leave the group.
-	const unavailableFollowers = team.filter(d => d.life <= 0 /*|| d.unavailableReason !== null*/);
+	const unavailableFollowers = team.filter(d => d.life <= 0 || d.state !== null);
 
 	if (unavailableFollowers.length > 0) {
 		for (const d of unavailableFollowers) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
-		team = team.filter(d => d.life > 0 /*&& d.unavailableReason === null*/);
+		team = team.filter(d => d.life > 0 && d.state === null);
 	}
 
 	/*if (dinozData.concentration) {
