@@ -135,9 +135,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:color';
 .modal-background {
 	position: absolute;
-	background: transparentize(#09092d, 0.4);
+	background: color.adjust(#09092d, $alpha: -0.4);
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -154,7 +155,6 @@ export default defineComponent({
 	.button {
 		margin-top: 25px;
 	}
-
 	.nothing {
 		display: block;
 		text-align: center;
@@ -215,7 +215,7 @@ export default defineComponent({
 	top: 0;
 	padding: 5px;
 	background-color: #fadcb0;
-	color: transparentize(brown, 0.4);
+	color: color.adjust(brown, $alpha: -0.4);
 	font-size: 0.85em;
 	letter-spacing: 0.03em;
 	text-decoration: none;
