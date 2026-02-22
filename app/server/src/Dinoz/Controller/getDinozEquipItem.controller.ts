@@ -18,8 +18,8 @@ export async function getDinozEquipItemRequest(dinozId: number) {
 			},
 			items: { select: { id: true, itemId: true } },
 			status: { select: { statusId: true } },
-			skills: { select: { skillId: true } }
-			//unavailableReason: true
+			skills: { select: { skillId: true } },
+			state: true
 		}
 	});
 

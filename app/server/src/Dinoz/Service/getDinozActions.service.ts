@@ -6,7 +6,7 @@ import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.js';
 
-import { Dinoz, DinozSkills, DinozStatus } from '../../../../prisma/index.js';
+import { Dinoz, DinozSkills, DinozState, DinozStatus } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { prisma } from '../../prisma.js';
 import { checkCondition } from '../../utils/checkCondition.js';
@@ -27,7 +27,7 @@ export async function getAvailableActions(
 		| 'gather'
 		| 'remaining'
 		| 'maxLife'
-		//| 'unavailableReason'
+		| 'state'
 		| 'placeId'
 		| 'life'
 	> & {
@@ -43,24 +43,24 @@ export async function getAvailableActions(
 
 	const dinozPlace = actualPlace(dinoz);
 
-	/*if (dinoz.unavailableReason === UnavailableReason.unfreezing) {
+	if (dinoz.state === DinozState.unfreezing) {
 		return [];
-	}*/
+	}
 
 	// Nothing else if dinoz is being sold
-	/*if (dinoz.unavailableReason === UnavailableReason.selling) {
+	if (dinoz.state === DinozState.selling) {
 		return [actionList[Action.MARKET]];
-	}*/
+	}
 
 	// Stop congel
-	/*if (dinoz.unavailableReason === UnavailableReason.frozen) {
+	if (dinoz.state === DinozState.frozen) {
 		return [actionList[Action.STOP_CONGEL]];
-	}*/
+	}
 
 	// Stop rest
-	/*if (dinoz.unavailableReason === UnavailableReason.resting) {
+	if (dinoz.state === DinozState.resting) {
 		return [actionList[Action.STOP_REST]];
-	}*/
+	}
 
 	// Leaders actions
 	if (dinoz.leaderId) {
@@ -71,14 +71,14 @@ export async function getAvailableActions(
 		const potentialDinozToFollow = await prisma.dinoz.findMany({
 			where: {
 				id: { not: dinoz.id },
-				userId: user.id
-				//unavailableReason: null
+				userId: user.id,
+				state: null
 			},
 			select: {
 				id: true,
 				placeId: true,
 				leaderId: true,
-				//unavailableReason: true,
+				state: true,
 				life: true,
 				followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
 				skills: { select: { skillId: true, state: true } }

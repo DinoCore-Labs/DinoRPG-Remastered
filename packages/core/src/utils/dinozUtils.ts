@@ -1,5 +1,6 @@
 import { DinozFiche } from '../models/dinoz/dinozFiche.js';
 import { levelList } from '../models/dinoz/dinozLevel.js';
+import { DinozState } from '../models/dinoz/dinozState.js';
 import { DinozForMaxXp } from '../models/dinoz/dinozXP.js';
 import { raceList } from '../models/dinoz/raceList.js';
 import { DinozStatusId } from '../models/dinoz/statusList.js';
@@ -118,7 +119,7 @@ export type FollowableDinozLike = {
 	id: number;
 	placeId: number;
 	leaderId: number | null;
-	//unavailableReason: unknown | null;
+	state: DinozState | null;
 	followers: readonly unknown[];
 	skills: readonly DinozSkillLike[];
 	life: number;
@@ -144,7 +145,7 @@ export const getFollowableDinoz = <T extends FollowableDinozLike>(
 		if (dinoz.id === potentialFollower.id) return false;
 
 		// Filter out unavailable Dinoz (selling, resting...)
-		//if (dinoz.unavailableReason !== null) return false;
+		if (dinoz.state !== null) return false;
 
 		// Filter out Dinoz that already have a leader
 		if (dinoz.leaderId !== null) return false;

@@ -28,7 +28,7 @@ export async function getDinozFightDataRequest(dinozId: number, userId: string) 
 					experience: true,
 					nbrUpFire: true,
 					nbrUpWood: true,
-					//unavailableReason: true,
+					state: true,
 					nbrUpWater: true,
 					nbrUpLightning: true,
 					nbrUpAir: true,
