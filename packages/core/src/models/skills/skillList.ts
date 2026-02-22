@@ -4120,7 +4120,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		name: 'Hades',
 		type: SkillType.I,
 		energy: Energy.E60,
-		element: [ElementType.AIR, ElementType.WOOD],
+		element: [ElementType.AIR, ElementType.WATER],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.HALEINE_FETIVE, Skill.TENACITE, Skill.COUP_SOURNOIS, Skill.INVOCATEUR],
