@@ -1,5 +1,11 @@
 # @dinorpg/bot
 
+## 0.2.3
+
+### Patch Changes
+
+- 19e315b: chore: update dependencies and dev dependencies
+
 ## 0.2.2
 
 ### Patch Changes

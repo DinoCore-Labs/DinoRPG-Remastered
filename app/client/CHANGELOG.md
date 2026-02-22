@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.6.2
+
+### Patch Changes
+
+- 19e315b: chore: update dependencies and dev dependencies
+
 ## 0.6.1
 
 ### Patch Changes
