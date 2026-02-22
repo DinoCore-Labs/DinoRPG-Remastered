@@ -2,6 +2,18 @@
 
 ## 🔹 Core
 
+## 0.5.3
+
+### Patch Changes
+
+- 7d5974f: feat: dinoz state
+
+## 0.5.2
+
+### Patch Changes
+
+- 19e315b: chore: update dependencies and dev dependencies
+
 ## 0.5.1
 
 ### Patch Changes
@@ -84,6 +96,12 @@
 
 ## 🔹 Bot
 
+## 0.2.3
+
+### Patch Changes
+
+- 19e315b: chore: update dependencies and dev dependencies
+
 ## 0.2.2
 
 ### Patch Changes
@@ -115,6 +133,22 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.6.3
+
+### Patch Changes
+
+- 7d5974f: feat: dinoz state
+- Updated dependencies [7d5974f]
+  - @dinorpg/core@0.5.3
+
+## 0.6.2
+
+### Patch Changes
+
+- 19e315b: chore: update dependencies and dev dependencies
+- Updated dependencies [19e315b]
+  - @dinorpg/core@0.5.2
 
 ## 0.6.1
 
@@ -242,6 +276,18 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.6.3
+
+### Patch Changes
+
+- 7d5974f: feat: dinoz state
+
+## 0.6.2
+
+### Patch Changes
+
+- 19e315b: chore: update dependencies and dev dependencies
 
 ## 0.6.1
 
