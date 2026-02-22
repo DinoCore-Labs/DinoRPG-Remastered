@@ -75,7 +75,7 @@ import { userStore } from '../../store/userStore.js';
 import { placeList } from '../../constants/place.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 //import { orderDinozList } from '@drpg/core/utils/DinozUtils';
-//import { UnavailableReason } from '@drpg/prisma/enums';
+import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 
 export default defineComponent({
 	name: 'DinozList',
@@ -85,7 +85,8 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
-			userStore: userStore()
+			userStore: userStore(),
+			DINOZ_STATE
 			//hasPDA: false as boolean
 		};
 	},

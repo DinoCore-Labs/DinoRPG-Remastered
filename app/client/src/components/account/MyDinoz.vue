@@ -55,7 +55,6 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			//UnavailableReason,
 			raceList: raceList,
 			statusList: statusList,
 			position: dinozPlacement,
@@ -96,8 +95,8 @@ export default defineComponent({
 				this.profile?.dinoz.slice().sort((a, b) => {
 					return a.level - b.level;
 				}) ?? [];
-		}
-		/*updateSortedDinozList() {
+		},
+		updateSortedDinozList() {
 			this.sortedDinozList =
 				this.profile?.dinoz
 					.slice()
@@ -121,7 +120,7 @@ export default defineComponent({
 						}
 						return 0;
 					}) ?? [];
-		}*/
+		}
 	},
 	watch: {
 		profile: {
