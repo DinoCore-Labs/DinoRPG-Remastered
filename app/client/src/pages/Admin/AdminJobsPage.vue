@@ -1,17 +1,13 @@
 <template>
 	<div class="adminJobs">
 		<TitleHeader title="Admin" header="Jobs :" sub-header="Scheduler" />
-
 		<DZDisclaimer help round content="admin.jobs.disclaimer" />
-
 		<div class="toolbar">
 			<DZButton :disabled="loading" @click="refresh()">
 				{{ loading ? 'Loading…' : 'Refresh' }}
 			</DZButton>
 		</div>
-
 		<div v-if="error" class="error">{{ error }}</div>
-
 		<!-- Jobs -->
 		<DZTable>
 			<tr>
@@ -24,7 +20,6 @@
 				<th>Error</th>
 				<th></th>
 			</tr>
-
 			<tr v-for="job in jobs" :key="job.key" :class="{ selected: job.key === selectedKey }" @click="select(job.key)">
 				<td class="mono">{{ job.key }}</td>
 				<td>{{ job.name }}</td>
@@ -40,19 +35,16 @@
 				</td>
 			</tr>
 		</DZTable>
-
 		<!-- Runs -->
 		<div v-if="selectedKey" class="runs">
 			<h3>
 				Runs: <span class="mono">{{ selectedKey }}</span>
 			</h3>
-
 			<div class="toolbar">
 				<DZButton small :disabled="runsLoading" @click="refreshRuns()">
 					{{ runsLoading ? 'Loading…' : 'Refresh runs' }}
 				</DZButton>
 			</div>
-
 			<DZTable>
 				<tr>
 					<th>Started</th>
@@ -61,7 +53,6 @@
 					<th>By</th>
 					<th>Error</th>
 				</tr>
-
 				<tr v-for="r in runs" :key="r.id">
 					<td class="mono">{{ formatDate(r.startedAt) }}</td>
 					<td class="mono">{{ formatDate(r.endedAt) }}</td>
