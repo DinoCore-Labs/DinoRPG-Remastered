@@ -51,6 +51,6 @@
 		"prettier": "^3.8.1",
 		"tsc-watch": "^7.2.0",
 		"typescript": "~5.9.3",
-		"vue-eslint-parser": "^10.2.0"
+		"vue-eslint-parser": "^10.4.0"
 	}
 }
