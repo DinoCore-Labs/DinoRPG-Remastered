@@ -50,7 +50,7 @@ import DinozEquip from './DinozEquip.vue';
 import DinozStatus from './DinozStatus.vue';
 import TitleHeader from '../utils/TitleHeader.vue';
 import type DinozAnimation from './DinozAnimation.vue';
-//import { UnavailableReason } from '@drpg/prisma/enums';
+import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -64,7 +64,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			//UnavailableReason,
+			DINOZ_STATE,
 			dinozStore: dinozStore(),
 			nameChoosen: undefined as boolean | undefined,
 			position: dinozPlacement
