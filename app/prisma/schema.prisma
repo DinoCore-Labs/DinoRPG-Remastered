@@ -10,12 +10,12 @@ datasource db {
 }
 
 model Dinoz {
-  id                 Int      @id @default(autoincrement())
-  name               String   @db.VarChar(32)
-  canRename          Boolean  @default(false)
+  id                 Int         @id @default(autoincrement())
+  name               String      @db.VarChar(32)
+  canRename          Boolean     @default(false)
   raceId             Int
-  display            String   @db.VarChar
-  level              Int      @default(1)
+  display            String      @db.VarChar
+  level              Int         @default(1)
   life               Int
   maxLife            Int
   experience         Int
@@ -27,11 +27,12 @@ model Dinoz {
   nextUpElementId    Int
   nextUpAltElementId Int
   placeId            Int
-  remaining          Int      @default(3)
+  remaining          Int         @default(3)
   order              Int?
-  createdDate        DateTime @default(now()) @db.Timestamptz(3)
-  updatedDate        DateTime @updatedAt @db.Timestamptz(3)
-  seed               String   @db.Uuid
+  createdDate        DateTime    @default(now()) @db.Timestamptz(3)
+  updatedDate        DateTime    @updatedAt @db.Timestamptz(3)
+  seed               String      @db.Uuid
+  state              DinozState?
 
   fight            Boolean                 @default(true)
   gather           Boolean                 @default(true)
@@ -301,6 +302,15 @@ model UserWallet {
   user   User      @relation(fields: [userId], references: [id])
 
   @@unique([userId, type])
+}
+
+enum DinozState {
+  frozen
+  sacrificed
+  selling
+  superdom
+  resting
+  unfreezing
 }
 
 enum Language {

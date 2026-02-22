@@ -143,6 +143,7 @@ exports.Prisma.DinozScalarFieldEnum = {
   createdDate: 'createdDate',
   updatedDate: 'updatedDate',
   seed: 'seed',
+  state: 'state',
   fight: 'fight',
   gather: 'gather',
   leaderId: 'leaderId',
@@ -333,6 +334,15 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.DinozState = exports.$Enums.DinozState = {
+  frozen: 'frozen',
+  sacrificed: 'sacrificed',
+  selling: 'selling',
+  superdom: 'superdom',
+  resting: 'resting',
+  unfreezing: 'unfreezing'
+};
+
 exports.JobType = exports.$Enums.JobType = {
   DAILY_AT: 'DAILY_AT',
   INTERVAL: 'INTERVAL'

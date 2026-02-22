@@ -32,6 +32,7 @@ model Dinoz {
   createdDate        DateTime               @default(now())   @db.Timestamptz(3)
   updatedDate        DateTime               @updatedAt        @db.Timestamptz(3)
   seed               String                 @db.Uuid
+  state              DinozState? 
 
   fight              Boolean                @default(true)
   gather             Boolean                @default(true)
@@ -301,6 +302,15 @@ model UserWallet {
   user        User      @relation(fields: [userId], references: [id])
 
   @@unique([userId, type])
+}
+
+enum DinozState {
+  frozen
+  sacrificed
+  selling
+  superdom
+  resting
+  unfreezing
 }
 
 enum Language {
