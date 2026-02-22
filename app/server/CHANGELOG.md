@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.6.2
+
+### Patch Changes
+
+- 19e315b: chore: update dependencies and dev dependencies
+- Updated dependencies [19e315b]
+  - @dinorpg/core@0.5.2
+
 ## 0.6.1
 
 ### Patch Changes
