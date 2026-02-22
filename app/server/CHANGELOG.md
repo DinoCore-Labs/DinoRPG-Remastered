@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.6.3
+
+### Patch Changes
+
+- 7d5974f: feat: dinoz state
+- Updated dependencies [7d5974f]
+  - @dinorpg/core@0.5.3
+
 ## 0.6.2
 
 ### Patch Changes
