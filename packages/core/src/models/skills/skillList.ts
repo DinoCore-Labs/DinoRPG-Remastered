@@ -2506,7 +2506,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		name: 'Ondine',
 		type: SkillType.I,
 		energy: Energy.E50,
-		element: [ElementType.WATER, ElementType.LIGHTNING],
+		element: [ElementType.WATER, ElementType.FIRE],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VENGEANCE, Skill.SANS_PITIE, Skill.INVOCATEUR],
