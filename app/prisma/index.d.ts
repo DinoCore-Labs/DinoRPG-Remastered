@@ -113,7 +113,19 @@ export type UserWallet = $Result.DefaultSelection<Prisma.$UserWalletPayload>
  * Enums
  */
 export namespace $Enums {
-  export const Language: {
+  export const DinozState: {
+  frozen: 'frozen',
+  sacrificed: 'sacrificed',
+  selling: 'selling',
+  superdom: 'superdom',
+  resting: 'resting',
+  unfreezing: 'unfreezing'
+};
+
+export type DinozState = (typeof DinozState)[keyof typeof DinozState]
+
+
+export const Language: {
   FR: 'FR',
   EN: 'EN',
   ES: 'ES',
@@ -168,6 +180,10 @@ export const JobStatus: {
 export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]
 
 }
+
+export type DinozState = $Enums.DinozState
+
+export const DinozState: typeof $Enums.DinozState
 
 export type Language = $Enums.Language
 
@@ -2850,6 +2866,7 @@ export namespace Prisma {
     createdDate: Date | null
     updatedDate: Date | null
     seed: string | null
+    state: $Enums.DinozState | null
     fight: boolean | null
     gather: boolean | null
     leaderId: number | null
@@ -2879,6 +2896,7 @@ export namespace Prisma {
     createdDate: Date | null
     updatedDate: Date | null
     seed: string | null
+    state: $Enums.DinozState | null
     fight: boolean | null
     gather: boolean | null
     leaderId: number | null
@@ -2908,6 +2926,7 @@ export namespace Prisma {
     createdDate: number
     updatedDate: number
     seed: number
+    state: number
     fight: number
     gather: number
     leaderId: number
@@ -2979,6 +2998,7 @@ export namespace Prisma {
     createdDate?: true
     updatedDate?: true
     seed?: true
+    state?: true
     fight?: true
     gather?: true
     leaderId?: true
@@ -3008,6 +3028,7 @@ export namespace Prisma {
     createdDate?: true
     updatedDate?: true
     seed?: true
+    state?: true
     fight?: true
     gather?: true
     leaderId?: true
@@ -3037,6 +3058,7 @@ export namespace Prisma {
     createdDate?: true
     updatedDate?: true
     seed?: true
+    state?: true
     fight?: true
     gather?: true
     leaderId?: true
@@ -3153,6 +3175,7 @@ export namespace Prisma {
     createdDate: Date
     updatedDate: Date
     seed: string
+    state: $Enums.DinozState | null
     fight: boolean
     gather: boolean
     leaderId: number | null
@@ -3201,6 +3224,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedDate?: boolean
     seed?: boolean
+    state?: boolean
     fight?: boolean
     gather?: boolean
     leaderId?: boolean
@@ -3238,6 +3262,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedDate?: boolean
     seed?: boolean
+    state?: boolean
     fight?: boolean
     gather?: boolean
     leaderId?: boolean
@@ -3269,6 +3294,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedDate?: boolean
     seed?: boolean
+    state?: boolean
     fight?: boolean
     gather?: boolean
     leaderId?: boolean
@@ -3300,13 +3326,14 @@ export namespace Prisma {
     createdDate?: boolean
     updatedDate?: boolean
     seed?: boolean
+    state?: boolean
     fight?: boolean
     gather?: boolean
     leaderId?: boolean
     userId?: boolean
   }
 
-  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "canRename" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "remaining" | "order" | "createdDate" | "updatedDate" | "seed" | "fight" | "gather" | "leaderId" | "userId", ExtArgs["result"]["dinoz"]>
+  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "canRename" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "remaining" | "order" | "createdDate" | "updatedDate" | "seed" | "state" | "fight" | "gather" | "leaderId" | "userId", ExtArgs["result"]["dinoz"]>
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
     followers?: boolean | Dinoz$followersArgs<ExtArgs>
@@ -3360,6 +3387,7 @@ export namespace Prisma {
       createdDate: Date
       updatedDate: Date
       seed: string
+      state: $Enums.DinozState | null
       fight: boolean
       gather: boolean
       leaderId: number | null
@@ -3816,6 +3844,7 @@ export namespace Prisma {
     readonly createdDate: FieldRef<"Dinoz", 'DateTime'>
     readonly updatedDate: FieldRef<"Dinoz", 'DateTime'>
     readonly seed: FieldRef<"Dinoz", 'String'>
+    readonly state: FieldRef<"Dinoz", 'DinozState'>
     readonly fight: FieldRef<"Dinoz", 'Boolean'>
     readonly gather: FieldRef<"Dinoz", 'Boolean'>
     readonly leaderId: FieldRef<"Dinoz", 'Int'>
@@ -24823,6 +24852,7 @@ export namespace Prisma {
     createdDate: 'createdDate',
     updatedDate: 'updatedDate',
     seed: 'seed',
+    state: 'state',
     fight: 'fight',
     gather: 'gather',
     leaderId: 'leaderId',
@@ -25138,6 +25168,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DinozState'
+   */
+  export type EnumDinozStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DinozState'>
+    
+
+
+  /**
+   * Reference to a field of type 'DinozState[]'
+   */
+  export type ListEnumDinozStateFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DinozState[]'>
+    
+
+
+  /**
    * Reference to a field of type 'JobType'
    */
   export type EnumJobTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobType'>
@@ -25278,6 +25322,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     seed?: UuidFilter<"Dinoz"> | string
+    state?: EnumDinozStateNullableFilter<"Dinoz"> | $Enums.DinozState | null
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
@@ -25314,6 +25359,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedDate?: SortOrder
     seed?: SortOrder
+    state?: SortOrderInput | SortOrder
     fight?: SortOrder
     gather?: SortOrder
     leaderId?: SortOrderInput | SortOrder
@@ -25353,6 +25399,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     seed?: UuidFilter<"Dinoz"> | string
+    state?: EnumDinozStateNullableFilter<"Dinoz"> | $Enums.DinozState | null
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
@@ -25389,6 +25436,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedDate?: SortOrder
     seed?: SortOrder
+    state?: SortOrderInput | SortOrder
     fight?: SortOrder
     gather?: SortOrder
     leaderId?: SortOrderInput | SortOrder
@@ -25426,6 +25474,7 @@ export namespace Prisma {
     createdDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     seed?: UuidWithAggregatesFilter<"Dinoz"> | string
+    state?: EnumDinozStateNullableWithAggregatesFilter<"Dinoz"> | $Enums.DinozState | null
     fight?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     gather?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     leaderId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
@@ -26611,6 +26660,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
@@ -26645,6 +26695,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
@@ -26678,6 +26729,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
@@ -26712,6 +26764,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -26746,6 +26799,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
@@ -26774,6 +26828,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
   }
@@ -26801,6 +26856,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28024,6 +28080,13 @@ export namespace Prisma {
     not?: NestedUuidFilter<$PrismaModel> | string
   }
 
+  export type EnumDinozStateNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.DinozState | EnumDinozStateFieldRefInput<$PrismaModel> | null
+    in?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumDinozStateNullableFilter<$PrismaModel> | $Enums.DinozState | null
+  }
+
   export type DinozNullableScalarRelationFilter = {
     is?: DinozWhereInput | null
     isNot?: DinozWhereInput | null
@@ -28112,6 +28175,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedDate?: SortOrder
     seed?: SortOrder
+    state?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
     leaderId?: SortOrder
@@ -28161,6 +28225,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedDate?: SortOrder
     seed?: SortOrder
+    state?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
     leaderId?: SortOrder
@@ -28190,6 +28255,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedDate?: SortOrder
     seed?: SortOrder
+    state?: SortOrder
     fight?: SortOrder
     gather?: SortOrder
     leaderId?: SortOrder
@@ -28301,6 +28367,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type EnumDinozStateNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DinozState | EnumDinozStateFieldRefInput<$PrismaModel> | null
+    in?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumDinozStateNullableWithAggregatesFilter<$PrismaModel> | $Enums.DinozState | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumDinozStateNullableFilter<$PrismaModel>
+    _max?: NestedEnumDinozStateNullableFilter<$PrismaModel>
   }
 
   export type DinozItemsCountOrderByAggregateInput = {
@@ -29460,6 +29536,10 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type NullableEnumDinozStateFieldUpdateOperationsInput = {
+    set?: $Enums.DinozState | null
+  }
+
   export type DinozUpdateOneWithoutFollowersNestedInput = {
     create?: XOR<DinozCreateWithoutFollowersInput, DinozUncheckedCreateWithoutFollowersInput>
     connectOrCreate?: DinozCreateOrConnectWithoutFollowersInput
@@ -30382,6 +30462,13 @@ export namespace Prisma {
     not?: NestedUuidFilter<$PrismaModel> | string
   }
 
+  export type NestedEnumDinozStateNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.DinozState | EnumDinozStateFieldRefInput<$PrismaModel> | null
+    in?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumDinozStateNullableFilter<$PrismaModel> | $Enums.DinozState | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -30487,6 +30574,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedEnumDinozStateNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DinozState | EnumDinozStateFieldRefInput<$PrismaModel> | null
+    in?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumDinozStateNullableWithAggregatesFilter<$PrismaModel> | $Enums.DinozState | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumDinozStateNullableFilter<$PrismaModel>
+    _max?: NestedEnumDinozStateNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumJobTypeFilter<$PrismaModel = never> = {
@@ -30724,6 +30821,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
@@ -30757,6 +30855,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
@@ -30794,6 +30893,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     followers?: DinozCreateNestedManyWithoutLeaderInput
@@ -30827,6 +30927,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     userId: string
@@ -31019,6 +31120,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
@@ -31052,6 +31154,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -31104,6 +31207,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
     seed?: UuidFilter<"Dinoz"> | string
+    state?: EnumDinozStateNullableFilter<"Dinoz"> | $Enums.DinozState | null
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
@@ -31300,6 +31404,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
@@ -31333,6 +31438,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
@@ -31381,6 +31487,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
@@ -31414,6 +31521,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -31446,6 +31554,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
@@ -31479,6 +31588,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
@@ -31527,6 +31637,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
@@ -31560,6 +31671,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -31592,6 +31704,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
@@ -31625,6 +31738,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
@@ -31673,6 +31787,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
@@ -31706,6 +31821,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -31738,6 +31854,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
@@ -31771,6 +31888,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
@@ -31819,6 +31937,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
@@ -31852,6 +31971,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -32345,6 +32465,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leader?: DinozCreateNestedOneWithoutFollowersInput
@@ -32378,6 +32499,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
@@ -33723,6 +33845,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     userId: string
@@ -33771,6 +33894,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     followers?: DinozUpdateManyWithoutLeaderNestedInput
@@ -33804,6 +33928,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
@@ -33837,6 +33962,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
@@ -33996,6 +34122,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedDate?: Date | string
     seed: string
+    state?: $Enums.DinozState | null
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
@@ -34134,6 +34261,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leader?: DinozUpdateOneWithoutFollowersNestedInput
@@ -34167,6 +34295,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -34200,6 +34329,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
