@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.5.3
+
+### Patch Changes
+
+- 7d5974f: feat: dinoz state
+
 ## 0.5.2
 
 ### Patch Changes

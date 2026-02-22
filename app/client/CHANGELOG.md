@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.6.3
+
+### Patch Changes
+
+- 7d5974f: feat: dinoz state
+
 ## 0.6.2
 
 ### Patch Changes
