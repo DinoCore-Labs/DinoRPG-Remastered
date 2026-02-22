@@ -1,6 +1,6 @@
 <template>
 	<div class="adminJobs">
-		<TitleHeader title="Admin" header="Jobs" sub-header="Scheduler" />
+		<TitleHeader title="Admin" header="Jobs :" sub-header="Scheduler" />
 
 		<DZDisclaimer help round content="admin.jobs.disclaimer" />
 
@@ -173,6 +173,8 @@ export default defineComponent({
 
 <style scoped>
 .adminJobs {
+	display: flex;
+	flex-direction: column;
 	padding: 12px;
 }
 .toolbar {
