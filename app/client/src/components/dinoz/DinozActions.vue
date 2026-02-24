@@ -463,31 +463,25 @@ export default defineComponent({
 					}
 					break;
 				case Action.CHANGE_LEADER:
-					/*try {
-						const followerId = +this.$route.params.id;
+					try {
+						const followerId = this.dinozId;
 						const currentLeader = this.dinozStore.getDinozList.find(d => d.id === followerId)?.leaderId;
-
 						if (!currentLeader) {
 							this.$toast.open({ message: formatText(this.$t(`toast.noFollowers`)), type: 'error' });
 							return;
 						}
-
 						await DinozService.changeLeader(followerId, currentLeader);
-
 						const dinozList = this.dinozStore.getDinozList;
 						if (!dinozList) {
 							this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 							return;
 						}
-
 						this.dinozStore.setDinozList(orderDinozList(dinozList));
-
 						this.$toast.open({ message: formatText(this.$t(`toast.leaderChanged`)), type: 'success' });
-
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}*/
+					}
 					break;
 				case Action.CONGEL:
 					/*try {
