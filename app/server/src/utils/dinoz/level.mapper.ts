@@ -142,7 +142,7 @@ export const getDinozUpChance = (
 	};
 };
 
-export const reincarnateDinoz = (race: DinozRace, display: string, seed: string): Prisma.DinozUpdateInput => {
+export const reincarnateDinoz = (race: DinozRace, display: string): Prisma.DinozUpdateInput => {
 	const fullDisplay = [...display];
 	fullDisplay[1] = '0';
 
@@ -173,6 +173,8 @@ export const reincarnateDinoz = (race: DinozRace, display: string, seed: string)
 				break;
 		}
 	}
+	// New destiny
+	let seed = randomUUID();
 
 	return {
 		experience: 0,
@@ -187,7 +189,8 @@ export const reincarnateDinoz = (race: DinozRace, display: string, seed: string)
 		display: fullDisplay.toString().replaceAll(',', ''),
 		maxLife: 100,
 		placeId: PlaceEnum.DINOVILLE,
-		life: 1
+		life: 1,
+		seed: seed
 		//FBTournamentStep: 0
 	};
 };

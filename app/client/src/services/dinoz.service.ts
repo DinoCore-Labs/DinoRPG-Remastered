@@ -46,5 +46,11 @@ export const DinozService = {
 			.put(`/dinoz/resurrect/${dinozId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	async reincarnate(dinozId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/reincarnate/${dinozId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

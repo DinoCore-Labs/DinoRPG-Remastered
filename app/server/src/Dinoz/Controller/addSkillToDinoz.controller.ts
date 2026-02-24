@@ -17,3 +17,9 @@ export async function addSkillToDinoz(dinozId: number, skillId: number /*event?:
 	});
 	//}
 }
+
+export async function removeSkillFromDinoz(dinozId: number, skillId: number) {
+	await prisma.dinozSkills.delete({
+		where: { skillId_dinozId: { dinozId, skillId } }
+	});
+}

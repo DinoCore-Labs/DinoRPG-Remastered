@@ -3,6 +3,7 @@ import type { FastifyInstance } from 'fastify';
 import { getDinozFiche } from '../Service/getDinozFiche.service.js';
 import { getDinozSkillHandler } from '../Service/getDinozSkill.service.js';
 import { moveDinozHandler } from '../Service/moveDinoz.service.js';
+import { reincarnate } from '../Service/reincarnateDinoz.service.js';
 import { resurrectDinoz } from '../Service/resurrectDinoz.service.js';
 import { setDinozName } from '../Service/setDinozName.service.js';
 import { setSkillStateHandler } from '../Service/setSkillState.service.js';
@@ -19,4 +20,5 @@ export async function dinozRoutes(app: FastifyInstance) {
 	app.post('/:id/irma', { preHandler: app.authenticate }, useIrma);
 	app.put('/move', { preHandler: app.authenticate }, moveDinozHandler);
 	app.put('/resurrect/:id', { preHandler: app.authenticate }, resurrectDinoz);
+	app.post('/reincarnate/:id', { preHandler: app.authenticate }, reincarnate);
 }

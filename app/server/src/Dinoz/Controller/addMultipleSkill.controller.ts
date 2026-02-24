@@ -39,3 +39,15 @@ export async function addMultipleUnlockableSkills(
 	});
 	//}
 }
+
+export async function removeAllSkillFromDinoz(dinozId: number) {
+	await prisma.dinozSkills.deleteMany({
+		where: { dinozId: dinozId }
+	});
+}
+
+export async function removeAllUnlockableSkillsFromDinoz(dinozId: number) {
+	await prisma.dinozSkillsUnlockable.deleteMany({
+		where: { dinozId: dinozId }
+	});
+}
