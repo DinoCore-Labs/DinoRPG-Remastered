@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-//import { DinozService } from '../../services/index.js';
+import { DinozService } from '../../services/dinoz.service.js';
 import eventBus from '../../events/index.js';
 import { getFollowableDinoz, orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { errorHandler } from '../../utils/errorHandler.js';
@@ -73,7 +73,7 @@ export default defineComponent({
 		},
 		async followDinoz(targetId: number) {
 			try {
-				//await DinozService.follow(this.dinozId, targetId);
+				await DinozService.follow(this.dinoz, targetId);
 
 				// Reset the list of dinoz available to follow
 				this.dinozAvailableToFollow = [];
