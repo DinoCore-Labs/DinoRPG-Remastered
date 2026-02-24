@@ -17,28 +17,28 @@
 			</template>
 			<!--<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />-->
 			<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
-				{{ $t('hud.following') }}
+				{{ $t('dinoz.hud.following') }}
 				<template #content>
-					{{ $t(`hud.follow`, { leader: leaderDinoz.name }) }}
+					{{ $t(`dinoz.hud.follow`, { leader: leaderDinoz.name }) }}
 				</template>
 			</Tippy>
 			<!--
 			<p class="follow" v-if="dinoz.tournament && dinoz.level >= dinoz.tournament.levelLimit">
-				{{ $t('hud.dojoTeam', { max: dinoz.tournament.levelLimit }) }}
+				{{ $t('dinoz.hud.dojoTeam', { max: dinoz.tournament.levelLimit }) }}
 			</p>-->
 			<DZDisclaimer
 				v-if="dinoz.state === DINOZ_STATE.unfreezing"
-				:content="$t('hud.unfreezeCountdown', { time: timeUntilMidnight })"
+				:content="$t('dinoz.hud.unfreezeCountdown', { time: timeUntilMidnight })"
 				help
 			/>
 			<DZDisclaimer
 				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life < dinoz.maxLife / 2"
-				:content="$t('hud.resting', { hp: hpRegen, min: minutesBeforeHour })"
+				:content="$t('dinoz.hud.resting', { hp: hpRegen, min: minutesBeforeHour })"
 				timer
 			/>
 			<DZDisclaimer
 				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life >= dinoz.maxLife / 2"
-				:content="$t('hud.restEnd')"
+				:content="$t('dinoz.hud.restEnd')"
 				help
 			/>
 			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :dinoz="dinozId"></DZFollow>

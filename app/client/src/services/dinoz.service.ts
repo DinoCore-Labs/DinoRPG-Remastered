@@ -52,5 +52,11 @@ export const DinozService = {
 			.post(`/dinoz/reincarnate/${dinozId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	async follow(dinozId: number, targetId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/${dinozId}/follow/${targetId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
