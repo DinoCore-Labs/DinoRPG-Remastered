@@ -7,7 +7,6 @@ import { getAvailableActions } from './getDinozActions.service.js';
 
 // import { TournamentManager } from '../../tournament/TournamentManager.js';
 // import { isDinozInTournament } from '../../tournament/isDinozInTournament.js';
-// import { getAvailableActions } from '../../actions/getAvailableActions.js';
 
 type Params = { id: string };
 

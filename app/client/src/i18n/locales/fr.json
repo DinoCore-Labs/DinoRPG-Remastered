@@ -197,7 +197,24 @@
 		"accept": "Oui",
 		"reject": "Non"
 	},
+	"resurrection": {
+		"choice1": {
+			"name": "**Choix 1 :**&&Résurrection",
+			"resurrect": "Ressusciter",
+			"explanation": "Vous pouvez ressusciter votre Dinoz, immédiatement et gratuitement :",
+			"list1": "il retournera à Dinoville",
+			"list2": "il perdra la moitié de ses points d'expérience actuels"
+		},
+		"choice2": {
+			"name": "**Choix 2 :**&&Potion d'Ange",
+			"resurrect": "Utiliser une potion",
+			"explanation": "Vous pouvez aussi ressusciter votre Dinoz en achetant une Potion d'Ange dans la {boutique} :",
+			"list1": "il restera au lieu actuel",
+			"list2": "il ne perdra aucun point d'expérience"
+		}
+	},
 	"modal": {
+		"close": "Fermer",
 		"continue": "Continuer"
 	},
 	"toast": {
@@ -207,6 +224,15 @@
 		"action": "Vous avez consommé {value} :irma: et pouvez refaire des actions.",
 		"resurrect": "Votre Dinoz est ressuscité.",
 		"egg": "Vous avez ouvert un œuf de {value}.",
+		"special": {
+			"box_common": "La boîte commune contenait {qty} {value} !",
+			"box_rare": "La boîte rare contenait {qty} {value} !",
+			"box_epic": "La boîte épique contenait {qty} {value} !",
+			"box_legendary": "La boîte légendaire contenait {qty} {value} !",
+			"devil_ointment": "Vous avez soigné le statut maudit de votre Dinoz.",
+			"amnesic_rice": "Votre Dinoz ne sait plus comment il se prénomme, il a également perdu toute son expérience :xp: !",
+			"pampleboum": "Ouille ! Il y avait un noyau dans ce pampleboum !"
+		},
 		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
 		"Invalid_credentials": "Identifiants incorrects.",
 		"Missing_device_cookie": "Impossible d’identifier votre navigateur. Veuillez autoriser les cookies et réessayer.",

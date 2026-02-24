@@ -145,7 +145,7 @@ export async function getAvailableActions(
 	}*/
 
 	// Refresh action
-	if (!dinoz.leaderId && !dinoz.fight /*|| !dinoz.gather*/) {
+	if ((!dinoz.leaderId && !dinoz.fight) || !dinoz.gather) {
 		if (dinoz.remaining > 0) {
 			availableActions.push(actionList[Action.ACTION]);
 		} else {

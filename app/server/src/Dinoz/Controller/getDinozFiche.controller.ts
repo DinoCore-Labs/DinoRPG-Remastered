@@ -58,3 +58,25 @@ export async function getDinozFicheRequest(dinozId: number, userId: string) {
 
 	return user;
 }
+
+export async function getDinozFicheLiteRequest(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			life: true,
+			experience: true,
+			name: true,
+			followers: true,
+			placeId: true,
+			user: {
+				select: {
+					id: true
+					//quests: { select: { questId: true, progression: true } }
+				}
+			}
+		}
+	});
+
+	return dinoz;
+}
