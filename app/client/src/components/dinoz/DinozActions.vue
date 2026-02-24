@@ -544,8 +544,8 @@ export default defineComponent({
 					}*/
 					break;
 				case Action.REINCARNATION:
-					/*try {
-						await DinozService.reincarnate(+this.$route.params.id);
+					try {
+						await DinozService.reincarnate(this.dinozId);
 						await this.refreshDinoz();
 						this.$toast.open({
 							message: this.$t('toast.reincarnation'),
@@ -553,7 +553,7 @@ export default defineComponent({
 						});
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}*/
+					}
 					break;
 				case Action.FB_TOURNAMENT:
 					/*this.$router.push({
