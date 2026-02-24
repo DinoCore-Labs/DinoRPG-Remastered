@@ -1,5 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 
+import { disband } from '../Service/disbandDinozTeam.service.js';
 import { followDinoz } from '../Service/followDinoz.service.js';
 import { getDinozFiche } from '../Service/getDinozFiche.service.js';
 import { getDinozSkillHandler } from '../Service/getDinozSkill.service.js';
@@ -25,4 +26,5 @@ export async function dinozRoutes(app: FastifyInstance) {
 	app.post('/reincarnate/:id', { preHandler: app.authenticate }, reincarnate);
 	app.post('/:id/follow/:targetId', { preHandler: app.authenticate }, followDinoz);
 	app.post('/:id/unfollow', { preHandler: app.authenticate }, unfollowDinoz);
+	app.post('/:id/disband', { preHandler: app.authenticate }, disband);
 }
