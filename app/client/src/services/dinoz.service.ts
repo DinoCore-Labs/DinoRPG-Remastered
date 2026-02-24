@@ -70,5 +70,11 @@ export const DinozService = {
 			.post(`/dinoz/${dinozId}/disband`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	async changeLeader(followerId: number, currentLeaderId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/${followerId}/change/${currentLeaderId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
