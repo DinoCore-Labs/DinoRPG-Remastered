@@ -404,32 +404,26 @@ export default defineComponent({
 				case Action.UNFOLLOW: {
 					try {
 						await DinozService.unfollow(this.dinozId);
-
 						// Refresh followed and following status
 						const currentDinozList = this.dinozStore.getDinozList;
 						if (!currentDinozList) {
 							this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 							return;
 						}
-
 						const currentDinoz = currentDinozList.find(d => d.id === this.dinozId);
 						if (!currentDinoz || !currentDinoz.leaderId) {
 							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 							return;
 						}
-
 						const leaderDinoz = currentDinozList.find(d => d.id === currentDinoz.leaderId);
 						if (!leaderDinoz) {
 							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 							return;
 						}
-
 						// update relation
 						currentDinoz.leaderId = null;
-
 						const i = leaderDinoz.followers.findIndex(f => f.id === currentDinoz.id);
 						if (i !== -1) leaderDinoz.followers.splice(i, 1);
-
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -438,26 +432,22 @@ export default defineComponent({
 					break;
 				}
 				case Action.DISBAND:
-					/*try {
-						await DinozService.disband(+this.$route.params.id);
-
+					try {
+						await DinozService.disband(this.dinozId);
 						let currentDinozList = this.dinozStore.getDinozList;
 						if (!currentDinozList) {
 							this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 							return;
 						}
-
-						const currentDinoz = currentDinozList.find(dinoz => dinoz.id === +this.$route.params.id);
+						const currentDinoz = currentDinozList.find(dinoz => dinoz.id === this.dinozId);
 						if (!currentDinoz) {
 							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 							return;
 						}
-
 						const previousLeader = currentDinoz.id;
 						const followingdinoz = currentDinozList
 							.filter(dinoz => dinoz.leaderId === previousLeader && dinoz.id !== previousLeader)
 							.map(d => d.id);
-
 						currentDinozList = currentDinozList.map(dinoz => {
 							if (dinoz.id === currentDinoz.id) {
 								dinoz.followers = [];
@@ -466,12 +456,11 @@ export default defineComponent({
 							}
 							return dinoz;
 						});
-
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}*/
+					}
 					break;
 				case Action.CHANGE_LEADER:
 					/*try {
