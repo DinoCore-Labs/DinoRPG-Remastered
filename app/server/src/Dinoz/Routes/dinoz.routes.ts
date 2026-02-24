@@ -8,6 +8,7 @@ import { reincarnate } from '../Service/reincarnateDinoz.service.js';
 import { resurrectDinoz } from '../Service/resurrectDinoz.service.js';
 import { setDinozName } from '../Service/setDinozName.service.js';
 import { setSkillStateHandler } from '../Service/setSkillState.service.js';
+import { unfollowDinoz } from '../Service/unfollowDinoz.service.js';
 import { useIrma } from '../Service/useIrma.service.js';
 
 export async function dinozRoutes(app: FastifyInstance) {
@@ -23,4 +24,5 @@ export async function dinozRoutes(app: FastifyInstance) {
 	app.put('/resurrect/:id', { preHandler: app.authenticate }, resurrectDinoz);
 	app.post('/reincarnate/:id', { preHandler: app.authenticate }, reincarnate);
 	app.post('/:id/follow/:targetId', { preHandler: app.authenticate }, followDinoz);
+	app.post('/:id/unfollow', { preHandler: app.authenticate }, unfollowDinoz);
 }

@@ -127,6 +127,7 @@ import DZDisclaimer from '../utils/DZDisclaimer.vue';
 import { GatherType } from '@dinorpg/core/models/enums/GatherType.js';
 import { formatText } from '../../utils/formatText';
 import eventBus from '../../events';
+import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 //import { DigResponse } from '@drpg/core/returnTypes/Dinoz';
 
 export default defineComponent({
@@ -401,7 +402,7 @@ export default defineComponent({
 					break;
 				}
 				case Action.UNFOLLOW: {
-					/*try {
+					try {
 						await DinozService.unfollow(this.dinozId);
 
 						// Refresh followed and following status
@@ -411,26 +412,28 @@ export default defineComponent({
 							return;
 						}
 
-						const currentDinoz = currentDinozList.find(dinoz => dinoz.id === +this.$route.params.id);
+						const currentDinoz = currentDinozList.find(d => d.id === this.dinozId);
 						if (!currentDinoz || !currentDinoz.leaderId) {
 							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 							return;
 						}
 
-						const currentDinozIndex = currentDinozList.map(d => d.id).indexOf(currentDinoz.id);
-						const leaderIndex = currentDinozList.map(d => d.id).indexOf(currentDinoz.leaderId);
-						const leaderDinoz = currentDinozList[leaderIndex];
-
-						if (currentDinozIndex > -1 && leaderIndex > -1) {
-							currentDinoz.leaderId = null;
-							const indexCurrentInFollowers = leaderDinoz.followers.map(d => d.id).indexOf(currentDinoz.id);
-							leaderDinoz.followers.splice(indexCurrentInFollowers, 1);
+						const leaderDinoz = currentDinozList.find(d => d.id === currentDinoz.leaderId);
+						if (!leaderDinoz) {
+							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
+							return;
 						}
+
+						// update relation
+						currentDinoz.leaderId = null;
+
+						const i = leaderDinoz.followers.findIndex(f => f.id === currentDinoz.id);
+						if (i !== -1) leaderDinoz.followers.splice(i, 1);
 
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}*/
+					}
 					await this.refreshDinoz();
 					break;
 				}
