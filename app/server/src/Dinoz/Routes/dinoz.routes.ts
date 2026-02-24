@@ -3,17 +3,20 @@ import type { FastifyInstance } from 'fastify';
 import { getDinozFiche } from '../Service/getDinozFiche.service.js';
 import { getDinozSkillHandler } from '../Service/getDinozSkill.service.js';
 import { moveDinozHandler } from '../Service/moveDinoz.service.js';
+import { resurrectDinoz } from '../Service/resurrectDinoz.service.js';
 import { setDinozName } from '../Service/setDinozName.service.js';
 import { setSkillStateHandler } from '../Service/setSkillState.service.js';
 import { useIrma } from '../Service/useIrma.service.js';
 
 export async function dinozRoutes(app: FastifyInstance) {
+	// Fiche
 	app.get('/fiche/:id', { preHandler: app.authenticate }, getDinozFiche);
 	app.put('/setname/:id', { preHandler: app.authenticate }, setDinozName);
-
+	// Skills
 	app.get('skills/:id', { preHandler: app.authenticate }, getDinozSkillHandler);
 	app.patch('setskillstate/:id', { preHandler: app.authenticate }, setSkillStateHandler);
-
+	// Actions
 	app.post('/:id/irma', { preHandler: app.authenticate }, useIrma);
 	app.put('/move', { preHandler: app.authenticate }, moveDinozHandler);
+	app.put('/resurrect/:id', { preHandler: app.authenticate }, resurrectDinoz);
 }

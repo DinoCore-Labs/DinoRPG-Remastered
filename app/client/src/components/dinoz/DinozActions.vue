@@ -1,6 +1,6 @@
 <template>
 	<div class="actions">
-		<!--<Resurect :enabled="resurect" @close="resurect = false" />-->
+		<Resurrect :enabled="resurrect" @close="resurrect = false" />
 		<!--<NPCModal v-if="NPCModal" :text="NPCModal" :npcName="npcName" @close="continueMission()" />-->
 		<div class="actions_top">
 			<p>{{ $t('dinozPage.action') }}</p>
@@ -113,7 +113,7 @@ import DZFollow from '../utils/DZFollow.vue';
 //import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
 //import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 //import NPCModal from '../../components/modal/NPCModal.vue';
-//import Resurect from '../../components/modal/ResurrectModal.vue';
+import Resurrect from '../modal/ResurrectModal.vue';
 //import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
 //import { mixin } from '../../mixin/mixin.js';
 import { FightService } from '../../services';
@@ -136,7 +136,7 @@ export default defineComponent({
 			dinozId: this.dinoz.id,
 			//shopNameList: shopNameList,
 			//itinerantShopNameList: itinerantShopNameList,
-			//resurect: false as boolean,
+			resurrect: false as boolean,
 			//NPCModal: undefined as string | undefined,
 			//npcName: undefined as string | undefined,
 			//missionReward: undefined as Rewarder[] | undefined,
@@ -158,7 +158,7 @@ export default defineComponent({
 		};
 	},
 	components: {
-		//Resurect,
+		Resurrect,
 		//MissionHUDVue,
 		//NPCModal,
 		//MissionRewardModal,
@@ -181,17 +181,14 @@ export default defineComponent({
 			const nowMs = now.getTime();
 			const midnightMs = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1);
 			const timeRemainingMs = midnightMs - nowMs;
-
 			const totalSeconds = Math.floor(timeRemainingMs / 1000);
 			const safeSeconds = Math.max(0, totalSeconds);
-
 			const hours = Math.floor(safeSeconds / 3600);
 			const minutes = Math.floor((safeSeconds % 3600) / 60);
 			const seconds = safeSeconds % 60;
 			const h = hours.toString().padStart(2, '0');
 			const m = minutes.toString().padStart(2, '0');
 			const s = seconds.toString().padStart(2, '0');
-
 			this.timeUntilMidnight = `${h}:${m}:${s}`;
 		},
 		computeTimeUntilNextHour() {
@@ -261,7 +258,7 @@ export default defineComponent({
 					break;
 				}
 				case Action.RESURRECT:
-					//this.resurect = true;
+					this.resurrect = true;
 					break;
 				case Action.MISSION:
 					/*if (typeof this.dinoz.missionId !== 'number') {
