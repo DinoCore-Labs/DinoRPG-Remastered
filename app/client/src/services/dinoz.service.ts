@@ -40,5 +40,11 @@ export const DinozService = {
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	async resurrectDinoz(dinozId: number): Promise<void | ItemFeedBack> {
+		return http()
+			.put(`/dinoz/resurrect/${dinozId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
