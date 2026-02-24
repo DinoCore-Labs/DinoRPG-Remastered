@@ -58,5 +58,11 @@ export const DinozService = {
 			.post(`/dinoz/${dinozId}/follow/${targetId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	async unfollow(dinozId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/${dinozId}/unfollow`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
