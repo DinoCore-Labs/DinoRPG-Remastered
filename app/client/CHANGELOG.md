@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.7.0
+
+### Minor Changes
+
+- 3f8f525: feat: dinoz actions
+
 ## 0.6.3
 
 ### Patch Changes
