@@ -32,12 +32,12 @@
 				help
 			/>
 			<DZDisclaimer
-				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life < dinoz.maxLife / 2"
+				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && !dinoz.rest?.maxed"
 				:content="$t('dinoz.hud.resting', { hp: dinoz.rest?.regen ?? 1, min: restCountdown })"
 				timer
 			/>
 			<DZDisclaimer
-				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life >= dinoz.maxLife / 2"
+				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && !!dinoz.rest?.maxed"
 				:content="$t('dinoz.hud.restEnd')"
 				help
 			/>
@@ -192,6 +192,10 @@ export default defineComponent({
 			this.timeUntilMidnight = `${h}:${m}:${s}`;
 		},*/
 		updateRestCountdown() {
+			if (this.dinoz.rest?.maxed) {
+				this.restSecondsLeft = 0;
+				return;
+			}
 			const nextIso = this.dinoz.rest?.next;
 			if (!nextIso) {
 				this.restSecondsLeft = 0;
