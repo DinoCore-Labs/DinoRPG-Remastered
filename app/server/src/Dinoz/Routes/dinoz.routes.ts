@@ -7,6 +7,7 @@ import { getDinozFiche } from '../Service/getDinozFiche.service.js';
 import { getDinozSkillHandler } from '../Service/getDinozSkill.service.js';
 import { moveDinozHandler } from '../Service/moveDinoz.service.js';
 import { reincarnate } from '../Service/reincarnateDinoz.service.js';
+import { startResting } from '../Service/restDinoz.service.js';
 import { resurrectDinoz } from '../Service/resurrectDinoz.service.js';
 import { setDinozName } from '../Service/setDinozName.service.js';
 import { setSkillStateHandler } from '../Service/setSkillState.service.js';
@@ -29,4 +30,5 @@ export async function dinozRoutes(app: FastifyInstance) {
 	app.post('/:id/unfollow', { preHandler: app.authenticate }, unfollowDinoz);
 	app.post('/:id/disband', { preHandler: app.authenticate }, disband);
 	app.post('/:id/change/:targetId', { preHandler: app.authenticate }, changeLeaderDinozGroup);
+	app.post('/:id/rest', { preHandler: app.authenticate }, startResting);
 }
