@@ -1,5 +1,6 @@
 import { ActionFiche } from './dinozActions.js';
 import { DinozRace } from './dinozRace.js';
+import { DinozRestInfos } from './dinozRest.js';
 import { DinozSkillsDTO } from './dinozSkills.js';
 import { DinozState } from './dinozState.js';
 import { DinozStatusDTO } from './dinozStatus.js';
@@ -36,6 +37,7 @@ export interface DinozFiche {
 	remaining: number;
 	fight: boolean;
 	gather: boolean;
+	rest?: DinozRestInfos | null;
 	//missions: DinozMission[];
 	//concentration: Concentration | null;
 	//tournament: Pick<TournamentState, 'id' | 'levelLimit'> | null;

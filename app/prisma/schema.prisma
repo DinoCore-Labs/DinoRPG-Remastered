@@ -33,6 +33,7 @@ model Dinoz {
   updatedDate        DateTime    @updatedAt @db.Timestamptz(3)
   seed               String      @db.Uuid
   state              DinozState?
+  stateTimer         DateTime?   @db.Timestamptz(3)
 
   fight            Boolean                 @default(true)
   gather           Boolean                 @default(true)

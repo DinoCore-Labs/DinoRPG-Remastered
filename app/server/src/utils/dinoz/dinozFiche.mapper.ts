@@ -1,4 +1,5 @@
 import { DinozFiche, DinozFicheLite, DinozPublicFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { DinozRestInfos } from '@dinorpg/core/models/dinoz/dinozRest.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { placeList } from '@dinorpg/core/models/place/placeList.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
@@ -63,7 +64,8 @@ export const toDinozFiche = (
 			//build: DinozBuild | null;
 		})[];
 	},
-	activeDinoz: number
+	activeDinoz: number,
+	restInfos?: DinozRestInfos | null
 	//currentTournament: TournamentState | null
 ): DinozFiche => {
 	const userForCondition = structuredClone(user);
@@ -114,7 +116,8 @@ export const toDinozFiche = (
 		order: dinoz.order,
 		remaining: dinoz.remaining,
 		fight: dinoz.fight,
-		gather: dinoz.gather
+		gather: dinoz.gather,
+		rest: restInfos ?? null
 		//missions: dinoz.missions,
 		//concentration: dinoz.concentration,
 		/*tournament: dinoz.TournamentTeam.find(team => team.tournamentId === currentTournament?.id)
