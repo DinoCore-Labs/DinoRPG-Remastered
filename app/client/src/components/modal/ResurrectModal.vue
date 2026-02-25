@@ -175,7 +175,7 @@ export default defineComponent({
 	top: 0;
 	padding: 5px;
 	background-color: #fadcb0;
-	color: transparentize(brown, 0.4);
+	color: color.adjust(brown, -0.4);
 	font-size: 0.85em;
 	letter-spacing: 0.03em;
 	text-decoration: none;
