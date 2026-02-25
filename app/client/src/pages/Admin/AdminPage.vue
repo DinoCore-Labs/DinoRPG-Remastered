@@ -31,7 +31,7 @@ export default defineComponent({
 	height: 20px;
 	align-self: center;
 	background-color: transparent;
-	background-image: url('../assets/design/tabs/tabsBg.webp');
+	background-image: url('../../assets/design/tabs/tabsBg.webp');
 	background-repeat: no-repeat;
 	border-bottom: 1.2px solid #ffe7aa;
 	li {
