@@ -11,6 +11,7 @@ import { startResting } from '../Service/restDinoz.service.js';
 import { resurrectDinoz } from '../Service/resurrectDinoz.service.js';
 import { setDinozName } from '../Service/setDinozName.service.js';
 import { setSkillStateHandler } from '../Service/setSkillState.service.js';
+import { stopResting } from '../Service/stopRestingDinoz.service.js';
 import { unfollowDinoz } from '../Service/unfollowDinoz.service.js';
 import { useIrma } from '../Service/useIrma.service.js';
 
@@ -31,4 +32,5 @@ export async function dinozRoutes(app: FastifyInstance) {
 	app.post('/:id/disband', { preHandler: app.authenticate }, disband);
 	app.post('/:id/change/:targetId', { preHandler: app.authenticate }, changeLeaderDinozGroup);
 	app.post('/:id/rest', { preHandler: app.authenticate }, startResting);
+	app.post('/:id/stop-rest', { preHandler: app.authenticate }, stopResting);
 }

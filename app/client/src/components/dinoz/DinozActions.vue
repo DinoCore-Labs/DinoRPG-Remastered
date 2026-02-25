@@ -146,7 +146,6 @@ export default defineComponent({
 			//MissionEnum: ConditionEnum,
 			//digRewards: undefined as DigResponse | undefined,
 			Action,
-			hpRegen: 1,
 			//itinerantName: '' as string,
 			dinozFullParty: [] as DinozFiche[],
 			uStore: userStore(),
@@ -535,12 +534,12 @@ export default defineComponent({
 					}
 					break;
 				case Action.STOP_REST:
-					/*try {
-						await DinozService.restDinoz(+this.$route.params.id, false);
+					try {
+						await DinozService.stopRestDinoz(this.dinozId);
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}*/
+					}
 					break;
 				case Action.REINCARNATION:
 					try {
@@ -593,29 +592,8 @@ export default defineComponent({
 		goToLeader() {
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
-		} /*,
-		async regenRate() {
-			const data = this.dinoz;
-			const skills = toSkillDetails(data.skills);
-			const priest = this.playerStore.isPriest;
-			const specialStats = Object.values(SpecialStat)
-				.map(stat =>
-					getSpecialStat(
-						data,
-						data.status.map(s => s.statusId),
-						skills,
-						stat as SpecialStat,
-						priest
-					)
-				)
-				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
-			const regen = specialStats.find(s => s.name === SpecialStat.HP_REGEN);
-			regen ? (this.hpRegen = regen.value) : 1;
-		}*/,
+		},
 		async loadComponent() {
-			/*if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
-				await this.regenRate();
-			}*/
 			this.dinozFullParty = dinozStore().getDinozList.filter(dinoz =>
 				this.dinoz?.followers.some(a => a.id === dinoz.id)
 			);
