@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.7.0
+
+### Minor Changes
+
+- 3f8f525: feat: dinoz actions
+
+### Patch Changes
+
+- Updated dependencies [3f8f525]
+  - @dinorpg/core@0.6.0
+
 ## 0.6.3
 
 ### Patch Changes
