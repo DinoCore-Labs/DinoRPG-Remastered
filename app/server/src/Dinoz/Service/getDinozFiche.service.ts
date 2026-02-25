@@ -1,8 +1,10 @@
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
+import { prisma } from '../../prisma.js';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { getDinozFicheRequest } from '../Controller/getDinozFiche.controller.js';
+import { applyRestIfNeeded } from '../Controller/getRestDinoz.controller.js';
 import { getAvailableActions } from './getDinozActions.service.js';
 
 // import { TournamentManager } from '../../tournament/TournamentManager.js';
@@ -18,13 +20,19 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 
 	const authedId = req.user.id;
 
-	// Retrieve player from dinozId
+	// 1) apply resting
+	const restInfos = await prisma.$transaction(tx => applyRestIfNeeded(tx, dinozId));
+
+	const ficheRest = restInfos
+		? { regen: restInfos.regen, next: restInfos.next.toISOString(), maxed: restInfos.maxed }
+		: null;
+
+	// 2) retrieve player from dinozId
 	const playerData = await getDinozFicheRequest(dinozId, authedId);
 
 	if (!playerData) {
 		throw new ExpectedError('userNotFound', { params: { authedId } });
 	}
-
 	if (playerData.dinoz.length === 0) {
 		throw new ExpectedError('dinozNotFound', { params: { dinozId } });
 	}
@@ -41,7 +49,7 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 	//const isInTournament = await isDinozInTournament(dinozId);
 
 	// Create the answer that will be sent back
-	const ret = toDinozFiche(playerData, dinozId /*isInTournament ? currentTournament : null*/);
+	const ret = toDinozFiche(playerData, dinozId, ficheRest /*isInTournament ? currentTournament : null*/);
 	ret.actions = await getAvailableActions(myDinoz, playerData);
 
 	return reply.send(ret);

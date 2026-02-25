@@ -33,7 +33,7 @@
 			/>
 			<DZDisclaimer
 				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life < dinoz.maxLife / 2"
-				:content="$t('dinoz.hud.resting', { hp: hpRegen, min: minutesBeforeHour })"
+				:content="$t('dinoz.hud.resting', { hp: dinoz.rest?.regen ?? 1, min: restCountdown })"
 				timer
 			/>
 			<DZDisclaimer
@@ -151,7 +151,7 @@ export default defineComponent({
 			dinozFullParty: [] as DinozFiche[],
 			uStore: userStore(),
 			timeUntilMidnight: '',
-			minutesBeforeHour: 60 - new Date().getMinutes(),
+			restSecondsLeft: 0,
 			intervals: [] as number[],
 			DINOZ_STATE
 			//mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
@@ -177,7 +177,7 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		computeTimeUntilMidnight() {
+		/*computeTimeUntilMidnight() {
 			const now = new Date();
 			const nowMs = now.getTime();
 			const midnightMs = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1);
@@ -191,13 +191,26 @@ export default defineComponent({
 			const m = minutes.toString().padStart(2, '0');
 			const s = seconds.toString().padStart(2, '0');
 			this.timeUntilMidnight = `${h}:${m}:${s}`;
-		},
-		computeTimeUntilNextHour() {
-			const now = new Date();
-			this.minutesBeforeHour = 60 - now.getMinutes();
-			if (this.minutesBeforeHour === 0) {
+		},*/
+		updateRestCountdown() {
+			const nextIso = this.dinoz.rest?.next;
+			if (!nextIso) {
+				this.restSecondsLeft = 0;
+				return;
+			}
+			const diff = Math.max(0, Math.floor((new Date(nextIso).getTime() - Date.now()) / 1000));
+			this.restSecondsLeft = diff;
+			// Quand on arrive à 0, on refresh pour appliquer le tick serveur
+			if (diff === 0) {
 				this.refreshDinoz();
 			}
+		},
+		formatMMSS(totalSeconds: number) {
+			const m = Math.floor(totalSeconds / 60)
+				.toString()
+				.padStart(2, '0');
+			const s = (totalSeconds % 60).toString().padStart(2, '0');
+			return `${m}:${s}`;
 		},
 		async launch(action: ActionFiche) {
 			switch (action.name) {
@@ -514,12 +527,12 @@ export default defineComponent({
 					}*/
 					break;
 				case Action.REST:
-					/*try {
-						await DinozService.restDinoz(+this.$route.params.id, true);
+					try {
+						await DinozService.restDinoz(this.dinozId);
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}*/
+					}
 					break;
 				case Action.STOP_REST:
 					/*try {
@@ -622,6 +635,9 @@ export default defineComponent({
 		leaderDinoz() {
 			if (!this.dinoz.leaderId) return;
 			return dinozStore().getDinoz(this.dinoz.leaderId);
+		},
+		restCountdown(): string {
+			return this.formatMMSS(this.restSecondsLeft);
 		}
 	},
 	watch: {
@@ -632,6 +648,7 @@ export default defineComponent({
 			handler() {
 				this.dinozId = this.dinoz.id;
 				this.loadComponent();
+				this.updateRestCountdown();
 			},
 			deep: false,
 			immediate: true
@@ -639,9 +656,9 @@ export default defineComponent({
 	},
 	async mounted() {
 		await this.loadComponent();
-		const intervalId = window.setInterval(() => this.computeTimeUntilMidnight(), 1000);
-		const intervalId2 = window.setInterval(() => this.computeTimeUntilNextHour(), 1000);
-		this.intervals.push(intervalId, intervalId2);
+		//const intervalId = window.setInterval(() => this.computeTimeUntilMidnight(), 1000);
+		const intervalId2 = window.setInterval(() => this.updateRestCountdown(), 1000);
+		this.intervals.push(/*intervalId,*/ intervalId2);
 	},
 	unmounted() {
 		this.intervals.forEach(clearInterval);
