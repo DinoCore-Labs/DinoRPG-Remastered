@@ -2,6 +2,7 @@ import { Action, ActionFiche, actionList } from '@dinorpg/core/models/dinoz/dino
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { gatherList } from '@dinorpg/core/models/gather/gatherList.js';
+import { shopList } from '@dinorpg/core/models/shop/shopList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.js';
@@ -239,12 +240,12 @@ export async function getAvailableActions(
 			imgName: actionList[Action.ITINERANTSHOP].imgName,
 			prop: itinerantShop.shopId
 		});
-	}
+	}*/
 	const shopAvailable = Object.values(shopList).filter(
 		shop =>
 			shop.placeId === dinoz.placeId &&
 			shop.placeId !== PlaceEnum.NOWHERE &&
-			checkCondition(shop.condition, player, dinoz.id)
+			checkCondition(shop.condition, user, dinoz.id)
 	);
 	if (shopAvailable.length > 0) {
 		// Add all the shop id to the action
@@ -260,7 +261,7 @@ export async function getAvailableActions(
 	}
 
 	// Hack to remove FRETURN so dinoz can still be redirected to NPC but cannot talk to them explicitly
-	dinoz.status = dinoz.status.filter(s => s.statusId !== DinozStatusId.FRETURN);
+	/*dinoz.status = dinoz.status.filter(s => s.statusId !== DinozStatusId.FRETURN);
 	const npcAvailable = Object.values(npcList).filter(npc => npc.placeId === dinoz.placeId);
 	npcAvailable.forEach(npc => {
 		if (!npc.condition || checkCondition(npc.condition, player, dinoz.id)) {
