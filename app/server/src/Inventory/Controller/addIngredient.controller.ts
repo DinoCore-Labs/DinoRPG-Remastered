@@ -7,3 +7,19 @@ export function addIngredientToInventory(userId: string, ingredientId: number, q
 		update: { quantity: { increment: quantity } }
 	});
 }
+
+export const decreaseIngredientQuantity = async (userId: string, ingredientId: number, quantity: number) => {
+	await prisma.userIngredients.update({
+		where: {
+			ingredientId_userId: {
+				ingredientId,
+				userId
+			}
+		},
+		data: {
+			quantity: {
+				decrement: quantity
+			}
+		}
+	});
+};

@@ -296,7 +296,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { ShopService } from '../services/shop.service.js';
 import { dinozStore } from '../store/dinozStore.js';
 import { userStore } from '../store/userStore.js';
-//import { formatText } from '../utils/formatText.js';
+import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/errorHandler.js';
 import DZInput from '../components/utils/DZInput.vue';
 
@@ -350,7 +350,7 @@ export default defineComponent({
 			return (this.resolveItem(item).quantity ?? 0) >= this.resolveItem(item).maxQuantity;
 		},
 		// Buy n of the selected item
-		/*async buyItems(itemId: number, quantity: number): Promise<void> {
+		async buyItems(itemId: number, quantity: number): Promise<void> {
 			if (!this.actualShop || !this.selectedItem) return;
 			try {
 				const bought = await ShopService.buyItem(this.actualShop.shopId, itemId, quantity);
@@ -364,7 +364,6 @@ export default defineComponent({
 						itemName: this.$t(`item.name.treasure_coupon`)
 					});
 				}
-
 				this.$toast.open({
 					message: formatText(message),
 					type: 'info'
@@ -373,7 +372,6 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
-
 			// Update player's money if the item purchased is non magical
 			if (
 				this.actualShop.type === ShopType.CLASSIC ||
@@ -388,7 +386,7 @@ export default defineComponent({
 				this.selectedItem = undefined;
 				await this.loadPage();
 			}
-		},*/
+		},
 		async popinConfirmChoice(max: boolean): Promise<void> {
 			if (!this.selectedItem || !this.actualShop) return;
 			let quantity: number;
@@ -402,7 +400,6 @@ export default defineComponent({
 				if (quantity > (this.selectedItem.quantity ?? 0)) {
 					quantity = Math.floor((this.selectedItem.quantity ?? 0) / this.selectedItem.price);
 				}
-
 				totalPrice = quantity * this.selectedItem.price;
 			} else {
 				const myGolds = this.userStore.gold;
@@ -421,7 +418,6 @@ export default defineComponent({
 				this.selectedItem.type === ItemShopType.ITEM
 					? this.$t(`items.name.${this.resolveItem(this.selectedItem).name}`)
 					: this.$t(`ingredients.name.${this.resolveIngredient(this.selectedItem).name}`);
-
 			let text;
 			switch (this.actualShop.type) {
 				case ShopType.FILOU:
@@ -452,7 +448,7 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			if (res && quantity > 0) {
-				//await this.buyItems(this.selectedItem.id, quantity);
+				await this.buyItems(this.selectedItem.id, quantity);
 			}
 		},
 		resolveItem(item: ItemShopFiche): ItemFiche {

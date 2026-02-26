@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
 import { buyDinoz } from '../Service/buyDinoz.service.js';
+import { buyItemHandler } from '../Service/buyItems.service.js';
 import { getDinozFromDinozShop } from '../Service/getDinozFromDinozShop.service.js';
 import { getItemsFromShopHandler } from '../Service/getItemsFromShop.service.js';
 
@@ -27,4 +28,5 @@ export async function shopRoutes(app: FastifyInstance) {
 	);
 	// Shop Items or Ingredients
 	app.get('/getshop/:shopId', { preHandler: app.authenticate }, getItemsFromShopHandler);
+	app.put('/buyitem/:shopId', { preHandler: app.authenticate }, buyItemHandler);
 }
