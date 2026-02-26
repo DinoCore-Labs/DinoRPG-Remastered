@@ -68,7 +68,7 @@ export function resolveSkillName(skillId: number, t: TFunction) {
 export function resolveItemName(itemId: number, t: TFunction) {
 	const item = Object.values(itemList).find(item => item.itemId === itemId);
 	if (!item) return 'inconnu';
-	return t(`item.name.${item.name}`);
+	return t(`items.name.${item.name}`);
 }
 
 export function resolveItemImagePath(itemId: number) {

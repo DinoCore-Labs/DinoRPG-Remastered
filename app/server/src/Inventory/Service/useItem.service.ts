@@ -349,7 +349,7 @@ async function useSpecialItem(
 		skills: Pick<DinozSkills, 'skillId'>[];
 		unlockableSkills: Pick<DinozSkillsUnlockable, 'skillId'>[];
 		user:
-			| (Pick<User, 'id' /*| 'cooker' | 'lang' | 'shopKeeper'*/> & {
+			| (Pick<User, 'id' | 'cooker' | /*'lang' |*/ 'shopKeeper'> & {
 					items: Pick<UserItems, 'itemId' | 'quantity'>[];
 			  })
 			| null;
@@ -374,16 +374,16 @@ async function useSpecialItem(
 		}
 		case 'pampleboum':
 			const initialLife = dinoz.life;
-			const healed = heal(dinoz, 15 * /*(dinoz.player.cooker ? 1.1 :*/ 1 /*)*/);
+			const healed = heal(dinoz, 15 * (dinoz.user.cooker ? 1.1 : 1));
 			const lifeHealed = Math.max(0, healed.life - initialLife);
 			await updateDinoz(dinoz.id, healed);
 			const pamp = dinoz.user.items.find(item => item.itemId === itemList[Item.PAMPLEBOUM_PIT].itemId);
 			if (!pamp) await addItemToInventory(dinoz.user.id, itemList[Item.PAMPLEBOUM_PIT].itemId, 1);
 			else if (
 				pamp.quantity <
-				//(dinoz.player.shopKeeper
-				//? Math.round(1.5 * itemList[Item.PAMPLEBOUM_PIT].maxQuantity)
-				/*:*/ itemList[Item.PAMPLEBOUM_PIT].maxQuantity /*)*/
+				(dinoz.user.shopKeeper
+					? Math.round(1.5 * itemList[Item.PAMPLEBOUM_PIT].maxQuantity)
+					: itemList[Item.PAMPLEBOUM_PIT].maxQuantity)
 			) {
 				await addItemToInventory(dinoz.user.id, itemList[Item.PAMPLEBOUM_PIT].itemId, 1);
 			}

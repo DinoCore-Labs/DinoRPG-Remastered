@@ -149,7 +149,7 @@ export default defineComponent({
 					switch (toast.category) {
 						case ItemEffect.SPECIAL:
 							message = this.$t(`toast.special.${toast.value}`, {
-								value: this.$t(`item.name.${toast.effect}`),
+								value: this.$t(`items.name.${toast.effect}`),
 								qty: toast.quantity
 							});
 							break;
@@ -200,15 +200,15 @@ export default defineComponent({
 			switch (this.sortOption) {
 				case 'nameAsc':
 					this.allItemsData.sort((a, b) =>
-						this.$t(`item.name.${this.itemNameList[a.itemId]}`).localeCompare(
-							this.$t(`item.name.${this.itemNameList[b.itemId]}`)
+						this.$t(`items.name.${this.itemNameList[a.itemId]}`).localeCompare(
+							this.$t(`items.name.${this.itemNameList[b.itemId]}`)
 						)
 					);
 					break;
 				case 'nameDesc':
 					this.allItemsData.sort((a, b) =>
-						this.$t(`item.name.${this.itemNameList[b.itemId]}`).localeCompare(
-							this.$t(`item.name.${this.itemNameList[a.itemId]}`)
+						this.$t(`items.name.${this.itemNameList[b.itemId]}`).localeCompare(
+							this.$t(`items.name.${this.itemNameList[a.itemId]}`)
 						)
 					);
 					break;
