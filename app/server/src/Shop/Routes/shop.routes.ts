@@ -26,5 +26,5 @@ export async function shopRoutes(app: FastifyInstance) {
 		buyDinoz
 	);
 	// Shop Items or Ingredients
-	app.get('/shop/:shopId', { preHandler: app.authenticate }, getItemsFromShopHandler);
+	app.get('/getshop/:shopId', { preHandler: app.authenticate }, getItemsFromShopHandler);
 }
