@@ -280,8 +280,8 @@
 									<span>{{ $t(`status.name.${detail.name}`) }}</span>
 								</span>
 								<span v-if="detail.type === 'item'" class="detail-name">
-									<img :src="getImgURL('item', `item_${detail.name}`)" :alt="$t(`item.name.${detail.name}`)" />
-									<span>{{ $t(`item.name.${detail.name}`) }}</span>
+									<img :src="getImgURL('item', `item_${detail.name}`)" :alt="$t(`items.name.${detail.name}`)" />
+									<span>{{ $t(`items.name.${detail.name}`) }}</span>
 								</span>
 							</li>
 						</ul>
