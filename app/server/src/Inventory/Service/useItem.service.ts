@@ -35,8 +35,8 @@ import { addItemToInventory } from '../Controller/addItem.controller.js';
 import { removeItem } from '../Controller/removeItem.controller.js';
 
 type Params = {
-	dinozId: number;
-	itemId: number;
+	dinozId: string;
+	itemId: string;
 };
 
 export async function useItemHandler(
@@ -65,10 +65,10 @@ export async function useItemHandler(
 
 	const itemData = dinoz.user.items.find(i => i.itemId === itemId);
 	if (!itemData || itemData.quantity <= 0) {
-		throw new ExpectedError(`notEnoughItem`, { params: { id: itemData?.id } });
+		throw new ExpectedError(`notEnoughItems`, { params: { id: itemData?.id } });
 	}
 
-	// --- Star quest (identique à ta logique) ---
+	// --- Star quest ---
 	//const starQuest = dinoz.user.quests.find(q => q.questId === Scenario.STAR && q.progression === 3);
 	/*if (starQuest) {
 		const dayOfWeek = new Date().getDate();
@@ -83,8 +83,6 @@ export async function useItemHandler(
 			const initialLife = dinoz.life;
 			await updateDinoz(dinoz.id, heal(dinoz, 30 * (dinoz.user.cooker ? 1.1 : 1)));
 
-			// ⚠️ note: ton code original calcule lifeHealed avec dinoz.life après update,
-			// mais dinoz n'est pas rechargé. Ici on fait “best effort” :
 			const refreshed = await getDinozFicheItemRequest(dinozId);
 			const newLife = refreshed?.life ?? initialLife;
 			const lifeHealed = Math.max(0, newLife - initialLife);
@@ -109,7 +107,7 @@ export async function useItemHandler(
 
 		case ItemEffect.HEAL: {
 			const initialLife = dinoz.life;
-			await updateDinoz(dinoz.id, heal(dinoz, item.effect.value * /*(dinoz.user.cooker ? 1.1 :*/ 1 /*)*/));
+			await updateDinoz(dinoz.id, heal(dinoz, item.effect.value * (dinoz.user.cooker ? 1.1 : 1)));
 
 			const refreshed = await getDinozFicheItemRequest(dinozId);
 			const newLife = refreshed?.life ?? initialLife;
@@ -125,7 +123,6 @@ export async function useItemHandler(
 			feedback = { category: ItemEffect.RESURRECT };
 
 			await incrementUserStat(StatTracking.DEATHS, dinoz.user.id, 1);
-			//await createLog(LogType.Revive, dinoz.user.id, dinoz.id, itemData.itemId.toString(), '1');
 			break;
 		}
 

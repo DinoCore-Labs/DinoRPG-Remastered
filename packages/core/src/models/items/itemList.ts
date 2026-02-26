@@ -1300,7 +1300,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	// The order matches the order in constants/race.ts
 	// Moueffe Egg
 	[Item.MOUEFFE_EGG]: {
-		itemId: 63,
+		itemId: 62,
 		name: 'moueffe_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1317,7 +1317,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Moueffe Egg
 	[Item.MOUEFFE_EGG_RARE]: {
-		itemId: 64,
+		itemId: 63,
 		name: 'moueffe_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1334,7 +1334,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Pigmou Egg
 	[Item.PIGMOU_EGG]: {
-		itemId: 65,
+		itemId: 64,
 		name: 'pigmou_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1351,7 +1351,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Pigmou Egg
 	[Item.PIGMOU_EGG_RARE]: {
-		itemId: 66,
+		itemId: 65,
 		name: 'pigmou_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1368,7 +1368,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Winks Egg
 	[Item.WINKS_EGG]: {
-		itemId: 67,
+		itemId: 66,
 		name: 'winks_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1385,7 +1385,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Winks Egg
 	[Item.WINKS_EGG_RARE]: {
-		itemId: 68,
+		itemId: 67,
 		name: 'winks_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1402,7 +1402,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Planaille Egg
 	[Item.PLANAILLE_EGG]: {
-		itemId: 69,
+		itemId: 68,
 		name: 'planaille_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1419,7 +1419,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Planaille Egg
 	[Item.PLANAILLE_EGG_RARE]: {
-		itemId: 70,
+		itemId: 69,
 		name: 'planaille_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1436,7 +1436,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Castivore Egg
 	[Item.CASTIVORE_EGG]: {
-		itemId: 71,
+		itemId: 70,
 		name: 'castivore_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1453,7 +1453,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Castivore Egg
 	[Item.CASTIVORE_EGG_RARE]: {
-		itemId: 72,
+		itemId: 71,
 		name: 'castivore_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1470,7 +1470,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rocky Egg
 	[Item.ROCKY_EGG]: {
-		itemId: 73,
+		itemId: 72,
 		name: 'rocky_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1487,7 +1487,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Rocky Egg
 	[Item.ROCKY_EGG_RARE]: {
-		itemId: 74,
+		itemId: 73,
 		name: 'rocky_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1504,7 +1504,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Pteroz Egg
 	[Item.PTEROZ_EGG]: {
-		itemId: 75,
+		itemId: 74,
 		name: 'pteroz_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1521,7 +1521,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Pteroz Egg
 	[Item.PTEROZ_EGG_RARE]: {
-		itemId: 76,
+		itemId: 75,
 		name: 'pteroz_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1538,7 +1538,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Nuagoz Egg
 	[Item.NUAGOZ_EGG]: {
-		itemId: 77,
+		itemId: 76,
 		name: 'nuagoz_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1555,7 +1555,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Nuagoz Egg
 	[Item.NUAGOZ_EGG_RARE]: {
-		itemId: 78,
+		itemId: 77,
 		name: 'nuagoz_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1572,7 +1572,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Sirain Egg
 	[Item.SIRAIN_EGG]: {
-		itemId: 79,
+		itemId: 78,
 		name: 'sirain_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1589,7 +1589,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Sirain Egg
 	[Item.SIRAIN_EGG_RARE]: {
-		itemId: 80,
+		itemId: 79,
 		name: 'sirain_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1606,7 +1606,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Hippoclamp Egg
 	[Item.HIPPOCLAMP_EGG]: {
-		itemId: 81,
+		itemId: 80,
 		name: 'hippoclamp_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1623,7 +1623,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Hippoclamp Egg
 	[Item.HIPPOCLAMP_EGG_RARE]: {
-		itemId: 82,
+		itemId: 81,
 		name: 'hippoclamp_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1640,7 +1640,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Gorilloz Egg
 	[Item.GORILLOZ_EGG]: {
-		itemId: 83,
+		itemId: 82,
 		name: 'gorilloz_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1657,7 +1657,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Gorilloz Egg
 	[Item.GORILLOZ_EGG_RARE]: {
-		itemId: 84,
+		itemId: 83,
 		name: 'gorilloz_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1674,7 +1674,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Wanwan Egg
 	[Item.WANWAN_EGG]: {
-		itemId: 85,
+		itemId: 84,
 		name: 'wanwan_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1691,7 +1691,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Wanwan Egg
 	[Item.WANWAN_EGG_RARE]: {
-		itemId: 86,
+		itemId: 85,
 		name: 'wanwan_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1708,7 +1708,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Wanwan Baby
 	[Item.WANWAN_BABY_RARE]: {
-		itemId: 87,
+		itemId: 86,
 		name: 'wanwan_baby_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1725,7 +1725,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Santaz Egg
 	[Item.SANTAZ_EGG]: {
-		itemId: 88,
+		itemId: 87,
 		name: 'santaz_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1742,7 +1742,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Santaz Egg
 	[Item.SANTAZ_EGG_RARE]: {
-		itemId: 89,
+		itemId: 88,
 		name: 'santaz_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1759,7 +1759,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Feross Egg
 	[Item.FEROSS_EGG]: {
-		itemId: 90,
+		itemId: 89,
 		name: 'feross_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1776,7 +1776,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Feross Egg
 	[Item.FEROSS_EGG_RARE]: {
-		itemId: 91,
+		itemId: 90,
 		name: 'feross_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1793,7 +1793,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Christmas Feross Egg
 	[Item.FEROSS_EGG_CHRISTMAS]: {
-		itemId: 92,
+		itemId: 91,
 		name: 'feross_egg_christmas',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1810,7 +1810,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Kabuki Egg
 	[Item.KABUKI_EGG]: {
-		itemId: 93,
+		itemId: 92,
 		name: 'kabuki_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1827,7 +1827,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Kabuki Egg
 	[Item.RARE_KABUKI_EGG]: {
-		itemId: 94,
+		itemId: 93,
 		name: 'kabuki_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1844,7 +1844,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Mahamuti Egg
 	[Item.MAHAMUTI_EGG]: {
-		itemId: 95,
+		itemId: 94,
 		name: 'mahamuti_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1861,7 +1861,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Mahamuti Egg
 	[Item.RARE_MAHAMUTI_EGG]: {
-		itemId: 96,
+		itemId: 95,
 		name: 'mahamuti_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1878,7 +1878,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Soufflet Egg
 	[Item.SOUFFLET_EGG]: {
-		itemId: 97,
+		itemId: 96,
 		name: 'souffet_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1895,7 +1895,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Soufflet Egg
 	[Item.SOUFFLET_EGG_RARE]: {
-		itemId: 98,
+		itemId: 97,
 		name: 'soufflet_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1912,7 +1912,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Toufufu Baby
 	[Item.TOUFUFU_BABY]: {
-		itemId: 99,
+		itemId: 98,
 		name: 'toufufu_baby',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1929,7 +1929,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Toufufu Baby
 	[Item.TOUFUFU_BABY_RARE]: {
-		itemId: 100,
+		itemId: 99,
 		name: 'toufufu_baby_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1946,7 +1946,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Quetzu Egg
 	[Item.QUETZU_EGG]: {
-		itemId: 101,
+		itemId: 100,
 		name: 'quetzu_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1963,7 +1963,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Quetzu Egg
 	[Item.QUETZU_EGG_RARE]: {
-		itemId: 102,
+		itemId: 101,
 		name: 'quetzu_egg_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -1980,7 +1980,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Smog Egg
 	[Item.SMOG_EGG]: {
-		itemId: 103,
+		itemId: 102,
 		name: 'smog_egg',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2014,7 +2014,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Anniversary Smog Egg
 	[Item.SMOG_EGG_ANNIVERSARY]: {
-		itemId: 104,
+		itemId: 103,
 		name: 'smog_egg_anniversary',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2031,7 +2031,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Christmas Blue Smog Egg
 	[Item.SMOG_EGG_CHRISTMAS_BLUE]: {
-		itemId: 105,
+		itemId: 104,
 		name: 'smog_egg_christmas_blue',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2048,7 +2048,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Christmas Blue Smog Egg
 	[Item.SMOG_EGG_CHRISTMAS_GREEN]: {
-		itemId: 106,
+		itemId: 105,
 		name: 'smog_egg_christmas_green',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2065,7 +2065,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Triceragnon Baby
 	[Item.TRICERAGNON_BABY]: {
-		itemId: 107,
+		itemId: 106,
 		name: 'triceragnon_baby',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2082,7 +2082,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Triceragnon Baby
 	[Item.TRICERAGNON_EGG_BABY]: {
-		itemId: 108,
+		itemId: 107,
 		name: 'triceragnon_baby_rare',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2099,7 +2099,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Amnesic Rice
 	[Item.AMNESIC_RICE]: {
-		itemId: 109,
+		itemId: 108,
 		name: 'amnesic_rice',
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2116,7 +2116,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Tik Bracelet: heals 10 to the wearer each day
 	[Item.TIK_BRACELET]: {
-		itemId: 110,
+		itemId: 109,
 		name: 'tik_bracelet',
 		canBeEquipped: true,
 		canBeUsedNow: false,
@@ -2129,7 +2129,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Magic Star: used for the Strange Creature quest
 	[Item.MAGIC_STAR]: {
-		itemId: 111,
+		itemId: 110,
 		name: 'magic_star',
 		canBeEquipped: false,
 		canBeUsedNow: false,
@@ -2142,7 +2142,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Golden Napodino: currency at the Magic Shop
 	[Item.GOLDEN_NAPODINO]: {
-		itemId: 112,
+		itemId: 111,
 		name: 'golden_napodino',
 		canBeEquipped: true,
 		canBeUsedNow: false,
@@ -2158,7 +2158,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Brings a little bamboo with you in each fight
 	[Item.BAMBOO_FRIEND]: {
-		itemId: 113,
+		itemId: 112,
 		name: 'bamboo_friend',
 		canBeEquipped: true,
 		canBeUsedNow: false,
@@ -2171,7 +2171,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Anniversary tickets
 	[Item.CANDLE_CARD]: {
-		itemId: 114,
+		itemId: 113,
 		name: 'candle_card',
 		canBeEquipped: false,
 		canBeUsedNow: false,
@@ -2184,7 +2184,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Tickets to use at the Christmas grid event
 	[Item.CHRISTMAS_TICKET]: {
-		itemId: 115,
+		itemId: 114,
 		name: 'christmas_ticket',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2197,7 +2197,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Tickets to use at ??
 	[Item.TICTAC_TICKET]: {
-		itemId: 116,
+		itemId: 115,
 		name: 'tictac_ticket',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2210,7 +2210,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Error
 	[Item.DOUBLE_NOT_USED]: {
-		itemId: 117,
+		itemId: 116,
 		name: 'anniversary_ticket',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2223,7 +2223,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Use to obtain ??, obtained during Easter event
 	[Item.EASTER_EGG]: {
-		itemId: 118,
+		itemId: 117,
 		name: 'easter_egg',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2236,7 +2236,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Ticket for Batide day
 	[Item.FIRE_CRACKER]: {
-		itemId: 119,
+		itemId: 118,
 		name: 'fire_cracker',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2249,7 +2249,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Like an irma potion, would be obtained daily from the monthly subscription
 	[Item.SPECIAL_IRMA_POTION]: {
-		itemId: 120,
+		itemId: 119,
 		name: 'special_potion_irma',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2262,7 +2262,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	//Used for special gather
 	[Item.GOLD100]: {
-		itemId: 121,
+		itemId: 120,
 		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2275,7 +2275,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	//Used for special gather
 	[Item.GOLD500]: {
-		itemId: 122,
+		itemId: 121,
 		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2288,7 +2288,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	//Used for special gather
 	[Item.GOLD1000]: {
-		itemId: 123,
+		itemId: 122,
 		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2301,7 +2301,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	//Used for special gather
 	[Item.GOLD2000]: {
-		itemId: 124,
+		itemId: 123,
 		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2314,7 +2314,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	//Used for special gather
 	[Item.GOLD2500]: {
-		itemId: 125,
+		itemId: 124,
 		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2327,7 +2327,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	//Used for special gather
 	[Item.GOLD3000]: {
-		itemId: 126,
+		itemId: 125,
 		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2340,7 +2340,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	//Used for special gather
 	[Item.GOLD5000]: {
-		itemId: 127,
+		itemId: 126,
 		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2353,7 +2353,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	//Used for special gather
 	[Item.GOLD10000]: {
-		itemId: 128,
+		itemId: 127,
 		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
@@ -2366,7 +2366,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	//Used for special gather
 	[Item.GOLD20000]: {
-		itemId: 129,
+		itemId: 128,
 		name: 'gold',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now

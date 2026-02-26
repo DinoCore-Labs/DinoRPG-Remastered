@@ -61,65 +61,64 @@ export const itemNameList: Record<number, string> = {
 	59: 'lightning_sphere', // x
 	60: 'air_sphere', // x
 	61: 'demon_ticket', // x
-	62: 'treasure_coupon', // x
-	63: 'moueffe_egg',
-	64: 'moueffe_egg_rare', // x
-	65: 'pigmou_egg',
-	66: 'pigmou_egg_rare', // x
-	67: 'winks_egg',
-	68: 'winks_egg_rare', // x
-	69: 'planaille_egg',
-	70: 'planaille_egg_rare',
-	71: 'castivore_egg',
-	72: 'castivore_egg_rare', // x
-	73: 'rocky_egg',
-	74: 'rocky_egg_rare', // x
-	75: 'pteroz_egg',
-	76: 'pteroz_egg_rare',
-	77: 'nuagoz_egg',
-	78: 'nuagoz_egg_rare', // x
-	79: 'sirain_egg',
-	80: 'sirain_egg_rare', // x
-	81: 'hippoclamp_egg',
-	82: 'hippoclamp_egg_rare',
-	83: 'gorilloz_egg',
-	84: 'gorilloz_egg_rare', // x
-	85: 'wanwan_egg',
-	86: 'wanwan_egg_rare', // x
-	87: 'wanwan_baby_rare', // x
-	88: 'santaz_egg', // x
-	89: 'santaz_egg_rare', // x
-	90: 'feross_egg', // x
-	91: 'feross_egg_rare', // x
-	92: 'feross_egg_christmas', // x
-	93: 'kabuki_egg', // x
-	94: 'kabuki_egg_rare', // x
-	95: 'mahamuti_egg', // x
-	96: 'mahamuti_egg_rare', // x
-	97: 'souffet_egg', // x
-	98: 'soufflet_egg_rare',
-	99: 'toufufu_baby', // x
-	100: 'toufufu_baby_rare', // x
-	101: 'quetzu_egg',
-	102: 'quetzu_egg_rare', // x
-	103: 'smog_egg', // x
-	104: 'smog_egg_anniversary', // x
-	105: 'smog_egg_christmas_blue', // x
-	106: 'smog_egg_christmas_green', // x
-	107: 'triceragnon_baby', // x
-	108: 'triceragnon_baby_rare',
-	109: 'amnesic_rice', // x
-	110: 'tik_bracelet', // x
-	111: 'magic_star', // x
-	112: 'golden_napodino', // x
-	113: 'bamboo_friend', // x
-	114: 'candle_card', // x
-	115: 'christmas_ticket', // x
-	116: 'tictac_ticket', // x
-	117: 'anniversary_ticket', // x
-	118: 'easter_egg', // x
-	119: 'fire_cracker', // x
-	120: 'special_potion_irma', // x
+	62: 'moueffe_egg',
+	63: 'moueffe_egg_rare', // x
+	64: 'pigmou_egg',
+	65: 'pigmou_egg_rare', // x
+	66: 'winks_egg',
+	67: 'winks_egg_rare', // x
+	68: 'planaille_egg',
+	69: 'planaille_egg_rare',
+	70: 'castivore_egg',
+	71: 'castivore_egg_rare', // x
+	72: 'rocky_egg',
+	73: 'rocky_egg_rare', // x
+	74: 'pteroz_egg',
+	75: 'pteroz_egg_rare',
+	76: 'nuagoz_egg',
+	77: 'nuagoz_egg_rare', // x
+	78: 'sirain_egg',
+	79: 'sirain_egg_rare', // x
+	80: 'hippoclamp_egg',
+	81: 'hippoclamp_egg_rare',
+	82: 'gorilloz_egg',
+	83: 'gorilloz_egg_rare', // x
+	84: 'wanwan_egg',
+	85: 'wanwan_egg_rare', // x
+	86: 'wanwan_baby_rare', // x
+	87: 'santaz_egg', // x
+	88: 'santaz_egg_rare', // x
+	89: 'feross_egg', // x
+	90: 'feross_egg_rare', // x
+	91: 'feross_egg_christmas', // x
+	92: 'kabuki_egg', // x
+	93: 'kabuki_egg_rare', // x
+	94: 'mahamuti_egg', // x
+	95: 'mahamuti_egg_rare', // x
+	96: 'souffet_egg', // x
+	97: 'soufflet_egg_rare',
+	98: 'toufufu_baby', // x
+	99: 'toufufu_baby_rare', // x
+	100: 'quetzu_egg',
+	101: 'quetzu_egg_rare', // x
+	102: 'smog_egg', // x
+	103: 'smog_egg_anniversary', // x
+	104: 'smog_egg_christmas_blue', // x
+	105: 'smog_egg_christmas_green', // x
+	106: 'triceragnon_baby', // x
+	107: 'triceragnon_baby_rare',
+	108: 'amnesic_rice', // x
+	109: 'tik_bracelet', // x
+	110: 'magic_star', // x
+	111: 'golden_napodino', // x
+	112: 'bamboo_friend', // x
+	113: 'candle_card', // x
+	114: 'christmas_ticket', // x
+	115: 'tictac_ticket', // x
+	116: 'anniversary_ticket', // x
+	117: 'easter_egg', // x
+	118: 'fire_cracker', // x
+	119: 'special_potion_irma', // x
 	130: 'christmas_egg',
 	143: 'void_sphere',
 	993: 'box_common',
