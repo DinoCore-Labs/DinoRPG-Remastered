@@ -87,120 +87,117 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 			}
 		]
 	},
-	// Notes:
-	// - disabled until magic items are reworked
-	// - price is in golden napodino instead of gold
-	// MAGIC_SHOP: {
-	// 	shopId: 3,
-	// 	name: 'magic',
-	// 	placeId: PlaceEnum.DINOVILLE,
-	// 	type: ShopType.MAGICAL,
-	// 	listItemsSold: [
-	// {
-	// 	id: itemList[Item.BANISHMENT].itemId,
-	// 	price: 3,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.BATTERING_RAM].itemId,
-	// 	price: 3,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.EMBER].itemId,
-	// 	price: 5,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.SCALE].itemId,
-	// 	price: 7,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.BEER].itemId,
-	// 	price: 3,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.ENCYCLOPEDIA].itemId,
-	// 	price: 6,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.ANTICHROMATIC].itemId,
-	// 	price: 4,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.ANTIDOTE].itemId,
-	// 	price: 5,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.TIME_MANIPULATOR].itemId,
-	// 	price: 5,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.DIMENSIONAL_POWDER].itemId,
-	// 	price: 6,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.SORCERERS_STICK].itemId,
-	// 	price: 7,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.FRIENDLY_WHISTLE].itemId,
-	// 	price: 8,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.DINOZ_CUBE].itemId,
-	// 	price: 9,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.TEMPORAL_REDUCTION].itemId,
-	// 	price: 5,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.TEAR_OF_LIFE].itemId,
-	// 	price: 6,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.CUZCUSSIAN_MASK].itemId,
-	// 	price: 8,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.ANTI_GRAVE_SUIT].itemId,
-	// 	price: 6,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.ENCHANTED_STEROID].itemId,
-	// 	price: 6,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.CURSE_LOCKER].itemId,
-	// 	price: 4,
-	// 	type: ItemShopType.ITEM
-	// },
-	// {
-	// 	id: itemList[Item.FEAR_FACTOR].itemId,
-	// 	price: 8,
-	// 	type: ItemShopType.ITEM
-	// }
-	// ],
-	// condition: {
-	// 	[ConditionEnum.POSSESS_OBJECT]: itemList[Item.GOLDEN_NAPODINO].itemId
-	// }
-	// },
+	MAGIC_SHOP: {
+		shopId: 3,
+		name: 'magic',
+		placeId: PlaceEnum.DINOVILLE,
+		type: ShopType.MAGICAL,
+		listItemsSold: [
+			{
+				id: itemList[Item.BANISHMENT].itemId,
+				price: 3,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.BATTERING_RAM].itemId,
+				price: 3,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.EMBER].itemId,
+				price: 5,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.SCALE].itemId,
+				price: 7,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.BEER].itemId,
+				price: 3,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.ENCYCLOPEDIA].itemId,
+				price: 6,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.ANTICHROMATIC].itemId,
+				price: 4,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.ANTIDOTE].itemId,
+				price: 5,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.TIME_MANIPULATOR].itemId,
+				price: 5,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.DIMENSIONAL_POWDER].itemId,
+				price: 6,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.SORCERERS_STICK].itemId,
+				price: 7,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.FRIENDLY_WHISTLE].itemId,
+				price: 8,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.DINOZ_CUBE].itemId,
+				price: 9,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.TEMPORAL_REDUCTION].itemId,
+				price: 5,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.TEAR_OF_LIFE].itemId,
+				price: 6,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.CUZCUSSIAN_MASK].itemId,
+				price: 8,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.ANTI_GRAVE_SUIT].itemId,
+				price: 6,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.ENCHANTED_STEROID].itemId,
+				price: 6,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.CURSE_LOCKER].itemId,
+				price: 4,
+				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.FEAR_FACTOR].itemId,
+				price: 8,
+				type: ItemShopType.ITEM
+			}
+		],
+		condition: {
+			[ConditionEnum.POSSESS_OBJECT]: itemList[Item.GOLDEN_NAPODINO].itemId
+		}
+	},
 	// Cursed Shop, only accessible by cursed dinoz
 	CURSED_SHOP: {
 		shopId: 4,
