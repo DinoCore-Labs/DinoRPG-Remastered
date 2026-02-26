@@ -17,6 +17,7 @@ import LevelUpPage from '../pages/LevelUpPage.vue';
 import MainPage from '../pages/MainPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
 import ShopDinoz from '../pages/ShopDinoz.vue';
+import ShopItems from '../pages/ShopItems.vue';
 import { UserService } from '../services';
 import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
@@ -133,6 +134,12 @@ const routes: RouteRecord[] = [
 				meta: { auth: true }
 			},
 			{
+				path: '/shop/:name',
+				name: 'ItemShopPage',
+				component: ShopItems,
+				meta: { auth: true }
+			},
+			{
 				path: '/faq',
 				name: 'FAQPage',
 				component: FAQPage,
@@ -192,12 +199,9 @@ router.beforeEach(async to => {
 		// si on arrive sur la home publique (ou toute page publique) et que la session est valide,
 		// on redirige vers le jeu.
 		const ok = await tryHydrate();
-
-		// tu peux limiter uniquement à HomePage si tu veux éviter de rediriger depuis /ranking, /faq, etc.
 		if (ok && to.name === 'HomePage') {
 			return { name: 'MainPage' };
 		}
-
 		return true;
 	}
 

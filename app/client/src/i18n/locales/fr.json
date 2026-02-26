@@ -170,6 +170,7 @@
 	},
 	"pageTitle": {
 		"account": "DinoRPG [ Informations personnelles ]",
+		"shop": "DinoRPG [ Marchand : {shop} ]",
 		"faq": "DinoRPG [ FAQ ]",
 		"guide": "DinoRPG [ Guide du Jeu ]",
 		"items": "DinoRPG [ Inventaire ]",
@@ -1651,6 +1652,84 @@
 			}
 		}
 	},
+	"shop": {
+		"dinoz": {
+			"header": "Enclos des Dinoz",
+			"help": "Bienvenue dans l'enclos à Dinoz ! Ici, **chaque jour**,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
+		},
+		"confirm": {
+			"classic": "Désirez-vous acheter {quantity} {item} pour un total de {value} or ?",
+			"filou": "Désirez-vous acheter {quantity} bons pour un total de {sold} {item} ?",
+			"magic": "Désirez-vous acheter {item} pour un total de {sold} napodinos ?"
+		},
+		"item": {
+			"help": "Cliquez sur un objet dans la liste pour l'examiner...",
+			"advice": "**Conseil du jour :**",
+			"advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma : l'essayer, c'est l'adopter !",
+			"quantity": "Quantité",
+			"buy": "Acheter",
+			"sell": "Vendre pour {gold} :gold:",
+			"title": "Marchand : ",
+			"price": "Prix :",
+			"flying": {
+				"name": "Boutique volante de Dinoland",
+				"description": "La Boutique volante de Dinoland est accessible à tout endroit et permet à tout moment à votre Dinoz de se procurer des objets de base. En général, il suffit de siffler très fort pour qu'elle arrive. Il existe aussi de nombreuses autres Boutiques dans Dinoland, qui vendent chacune des objets spéciaux."
+			},
+			"forge": {
+				"name": "Boutique des Forges",
+				"description": "La Boutique des Forges est le lieu où sont vendus les objets construits grâce au feu du Grand Tout Chaud. On y trouve de nombreux objets utiles pour le Combat."
+			},
+			"magic": {
+				"name": "Boutique Magique",
+				"description": "Au cœur d'une petite ruelle de Dinoville, les aventuriers se perdent parfois et trouvent alors la Boutique Magique... Les objets extrêmement rares et puissants qu'elle vend ne peuvent être achetés avec de vulgaires pièces d'or. Par contre, ces objets sont ensorcelés : une fois équipés sur un Dinoz, ils ne peuvent plus être enlevés avant plusieurs jours !"
+			},
+			"cursed": {
+				"name": "Boutique Maudite",
+				"description": "La Boutique Maudite vend des objets rarissimes introuvables ailleurs. Comme on raconte que quiconque y rentre est maudit à vie, seuls ceux qui le sont déjà osent s'y aventurer..."
+			},
+			"fruity": {
+				"name": "Boutique Fruitée",
+				"description": "« Si vous laissez de l'or dans le seau pendu au vieil arbre, un fruit tombera ! »"
+			},
+			"razad": {
+				"name": "Chez Razad",
+				"description": "Razad est un vieux nomade ayant fui les steppes occidentales, devenues trop dangereuses pour son commerce. Aujourd'hui, sa boutique est bien plus modeste qu'avant, mais au moins il est installé en sécurité à l'Avant-Poste Rocky."
+			},
+			"souk": {
+				"name": "Souk \"Ventes Éclair\"",
+				"description": "Le souk est installé un peu à l'écart des Pylônes de Magnétite, offrant une très jolie vue sur les arcs électriques qui se forment régulièrement dans cette région. Malheureusement, la boutique n'est pas hors d'atteinte de ces éclairs, ce qui pose quelques soucis évidents..."
+			},
+			"neerhel": {
+				"name": "Pourvoyeur de Toutemba",
+				"description": "La petite boutique du Pourvoyeur est cachée au fin fond des canyons de Toutemba dans une crique bien protégée. Normal quand on connaît les dangers que recelle la région..."
+			},
+			"barbarian": {
+				"name": "Barbare Troqueur",
+				"description": "« Prix pas négociables. Vous pas toucher marchandises. PAS TOUCHER J'AI DIT ! Si vous toucher, moi BROYER vous !»"
+			},
+			"secret": {
+				"name": "Boutique Secrète",
+				"description": "« La boutique secrète de la Team-W contient tous les objets des Steppes Magnétiques en un seul endroit, et surtout à prix très raisonnable ! »"
+			},
+			"elit": {
+				"name": "Boutique d'Elit",
+				"description": "Vous trouverez dans cette Boutique divers objets que les forces spéciales Végétox utilisent souvent au cours de leurs dangereuses missions."
+			},
+			"chens": {
+				"name": "Boutique de Chen",
+				"description": "Chen met à votre disposition des compétences consommables, elles sont tellement puissantes qu'elles se détruisent après utilisation. Elles sont à utiliser avec parcimonie."
+			},
+			"merchant": {
+				"name": "Marchand Ambulant",
+				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !",
+				"dimanche": "Le Marchand Ambulant a pris son jour de congé, il faudra patienter jusqu'à demain pour pouvoir vendre de nouveau vos ingrédients. Bien sûr, le Marchand Ambulant se sera déplacé à un lieu différent, il faudra donc le trouver avant de pouvoir vendre vos ingrédients."
+			},
+			"filou": {
+				"name": "Homme Louche",
+				"description": "C'est assez cher, mais a priori, il n'existe pas d'autre façon d'en avoir facilement..."
+			}
+		}
+	},
 	"rewards": {
 		"name": {
 			"perle": "Perle de la Fontaine",
@@ -2296,12 +2375,6 @@
 		},
 		"disclaimer": "Cliquez sur {number} case(s) de la grille pour trouver des {search}",
 		"nothing": "Votre Dinoz n'a rien trouvé..."
-	},
-	"shop": {
-		"dinoz": {
-			"header": "Enclos des Dinoz",
-			"help": "Bienvenue dans l'enclos à Dinoz ! Ici, **chaque jour**,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
-		}
 	},
 	"faq": {
 		"intro": "Vous pouvez trouver ici toutes les réponses à vos questions sur le jeu. Essayez toutefois de ne pas trop utiliser cette section, car de nombreux secrets sont plus amusants si vous les découvrez par vous-même en cherchant un peu.",
