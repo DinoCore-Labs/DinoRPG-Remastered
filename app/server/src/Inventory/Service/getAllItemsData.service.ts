@@ -1,8 +1,28 @@
-import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
+import { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { getUserInventoryDataRequest } from '../Controller/getUserInventory.controller.js';
+
+export const getItemMaxQuantity = (
+	userInventory: NonNullable<Awaited<ReturnType<typeof getUserInventoryDataRequest>>>,
+	item: ItemFiche
+) => {
+	if (
+		item.itemId === Item.GOBLIN_MERGUEZ /*&&
+		playerInventoryData.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD)*/
+	) {
+		return userInventory.shopKeeper ? 150 : 100;
+	}
+
+	if (userInventory.shopKeeper && item.itemType !== ItemType.MAGICAL) {
+		return Math.round(item.maxQuantity * 1.5);
+	}
+
+	return item.maxQuantity;
+};
 
 export async function getAllItemsData(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;
@@ -29,8 +49,9 @@ export async function getAllItemsData(req: FastifyRequest, reply: FastifyReply) 
 
 			return {
 				id: item.itemId,
+				price: item.price,
 				quantity: i.quantity,
-				maxQuantity: item.maxQuantity
+				maxQuantity: getItemMaxQuantity(userInventoryData, item)
 			};
 		});
 		return reply.status(200).send(dto);
