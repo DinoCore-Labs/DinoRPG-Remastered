@@ -222,6 +222,11 @@ exports.Prisma.RankingScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.SecretScalarFieldEnum = {
+  key: 'key',
+  value: 'value'
+};
+
 exports.Prisma.SignupDeviceMonthCounterScalarFieldEnum = {
   id: 'id',
   monthKey: 'monthKey',
@@ -390,6 +395,7 @@ exports.Prisma.ModelName = {
   JobDefinition: 'JobDefinition',
   JobRun: 'JobRun',
   Ranking: 'Ranking',
+  Secret: 'Secret',
   SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
   SignupIpMonthCounter: 'SignupIpMonthCounter',
   User: 'User',

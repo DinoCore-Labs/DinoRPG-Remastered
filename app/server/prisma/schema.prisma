@@ -154,6 +154,13 @@ model Ranking {
   @@index([userId])
 }
 
+model Secret {
+  key   String @id @db.VarChar
+  value String @db.VarChar
+
+  @@map("secret")
+}
+
 model SignupDeviceMonthCounter {
   id          Int      @id @default(autoincrement())
   monthKey    String
