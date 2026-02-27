@@ -1,6 +1,7 @@
 import { Action, ActionFiche, actionList } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
 import { gatherList } from '@dinorpg/core/models/gather/gatherList.js';
 import { shopList } from '@dinorpg/core/models/shop/shopList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
@@ -9,6 +10,7 @@ import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.
 
 import { Dinoz, DinozSkills, DinozState, DinozStatus } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
+import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { prisma } from '../../prisma.js';
 import { checkCondition } from '../../utils/checkCondition.js';
 import { canLevelUp, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
@@ -228,19 +230,33 @@ export async function getAvailableActions(
 	}
 
 	// Shop action: check if a shop is available where the dinoz is
-	/*const itinerant = await getSpecificSecret('itinerant');
+	const itinerant = await getSpecificSecret('itinerant');
 	if (!itinerant) throw new ExpectedError(`No itinerant merchant place found.`);
+	const shops = Object.values(shopList);
+
+	console.log('ShopType.ITINERANT =', ShopType.ITINERANT);
+	console.log('All shop types =', [...new Set(shops.map(s => s.type))]);
+	console.log(
+		'Itinerant candidates =',
+		shops.filter(s => s.type === ShopType.ITINERANT).map(s => s.shopId)
+	);
+	const candidates = Object.values(shopList).filter(shop => shop.type === ShopType.ITINERANT);
+
+	for (const s of candidates) {
+		const ok = checkCondition(s.condition, user, Number(dinoz.id));
+		console.log('[itinerant]', { shopId: s.shopId, condition: s.condition, ok });
+	}
 	const itinerantShop = Object.values(shopList)
 		.filter(shop => shop.type === ShopType.ITINERANT)
-		.find(s => checkCondition(s.condition, player, dinoz.id));
-
+		.find(s => checkCondition(s.condition, user, dinoz.id));
+	console.log(itinerantShop);
 	if (itinerantShop && +itinerant.value === dinoz.placeId) {
 		availableActions.push({
 			name: actionList[Action.ITINERANTSHOP].name,
 			imgName: actionList[Action.ITINERANTSHOP].imgName,
 			prop: itinerantShop.shopId
 		});
-	}*/
+	}
 	const shopAvailable = Object.values(shopList).filter(
 		shop =>
 			shop.placeId === dinoz.placeId &&

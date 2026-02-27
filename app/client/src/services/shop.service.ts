@@ -1,6 +1,7 @@
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import type { IngredientFiche } from '@dinorpg/core/models/ingredients/ingredientFiche.js';
 import type { DinozShopFicheLite } from '@dinorpg/core/models/shop/dinozShopFiche.js';
-import type { ItemShopFiche, ShopFeedBack } from '@dinorpg/core/models/shop/shopFiche.js';
+import type { ItemShopFiche, ShopDTO, ShopFeedBack } from '@dinorpg/core/models/shop/shopFiche.js';
 
 import { http } from '../utils/http';
 
@@ -28,6 +29,20 @@ export const ShopService = {
 			.put(`/shop/buyitem/${shopId}`, {
 				itemId: itemId,
 				quantity: quantity
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	async getIngredientsFromIngredientsShop(dinozId: number): Promise<Array<IngredientFiche>> {
+		return http()
+			.get(`/shop/getitinerantshop/${dinozId}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	async sellIngredient(dinozId: number, ingredients: ShopDTO[]): Promise<{ gold: number }> {
+		return http()
+			.put(`/shop/sellingredient/${dinozId}`, {
+				ingredients: ingredients
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
