@@ -82,7 +82,6 @@
 <script lang="ts" scoped>
 import type { IngredientFiche } from '@dinorpg/core/models/ingredients/ingredientFiche.js';
 import { ingredientNameList } from '@dinorpg/core/models/ingredients/ingredientNameList.js';
-import type { ShopDTO } from '@dinorpg/core/models/shop/shopFiche.js';
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { itinerantShopNameList } from '../constants/shop.js';
@@ -121,7 +120,6 @@ export default defineComponent({
 				icon: 'pi pi-trash'
 			});
 			const currentDinozId = this.dinozStore.currentDinozId;
-
 			if (typeof currentDinozId !== 'number') {
 				this.$toast.open({
 					message: this.$t(`toast.missingData`),
@@ -129,7 +127,6 @@ export default defineComponent({
 				});
 				return;
 			}
-
 			const sellingItems = this.ingredientList
 				.map(ing => ({ itemId: ing.ingredientId, quantity: this.inputValuesById[ing.ingredientId] ?? 0 }))
 				.filter(i => i.quantity > 0)
