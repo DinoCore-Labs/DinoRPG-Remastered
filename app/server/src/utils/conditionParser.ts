@@ -144,9 +144,9 @@ export function conditionParser(condition: Condition, user: PlayerForConditionCh
 		}
 	} else if (ACTIVE) {
 		result = ACTIVE;
-	} /*else if (DAY !== undefined) {
-		result = dayjs().day() === DAY;
-	} else if (TIME) {
+	} else if (DAY !== undefined) {
+		result = new Date().getDay() === DAY;
+	} /*else if (TIME) {
 		const hour = dayjs().hour();
 		const seed = hour + myDinoz.id;
 		const rng = prand.xoroshiro128plus(seed);

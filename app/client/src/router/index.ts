@@ -18,6 +18,7 @@ import MainPage from '../pages/MainPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
 import ShopDinoz from '../pages/ShopDinoz.vue';
 import ShopItems from '../pages/ShopItems.vue';
+import ShopItinerant from '../pages/ShopItinerant.vue';
 import { UserService } from '../services';
 import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
@@ -137,6 +138,12 @@ const routes: RouteRecord[] = [
 				path: '/shop/:name',
 				name: 'ItemShopPage',
 				component: ShopItems,
+				meta: { auth: true }
+			},
+			{
+				path: '/itinerantshop/:itinerantId',
+				name: 'ItinerantShopPage',
+				component: ShopItinerant,
 				meta: { auth: true }
 			},
 			{
