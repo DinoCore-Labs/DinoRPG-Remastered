@@ -52,7 +52,7 @@
 				@click="launch(action)"
 			>
 				<img :src="getImgURL('act', action.imgName)" :alt="action.imgName" />
-				<p v-if="action.name === 'shop'">{{ $t(`shop.item.${shopNameList[action.prop ?? '']}.name`) }}</p>
+				<p v-if="action.name === 'shop'">{{ $t(`shop.item.${getShopNameFromAction(action)}.name`) }}</p>
 				<!--<p v-else-if="action.name === 'npc'">{{ $t(`npc.name.${npcDisplayName(+(action.prop ?? '0'))}`) }}</p>
 				<p v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION">
 					{{ $t(`missions.actions.terminate`) }}
@@ -65,7 +65,7 @@
 				<template #content>
 					<h1
 						v-if="action.name === 'shop'"
-						v-html="formatContent($t(`shop.item.${shopNameList[action.prop ?? '']}.name`))"
+						v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.name`))"
 					/>
 					<!--<h1
 						v-else-if="action.name === 'npc'"
@@ -81,7 +81,7 @@
 					<!-- DESCRIPTION ACTIONS -->
 					<p
 						v-if="action.name === 'shop'"
-						v-html="formatContent($t(`shop.item.${shopNameList[action.prop ?? '']}.description`))"
+						v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.description`))"
 					/>
 					<!--<p v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.description`))" />
 					<p
@@ -214,6 +214,10 @@ export default defineComponent({
 			const s = (totalSeconds % 60).toString().padStart(2, '0');
 			return `${m}:${s}`;
 		},
+		getShopNameFromAction(action: ActionFiche): string | undefined {
+			if (typeof action.prop !== 'number') return undefined;
+			return this.shopNameList[action.prop];
+		},
 		async launch(action: ActionFiche) {
 			switch (action.name) {
 				case Action.IRMA:
@@ -241,9 +245,12 @@ export default defineComponent({
 					});
 					break;
 				case Action.SHOP:
+					const name = this.getShopNameFromAction(action);
+					if (!name) return;
+
 					this.$router.push({
 						name: 'ItemShopPage',
-						params: { name: shopNameList[action.prop as number] }
+						params: { name }
 					});
 					break;
 				case Action.ITINERANTSHOP:
