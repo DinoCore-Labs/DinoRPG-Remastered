@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.7.0
+
+### Minor Changes
+
+- 4686734: feat shop
+
 ## 0.6.0
 
 ### Minor Changes

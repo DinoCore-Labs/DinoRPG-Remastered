@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.8.0
+
+### Minor Changes
+
+- 4686734: feat shop
+
 ## 0.7.0
 
 ### Minor Changes
