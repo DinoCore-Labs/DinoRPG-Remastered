@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.8.0
+
+### Minor Changes
+
+- 4686734: feat shop
+
+### Patch Changes
+
+- Updated dependencies [4686734]
+  - @dinorpg/core@0.7.0
+
 ## 0.7.0
 
 ### Minor Changes
