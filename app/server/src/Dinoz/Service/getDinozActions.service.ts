@@ -232,24 +232,9 @@ export async function getAvailableActions(
 	// Shop action: check if a shop is available where the dinoz is
 	const itinerant = await getSpecificSecret('itinerant');
 	if (!itinerant) throw new ExpectedError(`No itinerant merchant place found.`);
-	const shops = Object.values(shopList);
-
-	console.log('ShopType.ITINERANT =', ShopType.ITINERANT);
-	console.log('All shop types =', [...new Set(shops.map(s => s.type))]);
-	console.log(
-		'Itinerant candidates =',
-		shops.filter(s => s.type === ShopType.ITINERANT).map(s => s.shopId)
-	);
-	const candidates = Object.values(shopList).filter(shop => shop.type === ShopType.ITINERANT);
-
-	for (const s of candidates) {
-		const ok = checkCondition(s.condition, user, Number(dinoz.id));
-		console.log('[itinerant]', { shopId: s.shopId, condition: s.condition, ok });
-	}
 	const itinerantShop = Object.values(shopList)
 		.filter(shop => shop.type === ShopType.ITINERANT)
 		.find(s => checkCondition(s.condition, user, dinoz.id));
-	console.log(itinerantShop);
 	if (itinerantShop && +itinerant.value === dinoz.placeId) {
 		availableActions.push({
 			name: actionList[Action.ITINERANTSHOP].name,
