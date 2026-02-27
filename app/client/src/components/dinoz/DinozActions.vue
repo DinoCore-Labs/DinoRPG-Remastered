@@ -52,23 +52,22 @@
 				@click="launch(action)"
 			>
 				<img :src="getImgURL('act', action.imgName)" :alt="action.imgName" />
-				<!--<p v-if="action.name === 'shop'">{{ $t(`shop.item.${shopNameList[action.prop ?? '']}.name`) }}</p>
-				<p v-else-if="action.name === 'npc'">{{ $t(`npc.name.${npcDisplayName(+(action.prop ?? '0'))}`) }}</p>
+				<p v-if="action.name === 'shop'">{{ $t(`shop.item.${shopNameList[action.prop ?? '']}.name`) }}</p>
+				<!--<p v-else-if="action.name === 'npc'">{{ $t(`npc.name.${npcDisplayName(+(action.prop ?? '0'))}`) }}</p>
 				<p v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION">
 					{{ $t(`missions.actions.terminate`) }}
 				</p>-->
 				<!--<p v-else-if="action.name === 'mission'">{{ $t(`missions.npc.${action.prop}`) }}</p>-->
-				<p>
+				<p v-else>
 					{{ action.forDinoz ? `${dinoz.followers.find(f => f.id === action.forDinoz)?.name}: ` : '' }}
 					{{ $t(`action.name.${action.name}`) }}
 				</p>
 				<template #content>
-					<!--
 					<h1
 						v-if="action.name === 'shop'"
 						v-html="formatContent($t(`shop.item.${shopNameList[action.prop ?? '']}.name`))"
 					/>
-					<h1
+					<!--<h1
 						v-else-if="action.name === 'npc'"
 						v-html="formatContent($t(`npc.name.${npcDisplayName(+(action.prop ?? '0'))}`))"
 					/>
@@ -77,19 +76,19 @@
 						v-html="formatContent($t(`missions.actions.terminate`))"
 					/>
 					<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />-->
-					<h1 v-html="formatContent($t(`action.name.${action.name}`))" />
+					<h1 v-else v-html="formatContent($t(`action.name.${action.name}`))" />
 
 					<!-- DESCRIPTION ACTIONS -->
-					<!--<p
+					<p
 						v-if="action.name === 'shop'"
 						v-html="formatContent($t(`shop.item.${shopNameList[action.prop ?? '']}.description`))"
 					/>
-					<p v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.description`))" />
+					<!--<p v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.description`))" />
 					<p
 						v-else-if="action.name === 'mission'"
 						v-html="formatContent($t(`missions.tooltip`, { mission: $t(`missions.name.${missionName}`) }))"
 					/>-->
-					<p v-html="formatContent($t(`action.description.${action.name}`))" />
+					<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
 				</template>
 			</Tippy>
 			<!--<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />-->
@@ -114,7 +113,6 @@ import DZFollow from '../utils/DZFollow.vue';
 //import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 //import NPCModal from '../../components/modal/NPCModal.vue';
 import Resurrect from '../modal/ResurrectModal.vue';
-//import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
 //import { mixin } from '../../mixin/mixin.js';
 import { FightService } from '../../services';
 import { DinozService } from '../../services';
@@ -128,6 +126,7 @@ import { GatherType } from '@dinorpg/core/models/enums/GatherType.js';
 import { formatText } from '../../utils/formatText';
 import eventBus from '../../events';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
+import { itinerantShopNameList, shopNameList } from '../../constants/shop';
 //import { DigResponse } from '@drpg/core/returnTypes/Dinoz';
 
 export default defineComponent({
@@ -135,8 +134,8 @@ export default defineComponent({
 	data() {
 		return {
 			dinozId: this.dinoz.id,
-			//shopNameList: shopNameList,
-			//itinerantShopNameList: itinerantShopNameList,
+			shopNameList: shopNameList,
+			itinerantShopNameList: itinerantShopNameList,
 			resurrect: false as boolean,
 			//NPCModal: undefined as string | undefined,
 			//npcName: undefined as string | undefined,
@@ -146,7 +145,7 @@ export default defineComponent({
 			//MissionEnum: ConditionEnum,
 			//digRewards: undefined as DigResponse | undefined,
 			Action,
-			//itinerantName: '' as string,
+			itinerantName: '' as string,
 			dinozFullParty: [] as DinozFiche[],
 			uStore: userStore(),
 			timeUntilMidnight: '',
@@ -242,16 +241,16 @@ export default defineComponent({
 					});
 					break;
 				case Action.SHOP:
-					/*this.$router.push({
+					this.$router.push({
 						name: 'ItemShopPage',
 						params: { name: shopNameList[action.prop as number] }
-					});*/
+					});
 					break;
 				case Action.ITINERANTSHOP:
-					/*this.$router.push({
-						name: 'ItinerantMerchantPage',
+					this.$router.push({
+						name: 'ItinerantShopPage',
 						params: { itinerantId: action.prop }
-					});*/
+					});
 					break;
 				case Action.NPC:
 					/*this.dinozStore.clearNpc(+this.$route.params.id);

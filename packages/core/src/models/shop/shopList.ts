@@ -1,5 +1,5 @@
 import { DinozStatusId } from '../dinoz/statusList.js';
-//import { DayEnum } from '../enums/DayType.js';
+import { DayEnum } from '../enums/DayType.js';
 import { ConditionEnum } from '../enums/Parser.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
 import { ShopType } from '../enums/ShopType.js';
@@ -421,7 +421,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		]
 	},
 	// ITINERANT MERCHANT ---- MONDAY
-	/*ITINERANT_MERCHANT_MONDAY: {
+	ITINERANT_MERCHANT_MONDAY: {
 		shopId: 13,
 		name: 'merchant',
 		placeId: PlaceEnum.NOWHERE,
@@ -837,7 +837,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		condition: {
 			[ConditionEnum.DAY]: DayEnum.SUNDAY
 		}
-	},*/
+	},
 	FILOU: {
 		shopId: 20,
 		name: 'filou',
