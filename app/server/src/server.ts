@@ -15,6 +15,8 @@ import { fightSchemas } from './Fight/Schema/fight.schema.js';
 import { gatherRoutes } from './Gather/Routes/gather.routes.js';
 import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
 import { ensureJobsExist } from './jobs/ensureJobs.js';
+import { ensureSecretsExist } from './jobs/ensureSecrets.js';
+import { itinerantMerchantMoveJob } from './jobs/handlers/itinerantMerchantMove.js';
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
 import { startScheduler } from './jobs/scheduler.js';
 import { levelRoutes } from './Level/Routes/level.routes.js';
@@ -178,10 +180,12 @@ async function buildServer() {
 	// 10. Scheduler
 	//------------------------------------------------------
 	await ensureJobsExist();
+	await ensureSecretsExist(server.log);
 
 	const stopScheduler = startScheduler(
 		{
-			'reset-dinoz-shop': resetDinozShopAtMidnight
+			'reset-dinoz-shop': resetDinozShopAtMidnight,
+			'itinerant-merchant-move': () => itinerantMerchantMoveJob(server.log)
 		},
 		server.log
 	);
