@@ -52,7 +52,7 @@
 								type="number"
 								min="0"
 								:max="ingredient.quantity"
-								v-model="inputValues[index].quantity"
+								v-model="inputValuesById[ingredient.ingredientId]"
 								@input="liveGold()"
 							/>
 						</td>
@@ -106,7 +106,7 @@ export default defineComponent({
 			itinerantShopNameList: itinerantShopNameList,
 			ingredientNameList: ingredientNameList,
 			ingredientList: [] as Array<IngredientFiche>,
-			inputValues: [] as ShopDTO[],
+			inputValuesById: {} as Record<number, number>,
 			itinerantId: undefined as number | undefined,
 			totalSell: 0 as number
 		};
@@ -130,7 +130,8 @@ export default defineComponent({
 				return;
 			}
 
-			const sellingItems = this.inputValues
+			const sellingItems = this.ingredientList
+				.map(ing => ({ itemId: ing.ingredientId, quantity: this.inputValuesById[ing.ingredientId] ?? 0 }))
 				.filter(i => i.quantity > 0)
 				.filter(i => (this.ingredientList.find(a => a.ingredientId === i.itemId)?.quantity ?? 0) >= i.quantity);
 			if (sellingItems.length < 1) {
@@ -144,10 +145,7 @@ export default defineComponent({
 				try {
 					const gold = await ShopService.sellIngredient(currentDinozId, sellingItems);
 					this.ingredientList = await ShopService.getIngredientsFromIngredientsShop(currentDinozId);
-					// reset value
-					this.inputValues = this.inputValues.map(a => {
-						return { itemId: a.itemId, quantity: 0 };
-					});
+					this.inputValuesById = Object.fromEntries(this.ingredientList.map(i => [i.ingredientId, 0]));
 					this.totalSell = 0;
 					const message = this.$t(`toast.ingredientSold`, { value: gold.gold });
 					this.$toast.open({
@@ -162,19 +160,16 @@ export default defineComponent({
 			}
 		},
 		liveGold() {
-			const toSold = this.inputValues.map(a => {
-				return (this.ingredientList.find(i => i.ingredientId === a.itemId)?.price ?? 0) * a.quantity;
-			});
-			this.totalSell = toSold.reduce((acc, items) => {
-				return acc + items;
-			});
+			this.totalSell = this.ingredientList.reduce((sum, ing) => {
+				const qty = this.inputValuesById[ing.ingredientId] ?? 0;
+				return sum + (ing.price ?? 0) * qty;
+			}, 0);
 		}
 	},
 	async mounted(): Promise<void> {
 		this.itinerantId = parseInt(this.$route.params.itinerantId as string);
 		try {
 			const currentDinozId = this.dinozStore.currentDinozId;
-
 			if (typeof currentDinozId !== 'number') {
 				this.$toast.open({
 					message: this.$t(`toast.missingData`),
@@ -182,12 +177,8 @@ export default defineComponent({
 				});
 				return;
 			}
-
 			this.ingredientList = await ShopService.getIngredientsFromIngredientsShop(currentDinozId);
-			const tempo: ShopDTO[] = this.ingredientList.map(i => {
-				return { itemId: i.ingredientId, quantity: 0 };
-			});
-			this.inputValues.push(...tempo);
+			this.inputValuesById = Object.fromEntries(this.ingredientList.map(i => [i.ingredientId, 0]));
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;
