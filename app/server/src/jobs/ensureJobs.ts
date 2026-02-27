@@ -16,4 +16,18 @@ export async function ensureJobsExist() {
 		},
 		update: {}
 	});
+	await prisma.jobDefinition.upsert({
+		where: { key: 'itinerant-merchant-move' },
+		create: {
+			key: 'itinerant-merchant-move',
+			name: 'Move itinerant merchant (weekly)',
+			type: 'DAILY_AT',
+			timezone: 'UTC',
+			dailyHour: 0,
+			dailyMinute: 0,
+			nextRunAt: nextDailyAtUtc(0, 0),
+			enabled: true
+		},
+		update: {}
+	});
 }

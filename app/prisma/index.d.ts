@@ -54,6 +54,11 @@ export type JobRun = $Result.DefaultSelection<Prisma.$JobRunPayload>
  */
 export type Ranking = $Result.DefaultSelection<Prisma.$RankingPayload>
 /**
+ * Model Secret
+ * 
+ */
+export type Secret = $Result.DefaultSelection<Prisma.$SecretPayload>
+/**
  * Model SignupDeviceMonthCounter
  * 
  */
@@ -405,6 +410,16 @@ export class PrismaClient<
     * ```
     */
   get ranking(): Prisma.RankingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.secret`: Exposes CRUD operations for the **Secret** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Secrets
+    * const secrets = await prisma.secret.findMany()
+    * ```
+    */
+  get secret(): Prisma.SecretDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.signupDeviceMonthCounter`: Exposes CRUD operations for the **SignupDeviceMonthCounter** model.
@@ -957,6 +972,7 @@ export namespace Prisma {
     JobDefinition: 'JobDefinition',
     JobRun: 'JobRun',
     Ranking: 'Ranking',
+    Secret: 'Secret',
     SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
     SignupIpMonthCounter: 'SignupIpMonthCounter',
     User: 'User',
@@ -983,7 +999,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dinoz" | "dinozItems" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "jobDefinition" | "jobRun" | "ranking" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
+      modelProps: "dinoz" | "dinozItems" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "jobDefinition" | "jobRun" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1576,6 +1592,80 @@ export namespace Prisma {
           count: {
             args: Prisma.RankingCountArgs<ExtArgs>
             result: $Utils.Optional<RankingCountAggregateOutputType> | number
+          }
+        }
+      }
+      Secret: {
+        payload: Prisma.$SecretPayload<ExtArgs>
+        fields: Prisma.SecretFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SecretFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecretPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SecretFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecretPayload>
+          }
+          findFirst: {
+            args: Prisma.SecretFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecretPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SecretFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecretPayload>
+          }
+          findMany: {
+            args: Prisma.SecretFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecretPayload>[]
+          }
+          create: {
+            args: Prisma.SecretCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecretPayload>
+          }
+          createMany: {
+            args: Prisma.SecretCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SecretCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecretPayload>[]
+          }
+          delete: {
+            args: Prisma.SecretDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecretPayload>
+          }
+          update: {
+            args: Prisma.SecretUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecretPayload>
+          }
+          deleteMany: {
+            args: Prisma.SecretDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SecretUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SecretUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecretPayload>[]
+          }
+          upsert: {
+            args: Prisma.SecretUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SecretPayload>
+          }
+          aggregate: {
+            args: Prisma.SecretAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSecret>
+          }
+          groupBy: {
+            args: Prisma.SecretGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SecretGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SecretCountArgs<ExtArgs>
+            result: $Utils.Optional<SecretCountAggregateOutputType> | number
           }
         }
       }
@@ -2509,6 +2599,7 @@ export namespace Prisma {
     jobDefinition?: JobDefinitionOmit
     jobRun?: JobRunOmit
     ranking?: RankingOmit
+    secret?: SecretOmit
     signupDeviceMonthCounter?: SignupDeviceMonthCounterOmit
     signupIpMonthCounter?: SignupIpMonthCounterOmit
     user?: UserOmit
@@ -12376,6 +12467,971 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: RankingInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Secret
+   */
+
+  export type AggregateSecret = {
+    _count: SecretCountAggregateOutputType | null
+    _min: SecretMinAggregateOutputType | null
+    _max: SecretMaxAggregateOutputType | null
+  }
+
+  export type SecretMinAggregateOutputType = {
+    key: string | null
+    value: string | null
+  }
+
+  export type SecretMaxAggregateOutputType = {
+    key: string | null
+    value: string | null
+  }
+
+  export type SecretCountAggregateOutputType = {
+    key: number
+    value: number
+    _all: number
+  }
+
+
+  export type SecretMinAggregateInputType = {
+    key?: true
+    value?: true
+  }
+
+  export type SecretMaxAggregateInputType = {
+    key?: true
+    value?: true
+  }
+
+  export type SecretCountAggregateInputType = {
+    key?: true
+    value?: true
+    _all?: true
+  }
+
+  export type SecretAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Secret to aggregate.
+     */
+    where?: SecretWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Secrets to fetch.
+     */
+    orderBy?: SecretOrderByWithRelationInput | SecretOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SecretWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Secrets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Secrets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Secrets
+    **/
+    _count?: true | SecretCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SecretMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SecretMaxAggregateInputType
+  }
+
+  export type GetSecretAggregateType<T extends SecretAggregateArgs> = {
+        [P in keyof T & keyof AggregateSecret]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSecret[P]>
+      : GetScalarType<T[P], AggregateSecret[P]>
+  }
+
+
+
+
+  export type SecretGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SecretWhereInput
+    orderBy?: SecretOrderByWithAggregationInput | SecretOrderByWithAggregationInput[]
+    by: SecretScalarFieldEnum[] | SecretScalarFieldEnum
+    having?: SecretScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SecretCountAggregateInputType | true
+    _min?: SecretMinAggregateInputType
+    _max?: SecretMaxAggregateInputType
+  }
+
+  export type SecretGroupByOutputType = {
+    key: string
+    value: string
+    _count: SecretCountAggregateOutputType | null
+    _min: SecretMinAggregateOutputType | null
+    _max: SecretMaxAggregateOutputType | null
+  }
+
+  type GetSecretGroupByPayload<T extends SecretGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SecretGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SecretGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SecretGroupByOutputType[P]>
+            : GetScalarType<T[P], SecretGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SecretSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["secret"]>
+
+  export type SecretSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["secret"]>
+
+  export type SecretSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    value?: boolean
+  }, ExtArgs["result"]["secret"]>
+
+  export type SecretSelectScalar = {
+    key?: boolean
+    value?: boolean
+  }
+
+  export type SecretOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"key" | "value", ExtArgs["result"]["secret"]>
+
+  export type $SecretPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Secret"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      key: string
+      value: string
+    }, ExtArgs["result"]["secret"]>
+    composites: {}
+  }
+
+  type SecretGetPayload<S extends boolean | null | undefined | SecretDefaultArgs> = $Result.GetResult<Prisma.$SecretPayload, S>
+
+  type SecretCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SecretFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: SecretCountAggregateInputType | true
+    }
+
+  export interface SecretDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Secret'], meta: { name: 'Secret' } }
+    /**
+     * Find zero or one Secret that matches the filter.
+     * @param {SecretFindUniqueArgs} args - Arguments to find a Secret
+     * @example
+     * // Get one Secret
+     * const secret = await prisma.secret.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SecretFindUniqueArgs>(args: SelectSubset<T, SecretFindUniqueArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Secret that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SecretFindUniqueOrThrowArgs} args - Arguments to find a Secret
+     * @example
+     * // Get one Secret
+     * const secret = await prisma.secret.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SecretFindUniqueOrThrowArgs>(args: SelectSubset<T, SecretFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Secret that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecretFindFirstArgs} args - Arguments to find a Secret
+     * @example
+     * // Get one Secret
+     * const secret = await prisma.secret.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SecretFindFirstArgs>(args?: SelectSubset<T, SecretFindFirstArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Secret that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecretFindFirstOrThrowArgs} args - Arguments to find a Secret
+     * @example
+     * // Get one Secret
+     * const secret = await prisma.secret.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SecretFindFirstOrThrowArgs>(args?: SelectSubset<T, SecretFindFirstOrThrowArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Secrets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecretFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Secrets
+     * const secrets = await prisma.secret.findMany()
+     * 
+     * // Get first 10 Secrets
+     * const secrets = await prisma.secret.findMany({ take: 10 })
+     * 
+     * // Only select the `key`
+     * const secretWithKeyOnly = await prisma.secret.findMany({ select: { key: true } })
+     * 
+     */
+    findMany<T extends SecretFindManyArgs>(args?: SelectSubset<T, SecretFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Secret.
+     * @param {SecretCreateArgs} args - Arguments to create a Secret.
+     * @example
+     * // Create one Secret
+     * const Secret = await prisma.secret.create({
+     *   data: {
+     *     // ... data to create a Secret
+     *   }
+     * })
+     * 
+     */
+    create<T extends SecretCreateArgs>(args: SelectSubset<T, SecretCreateArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Secrets.
+     * @param {SecretCreateManyArgs} args - Arguments to create many Secrets.
+     * @example
+     * // Create many Secrets
+     * const secret = await prisma.secret.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SecretCreateManyArgs>(args?: SelectSubset<T, SecretCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Secrets and returns the data saved in the database.
+     * @param {SecretCreateManyAndReturnArgs} args - Arguments to create many Secrets.
+     * @example
+     * // Create many Secrets
+     * const secret = await prisma.secret.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Secrets and only return the `key`
+     * const secretWithKeyOnly = await prisma.secret.createManyAndReturn({
+     *   select: { key: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SecretCreateManyAndReturnArgs>(args?: SelectSubset<T, SecretCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Secret.
+     * @param {SecretDeleteArgs} args - Arguments to delete one Secret.
+     * @example
+     * // Delete one Secret
+     * const Secret = await prisma.secret.delete({
+     *   where: {
+     *     // ... filter to delete one Secret
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SecretDeleteArgs>(args: SelectSubset<T, SecretDeleteArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Secret.
+     * @param {SecretUpdateArgs} args - Arguments to update one Secret.
+     * @example
+     * // Update one Secret
+     * const secret = await prisma.secret.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SecretUpdateArgs>(args: SelectSubset<T, SecretUpdateArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Secrets.
+     * @param {SecretDeleteManyArgs} args - Arguments to filter Secrets to delete.
+     * @example
+     * // Delete a few Secrets
+     * const { count } = await prisma.secret.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SecretDeleteManyArgs>(args?: SelectSubset<T, SecretDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Secrets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecretUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Secrets
+     * const secret = await prisma.secret.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SecretUpdateManyArgs>(args: SelectSubset<T, SecretUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Secrets and returns the data updated in the database.
+     * @param {SecretUpdateManyAndReturnArgs} args - Arguments to update many Secrets.
+     * @example
+     * // Update many Secrets
+     * const secret = await prisma.secret.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Secrets and only return the `key`
+     * const secretWithKeyOnly = await prisma.secret.updateManyAndReturn({
+     *   select: { key: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SecretUpdateManyAndReturnArgs>(args: SelectSubset<T, SecretUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Secret.
+     * @param {SecretUpsertArgs} args - Arguments to update or create a Secret.
+     * @example
+     * // Update or create a Secret
+     * const secret = await prisma.secret.upsert({
+     *   create: {
+     *     // ... data to create a Secret
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Secret we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SecretUpsertArgs>(args: SelectSubset<T, SecretUpsertArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Secrets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecretCountArgs} args - Arguments to filter Secrets to count.
+     * @example
+     * // Count the number of Secrets
+     * const count = await prisma.secret.count({
+     *   where: {
+     *     // ... the filter for the Secrets we want to count
+     *   }
+     * })
+    **/
+    count<T extends SecretCountArgs>(
+      args?: Subset<T, SecretCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SecretCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Secret.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecretAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SecretAggregateArgs>(args: Subset<T, SecretAggregateArgs>): Prisma.PrismaPromise<GetSecretAggregateType<T>>
+
+    /**
+     * Group by Secret.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SecretGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SecretGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SecretGroupByArgs['orderBy'] }
+        : { orderBy?: SecretGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SecretGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSecretGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Secret model
+   */
+  readonly fields: SecretFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Secret.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SecretClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Secret model
+   */
+  interface SecretFieldRefs {
+    readonly key: FieldRef<"Secret", 'String'>
+    readonly value: FieldRef<"Secret", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Secret findUnique
+   */
+  export type SecretFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
+    /**
+     * Filter, which Secret to fetch.
+     */
+    where: SecretWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Secret findUniqueOrThrow
+   */
+  export type SecretFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
+    /**
+     * Filter, which Secret to fetch.
+     */
+    where: SecretWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Secret findFirst
+   */
+  export type SecretFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
+    /**
+     * Filter, which Secret to fetch.
+     */
+    where?: SecretWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Secrets to fetch.
+     */
+    orderBy?: SecretOrderByWithRelationInput | SecretOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Secrets.
+     */
+    cursor?: SecretWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Secrets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Secrets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Secrets.
+     */
+    distinct?: SecretScalarFieldEnum | SecretScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Secret findFirstOrThrow
+   */
+  export type SecretFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
+    /**
+     * Filter, which Secret to fetch.
+     */
+    where?: SecretWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Secrets to fetch.
+     */
+    orderBy?: SecretOrderByWithRelationInput | SecretOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Secrets.
+     */
+    cursor?: SecretWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Secrets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Secrets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Secrets.
+     */
+    distinct?: SecretScalarFieldEnum | SecretScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Secret findMany
+   */
+  export type SecretFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
+    /**
+     * Filter, which Secrets to fetch.
+     */
+    where?: SecretWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Secrets to fetch.
+     */
+    orderBy?: SecretOrderByWithRelationInput | SecretOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Secrets.
+     */
+    cursor?: SecretWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Secrets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Secrets.
+     */
+    skip?: number
+    distinct?: SecretScalarFieldEnum | SecretScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Secret create
+   */
+  export type SecretCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Secret.
+     */
+    data: XOR<SecretCreateInput, SecretUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Secret createMany
+   */
+  export type SecretCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Secrets.
+     */
+    data: SecretCreateManyInput | SecretCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Secret createManyAndReturn
+   */
+  export type SecretCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
+    /**
+     * The data used to create many Secrets.
+     */
+    data: SecretCreateManyInput | SecretCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Secret update
+   */
+  export type SecretUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Secret.
+     */
+    data: XOR<SecretUpdateInput, SecretUncheckedUpdateInput>
+    /**
+     * Choose, which Secret to update.
+     */
+    where: SecretWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Secret updateMany
+   */
+  export type SecretUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Secrets.
+     */
+    data: XOR<SecretUpdateManyMutationInput, SecretUncheckedUpdateManyInput>
+    /**
+     * Filter which Secrets to update
+     */
+    where?: SecretWhereInput
+    /**
+     * Limit how many Secrets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Secret updateManyAndReturn
+   */
+  export type SecretUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
+    /**
+     * The data used to update Secrets.
+     */
+    data: XOR<SecretUpdateManyMutationInput, SecretUncheckedUpdateManyInput>
+    /**
+     * Filter which Secrets to update
+     */
+    where?: SecretWhereInput
+    /**
+     * Limit how many Secrets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Secret upsert
+   */
+  export type SecretUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Secret to update in case it exists.
+     */
+    where: SecretWhereUniqueInput
+    /**
+     * In case the Secret found by the `where` argument doesn't exist, create a new Secret with this data.
+     */
+    create: XOR<SecretCreateInput, SecretUncheckedCreateInput>
+    /**
+     * In case the Secret was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SecretUpdateInput, SecretUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Secret delete
+   */
+  export type SecretDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
+    /**
+     * Filter which Secret to delete.
+     */
+    where: SecretWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Secret deleteMany
+   */
+  export type SecretDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Secrets to delete
+     */
+    where?: SecretWhereInput
+    /**
+     * Limit how many Secrets to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Secret without action
+   */
+  export type SecretDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Secret
+     */
+    select?: SecretSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Secret
+     */
+    omit?: SecretOmit<ExtArgs> | null
   }
 
 
@@ -24971,6 +26027,14 @@ export namespace Prisma {
   export type RankingScalarFieldEnum = (typeof RankingScalarFieldEnum)[keyof typeof RankingScalarFieldEnum]
 
 
+  export const SecretScalarFieldEnum: {
+    key: 'key',
+    value: 'value'
+  };
+
+  export type SecretScalarFieldEnum = (typeof SecretScalarFieldEnum)[keyof typeof SecretScalarFieldEnum]
+
+
   export const SignupDeviceMonthCounterScalarFieldEnum: {
     id: 'id',
     monthKey: 'monthKey',
@@ -25947,6 +27011,43 @@ export namespace Prisma {
     completion?: IntWithAggregatesFilter<"Ranking"> | number
     dojo?: IntWithAggregatesFilter<"Ranking"> | number
     userId?: UuidWithAggregatesFilter<"Ranking"> | string
+  }
+
+  export type SecretWhereInput = {
+    AND?: SecretWhereInput | SecretWhereInput[]
+    OR?: SecretWhereInput[]
+    NOT?: SecretWhereInput | SecretWhereInput[]
+    key?: StringFilter<"Secret"> | string
+    value?: StringFilter<"Secret"> | string
+  }
+
+  export type SecretOrderByWithRelationInput = {
+    key?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SecretWhereUniqueInput = Prisma.AtLeast<{
+    key?: string
+    AND?: SecretWhereInput | SecretWhereInput[]
+    OR?: SecretWhereInput[]
+    NOT?: SecretWhereInput | SecretWhereInput[]
+    value?: StringFilter<"Secret"> | string
+  }, "key">
+
+  export type SecretOrderByWithAggregationInput = {
+    key?: SortOrder
+    value?: SortOrder
+    _count?: SecretCountOrderByAggregateInput
+    _max?: SecretMaxOrderByAggregateInput
+    _min?: SecretMinOrderByAggregateInput
+  }
+
+  export type SecretScalarWhereWithAggregatesInput = {
+    AND?: SecretScalarWhereWithAggregatesInput | SecretScalarWhereWithAggregatesInput[]
+    OR?: SecretScalarWhereWithAggregatesInput[]
+    NOT?: SecretScalarWhereWithAggregatesInput | SecretScalarWhereWithAggregatesInput[]
+    key?: StringWithAggregatesFilter<"Secret"> | string
+    value?: StringWithAggregatesFilter<"Secret"> | string
   }
 
   export type SignupDeviceMonthCounterWhereInput = {
@@ -27332,6 +28433,41 @@ export namespace Prisma {
     completion?: IntFieldUpdateOperationsInput | number
     dojo?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SecretCreateInput = {
+    key: string
+    value: string
+  }
+
+  export type SecretUncheckedCreateInput = {
+    key: string
+    value: string
+  }
+
+  export type SecretUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SecretUncheckedUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SecretCreateManyInput = {
+    key: string
+    value: string
+  }
+
+  export type SecretUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SecretUncheckedUpdateManyInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    value?: StringFieldUpdateOperationsInput | string
   }
 
   export type SignupDeviceMonthCounterCreateInput = {
@@ -28814,6 +29950,21 @@ export namespace Prisma {
     average?: SortOrder
     completion?: SortOrder
     dojo?: SortOrder
+  }
+
+  export type SecretCountOrderByAggregateInput = {
+    key?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SecretMaxOrderByAggregateInput = {
+    key?: SortOrder
+    value?: SortOrder
+  }
+
+  export type SecretMinOrderByAggregateInput = {
+    key?: SortOrder
+    value?: SortOrder
   }
 
   export type SignupDeviceMonthCounterMonthKeyDeviceTokenCompoundUniqueInput = {
