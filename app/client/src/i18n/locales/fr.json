@@ -1357,6 +1357,7 @@
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
 		"tname": "Ingrédients",
 		"tstock": "Stock",
+		"tquantity": "Quantité",
 		"name": {
 			"merou_lujidane": "Mérou Lujidané",
 			"poisson_vengeur": "Poisson-Vengeur",
