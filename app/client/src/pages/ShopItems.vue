@@ -356,7 +356,7 @@ export default defineComponent({
 				const bought = await ShopService.buyItem(this.actualShop.shopId, itemId, quantity);
 				let message = this.$t(`toast.itemBought`, {
 					quantity: bought.quantity,
-					itemName: this.$t(`item.name.${this.resolveItem(this.selectedItem).name}`)
+					itemName: this.$t(`items.name.${this.resolveItem(this.selectedItem).name}`)
 				});
 				if (this.actualShop.type === ShopType.FILOU) {
 					message = this.$t(`toast.itemBought`, {
