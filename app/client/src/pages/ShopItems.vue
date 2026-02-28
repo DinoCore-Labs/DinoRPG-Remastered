@@ -361,7 +361,7 @@ export default defineComponent({
 				if (this.actualShop.type === ShopType.FILOU) {
 					message = this.$t(`toast.itemBought`, {
 						quantity: bought.quantity,
-						itemName: this.$t(`item.name.treasure_coupon`)
+						itemName: this.$t(`leftPanel.wallets.treasureTicket`)
 					});
 				}
 				this.$toast.open({
@@ -384,6 +384,7 @@ export default defineComponent({
 				await this.$refreshGold();
 			} else if (this.actualShop.type === ShopType.FILOU) {
 				this.selectedItem = undefined;
+				await this.$refreshTreasureTicket();
 				await this.loadPage();
 			}
 		},

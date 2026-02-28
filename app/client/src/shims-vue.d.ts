@@ -16,5 +16,6 @@ declare module 'vue' {
 		$globalConfirm: typeof mixins.methods.$confirm;
 		$confirm: typeof mixins.methods.$confirm;
 		$refreshGold(): Promise<void>;
+		$refreshTreasureTicket(): Promise<void>;
 	}
 }
