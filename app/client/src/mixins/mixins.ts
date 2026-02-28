@@ -2,7 +2,7 @@ import type { ConfirmOptions } from '../utils/confirmPlugin';
 import { formatDateTime } from '../utils/formatDate';
 import { formatText } from '../utils/formatText';
 import { getImgURL } from '../utils/getImgURL';
-import { refreshGold } from '../utils/refreshGold';
+import { refreshGold, refreshTreasureTicket } from '../utils/refreshGold';
 
 type ConfirmHost = {
 	$globalConfirm?: (options: ConfirmOptions) => Promise<boolean>;
@@ -27,6 +27,9 @@ export const mixins = {
 		},
 		$refreshGold() {
 			return refreshGold();
+		},
+		$refreshTreasureTicket() {
+			return refreshTreasureTicket();
 		}
 	}
 };

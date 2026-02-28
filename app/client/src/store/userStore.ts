@@ -34,6 +34,9 @@ export const userStore = defineStore('userStore', {
 		setGold(gold: number) {
 			this.gold = gold;
 		},
+		setTicket(treasureTicket: number) {
+			this.treasureTicket = treasureTicket;
+		},
 		setPriest(priest: boolean): void {
 			this.priest = priest;
 		},
