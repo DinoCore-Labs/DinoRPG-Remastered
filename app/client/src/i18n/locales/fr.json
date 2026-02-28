@@ -1669,7 +1669,7 @@
 			"advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma : l'essayer, c'est l'adopter !",
 			"quantity": "Quantité",
 			"buy": "Acheter",
-			"sell": "Vendre pour {gold} :gold:",
+			"sell": "Vendre pour {sell} :gold:",
 			"title": "Marchand : ",
 			"price": "Prix :",
 			"flying": {
