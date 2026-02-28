@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.7.1
+
+### Patch Changes
+
+- f848067: some fixes
+
 ## 0.7.0
 
 ### Minor Changes

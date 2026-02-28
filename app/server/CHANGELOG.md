@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.8.1
+
+### Patch Changes
+
+- f848067: some fixes
+- Updated dependencies [f848067]
+  - @dinorpg/core@0.7.1
+
 ## 0.8.0
 
 ### Minor Changes
