@@ -50,7 +50,7 @@
 							theme="small"
 							class="name"
 							v-for="(item, index) in ingredientList"
-							:id="item.name"
+							:id="item.ingredientId"
 							:key="index"
 							tag="img"
 							:src="getImgURL('ingredients', item.name)"
