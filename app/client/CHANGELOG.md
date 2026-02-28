@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.8.1
+
+### Patch Changes
+
+- f848067: some fixes
+
 ## 0.8.0
 
 ### Minor Changes

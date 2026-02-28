@@ -1,5 +1,11 @@
 # @dinorpg/bot
 
+## 0.2.4
+
+### Patch Changes
+
+- f848067: some fixes
+
 ## 0.2.3
 
 ### Patch Changes
