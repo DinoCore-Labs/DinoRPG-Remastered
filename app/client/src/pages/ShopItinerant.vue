@@ -145,13 +145,13 @@ export default defineComponent({
 					const gold = await ShopService.sellIngredient(currentDinozId, sellingItems);
 					this.ingredientList = await ShopService.getIngredientsFromIngredientsShop(currentDinozId);
 					this.inputValuesById = Object.fromEntries(this.ingredientList.map(i => [i.ingredientId, 0]));
-					this.totalSell = 0;
-					const message = this.$t(`toast.ingredientSold`, { value: gold.gold });
+					const message = this.$t(`toast.ingredientSold`, { value: this.totalSell });
 					this.$toast.open({
 						message: formatText(message),
 						type: 'info'
 					});
 					this.playerStore.setGold(gold.gold);
+					this.totalSell = 0;
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
