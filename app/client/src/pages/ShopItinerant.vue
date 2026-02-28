@@ -70,9 +70,9 @@
 			</table>
 		</div>
 		<div v-if="ingredientList.length !== 0 && totalSell > 0" class="sell">
-			<a
+			<DZButton
 				class="button"
-				v-html="formatContent($t('shop.item.sell', { gold: totalSell }))"
+				v-html="formatContent($t('shop.item.sell', { sell: totalSell }))"
 				@click="sellIngredientPopinConfirmChoice()"
 			/>
 		</div>
@@ -91,12 +91,14 @@ import { userStore } from '../store/userStore.js';
 import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/errorHandler.js';
 import DZInput from '../components/utils/DZInput.vue';
+import DZButton from '../components/utils/DZButton.vue';
 
 export default defineComponent({
 	name: 'ShopItinerant',
 	components: {
 		TitleHeader,
-		DZInput
+		DZInput,
+		DZButton
 	},
 	data() {
 		return {
@@ -321,9 +323,9 @@ export default defineComponent({
 		.button {
 			background-size: cover;
 			font-size: 10pt;
-			padding-top: 9px;
-			width: 166px;
-			height: 25px;
+			padding-top: 3px;
+			width: 217px;
+			height: 39px;
 		}
 		.disabled {
 			opacity: 0.3;
