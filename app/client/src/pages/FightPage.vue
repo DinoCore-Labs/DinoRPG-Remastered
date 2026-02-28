@@ -64,7 +64,7 @@ export default defineComponent({
 		const fightResult = this.sessionStore.getFightResult;
 		if (fightResult === undefined) {
 			this.$toast.open({
-				message: this.$t('toast.noFight'),
+				message: this.$t('toast.viewFight'),
 				type: 'error'
 			});
 			this.$router.push({
