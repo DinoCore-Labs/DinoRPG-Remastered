@@ -89,7 +89,6 @@ export async function sellIngredient(
 		await decreaseIngredientQuantity(authed.id, ingre.id, ingre.quantity);
 	}
 
-	await addMoney(authed.id, gold);
-
-	return { gold };
+	const updated = await addMoney(authed.id, gold);
+	return { gold: updated.amount };
 }
