@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.9.0
+
+### Minor Changes
+
+- f7a4874: refactor fight
+
+### Patch Changes
+
+- Updated dependencies [f7a4874]
+  - @dinorpg/core@0.8.0
+
 ## 0.8.1
 
 ### Patch Changes
