@@ -9,7 +9,6 @@ export function conditionParser(condition: Condition, user: PlayerForConditionCh
 	let result;
 	const GOTO = condition[ConditionEnum.GOTO];
 	const PLACE_IS = condition[ConditionEnum.PLACE_IS];
-
 	const MIN_LEVEL = condition[ConditionEnum.MINLEVEL];
 	const MAX_LEVEL = condition[ConditionEnum.MAXLEVEL];
 	const STATUS = condition[ConditionEnum.STATUS];
@@ -57,7 +56,6 @@ export function conditionParser(condition: Condition, user: PlayerForConditionCh
 			myDinoz.missions.find(missions => missions.step === CURRENT_STEP && missions.isFinished === false) !== undefined;
 	}*/ else if (DINOZ_COUNT) {
 		const [comparator, value] = DINOZ_COUNT;
-
 		switch (comparator) {
 			case '==':
 				result = dinozCount === value;
@@ -88,7 +86,6 @@ export function conditionParser(condition: Condition, user: PlayerForConditionCh
 		result = user.dinoz.every(dinoz => place[1].placeId === dinoz.placeId);
 	} else if (PLACE_IS) {
 		const thisplace = placeList[PLACE_IS];
-
 		result = myDinoz.placeId === thisplace.placeId;
 	} /*else if (SCENARIO) {
 		const quest = SCENARIO[0];

@@ -286,6 +286,7 @@
 		"notEnoughMoney": "Vous n'avez pas assez d'or.",
 		"tooManyMagicItemEquiped": "Votre Dinoz ne peut pas équiper plus d'objets magiques.",
 		"maxQuantityInventory": "Vous avez déjà trop de cet objet dans votre inventaire",
+		"missingStatus": "L'un de vos Dinoz ne remplit pas les conditions pour faire cette action.",
 		"noFight": "Aujourd'hui, le marais est perdu dans la brume... Vous ne trouverez aucun monstre à combattre.",
 		"noMovement": "Aujourd'hui, le marais est complètement inondé ! Vous ne pouvez pas vous déplacer ici. Vous devez attendre demain pour sortir de ce bourbier.",
 		"unknown": "Une erreur est survenue."
