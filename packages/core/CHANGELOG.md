@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.8.0
+
+### Minor Changes
+
+- f7a4874: refactor fight
+
 ## 0.7.1
 
 ### Patch Changes
