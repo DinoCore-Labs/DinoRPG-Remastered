@@ -1,7 +1,7 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { DetailedFighter } from '@dinorpg/core/models/fight/detailedFighter.js';
 
-import { Dinoz, DinozItems, DinozSkills, DinozStatus } from '../../../../prisma/index.js';
+import { Dinoz, DinozCatch, DinozItems, DinozSkills, DinozStatus } from '../../../../prisma/index.js';
 
 export type DinozToGetFighter = Pick<
 	Dinoz,
@@ -21,7 +21,7 @@ export type DinozToGetFighter = Pick<
 	items: Pick<DinozItems, 'itemId'>[];
 	skills: Pick<DinozSkills, 'skillId'>[];
 	status: Pick<DinozStatus, 'statusId'>[];
-	//catches: Pick<DinozCatch, 'id' | 'hp' | 'monsterId'>[];
+	catches: Pick<DinozCatch, 'id' | 'hp' | 'monsterId'>[];
 };
 
 export interface FightRules {
