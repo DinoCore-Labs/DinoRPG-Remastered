@@ -908,7 +908,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: SeededR
 				const fighter = initializeDinoz(team, index, dinoz, place, bossFight, random);
 
 				// Catches
-				/*for (let i = 0; i < dinoz.catches.length; i++) {
+				for (let i = 0; i < dinoz.catches.length; i++) {
 					// Limit to 3 catches
 					if (i > 2) break;
 
@@ -939,7 +939,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: SeededR
 
 					// Add monster
 					fighters.push(monster);
-				}*/
+				}
 
 				return fighter;
 			})
