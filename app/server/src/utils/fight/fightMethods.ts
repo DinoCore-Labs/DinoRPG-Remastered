@@ -958,7 +958,7 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 
 	monster.master = fighter.id;
 
-	// Adjust time
+	// Adjust time to current time + random start time
 	monster.time = fighter.time + randomBetweenMaxExcludedSeeded(fightData.rng, 0, TIME_BASE) * TIME_FACTOR;
 
 	// Add monster to fighters
@@ -967,9 +967,7 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	// Add arrive step
 	fightData.steps.push({
 		action: 'arrive',
-		fid: monster.id,
-		entrance: monsterData.entrance,
-		scale: monsterData.size
+		fid: monster.id
 	});
 
 	checkReinforcementBan(fightData, monster);
@@ -1137,14 +1135,6 @@ const cancelEnvironment = (fightData: DetailedFight) => {
 const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche): boolean => {
 	// Get current fighter
 	const fighter = fightData.fighters[0];
-
-	// Cancel method to use if the item or event ends up not being triggered
-	const cancel = () => {
-		// Remove last step
-		fightData.steps.pop();
-
-		return false;
-	};
 
 	// If event is a skill
 	if ('id' in event) {
@@ -2050,7 +2040,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			default:
 				console.warn('Unknown item', event.itemId);
-				return cancel();
+				fightData.steps.pop();
+				return false;
 		}
 
 		// Add to items used
@@ -2146,7 +2137,8 @@ export const addStatus = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
 	status: FightStatus,
-	length?: FightStatusLength
+	length?: FightStatusLength,
+	addStep?: boolean
 ) => {
 	// Check if fighter already has the status
 	if (hasStatus(fighter, status)) return false;
@@ -2225,12 +2217,14 @@ export const addStatus = (
 
 	fighter.status.push(status_props);
 
-	// Add status step
-	fightData.steps.push({
-		action: 'addStatus',
-		fighter: stepFighter(fighter),
-		status
-	});
+	if (addStep ?? true) {
+		// Add status step
+		fightData.steps.push({
+			action: 'addStatus',
+			fighter: stepFighter(fighter),
+			status
+		});
+	}
 
 	return true;
 };
@@ -2319,6 +2313,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 };
 
 export const hasSkill = (fighter: DetailedFighter, skill: Skill) => fighter.skills.some(s => s.id === skill);
+export const hasItem = (fighter: DetailedFighter, item: Item) => fighter.items.some(i => i.itemId === item);
 
 // Skill conditions must be checked prior to calling this method
 const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean => {
@@ -2338,14 +2333,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		fid: fighter.id,
 		skill: skill.id
 	});
-
-	// Cancel method to use if the skil ends up not being triggered
-	const cancel = () => {
-		// Remove last step
-		fightData.steps.pop();
-
-		return false;
-	};
 
 	switch (skill.id) {
 		// AIR
@@ -3882,7 +3869,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		default:
 			console.warn('Unknown skill', skill.id);
-			return cancel();
+			// Remove last step
+			fightData.steps.pop();
+			return false;
 	}
 
 	// Not working well to add the activate step for all skills at this point
@@ -4421,7 +4410,7 @@ const attackTarget = (
 		checkAfterAttackEffects(fightData, attacker, target, damage, elements, isAssault, isDodged);
 
 		// Check for after defense effects of the target
-		checkAfterDefenseEffects(fightData, attacker, target, damage, isAssault);
+		checkAfterDefenseEffects(fightData, attacker, target, damage, elements, isAssault);
 
 		// The attacker can attempt a multihit with the following conditions:
 		// - attack can multihit
@@ -4718,12 +4707,26 @@ const checkAfterDefenseEffects = (
 	attacker: DetailedFighter,
 	target: DetailedFighter,
 	damage: number,
+	elements: ElementType[],
 	isCloseCombat: boolean
 ) => {
 	// Objet: voleur de vie
-	// TODO
-
-	// Objet: costume
+	// Check breakable costume
+	if (target.costume && target.costume.breakable && damage > 0 && elements.includes(ElementType.FIRE)) {
+		loseHp(fightData, target, 3, LifeEffect.Fire);
+		// Make the fighter leave and come back without the costume
+		fightData.steps.push({
+			action: 'loseCostume',
+			fid: target.id,
+			currentHp: target.hp
+		});
+		if (target.costume.item) {
+			const costumeIndex = target.items.findIndex(item => item.itemId === target.costume?.item);
+			target.items.splice(costumeIndex, 1);
+			target.itemsUsed.push(target.costume.item);
+		}
+		target.costume = undefined;
+	}
 	// TODO
 
 	// Statuses: sleep, flames Torche (competence ou briqué), intangible, ...

@@ -16,8 +16,8 @@ import {
 	type transpiled
 } from '@dinorpg/core/models/fight/transpiler.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
-import { bossList } from '@dinorpg/core/models/monster/bossList.js';
-import { monsterList } from '@dinorpg/core/models/monster/monsterList.js';
+import { Boss, bossList } from '@dinorpg/core/models/monster/bossList.js';
+import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
 import { placeList } from '@dinorpg/core/models/place/placeList.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import {
@@ -95,6 +95,40 @@ export function setFighterEnergy(fighter: FighterRecap, newEnergy: number) {
 
 export function resolveMonsterName(monster: string, t: TFunction) {
 	return t(`fight.monster.${monster}`);
+}
+
+export function resolveFighterSize(fighter: FighterRecap) {
+	if (fighter.costume) {
+		return fighter.costume.size ? fighter.costume.size / 100 : 1;
+	} else if (fighter.type === FighterType.DINOZ || fighter.type === FighterType.CLONE) {
+		return fighter.maxHp / 100;
+	} else {
+		return fighter.size ? fighter.size / 100 : 1;
+	}
+}
+
+export function resolveFighterDisplay(fighter: FighterRecap) {
+	if (fighter.costume) {
+		return fighter.costume.display ?? fighter.costume.name;
+	} else {
+		return fighter.display ?? fighter.name;
+	}
+}
+
+export function isFighterADinoz(fighter: FighterRecap) {
+	if (fighter.costume) {
+		return false;
+	} else {
+		return fighter.type === FighterType.DINOZ || fighter.type === FighterType.CLONE;
+	}
+}
+
+function isMonster(value: Monster | Boss): value is Monster {
+	return Object.values(Monster).includes(value as Monster);
+}
+
+function isBoss(value: Monster | Boss): value is Boss {
+	return Object.values(Boss).includes(value as Boss);
 }
 
 export function resolveSkillVisualEffect(skillId: number) {
@@ -178,6 +212,156 @@ export function transpileFight(
 					time: step.time
 				});
 				break;
+			case 'prepare':
+				// Prepare all Dinoz that participate in the fight
+				step.dinozList.forEach(d => {
+					myFighter = fighters.find(f => f.id === d.fid);
+					if (!myFighter) {
+						console.warn(`Cannot find fighter ${d.fid}`);
+						return;
+					}
+					if (d.costume && isMonster(d.costume)) {
+						myFighter.costume = monsterList[d.costume];
+					} else if (d.costume && isBoss(d.costume)) {
+						myFighter.costume = bossList[d.costume];
+					}
+					activeFighters.push(myFighter);
+					history.push({
+						action: DinoAction.ADD,
+						fighter: {
+							props: [myFighter.type === FighterType.BOSS ? 'Boss' : null, myFighter.dark ? 'Dark' : null],
+							dino: isFighterADinoz(myFighter),
+							life: myFighter.startingHp,
+							maxLife: myFighter.maxHp,
+							name:
+								myFighter.type === FighterType.DINOZ || myFighter.type === FighterType.CLONE
+									? myFighter.name
+									: resolveMonsterName(myFighter.name, t),
+							side: myFighter.attacker,
+							scale: resolveFighterSize(myFighter),
+							fid: myFighter.id,
+							gfx: resolveFighterDisplay(myFighter),
+							entrance: myFighter.entrance ?? EntranceEffect.STAND // Default to STAND for pre-display arrival
+						}
+					});
+					// Initialize energy of fighter
+					history.push({
+						action: DinoAction.ENERGY,
+						fighters: [{ fid: myFighter.id, energy: myFighter.energy }]
+					});
+					history.push({
+						action: DinoAction.MAXENERGY,
+						fighters: [{ fid: myFighter.id, energy: myFighter.maxEnergy }]
+					});
+					if (myFighter.type === 'monster') {
+						const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
+						if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
+							history.push({
+								action: DinoAction.TALK,
+								fid: myFighter.id,
+								message: t(`quest.${resolvedMonster.text.entrance}`)
+							});
+						}
+					} else if (myFighter.type === 'boss') {
+						const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
+						if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
+							history.push({
+								action: DinoAction.TALK,
+								fid: myFighter.id,
+								message: t(`quest.${resolvedBoss.text.entrance}`)
+							});
+						}
+					}
+
+					// Add status visual effect prior to revealing the fight scene
+					d.statusList.forEach(s => {
+						const status = resolveStatus(s);
+						if (status) {
+							history.push({
+								action: DinoAction.STATUS,
+								fid: d.fid,
+								status: status
+							});
+						}
+					});
+
+					myFighter = undefined;
+				});
+
+				// Reveal the fight scene
+				history.push({
+					action: DinoAction.DISPLAY
+				});
+
+				// Introduce the other fighters to the scene
+				step.monsterList.forEach(m => {
+					myFighter = fighters.find(f => f.id === m.fid);
+					if (!myFighter) {
+						console.warn(`Cannot find fighter ${m.fid}`);
+						return;
+					}
+					activeFighters.push(myFighter);
+					history.push({
+						action: DinoAction.ADD,
+						fighter: {
+							props: [myFighter.type === FighterType.BOSS ? 'Boss' : null, myFighter.dark ? 'Dark' : null],
+							dino: isFighterADinoz(myFighter),
+							life: myFighter.startingHp,
+							maxLife: myFighter.maxHp,
+							name:
+								myFighter.type === FighterType.DINOZ || myFighter.type === FighterType.CLONE
+									? myFighter.name
+									: resolveMonsterName(myFighter.name, t),
+							side: myFighter.attacker,
+							scale: resolveFighterSize(myFighter),
+							fid: myFighter.id,
+							gfx: resolveFighterDisplay(myFighter),
+							entrance: myFighter.entrance ?? EntranceEffect.RUN // Default to RUN for post-display arrival
+						}
+					});
+					// Initialize energy of fighter
+					history.push({
+						action: DinoAction.ENERGY,
+						fighters: [{ fid: myFighter.id, energy: myFighter.energy }]
+					});
+					history.push({
+						action: DinoAction.MAXENERGY,
+						fighters: [{ fid: myFighter.id, energy: myFighter.maxEnergy }]
+					});
+					if (myFighter.type === 'monster') {
+						const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
+						if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
+							history.push({
+								action: DinoAction.TALK,
+								fid: myFighter.id,
+								message: t(`quest.${resolvedMonster.text.entrance}`)
+							});
+						}
+					} else if (myFighter.type === 'boss') {
+						const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
+						if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
+							history.push({
+								action: DinoAction.TALK,
+								fid: myFighter.id,
+								message: t(`quest.${resolvedBoss.text.entrance}`)
+							});
+						}
+					}
+					// Add status visual effect
+					m.statusList.forEach(s => {
+						const status = resolveStatus(s);
+						if (status) {
+							history.push({
+								action: DinoAction.STATUS,
+								fid: m.fid,
+								status: status
+							});
+						}
+					});
+
+					myFighter = undefined;
+				});
+				break;
 			case 'arrive':
 				myFighter = fighters.find(f => f.id === step.fid);
 				if (!myFighter) {
@@ -242,7 +426,7 @@ export function transpileFight(
 				break;
 			case 'addStatus':
 				const status = resolveStatus(step.status);
-				if (status >= 0) {
+				if (status) {
 					history.push({
 						action: DinoAction.STATUS,
 						fid: step.fighter.id,
@@ -265,7 +449,7 @@ export function transpileFight(
 			case 'cursed':
 				break;
 			case 'death':
-				myFighter = fighters.find(f => f.id === step.fighter.id);
+				myFighter = activeFighters.find(f => f.id === step.fighter.id);
 				if (myFighter && myFighter.type === 'monster') {
 					const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
 					if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
@@ -309,7 +493,7 @@ export function transpileFight(
 			case 'expireEnvironment':
 				break;
 			case 'gainEnergy':
-				myFighter = fighters.find(f => f.id === step.fighter.id);
+				myFighter = activeFighters.find(f => f.id === step.fighter.id);
 				if (!myFighter) {
 					console.warn(`Cannot find fighter ${step.fighter.id}`);
 					return;
@@ -370,7 +554,7 @@ export function transpileFight(
 					textScaleFactor: step.critical ? 3 : undefined
 				});
 
-				myFighter = fighters.find(f => f.id === step.fighter.id);
+				myFighter = activeFighters.find(f => f.id === step.fighter.id);
 				if (!myFighter) {
 					console.warn(`Cannot find fighter ${step.fighter.id}`);
 					return;
@@ -410,6 +594,10 @@ export function transpileFight(
 				});
 				break;
 			case 'leave':
+				history.push({
+					action: DinoAction.ESCAPE,
+					fid: step.fighter.id
+				});
 				break;
 			case 'looseHp':
 				history.push({
@@ -481,7 +669,7 @@ export function transpileFight(
 					if (lastFighterId !== undefined && lastFighterId === currentFighterId && activeF.id === currentFighterId) {
 						return;
 					}
-					const myFighter = fighters.find(f => activeF.id === f.id);
+					const myFighter = activeFighters.find(f => activeF.id === f.id);
 					if (!myFighter) {
 						return;
 					}
@@ -500,7 +688,7 @@ export function transpileFight(
 				break;
 			case 'removeStatus':
 				const statusRemoved = resolveStatus(step.status);
-				if (statusRemoved >= 0) {
+				if (statusRemoved) {
 					history.push({
 						action: DinoAction.NOSTATUS,
 						fid: step.fighter.id,
@@ -515,7 +703,7 @@ export function transpileFight(
 			case 'setCostume':
 				break;
 			case 'skillAnnounce':
-				myFighter = fighters.find(f => f.id === step.fid);
+				myFighter = activeFighters.find(f => f.id === step.fid);
 				if (!myFighter) {
 					console.warn(`Cannot find fighter ${step.fid}`);
 					return;
@@ -540,7 +728,7 @@ export function transpileFight(
 				myFighter = undefined;
 				break;
 			case 'skillActivate':
-				myFighter = fighters.find(f => f.id === step.fid);
+				myFighter = activeFighters.find(f => f.id === step.fid);
 				if (!myFighter) {
 					console.warn(`Cannot find fighter ${step.fid}`);
 					return;
@@ -645,6 +833,36 @@ export function transpileFight(
 				});
 				break;
 			}
+			case 'loseCostume':
+				myFighter = activeFighters.find(f => f.id === step.fid);
+				if (!myFighter) {
+					console.warn(`Cannot find fighter ${step.fid}`);
+					return;
+				}
+				myFighter.costume = undefined;
+				history.push({
+					action: DinoAction.ESCAPE,
+					fid: step.fid
+				});
+				history.push({
+					action: DinoAction.ADD,
+					fighter: {
+						props: [myFighter.type === FighterType.BOSS ? 'Boss' : null, myFighter.dark ? 'Dark' : null],
+						dino: myFighter.type === FighterType.DINOZ || myFighter.type === FighterType.CLONE,
+						life: step.currentHp,
+						maxLife: myFighter.maxHp,
+						name:
+							myFighter.type === FighterType.DINOZ || myFighter.type === FighterType.CLONE
+								? myFighter.name
+								: resolveMonsterName(myFighter.name, t),
+						side: myFighter.attacker,
+						scale: resolveFighterSize(myFighter),
+						fid: myFighter.id,
+						gfx: myFighter.display,
+						entrance: myFighter.entrance ?? EntranceEffect.RUN // Default to RUN for any post-start arrivals
+					}
+				});
+				break;
 			case 'stealGold':
 				break;
 			case 'survive':

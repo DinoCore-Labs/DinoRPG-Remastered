@@ -53,168 +53,263 @@ const getStatusName = (status: string, t: TFunction) => t(`fight.status.${status
 
 const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 	if (IGNORE_STEPS.includes(fightStep.action)) {
-		return '';
+		return [''];
 	}
 
 	switch (fightStep.action) {
 		case 'timeLimit':
-			return t(`fight.step.${fightStep.action}`, {
-				time: fightStep.time
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					time: fightStep.time
+				})
+			];
+		case 'prepare':
+			const actions: string[] = [];
+			fightStep.dinozList.forEach(d => {
+				const fighterName = getFighterName(d.fid, t);
+				actions.push(
+					t(`fight.step.arrive`, {
+						name: fighterName
+					})
+				);
+				d.statusList.forEach(s => {
+					if (!DISPLAYED_STATUSES.includes(s)) {
+						return;
+					}
+					actions.push(
+						t(`fight.step.addStatus`, {
+							fighter: fighterName,
+							status: getStatusName(s, t)
+						})
+					);
+				});
 			});
-		case 'arrive':
-			return t(`fight.step.${fightStep.action}`, {
-				name: getFighterName(fightStep.fid, t)
+			fightStep.monsterList.forEach(m => {
+				const fighterName = getFighterName(m.fid, t);
+				actions.push(
+					t(`fight.step.arrive`, {
+						name: fighterName
+					})
+				);
+				m.statusList.forEach(s => {
+					if (!DISPLAYED_STATUSES.includes(s)) {
+						return '';
+					}
+					actions.push(
+						t(`fight.step.addStatus`, {
+							fighter: fighterName,
+							status: getStatusName(s, t)
+						})
+					);
+				});
 			});
+			return actions;
 		case 'resist':
-			return t(`fight.step.${fightStep.action}`, {
-				dinoz: getFighterName(fightStep.dinoz, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					dinoz: getFighterName(fightStep.dinoz, t)
+				})
+			];
 		case 'hit': {
 			if (fightStep.damage === null) {
-				return t(`fight.step.hit-dodge`, {
-					fighter: getFighterName(fightStep.fighter, t),
-					target: getFighterName(fightStep.target, t)
-				});
+				return [
+					t(`fight.step.hit-dodge`, {
+						fighter: getFighterName(fightStep.fighter, t),
+						target: getFighterName(fightStep.target, t)
+					})
+				];
 			} else {
 				if (fightStep.critical) {
-					return t('fight.step.hit-critical', {
-						fighter: getFighterName(fightStep.fighter, t),
-						damage: fightStep.damage,
-						target: getFighterName(fightStep.target, t),
-						elements: fightStep.elements.map(element => `:${ElementNames[element]}:`).join(', ')
-					});
+					return [
+						t('fight.step.hit-critical', {
+							fighter: getFighterName(fightStep.fighter, t),
+							damage: fightStep.damage,
+							target: getFighterName(fightStep.target, t),
+							elements: fightStep.elements.map(element => `:${ElementNames[element]}:`).join(', ')
+						})
+					];
 				} else {
-					return t('fight.step.hit', {
-						fighter: getFighterName(fightStep.fighter, t),
-						damage: fightStep.damage,
-						target: getFighterName(fightStep.target, t),
-						elements: fightStep.elements.map(element => `:${ElementNames[element]}:`).join(', ')
-					});
+					return [
+						t('fight.step.hit', {
+							fighter: getFighterName(fightStep.fighter, t),
+							damage: fightStep.damage,
+							target: getFighterName(fightStep.target, t),
+							elements: fightStep.elements.map(element => `:${ElementNames[element]}:`).join(', ')
+						})
+					];
 				}
 			}
 		}
 		case 'moveTo':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fid, t),
-				target: getFighterName(fightStep.tid, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fid, t),
+					target: getFighterName(fightStep.tid, t)
+				})
+			];
 		case 'moveBack':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fid, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fid, t)
+				})
+			];
 		case 'attemptHit': {
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t),
-				target: getFighterName(fightStep.target, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t),
+					target: getFighterName(fightStep.target, t)
+				})
+			];
 		}
 		case 'death':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t)
+				})
+			];
 		case 'counter':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t),
-				opponent: getFighterName(fightStep.opponent, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t),
+					opponent: getFighterName(fightStep.opponent, t)
+				})
+			];
 		case 'survive':
-			return t(`fight.step.${fightStep.action}`, {
-				dinoz: getFighterName(fightStep.dinoz, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					dinoz: getFighterName(fightStep.dinoz, t)
+				})
+			];
 		case 'skillAnnounce':
-			return t(`fight.step.skillAnnounce`, {
-				dinoz: getFighterName(fightStep.fid, t),
-				skill: t(`skill.name.${skillList[fightStep.skill].name}`),
-				energy: getSkillEnergy(fightStep.skill)
-			});
+			return [
+				t(`fight.step.skillAnnounce`, {
+					dinoz: getFighterName(fightStep.fid, t),
+					skill: t(`skill.name.${skillList[fightStep.skill].name}`),
+					energy: getSkillEnergy(fightStep.skill)
+				})
+			];
 		case 'skillActivate':
 			if (fightStep.targets.length) {
 				if (skillList[fightStep.skill].visualEffect == SkillVisualEffect.HEAL) {
-					return t(`fight.step.skillActivate-heal-targets`, {
-						dinoz: getFighterName(fightStep.fid, t),
-						skill: t(`skill.name.${skillList[fightStep.skill].name}`),
-						targets: fightStep.targets.map(target => getFighterName(target.tid, t)).join(', '),
-						heals: fightStep.targets.map(target => target.damages ?? 0).join(', '),
-						elements: skillList[fightStep.skill].element.map(element => `:${ElementNames[element]}:`).join(', ')
-					});
+					return [
+						t(`fight.step.skillActivate-heal-targets`, {
+							dinoz: getFighterName(fightStep.fid, t),
+							skill: t(`skill.name.${skillList[fightStep.skill].name}`),
+							targets: fightStep.targets.map(target => getFighterName(target.tid, t)).join(', '),
+							heals: fightStep.targets.map(target => target.damages ?? 0).join(', '),
+							elements: skillList[fightStep.skill].element.map(element => `:${ElementNames[element]}:`).join(', ')
+						})
+					];
 				} else {
-					return t(`fight.step.skillActivate-hit-targets`, {
-						dinoz: getFighterName(fightStep.fid, t),
-						skill: t(`skill.name.${skillList[fightStep.skill].name}`),
-						targets: fightStep.targets.map(target => getFighterName(target.tid, t)).join(', '),
-						damages: fightStep.targets.map(target => target.damages ?? 0).join(', '),
-						elements: skillList[fightStep.skill].element.map(element => `:${ElementNames[element]}:`).join(', ')
-					});
+					return [
+						t(`fight.step.skillActivate-hit-targets`, {
+							dinoz: getFighterName(fightStep.fid, t),
+							skill: t(`skill.name.${skillList[fightStep.skill].name}`),
+							targets: fightStep.targets.map(target => getFighterName(target.tid, t)).join(', '),
+							damages: fightStep.targets.map(target => target.damages ?? 0).join(', '),
+							elements: skillList[fightStep.skill].element.map(element => `:${ElementNames[element]}:`).join(', ')
+						})
+					];
 				}
 			}
-			return t(`fight.step.${fightStep.action}`, {
-				dinoz: getFighterName(fightStep.fid, t),
-				skill: t(`skill.name.${skillList[fightStep.skill].name}`)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					dinoz: getFighterName(fightStep.fid, t),
+					skill: t(`skill.name.${skillList[fightStep.skill].name}`)
+				})
+			];
 		case 'skillExpire':
-			return t(`fight.step.${fightStep.action}`, {
-				dinoz: getFighterName(fightStep.dinoz, t),
-				skill: t(`skill.name.${skillList[fightStep.skill].name}`)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					dinoz: getFighterName(fightStep.dinoz, t),
+					skill: t(`skill.name.${skillList[fightStep.skill].name}`)
+				})
+			];
 		case 'looseHp':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fid, t),
-				hp: fightStep.hp
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fid, t),
+					hp: fightStep.hp
+				})
+			];
 		case 'addStatus':
 			if (!DISPLAYED_STATUSES.includes(fightStep.status)) {
-				return '';
+				return [''];
 			}
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t),
-				status: getStatusName(fightStep.status, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t),
+					status: getStatusName(fightStep.status, t)
+				})
+			];
 		case 'removeStatus':
 			if (!DISPLAYED_STATUSES.includes(fightStep.status)) {
-				return '';
+				return [''];
 			}
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t),
-				status: getStatusName(fightStep.status, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t),
+					status: getStatusName(fightStep.status, t)
+				})
+			];
 		case 'heal':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t),
-				hp: fightStep.hp
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t),
+					hp: fightStep.hp
+				})
+			];
 		case 'itemUse':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t),
-				item: t(`items.name.${itemNameList[fightStep.itemId]}`)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t),
+					item: t(`item.name.${itemNameList[fightStep.itemId]}`)
+				})
+			];
 		case 'hypnotize':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t)
+				})
+			];
 		case 'gainEnergy':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t),
-				energy: fightStep.energy
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t),
+					energy: fightStep.energy
+				})
+			];
 		case 'newTurn':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t)
+				})
+			];
 		case 'statusTurn':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t)
+				})
+			];
 		case 'tired':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t)
-			});
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fighter, t)
+				})
+			];
+		case 'loseCostume':
+			return [
+				t(`fight.step.${fightStep.action}`, {
+					fighter: getFighterName(fightStep.fid, t)
+				})
+			];
 		default:
-			return JSON.stringify(fightStep);
+			return [JSON.stringify(fightStep)];
 	}
 };
 
 const translateFightStep = (fightStep: FightStep, t: TFunction) => {
-	return formatText(getTranslatedString(fightStep, t));
+	return getTranslatedString(fightStep, t).map(s => formatText(s));
 };
 
 export default translateFightStep;
