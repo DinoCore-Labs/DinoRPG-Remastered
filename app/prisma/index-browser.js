@@ -24,12 +24,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 7.4.1
- * Query Engine version: 55ae170b1ced7fc6ed07a15f110549408c501bb3
+ * Prisma Client JS version: 7.4.2
+ * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
  */
 Prisma.prismaVersion = {
-  client: "7.4.1",
-  engine: "55ae170b1ced7fc6ed07a15f110549408c501bb3"
+  client: "7.4.2",
+  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -154,6 +154,13 @@ exports.Prisma.DinozScalarFieldEnum = {
 exports.Prisma.RelationLoadStrategy = {
   query: 'query',
   join: 'join'
+};
+
+exports.Prisma.DinozCatchScalarFieldEnum = {
+  id: 'id',
+  dinozId: 'dinozId',
+  hp: 'hp',
+  monsterId: 'monsterId'
 };
 
 exports.Prisma.DinozItemsScalarFieldEnum = {
@@ -388,6 +395,7 @@ exports.MoneyType = exports.$Enums.MoneyType = {
 
 exports.Prisma.ModelName = {
   Dinoz: 'Dinoz',
+  DinozCatch: 'DinozCatch',
   DinozItems: 'DinozItems',
   DinozSkills: 'DinozSkills',
   DinozSkillsUnlockable: 'DinozSkillsUnlockable',

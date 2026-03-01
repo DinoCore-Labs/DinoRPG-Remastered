@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type Dinoz = $Result.DefaultSelection<Prisma.$DinozPayload>
 /**
+ * Model DinozCatch
+ * 
+ */
+export type DinozCatch = $Result.DefaultSelection<Prisma.$DinozCatchPayload>
+/**
  * Model DinozItems
  * 
  */
@@ -220,7 +225,9 @@ export const JobStatus: typeof $Enums.JobStatus
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Dinozs
  * const dinozs = await prisma.dinoz.findMany()
  * ```
@@ -241,7 +248,9 @@ export class PrismaClient<
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Dinozs
    * const dinozs = await prisma.dinoz.findMany()
    * ```
@@ -340,6 +349,16 @@ export class PrismaClient<
     * ```
     */
   get dinoz(): Prisma.DinozDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dinozCatch`: Exposes CRUD operations for the **DinozCatch** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DinozCatches
+    * const dinozCatches = await prisma.dinozCatch.findMany()
+    * ```
+    */
+  get dinozCatch(): Prisma.DinozCatchDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.dinozItems`: Exposes CRUD operations for the **DinozItems** model.
@@ -580,8 +599,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.4.1
-   * Query Engine version: 55ae170b1ced7fc6ed07a15f110549408c501bb3
+   * Prisma Client JS version: 7.4.2
+   * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
    */
   export type PrismaVersion = {
     client: string
@@ -965,6 +984,7 @@ export namespace Prisma {
 
   export const ModelName: {
     Dinoz: 'Dinoz',
+    DinozCatch: 'DinozCatch',
     DinozItems: 'DinozItems',
     DinozSkills: 'DinozSkills',
     DinozSkillsUnlockable: 'DinozSkillsUnlockable',
@@ -999,7 +1019,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dinoz" | "dinozItems" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "jobDefinition" | "jobRun" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
+      modelProps: "dinoz" | "dinozCatch" | "dinozItems" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "jobDefinition" | "jobRun" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1074,6 +1094,80 @@ export namespace Prisma {
           count: {
             args: Prisma.DinozCountArgs<ExtArgs>
             result: $Utils.Optional<DinozCountAggregateOutputType> | number
+          }
+        }
+      }
+      DinozCatch: {
+        payload: Prisma.$DinozCatchPayload<ExtArgs>
+        fields: Prisma.DinozCatchFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DinozCatchFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DinozCatchFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          findFirst: {
+            args: Prisma.DinozCatchFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DinozCatchFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          findMany: {
+            args: Prisma.DinozCatchFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>[]
+          }
+          create: {
+            args: Prisma.DinozCatchCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          createMany: {
+            args: Prisma.DinozCatchCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DinozCatchCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>[]
+          }
+          delete: {
+            args: Prisma.DinozCatchDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          update: {
+            args: Prisma.DinozCatchUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          deleteMany: {
+            args: Prisma.DinozCatchDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DinozCatchUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DinozCatchUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>[]
+          }
+          upsert: {
+            args: Prisma.DinozCatchUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DinozCatchPayload>
+          }
+          aggregate: {
+            args: Prisma.DinozCatchAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDinozCatch>
+          }
+          groupBy: {
+            args: Prisma.DinozCatchGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DinozCatchGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DinozCatchCountArgs<ExtArgs>
+            result: $Utils.Optional<DinozCatchCountAggregateOutputType> | number
           }
         }
       }
@@ -2592,6 +2686,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     dinoz?: DinozOmit
+    dinozCatch?: DinozCatchOmit
     dinozItems?: DinozItemsOmit
     dinozSkills?: DinozSkillsOmit
     dinozSkillsUnlockable?: DinozSkillsUnlockableOmit
@@ -2691,6 +2786,7 @@ export namespace Prisma {
    */
 
   export type DinozCountOutputType = {
+    catches: number
     followers: number
     items: number
     skills: number
@@ -2699,6 +2795,7 @@ export namespace Prisma {
   }
 
   export type DinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    catches?: boolean | DinozCountOutputTypeCountCatchesArgs
     followers?: boolean | DinozCountOutputTypeCountFollowersArgs
     items?: boolean | DinozCountOutputTypeCountItemsArgs
     skills?: boolean | DinozCountOutputTypeCountSkillsArgs
@@ -2715,6 +2812,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the DinozCountOutputType
      */
     select?: DinozCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountCatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozCatchWhereInput
   }
 
   /**
@@ -3328,6 +3432,7 @@ export namespace Prisma {
     gather?: boolean
     leaderId?: boolean
     userId?: boolean
+    catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
     followers?: boolean | Dinoz$followersArgs<ExtArgs>
     items?: boolean | Dinoz$itemsArgs<ExtArgs>
@@ -3437,6 +3542,7 @@ export namespace Prisma {
 
   export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "canRename" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "remaining" | "order" | "createdDate" | "updatedDate" | "seed" | "state" | "stateTimer" | "fight" | "gather" | "leaderId" | "userId", ExtArgs["result"]["dinoz"]>
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
     followers?: boolean | Dinoz$followersArgs<ExtArgs>
     items?: boolean | Dinoz$itemsArgs<ExtArgs>
@@ -3458,6 +3564,7 @@ export namespace Prisma {
   export type $DinozPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Dinoz"
     objects: {
+      catches: Prisma.$DinozCatchPayload<ExtArgs>[]
       leader: Prisma.$DinozPayload<ExtArgs> | null
       followers: Prisma.$DinozPayload<ExtArgs>[]
       items: Prisma.$DinozItemsPayload<ExtArgs>[]
@@ -3889,6 +3996,7 @@ export namespace Prisma {
    */
   export interface Prisma__DinozClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    catches<T extends Dinoz$catchesArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$catchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     leader<T extends Dinoz$leaderArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$leaderArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     followers<T extends Dinoz$followersArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     items<T extends Dinoz$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4358,6 +4466,30 @@ export namespace Prisma {
   }
 
   /**
+   * Dinoz.catches
+   */
+  export type Dinoz$catchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    where?: DinozCatchWhereInput
+    orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
+    cursor?: DinozCatchWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
+  }
+
+  /**
    * Dinoz.leader
    */
   export type Dinoz$leaderArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4512,6 +4644,1102 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: DinozInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DinozCatch
+   */
+
+  export type AggregateDinozCatch = {
+    _count: DinozCatchCountAggregateOutputType | null
+    _avg: DinozCatchAvgAggregateOutputType | null
+    _sum: DinozCatchSumAggregateOutputType | null
+    _min: DinozCatchMinAggregateOutputType | null
+    _max: DinozCatchMaxAggregateOutputType | null
+  }
+
+  export type DinozCatchAvgAggregateOutputType = {
+    id: number | null
+    dinozId: number | null
+    hp: number | null
+  }
+
+  export type DinozCatchSumAggregateOutputType = {
+    id: number | null
+    dinozId: number | null
+    hp: number | null
+  }
+
+  export type DinozCatchMinAggregateOutputType = {
+    id: number | null
+    dinozId: number | null
+    hp: number | null
+    monsterId: string | null
+  }
+
+  export type DinozCatchMaxAggregateOutputType = {
+    id: number | null
+    dinozId: number | null
+    hp: number | null
+    monsterId: string | null
+  }
+
+  export type DinozCatchCountAggregateOutputType = {
+    id: number
+    dinozId: number
+    hp: number
+    monsterId: number
+    _all: number
+  }
+
+
+  export type DinozCatchAvgAggregateInputType = {
+    id?: true
+    dinozId?: true
+    hp?: true
+  }
+
+  export type DinozCatchSumAggregateInputType = {
+    id?: true
+    dinozId?: true
+    hp?: true
+  }
+
+  export type DinozCatchMinAggregateInputType = {
+    id?: true
+    dinozId?: true
+    hp?: true
+    monsterId?: true
+  }
+
+  export type DinozCatchMaxAggregateInputType = {
+    id?: true
+    dinozId?: true
+    hp?: true
+    monsterId?: true
+  }
+
+  export type DinozCatchCountAggregateInputType = {
+    id?: true
+    dinozId?: true
+    hp?: true
+    monsterId?: true
+    _all?: true
+  }
+
+  export type DinozCatchAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DinozCatch to aggregate.
+     */
+    where?: DinozCatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozCatches to fetch.
+     */
+    orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DinozCatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozCatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozCatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DinozCatches
+    **/
+    _count?: true | DinozCatchCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DinozCatchAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DinozCatchSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DinozCatchMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DinozCatchMaxAggregateInputType
+  }
+
+  export type GetDinozCatchAggregateType<T extends DinozCatchAggregateArgs> = {
+        [P in keyof T & keyof AggregateDinozCatch]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDinozCatch[P]>
+      : GetScalarType<T[P], AggregateDinozCatch[P]>
+  }
+
+
+
+
+  export type DinozCatchGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozCatchWhereInput
+    orderBy?: DinozCatchOrderByWithAggregationInput | DinozCatchOrderByWithAggregationInput[]
+    by: DinozCatchScalarFieldEnum[] | DinozCatchScalarFieldEnum
+    having?: DinozCatchScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DinozCatchCountAggregateInputType | true
+    _avg?: DinozCatchAvgAggregateInputType
+    _sum?: DinozCatchSumAggregateInputType
+    _min?: DinozCatchMinAggregateInputType
+    _max?: DinozCatchMaxAggregateInputType
+  }
+
+  export type DinozCatchGroupByOutputType = {
+    id: number
+    dinozId: number
+    hp: number
+    monsterId: string
+    _count: DinozCatchCountAggregateOutputType | null
+    _avg: DinozCatchAvgAggregateOutputType | null
+    _sum: DinozCatchSumAggregateOutputType | null
+    _min: DinozCatchMinAggregateOutputType | null
+    _max: DinozCatchMaxAggregateOutputType | null
+  }
+
+  type GetDinozCatchGroupByPayload<T extends DinozCatchGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DinozCatchGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DinozCatchGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DinozCatchGroupByOutputType[P]>
+            : GetScalarType<T[P], DinozCatchGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DinozCatchSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dinozId?: boolean
+    hp?: boolean
+    monsterId?: boolean
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dinozCatch"]>
+
+  export type DinozCatchSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dinozId?: boolean
+    hp?: boolean
+    monsterId?: boolean
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dinozCatch"]>
+
+  export type DinozCatchSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dinozId?: boolean
+    hp?: boolean
+    monsterId?: boolean
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dinozCatch"]>
+
+  export type DinozCatchSelectScalar = {
+    id?: boolean
+    dinozId?: boolean
+    hp?: boolean
+    monsterId?: boolean
+  }
+
+  export type DinozCatchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dinozId" | "hp" | "monsterId", ExtArgs["result"]["dinozCatch"]>
+  export type DinozCatchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }
+  export type DinozCatchIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }
+  export type DinozCatchIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }
+
+  export type $DinozCatchPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DinozCatch"
+    objects: {
+      dinoz: Prisma.$DinozPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      dinozId: number
+      hp: number
+      monsterId: string
+    }, ExtArgs["result"]["dinozCatch"]>
+    composites: {}
+  }
+
+  type DinozCatchGetPayload<S extends boolean | null | undefined | DinozCatchDefaultArgs> = $Result.GetResult<Prisma.$DinozCatchPayload, S>
+
+  type DinozCatchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DinozCatchFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DinozCatchCountAggregateInputType | true
+    }
+
+  export interface DinozCatchDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DinozCatch'], meta: { name: 'DinozCatch' } }
+    /**
+     * Find zero or one DinozCatch that matches the filter.
+     * @param {DinozCatchFindUniqueArgs} args - Arguments to find a DinozCatch
+     * @example
+     * // Get one DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DinozCatchFindUniqueArgs>(args: SelectSubset<T, DinozCatchFindUniqueArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DinozCatch that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DinozCatchFindUniqueOrThrowArgs} args - Arguments to find a DinozCatch
+     * @example
+     * // Get one DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DinozCatchFindUniqueOrThrowArgs>(args: SelectSubset<T, DinozCatchFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DinozCatch that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchFindFirstArgs} args - Arguments to find a DinozCatch
+     * @example
+     * // Get one DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DinozCatchFindFirstArgs>(args?: SelectSubset<T, DinozCatchFindFirstArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DinozCatch that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchFindFirstOrThrowArgs} args - Arguments to find a DinozCatch
+     * @example
+     * // Get one DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DinozCatchFindFirstOrThrowArgs>(args?: SelectSubset<T, DinozCatchFindFirstOrThrowArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DinozCatches that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DinozCatches
+     * const dinozCatches = await prisma.dinozCatch.findMany()
+     * 
+     * // Get first 10 DinozCatches
+     * const dinozCatches = await prisma.dinozCatch.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dinozCatchWithIdOnly = await prisma.dinozCatch.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DinozCatchFindManyArgs>(args?: SelectSubset<T, DinozCatchFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DinozCatch.
+     * @param {DinozCatchCreateArgs} args - Arguments to create a DinozCatch.
+     * @example
+     * // Create one DinozCatch
+     * const DinozCatch = await prisma.dinozCatch.create({
+     *   data: {
+     *     // ... data to create a DinozCatch
+     *   }
+     * })
+     * 
+     */
+    create<T extends DinozCatchCreateArgs>(args: SelectSubset<T, DinozCatchCreateArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DinozCatches.
+     * @param {DinozCatchCreateManyArgs} args - Arguments to create many DinozCatches.
+     * @example
+     * // Create many DinozCatches
+     * const dinozCatch = await prisma.dinozCatch.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DinozCatchCreateManyArgs>(args?: SelectSubset<T, DinozCatchCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DinozCatches and returns the data saved in the database.
+     * @param {DinozCatchCreateManyAndReturnArgs} args - Arguments to create many DinozCatches.
+     * @example
+     * // Create many DinozCatches
+     * const dinozCatch = await prisma.dinozCatch.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DinozCatches and only return the `id`
+     * const dinozCatchWithIdOnly = await prisma.dinozCatch.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DinozCatchCreateManyAndReturnArgs>(args?: SelectSubset<T, DinozCatchCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DinozCatch.
+     * @param {DinozCatchDeleteArgs} args - Arguments to delete one DinozCatch.
+     * @example
+     * // Delete one DinozCatch
+     * const DinozCatch = await prisma.dinozCatch.delete({
+     *   where: {
+     *     // ... filter to delete one DinozCatch
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DinozCatchDeleteArgs>(args: SelectSubset<T, DinozCatchDeleteArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DinozCatch.
+     * @param {DinozCatchUpdateArgs} args - Arguments to update one DinozCatch.
+     * @example
+     * // Update one DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DinozCatchUpdateArgs>(args: SelectSubset<T, DinozCatchUpdateArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DinozCatches.
+     * @param {DinozCatchDeleteManyArgs} args - Arguments to filter DinozCatches to delete.
+     * @example
+     * // Delete a few DinozCatches
+     * const { count } = await prisma.dinozCatch.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DinozCatchDeleteManyArgs>(args?: SelectSubset<T, DinozCatchDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DinozCatches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DinozCatches
+     * const dinozCatch = await prisma.dinozCatch.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DinozCatchUpdateManyArgs>(args: SelectSubset<T, DinozCatchUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DinozCatches and returns the data updated in the database.
+     * @param {DinozCatchUpdateManyAndReturnArgs} args - Arguments to update many DinozCatches.
+     * @example
+     * // Update many DinozCatches
+     * const dinozCatch = await prisma.dinozCatch.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DinozCatches and only return the `id`
+     * const dinozCatchWithIdOnly = await prisma.dinozCatch.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DinozCatchUpdateManyAndReturnArgs>(args: SelectSubset<T, DinozCatchUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DinozCatch.
+     * @param {DinozCatchUpsertArgs} args - Arguments to update or create a DinozCatch.
+     * @example
+     * // Update or create a DinozCatch
+     * const dinozCatch = await prisma.dinozCatch.upsert({
+     *   create: {
+     *     // ... data to create a DinozCatch
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DinozCatch we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DinozCatchUpsertArgs>(args: SelectSubset<T, DinozCatchUpsertArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DinozCatches.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchCountArgs} args - Arguments to filter DinozCatches to count.
+     * @example
+     * // Count the number of DinozCatches
+     * const count = await prisma.dinozCatch.count({
+     *   where: {
+     *     // ... the filter for the DinozCatches we want to count
+     *   }
+     * })
+    **/
+    count<T extends DinozCatchCountArgs>(
+      args?: Subset<T, DinozCatchCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DinozCatchCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DinozCatch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DinozCatchAggregateArgs>(args: Subset<T, DinozCatchAggregateArgs>): Prisma.PrismaPromise<GetDinozCatchAggregateType<T>>
+
+    /**
+     * Group by DinozCatch.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DinozCatchGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DinozCatchGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DinozCatchGroupByArgs['orderBy'] }
+        : { orderBy?: DinozCatchGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DinozCatchGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDinozCatchGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DinozCatch model
+   */
+  readonly fields: DinozCatchFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DinozCatch.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DinozCatchClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dinoz<T extends DinozDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DinozDefaultArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DinozCatch model
+   */
+  interface DinozCatchFieldRefs {
+    readonly id: FieldRef<"DinozCatch", 'Int'>
+    readonly dinozId: FieldRef<"DinozCatch", 'Int'>
+    readonly hp: FieldRef<"DinozCatch", 'Int'>
+    readonly monsterId: FieldRef<"DinozCatch", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DinozCatch findUnique
+   */
+  export type DinozCatchFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozCatch to fetch.
+     */
+    where: DinozCatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozCatch findUniqueOrThrow
+   */
+  export type DinozCatchFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozCatch to fetch.
+     */
+    where: DinozCatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozCatch findFirst
+   */
+  export type DinozCatchFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozCatch to fetch.
+     */
+    where?: DinozCatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozCatches to fetch.
+     */
+    orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DinozCatches.
+     */
+    cursor?: DinozCatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozCatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozCatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozCatches.
+     */
+    distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozCatch findFirstOrThrow
+   */
+  export type DinozCatchFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozCatch to fetch.
+     */
+    where?: DinozCatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozCatches to fetch.
+     */
+    orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DinozCatches.
+     */
+    cursor?: DinozCatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozCatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozCatches.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozCatches.
+     */
+    distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozCatch findMany
+   */
+  export type DinozCatchFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter, which DinozCatches to fetch.
+     */
+    where?: DinozCatchWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DinozCatches to fetch.
+     */
+    orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DinozCatches.
+     */
+    cursor?: DinozCatchWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DinozCatches from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DinozCatches.
+     */
+    skip?: number
+    distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozCatch create
+   */
+  export type DinozCatchCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DinozCatch.
+     */
+    data: XOR<DinozCatchCreateInput, DinozCatchUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozCatch createMany
+   */
+  export type DinozCatchCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DinozCatches.
+     */
+    data: DinozCatchCreateManyInput | DinozCatchCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DinozCatch createManyAndReturn
+   */
+  export type DinozCatchCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * The data used to create many DinozCatches.
+     */
+    data: DinozCatchCreateManyInput | DinozCatchCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DinozCatch update
+   */
+  export type DinozCatchUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DinozCatch.
+     */
+    data: XOR<DinozCatchUpdateInput, DinozCatchUncheckedUpdateInput>
+    /**
+     * Choose, which DinozCatch to update.
+     */
+    where: DinozCatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozCatch updateMany
+   */
+  export type DinozCatchUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DinozCatches.
+     */
+    data: XOR<DinozCatchUpdateManyMutationInput, DinozCatchUncheckedUpdateManyInput>
+    /**
+     * Filter which DinozCatches to update
+     */
+    where?: DinozCatchWhereInput
+    /**
+     * Limit how many DinozCatches to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DinozCatch updateManyAndReturn
+   */
+  export type DinozCatchUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * The data used to update DinozCatches.
+     */
+    data: XOR<DinozCatchUpdateManyMutationInput, DinozCatchUncheckedUpdateManyInput>
+    /**
+     * Filter which DinozCatches to update
+     */
+    where?: DinozCatchWhereInput
+    /**
+     * Limit how many DinozCatches to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DinozCatch upsert
+   */
+  export type DinozCatchUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DinozCatch to update in case it exists.
+     */
+    where: DinozCatchWhereUniqueInput
+    /**
+     * In case the DinozCatch found by the `where` argument doesn't exist, create a new DinozCatch with this data.
+     */
+    create: XOR<DinozCatchCreateInput, DinozCatchUncheckedCreateInput>
+    /**
+     * In case the DinozCatch was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DinozCatchUpdateInput, DinozCatchUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozCatch delete
+   */
+  export type DinozCatchDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
+    /**
+     * Filter which DinozCatch to delete.
+     */
+    where: DinozCatchWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DinozCatch deleteMany
+   */
+  export type DinozCatchDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DinozCatches to delete
+     */
+    where?: DinozCatchWhereInput
+    /**
+     * Limit how many DinozCatches to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DinozCatch without action
+   */
+  export type DinozCatchDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DinozCatch
+     */
+    select?: DinozCatchSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DinozCatch
+     */
+    omit?: DinozCatchOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozCatchInclude<ExtArgs> | null
   }
 
 
@@ -25940,6 +27168,16 @@ export namespace Prisma {
   export type RelationLoadStrategy = (typeof RelationLoadStrategy)[keyof typeof RelationLoadStrategy]
 
 
+  export const DinozCatchScalarFieldEnum: {
+    id: 'id',
+    dinozId: 'dinozId',
+    hp: 'hp',
+    monsterId: 'monsterId'
+  };
+
+  export type DinozCatchScalarFieldEnum = (typeof DinozCatchScalarFieldEnum)[keyof typeof DinozCatchScalarFieldEnum]
+
+
   export const DinozItemsScalarFieldEnum: {
     id: 'id',
     itemId: 'itemId',
@@ -26406,6 +27644,7 @@ export namespace Prisma {
     gather?: BoolFilter<"Dinoz"> | boolean
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
     userId?: UuidFilter<"Dinoz"> | string
+    catches?: DinozCatchListRelationFilter
     leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     followers?: DinozListRelationFilter
     items?: DinozItemsListRelationFilter
@@ -26444,6 +27683,7 @@ export namespace Prisma {
     gather?: SortOrder
     leaderId?: SortOrderInput | SortOrder
     userId?: SortOrder
+    catches?: DinozCatchOrderByRelationAggregateInput
     leader?: DinozOrderByWithRelationInput
     followers?: DinozOrderByRelationAggregateInput
     items?: DinozItemsOrderByRelationAggregateInput
@@ -26485,6 +27725,7 @@ export namespace Prisma {
     gather?: BoolFilter<"Dinoz"> | boolean
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
     userId?: UuidFilter<"Dinoz"> | string
+    catches?: DinozCatchListRelationFilter
     leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     followers?: DinozListRelationFilter
     items?: DinozItemsListRelationFilter
@@ -26562,6 +27803,58 @@ export namespace Prisma {
     gather?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     leaderId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
     userId?: UuidWithAggregatesFilter<"Dinoz"> | string
+  }
+
+  export type DinozCatchWhereInput = {
+    AND?: DinozCatchWhereInput | DinozCatchWhereInput[]
+    OR?: DinozCatchWhereInput[]
+    NOT?: DinozCatchWhereInput | DinozCatchWhereInput[]
+    id?: IntFilter<"DinozCatch"> | number
+    dinozId?: IntFilter<"DinozCatch"> | number
+    hp?: IntFilter<"DinozCatch"> | number
+    monsterId?: StringFilter<"DinozCatch"> | string
+    dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
+  }
+
+  export type DinozCatchOrderByWithRelationInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    hp?: SortOrder
+    monsterId?: SortOrder
+    dinoz?: DinozOrderByWithRelationInput
+  }
+
+  export type DinozCatchWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: DinozCatchWhereInput | DinozCatchWhereInput[]
+    OR?: DinozCatchWhereInput[]
+    NOT?: DinozCatchWhereInput | DinozCatchWhereInput[]
+    dinozId?: IntFilter<"DinozCatch"> | number
+    hp?: IntFilter<"DinozCatch"> | number
+    monsterId?: StringFilter<"DinozCatch"> | string
+    dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
+  }, "id">
+
+  export type DinozCatchOrderByWithAggregationInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    hp?: SortOrder
+    monsterId?: SortOrder
+    _count?: DinozCatchCountOrderByAggregateInput
+    _avg?: DinozCatchAvgOrderByAggregateInput
+    _max?: DinozCatchMaxOrderByAggregateInput
+    _min?: DinozCatchMinOrderByAggregateInput
+    _sum?: DinozCatchSumOrderByAggregateInput
+  }
+
+  export type DinozCatchScalarWhereWithAggregatesInput = {
+    AND?: DinozCatchScalarWhereWithAggregatesInput | DinozCatchScalarWhereWithAggregatesInput[]
+    OR?: DinozCatchScalarWhereWithAggregatesInput[]
+    NOT?: DinozCatchScalarWhereWithAggregatesInput | DinozCatchScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DinozCatch"> | number
+    dinozId?: IntWithAggregatesFilter<"DinozCatch"> | number
+    hp?: IntWithAggregatesFilter<"DinozCatch"> | number
+    monsterId?: StringWithAggregatesFilter<"DinozCatch"> | string
   }
 
   export type DinozItemsWhereInput = {
@@ -27784,6 +29077,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -27822,6 +29116,7 @@ export namespace Prisma {
     gather?: boolean
     leaderId?: number | null
     userId: string
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
@@ -27855,6 +29150,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -27893,6 +29189,7 @@ export namespace Prisma {
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
@@ -27988,6 +29285,51 @@ export namespace Prisma {
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DinozCatchCreateInput = {
+    hp: number
+    monsterId: string
+    dinoz: DinozCreateNestedOneWithoutCatchesInput
+  }
+
+  export type DinozCatchUncheckedCreateInput = {
+    id?: number
+    dinozId: number
+    hp: number
+    monsterId: string
+  }
+
+  export type DinozCatchUpdateInput = {
+    hp?: IntFieldUpdateOperationsInput | number
+    monsterId?: StringFieldUpdateOperationsInput | string
+    dinoz?: DinozUpdateOneRequiredWithoutCatchesNestedInput
+  }
+
+  export type DinozCatchUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dinozId?: IntFieldUpdateOperationsInput | number
+    hp?: IntFieldUpdateOperationsInput | number
+    monsterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DinozCatchCreateManyInput = {
+    id?: number
+    dinozId: number
+    hp: number
+    monsterId: string
+  }
+
+  export type DinozCatchUpdateManyMutationInput = {
+    hp?: IntFieldUpdateOperationsInput | number
+    monsterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DinozCatchUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dinozId?: IntFieldUpdateOperationsInput | number
+    hp?: IntFieldUpdateOperationsInput | number
+    monsterId?: StringFieldUpdateOperationsInput | string
   }
 
   export type DinozItemsCreateInput = {
@@ -29260,6 +30602,12 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type DinozCatchListRelationFilter = {
+    every?: DinozCatchWhereInput
+    some?: DinozCatchWhereInput
+    none?: DinozCatchWhereInput
+  }
+
   export type DinozNullableScalarRelationFilter = {
     is?: DinozWhereInput | null
     isNot?: DinozWhereInput | null
@@ -29303,6 +30651,10 @@ export namespace Prisma {
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type DinozCatchOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type DinozOrderByRelationAggregateInput = {
@@ -29567,6 +30919,44 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type DinozScalarRelationFilter = {
+    is?: DinozWhereInput
+    isNot?: DinozWhereInput
+  }
+
+  export type DinozCatchCountOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    hp?: SortOrder
+    monsterId?: SortOrder
+  }
+
+  export type DinozCatchAvgOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    hp?: SortOrder
+  }
+
+  export type DinozCatchMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    hp?: SortOrder
+    monsterId?: SortOrder
+  }
+
+  export type DinozCatchMinOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    hp?: SortOrder
+    monsterId?: SortOrder
+  }
+
+  export type DinozCatchSumOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+    hp?: SortOrder
   }
 
   export type DinozItemsCountOrderByAggregateInput = {
@@ -30606,6 +31996,13 @@ export namespace Prisma {
     _max?: NestedEnumMoneyTypeFilter<$PrismaModel>
   }
 
+  export type DinozCatchCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
+    createMany?: DinozCatchCreateManyDinozInputEnvelope
+    connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+  }
+
   export type DinozCreateNestedOneWithoutFollowersInput = {
     create?: XOR<DinozCreateWithoutFollowersInput, DinozUncheckedCreateWithoutFollowersInput>
     connectOrCreate?: DinozCreateOrConnectWithoutFollowersInput
@@ -30651,6 +32048,13 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutDinozInput, UserUncheckedCreateWithoutDinozInput>
     connectOrCreate?: UserCreateOrConnectWithoutDinozInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type DinozCatchUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
+    createMany?: DinozCatchCreateManyDinozInputEnvelope
+    connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
   }
 
   export type DinozUncheckedCreateNestedManyWithoutLeaderInput = {
@@ -30722,6 +32126,20 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type DinozCatchUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
+    upsert?: DinozCatchUpsertWithWhereUniqueWithoutDinozInput | DinozCatchUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DinozCatchCreateManyDinozInputEnvelope
+    set?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    disconnect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    delete?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    update?: DinozCatchUpdateWithWhereUniqueWithoutDinozInput | DinozCatchUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DinozCatchUpdateManyWithWhereWithoutDinozInput | DinozCatchUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
   }
 
   export type DinozUpdateOneWithoutFollowersNestedInput = {
@@ -30812,6 +32230,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDinozInput, UserUpdateWithoutDinozInput>, UserUncheckedUpdateWithoutDinozInput>
   }
 
+  export type DinozCatchUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
+    upsert?: DinozCatchUpsertWithWhereUniqueWithoutDinozInput | DinozCatchUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DinozCatchCreateManyDinozInputEnvelope
+    set?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    disconnect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    delete?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+    update?: DinozCatchUpdateWithWhereUniqueWithoutDinozInput | DinozCatchUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DinozCatchUpdateManyWithWhereWithoutDinozInput | DinozCatchUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
+  }
+
   export type DinozUncheckedUpdateManyWithoutLeaderNestedInput = {
     create?: XOR<DinozCreateWithoutLeaderInput, DinozUncheckedCreateWithoutLeaderInput> | DinozCreateWithoutLeaderInput[] | DinozUncheckedCreateWithoutLeaderInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutLeaderInput | DinozCreateOrConnectWithoutLeaderInput[]
@@ -30880,6 +32312,20 @@ export namespace Prisma {
     update?: DinozStatusUpdateWithWhereUniqueWithoutDinozInput | DinozStatusUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: DinozStatusUpdateManyWithWhereWithoutDinozInput | DinozStatusUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: DinozStatusScalarWhereInput | DinozStatusScalarWhereInput[]
+  }
+
+  export type DinozCreateNestedOneWithoutCatchesInput = {
+    create?: XOR<DinozCreateWithoutCatchesInput, DinozUncheckedCreateWithoutCatchesInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutCatchesInput
+    connect?: DinozWhereUniqueInput
+  }
+
+  export type DinozUpdateOneRequiredWithoutCatchesNestedInput = {
+    create?: XOR<DinozCreateWithoutCatchesInput, DinozUncheckedCreateWithoutCatchesInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutCatchesInput
+    upsert?: DinozUpsertWithoutCatchesInput
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutCatchesInput, DinozUpdateWithoutCatchesInput>, DinozUncheckedUpdateWithoutCatchesInput>
   }
 
   export type DinozCreateNestedOneWithoutItemsInput = {
@@ -31979,6 +33425,27 @@ export namespace Prisma {
     _max?: NestedEnumMoneyTypeFilter<$PrismaModel>
   }
 
+  export type DinozCatchCreateWithoutDinozInput = {
+    hp: number
+    monsterId: string
+  }
+
+  export type DinozCatchUncheckedCreateWithoutDinozInput = {
+    id?: number
+    hp: number
+    monsterId: string
+  }
+
+  export type DinozCatchCreateOrConnectWithoutDinozInput = {
+    where: DinozCatchWhereUniqueInput
+    create: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DinozCatchCreateManyDinozInputEnvelope = {
+    data: DinozCatchCreateManyDinozInput | DinozCatchCreateManyDinozInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DinozCreateWithoutFollowersInput = {
     name: string
     canRename?: boolean
@@ -32005,6 +33472,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsCreateNestedManyWithoutDinozInput
@@ -32042,6 +33510,7 @@ export namespace Prisma {
     gather?: boolean
     leaderId?: number | null
     userId: string
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedCreateNestedManyWithoutDinozInput
@@ -32079,6 +33548,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsCreateNestedManyWithoutDinozInput
@@ -32115,6 +33585,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     userId: string
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
@@ -32271,6 +33742,32 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutDinozInput, UserUncheckedCreateWithoutDinozInput>
   }
 
+  export type DinozCatchUpsertWithWhereUniqueWithoutDinozInput = {
+    where: DinozCatchWhereUniqueInput
+    update: XOR<DinozCatchUpdateWithoutDinozInput, DinozCatchUncheckedUpdateWithoutDinozInput>
+    create: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DinozCatchUpdateWithWhereUniqueWithoutDinozInput = {
+    where: DinozCatchWhereUniqueInput
+    data: XOR<DinozCatchUpdateWithoutDinozInput, DinozCatchUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type DinozCatchUpdateManyWithWhereWithoutDinozInput = {
+    where: DinozCatchScalarWhereInput
+    data: XOR<DinozCatchUpdateManyMutationInput, DinozCatchUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type DinozCatchScalarWhereInput = {
+    AND?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
+    OR?: DinozCatchScalarWhereInput[]
+    NOT?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
+    id?: IntFilter<"DinozCatch"> | number
+    dinozId?: IntFilter<"DinozCatch"> | number
+    hp?: IntFilter<"DinozCatch"> | number
+    monsterId?: StringFilter<"DinozCatch"> | string
+  }
+
   export type DinozUpsertWithoutFollowersInput = {
     update: XOR<DinozUpdateWithoutFollowersInput, DinozUncheckedUpdateWithoutFollowersInput>
     create: XOR<DinozCreateWithoutFollowersInput, DinozUncheckedCreateWithoutFollowersInput>
@@ -32308,6 +33805,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
@@ -32345,6 +33843,7 @@ export namespace Prisma {
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
@@ -32569,6 +34068,164 @@ export namespace Prisma {
     dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type DinozCreateWithoutCatchesInput = {
+    name: string
+    canRename?: boolean
+    raceId: number
+    display: string
+    level?: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining?: number
+    order?: number | null
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    seed: string
+    state?: $Enums.DinozState | null
+    stateTimer?: Date | string | null
+    fight?: boolean
+    gather?: boolean
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+    items?: DinozItemsCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillsCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillsUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    user: UserCreateNestedOneWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutCatchesInput = {
+    id?: number
+    name: string
+    canRename?: boolean
+    raceId: number
+    display: string
+    level?: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining?: number
+    order?: number | null
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    seed: string
+    state?: $Enums.DinozState | null
+    stateTimer?: Date | string | null
+    fight?: boolean
+    gather?: boolean
+    leaderId?: number | null
+    userId: string
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillsUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutCatchesInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutCatchesInput, DinozUncheckedCreateWithoutCatchesInput>
+  }
+
+  export type DinozUpsertWithoutCatchesInput = {
+    update: XOR<DinozUpdateWithoutCatchesInput, DinozUncheckedUpdateWithoutCatchesInput>
+    create: XOR<DinozCreateWithoutCatchesInput, DinozUncheckedCreateWithoutCatchesInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutCatchesInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutCatchesInput, DinozUncheckedUpdateWithoutCatchesInput>
+  }
+
+  export type DinozUpdateWithoutCatchesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    canRename?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    remaining?: IntFieldUpdateOperationsInput | number
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
+    stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemsUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillsUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    user?: UserUpdateOneRequiredWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutCatchesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    canRename?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    remaining?: IntFieldUpdateOperationsInput | number
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
+    stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    userId?: StringFieldUpdateOperationsInput | string
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
   export type DinozCreateWithoutItemsInput = {
     name: string
     canRename?: boolean
@@ -32595,6 +34252,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     skills?: DinozSkillsCreateNestedManyWithoutDinozInput
@@ -32632,6 +34290,7 @@ export namespace Prisma {
     gather?: boolean
     leaderId?: number | null
     userId: string
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedCreateNestedManyWithoutDinozInput
@@ -32680,6 +34339,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
@@ -32717,6 +34377,7 @@ export namespace Prisma {
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
@@ -32749,6 +34410,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -32786,6 +34448,7 @@ export namespace Prisma {
     gather?: boolean
     leaderId?: number | null
     userId: string
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedCreateNestedManyWithoutDinozInput
@@ -32834,6 +34497,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -32871,6 +34535,7 @@ export namespace Prisma {
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
@@ -32903,6 +34568,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -32940,6 +34606,7 @@ export namespace Prisma {
     gather?: boolean
     leaderId?: number | null
     userId: string
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
@@ -32988,6 +34655,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -33025,6 +34693,7 @@ export namespace Prisma {
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
@@ -33057,6 +34726,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -33094,6 +34764,7 @@ export namespace Prisma {
     gather?: boolean
     leaderId?: number | null
     userId: string
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
@@ -33142,6 +34813,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -33179,6 +34851,7 @@ export namespace Prisma {
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
     userId?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
@@ -33672,6 +35345,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -33708,6 +35382,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
     skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
@@ -35027,6 +36702,12 @@ export namespace Prisma {
     dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type DinozCatchCreateManyDinozInput = {
+    id?: number
+    hp: number
+    monsterId: string
+  }
+
   export type DinozCreateManyLeaderInput = {
     id?: number
     name: string
@@ -35078,6 +36759,23 @@ export namespace Prisma {
     statusId: number
   }
 
+  export type DinozCatchUpdateWithoutDinozInput = {
+    hp?: IntFieldUpdateOperationsInput | number
+    monsterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DinozCatchUncheckedUpdateWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hp?: IntFieldUpdateOperationsInput | number
+    monsterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DinozCatchUncheckedUpdateManyWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hp?: IntFieldUpdateOperationsInput | number
+    monsterId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type DinozUpdateWithoutLeaderInput = {
     name?: StringFieldUpdateOperationsInput | string
     canRename?: BoolFieldUpdateOperationsInput | boolean
@@ -35104,6 +36802,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
@@ -35140,6 +36839,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     userId?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
@@ -35475,6 +37175,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -35511,6 +37212,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput

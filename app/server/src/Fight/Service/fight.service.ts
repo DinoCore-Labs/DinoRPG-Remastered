@@ -15,13 +15,13 @@ import { placeList, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeList.
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { calculatePvExp, getMaxXp } from '@dinorpg/core/utils/dinozUtils.js';
 //import { getActualStep } from '@drpg/core/utils/MissionUtils';
-//import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
 //import { scenarioChecker } from '../utils/scenarioChecker.js';
 //import { getPlayerEventProgression, increasePlayerEventProgression } from '../dao/eventsDao.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { Dinoz, DinozSkills, DinozStatus, User } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
+import { createCatch, removeCatch, updateCatch } from '../../Dinoz/Controller/dinozCatches.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
@@ -181,7 +181,7 @@ export async function fightMonstersAtPlace(
  **/
 export function calculateFightVsMonsters(
 	team: DinozToGetFighter[],
-	user: Pick<User, 'id' /*| 'cooker'*/>,
+	user: Pick<User, 'id' | 'cooker'>,
 	place: PlaceEnum,
 	monsters?: MonsterFiche[],
 	seed?: string
@@ -209,7 +209,7 @@ export function calculateFightVsMonsters(
 		rules: MONSTER_FIGHT_RULES,
 
 		// Teams
-		attackerHasCook: false, // replace with user.cooker when cooker implementation is done
+		attackerHasCook: user.cooker,
 		defenderHasCook: false,
 
 		// Fighters
@@ -377,9 +377,9 @@ export async function rewardFight(
 		//await createLog(LogType.HPLost, playerId, d.id, attacker.hpLost);
 
 		// Log death if dinoz is dead
-		/*if (attacker.hpLost >= d.life) {
-			await createLog(LogType.Death, playerId, d.id);
-		}*/
+		if (attacker.hpLost >= d.life) {
+			incrementUserStat(StatTracking.DEATHS, userId, 1);
+		}
 
 		// Add statuses
 		for (const status of attacker.statusGained) {
@@ -484,7 +484,7 @@ export async function rewardFight(
 	//scenarioChecker(playerId, fightResult, monsters);
 
 	// Catches
-	/*for (const dinozCatch of fightResult.catches) {
+	for (const dinozCatch of fightResult.catches) {
 		if (!dinozCatch.id) {
 			// New catch
 
@@ -505,7 +505,7 @@ export async function rewardFight(
 			// Update catch
 			await updateCatch(dinozCatch.id, dinozCatch.hp);
 		}
-	}*/
+	}
 
 	/*await createLog(
 		LogType.Fight,
