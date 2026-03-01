@@ -1,12 +1,13 @@
 import { DinozItems } from '@dinorpg/core/models/dinoz/dinozItems.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
+import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 //import { ConditionEnum } from '@dinorpg/core/models/enums/Parser.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { currentEvents, EventDetails, GameEvent } from '@dinorpg/core/models/events/events.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import { FightProcessResult } from '@dinorpg/core/models/fight/fightResult.js';
-import { Item } from '@dinorpg/core/models/items/itemList.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { bossList } from '@dinorpg/core/models/monster/bossList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { monsterList } from '@dinorpg/core/models/monster/monsterList.js';
@@ -459,7 +460,12 @@ export async function rewardFight(
 	const merguezPerPlayer: Record<string, number> = {};
 	for (const fighter of [...fightResult.attackers, ...fightResult.defenders]) {
 		for (const itemUsed of fighter.itemsUsed) {
-			await removeItemFromDinoz(fighter.dinozId, itemUsed);
+			const itemRef = itemList[itemUsed];
+
+			// Remove only classic items
+			if (itemRef.itemType === ItemType.CLASSIC) {
+				await removeItemFromDinoz(fighter.dinozId, itemUsed);
+			}
 
 			if (fighter.userId && itemUsed === Item.GOBLIN_MERGUEZ) {
 				if (!merguezPerPlayer[fighter.userId]) {
