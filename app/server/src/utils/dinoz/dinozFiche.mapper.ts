@@ -3,6 +3,7 @@ import { DinozRestInfos } from '@dinorpg/core/models/dinoz/dinozRest.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { placeList } from '@dinorpg/core/models/place/placeList.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
+import { Condition } from '@dinorpg/core/models/utils/condition.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getMaxXp, getRace } from '@dinorpg/core/utils/dinozUtils.js';
 
@@ -17,6 +18,8 @@ import {
 	UserItems,
 	UserRewards
 } from '../../../../prisma/index.js';
+import { checkCondition } from '../checkCondition.js';
+import { PlayerForConditionCheck } from '../user/userConditionCheck.js';
 
 type Config = {
 	dinoz: {
@@ -103,7 +106,7 @@ export const toDinozFiche = (
 							}
 							return place;
 						})
-						//.filter(place => !place.conditions || checkCondition(place.conditions, playerForCondition, dinoz.id))
+						.filter(place => !place.conditions || checkCondition(place.conditions, userForCondition, dinoz.id))
 						.map(place => place.placeId),
 		nbrUpFire: dinoz.nbrUpFire,
 		nbrUpWood: dinoz.nbrUpWood,
@@ -236,4 +239,8 @@ export const calculateXPBonus = (
 	if( d.hasEffect(Data.EFFECTS.list.maudit) )
 		f = 0;*/
 	return Math.round(xp * f);
+};
+
+export const canGoToThisPlace = (user: PlayerForConditionCheck, condition: Condition, activeDinoz: number) => {
+	return checkCondition(condition, user, activeDinoz);
 };

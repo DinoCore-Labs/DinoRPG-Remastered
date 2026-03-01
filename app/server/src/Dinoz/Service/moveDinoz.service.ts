@@ -11,7 +11,8 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import { fightMonstersAtPlace } from '../../Fight/Service/fight.service.js';
 import { movementListener } from '../../Fight/Service/movementListener.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
-import { isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
+import { canGoToThisPlace, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
+import { PlayerForConditionCheck } from '../../utils/user/userConditionCheck.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../Controller/getDinozFight.controller.js';
 import { updateDinoz, updateMultipleDinoz } from '../Controller/updateDinoz.controller.js';
@@ -83,21 +84,21 @@ export async function moveDinozHandler(req: Req, reply: FastifyReply) {
 	}
 
 	// Check if condition to go to desired place are fulfilled for dinoz and followers
-	/*if (desiredPlace.conditions) {
+	if (desiredPlace.conditions) {
 		for (const member of team) {
 			const memberToTest: PlayerForConditionCheck = {
 				id: user.id,
 				items: user.items,
 				rewards: user.rewards,
-				quests: user.quests,
+				//quests: user.quests,
 				ranking: user.ranking,
 				dinoz: [member]
 			};
 			if (!canGoToThisPlace(memberToTest, desiredPlace.conditions, member.id)) {
-				throw new ExpectedError(translate('missingStatus', authed));
+				throw new ExpectedError('missingStatus');
 			}
 		}
-	}*/
+	}
 
 	// If dinoz leave the map, replace by the good place
 	const finalPlace = desiredPlace.alias ?? desiredPlace.placeId;

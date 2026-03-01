@@ -1,12 +1,14 @@
 //import { DinozStatusId } from '../dinoz/statusList.js';
+import { DinozStatusId } from '../dinoz/statusList.js';
 import { GatherType } from '../enums/GatherType.js';
 import { GroundEnum } from '../enums/GroundEnum.js';
 import { MapZone } from '../enums/MapZone.js';
+import { Comparator, ConditionEnum, Operator } from '../enums/Parser.js';
 //import { Comparator, ConditionEnum, Operator } from '../enums/Parser.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
+import { Condition } from '../utils/condition.js';
 //import { Scenario } from '../enums/Scenario.mjs';
 //import { MissionID } from '../missions/missionList.mjs';
-//import { Condition } from '../npc/NpcConditions.mjs';
 
 /** Sticky Swamp - No movement on Thursday and Saturday. */
 export const SWAMP_FLOODED_DAYS = [4, 6];
@@ -20,7 +22,7 @@ export const placeList: Record<
 		name: string;
 		borderPlace: number[];
 		map: MapZone;
-		//conditions?: Condition;
+		conditions?: Condition;
 		alias?: number;
 		gather?: GatherType;
 		specialGather?: GatherType;
@@ -132,9 +134,9 @@ export const placeList: Record<
 		name: 'gogtc',
 		borderPlace: [8],
 		alias: 43,
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.STATUS]: DinozStatusId.CLIMBING_GEAR
-		},*/
+		},
 		map: MapZone.GTOUTCHAUD
 	},
 	[PlaceEnum.GO_TO_ATLANTEINES_ISLAND]: {
@@ -142,21 +144,21 @@ export const placeList: Record<
 		name: 'goiles',
 		borderPlace: [1],
 		alias: 31,
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.STATUS]: DinozStatusId.BUOY
-		},*/
+		},
 		map: MapZone.ILES
 	},
 	[PlaceEnum.CIMETIERE]: {
 		placeId: PlaceEnum.CIMETIERE,
 		name: 'skull',
 		borderPlace: [1],
-		/*conditions: {
+		conditions: {
 			[Operator.OR]: [
 				{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
 				{ [ConditionEnum.DINOZ_LIFE]: [Comparator.LESSER_EQUAL, 10] }
 			]
-		},*/
+		},
 		map: MapZone.DINOLAND,
 		ground: GroundEnum.DIRT,
 		background: 's_graveyard',
@@ -167,18 +169,18 @@ export const placeList: Record<
 		name: 'goplaz',
 		borderPlace: [5],
 		alias: 35,
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.STATUS]: DinozStatusId.DINOPLAZA
-		},*/
+		},
 		map: MapZone.DINOWEST
 	},
 	[PlaceEnum.GO_TO_MONSTER_ISLAND]: {
 		placeId: PlaceEnum.GO_TO_MONSTER_ISLAND,
 		name: 'gomisl',
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.STATUS]: DinozStatusId.JOVEBOZE,
 			[ConditionEnum.ACTIVE]: false
-		},*/
+		},
 		borderPlace: [1],
 		alias: 92,
 		map: MapZone.ILEMONSTRE
@@ -227,9 +229,9 @@ export const placeList: Record<
 		placeId: PlaceEnum.FLEUVE_JUMIN_BIS,
 		name: 'fleuve',
 		borderPlace: [18],
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.STATUS]: DinozStatusId.FLIPPERS
-		},*/
+		},
 		alias: 17,
 		map: MapZone.JUNGLE,
 		ground: GroundEnum.NONE,
@@ -240,9 +242,9 @@ export const placeList: Record<
 		placeId: PlaceEnum.CAMP_KORGON,
 		name: 'camp',
 		borderPlace: [22, 102],
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.STATUS]: DinozStatusId.FLIPPERS
-		},*/
+		},
 		map: MapZone.JUNGLE,
 		gather: GatherType.HUNT,
 		ground: GroundEnum.ROCK,
@@ -253,9 +255,9 @@ export const placeList: Record<
 		placeId: PlaceEnum.JUNGLE_SAUVAGE,
 		name: 'jungle',
 		borderPlace: [17, 20],
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.STATUS]: DinozStatusId.FLIPPERS
-		},*/
+		},
 		map: MapZone.JUNGLE,
 		gather: GatherType.HUNT,
 		ground: GroundEnum.NONE,
@@ -276,10 +278,10 @@ export const placeList: Record<
 		placeId: PlaceEnum.GO_TO_STEPPES,
 		name: 'gostep',
 		borderPlace: [20],
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.STATUS]: DinozStatusId.SYLVENOIRE_KEY,
 			[ConditionEnum.ACTIVE]: false
-		},*/
+		},
 		alias: 55,
 		map: MapZone.STEPPE
 	},
@@ -301,12 +303,12 @@ export const placeList: Record<
 		placeId: PlaceEnum.GO_TO_FOREST,
 		name: 'gogrum',
 		borderPlace: [25],
-		/*conditions: {
+		conditions: {
 			[Operator.AND]: [
 				{ [ConditionEnum.STATUS]: DinozStatusId.NENUPHAR_LEAF },
 				{ [ConditionEnum.STATUS]: DinozStatusId.ZORS_GLOVE }
 			]
-		},*/
+		},
 		alias: 14,
 		map: MapZone.JUNGLE
 	},
@@ -326,9 +328,9 @@ export const placeList: Record<
 		name: 'rasca',
 		borderPlace: [25],
 		alias: 28,
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY
-		},*/
+		},
 		map: MapZone.ILES
 	},
 	[PlaceEnum.BAO_BOB]: {
@@ -346,9 +348,9 @@ export const placeList: Record<
 		placeId: PlaceEnum.DOME_SOULAFLOTTE,
 		name: 'dome',
 		borderPlace: [25],
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.STATUS]: DinozStatusId.RASCAPHANDRE_DECOY
-		},*/
+		},
 		map: MapZone.ILES,
 		gather: GatherType.ENERGY1,
 		ground: GroundEnum.NONE,
@@ -402,10 +404,10 @@ export const placeList: Record<
 		map: MapZone.ILES,
 		ground: GroundEnum.DIRT,
 		background: 'broc',
-		top: 110 /*,
+		top: 110,
 		conditions: {
 			[ConditionEnum.ACTIVE]: false //'roid'
-		}*/
+		}
 	},
 	[PlaceEnum.GO_TO_DINOVILLE]: {
 		placeId: PlaceEnum.GO_TO_DINOVILLE,
@@ -559,9 +561,9 @@ export const placeList: Record<
 		placeId: PlaceEnum.GO_TO_TUNNEL,
 		name: 'stunel',
 		borderPlace: [48],
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.STATUS]: DinozStatusId.LANTERN
-		},*/
+		},
 		alias: 49,
 		map: MapZone.GTOUTCHAUD
 	},
@@ -576,10 +578,10 @@ export const placeList: Record<
 		placeId: PlaceEnum.GO_TO_KARINBAO_TOWER,
 		name: 'tourbt',
 		borderPlace: [47, 53],
-		map: MapZone.GTOUTCHAUD /*,
+		map: MapZone.GTOUTCHAUD,
 		conditions: {
 			[ConditionEnum.ACTIVE]: false //'roid'
-		}*/
+		}
 	},
 	[PlaceEnum.GO_TO_CELESTIAL_ISLAND]: {
 		placeId: PlaceEnum.GO_TO_CELESTIAL_ISLAND,
@@ -911,14 +913,15 @@ export const placeList: Record<
 		placeId: PlaceEnum.TOUR_SOMBRE_1,
 		name: 'dktow2',
 		borderPlace: [104, 106],
-		/*conditions: {
-			[Operator.OR]: [
+		conditions: {
+			/*[Operator.OR]: [
 				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'monte' },
 				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'roif' },
 				{ [ConditionEnum.SCENARIO]: [Scenario.SMOG, 16, '='] },
 				{ [ConditionEnum.SCENARIO]: [Scenario.SMOG, 15, '='] }
-			]
-		},*/
+			]*/
+			[ConditionEnum.ACTIVE]: false
+		},
 		map: MapZone.DARKWORLD
 	},
 	[PlaceEnum.TOUR_SOMBRE_2]: {
@@ -955,45 +958,48 @@ export const placeList: Record<
 		placeId: PlaceEnum.DARK_FAKE,
 		name: 'fake',
 		borderPlace: [103],
-		/*conditions: {
-			[Operator.OR]: [
+		conditions: {
+			/*[Operator.OR]: [
 				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'ouestu' },
 				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'lumi' },
 				{ [ConditionEnum.CURRENT_MISSION]: MissionID.TODO }, //'truci2' },
 				{ [ConditionEnum.STATUS]: DinozStatusId.DARK_ORB }
-			]
-		},*/
+			]*/
+			[ConditionEnum.ACTIVE]: false
+		},
 		map: MapZone.DARKWORLD
 	},
 	[PlaceEnum.DARK_FAKE_2]: {
 		placeId: PlaceEnum.DARK_FAKE_2,
 		name: 'fake2',
 		borderPlace: [102],
-		/*conditions: {
-			[ConditionEnum.CURRENT_MISSION]: MissionID.TODO //'roid'
-		},*/
+		conditions: {
+			[ConditionEnum.ACTIVE]: false
+			//[ConditionEnum.CURRENT_MISSION]: MissionID.TODO //'roid'
+		},
 		map: MapZone.DARKWORLD
 	},
 	[PlaceEnum.TOUR_SOMBRE_ENTREE]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_ENTREE,
 		name: 'gotow',
 		borderPlace: [104],
-		/*conditions: {
-			[Operator.OR]: [
+		conditions: {
+			/*[Operator.OR]: [
 				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.TODO } }, //'monte' } },
 				{ [Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.TODO } }, //'roif' } },
 				{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.SMOG, 16, '='] } }
-			]
-		},*/
+			]*/
+			[ConditionEnum.ACTIVE]: false
+		},
 		alias: 105,
 		map: MapZone.DARKWORLD
 	},
 	[PlaceEnum.RETOUR_SURFACE]: {
 		placeId: PlaceEnum.RETOUR_SURFACE,
 		name: 'rechut',
-		/*conditions: {
+		conditions: {
 			[ConditionEnum.ACTIVE]: false
-		},*/
+		},
 		borderPlace: [],
 		alias: 25,
 		map: MapZone.DARKWORLD

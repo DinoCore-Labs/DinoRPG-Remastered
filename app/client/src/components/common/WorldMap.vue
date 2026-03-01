@@ -232,7 +232,6 @@ export default defineComponent({
 				const dinozId = this.dinozData.id;
 				const dinozList = this.dinozStore.getDinozList;
 				const place = placeList.find(place => place.placeId === placeId);
-
 				if (!dinozList || !dinozId || !place) {
 					this.$toast.open({
 						message: formatText(this.$t(`toast.missingData`)),
@@ -241,7 +240,6 @@ export default defineComponent({
 
 					return;
 				}
-
 				if (moveTry.result) {
 					this.dinozStore.setDinozList(
 						dinozList.map(dinoz => {
