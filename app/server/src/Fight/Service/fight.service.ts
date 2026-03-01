@@ -525,17 +525,14 @@ export async function rewardFight(
 			attacker: f.attacker,
 			maxHp: f.maxHp,
 			startingHp: f.startingHp,
+			currentHp: f.startingHp,
 			energy: f.energy,
 			maxEnergy: f.maxEnergy,
 			energyRecovery: f.energyRecovery,
-			dark:
-				f.type === FighterType.BOSS
-					? (Object.values(bossList).find(b => b.name === f.name)?.dark ?? undefined)
-					: undefined,
-			size:
-				f.type === FighterType.BOSS
-					? (Object.values(bossList).find(b => b.name === f.name)?.size ?? undefined)
-					: undefined
+			costume: f.costume,
+			dark: f.dark,
+			size: f.size,
+			entrance: f.entrance
 		};
 	});
 	return {

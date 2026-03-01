@@ -1,11 +1,12 @@
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
+import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { DetailedFighter, FighterResultFiche } from '@dinorpg/core/models/fight/detailedFighter.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import { FightProcessResult, FightStats } from '@dinorpg/core/models/fight/fightResult.js';
 import { FightStatus, FightStatusLength } from '@dinorpg/core/models/fight/fightStatus.js';
-import { FightStep } from '@dinorpg/core/models/fight/fightStep.js';
+import { FightStep, PrepareStep } from '@dinorpg/core/models/fight/fightStep.js';
 import { LifeEffect, NotificationList } from '@dinorpg/core/models/fight/transpiler.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
@@ -20,6 +21,8 @@ import {
 	checkDeaths,
 	createStatus,
 	getLimitedRandomOpponent,
+	hasItem,
+	hasSkill,
 	hasStatus,
 	heal,
 	initStepFighter,
@@ -28,6 +31,7 @@ import {
 	stepFighter,
 	updateStat
 } from './fightMethods.js';
+import { initializeMonster } from './getFighters.js';
 import { randomBetweenSeeded } from './randomBetween.js';
 
 export type DetailedFight = {
@@ -99,6 +103,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		timeout = timeout * TIME_FACTOR;
 	}
 
+	// Initialize fight data using the provided configuration.
 	const fightData: DetailedFight = {
 		rng,
 		loser: null,
@@ -249,137 +254,18 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		});
 	}
 
-	fightData.fighters.forEach(fighter => {
-		// Total the starting HP of all fighters
-		updateStat(fightData, fighter, 'startingHp', fighter.startingHp);
+	// Prepare the fight: fighters arrive, some special skills and items are handled *before* the start of the fight
+	prepareFight(fightData);
 
-		// Handle costumes
-		if (fighter.costume) {
-			fightData.steps.push({
-				action: 'setCostume',
-				fighter: initStepFighter(fighter),
-				costume: fighter.costume.name
-			});
-		}
-
-		// Add arrive step for all fighters
-		fightData.steps.push({
-			action: 'arrive',
-			fid: fighter.id
-		});
-
-		// Process all skills and items that take effect at the beginning of the fight
-
-		// Temporal reduction
-		if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
-			fightData.steps.push({
-				action: 'itemUse',
-				fighter: stepFighter(fighter),
-				itemId: Item.TEMPORAL_REDUCTION
-			});
-		}
-
-		// Curse locker
-		if (fighter.items.some(item => item.itemId === Item.CURSE_LOCKER)) {
-			const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
-
-			if (opponent) {
-				fightData.steps.push({
-					action: 'itemUse',
-					fighter: stepFighter(fighter),
-					itemId: Item.CURSE_LOCKER
-				});
-
-				// Weakest element is the last in the array
-				opponent.element = opponent.elements[opponent.elements.length - 1];
-				// Lock opponent for 4 cycles on that element
-				opponent.locked = 4 * CYCLE;
-
-				// Add fx for locked
-				fightData.steps.push({
-					action: 'notify',
-					fids: [opponent.id],
-					notification: NotificationList.MonoElt
-				});
-				addStatus(fightData, opponent, FightStatus.LOCKED);
-			}
-		}
-
-		// Cleptomania
-		if (fighter.skills.some(skill => skill.id === Skill.CLEPTOMANE)) {
-			const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
-
-			if (opponent) {
-				const nonMagicItems = opponent.items.filter(item => !item.isRare);
-
-				// Remove non magic items
-				opponent.items = opponent.items.filter(item => item.isRare);
-
-				// Add skill step
-				fightData.steps.push({
-					action: 'skillAnnounce',
-					fid: fighter.id,
-					skill: Skill.CLEPTOMANE
-				});
-
-				// Add disabled items step
-				fightData.steps.push({
-					action: 'disabledItems',
-					fighter: stepFighter(opponent),
-					items: nonMagicItems.map(item => item.itemId)
-				});
-			}
-		}
-
-		// JOKER
-		if (fighter.skills.some(skill => skill.id === Skill.JOKER)) {
-			// 50% chance to get 25% / -25% speed
-			fighter.stats.speed.global *= fightData.rng() > 0.5 ? 1.25 : 0.75;
-
-			// Add skill step
-			fightData.steps.push({
-				action: 'skillAnnounce',
-				fid: fighter.id,
-				skill: Skill.JOKER
-			});
-		}
-
-		// FORME_ETHERALE
-		if (fighter.skills.some(skill => skill.id === Skill.FORME_ETHERALE)) {
-			addStatus(fightData, fighter, FightStatus.INTANGIBLE);
-		}
-
-		// TORCHE
-		if (fighter.skills.some(skill => skill.id === Skill.TORCHE)) {
-			addStatus(fightData, fighter, FightStatus.TORCHED);
-		}
-
-		// ACCUPUNCTURE
-		if (fighter.skills.some(skill => skill.id === Skill.ACUPUNCTURE)) {
-			addStatus(fightData, fighter, FightStatus.HEALING);
-		}
-
-		// M_INITIATIVE_RESET
-		const initiativeResetInTeam = fightData.fighters.some(
-			f => f.attacker === fighter.attacker && f.skills.some(skill => skill.id === Skill.M_INITIATIVE_RESET)
-		);
-		if (initiativeResetInTeam) {
-			fighter.time = 1;
-		}
-		const initiativeResetInOpponents = fightData.fighters.some(
-			f => f.attacker !== fighter.attacker && f.skills.some(skill => skill.id === Skill.M_INITIATIVE_RESET)
-		);
-		if (initiativeResetInOpponents) {
-			fighter.time = 0;
-		}
-	});
+	// Start the fight: handle skills and items that trigger at the beginning of the fight
+	startFight(fightData);
 
 	let turn = 0;
 
 	// Order a first time fighters by initiative (random if equal)
 	orderFighters(fightData);
 
-	// Zero the time origin to start from clean origin
+	// Update time of all fighters relatively to the first fighter (with the lowest time)
 	fightData.fighters.map(fighter => (fighter.time -= fightData.fighters[0].time));
 
 	let overtimePoisonDamage = 10;
@@ -391,7 +277,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		applyStrategy(fightData, fighter);
 	});
 
-	// Hack to not play dinoz turn if there are no ennemies (swamp)
+	// Hack to not continue the fight if one side has no fighter
 	if (fightData.fighters.filter(f => !f.attacker).length === 0) {
 		fightData.loser = 'defenders';
 	} else if (fightData.fighters.filter(f => f.attacker).length === 0) {
@@ -604,6 +490,10 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 				type: f.type,
 				name: f.name,
 				display: f.display,
+				costume: f.costume?.skin,
+				dark: f.dark,
+				size: f.size,
+				entrance: f.entrance,
 				attacker: f.attacker,
 				maxHp: f.maxHp,
 				startingHp: f.startingHp,
@@ -613,6 +503,259 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 			};
 		})
 	};
+};
+
+/**
+ * @summary Prepare the fight: go through each fighter and process all skills, status, and items that happen before the scene is revealed to the player.
+ * This may include some passive special effect that don't have a visual.
+ * Note: This method updates the provided fight data.
+ **/
+const prepareFight = (fightData: DetailedFight) => {
+	let prepareStep = {
+		action: 'prepare',
+		dinozList: [],
+		monsterList: []
+	} as PrepareStep;
+
+	// Count monsters
+	const monsterCount = fightData.fighters.filter(f => f.type !== FighterType.DINOZ).length;
+	// Count monsters with M_RENFORT
+	const renfortApplied = fightData.fighters.filter(f => f.skills.some(skill => skill.id === Skill.M_RENFORTS)).length;
+	// Count monsters with M_WORM_CALL
+	const wormCalls = fightData.fighters.filter(f => f.skills.some(skill => skill.id === Skill.M_WORM_CALL)).length;
+
+	const reinforcementData = { existingMonsters: monsterCount, renfortApplied, wormCalls };
+
+	// Use for loop to process elements that could be added while processing the loop
+	for (let i = 0; i < fightData.fighters.length; i++) {
+		const fighter = fightData.fighters[i];
+		// Total the starting HP of all fighters
+		updateStat(fightData, fighter, 'startingHp', fighter.startingHp);
+
+		// Skills
+
+		if (hasSkill(fighter, Skill.STRATEGIE)) {
+			applyStrategy(fightData, fighter);
+		}
+
+		if (hasSkill(fighter, Skill.SPECIALISTE)) {
+			// Remove the lowest element (at this point elements have been ordered)
+			fighter.elements.pop();
+		}
+
+		if (hasSkill(fighter, Skill.FORME_ETHERALE)) {
+			addStatus(fightData, fighter, FightStatus.INTANGIBLE, FightStatusLength.INFINITE, false);
+		}
+
+		if (hasSkill(fighter, Skill.TORCHE)) {
+			addStatus(fightData, fighter, FightStatus.TORCHED, FightStatusLength.INFINITE, false);
+		}
+
+		if (hasSkill(fighter, Skill.ACUPUNCTURE)) {
+			addStatus(fightData, fighter, FightStatus.HEALING, FightStatusLength.INFINITE, false);
+		}
+
+		// TODO refine
+		// M_INITIATIVE_RESET
+		const initiativeResetInTeam = fightData.fighters.some(
+			f => f.attacker === fighter.attacker && f.skills.some(skill => skill.id === Skill.M_INITIATIVE_RESET)
+		);
+		if (initiativeResetInTeam) {
+			fighter.time = 1;
+		}
+		const initiativeResetInOpponents = fightData.fighters.some(
+			f => f.attacker !== fighter.attacker && f.skills.some(skill => skill.id === Skill.M_INITIATIVE_RESET)
+		);
+		if (initiativeResetInOpponents) {
+			fighter.time = 0;
+		}
+
+		// Items
+
+		if (hasItem(fighter, Item.BAMBOO_FRIEND)) {
+			// Add the bamboo friend as reinforcement. This reinforcement cannot be blocked.
+			const bamboo = initializeMonster(
+				reinforcementData,
+				null,
+				fighter.attacker ? 0 : 1,
+				monsterList[Monster.BAMBOOZ_SPROUTING],
+				fightData.place,
+				true,
+				fightData.rng
+			);
+			bamboo.master = fighter.id;
+			// Just add the fighter to the fight data. It should be processed at the end of the loop.
+			fightData.fighters.push(bamboo);
+		}
+
+		// Costumes
+		if (hasItem(fighter, Item.VEGETOX_COSTUME)) {
+			fighter.costume = {
+				skin: monsterList.VEGETOX_GUARD,
+				breakable: true,
+				item: Item.VEGETOX_COSTUME
+			};
+		} else if (hasItem(fighter, Item.GOBLIN_COSTUME)) {
+			fighter.costume = {
+				skin: monsterList.GOBLIN,
+				breakable: true,
+				item: Item.GOBLIN_COSTUME
+			};
+		}
+
+		// Add the step
+		if (fighter.type === FighterType.DINOZ || fighter.type === FighterType.REINFORCEMENT) {
+			prepareStep.dinozList.push({
+				fid: fighter.id,
+				statusList: fighter.status.map(s => s.type),
+				costume: fighter.costume?.skin.id
+			});
+		} else if (fighter.type === FighterType.MONSTER || fighter.type === FighterType.BOSS) {
+			prepareStep.monsterList.push({
+				fid: fighter.id,
+				statusList: fighter.status.map(s => s.type),
+				costume: fighter.costume?.skin.id
+			});
+		}
+		// Clones are not expected
+		// What about monsters for capture glove?
+	}
+
+	// Finally push prepare step to history
+	fightData.steps.push(prepareStep);
+};
+
+/**
+ * @summary Start of the the fight, process all skills, status and items that happen at the beginning of the fight.
+ * Magic / permanent items are processed first.
+ * Then skills.
+ * Then consumable items.
+ * Note: This method updates the provided fight data.
+ **/
+const startFight = (fightData: DetailedFight) => {
+	// Process all magic items
+	if (fightData.rules.canUseEquipment) {
+		fightData.fighters.forEach(fighter => {
+			// Insert use step for all magic items with passive effects - visual only
+			fighter.items.forEach(item => {
+				if (item.itemType === ItemType.MAGICAL && item.passiveEffect) {
+					fightData.steps.push({
+						action: 'itemUse',
+						fighter: stepFighter(fighter),
+						itemId: item.itemId
+					});
+				}
+			});
+
+			// Temporal reduction - effect already applied at this point
+			if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
+				fightData.steps.push({
+					action: 'itemUse',
+					fighter: stepFighter(fighter),
+					itemId: Item.TEMPORAL_REDUCTION
+				});
+			}
+
+			// Curse locker
+			if (fighter.items.some(item => item.itemId === Item.CURSE_LOCKER)) {
+				const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
+
+				if (opponent) {
+					fightData.steps.push({
+						action: 'itemUse',
+						fighter: stepFighter(fighter),
+						itemId: Item.CURSE_LOCKER
+					});
+
+					// Weakest element is the last in the array
+					opponent.element = opponent.elements[opponent.elements.length - 1];
+					// Lock opponent for 4 cycles on that element
+					opponent.locked = 4 * CYCLE;
+
+					// Add fx for locked
+					fightData.steps.push({
+						action: 'notify',
+						fids: [opponent.id],
+						notification: NotificationList.MonoElt
+					});
+					addStatus(fightData, opponent, FightStatus.LOCKED);
+				}
+			}
+		});
+	}
+
+	// Then process all skills
+	fightData.fighters.forEach(fighter => {
+		// Cleptomania
+		if (hasSkill(fighter, Skill.CLEPTOMANE)) {
+			const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
+
+			if (opponent) {
+				// Keep only magic items
+				opponent.items = opponent.items.filter(item => item.itemType === ItemType.MAGICAL);
+
+				// Add skill step
+				fightData.steps.push({
+					action: 'skillAnnounce',
+					fid: fighter.id,
+					skill: Skill.CLEPTOMANE
+				});
+
+				// Add disabled items step
+				fightData.steps.push({
+					action: 'notify',
+					fids: [opponent.id],
+					notification: NotificationList.NoUse
+				});
+			}
+		}
+
+		// JOKER
+		if (hasSkill(fighter, Skill.JOKER)) {
+			// 50% chance to get 25% / -25% speed
+			fighter.stats.speed.global *= fightData.rng() > 0.5 ? 1.25 : 0.75;
+
+			// Add skill step
+			fightData.steps.push({
+				action: 'skillAnnounce',
+				fid: fighter.id,
+				skill: Skill.JOKER
+			});
+		}
+
+		if (hasSkill(fighter, Skill.DOUBLE_FACE)) {
+			// 50% chance to get positive / negative time
+			fighter.time += (fightData.rng() > 0.5 ? 10 : -10) * TIME_FACTOR;
+
+			// Add skill step
+			fightData.steps.push({
+				action: 'skillAnnounce',
+				fid: fighter.id,
+				skill: Skill.DOUBLE_FACE
+			});
+		}
+	});
+
+	// Finally process all consumables items used only at start of the fight
+	if (fightData.rules.canUseEquipment && !fightData.rules.canUsePermanentEquipmentOnly) {
+		fightData.fighters.forEach(fighter => {
+			// Insert use step for all items with passive effects and consume them - visual only.
+			fighter.items.forEach((item, index) => {
+				if (item.itemType === ItemType.CLASSIC && item.passiveEffect) {
+					fightData.steps.push({
+						action: 'itemUse',
+						fighter: stepFighter(fighter),
+						itemId: item.itemId
+					});
+					// Add to items used
+					fighter.itemsUsed.push(item.itemId);
+					// Remove from items
+					fighter.items.splice(index, 1);
+				}
+			});
+			// TODO check items in MT's code
+		});
+	}
 };
 
 export default generateFight;

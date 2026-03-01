@@ -129,7 +129,7 @@ export default defineComponent({
 
 			if (!this.fightHistory) {
 				this.fightHistory = this.fight.history
-					.map(step => translateFightStep(step, this.$t))
+					.flatMap(step => translateFightStep(step, this.$t))
 					.filter(Boolean)
 					.join('<br />');
 			}

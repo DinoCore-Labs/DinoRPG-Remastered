@@ -1,5 +1,7 @@
 import { ElementType } from '../enums/ElementType.js';
 import { Item } from '../items/itemList.js';
+import { Boss } from '../monster/bossList.js';
+import { Monster } from '../monster/monsterList.js';
 import { Skill } from '../skills/skillList.js';
 import { FighterType } from './fighterType.js';
 import { FightStatus } from './fightStatus.js';
@@ -36,13 +38,23 @@ export interface TimeLimitStep {
 	time: number;
 }
 
+export interface PrepareStep {
+	action: 'prepare';
+	dinozList: {
+		fid: number;
+		statusList: FightStatus[];
+		costume?: Monster | Boss;
+	}[];
+	monsterList: {
+		fid: number;
+		statusList: FightStatus[];
+		costume?: Monster | Boss;
+	}[];
+}
 export interface ArriveStep {
 	action: 'arrive';
 	fid: number;
-	entrance?: EntranceEffect;
-	scale?: number;
 }
-
 export interface LeaveStep {
 	action: 'leave';
 	fighter: StepFighter;
@@ -274,8 +286,15 @@ export interface AttachStep {
 	fx: string;
 }
 
+export interface LoseCostumeStep {
+	action: 'loseCostume';
+	fid: number;
+	currentHp: number;
+}
+
 export type FightStep =
 	| TimeLimitStep
+	| PrepareStep
 	| ArriveStep
 	| LeaveStep
 	| ResistStep
@@ -313,4 +332,5 @@ export type FightStep =
 	| TiredStep
 	| FlipStep
 	| AnimationStep
-	| AttachStep;
+	| AttachStep
+	| LoseCostumeStep;

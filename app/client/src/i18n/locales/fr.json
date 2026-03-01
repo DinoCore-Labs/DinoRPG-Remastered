@@ -2371,7 +2371,8 @@
 			"gainEnergy": "**{fighter}** regagne de l'énergie et a maintenant **{energy}** énergie.",
 			"newTurn": "C'est au tour de **{fighter}**.",
 			"statusTurn": "Vérication des statuts avant le tour de **{fighter}**",
-			"tired": "**{fighter}** est fatigué et passe son tour."
+			"tired": "**{fighter}** est fatigué et passe son tour.",
+			"loseCostume": "Le costume de **{fighter}** s'est déchiré!"
 		},
 		"event": {
 			"christmas_ticket": "Il semblerait que ce monstre possédait un ticket de Noël sur lui. Quelle aubaine !"

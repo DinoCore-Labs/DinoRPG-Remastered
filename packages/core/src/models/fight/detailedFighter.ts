@@ -8,6 +8,7 @@ import { SkillDetails } from '../skills/skillDetails.js';
 import { Skill } from '../skills/skillList.js';
 import { FighterType } from './fighterType.js';
 import { FighterStatusData } from './fightStatus.js';
+import { EntranceEffect } from './transpiler.js';
 
 export interface DetailedFighter {
 	// Metadata
@@ -16,6 +17,9 @@ export interface DetailedFighter {
 	name: string;
 	level: number;
 	display?: string;
+	dark?: boolean;
+	size?: number;
+	entrance?: EntranceEffect;
 	type: FighterType;
 	// In case the fighter is a summon, this is the ID of the fighter that summoned them.
 	master?: number;
@@ -93,7 +97,11 @@ export interface DetailedFighter {
 	// Survival
 	canSurvive?: boolean;
 	// Costume
-	costume?: MonsterFiche;
+	costume?: {
+		skin: MonsterFiche;
+		breakable: boolean;
+		item?: Item;
+	};
 	// Hypnotized: duration (in cycles) of the hypnosis
 	hypnotized?: number;
 	hasUsedHypnose: boolean;
