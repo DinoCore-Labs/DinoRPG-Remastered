@@ -6,7 +6,7 @@
 				<div class="homepage-menu">
 					<div>
 						<DZButton @click="openAuthMenu">{{ $t('homepage.connexion') }}</DZButton>
-						<DZButton :disabled="true">{{ $t('homepage.news') }}</DZButton>
+						<DZButton href="/news">{{ $t('homepage.news') }}</DZButton>
 					</div>
 					<div>
 						<DZButton href="/ranking/player/1">{{ $t('homepage.ranking') }}</DZButton>

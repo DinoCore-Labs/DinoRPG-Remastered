@@ -42,7 +42,7 @@ const routes: RouteRecord[] = [
 				path: '/news',
 				name: 'NewsPage',
 				component: NewsPage,
-				meta: { auth: true }
+				meta: { public: true, showLeftPanel: false }
 			},
 			// ⭐️ PAGE COMPTE (mon compte)
 			{
