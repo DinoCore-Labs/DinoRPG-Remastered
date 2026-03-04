@@ -15,6 +15,7 @@ import Ingredients from '../pages/Ingredients.vue';
 import Inventory from '../pages/Inventory.vue';
 import LevelUpPage from '../pages/LevelUpPage.vue';
 import MainPage from '../pages/MainPage.vue';
+import NewsPage from '../pages/NewsPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
 import ShopDinoz from '../pages/ShopDinoz.vue';
 import ShopItems from '../pages/ShopItems.vue';
@@ -32,11 +33,17 @@ const routes: RouteRecord[] = [
 		meta: { public: true }
 	},
 	{
-		path: '/game',
+		path: '/',
 		name: 'MainPage',
 		component: MainPage,
 		meta: { auth: true },
 		children: [
+			{
+				path: '/news',
+				name: 'NewsPage',
+				component: NewsPage,
+				meta: { auth: true }
+			},
 			// ⭐️ PAGE COMPTE (mon compte)
 			{
 				path: '/user',
@@ -207,7 +214,7 @@ router.beforeEach(async to => {
 		// on redirige vers le jeu.
 		const ok = await tryHydrate();
 		if (ok && to.name === 'HomePage') {
-			return { name: 'MainPage' };
+			return { name: 'NewsPage' };
 		}
 		return true;
 	}
@@ -228,7 +235,7 @@ router.beforeEach(async to => {
 	// ✅ Roles
 	if (to.meta.roles && user.role) {
 		const ok = to.meta.roles.some(r => is_granted(r, user.role!));
-		if (!ok) return { name: 'MainPage' };
+		if (!ok) return { name: 'NewsPage' };
 	}
 
 	return true;

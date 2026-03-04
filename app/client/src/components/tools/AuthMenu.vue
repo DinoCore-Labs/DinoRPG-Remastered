@@ -78,7 +78,7 @@ export default defineComponent({
 					await UserService.login(this.name, this.password);
 					this.$toast.success(this.$t('topBar.authMenu.welcomeBack', { name: this.name }));
 					this.close();
-					this.$router.push('/game');
+					this.$router.push('/news');
 				}
 			} catch (e: any) {
 				const msg = e.response?.data?.message ?? 'unknown';
