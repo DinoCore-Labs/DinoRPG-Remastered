@@ -254,7 +254,7 @@ export default defineComponent({
 		}
 	}
 	.disclaimer {
-		font-size: 10px;
+		font-size: 11px;
 		font-style: italic;
 		padding: 5px;
 	}
