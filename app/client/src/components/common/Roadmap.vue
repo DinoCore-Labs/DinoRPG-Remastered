@@ -39,33 +39,31 @@
 				</a>
 			</li>
 		</ul>
-		<table class="futur" :style="{ display: showFuturTable ? 'table' : 'none' }">
-			<tbody>
-				<tr>
-					<td class="futurHeader">
-						<div class="futurTitle">
-							<img :src="getImgURL('icons', 'small_sage')" alt="small_sage" />
-							<span>{{ $t('newsPage.roadmap.futurTitle') }}</span>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td class="futurDesc">
-						<div class="futurInfo">
-							<ul>
-								<li v-for="(item, index) in futurInfoList" :key="index">
-									<img v-if="item.imageUrl" :src="getImgURL(item.imageUrl.path, item.imageUrl.name)" alt="Image" />
-									<span v-html="formatContent(item.text)" />
-								</li>
-							</ul>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td class="futurFooter"></td>
-				</tr>
-			</tbody>
-		</table>
+		<DZTable class="futur" :style="{ display: showFuturTable ? 'table' : 'none' }">
+			<tr>
+				<td class="futurHeader">
+					<div class="futurTitle">
+						<img :src="getImgURL('icons', 'small_sage')" alt="small_sage" />
+						<span>{{ $t('newsPage.roadmap.futurTitle') }}</span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="futurDesc">
+					<div class="futurInfo">
+						<ul>
+							<li v-for="(item, index) in futurInfoList" :key="index">
+								<img v-if="item.imageUrl" :src="getImgURL(item.imageUrl.path, item.imageUrl.name)" alt="Image" />
+								<span v-html="formatContent(item.text)" />
+							</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="futurFooter"></td>
+			</tr>
+		</DZTable>
 		<DZDisclaimer help content="newsPage.roadmap.help" />
 		<DZDisclaimer content="newsPage.roadmap.disclaimer" />
 	</div>
@@ -73,10 +71,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DZDisclaimer from '../utils/DZDisclaimer.vue';
+import DZTable from '../utils/DZTable.vue';
 
 export default defineComponent({
 	name: 'Roadmap',
-	components: { DZDisclaimer },
+	components: { DZDisclaimer, DZTable },
 	data() {
 		return {
 			showFuturTable: false,
@@ -201,6 +200,7 @@ export default defineComponent({
 	}
 	.futur {
 		border-collapse: collapse;
+		background-color: transparent;
 		width: 520px;
 		& tbody {
 			& tr {
@@ -208,7 +208,7 @@ export default defineComponent({
 					background-image: url('../../assets/background/maj_bg_header.webp');
 					background-repeat: no-repeat;
 					background-position: top center;
-					height: 27px;
+					height: 25px;
 					.futurTitle {
 						text-transform: uppercase;
 						font-size: 13px;
@@ -232,13 +232,12 @@ export default defineComponent({
 						& ul {
 							display: block;
 							list-style: none;
-							margin-top: 4px;
 							& li {
 								margin-top: 4px;
 								margin-left: 75px;
 								margin-right: 110px;
 								& span {
-									margin-left: 5px;
+									margin-left: 6px;
 								}
 							}
 						}
@@ -250,6 +249,10 @@ export default defineComponent({
 					height: 17px;
 					background-position: top center;
 				}
+			}
+			& td {
+				border: none;
+				background-color: transparent;
 			}
 		}
 	}
