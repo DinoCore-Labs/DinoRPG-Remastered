@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.9.1
+
+### Patch Changes
+
+- c12bfc7: feat roadmap
+
 ## 0.9.0
 
 ### Minor Changes
