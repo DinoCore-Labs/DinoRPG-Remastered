@@ -12,7 +12,7 @@ import { calculatePlayerCompletion } from '../../utils/user/calculatePlayerCompl
 export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 	try {
 		const userId = req.user.id;
-		//if (!userId) return reply.code(401).send({ message: 'Authentication required' });
+		if (!userId) return reply.code(401).send({ message: 'Authentication required' });
 
 		await prisma.$transaction(async tx => {
 			const user = await tx.user.findUnique({
