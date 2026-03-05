@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.8.0
+
+### Minor Changes
+
+- f7a4874: refactor fight
+
 ## 0.7.1
 
 ### Patch Changes
@@ -157,6 +163,17 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.9.0
+
+### Minor Changes
+
+- f7a4874: refactor fight
+
+### Patch Changes
+
+- Updated dependencies [f7a4874]
+  - @dinorpg/core@0.8.0
 
 ## 0.8.1
 
@@ -330,6 +347,18 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.9.1
+
+### Patch Changes
+
+- c12bfc7: feat roadmap
+
+## 0.9.0
+
+### Minor Changes
+
+- f7a4874: refactor fight
 
 ## 0.8.1
 
