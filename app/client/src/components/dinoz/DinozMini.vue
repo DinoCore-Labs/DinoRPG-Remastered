@@ -26,7 +26,7 @@ export default defineComponent({
 				height: `${this.height}px`,
 				animationLength: `${(this.imageCount * 1000) / 24}ms`,
 				maxMargin: `-${this.width * this.imageCount}px`,
-				offsetY: `13px` // 👈 remplace ton -13 ici
+				offsetY: `-6px`
 			};
 		}
 	},
@@ -45,10 +45,8 @@ export default defineComponent({
 				div.querySelectorAll('img').forEach((img: HTMLImageElement) => {
 					img.removeAttribute('hidden');
 				});
-
 				dinoAnimDiv.innerHTML = '';
 				dinoAnimDiv.appendChild(div);
-
 				this.imageCount = Number(div.getAttribute('data-length') ?? '0');
 			},
 			this.width,
@@ -67,14 +65,11 @@ export default defineComponent({
 		margin-left: v-bind('styleVars.maxMargin');
 	}
 }
-
 .dinoWrap {
 	width: v-bind('styleVars.width');
 	height: v-bind('styleVars.height');
 	overflow: hidden;
-
 	transform: translateY(v-bind('styleVars.offsetY'));
-
 	:deep(.DinoRPG-Animation) {
 		display: flex;
 		margin-left: 0;
