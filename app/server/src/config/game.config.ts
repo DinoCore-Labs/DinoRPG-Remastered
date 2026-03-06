@@ -69,15 +69,15 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 			//buyableQuetzu: 6
 		},
 		general: {
-			initialMoney: 200_000,
-			initialTreasureTicket: 15,
+			initialMoney: 100_000,
+			initialTreasureTicket: 30,
 			starterPack: [
-				{ itemId: 1, quantity: 50 }, // potion irma
+				{ itemId: 1, quantity: 20 }, // potion irma
 				{ itemId: 2, quantity: 5 }, // potion d'ange
-				{ itemId: 3, quantity: 10 }, // nuage burger
-				{ itemId: 4, quantity: 5 }, // pain chaud
-				{ itemId: 5, quantity: 5 }, // tarte
-				{ itemId: 997, quantity: 5 } // daily ticket
+				{ itemId: 3, quantity: 5 }, // nuage burger
+				{ itemId: 4, quantity: 1 }, // pain chaud
+				{ itemId: 5, quantity: 2 }, // tarte
+				{ itemId: 997, quantity: 2 } // daily ticket
 			]
 		}
 	}
