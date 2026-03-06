@@ -1,6 +1,7 @@
 import { DinozFiche, DinozFicheLite, DinozPublicFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { DinozRestInfos } from '@dinorpg/core/models/dinoz/dinozRest.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
+import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { placeList } from '@dinorpg/core/models/place/placeList.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { Condition } from '@dinorpg/core/models/utils/condition.js';
@@ -226,6 +227,7 @@ export const calculateXPBonus = (
 	dinoz: Pick<Dinoz, 'id'> & {
 		skills: Pick<DinozSkills, 'skillId'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
+		items: Pick<DinozItems, 'itemId'>[];
 	},
 	xp: number,
 	user: Pick<User, 'id' | 'teacher'>
@@ -233,11 +235,8 @@ export const calculateXPBonus = (
 	let f = 1.0;
 	if (dinoz.skills.some(s => s.skillId === Skill.INTELLIGENCE)) f *= 1.05;
 	if (user.teacher) f *= 1.05;
-	//TODO encyclopedie et maudit
-	/*if( d.hasEquip(Data.OBJECTS.list.mencly) )
-		f *= 1.15;
-	if( d.hasEffect(Data.EFFECTS.list.maudit) )
-		f = 0;*/
+	if (dinoz.items.some(i => i.itemId === Item.ENCYCLOPEDIA)) f *= 1.15;
+	if (dinoz.status.some(s => s.statusId === DinozStatusId.CURSED)) f *= 0;
 	return Math.round(xp * f);
 };
 
