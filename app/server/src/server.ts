@@ -7,7 +7,7 @@ import multipart from '@fastify/multipart';
 import { randomUUID } from 'crypto';
 import Fastify, { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 
-import { adminJobsRoutes } from './Admin/Routes/adminJobs.routes.js';
+import { adminRoutes } from './Admin/Routes/adminJobs.routes.js';
 import { loadConfig } from './config/config.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
 import { fightRoutes } from './Fight/Routes/fight.routes.js';
@@ -175,7 +175,7 @@ async function buildServer() {
 	server.register(levelRoutes, { prefix: 'api/level' });
 	server.register(gatherRoutes, { prefix: 'api/gather' });
 
-	server.register(adminJobsRoutes, { prefix: 'api/admin' });
+	server.register(adminRoutes, { prefix: 'api/admin' });
 	//------------------------------------------------------
 	// 10. Scheduler
 	//------------------------------------------------------

@@ -1,7 +1,6 @@
 <template>
 	<div class="adminJobs">
 		<TitleHeader title="Admin" header="Jobs :" sub-header="Scheduler" />
-		<DZDisclaimer help round content="admin.jobs.disclaimer" />
 		<div class="toolbar">
 			<DZButton :disabled="loading" @click="refresh()">
 				{{ loading ? 'Loading…' : 'Refresh' }}
@@ -108,12 +107,10 @@ export default defineComponent({
 				this.loading = false;
 			}
 		},
-
 		async select(key: string) {
 			this.selectedKey = key;
 			await this.refreshRuns();
 		},
-
 		async refreshRuns() {
 			if (!this.selectedKey) return;
 			this.error = '';
@@ -126,7 +123,6 @@ export default defineComponent({
 				this.runsLoading = false;
 			}
 		},
-
 		async run(key: string) {
 			this.error = '';
 			this.runningKey = key;
@@ -140,13 +136,11 @@ export default defineComponent({
 				this.runningKey = '';
 			}
 		},
-
 		formatDate(value?: string | null) {
 			if (!value) return '—';
 			const d = new Date(value);
 			return Number.isNaN(d.getTime()) ? value : d.toLocaleString();
 		},
-
 		formatType(job: JobDefinition) {
 			if (job.type === 'DAILY_AT') {
 				const hh = String(job.dailyHour ?? 0).padStart(2, '0');
