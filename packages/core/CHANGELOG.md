@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.8.1
+
+### Patch Changes
+
+- abeb4b5: alpha 0.1.0
+
 ## 0.8.0
 
 ### Minor Changes

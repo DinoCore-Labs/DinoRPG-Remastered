@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.9.1
+
+### Patch Changes
+
+- abeb4b5: alpha 0.1.0
+- Updated dependencies [abeb4b5]
+  - @dinorpg/core@0.8.1
+
 ## 0.9.0
 
 ### Minor Changes
