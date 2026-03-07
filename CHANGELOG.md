@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.8.1
+
+### Patch Changes
+
+- abeb4b5: alpha 0.1.0
+
 ## 0.8.0
 
 ### Minor Changes
@@ -163,6 +169,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.9.1
+
+### Patch Changes
+
+- abeb4b5: alpha 0.1.0
+- Updated dependencies [abeb4b5]
+  - @dinorpg/core@0.8.1
 
 ## 0.9.0
 
@@ -347,6 +361,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.9.2
+
+### Patch Changes
+
+- abeb4b5: alpha 0.1.0
 
 ## 0.9.1
 
