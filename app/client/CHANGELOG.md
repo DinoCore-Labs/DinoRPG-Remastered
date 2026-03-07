@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.9.2
+
+### Patch Changes
+
+- abeb4b5: alpha 0.1.0
+
 ## 0.9.1
 
 ### Patch Changes
