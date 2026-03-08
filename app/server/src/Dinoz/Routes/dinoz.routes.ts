@@ -30,6 +30,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozIdParamsSchema
 			}
 		},
@@ -40,6 +41,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozIdParamsSchema,
 				body: setDinozNameBodySchema
 			}
@@ -52,6 +54,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozIdParamsSchema
 			}
 		},
@@ -62,6 +65,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozIdParamsSchema,
 				body: setSkillStateBodySchema
 			}
@@ -74,6 +78,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozIdParamsSchema
 			}
 		},
@@ -84,6 +89,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				body: moveDinozSchema
 			}
 		},
@@ -94,6 +100,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozIdParamsSchema
 			}
 		},
@@ -104,6 +111,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozIdParamsSchema
 			}
 		},
@@ -114,6 +122,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozFollowParamsSchema
 			}
 		},
@@ -124,6 +133,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozIdParamsSchema
 			}
 		},
@@ -134,6 +144,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozIdParamsSchema
 			}
 		},
@@ -144,6 +155,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozFollowParamsSchema
 			}
 		},
@@ -154,6 +166,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozIdParamsSchema
 			}
 		},
@@ -164,6 +177,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Dinoz'],
 				params: dinozIdParamsSchema
 			}
 		},
