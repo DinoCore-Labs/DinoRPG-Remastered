@@ -9,6 +9,7 @@ export async function fightRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Fight'],
 				body: processFightSchema,
 				response: {
 					200: processFightResponseSchema
