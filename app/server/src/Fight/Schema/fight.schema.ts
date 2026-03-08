@@ -1,11 +1,5 @@
 import { z } from 'zod';
 
-export const fightParamSchema = z.object({
-	id: z.coerce.number().int().positive()
-});
-
-export type FightParamInput = z.infer<typeof fightParamSchema>;
-
 export const processFightSchema = z.object({
 	dinozId: z.number().int().min(1)
 });
