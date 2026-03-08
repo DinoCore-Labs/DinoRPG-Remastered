@@ -146,6 +146,7 @@ async function buildServer() {
 				{ name: 'Users', description: 'User account and profile' },
 				{ name: 'Inventory', description: 'Player inventory management' },
 				{ name: 'Dinoz', description: 'Dinoz actions and management' },
+				{ name: 'Level', description: 'Level progression and skill learning' },
 				{ name: 'Fight', description: 'Fight system' },
 				{ name: 'Gather', description: 'Resource gathering actions' },
 				{ name: 'Shop', description: 'Shops and purchases' },

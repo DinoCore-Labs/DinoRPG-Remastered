@@ -25,14 +25,6 @@ import {
 } from '../Schema/user.schema.js';
 
 export async function userRoutes(app: FastifyInstance) {
-	console.log({
-		createUserSchema,
-		createUserResponseSchema,
-		loginSchema,
-		loginResponseSchema,
-		updateUserProfileSchema,
-		updateUserProfileResponseSchema
-	});
 	// Routes GET
 	// Me infos
 	app.get(
