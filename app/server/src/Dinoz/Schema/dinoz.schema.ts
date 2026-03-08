@@ -25,7 +25,12 @@ export const dinozFollowParamsSchema = z.object({
 });
 
 export const setDinozNameBodySchema = z.object({
-	name: z.string().min(1).max(32)
+	name: z
+		.string()
+		.trim()
+		.min(1)
+		.max(32)
+		.regex(/^[A-Za-zÀ-ÿ0-9'-]+(?: [A-Za-zÀ-ÿ0-9'-]+)*$/)
 });
 
 export const setSkillStateBodySchema = z.object({

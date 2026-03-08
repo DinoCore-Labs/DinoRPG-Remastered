@@ -7,7 +7,7 @@ import { http } from '../utils/http';
 export const DinozService = {
 	async setDinozName(id: number, newName: string): Promise<void> {
 		return http()
-			.put(`/dinoz/setname/${id}`, { newName: newName })
+			.put(`/dinoz/setname/${id}`, { name: newName })
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},

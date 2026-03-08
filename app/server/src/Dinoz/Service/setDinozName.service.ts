@@ -4,10 +4,10 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { canDinozRename } from '../Controller/canDinozRename.js';
 import { updateDinoz } from '../Controller/updateDinoz.controller.js';
 
-export const regexName = /^(?=.{1,32}$)[A-Za-zÀ-ÿ0-9]+( [A-Za-zÀ-ÿ0-9]+)*$/;
+export const regexName = /^(?=.{1,32}$)[A-Za-zÀ-ÿ0-9'-]+( [A-Za-zÀ-ÿ0-9'-]+)*$/;
 
 type Params = { id: string };
-type Body = { newName: string };
+type Body = { name: string };
 
 export async function setDinozName(req: FastifyRequest<{ Params: Params; Body: Body }>, reply: FastifyReply) {
 	const dinozId = Number(req.params.id);
@@ -16,7 +16,7 @@ export async function setDinozName(req: FastifyRequest<{ Params: Params; Body: B
 	}
 
 	// newName (trim important pour éviter " Dino" / "Dino ")
-	const name = (req.body?.newName ?? '').trim();
+	const name = (req.body?.name ?? '').trim();
 
 	const authedUserId = req.user.id;
 
@@ -42,7 +42,7 @@ export async function setDinozName(req: FastifyRequest<{ Params: Params; Body: B
 	}
 
 	await updateDinoz(+req.params.id, {
-		name: req.body.newName,
+		name: req.body.name,
 		canRename: false
 	});
 
