@@ -63,7 +63,7 @@ export const userNameParamSchema = z.object({
 export type UserNameParamInput = z.infer<typeof userNameParamSchema>;
 
 export const userIdParamSchema = z.object({
-	id: z.coerce.number().int().positive()
+	id: z.string().uuid()
 });
 
 export type UserIdParamInput = z.infer<typeof userIdParamSchema>;
