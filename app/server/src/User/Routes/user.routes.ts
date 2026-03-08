@@ -134,6 +134,4 @@ export async function userRoutes(app: FastifyInstance) {
 	app.post('/me/avatar', { preHandler: [app.authenticate], schema: { tags: ['Users'] } }, uploadAvatarController);
 	// Routes DELETE
 	app.delete('/logout', { schema: { tags: ['Users'] } }, logoutUser);
-
-	app.log.info('user routes registered');
 }
