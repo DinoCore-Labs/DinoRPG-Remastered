@@ -16,11 +16,11 @@ import { PlayerForConditionCheck } from '../../utils/user/userConditionCheck.js'
 import { addStatusToDinoz, removeStatusFromDinoz } from '../Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../Controller/getDinozFight.controller.js';
 import { updateDinoz, updateMultipleDinoz } from '../Controller/updateDinoz.controller.js';
-import type { MoveDinozInput, MoveDinozResponse } from '../Schema/dinoz.schema.js';
+import type { MoveDinozInput } from '../Schema/dinoz.schema.js';
 
 type Req = FastifyRequest<{ Body: MoveDinozInput }>;
 
-export async function moveDinozHandler(req: Req, reply: FastifyReply) {
+export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 	const { dinozId, placeId } = req.body;
 
 	const authedId = req.user.id;

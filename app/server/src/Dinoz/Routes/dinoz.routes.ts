@@ -84,10 +84,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
-				body: moveDinozSchema,
-				response: {
-					200: moveDinozResponseSchema
-				}
+				body: moveDinozSchema
 			}
 		},
 		moveDinozHandler

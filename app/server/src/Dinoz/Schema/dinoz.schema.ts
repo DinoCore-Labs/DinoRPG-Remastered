@@ -8,7 +8,6 @@ export const moveDinozSchema = z.object({
 export type MoveDinozInput = z.infer<typeof moveDinozSchema>;
 
 export const moveDinozResponseSchema = z.object({
-	success: z.literal(true),
 	dinozId: z.number().int().positive(),
 	placeId: z.number().int().positive()
 });
