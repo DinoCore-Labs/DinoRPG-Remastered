@@ -190,37 +190,32 @@
 			"title": "Découvrez les prochains événements sur DinoRPG !",
 			"small": "Prédiction d'Irma",
 			"strong": {
-				"title1": "Alpha 0.1.0 (Bientôt)",
-				"title2": "Alpha 0.2.0",
-				"title3": "Alpha 0.3.0",
-				"title4": "Alpha 0.4.0"
+				"title1": "Alpha 0.2.0 (Bientôt)",
+				"title2": "Alpha 0.3.0",
+				"title3": "Alpha 0.4.0",
+				"title4": "Beta 0.5.0"
 			},
 			"help": "Cliquez sur une mise à jour ci-dessus pour obtenir d'avantage d'informations !",
 			"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
 			"futurTitle": "Avenir Dinolandien",
 			"futureInfo1": {
-				"text1": "Accès à Dinoland",
-				"text2": "Les bons du trésor font maintenant partis du portefeuille de l'utilisateur (comme les :gold:). Ne fait plus parti des items du jeu et est considéré comme une monnaie.",
-				"text3": "Les données de base de l'utilisateur sont présentes.",
-				"text4": "Les données de base des Dinoz sont présentes.",
-				"text5": "Création de la roadmap.",
-				"text6": "Correction des bugs."
-			},
-			"futureInfo2": {
 				"text1": "Création des news",
 				"text2": "Création de la partie Admin : gestion des utilisateurs, des Dinoz, des news, des secrets et des jobs.",
 				"text3": "Correction des bugs."
 			},
-			"futureInfo3": {
+			"futureInfo2": {
 				"text1": "Mise en place des PNJ et des quêtes.",
 				"text2": "Création du scénario tutoriel pour les nouveaux joueurs.",
 				"text3": "Correction des bugs."
 			},
-			"futureInfo4": {
+			"futureInfo3": {
 				"text1": "Apparition de certains PNJ",
 				"text2": "Déblocage des cartes : Grand Tout-Chaud, Iles Atlantéinées, Forêt de Gruhmel",
 				"text3": "Nouvelle action Dinoz : creuser",
 				"text4": "Correction des bugs"
+			},
+			"futureInfo4": {
+				"text1": "À venir"
 			}
 		}
 	},

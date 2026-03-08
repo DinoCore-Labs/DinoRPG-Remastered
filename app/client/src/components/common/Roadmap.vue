@@ -98,18 +98,15 @@ export default defineComponent({
 			switch (tableIndex) {
 				case 1:
 					this.futurInfoList = [
-						{ imageUrl: { path: 'achievements', name: 'moves' }, text: this.$t('newsPage.roadmap.futureInfo1.text1') },
-						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo1.text2') },
-						{ imageUrl: { path: 'icons', name: 'small_reput' }, text: this.$t('newsPage.roadmap.futureInfo1.text3') },
-						{ imageUrl: { path: 'icons', name: 'small_reput' }, text: this.$t('newsPage.roadmap.futureInfo1.text4') },
-						{ imageUrl: { path: 'icons', name: 'small_reput' }, text: this.$t('newsPage.roadmap.futureInfo1.text5') },
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo1.text6') }
+						{ imageUrl: { path: 'icons', name: 'small_reput' }, text: this.$t('newsPage.roadmap.futureInfo1.text1') },
+						{ imageUrl: { path: 'icons', name: 'small_reput' }, text: this.$t('newsPage.roadmap.futureInfo1.text2') },
+						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo1.text3') }
 					];
 					break;
 				case 2:
 					this.futurInfoList = [
-						{ imageUrl: { path: 'icons', name: 'small_reput' }, text: this.$t('newsPage.roadmap.futureInfo2.text1') },
-						{ imageUrl: { path: 'icons', name: 'small_reput' }, text: this.$t('newsPage.roadmap.futureInfo2.text2') },
+						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo2.text1') },
+						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo2.text2') },
 						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo2.text3') }
 					];
 					break;
@@ -117,15 +114,13 @@ export default defineComponent({
 					this.futurInfoList = [
 						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo3.text1') },
 						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo3.text2') },
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo3.text3') }
+						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo3.text3') },
+						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo3.text4') }
 					];
 					break;
 				case 4:
 					this.futurInfoList = [
-						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo4.text1') },
-						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo4.text2') },
-						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo4.text3') },
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo4.text4') }
+						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo4.text1') }
 					];
 					break;
 				default:
