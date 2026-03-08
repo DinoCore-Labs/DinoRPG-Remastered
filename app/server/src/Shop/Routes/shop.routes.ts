@@ -10,12 +10,13 @@ import { sellIngredient } from '../Service/sellIngredients.service.js';
 
 export async function shopRoutes(app: FastifyInstance) {
 	// Shop Dinoz
-	app.get('/dinoz', { preHandler: app.authenticate }, getDinozFromDinozShop);
+	app.get('/dinoz', { preHandler: app.authenticate, schema: { tags: ['Shop'] } }, getDinozFromDinozShop);
 	app.post(
 		'/dinoz/buydinoz/:id',
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Shop'],
 				params: shopDinozIdParamsSchema
 			}
 		},
@@ -27,6 +28,7 @@ export async function shopRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Shop'],
 				params: shopIdParamsSchema
 			}
 		},
@@ -37,6 +39,7 @@ export async function shopRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Shop'],
 				params: shopIdParamsSchema
 			}
 		},
@@ -48,6 +51,7 @@ export async function shopRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Shop'],
 				params: itinerantDinozIdParamsSchema
 			}
 		},
@@ -58,6 +62,7 @@ export async function shopRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
+				tags: ['Shop'],
 				params: itinerantDinozIdParamsSchema
 			}
 		},
