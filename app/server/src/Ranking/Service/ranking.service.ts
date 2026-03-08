@@ -3,13 +3,10 @@ import { FastifyRequest } from 'fastify';
 import { getAverageRanking } from '../Controller/getAverageRanking.controller.js';
 import { getClassicRanking } from '../Controller/getClassicRanking.controller.js';
 import { getCompletionRanking } from '../Controller/getCompletionRanking.controller.js';
+import { RankingListParams } from '../Schema/ranking.schema.js';
 
-export async function getRanking(
-	req: FastifyRequest<{
-		Params: { sort: string; page: string };
-	}>
-) {
-	const { sort, page } = req.params;
+export async function getRanking(params: RankingListParams) {
+	const { sort, page } = params;
 	const pageNum = Number(page);
 
 	let ranking;

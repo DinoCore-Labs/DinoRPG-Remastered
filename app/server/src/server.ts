@@ -150,6 +150,7 @@ async function buildServer() {
 				{ name: 'Fight', description: 'Fight system' },
 				{ name: 'Gather', description: 'Resource gathering actions' },
 				{ name: 'Shop', description: 'Shops and purchases' },
+				{ name: 'Ranking', description: 'Player rankings and leaderboard' },
 				{ name: 'Admin', description: 'Administration endpoints' }
 			]
 		},

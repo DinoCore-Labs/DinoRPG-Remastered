@@ -1,21 +1,37 @@
 import { FastifyInstance } from 'fastify';
+import { ZodTypeProvider } from 'fastify-type-provider-zod';
 
 import { getUserRankingSummary } from '../Controller/getUserPositionRanking.controller.js';
+import { rankingListParamsSchema, rankingPositionParamsSchema } from '../Schema/ranking.schema.js';
 import { getRanking } from '../Service/ranking.service.js';
 
 export async function rankingRoutes(app: FastifyInstance) {
-	app.get<{
-		Params: { sort: string; page: string };
-	}>('/list/:sort/:page', async (req, reply) => {
-		const res = await getRanking(req);
-		reply.send(res);
-	});
-	app.get('/position/:userId', async (req, reply) => {
-		const { userId } = req.params as { userId?: string };
-
-		if (!userId) return reply.code(400).send({ message: 'Invalid userId' });
-
-		const data = await getUserRankingSummary(userId);
-		return reply.send({ data });
-	});
+	const typedApp = app.withTypeProvider<ZodTypeProvider>();
+	typedApp.get(
+		'/list/:sort/:page',
+		{
+			schema: {
+				tags: ['Ranking'],
+				params: rankingListParamsSchema
+			}
+		},
+		async (req, reply) => {
+			const res = await getRanking(req.params);
+			reply.send(res);
+		}
+	);
+	typedApp.get(
+		'/position/:userId',
+		{
+			schema: {
+				tags: ['Ranking'],
+				params: rankingPositionParamsSchema
+			}
+		},
+		async (req, reply) => {
+			const { userId } = req.params;
+			const data = await getUserRankingSummary(userId);
+			return reply.send({ data });
+		}
+	);
 }
