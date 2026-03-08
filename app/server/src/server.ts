@@ -4,14 +4,22 @@ import fCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fjwt, { FastifyJWT } from '@fastify/jwt';
 import multipart from '@fastify/multipart';
+import swagger from '@fastify/swagger';
+import swaggerUI from '@fastify/swagger-ui';
 import { randomUUID } from 'crypto';
 import Fastify, { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
+import {
+	jsonSchemaTransform,
+	jsonSchemaTransformObject,
+	serializerCompiler,
+	validatorCompiler,
+	type ZodTypeProvider
+} from 'fastify-type-provider-zod';
 
 import { adminRoutes } from './Admin/Routes/adminJobs.routes.js';
 import { loadConfig } from './config/config.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
 import { fightRoutes } from './Fight/Routes/fight.routes.js';
-import { fightSchemas } from './Fight/Schema/fight.schema.js';
 import { gatherRoutes } from './Gather/Routes/gather.routes.js';
 import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
 import { ensureJobsExist } from './jobs/ensureJobs.js';
@@ -23,7 +31,6 @@ import { levelRoutes } from './Level/Routes/level.routes.js';
 import { rankingRoutes } from './Ranking/Routes/ranking.routes.js';
 import { shopRoutes } from './Shop/Routes/shop.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
-import { userSchemas } from './User/Schema/user.schema.js';
 import version from './utils/version.js';
 
 const cfg = loadConfig();
@@ -32,13 +39,19 @@ async function buildServer() {
 	const server = Fastify({
 		logger: true,
 		trustProxy: true
-	});
+	}).withTypeProvider<ZodTypeProvider>();
+
+	//-------------------------------------------------------
+	// Zod compilers
+	//-------------------------------------------------------
+	server.setValidatorCompiler(validatorCompiler);
+	server.setSerializerCompiler(serializerCompiler);
 
 	//-------------------------------------------------------
 	// 1. CORS
 	//-------------------------------------------------------
 	server.register(cors, {
-		origin: cfg.selfUrl.origin, // ex: http://localhost:8080/
+		origin: cfg.selfUrl.origin,
 		credentials: true,
 		methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 		allowedHeaders: ['Content-Type', 'Authorization']
@@ -53,12 +66,9 @@ async function buildServer() {
 	});
 	server.addHook('preHandler', async (req, reply) => {
 		const DEVICE_COOKIE = cfg.secrets.deviceCookie;
-
 		let deviceId = req.cookies?.[DEVICE_COOKIE];
-
 		if (!deviceId || typeof deviceId !== 'string') {
 			deviceId = randomUUID();
-
 			reply.setCookie(DEVICE_COOKIE, deviceId, {
 				path: '/',
 				httpOnly: true,
@@ -67,7 +77,6 @@ async function buildServer() {
 				maxAge: 60 * 60 * 24 * 400
 			});
 		}
-
 		(req as any).deviceId = deviceId;
 	});
 
@@ -95,11 +104,9 @@ async function buildServer() {
 	//------------------------------------------------------
 	server.decorate('authenticate', async (req: FastifyRequest, reply: FastifyReply) => {
 		const token = req.cookies.access_token;
-
 		if (!token) {
 			return reply.status(401).send({ message: 'Authentication required' });
 		}
-
 		try {
 			const decoded = req.jwt.verify<FastifyJWT['user']>(token);
 			req.user = decoded;
@@ -107,10 +114,8 @@ async function buildServer() {
 			return reply.status(401).send({ message: 'Invalid token' });
 		}
 	});
-
 	server.decorate('admin', async (req: FastifyRequest, reply: FastifyReply) => {
 		const role = (req.user as any)?.role as UserRole;
-
 		if (role !== 'ADMIN' && role !== 'SUPER_ADMIN') {
 			return reply.code(403).send({ message: 'Forbidden' });
 		}
@@ -126,24 +131,21 @@ async function buildServer() {
 	});
 
 	//------------------------------------------------------
-	// 6. Healthcheck
+	// 6. Swagger
 	//------------------------------------------------------
-	server.get('/healthcheck', async () => ({ status: 'OK' }));
-
-	//------------------------------------------------------
-	// 7. Swagger
-	//------------------------------------------------------
-	server.register(import('@fastify/swagger'), {
+	await server.register(swagger, {
 		openapi: {
 			info: {
 				title: 'DinoRPG API',
 				description: 'API documentation',
 				version
 			}
-		}
+		},
+		transform: jsonSchemaTransform,
+		transformObject: jsonSchemaTransformObject
 	});
 
-	server.register(import('@fastify/swagger-ui'), {
+	await server.register(swaggerUI, {
 		routePrefix: '/docs',
 		uiConfig: {
 			docExpansion: 'full',
@@ -154,17 +156,28 @@ async function buildServer() {
 	});
 
 	//------------------------------------------------------
-	// 8. Schemas Zod
+	// 7. Healthcheck
 	//------------------------------------------------------
-	for (const user of userSchemas) {
-		server.addSchema(user);
-	}
-	for (const fight of fightSchemas) {
-		server.addSchema(fight);
-	}
+	server.get(
+		'/healthcheck',
+		{
+			schema: {
+				response: {
+					200: {
+						type: 'object',
+						properties: {
+							status: { type: 'string' }
+						},
+						required: ['status']
+					}
+				}
+			}
+		},
+		async () => ({ status: 'OK' })
+	);
 
 	//------------------------------------------------------
-	// 9. Routes
+	// 8. Routes
 	//------------------------------------------------------
 	server.register(userRoutes, { prefix: 'api/users' });
 	server.register(rankingRoutes, { prefix: 'api/ranking' });
@@ -176,8 +189,9 @@ async function buildServer() {
 	server.register(gatherRoutes, { prefix: 'api/gather' });
 
 	server.register(adminRoutes, { prefix: 'api/admin' });
+
 	//------------------------------------------------------
-	// 10. Scheduler
+	// 9. Scheduler
 	//------------------------------------------------------
 	await ensureJobsExist();
 	await ensureSecretsExist(server.log);
@@ -194,11 +208,10 @@ async function buildServer() {
 		stopScheduler();
 	});
 	//------------------------------------------------------
-	// EXTRA: Test multipart
+	// EXTRA: Tests
 	//------------------------------------------------------
 	server.post('/test-upload', async (req, reply) => {
 		const file = await req.file();
-
 		console.log('UPLOAD:', {
 			filename: file?.filename,
 			mimetype: file?.mimetype,
@@ -207,7 +220,17 @@ async function buildServer() {
 
 		reply.send({ ok: true });
 	});
+	server.get('/debug-device', async req => {
+		return {
+			cookieIn: req.cookies?.dz_device ?? null,
+			deviceId: (req as FastifyRequest & { deviceId?: string }).deviceId ?? null,
+			ip: req.ip
+		};
+	});
 
+	//------------------------------------------------------
+	// EXTRA: Errors
+	//------------------------------------------------------
 	server.setErrorHandler((err, req, reply) => {
 		// 1) Erreurs "attendues"
 		if (err instanceof ExpectedError) {
@@ -224,14 +247,6 @@ async function buildServer() {
 		// 3) Fallback 500
 		req.log.error(err);
 		return reply.code(500).send({ message: 'Internal Server Error' });
-	});
-
-	server.get('/debug-device', async (req, reply) => {
-		return {
-			cookieIn: req.cookies?.dz_device ?? null,
-			deviceId: (req as any).deviceId ?? null,
-			ip: req.ip
-		};
 	});
 
 	return server;

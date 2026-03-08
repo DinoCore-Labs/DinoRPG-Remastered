@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 
-import { $fightRef } from '../Schema/fight.schema.js';
+import { processFightResponseSchema, processFightSchema } from '../Schema/fight.schema.js';
 import { processFight } from '../Service/fight.service.js';
 
 export async function fightRoutes(app: FastifyInstance) {
@@ -9,9 +9,9 @@ export async function fightRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
-				body: $fightRef('processFightSchema'),
+				body: processFightSchema,
 				response: {
-					200: $fightRef('processFightResponseSchema')
+					200: processFightResponseSchema
 				}
 			}
 		},

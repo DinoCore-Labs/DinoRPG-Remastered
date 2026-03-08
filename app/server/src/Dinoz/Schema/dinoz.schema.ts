@@ -1,4 +1,3 @@
-import { buildJsonSchemas } from 'fastify-zod';
 import { z } from 'zod';
 
 export const moveDinozSchema = z.object({
@@ -15,8 +14,3 @@ export const moveDinozResponseSchema = z.object({
 });
 
 export type MoveDinozResponse = z.infer<typeof moveDinozResponseSchema>;
-
-export const { schemas: moveSchemas, $ref } = buildJsonSchemas({
-	moveDinozSchema,
-	moveDinozResponseSchema
-});

@@ -13,7 +13,14 @@ import {
 	updateProfileController,
 	uploadAvatarController
 } from '../Controller/userProfile.controller.js';
-import { $userRef } from '../Schema/user.schema.js';
+import {
+	createUserResponseSchema,
+	createUserSchema,
+	loginResponseSchema,
+	loginSchema,
+	updateUserProfileResponseSchema,
+	updateUserProfileSchema
+} from '../Schema/user.schema.js';
 
 export async function userRoutes(app: FastifyInstance) {
 	// Routes GET
@@ -47,9 +54,9 @@ export async function userRoutes(app: FastifyInstance) {
 		'/register',
 		{
 			schema: {
-				body: $userRef('createUserSchema'),
+				body: createUserSchema,
 				response: {
-					201: $userRef('createUserResponseSchema')
+					201: createUserResponseSchema
 				}
 			}
 		},
@@ -59,15 +66,27 @@ export async function userRoutes(app: FastifyInstance) {
 		'/login',
 		{
 			schema: {
-				body: $userRef('loginSchema'),
+				body: loginSchema,
 				response: {
-					201: $userRef('loginResponseSchema')
+					201: loginResponseSchema
 				}
 			}
 		},
 		loginUser
 	);
-	app.put('/me/profile', { preHandler: [app.authenticate] }, updateProfileController);
+	app.put(
+		'/me/profile',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				body: updateUserProfileSchema,
+				response: {
+					200: updateUserProfileResponseSchema
+				}
+			}
+		},
+		updateProfileController
+	);
 	app.post('/me/avatar', { preHandler: [app.authenticate] }, uploadAvatarController);
 	// Routes DELETE
 	app.delete('/logout', logoutUser);
