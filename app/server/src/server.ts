@@ -18,6 +18,7 @@ import {
 
 import { adminRoutes } from './Admin/Routes/adminJobs.routes.js';
 import { loadConfig } from './config/config.js';
+import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
 import { fightRoutes } from './Fight/Routes/fight.routes.js';
 import { gatherRoutes } from './Gather/Routes/gather.routes.js';
@@ -163,13 +164,7 @@ async function buildServer() {
 		{
 			schema: {
 				response: {
-					200: {
-						type: 'object',
-						properties: {
-							status: { type: 'string' }
-						},
-						required: ['status']
-					}
+					200: healthcheckResponseSchema
 				}
 			}
 		},
