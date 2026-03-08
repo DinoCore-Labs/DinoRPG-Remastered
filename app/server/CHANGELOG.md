@@ -1,5 +1,11 @@
 # @dinorpg/server
 
+## 0.9.2
+
+### Patch Changes
+
+- b8a7bac: refactor(server): migrate API validation to Zod v4 and add Swagger tags
+
 ## 0.9.1
 
 ### Patch Changes
