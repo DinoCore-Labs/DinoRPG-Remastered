@@ -14,3 +14,21 @@ export const moveDinozResponseSchema = z.object({
 });
 
 export type MoveDinozResponse = z.infer<typeof moveDinozResponseSchema>;
+
+export const dinozIdParamsSchema = z.object({
+	id: z.coerce.number().int().positive()
+});
+
+export const dinozFollowParamsSchema = z.object({
+	id: z.coerce.number().int().positive(),
+	targetId: z.coerce.number().int().positive()
+});
+
+export const setDinozNameBodySchema = z.object({
+	name: z.string().min(1).max(32)
+});
+
+export const setSkillStateBodySchema = z.object({
+	skillId: z.coerce.number().int().positive(),
+	state: z.boolean()
+});

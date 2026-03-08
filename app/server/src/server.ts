@@ -16,7 +16,7 @@ import {
 	type ZodTypeProvider
 } from 'fastify-type-provider-zod';
 
-import { adminRoutes } from './Admin/Routes/adminJobs.routes.js';
+import { adminRoutes } from './Admin/Routes/admin.routes.js';
 import { loadConfig } from './config/config.js';
 import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
@@ -136,10 +136,11 @@ async function buildServer() {
 	//------------------------------------------------------
 	await server.register(swagger, {
 		openapi: {
+			openapi: '3.1.0',
 			info: {
 				title: 'DinoRPG API',
 				description: 'API documentation',
-				version
+				version: version
 			}
 		},
 		transform: jsonSchemaTransform,

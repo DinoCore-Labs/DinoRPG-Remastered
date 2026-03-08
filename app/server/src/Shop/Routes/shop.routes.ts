@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 
+import { itinerantDinozIdParamsSchema, shopDinozIdParamsSchema, shopIdParamsSchema } from '../Schema/shop.schema.js';
 import { buyDinoz } from '../Service/buyDinoz.service.js';
 import { buyItemHandler } from '../Service/buyItems.service.js';
 import { getDinozFromDinozShop } from '../Service/getDinozFromDinozShop.service.js';
@@ -15,23 +16,51 @@ export async function shopRoutes(app: FastifyInstance) {
 		{
 			preHandler: app.authenticate,
 			schema: {
-				params: {
-					type: 'object',
-					required: ['id'],
-					properties: {
-						id: {
-							type: 'number'
-						}
-					}
-				}
+				params: shopDinozIdParamsSchema
 			}
 		},
 		buyDinoz
 	);
 	// Shop Items or Ingredients
-	app.get('/getshop/:shopId', { preHandler: app.authenticate }, getItemsFromShopHandler);
-	app.put('/buyitem/:shopId', { preHandler: app.authenticate }, buyItemHandler);
+	app.get(
+		'/getshop/:shopId',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				params: shopIdParamsSchema
+			}
+		},
+		getItemsFromShopHandler
+	);
+	app.put(
+		'/buyitem/:shopId',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				params: shopIdParamsSchema
+			}
+		},
+		buyItemHandler
+	);
 	// Itinerant Merchant
-	app.get('/getitinerantshop/:dinozId', { preHandler: app.authenticate }, getIngredientsFromItinerantShop);
-	app.put('/sellingredient/:dinozId', { preHandler: app.authenticate }, sellIngredient);
+	app.get(
+		'/getitinerantshop/:dinozId',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				params: itinerantDinozIdParamsSchema
+			}
+		},
+		getIngredientsFromItinerantShop
+	);
+	app.put(
+		'/sellingredient/:dinozId',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				params: itinerantDinozIdParamsSchema
+			}
+		},
+		sellIngredient
+	);
 }

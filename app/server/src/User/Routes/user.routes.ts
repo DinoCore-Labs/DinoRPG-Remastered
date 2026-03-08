@@ -19,10 +19,20 @@ import {
 	loginResponseSchema,
 	loginSchema,
 	updateUserProfileResponseSchema,
-	updateUserProfileSchema
+	updateUserProfileSchema,
+	userIdParamSchema,
+	userNameParamSchema
 } from '../Schema/user.schema.js';
 
 export async function userRoutes(app: FastifyInstance) {
+	console.log({
+		createUserSchema,
+		createUserResponseSchema,
+		loginSchema,
+		loginResponseSchema,
+		updateUserProfileSchema,
+		updateUserProfileResponseSchema
+	});
 	// Routes GET
 	// Me infos
 	app.get(
@@ -35,18 +45,42 @@ export async function userRoutes(app: FastifyInstance) {
 	// Me profile
 	app.get('/me/profile', { preHandler: [app.authenticate] }, getOwnProfileController);
 	// Check name of account creation
-	app.get('/check-name/:name', checkNameUser);
+	app.get(
+		'/check-name/:name',
+		{
+			schema: {
+				params: userNameParamSchema
+			}
+		},
+		checkNameUser
+	);
 	// Search name of ranking
-	app.get('/search/:name', async (req, reply) => {
-		const name = (req.params as any).name;
-		const users = await searchUsersByName(name);
-		reply.send(users);
-	});
+	app.get(
+		'/search/:name',
+		{
+			schema: {
+				params: userNameParamSchema
+			}
+		},
+		async (req, reply) => {
+			const name = (req.params as any).name;
+			const users = await searchUsersByName(name);
+			reply.send(users);
+		}
+	);
 	// UserCard
-	app.get('/tooltip/:id', async (req, reply) => {
-		const res = await userToolTip(req);
-		reply.send(res);
-	});
+	app.get(
+		'/tooltip/:id',
+		{
+			schema: {
+				params: userIdParamSchema
+			}
+		},
+		async (req, reply) => {
+			const res = await userToolTip(req);
+			reply.send(res);
+		}
+	);
 	// Profil public d'un autre joueur
 	app.get('/:id/profile', getUserProfileController);
 	// Routes POST/PUT/PATCH

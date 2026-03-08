@@ -34,17 +34,11 @@ export const loginResponseSchema = z.object({
 export type LoginResponse = z.infer<typeof loginResponseSchema>;
 
 // User profile update
-const nullableGenderSchema = z.union([z.nativeEnum(Gender), z.literal('').transform(() => null), z.null()]).optional();
-
-const nullableLanguageSchema = z
-	.union([z.nativeEnum(Language), z.literal('').transform(() => null), z.null()])
-	.optional();
-
 export const updateUserProfileSchema = z.object({
 	description: z.string().max(500).optional(),
-	language: nullableLanguageSchema,
-	gender: nullableGenderSchema,
-	age: z.union([z.number().int().min(1).max(120), z.null()]).optional()
+	language: z.nativeEnum(Language).nullable().optional(),
+	gender: z.nativeEnum(Gender).nullable().optional(),
+	age: z.number().int().min(1).max(120).nullable().optional()
 });
 
 export type UpdateUserProfileInput = z.infer<typeof updateUserProfileSchema>;
@@ -61,3 +55,15 @@ export const updateUserProfileResponseSchema = z.object({
 });
 
 export type UpdateUserProfileResponse = z.infer<typeof updateUserProfileResponseSchema>;
+
+export const userNameParamSchema = z.object({
+	name: z.string().min(1)
+});
+
+export type UserNameParamInput = z.infer<typeof userNameParamSchema>;
+
+export const userIdParamSchema = z.object({
+	id: z.coerce.number().int().positive()
+});
+
+export type UserIdParamInput = z.infer<typeof userIdParamSchema>;
