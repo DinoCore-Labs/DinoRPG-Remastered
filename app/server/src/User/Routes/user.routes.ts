@@ -38,17 +38,30 @@ export async function userRoutes(app: FastifyInstance) {
 	app.get(
 		'/me',
 		{
-			preHandler: [app.authenticate]
+			preHandler: [app.authenticate],
+			schema: {
+				tags: ['Users']
+			}
 		},
 		meUser
 	);
 	// Me profile
-	app.get('/me/profile', { preHandler: [app.authenticate] }, getOwnProfileController);
+	app.get(
+		'/me/profile',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				tags: ['Users']
+			}
+		},
+		getOwnProfileController
+	);
 	// Check name of account creation
 	app.get(
 		'/check-name/:name',
 		{
 			schema: {
+				tags: ['Users'],
 				params: userNameParamSchema
 			}
 		},
@@ -59,6 +72,7 @@ export async function userRoutes(app: FastifyInstance) {
 		'/search/:name',
 		{
 			schema: {
+				tags: ['Users'],
 				params: userNameParamSchema
 			}
 		},
@@ -73,6 +87,7 @@ export async function userRoutes(app: FastifyInstance) {
 		'/tooltip/:id',
 		{
 			schema: {
+				tags: ['Users'],
 				params: userIdParamSchema
 			}
 		},
@@ -88,6 +103,7 @@ export async function userRoutes(app: FastifyInstance) {
 		'/register',
 		{
 			schema: {
+				tags: ['Users'],
 				body: createUserSchema,
 				response: {
 					201: createUserResponseSchema
@@ -100,6 +116,7 @@ export async function userRoutes(app: FastifyInstance) {
 		'/login',
 		{
 			schema: {
+				tags: ['Users'],
 				body: loginSchema,
 				response: {
 					201: loginResponseSchema
@@ -113,6 +130,7 @@ export async function userRoutes(app: FastifyInstance) {
 		{
 			preHandler: [app.authenticate],
 			schema: {
+				tags: ['Users'],
 				body: updateUserProfileSchema,
 				response: {
 					200: updateUserProfileResponseSchema
@@ -121,9 +139,9 @@ export async function userRoutes(app: FastifyInstance) {
 		},
 		updateProfileController
 	);
-	app.post('/me/avatar', { preHandler: [app.authenticate] }, uploadAvatarController);
+	app.post('/me/avatar', { preHandler: [app.authenticate], schema: { tags: ['Users'] } }, uploadAvatarController);
 	// Routes DELETE
-	app.delete('/logout', logoutUser);
+	app.delete('/logout', { schema: { tags: ['Users'] } }, logoutUser);
 
 	app.log.info('user routes registered');
 }
