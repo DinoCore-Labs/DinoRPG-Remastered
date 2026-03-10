@@ -120,6 +120,10 @@ const toggle = () => {
 
 	open.value = true;
 
+	if (props.search && fetchedOptions.value.length === 0) {
+		void fetchOptions(searchQuery.value);
+	}
+
 	alignFocused();
 };
 
