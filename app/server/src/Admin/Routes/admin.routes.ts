@@ -6,8 +6,19 @@ import {
 	adminJobKeyParamsSchema,
 	adminRunJobResponseSchema
 } from '../Schema/admin.schema.js';
+import {
+	getAdminUserDetailsHandler,
+	getAdminUserDinozHandler,
+	updateAdminUserProfileHandler,
+	updateAdminUserWalletHandler
+} from '../Service/adminUserHandler.service.js';
 
 export async function adminRoutes(app: FastifyInstance) {
+	// User
+	app.get('/user/:id', { preHandler: [app.authenticate, app.admin] }, getAdminUserDetailsHandler);
+	app.get('/user/:id/dinoz', { preHandler: [app.authenticate, app.admin] }, getAdminUserDinozHandler);
+	app.patch('/user/:id/profile', { preHandler: [app.authenticate, app.admin] }, updateAdminUserProfileHandler);
+	app.post('/user/:id/wallets/update', { preHandler: [app.authenticate, app.admin] }, updateAdminUserWalletHandler);
 	// Jobs
 	app.get('/jobs', { preHandler: [app.authenticate, app.admin] }, async () => {
 		return prisma.jobDefinition.findMany({
