@@ -9,14 +9,12 @@ export const AdminJobsService = {
 			.then(res => res.data)
 			.catch(err => Promise.reject(err));
 	},
-
 	getRuns(key: string): Promise<JobRun[]> {
 		return http()
 			.get(`/admin/jobs/${encodeURIComponent(key)}/runs`)
 			.then(res => res.data)
 			.catch(err => Promise.reject(err));
 	},
-
 	runNow(key: string): Promise<{ ok: boolean }> {
 		return http()
 			.post(`/admin/jobs/${encodeURIComponent(key)}/run`)

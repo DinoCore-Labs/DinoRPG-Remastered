@@ -1,6 +1,9 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.admin')"></TitleHeader>
 	<ul class="tabs" style="margin-top: 10px">
+		<li :class="{ active: $route.path.startsWith('/admin/user') }">
+			<RouterLink to="/admin/user">User</RouterLink>
+		</li>
 		<li :class="{ active: $route.path.startsWith('/admin/jobs') }">
 			<RouterLink to="/admin/jobs">Jobs</RouterLink>
 		</li>
