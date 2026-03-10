@@ -89,7 +89,7 @@ export async function userRoutes(app: FastifyInstance) {
 		}
 	);
 	// Profil public d'un autre joueur
-	app.get('/:id/profile', getUserProfileController);
+	app.get('/:id/profile', { schema: { tags: ['Users'] } }, getUserProfileController);
 	// Routes POST/PUT/PATCH
 	app.post(
 		'/register',

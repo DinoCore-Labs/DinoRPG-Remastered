@@ -15,12 +15,28 @@ import {
 
 export async function adminRoutes(app: FastifyInstance) {
 	// User
-	app.get('/user/:id', { preHandler: [app.authenticate, app.admin] }, getAdminUserDetailsHandler);
-	app.get('/user/:id/dinoz', { preHandler: [app.authenticate, app.admin] }, getAdminUserDinozHandler);
-	app.patch('/user/:id/profile', { preHandler: [app.authenticate, app.admin] }, updateAdminUserProfileHandler);
-	app.post('/user/:id/wallets/update', { preHandler: [app.authenticate, app.admin] }, updateAdminUserWalletHandler);
+	app.get(
+		'/user/:id',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		getAdminUserDetailsHandler
+	);
+	app.get(
+		'/user/:id/dinoz',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		getAdminUserDinozHandler
+	);
+	app.patch(
+		'/user/:id/profile',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminUserProfileHandler
+	);
+	app.post(
+		'/user/:id/wallets/update',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminUserWalletHandler
+	);
 	// Jobs
-	app.get('/jobs', { preHandler: [app.authenticate, app.admin] }, async () => {
+	app.get('/jobs', { preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } }, async () => {
 		return prisma.jobDefinition.findMany({
 			orderBy: { key: 'asc' }
 		});
@@ -30,6 +46,7 @@ export async function adminRoutes(app: FastifyInstance) {
 		{
 			preHandler: [app.authenticate, app.admin],
 			schema: {
+				tags: ['Admin'],
 				params: adminJobKeyParamsSchema,
 				response: {
 					404: adminErrorResponseSchema
@@ -53,6 +70,7 @@ export async function adminRoutes(app: FastifyInstance) {
 		{
 			preHandler: [app.authenticate, app.admin],
 			schema: {
+				tags: ['Admin'],
 				params: adminJobKeyParamsSchema,
 				response: {
 					200: adminRunJobResponseSchema,
