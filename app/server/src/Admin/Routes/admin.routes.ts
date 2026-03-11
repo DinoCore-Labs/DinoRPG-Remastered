@@ -9,6 +9,8 @@ import {
 import {
 	getAdminUserDetailsHandler,
 	getAdminUserDinozHandler,
+	updateAdminUserIngredientsHandler,
+	updateAdminUserItemsHandler,
 	updateAdminUserProfileHandler,
 	updateAdminUserUniqueSkillsHandler,
 	updateAdminUserWalletHandler
@@ -40,6 +42,16 @@ export async function adminRoutes(app: FastifyInstance) {
 		'/user/:id/unique-skills',
 		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminUserUniqueSkillsHandler
+	);
+	app.patch(
+		'/user/:id/items',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminUserItemsHandler
+	);
+	app.patch(
+		'/user/:id/ingredients',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminUserIngredientsHandler
 	);
 	// Jobs
 	app.get('/jobs', { preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } }, async () => {
