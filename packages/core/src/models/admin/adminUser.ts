@@ -1,3 +1,5 @@
+import { UserRole } from '../user/userRole.js';
+
 export interface AdminUserWallet {
 	type: string;
 	amount: number;
@@ -17,10 +19,23 @@ export interface AdminUserIngredient {
 	quantity: number;
 }
 
-export interface AdminUserUniqueSkill {
-	skillId: number;
-	state: boolean;
-	dinozId: number | null;
+export interface AdminUserUniqueSkills {
+	leader: boolean;
+	engineer: boolean;
+	cooker: boolean;
+	shopKeeper: boolean;
+	merchant: boolean;
+	priest: boolean;
+	teacher: boolean;
+	matelasseur: boolean;
+	messie: boolean;
+}
+
+export interface AdminUserProfile {
+	avatar: string | null;
+	age: number | null;
+	language: string | null;
+	description: string | null;
 }
 
 /*export interface AdminUserQuest {
@@ -42,14 +57,16 @@ export interface AdminUserUniqueSkill {
 export interface AdminUserDetails {
 	id: string;
 	name: string;
-	role: string;
+	role: UserRole;
+	lastLogin: Date;
+	profile: AdminUserProfile | null;
 	wallets: AdminUserWallet[];
 	rewards: AdminUserReward[];
 	items: AdminUserItem[];
 	ingredients: AdminUserIngredient[];
+	uniqueSkills: AdminUserUniqueSkills;
 	//quests: AdminUserQuest[];
 	//banCase: AdminBanCase | null;
-	uniqueSkills: AdminUserUniqueSkill[];
 }
 
 export interface AdminDinozSummary {

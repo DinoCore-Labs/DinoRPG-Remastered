@@ -13,6 +13,24 @@ export async function getAdminUserDetails(userId: string): Promise<AdminUserDeta
 			id: true,
 			name: true,
 			role: true,
+			lastLogin: true,
+			leader: true,
+			engineer: true,
+			cooker: true,
+			shopKeeper: true,
+			merchant: true,
+			priest: true,
+			teacher: true,
+			matelasseur: true,
+			messie: true,
+			profile: {
+				select: {
+					avatar: true,
+					age: true,
+					language: true,
+					description: true
+				}
+			},
 			wallets: {
 				select: {
 					type: true,
@@ -86,10 +104,30 @@ export async function getAdminUserDetails(userId: string): Promise<AdminUserDeta
 		id: user.id,
 		name: user.name,
 		role: user.role,
+		lastLogin: user.lastLogin,
+		profile: user.profile
+			? {
+					avatar: user.profile.avatar ? Buffer.from(user.profile.avatar).toString('base64') : null,
+					age: user.profile.age ?? null,
+					language: user.profile.language ?? null,
+					description: user.profile.description ?? null
+				}
+			: null,
 		wallets: user.wallets,
 		rewards: user.rewards,
 		items: user.items,
 		ingredients: user.ingredients,
+		uniqueSkills: {
+			leader: user.leader,
+			engineer: user.engineer,
+			cooker: user.cooker,
+			shopKeeper: user.shopKeeper,
+			merchant: user.merchant,
+			priest: user.priest,
+			teacher: user.teacher,
+			matelasseur: user.matelasseur,
+			messie: user.messie
+		}
 		/*quests: user.quests,
 		banCase: user.banCase
 			? {
@@ -98,7 +136,6 @@ export async function getAdminUserDetails(userId: string): Promise<AdminUserDeta
 					banEndDate: user.banCase.banEndDate ? user.banCase.banEndDate.toISOString() : null
 				}
 			: null,*/
-		uniqueSkills: user.dinoz.flatMap(dinoz => dinoz.skills)
 	};
 }
 
@@ -123,7 +160,19 @@ export async function updateAdminUserProfile(userId: string, payload: UpdateAdmi
 	await prisma.user.update({
 		where: { id: userId },
 		data: {
-			role: payload.role
+			role: payload.role,
+			profile: {
+				upsert: {
+					create: {
+						description: payload.description,
+						avatar: null
+					},
+					update: {
+						description: payload.description,
+						...(payload.removeAvatar ? { avatar: null } : {})
+					}
+				}
+			}
 		}
 	});
 }

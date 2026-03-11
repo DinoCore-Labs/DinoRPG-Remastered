@@ -1,64 +1,62 @@
-a {
+.button {
 	border: none;
-	&.button {
-		position: relative;
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 145px;
-		height: 28px;
-		margin-top: 3px;
-		margin-bottom: 2px;
-		font-variant: small-caps;
-		font-size: 10.5pt;
-		color: #ffeb7a;
-		font-weight: bold;
-		text-decoration: none;
-		text-align: center;
-		cursor: pointer;
-		background-image: url('../../assets/button/button.webp');
-		background-repeat: no-repeat;
-		&:first-letter {
-			color: white;
-		}
-		& > span:first-letter {
-			color: white;
-		}
-		&--disabled {
-			opacity: 0.7;
-		}
-	}
-	&.button:hover {
-		background-image: url('../../assets/button/button_hover.webp');
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 145px;
+	height: 28px;
+	margin-top: 3px;
+	margin-bottom: 2px;
+	font-variant: small-caps;
+	font-size: 10.5pt;
+	color: #ffeb7a;
+	font-weight: bold;
+	text-decoration: none;
+	text-align: center;
+	cursor: pointer;
+	background-image: url('../../assets/button/button.webp');
+	background-repeat: no-repeat;
+	&:first-letter {
 		color: white;
-		background-color: transparent;
 	}
-	&.back {
-		margin-left: 15px;
-		img {
-			position: absolute;
-			left: -15px;
-			top: 0;
-		}
+	& > span:first-letter {
+		color: white;
 	}
-	&.bSmall {
-		width: 95px;
-		background-image: url('../../assets/button/button_small.webp');
+	&--disabled {
+		opacity: 0.7;
 	}
-	&.bSmall:hover {
-		background-image: url('../../assets/button/button_small_hover.webp');
+}
+.button:hover {
+	background-image: url('../../assets/button/button_hover.webp');
+	color: white;
+	background-color: transparent;
+}
+.back {
+	margin-left: 15px;
+	img {
+		position: absolute;
+		left: -15px;
+		top: 0;
 	}
-	&.helpButton {
-		background-image: url('../../assets/button/button_help.gif');
-		width: 95px;
-		height: 50px;
-		display: flex;
-		justify-content: center;
-		align-items: flex-end;
-		box-sizing: border-box;
-		padding-bottom: 4px;
-	}
-	&.helpButton:hover {
-		background-image: url('../../assets/button/button_help_hover.gif');
-	}
+}
+.bSmall {
+	width: 95px;
+	background-image: url('../../assets/button/button_small.webp');
+}
+.bSmall:hover {
+	background-image: url('../../assets/button/button_small_hover.webp');
+}
+.helpButton {
+	background-image: url('../../assets/button/button_help.gif');
+	width: 95px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
+	box-sizing: border-box;
+	padding-bottom: 4px;
+}
+.helpButton:hover {
+	background-image: url('../../assets/button/button_help_hover.gif');
 }
