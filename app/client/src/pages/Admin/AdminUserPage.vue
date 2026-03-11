@@ -73,7 +73,6 @@ async function reloadUser() {
 .admin-user-page {
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
 }
 
 .red {

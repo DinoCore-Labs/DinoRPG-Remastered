@@ -25,6 +25,7 @@ const props = defineProps<{
 	label?: string;
 	disabled?: boolean;
 	id: string;
+	name?: string;
 }>();
 
 const emit = defineEmits<{
