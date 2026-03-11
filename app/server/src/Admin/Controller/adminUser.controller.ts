@@ -1,5 +1,6 @@
 import { AdminDinozSummary, AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
 import {
+	UpdateAdminUserInventoryPayload,
 	UpdateAdminUserProfilePayload,
 	UpdateAdminUserUniqueSkillsPayload,
 	UpdateAdminUserWalletPayload
@@ -236,6 +237,95 @@ export async function updateAdminUserUniqueSkills(
 			teacher: payload.uniqueSkills.teacher,
 			matelasseur: payload.uniqueSkills.matelasseur,
 			messie: payload.uniqueSkills.messie
+		}
+	});
+}
+
+export async function updateAdminUserItems(userId: string, payload: UpdateAdminUserInventoryPayload): Promise<void> {
+	const item = await prisma.userItems.findUnique({
+		where: {
+			itemId_userId: {
+				itemId: payload.id,
+				userId
+			}
+		}
+	});
+
+	if (!item) {
+		if (payload.operation === 'remove') {
+			return;
+		}
+
+		await prisma.userItems.create({
+			data: {
+				userId,
+				itemId: payload.id,
+				quantity: payload.quantity
+			}
+		});
+
+		return;
+	}
+
+	const nextQuantity =
+		payload.operation === 'add' ? item.quantity + payload.quantity : Math.max(0, item.quantity - payload.quantity);
+
+	await prisma.userItems.update({
+		where: {
+			itemId_userId: {
+				itemId: payload.id,
+				userId
+			}
+		},
+		data: {
+			quantity: nextQuantity
+		}
+	});
+}
+
+export async function updateAdminUserIngredients(
+	userId: string,
+	payload: UpdateAdminUserInventoryPayload
+): Promise<void> {
+	const ingredient = await prisma.userIngredients.findUnique({
+		where: {
+			ingredientId_userId: {
+				ingredientId: payload.id,
+				userId
+			}
+		}
+	});
+
+	if (!ingredient) {
+		if (payload.operation === 'remove') {
+			return;
+		}
+
+		await prisma.userIngredients.create({
+			data: {
+				userId,
+				ingredientId: payload.id,
+				quantity: payload.quantity
+			}
+		});
+
+		return;
+	}
+
+	const nextQuantity =
+		payload.operation === 'add'
+			? ingredient.quantity + payload.quantity
+			: Math.max(0, ingredient.quantity - payload.quantity);
+
+	await prisma.userIngredients.update({
+		where: {
+			ingredientId_userId: {
+				ingredientId: payload.id,
+				userId
+			}
+		},
+		data: {
+			quantity: nextQuantity
 		}
 	});
 }

@@ -3,12 +3,16 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import {
 	getAdminUserDetails,
 	getAdminUserDinoz,
+	updateAdminUserIngredients,
+	updateAdminUserItems,
 	updateAdminUserProfile,
 	updateAdminUserUniqueSkills,
 	updateAdminUserWallet
 } from '../Controller/adminUser.controller.js';
 import {
 	adminUserParamsSchema,
+	updateAdminUserIngredientsSchema,
+	updateAdminUserItemsSchema,
 	updateAdminUserProfileSchema,
 	updateAdminUserUniqueSkillsSchema,
 	updateAdminUserWalletSchema
@@ -77,6 +81,32 @@ export async function updateAdminUserUniqueSkillsHandler(request: FastifyRequest
 	}
 
 	await updateAdminUserUniqueSkills(parsedParams.data.id, parsedBody.data);
+
+	return reply.status(204).send();
+}
+
+export async function updateAdminUserItemsHandler(request: FastifyRequest, reply: FastifyReply) {
+	const parsedParams = adminUserParamsSchema.safeParse(request.params);
+	const parsedBody = updateAdminUserItemsSchema.safeParse(request.body);
+
+	if (!parsedParams.success || !parsedBody.success) {
+		return reply.status(400).send({ message: 'Invalid request payload' });
+	}
+
+	await updateAdminUserItems(parsedParams.data.id, parsedBody.data);
+
+	return reply.status(204).send();
+}
+
+export async function updateAdminUserIngredientsHandler(request: FastifyRequest, reply: FastifyReply) {
+	const parsedParams = adminUserParamsSchema.safeParse(request.params);
+	const parsedBody = updateAdminUserIngredientsSchema.safeParse(request.body);
+
+	if (!parsedParams.success || !parsedBody.success) {
+		return reply.status(400).send({ message: 'Invalid request payload' });
+	}
+
+	await updateAdminUserIngredients(parsedParams.data.id, parsedBody.data);
 
 	return reply.status(204).send();
 }

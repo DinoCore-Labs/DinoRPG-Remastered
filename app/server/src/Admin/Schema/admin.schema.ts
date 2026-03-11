@@ -43,3 +43,15 @@ export const updateAdminUserUniqueSkillsSchema = z.object({
 		messie: z.boolean()
 	})
 });
+
+export const updateAdminUserItemsSchema = z.object({
+	id: z.number().int().positive(),
+	quantity: z.number().int().positive(),
+	operation: z.enum(['add', 'remove'])
+});
+
+export const updateAdminUserIngredientsSchema = z.object({
+	id: z.number().int().positive(),
+	quantity: z.number().int().positive(),
+	operation: z.enum(['add', 'remove'])
+});
