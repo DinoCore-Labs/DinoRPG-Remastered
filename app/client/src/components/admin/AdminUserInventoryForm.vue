@@ -1,54 +1,51 @@
 <template>
 	<div class="card">
 		<div class="card-container">
-			<h3>{{ inventoryTitle }}</h3>
-
-			<ul class="inventory-list">
-				<li v-for="entry in inventoryList" :key="entryKey(entry)" class="inventory-row">
-					<img class="inventory-icon" :src="entryIcon(entry)" :alt="entryName(entry)" />
-
-					<div class="inventory-info">
-						<strong>{{ entryName(entry) }}</strong>
-						<span>ID: {{ entryId(entry) }}</span>
+			<div class="card-container">
+				<h3>{{ inventoryTitle }}</h3>
+				<ul class="inventory-list">
+					<li v-for="entry in inventoryList" :key="entryKey(entry)" class="inventory-row">
+						<img class="inventory-icon" :src="entryIcon(entry)" :alt="entryName(entry)" />
+						<div class="inventory-info">
+							<strong>{{ entryName(entry) }}</strong>
+							<span>ID: {{ entryId(entry) }}</span>
+						</div>
+						<div class="inventory-quantity">× {{ entry.quantity }}</div>
+					</li>
+				</ul>
+				<form class="inventory-form" @submit.prevent="submit">
+					<div class="field">
+						<label for="inventorySelect">{{ inventoryLabel }}</label>
+						<DZSelect id="inventorySelect" v-model="form.id" :options="selectOptions" />
 					</div>
-
-					<div class="inventory-quantity">× {{ entry.quantity }}</div>
-				</li>
-			</ul>
-
-			<form class="inventory-form" @submit.prevent="submit">
-				<div class="field">
-					<label for="inventorySelect">{{ inventoryLabel }}</label>
-
-					<DZSelect id="inventorySelect" v-model="form.id" :options="selectOptions" />
-				</div>
-
-				<div class="field">
-					<label for="inventoryQuantity">Quantité</label>
-
-					<DZInput id="inventoryQuantity" v-model="form.quantity" type="number" min="1" />
-				</div>
-
-				<div class="field">
-					<label>Opération</label>
-
-					<div class="radio-group">
-						<DZRadio id="inventoryAdd" name="inventoryOperation" v-model="form.operation" value="add" label="Ajouter" />
-
-						<DZRadio
-							id="inventoryRemove"
-							name="inventoryOperation"
-							v-model="form.operation"
-							value="remove"
-							label="Retirer"
-						/>
+					<div class="field">
+						<label for="inventoryQuantity">Quantité</label>
+						<DZInput id="inventoryQuantity" v-model="form.quantity" type="number" min="1" />
 					</div>
-				</div>
-
-				<DZButton type="submit" :disabled="submitting">
-					{{ submitting ? 'Enregistrement...' : 'Modifier' }}
-				</DZButton>
-			</form>
+					<div class="field">
+						<label>Opération</label>
+						<div class="radio-group">
+							<DZRadio
+								id="inventoryAdd"
+								name="inventoryOperation"
+								v-model="form.operation"
+								value="add"
+								label="Ajouter"
+							/>
+							<DZRadio
+								id="inventoryRemove"
+								name="inventoryOperation"
+								v-model="form.operation"
+								value="remove"
+								label="Retirer"
+							/>
+						</div>
+					</div>
+					<DZButton type="submit" :disabled="submitting">
+						{{ submitting ? 'Enregistrement...' : 'Modifier' }}
+					</DZButton>
+				</form>
+			</div>
 		</div>
 	</div>
 </template>
@@ -141,16 +138,14 @@ function entryName(entry: InventoryEntry): string {
 
 function entryIcon(entry: InventoryEntry): string {
 	if (props.type === 'items') {
-		const itemId = (entry as ItemEntry).itemId;
-		const itemName = itemNameList[itemId];
-
-		return getImgURL('item', `item_${itemName}`);
+		const id = (entry as ItemEntry).itemId;
+		const name = itemNameList[id] ?? `item_${id}`;
+		return getImgURL('item', `item_${name}`);
 	}
 
-	const ingredientId = (entry as IngredientEntry).ingredientId;
-	const ingredientName = ingredientNameList[ingredientId];
-
-	return getImgURL('ingredients', ingredientName);
+	const id = (entry as IngredientEntry).ingredientId;
+	const name = ingredientNameList[id] ?? `ingredient_${id}`;
+	return getImgURL('ingredients', name);
 }
 
 async function submit() {
