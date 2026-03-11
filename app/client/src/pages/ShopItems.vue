@@ -16,7 +16,7 @@
 			<p class="shopText" v-html="formatContent($t(`shop.item.${actualShop.name}.description`))" />
 		</div>
 		<div class="shopShop">
-			<div class="back">
+			<div class="background">
 				<div class="list">
 					<template v-if="itemList.length > 0">
 						<Tippy
@@ -566,7 +566,7 @@ export default defineComponent({
 		justify-content: center;
 		max-width: 95%;
 		align-self: center;
-		.back {
+		.background {
 			background: url('../assets/background/shop_bg_items.webp');
 			width: 162px;
 			height: 193px;
@@ -802,7 +802,6 @@ export default defineComponent({
 			.item {
 				display: none;
 			}
-
 			.noValue {
 				height: 12px;
 			}

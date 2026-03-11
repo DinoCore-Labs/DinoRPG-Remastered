@@ -29,3 +29,17 @@ export const updateAdminUserWalletSchema = z.object({
 	amount: z.number().int().positive(),
 	operation: z.enum(['add', 'remove'])
 });
+
+export const updateAdminUserUniqueSkillsSchema = z.object({
+	uniqueSkills: z.object({
+		leader: z.boolean(),
+		engineer: z.boolean(),
+		cooker: z.boolean(),
+		shopKeeper: z.boolean(),
+		merchant: z.boolean(),
+		priest: z.boolean(),
+		teacher: z.boolean(),
+		matelasseur: z.boolean(),
+		messie: z.boolean()
+	})
+});

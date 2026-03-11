@@ -1,6 +1,7 @@
 import { AdminDinozSummary, AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
 import {
 	UpdateAdminUserProfilePayload,
+	UpdateAdminUserUniqueSkillsPayload,
 	UpdateAdminUserWalletPayload
 } from '@dinorpg/core/models/admin/adminUserPayloads.js';
 
@@ -215,6 +216,26 @@ export async function updateAdminUserWallet(userId: string, payload: UpdateAdmin
 		},
 		data: {
 			amount: nextAmount
+		}
+	});
+}
+
+export async function updateAdminUserUniqueSkills(
+	userId: string,
+	payload: UpdateAdminUserUniqueSkillsPayload
+): Promise<void> {
+	await prisma.user.update({
+		where: { id: userId },
+		data: {
+			leader: payload.uniqueSkills.leader,
+			engineer: payload.uniqueSkills.engineer,
+			cooker: payload.uniqueSkills.cooker,
+			shopKeeper: payload.uniqueSkills.shopKeeper,
+			merchant: payload.uniqueSkills.merchant,
+			priest: payload.uniqueSkills.priest,
+			teacher: payload.uniqueSkills.teacher,
+			matelasseur: payload.uniqueSkills.matelasseur,
+			messie: payload.uniqueSkills.messie
 		}
 	});
 }
