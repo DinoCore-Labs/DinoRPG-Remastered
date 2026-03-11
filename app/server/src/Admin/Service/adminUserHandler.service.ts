@@ -4,11 +4,13 @@ import {
 	getAdminUserDetails,
 	getAdminUserDinoz,
 	updateAdminUserProfile,
+	updateAdminUserUniqueSkills,
 	updateAdminUserWallet
 } from '../Controller/adminUser.controller.js';
 import {
 	adminUserParamsSchema,
 	updateAdminUserProfileSchema,
+	updateAdminUserUniqueSkillsSchema,
 	updateAdminUserWalletSchema
 } from '../Schema/admin.schema.js';
 
@@ -62,6 +64,19 @@ export async function updateAdminUserWalletHandler(request: FastifyRequest, repl
 	}
 
 	await updateAdminUserWallet(parsedParams.data.id, parsedBody.data);
+
+	return reply.status(204).send();
+}
+
+export async function updateAdminUserUniqueSkillsHandler(request: FastifyRequest, reply: FastifyReply) {
+	const parsedParams = adminUserParamsSchema.safeParse(request.params);
+	const parsedBody = updateAdminUserUniqueSkillsSchema.safeParse(request.body);
+
+	if (!parsedParams.success || !parsedBody.success) {
+		return reply.status(400).send({ message: 'Invalid request payload' });
+	}
+
+	await updateAdminUserUniqueSkills(parsedParams.data.id, parsedBody.data);
 
 	return reply.status(204).send();
 }
