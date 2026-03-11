@@ -5,7 +5,7 @@
 				<h3>Profil</h3>
 				<div class="field">
 					<label for="role">Rôle</label>
-					<DZSelect id="role" v-model="form.role" :options="roleOptions" :placeholder="$t('button.search')" />
+					<DZSelect id="role" v-model="form.role" :options="roleOptions" />
 				</div>
 				<div class="field">
 					<label for="description">Description</label>
@@ -103,9 +103,13 @@ async function submit() {
 		color: #bc683c !important;
 	}
 }
-
-textarea,
-select {
+textarea {
+	border: none;
 	width: 100%;
+	background-color: #ae6139;
+	color: #ffee92;
+}
+textarea:focus {
+	background-color: #9a4029;
 }
 </style>

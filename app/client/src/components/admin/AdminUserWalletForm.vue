@@ -1,43 +1,64 @@
 <template>
 	<div class="card">
-		<h3>Wallets</h3>
-
-		<ul class="wallet-list">
-			<li v-for="wallet in user.wallets" :key="wallet.type">
-				<strong>{{ wallet.type }}</strong> : {{ wallet.amount }}
-			</li>
-		</ul>
-
-		<form @submit.prevent="submit">
-			<div class="field">
-				<label for="walletType">Type</label>
-				<input id="walletType" v-model="form.type" type="text" />
+		<div class="card-container">
+			<div class="card-container">
+				<h3>Wallets</h3>
+				<ul class="wallet-list">
+					<li v-for="wallet in user.wallets" :key="wallet.type">
+						<strong>{{ wallet.type }}</strong> : {{ wallet.amount }}
+					</li>
+				</ul>
+				<form @submit.prevent="submit">
+					<div class="field">
+						<label for="walletType">Type</label>
+						<DZSelect id="walletType" v-model="form.type" :options="walletOptions" />
+					</div>
+					<div class="field">
+						<label for="walletAmount">Montant</label>
+						<DZInput id="walletAmount" v-model.number="form.amount" type="number" min="1" />
+					</div>
+					<div class="field">
+						<label>Opération</label>
+						<div class="radio-group">
+							<DZRadio
+								id="walletOperationAdd"
+								name="walletOperation"
+								v-model="form.operation"
+								value="add"
+								label="Ajouter"
+							/>
+							<DZRadio
+								id="walletOperationRemove"
+								name="walletOperation"
+								v-model="form.operation"
+								value="remove"
+								label="Retirer"
+							/>
+						</div>
+					</div>
+					<DZButton @click="submit" :disabled="submitting">
+						{{ submitting ? 'Enregistrement...' : 'Modifier le wallet' }}
+					</DZButton>
+				</form>
 			</div>
-
-			<div class="field">
-				<label for="walletAmount">Montant</label>
-				<input id="walletAmount" v-model.number="form.amount" type="number" min="1" />
-			</div>
-
-			<div class="field">
-				<label>Opération</label>
-				<select v-model="form.operation">
-					<option value="add">Ajouter</option>
-					<option value="remove">Retirer</option>
-				</select>
-			</div>
-
-			<button type="submit" :disabled="submitting">
-				{{ submitting ? 'Enregistrement...' : 'Modifier le wallet' }}
-			</button>
-		</form>
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import type { AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
-// import { AdminService } from '@/services';
+import { AdminUserService } from '../../services/adminUsers.service';
+import DZSelect from '../utils/DZSelect.vue';
+import type { SelectOption } from '../utils/DZSelect.vue';
+import DZRadio from '../utils/DZRadio.vue';
+import DZButton from '../utils/DZButton.vue';
+import {
+	MoneyTypes,
+	type UpdateAdminUserWalletPayload,
+	type MoneyType
+} from '@dinorpg/core/models/admin/adminUserPayloads.js';
+import DZInput from '../utils/DZInput.vue';
 
 const props = defineProps<{
 	user: AdminUserDetails;
@@ -48,8 +69,13 @@ const emit = defineEmits<{
 }>();
 
 const submitting = ref(false);
-
-const form = reactive({
+const walletOptions = computed<SelectOption<MoneyType>[]>(() =>
+	MoneyTypes.map(role => ({
+		value: role,
+		label: role
+	}))
+);
+const form = reactive<UpdateAdminUserWalletPayload>({
 	type: 'GOLD',
 	amount: 1,
 	operation: 'add' as 'add' | 'remove'
@@ -59,12 +85,11 @@ async function submit() {
 	submitting.value = true;
 
 	try {
-		// await AdminService.updateUserWallet(props.player.id, {
-		// 	type: form.type,
-		// 	amount: form.amount,
-		// 	operation: form.operation
-		// });
-
+		await AdminUserService.updateUserWallet(props.user.id, {
+			type: form.type,
+			amount: form.amount,
+			operation: form.operation
+		});
 		emit('updated');
 	} finally {
 		submitting.value = false;
@@ -74,19 +99,20 @@ async function submit() {
 
 <style scoped lang="scss">
 .card {
-	padding: 16px;
-	background: #ecbd84;
-	border: 1px solid #bc683c;
-	display: flex;
-	flex-direction: column;
-	gap: 12px;
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	background-color: #ecbd84;
+	padding: 5px;
+	&-container {
+		border: 2px solid #bc683c;
+		padding: 20px;
+	}
 }
-
 .wallet-list {
 	margin: 0;
 	padding-left: 18px;
 }
-
 .field {
 	display: flex;
 	flex-direction: column;

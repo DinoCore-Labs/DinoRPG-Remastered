@@ -10,3 +10,7 @@ export interface UpdateAdminUserWalletPayload {
 	amount: number;
 	operation: 'add' | 'remove';
 }
+
+export const MoneyTypes = ['GOLD', 'TREASURE_TICKET'] as const;
+
+export type MoneyType = (typeof MoneyTypes)[number];
