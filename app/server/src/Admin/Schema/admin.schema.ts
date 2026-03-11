@@ -19,7 +19,9 @@ export const adminUserParamsSchema = z.object({
 });
 
 export const updateAdminUserProfileSchema = z.object({
-	role: z.nativeEnum(Role)
+	role: z.nativeEnum(Role),
+	description: z.string().max(1000).nullable(),
+	removeAvatar: z.boolean().default(false)
 });
 
 export const updateAdminUserWalletSchema = z.object({

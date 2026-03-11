@@ -1,27 +1,36 @@
 <template>
-	<form class="card" @submit.prevent="submit">
-		<h3>Profil</h3>
-
-		<div class="field">
-			<label for="customText">Custom text</label>
-			<input id="customText" v-model="form.customText" type="text" />
+	<div class="card">
+		<div class="card-container">
+			<form class="card-container" @submit.prevent="submit">
+				<h3>Profil</h3>
+				<div class="field">
+					<label for="role">Rôle</label>
+					<DZSelect id="role" v-model="form.role" :options="roleOptions" :placeholder="$t('button.search')" />
+				</div>
+				<div class="field">
+					<label for="description">Description</label>
+					<textarea id="description" v-model="form.description" rows="4" />
+				</div>
+				<div class="field checkbox-field">
+					<DZCheckbox id="removeAvatar" v-model="form.removeAvatar" label="Supprimer l’avatar" />
+				</div>
+				<DZButton @click="submit" :disabled="submitting">
+					{{ submitting ? 'Enregistrement...' : 'Mettre à jour' }}
+				</DZButton>
+			</form>
 		</div>
-
-		<div class="field">
-			<label for="role">Rôle</label>
-			<input id="role" v-model="form.role" type="text" />
-		</div>
-
-		<button type="submit" :disabled="submitting">
-			{{ submitting ? 'Enregistrement...' : 'Mettre à jour' }}
-		</button>
-	</form>
+	</div>
 </template>
 
 <script setup lang="ts">
-import { reactive, watch, ref } from 'vue';
+import { computed, reactive, watch, ref } from 'vue';
 import type { AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
-// import { AdminService } from '@/services';
+import type { UpdateAdminUserProfilePayload } from '@dinorpg/core/models/admin/adminUserPayloads.js';
+import { AdminUserService } from '../../services/adminUsers.service';
+import { UserRoles, type UserRole } from '@dinorpg/core/models/user/userRole.js';
+import DZSelect, { type SelectOption } from '../utils/DZSelect.vue';
+import DZCheckbox from '../utils/DZCheckbox.vue';
+import DZButton from '../utils/DZButton.vue';
 
 const props = defineProps<{
 	user: AdminUserDetails;
@@ -32,15 +41,23 @@ const emit = defineEmits<{
 }>();
 
 const submitting = ref(false);
+const roleOptions = computed<SelectOption<UserRole>[]>(() =>
+	UserRoles.map(role => ({
+		value: role,
+		label: role
+	}))
+);
 
-const form = reactive({
-	customText: '',
-	role: ''
+const form = reactive<UpdateAdminUserProfilePayload>({
+	role: props.user.role,
+	description: props.user.profile?.description ?? null,
+	removeAvatar: false
 });
 
 function hydrateForm() {
-	form.customText = props.user.customText ?? '';
 	form.role = props.user.role;
+	form.description = props.user.profile?.description ?? null;
+	form.removeAvatar = false;
 }
 
 watch(() => props.user, hydrateForm, { immediate: true });
@@ -49,12 +66,11 @@ async function submit() {
 	submitting.value = true;
 
 	try {
-		// await AdminService.updateUserProfile(props.player.id, {
-		// 	customText: form.customText,
-		// 	quetzuBought: form.quetzuBought,
-		// 	dailyGridRewards: form.dailyGridRewards,
-		// 	role: form.role
-		// });
+		await AdminUserService.updateUserProfile(props.user.id, {
+			role: form.role,
+			description: form.description?.trim() ? form.description.trim() : null,
+			removeAvatar: form.removeAvatar
+		});
 
 		emit('updated');
 	} finally {
@@ -65,17 +81,31 @@ async function submit() {
 
 <style scoped lang="scss">
 .card {
-	padding: 16px;
-	background: #ecbd84;
-	border: 1px solid #bc683c;
-	display: flex;
-	flex-direction: column;
-	gap: 12px;
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	background-color: #ecbd84;
+	padding: 5px;
+	&-container {
+		border: 2px solid #bc683c;
+		padding: 20px;
+	}
 }
-
 .field {
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
+}
+.checkbox-field {
+	flex-direction: row;
+	align-items: center;
+	& label {
+		color: #bc683c !important;
+	}
+}
+
+textarea,
+select {
+	width: 100%;
 }
 </style>
