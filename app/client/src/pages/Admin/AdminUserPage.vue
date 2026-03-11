@@ -12,6 +12,8 @@
 			<AdminUserProfileForm :user="user" @updated="reloadUser" />
 			<AdminUserWalletForm :user="user" @updated="reloadUser" />
 			<AdminUserUniqueSkillsForm :user="user" @updated="reloadUser" />
+			<AdminUserInventoryForm :user="user" type="items" @updated="reloadUser" />
+			<AdminUserInventoryForm :user="user" type="ingredients" @updated="reloadUser" />
 			<AdminUserDinozList :user-id="user.id" :dinoz-list="dinozList" />
 		</template>
 	</div>
@@ -24,6 +26,7 @@ import AdminUserSummaryCard from '../../components/admin/AdminUserSummaryCard.vu
 import AdminUserProfileForm from '../../components/admin/AdminUserProfileForm.vue';
 import AdminUserWalletForm from '../../components/admin/AdminUserWalletForm.vue';
 import AdminUserUniqueSkillsForm from '../../components/admin/AdminUserUniqueSkillsForm.vue';
+import AdminUserInventoryForm from '../../components/admin/AdminUserInventoryForm.vue';
 import AdminUserDinozList from '../../components/admin/AdminUserDinozList.vue';
 
 import type { AdminDinozSummary, AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';

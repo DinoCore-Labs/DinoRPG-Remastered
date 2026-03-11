@@ -12,10 +12,18 @@ export interface UpdateAdminUserWalletPayload {
 	operation: 'add' | 'remove';
 }
 
+export const MoneyTypes = ['GOLD', 'TREASURE_TICKET'] as const;
+
+export type MoneyType = (typeof MoneyTypes)[number];
+
 export interface UpdateAdminUserUniqueSkillsPayload {
 	uniqueSkills: AdminUserUniqueSkills;
 }
 
-export const MoneyTypes = ['GOLD', 'TREASURE_TICKET'] as const;
+export type InventoryType = 'items' | 'ingredients';
 
-export type MoneyType = (typeof MoneyTypes)[number];
+export interface UpdateAdminUserInventoryPayload {
+	id: number;
+	quantity: number;
+	operation: 'add' | 'remove';
+}
