@@ -55,3 +55,8 @@ export const updateAdminUserIngredientsSchema = z.object({
 	quantity: z.number().int().positive(),
 	operation: z.enum(['add', 'remove'])
 });
+
+export const updateAdminUserRewardsSchema = z.object({
+	rewardId: z.number().int().positive(),
+	operation: z.enum(['add', 'remove'])
+});
