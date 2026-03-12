@@ -218,13 +218,10 @@ export const rewardList: Readonly<Record<Reward, EpicReward>> = Object.freeze(
 	Object.fromEntries(
 		(Object.values(Reward).filter(v => typeof v === 'number') as number[]).map(id => {
 			const rewardId = id as Reward;
-
 			// reverse mapping d'un enum numérique TS:
 			// Reward[100] -> "WAR1A", etc.
 			const name = Reward[rewardId].toLowerCase() as string;
-
 			const displayed = displayedOverrides[rewardId] ?? true;
-
 			return [
 				rewardId,
 				{
