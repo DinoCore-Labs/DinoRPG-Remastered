@@ -2,6 +2,7 @@ import { AdminDinozSummary, AdminUserDetails } from '@dinorpg/core/models/admin/
 import {
 	UpdateAdminUserInventoryPayload,
 	UpdateAdminUserProfilePayload,
+	UpdateAdminUserRewardsPayload,
 	UpdateAdminUserUniqueSkillsPayload,
 	UpdateAdminUserWalletPayload
 } from '@dinorpg/core/models/admin/adminUserPayloads.js';
@@ -61,7 +62,7 @@ export async function getAdminUserDetails(userId: string): Promise<AdminUserDeta
 				orderBy: {
 					ingredientId: 'asc'
 				}
-			},
+			}
 			/*quests: {
 				select: {
 					questId: true,
@@ -82,19 +83,7 @@ export async function getAdminUserDetails(userId: string): Promise<AdminUserDeta
 					banDate: true,
 					banEndDate: true
 				}
-			},*/
-			dinoz: {
-				select: {
-					id: true,
-					skills: {
-						select: {
-							skillId: true,
-							state: true,
-							dinozId: true
-						}
-					}
-				}
-			}
+			}*/
 		}
 	});
 
@@ -188,12 +177,10 @@ export async function updateAdminUserWallet(userId: string, payload: UpdateAdmin
 			}
 		}
 	});
-
 	if (!wallet) {
 		if (payload.operation === 'remove') {
 			throw new Error(`Wallet ${payload.type} not found`);
 		}
-
 		await prisma.userWallet.create({
 			data: {
 				userId,
@@ -201,13 +188,10 @@ export async function updateAdminUserWallet(userId: string, payload: UpdateAdmin
 				amount: payload.amount
 			}
 		});
-
 		return;
 	}
-
 	const nextAmount =
 		payload.operation === 'add' ? wallet.amount + payload.amount : Math.max(0, wallet.amount - payload.amount);
-
 	await prisma.userWallet.update({
 		where: {
 			userId_type: {
@@ -250,12 +234,10 @@ export async function updateAdminUserItems(userId: string, payload: UpdateAdminU
 			}
 		}
 	});
-
 	if (!item) {
 		if (payload.operation === 'remove') {
 			return;
 		}
-
 		await prisma.userItems.create({
 			data: {
 				userId,
@@ -263,13 +245,10 @@ export async function updateAdminUserItems(userId: string, payload: UpdateAdminU
 				quantity: payload.quantity
 			}
 		});
-
 		return;
 	}
-
 	const nextQuantity =
 		payload.operation === 'add' ? item.quantity + payload.quantity : Math.max(0, item.quantity - payload.quantity);
-
 	await prisma.userItems.update({
 		where: {
 			itemId_userId: {
@@ -295,12 +274,10 @@ export async function updateAdminUserIngredients(
 			}
 		}
 	});
-
 	if (!ingredient) {
 		if (payload.operation === 'remove') {
 			return;
 		}
-
 		await prisma.userIngredients.create({
 			data: {
 				userId,
@@ -308,15 +285,12 @@ export async function updateAdminUserIngredients(
 				quantity: payload.quantity
 			}
 		});
-
 		return;
 	}
-
 	const nextQuantity =
 		payload.operation === 'add'
 			? ingredient.quantity + payload.quantity
 			: Math.max(0, ingredient.quantity - payload.quantity);
-
 	await prisma.userIngredients.update({
 		where: {
 			ingredientId_userId: {
@@ -326,6 +300,36 @@ export async function updateAdminUserIngredients(
 		},
 		data: {
 			quantity: nextQuantity
+		}
+	});
+}
+
+export async function updateAdminUserRewards(userId: string, payload: UpdateAdminUserRewardsPayload): Promise<void> {
+	const reward = await prisma.userRewards.findUnique({
+		where: {
+			rewardId_userId: {
+				rewardId: payload.rewardId,
+				userId
+			}
+		}
+	});
+	if (payload.operation === 'add') {
+		if (reward) return;
+		await prisma.userRewards.create({
+			data: {
+				userId,
+				rewardId: payload.rewardId
+			}
+		});
+		return;
+	}
+	if (!reward) return;
+	await prisma.userRewards.delete({
+		where: {
+			rewardId_userId: {
+				rewardId: payload.rewardId,
+				userId
+			}
 		}
 	});
 }

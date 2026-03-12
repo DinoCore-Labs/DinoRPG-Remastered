@@ -12,6 +12,7 @@ import {
 	updateAdminUserIngredientsHandler,
 	updateAdminUserItemsHandler,
 	updateAdminUserProfileHandler,
+	updateAdminUserRewardsHandler,
 	updateAdminUserUniqueSkillsHandler,
 	updateAdminUserWalletHandler
 } from '../Service/adminUserHandler.service.js';
@@ -52,6 +53,11 @@ export async function adminRoutes(app: FastifyInstance) {
 		'/user/:id/ingredients',
 		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminUserIngredientsHandler
+	);
+	app.patch(
+		'/admin/users/:id/rewards',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminUserRewardsHandler
 	);
 	// Jobs
 	app.get('/jobs', { preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } }, async () => {

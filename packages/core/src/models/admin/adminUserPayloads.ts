@@ -27,3 +27,8 @@ export interface UpdateAdminUserInventoryPayload {
 	quantity: number;
 	operation: 'add' | 'remove';
 }
+
+export interface UpdateAdminUserRewardsPayload {
+	rewardId: number;
+	operation: 'add' | 'remove';
+}
