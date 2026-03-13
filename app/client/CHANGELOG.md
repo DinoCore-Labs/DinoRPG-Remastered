@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.9.3
+
+### Patch Changes
+
+- a534c39: admin user panel
+
 ## 0.9.2
 
 ### Patch Changes
