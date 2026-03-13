@@ -74,6 +74,4 @@ export interface AdminDinozSummary {
 	name: string;
 	level: number;
 	raceId: number;
-	life: number;
-	maxLife: number;
 }

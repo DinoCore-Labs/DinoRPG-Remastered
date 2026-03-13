@@ -139,9 +139,7 @@ export async function getAdminUserDinoz(userId: string): Promise<AdminDinozSumma
 			id: true,
 			name: true,
 			level: true,
-			raceId: true,
-			life: true,
-			maxLife: true
+			raceId: true
 		},
 		orderBy: [{ level: 'desc' }, { id: 'asc' }]
 	});
