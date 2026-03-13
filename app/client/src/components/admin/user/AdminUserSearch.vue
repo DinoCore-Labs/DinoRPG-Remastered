@@ -12,9 +12,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import DZSelect from '../utils/DZSelect.vue';
-import type { SelectOption } from '../utils/DZSelect.vue';
-import { UserService } from '../../services';
+import DZSelect from '../../utils/DZSelect.vue';
+import type { SelectOption } from '../../utils/DZSelect.vue';
+import { UserService } from '../../../services';
 
 const emit = defineEmits<{
 	(e: 'select', value: string): void;

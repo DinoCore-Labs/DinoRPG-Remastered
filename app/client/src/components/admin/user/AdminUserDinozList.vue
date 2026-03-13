@@ -20,9 +20,9 @@ import { useRouter } from 'vue-router';
 
 import type { AdminDinozSummary } from '@dinorpg/core/models/admin/adminUser.js';
 
-import DZSelect from '../utils/DZSelect.vue';
-import type { SelectOption } from '../utils/DZSelect.vue';
-import DZButton from '../utils/DZButton.vue';
+import DZSelect from '../../utils/DZSelect.vue';
+import type { SelectOption } from '../../utils/DZSelect.vue';
+import DZButton from '../../utils/DZButton.vue';
 
 const props = defineProps<{
 	userId: string;

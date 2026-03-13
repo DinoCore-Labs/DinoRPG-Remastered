@@ -22,14 +22,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import AdminUserSearch from '../../components/admin/AdminUserSearch.vue';
-import AdminUserSummaryCard from '../../components/admin/AdminUserSummaryCard.vue';
-import AdminUserProfileForm from '../../components/admin/AdminUserProfileForm.vue';
-import AdminUserWalletForm from '../../components/admin/AdminUserWalletForm.vue';
-import AdminUserUniqueSkillsForm from '../../components/admin/AdminUserUniqueSkillsForm.vue';
-import AdminUserInventoryForm from '../../components/admin/AdminUserInventoryForm.vue';
-import AdminUserRewardsForm from '../../components/admin/AdminUserRewardsForm.vue';
-import AdminUserDinozList from '../../components/admin/AdminUserDinozList.vue';
+import AdminUserSearch from '../../components/admin/user/AdminUserSearch.vue';
+import AdminUserSummaryCard from '../../components/admin/user/AdminUserSummaryCard.vue';
+import AdminUserProfileForm from '../../components/admin/user/AdminUserProfileForm.vue';
+import AdminUserWalletForm from '../../components/admin/user/AdminUserWalletForm.vue';
+import AdminUserUniqueSkillsForm from '../../components/admin/user/AdminUserUniqueSkillsForm.vue';
+import AdminUserInventoryForm from '../../components/admin/user/AdminUserInventoryForm.vue';
+import AdminUserRewardsForm from '../../components/admin/user/AdminUserRewardsForm.vue';
+import AdminUserDinozList from '../../components/admin/user/AdminUserDinozList.vue';
 
 import type { AdminDinozSummary, AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
 import { AdminUserService } from '../../services/adminUsers.service';
