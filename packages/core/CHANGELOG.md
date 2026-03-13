@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.8.2
+
+### Patch Changes
+
+- a534c39: admin user panel
+
 ## 0.8.1
 
 ### Patch Changes
