@@ -55,7 +55,7 @@ export async function adminRoutes(app: FastifyInstance) {
 		updateAdminUserIngredientsHandler
 	);
 	app.patch(
-		'/admin/users/:id/rewards',
+		'/user/:id/rewards',
 		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminUserRewardsHandler
 	);
