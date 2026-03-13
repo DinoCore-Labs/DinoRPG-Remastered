@@ -26,11 +26,11 @@
 import { computed, reactive, watch, ref } from 'vue';
 import type { AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
 import type { UpdateAdminUserProfilePayload } from '@dinorpg/core/models/admin/adminUserPayloads.js';
-import { AdminUserService } from '../../services/adminUsers.service';
+import { AdminUserService } from '../../../services/adminUsers.service';
 import { UserRoles, type UserRole } from '@dinorpg/core/models/user/userRole.js';
-import DZSelect, { type SelectOption } from '../utils/DZSelect.vue';
-import DZCheckbox from '../utils/DZCheckbox.vue';
-import DZButton from '../utils/DZButton.vue';
+import DZSelect, { type SelectOption } from '../../utils/DZSelect.vue';
+import DZCheckbox from '../../utils/DZCheckbox.vue';
+import DZButton from '../../utils/DZButton.vue';
 
 const props = defineProps<{
 	user: AdminUserDetails;

@@ -48,17 +48,17 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue';
 import type { AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
-import { AdminUserService } from '../../services/adminUsers.service';
-import DZSelect from '../utils/DZSelect.vue';
-import type { SelectOption } from '../utils/DZSelect.vue';
-import DZRadio from '../utils/DZRadio.vue';
-import DZButton from '../utils/DZButton.vue';
+import { AdminUserService } from '../../../services/adminUsers.service';
+import DZSelect from '../../utils/DZSelect.vue';
+import type { SelectOption } from '../../utils/DZSelect.vue';
+import DZRadio from '../../utils/DZRadio.vue';
+import DZButton from '../../utils/DZButton.vue';
 import {
 	MoneyTypes,
 	type UpdateAdminUserWalletPayload,
 	type MoneyType
 } from '@dinorpg/core/models/admin/adminUserPayloads.js';
-import DZInput from '../utils/DZInput.vue';
+import DZInput from '../../utils/DZInput.vue';
 
 const props = defineProps<{
 	user: AdminUserDetails;

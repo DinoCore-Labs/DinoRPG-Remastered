@@ -57,14 +57,14 @@ import type { AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
 import { itemNameList } from '@dinorpg/core/models/items/itemNameList.js';
 import { ingredientNameList } from '@dinorpg/core/models/ingredients/ingredientNameList.js';
 
-import { AdminUserService } from '../../services/adminUsers.service';
-import { getImgURL } from '../../utils/getImgURL';
+import { AdminUserService } from '../../../services/adminUsers.service';
+import { getImgURL } from '../../../utils/getImgURL';
 
-import DZSelect from '../utils/DZSelect.vue';
-import type { SelectOption } from '../utils/DZSelect.vue';
-import DZInput from '../utils/DZInput.vue';
-import DZRadio from '../utils/DZRadio.vue';
-import DZButton from '../utils/DZButton.vue';
+import DZSelect from '../../utils/DZSelect.vue';
+import type { SelectOption } from '../../utils/DZSelect.vue';
+import DZInput from '../../utils/DZInput.vue';
+import DZRadio from '../../utils/DZRadio.vue';
+import DZButton from '../../utils/DZButton.vue';
 
 type InventoryType = 'items' | 'ingredients';
 
