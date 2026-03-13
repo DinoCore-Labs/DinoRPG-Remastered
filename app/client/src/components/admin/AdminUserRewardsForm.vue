@@ -4,6 +4,7 @@
 			<h3>Rewards</h3>
 			<ul class="reward-list">
 				<li v-for="reward in user.rewards" :key="reward.rewardId" class="reward-row">
+					<img class="reward-icon" :src="rewardIcon(reward.rewardId)" :alt="rewardName(reward.rewardId)" />
 					<div class="reward-info">
 						<strong>{{ rewardName(reward.rewardId) }}</strong>
 						<span>ID: {{ reward.rewardId }}</span>
@@ -42,7 +43,8 @@ import DZRadio from '../utils/DZRadio.vue';
 import DZButton from '../utils/DZButton.vue';
 
 // À adapter selon où se trouve ta liste réelle
-import { rewardList } from '@dinorpg/core/models/rewards/rewardList.js';
+import { Reward, rewardList } from '@dinorpg/core/models/rewards/rewardList.js';
+import { getImgURL } from '../../utils/getImgURL';
 
 const props = defineProps<{
 	user: AdminUserDetails;
@@ -60,14 +62,21 @@ const form = reactive({
 });
 
 const rewardOptions = computed<SelectOption<number>[]>(() =>
-	Object.entries(rewardList).map(([id, name]) => ({
-		value: Number(id),
-		label: String(name)
-	}))
+	Object.entries(rewardList)
+		.filter(([, reward]) => reward.displayed)
+		.map(([id, reward]) => ({
+			value: Number(id),
+			label: reward.name
+		}))
 );
 
 function rewardName(rewardId: number): string {
-	return rewardList.imgName[rewardId] ?? `reward_${rewardId}`;
+	return rewardList[rewardId as Reward]?.name ?? `reward_${rewardId}`;
+}
+
+function rewardIcon(rewardId: number): string {
+	const reward = rewardList[rewardId as Reward];
+	return getImgURL('epicRewards', `collec_${reward?.name ?? `reward_${rewardId}`}`);
 }
 
 async function submit() {
