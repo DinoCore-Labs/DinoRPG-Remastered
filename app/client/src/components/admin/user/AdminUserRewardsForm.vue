@@ -35,16 +35,16 @@
 import { computed, reactive, ref } from 'vue';
 
 import type { AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
-import { AdminUserService } from '../../services/adminUsers.service';
+import { AdminUserService } from '../../../services/adminUsers.service';
 
-import DZSelect from '../utils/DZSelect.vue';
-import type { SelectOption } from '../utils/DZSelect.vue';
-import DZRadio from '../utils/DZRadio.vue';
-import DZButton from '../utils/DZButton.vue';
+import DZSelect from '../../utils/DZSelect.vue';
+import type { SelectOption } from '../../utils/DZSelect.vue';
+import DZRadio from '../../utils/DZRadio.vue';
+import DZButton from '../../utils/DZButton.vue';
 
 // À adapter selon où se trouve ta liste réelle
 import { Reward, rewardList } from '@dinorpg/core/models/rewards/rewardList.js';
-import { getImgURL } from '../../utils/getImgURL';
+import { getImgURL } from '../../../utils/getImgURL';
 
 const props = defineProps<{
 	user: AdminUserDetails;

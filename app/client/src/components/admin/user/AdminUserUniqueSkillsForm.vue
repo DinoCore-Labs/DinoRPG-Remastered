@@ -30,10 +30,10 @@
 import { reactive, ref, watch } from 'vue';
 
 import type { AdminUserDetails, AdminUserUniqueSkills } from '@dinorpg/core/models/admin/adminUser.js';
-import { AdminUserService } from '../../services/adminUsers.service';
+import { AdminUserService } from '../../../services/adminUsers.service';
 
-import DZCheckbox from '../utils/DZCheckbox.vue';
-import DZButton from '../utils/DZButton.vue';
+import DZCheckbox from '../../utils/DZCheckbox.vue';
+import DZButton from '../../utils/DZButton.vue';
 
 const props = defineProps<{
 	user: AdminUserDetails;
