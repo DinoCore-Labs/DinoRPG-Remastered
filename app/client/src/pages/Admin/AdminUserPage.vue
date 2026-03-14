@@ -1,5 +1,6 @@
 <template>
 	<div class="admin-user-page">
+		<TitleHeader v-if="user" title="Admin" header="User:" :sub-header="user.name ?? user.id" />
 		<AdminUserSearch
 			:model-value="selectedUserId"
 			@update:model-value="selectedUserId = $event"
@@ -30,6 +31,7 @@ import AdminUserUniqueSkillsForm from '../../components/admin/user/AdminUserUniq
 import AdminUserInventoryForm from '../../components/admin/user/AdminUserInventoryForm.vue';
 import AdminUserRewardsForm from '../../components/admin/user/AdminUserRewardsForm.vue';
 import AdminUserDinozList from '../../components/admin/user/AdminUserDinozList.vue';
+import TitleHeader from '../../components/utils/TitleHeader.vue';
 
 import type { AdminDinozSummary, AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
 import { AdminUserService } from '../../services/adminUsers.service';
