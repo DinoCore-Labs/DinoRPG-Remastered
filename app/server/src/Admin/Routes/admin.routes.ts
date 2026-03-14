@@ -1,10 +1,17 @@
 import type { FastifyInstance } from 'fastify';
 
+import { getAllSecrets, getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
+import { setSpecificSecret } from '../../jobs/controller/setSpecificSecret.js';
 import { prisma } from '../../prisma.js';
 import {
 	adminErrorResponseSchema,
 	adminJobKeyParamsSchema,
-	adminRunJobResponseSchema
+	adminRunJobResponseSchema,
+	adminSecretKeyParamsSchema,
+	adminSecretListSchema,
+	adminSecretSchema,
+	notFoundErrorSchema,
+	updateAdminSecretBodySchema
 } from '../Schema/admin.schema.js';
 import {
 	getAdminUserDetailsHandler,
@@ -115,6 +122,54 @@ export async function adminRoutes(app: FastifyInstance) {
 				}
 			});
 			return { ok: true };
+		}
+	);
+	// Secrets
+	app.get(
+		'/secrets',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin'],
+				response: {
+					200: adminSecretListSchema
+				}
+			}
+		},
+		async (_request, reply) => {
+			const secrets = await getAllSecrets();
+			return reply.status(200).send(secrets);
+		}
+	);
+	app.put(
+		'/secrets/:key',
+		{
+			schema: {
+				tags: ['Admin'],
+				params: adminSecretKeyParamsSchema,
+				body: updateAdminSecretBodySchema,
+				response: {
+					200: adminSecretSchema,
+					404: notFoundErrorSchema
+				}
+			}
+		},
+		async (request, reply) => {
+			const { key } = adminSecretKeyParamsSchema.parse(request.params);
+			const { value } = updateAdminSecretBodySchema.parse(request.body);
+
+			const existingSecret = await getSpecificSecret(key);
+			if (!existingSecret) {
+				return reply.status(404).send({
+					message: `Secret "${key}" not found`
+				});
+			}
+
+			const updatedSecret = await setSpecificSecret(key, value);
+			return reply.status(200).send({
+				key: updatedSecret.key,
+				value: updatedSecret.value
+			});
 		}
 	);
 }
