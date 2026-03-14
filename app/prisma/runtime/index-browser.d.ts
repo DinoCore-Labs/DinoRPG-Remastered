@@ -1,4 +1,5 @@
-import { AnyNull , DbNull , Decimal , isAnyNull , isDbNull , isJsonNull , JsonNull , NullTypes } from '@prisma/client-runtime-utils';
+import { AnyNull , DbNull , Decimal , isAnyNull , isDbNull , isJsonNull , isObjectEnumValue , JsonNull , NullTypes } from '@prisma/client-runtime-utils';
+
 
 
 
@@ -42,6 +43,8 @@ export { isAnyNull }
 export { isDbNull }
 
 export { isJsonNull }
+
+export { isObjectEnumValue }
 
 export { JsonNull }
 
