@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.8.3
+
+### Patch Changes
+
+- c41aa3d: admin secrets panel
+
 ## 0.8.2
 
 ### Patch Changes
@@ -175,6 +181,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.9.4
+
+### Patch Changes
+
+- c41aa3d: admin secrets panel
+- Updated dependencies [c41aa3d]
+  - @dinorpg/core@0.8.3
 
 ## 0.9.3
 
@@ -381,6 +395,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.9.4
+
+### Patch Changes
+
+- c41aa3d: admin secrets panel
 
 ## 0.9.3
 
