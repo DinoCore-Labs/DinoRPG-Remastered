@@ -599,8 +599,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.4.2
-   * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
+   * Prisma Client JS version: 7.5.0
+   * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
    */
   export type PrismaVersion = {
     client: string
@@ -4261,6 +4261,11 @@ export namespace Prisma {
      * Skip the first `n` Dinozs.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dinozs.
+     */
     distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -5520,6 +5525,11 @@ export namespace Prisma {
      * Skip the first `n` DinozCatches.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozCatches.
+     */
     distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -6603,6 +6613,11 @@ export namespace Prisma {
      * Skip the first `n` DinozItems.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozItems.
+     */
     distinct?: DinozItemsScalarFieldEnum | DinozItemsScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -7718,6 +7733,11 @@ export namespace Prisma {
      * Skip the first `n` DinozSkills.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozSkills.
+     */
     distinct?: DinozSkillsScalarFieldEnum | DinozSkillsScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -8820,6 +8840,11 @@ export namespace Prisma {
      * Skip the first `n` DinozSkillsUnlockables.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozSkillsUnlockables.
+     */
     distinct?: DinozSkillsUnlockableScalarFieldEnum | DinozSkillsUnlockableScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -9922,6 +9947,11 @@ export namespace Prisma {
      * Skip the first `n` DinozStatuses.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DinozStatuses.
+     */
     distinct?: DinozStatusScalarFieldEnum | DinozStatusScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -11219,6 +11249,11 @@ export namespace Prisma {
      * Skip the first `n` JobDefinitions.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JobDefinitions.
+     */
     distinct?: JobDefinitionScalarFieldEnum | JobDefinitionScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -12328,6 +12363,11 @@ export namespace Prisma {
      * Skip the first `n` JobRuns.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JobRuns.
+     */
     distinct?: JobRunScalarFieldEnum | JobRunScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -13475,6 +13515,11 @@ export namespace Prisma {
      * Skip the first `n` Rankings.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Rankings.
+     */
     distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -14468,6 +14513,11 @@ export namespace Prisma {
      * Skip the first `n` Secrets.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Secrets.
+     */
     distinct?: SecretScalarFieldEnum | SecretScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -15536,6 +15586,11 @@ export namespace Prisma {
      * Skip the first `n` SignupDeviceMonthCounters.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SignupDeviceMonthCounters.
+     */
     distinct?: SignupDeviceMonthCounterScalarFieldEnum | SignupDeviceMonthCounterScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -16604,6 +16659,11 @@ export namespace Prisma {
      * Skip the first `n` SignupIpMonthCounters.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SignupIpMonthCounters.
+     */
     distinct?: SignupIpMonthCounterScalarFieldEnum | SignupIpMonthCounterScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -17818,6 +17878,11 @@ export namespace Prisma {
      * Skip the first `n` Users.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
     distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -19132,6 +19197,11 @@ export namespace Prisma {
      * Skip the first `n` UserDinozShops.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserDinozShops.
+     */
     distinct?: UserDinozShopScalarFieldEnum | UserDinozShopScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -20260,6 +20330,11 @@ export namespace Prisma {
      * Skip the first `n` UserGathers.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserGathers.
+     */
     distinct?: UserGatherScalarFieldEnum | UserGatherScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -21375,6 +21450,11 @@ export namespace Prisma {
      * Skip the first `n` UserIngredients.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserIngredients.
+     */
     distinct?: UserIngredientsScalarFieldEnum | UserIngredientsScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -22471,6 +22551,11 @@ export namespace Prisma {
      * Skip the first `n` UserItems.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserItems.
+     */
     distinct?: UserItemsScalarFieldEnum | UserItemsScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -23611,6 +23696,11 @@ export namespace Prisma {
      * Skip the first `n` UserProfiles.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserProfiles.
+     */
     distinct?: UserProfileScalarFieldEnum | UserProfileScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -24690,6 +24780,11 @@ export namespace Prisma {
      * Skip the first `n` UserRewards.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserRewards.
+     */
     distinct?: UserRewardsScalarFieldEnum | UserRewardsScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -25801,6 +25896,11 @@ export namespace Prisma {
      * Skip the first `n` UserTrackings.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserTrackings.
+     */
     distinct?: UserTrackingScalarFieldEnum | UserTrackingScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
@@ -26889,6 +26989,11 @@ export namespace Prisma {
      * Skip the first `n` UserWallets.
      */
     skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserWallets.
+     */
     distinct?: UserWalletScalarFieldEnum | UserWalletScalarFieldEnum[]
     relationLoadStrategy?: RelationLoadStrategy
   }
