@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.9.4
+
+### Patch Changes
+
+- c41aa3d: admin secrets panel
+- Updated dependencies [c41aa3d]
+  - @dinorpg/core@0.8.3
+
 ## 0.9.3
 
 ### Patch Changes
