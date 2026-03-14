@@ -92,21 +92,17 @@ onMounted(fetchSecrets);
 	flex-direction: column;
 	gap: 12px;
 }
-
 .card {
 	padding: 16px;
 }
-
 .state {
 	padding: 8px 0;
 }
-
 .secrets-list {
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
 }
-
 .secret-row {
 	display: flex;
 	flex-direction: column;
@@ -116,18 +112,15 @@ onMounted(fetchSecrets);
 	border-radius: 6px;
 	background: rgba(255, 248, 232, 0.7);
 }
-
 .secret-key {
 	font-weight: bold;
 	word-break: break-word;
 }
-
 .secret-actions {
 	display: flex;
 	gap: 8px;
 	align-items: center;
 }
-
 .secret-input {
 	flex: 1;
 	min-width: 0;
