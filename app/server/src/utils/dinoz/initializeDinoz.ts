@@ -2,6 +2,7 @@ import { DinozRace } from '@dinorpg/core/models/dinoz/dinozRace.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 
 import { Prisma } from '../../../../prisma/index.js';
+import { GLOBAL } from '../../context.js';
 import { getRandomUpElement } from './getRandomUpElement.js';
 
 export const initializeDinoz = (
@@ -26,8 +27,8 @@ export const initializeDinoz = (
 		nbrUpWater: race.nbrWater,
 		nbrUpLightning: race.nbrLightning,
 		nbrUpAir: race.nbrAir,
-		nextUpElementId: getRandomUpElement(race.upChance, seed),
-		nextUpAltElementId: getRandomUpElement(race.upChance, seed),
+		nextUpElementId: getRandomUpElement(race.upChance, seed + GLOBAL.config.salt),
+		nextUpAltElementId: getRandomUpElement(race.upChance, seed + GLOBAL.config.salt + 'pdc'),
 		user: { connect: { id: userId } },
 		seed: seed
 	};
