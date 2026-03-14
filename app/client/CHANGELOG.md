@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.9.4
+
+### Patch Changes
+
+- c41aa3d: admin secrets panel
+
 ## 0.9.3
 
 ### Patch Changes

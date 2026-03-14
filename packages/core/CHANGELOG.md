@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.8.3
+
+### Patch Changes
+
+- c41aa3d: admin secrets panel
+
 ## 0.8.2
 
 ### Patch Changes
