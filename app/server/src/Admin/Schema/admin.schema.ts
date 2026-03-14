@@ -60,3 +60,27 @@ export const updateAdminUserRewardsSchema = z.object({
 	rewardId: z.number().int().positive(),
 	operation: z.enum(['add', 'remove'])
 });
+
+export const adminSecretSchema = z.object({
+	key: z.string(),
+	value: z.string()
+});
+
+export const adminSecretListSchema = z.array(adminSecretSchema);
+
+export const adminSecretKeyParamsSchema = z.object({
+	key: z.string().min(1)
+});
+
+export const updateAdminSecretBodySchema = z.object({
+	value: z.string()
+});
+
+export const notFoundErrorSchema = z.object({
+	message: z.string()
+});
+
+export type AdminSecret = z.infer<typeof adminSecretSchema>;
+export type UpdateAdminSecretBody = z.infer<typeof updateAdminSecretBodySchema>;
+export type AdminSecretKeyParams = z.infer<typeof adminSecretKeyParamsSchema>;
+export type NotFoundError = z.infer<typeof notFoundErrorSchema>;
