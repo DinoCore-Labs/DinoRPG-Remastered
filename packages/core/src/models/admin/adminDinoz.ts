@@ -14,7 +14,6 @@ export interface AdminDinozSkillEntry {
 export interface AdminDinozItemEntry {
 	id: number;
 	itemId: number;
-	quantity: number;
 }
 
 export interface AdminDinozFollowerEntry {

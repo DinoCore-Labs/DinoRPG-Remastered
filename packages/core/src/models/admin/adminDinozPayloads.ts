@@ -63,6 +63,5 @@ export interface RemoveAdminDinozSkillPayload {
 export interface UpdateAdminDinozItemsPayload {
 	entries: {
 		itemId: number;
-		quantity: number;
 	}[];
 }
