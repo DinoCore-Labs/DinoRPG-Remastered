@@ -2,6 +2,7 @@ import type { AdminDinozDetails } from '@dinorpg/core/models/admin/adminDinoz.js
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { DinozState } from '../../../../prisma/index.js';
+import { addSkillToDinozWithEffects } from '../../Level/Service/learnSkill.service.js';
 import { prisma } from '../../prisma.js';
 
 async function getOwnedDinozOrThrow(userId: string, dinozId: number) {
@@ -265,24 +266,12 @@ export async function addAdminDinozSkill(
 ) {
 	await getOwnedDinozOrThrow(userId, dinozId);
 
-	const existing = await prisma.dinozSkills.findFirst({
-		where: {
-			dinozId,
-			skillId: data.skillId
-		},
-		select: { id: true }
-	});
-
-	if (existing) {
-		throw new ExpectedError('Cette compétence existe déjà.');
-	}
-
-	await prisma.dinozSkills.create({
-		data: {
-			dinozId,
-			skillId: data.skillId,
-			state: data.state ?? true
-		}
+	await addSkillToDinozWithEffects({
+		dinozId,
+		userId,
+		skillId: data.skillId,
+		state: data.state ?? true,
+		computeUnlockables: true
 	});
 }
 
