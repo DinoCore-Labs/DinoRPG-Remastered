@@ -4,9 +4,11 @@ import { DinozState } from '../../../../prisma/index.js';
 import {
 	addAdminDinozSkill,
 	addAdminDinozStatus,
+	addAdminDinozUnlockableSkill,
 	getAdminDinozDetails,
 	removeAdminDinozSkill,
 	removeAdminDinozStatus,
+	removeAdminDinozUnlockableSkill,
 	teleportAdminDinoz,
 	updateAdminDinozItems,
 	updateAdminDinozLeader,
@@ -136,6 +138,24 @@ export async function removeAdminDinozSkillHandler(
 	reply: FastifyReply
 ) {
 	await removeAdminDinozSkill(request.params.userId, Number(request.params.dinozId), request.body.skillId);
+	return reply.send({ ok: true });
+}
+
+export async function addAdminDinozUnlockableSkillController(
+	request: FastifyRequest<{ Params: Params; Body: { skillId: number } }>,
+	reply: FastifyReply
+) {
+	await addAdminDinozUnlockableSkill(request.params.userId, Number(request.params.dinozId), request.body.skillId);
+
+	return reply.send({ ok: true });
+}
+
+export async function removeAdminDinozUnlockableSkillController(
+	request: FastifyRequest<{ Params: Params; Body: { skillId: number } }>,
+	reply: FastifyReply
+) {
+	await removeAdminDinozUnlockableSkill(request.params.userId, Number(request.params.dinozId), request.body.skillId);
+
 	return reply.send({ ok: true });
 }
 

@@ -12,6 +12,7 @@
 			<AdminDinozLeaderForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
 			<AdminDinozStatusForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
 			<AdminDinozSkillsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozUnlockableSkillsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
 			<AdminDinozItemsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
 		</template>
 	</div>
@@ -30,6 +31,7 @@ import AdminDinozLeaderForm from '../../components/admin/dinoz/AdminDinozLeaderF
 import AdminDinozPlaceForm from '../../components/admin/dinoz/AdminDinozPlaceForm.vue';
 import AdminDinozProfileForm from '../../components/admin/dinoz/AdminDinozProfileForm.vue';
 import AdminDinozSkillsForm from '../../components/admin/dinoz/AdminDinozSkillsForm.vue';
+import AdminDinozUnlockableSkillsForm from '../../components/admin/dinoz/AdminDinozUnlockableSkillsForm.vue';
 import AdminDinozStateForm from '../../components/admin/dinoz/AdminDinozStateForm.vue';
 import AdminDinozStatsForm from '../../components/admin/dinoz/AdminDinozStatsForm.vue';
 import AdminDinozStatusForm from '../../components/admin/dinoz/AdminDinozStatusForm.vue';
