@@ -20,7 +20,7 @@
 					flip
 					:race="dinozData.race.raceId"
 					:key="dinozData.life || dinozData.display"
-					:isFrozen="dinozData.remaining === 12"
+					:isFrozen="dinozData.state === 'frozen'"
 				/>
 				<template #fallback> <Loading /> </template>
 			</Suspense>

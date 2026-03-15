@@ -2,7 +2,7 @@
 	<div class="dinozList">
 		<Tippy class="dinoz" tag="div" v-for="(dinoz, index) in sortedDinozList" :key="index" theme="small" interactive>
 			<Suspense>
-				<DinozWithoutFlash :display="dinoz.display" :life="1" flip />
+				<DinozWithoutFlash :display="dinoz.display" :life="1" flip :isFrozen="dinoz.isFrozen" />
 				<template #fallback><Loading /></template>
 			</Suspense>
 			<RouterLink class="name" :to="`/dinoz/${dinoz.id}`" v-if="isOwner">
