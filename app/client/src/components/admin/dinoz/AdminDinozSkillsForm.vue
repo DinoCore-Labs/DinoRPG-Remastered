@@ -20,11 +20,7 @@
 									:model-value="entry.state"
 									@update:modelValue="onToggleSkill(entry.skillId, $event)"
 								>
-									Active
 								</DZCheckbox>
-								<span v-else class="skill-state-fixed">
-									{{ entry.state ? 'Active' : 'Inactive' }}
-								</span>
 								<DZButton type="button" @click="removeSkill(entry.skillId)"> Supprimer </DZButton>
 							</div>
 						</div>
@@ -172,29 +168,25 @@ async function submit() {
 	margin-bottom: 10px;
 	background-color: #ecbd84;
 	padding: 5px;
-
 	&-container {
 		border: 2px solid #bc683c;
 		padding: 20px;
 	}
 }
-
 .section + .section {
 	margin-top: 14px;
 }
-
 .title {
 	display: block;
 	margin-bottom: 6px;
 	font-weight: bold;
 }
-
 .skills-list {
 	display: flex;
-	flex-direction: column;
 	gap: 8px;
+	flex-wrap: wrap;
+	width: 100%;
 }
-
 .skill-entry {
 	display: flex;
 	justify-content: space-between;
@@ -204,35 +196,29 @@ async function submit() {
 	border: 1px solid #bc683c;
 	background: rgb(255 255 255 / 12%);
 }
-
 .skill-main {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 }
-
 .skill-actions {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 	flex-wrap: wrap;
 }
-
 .skill-state-fixed {
 	font-size: 0.95rem;
 }
-
 .error-skill {
 	color: #a11;
 	font-weight: bold;
 }
-
 .skills-editor {
 	display: flex;
 	gap: 12px;
 	align-items: flex-start;
 }
-
 .operations {
 	display: flex;
 	flex-direction: column;
