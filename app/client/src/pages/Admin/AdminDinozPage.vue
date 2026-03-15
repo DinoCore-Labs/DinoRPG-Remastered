@@ -8,7 +8,7 @@
 			<AdminDinozProfileForm :dinoz="dinoz" @updated="reloadDinoz" />
 			<AdminDinozStatsForm :dinoz="dinoz" @updated="reloadDinoz" />
 			<AdminDinozStateForm :dinoz="dinoz" @updated="reloadDinoz" />
-			<!--<AdminDinozRelationsForm :dinoz="dinoz" @updated="reloadDinoz" />-->
+			<AdminDinozRelationsForm :dinoz="dinoz" @updated="reloadDinoz" />
 		</template>
 	</div>
 </template>
@@ -25,7 +25,7 @@ import AdminDinozSummaryCard from '../../components/admin/dinoz/AdminDinozSummar
 import AdminDinozProfileForm from '../../components/admin/dinoz/AdminDinozProfileForm.vue';
 import AdminDinozStatsForm from '../../components/admin/dinoz/AdminDinozStatsForm.vue';
 import AdminDinozStateForm from '../../components/admin/dinoz/AdminDinozStateForm.vue';
-//import AdminDinozRelationsForm from '../../components/admin/dinoz/AdminDinozRelationsForm.vue';
+import AdminDinozRelationsForm from '../../components/admin/dinoz/AdminDinozRelationsForm.vue';
 
 const route = useRoute();
 
