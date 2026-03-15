@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.9.5
+
+### Patch Changes
+
+- 21f55ea: feat: admin dinoz panel
+
 ## 0.9.4
 
 ### Patch Changes

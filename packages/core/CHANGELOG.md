@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.8.4
+
+### Patch Changes
+
+- 21f55ea: feat: admin dinoz panel
+
 ## 0.8.3
 
 ### Patch Changes
