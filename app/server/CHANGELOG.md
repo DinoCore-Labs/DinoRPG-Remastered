@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.9.5
+
+### Patch Changes
+
+- 21f55ea: feat: admin dinoz panel
+- Updated dependencies [21f55ea]
+  - @dinorpg/core@0.8.4
+
 ## 0.9.4
 
 ### Patch Changes
