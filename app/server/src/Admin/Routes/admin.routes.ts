@@ -16,9 +16,11 @@ import {
 import {
 	addAdminDinozSkillHandler,
 	addAdminDinozStatusHandler,
+	addAdminDinozUnlockableSkillController,
 	getAdminDinozDetailsHandler,
 	removeAdminDinozSkillHandler,
 	removeAdminDinozStatusHandler,
+	removeAdminDinozUnlockableSkillController,
 	teleportAdminDinozHandler,
 	updateAdminDinozItemsHandler,
 	updateAdminDinozLeaderHandler,
@@ -135,6 +137,16 @@ export async function adminRoutes(app: FastifyInstance) {
 		'/user/:userId/dinoz/:dinozId/skills/remove',
 		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		removeAdminDinozSkillHandler
+	);
+	app.post(
+		'/user/:userId/dinoz/:dinozId/unlockable-skills',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		addAdminDinozUnlockableSkillController
+	);
+	app.patch(
+		'/user/:userId/dinoz/:dinozId/unlockable-skills/remove',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		removeAdminDinozUnlockableSkillController
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/items',

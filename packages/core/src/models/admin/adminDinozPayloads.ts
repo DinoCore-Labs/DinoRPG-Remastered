@@ -59,6 +59,14 @@ export interface RemoveAdminDinozSkillPayload {
 	skillId: number;
 }
 
+export interface AddAdminDinozUnlockableSkillPayload {
+	skillId: number;
+}
+
+export interface RemoveAdminDinozUnlockableSkillPayload {
+	skillId: number;
+}
+
 export interface UpdateAdminDinozItemsPayload {
 	entries: {
 		itemId: number;

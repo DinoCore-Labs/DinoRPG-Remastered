@@ -30,6 +30,12 @@ async function getOwnedDinozOrThrow(userId: string, dinozId: number) {
 					state: true
 				}
 			},
+			unlockableSkills: {
+				select: {
+					id: true,
+					skillId: true
+				}
+			},
 			items: {
 				select: {
 					id: true,
@@ -103,6 +109,7 @@ export async function getAdminDinozDetails(userId: string, dinozId: number): Pro
 		updatedDate: dinoz.updatedDate.toISOString(),
 		status: dinoz.status,
 		skills: dinoz.skills,
+		unlockableSkills: dinoz.unlockableSkills,
 		items: dinoz.items,
 		followers: dinoz.followers,
 		leaderOptions
@@ -304,6 +311,40 @@ export async function removeAdminDinozSkill(userId: string, dinozId: number, ski
 	await getOwnedDinozOrThrow(userId, dinozId);
 
 	await prisma.dinozSkills.deleteMany({
+		where: {
+			dinozId,
+			skillId
+		}
+	});
+}
+
+export async function addAdminDinozUnlockableSkill(userId: string, dinozId: number, skillId: number) {
+	await getOwnedDinozOrThrow(userId, dinozId);
+
+	const existing = await prisma.dinozSkillsUnlockable.findFirst({
+		where: {
+			dinozId,
+			skillId
+		},
+		select: { id: true }
+	});
+
+	if (existing) {
+		return;
+	}
+
+	await prisma.dinozSkillsUnlockable.create({
+		data: {
+			dinozId,
+			skillId
+		}
+	});
+}
+
+export async function removeAdminDinozUnlockableSkill(userId: string, dinozId: number, skillId: number) {
+	await getOwnedDinozOrThrow(userId, dinozId);
+
+	await prisma.dinozSkillsUnlockable.deleteMany({
 		where: {
 			dinozId,
 			skillId
