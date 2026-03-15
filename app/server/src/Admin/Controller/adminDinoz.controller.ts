@@ -58,6 +58,7 @@ export async function getAdminDinozDetails(userId: string, dinozId: number): Pro
 	const leaderOptions = await prisma.dinoz.findMany({
 		where: {
 			userId,
+			placeId: dinoz.placeId,
 			NOT: {
 				id: dinozId
 			}
@@ -187,7 +188,7 @@ export async function teleportAdminDinoz(userId: string, dinozId: number, placeI
 }
 
 export async function updateAdminDinozLeader(userId: string, dinozId: number, leaderId: number | null) {
-	await getOwnedDinozOrThrow(userId, dinozId);
+	const dinoz = await getOwnedDinozOrThrow(userId, dinozId);
 
 	if (leaderId === dinozId) {
 		throw new ExpectedError('Un Dinoz ne peut pas se suivre lui-même.');
@@ -199,11 +200,18 @@ export async function updateAdminDinozLeader(userId: string, dinozId: number, le
 				id: leaderId,
 				userId
 			},
-			select: { id: true }
+			select: {
+				id: true,
+				placeId: true
+			}
 		});
 
 		if (!leader) {
 			throw new ExpectedError('Leader invalide.');
+		}
+
+		if (leader.placeId !== dinoz.placeId) {
+			throw new ExpectedError('Le leader doit être sur le même lieu que le Dinoz.');
 		}
 	}
 
