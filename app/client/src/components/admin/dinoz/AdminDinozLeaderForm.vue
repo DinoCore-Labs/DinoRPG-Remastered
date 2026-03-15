@@ -9,6 +9,15 @@
 				</div>
 				<DZButton type="button" @click="submit">Sauvegarder</DZButton>
 			</div>
+			<div class="card-container followers">
+				<h4>Followers</h4>
+				<div v-if="dinoz.followers.length > 0" class="followers-list">
+					<div v-for="follower in dinoz.followers" :key="follower.id" class="follower">
+						<span>{{ follower.name }} (#{{ follower.id }}) - niv. {{ follower.level }}</span>
+					</div>
+				</div>
+				<p v-else>Aucun follower</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -76,6 +85,9 @@ async function submit() {
 .field {
 	display: flex;
 	gap: 5px;
+}
+.followers {
+	margin-top: 5px;
 }
 label {
 	color: #8e3e26;
