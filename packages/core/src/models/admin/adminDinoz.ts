@@ -11,6 +11,11 @@ export interface AdminDinozSkillEntry {
 	state: boolean;
 }
 
+export interface AdminDinozUnlockableSkillEntry {
+	id: number;
+	skillId: number;
+}
+
 export interface AdminDinozItemEntry {
 	id: number;
 	itemId: number;
@@ -59,6 +64,7 @@ export interface AdminDinozDetails {
 	updatedDate: string;
 	status: AdminDinozStatusEntry[];
 	skills: AdminDinozSkillEntry[];
+	unlockableSkills: AdminDinozUnlockableSkillEntry[];
 	items: AdminDinozItemEntry[];
 	followers: AdminDinozFollowerEntry[];
 	leaderOptions: AdminDinozLeaderOption[];

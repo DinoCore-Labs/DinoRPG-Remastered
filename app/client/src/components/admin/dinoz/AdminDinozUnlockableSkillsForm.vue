@@ -2,39 +2,38 @@
 	<div class="card">
 		<div class="card-container">
 			<div class="card-container">
-				<h3>Skills</h3>
+				<h3>Unlockable Skills</h3>
 				<div class="section">
-					<label class="title">Skills actuelles :</label>
-					<div v-if="dinoz.skills.length > 0" class="skills-list">
-						<div v-for="entry in dinoz.skills" :key="entry.id" class="skill-entry">
-							<div class="skill-main">
-								<span v-if="hasSkill(entry.skillId)">
-									{{ t(`skill.name.${getSkillNameKey(entry.skillId)}`) }}
-								</span>
-								<span v-else class="error-skill"> Unknown skill (ID: {{ entry.skillId }}) </span>
-							</div>
-							<div class="skill-actions">
-								<DZCheckbox
-									v-if="isActivatableSkill(entry.skillId)"
-									:id="`skill-state-${entry.skillId}`"
-									:model-value="entry.state"
-									@update:modelValue="onToggleSkill(entry.skillId, $event)"
-								>
-								</DZCheckbox>
-							</div>
+					<label class="title">Unlockable skills actuelles :</label>
+					<div v-if="dinoz.unlockableSkills.length > 0" class="skills-list">
+						<div v-for="entry in dinoz.unlockableSkills" :key="entry.id" class="skill-entry">
+							<span v-if="hasSkill(entry.skillId)">
+								{{ t(`skill.name.${getSkillNameKey(entry.skillId)}`) }}
+							</span>
+							<span v-else class="error-skill"> Unknown unlockable skill (ID: {{ entry.skillId }}) </span>
 						</div>
 					</div>
-					<p v-else>Aucune skill.</p>
+					<p v-else>Aucune unlockable skill.</p>
 				</div>
 				<div class="section">
-					<label class="title" for="dinozSkills">Modifier les skills :</label>
-					<div class="skills-editor">
-						<DZSelect id="dinozSkills" v-model="selectedSkillId" :options="skillOptions" />
+					<label class="title" for="dinozUnlockableSkills">Modifier les unlockable skills :</label>
+					<div>
+						<DZSelect id="dinozUnlockableSkills" v-model="selectedSkillId" :options="skillOptions" />
 						<div class="operations">
-							<DZRadio id="skillOperationAdd" name="skillOperation" v-model="skillOperation" value="add">
+							<DZRadio
+								id="unlockableSkillOperationAdd"
+								name="unlockableSkillOperation"
+								v-model="skillOperation"
+								value="add"
+							>
 								Ajouter
 							</DZRadio>
-							<DZRadio id="skillOperationRemove" name="skillOperation" v-model="skillOperation" value="remove">
+							<DZRadio
+								id="unlockableSkillOperationRemove"
+								name="unlockableSkillOperation"
+								v-model="skillOperation"
+								value="remove"
+							>
 								Retirer
 							</DZRadio>
 						</div>
@@ -55,7 +54,6 @@ import { skillList } from '@dinorpg/core/models/skills/skillList.js';
 
 import { AdminDinozService } from '../../../services/adminDinoz.service';
 import DZButton from '../../utils/DZButton.vue';
-import DZCheckbox from '../../utils/DZCheckbox.vue';
 import DZRadio from '../../utils/DZRadio.vue';
 import DZSelect from '../../utils/DZSelect.vue';
 import type { SelectOption } from '../../utils/DZSelect.vue';
@@ -76,7 +74,7 @@ const NO_SKILL = 0;
 const skillOperation = ref<'add' | 'remove'>('add');
 const selectedSkillId = ref<number>(NO_SKILL);
 
-const currentSkillIds = computed(() => props.dinoz.skills.map(entry => entry.skillId));
+const currentUnlockableSkillIds = computed(() => props.dinoz.unlockableSkills.map(entry => entry.skillId));
 
 const allSkillIds = computed(() =>
 	Object.keys(skillList)
@@ -85,12 +83,12 @@ const allSkillIds = computed(() =>
 		.sort((a, b) => a - b)
 );
 
-const skillListFiltered = computed(() => {
+const unlockableSkillListFiltered = computed(() => {
 	if (skillOperation.value === 'add') {
-		return allSkillIds.value.filter(skillId => !currentSkillIds.value.includes(skillId));
+		return allSkillIds.value.filter(skillId => !currentUnlockableSkillIds.value.includes(skillId));
 	}
 
-	return allSkillIds.value.filter(skillId => currentSkillIds.value.includes(skillId));
+	return allSkillIds.value.filter(skillId => currentUnlockableSkillIds.value.includes(skillId));
 });
 
 const skillOptions = computed<SelectOption<number>[]>(() => [
@@ -98,7 +96,7 @@ const skillOptions = computed<SelectOption<number>[]>(() => [
 		value: NO_SKILL,
 		label: 'Sélectionner une skill'
 	},
-	...skillListFiltered.value.map(skillId => ({
+	...unlockableSkillListFiltered.value.map(skillId => ({
 		value: skillId,
 		label: hasSkill(skillId) ? t(`skill.name.${getSkillNameKey(skillId)}`) : `Unknown skill (#${skillId})`
 	}))
@@ -117,32 +115,15 @@ function getSkillNameKey(skillId: number) {
 	return skill?.name ?? String(skillId);
 }
 
-function isActivatableSkill(skillId: number) {
-	const skill = skillList[skillId as keyof typeof skillList];
-	return skill?.activatable ?? false;
-}
-
-async function onToggleSkill(skillId: number, value: boolean | string[]) {
-	if (typeof value !== 'boolean') return;
-
-	await AdminDinozService.updateDinozSkillState(props.userId, props.dinoz.id, {
-		skillId,
-		state: value
-	});
-
-	emit('updated');
-}
-
 async function submit() {
 	if (selectedSkillId.value === NO_SKILL) return;
 
 	if (skillOperation.value === 'add') {
-		await AdminDinozService.addDinozSkill(props.userId, props.dinoz.id, {
-			skillId: selectedSkillId.value,
-			state: true
+		await AdminDinozService.addDinozUnlockableSkill(props.userId, props.dinoz.id, {
+			skillId: selectedSkillId.value
 		});
 	} else {
-		await AdminDinozService.removeDinozSkill(props.userId, props.dinoz.id, {
+		await AdminDinozService.removeDinozUnlockableSkill(props.userId, props.dinoz.id, {
 			skillId: selectedSkillId.value
 		});
 	}
@@ -159,6 +140,7 @@ async function submit() {
 	margin-bottom: 10px;
 	background-color: #ecbd84;
 	padding: 5px;
+
 	&-container {
 		border: 2px solid #bc683c;
 		padding: 20px;
@@ -174,41 +156,22 @@ async function submit() {
 }
 .skills-list {
 	display: flex;
-	gap: 8px;
 	flex-wrap: wrap;
-	width: 100%;
+	gap: 8px;
 }
 .skill-entry {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 12px;
 	padding: 6px 8px;
 	border: 1px solid #bc683c;
 	background: rgb(255 255 255 / 12%);
-}
-.skill-main {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-.skill-actions {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	flex-wrap: wrap;
-}
-.skill-state-fixed {
-	font-size: 0.95rem;
-}
-.error-skill {
-	color: #a11;
-	font-weight: bold;
 }
 .operations {
 	display: flex;
 	margin: 5px;
 	gap: 8px;
 	min-width: 120px;
+}
+.error-skill {
+	color: #a11;
+	font-weight: bold;
 }
 </style>

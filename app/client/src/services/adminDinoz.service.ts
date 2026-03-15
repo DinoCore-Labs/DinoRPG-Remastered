@@ -2,8 +2,10 @@ import type { AdminDinozDetails } from '@dinorpg/core/models/admin/adminDinoz.js
 import type {
 	AddAdminDinozSkillPayload,
 	AddAdminDinozStatusPayload,
+	AddAdminDinozUnlockableSkillPayload,
 	RemoveAdminDinozSkillPayload,
 	RemoveAdminDinozStatusPayload,
+	RemoveAdminDinozUnlockableSkillPayload,
 	TeleportAdminDinozPayload,
 	UpdateAdminDinozItemsPayload,
 	UpdateAdminDinozLeaderPayload,
@@ -87,6 +89,26 @@ export const AdminDinozService = {
 	removeDinozSkill(userId: string, dinozId: number, payload: RemoveAdminDinozSkillPayload): Promise<{ ok: boolean }> {
 		return http()
 			.patch(`/admin/user/${encodeURIComponent(userId)}/dinoz/${dinozId}/skills/remove`, payload)
+			.then(res => res.data)
+			.catch(err => Promise.reject(err));
+	},
+	addDinozUnlockableSkill(
+		userId: string,
+		dinozId: number,
+		payload: AddAdminDinozUnlockableSkillPayload
+	): Promise<{ ok: boolean }> {
+		return http()
+			.post(`/admin/user/${encodeURIComponent(userId)}/dinoz/${dinozId}/unlockable-skills`, payload)
+			.then(res => res.data)
+			.catch(err => Promise.reject(err));
+	},
+	removeDinozUnlockableSkill(
+		userId: string,
+		dinozId: number,
+		payload: RemoveAdminDinozUnlockableSkillPayload
+	): Promise<{ ok: boolean }> {
+		return http()
+			.patch(`/admin/user/${encodeURIComponent(userId)}/dinoz/${dinozId}/unlockable-skills/remove`, payload)
 			.then(res => res.data)
 			.catch(err => Promise.reject(err));
 	},
