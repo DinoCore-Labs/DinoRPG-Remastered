@@ -1,6 +1,6 @@
 import { prisma } from '../../prisma.js';
 
-export async function addSkillToDinoz(dinozId: number, skillId: number /*event?: GameDinozUsage*/) {
+export async function addSkillToDinoz(dinozId: number, skillId: number, state = true /*event?: GameDinozUsage*/) {
 	/*if (event) {
 		await prisma.dinozSkill.create({
 			data: {
@@ -12,7 +12,8 @@ export async function addSkillToDinoz(dinozId: number, skillId: number /*event?:
 	await prisma.dinozSkills.create({
 		data: {
 			dinozId,
-			skillId
+			skillId,
+			state
 		}
 	});
 	//}

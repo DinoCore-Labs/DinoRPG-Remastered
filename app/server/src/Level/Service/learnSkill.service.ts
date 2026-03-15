@@ -128,44 +128,13 @@ export async function learnSkill(
 			throw new ExpectedError(`Skill ${wantedSkillId} doesn't exist.`, { statusCode: 404 });
 		}
 
-		await applySkillEffect(dinozSkills, skill, authed.id /*event*/);
-		await addSkillToDinoz(dinozId, wantedSkillId /*event*/);
-
-		// Leave party if the skill is Brave (hors event)
-		if (skill.id === Skill.BRAVE /*&& !event*/) {
-			const dinoz = await getFollowingDinoz(dinozId);
-
-			if (dinoz && dinoz.followers.length > 0) {
-				for (const d of dinoz.followers) {
-					await updateDinoz(d.id, { leader: { disconnect: true } });
-				}
-			} else if (dinoz && dinoz.leaderId) {
-				await updateDinoz(dinozId, { leader: { disconnect: true } });
-			}
-		}
-
-		// Discover skill for player
-		// (chez toi: dinozSkills.user.discoveredSkills ? adapte si différent)
-		/*if (!dinozSkills.user.discoveredSkills.includes(skill.id)) {
-			await setPlayer(dinozSkills.user.id, {
-				discoveredSkills: [...dinozSkills.user.discoveredSkills, skill.id]
-			});
-			result.discoveredSkill = skill.id;
-		}*/
-
-		// Compute new unlockable skills
-		const newUnlockableSkills = Object.values(skillList)
-			.filter(s => s.unlockedFrom?.some(id => skillIdList.includes(id)))
-			.filter(s =>
-				s.unlockedFrom?.every(id => skillIdList.includes(id) || dinozSkills.skills.some(ds => ds.skillId === id))
-			)
-			.filter(s => !s.raceId || s.raceId.includes(dinozSkills.raceId))
-			.map(s => /*event ? { skillId: s.id, gameDinozId: dinozId } : */ ({ skillId: s.id, dinozId }));
-
-		// Keep local data in sync
-		dinozSkills.skills.push({ skillId: wantedSkillId });
-
-		await addMultipleUnlockableSkills(newUnlockableSkills);
+		await addSkillToDinozWithEffects({
+			dinozId,
+			userId: authed.id,
+			skillId: wantedSkillId,
+			state: true,
+			computeUnlockables: true
+		});
 	}
 
 	// --- Update dinoz data (level up resolution) ---
@@ -214,4 +183,80 @@ export async function learnSkill(
 	//await checkFBCreation(dinozSkills.level + 1);
 
 	return result;
+}
+
+export async function addSkillToDinozWithEffects(params: {
+	dinozId: number;
+	userId: string;
+	skillId: number;
+	state?: boolean;
+	computeUnlockables?: boolean;
+}) {
+	const { dinozId, userId, skillId, state = true, computeUnlockables = true } = params;
+
+	const dinozSkills = await getDinozForLevelUp(dinozId);
+	if (!dinozSkills) {
+		throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
+	}
+
+	if (!dinozSkills.user || dinozSkills.user.id !== userId) {
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${userId}`, { statusCode: 403 });
+	}
+
+	const alreadyHasSkill = dinozSkills.skills.some(ds => ds.skillId === skillId);
+	if (alreadyHasSkill) {
+		throw new ExpectedError(`Dinoz ${dinozId} already has skill ${skillId}`, { statusCode: 400 });
+	}
+
+	const skill = Object.values(skillList).find(s => s.id === skillId);
+	if (!skill) {
+		throw new ExpectedError(`Skill ${skillId} doesn't exist.`, { statusCode: 404 });
+	}
+
+	await applySkillEffect(dinozSkills, skill, userId);
+	await addSkillToDinoz(dinozId, skillId, state);
+
+	// Garder les données locales à jour pour le calcul des unlockables
+	dinozSkills.skills.push({ skillId });
+
+	// Discover skill for player
+	// (chez toi: dinozSkills.user.discoveredSkills ? adapte si différent)
+	/*if (!dinozSkills.user.discoveredSkills.includes(skill.id)) {
+			await setPlayer(dinozSkills.user.id, {
+				discoveredSkills: [...dinozSkills.user.discoveredSkills, skill.id]
+			});
+			result.discoveredSkill = skill.id;
+		}*/
+
+	// Cas spécial Brave
+	if (skill.id === Skill.BRAVE) {
+		const dinoz = await getFollowingDinoz(dinozId);
+
+		if (dinoz && dinoz.followers.length > 0) {
+			for (const follower of dinoz.followers) {
+				await updateDinoz(follower.id, { leader: { disconnect: true } });
+			}
+		} else if (dinoz && dinoz.leaderId) {
+			await updateDinoz(dinozId, { leader: { disconnect: true } });
+		}
+	}
+
+	if (computeUnlockables) {
+		const newUnlockableSkills = Object.values(skillList)
+			.filter(s => s.unlockedFrom?.some(id => id === skillId))
+			.filter(s =>
+				s.unlockedFrom?.every(
+					id => id === skillId || dinozSkills.skills.some(existingSkill => existingSkill.skillId === id)
+				)
+			)
+			.filter(s => !s.raceId || s.raceId.includes(dinozSkills.raceId))
+			.map(s => ({
+				skillId: s.id,
+				dinozId
+			}));
+
+		if (newUnlockableSkills.length > 0) {
+			await addMultipleUnlockableSkills(newUnlockableSkills);
+		}
+	}
 }
