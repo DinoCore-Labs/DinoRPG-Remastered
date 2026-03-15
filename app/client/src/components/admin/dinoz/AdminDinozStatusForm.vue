@@ -26,7 +26,7 @@
 				</div>
 				<div class="section">
 					<label class="title" for="dinozStatuses">Modifier les statuts :</label>
-					<div class="statuses-editor">
+					<div>
 						<DZSelect id="dinozStatuses" v-model="selectedStatusId" :options="statusOptions" />
 						<div class="operations">
 							<DZRadio id="statusOperationAdd" name="statusOperation" v-model="statusOperation" value="add">
