@@ -31,6 +31,7 @@ export interface AdminDinozLeaderOption {
 export interface AdminDinozDetails {
 	id: number;
 	userId: string;
+	userName: string | null;
 	name: string;
 	canRename: boolean;
 	raceId: number;
@@ -48,7 +49,6 @@ export interface AdminDinozDetails {
 	nextUpAltElementId: number;
 	placeId: number;
 	remaining: number;
-	order: number | null;
 	seed: string;
 	state: DinozState | null;
 	stateTimer: string | null;

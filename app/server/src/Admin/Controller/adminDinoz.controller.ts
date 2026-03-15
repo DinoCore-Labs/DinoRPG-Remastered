@@ -11,6 +11,11 @@ async function getOwnedDinozOrThrow(userId: string, dinozId: number) {
 			userId
 		},
 		include: {
+			user: {
+				select: {
+					name: true
+				}
+			},
 			status: {
 				select: {
 					id: true,
@@ -68,6 +73,7 @@ export async function getAdminDinozDetails(userId: string, dinozId: number): Pro
 	return {
 		id: dinoz.id,
 		userId: dinoz.userId,
+		userName: dinoz.user.name,
 		name: dinoz.name,
 		canRename: dinoz.canRename,
 		raceId: dinoz.raceId,
@@ -85,7 +91,6 @@ export async function getAdminDinozDetails(userId: string, dinozId: number): Pro
 		nextUpAltElementId: dinoz.nextUpAltElementId,
 		placeId: dinoz.placeId,
 		remaining: dinoz.remaining,
-		order: dinoz.order,
 		seed: dinoz.seed,
 		state: dinoz.state ?? null,
 		stateTimer: dinoz.stateTimer?.toISOString() ?? null,
@@ -314,7 +319,6 @@ export async function updateAdminDinozItems(
 	dinozId: number,
 	entries: {
 		itemId: number;
-		quantity: number;
 	}[]
 ) {
 	await getOwnedDinozOrThrow(userId, dinozId);
@@ -324,15 +328,14 @@ export async function updateAdminDinozItems(
 			where: { dinozId }
 		});
 
-		const filtered = entries.filter(entry => entry.quantity > 0);
+		const filtered = entries.filter(entry => entry.itemId > 0);
 
 		if (filtered.length === 0) return;
 
 		await tx.dinozItems.createMany({
 			data: filtered.map(entry => ({
 				dinozId,
-				itemId: entry.itemId,
-				quantity: entry.quantity
+				itemId: entry.itemId
 			}))
 		});
 	});
