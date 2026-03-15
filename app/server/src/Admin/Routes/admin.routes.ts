@@ -81,18 +81,66 @@ export async function adminRoutes(app: FastifyInstance) {
 		updateAdminUserRewardsHandler
 	);
 	// Dinoz
-	app.get('/admin/user/:userId/dinoz/:dinozId', getAdminDinozDetailsHandler);
-	app.patch('/admin/user/:userId/dinoz/:dinozId/profile', updateAdminDinozProfileHandler);
-	app.patch('/admin/user/:userId/dinoz/:dinozId/stats', updateAdminDinozStatsHandler);
-	app.patch('/admin/user/:userId/dinoz/:dinozId/state', updateAdminDinozStateHandler);
-	app.patch('/admin/user/:userId/dinoz/:dinozId/place', teleportAdminDinozHandler);
-	app.patch('/admin/user/:userId/dinoz/:dinozId/leader', updateAdminDinozLeaderHandler);
-	app.post('/admin/user/:userId/dinoz/:dinozId/status', addAdminDinozStatusHandler);
-	app.patch('/admin/user/:userId/dinoz/:dinozId/status/remove', removeAdminDinozStatusHandler);
-	app.post('/admin/user/:userId/dinoz/:dinozId/skills', addAdminDinozSkillHandler);
-	app.patch('/admin/user/:userId/dinoz/:dinozId/skills/state', updateAdminDinozSkillStateHandler);
-	app.patch('/admin/user/:userId/dinoz/:dinozId/skills/remove', removeAdminDinozSkillHandler);
-	app.patch('/admin/user/:userId/dinoz/:dinozId/items', updateAdminDinozItemsHandler);
+	app.get(
+		'/user/:userId/dinoz/:dinozId',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		getAdminDinozDetailsHandler
+	);
+	app.patch(
+		'/user/:userId/dinoz/:dinozId/profile',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminDinozProfileHandler
+	);
+	app.patch(
+		'/user/:userId/dinoz/:dinozId/stats',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminDinozStatsHandler
+	);
+	app.patch(
+		'/user/:userId/dinoz/:dinozId/state',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminDinozStateHandler
+	);
+	app.patch(
+		'/user/:userId/dinoz/:dinozId/place',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		teleportAdminDinozHandler
+	);
+	app.patch(
+		'/user/:userId/dinoz/:dinozId/leader',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminDinozLeaderHandler
+	);
+	app.post(
+		'/user/:userId/dinoz/:dinozId/status',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		addAdminDinozStatusHandler
+	);
+	app.patch(
+		'/user/:userId/dinoz/:dinozId/status/remove',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		removeAdminDinozStatusHandler
+	);
+	app.post(
+		'/user/:userId/dinoz/:dinozId/skills',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		addAdminDinozSkillHandler
+	);
+	app.patch(
+		'/user/:userId/dinoz/:dinozId/skills/state',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminDinozSkillStateHandler
+	);
+	app.patch(
+		'/user/:userId/dinoz/:dinozId/skills/remove',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		removeAdminDinozSkillHandler
+	);
+	app.patch(
+		'/user/:userId/dinoz/:dinozId/items',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminDinozItemsHandler
+	);
 	// Jobs
 	app.get('/jobs', { preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } }, async () => {
 		return prisma.jobDefinition.findMany({
