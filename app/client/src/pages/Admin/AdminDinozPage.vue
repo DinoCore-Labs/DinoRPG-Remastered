@@ -5,8 +5,8 @@
 		<p v-else-if="error" class="red">{{ error }}</p>
 		<template v-else-if="dinoz">
 			<AdminDinozSummaryCard :dinoz="dinoz" />
-			<!--<AdminDinozProfileForm :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozStatsForm :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozProfileForm :dinoz="dinoz" @updated="reloadDinoz" />
+			<!--<AdminDinozStatsForm :dinoz="dinoz" @updated="reloadDinoz" />
 			<AdminDinozStateForm :dinoz="dinoz" @updated="reloadDinoz" />
 			<AdminDinozRelationsForm :dinoz="dinoz" @updated="reloadDinoz" />-->
 		</template>
@@ -22,7 +22,7 @@ import type { AdminDinozDetails } from '@dinorpg/core/models/admin/adminDinoz.js
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import { AdminDinozService } from '../../services/adminDinoz.service';
 import AdminDinozSummaryCard from '../../components/admin/dinoz/AdminDinozSummaryCard.vue';
-//import AdminDinozProfileForm from '../../components/admin/dinoz/AdminDinozProfileForm.vue';
+import AdminDinozProfileForm from '../../components/admin/dinoz/AdminDinozProfileForm.vue';
 //import AdminDinozStatsForm from '../../components/admin/dinoz/AdminDinozStatsForm.vue';
 //import AdminDinozStateForm from '../../components/admin/dinoz/AdminDinozStateForm.vue';
 //import AdminDinozRelationsForm from '../../components/admin/dinoz/AdminDinozRelationsForm.vue';
