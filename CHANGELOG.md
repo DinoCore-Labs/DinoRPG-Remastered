@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.8.4
+
+### Patch Changes
+
+- 21f55ea: feat: admin dinoz panel
+
 ## 0.8.3
 
 ### Patch Changes
@@ -181,6 +187,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.9.5
+
+### Patch Changes
+
+- 21f55ea: feat: admin dinoz panel
+- Updated dependencies [21f55ea]
+  - @dinorpg/core@0.8.4
 
 ## 0.9.4
 
@@ -395,6 +409,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.9.5
+
+### Patch Changes
+
+- 21f55ea: feat: admin dinoz panel
 
 ## 0.9.4
 
