@@ -20,7 +20,6 @@ export interface UpdateAdminDinozStatsPayload {
 	nextUpElementId: number;
 	nextUpAltElementId: number;
 	remaining: number;
-	order: number | null;
 	fight: boolean;
 	gather: boolean;
 }

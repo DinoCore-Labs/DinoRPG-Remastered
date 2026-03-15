@@ -1,90 +1,66 @@
 <template>
 	<div class="card">
 		<div class="card-container">
-			<h3>Stats</h3>
-
-			<div class="grid">
-				<div class="field">
-					<label for="level">Niveau</label>
-					<input id="level" v-model.number="form.level" type="number" min="1" />
+			<div class="card-container">
+				<h3>Stats</h3>
+				<div class="grid">
+					<div class="field">
+						<label for="level">Niveau :</label>
+						<DZInput id="level" v-model.number="form.level" type="number" min="1" />
+					</div>
+					<div class="field">
+						<label for="experience">Expérience :</label>
+						<DZInput id="experience" v-model.number="form.experience" type="number" min="0" />
+					</div>
+					<div class="field">
+						<label for="life">Vie :</label>
+						<DZInput id="life" v-model.number="form.life" type="number" min="0" />
+					</div>
+					<div class="field">
+						<label for="maxLife">Vie max :</label>
+						<DZInput id="maxLife" v-model.number="form.maxLife" type="number" min="1" />
+					</div>
+					<div class="field">
+						<label for="remaining">Remaining :</label>
+						<DZInput id="remaining" v-model.number="form.remaining" type="number" min="0" />
+					</div>
+					<div class="field">
+						<label for="nbrUpFire">Fire</label>
+						<DZInput id="nbrUpFire" v-model.number="form.nbrUpFire" type="number" min="0" />
+					</div>
+					<div class="field">
+						<label for="nbrUpWood">Wood</label>
+						<DZInput id="nbrUpWood" v-model.number="form.nbrUpWood" type="number" min="0" />
+					</div>
+					<div class="field">
+						<label for="nbrUpWater">Water</label>
+						<DZInput id="nbrUpWater" v-model.number="form.nbrUpWater" type="number" min="0" />
+					</div>
+					<div class="field">
+						<label for="nbrUpLightning">Lightning</label>
+						<DZInput id="nbrUpLightning" v-model.number="form.nbrUpLightning" type="number" min="0" />
+					</div>
+					<div class="field">
+						<label for="nbrUpAir">Air</label>
+						<DZInput id="nbrUpAir" v-model.number="form.nbrUpAir" type="number" min="0" />
+					</div>
+					<div class="field">
+						<label for="nextUpElementId">Next up element</label>
+						<DZInput id="nextUpElementId" v-model.number="form.nextUpElementId" type="number" min="0" />
+					</div>
+					<div class="field">
+						<label for="nextUpAltElementId">Next up alt element</label>
+						<DZInput id="nextUpAltElementId" v-model.number="form.nextUpAltElementId" type="number" min="0" />
+					</div>
+					<div class="field">
+						<DZCheckbox id="fight" v-model="form.fight"> Fight activé </DZCheckbox>
+					</div>
+					<div class="field">
+						<DZCheckbox id="gather" v-model="form.gather"> Gather activé </DZCheckbox>
+					</div>
 				</div>
-
-				<div class="field">
-					<label for="experience">Expérience</label>
-					<input id="experience" v-model.number="form.experience" type="number" min="0" />
-				</div>
-
-				<div class="field">
-					<label for="life">Vie</label>
-					<input id="life" v-model.number="form.life" type="number" min="0" />
-				</div>
-
-				<div class="field">
-					<label for="maxLife">Vie max</label>
-					<input id="maxLife" v-model.number="form.maxLife" type="number" min="1" />
-				</div>
-
-				<div class="field">
-					<label for="remaining">Remaining</label>
-					<input id="remaining" v-model.number="form.remaining" type="number" min="0" />
-				</div>
-
-				<div class="field">
-					<label for="order">Order</label>
-					<input id="order" :value="form.order ?? ''" type="number" min="0" @input="onOrderInput" />
-				</div>
-
-				<div class="field">
-					<label for="nbrUpFire">Fire</label>
-					<input id="nbrUpFire" v-model.number="form.nbrUpFire" type="number" min="0" />
-				</div>
-
-				<div class="field">
-					<label for="nbrUpWood">Wood</label>
-					<input id="nbrUpWood" v-model.number="form.nbrUpWood" type="number" min="0" />
-				</div>
-
-				<div class="field">
-					<label for="nbrUpWater">Water</label>
-					<input id="nbrUpWater" v-model.number="form.nbrUpWater" type="number" min="0" />
-				</div>
-
-				<div class="field">
-					<label for="nbrUpLightning">Lightning</label>
-					<input id="nbrUpLightning" v-model.number="form.nbrUpLightning" type="number" min="0" />
-				</div>
-
-				<div class="field">
-					<label for="nbrUpAir">Air</label>
-					<input id="nbrUpAir" v-model.number="form.nbrUpAir" type="number" min="0" />
-				</div>
-
-				<div class="field">
-					<label for="nextUpElementId">Next up element</label>
-					<input id="nextUpElementId" v-model.number="form.nextUpElementId" type="number" min="0" />
-				</div>
-
-				<div class="field">
-					<label for="nextUpAltElementId">Next up alt element</label>
-					<input id="nextUpAltElementId" v-model.number="form.nextUpAltElementId" type="number" min="0" />
-				</div>
-
-				<div class="checkbox">
-					<label>
-						<input v-model="form.fight" type="checkbox" />
-						Fight activé
-					</label>
-				</div>
-
-				<div class="checkbox">
-					<label>
-						<input v-model="form.gather" type="checkbox" />
-						Gather activé
-					</label>
-				</div>
+				<DZButton type="button" @click="submit">Sauvegarder</DZButton>
 			</div>
-
-			<DZButton type="button" @click="submit">Sauvegarder</DZButton>
 		</div>
 	</div>
 </template>
@@ -97,6 +73,8 @@ import type { UpdateAdminDinozStatsPayload } from '@dinorpg/core/models/admin/ad
 
 import { AdminDinozService } from '../../../services/adminDinoz.service';
 import DZButton from '../../utils/DZButton.vue';
+import DZCheckbox from '../../utils/DZCheckbox.vue';
+import DZInput from '../../utils/DZInput.vue';
 
 const props = defineProps<{
 	userId: string;
@@ -113,7 +91,6 @@ const form = reactive<UpdateAdminDinozStatsPayload>({
 	life: 0,
 	maxLife: 1,
 	remaining: 0,
-	order: null,
 	nbrUpFire: 0,
 	nbrUpWood: 0,
 	nbrUpWater: 0,
@@ -133,7 +110,6 @@ watch(
 		form.life = value.life;
 		form.maxLife = value.maxLife;
 		form.remaining = value.remaining;
-		form.order = value.order;
 		form.nbrUpFire = value.nbrUpFire;
 		form.nbrUpWood = value.nbrUpWood;
 		form.nbrUpWater = value.nbrUpWater;
@@ -147,11 +123,6 @@ watch(
 	{ immediate: true }
 );
 
-function onOrderInput(event: Event) {
-	const value = (event.target as HTMLInputElement).value;
-	form.order = value === '' ? null : Number(value);
-}
-
 async function submit() {
 	await AdminDinozService.updateDinozStats(props.userId, props.dinoz.id, {
 		level: form.level,
@@ -159,7 +130,6 @@ async function submit() {
 		life: form.life,
 		maxLife: form.maxLife,
 		remaining: form.remaining,
-		order: form.order,
 		nbrUpFire: form.nbrUpFire,
 		nbrUpWood: form.nbrUpWood,
 		nbrUpWater: form.nbrUpWater,
@@ -174,3 +144,24 @@ async function submit() {
 	emit('updated');
 }
 </script>
+
+<style scoped lang="scss">
+.card {
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	background-color: #ecbd84;
+	padding: 5px;
+	&-container {
+		border: 2px solid #bc683c;
+		padding: 20px;
+	}
+}
+.field {
+	display: flex;
+	gap: 5px;
+}
+label {
+	color: #8e3e26;
+}
+</style>

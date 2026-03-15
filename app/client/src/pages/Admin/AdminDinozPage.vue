@@ -1,11 +1,10 @@
 <template>
 	<div class="admin-dinoz-page">
 		<TitleHeader title="Admin - Dinoz" />
-
 		<p v-if="loading">Chargement...</p>
 		<p v-else-if="error" class="red">{{ error }}</p>
-
 		<template v-else-if="dinoz && userId">
+			<AdminDinozSummaryCard :user-id="userId" :dinoz="dinoz" />
 			<AdminDinozProfileForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
 			<AdminDinozStatsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
 			<AdminDinozStateForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
@@ -34,6 +33,7 @@ import AdminDinozSkillsForm from '../../components/admin/dinoz/AdminDinozSkillsF
 import AdminDinozStateForm from '../../components/admin/dinoz/AdminDinozStateForm.vue';
 import AdminDinozStatsForm from '../../components/admin/dinoz/AdminDinozStatsForm.vue';
 import AdminDinozStatusForm from '../../components/admin/dinoz/AdminDinozStatusForm.vue';
+import AdminDinozSummaryCard from '../../components/admin/dinoz/AdminDinozSummaryCard.vue';
 
 const route = useRoute();
 
@@ -78,7 +78,6 @@ watch([userId, dinozId], loadDinoz, { immediate: true });
 .admin-dinoz-page {
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
 }
 .red {
 	color: red;

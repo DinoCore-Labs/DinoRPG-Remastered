@@ -1,31 +1,19 @@
 <template>
 	<div class="card">
 		<div class="card-container">
-			<h3>Profil</h3>
-
-			<div class="field">
-				<label for="name">Nom</label>
-				<input id="name" v-model="form.name" type="text" />
+			<div class="card-container">
+				<h3>Profil</h3>
+				<div class="field">
+					<label for="name">Nom :</label>
+					<DZInput id="name" v-model="form.name" type="text" />
+				</div>
+				<div class="field">
+					<label for="display">Display :</label>
+					<DZInput id="display" v-model="form.display" type="text" />
+				</div>
+				<div class="field"><DZCheckbox id="canRename" v-model="form.canRename"> Peut être renommé </DZCheckbox></div>
+				<DZButton type="button" @click="submit">Sauvegarder</DZButton>
 			</div>
-
-			<div class="field">
-				<label for="display">Display</label>
-				<input id="display" v-model="form.display" type="text" />
-			</div>
-
-			<div class="field">
-				<label for="raceId">Race ID</label>
-				<input id="raceId" v-model.number="form.raceId" type="number" min="1" />
-			</div>
-
-			<div class="checkbox">
-				<label>
-					<input v-model="form.canRename" type="checkbox" />
-					Peut être renommé
-				</label>
-			</div>
-
-			<DZButton type="button" @click="submit">Sauvegarder</DZButton>
 		</div>
 	</div>
 </template>
@@ -37,6 +25,8 @@ import type { AdminDinozDetails } from '@dinorpg/core/models/admin/adminDinoz.js
 import type { UpdateAdminDinozProfilePayload } from '@dinorpg/core/models/admin/adminDinozPayloads.js';
 
 import DZButton from '../../utils/DZButton.vue';
+import DZCheckbox from '../../utils/DZCheckbox.vue';
+import DZInput from '../../utils/DZInput.vue';
 import { AdminDinozService } from '../../../services/adminDinoz.service';
 
 const props = defineProps<{
@@ -77,3 +67,24 @@ async function submit() {
 	emit('updated');
 }
 </script>
+
+<style scoped lang="scss">
+.card {
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	background-color: #ecbd84;
+	padding: 5px;
+	&-container {
+		border: 2px solid #bc683c;
+		padding: 20px;
+	}
+}
+.field {
+	display: flex;
+	gap: 5px;
+}
+label {
+	color: #8e3e26;
+}
+</style>
