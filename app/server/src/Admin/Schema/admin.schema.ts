@@ -84,3 +84,46 @@ export type AdminSecret = z.infer<typeof adminSecretSchema>;
 export type UpdateAdminSecretBody = z.infer<typeof updateAdminSecretBodySchema>;
 export type AdminSecretKeyParams = z.infer<typeof adminSecretKeyParamsSchema>;
 export type NotFoundError = z.infer<typeof notFoundErrorSchema>;
+
+export const adminDinozParamsSchema = z.object({
+	dinozId: z.coerce.number().int().positive()
+});
+
+export const adminDinozQuerySchema = z.object({
+	playerId: z.string().uuid()
+});
+
+export const updateAdminDinozBodySchema = z.object({
+	name: z.string().trim().min(1).max(32).optional(),
+	canRename: z.boolean().optional(),
+	raceId: z.number().int().positive().optional(),
+	display: z.string().trim().min(1).optional(),
+
+	level: z.number().int().min(1).optional(),
+	life: z.number().int().min(0).optional(),
+	maxLife: z.number().int().min(1).optional(),
+	experience: z.number().int().min(0).optional(),
+
+	nbrUpFire: z.number().int().min(0).optional(),
+	nbrUpWood: z.number().int().min(0).optional(),
+	nbrUpWater: z.number().int().min(0).optional(),
+	nbrUpLightning: z.number().int().min(0).optional(),
+	nbrUpAir: z.number().int().min(0).optional(),
+
+	nextUpElementId: z.number().int().min(0).optional(),
+	nextUpAltElementId: z.number().int().min(0).optional(),
+
+	placeId: z.number().int().positive().optional(),
+	remaining: z.number().int().min(0).optional(),
+	order: z.number().int().min(0).nullable().optional(),
+
+	seed: z.string().uuid().optional(),
+
+	state: z.string().nullable().optional(),
+	stateTimer: z.string().datetime().nullable().optional(),
+
+	fight: z.boolean().optional(),
+	gather: z.boolean().optional(),
+
+	leaderId: z.number().int().positive().nullable().optional()
+});

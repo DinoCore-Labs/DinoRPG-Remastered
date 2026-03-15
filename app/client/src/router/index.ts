@@ -3,6 +3,7 @@ import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import AccountPage from '../pages/AccountPage.vue';
+import AdminDinozPage from '../pages/Admin/AdminDinozPage.vue';
 import AdminJobsPage from '../pages/Admin/AdminJobsPage.vue';
 import AdminPage from '../pages/Admin/AdminPage.vue';
 import AdminSecretsPage from '../pages/Admin/AdminSecretsPage.vue';
@@ -177,6 +178,12 @@ const routes: RouteRecord[] = [
 						path: '/admin/user',
 						name: 'AdminUser',
 						component: AdminUserPage,
+						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
+					},
+					{
+						path: '/admin/dinoz',
+						name: 'AdminDinoz',
+						component: AdminDinozPage,
 						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
 					},
 					{

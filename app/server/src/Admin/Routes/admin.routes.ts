@@ -4,6 +4,8 @@ import { getAllSecrets, getSpecificSecret } from '../../jobs/controller/getSpeci
 import { setSpecificSecret } from '../../jobs/controller/setSpecificSecret.js';
 import { prisma } from '../../prisma.js';
 import {
+	adminDinozParamsSchema,
+	adminDinozQuerySchema,
 	adminErrorResponseSchema,
 	adminJobKeyParamsSchema,
 	adminRunJobResponseSchema,
@@ -11,8 +13,10 @@ import {
 	adminSecretListSchema,
 	adminSecretSchema,
 	notFoundErrorSchema,
+	updateAdminDinozBodySchema,
 	updateAdminSecretBodySchema
 } from '../Schema/admin.schema.js';
+import { getAdminDinozController, updateAdminDinozController } from '../Service/adminDinozHandler.service.js';
 import {
 	getAdminUserDetailsHandler,
 	getAdminUserDinozHandler,
@@ -65,6 +69,32 @@ export async function adminRoutes(app: FastifyInstance) {
 		'/user/:id/rewards',
 		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminUserRewardsHandler
+	);
+	// Dinoz
+	app.get(
+		'/dinoz/:dinozId',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin'],
+				params: adminDinozParamsSchema,
+				querystring: adminDinozQuerySchema
+			}
+		},
+		getAdminDinozController
+	);
+
+	app.patch(
+		'/dinoz/:dinozId',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin'],
+				params: adminDinozParamsSchema,
+				body: updateAdminDinozBodySchema
+			}
+		},
+		updateAdminDinozController
 	);
 	// Jobs
 	app.get('/jobs', { preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } }, async () => {
