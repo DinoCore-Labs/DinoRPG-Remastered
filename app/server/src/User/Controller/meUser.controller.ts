@@ -1,12 +1,12 @@
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
-import dayjs from 'dayjs';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
+import { isSameDay } from '../../utils/dateHelpers.js';
 import { calculatePlayerCompletion } from '../../utils/user/calculatePlayerCompletion.js';
 
 export async function meUser(req: FastifyRequest, reply: FastifyReply) {
@@ -34,7 +34,9 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				}
 			});
 
-			const isFirstLoginToday = !user?.lastLogin || !dayjs().isSame(user.lastLogin, 'day');
+			const now = new Date();
+
+			const isFirstLoginToday = !user?.lastLogin || !isSameDay(now, user.lastLogin);
 
 			if (isFirstLoginToday) {
 				// Update completion
