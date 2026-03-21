@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify';
 
 import { getAllSecrets, getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { setSpecificSecret } from '../../jobs/controller/setSpecificSecret.js';
+import { newsIdParamsSchema } from '../../News/Schema/news.schema.js';
 import { prisma } from '../../prisma.js';
 import {
 	adminErrorResponseSchema,
@@ -29,6 +30,12 @@ import {
 	updateAdminDinozStateHandler,
 	updateAdminDinozStatsHandler
 } from '../Service/adminDinozHandler.service.js';
+import {
+	createAdminNewsHandler,
+	getAdminNewsDetailsHandler,
+	getAdminNewsListHandler,
+	updateAdminNewsHandler
+} from '../Service/adminNewsHandler.service.js';
 import {
 	getAdminUserDetailsHandler,
 	getAdminUserDinozHandler,
@@ -152,6 +159,51 @@ export async function adminRoutes(app: FastifyInstance) {
 		'/user/:userId/dinoz/:dinozId/items',
 		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminDinozItemsHandler
+	);
+	// News
+	app.get(
+		'/news',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		getAdminNewsListHandler
+	);
+	app.get(
+		'/news/:id',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin'],
+				params: newsIdParamsSchema
+			}
+		},
+		getAdminNewsDetailsHandler
+	);
+
+	app.post(
+		'/news',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		createAdminNewsHandler
+	);
+
+	app.patch(
+		'/news/:id',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin'],
+				params: newsIdParamsSchema
+			}
+		},
+		updateAdminNewsHandler
 	);
 	// Jobs
 	app.get('/jobs', { preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } }, async () => {
