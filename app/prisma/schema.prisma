@@ -150,6 +150,128 @@ model JobRun {
   @@map("job_run")
 }
 
+model News {
+  id   Int      @id @default(autoincrement())
+  slug String   @unique @db.VarChar
+  type NewsType @default(update)
+
+  image         Bytes?
+  imageMimeType String? @db.VarChar
+
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations NewsTranslation[]
+  poll         Poll?
+  likedBy      NewsLike[]
+
+  @@index([type])
+  @@index([isPublished, publishedAt])
+  @@index([createdAt])
+  @@map("news")
+}
+
+model NewsTranslation {
+  id      Int      @id @default(autoincrement())
+  newsId  Int
+  lang    Language
+  title   String   @db.VarChar
+  excerpt String?  @db.VarChar
+  content String   @db.VarChar
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
+
+  @@unique([newsId, lang])
+  @@index([lang])
+  @@map("news_translations")
+}
+
+model Poll {
+  id       Int      @id @default(autoincrement())
+  newsId   Int      @unique
+  isActive Boolean  @default(true)
+  endAt    DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  news    News         @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  options PollOption[]
+  votes   PollVote[]
+
+  @@index([isActive, endAt])
+  @@map("polls")
+}
+
+model PollOption {
+  id        Int @id @default(autoincrement())
+  pollId    Int
+  sortOrder Int @default(0)
+
+  createdAt DateTime @default(now())
+
+  poll         Poll                    @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  translations PollOptionTranslation[]
+  votes        PollVote[]
+
+  @@unique([pollId, sortOrder])
+  @@index([pollId])
+  @@map("poll_options")
+}
+
+model PollOptionTranslation {
+  id           Int      @id @default(autoincrement())
+  pollOptionId Int
+  lang         Language
+  label        String   @db.VarChar
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pollOption PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
+
+  @@unique([pollOptionId, lang])
+  @@index([lang])
+  @@map("poll_option_translations")
+}
+
+model PollVote {
+  id           Int      @id @default(autoincrement())
+  pollId       Int
+  pollOptionId Int
+  userId       String   @db.Uuid
+  votedAt      DateTime @default(now())
+
+  poll       Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollOption PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([pollId, userId], name: "unique_user_vote_per_poll")
+  @@index([pollId])
+  @@index([pollOptionId])
+  @@index([userId])
+  @@map("poll_votes")
+}
+
+model NewsLike {
+  newsId    Int
+  userId    String   @db.Uuid
+  createdAt DateTime @default(now())
+
+  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([newsId, userId])
+  @@index([userId])
+  @@map("news_likes")
+}
+
 model Ranking {
   id         Int @id @default(autoincrement())
   dinozCount Int @default(0)
@@ -229,6 +351,9 @@ model User {
   teacher     Boolean @default(false)
   matelasseur Boolean @default(false)
   messie      Boolean @default(false)
+
+  newsLikes NewsLike[]
+  pollVotes PollVote[]
 }
 
 model UserDinozShop {
@@ -348,6 +473,19 @@ enum Gender {
 enum MoneyType {
   GOLD
   TREASURE_TICKET
+}
+
+enum NewsType {
+  update
+  information
+  war
+  war_mana
+  championship
+  tid_start
+  tid_end
+  event_christmas
+  story
+  announce
 }
 
 enum Role {
