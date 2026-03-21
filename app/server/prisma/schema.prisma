@@ -180,7 +180,7 @@ model NewsTranslation {
   lang      Language
   title     String    @db.VarChar
   excerpt   String?   @db.VarChar
-  content   String    @db.VarChar
+  content   String    @db.Text
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
