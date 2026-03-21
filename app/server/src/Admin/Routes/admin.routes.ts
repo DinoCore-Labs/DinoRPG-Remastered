@@ -182,7 +182,6 @@ export async function adminRoutes(app: FastifyInstance) {
 		},
 		getAdminNewsDetailsHandler
 	);
-
 	app.post(
 		'/news',
 		{
@@ -193,8 +192,7 @@ export async function adminRoutes(app: FastifyInstance) {
 		},
 		createAdminNewsHandler
 	);
-
-	app.patch(
+	app.put(
 		'/news/:id',
 		{
 			preHandler: [app.authenticate, app.admin],
