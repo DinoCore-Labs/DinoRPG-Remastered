@@ -219,6 +219,68 @@ exports.Prisma.JobRunScalarFieldEnum = {
   triggeredBy: 'triggeredBy'
 };
 
+exports.Prisma.NewsScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  type: 'type',
+  image: 'image',
+  imageMimeType: 'imageMimeType',
+  isPublished: 'isPublished',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NewsTranslationScalarFieldEnum = {
+  id: 'id',
+  newsId: 'newsId',
+  lang: 'lang',
+  title: 'title',
+  excerpt: 'excerpt',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PollScalarFieldEnum = {
+  id: 'id',
+  newsId: 'newsId',
+  isActive: 'isActive',
+  endAt: 'endAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PollOptionScalarFieldEnum = {
+  id: 'id',
+  pollId: 'pollId',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PollOptionTranslationScalarFieldEnum = {
+  id: 'id',
+  pollOptionId: 'pollOptionId',
+  lang: 'lang',
+  label: 'label',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PollVoteScalarFieldEnum = {
+  id: 'id',
+  pollId: 'pollId',
+  pollOptionId: 'pollOptionId',
+  userId: 'userId',
+  votedAt: 'votedAt'
+};
+
+exports.Prisma.NewsLikeScalarFieldEnum = {
+  newsId: 'newsId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.RankingScalarFieldEnum = {
   id: 'id',
   dinozCount: 'dinozCount',
@@ -368,11 +430,17 @@ exports.JobStatus = exports.$Enums.JobStatus = {
   FAILED: 'FAILED'
 };
 
-exports.Role = exports.$Enums.Role = {
-  PLAYER: 'PLAYER',
-  MODERATOR: 'MODERATOR',
-  ADMIN: 'ADMIN',
-  SUPER_ADMIN: 'SUPER_ADMIN'
+exports.NewsType = exports.$Enums.NewsType = {
+  update: 'update',
+  information: 'information',
+  war: 'war',
+  war_mana: 'war_mana',
+  championship: 'championship',
+  tid_start: 'tid_start',
+  tid_end: 'tid_end',
+  event_christmas: 'event_christmas',
+  story: 'story',
+  announce: 'announce'
 };
 
 exports.Language = exports.$Enums.Language = {
@@ -380,6 +448,13 @@ exports.Language = exports.$Enums.Language = {
   EN: 'EN',
   ES: 'ES',
   DE: 'DE'
+};
+
+exports.Role = exports.$Enums.Role = {
+  PLAYER: 'PLAYER',
+  MODERATOR: 'MODERATOR',
+  ADMIN: 'ADMIN',
+  SUPER_ADMIN: 'SUPER_ADMIN'
 };
 
 exports.Gender = exports.$Enums.Gender = {
@@ -402,6 +477,13 @@ exports.Prisma.ModelName = {
   DinozStatus: 'DinozStatus',
   JobDefinition: 'JobDefinition',
   JobRun: 'JobRun',
+  News: 'News',
+  NewsTranslation: 'NewsTranslation',
+  Poll: 'Poll',
+  PollOption: 'PollOption',
+  PollOptionTranslation: 'PollOptionTranslation',
+  PollVote: 'PollVote',
+  NewsLike: 'NewsLike',
   Ranking: 'Ranking',
   Secret: 'Secret',
   SignupDeviceMonthCounter: 'SignupDeviceMonthCounter',
