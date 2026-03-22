@@ -24,7 +24,7 @@ export const AdminNewsService = {
 	},
 	async updateAdminNews(newsId: number, payload: Partial<AdminNewsPayload>): Promise<DetailedNews> {
 		return http()
-			.patch(`/admin/news/${newsId}`, payload)
+			.put(`/admin/news/${newsId}`, payload)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
@@ -46,7 +46,7 @@ export const AdminNewsService = {
 		formData.append('image', image);
 		formData.append('payload', JSON.stringify(payload));
 		return http()
-			.post(`/admin/news/${newsId}`, formData)
+			.put(`/admin/news/${newsId}`, formData)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
