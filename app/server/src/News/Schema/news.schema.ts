@@ -20,9 +20,9 @@ export const pollVoteParamsSchema = z.object({
 
 export const newsTranslationBodySchema = z.object({
 	lang: languageSchema,
-	title: z.string().trim().min(1).max(255),
+	title: z.string().trim().max(255),
 	excerpt: z.string().trim().max(255).nullable().optional(),
-	content: z.string().trim().min(1)
+	content: z.string().trim()
 });
 
 export const pollOptionTranslationBodySchema = z.object({
