@@ -24,6 +24,7 @@
 				<RouterLink :to="`/admin/news/${news.id}`">
 					<DZButton type="button">Éditer</DZButton>
 				</RouterLink>
+				<DZButton type="button" @click="handleDelete(news.id)">Supprimer</DZButton>
 			</li>
 		</ul>
 
@@ -67,6 +68,26 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 			} finally {
 				this.loading = false;
+			}
+		},
+		async handleDelete(id: number) {
+			const confirmed = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (!confirmed) return;
+			try {
+				await AdminNewsService.deleteNews(id);
+				this.$toast.open({
+					message: this.$t('adminNews.deleteSuccess') as string,
+					type: 'success'
+				});
+				await this.loadNews();
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
 			}
 		}
 	},

@@ -58,3 +58,11 @@ export async function updateAdminNewsHandler(req: FastifyRequest, reply: Fastify
 	const updated = await newsService.updateAdminNews(id, parsed.data);
 	return reply.send(newsService.mapAdminNews(updated));
 }
+
+export async function deleteNewsHandler(req: FastifyRequest, reply: FastifyReply) {
+	const { id } = newsIdParamsSchema.parse(req.params);
+
+	await newsService.deleteAdminNews(id);
+
+	return reply.send({ success: true });
+}
