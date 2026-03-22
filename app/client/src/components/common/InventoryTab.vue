@@ -15,12 +15,12 @@
 				</tr>
 				<tr v-for="(item, index) in allItemsData" :class="index % 2 === 1 ? 'even' : ''" :key="index">
 					<Tippy class="name" tag="td" theme="normal">
-						<img :src="getImgURL('item', `item_${itemNameList[item.itemId]}`)" :alt="itemNameList[item.itemId]" />
+						<img :src="getImgURL('item', `item_${getItemIconName(item.itemId)}`)" :alt="itemNameList[item.itemId]" />
 						<p v-html="$t(`items.name.${itemNameList[item.itemId]}`)" />
 						<template #content>
 							<h1 v-html="formatContent($t(`items.name.${itemNameList[item.itemId]}`))" />
 							<h2>{{ $t(`tooltip.item.maxQuantity`) }} {{ item.maxQuantity }}</h2>
-							<p v-html="formatContent($t(`items.description.${itemNameList[item.itemId]}`))" />
+							<p v-html="formatContent($t(`items.description.${getItemDescriptionKey(item)}`))" />
 						</template>
 					</Tippy>
 					<td
@@ -122,6 +122,18 @@ export default defineComponent({
 		};
 	},
 	methods: {
+		getItemIconName(itemId: number) {
+			if (itemId >= 120 && itemId <= 129) {
+				return 'gold';
+			}
+			return itemNameList[itemId];
+		},
+		getItemDescriptionKey(item: ItemFiche) {
+			if (item.itemId >= 120 && item.itemId <= 129) {
+				return 'gold1';
+			}
+			return item.name;
+		},
 		goToItemShop() {
 			this.$router.push({
 				name: 'ItemShopPage',

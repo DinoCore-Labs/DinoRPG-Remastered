@@ -2263,131 +2263,171 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	//Used for special gather
 	[Item.GOLD100]: {
 		itemId: 120,
-		name: 'gold',
+		name: 'gold100',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
+		effect: {
+			category: ItemEffect.GOLD,
+			value: 100
+		},
 		isRare: false,
 		maxQuantity: 3,
 		sellable: false,
-		price: 100, // TODO double check
+		price: 100,
 		display: 'gold'
 	},
 	//Used for special gather
 	[Item.GOLD500]: {
 		itemId: 121,
-		name: 'gold',
+		name: 'gold500',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
+		effect: {
+			category: ItemEffect.GOLD,
+			value: 500
+		},
 		isRare: false,
 		maxQuantity: 3,
 		sellable: false,
-		price: 500, // TODO double check
-		display: 'GOLD500'
+		price: 500,
+		display: 'gold'
 	},
 	//Used for special gather
 	[Item.GOLD1000]: {
 		itemId: 122,
-		name: 'gold',
+		name: 'gold1000',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
+		effect: {
+			category: ItemEffect.GOLD,
+			value: 1000
+		},
 		isRare: false,
 		maxQuantity: 3,
 		sellable: false,
-		price: 1000, // TODO double check
-		display: 'GOLD1000'
+		price: 1000,
+		display: 'gold'
 	},
 	//Used for special gather
 	[Item.GOLD2000]: {
 		itemId: 123,
-		name: 'gold',
+		name: 'gold2000',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
+		effect: {
+			category: ItemEffect.GOLD,
+			value: 2000
+		},
 		isRare: false,
 		maxQuantity: 3,
 		sellable: false,
-		price: 2000, // TODO double check
-		display: 'GOLD2000'
+		price: 2000,
+		display: 'gold'
 	},
 	//Used for special gather
 	[Item.GOLD2500]: {
 		itemId: 124,
-		name: 'gold',
+		name: 'gold2500',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
+		effect: {
+			category: ItemEffect.GOLD,
+			value: 2500
+		},
 		isRare: false,
 		maxQuantity: 3,
 		sellable: false,
-		price: 2500, // TODO double check
-		display: 'GOLD2500'
+		price: 2500,
+		display: 'gold'
 	},
 	//Used for special gather
 	[Item.GOLD3000]: {
 		itemId: 125,
-		name: 'gold',
+		name: 'gold3000',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
+		effect: {
+			category: ItemEffect.GOLD,
+			value: 3000
+		},
 		isRare: false,
 		maxQuantity: 3,
 		sellable: false,
-		price: 3000, // TODO double check
-		display: 'GOLD3000'
+		price: 3000,
+		display: 'gold'
 	},
 	//Used for special gather
 	[Item.GOLD5000]: {
 		itemId: 126,
-		name: 'gold',
+		name: 'gold5000',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
+		effect: {
+			category: ItemEffect.GOLD,
+			value: 5000
+		},
 		isRare: false,
 		maxQuantity: 3,
 		sellable: false,
-		price: 5000, // TODO double check
-		display: 'GOLD5000'
+		price: 5000,
+		display: 'gold'
 	},
 	//Used for special gather
 	[Item.GOLD10000]: {
 		itemId: 127,
-		name: 'gold',
+		name: 'gold10000',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
+		effect: {
+			category: ItemEffect.GOLD,
+			value: 10000
+		},
 		isRare: false,
 		maxQuantity: 3,
 		sellable: false,
-		price: 10000, // TODO double check
-		display: 'GOLD10000'
+		price: 10000,
+		display: 'gold'
 	},
 	//Used for special gather
 	[Item.GOLD20000]: {
 		itemId: 128,
-		name: 'gold',
+		name: 'gold20000',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
+		effect: {
+			category: ItemEffect.GOLD,
+			value: 20000
+		},
 		isRare: false,
 		maxQuantity: 3,
 		sellable: false,
-		price: 20000, // TODO double check
-		display: 'GOLD20000'
+		price: 20000,
+		display: 'gold'
 	},
 	[Item.GOLD50000]: {
 		itemId: 129,
-		name: 'gold',
+		name: 'gold50000',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
+		effect: {
+			category: ItemEffect.GOLD,
+			value: 50000
+		},
 		isRare: false,
 		maxQuantity: 3,
 		sellable: false,
-		price: 50000, // TODO double check
-		display: 'GOLD50000'
+		price: 50000,
+		display: 'gold'
 	},
 	// Use to obtain Santaz or Trice, obtained during Christmas event
 	[Item.CHRISTMAS_EGG]: {

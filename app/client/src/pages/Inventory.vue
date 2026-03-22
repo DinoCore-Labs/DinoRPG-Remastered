@@ -18,13 +18,13 @@
 			}"
 		>
 			<td class="tdIcon">
-				<img :src="getImgURL('item', `item_${itemNameList[item.itemId]}`)" :alt="itemNameList[item.itemId]" />
+				<img :src="getImgURL('item', `item_${getItemIconName(item.itemId)}`)" :alt="itemNameList[item.itemId]" />
 			</td>
 			<td class="tdName">{{ $t(`items.name.${item.name}`) }}</td>
 			<td class="tdStock" v-if="item.quantity !== 0">{{ item.quantity }}/{{ item.maxQuantity }}</td>
 			<template #content>
 				<h1 v-html="formatContent($t(`items.name.${item.name}`))" />
-				<p v-html="formatContent($t(`items.description.${item.name}`))" />
+				<p v-html="formatContent($t(`items.description.${getItemDescriptionKey(item)}`))" />
 			</template>
 		</Tippy>
 	</DZTable>
@@ -62,6 +62,18 @@ export default defineComponent({
 		await this.loadItems();
 	},
 	methods: {
+		getItemIconName(itemId: number) {
+			if (itemId >= 120 && itemId <= 129) {
+				return 'gold';
+			}
+			return itemNameList[itemId];
+		},
+		getItemDescriptionKey(item: ItemFiche) {
+			if (item.itemId >= 120 && item.itemId <= 129) {
+				return 'gold1';
+			}
+			return item.name;
+		},
 		async loadItems() {
 			try {
 				const items = await InventoryService.getAllItemsData();

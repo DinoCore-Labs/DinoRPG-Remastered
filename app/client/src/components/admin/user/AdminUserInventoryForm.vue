@@ -140,6 +140,9 @@ function entryIcon(entry: InventoryEntry): string {
 	if (props.type === 'items') {
 		const id = (entry as ItemEntry).itemId;
 		const name = itemNameList[id] ?? `item_${id}`;
+		if (id >= 120 && id <= 129) {
+			return getImgURL('item', `item_gold`);
+		}
 		return getImgURL('item', `item_${name}`);
 	}
 
