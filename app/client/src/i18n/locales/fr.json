@@ -276,6 +276,7 @@
 		"missingUser": "Utilisateur manquant.",
 		"missingData": "Données manquantes.",
 		"reincarnation": "Votre Dinoz s'est réincarné.",
+		"loginToLike": "Connectez-vous pour aimer cette news.",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
 			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",
