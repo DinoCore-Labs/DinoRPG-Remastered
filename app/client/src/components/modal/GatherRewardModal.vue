@@ -37,7 +37,11 @@
 				>
 					<template #content>
 						<h1 v-html="formatContent($t(`items.name.${getItemName(item.id)}`))" />
-						<p v-html="formatContent($t(`items.description.${getItemName(item.id)}`, { quantity: item.price }))" />
+						<p
+							v-html="
+								formatContent($t(`items.description.${getItemDescriptionKey(item.id)}`, { quantity: item.price }))
+							"
+						/>
 					</template>
 				</Tippy>
 				<div class="name-info">
@@ -115,6 +119,12 @@ export default defineComponent({
 		},
 		getItemName(itemId: Item): string {
 			return this.itemList[itemId].name.toLowerCase();
+		},
+		getItemDescriptionKey(itemId: Item) {
+			if (this.itemList[itemId].itemId >= 120 && this.itemList[itemId].itemId <= 129) {
+				return 'gold';
+			}
+			return this.itemList[itemId].name;
 		},
 		isMaxQuantity(ingredientId: number) {
 			const ingredient = this.ingredientsAtMaxQuantity.find(ingre => ingre.ingredientId === ingredientId);

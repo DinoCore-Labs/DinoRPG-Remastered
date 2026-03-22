@@ -864,6 +864,11 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'item',
+				ingredientId: [itemList[Item.GOLD50000].itemId],
+				startQuantity: 1
+			},
+			{
+				type: 'item',
 				ingredientId: [itemList[Item.BOX_HANDLER].itemId],
 				startQuantity: 10
 			}

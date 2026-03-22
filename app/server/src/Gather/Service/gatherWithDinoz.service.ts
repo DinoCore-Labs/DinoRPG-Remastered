@@ -158,7 +158,8 @@ export async function gatherWithDinozHandler(
 				itemList[Item.GOLD3000].itemId,
 				itemList[Item.GOLD5000].itemId,
 				itemList[Item.GOLD10000].itemId,
-				itemList[Item.GOLD20000].itemId
+				itemList[Item.GOLD20000].itemId,
+				itemList[Item.GOLD50000].itemId
 			];
 
 			if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.id)) {
