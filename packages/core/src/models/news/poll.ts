@@ -37,6 +37,7 @@ export interface PublicPollOption {
 	id: number;
 	label: string;
 	sortOrder: number;
+	voteCount: number;
 }
 
 export interface PublicPoll {

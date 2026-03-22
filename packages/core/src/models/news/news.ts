@@ -71,3 +71,7 @@ export interface PublicNewsListItem {
 	likedByMe: boolean;
 	poll: PublicPoll | null;
 }
+
+export interface NewsPageItem extends PublicNewsListItem {
+	hide: boolean;
+}
