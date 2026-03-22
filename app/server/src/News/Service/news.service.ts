@@ -345,11 +345,11 @@ export const newsService = {
 								})),
 								lang as Language
 							);
-
 							return {
 								id: option.id,
 								sortOrder: option.sortOrder,
-								label: optionTranslation?.label ?? ''
+								label: optionTranslation?.label ?? '',
+								voteCount: news.poll!.votes.filter(vote => vote.pollOptionId === option.id).length
 							};
 						})
 					}
