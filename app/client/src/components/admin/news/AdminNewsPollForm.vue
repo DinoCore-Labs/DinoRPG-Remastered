@@ -1,31 +1,31 @@
 <template>
-	<div class="poll-block">
-		<div class="field checkbox">
-			<label>
-				<input v-model="localValue.pollEnabled" type="checkbox" />
-				Ajouter un sondage
-			</label>
-		</div>
-		<div v-if="localValue.pollEnabled">
-			<div class="field checkbox">
-				<label>
-					<input v-model="localValue.poll.isActive" type="checkbox" />
-					Sondage actif
-				</label>
-			</div>
-			<div class="field">
-				<label>Date de fin</label>
-				<input v-model="localValue.poll.endAt" type="datetime-local" />
-			</div>
-			<div v-for="(option, optionIndex) in localValue.poll.options" :key="optionIndex" class="poll-option">
-				<h5>Option {{ Number(optionIndex) + 1 }}</h5>
-				<div v-for="translation in option.translations" :key="translation.lang" class="field">
-					<label>{{ translation.lang }}</label>
-					<input v-model="translation.label" type="text" />
+	<div class="card">
+		<div class="card-container">
+			<div class="card-container">
+				<div class="poll-block">
+					<div class="field checkbox">
+						<DZCheckbox id="addPoll" v-model="localValue.pollEnabled" label="Ajouter un sondage" type="checkbox" />
+					</div>
+					<div v-if="localValue.pollEnabled">
+						<div class="field checkbox">
+							<DZCheckbox id="activePoll" v-model="localValue.poll.isActive" label="Sondage actif" type="checkbox" />
+						</div>
+						<div class="field">
+							<label for="endAt">Date de fin</label>
+							<DZInput v-model="localValue.poll.endAt" id="endAt" type="datetime-local" />
+						</div>
+						<div v-for="(option, optionIndex) in localValue.poll.options" :key="optionIndex" class="poll-option">
+							<h5>Option {{ Number(optionIndex) + 1 }}</h5>
+							<div v-for="translation in option.translations" :key="translation.lang" class="field">
+								<label>{{ translation.lang }}</label>
+								<DZInput v-model="translation.label" :label="translation.lang" type="text" />
+							</div>
+							<DZButton type="button" @click="removeOption(Number(optionIndex))">Supprimer l’option</DZButton>
+						</div>
+						<DZButton type="button" @click="addOption">Ajouter une option</DZButton>
+					</div>
 				</div>
-				<DZButton type="button" @click="removeOption(Number(optionIndex))">Supprimer l’option</DZButton>
 			</div>
-			<DZButton type="button" @click="addOption">Ajouter une option</DZButton>
 		</div>
 	</div>
 </template>
@@ -35,11 +35,15 @@ import { Language } from '@dinorpg/core/models/config/language.js';
 import { defineComponent, type PropType } from 'vue';
 
 import DZButton from '../../utils/DZButton.vue';
+import DZCheckbox from '../../utils/DZCheckbox.vue';
+import DZInput from '../../utils/DZInput.vue';
 
 export default defineComponent({
 	name: 'AdminNewsPollForm',
 	components: {
-		DZButton
+		DZButton,
+		DZCheckbox,
+		DZInput
 	},
 	props: {
 		modelValue: {
@@ -91,3 +95,24 @@ export default defineComponent({
 	}
 });
 </script>
+
+<style scoped lang="scss">
+.card {
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	background-color: #ecbd84;
+	padding: 5px;
+	&-container {
+		border: 2px solid #bc683c;
+		padding: 20px;
+	}
+}
+.field {
+	display: flex;
+	gap: 5px;
+}
+label {
+	color: #8e3e26;
+}
+</style>
