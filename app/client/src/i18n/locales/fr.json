@@ -182,7 +182,13 @@
 		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
 		"dinozNaming": "DinoRPG [ Choix du Nom ]",
 		"levelup": "DinoRPG [ Niveau supplémentaire pour {dinoz} ]",
-		"gather": "DinoRPG [ {type} ]"
+		"gather": "DinoRPG [ {type} ]",
+		"admin": "DinoRPG [ Admin Dashboard ]"
+	},
+	"adminPage": {
+		"news": {
+			"deleteSucces": "News supprimée avec succès"
+		}
 	},
 	"newsPage": {
 		"title": "Actualités de Dinoland",

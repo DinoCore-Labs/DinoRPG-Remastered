@@ -46,7 +46,13 @@ export const AdminNewsService = {
 		formData.append('image', image);
 		formData.append('payload', JSON.stringify(payload));
 		return http()
-			.patch(`/admin/news/${newsId}`, formData)
+			.post(`/admin/news/${newsId}`, formData)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	async deleteNews(newsId: number) {
+		return http()
+			.delete(`/admin/news/${newsId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}
