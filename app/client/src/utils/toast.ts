@@ -1,6 +1,6 @@
 import type { App } from 'vue';
 import type { ToastPluginApi, ToastProps } from 'vue-toast-notification';
-import ToastPlugin from 'vue-toast-notification';
+import ToastPlugin, { useToast } from 'vue-toast-notification';
 
 interface ToastInstance {
 	dismiss: () => void;
@@ -20,7 +20,7 @@ export const createToastPlugin = (options: ToastProps) => {
 		install(app: App) {
 			app.use(ToastPlugin, options);
 
-			const originalToast = app.config.globalProperties.$toast as ToastPluginApi;
+			const originalToast = useToast();
 
 			const open = (params: string | ToastPropsWithMessage) => {
 				if (activeToasts.length >= MAX_TOASTS) {
@@ -47,19 +47,15 @@ export const createToastPlugin = (options: ToastProps) => {
 
 			const wrappedToast: ToastPluginApi = {
 				open: open as ToastPluginApi['open'],
-
 				success: (message, opts?: ToastOptions) => open({ message, type: 'success', ...(opts ?? {}) }),
-
 				error: (message, opts?: ToastOptions) => open({ message, type: 'error', ...(opts ?? {}) }),
-
 				info: (message, opts?: ToastOptions) => open({ message, type: 'info', ...(opts ?? {}) }),
-
 				warning: (message, opts?: ToastOptions) => open({ message, type: 'warning', ...(opts ?? {}) }),
-
 				default: (message, opts?: ToastOptions) => open({ message, type: 'default', ...(opts ?? {}) }),
-
 				clear: () => {
-					activeToasts.length = 0;
+					while (activeToasts.length) {
+						activeToasts.shift()?.dismiss();
+					}
 					originalToast.clear();
 				}
 			};
