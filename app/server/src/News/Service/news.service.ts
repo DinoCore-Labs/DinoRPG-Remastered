@@ -18,23 +18,24 @@ function ensureUniqueLanguages<T extends { lang: Language }>(items: T[], errorMe
 	}
 }
 
+function getFilledNewsTranslations(
+	translations: CreateNewsBody['translations'] | NonNullable<UpdateNewsBody['translations']>
+) {
+	return translations.filter(
+		translation => translation.title.trim().length > 0 && translation.content.trim().length > 0
+	);
+}
+
 function validateNewsTranslations(
 	translations: CreateNewsBody['translations'] | NonNullable<UpdateNewsBody['translations']>
 ) {
-	if (translations.length === 0) {
+	const filledTranslations = getFilledNewsTranslations(translations);
+
+	if (filledTranslations.length === 0) {
 		throw new ExpectedError('At least one news translation is required');
 	}
 
-	ensureUniqueLanguages(translations, 'Duplicate news translation language');
-
-	for (const translation of translations) {
-		if (!translation.title.trim()) {
-			throw new ExpectedError(`Missing title for language ${translation.lang}`);
-		}
-		if (!translation.content.trim()) {
-			throw new ExpectedError(`Missing content for language ${translation.lang}`);
-		}
-	}
+	ensureUniqueLanguages(filledTranslations, 'Duplicate news translation language');
 }
 
 function validatePollInput(poll: NonNullable<CreateNewsBody['poll'] | UpdateNewsBody['poll']>) {
@@ -63,7 +64,11 @@ function validatePollInput(poll: NonNullable<CreateNewsBody['poll'] | UpdateNews
 
 export const newsService = {
 	async createAdminNews(input: CreateNewsBody, image?: Uint8Array, imageMimeType?: string | null) {
-		validateNewsTranslations(input.translations);
+		const filledTranslations = input.translations.filter(
+			translation => translation.title.trim().length > 0 && translation.content.trim().length > 0
+		);
+
+		validateNewsTranslations(filledTranslations);
 
 		if (input.poll) {
 			validatePollInput(input.poll);
@@ -112,7 +117,6 @@ export const newsService = {
 			return createdNews;
 		});
 	},
-
 	async updateAdminNews(newsId: number, input: UpdateNewsBody, image?: Uint8Array, imageMimeType?: string | null) {
 		const existingNews = await newsRepository.findNewsById(newsId);
 		if (!existingNews) {
@@ -188,11 +192,9 @@ export const newsService = {
 			return updatedNews;
 		});
 	},
-
 	async getAdminNewsList() {
 		return newsRepository.findAdminNewsList();
 	},
-
 	async getAdminNewsDetails(newsId: number) {
 		const news = await newsRepository.findNewsById(newsId);
 		if (!news) {
@@ -200,7 +202,6 @@ export const newsService = {
 		}
 		return news;
 	},
-
 	async getPublicNews(page: number) {
 		if (page < 1) {
 			throw new ExpectedError('Invalid page');
@@ -208,7 +209,6 @@ export const newsService = {
 
 		return newsRepository.findPublicNewsPage(page, 10);
 	},
-
 	async getNewsImage(newsId: number) {
 		const image = await newsRepository.findNewsImage(newsId);
 		if (!image || !image.image) {
@@ -216,7 +216,6 @@ export const newsService = {
 		}
 		return image;
 	},
-
 	async toggleNewsLike(newsId: number, userId: string) {
 		const news = await newsRepository.findNewsById(newsId);
 		if (!news) {
@@ -243,7 +242,6 @@ export const newsService = {
 			likedByMe: true
 		};
 	},
-
 	async voteToPoll(pollId: number, optionId: number, userId: string) {
 		const poll = await newsRepository.findPollById(pollId, userId);
 		if (!poll) {
@@ -268,7 +266,6 @@ export const newsService = {
 
 		return { success: true };
 	},
-
 	mapAdminNews(news: AdminNewsDetailsRecord) {
 		if (!news) throw new ExpectedError('News not found');
 
@@ -302,7 +299,6 @@ export const newsService = {
 			likes: news.likedBy.length
 		};
 	},
-
 	mapPublicNewsItem(news: PublicNewsRecord, lang: Language, userId?: string) {
 		const translation = resolveNewsTranslation(
 			news.translations.map(t => ({
