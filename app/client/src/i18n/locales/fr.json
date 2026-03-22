@@ -186,6 +186,14 @@
 	},
 	"newsPage": {
 		"title": "Actualités de Dinoland",
+		"noTranslation": "Pas de traduction pour le moment",
+		"poll": {
+			"choose_option": "Le sondage se termine le {date}, votez pour votre choix:",
+			"choose_done": "Vote enregistré",
+			"select": "Voter",
+			"select_option": "Sélectionnez une option",
+			"total_participants": "{qty} votants"
+		},
 		"roadmap": {
 			"title": "Découvrez les prochains événements sur DinoRPG !",
 			"small": "Prédiction d'Irma",

@@ -24,7 +24,7 @@
 			<MarkdownRenderer :source="news.content" />
 		</div>
 		<div class="missingText" v-else>
-			{{ $t('news.noTranslation') }}
+			{{ $t('newsPage.noTranslation') }}
 		</div>
 		<Poll v-if="news.poll" :poll="news.poll" @voted="refreshCurrentPage" />
 		<div class="newsFooter">
@@ -175,7 +175,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .hide {
-	max-height: 50px !important;
+	max-height: 60px !important;
 	overflow: hidden;
 	p {
 		display: none;
@@ -224,12 +224,7 @@ export default defineComponent({
 		color: #f4e4bc;
 		line-height: 1.6;
 		:deep(.markdown-body) {
-			background: linear-gradient(145deg, #8b4513, #a0522d);
-			border-radius: 12px;
-			padding: 20px;
-			box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-			border: 2px solid rgba(255, 215, 0, 0.3);
-			backdrop-filter: blur(10px);
+			padding: 13px;
 			position: relative;
 			overflow: hidden;
 		}
@@ -244,44 +239,37 @@ export default defineComponent({
 			font-weight: bold;
 			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 		}
-
 		:deep(h1) {
-			font-size: 2rem;
-			margin-bottom: 20px;
+			font-size: 1.6rem;
+			margin-bottom: 10px;
 			border-bottom: 2px solid rgba(255, 215, 0, 0.3);
 			padding-bottom: 10px;
 		}
-
 		:deep(h2) {
-			font-size: 1.6rem;
+			font-size: 1.2rem;
 			margin-top: 25px;
 		}
-
 		:deep(h3) {
-			font-size: 1.4rem;
+			font-size: 1rem;
 			margin-top: 20px;
 		}
-
 		:deep(h4) {
-			font-size: 1.2rem;
+			font-size: 1rem;
 			margin-top: 15px;
 		}
-
 		:deep(h5) {
 			font-size: 1.1rem;
 			margin-top: 15px;
 		}
-
 		:deep(h6) {
 			font-size: 1rem;
 			margin-top: 10px;
 		}
-
 		:deep(p) {
 			margin: 15px 0;
 			color: #f4e4bc;
 			text-align: justify;
-			font-size: 1.2rem;
+			font-size: 1rem;
 			font-weight: 500;
 		}
 
@@ -365,37 +353,31 @@ export default defineComponent({
 			font-style: italic;
 		}
 	}
-
 	.news {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-
 		.newsTitle {
 			display: flex;
 			gap: 10px;
 			max-width: 80%;
-
 			.newsImg {
 				border: 1px solid #ffee92;
 				min-width: 80px;
 				height: 80px;
 				overflow: hidden;
-
 				img {
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
 				}
 			}
-
 			.newsContent {
 				color: #ffee92;
 				display: flex;
 				flex-direction: column;
 				max-width: 280px;
 				min-width: 0;
-
 				h1 {
 					height: auto;
 					max-height: none;
@@ -409,7 +391,6 @@ export default defineComponent({
 					text-overflow: ellipsis;
 					overflow: hidden;
 				}
-
 				span {
 					font-size: 7.5pt;
 					margin-bottom: 6px;
@@ -417,9 +398,8 @@ export default defineComponent({
 				}
 			}
 		}
-
 		.newsLike {
-			background-image: url('../../assets/design/marker.webp');
+			background-image: url('../assets/background/marker.webp');
 			background-repeat: no-repeat;
 			display: flex;
 			align-items: center;
@@ -428,7 +408,6 @@ export default defineComponent({
 			margin-left: -25px;
 			min-width: 130px;
 			height: 70px;
-
 			.newsCounter {
 				display: flex;
 				color: #ffee92;
@@ -436,13 +415,11 @@ export default defineComponent({
 				font-weight: bold;
 				margin-top: -15px;
 				margin-left: 25px;
-
 				img {
 					height: 16px;
 					width: 20px;
 					object-fit: cover;
 				}
-
 				span {
 					margin-top: -1px;
 					margin-left: 6px;
@@ -450,10 +427,8 @@ export default defineComponent({
 			}
 		}
 	}
-
 	.newsFooter {
 		display: flex;
-
 		.counter {
 			color: #ffee92;
 			cursor: pointer;
@@ -462,7 +437,6 @@ export default defineComponent({
 			padding: 0;
 			font-size: 11pt;
 			font-weight: bold;
-
 			img {
 				max-width: 100%;
 				display: block;
