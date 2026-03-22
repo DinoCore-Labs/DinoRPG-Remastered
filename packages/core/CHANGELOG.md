@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.8.5
+
+### Patch Changes
+
+- 4549e80: feat news
+
 ## 0.8.4
 
 ### Patch Changes
