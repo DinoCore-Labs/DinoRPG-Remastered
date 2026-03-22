@@ -32,6 +32,7 @@ import {
 } from '../Service/adminDinozHandler.service.js';
 import {
 	createAdminNewsHandler,
+	deleteNewsHandler,
 	getAdminNewsDetailsHandler,
 	getAdminNewsListHandler,
 	updateAdminNewsHandler
@@ -202,6 +203,17 @@ export async function adminRoutes(app: FastifyInstance) {
 			}
 		},
 		updateAdminNewsHandler
+	);
+	app.delete(
+		'/news/:id',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin'],
+				params: newsIdParamsSchema
+			}
+		},
+		deleteNewsHandler
 	);
 	// Jobs
 	app.get('/jobs', { preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } }, async () => {

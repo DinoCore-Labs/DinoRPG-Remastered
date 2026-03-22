@@ -266,6 +266,17 @@ export const newsService = {
 
 		return { success: true };
 	},
+	async deleteAdminNews(id: number) {
+		const news = await newsRepository.findNewsById(id);
+
+		if (!news) {
+			throw new ExpectedError('News not found');
+		}
+
+		await newsRepository.deleteNews(id);
+
+		return { success: true };
+	},
 	mapAdminNews(news: AdminNewsDetailsRecord) {
 		if (!news) throw new ExpectedError('News not found');
 

@@ -70,7 +70,6 @@ export const newsRepository = {
 			include: adminNewsDetailsInclude
 		});
 	},
-
 	findAdminNewsList() {
 		return prisma.news.findMany({
 			orderBy: { createdAt: 'desc' },
@@ -96,7 +95,6 @@ export const newsRepository = {
 			}
 		});
 	},
-
 	findPublicNewsPage(page: number, take: number) {
 		return prisma.news.findMany({
 			where: {
@@ -109,7 +107,6 @@ export const newsRepository = {
 			include: publicNewsInclude
 		});
 	},
-
 	findNewsImage(id: number) {
 		return prisma.news.findUnique({
 			where: { id },
@@ -119,7 +116,6 @@ export const newsRepository = {
 			}
 		});
 	},
-
 	findNewsLike(newsId: number, userId: string) {
 		return prisma.newsLike.findUnique({
 			where: {
@@ -130,7 +126,6 @@ export const newsRepository = {
 			}
 		});
 	},
-
 	createNewsLike(newsId: number, userId: string) {
 		return prisma.newsLike.create({
 			data: {
@@ -139,7 +134,6 @@ export const newsRepository = {
 			}
 		});
 	},
-
 	deleteNewsLike(newsId: number, userId: string) {
 		return prisma.newsLike.delete({
 			where: {
@@ -150,13 +144,11 @@ export const newsRepository = {
 			}
 		});
 	},
-
 	countNewsLikes(newsId: number) {
 		return prisma.newsLike.count({
 			where: { newsId }
 		});
 	},
-
 	findPollById(pollId: number, userId?: string) {
 		return prisma.poll.findUnique({
 			where: { id: pollId },
@@ -177,7 +169,6 @@ export const newsRepository = {
 			}
 		});
 	},
-
 	upsertPollVote(pollId: number, pollOptionId: number, userId: string) {
 		return prisma.pollVote.upsert({
 			where: {
@@ -195,6 +186,11 @@ export const newsRepository = {
 				pollOptionId,
 				userId
 			}
+		});
+	},
+	deleteNews(id: number) {
+		return prisma.news.delete({
+			where: { id }
 		});
 	}
 };
