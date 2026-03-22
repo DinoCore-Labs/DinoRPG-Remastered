@@ -82,7 +82,7 @@ export default defineComponent({
 			try {
 				await AdminNewsService.deleteNews(id);
 				this.$toast.open({
-					message: this.$t('adminNews.deleteSuccess') as string,
+					message: this.$t('adminPage.news.deleteSuccess') as string,
 					type: 'success'
 				});
 				await this.loadNews();
