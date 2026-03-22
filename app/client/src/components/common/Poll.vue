@@ -74,7 +74,7 @@ export default defineComponent({
 			const date = new Date(stringDate);
 			const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
 
-			return date.toLocaleDateString(this.localeStore.getLanguage, options);
+			return date.toLocaleDateString(this.localStore.getLanguage, options);
 		},
 
 		getPercentage(optionId: number) {
