@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.9.6
+
+### Patch Changes
+
+- 4549e80: feat news
+- Updated dependencies [4549e80]
+  - @dinorpg/core@0.8.5
+
 ## 0.9.5
 
 ### Patch Changes
