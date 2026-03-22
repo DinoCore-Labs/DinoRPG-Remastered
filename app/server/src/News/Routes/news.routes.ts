@@ -18,6 +18,7 @@ export async function newsRoutes(app: FastifyInstance) {
 	app.get(
 		'/page/:page',
 		{
+			preHandler: [app.noAuth],
 			schema: {
 				tags: ['News'],
 				params: newsPageParamsSchema

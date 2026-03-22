@@ -17,6 +17,7 @@ export async function getNewsListHandler(req: FastifyRequest, reply: FastifyRepl
 	const { page } = newsPageParamsSchema.parse(req.params);
 
 	const user = (req as AuthenticatedRequest).user;
+
 	const lang = (user?.profile?.language ?? Language.FR) as Language;
 
 	const news = await newsService.getPublicNews(page);

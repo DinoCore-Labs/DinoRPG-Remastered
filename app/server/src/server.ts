@@ -116,6 +116,18 @@ async function buildServer() {
 			return reply.status(401).send({ message: 'Invalid token' });
 		}
 	});
+	server.decorate('noAuth', async (req: FastifyRequest, _reply: FastifyReply) => {
+		const token = req.cookies.access_token;
+		if (!token) {
+			return;
+		}
+		try {
+			const decoded = req.jwt.verify<FastifyJWT['user']>(token);
+			req.user = decoded;
+		} catch {
+			return;
+		}
+	});
 	server.decorate('admin', async (req: FastifyRequest, reply: FastifyReply) => {
 		const role = (req.user as any)?.role as UserRole;
 		if (role !== 'ADMIN' && role !== 'SUPER_ADMIN') {
@@ -152,6 +164,7 @@ async function buildServer() {
 				{ name: 'Gather', description: 'Resource gathering actions' },
 				{ name: 'Shop', description: 'Shops and purchases' },
 				{ name: 'Ranking', description: 'Player rankings and leaderboard' },
+				{ name: 'News', description: 'News endpoints' },
 				{ name: 'Admin', description: 'Administration endpoints' }
 			]
 		},
