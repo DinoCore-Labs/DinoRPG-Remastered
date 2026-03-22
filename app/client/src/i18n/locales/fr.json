@@ -187,7 +187,7 @@
 	},
 	"adminPage": {
 		"news": {
-			"deleteSucces": "News supprimée avec succès"
+			"deleteSuccess": "News supprimée avec succès"
 		}
 	},
 	"newsPage": {
