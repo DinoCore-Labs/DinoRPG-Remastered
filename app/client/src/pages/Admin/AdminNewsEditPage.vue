@@ -1,9 +1,7 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.admin')" :header="isEdit ? 'Modifier une news' : 'Créer une news'" />
-
 	<p v-if="loading">Chargement...</p>
 	<p v-else-if="error" class="red">{{ error }}</p>
-
 	<AdminNewsForm
 		v-else
 		:model-value="form"
@@ -11,7 +9,16 @@
 		:has-current-image="hasCurrentImage"
 		:is-edit="isEdit"
 		@update:model-value="form = $event"
+		@image-change="handleImageChange"
 		@submit="handleSubmit"
+	/>
+	<AdminNewsPreview
+		:type="form.type"
+		:translations="form.translations"
+		:selected-lang="selectedLang"
+		:image-url="previewImageUrl"
+		:poll="form.poll"
+		:published-at="form.publishedAt"
 	/>
 </template>
 
@@ -24,6 +31,7 @@ import type { AdminNewsPayload } from '@dinorpg/core/models/admin/adminNewsPaylo
 
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import AdminNewsForm from '../../components/admin/news/AdminNewsForm.vue';
+import AdminNewsPreview from '../../components/admin/news/AdminNewsPreview.vue';
 import { AdminNewsService } from '../../services/adminNews.service';
 import { errorHandler } from '../../utils/errorHandler';
 
@@ -72,7 +80,8 @@ export default defineComponent({
 	name: 'AdminNewsEditPage',
 	components: {
 		TitleHeader,
-		AdminNewsForm
+		AdminNewsForm,
+		AdminNewsPreview
 	},
 	data() {
 		return {
@@ -81,7 +90,9 @@ export default defineComponent({
 			error: '',
 			form: createDefaultForm(),
 			imageFile: null as File | null,
-			hasCurrentImage: false
+			imagePreviewUrl: null as string | null,
+			hasCurrentImage: false,
+			selectedLang: Language.FR as Language
 		};
 	},
 	computed: {
@@ -91,26 +102,40 @@ export default defineComponent({
 		},
 		isEdit(): boolean {
 			return this.newsId !== null;
+		},
+		previewImageUrl(): string | null {
+			if (this.imagePreviewUrl) return this.imagePreviewUrl;
+			if (this.isEdit && this.newsId && this.hasCurrentImage && !this.form.removeImage) {
+				return `${import.meta.env.VITE_API_URL}/api/news/${this.newsId}/image`;
+			}
+			return null;
 		}
 	},
 	methods: {
+		handleImageChange(file: File | null) {
+			this.imageFile = file;
+			if (this.imagePreviewUrl) {
+				URL.revokeObjectURL(this.imagePreviewUrl);
+				this.imagePreviewUrl = null;
+			}
+			if (file) {
+				this.imagePreviewUrl = URL.createObjectURL(file);
+				this.form.removeImage = false;
+			}
+		},
 		mapNewsToForm(news: DetailedNews) {
 			const form = createDefaultForm();
-
 			form.slug = news.slug;
 			form.type = news.type;
 			form.isPublished = news.isPublished;
 			form.publishedAt = news.publishedAt ? new Date(news.publishedAt).toISOString().slice(0, 16) : '';
-
 			for (const translation of news.translations) {
 				const current = form.translations.find(t => t.lang === translation.lang);
 				if (!current) continue;
-
 				current.title = translation.title;
 				current.excerpt = translation.excerpt ?? '';
 				current.content = translation.content;
 			}
-
 			if (news.poll) {
 				form.pollEnabled = true;
 				form.poll.isActive = news.poll.isActive;
@@ -123,10 +148,8 @@ export default defineComponent({
 					}))
 				}));
 			}
-
 			return form;
 		},
-
 		buildPayload(): AdminNewsPayload {
 			return {
 				slug: this.form.slug,
@@ -155,17 +178,14 @@ export default defineComponent({
 					: undefined
 			};
 		},
-
 		async loadNews() {
 			if (!this.isEdit || !this.newsId) return;
-
 			try {
 				this.loading = true;
 				this.error = '';
-
 				const news = await AdminNewsService.getAdminNewsDetails(this.newsId);
 				this.form = this.mapNewsToForm(news);
-				this.hasCurrentImage = !!news.image?.data;
+				this.hasCurrentImage = !!news.image;
 			} catch (err) {
 				this.error = 'Impossible de charger la news.';
 				errorHandler.handle(err, this.$toast);
@@ -173,12 +193,10 @@ export default defineComponent({
 				this.loading = false;
 			}
 		},
-
 		async handleSubmit(imageFile: File | null) {
 			try {
 				this.saving = true;
 				const payload = this.buildPayload();
-
 				if (this.isEdit && this.newsId) {
 					if (imageFile) {
 						await AdminNewsService.updateAdminNewsWithImage(this.newsId, payload, imageFile);
@@ -192,7 +210,6 @@ export default defineComponent({
 						await AdminNewsService.createAdminNews(payload);
 					}
 				}
-
 				this.$router.push('/admin/news');
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
