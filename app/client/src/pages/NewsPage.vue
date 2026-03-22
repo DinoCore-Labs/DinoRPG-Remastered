@@ -12,7 +12,7 @@
 					<span>{{ formatCreatedDate(news.publishedAt ?? news.createdAt) }}</span>
 				</div>
 			</div>
-			<div v-if="isAuthenticated" class="newsLike" @click.stop="toggleLike(news)">
+			<div class="newsLike" :class="{ disabled: !isAuthenticated }" @click.stop="handleLike(news)">
 				<div class="newsCounter">
 					<img :src="getImgURL('icons', news.likedByMe ? 'miniIcon_on' : 'miniIcon_off')" alt="icon" />
 					<span class="newsCounter">{{ news.likes }}</span>
@@ -27,8 +27,8 @@
 			{{ $t('news.noTranslation') }}
 		</div>
 		<Poll v-if="news.poll" :poll="news.poll" @voted="refreshCurrentPage" />
-		<div v-if="isAuthenticated" class="newsFooter">
-			<a class="counter" @click.stop="toggleLike(news)">
+		<div class="newsFooter">
+			<a class="counter" :class="{ disabled: !isAuthenticated }" @click.stop="handleLike(news)">
 				<img :src="getImgURL('icons', news.likedByMe ? 'miniIcon_on' : 'miniIcon_off')" alt="icon" />
 				<span class="newsCounter">{{ news.likes }}</span>
 			</a>
@@ -100,7 +100,6 @@ export default defineComponent({
 			const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
 			return date.toLocaleDateString(this.localStore.getLanguage || undefined, options);
 		},
-
 		async getFirstNews() {
 			try {
 				this.loading = true;
@@ -114,19 +113,16 @@ export default defineComponent({
 				this.loading = false;
 			}
 		},
-
 		async overload(page: number) {
 			try {
 				this.loading = true;
 				const newLoad = await NewsService.getNewsPage(page);
-
 				this.batch.push(
 					...newLoad.map(news => ({
 						...news,
 						hide: true
 					}))
 				);
-
 				this.page = page;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -135,14 +131,11 @@ export default defineComponent({
 				this.loading = false;
 			}
 		},
-
 		async refreshCurrentPage() {
 			try {
 				const refreshed = await NewsService.getNewsPage(this.page);
-
 				this.batch = refreshed.map((news, index) => {
 					const previous = this.batch[index];
-
 					return {
 						...news,
 						hide: previous ? previous.hide : index !== 0
@@ -153,10 +146,18 @@ export default defineComponent({
 				return Promise.reject(err);
 			}
 		},
-
+		handleLike(news: NewsPageItem) {
+			if (!this.isAuthenticated) {
+				this.$toast.open({
+					message: this.$t('toast.loginToLike'),
+					type: 'info'
+				});
+				return;
+			}
+			this.toggleLike(news);
+		},
 		async toggleLike(news: NewsPageItem) {
 			if (!this.isAuthenticated) return;
-
 			try {
 				const result = await NewsService.toggleLike(news.id);
 				news.likes = result.likes;
@@ -176,12 +177,10 @@ export default defineComponent({
 .hide {
 	max-height: 50px !important;
 	overflow: hidden;
-
 	p {
 		display: none;
 	}
 }
-
 .overload {
 	display: block;
 	text-align: center;
@@ -189,7 +188,6 @@ export default defineComponent({
 	padding: 2px;
 	cursor: pointer;
 }
-
 .bloc {
 	background-image: url('../assets/background/bloc_news.webp');
 	width: 90%;
@@ -205,7 +203,11 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
-
+	.newsLike.disabled,
+	.counter.disabled {
+		cursor: default;
+		opacity: 0.85;
+	}
 	.missingText {
 		color: #f4e4bc;
 		line-height: 1.6;
@@ -218,11 +220,9 @@ export default defineComponent({
 		position: relative;
 		overflow: hidden;
 	}
-
 	.markdown {
 		color: #f4e4bc;
 		line-height: 1.6;
-
 		:deep(.markdown-body) {
 			background: linear-gradient(145deg, #8b4513, #a0522d);
 			border-radius: 12px;
@@ -233,7 +233,6 @@ export default defineComponent({
 			position: relative;
 			overflow: hidden;
 		}
-
 		:deep(h1),
 		:deep(h2),
 		:deep(h3),
