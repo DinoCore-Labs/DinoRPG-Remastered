@@ -1,7 +1,7 @@
 <template>
 	<div class="mainpage">
 		<div class="mainpage-header">
-			<a @click="goToMainPage()" class="linkHome"></a>
+			<a @click="goToNewsPage()" class="linkHome"></a>
 			<LeftPanel v-if="showLeftPanel" />
 			<div class="mainpage-center">
 				<RouterView />
@@ -27,9 +27,9 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		async goToMainPage() {
+		async goToNewsPage() {
 			this.$router.push({
-				name: 'MainPage'
+				name: 'NewsPage'
 			});
 		}
 	}
