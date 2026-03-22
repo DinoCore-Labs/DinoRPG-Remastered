@@ -32,7 +32,6 @@ export const AdminNewsService = {
 		const formData = new FormData();
 		formData.append('image', image);
 		formData.append('payload', JSON.stringify(payload));
-
 		return http()
 			.post('/admin/news', formData)
 			.then(res => Promise.resolve(res.data))

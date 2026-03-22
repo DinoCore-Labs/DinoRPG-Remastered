@@ -32,7 +32,11 @@ export async function parseCreateMultipartNewsPayload(req: FastifyRequest): Prom
 	}
 
 	const parsed = createNewsBodySchema.safeParse(payload);
+
 	if (!parsed.success) {
+		console.log('CREATE NEWS PAYLOAD ERROR');
+		console.log(JSON.stringify(parsed.error.flatten(), null, 2));
+		console.log('RAW PAYLOAD:', JSON.stringify(payload, null, 2));
 		throw new ExpectedError('Invalid news payload');
 	}
 
@@ -63,7 +67,11 @@ export async function parseUpdateMultipartNewsPayload(req: FastifyRequest): Prom
 	}
 
 	const parsed = updateNewsBodySchema.safeParse(payload);
+
 	if (!parsed.success) {
+		console.log('UPDATE NEWS PAYLOAD ERROR');
+		console.log(JSON.stringify(parsed.error.flatten(), null, 2));
+		console.log('RAW PAYLOAD:', JSON.stringify(payload, null, 2));
 		throw new ExpectedError('Invalid news payload');
 	}
 

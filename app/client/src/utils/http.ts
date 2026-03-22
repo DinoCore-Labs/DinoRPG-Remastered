@@ -6,9 +6,9 @@ export const API_BASE = `${API_SERVER}api`;
 export function http(): AxiosInstance {
 	return axios.create({
 		baseURL: API_BASE,
-		withCredentials: true,
-		headers: {
+		withCredentials: true
+		/*headers: {
 			'Content-Type': 'application/json'
-		}
+		}*/
 	});
 }
