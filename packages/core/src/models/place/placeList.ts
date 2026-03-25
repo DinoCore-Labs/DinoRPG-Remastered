@@ -1,12 +1,12 @@
 //import { DinozStatusId } from '../dinoz/statusList.js';
 import { DinozStatusId } from '../dinoz/statusList.js';
+import { Condition } from '../enums/ConditionType.js';
 import { GatherType } from '../enums/GatherType.js';
 import { GroundEnum } from '../enums/GroundEnum.js';
 import { MapZone } from '../enums/MapZone.js';
 import { Comparator, ConditionEnum, Operator } from '../enums/Parser.js';
 //import { Comparator, ConditionEnum, Operator } from '../enums/Parser.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
-import { Condition } from '../utils/condition.js';
 //import { Scenario } from '../enums/Scenario.mjs';
 //import { MissionID } from '../missions/missionList.mjs';
 

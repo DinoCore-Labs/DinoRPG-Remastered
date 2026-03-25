@@ -8,7 +8,7 @@ export enum ConditionEnum {
 	POSSESS_INGREDIENT = 'hasingr',
 	POSSESS_OBJECT = 'hasobject',
 	ACTIVE = 'active',
-	PLAYER_EPIC = 'uvar',
+	PLAYER_EPIC = 'epic',
 	RANDOM = 'drand',
 	HOUR = 'hour',
 	TAG = 'tag',
@@ -37,7 +37,9 @@ export enum ConditionEnum {
 	GIVE_ITEM = 'give_item',
 	CURRENT_STEP = 'current_step',
 	DINOZ_COUNT = 'dinoz_count',
-	PLAYER_POINT = 'player_point'
+	PLAYER_POINT = 'player_point',
+	UVAR = 'uvar',
+	TAB = 'tab'
 }
 
 export enum TriggerEnum {
