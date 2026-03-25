@@ -12,9 +12,9 @@ export function conditionParser(condition: Condition, user: PlayerForConditionCh
 	const MIN_LEVEL = condition[ConditionEnum.MINLEVEL];
 	const MAX_LEVEL = condition[ConditionEnum.MAXLEVEL];
 	const STATUS = condition[ConditionEnum.STATUS];
-	//const FINISHED_MISSION = condition[ConditionEnum.FINISHED_MISSION];
+	const FINISHED_MISSION = condition[ConditionEnum.FINISHED_MISSION];
 	const SKILL = condition[ConditionEnum.SKILL];
-	//const SCENARIO = condition[ConditionEnum.SCENARIO];
+	const SCENARIO = condition[ConditionEnum.SCENARIO];
 	const POSSESS_OBJECT = condition[ConditionEnum.POSSESS_OBJECT];
 	const PLAYER_EPIC = condition[ConditionEnum.PLAYER_EPIC];
 	const RANDOM = condition[ConditionEnum.RANDOM];

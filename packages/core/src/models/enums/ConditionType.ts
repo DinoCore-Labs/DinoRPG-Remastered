@@ -9,14 +9,14 @@ export type Condition = {
 	[Operator.NOT]?: Condition;
 	[ConditionEnum.MINLEVEL]?: number;
 	[ConditionEnum.MAXLEVEL]?: number;
-	//[ConditionEnum.FINISHED_MISSION]?: MissionID;
 	[ConditionEnum.SKILL]?: number;
 	[ConditionEnum.POSSESS_OBJECT]?: number;
 	[ConditionEnum.COLLEC]?: number;
 	[ConditionEnum.STATUS]?: number;
 	[ConditionEnum.RANDOM]?: number;
 	[ConditionEnum.DINOZ_LIFE]?: [Comparator, number];
-	//[ConditionEnum.SCENARIO]?: [Scenario, number, '+' | '-' | '='];
+	[ConditionEnum.SCENARIO]?: [string, Comparator, number];
+	[ConditionEnum.FINISHED_MISSION]?: number;
 	[ConditionEnum.CURRENT_MISSION]?: number;
 	[ConditionEnum.POSSESS_INGREDIENT]?: [Ingredient, Comparator, number];
 	[ConditionEnum.ACTIVE]?: boolean;
