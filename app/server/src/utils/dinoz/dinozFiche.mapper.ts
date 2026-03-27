@@ -1,10 +1,10 @@
 import { DinozFiche, DinozFicheLite, DinozPublicFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { DinozRestInfos } from '@dinorpg/core/models/dinoz/dinozRest.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
+import { Condition } from '@dinorpg/core/models/enums/ConditionType.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { placeList } from '@dinorpg/core/models/place/placeList.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
-import { Condition } from '@dinorpg/core/models/utils/condition.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getMaxXp, getRace } from '@dinorpg/core/utils/dinozUtils.js';
 
