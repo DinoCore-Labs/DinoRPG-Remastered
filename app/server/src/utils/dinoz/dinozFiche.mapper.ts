@@ -20,7 +20,7 @@ import {
 	UserRewards
 } from '../../../../prisma/index.js';
 import { checkCondition } from '../checkCondition.js';
-import { PlayerForConditionCheck } from '../user/userConditionCheck.js';
+import { UserForConditionCheck } from '../user/userConditionCheck.js';
 
 type Config = {
 	dinoz: {
@@ -240,6 +240,6 @@ export const calculateXPBonus = (
 	return Math.round(xp * f);
 };
 
-export const canGoToThisPlace = (user: PlayerForConditionCheck, condition: Condition, activeDinoz: number) => {
+export const canGoToThisPlace = (user: UserForConditionCheck, condition: Condition, activeDinoz: number) => {
 	return checkCondition(condition, user, activeDinoz);
 };

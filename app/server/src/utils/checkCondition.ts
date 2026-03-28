@@ -2,11 +2,11 @@ import { Condition } from '@dinorpg/core/models/enums/ConditionType.js';
 import { Operator } from '@dinorpg/core/models/enums/Parser.js';
 
 import { conditionParser } from './conditionParser.js';
-import { PlayerForConditionCheck } from './user/userConditionCheck.js';
+import { UserForConditionCheck } from './user/userConditionCheck.js';
 
 export function checkCondition(
 	condition: Condition | undefined,
-	user: PlayerForConditionCheck,
+	user: UserForConditionCheck,
 	activeDinoz: number
 ): boolean {
 	if (!condition) return true;

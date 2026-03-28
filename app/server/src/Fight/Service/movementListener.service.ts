@@ -3,11 +3,11 @@ import { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 
 import { User } from '../../../../prisma/index.js';
 import { DinozToGetFighter } from '../../utils/fight/fight.mapper.js';
-import { PlayerForConditionCheck } from '../../utils/user/userConditionCheck.js';
+import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
 import { DinozToRewardFight } from './fight.service.js';
 
 export async function movementListener(
-	user: Pick<User, 'id' /*| 'teacher' | 'cooker'*/> & PlayerForConditionCheck,
+	user: Pick<User, 'id' | 'teacher' | 'cooker'> & UserForConditionCheck,
 	team: (DinozToGetFighter & DinozToRewardFight) /*& DinozToGetActualStep*/[],
 	finalPlace: PlaceEnum,
 	activeDinoz: number

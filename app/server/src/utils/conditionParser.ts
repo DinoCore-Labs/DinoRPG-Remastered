@@ -3,9 +3,9 @@ import { Comparator, ConditionEnum } from '@dinorpg/core/models/enums/Parser.js'
 import { placeList } from '@dinorpg/core/models/place/placeList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { PlayerForConditionCheck } from './user/userConditionCheck.js';
+import { UserForConditionCheck } from './user/userConditionCheck.js';
 
-export function conditionParser(condition: Condition, user: PlayerForConditionCheck, activeDinoz: number): boolean {
+export function conditionParser(condition: Condition, user: UserForConditionCheck, activeDinoz: number): boolean {
 	let result;
 	const GOTO = condition[ConditionEnum.GOTO];
 	const PLACE_IS = condition[ConditionEnum.PLACE_IS];
