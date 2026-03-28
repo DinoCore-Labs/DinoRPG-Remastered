@@ -1,10 +1,12 @@
+import { Condition } from '@dinorpg/core/models/conditions/conditions.js';
+import { defaultConditionKeyMaps } from '@dinorpg/core/models/conditions/defaultConditionKeyMaps.js';
 import { DinozFiche, DinozFicheLite, DinozPublicFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { DinozRestInfos } from '@dinorpg/core/models/dinoz/dinozRest.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
-import { Condition } from '@dinorpg/core/models/enums/ConditionType.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { placeList } from '@dinorpg/core/models/place/placeList.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
+import { evalCondition } from '@dinorpg/core/models/utils/conditions/evalConditions.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getMaxXp, getRace } from '@dinorpg/core/utils/dinozUtils.js';
 
@@ -19,7 +21,7 @@ import {
 	UserItems,
 	UserRewards
 } from '../../../../prisma/index.js';
-import { checkCondition } from '../checkCondition.js';
+import { buildConditionContext } from '../conditions/buildConditionContext.js';
 import { UserForConditionCheck } from '../user/userConditionCheck.js';
 
 type Config = {
@@ -78,6 +80,7 @@ export const toDinozFiche = (
 		throw new ExpectedError('Inexistant dinoz');
 	}
 	userForCondition.dinoz = [dinoz];
+	const conditionContext = buildConditionContext(userForCondition, dinoz.id, defaultConditionKeyMaps);
 	return {
 		id: dinoz.id,
 		name: dinoz.name,
@@ -100,15 +103,17 @@ export const toDinozFiche = (
 			dinoz.state !== null || !dinoz.fight || dinoz.leaderId
 				? []
 				: actualPlace(dinoz)
-						.borderPlace.map(placeId => {
-							const place = Object.values(placeList).find(place => place.placeId === placeId);
-							if (!place) {
-								throw new Error(`Place ${placeId} doesn't exist.`);
+						.moves.filter(move => {
+							if (move.condition && !evalCondition(conditionContext, move.condition)) {
+								return false;
 							}
-							return place;
+							const targetPlace = placeList[move.target];
+							if (!targetPlace) {
+								throw new Error(`Place ${move.target} doesn't exist.`);
+							}
+							return true;
 						})
-						.filter(place => !place.conditions || checkCondition(place.conditions, userForCondition, dinoz.id))
-						.map(place => place.placeId),
+						.map(move => move.target),
 		nbrUpFire: dinoz.nbrUpFire,
 		nbrUpWood: dinoz.nbrUpWood,
 		nbrUpWater: dinoz.nbrUpWater,
@@ -241,5 +246,6 @@ export const calculateXPBonus = (
 };
 
 export const canGoToThisPlace = (user: UserForConditionCheck, condition: Condition, activeDinoz: number) => {
-	return checkCondition(condition, user, activeDinoz);
+	const context = buildConditionContext(user, activeDinoz, defaultConditionKeyMaps);
+	return evalCondition(context, condition);
 };

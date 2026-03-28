@@ -1,19 +1,9 @@
 import { ConditionsContext } from '@dinorpg/core/models/conditions/conditionsContext.js';
+import { ConditionKeyMaps } from '@dinorpg/core/models/conditions/defaultConditionKeyMaps.js';
 import { dinozStatusKeyById } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { UserForConditionCheck } from '../user/userConditionCheck.js';
-
-export type ConditionKeyMaps = {
-	itemKeyById?: Partial<Record<number, string>>;
-	skillKeyById?: Partial<Record<number, string>>;
-	ingredientKeyById?: Partial<Record<number, string>>;
-	rewardKeyById?: Partial<Record<number, string>>;
-	placeKeyById?: Partial<Record<number, string>>;
-	missionKeyById?: Partial<Record<number, string>>;
-	getRaceKey?: (raceId: string | number | null | undefined) => string | undefined;
-	getFriendKey?: (friendId: string | number | null | undefined) => string | undefined;
-};
 
 export type BuildConditionContextOptions = {
 	now?: Date;
