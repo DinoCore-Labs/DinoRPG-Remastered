@@ -5,7 +5,7 @@
 	"type": "module",
 	"main": "dist/index.js",
 	"scripts": {
-		"dev": "tsc-watch --build ./tsconfig.json --onSuccess \"node dist/index.js\"",
+		"build": "tsc-watch --build ./tsconfig.json --onSuccess \"node dist/index.js\"",
 		"deploy": "tsc src/deploy.ts"
 	},
 	"keywords": [],

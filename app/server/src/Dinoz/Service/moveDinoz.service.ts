@@ -12,7 +12,7 @@ import { fightMonstersAtPlace } from '../../Fight/Service/fight.service.js';
 import { movementListener } from '../../Fight/Service/movementListener.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { canGoToThisPlace, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
-import { PlayerForConditionCheck } from '../../utils/user/userConditionCheck.js';
+import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../Controller/getDinozFight.controller.js';
 import { updateDinoz, updateMultipleDinoz } from '../Controller/updateDinoz.controller.js';
@@ -86,7 +86,7 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 	// Check if condition to go to desired place are fulfilled for dinoz and followers
 	if (desiredPlace.conditions) {
 		for (const member of team) {
-			const memberToTest: PlayerForConditionCheck = {
+			const memberToTest: UserForConditionCheck = {
 				id: user.id,
 				items: user.items,
 				rewards: user.rewards,

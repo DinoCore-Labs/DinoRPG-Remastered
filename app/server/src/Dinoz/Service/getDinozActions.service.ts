@@ -14,7 +14,7 @@ import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { prisma } from '../../prisma.js';
 import { checkCondition } from '../../utils/checkCondition.js';
 import { canLevelUp, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
-import { PlayerForConditionCheck } from '../../utils/user/userConditionCheck.js';
+import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
 
 /**
  * @summary Get available action from dinoz
@@ -40,7 +40,7 @@ export async function getAvailableActions(
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkills, 'skillId'>[];
 	},
-	user: PlayerForConditionCheck
+	user: UserForConditionCheck
 ) {
 	const availableActions: ActionFiche[] = [];
 

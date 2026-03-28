@@ -7,7 +7,7 @@ import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 
 import { Prisma, UserGather } from '../../../../prisma/index.js';
 import { checkCondition } from '../checkCondition.js';
-import { PlayerForConditionCheck } from '../user/userConditionCheck.js';
+import { UserForConditionCheck } from '../user/userConditionCheck.js';
 
 export const initializeGatherGrid = (userId: string, placeId: number, gridInformation: GatherData) => {
 	const data: Prisma.UserGatherCreateInput = {
@@ -65,7 +65,7 @@ export const getPublicGrid = (grid: Pick<UserGather, 'grid'>) => {
 
 export const discoverBox = (
 	grid: Pick<UserGather, 'grid'>,
-	user: PlayerForConditionCheck,
+	user: UserForConditionCheck,
 	gridInformation: GatherData,
 	...box: [number, number][]
 ): {
