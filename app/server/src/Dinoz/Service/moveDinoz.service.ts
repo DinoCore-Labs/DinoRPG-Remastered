@@ -3,7 +3,8 @@ import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { TemporaryStatus } from '@dinorpg/core/models/enums/TemporaryStatus.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
-import { placeList, SWAMP_FLOODED_DAYS } from '@dinorpg/core/models/place/placeList.js';
+import { SWAMP_FLOODED_DAYS } from '@dinorpg/core/models/place/placeList.js';
+import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
@@ -73,18 +74,21 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 	}
 
 	const currentPlace = actualPlace(dinoz);
-	const desiredPlace = Object.values(placeList).find(p => p.placeId === placeId);
+	const desiredPlace = Object.values(placeListv2).find(p => p.placeId === placeId);
 
 	if (!desiredPlace) throw new ExpectedError(`Dinoz ${dinozId} want to go in the void`);
 	if (currentPlace.placeId === desiredPlace.placeId) {
 		throw new ExpectedError(`Dinoz ${dinozId} is already at ${currentPlace.name}`);
 	}
-	if (!currentPlace.borderPlace.includes(desiredPlace.placeId)) {
+
+	const moveToDesiredPlace = currentPlace.moves.find(move => move.target === desiredPlace.placeId);
+
+	if (!moveToDesiredPlace) {
 		throw new ExpectedError(`${currentPlace.name} is not adjacent with ${desiredPlace.name}`);
 	}
 
 	// Check if condition to go to desired place are fulfilled for dinoz and followers
-	if (desiredPlace.conditions) {
+	if (desiredPlace.condition) {
 		for (const member of team) {
 			const memberToTest: UserForConditionCheck = {
 				id: user.id,
@@ -94,14 +98,14 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 				ranking: user.ranking,
 				dinoz: [member]
 			};
-			if (!canGoToThisPlace(memberToTest, desiredPlace.conditions, member.id)) {
+			if (moveToDesiredPlace.condition && !canGoToThisPlace(memberToTest, moveToDesiredPlace.condition, member.id)) {
 				throw new ExpectedError('missingStatus');
 			}
 		}
 	}
 
-	// If dinoz leave the map, replace by the good place
-	const finalPlace = desiredPlace.alias ?? desiredPlace.placeId;
+	// If dinoz leaves the map, replace by the good place
+	const finalPlace = desiredPlace.gotoPlaceId ?? desiredPlace.placeId;
 
 	// Marais Collant - No movement days.
 	if (SWAMP_FLOODED_DAYS.includes(dayOfWeek) && currentPlace.placeId === PlaceEnum.MARAIS_COLLANT) {

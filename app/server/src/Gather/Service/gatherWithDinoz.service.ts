@@ -52,20 +52,23 @@ export async function gatherWithDinozHandler(
 
 	const place = actualPlace(dinozData);
 
-	const typeOfGridArray = Object.entries(GatherType).filter(g => {
-		if (g[1] === place.gather || g[1] === place.specialGather) return true;
-		return false;
-	});
+	const requestedGatherAction = req.body.type.toString().toLowerCase();
+	const availableGatherTypes = place.gathers ?? [];
 
-	const typeOfGrid = typeOfGridArray.find(
-		g => g[0].toLowerCase().replace(/[0-9]/g, '') === req.body.type.toString().toLowerCase()
-	);
+	const typeOfGridEntry = Object.entries(GatherType)
+		.filter(([, value]) => typeof value === 'number')
+		.find(([key, value]) => {
+			const gatherType = value as GatherType;
+			const normalizedKey = key.toLowerCase().replace(/[0-9]/g, '');
 
-	if (!typeOfGrid) {
+			return availableGatherTypes.includes(gatherType) && normalizedKey === requestedGatherAction;
+		});
+
+	if (!typeOfGridEntry) {
 		throw new ExpectedError(`This type of grid doesn't exist`);
 	}
 
-	const idOfTypeOfGrid = Number(typeOfGrid[1]);
+	const idOfTypeOfGrid = typeOfGridEntry[1] as GatherType;
 
 	const userGrid = await getCommonGatherInfo(authed.id);
 
