@@ -5,7 +5,7 @@ import { DinozForMaxXp } from '../models/dinoz/dinozXP.js';
 import { raceList } from '../models/dinoz/raceList.js';
 import { DinozStatusId } from '../models/dinoz/statusList.js';
 import { Stat } from '../models/enums/SkillStat.js';
-import { placeList } from '../models/place/placeList.js';
+import { placeListv2 } from '../models/place/placeListv2.js';
 import { BaseSpecialStats, SpecialStat } from '../models/skills/getSpecialStats.js';
 import { Skill, skillList } from '../models/skills/skillList.js';
 import { ExpectedError } from '../models/utils/expectedError.js';
@@ -35,7 +35,7 @@ export const getMaxXp = (dinoz: DinozForMaxXp): number => {
 export type HasPlaceId = { placeId: number };
 
 export const actualPlace = (dinoz: HasPlaceId) => {
-	const place = Object.values(placeList).find(p => p.placeId === dinoz.placeId);
+	const place = Object.values(placeListv2).find(p => p.placeId === dinoz.placeId);
 
 	if (!place) {
 		throw new Error(`Place ${dinoz.placeId} doesn't exist.`);

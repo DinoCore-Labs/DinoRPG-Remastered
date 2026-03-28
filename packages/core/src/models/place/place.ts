@@ -1,5 +1,5 @@
-import { placeList } from './placeList.js';
+import { placeListv2 } from './placeListv2.js';
 
-export type Place = (typeof placeList)[keyof typeof placeList] & {
+export type Place = (typeof placeListv2)[keyof typeof placeListv2] & {
 	borderPlace: readonly number[];
 };
