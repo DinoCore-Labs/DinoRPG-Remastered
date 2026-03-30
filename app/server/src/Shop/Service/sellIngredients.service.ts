@@ -1,15 +1,16 @@
+import { defaultConditionKeyMaps } from '@dinorpg/core/models/conditions/defaultConditionKeyMaps.js';
 import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
-import { shopList } from '@dinorpg/core/models/shop/shopList.js';
+import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyRequest } from 'fastify';
 
 import { getDinozFromItinerantShop } from '../../Dinoz/Controller/getDinozFromItinerantShop.controller.js';
 import { decreaseIngredientQuantity } from '../../Inventory/Controller/addIngredient.controller.js';
 import { getUserIngredientDataRequest } from '../../Inventory/Controller/getUserIngredient.controller.js';
-import { getAllIngredientsData } from '../../Inventory/Service/getAllIngredientsData.service.js';
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { addMoney } from '../../User/Controller/money.controller.js';
-import { checkCondition } from '../../utils/checkCondition.js';
+import { buildConditionContext } from '../../utils/conditions/buildConditionContext.js';
+import { checkCondition } from '../../utils/conditions/checkCondition.js';
 
 type DinozParams = {
 	dinozId: string;
@@ -48,9 +49,11 @@ export async function sellIngredient(
 	const itinerant = await getSpecificSecret('itinerant');
 	if (!itinerant) throw new ExpectedError(`No itinerant merchant place found.`);
 
-	const itinerantShop = Object.values(shopList)
+	const conditionContext = buildConditionContext(player, dinozId, defaultConditionKeyMaps);
+
+	const itinerantShop = Object.values(shopListV2)
 		.filter(shop => shop.type === ShopType.ITINERANT)
-		.find(s => checkCondition(s.condition, player, dinozId));
+		.find(shop => checkCondition(shop.condition, conditionContext));
 
 	if (!itinerantShop || !player.dinoz.some(d => d.placeId === Number(itinerant.value))) {
 		throw new ExpectedError(`This dinoz cannot access itinerant shop`);

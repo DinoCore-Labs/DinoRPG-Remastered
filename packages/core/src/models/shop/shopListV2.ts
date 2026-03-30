@@ -882,6 +882,7 @@ export const shopListV2: Readonly<Record<string, ShopFiche>> = {
       <desc>Gégé met à votre disposition les objets qu'il a trouvé aux ruines du technodôme englouti. Mais attention, il ne risque pas sa peau pour de simple pièces d'or, il aime surtout les napodinoz !
 		  Aucune reconnaissance envers son sauveur ce Gégé ! Heureusement, il a aussi des objets plus abordables !</desc>
       */
-		]
+		],
+		condition: c('scenario(caush,43+)')
 	}
 };
