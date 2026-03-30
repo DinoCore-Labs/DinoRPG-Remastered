@@ -3,7 +3,6 @@ import { Action, ActionFiche, actionList } from '@dinorpg/core/models/dinoz/dino
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
-import { shopList } from '@dinorpg/core/models/shop/shopList.js';
 import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
