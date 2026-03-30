@@ -1,9 +1,23 @@
 <template>
 	<Transition>
 		<div class="modal-background">
-			<div v-if="rewardList.ingredients.length === 0 && rewardList.item.length === 0">
+			<div v-if="rewardList.ingredients.length === 0 && rewardList.item.length === 0 && rewardList.gold === 0">
 				<span class="nothing">{{ $t('gather.nothing') }}</span>
 			</div>
+
+			<div v-if="rewardList.gold > 0" class="item-container">
+				<Tippy theme="normal" tag="img" :src="getImgURL('item', 'item_gold')" alt="gold">
+					<template #content>
+						<h1 v-html="formatContent($t('items.name.gold'))" />
+						<p v-html="formatContent($t('items.description.gold', { quantity: rewardList.gold }))" />
+					</template>
+				</Tippy>
+				<div class="name-info">
+					<span>{{ rewardList.gold }} </span>
+					<span>{{ formatContent($t('items.name.gold')) }}</span>
+				</div>
+			</div>
+
 			<div v-for="ingredient in rewardList.ingredients" :key="ingredient.ingredientId" class="ingredient-container">
 				<Tippy
 					theme="normal"
@@ -18,16 +32,16 @@
 					</template>
 				</Tippy>
 				<div :class="{ 'name-info': true, 'is-max': isMaxQuantity(ingredient.ingredientId) }">
-					<span v-if="ingredient.quantity && ingredient.quantity > 1">x{{ ingredient.quantity }}{{ ' ' }}</span>
+					<span v-if="ingredient.quantity && ingredient.quantity > 1">x{{ ingredient.quantity }} </span>
 					<span>
 						{{ formatContent($t(`ingredients.name.${ingredient.name}`)) }}
-						{{ ' ' }}
 					</span>
 					<span class="ingredient-count">
 						({{ `${getIngredientCount(ingredient.ingredientId)}/${ingredient.maxQuantity}` }})
 					</span>
 				</div>
 			</div>
+
 			<div v-for="item in rewardList.item" :key="item.id" class="item-container">
 				<Tippy
 					theme="normal"
@@ -45,11 +59,11 @@
 					</template>
 				</Tippy>
 				<div class="name-info">
-					<span v-if="item.quantity && item.quantity > 1">x{{ item.quantity }}{{ ' ' }}</span>
-					<span v-if="getItemName(item.id) === 'gold'">{{ item.price }}{{ ' ' }}</span>
+					<span v-if="item.quantity && item.quantity > 1">x{{ item.quantity }} </span>
 					<span>{{ formatContent($t(`items.name.${getItemName(item.id)}`)) }}</span>
 				</div>
 			</div>
+
 			<a class="button" @click="$emit('close')">
 				{{ $t('modal.continue') }}
 			</a>
@@ -61,7 +75,7 @@
 import { defineComponent, type PropType } from 'vue';
 import type { GatherRewards } from '@dinorpg/core/models/gather/gatherRewards.js';
 import { userStore } from '../../store/userStore';
-import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { itemList } from '@dinorpg/core/models/items/itemList.js';
 
 export default defineComponent({
 	name: 'GatherRewardModal',
@@ -75,56 +89,29 @@ export default defineComponent({
 	data() {
 		return {
 			userStore: userStore(),
-			rewardList: { item: [], ingredients: [] } satisfies GatherRewards as GatherRewards,
+			rewardList: { item: [], ingredients: [], gold: 0 } satisfies GatherRewards as GatherRewards,
 			itemList: itemList
 		};
 	},
 	mounted() {
 		this.rewardList = this.rewards;
-		for (const item of this.rewardList.item) {
-			const goldId = [
-				Item.GOLD100,
-				Item.GOLD500,
-				Item.GOLD1000,
-				Item.GOLD2000,
-				Item.GOLD2500,
-				Item.GOLD3000,
-				Item.GOLD5000,
-				Item.GOLD10000,
-				Item.GOLD20000
-			];
-			if (goldId.includes(item.id)) {
-				this.userStore.setGold(item.price);
-			}
+
+		if (this.rewardList.gold > 0) {
+			this.userStore.setGold(this.rewardList.gold);
 		}
 	},
 	methods: {
-		isGoldItem(itemId: number): boolean {
-			const goldIds = [
-				Item.GOLD100,
-				Item.GOLD500,
-				Item.GOLD1000,
-				Item.GOLD2000,
-				Item.GOLD2500,
-				Item.GOLD3000,
-				Item.GOLD5000,
-				Item.GOLD10000,
-				Item.GOLD20000
-			];
-			return goldIds.includes(itemId);
+		getItemById(itemId: number) {
+			return Object.values(this.itemList).find(item => item.itemId === itemId);
 		},
-		getItemImageKey(itemId: Item): string {
-			if (this.isGoldItem(itemId)) return 'gold';
-			return this.itemList[itemId].name.toLowerCase();
+		getItemImageKey(itemId: number): string {
+			return this.getItemById(itemId)?.name.toLowerCase() ?? 'unknown';
 		},
-		getItemName(itemId: Item): string {
-			return this.itemList[itemId].name.toLowerCase();
+		getItemName(itemId: number): string {
+			return this.getItemById(itemId)?.name.toLowerCase() ?? 'unknown';
 		},
-		getItemDescriptionKey(itemId: Item) {
-			if (this.itemList[itemId].itemId >= 120 && this.itemList[itemId].itemId <= 129) {
-				return 'gold';
-			}
-			return this.itemList[itemId].name;
+		getItemDescriptionKey(itemId: number) {
+			return this.getItemById(itemId)?.name ?? 'unknown';
 		},
 		isMaxQuantity(ingredientId: number) {
 			const ingredient = this.ingredientsAtMaxQuantity.find(ingre => ingre.ingredientId === ingredientId);
