@@ -4,6 +4,7 @@ import { ItemFicheDTO } from '../items/itemFiche.js';
 export interface GatherRewards {
 	item: ItemFicheDTO[];
 	ingredients: IngredientFiche[];
+	gold: number;
 }
 
 export const GRID_FINISHED_GOLD_REWARD = 1000;

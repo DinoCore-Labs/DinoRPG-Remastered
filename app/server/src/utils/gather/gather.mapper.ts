@@ -1,51 +1,90 @@
+import { ConditionsContext } from '@dinorpg/core/models/conditions/conditionsContext.js';
 import { GatherType } from '@dinorpg/core/models/enums/GatherType.js';
-import { GatherData } from '@dinorpg/core/models/gather/gatherData.js';
-import { gatherList } from '@dinorpg/core/models/gather/gatherList.js';
+import { GatherResult } from '@dinorpg/core/models/gather/gatherResult.js';
 import { GatherRewards } from '@dinorpg/core/models/gather/gatherRewards.js';
 import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
-import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import { evalCondition } from '@dinorpg/core/models/utils/conditions/evalConditions.js';
 
 import { Prisma, UserGather } from '../../../../prisma/index.js';
-import { checkCondition } from '../checkCondition.js';
-import { UserForConditionCheck } from '../user/userConditionCheck.js';
+import {
+	decodeGatherReward,
+	EMPTY_GATHER_CELL,
+	encodeGold,
+	encodeIngredient,
+	encodeItem,
+	OPENED_GATHER_CELL
+} from './gather.codec.js';
+import { CompiledGatherData, getCompiledGather } from './gather.compiler.js';
 
-export const initializeGatherGrid = (userId: string, placeId: number, gridInformation: GatherData) => {
-	const data: Prisma.UserGatherCreateInput = {
-		user: { connect: { id: userId } },
-		place: placeId,
-		type: gridInformation.type
-	};
+function pickRandom<T>(values: T[]): T {
+	return values[Math.floor(Math.random() * values.length)]!;
+}
 
-	// Create arry with ingredientId. 0 for no element
+function buildRewardPool(gather: CompiledGatherData, context: ConditionsContext): number[] {
+	const pool: number[] = [];
 
-	let grid: number[] = new Array(gridInformation.size * gridInformation.size);
-	let ingredientCount = 0;
-
-	// Generate a list of ingredient
-	gridInformation.items.forEach(ingredient => {
-		const buffer = new Array(ingredient.startQuantity);
-		for (let i = 0; i < ingredient.startQuantity; i++) {
-			let ingredientId = ingredient.ingredientId[Math.floor(Math.random() * ingredient.ingredientId.length)];
-			if (ingredient.type === 'item') ingredientId += 1000;
-			buffer[i] = ingredientId;
+	for (const entry of gather.found) {
+		if (!evalCondition(context, entry.condition)) {
+			continue;
 		}
 
-		grid.splice(ingredientCount, ingredient.startQuantity, ...buffer);
-		ingredientCount += ingredient.startQuantity;
-	});
+		for (let index = 0; index < entry.count; index += 1) {
+			switch (entry.reward.kind) {
+				case 'ingredient':
+					pool.push(encodeIngredient(pickRandom(entry.reward.ids)));
+					break;
 
-	// Fill the empty spot with 0
-	grid = Array.from(grid, v => (v === undefined ? 0 : v));
+				case 'item':
+					pool.push(encodeItem(pickRandom(entry.reward.ids), entry.reward.quantity));
+					break;
 
-	// Shuffle the ingredient list
-	for (let i = grid.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[grid[i], grid[j]] = [grid[j], grid[i]];
+				case 'gold':
+					pool.push(encodeGold(entry.reward.amount));
+					break;
+			}
+		}
 	}
 
-	data.grid = grid;
+	return pool;
+}
 
-	return data;
+function shuffle<T>(values: T[]): T[] {
+	const cloned = [...values];
+
+	for (let index = cloned.length - 1; index > 0; index -= 1) {
+		const swapIndex = Math.floor(Math.random() * (index + 1));
+		[cloned[index], cloned[swapIndex]] = [cloned[swapIndex], cloned[index]];
+	}
+
+	return cloned;
+}
+
+export const initializeGatherGrid = (
+	userId: string,
+	placeId: number,
+	gather: CompiledGatherData,
+	context: ConditionsContext
+): Prisma.UserGatherCreateInput => {
+	const maxCells = gather.size * gather.size;
+	const pool = buildRewardPool(gather, context);
+
+	if (pool.length > maxCells) {
+		throw new Error(`Gather "${gather.id}" has ${pool.length} rewards for only ${maxCells} cells.`);
+	}
+
+	const grid = [...pool];
+
+	while (grid.length < maxCells) {
+		grid.push(EMPTY_GATHER_CELL);
+	}
+
+	return {
+		user: { connect: { id: userId } },
+		place: placeId,
+		type: gather.type,
+		grid: shuffle(grid)
+	};
 };
 
 export const hideGridIngredients = (grid: number[]) => {
@@ -56,80 +95,91 @@ export const hideGridIngredients = (grid: number[]) => {
 };
 
 export const getGridSize = (grid: Pick<UserGather, 'type'>) => {
-	return gatherList[grid.type as GatherType].size;
+	return getCompiledGather(grid.type as GatherType).size;
 };
 
 export const getPublicGrid = (grid: Pick<UserGather, 'grid'>) => {
-	return grid.grid.map(ingredient => (ingredient >= 0 ? 0 : -1));
+	return grid.grid.map(value => (value >= 0 ? 0 : -1));
 };
 
 export const discoverBox = (
 	grid: Pick<UserGather, 'grid'>,
-	user: UserForConditionCheck,
-	gridInformation: GatherData,
+	gather: CompiledGatherData,
 	...box: [number, number][]
-): {
-	grid: number[][];
-	rewards: GatherRewards;
-	isGridComplete: boolean;
-	goldReward: number;
-	ingredientsAtMaxQuantity: { ingredientId: number; quantity: number; isMaxQuantity: boolean }[];
-} => {
+): GatherResult => {
 	const flatReturnGrid = getPublicGrid(grid);
-	const rewards: GatherRewards = { item: [], ingredients: [] };
-	const isGridComplete = false;
-	const goldReward = 0;
-	const ingredientsAtMaxQuantity: { ingredientId: number; quantity: number; isMaxQuantity: boolean }[] = [];
-	for (let i = 0; i < box.length; i++) {
-		let ingredientId: number = grid.grid[box[i][0] * gridInformation.size + box[i][1]];
-		let itemCheck = false;
-		if (ingredientId > 1000) {
-			ingredientId -= 1000;
-			itemCheck = true;
-		}
-		flatReturnGrid[box[i][0] * gridInformation.size + box[i][1]] = -1;
 
-		if (itemCheck) {
-			const item = itemList[ingredientId as Item];
-			rewards.item.push({ id: item.itemId, price: item.price, maxQuantity: item.maxQuantity, quantity: 1 });
-		} else {
-			const ingredient = Object.values(ingredientList).find(
-				ingredientFiche => ingredientFiche.ingredientId === ingredientId
-			);
-			if (ingredient) {
-				const gridIngredient = gridInformation.items.filter(ing => ing.ingredientId.includes(ingredient.ingredientId));
-				if (gridIngredient.length < 1) throw new Error('Ingredient not found in gridInformation.items');
-				for (const possibleGater of gridIngredient) {
-					if (checkCondition(possibleGater.condition, user, user.dinoz[0].id)) {
-						ingredient.name = ingredient.name.toLowerCase();
-						rewards.ingredients.push(ingredient);
-					}
-				}
+	const rewards: GatherRewards = {
+		item: [],
+		ingredients: [],
+		gold: 0
+	};
+
+	const ingredientsAtMaxQuantity: { ingredientId: number; quantity: number; isMaxQuantity: boolean }[] = [];
+
+	for (const [x, y] of box) {
+		const index = x * gather.size + y;
+		const cellValue = grid.grid[index];
+
+		flatReturnGrid[index] = OPENED_GATHER_CELL;
+
+		const reward = decodeGatherReward(cellValue);
+		if (!reward) continue;
+
+		switch (reward.kind) {
+			case 'gold':
+				rewards.gold += reward.amount;
+				break;
+
+			case 'item': {
+				const item = Object.values(itemList).find(entry => entry.itemId === reward.itemId);
+				if (!item) break;
+
+				rewards.item.push({
+					id: item.itemId,
+					price: item.price,
+					maxQuantity: item.maxQuantity,
+					quantity: reward.quantity
+				});
+				break;
+			}
+
+			case 'ingredient': {
+				const ingredient = Object.values(ingredientList).find(entry => entry.ingredientId === reward.ingredientId);
+				if (!ingredient) break;
+
+				rewards.ingredients.push({
+					...ingredient,
+					name: ingredient.name.toLowerCase()
+				});
+				break;
 			}
 		}
 	}
 
-	// Unflatten the grid
-	const returnGrid = [];
-	for (let i = 0; i < flatReturnGrid.length; i += gridInformation.size) {
-		returnGrid.push(flatReturnGrid.slice(i, i + gridInformation.size));
+	const returnGrid: number[][] = [];
+	for (let index = 0; index < flatReturnGrid.length; index += gather.size) {
+		returnGrid.push(flatReturnGrid.slice(index, index + gather.size));
 	}
 
 	return {
 		grid: returnGrid,
-		rewards: rewards,
-		isGridComplete,
-		goldReward,
+		rewards,
+		isGridComplete: false,
+		gridCompletionGoldReward: 0,
 		ingredientsAtMaxQuantity
 	};
 };
 
 export const saveGrid = (grid: Pick<UserGather, 'grid' | 'type'>, ...box: [number, number][]) => {
-	for (let i = 0; i < box.length; i++) {
-		grid.grid[box[i][0] * getGridSize(grid) + box[i][1]] = -1;
+	const newGrid = [...grid.grid];
+	const size = getGridSize(grid);
+
+	for (const [x, y] of box) {
+		newGrid[x * size + y] = OPENED_GATHER_CELL;
 	}
 
 	return {
-		grid: grid.grid
+		grid: newGrid
 	};
 };
