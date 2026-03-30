@@ -232,7 +232,9 @@ export async function getAvailableActions(
 
 	// Special gather
 	for (const gatherFound of specialGatherEntries) {
-		if (checkCondition(gatherFound.condition, currentContext)) {
+		const passes = checkCondition(gatherFound.condition, currentContext);
+
+		if (passes) {
 			pushUniqueAction(availableActions, getGatherActionFiche(gatherFound));
 		}
 	}
@@ -295,6 +297,11 @@ export async function getAvailableActions(
 	) {
 		availableActions.push(actionList[Action.CONGEL]);
 	}
+
+	console.log(
+		`Available actions for dinoz ${dinoz.id}:`,
+		availableActions.map(a => a.name)
+	);
 
 	return availableActions;
 }

@@ -37,7 +37,7 @@ export const placeListv2 = definePlaces({
 		name: 'univ',
 		map: MapZone.DINOLAND,
 		moves: [{ target: PlaceEnum.DINOVILLE }, { target: PlaceEnum.PAPY_JOE }, { target: PlaceEnum.COLLINES_ESCARPEES }],
-		gathers: [GatherType.CUEILLE1],
+		gathers: [GatherType.CUEILLE1, GatherType.DAILY],
 		ground: GroundEnum.NONE,
 		background: 's_univ',
 		itinerant: true
