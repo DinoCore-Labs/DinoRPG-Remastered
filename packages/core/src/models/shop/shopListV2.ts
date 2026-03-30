@@ -1,13 +1,14 @@
 import { DinozStatusId } from '../dinoz/statusList.js';
-import { DayEnum } from '../enums/DayType.js';
-import { ConditionEnum } from '../enums/Parser.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
 import { ShopType } from '../enums/ShopType.js';
 import { Ingredient } from '../ingredients/ingredientList.js';
 import { Item, itemList } from '../items/itemList.js';
+import { parseCondition } from '../utils/conditions/parseConditions.js';
 import { ItemShopType, ShopFiche } from './shopFiche.js';
 
-export const shopList: Readonly<Record<string, ShopFiche>> = {
+const c = (source: string) => parseCondition(source);
+
+export const shopListV2: Readonly<Record<string, ShopFiche>> = {
 	// Flying Shop
 	FLYING_SHOP: {
 		shopId: 1,
@@ -194,9 +195,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				type: ItemShopType.ITEM
 			}
 		],
-		condition: {
-			[ConditionEnum.POSSESS_OBJECT]: itemList[Item.GOLDEN_NAPODINO].itemId
-		}
+		condition: c(`hasobject(${itemList[Item.GOLDEN_NAPODINO].name})`)
 	},
 	// Cursed Shop, only accessible by cursed dinoz
 	CURSED_SHOP: {
@@ -216,9 +215,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				type: ItemShopType.ITEM
 			}
 		],
-		condition: {
-			[ConditionEnum.STATUS]: DinozStatusId.CURSED
-		}
+		condition: c(`status(${DinozStatusId.CURSED})`)
 	},
 	// Fruity Shop
 	FRUITY_SHOP: {
@@ -233,9 +230,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				type: ItemShopType.ITEM
 			}
 		],
-		condition: {
-			[ConditionEnum.STATUS]: DinozStatusId.FLOWERING_BRANCH
-		}
+		condition: c(`status(${DinozStatusId.FLOWERING_BRANCH})`)
 	},
 	// Razad's Shop
 	RAZADS_SHOP: {
@@ -345,7 +340,8 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				price: 5200,
 				type: ItemShopType.ITEM
 			}
-		]
+		],
+		condition: c('scenario(magnet,12+)')
 	},
 	// Elite Camp
 	ELITE_CAMP: {
@@ -417,8 +413,15 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				id: itemList[Item.TEMPORAL_STABILISER].itemId,
 				price: 4000,
 				type: ItemShopType.ITEM
+			},
+			{
+				id: itemList[Item.ELIXIR].itemId,
+				price: 5000,
+				type: ItemShopType.ITEM,
+				condition: c('mission(morgu)|mission(dorou)')
 			}
-		]
+		],
+		condition: c('scenario(nimbao,42+)')
 	},
 	// ITINERANT MERCHANT ---- MONDAY
 	ITINERANT_MERCHANT_MONDAY: {
@@ -453,9 +456,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				type: ItemShopType.INGREDIENT
 			}
 		],
-		condition: {
-			[ConditionEnum.DAY]: DayEnum.MONDAY
-		}
+		condition: c('day(monday)')
 	},
 	// ITINERANT MERCHANT ---- TUESDAY
 	ITINERANT_MERCHANT_TUESDAY: {
@@ -505,9 +506,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				type: ItemShopType.INGREDIENT
 			}
 		],
-		condition: {
-			[ConditionEnum.DAY]: DayEnum.TUESDAY
-		}
+		condition: c('day(tuesday)')
 	},
 	// ITINERANT MERCHANT ---- WEDNESDAY
 	ITINERANT_MERCHANT_WEDNESDAY: {
@@ -557,9 +556,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				type: ItemShopType.INGREDIENT
 			}
 		],
-		condition: {
-			[ConditionEnum.DAY]: DayEnum.WEDNESDAY
-		}
+		condition: c('day(wednesday)')
 	},
 	// ITINERANT MERCHANT ---- THURSDAY
 	ITINERANT_MERCHANT_THURSDAY: {
@@ -604,9 +601,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				type: ItemShopType.INGREDIENT
 			}
 		],
-		condition: {
-			[ConditionEnum.DAY]: DayEnum.THURSDAY
-		}
+		condition: c('day(thursday)')
 	},
 	// ITINERANT MERCHANT ---- FRIDAY
 	ITINERANT_MERCHANT_FRIDAY: {
@@ -641,9 +636,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				type: ItemShopType.INGREDIENT
 			}
 		],
-		condition: {
-			[ConditionEnum.DAY]: DayEnum.FRIDAY
-		}
+		condition: c('day(friday)')
 	},
 	// ITINERANT MERCHANT ---- SATURDAY
 	ITINERANT_MERCHANT_SATURDAY: {
@@ -823,9 +816,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				type: ItemShopType.INGREDIENT
 			}
 		],
-		condition: {
-			[ConditionEnum.DAY]: DayEnum.SATURDAY
-		}
+		condition: c('day(saturday)')
 	},
 	// ITINERANT MERCHANT ---- SUNDAY ---- SHOP CLOSED
 	ITINERANT_MERCHANT_SUNDAY: {
@@ -834,9 +825,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		placeId: PlaceEnum.NOWHERE,
 		type: ShopType.ITINERANT,
 		listItemsSold: [],
-		condition: {
-			[ConditionEnum.DAY]: DayEnum.SUNDAY
-		}
+		condition: c('day(sunday)')
 	},
 	FILOU: {
 		shopId: 20,
@@ -869,6 +858,30 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 				price: 4,
 				type: ItemShopType.INGREDIENT
 			}
+		]
+	},
+	GEGE: {
+		shopId: 21,
+		name: 'gege',
+		placeId: PlaceEnum.CACROP,
+		type: ShopType.CLASSIC,
+		listItemsSold: [
+			/*
+      <o id="boost"	name="Graine d'expérience" max="10">
+      <desc>La graine d'expérience permet au dinoz qui l'utilise de gagner le double d'expérience à la fin du combat.</desc>
+      </o>
+      <o id="sterod"	name="Stérodino" max="10">
+        <desc>Le stérodino permet au dinoz qui l'utilise de récupérer 50 points d'énergie pendant le combat.</desc>
+      </o>
+      <o id="parfum"	name="Parfum d'oubli" max="6" trade="25000">
+        <desc>Cet objet, utilisable uniquement par des dinoz ayant dépassé le niveau 50, lui permet de revenir à ce niveau en oubliant les compétences apprises entre temps.</desc>
+      </o>
+      <o id="compri"	name="Aspirune" max="10">
+        <desc>L'Aspirune permet au dinoz qui l'utilise de booster son taux de récupération d'énergie pendant le combat.</desc>
+      </o>
+      <desc>Gégé met à votre disposition les objets qu'il a trouvé aux ruines du technodôme englouti. Mais attention, il ne risque pas sa peau pour de simple pièces d'or, il aime surtout les napodinoz !
+		  Aucune reconnaissance envers son sauveur ce Gégé ! Heureusement, il a aussi des objets plus abordables !</desc>
+      */
 		]
 	}
 };

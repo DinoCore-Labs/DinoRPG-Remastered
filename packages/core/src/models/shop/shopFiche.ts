@@ -1,4 +1,4 @@
-import { Condition } from '../enums/ConditionType.js';
+import { Condition } from '../conditions/conditions.js';
 import { ItemType } from '../enums/ItemType.js';
 import { ShopType } from '../enums/ShopType.js';
 
@@ -17,6 +17,7 @@ export type ItemShopFiche =
 			price: number;
 			type: ItemShopType.INGREDIENT;
 			quantity?: number;
+			condition?: Condition;
 	  }
 	| {
 			id: number;
@@ -24,6 +25,7 @@ export type ItemShopFiche =
 			type: ItemShopType.ITEM;
 			quantity?: number;
 			itemType?: ItemType;
+			condition?: Condition;
 	  };
 
 export enum ItemShopType {
