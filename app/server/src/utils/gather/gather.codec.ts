@@ -1,10 +1,12 @@
 export const EMPTY_GATHER_CELL = 0;
 export const OPENED_GATHER_CELL = -1;
 
-const INGREDIENT_OFFSET = 100_000;
-const ITEM_OFFSET = 200_000;
-const GOLD_OFFSET = 300_000;
-const ITEM_QUANTITY_FACTOR = 1_000;
+const INGREDIENT_OFFSET = 1_000_000;
+const ITEM_OFFSET = 2_000_000;
+const GOLD_OFFSET = 3_000_000;
+
+const ITEM_ID_FACTOR = 1_000;
+const ITEM_QUANTITY_FACTOR = 1;
 
 export type EncodedGatherReward =
 	| {
@@ -26,7 +28,7 @@ export function encodeIngredient(ingredientId: number): number {
 }
 
 export function encodeItem(itemId: number, quantity: number): number {
-	return ITEM_OFFSET + itemId * ITEM_QUANTITY_FACTOR + quantity;
+	return ITEM_OFFSET + itemId * ITEM_ID_FACTOR + quantity * ITEM_QUANTITY_FACTOR;
 }
 
 export function encodeGold(amount: number): number {
@@ -47,8 +49,8 @@ export function decodeGatherReward(value: number): EncodedGatherReward | null {
 
 	if (value >= ITEM_OFFSET) {
 		const raw = value - ITEM_OFFSET;
-		const itemId = Math.floor(raw / ITEM_QUANTITY_FACTOR);
-		const quantity = raw % ITEM_QUANTITY_FACTOR;
+		const itemId = Math.floor(raw / ITEM_ID_FACTOR);
+		const quantity = raw % ITEM_ID_FACTOR;
 
 		return {
 			kind: 'item',
