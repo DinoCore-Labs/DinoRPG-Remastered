@@ -4,6 +4,6 @@ export interface GatherResult {
 	grid: number[][];
 	rewards: GatherRewards;
 	isGridComplete: boolean;
-	goldReward: number;
+	gridCompletionGoldReward: number;
 	ingredientsAtMaxQuantity: { ingredientId: number; quantity: number; isMaxQuantity: boolean }[];
 }
