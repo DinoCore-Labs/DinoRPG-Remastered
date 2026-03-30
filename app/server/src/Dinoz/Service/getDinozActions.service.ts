@@ -1,8 +1,8 @@
+import { defaultConditionKeyMaps } from '@dinorpg/core/models/conditions/defaultConditionKeyMaps.js';
 import { Action, ActionFiche, actionList } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
-import { gatherList } from '@dinorpg/core/models/gather/gatherList.js';
 import { shopList } from '@dinorpg/core/models/shop/shopList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
@@ -12,16 +12,16 @@ import { Dinoz, DinozSkills, DinozState, DinozStatus } from '../../../../prisma/
 import gameConfig from '../../config/game.config.js';
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { prisma } from '../../prisma.js';
-import { checkCondition } from '../../utils/checkCondition.js';
+import { buildConditionContext, BuildConditionContextOptions } from '../../utils/conditions/buildConditionContext.js';
+import { checkCondition } from '../../utils/conditions/checkCondition.js';
 import { canLevelUp, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
+import { type CompiledGatherData, getCompiledGather } from '../../utils/gather/gather.compiler.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
 
-type GatherEntry = (typeof gatherList)[keyof typeof gatherList];
+type GatherEntry = CompiledGatherData;
 
 function getPlaceGatherEntries(place: { gathers?: number[] }): GatherEntry[] {
-	return (place.gathers ?? [])
-		.map(type => Object.values(gatherList).find(grid => grid.type === type))
-		.filter((grid): grid is GatherEntry => Boolean(grid));
+	return (place.gathers ?? []).map(type => getCompiledGather(type));
 }
 
 function pushUniqueAction(actions: ActionFiche[], action: ActionFiche) {
@@ -36,6 +36,19 @@ function pushUniqueAction(actions: ActionFiche[], action: ActionFiche) {
 	if (!exists) {
 		actions.push(action);
 	}
+}
+
+function getGatherActionFiche(gather: GatherEntry): ActionFiche {
+	const fiche = actionList[gather.action];
+
+	if (fiche) {
+		return fiche;
+	}
+
+	return {
+		name: gather.action,
+		imgName: 'act_gather'
+	} as ActionFiche;
 }
 
 /**
@@ -60,14 +73,26 @@ export async function getAvailableActions(
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkills, 'skillId'>[];
 	},
-	user: UserForConditionCheck
+	user: UserForConditionCheck,
+	conditionOptions: BuildConditionContextOptions = {}
 ) {
 	const availableActions: ActionFiche[] = [];
 
 	const dinozPlace = actualPlace(dinoz);
 	const placeGatherEntries = getPlaceGatherEntries(dinozPlace);
-	const normalGatherEntries = placeGatherEntries.filter(gather => !gather.special);
-	const specialGatherEntries = placeGatherEntries.filter(gather => gather.special);
+	const normalGatherEntries = placeGatherEntries.filter(gather => !gather.cost);
+	const specialGatherEntries = placeGatherEntries.filter(gather => Boolean(gather.cost));
+
+	const contextCache = new Map<number, ReturnType<typeof buildConditionContext>>();
+
+	function getContext(activeDinozId: number) {
+		const cached = contextCache.get(activeDinozId);
+		if (cached) return cached;
+
+		const context = buildConditionContext(user, activeDinozId, defaultConditionKeyMaps, conditionOptions);
+		contextCache.set(activeDinozId, context);
+		return context;
+	}
 
 	if (dinoz.state === DinozState.unfreezing) {
 		return [];
@@ -128,10 +153,12 @@ export async function getAvailableActions(
 				continue;
 			}
 
+			const followerContext = getContext(follower.id);
+
 			for (const gatherFound of normalGatherEntries) {
-				if (checkCondition(gatherFound.condition, user, follower.id)) {
+				if (checkCondition(gatherFound.condition, followerContext)) {
 					pushUniqueAction(availableActions, {
-						...actionList[gatherFound.action],
+						...getGatherActionFiche(gatherFound),
 						forDinoz: follower.id
 					});
 				}
@@ -192,22 +219,21 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.FIGHT]);
 	}
 
+	const currentContext = getContext(dinoz.id);
+
 	// Normal gather
 	if (dinoz.gather) {
 		for (const gatherFound of normalGatherEntries) {
-			if (checkCondition(gatherFound.condition, user, dinoz.id)) {
-				pushUniqueAction(availableActions, actionList[gatherFound.action]);
+			if (checkCondition(gatherFound.condition, currentContext)) {
+				pushUniqueAction(availableActions, getGatherActionFiche(gatherFound));
 			}
 		}
 	}
 
 	// Special gather
 	for (const gatherFound of specialGatherEntries) {
-		if (checkCondition(gatherFound.condition, user, dinoz.id)) {
-			pushUniqueAction(availableActions, {
-				name: gatherFound.action,
-				imgName: 'act_gather'
-			});
+		if (checkCondition(gatherFound.condition, currentContext)) {
+			pushUniqueAction(availableActions, getGatherActionFiche(gatherFound));
 		}
 	}
 
@@ -228,7 +254,7 @@ export async function getAvailableActions(
 
 	const itinerantShop = Object.values(shopList)
 		.filter(shop => shop.type === ShopType.ITINERANT)
-		.find(shop => checkCondition(shop.condition, user, dinoz.id));
+		.find(shop => checkCondition(shop.condition, currentContext));
 
 	if (itinerantShop && +itinerant.value === dinoz.placeId) {
 		availableActions.push({
@@ -242,7 +268,7 @@ export async function getAvailableActions(
 		shop =>
 			shop.placeId === dinoz.placeId &&
 			shop.placeId !== PlaceEnum.NOWHERE &&
-			checkCondition(shop.condition, user, dinoz.id)
+			checkCondition(shop.condition, currentContext)
 	);
 
 	if (shopAvailable.length > 0) {
