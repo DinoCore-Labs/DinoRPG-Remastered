@@ -451,6 +451,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			...itemList[Item.DAILY_TICKET],
 			quantity: 1
 		},
-		found: [gold(2500, 12), gold(5000, 8), gold(10000, 4), gold(20000, 2), gold(50000, 1), items(Item.BOX_HANDLER, 10)]
+		found: [gold(2500, 11), gold(5000, 8), gold(10000, 4), gold(20000, 2), gold(50000, 1), items(Item.BOX_HANDLER, 10)]
 	}
 };

@@ -3,7 +3,7 @@ import { GroundEnum } from '../enums/GroundEnum.js';
 import { MapZone } from '../enums/MapZone.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
 import { definePlaces } from './definePlaces.js';
-import { PlaceDefinition, PlaceDefinitionInput } from './placeDefinition.js';
+import { PlaceDefinitionInput } from './placeDefinition.js';
 
 export const placeListv2 = definePlaces({
 	[PlaceEnum.ANYWHERE]: {
