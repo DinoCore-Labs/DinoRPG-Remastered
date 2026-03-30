@@ -7,3 +7,5 @@ export enum DayEnum {
 	FRIDAY,
 	SATURDAY
 }
+
+export type DayKey = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';

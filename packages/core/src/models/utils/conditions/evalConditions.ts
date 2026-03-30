@@ -1,6 +1,7 @@
 import { CompareMode, Condition, RandomBasis } from '../../conditions/conditions.js';
 import { ConditionsContext } from '../../conditions/conditionsContext.js';
 import { dinozStatusIdByKey } from '../../dinoz/statusKeyMap.js';
+import { DayKey } from '../../enums/DayType.js';
 
 function compare(left: number, right: number, mode: CompareMode): boolean {
 	switch (mode) {
@@ -55,6 +56,25 @@ function normalize(value: string | undefined | null): string | undefined {
 	return value?.toLowerCase();
 }
 
+function getDayKey(date: Date): DayKey {
+	switch (date.getDay()) {
+		case 1:
+			return 'monday';
+		case 2:
+			return 'tuesday';
+		case 3:
+			return 'wednesday';
+		case 4:
+			return 'thursday';
+		case 5:
+			return 'friday';
+		case 6:
+			return 'saturday';
+		default:
+			return 'sunday';
+	}
+}
+
 export function evalCondition(context: ConditionsContext, condition: Condition): boolean {
 	switch (condition.type) {
 		case 'true':
@@ -72,6 +92,8 @@ export function evalCondition(context: ConditionsContext, condition: Condition):
 			const target = new Date(condition.value).getTime();
 			return compare(now, target, condition.compare);
 		}
+		case 'day':
+			return normalize(getDayKey(context.now)) === normalize(condition.key);
 		case 'caushrock':
 			return compare(context.world.rockDirectionIndex ?? -1, condition.direction, 'eq');
 		case 'level':
