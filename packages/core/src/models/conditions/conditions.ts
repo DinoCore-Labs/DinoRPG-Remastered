@@ -1,3 +1,5 @@
+import { DayKey } from '../enums/DayType.js';
+
 export type CompareMode = 'eq' | 'gte' | 'lte';
 
 export type MissionConditionStatus = { type: 'done' } | { type: 'current'; step?: number };
@@ -11,6 +13,7 @@ export type Condition =
 	| { type: 'or'; left: Condition; right: Condition }
 	| { type: 'and'; left: Condition; right: Condition }
 	| { type: 'date'; value: string; compare: CompareMode }
+	| { type: 'day'; key: DayKey }
 	| { type: 'caushrock'; direction: number }
 	| { type: 'level'; value: number }
 	| { type: 'effect'; key: string }

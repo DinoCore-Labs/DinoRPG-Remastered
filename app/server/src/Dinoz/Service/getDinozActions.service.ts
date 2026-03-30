@@ -4,6 +4,7 @@ import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
 import { shopList } from '@dinorpg/core/models/shop/shopList.js';
+import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.js';
@@ -252,7 +253,7 @@ export async function getAvailableActions(
 	const itinerant = await getSpecificSecret('itinerant');
 	if (!itinerant) throw new ExpectedError(`No itinerant merchant place found.`);
 
-	const itinerantShop = Object.values(shopList)
+	const itinerantShop = Object.values(shopListV2)
 		.filter(shop => shop.type === ShopType.ITINERANT)
 		.find(shop => checkCondition(shop.condition, currentContext));
 
@@ -264,7 +265,7 @@ export async function getAvailableActions(
 		});
 	}
 
-	const shopAvailable = Object.values(shopList).filter(
+	const shopAvailable = Object.values(shopListV2).filter(
 		shop =>
 			shop.placeId === dinoz.placeId &&
 			shop.placeId !== PlaceEnum.NOWHERE &&
