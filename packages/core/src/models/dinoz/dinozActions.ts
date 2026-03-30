@@ -122,15 +122,15 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.ANNIV]: {
 		name: Action.ANNIV,
-		imgName: 'act_default'
+		imgName: 'act_gather'
 	},
 	[Action.DAILY]: {
 		name: Action.DAILY,
-		imgName: 'act_default'
+		imgName: 'act_gather'
 	},
 	[Action.XMAS]: {
 		name: Action.XMAS,
-		imgName: 'act_default'
+		imgName: 'act_gather'
 	},
 	[Action.IRMA]: {
 		name: Action.IRMA,
