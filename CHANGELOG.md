@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.9.0
+
+### Minor Changes
+
+- 9fa33cb: refactor conditions
+
 ## 0.8.5
 
 ### Patch Changes
@@ -193,6 +199,17 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.10.0
+
+### Minor Changes
+
+- 9fa33cb: refactor conditions
+
+### Patch Changes
+
+- Updated dependencies [9fa33cb]
+  - @dinorpg/core@0.9.0
 
 ## 0.9.6
 
@@ -423,6 +440,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.10.0
+
+### Minor Changes
+
+- 9fa33cb: refactor conditions
 
 ## 0.9.6
 
