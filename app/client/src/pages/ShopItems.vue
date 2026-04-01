@@ -290,7 +290,7 @@ import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.
 import type { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { type ItemShopFiche, ItemShopType } from '@dinorpg/core/models/shop/shopFiche.js';
-import { shopList } from '@dinorpg/core/models/shop/shopList.js';
+import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { ShopService } from '../services/shop.service.js';
@@ -309,7 +309,7 @@ export default defineComponent({
 			itemList: [] as Array<ItemFiche>,
 			ingredientList: [] as IngredientFiche[],
 			fullItems: [] as ItemShopFiche[],
-			shopList: shopList,
+			shopList: shopListV2,
 			selectedItem: undefined as ItemShopFiche | undefined,
 			selectedQuantity: 1,
 			ItemShopType: ItemShopType
@@ -334,7 +334,7 @@ export default defineComponent({
 			};
 		},
 		actualShop() {
-			const shop = Object.values(shopList).find(s => s.name === this.$route.params.name);
+			const shop = Object.values(shopListV2).find(s => s.name === this.$route.params.name);
 			if (!shop) {
 				this.$toast.open({
 					message: this.$t('toast.noShop'),
