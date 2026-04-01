@@ -19,6 +19,7 @@ export enum Monster {
 	BARCHE = 'BARCHE',
 	COBRA = 'COBRA',
 	PIRA = 'PIRA',
+	PIRA2 = 'PIRA2',
 	KAZKA = 'KAZKA',
 	ANGUIL = 'ANGUIL',
 	BORG = 'BORG',
@@ -40,7 +41,6 @@ export enum Monster {
 	MIMIC = 'MIMIC',
 	EARTH2 = 'EARTH2',
 	KORGON_REINFORCEMENT = 'KORGON_REINFORCEMENT',
-	KORGON_SKULLY = 'KORGON_SKULLY',
 	VEGETOX_GUARD = 'VEGETOX_GUARD',
 	VEGETOX_GUARD_2 = 'VEGETOX_GUARD_2',
 	FRUTOX_DEFENDER = 'FRUTOX_DEFENDER',
@@ -97,6 +97,9 @@ export enum Monster {
 }
 
 export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
+	/* -------------------------------------------------
+	 * DINOVILLE
+	 * ------------------------------------------------- */
 	[Monster.GOUPIGNON]: {
 		id: Monster.GOUPIGNON,
 		name: 'goupignon',
@@ -275,6 +278,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.M_FLIGHT],
 		display: 'piraos'
 	},
+	/* -------------------------------------------------
+	 * GRAND TOUT CHAUD
+	 * ------------------------------------------------- */
 	[Monster.FLAM]: {
 		id: Monster.FLAM,
 		name: 'flam',
@@ -363,6 +369,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'cobra',
 		entrance: EntranceEffect.GROW
 	},
+	/* -------------------------------------------------
+	 * ILES ATLANTEINEES
+	 * ------------------------------------------------- */
 	[Monster.PIRA]: {
 		id: Monster.PIRA,
 		name: 'pira',
@@ -386,6 +395,28 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		],
 		canBeCaptured: true,
 		skills: [Skill.M_FLIGHT],
+		display: 'pira'
+	},
+	[Monster.PIRA2]: {
+		id: Monster.PIRA2,
+		name: 'pira2',
+		hp: 5,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		resilience: 0,
+		odds: 100,
+		level: 1,
+		zones: [MapZone.ILES],
+		groups: [
+			{ quantity: 0, odds: 1 },
+			{ quantity: 1, odds: 1 }
+		],
+		canBeCaptured: true,
 		display: 'pira'
 	},
 	[Monster.KAZKA]: {
@@ -452,6 +483,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'borg',
 		entrance: EntranceEffect.GROW
 	},
+	/* -------------------------------------------------
+	 * FORET DE GRUHMEL
+	 * ------------------------------------------------- */
 	[Monster.KORGON]: {
 		id: Monster.KORGON,
 		name: 'korgon',
@@ -474,27 +508,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		],
 		canBeCaptured: true,
 		display: 'korgon'
-	},
-	[Monster.KORGON_SKULLY]: {
-		id: Monster.KORGON_SKULLY,
-		name: 'korgon_skully',
-		hp: 10,
-		elements: {
-			fire: 3,
-			wood: 4,
-			water: 0,
-			lightning: 0,
-			air: 0
-		},
-		resilience: 0,
-		odds: 100,
-		level: 7,
-		zones: [],
-		canBeCaptured: false,
-		display: 'korgon',
-		text: {
-			entrance: 'korgon_start'
-		}
 	},
 	[Monster.RONCIV]: {
 		id: Monster.RONCIV,
@@ -564,6 +577,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		display: 'grdien',
 		entrance: EntranceEffect.GROUND
 	},
+	/* -------------------------------------------------
+	 * STEPPES MAGNETIQUES
+	 * ------------------------------------------------- */
 	[Monster.WORM2]: {
 		id: Monster.WORM2,
 		name: 'worm2',
@@ -801,6 +817,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		skills: [Skill.M_STEAL]
 	},
+	/* -------------------------------------------------
+	 * DINOWEST
+	 * ------------------------------------------------- */
 	[Monster.GROPI]: {
 		id: Monster.GROPI,
 		name: 'gropi',
@@ -859,6 +878,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.DINOWEST],
 		canBeCaptured: true
 	},
+	/* -------------------------------------------------
+	 * SKILLS DINOZ
+	 * ------------------------------------------------- */
 	[Monster.KORGON_REINFORCEMENT]: {
 		id: Monster.KORGON_REINFORCEMENT,
 		name: 'rkrgns',
@@ -879,6 +901,50 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: false,
 		display: 'rkrgns'
 	},
+	[Monster.GORILLOZ_SPIRIT]: {
+		id: Monster.GORILLOZ_SPIRIT,
+		name: 'egrllz',
+		hp: 40,
+		elements: {
+			fire: 5,
+			wood: 8,
+			water: 3,
+			lightning: 3,
+			air: 3
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		odds: 0,
+		level: 0,
+		zones: [MapZone.ALL],
+		canBeCaptured: false,
+		display: 'egrllz'
+	},
+	[Monster.BAMBOOZ_SPROUTING]: {
+		id: Monster.BAMBOOZ_SPROUTING,
+		name: 'bamboo',
+		hp: 30,
+		elements: {
+			fire: 0,
+			wood: 4,
+			water: 0,
+			lightning: 4,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		odds: 0,
+		level: 0,
+		zones: [MapZone.ALL],
+		canBeCaptured: true,
+		display: 'bamboo',
+		entrance: EntranceEffect.FALL
+	},
+	/* -------------------------------------------------
+	 * ILES DES MONSTRES
+	 * ------------------------------------------------- */
 	[Monster.VEGETOX_GUARD]: {
 		id: Monster.VEGETOX_GUARD,
 		name: 'mugard',
@@ -953,47 +1019,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.M_FASTER],
 		canBeCaptured: true,
 		entrance: EntranceEffect.GROW
-	},
-	[Monster.GORILLOZ_SPIRIT]: {
-		id: Monster.GORILLOZ_SPIRIT,
-		name: 'egrllz',
-		hp: 40,
-		elements: {
-			fire: 5,
-			wood: 8,
-			water: 3,
-			lightning: 3,
-			air: 3
-		},
-		bonus_attack: 0,
-		bonus_defense: 0,
-		resilience: 40,
-		odds: 0,
-		level: 0,
-		zones: [MapZone.ALL],
-		canBeCaptured: false,
-		display: 'egrllz'
-	},
-	[Monster.BAMBOOZ_SPROUTING]: {
-		id: Monster.BAMBOOZ_SPROUTING,
-		name: 'bamboo',
-		hp: 30,
-		elements: {
-			fire: 0,
-			wood: 4,
-			water: 0,
-			lightning: 4,
-			air: 0
-		},
-		bonus_attack: 0,
-		bonus_defense: 0,
-		resilience: 40,
-		odds: 0,
-		level: 0,
-		zones: [MapZone.ALL],
-		canBeCaptured: true,
-		display: 'bamboo',
-		entrance: EntranceEffect.FALL
 	},
 	[Monster.PIGLOUNOU]: {
 		id: Monster.PIGLOUNOU,
@@ -1580,10 +1605,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.COUP_DOUBLE],
 		zones: [],
 		canBeCaptured: true,
-		display: 'brig2',
-		text: {
-			entrance: 'baraba_start'
-		}
+		display: 'brig2'
 	},
 	[Monster.BARATRIBOR]: {
 		id: Monster.BARATRIBOR,
@@ -1604,10 +1626,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.COUP_DOUBLE],
 		zones: [],
 		canBeCaptured: true,
-		display: 'brig1',
-		text: {
-			entrance: 'boat_start'
-		}
+		display: 'brig1'
 	},
 	[Monster.ELEMENTAL_DISCIPLE]: {
 		id: Monster.ELEMENTAL_DISCIPLE,
