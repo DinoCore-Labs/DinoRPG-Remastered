@@ -3889,7 +3889,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			col1: 0xffffff,
 			col2: 0x00ffff
 		},
-		damageEffect: DamagesEffect.Eject
+		damageEffect: DamagesEffect.Normal // Should be Eject but rendering is bugged currently
 	},
 	[Skill.VENT_VIF]: {
 		id: Skill.VENT_VIF,
