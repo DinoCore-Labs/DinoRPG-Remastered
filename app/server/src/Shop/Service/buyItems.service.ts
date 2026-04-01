@@ -1,9 +1,9 @@
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
-import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ShopFiche } from '@dinorpg/core/models/shop/shopFiche.js';
-import { shopList } from '@dinorpg/core/models/shop/shopList.js';
+import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -51,7 +51,7 @@ export async function buyItemHandler(
 			throw new ExpectedError('Wrong quantity');
 		}
 
-		const theShop: ShopFiche | undefined = Object.values(shopList).find(s => s.shopId === shopId);
+		const theShop: ShopFiche | undefined = Object.values(shopListV2).find(s => s.shopId === shopId);
 		if (!theShop) throw new ExpectedError(`The shop ${shopId} does not exist`);
 
 		checkDinozPlace(theShop, playerShopData, shopId);
@@ -65,7 +65,7 @@ export async function buyItemHandler(
 
 		// Prix shop (merchant -10% au flying shop)
 		itemReference.price =
-			playerShopData.merchant && theShop.shopId === shopList.FLYING_SHOP.shopId
+			playerShopData.merchant && theShop.shopId === shopListV2.FLYING_SHOP.shopId
 				? Math.round(itemSold.price * 0.9)
 				: itemSold.price;
 
@@ -97,7 +97,7 @@ export async function buyItemHandler(
 
 			await incrementUserStat(StatTracking.S_BUYER, userId, quantityBought);
 
-			const itemFromShop = shopList.FILOU.listItemsSold.find(i => i.id === itemId);
+			const itemFromShop = shopListV2.FILOU.listItemsSold.find(i => i.id === itemId);
 			if (!itemFromShop) throw new ExpectedError(`The item ${itemId} is not sellable for coupons!`);
 
 			await decreaseIngredientQuantity(userId, itemReference.itemId, itemFromShop.price * quantityBought);

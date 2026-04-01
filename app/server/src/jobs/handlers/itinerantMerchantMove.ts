@@ -1,4 +1,4 @@
-import { placeList } from '@dinorpg/core/models/place/placeList.js';
+import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 
 import { setSpecificSecret } from '../controller/setSpecificSecret.js';
 
@@ -8,7 +8,7 @@ export async function itinerantMerchantMoveJob(log: { info: Function; error: Fun
 	// Lundi UTC
 	if (now.getUTCDay() !== 1) return;
 
-	const availablePlace = Object.values(placeList).filter(p => p.itinerant === true);
+	const availablePlace = Object.values(placeListv2).filter(p => p.itinerant === true);
 
 	if (availablePlace.length === 0) {
 		log.error('[itinerant] no available itinerant places');

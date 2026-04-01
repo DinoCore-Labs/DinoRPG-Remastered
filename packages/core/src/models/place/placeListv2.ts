@@ -5,6 +5,11 @@ import { PlaceEnum } from '../enums/PlaceEnum.js';
 import { definePlaces } from './definePlaces.js';
 import { PlaceDefinitionInput } from './placeDefinition.js';
 
+/** Sticky Swamp - No movement on Thursday and Saturday. */
+export const SWAMP_FLOODED_DAYS = [4, 6];
+/** Sticky Swamp - No fights on Wednesday and Sunday. */
+export const SWAMP_FOG_DAYS = [0, 3];
+
 export const placeListv2 = definePlaces({
 	[PlaceEnum.ANYWHERE]: {
 		placeId: PlaceEnum.ANYWHERE,
@@ -1628,3 +1633,18 @@ export const placeListv2 = definePlaces({
 		moves: []
 	}
 } satisfies Partial<Record<PlaceEnum, PlaceDefinitionInput>>);
+
+export const PlacesByMap = Object.values(placeListv2).reduce(
+	(acc, place) => {
+		const currentMap = acc[place.map];
+
+		if (currentMap) {
+			currentMap.push(place.placeId);
+		} else {
+			acc[place.map] = [place.placeId];
+		}
+
+		return acc;
+	},
+	{} as Partial<Record<MapZone, PlaceEnum[]>>
+);
