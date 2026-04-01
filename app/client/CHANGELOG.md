@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.10.0
+
+### Minor Changes
+
+- 9fa33cb: refactor conditions
+
 ## 0.9.6
 
 ### Patch Changes
