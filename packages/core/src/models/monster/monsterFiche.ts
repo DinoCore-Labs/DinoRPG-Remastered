@@ -1,3 +1,4 @@
+import { Condition } from '../conditions/conditions.js';
 import { MapZone } from '../enums/MapZone.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
 import { GameEvent } from '../events/events.js';
@@ -43,10 +44,7 @@ export type MonsterFiche = {
 	dark?: boolean;
 	// Specifies an entrance effet for the monster.
 	entrance?: EntranceEffect;
-	text?: {
-		entrance?: string;
-		death?: string;
-	};
+	condition?: Condition;
 };
 
 export type groupMonster = {
