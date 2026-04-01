@@ -9,7 +9,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@eternaltwin/dinorpg_animations": "^1.0.4",
+		"@eternaltwin/dinorpg_animations": "^1.0.8",
 		"axios": "^1.14.0",
 		"markdown-it": "^14.1.1",
 		"mitt": "^3.0.1",
