@@ -90,7 +90,7 @@ import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 import { formatText } from '../../utils/formatText.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
-import { SWAMP_FLOODED_DAYS, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeList.js';
+import { SWAMP_FLOODED_DAYS, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { DinozService } from '../../services/dinoz.service.js';
 

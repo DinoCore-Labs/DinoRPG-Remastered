@@ -4,7 +4,7 @@ import { DinozFiche, DinozFicheLite, DinozPublicFiche } from '@dinorpg/core/mode
 import { DinozRestInfos } from '@dinorpg/core/models/dinoz/dinozRest.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
-import { placeList } from '@dinorpg/core/models/place/placeList.js';
+import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { evalCondition } from '@dinorpg/core/models/utils/conditions/evalConditions.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
@@ -107,7 +107,7 @@ export const toDinozFiche = (
 							if (move.condition && !evalCondition(conditionContext, move.condition)) {
 								return false;
 							}
-							const targetPlace = placeList[move.target];
+							const targetPlace = placeListv2[move.target];
 							if (!targetPlace) {
 								throw new Error(`Place ${move.target} doesn't exist.`);
 							}
