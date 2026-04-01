@@ -8,7 +8,7 @@ import { FighterStatusData, FightStatus } from '@dinorpg/core/models/fight/fight
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
-import { PlacesByMap } from '@dinorpg/core/models/place/placeList.js';
+import { PlacesByMap } from '@dinorpg/core/models/place/placeListv2.js';
 import { AssaultElement, getAssaultStat } from '@dinorpg/core/models/skills/getAssaultStats.js';
 import { DefenseElement, getDefenseStat } from '@dinorpg/core/models/skills/getDefenseStats.js';
 import { getSpecialStat, SpecialStat } from '@dinorpg/core/models/skills/getSpecialStats.js';

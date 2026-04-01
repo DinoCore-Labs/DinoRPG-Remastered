@@ -1,22 +1,17 @@
 import { DinozItems } from '@dinorpg/core/models/dinoz/dinozItems.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
-//import { ConditionEnum } from '@dinorpg/core/models/enums/Parser.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { currentEvents, EventDetails, GameEvent } from '@dinorpg/core/models/events/events.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import { FightProcessResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
-import { bossList } from '@dinorpg/core/models/monster/bossList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { monsterList } from '@dinorpg/core/models/monster/monsterList.js';
-import { placeList, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeList.js';
+import { placeListv2, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { calculatePvExp, getMaxXp } from '@dinorpg/core/utils/dinozUtils.js';
-//import { getActualStep } from '@drpg/core/utils/MissionUtils';
-//import { scenarioChecker } from '../utils/scenarioChecker.js';
-//import { getPlayerEventProgression, increasePlayerEventProgression } from '../dao/eventsDao.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { Dinoz, DinozSkills, DinozStatus, User } from '../../../../prisma/index.js';
@@ -618,7 +613,7 @@ export async function generateMonsterList(
 	teamPowerLevel = Math.round(teamPowerLevel * diff);
 
 	const specialProb = getRandomNumber(0, 100);
-	const place = Object.values(placeList).find(place => place.placeId === placeOfFight);
+	const place = Object.values(placeListv2).find(place => place.placeId === placeOfFight);
 	if (!place) {
 		throw new ExpectedError(`This place doesn't exist.`);
 	}

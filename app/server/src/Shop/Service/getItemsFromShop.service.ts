@@ -1,5 +1,5 @@
 import { ItemShopFiche, ItemShopType } from '@dinorpg/core/models/shop/shopFiche.js';
-import { shopList } from '@dinorpg/core/models/shop/shopList.js';
+import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -23,7 +23,7 @@ export async function getItemsFromShopHandler(
 	}
 
 	try {
-		const tempShop = Object.values(shopList).find(shop => shop.shopId === shopId);
+		const tempShop = Object.values(shopListV2).find(shop => shop.shopId === shopId);
 
 		// Throw an exception if the shop does not exist
 		if (!tempShop) {
@@ -49,7 +49,7 @@ export async function getItemsFromShopHandler(
 			return {
 				id: itemSold.id,
 				price:
-					playerShopData.merchant && tempShop.shopId === shopList.FLYING_SHOP.shopId
+					playerShopData.merchant && tempShop.shopId === shopListV2.FLYING_SHOP.shopId
 						? Math.round(itemSold.price * 0.9)
 						: itemSold.price,
 				quantity: itemPlayer ? itemPlayer.quantity : 0,
