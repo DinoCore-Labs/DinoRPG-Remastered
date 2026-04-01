@@ -773,7 +773,7 @@ export function transpileFight(
 							}
 						});
 					}
-					// Remove energy per target hit if a at least one target was hit
+					// Remove energy per target hit if at least one target was hit
 					if (targetsHit > 0) {
 						setFighterEnergy(myFighter, myFighter.energy - targetsHit * BASE_ENERGY_COST);
 						history.push({
