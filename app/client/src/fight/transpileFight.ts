@@ -18,7 +18,7 @@ import {
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { Boss, bossList } from '@dinorpg/core/models/monster/bossList.js';
 import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
-import { placeList } from '@dinorpg/core/models/place/placeList.js';
+import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import {
 	BASE_ASSAULT_ENERGY_COST,
@@ -29,7 +29,7 @@ import {
 import type { TFunction } from './translateFightStep';
 
 export function resolveFightingPlace(placeId: number) {
-	const place = Object.values(placeList).find(p => p.placeId === placeId);
+	const place = Object.values(placeListv2).find(p => p.placeId === placeId);
 	if (!place) return;
 	return {
 		bg: place.background,
@@ -255,22 +255,22 @@ export function transpileFight(
 					});
 					if (myFighter.type === 'monster') {
 						const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
-						if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
+						/*if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
 							history.push({
 								action: DinoAction.TALK,
 								fid: myFighter.id,
 								message: t(`quest.${resolvedMonster.text.entrance}`)
 							});
-						}
+						}*/
 					} else if (myFighter.type === 'boss') {
 						const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
-						if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
+						/*if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
 							history.push({
 								action: DinoAction.TALK,
 								fid: myFighter.id,
 								message: t(`quest.${resolvedBoss.text.entrance}`)
 							});
-						}
+						}*/
 					}
 
 					// Add status visual effect prior to revealing the fight scene
@@ -330,22 +330,22 @@ export function transpileFight(
 					});
 					if (myFighter.type === 'monster') {
 						const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
-						if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
+						/*if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
 							history.push({
 								action: DinoAction.TALK,
 								fid: myFighter.id,
 								message: t(`quest.${resolvedMonster.text.entrance}`)
 							});
-						}
+						}*/
 					} else if (myFighter.type === 'boss') {
 						const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
-						if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
+						/*if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
 							history.push({
 								action: DinoAction.TALK,
 								fid: myFighter.id,
 								message: t(`quest.${resolvedBoss.text.entrance}`)
 							});
-						}
+						}*/
 					}
 					// Add status visual effect
 					m.statusList.forEach(s => {
@@ -403,22 +403,22 @@ export function transpileFight(
 				});
 				if (myFighter.type === 'monster') {
 					const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
-					if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
+					/*if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
 						history.push({
 							action: DinoAction.TALK,
 							fid: myFighter.id,
 							message: t(`quest.${resolvedMonster.text.entrance}`)
 						});
-					}
+					}*/
 				} else if (myFighter.type === 'boss') {
 					const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
-					if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
+					/*if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
 						history.push({
 							action: DinoAction.TALK,
 							fid: myFighter.id,
 							message: t(`quest.${resolvedBoss.text.entrance}`)
 						});
-					}
+					}*/
 				}
 				myFighter = undefined;
 				break;
@@ -452,22 +452,22 @@ export function transpileFight(
 				myFighter = activeFighters.find(f => f.id === step.fighter.id);
 				if (myFighter && myFighter.type === 'monster') {
 					const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
-					if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
+					/*if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
 						history.push({
 							action: DinoAction.TALK,
 							fid: myFighter.id,
 							message: t(`quest.${resolvedMonster.text.entrance}`)
 						});
-					}
+					}*/
 				} else if (myFighter && myFighter.type === 'boss') {
 					const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
-					if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
+					/*if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
 						history.push({
 							action: DinoAction.TALK,
 							fid: myFighter.id,
 							message: t(`quest.${resolvedBoss.text.entrance}`)
 						});
-					}
+					}*/
 				}
 				history.push({
 					action: DinoAction.DEAD,
