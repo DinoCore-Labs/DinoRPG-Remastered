@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.9.0
+
+### Minor Changes
+
+- 9fa33cb: refactor conditions
+
 ## 0.8.5
 
 ### Patch Changes

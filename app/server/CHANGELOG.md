@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.10.0
+
+### Minor Changes
+
+- 9fa33cb: refactor conditions
+
+### Patch Changes
+
+- Updated dependencies [9fa33cb]
+  - @dinorpg/core@0.9.0
+
 ## 0.9.6
 
 ### Patch Changes
