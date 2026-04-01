@@ -99,7 +99,7 @@ export default defineComponent({
 					// Check if the grid is complete
 					if (this.gatherResult.isGridComplete) {
 						// If there is a gold reward, show a success message
-						if (this.gatherResult.goldReward > 0) {
+						if (this.gatherResult.gridCompletionGoldReward > 0) {
 							this.$toast.success(formatText(this.$t('toast.finishGrid')));
 						} else {
 							// If no gold reward, show an informational message about daily rewards being finished
