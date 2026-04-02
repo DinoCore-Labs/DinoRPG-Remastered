@@ -19,6 +19,7 @@ import {
 import { adminRoutes } from './Admin/Routes/admin.routes.js';
 import { loadConfig } from './config/config.js';
 import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
+import { dialogRoutes } from './Dialog/Routes/dialog.routes.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
 import { fightRoutes } from './Fight/Routes/fight.routes.js';
 import { gatherRoutes } from './Gather/Routes/gather.routes.js';
@@ -209,7 +210,7 @@ async function buildServer() {
 	server.register(levelRoutes, { prefix: 'api/level' });
 	server.register(gatherRoutes, { prefix: 'api/gather' });
 	server.register(newsRoutes, { prefix: 'api/news' });
-
+	server.register(dialogRoutes, { prefix: 'api/dialog' });
 	server.register(adminRoutes, { prefix: 'api/admin' });
 
 	//------------------------------------------------------
