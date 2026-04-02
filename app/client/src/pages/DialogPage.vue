@@ -162,11 +162,11 @@ watch(
 .box {
 	cursor: pointer;
 	background:
-		url('../assets/background/dialog_bg_top_left.webp'), url('../assets/background/dialog_bg_top_right.webp'),
-		url('../assets/background/dialog_bg_top_center.webp'), url('../assets/background/dialog_bg_footer_left.webp'),
-		url('../assets/background/dialog_bg_footer_right.webp'), url('../assets/background/dialog_bg_footer_center.webp'),
-		url('../assets/background/dialog_bg_center_left.webp'), url('../assets/background/dialog_bg_center_right.webp'),
-		url('../assets/background/dialog_bg_center_center.webp');
+		url('../assets/background/dialog_top_left.webp'), url('../assets/background/dialog_top_right.webp'),
+		url('../assets/background/dialog_top_center.webp'), url('../assets/background/dialog_footer_left.webp'),
+		url('../assets/background/dialog_footer_right.webp'), url('../assets/background/dialog_footer_center.webp'),
+		url('../assets/background/dialog_center_left.webp'), url('../assets/background/dialog_center_right.webp'),
+		url('../assets/background/dialog_center_center.webp');
 	background-position-x: left, right, center, left, right, center, left, right, center;
 	background-position-y: top, top, top, bottom, bottom, bottom, 40px, 40px, 40px;
 	background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
