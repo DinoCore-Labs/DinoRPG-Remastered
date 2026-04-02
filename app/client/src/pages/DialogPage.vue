@@ -52,8 +52,8 @@ const error = ref<string | null>(null);
 const dinozId = computed(() => Number(route.params.id));
 const dialogId = computed(() => String(route.params.dialogId));
 
-const npcName = computed(() => dialogState.value?.name ?? dialogId.value);
-const swfName = computed(() => dialogState.value?.pnj.gfx ?? dialogId.value);
+const npcName = computed(() => dialogState.value?.name ?? '');
+const swfName = computed(() => dialogState.value?.pnj.gfx ?? null);
 const npcFlashvars = computed(() => {
 	if (!dialogState.value) return '';
 
@@ -217,7 +217,6 @@ watch(
 
 #answer {
 	list-style: none;
-	margin-top: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	background-color: #9a4029;
