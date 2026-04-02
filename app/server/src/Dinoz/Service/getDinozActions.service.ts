@@ -317,6 +317,16 @@ export async function getAvailableActions(
 	}
 
 	console.log(
+		'Available dialogs for dinoz',
+		dinoz.id,
+		availableDialogs.map(dialog => ({
+			id: dialog.id,
+			name: dialog.name,
+			place: dialog.place
+		}))
+	);
+
+	console.log(
 		`Available actions for dinoz ${dinoz.id}:`,
 		availableActions.map(a => a.name)
 	);
