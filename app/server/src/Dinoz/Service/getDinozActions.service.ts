@@ -10,6 +10,7 @@ import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.
 
 import { Dinoz, DinozSkills, DinozState, DinozStatus } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
+import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { prisma } from '../../prisma.js';
 import { buildConditionContext, BuildConditionContextOptions } from '../../utils/conditions/buildConditionContext.js';
@@ -49,6 +50,14 @@ function getGatherActionFiche(gather: GatherEntry): ActionFiche {
 		name: gather.action,
 		imgName: 'act_gather'
 	} as ActionFiche;
+}
+
+function getDialogActionFiche(dialog: { id: string; name: string }): ActionFiche {
+	return {
+		...actionList[Action.NPC],
+		prop: dialog.id,
+		label: dialog.name
+	};
 }
 
 /**
@@ -296,6 +305,15 @@ export async function getAvailableActions(
 		dinoz.status.some(status => status.statusId === DinozStatusId.FSPELE)
 	) {
 		availableActions.push(actionList[Action.CONGEL]);
+	}
+
+	const availableDialogs = await listAvailableDialogs({
+		userId: user.id,
+		dinozId: dinoz.id
+	});
+
+	for (const dialog of availableDialogs) {
+		pushUniqueAction(availableActions, getDialogActionFiche(dialog));
 	}
 
 	console.log(

@@ -38,6 +38,7 @@ export interface ActionFiche {
 	name: Action | GatherType;
 	imgName: string;
 	prop?: number | string;
+	label?: string;
 	special?: boolean;
 	forDinoz?: number;
 }
