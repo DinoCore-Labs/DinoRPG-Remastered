@@ -9,7 +9,7 @@
 				<span v-if="dialogState" class="dialog" v-html="renderDialogText(dialogState.text)" />
 
 				<div class="portrait">
-					<AnimatedNPC v-if="swfName" :NPC="swfName" />
+					<AnimatedNPC v-if="swfName" :NPC="swfName" :flashvars="npcFlashvars" />
 					<DZButton :disabled="loading" @click="stop"> Quitter </DZButton>
 				</div>
 			</div>
@@ -54,6 +54,14 @@ const dialogId = computed(() => String(route.params.dialogId));
 
 const npcName = computed(() => dialogState.value?.name ?? dialogId.value);
 const swfName = computed(() => dialogState.value?.pnj.gfx ?? dialogId.value);
+const npcFlashvars = computed(() => {
+	if (!dialogState.value) return '';
+
+	return new URLSearchParams({
+		frame: dialogState.value.pnj.frame ?? 'speak',
+		background: dialogState.value.pnj.background ?? '1'
+	}).toString();
+});
 
 const pageTitle = computed(() => `PNJ - ${npcName.value}`);
 const headerTitle = computed(() => 'Personnage');

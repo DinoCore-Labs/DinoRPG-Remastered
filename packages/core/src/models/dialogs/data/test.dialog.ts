@@ -6,11 +6,11 @@ import { DialogDefinition } from '../dialog.js';
 export const testDialog = defineDialog({
 	id: 'tutorial_master',
 	place: PlaceEnum.DINOVILLE,
-	name: 'Maître du tutoriel',
+	name: 'hulot',
 	pnj: {
 		image: false,
-		gfx: 'tutorial_master',
-		frame: 'speak',
+		gfx: 'hulot',
+		frame: 'sick',
 		background: '1'
 	},
 	cond: { type: 'true' },
