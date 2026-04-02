@@ -53,8 +53,10 @@
 			>
 				<img :src="getImgURL('act', action.imgName)" :alt="action.imgName" />
 				<p v-if="action.name === 'shop'">{{ $t(`shop.item.${getShopNameFromAction(action)}.name`) }}</p>
-				<!--<p v-else-if="action.name === 'npc'">{{ $t(`npc.name.${npcDisplayName(+(action.prop ?? '0'))}`) }}</p>
-				<p v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION">
+				<p v-else-if="action.name === Action.NPC">
+					{{ action.label ?? action.prop }}
+				</p>
+				<!--<p v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION">
 					{{ $t(`missions.actions.terminate`) }}
 				</p>-->
 				<!--<p v-else-if="action.name === 'mission'">{{ $t(`missions.npc.${action.prop}`) }}</p>-->
@@ -67,11 +69,10 @@
 						v-if="action.name === 'shop'"
 						v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.name`))"
 					/>
+					<h1 v-else-if="action.name === Action.NPC">
+						{{ action.label ?? action.prop }}
+					</h1>
 					<!--<h1
-						v-else-if="action.name === 'npc'"
-						v-html="formatContent($t(`npc.name.${npcDisplayName(+(action.prop ?? '0'))}`))"
-					/>
-					<h1
 						v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION"
 						v-html="formatContent($t(`missions.actions.terminate`))"
 					/>
@@ -83,8 +84,8 @@
 						v-if="action.name === 'shop'"
 						v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.description`))"
 					/>
-					<!--<p v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.description`))" />
-					<p
+					<p v-else-if="action.name === Action.NPC" v-html="formatContent($t(`npc.description`))" />
+					<!--<p
 						v-else-if="action.name === 'mission'"
 						v-html="formatContent($t(`missions.tooltip`, { mission: $t(`missions.name.${missionName}`) }))"
 					/>-->
@@ -260,11 +261,15 @@ export default defineComponent({
 					});
 					break;
 				case Action.NPC:
-					/*this.dinozStore.clearNpc(+this.$route.params.id);
+					if (typeof action.prop !== 'string') return;
+
 					this.$router.push({
-						name: 'NPC',
-						params: { id: this.$route.params.id.toString(), npc: this.npcDisplayName(action.prop as number) }
-					});*/
+						name: 'DialogPage',
+						params: {
+							id: this.dinozId.toString(),
+							dialogId: action.prop
+						}
+					});
 					break;
 				case Action.FIGHT: {
 					try {
