@@ -171,21 +171,20 @@ async function assertDialogAvailability(tx: DialogTransaction, dialog: RuntimeDi
 export async function listAvailableDialogs(params: {
 	userId: string;
 	dinozId: number;
-	place: RuntimeDialog['place'];
 }): Promise<AvailableDialogSummary[]> {
 	return prisma.$transaction(async tx => {
 		const availableDialogs: AvailableDialogSummary[] = [];
 
 		for (const dialog of getDialogs()) {
-			if (dialog.place !== params.place) {
-				continue;
-			}
-
 			const context = await buildDialogContext(tx, {
 				userId: params.userId,
 				dinozId: params.dinozId,
 				dialog
 			});
+
+			if (context.dinoz.placeId !== dialog.place) {
+				continue;
+			}
 
 			if (dialog.cond && !checkDialogCondition(dialog.cond, context)) {
 				continue;
