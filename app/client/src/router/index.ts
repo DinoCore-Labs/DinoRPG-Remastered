@@ -10,6 +10,7 @@ import AdminNewsPage from '../pages/Admin/AdminNewsPage.vue';
 import AdminPage from '../pages/Admin/AdminPage.vue';
 import AdminSecretsPage from '../pages/Admin/AdminSecretsPage.vue';
 import AdminUserPage from '../pages/Admin/AdminUserPage.vue';
+import DialogPage from '../pages/DialogPage.vue';
 import DinozPage from '../pages/DinozPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
 import FightPage from '../pages/FightPage.vue';
@@ -86,9 +87,9 @@ const routes: RouteRecord[] = [
 				name: 'Leveling',
 				component: LevelUpPage,
 				props: route => ({
-					id: route.params.id,
-					event: route.query.event,
-					eventId: route.query.eventId
+					id: route.params.id
+					//event: route.query.event,
+					//eventId: route.query.eventId
 				})
 			},
 			{
@@ -100,7 +101,14 @@ const routes: RouteRecord[] = [
 			{
 				path: '/gather/grid/:type/:dinozId',
 				name: 'Gather',
-				component: GatherPage
+				component: GatherPage,
+				meta: { auth: true }
+			},
+			{
+				path: '/dinoz/:id/dialog/:dialogId',
+				name: 'DialogPage',
+				component: DialogPage,
+				meta: { auth: true }
 			},
 			{
 				path: '/ranking',
