@@ -19,6 +19,7 @@ import {
 import { adminRoutes } from './Admin/Routes/admin.routes.js';
 import { loadConfig } from './config/config.js';
 import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
+import { loadDialogs } from './Dialog/Controller/dialog.registry.js';
 import { dialogRoutes } from './Dialog/Routes/dialog.routes.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
 import { fightRoutes } from './Fight/Routes/fight.routes.js';
@@ -197,9 +198,13 @@ async function buildServer() {
 		},
 		async () => ({ status: 'OK' })
 	);
+	//------------------------------------------------------
+	// 8. Dialog registry
+	//------------------------------------------------------
+	loadDialogs();
 
 	//------------------------------------------------------
-	// 8. Routes
+	// 9. Routes
 	//------------------------------------------------------
 	server.register(userRoutes, { prefix: 'api/users' });
 	server.register(rankingRoutes, { prefix: 'api/ranking' });
@@ -214,7 +219,7 @@ async function buildServer() {
 	server.register(adminRoutes, { prefix: 'api/admin' });
 
 	//------------------------------------------------------
-	// 9. Scheduler
+	// 10. Scheduler
 	//------------------------------------------------------
 	await ensureJobsExist();
 	await ensureSecretsExist(server.log);
