@@ -12,6 +12,7 @@ declare module 'vue' {
 	interface ComponentCustomProperties {
 		formatContent(value: string): string;
 		getImgURL(path: string, imgName: string, pixel?: boolean): string;
+		getSWFURL(path: string, imgName: string): string;
 		$t: (key: string, options?: Record<string, unknown>) => string;
 		$globalConfirm: typeof mixins.methods.$confirm;
 		$confirm: typeof mixins.methods.$confirm;

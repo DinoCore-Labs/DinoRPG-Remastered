@@ -2,6 +2,7 @@ import type { ConfirmOptions } from '../utils/confirmPlugin';
 import { formatDateTime } from '../utils/formatDate';
 import { formatText } from '../utils/formatText';
 import { getImgURL } from '../utils/getImgURL';
+import { getSWFURL } from '../utils/getSWFURL';
 import { refreshGold, refreshTreasureTicket } from '../utils/refreshGold';
 
 type ConfirmHost = {
@@ -15,6 +16,7 @@ export const mixins = {
 		},
 		formatDateTime,
 		getImgURL,
+		getSWFURL,
 		$confirm(this: ConfirmHost, options: ConfirmOptions): Promise<boolean> {
 			if (this.$globalConfirm) {
 				return this.$globalConfirm(options);
