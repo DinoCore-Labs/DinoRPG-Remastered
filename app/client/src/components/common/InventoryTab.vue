@@ -150,7 +150,15 @@ export default defineComponent({
 					const toast = await InventoryService.useInventoryItem(item.itemId, +dinozId);
 					await this.resfreshInventory();
 					if (toast.category === ItemEffect.EGG) {
-						await this.dinozStore.setDinozList;
+						const dinozList = [...this.dinozStore.getDinozList, toast.dinoz];
+						this.dinozStore.setDinozList(dinozList);
+
+						await this.$router.push({
+							name: 'DinozPage',
+							params: {
+								id: toast.dinoz.id
+							}
+						});
 					} else if (toast.category === ItemEffect.GOLD) {
 						await this.$refreshGold();
 					} else {

@@ -1,3 +1,4 @@
+import { DinozFiche } from '../dinoz/dinozFiche.js';
 import { ItemEffect } from '../enums/ItemEffect.js';
 
 export type ItemFeedBack =
@@ -9,8 +10,13 @@ export type ItemFeedBack =
 			category: ItemEffect.RESURRECT;
 	  }
 	| {
-			category: ItemEffect.EGG | ItemEffect.SPHERE;
+			category: ItemEffect.SPHERE;
 			value: string;
+	  }
+	| {
+			category: ItemEffect.EGG;
+			value: string;
+			dinoz: DinozFiche;
 	  }
 	| {
 			category: ItemEffect.SPECIAL;
