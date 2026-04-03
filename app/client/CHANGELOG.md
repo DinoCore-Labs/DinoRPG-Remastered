@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.11.0
+
+### Minor Changes
+
+- a32f88d: feat dialog
+
 ## 0.10.0
 
 ### Minor Changes
