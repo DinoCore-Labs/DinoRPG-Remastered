@@ -785,18 +785,21 @@ const addSkillFx = (fightData: DetailedFight, fid: number, skill: Skill, targets
  * This method assumes the history in fightData contains only steps from the skill activation.
  * The previous steps are saved in `old_history`.
  * This method mutates the fightData history.
- * @param fightData All data for the fight, but the history must be comprised only of the steps that happened for the skill activation.
- * @param old_history Previous history data
- * @param attacker Details of the fighter that carried the attack
- * @param skill Skill used
+ * This is inspired from MT's source code but fixes a design flaw of their method.
+ * @param fightData Contains all the fight data, used to save the reconstructed history.
+ * @param old_history Previous history data.
+ * @param hit_steps All the steps for each hit of the skill, with before and after steps.
+ * @param attacker Details of the fighter that carried the attack.
+ * @param skill Skill used.
  */
+
 const consolidateSkillHitSteps = (
 	fightData: DetailedFight,
 	old_history: FightStep[],
+	hit_steps: FightStep[][],
 	attacker: DetailedFighter,
 	skill: Skill
 ) => {
-	let found = false;
 	const after: FightStep[] = [];
 	const hitStep: SkillActivateStep = {
 		action: 'skillActivate',
@@ -805,24 +808,28 @@ const consolidateSkillHitSteps = (
 		targets: []
 	};
 
-	fightData.steps.forEach(s => {
-		if (s.action === 'hit') {
-			// If hit step was found, extract target id and damage and save it into the hit step.
-			// Mark the hit step as found.
-			found = true;
-			hitStep.targets.push({
-				tid: s.target.id,
-				damages: s.damage
-			});
-		} else {
-			if (found) {
-				// Once found, save all steps as "after the hit"
-				after.push(s);
+	// For each group of steps related to a hit, aggregate the steps that happen before the hit to the old history, and save together the steps that happen after.
+	hit_steps.forEach(steps => {
+		let found = false;
+		steps.forEach(s => {
+			if (s.action === 'hit') {
+				// If hit step was found, extract target id and damage and save it into the hit step.
+				// Mark the hit step as found.
+				found = true;
+				hitStep.targets.push({
+					tid: s.target.id,
+					damages: s.damage
+				});
 			} else {
-				// Until the skill activation
-				old_history.push(s);
+				if (found) {
+					// Once found, save all steps as "after the hit"
+					after.push(s);
+				} else {
+					// Until the skill activation
+					old_history.push(s);
+				}
 			}
-		}
+		});
 	});
 
 	// Add the skill hit step.
@@ -890,9 +897,11 @@ const attackSingleOpponent = (
 		});
 	}
 
+	let hit_step = [fightData.steps];
+	fightData.steps = [];
 	// Convert hit step into skill activation step and consolidate so defense & other pre-hit steps are properly
 	// before the skill activation step, and after-defense steps are properly after.
-	consolidateSkillHitSteps(fightData, old_history, fighter, skill);
+	consolidateSkillHitSteps(fightData, old_history, hit_step, fighter, skill);
 
 	return result;
 };
@@ -909,6 +918,7 @@ const attackAllOpponents = (
 ) => {
 	// Requirement for hit step consolidation: save history & temporary reset active history
 	const old_history = fightData.steps;
+	let hit_steps: FightStep[][] = [];
 	fightData.steps = [];
 
 	// Attack each opponent
@@ -945,11 +955,13 @@ const attackAllOpponents = (
 				fid: realTarget.id
 			});
 		}
+		hit_steps.push(fightData.steps);
+		fightData.steps = [];
 	});
 
 	// Convert all hit steps into one single skill activation step and consolidate so all defense & other pre-hit steps are properly
 	// before the skill activation step, and after-defense steps are properly after.
-	consolidateSkillHitSteps(fightData, old_history, fighter, skill);
+	consolidateSkillHitSteps(fightData, old_history, hit_steps, fighter, skill);
 };
 
 const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monsterData: MonsterFiche) => {
