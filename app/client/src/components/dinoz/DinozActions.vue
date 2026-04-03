@@ -54,7 +54,7 @@
 				<img :src="getImgURL('act', action.imgName)" :alt="action.imgName" />
 				<p v-if="action.name === 'shop'">{{ $t(`shop.item.${getShopNameFromAction(action)}.name`) }}</p>
 				<p v-else-if="action.name === Action.NPC">
-					{{ action.label ?? action.prop }}
+					{{ getNpcActionName(action) }}
 				</p>
 				<!--<p v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION">
 					{{ $t(`missions.actions.terminate`) }}
@@ -69,9 +69,9 @@
 						v-if="action.name === 'shop'"
 						v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.name`))"
 					/>
-					<h1 v-else-if="action.name === Action.NPC">
-						{{ action.label ?? action.prop }}
-					</h1>
+					<p v-else-if="action.name === Action.NPC">
+						{{ getNpcActionName(action) }}
+					</p>
 					<!--<h1
 						v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION"
 						v-html="formatContent($t(`missions.actions.terminate`))"
@@ -218,6 +218,19 @@ export default defineComponent({
 		getShopNameFromAction(action: ActionFiche): string | undefined {
 			if (typeof action.prop !== 'number') return undefined;
 			return this.shopNameList[action.prop];
+		},
+		translateI18nText(value?: string) {
+			if (!value) return '';
+			return this.$te(value) ? this.$t(value) : value;
+		},
+		getNpcActionName(action: ActionFiche) {
+			if (typeof action.label === 'string' && action.label.length > 0) {
+				return this.translateI18nText(action.label);
+			}
+			if (typeof action.prop === 'string') {
+				return this.translateI18nText(action.prop);
+			}
+			return '';
 		},
 		async launch(action: ActionFiche) {
 			switch (action.name) {

@@ -1,32 +1,29 @@
 <template>
 	<TitleHeader :title="pageTitle" :header="headerTitle" :subHeader="npcName" />
-
 	<div class="wrapper">
 		<div class="box">
 			<p class="name">{{ npcName }} :</p>
-
 			<div class="content">
 				<span v-if="dialogState" class="dialog" v-html="renderDialogText(dialogState.text)" />
-
 				<div class="portrait">
 					<AnimatedNPC v-if="swfName" :NPC="swfName" :flashvars="npcFlashvars" />
-					<DZButton :disabled="loading" @click="stop"> Quitter </DZButton>
+					<DZButton :disabled="loading" @click="stop">
+						{{ $t('npc.leave') }}
+					</DZButton>
 				</div>
 			</div>
 		</div>
-
 		<div class="footer"></div>
-
 		<ul v-if="loaded && dialogState && dialogState.links.length > 0" id="answer">
 			<li v-for="choice in dialogState.links" :key="choice.id">
 				<a v-html="renderDialogText(choice.text)" @click.prevent="chooseStep(choice.id, choice.confirm)" />
 			</li>
 		</ul>
-
 		<p v-if="error" class="error">{{ error }}</p>
-
 		<p v-if="dialogState?.actions.url" class="extra-action">
-			<a :href="dialogState.actions.url" target="_blank" rel="noopener"> Ouvrir le lien </a>
+			<a :href="dialogState.actions.url" target="_blank" rel="noopener">
+				{{ $t('npc.openLink') }}
+			</a>
 		</p>
 	</div>
 </template>
@@ -35,6 +32,7 @@
 import type { DialogPhaseResponse } from '@dinorpg/core/models/dialogs/dialogResponse.js';
 import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import DZButton from '../components/utils/DZButton.vue';
@@ -52,7 +50,6 @@ const error = ref<string | null>(null);
 const dinozId = computed(() => Number(route.params.id));
 const dialogId = computed(() => String(route.params.dialogId));
 
-const npcName = computed(() => dialogState.value?.name ?? '');
 const swfName = computed(() => dialogState.value?.pnj.gfx ?? null);
 const npcFlashvars = computed(() => {
 	if (!dialogState.value) return '';
@@ -66,9 +63,18 @@ const npcFlashvars = computed(() => {
 const pageTitle = computed(() => `PNJ - ${npcName.value}`);
 const headerTitle = computed(() => 'Personnage');
 
-function renderDialogText(text: string | undefined): string {
-	return (text ?? '').replace(/\n/g, '<br>');
+const { t, te } = useI18n();
+
+function translateText(key: string | undefined): string {
+	const value = key ?? '';
+	return te(value) ? t(value) : value;
 }
+
+function renderDialogText(text: string | undefined): string {
+	return translateText(text).replace(/\n/g, '<br>');
+}
+
+const npcName = computed(() => translateText(dialogState.value?.name ?? ''));
 
 async function handlePhaseActions(phase: DialogPhaseResponse) {
 	if (phase.actions.startFight) {
