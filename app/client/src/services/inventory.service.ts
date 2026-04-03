@@ -1,6 +1,6 @@
 import type { DinozItems } from '@dinorpg/core/models/dinoz/dinozItems.js';
 import type { IngredientFicheDTO } from '@dinorpg/core/models/ingredients/ingredientFiche.js';
-import type { ItemFeedBack } from '@dinorpg/core/models/items/itemFeedback.js';
+import type { UseItemResult } from '@dinorpg/core/models/items/itemFeedback.js';
 import type { ItemFicheDTO } from '@dinorpg/core/models/items/itemFiche.js';
 
 import { http } from '../utils/http';
@@ -18,7 +18,7 @@ export const InventoryService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	async useInventoryItem(itemId: number, dinozId: number): Promise<ItemFeedBack> {
+	async useInventoryItem(itemId: number, dinozId: number): Promise<UseItemResult> {
 		return http()
 			.get(`/inventory/${dinozId}/${itemId}`)
 			.then(res => Promise.resolve(res.data))

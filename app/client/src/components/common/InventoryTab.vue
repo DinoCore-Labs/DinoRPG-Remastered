@@ -144,52 +144,79 @@ export default defineComponent({
 			return (item.quantity ?? 0) >= (item.maxQuantity ?? 0);
 		},
 		async useItem(item: ItemFiche): Promise<void> {
-			if ((item.quantity ?? 0) > 0) {
-				const dinozId = this.$route.params.id as string;
-				try {
-					const toast = await InventoryService.useInventoryItem(item.itemId, +dinozId);
-					await this.resfreshInventory();
-					if (toast.category === ItemEffect.EGG) {
-						const dinozList = [...this.dinozStore.getDinozList, toast.dinoz];
-						this.dinozStore.setDinozList(dinozList);
+			if ((item.quantity ?? 0) <= 0) return;
 
-						await this.$router.push({
-							name: 'DinozPage',
-							params: {
-								id: toast.dinoz.id
-							}
-						});
-					} else if (toast.category === ItemEffect.GOLD) {
-						await this.$refreshGold();
-					} else {
-						eventBus.emit('refreshDinoz', true);
-					}
+			const dinozId = this.$route.params.id as string;
 
+			try {
+				const result = await InventoryService.useInventoryItem(item.itemId, +dinozId);
+
+				await this.resfreshInventory();
+
+				const categories = result.effects.map(effect => effect.category);
+
+				if (result.createdDinoz) {
+					const dinozList = [...this.dinozStore.getDinozList, result.createdDinoz];
+					this.dinozStore.setDinozList(dinozList);
+
+					await this.$router.push({
+						name: 'DinozPage',
+						params: {
+							id: result.createdDinoz.id
+						}
+					});
+				}
+
+				if (categories.includes(ItemEffect.GOLD)) {
+					await this.$refreshGold();
+				}
+
+				if (
+					categories.some(category =>
+						[ItemEffect.ACTION, ItemEffect.HEAL, ItemEffect.RESURRECT, ItemEffect.SPHERE, ItemEffect.SPECIAL].includes(
+							category
+						)
+					)
+				) {
+					eventBus.emit('refreshDinoz', true);
+				}
+
+				for (const effect of result.effects) {
 					let message: string;
-					switch (toast.category) {
+
+					switch (effect.category) {
 						case ItemEffect.SPECIAL:
-							message = this.$t(`toast.special.${toast.value}`, {
-								value: this.$t(`items.name.${toast.effect}`),
-								qty: toast.quantity
+							message = this.$t(`toast.special.${effect.value}`, {
+								value: this.$t(`items.name.${effect.effect}`),
+								qty: effect.quantity
 							});
 							break;
+
 						case ItemEffect.SPHERE:
-							message = this.$t(`toast.sphere`, { value: this.$t(`skill.name.${toast.value}`) });
+							message = this.$t(`toast.sphere`, {
+								value: this.$t(`skill.name.${effect.value}`)
+							});
 							break;
+
 						case ItemEffect.QUEST:
-							message = this.$t(`quest.${toast.value}`);
+							message = this.$t(`quest.${effect.value}`);
 							break;
+
 						case ItemEffect.RESURRECT:
-							message = this.$t(`toast.${toast.category}`);
+							message = this.$t(`toast.${effect.category}`);
 							break;
+
 						case ItemEffect.EGG:
-							message = this.$t(`toast.${toast.category}`, { value: this.$t(`race.name.${toast.value}`) });
+							message = this.$t(`toast.${effect.category}`, {
+								value: this.$t(`race.name.${effect.value}`)
+							});
 							break;
+
 						default:
 							message =
-								typeof toast.value === 'number'
-									? this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value)
-									: this.$t(`toast.${toast.category}`, { value: toast.value });
+								typeof effect.value === 'number'
+									? this.$t(`toast.${effect.category}`, { value: effect.value }, effect.value)
+									: this.$t(`toast.${effect.category}`, { value: effect.value });
 							break;
 					}
 
@@ -197,10 +224,9 @@ export default defineComponent({
 						message: formatText(message),
 						type: 'info'
 					});
-				} catch (error) {
-					errorHandler.handle(error, this.$toast);
-					return;
 				}
+			} catch (error) {
+				errorHandler.handle(error, this.$toast);
 			}
 		},
 		async equipItem(item: ItemFiche): Promise<void> {

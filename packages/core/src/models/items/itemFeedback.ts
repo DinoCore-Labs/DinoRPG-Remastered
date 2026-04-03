@@ -10,13 +10,8 @@ export type ItemFeedBack =
 			category: ItemEffect.RESURRECT;
 	  }
 	| {
-			category: ItemEffect.SPHERE;
+			category: ItemEffect.EGG | ItemEffect.SPHERE;
 			value: string;
-	  }
-	| {
-			category: ItemEffect.EGG;
-			value: string;
-			dinoz: DinozFiche;
 	  }
 	| {
 			category: ItemEffect.SPECIAL;
@@ -28,3 +23,13 @@ export type ItemFeedBack =
 			category: ItemEffect.QUEST;
 			value: string;
 	  };
+
+export type UseItemResult = {
+	effects: ItemFeedBack[];
+	createdDinoz?: DinozFiche;
+};
+
+export type SpecialItemResult = {
+	specialEffect?: ItemFeedBack;
+	extraEffects?: ItemFeedBack[];
+};

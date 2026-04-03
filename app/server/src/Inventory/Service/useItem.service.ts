@@ -4,7 +4,7 @@ import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 //import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { RaceEnum } from '@dinorpg/core/models/enums/Race.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
-import { ItemFeedBack } from '@dinorpg/core/models/items/itemFeedback.js';
+import { ItemFeedBack, SpecialItemResult, UseItemResult } from '@dinorpg/core/models/items/itemFeedback.js';
 import { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 //import { SWAMP_FLOODED_DAYS } from '@dinorpg/core/models/place/placeList.js';
@@ -43,7 +43,7 @@ type Params = {
 export async function useItemHandler(
 	req: FastifyRequest<{ Params: Params }>,
 	_reply: FastifyReply
-): Promise<ItemFeedBack> {
+): Promise<UseItemResult> {
 	const authed = req.user;
 
 	const dinozId = +req.params.dinozId;
@@ -54,7 +54,6 @@ export async function useItemHandler(
 		throw new ExpectedError(`Player ${dinozId} doesn't exist.`, { statusCode: 404 });
 	}
 
-	// ownership
 	if (dinoz.user.id !== authed.id) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player.`, { statusCode: 403 });
 	}
@@ -69,40 +68,13 @@ export async function useItemHandler(
 		throw new ExpectedError(`notEnoughItems`, { params: { id: itemData?.id } });
 	}
 
-	// --- Star quest ---
-	//const starQuest = dinoz.user.quests.find(q => q.questId === Scenario.STAR && q.progression === 3);
-	/*if (starQuest) {
-		const dayOfWeek = new Date().getDate();
-		if (
-			SWAMP_FLOODED_DAYS.includes(dayOfWeek) &&
-			dinoz.placeId === PlaceEnum.MARAIS_COLLANT &&
-			itemId === itemList[Item.MEAT_PIE].itemId
-		) {
-			//await updateQuest(dinoz.user.id, Scenario.STAR, 4);
-			//await addItemToInventory(dinoz.user.id, itemList[Item.MAGIC_STAR].itemId, 1);
-
-			const initialLife = dinoz.life;
-			await updateDinoz(dinoz.id, heal(dinoz, 30 * (dinoz.user.cooker ? 1.1 : 1)));
-
-			const refreshed = await getDinozFicheItemRequest(dinozId);
-			const newLife = refreshed?.life ?? initialLife;
-			const lifeHealed = Math.max(0, newLife - initialLife);
-
-			await incrementUserStat(StatTracking.HEAL_PV, dinoz.user.id, lifeHealed);
-
-			await removeItem(dinoz.user.id, itemData.itemId, 1);
-			//await createLog(LogType.ItemUsed, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
-
-			return { category: ItemEffect.QUEST, value: 'eat_star_found' };
-		}
-	}*/
-
-	let feedback: ItemFeedBack;
+	const effects: ItemFeedBack[] = [];
+	let createdDinoz: UseItemResult['createdDinoz'];
 
 	switch (item.effect?.category) {
 		case ItemEffect.ACTION: {
 			await updateDinoz(dinoz.id, { fight: true, gather: true });
-			feedback = { category: ItemEffect.ACTION, value: 1 };
+			effects.push({ category: ItemEffect.ACTION, value: 1 });
 			break;
 		}
 
@@ -114,14 +86,14 @@ export async function useItemHandler(
 			const newLife = refreshed?.life ?? initialLife;
 			const lifeHealed = Math.max(0, newLife - initialLife);
 
-			feedback = { category: ItemEffect.HEAL, value: lifeHealed };
+			effects.push({ category: ItemEffect.HEAL, value: lifeHealed });
 			await incrementUserStat(StatTracking.HEAL_PV, dinoz.user.id, lifeHealed);
 			break;
 		}
 
 		case ItemEffect.RESURRECT: {
 			await updateDinoz(dinoz.id, resurrect(dinoz));
-			feedback = { category: ItemEffect.RESURRECT };
+			effects.push({ category: ItemEffect.RESURRECT });
 
 			await incrementUserStat(StatTracking.DEATHS, dinoz.user.id, 1);
 			break;
@@ -130,42 +102,46 @@ export async function useItemHandler(
 		case ItemEffect.EGG: {
 			const result = await hatchEgg(item, authed);
 
-			feedback = {
+			effects.push({
 				category: ItemEffect.EGG,
-				value: raceList[result.race].name,
-				dinoz: result.dinoz
-			};
+				value: raceList[result.race].name
+			});
+
+			createdDinoz = result.dinoz;
 			break;
 		}
 
 		case ItemEffect.SPHERE: {
 			const skillToLearn = learnNextSphereSkill(dinoz, item.effect.value);
 			const skill = Object.values(skillList).find(s => s.id === skillToLearn);
-			if (!skill) throw new ExpectedError(`Skill ${skillToLearn} doesn't exist.`, { statusCode: 404 });
+			if (!skill) {
+				throw new ExpectedError(`Skill ${skillToLearn} doesn't exist.`, { statusCode: 404 });
+			}
 
 			await applySkillEffect(dinoz, skill, dinoz.user.id);
 			await addSkillToDinoz(dinozId, skillToLearn);
 
-			feedback = { category: ItemEffect.SPHERE, value: skill.name };
+			effects.push({ category: ItemEffect.SPHERE, value: skill.name });
 			break;
 		}
 
 		case ItemEffect.GOLD: {
 			await addMoney(dinoz.user.id, item.effect.value);
-			feedback = { category: ItemEffect.GOLD, value: item.effect.value };
+			effects.push({ category: ItemEffect.GOLD, value: item.effect.value });
 			break;
 		}
 
 		case ItemEffect.SPECIAL: {
-			const itemWon = await useSpecialItem(dinoz, item);
-			const itemName = itemList[item.itemId as Item];
+			const result = await useSpecialItem(dinoz, item);
 
-			feedback = {
-				category: ItemEffect.SPECIAL,
-				value: itemName.name.toLowerCase(),
-				effect: itemWon?.name ?? '',
-				quantity: itemWon?.quantity ?? 1
-			};
+			if (result?.specialEffect) {
+				effects.push(result.specialEffect);
+			}
+
+			if (result?.extraEffects?.length) {
+				effects.push(...result.extraEffects);
+			}
+
 			break;
 		}
 
@@ -176,7 +152,10 @@ export async function useItemHandler(
 	await removeItem(dinoz.user.id, itemData.itemId, 1);
 	await incrementUserStat(StatTracking.ITEM_USED, dinoz.user.id, 1);
 
-	return feedback;
+	return {
+		effects,
+		createdDinoz
+	};
 }
 
 async function hatchEgg(item: ItemFiche, authed: Pick<User, 'id'>) {
@@ -348,37 +327,59 @@ async function useSpecialItem(
 		skills: Pick<DinozSkills, 'skillId'>[];
 		unlockableSkills: Pick<DinozSkillsUnlockable, 'skillId'>[];
 		user:
-			| (Pick<User, 'id' | 'cooker' | /*'lang' |*/ 'shopKeeper'> & {
+			| (Pick<User, 'id' | 'cooker' | 'shopKeeper'> & {
 					items: Pick<UserItems, 'itemId' | 'quantity'>[];
 			  })
 			| null;
 	},
 	item: ItemFiche
-): Promise<{ name: string; quantity?: number } | undefined> {
+): Promise<SpecialItemResult | undefined> {
 	if (!dinoz.user) {
 		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to a player.`);
 	}
 
 	if (item.effect?.category !== ItemEffect.SPECIAL) return;
+
 	switch (item.effect.value) {
 		case 'ointment':
 			if (!dinoz.status.some(status => status.statusId === DinozStatusId.CURSED)) {
 				throw new ExpectedError(`NotCursed`, { params: { id: dinoz.user } });
 			}
+
 			await removeStatusFromDinoz(dinoz.id, DinozStatusId.CURSED);
-			return { name: 'ointment' };
-		case 'rice': {
+
+			return {
+				specialEffect: {
+					category: ItemEffect.SPECIAL,
+					value: item.name.toLowerCase(),
+					effect: 'ointment',
+					quantity: 1
+				}
+			};
+
+		case 'rice':
 			await useRice(dinoz);
-			return { name: 'rice' };
-		}
-		case 'pampleboum':
+
+			return {
+				specialEffect: {
+					category: ItemEffect.SPECIAL,
+					value: item.name.toLowerCase(),
+					effect: 'rice',
+					quantity: 1
+				}
+			};
+
+		case 'pampleboum': {
 			const initialLife = dinoz.life;
 			const healed = heal(dinoz, 15 * (dinoz.user.cooker ? 1.1 : 1));
 			const lifeHealed = Math.max(0, healed.life - initialLife);
+
 			await updateDinoz(dinoz.id, healed);
-			const pamp = dinoz.user.items.find(item => item.itemId === itemList[Item.PAMPLEBOUM_PIT].itemId);
-			if (!pamp) await addItemToInventory(dinoz.user.id, itemList[Item.PAMPLEBOUM_PIT].itemId, 1);
-			else if (
+
+			const pamp = dinoz.user.items.find(entry => entry.itemId === itemList[Item.PAMPLEBOUM_PIT].itemId);
+			if (!pamp) {
+				await addItemToInventory(dinoz.user.id, itemList[Item.PAMPLEBOUM_PIT].itemId, 1);
+			} else if (
 				pamp.quantity <
 				(dinoz.user.shopKeeper
 					? Math.round(1.5 * itemList[Item.PAMPLEBOUM_PIT].maxQuantity)
@@ -387,17 +388,39 @@ async function useSpecialItem(
 				await addItemToInventory(dinoz.user.id, itemList[Item.PAMPLEBOUM_PIT].itemId, 1);
 			}
 
-			//Update stats
 			await incrementUserStat(StatTracking.HEAL_PV, dinoz.user.id, lifeHealed);
-			return { name: 'pampleboum' };
-		case 'box':
+
+			return {
+				specialEffect: {
+					category: ItemEffect.SPECIAL,
+					value: item.name.toLowerCase(),
+					effect: 'pampleboum',
+					quantity: 1
+				},
+				extraEffects: [{ category: ItemEffect.HEAL, value: lifeHealed }]
+			};
+		}
+
+		case 'box': {
 			if (!item.name) {
 				throw new ExpectedError(`Special item with ${item.effect.value} value is not implemented`);
 			}
+
 			const boxOpened = boxOpening(item);
 			await addItemToInventory(dinoz.user.id, boxOpened.item.itemId, boxOpened.quantity);
+
 			const wonItem = itemList[boxOpened.item.itemId as Item];
-			return { name: wonItem.name.toLowerCase(), quantity: boxOpened.quantity };
+
+			return {
+				specialEffect: {
+					category: ItemEffect.SPECIAL,
+					value: item.name.toLowerCase(),
+					effect: wonItem.name.toLowerCase(),
+					quantity: boxOpened.quantity
+				}
+			};
+		}
+
 		default:
 			throw new ExpectedError(`Special item with ${item.effect.value} value is not implemented`);
 	}
@@ -405,7 +428,7 @@ async function useSpecialItem(
 
 export const heal = (
 	dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'> & {
-		user: Pick<User, 'id' /*| 'lang'*/> | null;
+		user: Pick<User, 'id'> | null;
 	},
 	lifeToAdd: number
 ) => {
@@ -422,7 +445,7 @@ export const heal = (
 
 export const resurrect = (
 	dinoz: Pick<Dinoz, 'life' | 'id'> & {
-		user: Pick<User, 'id' /*| 'lang'*/> | null;
+		user: Pick<User, 'id'> | null;
 	}
 ) => {
 	if (dinoz.life > 0) {
