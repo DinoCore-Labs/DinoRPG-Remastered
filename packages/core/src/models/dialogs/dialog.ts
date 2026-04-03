@@ -10,6 +10,12 @@ export type DialogPnj = {
 	background: string;
 };
 
+export type DialogPhaseActions = {
+	startFight?: string;
+	popup?: boolean;
+	url?: string;
+};
+
 export type DialogPhaseDefinition = {
 	id: string;
 	name?: string;
@@ -18,6 +24,7 @@ export type DialogPhaseDefinition = {
 	next?: string[];
 	effects?: DialogEffect[];
 	special?: DialogSpecial[];
+	actions?: DialogPhaseActions;
 	pnj?: Partial<DialogPnj> | null;
 	needCheck?: boolean;
 };
