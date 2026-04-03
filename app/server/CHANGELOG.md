@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.11.0
+
+### Minor Changes
+
+- a32f88d: feat dialog
+
+### Patch Changes
+
+- Updated dependencies [a32f88d]
+  - @dinorpg/core@0.10.0
+
 ## 0.10.0
 
 ### Minor Changes
