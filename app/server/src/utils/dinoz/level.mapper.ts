@@ -220,11 +220,8 @@ export const useRice = async (
 		const upChance = getDinozUpChance(learnableSkills, unlockableSkills, dinozRace);
 
 		newDinozData.seed = randomUUID();
-		newDinozData.nextUpElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt + dinoz.level);
-		newDinozData.nextUpAltElementId = getRandomUpElement(
-			upChance,
-			newDinozData.seed + GLOBAL.config.salt + dinoz.level + 'pdc'
-		);
+		newDinozData.nextUpElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt);
+		newDinozData.nextUpAltElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt + 'pdc');
 	}
 	await updateDinoz(dinoz.id, newDinozData);
 };
