@@ -6,11 +6,13 @@ export type DialogResponseLink = {
 	confirm: boolean;
 };
 
+export type I18nKey = string;
+
 export type DialogPhaseResponse = {
 	dialogId: string;
 	phaseId: string;
-	name: string;
-	text: string;
+	name: I18nKey;
+	text: I18nKey;
 	fast: boolean;
 	pnj: DialogPnj;
 	links: DialogResponseLink[];

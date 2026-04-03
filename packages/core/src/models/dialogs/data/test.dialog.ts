@@ -4,9 +4,9 @@ import { defineDialog } from '../defineDialog.js';
 import { DialogDefinition } from '../dialog.js';
 
 export const testDialog = defineDialog({
-	id: 'tutorial_master',
+	id: 'test_dialog',
 	place: PlaceEnum.DINOVILLE,
-	name: 'hulot',
+	name: 'npc.hulot.name',
 	pnj: {
 		image: false,
 		gfx: 'hulot',
@@ -18,12 +18,12 @@ export const testDialog = defineDialog({
 	phases: {
 		begin: {
 			id: 'begin',
-			text: 'Bienvenue jeune dresseur. Veux-tu commencer ton apprentissage ?',
+			text: 'npc.hulot.dialog.begin',
 			next: ['start_tutorial', 'leave']
 		},
 		tutorial_start: {
 			id: 'tutorial_start',
-			text: 'Très bien. Prends ceci pour commencer.',
+			text: 'npc.hulot.dialog.tutorial_start',
 			next: ['continue'],
 			effects: [
 				{ type: 'giveItem', itemId: Item.POTION_IRMA, count: 1 },
@@ -32,25 +32,25 @@ export const testDialog = defineDialog({
 		},
 		exit: {
 			id: 'exit',
-			text: 'Reviens me voir quand tu seras prêt.',
+			text: 'npc.dialog.exit',
 			next: []
 		}
 	},
 	links: {
 		start_tutorial: {
 			id: 'start_tutorial',
-			text: 'Oui, je suis prêt.',
+			text: 'npc.hulot.choice.start_tutorial',
 			target: 'tutorial_start',
 			cond: { type: 'true' }
 		},
 		continue: {
 			id: 'continue',
-			text: 'Merci.',
+			text: 'npc.hulot.choice.continue',
 			target: 'exit'
 		},
 		leave: {
 			id: 'leave',
-			text: 'Pas maintenant.',
+			text: 'npc.dialog.leave',
 			target: 'exit'
 		}
 	},

@@ -2911,5 +2911,26 @@
 			"security": "Sécurité de mon compte",
 			"security-1": "**Peu importe qui vous le demande**... && && Ne communiquez jamais vos identifiants et mots de passe !"
 		}
+	},
+	"npc": {
+		"description": "Vous pouvez discuter avec cette personne.",
+		"leave": "Arrêter la discussion",
+		"openLink": "Ouvrir le lien",
+		"continue": "Continuer",
+		"hulot": {
+			"name": "Hulot",
+			"dialog": {
+				"begin": "Bonjour jeune dresseur !",
+				"tutorial_start": "Très bien, commençons le tutoriel."
+			},
+			"choice": {
+				"start_tutorial": "Commencer le tutoriel",
+				"continue": "Continuer"
+			}
+		},
+		"dialog": {
+			"exit": "À bientôt.",
+			"leave": "Quitter"
+		}
 	}
 }
