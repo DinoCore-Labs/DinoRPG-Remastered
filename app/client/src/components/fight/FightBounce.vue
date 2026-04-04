@@ -104,22 +104,29 @@ export default defineComponent({
 		return {
 			dinozStore: dinozStore(),
 			displayFightHistory: false,
-			fightHistory: undefined as string | undefined,
-			npcSpeech: undefined as string | undefined,
-			npcName: undefined as string | undefined
+			fightHistory: undefined as string | undefined
 		};
 	},
 	methods: {
 		returnToDinoz() {
-			if (this.npcSpeech && this.fight.result) {
+			if (this.fight.result && this.fight.dialogReturn) {
 				this.$router.push({
-					name: 'NPC',
-					params: { id: this.dinozId.toString(), npc: this.npcName }
+					name: 'DialogPage',
+					params: {
+						id: this.dinozId.toString(),
+						dialogId: this.fight.dialogReturn.dialogId
+					},
+					query: {
+						phaseId: this.fight.dialogReturn.phaseId
+					}
 				});
-			} else {
-				//this.dinozStore.clearNpc(this.dinozId);
-				this.$router.push({ name: 'DinozPage', params: { id: this.dinozId.toString() } });
+				return;
 			}
+
+			this.$router.push({
+				name: 'DinozPage',
+				params: { id: this.dinozId.toString() }
+			});
 		},
 		toggleFightHistory(): void {
 			if (this.displayFightHistory) {
@@ -135,15 +142,7 @@ export default defineComponent({
 			}
 			this.displayFightHistory = true;
 		}
-	} /*,
-	mounted() {
-		if (this.fight.result) {
-			this.npcSpeech = this.dinozStore.getNpc(this.dinozId)?.npcSpeech;
-			this.npcName = this.dinozStore.getNpc(this.dinozId)?.npcName;
-		} else {
-			this.dinozStore.clearNpc(this.dinozId);
-		}
-	}*/
+	}
 });
 </script>
 
