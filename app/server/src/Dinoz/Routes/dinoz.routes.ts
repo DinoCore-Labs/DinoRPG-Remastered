@@ -3,12 +3,12 @@ import type { FastifyInstance } from 'fastify';
 import {
 	dinozFollowParamsSchema,
 	dinozIdParamsSchema,
-	moveDinozResponseSchema,
 	moveDinozSchema,
 	setDinozNameBodySchema,
 	setSkillStateBodySchema
 } from '../Schema/dinoz.schema.js';
 import { changeLeaderDinozGroup } from '../Service/changeLeaderDinozGroup.service.js';
+import { digWithDinozHandler } from '../Service/dig.service.js';
 import { disband } from '../Service/disbandDinozTeam.service.js';
 import { followDinoz } from '../Service/followDinoz.service.js';
 import { getDinozFiche } from '../Service/getDinozFiche.service.js';
@@ -182,5 +182,16 @@ export async function dinozRoutes(app: FastifyInstance) {
 			}
 		},
 		stopResting
+	);
+	app.get(
+		'/dig/:id',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Dinoz'],
+				params: dinozIdParamsSchema
+			}
+		},
+		digWithDinozHandler
 	);
 }
