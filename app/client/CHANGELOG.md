@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.11.1
+
+### Patch Changes
+
+- bd58005: feat professor eugene
+
 ## 0.11.0
 
 ### Minor Changes

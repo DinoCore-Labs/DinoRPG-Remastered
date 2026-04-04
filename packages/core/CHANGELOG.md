@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.10.1
+
+### Patch Changes
+
+- bd58005: feat professor eugene
+
 ## 0.10.0
 
 ### Minor Changes
