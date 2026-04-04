@@ -128,7 +128,8 @@ import { formatText } from '../../utils/formatText';
 import eventBus from '../../events';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { itinerantShopNameList, shopNameList } from '../../constants/shop';
-//import { DigResponse } from '@drpg/core/returnTypes/Dinoz';
+import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import { dinozStatusKeyById } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -144,7 +145,6 @@ export default defineComponent({
 			sessionStore: sessionStore(),
 			dinozStore: dinozStore(),
 			//MissionEnum: ConditionEnum,
-			//digRewards: undefined as DigResponse | undefined,
 			Action,
 			itinerantName: '' as string,
 			dinozFullParty: [] as DinozFiche[],
@@ -358,49 +358,50 @@ export default defineComponent({
 					}*/
 					break;
 				case Action.DIG:
-					/*try {
-						this.digRewards = await DinozService.dig(parseInt(this.$route.params.id.toString()));
+					try {
+						const digResult = await DinozService.dig(this.dinozId);
 
-						if (this.digRewards.fight) {
-							this.sessionStore.setFightResult(this.digRewards.fight);
-							this.$router.push({
-								name: 'Fight',
-								params: { dinozId: this.$route.params.id.toString() }
-							});
-
-							return;
-						}
-
-						for (const reward of this.digRewards.rewards) {
-							if (reward.rewardType === RewardEnum.GOLD) {
-								this.$toast.open({
-									message: formatText(this.$t(`dig.gold`, { gold: reward.value })),
-									type: 'reward'
-								});
-							} else if (reward.rewardType === RewardEnum.STATUS) {
-								this.$toast.open({
-									message: formatText(
-										formatText(
-											this.$t(`dig.status`, {
-												item: mixin.methods.formatContent(this.$t(`status.name.${reward.value}`))
-											})
-										)
-									),
-									type: 'success'
-								});
-							} else if (reward.rewardType === RewardEnum.SCENARIO) {
-								if (reward.value === 1 && reward.step === 5) {
+						for (const reward of digResult.rewards) {
+							switch (reward.type) {
+								case 'gold':
 									this.$toast.open({
-										message: formatText(this.$t(`quest.dig_star_found`)),
-										type: 'info'
+										message: formatText(this.$t('dig.gold', { gold: reward.amount })),
+										type: 'reward'
 									});
+									break;
+								case 'status': {
+									const statusKey = dinozStatusKeyById[reward.statusId];
+									this.$toast.open({
+										message: formatText(
+											this.$t('dig.status', {
+												item: this.$t(`status.name.${statusKey}`)
+											})
+										),
+										type: 'success'
+									});
+									break;
+								}
+								case 'item': {
+									const item = itemList[reward.itemId as keyof typeof itemList];
+									const itemName = item ? this.$t(`items.name.${item.name}`) : `#${reward.itemId}`;
+									this.$toast.open({
+										message: formatText(
+											this.$t('dig.item', {
+												item: itemName,
+												quantity: reward.quantity
+											})
+										),
+										type: 'success'
+									});
+									break;
 								}
 							}
 						}
+						eventBus.emit('refreshInventory', true);
+						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}*/
-					await this.refreshDinoz();
+					}
 					break;
 				case Action.FISH:
 				case Action.CUEILLE:
