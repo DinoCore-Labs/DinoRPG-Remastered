@@ -6,10 +6,9 @@ export const professorEugeneDialog = defineDialog({
 	id: 'professor_eugene',
 	place: PlaceEnum.UNIVERSITE,
 	name: 'npc.eugene.name',
-	description: 'npc.eugene.description',
 	pnj: {
 		image: false,
-		gfx: 'eugene',
+		gfx: 'professor',
 		frame: 'speak',
 		background: '1'
 	},
@@ -27,39 +26,32 @@ export const professorEugeneDialog = defineDialog({
 			text: 'npc.eugene.dialog.talk',
 			next: ['question', 'nothing', 'nothing2', 'learn', 'learn_water', 'learn_fire', 'learn_done']
 		},
-
 		// APPRENTISSAGE
-
 		nothing: {
 			id: 'nothing',
 			text: 'npc.eugene.dialog.nothing',
 			next: []
 		},
-
 		nothing2: {
 			id: 'nothing2',
 			text: 'npc.eugene.dialog.nothing2',
 			next: []
 		},
-
 		learn: {
 			id: 'learn',
 			text: 'npc.eugene.dialog.learn',
 			next: ['water', 'fire']
 		},
-
 		water: {
 			id: 'water',
 			text: 'npc.eugene.dialog.water',
 			next: ['water_fight', 'back']
 		},
-
 		fire: {
 			id: 'fire',
 			text: 'npc.eugene.dialog.fire',
 			next: ['fire_fight', 'back']
 		},
-
 		water_fight: {
 			id: 'water_fight',
 			text: 'npc.eugene.dialog.water_fight',
@@ -68,7 +60,6 @@ export const professorEugeneDialog = defineDialog({
 				startFight: 'ewater'
 			}
 		},
-
 		fire_fight: {
 			id: 'fire_fight',
 			text: 'npc.eugene.dialog.fire_fight',
@@ -77,63 +68,52 @@ export const professorEugeneDialog = defineDialog({
 				startFight: 'efire'
 			}
 		},
-
 		learn_water: {
 			id: 'learn_water',
 			text: 'npc.eugene.dialog.learn_water',
 			next: ['water_fight']
 		},
-
 		learn_fire: {
 			id: 'learn_fire',
 			text: 'npc.eugene.dialog.learn_fire',
 			next: ['fire_fight']
 		},
-
 		learn_done: {
 			id: 'learn_done',
 			text: 'npc.eugene.dialog.learn_done',
 			next: []
 		},
-
 		// QUESTIONS
-
 		question: {
 			id: 'question',
 			text: 'npc.eugene.dialog.question',
 			next: ['dinoville', 'gtc', 'atlante', 'stone', 'gant', 'noquestion']
 		},
-
 		dinoville: {
 			id: 'dinoville',
 			text: 'npc.eugene.dialog.dinoville',
 			next: ['menu']
 		},
-
 		atlante: {
 			id: 'atlante',
 			text: 'npc.eugene.dialog.atlante',
 			next: ['menu']
 		},
-
 		gtc: {
 			id: 'gtc',
 			text: 'npc.eugene.dialog.gtc',
 			next: ['menu']
 		},
-
 		gant: {
 			id: 'gant',
 			text: 'npc.eugene.dialog.gant',
 			next: ['menu']
 		},
-
 		stone: {
 			id: 'stone',
 			text: 'npc.eugene.dialog.stone',
 			next: ['stone_yes', 'stone_no']
 		},
-
 		stone_yes: {
 			id: 'stone_yes',
 			text: 'npc.eugene.dialog.stone_yes',
@@ -143,20 +123,17 @@ export const professorEugeneDialog = defineDialog({
 				{ type: 'effect', effect: 'totem' }
 			]
 		},
-
 		noquestion: {
 			id: 'noquestion',
 			text: 'npc.eugene.dialog.noquestion',
 			next: []
 		},
-
 		exit: {
 			id: 'exit',
 			text: 'npc.dialog.exit',
 			next: []
 		}
 	},
-
 	links: {
 		// Entrée
 		talk: {
@@ -164,7 +141,6 @@ export const professorEugeneDialog = defineDialog({
 			text: 'npc.eugene.choice.talk',
 			target: 'talk'
 		},
-
 		// Menu principal
 		question: {
 			id: 'question',
@@ -175,31 +151,31 @@ export const professorEugeneDialog = defineDialog({
 			id: 'nothing',
 			text: 'npc.eugene.choice.learn',
 			target: 'nothing',
-			cond: parseCondition('!(level(5))')
+			cond: parseCondition('!level(5)')
 		},
 		learn: {
 			id: 'learn',
 			text: 'npc.eugene.choice.learn',
 			target: 'learn',
-			cond: parseCondition('level(5)+!(fx(bouee))+!(fx(matesc))')
+			cond: parseCondition('level(5)+!fx(bouee)+!fx(matesc)')
 		},
 		nothing2: {
 			id: 'nothing2',
 			text: 'npc.eugene.choice.learn',
 			target: 'nothing2',
-			cond: parseCondition('!(level(7))+(fx(bouee)|fx(matesc))')
+			cond: parseCondition('!level(7)+(fx(bouee)|fx(matesc))')
 		},
 		learn_water: {
 			id: 'learn_water',
 			text: 'npc.eugene.choice.learn',
 			target: 'learn_water',
-			cond: parseCondition('level(7)+fx(matesc)+!(fx(bouee))')
+			cond: parseCondition('level(7)+fx(matesc)+!fx(bouee)')
 		},
 		learn_fire: {
 			id: 'learn_fire',
 			text: 'npc.eugene.choice.learn',
 			target: 'learn_fire',
-			cond: parseCondition('level(7)+fx(bouee)+!(fx(matesc))')
+			cond: parseCondition('level(7)+fx(bouee)+!fx(matesc)')
 		},
 		learn_done: {
 			id: 'learn_done',
@@ -207,7 +183,6 @@ export const professorEugeneDialog = defineDialog({
 			target: 'learn_done',
 			cond: parseCondition('fx(bouee)+fx(matesc)')
 		},
-
 		// Choix apprentissage
 		water: {
 			id: 'water',
@@ -231,10 +206,9 @@ export const professorEugeneDialog = defineDialog({
 		},
 		back: {
 			id: 'back',
-			text: 'common.dialog.back',
+			text: 'npc.eugene.choice.back',
 			target: 'learn'
 		},
-
 		// Questions
 		dinoville: {
 			id: 'dinoville',
@@ -272,10 +246,9 @@ export const professorEugeneDialog = defineDialog({
 		},
 		menu: {
 			id: 'menu',
-			text: 'common.dialog.back',
+			text: 'npc.eugene.choice.back',
 			target: 'question'
 		},
-
 		// Pierre
 		stone_yes: {
 			id: 'stone_yes',
@@ -288,6 +261,5 @@ export const professorEugeneDialog = defineDialog({
 			target: 'question'
 		}
 	},
-
 	inject: []
 });
