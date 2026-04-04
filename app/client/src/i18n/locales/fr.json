@@ -2946,6 +2946,8 @@
 				"learn": "Alors comme ça ton Dinoz veut apprendre une technique ? Pour cela ton Dinoz devra combattre un monstre. Je l'entraînerai uniquement s'il en sort vainqueur. Au fait, quelle technique veux-tu que je lui apprenne ?",
 				"water": "Très bien. Si ton Dinoz remporte ce défi, je lui apprendrai à utiliser la Bouée. Grâce à ça, ton Dinoz pourra traverser de courtes distances d'eau.",
 				"fire": "L'Escalade n'est pas facile à maîtriser, et en plus il faut du Matériel d'Escalade pour pouvoir s'y initier. S'il arrive à gagner contre ce monstre, j'enseignerai les bases à ton Dinoz et lui fournirai le materiel qui devrait lui permettre de gravir le volcan du Grand Tout Chaud.",
+				"learn_water": "Tu viens pour obtenir la Bouée c'est cela ? Il te faudra d'abord combattre ce monstre avant que je la donne à ton Dinoz !",
+				"learn_fire": "Tu viens pour obtenir le Materiel d'Escalade ? Pour l'avoir, tu devras d'abord combattre ce monstre.",
 				"water_fight": "Bravo, beau combat ! Comme promis, je viens de donner la Bouée à ton Dinoz. Maintenant il devrait pouvoir accéder aux Iles Atlantéinées au sud de Dinoland. Bonne chance, et sois prudent !",
 				"fire_fight": "Bravo, beau combat ! Ton Dinoz possède maintenant le Matériel d'Escalade, et il devrait pouvoir gravir les pentes escarpées du volcan du Grand Tout Chaud. Les monstres là-bas sont très chaleureux, alors fais attention en t'y rendant !",
 				"learn_done": "Je n'ai plus rien à enseigner à ton Dinoz. Mais ne t'inquiète pas, il y a d'autres personnes à travers l'Univers de Dinoland qui pourront lui faire apprendre de nombreuses techniques !"

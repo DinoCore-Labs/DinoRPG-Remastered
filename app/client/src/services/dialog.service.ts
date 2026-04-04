@@ -21,14 +21,24 @@ export const DialogService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-
 	async startDialog(dinozId: number, dialogId: string): Promise<DialogPhaseResponse> {
 		return http()
 			.post(`/dialog/${dialogId}/start?dinozId=${dinozId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-
+	async resumeDialog(dinozId: number, dialogId: string, phaseId: string): Promise<DialogPhaseResponse> {
+		return http()
+			.post(
+				`/dialog/${dialogId}/resume`,
+				{ phaseId },
+				{
+					params: { dinozId }
+				}
+			)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
 	async selectDialogLink(
 		dinozId: number,
 		dialogId: string,

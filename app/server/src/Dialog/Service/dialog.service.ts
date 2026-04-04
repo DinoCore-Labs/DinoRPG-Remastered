@@ -32,7 +32,7 @@ export type AvailableDialogSummary = {
 	pnj: RuntimeDialog['pnj'];
 };
 
-function getDialogPhase(dialog: RuntimeDialog, phaseId: string): RuntimeDialogPhase {
+export function getDialogPhase(dialog: RuntimeDialog, phaseId: string): RuntimeDialogPhase {
 	const phase = dialog.phases[phaseId];
 
 	if (!phase) {
@@ -117,7 +117,7 @@ function resolvePhasePnj(dialog: RuntimeDialog, phase: RuntimeDialogPhase) {
 	return phase.pnj ?? dialog.pnj;
 }
 
-async function enterDialogPhase(
+export async function enterDialogPhase(
 	tx: DialogTransaction,
 	dialog: RuntimeDialog,
 	phase: RuntimeDialogPhase,
@@ -156,7 +156,12 @@ async function enterDialogPhase(
 	};
 }
 
-async function assertDialogAvailability(tx: DialogTransaction, dialog: RuntimeDialog, userId: string, dinozId: number) {
+export async function assertDialogAvailability(
+	tx: DialogTransaction,
+	dialog: RuntimeDialog,
+	userId: string,
+	dinozId: number
+) {
 	const context = await buildDialogContext(tx, {
 		userId,
 		dinozId,
@@ -241,5 +246,22 @@ export async function selectDialogLink(params: SelectDialogLinkParams): Promise<
 		const targetPhase = getDialogPhase(dialog, selectedLink.target);
 
 		return enterDialogPhase(tx, dialog, targetPhase, params.userId, params.dinozId);
+	});
+}
+
+export async function resumeDialogPhase(params: {
+	userId: string;
+	dinozId: number;
+	dialogId: string;
+	phaseId: string;
+}): Promise<DialogPhaseResponse> {
+	return prisma.$transaction(async tx => {
+		const dialog = getDialogById(params.dialogId);
+
+		await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
+
+		const phase = getDialogPhase(dialog, params.phaseId);
+
+		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId);
 	});
 }
