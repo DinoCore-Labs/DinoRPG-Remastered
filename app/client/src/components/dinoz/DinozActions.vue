@@ -129,7 +129,6 @@ import eventBus from '../../events';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { itinerantShopNameList, shopNameList } from '../../constants/shop';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
-import { dinozStatusKeyById } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -370,7 +369,7 @@ export default defineComponent({
 									});
 									break;
 								case 'status': {
-									const statusKey = dinozStatusKeyById[reward.statusId];
+									const statusKey = reward.statusId;
 									this.$toast.open({
 										message: formatText(
 											this.$t('dig.status', {
