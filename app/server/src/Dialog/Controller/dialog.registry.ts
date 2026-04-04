@@ -22,7 +22,7 @@ export function loadDialogs() {
 
 		dialogRegistry.set(dialog.id, dialog);
 	}
-	console.log('Dialogs loaded:', [...dialogRegistry.keys()]);
+	//console.log('Dialogs loaded:', [...dialogRegistry.keys()]);
 }
 
 export function getDialogById(dialogId: string): RuntimeDialog {
