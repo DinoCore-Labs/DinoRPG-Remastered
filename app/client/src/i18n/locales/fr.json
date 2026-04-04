@@ -2971,6 +2971,40 @@
 				"fight": "Combattre"
 			}
 		},
+		"coralMiner": {
+			"name": "Mineur Coralien",
+			"dialog": {
+				"begin": "Pinc ! Pinc ! Pinc ! Pffff ce corail est plus dur que de la pierre tu savais ça toi ?",
+				"yes": "Ah bon tu étais au courant ? Tiens, je te prête une vielle pelle pour que toi aussi tu puisses creuser. Elle est en très mauvais état donc à la première utilisation elle va se casser, mais c'est ma pelle porte-chance, avec elle tu pourras trouver les plus grands trésors de Dinoland ! Alors, on dit quoi ?",
+				"nothing": "Alors elle te plaît ma pelle ? On dit quoi ?",
+				"repair": "Ah c'est toi ? Alors comme ça tu as cassé ma pelle ? Bouge pas... voilà je te l'ai réparée !... Hep ! Tu n'oublies pas quelque chose ?",
+				"nothing2": "Alors elle te plaît ma pelle avec le manche ergonomique ? On dit quoi ?",
+				"repair2": "Ah c'est toi ? Alors comme ça tu as cassé ma pelle ? Bouge pas... voilà je te l'ai réparée !... Hep ! Tu n'oublies pas quelque chose ?",
+				"thanks": "T'es sympa ! Reviens ici quand ta pelle sera cassée, je la réparerai.",
+				"no": "Pfff, oui c'est très très dur à creuser, c'est pour celà qu'il faut des gars costauds comme moi pour faire ce métier.",
+				"next": "Oui, tout à fait ! Regarde-moi ces muscles ! Je suis nominé aux Corail Awards, catégorie \"Mineur Gros-bras\" cette année.",
+				"next2": "Oui, puisque j'te le dis ! Va falloir que je bosse encore beaucoup si je veux un jour ressembler à mon idole...",
+				"next3": "Et alors ?!!? Tu me demandes même pô qui c'est mon idole ?",
+				"qui": "Mais voyons ! Sylverter Staline bien sûr ! Trois fois gagnant des Corail Awards, dans les catégories \"Muscles Ultimes\" et \"Replique qui tue\". Il est vraiment trop coool, et il a toujours réussi a éliminer tous ses opposants !",
+				"ok": "Oui c'est le plus fort ! Alàlà, le bon vieux temps, je pourrais en parler pendant des heures... Mais bon je te laisse j'ai du boulot ! Pinc ! Pinc ! Pinc !",
+				"give": "Ah ! Je vois que toi aussi tu aime bien ce Corail dûr comme la pierre ! Tiens, j'te donne cet enchantillon, je l'ai cassé tout à l'heure !"
+			},
+			"choice": {
+				"yes": "Oui",
+				"nothing": "Oui",
+				"repair": "Oui",
+				"nothing2": "Oui",
+				"repair2": "Oui",
+				"give": "Génial !",
+				"no": "Non",
+				"thanks": "Merci !",
+				"next": "Ah bon...",
+				"next2": "Vraiment...",
+				"next3": "...",
+				"qui": "Euh... et qui est votre idole ?",
+				"ok": "Il a l'air fort !"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
