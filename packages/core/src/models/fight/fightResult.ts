@@ -9,6 +9,10 @@ import { FighterType } from './fighterType.js';
 import { FightStep } from './fightStep.js';
 import { EntranceEffect } from './transpiler.js';
 
+export type FightDialogReturn = {
+	dialogId: string;
+	phaseId: string;
+};
 export interface FightResult {
 	fighters: FighterRecap[];
 	goldEarned: number;
@@ -30,6 +34,7 @@ export interface FightResult {
 	endText?: FightText;
 	itemWon?: number;
 	statusReward?: DinozStatusId;
+	dialogReturn?: FightDialogReturn;
 }
 
 export interface FighterRecap {

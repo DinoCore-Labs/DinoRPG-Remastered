@@ -99,6 +99,8 @@ async function handlePhaseActions(phase: DialogPhaseResponse) {
 	}
 }
 
+const resumePhaseId = computed(() => (typeof route.query.phaseId === 'string' ? route.query.phaseId : undefined));
+
 async function loadDialog() {
 	if (!Number.isFinite(dinozId.value) || dinozId.value <= 0 || !dialogId.value) {
 		error.value = 'Dialogue invalide';
@@ -110,7 +112,11 @@ async function loadDialog() {
 	loaded.value = false;
 
 	try {
-		dialogState.value = await DialogService.startDialog(dinozId.value, dialogId.value);
+		if (resumePhaseId.value) {
+			dialogState.value = await DialogService.resumeDialog(dinozId.value, dialogId.value, resumePhaseId.value);
+		} else {
+			dialogState.value = await DialogService.startDialog(dinozId.value, dialogId.value);
+		}
 
 		loaded.value = true;
 

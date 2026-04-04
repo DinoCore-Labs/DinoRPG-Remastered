@@ -7,6 +7,7 @@ import {
 	dialogQuerySchema
 } from '../Schema/dialog.schema.js';
 import { getAvailableDialogsHandler } from '../Service/getAvailableDialogs.service.js';
+import { resumeDialogHandler } from '../Service/resumeDialog.service.js';
 import { selectDialogLinkHandler } from '../Service/selectDialogLink.service.js';
 import { startDialogHandler } from '../Service/startDialog.service.js';
 
@@ -22,7 +23,6 @@ export async function dialogRoutes(app: FastifyInstance) {
 		},
 		getAvailableDialogsHandler
 	);
-
 	app.post(
 		'/:dialogId/start',
 		{
@@ -35,7 +35,6 @@ export async function dialogRoutes(app: FastifyInstance) {
 		},
 		startDialogHandler
 	);
-
 	app.post(
 		'/:dialogId/links/:linkId',
 		{
@@ -48,5 +47,18 @@ export async function dialogRoutes(app: FastifyInstance) {
 			}
 		},
 		selectDialogLinkHandler
+	);
+	app.post(
+		'/:dialogId/resume',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Dialog'],
+				params: dialogIdParamsSchema,
+				querystring: dialogQuerySchema,
+				body: dialogPhaseBodySchema
+			}
+		},
+		resumeDialogHandler
 	);
 }
