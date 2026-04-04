@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.11.2
+
+### Patch Changes
+
+- 69c3dd9: feat coral miner
+
 ## 0.11.1
 
 ### Patch Changes
