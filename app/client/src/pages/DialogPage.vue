@@ -38,6 +38,8 @@ import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import DZButton from '../components/utils/DZButton.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DialogService } from '../services/dialog.service.js';
+import { FightService } from '../services';
+import { sessionStore } from '../store/sessionStore';
 
 const route = useRoute();
 const router = useRouter();
@@ -76,16 +78,24 @@ function renderDialogText(text: string | undefined): string {
 
 const npcName = computed(() => translateText(dialogState.value?.name ?? ''));
 
+const sStore = sessionStore();
+
 async function handlePhaseActions(phase: DialogPhaseResponse) {
 	if (phase.actions.startFight) {
-		// À brancher quand ton backend de dialogue renverra
-		// soit les données de fight, soit un vrai déclencheur exploitable.
-		// await router.push({ name: 'Fight', params: { dinozId: String(dinozId.value) } });
+		const fight = await FightService.processDialogFight(dinozId.value, phase.dialogId, phase.phaseId);
+
+		sStore.setFightResult(fight);
+
+		await router.push({
+			name: 'FightPage',
+			params: { dinozId: String(dinozId.value) }
+		});
+
+		return;
 	}
 
 	if (phase.actions.popup) {
-		// Rien à faire ici pour l'instant :
-		// la page dialogue joue déjà le rôle d'écran dédié.
+		// plus tard
 	}
 }
 

@@ -94,7 +94,7 @@ function extractPhaseActions(phase: RuntimeDialogPhase): DialogPhaseResponse['ac
 	for (const special of phase.special) {
 		switch (special.type) {
 			case 'startFight':
-				actions.startFight = true;
+				actions.startFight = phase.id;
 				break;
 
 			case 'popup':
