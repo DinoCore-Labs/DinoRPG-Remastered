@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.10.2
+
+### Patch Changes
+
+- 69c3dd9: feat coral miner
+
 ## 0.10.1
 
 ### Patch Changes
@@ -211,6 +217,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.11.2
+
+### Patch Changes
+
+- 69c3dd9: feat coral miner
+- Updated dependencies [69c3dd9]
+  - @dinorpg/core@0.10.2
 
 ## 0.11.1
 
@@ -471,6 +485,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.11.2
+
+### Patch Changes
+
+- 69c3dd9: feat coral miner
 
 ## 0.11.1
 
