@@ -68,11 +68,11 @@ async function mountPlayer() {
 	container.value.appendChild(localPlayer);
 
 	try {
-		console.log('Loading NPC SWF:', {
+		/*console.log('Loading NPC SWF:', {
 			npc: props.NPC,
 			swfUrl,
 			flashvars: props.flashvars ?? ''
-		});
+		});*/
 
 		await localPlayer.load({
 			url: swfUrl,

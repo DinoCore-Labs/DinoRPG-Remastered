@@ -71,12 +71,12 @@ function resolveVisibleLinks(
 		if (link.cond && !checkDialogCondition(link.cond, context)) {
 			continue;
 		}
-		console.log('COND RAW', link.id, JSON.stringify(link.cond, null, 2));
+		/*console.log('COND RAW', link.id, JSON.stringify(link.cond, null, 2));
 		visibleLinks.push({
 			id: link.id,
 			text: link.text,
 			confirm: link.confirm
-		});
+		});*/
 	}
 
 	return visibleLinks;
