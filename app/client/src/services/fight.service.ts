@@ -12,5 +12,17 @@ export const FightService = {
 			.catch(err => {
 				Promise.reject(err);
 			});
+	},
+	async processDialogFight(dinozId: number, dialogId: string, phaseId: string) {
+		return http()
+			.post(`/fight/dialog`, {
+				dinozId,
+				dialogId,
+				phaseId
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => {
+				Promise.reject(err);
+			});
 	}
 };

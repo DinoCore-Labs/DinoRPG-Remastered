@@ -1,7 +1,9 @@
 import type { FastifyInstance } from 'fastify';
 
 import { processFightResponseSchema, processFightSchema } from '../Schema/fight.schema.js';
+import { processDialogFightBodySchema } from '../Schema/fightDialog.schema.js';
 import { processFight } from '../Service/fight.service.js';
+import { processDialogFight } from '../Service/processDialogFight.service.js';
 
 export async function fightRoutes(app: FastifyInstance) {
 	app.put(
@@ -17,5 +19,16 @@ export async function fightRoutes(app: FastifyInstance) {
 			}
 		},
 		processFight
+	);
+	app.post(
+		'/fight/dialog',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				body: processDialogFightBodySchema,
+				tags: ['Fight']
+			}
+		},
+		processDialogFight
 	);
 }

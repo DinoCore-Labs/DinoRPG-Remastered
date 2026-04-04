@@ -1,3 +1,4 @@
+import { MonsterFiche } from '../monster/monsterFiche.js';
 import type { DialogPnj } from './dialog.js';
 
 export type DialogResponseLink = {
@@ -17,7 +18,7 @@ export type DialogPhaseResponse = {
 	pnj: DialogPnj;
 	links: DialogResponseLink[];
 	actions: {
-		startFight?: boolean;
+		startFight?: string;
 		popup?: boolean;
 		statusKey?: string;
 		url?: string;

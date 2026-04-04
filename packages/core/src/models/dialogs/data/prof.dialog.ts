@@ -1,4 +1,6 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
+import { bossList } from '../../monster/bossList.js';
+import { monsterList } from '../../monster/monsterList.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { defineDialog } from '../defineDialog.js';
 
@@ -55,18 +57,14 @@ export const professorEugeneDialog = defineDialog({
 		water_fight: {
 			id: 'water_fight',
 			text: 'npc.eugene.dialog.water_fight',
-			next: [],
-			actions: {
-				startFight: 'ewater'
-			}
+			next: ['learn_done'],
+			special: [{ type: 'startFight', fightId: [bossList.ELEMENTAIRE_EAU] }]
 		},
 		fire_fight: {
 			id: 'fire_fight',
 			text: 'npc.eugene.dialog.fire_fight',
-			next: [],
-			actions: {
-				startFight: 'efire'
-			}
+			next: ['learn_done'],
+			special: [{ type: 'startFight', fightId: [bossList.ELEMENTAIRE_FEU] }]
 		},
 		learn_water: {
 			id: 'learn_water',
