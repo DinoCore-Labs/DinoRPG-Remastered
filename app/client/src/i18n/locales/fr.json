@@ -183,6 +183,7 @@
 		"dinozNaming": "DinoRPG [ Choix du Nom ]",
 		"levelup": "DinoRPG [ Niveau supplémentaire pour {dinoz} ]",
 		"gather": "DinoRPG [ {type} ]",
+		"fight": "DinoRPG [ Combat ! ]",
 		"admin": "DinoRPG [ Admin Dashboard ]"
 	},
 	"adminPage": {
