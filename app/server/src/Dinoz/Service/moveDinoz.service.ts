@@ -107,12 +107,12 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 	const finalPlace = desiredPlace.gotoPlaceId ?? desiredPlace.placeId;
 
 	// Marais Collant - No movement days.
-	if (SWAMP_FLOODED_DAYS.includes(dayOfWeek) && currentPlace.placeId === PlaceEnum.MARAIS_COLLANT) {
+	/*if (SWAMP_FLOODED_DAYS.includes(dayOfWeek) && currentPlace.placeId === PlaceEnum.MARAIS_COLLANT) {
 		if (!dinoz.status.some(s => s.statusId === DinozStatusId.WEIRD_SWAMP_SEEN)) {
 			await addStatusToDinoz(dinoz.id, DinozStatusId.WEIRD_SWAMP_SEEN);
 		}
 		throw new ExpectedError('noMovement', { params: { placeName: currentPlace.name } });
-	}
+	}*/
 
 	let fight = await movementListener(user, team, finalPlace, dinozId);
 	if (!fight) {

@@ -252,6 +252,7 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.FB_TOURNAMENT]);
 	}
 
+	// Dig action
 	if (
 		dinoz.status.some(
 			status => status.statusId === DinozStatusId.SHOVEL || status.statusId === DinozStatusId.ENHANCED_SHOVEL
@@ -315,21 +316,6 @@ export async function getAvailableActions(
 	for (const dialog of availableDialogs) {
 		pushUniqueAction(availableActions, getDialogActionFiche(dialog));
 	}
-
-	console.log(
-		'Available dialogs for dinoz',
-		dinoz.id,
-		availableDialogs.map(dialog => ({
-			id: dialog.id,
-			name: dialog.name,
-			place: dialog.place
-		}))
-	);
-
-	console.log(
-		`Available actions for dinoz ${dinoz.id}:`,
-		availableActions.map(a => a.name)
-	);
 
 	return availableActions;
 }

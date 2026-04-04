@@ -248,6 +248,11 @@
 		"accept": "Oui",
 		"reject": "Non"
 	},
+	"dig": {
+		"item": "Votre Dinoz trouve : {item} x{quantity}",
+		"gold": "Votre Dinoz a trouvé {gold} :gold: en creusant ici.",
+		"status": "En creusant, votre Dinoz a trouvé l'objet {item}. Il apparaîtra dans ses statuts. Félicitations !"
+	},
 	"resurrection": {
 		"choice1": {
 			"name": "**Choix 1 :**&&Résurrection",
@@ -290,6 +295,7 @@
 		"missingData": "Données manquantes.",
 		"reincarnation": "Votre Dinoz s'est réincarné.",
 		"loginToLike": "Connectez-vous pour aimer cette news.",
+		"shovelMine": "Vous n'allez quand même pas creuser à côté du mineur !?!",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
 			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",

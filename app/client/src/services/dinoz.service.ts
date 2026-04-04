@@ -1,3 +1,4 @@
+import type { DigResponse } from '@dinorpg/core/models/dinoz/digTreasure.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import type { ItemFeedBack } from '@dinorpg/core/models/items/itemFeedback.js';
@@ -86,6 +87,12 @@ export const DinozService = {
 	async stopRestDinoz(dinozId: number): Promise<void> {
 		return http()
 			.post(`/dinoz/${dinozId}/stop-rest`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	async dig(dinozId: number): Promise<DigResponse> {
+		return http()
+			.get(`/dinoz/dig/${dinozId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}
