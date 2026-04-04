@@ -20,8 +20,8 @@ export async function fightRoutes(app: FastifyInstance) {
 		},
 		processFight
 	);
-	app.post(
-		'/fight/dialog',
+	app.put(
+		'/dialog',
 		{
 			preHandler: [app.authenticate],
 			schema: {

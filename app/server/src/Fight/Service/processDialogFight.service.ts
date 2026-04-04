@@ -85,10 +85,6 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 		team = team.filter(d => d.life > 0 && d.state === null);
 	}
 
-	if (team.some(d => !d.fight)) {
-		throw new ExpectedError('missingIrma');
-	}
-
 	if (!isAlive(dinozData)) {
 		throw new ExpectedError('dead');
 	}
