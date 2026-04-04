@@ -15,7 +15,7 @@ export const FightService = {
 	},
 	async processDialogFight(dinozId: number, dialogId: string, phaseId: string) {
 		return http()
-			.post(`/fight/dialog`, {
+			.put(`/fight/dialog`, {
 				dinozId,
 				dialogId,
 				phaseId
