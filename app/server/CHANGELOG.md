@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.11.1
+
+### Patch Changes
+
+- bd58005: feat professor eugene
+- Updated dependencies [bd58005]
+  - @dinorpg/core@0.10.1
+
 ## 0.11.0
 
 ### Minor Changes
