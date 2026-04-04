@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.10.2
+
+### Patch Changes
+
+- 69c3dd9: feat coral miner
+
 ## 0.10.1
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.11.2
+
+### Patch Changes
+
+- 69c3dd9: feat coral miner
+- Updated dependencies [69c3dd9]
+  - @dinorpg/core@0.10.2
+
 ## 0.11.1
 
 ### Patch Changes
