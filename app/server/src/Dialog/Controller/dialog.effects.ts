@@ -1,9 +1,11 @@
 import { DialogEffect } from '@dinorpg/core/models/dialogs/dialogEffect.js';
 import { RuntimeDialog, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
 import { DialogSpecial } from '@dinorpg/core/models/dialogs/dialogSpecial.js';
+import { dinozStatusIdByKey, dinozStatusKeyById } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/client.js';
+import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { DialogContext } from './dialog.context.js';
 
 type DialogTransaction = Prisma.TransactionClient;
@@ -229,6 +231,16 @@ function pickRandomItemId(itemIds: number[]): number {
 	return itemIds[index]!;
 }
 
+function getDialogStatusId(statusKey: string): number {
+	const statusId = dinozStatusIdByKey[statusKey];
+
+	if (!statusId) {
+		throw new Error(`Unknown dialog status key "${statusKey}"`);
+	}
+
+	return statusId;
+}
+
 function notImplemented(message: string): never {
 	throw new Error(message);
 }
@@ -244,35 +256,33 @@ async function applyDialogEffect(
 		case 'scenario':
 			//await upsertScenarioProgress(tx, context.user.id, effect.scenarioKey, effect.phase);
 			return;
-
 		case 'scenarioDelta':
 			//await incrementScenarioProgress(tx, context.user.id, effect.scenarioKey, effect.delta);
 			return;
-
 		case 'giveItem':
 			await addUserItem(tx, context.user.id, effect.itemId, effect.count);
 			return;
-
 		case 'giveIngredient':
 			await addUserIngredient(tx, context.user.id, effect.ingredientId, effect.count);
 			return;
-
 		case 'giveRandomItem': {
 			const itemId = pickRandomItemId(effect.itemIds);
 			await addUserItem(tx, context.user.id, itemId, 1);
 			return;
 		}
-
 		case 'heal':
 			await healDinoz(tx, context, effect.amount);
 			return;
-
 		case 'url':
 			// Purement informatif pour le frontend.
 			return;
-
-		case 'effect':
+		case 'effect': {
+			await addStatusToDinoz(context.dinoz.id, getDialogStatusId(effect.effect));
+			return;
+		}
 		case 'noEffect':
+			await removeStatusFromDinoz(context.dinoz.id, getDialogStatusId(effect.effect));
+			return;
 		case 'collection':
 		case 'removeCollection':
 		case 'skill':
