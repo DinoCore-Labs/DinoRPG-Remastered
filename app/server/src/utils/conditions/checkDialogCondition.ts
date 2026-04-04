@@ -1,4 +1,5 @@
 import { CompareMode, Condition } from '@dinorpg/core/models/conditions/conditions.js';
+import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 
 import {
 	DialogContext,
@@ -56,8 +57,15 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'status':
 			return hasDinozStatus(context, condition.value);
 
-		case 'effect':
+		case 'effect': {
+			const statusId = dinozStatusIdByKey[condition.key];
+
+			if (statusId != null) {
+				return hasDinozStatus(context, statusId);
+			}
+
 			return context.user.effects.has(condition.key);
+		}
 
 		case 'collection':
 			return context.user.collections.has(condition.key);
