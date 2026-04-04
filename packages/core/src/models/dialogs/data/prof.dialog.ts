@@ -56,7 +56,7 @@ export const professorEugeneDialog = defineDialog({
 		},
 		water_fight: {
 			id: 'water_fight',
-			text: 'npc.eugene.dialog.water_fight',
+			text: '',
 			next: [],
 			special: [
 				{ type: 'startFight', fightId: [bossList.ELEMENTAIRE_EAU] },
@@ -65,6 +65,11 @@ export const professorEugeneDialog = defineDialog({
 					status: 'bouee'
 				}
 			]
+		},
+		water_win: {
+			id: 'water_win',
+			text: 'npc.eugene.dialog.water_fight',
+			next: []
 		},
 		fire_fight: {
 			id: 'fire_fight',
@@ -77,6 +82,11 @@ export const professorEugeneDialog = defineDialog({
 					status: 'matesc'
 				}
 			]
+		},
+		fire_win: {
+			id: 'fire_win',
+			text: 'npc.eugene.dialog.fire_fight',
+			next: []
 		},
 		learn_water: {
 			id: 'learn_water',
