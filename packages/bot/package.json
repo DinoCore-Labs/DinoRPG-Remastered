@@ -13,6 +13,6 @@
 	"license": "ISC",
 	"packageManager": "pnpm@10.12.1",
 	"dependencies": {
-		"discord.js": "^14.25.1"
+		"discord.js": "^14.26.2"
 	}
 }
