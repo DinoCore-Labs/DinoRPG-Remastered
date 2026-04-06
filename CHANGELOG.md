@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.10.3
+
+### Patch Changes
+
+- eb40dca: feat atlanteGuard and joveboze dialogs
+
 ## 0.10.2
 
 ### Patch Changes
@@ -174,6 +180,12 @@
 
 ## 🔹 Bot
 
+## 0.2.5
+
+### Patch Changes
+
+- eb40dca: feat atlanteGuard and joveboze dialogs
+
 ## 0.2.4
 
 ### Patch Changes
@@ -217,6 +229,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.11.3
+
+### Patch Changes
+
+- eb40dca: feat atlanteGuard and joveboze dialogs
+- Updated dependencies [eb40dca]
+  - @dinorpg/core@0.10.3
 
 ## 0.11.2
 
@@ -485,6 +505,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.11.3
+
+### Patch Changes
+
+- eb40dca: feat atlanteGuard and joveboze dialogs
 
 ## 0.11.2
 
