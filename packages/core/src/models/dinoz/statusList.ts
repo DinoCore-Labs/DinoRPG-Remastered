@@ -12,7 +12,7 @@ export enum DinozStatusId {
 	ZORS_GLOVE = 11,
 	ZENBRO = 12,
 	NENUPHAR_LEAF = 13,
-	CHUTES = 14, //NOT NEEDED
+	CHUTES = 14,
 	JVBZ = 15,
 	QWOOD = 16,
 	QWHY = 17,
@@ -41,7 +41,7 @@ export enum DinozStatusId {
 	BACKPACK = 40,
 	REINCARNATION = 41,
 	RENAISSANCE = 42,
-	FSPELE = 43, //NOT IMPLEMENTED YET
+	FSPELE = 43,
 	BRONZE_CUP = 44,
 	SILVER_CUP = 45,
 	GOLD_CUP = 46,

@@ -5,6 +5,7 @@ import { hydargolDialog } from './hydargol.dialog.js';
 import { jovebozeDialog } from './joveboze.dialog.js';
 import { padamoineDialog } from './padamoine.dialog.js';
 import { professorEugeneDialog } from './prof.dialog.js';
+import { speleleologueDialog, speleleologueIceDialog } from './spelele.dialog.js';
 import { testDialog } from './test.dialog.js';
 import { weirdManDialog } from './weirdMan.dialog.js';
 
@@ -18,6 +19,9 @@ export const dialogDefinitions = [
 	atlanteGuardDialog,
 	hydargolDialog,
 	archisageDialog,
+	// GTC
+	speleleologueDialog,
+	speleleologueIceDialog,
 	// Foret
 	weirdManDialog,
 	// Test
