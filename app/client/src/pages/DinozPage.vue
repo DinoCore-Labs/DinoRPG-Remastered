@@ -10,7 +10,7 @@
 			:key="dinozData.display" /><template #fallback> <Loading /> </template
 	></Suspense>
 	<div class="dinozPanels" v-if="nameChoosen === true">
-		<DinozActions v-show="isReady" :dinoz="dinozData" :refresh-dinoz="refreshDinoz" />
+		<DinozActions v-show="isReady" :dinoz="dinozData" :refreshDinoz="refreshDinoz" />
 		<TabPanels v-if="isReady" :dinozData="dinozData" />
 		<div class="footer" />
 	</div>

@@ -15,6 +15,7 @@ import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { prisma } from '../../prisma.js';
 import { buildConditionContext, BuildConditionContextOptions } from '../../utils/conditions/buildConditionContext.js';
 import { checkCondition } from '../../utils/conditions/checkCondition.js';
+import { canFreezeDinozAction } from '../../utils/dinoz/canFreezeDinozAction.js';
 import { canLevelUp, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { type CompiledGatherData, getCompiledGather } from '../../utils/gather/gather.compiler.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
@@ -301,10 +302,7 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.MARKET]);
 	}
 
-	if (
-		dinoz.placeId === PlaceEnum.GORGES_PROFONDES &&
-		dinoz.status.some(status => status.statusId === DinozStatusId.FSPELE)
-	) {
+	if (canFreezeDinozAction(dinoz)) {
 		availableActions.push(actionList[Action.CONGEL]);
 	}
 
