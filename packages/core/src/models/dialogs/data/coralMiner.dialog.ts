@@ -6,7 +6,6 @@ const c = (source: string) => parseCondition(source);
 
 export const coralMinerDialog: DialogDefinition = {
 	id: 'coral_miner',
-	first: 'begin',
 	cond: c('fx(bouee)'),
 	place: PlaceEnum.MINES_DE_CORAIL,
 	name: 'npc.coralMiner.name',

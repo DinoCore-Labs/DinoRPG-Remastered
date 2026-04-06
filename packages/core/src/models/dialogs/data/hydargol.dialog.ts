@@ -6,7 +6,6 @@ export const hydargolDialog: DialogDefinition = {
 	id: 'master_hydargol',
 	name: 'npc.hydargol.name',
 	place: PlaceEnum.CHUTES_MUTANTES,
-	first: 'begin',
 	cond: parseCondition('admin()|fx(bouee)'),
 	pnj: {
 		image: false,
