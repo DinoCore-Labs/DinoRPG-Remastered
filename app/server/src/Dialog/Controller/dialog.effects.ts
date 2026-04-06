@@ -255,7 +255,7 @@ async function addUserCollection(tx: DialogTransaction, userId: string, collecti
 	const rewardId = getDialogRewardId(collectionKey);
 
 	await tx.userRewards.upsert({
-		where: getUserRewardWhere(rewardId, userId),
+		where: getUserRewardWhere(userId, rewardId),
 		create: {
 			userId,
 			rewardId
