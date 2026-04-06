@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.11.0
+
+### Minor Changes
+
+- aefc4ba: Add the Speleleologue NPC, freeze/unfreeze actions, and automatic unfreeze completion after 24 hours
+
 ## 0.10.6
 
 ### Patch Changes
