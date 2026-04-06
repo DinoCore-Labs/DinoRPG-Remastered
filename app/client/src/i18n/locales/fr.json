@@ -3161,6 +3161,23 @@
 				"thanks": "Oui, merci beaucoup !"
 			}
 		},
+		"speleleologue_ice": {
+			"dialog": {
+				"begin": "Ah ! Tiens salut ! Il fait frais ici tu ne trouve pas ?",
+				"talk": "Je viens de passer quelques temps à explorer la Grotte du Zéro Relatif... savais tu que la glace qui la compose est extraordinaire ??? Elle est composée de 3% de Mazotte Solide, un ingrédient rarissime qui conserve une température stable...",
+				"next": "Cela permet à la glace de ne pas dégeler, même pendant l'été quand les flux de magma ralentissent le cycle de refroidissement de la grotte. Bien entendu, le Mazotte Solide est entièrement contraire à toutes les lois connues de la thermodynamique, mais malgré cela il continue d'exister... C'est d'ailleurs un grand casse-tête pour les professeurs de l'Université.",
+				"prof": "Oui ! Certains tels le fameux professeur Eugène ont même mis en place une théorie qui explique l'existence du Mazotte Solide. C'est un peu compliqué car cela nécessite de considérer que l'Univers est composé de 4,24 dimensions : trois dimensions pour le monde normal et 1,24 dimension utilisée uniquement par le Mazotte Solide.",
+				"theo": "Oui, mais cette théorie a de très intéressantes applications, comme le fait de pouvoir prévoir la température d'ébulition d'un Archélion. Son principal défaut est qu'elle prévoit aussi l'existence d'un Monde Sombre parallèle à Dinoland... La communauté scientifique pense donc que le professeur Eugène se trompe, car un tel endroit ne peut pas exister... Tout du moins pas d'après la théorie du professeur Stinstanstein.",
+				"ok": "Enfin, tout cela pour te dire que cette glace est géniale. Tiens, en voilà un petit bout, garde le avec toi pour te rafraîchir quand il fait chaud !"
+			},
+			"choice": {
+				"talk": "Glaglaglagla...",
+				"next": "Mazotte ?",
+				"prof": "Effectivement...",
+				"theo": "Oulala...",
+				"ok": "... effectivement...."
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
