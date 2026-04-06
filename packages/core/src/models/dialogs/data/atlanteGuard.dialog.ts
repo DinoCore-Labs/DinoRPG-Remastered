@@ -12,7 +12,7 @@ export const atlanteGuardDialog: DialogDefinition = {
 	cond: parseCondition('admin()|fx(bouee)'),
 	pnj: {
 		image: false,
-		gfx: 'apostoph',
+		gfx: 'garde_atlante',
 		frame: 'speak',
 		background: '1'
 	},
@@ -67,34 +67,34 @@ export const atlanteGuardDialog: DialogDefinition = {
 	links: {
 		rasca: {
 			id: 'rasca',
-			text: 'npc.atlanteGuard.link.rasca',
+			text: 'npc.atlanteGuard.choice.rasca',
 			target: 'rasca',
 			cond: parseCondition('!fx(rasca)')
 		},
 		thanks: {
 			id: 'thanks',
-			text: 'npc.atlanteGuard.link.thanks',
+			text: 'npc.atlanteGuard.choice.thanks',
 			target: 'thanks',
 			cond: parseCondition('fx(rasca)')
 		},
 		where: {
 			id: 'where',
-			text: 'npc.atlanteGuard.link.where',
+			text: 'npc.atlanteGuard.choice.where',
 			target: 'where'
 		},
 		call: {
 			id: 'call',
-			text: 'npc.atlanteGuard.link.call',
+			text: 'npc.atlanteGuard.choice.call',
 			target: 'call'
 		},
 		appeau: {
 			id: 'appeau',
-			text: 'npc.atlanteGuard.link.appeau',
+			text: 'npc.atlanteGuard.choice.appeau',
 			target: 'appeau'
 		},
 		old: {
 			id: 'old',
-			text: 'npc.atlanteGuard.link.old',
+			text: 'npc.atlanteGuard.choice.old',
 			target: 'old'
 		}
 	}
