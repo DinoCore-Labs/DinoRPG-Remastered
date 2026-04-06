@@ -63,7 +63,7 @@ const npcFlashvars = computed(() => {
 });
 
 const pageTitle = computed(() => `PNJ - ${npcName.value}`);
-const headerTitle = computed(() => 'Personnage');
+const headerTitle = computed(() => 'PNJ :');
 
 const { t, te } = useI18n();
 
