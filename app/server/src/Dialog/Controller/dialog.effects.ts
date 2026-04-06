@@ -1,9 +1,7 @@
 import { DialogEffect } from '@dinorpg/core/models/dialogs/dialogEffect.js';
 import { RuntimeDialog, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
 import { DialogSpecial } from '@dinorpg/core/models/dialogs/dialogSpecial.js';
-import { dinozStatusIdByKey, dinozStatusKeyById } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
-import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
-import { statTrackingByReward } from '@dinorpg/core/models/goals/statTrackingByReward.js';
+import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { rewardIdByKey, statTrackingByCollectionKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
