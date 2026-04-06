@@ -8,7 +8,6 @@ export const atlanteGuardDialog: DialogDefinition = {
 	id: 'atlante_guard',
 	name: 'npc.atlanteGuard.name',
 	place: PlaceEnum.CHUTES_MUTANTES,
-	first: 'begin',
 	cond: parseCondition('admin()|fx(bouee)'),
 	pnj: {
 		image: false,

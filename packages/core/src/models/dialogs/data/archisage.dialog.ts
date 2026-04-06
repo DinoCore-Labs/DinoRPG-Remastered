@@ -7,7 +7,6 @@ export const archisageDialog: DialogDefinition = {
 	id: 'archisage',
 	name: 'npc.archisage.name',
 	place: PlaceEnum.DOME_SOULAFLOTTE,
-	first: 'begin',
 	cond: parseCondition('!fx(gant)'),
 	pnj: {
 		image: false,
