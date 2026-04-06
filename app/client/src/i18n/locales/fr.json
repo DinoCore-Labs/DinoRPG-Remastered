@@ -3078,6 +3078,18 @@
 				"no": "Pas question"
 			}
 		},
+		"padamoine": {
+			"name": "Apprenti padamoine",
+			"dialog": {
+				"begin": "Bonjour, heu... je suis Bémol, le padamoine de Maître Hydargol. Et heu... je dois lui amener ces feuilles de nénuphar. Le problème c'est que, heu... je viens de me rendre compte que j'avais le mal de mer... pourtant je dois me rendre sur les Iles Altantéinées ! Qu'est-ce que je vais bien pouvoir faire ???",
+				"help": "C'est vrai, vous acceptez de m'aider ?? Merci beaucoup !",
+				"get": "Vous avez l'air digne de confiance. Tenez, je vous confie ces feuilles de nénuphar, et que la Sainte Force soit avec vous !"
+			},
+			"choice": {
+				"help": "Je dois justement y aller aussi. Je peux lui app...",
+				"get": "Heu... De rien"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
