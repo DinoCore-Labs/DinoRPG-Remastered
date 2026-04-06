@@ -6,6 +6,7 @@ import { jovebozeDialog } from './joveboze.dialog.js';
 import { padamoineDialog } from './padamoine.dialog.js';
 import { professorEugeneDialog } from './prof.dialog.js';
 import { testDialog } from './test.dialog.js';
+import { weirdManDialog } from './weirdMan.dialog.js';
 
 export const dialogDefinitions = [
 	// Dinoville
@@ -17,6 +18,8 @@ export const dialogDefinitions = [
 	atlanteGuardDialog,
 	hydargolDialog,
 	archisageDialog,
+	// Foret
+	weirdManDialog,
 	// Test
 	testDialog
 ];
