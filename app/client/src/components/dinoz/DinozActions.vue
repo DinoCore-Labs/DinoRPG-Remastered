@@ -69,9 +69,9 @@
 						v-if="action.name === 'shop'"
 						v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.name`))"
 					/>
-					<p v-else-if="action.name === Action.NPC">
+					<h1 v-else-if="action.name === 'npc'">
 						{{ getNpcActionName(action) }}
-					</p>
+					</h1>
 					<!--<h1
 						v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION"
 						v-html="formatContent($t(`missions.actions.terminate`))"
