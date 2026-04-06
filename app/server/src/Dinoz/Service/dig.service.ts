@@ -2,12 +2,14 @@ import { defaultConditionKeyMaps } from '@dinorpg/core/models/conditions/default
 import { DigReward } from '@dinorpg/core/models/dinoz/digTreasure.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { MoneyType } from '../../../../prisma/index.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { prisma } from '../../prisma.js';
+import { incrementUserStat } from '../../Stats/stats.service.js';
 import { addMoney } from '../../User/Controller/money.controller.js';
 import { buildConditionContext } from '../../utils/conditions/buildConditionContext.js';
 import { checkCondition } from '../../utils/conditions/checkCondition.js';
@@ -163,6 +165,7 @@ export async function digWithDinoz(userId: string, dinozId: number) {
 		}
 
 		await breakShovel(activeDinoz.id, statusIds);
+		await incrementUserStat(StatTracking.BROKEN_SHOVEL, player.id, 1);
 
 		return {
 			treasureId: treasure?.id ?? null,
