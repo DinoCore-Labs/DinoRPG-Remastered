@@ -152,7 +152,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.ILES,
 		moves: [],
 		gotoPlaceId: PlaceEnum.ILE_WAIKIKI,
-		background: 'go_swim'
+		background: 's_ilewkk'
 	},
 
 	[PlaceEnum.CIMETIERE]: {
@@ -372,11 +372,10 @@ export const placeListv2 = definePlaces({
 		],
 		gathers: [GatherType.CUEILLE1],
 		ground: GroundEnum.WATER,
-		background: 'swamp_clear',
+		background: 'swp_clear',
 		top: 160,
 		itinerant: true
 	},
-
 	[PlaceEnum.MAROK]: {
 		placeId: PlaceEnum.MAROK,
 		name: 'marok',
@@ -384,9 +383,8 @@ export const placeListv2 = definePlaces({
 		moves: [],
 		gotoPlaceId: PlaceEnum.MARAIS_COLLANT,
 		realPlaceId: PlaceEnum.MARAIS_COLLANT,
-		background: 'swamp_clear'
+		background: 'swp_clear'
 	},
-
 	[PlaceEnum.MARFOG]: {
 		placeId: PlaceEnum.MARFOG,
 		name: 'marfog',
@@ -470,7 +468,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.ILES,
 		moves: [],
 		gotoPlaceId: PlaceEnum.DOME_SOULAFLOTTE,
-		background: 'rasca'
+		background: 's_dome'
 	},
 
 	[PlaceEnum.DOME_SOULAFLOTTE]: {
@@ -480,7 +478,7 @@ export const placeListv2 = definePlaces({
 		moves: [{ target: PlaceEnum.CHUTES_MUTANTES }],
 		gathers: [GatherType.ENERGY1],
 		ground: GroundEnum.NONE,
-		background: 'dome',
+		background: 's_dome',
 		top: 110
 	},
 
@@ -497,7 +495,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.DINOLAND,
 		moves: [],
 		gotoPlaceId: PlaceEnum.PORT_DE_PRECHE,
-		background: 'go_swim'
+		background: 's_port'
 	},
 
 	[PlaceEnum.GO_TO_FOREST]: {
