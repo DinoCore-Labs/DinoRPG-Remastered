@@ -1,4 +1,5 @@
 import { RuntimeDialog } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
+import { rewardKeyById } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma, Role } from '../../../../prisma/client.js';
@@ -83,6 +84,20 @@ function buildEmptyNumberMap(): Map<string, number> {
 	return new Map<string, number>();
 }
 
+function buildRewardKeySet(entries: Array<{ rewardId: number }>): Set<string> {
+	const set = new Set<string>();
+
+	for (const entry of entries) {
+		const rewardKey = rewardKeyById[entry.rewardId];
+
+		if (rewardKey) {
+			set.add(rewardKey);
+		}
+	}
+
+	return set;
+}
+
 export function getScenarioProgress(context: DialogContext, scenarioKey: string): number {
 	return context.user.scenarios.get(scenarioKey)?.progression ?? 0;
 }
@@ -149,6 +164,13 @@ export async function buildDialogContext(
 		}
 	});
 
+	const userRewards = await tx.userRewards.findMany({
+		where: { userId: params.userId },
+		select: {
+			rewardId: true
+		}
+	});
+
 	const dinoz = await tx.dinoz.findUnique({
 		where: { id: params.dinozId },
 		select: {
@@ -207,7 +229,7 @@ export async function buildDialogContext(
 			),
 			effects: buildEmptyStringSet(),
 			tags: buildEmptyStringSet(),
-			collections: buildEmptyStringSet(),
+			collections: buildRewardKeySet(userRewards),
 			userVars: buildEmptyNumberMap()
 		},
 		dinoz: {
