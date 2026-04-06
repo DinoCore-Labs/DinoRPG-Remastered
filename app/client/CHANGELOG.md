@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.11.6
+
+### Patch Changes
+
+- f7503f9: Add weird man dialog
+
 ## 0.11.5
 
 ### Patch Changes
