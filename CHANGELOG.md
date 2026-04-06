@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.10.6
+
+### Patch Changes
+
+- f7503f9: Add weird man dialog
+
 ## 0.10.5
 
 ### Patch Changes
@@ -241,6 +247,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.11.6
+
+### Patch Changes
+
+- f7503f9: Add weird man dialog
+- Updated dependencies [f7503f9]
+  - @dinorpg/core@0.10.6
 
 ## 0.11.5
 
@@ -533,6 +547,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.11.6
+
+### Patch Changes
+
+- f7503f9: Add weird man dialog
 
 ## 0.11.5
 
