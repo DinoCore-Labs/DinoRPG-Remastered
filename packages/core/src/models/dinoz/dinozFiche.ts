@@ -38,6 +38,7 @@ export interface DinozFiche {
 	fight: boolean;
 	gather: boolean;
 	rest?: DinozRestInfos | null;
+	stateTimer?: string;
 	//missions: DinozMission[];
 	//concentration: Concentration | null;
 	//tournament: Pick<TournamentState, 'id' | 'levelLimit'> | null;

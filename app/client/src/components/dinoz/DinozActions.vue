@@ -28,7 +28,7 @@
 			</p>-->
 			<DZDisclaimer
 				v-if="dinoz.state === DINOZ_STATE.unfreezing"
-				:content="$t('dinoz.hud.unfreezeCountdown', { time: timeUntilMidnight })"
+				:content="$t('dinoz.hud.unfreezeCountdown', { time: unfreezeCountdown })"
 				help
 			/>
 			<DZDisclaimer
@@ -104,7 +104,6 @@ import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 //import { ConditionEnum, RewardEnum } from '@dinorpg/core/models/enums/Parser.js';
 //import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
-//import { npcList } from '@drpg/core/models/npc/NpcList';
 //import type { Rewarder } from '@dinorpg/core/models/rewards/rewarder.js';
 //import { orderDinozList, toSkillDetails } from '@drpg/core/utils/DinozUtils';
 //import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
@@ -139,7 +138,6 @@ export default defineComponent({
 			itinerantShopNameList: itinerantShopNameList,
 			resurrect: false as boolean,
 			//NPCModal: undefined as string | undefined,
-			//npcName: undefined as string | undefined,
 			//missionReward: undefined as Rewarder[] | undefined,
 			sessionStore: sessionStore(),
 			dinozStore: dinozStore(),
@@ -148,7 +146,7 @@ export default defineComponent({
 			itinerantName: '' as string,
 			dinozFullParty: [] as DinozFiche[],
 			uStore: userStore(),
-			timeUntilMidnight: '',
+			unfreezeSecondsLeft: 0,
 			restSecondsLeft: 0,
 			intervals: [] as number[],
 			DINOZ_STATE
@@ -175,21 +173,22 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		/*computeTimeUntilMidnight() {
-			const now = new Date();
-			const nowMs = now.getTime();
-			const midnightMs = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1);
-			const timeRemainingMs = midnightMs - nowMs;
-			const totalSeconds = Math.floor(timeRemainingMs / 1000);
-			const safeSeconds = Math.max(0, totalSeconds);
-			const hours = Math.floor(safeSeconds / 3600);
-			const minutes = Math.floor((safeSeconds % 3600) / 60);
-			const seconds = safeSeconds % 60;
-			const h = hours.toString().padStart(2, '0');
-			const m = minutes.toString().padStart(2, '0');
-			const s = seconds.toString().padStart(2, '0');
-			this.timeUntilMidnight = `${h}:${m}:${s}`;
-		},*/
+		updateUnfreezeCountdown() {
+			if (this.dinoz.state !== DINOZ_STATE.unfreezing) {
+				this.unfreezeSecondsLeft = 0;
+				return;
+			}
+			const endIso = this.dinoz.stateTimer;
+			if (!endIso) {
+				this.unfreezeSecondsLeft = 0;
+				return;
+			}
+			const diff = Math.max(0, Math.floor((new Date(endIso).getTime() - Date.now()) / 1000));
+			this.unfreezeSecondsLeft = diff;
+			if (diff === 0) {
+				this.refreshDinoz();
+			}
+		},
 		updateRestCountdown() {
 			if (this.dinoz.rest?.maxed) {
 				this.restSecondsLeft = 0;
@@ -206,6 +205,16 @@ export default defineComponent({
 			if (diff === 0) {
 				this.refreshDinoz();
 			}
+		},
+		formatHHMMSS(totalSeconds: number) {
+			const h = Math.floor(totalSeconds / 3600)
+				.toString()
+				.padStart(2, '0');
+			const m = Math.floor((totalSeconds % 3600) / 60)
+				.toString()
+				.padStart(2, '0');
+			const s = (totalSeconds % 60).toString().padStart(2, '0');
+			return `${h}:${m}:${s}`;
 		},
 		formatMMSS(totalSeconds: number) {
 			const m = Math.floor(totalSeconds / 60)
@@ -540,12 +549,13 @@ export default defineComponent({
 					}
 					break;
 				case Action.STOP_CONGEL:
-					/*try {
-						await DinozService.unfrozeDinoz(+this.$route.params.id);
+					try {
+						const result = await DinozService.stopCongel(this.dinozId);
+						this.dinoz.stateTimer = result.unfreezeAt ?? null;
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}*/
+					}
 					break;
 				case Action.REST:
 					try {
@@ -636,6 +646,9 @@ export default defineComponent({
 			if (!this.dinoz.leaderId) return;
 			return dinozStore().getDinoz(this.dinoz.leaderId);
 		},
+		unfreezeCountdown(): string {
+			return this.formatHHMMSS(this.unfreezeSecondsLeft);
+		},
 		restCountdown(): string {
 			return this.formatMMSS(this.restSecondsLeft);
 		}
@@ -649,6 +662,7 @@ export default defineComponent({
 				this.dinozId = this.dinoz.id;
 				this.loadComponent();
 				this.updateRestCountdown();
+				this.updateUnfreezeCountdown();
 			},
 			deep: false,
 			immediate: true
@@ -656,9 +670,9 @@ export default defineComponent({
 	},
 	async mounted() {
 		await this.loadComponent();
-		//const intervalId = window.setInterval(() => this.computeTimeUntilMidnight(), 1000);
+		const intervalId = window.setInterval(() => this.updateUnfreezeCountdown(), 1000);
 		const intervalId2 = window.setInterval(() => this.updateRestCountdown(), 1000);
-		this.intervals.push(/*intervalId,*/ intervalId2);
+		this.intervals.push(intervalId, intervalId2);
 	},
 	unmounted() {
 		this.intervals.forEach(clearInterval);

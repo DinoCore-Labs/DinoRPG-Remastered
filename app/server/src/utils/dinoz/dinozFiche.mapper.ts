@@ -43,6 +43,7 @@ export const toDinozFiche = (
 			| 'name'
 			| 'display'
 			| 'state'
+			| 'stateTimer'
 			| 'level'
 			| 'leaderId'
 			| 'life'
@@ -86,6 +87,7 @@ export const toDinozFiche = (
 		name: dinoz.name,
 		display: dinoz.display,
 		state: dinoz.state,
+		stateTimer: dinoz.stateTimer?.toISOString(),
 		level: dinoz.level,
 		//missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId ?? null,
 		leaderId: dinoz.leaderId,

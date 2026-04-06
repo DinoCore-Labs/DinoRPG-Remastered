@@ -18,3 +18,8 @@ export type DinozRestInfos = {
 	next: string; // ISO date (ou timestamp number si tu préfères)
 	maxed: boolean;
 };
+
+export type UnfreezeDinozResponse = {
+	success: boolean;
+	unfreezeAt: string;
+};
