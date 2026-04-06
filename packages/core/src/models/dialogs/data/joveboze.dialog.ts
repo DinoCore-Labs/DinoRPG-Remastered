@@ -78,27 +78,27 @@ export const jovebozeDialog: DialogDefinition = {
 	links: {
 		sry: {
 			id: 'sry',
-			text: 'npc.joveboze.link.sry',
+			text: 'npc.joveboze.choice.sry',
 			target: 'sry'
 		},
 		trad: {
 			id: 'trad',
-			text: 'npc.joveboze.link.trad',
+			text: 'npc.joveboze.choice.trad',
 			target: 'trad'
 		},
 		go: {
 			id: 'go',
-			text: 'npc.joveboze.link.go',
+			text: 'npc.joveboze.choice.go',
 			target: 'go'
 		},
 		attack: {
 			id: 'attack',
-			text: 'npc.joveboze.link.attack',
+			text: 'npc.joveboze.choice.attack',
 			target: 'attack'
 		},
 		back: {
 			id: 'back',
-			text: 'npc.joveboze.link.back',
+			text: 'npc.joveboze.choice.back',
 			target: 'attack'
 		}
 	}
