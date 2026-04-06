@@ -2,11 +2,14 @@ import { DialogEffect } from '@dinorpg/core/models/dialogs/dialogEffect.js';
 import { RuntimeDialog, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
 import { DialogSpecial } from '@dinorpg/core/models/dialogs/dialogSpecial.js';
 import { dinozStatusIdByKey, dinozStatusKeyById } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
-import { rewardIdByKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
+import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
+import { statTrackingByReward } from '@dinorpg/core/models/goals/statTrackingByReward.js';
+import { rewardIdByKey, statTrackingByCollectionKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/client.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
+import { incrementUserStat } from '../../Stats/stats.service.js';
 import { DialogContext } from './dialog.context.js';
 
 type DialogTransaction = Prisma.TransactionClient;
@@ -251,17 +254,43 @@ function getDialogRewardId(collectionKey: string): number {
 	return rewardId;
 }
 
-async function addUserCollection(tx: DialogTransaction, userId: string, collectionKey: string) {
+type AddUserCollectionResult = {
+	rewardId: number;
+	created: boolean;
+};
+
+async function addUserCollection(
+	tx: DialogTransaction,
+	userId: string,
+	collectionKey: string
+): Promise<AddUserCollectionResult> {
 	const rewardId = getDialogRewardId(collectionKey);
 
-	await tx.userRewards.upsert({
+	const existingReward = await tx.userRewards.findUnique({
 		where: getUserRewardWhere(userId, rewardId),
-		create: {
+		select: {
+			userId: true
+		}
+	});
+
+	if (existingReward) {
+		return {
+			rewardId,
+			created: false
+		};
+	}
+
+	await tx.userRewards.create({
+		data: {
 			userId,
 			rewardId
-		},
-		update: {}
+		}
 	});
+
+	return {
+		rewardId,
+		created: true
+	};
 }
 
 async function removeUserCollection(tx: DialogTransaction, context: DialogContext, collectionKey: string) {
@@ -328,9 +357,19 @@ async function applyDialogEffect(
 		case 'noEffect':
 			await removeStatusFromDinoz(context.dinoz.id, getDialogStatusId(effect.effect));
 			return;
-		case 'collection':
-			await addUserCollection(tx, context.user.id, effect.collection);
+		case 'collection': {
+			const result = await addUserCollection(tx, context.user.id, effect.collection);
+
+			if (result.created) {
+				const statTracking = statTrackingByCollectionKey[effect.collection];
+
+				if (statTracking !== undefined) {
+					await incrementUserStat(statTracking, context.user.id, 1);
+				}
+			}
+
 			return;
+		}
 
 		case 'removeCollection':
 			await removeUserCollection(tx, context, effect.collection);
