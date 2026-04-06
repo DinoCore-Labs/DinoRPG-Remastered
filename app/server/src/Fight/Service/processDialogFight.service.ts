@@ -65,6 +65,8 @@ function resolveDialogReturnPhase(phaseId: string, won: boolean): string | undef
 			return 'fire_win';
 		case 'attack':
 			return 'attack_win';
+		case 'show':
+			return 'show_win';
 		default:
 			return undefined;
 	}

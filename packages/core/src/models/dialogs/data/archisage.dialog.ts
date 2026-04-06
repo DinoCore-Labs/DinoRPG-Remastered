@@ -18,52 +18,48 @@ export const archisageDialog: DialogDefinition = {
 	phases: {
 		begin: {
 			id: 'begin',
-			name: 'npc.archisage.name',
 			text: 'npc.archisage.dialog.begin',
 			fast: true,
-			next: ['enigm'],
-			effects: [],
-			special: []
+			next: ['enigm']
 		},
 		enigm: {
 			id: 'enigm',
-			name: 'npc.archisage.name',
 			text: 'npc.archisage.dialog.enigm',
 			fast: false,
-			next: ['next'],
-			effects: [],
-			special: []
+			next: ['next']
 		},
 		next: {
 			id: 'next',
-			name: 'npc.archisage.name',
 			text: 'npc.archisage.dialog.next',
 			fast: false,
-			next: ['tresor'],
-			effects: [],
-			special: []
+			next: ['tresor']
 		},
 		tresor: {
 			id: 'tresor',
-			name: 'npc.archisage.name',
 			text: 'npc.archisage.dialog.tresor',
 			fast: false,
-			next: ['quoi'],
-			effects: [],
-			special: []
+			next: ['quoi']
 		},
 		quoi: {
 			id: 'quoi',
-			name: 'npc.archisage.name',
 			text: 'npc.archisage.dialog.quoi',
 			fast: false,
-			next: ['show'],
-			effects: [],
-			special: []
+			next: ['show']
 		},
 		show: {
 			id: 'show',
-			name: 'npc.archisage.name',
+			text: '',
+			fast: false,
+			next: [],
+			special: [
+				{
+					type: 'startFight',
+					fightId: [bossList.ELEMENTAIRE_TERRE]
+				}
+			]
+		},
+		show_win: {
+			id: 'show_win',
 			text: 'npc.archisage.dialog.show',
 			fast: false,
 			next: [],
@@ -83,12 +79,6 @@ export const archisageDialog: DialogDefinition = {
 				{
 					type: 'effect',
 					effect: 'gant'
-				}
-			],
-			special: [
-				{
-					type: 'startFight',
-					fightId: [bossList.ELEMENTAIRE_TERRE]
 				}
 			]
 		}
