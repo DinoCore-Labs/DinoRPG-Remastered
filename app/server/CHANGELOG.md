@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.11.5
+
+### Patch Changes
+
+- c141871: add Archisage dialog
+- Updated dependencies [c141871]
+  - @dinorpg/core@0.10.5
+
 ## 0.11.4
 
 ### Patch Changes
