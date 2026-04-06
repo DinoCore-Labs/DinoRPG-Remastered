@@ -19,7 +19,7 @@ export const statusList: {
 		11: 'gant',
 		12: 'zenbro',
 		13: 'nenuph',
-		14: 'chutes', //NOT NEEDED
+		14: 'chutes',
 		15: 'jvbz',
 		16: 'qwood',
 		17: 'qwhy',
