@@ -71,8 +71,7 @@ export const weirdManDialog: DialogDefinition = {
 		},
 		fight: {
 			id: 'fight',
-			name: 'npc.weirdMan.name',
-			text: 'npc.weirdMan.dialog.fight',
+			text: '',
 			fast: true,
 			next: [],
 			special: [
@@ -98,47 +97,47 @@ export const weirdManDialog: DialogDefinition = {
 	links: {
 		hi: {
 			id: 'hi',
-			text: 'npc.weirdMan.link.hi',
+			text: 'npc.weirdMan.choice.hi',
 			target: 'hi'
 		},
 		approach: {
 			id: 'approach',
-			text: 'npc.weirdMan.link.approach',
+			text: 'npc.weirdMan.choice.approach',
 			target: 'approach'
 		},
 		ignore: {
 			id: 'ignore',
-			text: 'npc.weirdMan.link.ignore',
+			text: 'npc.weirdMan.choice.ignore',
 			target: 'ignore'
 		},
 		run: {
 			id: 'run',
-			text: 'npc.weirdMan.link.run',
+			text: 'npc.weirdMan.choice.run',
 			target: 'run'
 		},
 		intro: {
 			id: 'intro',
-			text: 'npc.weirdMan.link.intro',
+			text: 'npc.weirdMan.choice.intro',
 			target: 'intro'
 		},
 		seenWhat: {
 			id: 'seenWhat',
-			text: 'npc.weirdMan.link.seenWhat',
+			text: 'npc.weirdMan.choice.seenWhat',
 			target: 'seenWhat'
 		},
 		leave: {
 			id: 'leave',
-			text: 'npc.weirdMan.link.leave',
+			text: 'npc.weirdMan.choice.leave',
 			target: 'leave'
 		},
 		show: {
 			id: 'show',
-			text: 'npc.weirdMan.link.show',
+			text: 'npc.weirdMan.choice.show',
 			target: 'show'
 		},
 		fight: {
 			id: 'fight',
-			text: 'npc.weirdMan.link.fight',
+			text: 'npc.weirdMan.choice.fight',
 			target: 'fight'
 		}
 	}
