@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.10.3
+
+### Patch Changes
+
+- eb40dca: feat atlanteGuard and joveboze dialogs
+
 ## 0.10.2
 
 ### Patch Changes

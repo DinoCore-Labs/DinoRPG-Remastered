@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.11.3
+
+### Patch Changes
+
+- eb40dca: feat atlanteGuard and joveboze dialogs
+
 ## 0.11.2
 
 ### Patch Changes

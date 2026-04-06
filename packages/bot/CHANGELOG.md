@@ -1,5 +1,11 @@
 # @dinorpg/bot
 
+## 0.2.5
+
+### Patch Changes
+
+- eb40dca: feat atlanteGuard and joveboze dialogs
+
 ## 0.2.4
 
 ### Patch Changes
