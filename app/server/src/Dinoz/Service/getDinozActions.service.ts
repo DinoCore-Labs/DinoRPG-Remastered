@@ -15,10 +15,11 @@ import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { prisma } from '../../prisma.js';
 import { buildConditionContext, BuildConditionContextOptions } from '../../utils/conditions/buildConditionContext.js';
 import { checkCondition } from '../../utils/conditions/checkCondition.js';
-import { canFreezeDinozAction } from '../../utils/dinoz/canFreezeDinozAction.js';
+import { canFreezeDinozAction, canStartUnfreezingDinozAction } from '../../utils/dinoz/canFreezeDinozAction.js';
 import { canLevelUp, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { type CompiledGatherData, getCompiledGather } from '../../utils/gather/gather.compiler.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
+import { getActiveDinozCount, getUserMaxDinoz } from '../Controller/getActiveDinoz.js';
 
 type GatherEntry = CompiledGatherData;
 
@@ -112,8 +113,16 @@ export async function getAvailableActions(
 		return [actionList[Action.MARKET]];
 	}
 
+	const maxDinoz = getUserMaxDinoz(user);
+
 	if (dinoz.state === DinozState.frozen) {
-		return [actionList[Action.STOP_CONGEL]];
+		const activeDinozCount = await getActiveDinozCount(user.id);
+
+		if (canStartUnfreezingDinozAction(dinoz.state, activeDinozCount, maxDinoz)) {
+			return [actionList[Action.STOP_CONGEL]];
+		}
+
+		return [];
 	}
 
 	if (dinoz.state === DinozState.resting) {

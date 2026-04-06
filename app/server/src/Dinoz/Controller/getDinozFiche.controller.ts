@@ -35,6 +35,7 @@ export async function getDinozFicheRequest(dinozId: number, userId: string) {
 					raceId: true,
 					leaderId: true,
 					state: true,
+					stateTimer: true,
 					fight: true,
 					gather: true,
 					remaining: true,

@@ -13,6 +13,8 @@ import {
 
 export type UserForConditionCheck = Pick<User, 'id'> & {
 	isAdmin?: boolean;
+	leader?: boolean;
+	messie?: boolean;
 	items: Pick<UserItems, 'itemId' | 'quantity'>[];
 	rewards: Pick<UserRewards, 'rewardId'>[];
 	quests?: {

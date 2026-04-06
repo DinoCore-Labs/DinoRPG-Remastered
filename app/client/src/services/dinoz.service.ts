@@ -1,5 +1,6 @@
 import type { DigResponse } from '@dinorpg/core/models/dinoz/digTreasure.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import type { UnfreezeDinozResponse } from '@dinorpg/core/models/dinoz/dinozRest.js';
 import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import type { ItemFeedBack } from '@dinorpg/core/models/items/itemFeedback.js';
 
@@ -99,6 +100,12 @@ export const DinozService = {
 	async congel(dinozId: number): Promise<void> {
 		return http()
 			.post(`/dinoz/${dinozId}/freeze`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	async stopCongel(dinozId: number): Promise<UnfreezeDinozResponse> {
+		return http()
+			.post(`/dinoz/${dinozId}/unfreeze`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}
