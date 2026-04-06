@@ -95,5 +95,11 @@ export const DinozService = {
 			.get(`/dinoz/dig/${dinozId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	async congel(dinozId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/${dinozId}/freeze`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
