@@ -1,3 +1,4 @@
+import { archisageDialog } from './archisage.dialog.js';
 import { atlanteGuardDialog } from './atlanteGuard.dialog.js';
 import { coralMinerDialog } from './coralMiner.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
@@ -15,5 +16,7 @@ export const dialogDefinitions = [
 	coralMinerDialog,
 	atlanteGuardDialog,
 	hydargolDialog,
+	archisageDialog,
+	// Test
 	testDialog
 ];
