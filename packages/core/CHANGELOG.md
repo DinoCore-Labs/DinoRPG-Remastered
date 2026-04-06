@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.10.6
+
+### Patch Changes
+
+- f7503f9: Add weird man dialog
+
 ## 0.10.5
 
 ### Patch Changes
