@@ -7,7 +7,6 @@ export const jovebozeDialog: DialogDefinition = {
 	id: 'joveboze',
 	name: 'npc.joveboze.name',
 	place: PlaceEnum.PORT_DE_PRECHE,
-	first: 'begin',
 	cond: parseCondition('fx(jvbz)'),
 	pnj: {
 		image: false,
