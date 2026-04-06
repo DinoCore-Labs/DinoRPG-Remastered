@@ -73,7 +73,7 @@ export const professorEugeneDialog = defineDialog({
 		},
 		fire_fight: {
 			id: 'fire_fight',
-			text: 'npc.eugene.dialog.fire_fight',
+			text: '',
 			next: [],
 			special: [
 				{ type: 'startFight', fightId: [bossList.ELEMENTAIRE_FEU] },
