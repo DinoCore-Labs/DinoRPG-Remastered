@@ -260,7 +260,6 @@ export default defineComponent({
 				case Action.SHOP:
 					const name = this.getShopNameFromAction(action);
 					if (!name) return;
-
 					this.$router.push({
 						name: 'ItemShopPage',
 						params: { name }
@@ -274,7 +273,6 @@ export default defineComponent({
 					break;
 				case Action.NPC:
 					if (typeof action.prop !== 'string') return;
-
 					this.$router.push({
 						name: 'DialogPage',
 						params: {
@@ -287,7 +285,6 @@ export default defineComponent({
 					try {
 						const fight = await FightService.processFight(this.dinozId);
 						this.sessionStore.setFightResult(fight);
-
 						this.$router.push({
 							name: 'FightPage',
 							params: { dinozId: this.dinozId.toString() }
@@ -359,7 +356,6 @@ export default defineComponent({
 				case Action.DIG:
 					try {
 						const digResult = await DinozService.dig(this.dinozId);
-
 						for (const reward of digResult.rewards) {
 							switch (reward.type) {
 								case 'gold':
@@ -524,15 +520,13 @@ export default defineComponent({
 					}
 					break;
 				case Action.CONGEL:
-					/*try {
-						await DinozService.frozeDinoz(+this.$route.params.id);
-
+					try {
+						await DinozService.congel(this.dinozId);
 						const currentDinozList = this.dinozStore.getDinozList;
 						if (!currentDinozList) {
 							this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 							return;
 						}
-
 						const currentDinoz = currentDinozList.findIndex(dinoz => dinoz.id === +this.$route.params.id);
 						if (currentDinoz < 0) {
 							this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
@@ -543,7 +537,7 @@ export default defineComponent({
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
-					}*/
+					}
 					break;
 				case Action.STOP_CONGEL:
 					/*try {

@@ -11,6 +11,7 @@ import { changeLeaderDinozGroup } from '../Service/changeLeaderDinozGroup.servic
 import { digWithDinozHandler } from '../Service/dig.service.js';
 import { disband } from '../Service/disbandDinozTeam.service.js';
 import { followDinoz } from '../Service/followDinoz.service.js';
+import { freezeDinoz } from '../Service/freezeDinoz.service.js';
 import { getDinozFiche } from '../Service/getDinozFiche.service.js';
 import { getDinozSkillHandler } from '../Service/getDinozSkill.service.js';
 import { moveDinozHandler } from '../Service/moveDinoz.service.js';
@@ -193,5 +194,16 @@ export async function dinozRoutes(app: FastifyInstance) {
 			}
 		},
 		digWithDinozHandler
+	);
+	app.post(
+		'/:id/freeze',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Dinoz'],
+				params: dinozIdParamsSchema
+			}
+		},
+		freezeDinoz
 	);
 }
