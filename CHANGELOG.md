@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.10.4
+
+### Patch Changes
+
+- b421908: Adds Hydargol and Padamoine dialogs, collection reward handling, and the Pearl daily healing scheduler
+
 ## 0.10.3
 
 ### Patch Changes
@@ -229,6 +235,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.11.4
+
+### Patch Changes
+
+- b421908: Adds Hydargol and Padamoine dialogs, collection reward handling, and the Pearl daily healing scheduler
+- Updated dependencies [b421908]
+  - @dinorpg/core@0.10.4
 
 ## 0.11.3
 
@@ -505,6 +519,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.11.4
+
+### Patch Changes
+
+- b421908: Adds Hydargol and Padamoine dialogs, collection reward handling, and the Pearl daily healing scheduler
 
 ## 0.11.3
 
