@@ -3108,6 +3108,32 @@
 				"show": "Montrer les ingrédients"
 			}
 		},
+		"weirdMan": {
+			"name": "Homme bizarre",
+			"dialog": {
+				"begin": "Un individu bizarre maladroitement caché entre les arbres vous fixe avec un regard inquiétant... Il brandit une lanterne dans votre direction.",
+				"hi": "L'homme a l'air inquiet et continue à vous toiser sans rien dire...",
+				"approach": "A peine faites-vous un pas dans sa direction que l'homme bondit, terrorisé, et se jette dans un fourré un peu plus loin ! Un instant plus tard, sa tête émerge du feuillage et vous fixe à nouveau avec inquiétude...",
+				"run": "Vous prenez vos jambes à votre cou !",
+				"ignore": "Vous tournez la tête ailleurs pour essayer de l'ignorer. Mais tandis que vous jetez à nouveau un coup d'oeil dans sa direction, vous constatez avec surprise qu'il se dresse face à vous droit comme un piquet !! Vous ne pouvez vous empêcher de pousser un cri de surprise ! Il vous colle alors sa lanterne sous le nez et vous renifle bruyamment...",
+				"intro": "Peur ? Peur de quoi ? Les ombres ou les voix ? Vous avez peur aussi ? On a tous peur ! Moi je les ai vus !",
+				"leave": "Vous reculez lentement puis vous tournez les talons sans prendre la peine de jeter un regard derrière vous...",
+				"seenWhat": "Gorgoth !! Celui qu'on appelle l'innommable mangeur de têtes de la noirceur abyssale !!",
+				"show": "Il terrorise tout ce qui vit dans la Jungle de Grumhel !! Sachant que la Jungle terrorise déjà tout le monde. Tenez regardez, il est juste là (il pointe du doigt la végétation épaisse et noire) !",
+				"fight": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grand surprise qu'il a disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à son cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les endroits obscurs."
+			},
+			"choice": {
+				"hi": "Euh... Bonjour ?",
+				"approach": "Tenter de s'approcher...",
+				"ignore": "L'ignorer",
+				"run": "Partir en courant !",
+				"intro": "Argh ! Vous m'avez fait peur !",
+				"seenWhat": "Vu quoi ?",
+				"leave": "Euh je vais vous laisser...",
+				"show": "Erk ! Il a l'air dangereux !",
+				"fight": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
