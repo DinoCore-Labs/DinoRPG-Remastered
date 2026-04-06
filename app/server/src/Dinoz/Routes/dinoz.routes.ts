@@ -22,6 +22,7 @@ import { setDinozName } from '../Service/setDinozName.service.js';
 import { setSkillStateHandler } from '../Service/setSkillState.service.js';
 import { stopResting } from '../Service/stopRestingDinoz.service.js';
 import { unfollowDinoz } from '../Service/unfollowDinoz.service.js';
+import { unfreezeDinoz } from '../Service/unfreezeDinoz.service.js';
 import { useIrma } from '../Service/useIrma.service.js';
 
 export async function dinozRoutes(app: FastifyInstance) {
@@ -205,5 +206,16 @@ export async function dinozRoutes(app: FastifyInstance) {
 			}
 		},
 		freezeDinoz
+	);
+	app.post(
+		'/:id/unfreeze',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Dinoz'],
+				params: dinozIdParamsSchema
+			}
+		},
+		unfreezeDinoz
 	);
 }
