@@ -30,4 +30,18 @@ export async function ensureJobsExist() {
 		},
 		update: {}
 	});
+	await prisma.jobDefinition.upsert({
+		where: { key: 'heal-fountain-pearl-dinoz' },
+		create: {
+			key: 'heal-fountain-pearl-dinoz',
+			name: 'Heal Fountain of Youth Dinoz for Pearl owners',
+			type: 'DAILY_AT',
+			timezone: 'UTC',
+			dailyHour: 0,
+			dailyMinute: 0,
+			nextRunAt: nextDailyAtUtc(0, 0),
+			enabled: true
+		},
+		update: {}
+	});
 }
