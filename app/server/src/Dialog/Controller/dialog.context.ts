@@ -110,71 +110,69 @@ export async function buildDialogContext(
 	tx: DialogTransaction,
 	params: BuildDialogContextParams
 ): Promise<DialogContext> {
-	const [user, userItems, userIngredients, dinoz] = await Promise.all([
-		tx.user.findUnique({
-			where: { id: params.userId },
-			select: {
-				id: true,
-				profile: {
-					select: {
-						language: true
-					}
+	const user = await tx.user.findUnique({
+		where: { id: params.userId },
+		select: {
+			id: true,
+			profile: {
+				select: {
+					language: true
+				}
+			},
+			wallets: {
+				where: {
+					type: 'GOLD'
 				},
-				wallets: {
-					where: {
-						type: 'GOLD'
-					},
-					select: {
-						amount: true
-					},
-					take: 1
+				select: {
+					amount: true
+				},
+				take: 1
+			}
+		}
+	});
+
+	const userItems = await tx.userItems.findMany({
+		where: { userId: params.userId },
+		select: {
+			itemId: true,
+			quantity: true
+		}
+	});
+
+	const userIngredients = await tx.userIngredients.findMany({
+		where: { userId: params.userId },
+		select: {
+			ingredientId: true,
+			quantity: true
+		}
+	});
+
+	const dinoz = await tx.dinoz.findUnique({
+		where: { id: params.dinozId },
+		select: {
+			id: true,
+			userId: true,
+			placeId: true,
+			level: true,
+			life: true,
+			maxLife: true,
+			status: {
+				select: {
+					statusId: true
+				}
+			},
+			skills: {
+				select: {
+					skillId: true
+				}
+			},
+			items: {
+				select: {
+					itemId: true
 				}
 			}
-		}),
-
-		tx.userItems.findMany({
-			where: { userId: params.userId },
-			select: {
-				itemId: true,
-				quantity: true
-			}
-		}),
-
-		tx.userIngredients.findMany({
-			where: { userId: params.userId },
-			select: {
-				ingredientId: true,
-				quantity: true
-			}
-		}),
-
-		tx.dinoz.findUnique({
-			where: { id: params.dinozId },
-			select: {
-				id: true,
-				userId: true,
-				placeId: true,
-				level: true,
-				life: true,
-				maxLife: true,
-				status: {
-					select: {
-						statusId: true
-					}
-				},
-				skills: {
-					select: {
-						skillId: true
-					}
-				},
-				items: {
-					select: {
-						itemId: true
-					}
-				}
-			}
-		})
-	]);
+		}
+	});
 
 	if (!user) {
 		throw new ExpectedError(`User "${params.userId}" not found`);
@@ -209,7 +207,6 @@ export async function buildDialogContext(
 			collections: buildEmptyStringSet(),
 			userVars: buildEmptyNumberMap()
 		},
-
 		dinoz: {
 			id: dinoz.id,
 			userId: dinoz.userId,
@@ -221,7 +218,6 @@ export async function buildDialogContext(
 			skillIds: buildNumberSet(dinoz.skills, entry => entry.skillId),
 			itemIds: buildNumberSet(dinoz.items, entry => entry.itemId)
 		},
-
 		dialog: {
 			id: params.dialog.id,
 			place: params.dialog.place
