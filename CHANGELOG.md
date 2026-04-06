@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.11.0
+
+### Minor Changes
+
+- aefc4ba: Add the Speleleologue NPC, freeze/unfreeze actions, and automatic unfreeze completion after 24 hours
+
 ## 0.10.6
 
 ### Patch Changes
@@ -247,6 +253,17 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.12.0
+
+### Minor Changes
+
+- aefc4ba: Add the Speleleologue NPC, freeze/unfreeze actions, and automatic unfreeze completion after 24 hours
+
+### Patch Changes
+
+- Updated dependencies [aefc4ba]
+  - @dinorpg/core@0.11.0
 
 ## 0.11.6
 
@@ -547,6 +564,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.12.0
+
+### Minor Changes
+
+- aefc4ba: Add the Speleleologue NPC, freeze/unfreeze actions, and automatic unfreeze completion after 24 hours
 
 ## 0.11.6
 
