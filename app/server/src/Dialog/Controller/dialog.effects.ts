@@ -2,6 +2,7 @@ import { DialogEffect } from '@dinorpg/core/models/dialogs/dialogEffect.js';
 import { RuntimeDialog, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
 import { DialogSpecial } from '@dinorpg/core/models/dialogs/dialogSpecial.js';
 import { dinozStatusIdByKey, dinozStatusKeyById } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
+import { rewardIdByKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/client.js';
@@ -231,6 +232,50 @@ function pickRandomItemId(itemIds: number[]): number {
 	return itemIds[index]!;
 }
 
+function getUserRewardWhere(userId: string, rewardId: number) {
+	return {
+		rewardId_userId: {
+			rewardId,
+			userId
+		}
+	};
+}
+
+function getDialogRewardId(collectionKey: string): number {
+	const rewardId = rewardIdByKey[collectionKey];
+
+	if (!rewardId) {
+		throw new Error(`Unknown dialog collection key "${collectionKey}"`);
+	}
+
+	return rewardId;
+}
+
+async function addUserCollection(tx: DialogTransaction, userId: string, collectionKey: string) {
+	const rewardId = getDialogRewardId(collectionKey);
+
+	await tx.userRewards.upsert({
+		where: getUserRewardWhere(rewardId, userId),
+		create: {
+			userId,
+			rewardId
+		},
+		update: {}
+	});
+}
+
+async function removeUserCollection(tx: DialogTransaction, context: DialogContext, collectionKey: string) {
+	const rewardId = getDialogRewardId(collectionKey);
+
+	if (!context.user.collections.has(collectionKey)) {
+		throw new ExpectedError(`Collection "${collectionKey}" is not owned by user "${context.user.id}"`);
+	}
+
+	await tx.userRewards.delete({
+		where: getUserRewardWhere(context.user.id, rewardId)
+	});
+}
+
 function getDialogStatusId(statusKey: string): number {
 	const statusId = dinozStatusIdByKey[statusKey];
 
@@ -284,7 +329,12 @@ async function applyDialogEffect(
 			await removeStatusFromDinoz(context.dinoz.id, getDialogStatusId(effect.effect));
 			return;
 		case 'collection':
+			await addUserCollection(tx, context.user.id, effect.collection);
+			return;
+
 		case 'removeCollection':
+			await removeUserCollection(tx, context, effect.collection);
+			return;
 		case 'skill':
 		case 'unlockMission':
 		case 'friend':
