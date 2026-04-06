@@ -3048,6 +3048,36 @@
 				"back": "RECULER !!!"
 			}
 		},
+		"hydargol": {
+			"name": "Maître Hydargol",
+			"dialog": {
+				"begin": "Les Chutes Mutantes sont l'un des Grands Lieux de méditation des moines Zenzen. C'est pour cette raison qu'on en trouve souvent dans le coin. En s'installant sur de grandes feuilles de nénuphars, ils essaient de méditer le plus longtemps... sans pour autant se faire entraîner par le courant ! <br> De nombreux moines s'étant un peu assoupis se sont offert une descente des chutes : en tout cas, personne ne les a jamais revus.",
+				"talk": ".........bon.jour......",
+				"help": "....Ah ? Euh... oui... peux-tu... m'apporter...Zzzz... zzz...",
+				"get": "...Ah ? Euh... oui... m'apporter... une feuille... de nénuphar...",
+				"where": "...trouve... mon... apprenti padamoine... Zzz... zzz...",
+				"give": "...merci.... je vais pouvoir.... enfin... méditer sur... les Chutes !!!! Je t'offre cette Perle en récompense... elle rejoindra ta Collection d'objets !",
+				"act": "Youhouhhh !!! C'est génial ! Regarde... je flotte !",
+				"gant": "Oooh !!! C'est un Gant des Zors que tu as là ? GENIAL !!!",
+				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes, autour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et accéder à la Forêt de Grumhel qui se trouve au-delà.",
+				"super": "Bon, si tu me promets de me laisser utiliser ton Gant de temps en temps, je te prête les feuilles de nénuphar qui te permettront de passer les Chutes... marché conclu ?",
+				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure ! Et fait attention, la Forêt au delà est très dangereuse !"
+			},
+			"choice": {
+				"talk": "Parler au Maître Hydargol",
+				"hello": "Bonjour !",
+				"help": "Puis-je vous être utile ?",
+				"give": "Donner les feuilles de nénuphars",
+				"act": "Alors quoi de neuf ?",
+				"get": "Vous apporter... ?",
+				"where": "Et où je vais trouver cela ?",
+				"gant": "Montrer le Gant des Zors",
+				"why": "Ah ? Pourquoi ?",
+				"super": "Super !",
+				"ok": "Ok",
+				"no": "Pas question"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
