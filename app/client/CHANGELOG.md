@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.11.4
+
+### Patch Changes
+
+- b421908: Adds Hydargol and Padamoine dialogs, collection reward handling, and the Pearl daily healing scheduler
+
 ## 0.11.3
 
 ### Patch Changes
