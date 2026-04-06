@@ -1,6 +1,8 @@
 import { CompareMode, Condition } from '@dinorpg/core/models/conditions/conditions.js';
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
+import { UserRole } from '@dinorpg/core/models/user/userRole.js';
 
+import { Role } from '../../../../prisma/index.js';
 import {
 	DialogContext,
 	getScenarioProgress,
@@ -22,6 +24,10 @@ function compareNumber(left: number, right: number, compare: CompareMode): boole
 
 function unsupportedCondition(condition: Condition): boolean {
 	throw new Error(`Dialog condition "${condition.type}" is not implemented yet`);
+}
+
+function isAdminRole(role: UserRole): boolean {
+	return role === Role.ADMIN || role === Role.SUPER_ADMIN;
 }
 
 export function checkDialogCondition(condition: Condition | null | undefined, context: DialogContext): boolean {
@@ -112,6 +118,8 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 			return false;
 
 		case 'admin':
+			return isAdminRole(context.user.role);
+
 		case 'date':
 		case 'day':
 		case 'caushrock':

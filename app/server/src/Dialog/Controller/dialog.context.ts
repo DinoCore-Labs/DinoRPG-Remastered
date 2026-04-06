@@ -1,7 +1,7 @@
 import { RuntimeDialog } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { Prisma } from '../../../../prisma/client.js';
+import { Prisma, Role } from '../../../../prisma/client.js';
 
 type DialogTransaction = Prisma.TransactionClient;
 
@@ -13,6 +13,7 @@ export type DialogScenarioState = {
 export type DialogContext = {
 	user: {
 		id: string;
+		role: Role;
 		lang: string;
 		gold: number;
 		scenarios: Map<string, DialogScenarioState>;
@@ -114,6 +115,7 @@ export async function buildDialogContext(
 		where: { id: params.userId },
 		select: {
 			id: true,
+			role: true,
 			profile: {
 				select: {
 					language: true
@@ -189,6 +191,7 @@ export async function buildDialogContext(
 	return {
 		user: {
 			id: user.id,
+			role: user.role,
 			lang: user.profile?.language ?? 'fr',
 			gold: user.wallets[0]?.amount ?? 0,
 			scenarios: buildEmptyScenarioMap(),
