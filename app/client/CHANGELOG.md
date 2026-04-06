@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.11.5
+
+### Patch Changes
+
+- c141871: add Archisage dialog
+
 ## 0.11.4
 
 ### Patch Changes
