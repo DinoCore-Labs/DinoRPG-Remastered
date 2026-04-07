@@ -19,17 +19,17 @@ export const strangePterozDialog = defineDialog({
 		begin: {
 			id: 'begin',
 			text: 'npc.strangePteroz.dialog.begin',
-			next: ['battle', 'leave']
+			next: ['fight', 'leave']
 		},
-		battle: {
-			id: 'battle',
+		fight: {
+			id: 'fight',
 			text: '',
 			next: [],
 			special: [{ type: 'startFight', fightId: [bossList.PTEROZ] }]
 		},
-		battle_win: {
-			id: 'battle_win',
-			text: 'npc.strangePteroz.dialog.battle',
+		fight_win: {
+			id: 'fight_win',
+			text: 'npc.strangePteroz.dialog.fight',
 			next: [],
 			effects: [{ type: 'collection', collection: 'pteroz' }]
 		},
@@ -40,10 +40,10 @@ export const strangePterozDialog = defineDialog({
 		}
 	},
 	links: {
-		battle: {
-			id: 'battle',
-			text: 'npc.strangePteroz.choice.battle',
-			target: 'battle'
+		fight: {
+			id: 'fight',
+			text: 'npc.strangePteroz.choice.fight',
+			target: 'fight'
 		},
 		leave: {
 			id: 'leave',
