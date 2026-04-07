@@ -2,7 +2,8 @@ import { StatTracking } from '../enums/StatsTracking.js';
 import { Reward } from './rewardList.js';
 
 export const rewardIdByKey: Record<string, Reward> = {
-	perle: Reward.PERLE
+	perle: Reward.PERLE,
+	pteroz: Reward.PTEROZ
 };
 
 export const rewardKeyById: Partial<Record<number, string>> = Object.fromEntries(
@@ -10,5 +11,6 @@ export const rewardKeyById: Partial<Record<number, string>> = Object.fromEntries
 );
 
 export const statTrackingByCollectionKey: Partial<Record<string, StatTracking>> = {
-	perle: StatTracking.PERLE
+	perle: StatTracking.PERLE,
+	pteroz: StatTracking.PTEROZ
 };
