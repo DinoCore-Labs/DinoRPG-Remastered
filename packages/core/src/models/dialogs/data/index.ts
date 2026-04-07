@@ -7,6 +7,7 @@ import { padamoineDialog } from './padamoine.dialog.js';
 import { professorEugeneDialog } from './prof.dialog.js';
 import { speleleologueDialog, speleleologueIceDialog } from './spelele.dialog.js';
 import { testDialog } from './test.dialog.js';
+import { strangePterozDialog } from './totems.dialog.js';
 import { weirdManDialog } from './weirdMan.dialog.js';
 
 export const dialogDefinitions = [
@@ -20,6 +21,7 @@ export const dialogDefinitions = [
 	hydargolDialog,
 	archisageDialog,
 	// GTC
+	strangePterozDialog,
 	speleleologueDialog,
 	speleleologueIceDialog,
 	// Foret
