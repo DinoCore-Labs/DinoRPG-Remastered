@@ -5,6 +5,7 @@ import { prisma } from '../../prisma.js';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { getDinozFicheRequest } from '../Controller/getDinozFiche.controller.js';
 import { applyRestIfNeeded } from '../Controller/getRestDinoz.controller.js';
+import { applyUnfreezeIfNeeded } from '../Controller/getUnfreezeDinoz.controller.js';
 import { getAvailableActions } from './getDinozActions.service.js';
 
 // import { TournamentManager } from '../../tournament/TournamentManager.js';
@@ -21,7 +22,10 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 	const authedId = req.user.id;
 
 	// 1) apply resting
-	const restInfos = await prisma.$transaction(tx => applyRestIfNeeded(tx, dinozId));
+	const restInfos = await prisma.$transaction(async tx => {
+		await applyUnfreezeIfNeeded(tx, dinozId);
+		return applyRestIfNeeded(tx, dinozId);
+	});
 
 	const ficheRest = restInfos
 		? { regen: restInfos.regen, next: restInfos.next.toISOString(), maxed: restInfos.maxed }
