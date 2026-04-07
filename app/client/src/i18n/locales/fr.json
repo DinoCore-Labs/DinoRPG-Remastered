@@ -3182,11 +3182,11 @@
 			"name": "Etrange Dinoz",
 			"dialog": {
 				"begin": "Un étrange Dinoz à l'allure menaçante est apparu sur votre chemin. Ses yeux rouges vous fixent intensément, il a l'air très féroce !",
-				"battle": "Vous avez vaincu un Ptéroz ! Vous obtenez le Trophée des ptéroz qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
+				"fight": "Vous avez vaincu un Ptéroz ! Vous obtenez le Trophée des ptéroz qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
 				"leave": "Ouf ! Un pas de plus et ce Dinoz vous attaquait !"
 			},
 			"choice": {
-				"battle": "Le combattre !",
+				"fight": "Le combattre !",
 				"leave": "S'enfuir !"
 			}
 		},
