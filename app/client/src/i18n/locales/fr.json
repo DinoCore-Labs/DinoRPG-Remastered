@@ -3190,6 +3190,18 @@
 				"leave": "S'enfuir !"
 			}
 		},
+		"strangeHippo": {
+			"name": "Etrange Dinoz",
+			"dialog": {
+				"begin": "Un étrange Dinoz est apparu sur votre chemin, puis s'enfuit... Que désirez-vous faire ?",
+				"fight": "Vous avez vaincu un Dinoz rare : un Hippoclamp ! Vous obtenez le Trophée des Hippoclamps qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
+				"leave": "On dirait qu'il ne revient pas... Mais de quelle espèce pouvait-il bien s'agir ?"
+			},
+			"choice": {
+				"fight": "Le poursuivre !",
+				"leave": "Attendre."
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
