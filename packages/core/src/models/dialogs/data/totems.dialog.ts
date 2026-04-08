@@ -105,7 +105,7 @@ export const strangeHippoDialog = defineDialog({
 	inject: []
 });
 
-/*export const strangeRockyDialog = defineDialog({
+export const strangeRockyDialog = defineDialog({
 	id: 'strange_rocky',
 	place: PlaceEnum.FORCEBRUT,
 	name: 'npc.strangeRocky.name',
@@ -132,15 +132,13 @@ export const strangeHippoDialog = defineDialog({
 			id: 'fight',
 			text: '',
 			next: [],
-			special: [
-				{ type: 'startFight', fightId: [bossList.ROCKY] },
-				{ type: 'collec', collection: 'rocky' }
-			]
+			special: [{ type: 'startFight', fightId: [bossList.ROCKY] }]
 		},
 		fight_win: {
 			id: 'fight_win',
 			text: 'npc.strangeRocky.dialog.fight',
-			next: []
+			next: [],
+			effects: [{ type: 'collection', collection: 'rocky' }]
 		},
 		leave: {
 			id: 'leave',
@@ -171,4 +169,4 @@ export const strangeHippoDialog = defineDialog({
 		}
 	},
 	inject: []
-});*/
+});
