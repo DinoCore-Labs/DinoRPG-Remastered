@@ -3222,6 +3222,15 @@
 				"leave": "Continuer votre route"
 			}
 		},
+		"papyJoe": {
+			"name": "Papy Joe",
+			"dialog": {
+				"begin": "Salut p'tit gars, je t'attendais..."
+			},
+			"choice": {
+				"missions": "Consulter la liste des missions"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
