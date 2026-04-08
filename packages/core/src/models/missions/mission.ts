@@ -8,9 +8,9 @@ export type MissionLabels = Partial<Record<MissionLabelKey, number>>;
 export type MissionDefinition = {
 	key: MissionKey;
 	group: MissionGroupKey;
-	name: string;
-	begin: string;
-	end: string;
+	nameKey: string;
+	beginKey: string;
+	endKey: string;
 	goals: MissionGoal[];
 	rewards: MissionReward[];
 	labels: MissionLabels;
