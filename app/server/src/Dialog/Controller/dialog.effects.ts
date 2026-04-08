@@ -1,4 +1,5 @@
 import { DialogEffect } from '@dinorpg/core/models/dialogs/dialogEffect.js';
+import { DialogPhaseResponse } from '@dinorpg/core/models/dialogs/dialogResponse.js';
 import { RuntimeDialog, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
 import { DialogSpecial } from '@dinorpg/core/models/dialogs/dialogSpecial.js';
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
@@ -14,8 +15,13 @@ type DialogTransaction = Prisma.TransactionClient;
 
 type ApplyDialogPhaseEffectsParams = {
 	context: DialogContext;
-	dialog: Pick<RuntimeDialog, 'id'>;
-	phase: Pick<RuntimeDialogPhase, 'id' | 'effects' | 'special'>;
+	dialog: Pick<RuntimeDialog, 'id' | 'pnj'>;
+	phase: Pick<RuntimeDialogPhase, 'id' | 'effects' | 'special' | 'pnj'>;
+};
+
+type ApplyDialogPhaseEffectsResult = {
+	actions: DialogPhaseResponse['actions'];
+	pnj: DialogPhaseResponse['pnj'];
 };
 
 function getUserQuestWhere(userId: string, questKey: string) {
@@ -317,12 +323,26 @@ function notImplemented(message: string): never {
 	throw new Error(message);
 }
 
+function resolvePhasePnj(
+	dialog: Pick<RuntimeDialog, 'id' | 'pnj'>,
+	phase: Pick<RuntimeDialogPhase, 'id' | 'pnj'>
+): DialogPhaseResponse['pnj'] {
+	const pnj = phase.pnj ?? dialog.pnj;
+
+	if (!pnj) {
+		throw new Error(`Missing PNJ for phase "${phase.id}" in dialog "${dialog.id}"`);
+	}
+
+	return pnj;
+}
+
 async function applyDialogEffect(
 	tx: DialogTransaction,
 	context: DialogContext,
 	dialogId: string,
 	phaseId: string,
-	effect: DialogEffect
+	effect: DialogEffect,
+	actions: DialogPhaseResponse['actions']
 ) {
 	switch (effect.type) {
 		case 'scenario':
@@ -346,7 +366,7 @@ async function applyDialogEffect(
 			await healDinoz(tx, context, effect.amount);
 			return;
 		case 'url':
-			// Purement informatif pour le frontend.
+			actions.url = effect.url;
 			return;
 		case 'effect': {
 			await addStatusToDinoz(context.dinoz.id, getDialogStatusId(effect.effect));
@@ -368,7 +388,6 @@ async function applyDialogEffect(
 
 			return;
 		}
-
 		case 'removeCollection':
 			await removeUserCollection(tx, context, effect.collection);
 			return;
@@ -392,41 +411,60 @@ async function applyDialogSpecial(
 	context: DialogContext,
 	dialogId: string,
 	phaseId: string,
-	special: DialogSpecial
+	special: DialogSpecial,
+	actions: DialogPhaseResponse['actions']
 ) {
 	switch (special.type) {
 		case 'useItem':
 			await removeUserItem(tx, context, special.itemId, special.count);
 			return;
-
 		case 'useIngredient':
 			await removeUserIngredient(tx, context, special.ingredientId, special.count);
 			return;
-
 		case 'useGold':
 			await removeUserGold(tx, context, special.amount);
 			return;
-
-		case 'none':
+		case 'startFight':
+			actions.startFight = phaseId;
+			return;
+		case 'popup':
+			actions.popup = true;
+			return;
+		case 'status':
+			actions.statusKey = special.status;
+			return;
+		case 'missions':
+			actions.missionsGroup = special.group;
+			return;
 		case 'fight':
 		case 'fightGroup':
-		case 'missions':
-		case 'startFight':
-		case 'popup':
-		case 'status':
-			// Gérés plus tard côté orchestration / frontend / combat.
+		case 'none':
 			return;
+
+		default: {
+			const exhaustiveCheck: never = special;
+			return exhaustiveCheck;
+		}
 	}
 }
 
-export async function applyDialogPhaseEffects(tx: DialogTransaction, params: ApplyDialogPhaseEffectsParams) {
-	// Comme dans l’esprit MT, on traite d’abord les "use*" qui représentent
-	// un coût d’entrée dans la phase, puis on applique les effets de récompense/progression.
+export async function applyDialogPhaseEffects(
+	tx: DialogTransaction,
+	params: ApplyDialogPhaseEffectsParams
+): Promise<ApplyDialogPhaseEffectsResult> {
+	const actions: DialogPhaseResponse['actions'] = {};
+
+	// On traite d’abord les "use*" qui représentent un coût d’entrée dans la phase.
 	for (const special of params.phase.special) {
-		await applyDialogSpecial(tx, params.context, params.dialog.id, params.phase.id, special);
+		await applyDialogSpecial(tx, params.context, params.dialog.id, params.phase.id, special, actions);
 	}
 
 	for (const effect of params.phase.effects) {
-		await applyDialogEffect(tx, params.context, params.dialog.id, params.phase.id, effect);
+		await applyDialogEffect(tx, params.context, params.dialog.id, params.phase.id, effect, actions);
 	}
+
+	return {
+		actions,
+		pnj: resolvePhasePnj(params.dialog, params.phase)
+	};
 }
