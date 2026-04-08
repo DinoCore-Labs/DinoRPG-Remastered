@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.12.1
+
+### Patch Changes
+
+- 4f8b9ba: add strange dinoz dialogs
+
 ## 0.12.0
 
 ### Minor Changes

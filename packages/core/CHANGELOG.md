@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.11.1
+
+### Patch Changes
+
+- 4f8b9ba: add strange dinoz dialogs
+
 ## 0.11.0
 
 ### Minor Changes
