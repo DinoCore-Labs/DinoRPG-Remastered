@@ -11,6 +11,7 @@ import AdminPage from '../pages/Admin/AdminPage.vue';
 import AdminSecretsPage from '../pages/Admin/AdminSecretsPage.vue';
 import AdminUserPage from '../pages/Admin/AdminUserPage.vue';
 import DialogPage from '../pages/DialogPage.vue';
+import DinozMissions from '../pages/DinozMissions.vue';
 import DinozPage from '../pages/DinozPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
 import FightPage from '../pages/FightPage.vue';
@@ -108,6 +109,12 @@ const routes: RouteRecord[] = [
 				path: '/dinoz/:id/dialog/:dialogId',
 				name: 'DialogPage',
 				component: DialogPage,
+				meta: { auth: true }
+			},
+			{
+				path: '/dinoz/:id/missions/:group',
+				name: 'DinozMissions',
+				component: DinozMissions,
 				meta: { auth: true }
 			},
 			{
