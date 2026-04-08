@@ -3202,6 +3202,21 @@
 				"leave": "Attendre."
 			}
 		},
+		"strangeRocky": {
+			"name": "Etrange Dinoz",
+			"dialog": {
+				"begin": "Une étrange pierre se dresse au milieu du chemin, Son emplacement ne semble pas très naturel... Que désirez vous faire ?",
+				"touch": "C'est étrange... la pierre semble chaude au toucher. Il n'y a rien d'autre de spécial... Peut-être vaut-il mieux ne pas insister...",
+				"leave": "Vous avez raison, après-tout ce n'est qu'un simple caillou....",
+				"fight": "Oooops !! La pierre en question était un Rocky, un Dinoz moitié animal moitié minéral assez rare dans le Royaume de Dinoville... En l'ayant vaincu, vous obtenez le Trophée des Rockys, qui vous permettra désormais d'obtenir des Rockys dans la Boutique des Dinoz. Bravo !"
+			},
+			"choice": {
+				"touch": "La toucher",
+				"fight": "Essayer de la faire basculer",
+				"grave": "Graver quelque chose",
+				"leave": "Continuer votre route"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
