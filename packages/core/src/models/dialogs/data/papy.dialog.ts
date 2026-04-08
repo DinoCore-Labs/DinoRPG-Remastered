@@ -20,7 +20,8 @@ export const papyJoeDialog: DialogDefinition = {
 		missions: {
 			id: 'missions',
 			text: '',
-			next: []
+			next: [],
+			special: [{ type: 'missions', group: 'papy' }]
 		}
 	},
 	links: {

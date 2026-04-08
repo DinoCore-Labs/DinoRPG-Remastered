@@ -82,41 +82,6 @@ function resolveVisibleLinks(
 	return visibleLinks;
 }
 
-function extractPhaseActions(phase: RuntimeDialogPhase): DialogPhaseResponse['actions'] {
-	const actions: DialogPhaseResponse['actions'] = {};
-
-	for (const effect of phase.effects) {
-		if (effect.type === 'url') {
-			actions.url = effect.url;
-		}
-	}
-
-	for (const special of phase.special) {
-		switch (special.type) {
-			case 'startFight':
-				actions.startFight = phase.id;
-				break;
-
-			case 'popup':
-				actions.popup = true;
-				break;
-
-			case 'status':
-				actions.statusKey = special.status;
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	return actions;
-}
-
-function resolvePhasePnj(dialog: RuntimeDialog, phase: RuntimeDialogPhase) {
-	return phase.pnj ?? dialog.pnj;
-}
-
 export async function enterDialogPhase(
 	tx: DialogTransaction,
 	dialog: RuntimeDialog,
@@ -130,7 +95,7 @@ export async function enterDialogPhase(
 		dialog
 	});
 
-	await applyDialogPhaseEffects(tx, {
+	const phaseResult = await applyDialogPhaseEffects(tx, {
 		context: beforeContext,
 		dialog,
 		phase
@@ -150,9 +115,9 @@ export async function enterDialogPhase(
 		name: phase.name,
 		text: phase.text,
 		fast: phase.fast,
-		pnj: resolvePhasePnj(dialog, phase),
+		pnj: phaseResult.pnj,
 		links,
-		actions: extractPhaseActions(phase)
+		actions: phaseResult.actions
 	};
 }
 
