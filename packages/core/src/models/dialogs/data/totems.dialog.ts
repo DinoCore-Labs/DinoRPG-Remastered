@@ -54,7 +54,7 @@ export const strangePterozDialog = defineDialog({
 	inject: []
 });
 
-/*export const strangeHippoDialog = defineDialog({
+export const strangeHippoDialog = defineDialog({
 	id: 'strange_hippo',
 	place: PlaceEnum.ILE_WAIKIKI,
 	name: 'npc.strangeHippo.name',
@@ -76,15 +76,13 @@ export const strangePterozDialog = defineDialog({
 			id: 'fight',
 			text: '',
 			next: [],
-			special: [
-				{ type: 'startFight', fightId: [bossList.HIPPOCLAMP] },
-				{ type: 'collection', collection: 'hippo' }
-			]
+			special: [{ type: 'startFight', fightId: [bossList.HIPPOCLAMP] }]
 		},
 		fight_win: {
 			id: 'fight_win',
 			text: 'npc.strangeHippo.dialog.fight',
-			next: []
+			next: [],
+			effects: [{ type: 'collection', collection: 'hippo' }]
 		},
 		leave: {
 			id: 'leave',
@@ -107,7 +105,7 @@ export const strangePterozDialog = defineDialog({
 	inject: []
 });
 
-export const strangeRockyDialog = defineDialog({
+/*export const strangeRockyDialog = defineDialog({
 	id: 'strange_rocky',
 	place: PlaceEnum.FORCEBRUT,
 	name: 'npc.strangeRocky.name',
