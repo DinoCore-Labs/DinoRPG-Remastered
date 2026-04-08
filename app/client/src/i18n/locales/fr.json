@@ -205,27 +205,32 @@
 			"title": "Découvrez les prochains événements sur DinoRPG !",
 			"small": "Prédiction d'Irma",
 			"strong": {
-				"title1": "Alpha 0.3.0 (Bientôt)",
-				"title2": "Alpha 0.4.0",
-				"title3": "Alpha 0.5.0",
-				"title4": "Beta 0.6.0"
+				"title1": "Alpha 0.4.0 (Bientôt)",
+				"title2": "Alpha 0.5.0",
+				"title3": "Alpha 0.6.0",
+				"title4": "Alpha 0.7.0"
 			},
 			"help": "Cliquez sur une mise à jour ci-dessus pour obtenir d'avantage d'informations !",
 			"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
 			"futurTitle": "Avenir Dinolandien",
 			"futureInfo1": {
-				"text1": "Mise en place des PNJ et des quêtes.",
-				"text2": "Création du scénario tutoriel pour les nouveaux joueurs.",
-				"text3": "Correction des bugs."
+				"text1": "Mise en place de Papy Joe et ses missions.",
+				"text2": "La messagerie est débloquée avec l'obtention des timbres de Papy Joe.",
+				"text3": "Mise en place du Shaman Mou et de ses missions.",
+				"text4": "Mise en place du Vénérable.",
+				"text5": "Correction des bugs."
 			},
 			"futureInfo2": {
-				"text1": "Apparition de certains PNJ",
-				"text2": "Déblocage des cartes : Grand Tout-Chaud, Iles Atlantéinées, Forêt de Gruhmel",
-				"text3": "Nouvelle action Dinoz : creuser",
+				"text1": "Mise en place de Bao Bob et de ses missions.",
+				"text2": "Mise en place du Rodeur et de ses missions.",
+				"text3": "Mise en place de Nicolas Hulot et de ses missions.",
 				"text4": "Correction des bugs"
 			},
 			"futureInfo3": {
-				"text1": "À venir"
+				"text1": "Mise en place de Dian Korgsey et de ses missions.",
+				"text2": "Mise en place du Gardien de la forêt et de ses missions.",
+				"text3": "Déblocage de la Boutique Fruitée avec l'obtention de la branche fleurie du Gardien de la forêt.",
+				"text4": "Correction des bugs"
 			},
 			"futureInfo4": {
 				"text1": "À venir"
