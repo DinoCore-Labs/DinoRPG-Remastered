@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.11.1
+
+### Patch Changes
+
+- 4f8b9ba: add strange dinoz dialogs
+
 ## 0.11.0
 
 ### Minor Changes
@@ -253,6 +259,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.12.1
+
+### Patch Changes
+
+- 4f8b9ba: add strange dinoz dialogs
+- Updated dependencies [4f8b9ba]
+  - @dinorpg/core@0.11.1
 
 ## 0.12.0
 
@@ -564,6 +578,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.12.1
+
+### Patch Changes
+
+- 4f8b9ba: add strange dinoz dialogs
 
 ## 0.12.0
 
