@@ -17,7 +17,7 @@ import {
 } from './missionKey.js';
 
 export type MissionTalkBranch = {
-	text: string;
+	textKey: string;
 	label: MissionLabelKey;
 	condition?: MissionDelayedCondition | null;
 };
@@ -26,14 +26,14 @@ export type MissionAtGoal = {
 	type: 'AT';
 	place: PlaceEnum | null;
 	hidden: boolean;
-	title?: string | null;
+	titleKey?: string | null;
 };
 
 export type MissionTalkGoal = {
 	type: 'TALK';
-	name: string;
+	nameKey: string;
 	npcKey?: MissionNpcKey;
-	text: string;
+	textKey: string;
 	avatar?: MissionAvatarKey | null;
 	branches?: MissionTalkBranch[] | null;
 	frame?: MissionFrameKey | null;
@@ -43,9 +43,9 @@ export type MissionTalkGoal = {
 
 export type MissionActionGoal = {
 	type: 'ACTION';
-	name: string;
+	nameKey: string;
 	actionKey?: MissionActionKey;
-	description: string;
+	descriptionKey: string;
 	waitSeconds?: number | null;
 };
 
@@ -62,7 +62,7 @@ export type MissionCompleteGroupGoal = {
 export type MissionRequireEffectGoal = {
 	type: 'REQUIRE_EFFECT';
 	effectKey: MissionEffectKey;
-	title: string;
+	titleKey: string;
 };
 
 export type MissionFightGoal = {
@@ -99,7 +99,7 @@ export type MissionBranchGoal = {
 
 export type MissionDigGoal = {
 	type: 'DIG';
-	message: string;
+	messageKey: string;
 };
 
 export type MissionGoal =
