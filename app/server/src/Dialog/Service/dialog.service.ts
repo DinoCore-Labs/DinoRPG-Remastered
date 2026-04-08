@@ -179,10 +179,10 @@ export async function listAvailableDialogs(params: {
 }): Promise<AvailableDialogSummary[]> {
 	return prisma.$transaction(async tx => {
 		const availableDialogs: AvailableDialogSummary[] = [];
-		console.log(
+		/*console.log(
 			'Registered dialogs:',
 			getDialogs().map(dialog => dialog.id)
-		);
+		);*/
 		for (const dialog of getDialogs()) {
 			const context = await buildDialogContext(tx, {
 				userId: params.userId,
