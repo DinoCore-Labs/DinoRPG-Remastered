@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.12.1
+
+### Patch Changes
+
+- 4f8b9ba: add strange dinoz dialogs
+- Updated dependencies [4f8b9ba]
+  - @dinorpg/core@0.11.1
+
 ## 0.12.0
 
 ### Minor Changes
