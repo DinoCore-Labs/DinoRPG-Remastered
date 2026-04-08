@@ -94,6 +94,18 @@ async function handlePhaseActions(phase: DialogPhaseResponse) {
 		return;
 	}
 
+	if (phase.actions.missionsGroup) {
+		await router.push({
+			name: 'DinozMissions',
+			params: {
+				id: String(dinozId.value),
+				group: phase.actions.missionsGroup
+			}
+		});
+
+		return;
+	}
+
 	if (phase.actions.popup) {
 		// plus tard
 	}
