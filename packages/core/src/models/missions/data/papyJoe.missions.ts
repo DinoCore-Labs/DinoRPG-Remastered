@@ -18,6 +18,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
+				npcKey: 'fish_merchant',
 				nameKey: 'missions.papy.fish.fishMerchant.name',
 				textKey: 'missions.papy.fish.fishMerchant.text'
 			},
@@ -28,6 +29,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
+				npcKey: 'madame_seyche',
 				nameKey: 'missions.papy.fish.madameSeyche.name',
 				textKey: 'missions.papy.fish.madameSeyche.text'
 			}
@@ -50,6 +52,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
+				npcKey: 'jacqueline_ducraft',
 				nameKey: 'missions.papy.common.jacquelineDucraft.name',
 				textKey: 'missions.papy.dog.goals.jacquelineIntro.text'
 			},
@@ -71,6 +74,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
+				npcKey: 'jacqueline_ducraft',
 				nameKey: 'missions.papy.common.jacquelineDucraft.name',
 				textKey: 'missions.papy.dog.goals.jacquelineReturn.text'
 			}
@@ -239,6 +243,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
+				npcKey: 'madame_seyche',
 				nameKey: 'missions.papy.common.madameSeyche.name',
 				textKey: 'missions.papy.kbook.goals.madameSeyche.text'
 			}
@@ -298,6 +303,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
+				npcKey: 'madame_seyche',
 				nameKey: 'missions.papy.common.madameSeyche.name',
 				textKey: 'missions.papy.lettre.goals.madameSeyche.text'
 			}

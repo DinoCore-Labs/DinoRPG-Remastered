@@ -3,6 +3,7 @@ import { RuntimeDialog, RuntimeDialogLink, RuntimeDialogPhase } from '@dinorpg/c
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/client.js';
+import { advanceDinozMissionOnTalk } from '../../Mission/Controller/mission.progress.js';
 import { prisma } from '../../prisma.js';
 import { checkDialogCondition } from '../../utils/conditions/checkDialogCondition.js';
 import { buildDialogContext } from '../Controller/dialog.context.js';
@@ -99,6 +100,12 @@ export async function enterDialogPhase(
 		context: beforeContext,
 		dialog,
 		phase
+	});
+
+	// Mission progression related to TALK phases
+	await advanceDinozMissionOnTalk(tx, {
+		dinozId,
+		npcKey: dialog.id
 	});
 
 	const afterContext = await buildDialogContext(tx, {

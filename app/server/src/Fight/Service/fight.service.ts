@@ -8,6 +8,7 @@ import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import { FightProcessResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
+import { getMonsterKeyById, monsterKeyById } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 import { monsterList } from '@dinorpg/core/models/monster/monsterList.js';
 import { placeListv2, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
@@ -22,6 +23,8 @@ import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.c
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
+import { advanceDinozMissionOnFightWon } from '../../Mission/Controller/mission.progress.js';
+import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { addMoney, removeMoney } from '../../User/Controller/money.controller.js';
 import { calculateXPBonus, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
@@ -153,13 +156,24 @@ export async function fightMonstersAtPlace(
 	const result = await rewardFight(team, monsters, fightResult, placeId, user);
 
 	// If any dinoz is on a mission, check if the fight result progress the mission
-	/*for (const dinoz of team) {
-		if (dinoz.missions.some(mission => !mission.isFinished)) {
-			const dinozAtFuturePlace = structuredClone(dinoz);
-			dinozAtFuturePlace.placeId = placeId;
-			await checkMissionFight(dinozAtFuturePlace, result);
+	const leader = team[0];
+
+	if (fightResult.winner && leader) {
+		const defeatedMonsterKeys = monsters
+			.map(monster => getMonsterKeyById(monster.id))
+			.filter((key): key is NonNullable<typeof key> => key !== null);
+
+		if (defeatedMonsterKeys.length > 0) {
+			await prisma.$transaction(async tx => {
+				await advanceDinozMissionOnFightWon(tx, {
+					dinozId: leader.id,
+					defeatedMonsterKeys,
+					zone: null
+				});
+			});
 		}
-	}*/
+	}
+
 	return result;
 }
 
