@@ -31,6 +31,7 @@ import { UserService } from '../services';
 import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
 import { is_granted } from '../utils/permission';
+import { requireOwnedDinozByParam } from './helper';
 
 const routes: RouteRecord[] = [
 	{
@@ -81,7 +82,8 @@ const routes: RouteRecord[] = [
 				path: '/dinoz/:id',
 				name: 'DinozPage',
 				component: DinozPage,
-				meta: { auth: true }
+				meta: { auth: true },
+				beforeEnter: requireOwnedDinozByParam('id')
 			},
 			{
 				path: '/level/:id',
@@ -97,25 +99,29 @@ const routes: RouteRecord[] = [
 				path: '/fight/:dinozId',
 				name: 'FightPage',
 				component: FightPage,
-				meta: { auth: true }
+				meta: { auth: true },
+				beforeEnter: requireOwnedDinozByParam('dinozId')
 			},
 			{
 				path: '/gather/grid/:type/:dinozId',
 				name: 'Gather',
 				component: GatherPage,
-				meta: { auth: true }
+				meta: { auth: true },
+				beforeEnter: requireOwnedDinozByParam('dinozId')
 			},
 			{
 				path: '/dinoz/:id/dialog/:dialogId',
 				name: 'DialogPage',
 				component: DialogPage,
-				meta: { auth: true }
+				meta: { auth: true },
+				beforeEnter: requireOwnedDinozByParam('id')
 			},
 			{
 				path: '/dinoz/:id/missions/:group',
 				name: 'DinozMissions',
 				component: DinozMissions,
-				meta: { auth: true }
+				meta: { auth: true },
+				beforeEnter: requireOwnedDinozByParam('id')
 			},
 			{
 				path: '/ranking',
