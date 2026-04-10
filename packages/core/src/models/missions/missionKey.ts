@@ -1,3 +1,5 @@
+import { MonsterKey } from '../monster/monsterKey.js';
+
 export type MissionKey = string;
 export type MissionGroupKey = string;
 export type MissionLabelKey = string;
@@ -5,7 +7,7 @@ export type MissionLabelKey = string;
 export type MissionNpcKey = string;
 export type MissionActionKey = string;
 
-export type MissionMonsterKey = string;
+export type MissionMonsterKey = MonsterKey;
 export type MissionItemKey = string;
 export type MissionIngredientKey = string;
 
