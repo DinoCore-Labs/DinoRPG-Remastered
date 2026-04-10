@@ -18,8 +18,8 @@ export const papyJoeMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
-				nameKey: 'missions.papy.common.fishMerchant.name',
-				textKey: 'missions.papy.fish.goals.fishMerchant.text'
+				nameKey: 'missions.papy.fish.fishMerchant.name',
+				textKey: 'missions.papy.fish.fishMerchant.text'
 			},
 			{
 				type: 'AT',
@@ -28,8 +28,8 @@ export const papyJoeMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
-				nameKey: 'missions.papy.common.madameSeyche.name',
-				textKey: 'missions.papy.fish.goals.madameSeyche.text'
+				nameKey: 'missions.papy.fish.madameSeyche.name',
+				textKey: 'missions.papy.fish.madameSeyche.text'
 			}
 		],
 		rewards: [{ type: 'XP', value: 20 }],

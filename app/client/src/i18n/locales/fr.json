@@ -3235,5 +3235,22 @@
 			"exit": "À bientôt.",
 			"leave": "Quitter"
 		}
+	},
+	"missions": {
+		"papy": {
+			"fish": {
+				"name": "Du poisson frais",
+				"begin": "Madame Seyche, habitante de Dinoville, recherche du poisson frais pour organiser un dîner avec ses amis. Peux-tu aller lui chercher du poisson chez le Marchand au Port de Prêche au sud ? Il a été prévenu et il t'attend.",
+				"end": "Madame Seyche est très contente de toi, voilà ta récompense !",
+				"fishMerchant": {
+					"name": "Marchand de Poisson",
+					"text": "Salut mon ptit, tu viens chercher du poisson c'est ça ? Tiens, prends-le et apporte-le à Dinoville au plus vite."
+				},
+				"madameSeyche": {
+					"name": "Madame Seyche",
+					"text": "Ooooohhhh merci mon petit, ce dîner va être très réussi grâce à toi ! Retourne vite voir Papy Joe pour obtenir ta récompense..."
+				}
+			}
+		}
 	}
 }
