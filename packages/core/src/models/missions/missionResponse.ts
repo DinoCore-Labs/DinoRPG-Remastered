@@ -1,4 +1,6 @@
-import type { MissionGroupKey, MissionKey } from './missionKey.js';
+import { MissionGroupKey, MissionKey } from './missionKey.js';
+
+export type DinozMissionStatus = 'LOCKED' | 'AVAILABLE' | 'IN_PROGRESS' | 'COMPLETED';
 
 export type DinozMissionGroupItem = {
 	key: MissionKey;
@@ -7,6 +9,8 @@ export type DinozMissionGroupItem = {
 	beginKey: string;
 	endKey: string;
 	limit?: number | null;
+	status: DinozMissionStatus;
+	canStart: boolean;
 	isCompleted: boolean;
 	isActive: boolean;
 	progression: number | null;
@@ -15,6 +19,7 @@ export type DinozMissionGroupItem = {
 
 export type DinozMissionGroupResponse = {
 	group: MissionGroupKey;
+	activeMissionKey: MissionKey | null;
 	missions: DinozMissionGroupItem[];
 };
 

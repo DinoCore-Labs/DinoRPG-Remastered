@@ -89,15 +89,15 @@ function checkCanFightCondition(dinoz: OwnedDinozForMissionStart, monsterKey: Mo
 	return dinoz.level >= monster.level;
 }
 
-export async function assertMissionStartCondition(
+export async function checkMissionStartCondition(
 	tx: MissionTransaction,
 	params: {
 		dinoz: OwnedDinozForMissionStart;
 		condition?: MissionConditionSource | null;
 	}
-) {
+): Promise<boolean> {
 	if (!params.condition) {
-		return;
+		return true;
 	}
 
 	const parsedConditions = parseMissionStartConditionSource(params.condition);
@@ -108,7 +108,7 @@ export async function assertMissionStartCondition(
 				const isCompleted = await checkMissionCompletedCondition(tx, params.dinoz.id, condition.missionKey);
 
 				if (!isCompleted) {
-					throw new ExpectedError(`Mission "${condition.missionKey}" must be completed before starting this mission`);
+					return false;
 				}
 
 				break;
@@ -118,13 +118,27 @@ export async function assertMissionStartCondition(
 				const canFight = checkCanFightCondition(params.dinoz, condition.monsterKey);
 
 				if (!canFight) {
-					throw new ExpectedError(
-						`Dinoz "${params.dinoz.id}" cannot start a mission requiring "${condition.monsterKey}"`
-					);
+					return false;
 				}
 
 				break;
 			}
 		}
+	}
+
+	return true;
+}
+
+export async function assertMissionStartCondition(
+	tx: MissionTransaction,
+	params: {
+		dinoz: OwnedDinozForMissionStart;
+		condition?: MissionConditionSource | null;
+	}
+) {
+	const isAllowed = await checkMissionStartCondition(tx, params);
+
+	if (!isAllowed) {
+		throw new ExpectedError(`Mission start conditions are not satisfied`);
 	}
 }
