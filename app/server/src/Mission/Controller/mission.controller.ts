@@ -1,8 +1,9 @@
-import { DinozMissionGroupResponse } from '@dinorpg/core/models/missions/missionResponse.js';
+import type { DinozMissionGroupResponse, DinozMissionStatus } from '@dinorpg/core/models/missions/missionResponse.js';
 
-import { Prisma } from '../../../../prisma/client.js';
+import type { Prisma } from '../../../../prisma/client.js';
 import { assertOwnedDinoz } from './mission.access.js';
 import { getMissionDefinitionsByGroup } from './mission.registry.js';
+import { checkMissionStartCondition } from './mission.startConditions.js';
 
 type MissionTransaction = Prisma.TransactionClient;
 
@@ -14,7 +15,7 @@ export async function getDinozMissionGroup(
 		group: string;
 	}
 ): Promise<DinozMissionGroupResponse> {
-	await assertOwnedDinoz(tx, params.userId, params.dinozId);
+	const dinoz = await assertOwnedDinoz(tx, params.userId, params.dinozId);
 
 	const definitions = getMissionDefinitionsByGroup(params.group);
 
@@ -36,23 +37,74 @@ export async function getDinozMissionGroup(
 	const savedMissionByKey = new Map(savedMissions.map(mission => [mission.missionKey, mission]));
 	const activeMissionKey = savedMissions.find(mission => !mission.isCompleted)?.missionKey ?? null;
 
-	return {
-		group: params.group,
-		missions: definitions.map(definition => {
-			const savedMission = savedMissionByKey.get(definition.key);
+	const missions = [];
 
-			return {
+	for (const definition of definitions) {
+		const savedMission = savedMissionByKey.get(definition.key);
+
+		if (savedMission?.isCompleted) {
+			missions.push({
 				key: definition.key,
 				group: definition.group,
 				nameKey: definition.nameKey,
 				beginKey: definition.beginKey,
 				endKey: definition.endKey,
 				limit: definition.limit ?? null,
-				isCompleted: savedMission?.isCompleted ?? false,
-				isActive: activeMissionKey === definition.key,
-				progression: savedMission?.progression ?? null,
-				tracking: savedMission?.tracking ?? null
-			};
-		})
+				status: 'COMPLETED' as DinozMissionStatus,
+				canStart: false,
+				isCompleted: true,
+				isActive: false,
+				progression: savedMission.progression,
+				tracking: savedMission.tracking
+			});
+			continue;
+		}
+
+		if (savedMission && !savedMission.isCompleted) {
+			missions.push({
+				key: definition.key,
+				group: definition.group,
+				nameKey: definition.nameKey,
+				beginKey: definition.beginKey,
+				endKey: definition.endKey,
+				limit: definition.limit ?? null,
+				status: 'IN_PROGRESS' as DinozMissionStatus,
+				canStart: false,
+				isCompleted: false,
+				isActive: true,
+				progression: savedMission.progression,
+				tracking: savedMission.tracking
+			});
+			continue;
+		}
+
+		const isUnlocked = await checkMissionStartCondition(tx, {
+			dinoz,
+			condition: definition.condition
+		});
+
+		const status: DinozMissionStatus = isUnlocked ? 'AVAILABLE' : 'LOCKED';
+		const canStart = isUnlocked && activeMissionKey === null;
+
+		missions.push({
+			key: definition.key,
+			group: definition.group,
+			nameKey: definition.nameKey,
+			beginKey: definition.beginKey,
+			endKey: definition.endKey,
+			limit: definition.limit ?? null,
+			status,
+			canStart,
+			isCompleted: false,
+			isActive: false,
+			progression: null,
+			tracking: null
+		});
+	}
+
+	return {
+		group: params.group,
+		activeMissionKey,
+		missions
 	};
 }
