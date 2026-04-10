@@ -32,6 +32,7 @@ import { itinerantMerchantMoveJob } from './jobs/handlers/itinerantMerchantMove.
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
 import { startScheduler } from './jobs/scheduler.js';
 import { levelRoutes } from './Level/Routes/level.routes.js';
+import { missionsRoutes } from './Mission/Routes/mission.routes.js';
 import { newsRoutes } from './News/Routes/news.routes.js';
 import { rankingRoutes } from './Ranking/Routes/ranking.routes.js';
 import { shopRoutes } from './Shop/Routes/shop.routes.js';
@@ -218,6 +219,7 @@ async function buildServer() {
 	server.register(newsRoutes, { prefix: 'api/news' });
 	server.register(dialogRoutes, { prefix: 'api/dialog' });
 	server.register(adminRoutes, { prefix: 'api/admin' });
+	server.register(missionsRoutes, { prefix: 'api/missions' });
 
 	//------------------------------------------------------
 	// 10. Scheduler
