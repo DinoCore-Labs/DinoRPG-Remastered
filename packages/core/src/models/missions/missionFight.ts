@@ -18,5 +18,5 @@ export type MissionKillInfos = {
 	count: number;
 	force: boolean;
 	zone?: number | null;
-	displayName?: string | null;
+	displayNameKey?: string | null;
 };
