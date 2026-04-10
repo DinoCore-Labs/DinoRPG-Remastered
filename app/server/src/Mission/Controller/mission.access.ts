@@ -1,6 +1,6 @@
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { Prisma } from '../../../../prisma/client.js';
+import type { Prisma } from '../../../../prisma/client.js';
 
 type MissionTransaction = Prisma.TransactionClient;
 
@@ -9,7 +9,8 @@ export async function assertOwnedDinoz(tx: MissionTransaction, userId: string, d
 		where: { id: dinozId },
 		select: {
 			id: true,
-			userId: true
+			userId: true,
+			level: true
 		}
 	});
 

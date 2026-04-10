@@ -1,28 +1,10 @@
-import type { MissionDefinition } from '@dinorpg/core/models/missions/mission.js';
+import { DinozMissionGroupResponse } from '@dinorpg/core/models/missions/missionResponse.js';
 
 import { Prisma } from '../../../../prisma/client.js';
 import { assertOwnedDinoz } from './mission.access.js';
 import { getMissionDefinitionsByGroup } from './mission.registry.js';
 
 type MissionTransaction = Prisma.TransactionClient;
-
-export type DinozMissionGroupItem = {
-	key: MissionDefinition['key'];
-	group: MissionDefinition['group'];
-	nameKey: MissionDefinition['nameKey'];
-	beginKey: MissionDefinition['beginKey'];
-	endKey: MissionDefinition['endKey'];
-	limit?: MissionDefinition['limit'];
-	isCompleted: boolean;
-	isActive: boolean;
-	progression: number | null;
-	tracking: number | null;
-};
-
-export type DinozMissionGroupResponse = {
-	group: string;
-	missions: DinozMissionGroupItem[];
-};
 
 export async function getDinozMissionGroup(
 	tx: MissionTransaction,
