@@ -10,6 +10,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { fightMonstersAtPlace } from '../../Fight/Service/fight.service.js';
 import { movementListener } from '../../Fight/Service/movementListener.service.js';
+import { advanceDinozMissionOnMove } from '../../Mission/Controller/mission.progress.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { canGoToThisPlace, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
@@ -122,6 +123,12 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 				team.map(d => d.id),
 				{ placeId: finalPlace }
 			);
+
+			// Mission progression related to MOVE action
+			await advanceDinozMissionOnMove({
+				dinozId,
+				place: finalPlace
+			});
 
 			/*await createLogForMultipleDinoz(
 				LogType.Move,

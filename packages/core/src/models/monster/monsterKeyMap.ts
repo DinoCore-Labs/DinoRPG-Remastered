@@ -1,3 +1,4 @@
+import { Boss } from './bossList.js';
 import type { MonsterFiche } from './monsterFiche.js';
 import type { MonsterKey } from './monsterKey.js';
 import { Monster, monsterList } from './monsterList.js';
@@ -106,3 +107,18 @@ export const monsterByKey: Readonly<Record<MonsterKey, MonsterFiche>> = Object.f
 		MonsterFiche
 	>
 );
+
+export const monsterKeyById: Readonly<Record<Monster, MonsterKey>> = Object.freeze(
+	Object.fromEntries(Object.entries(monsterIdByKey).map(([key, monsterId]) => [monsterId, key])) as Record<
+		Monster,
+		MonsterKey
+	>
+);
+
+export function getMonsterKeyById(id: Monster | Boss): MonsterKey | null {
+	if (id in monsterKeyById) {
+		return monsterKeyById[id as Monster];
+	}
+
+	return null;
+}

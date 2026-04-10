@@ -2,18 +2,18 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { prisma } from '../../prisma.js';
-import { getDinozMissionGroup } from '../Controller/getDinozMission.controller.js';
+import { getDinozMissionDetail } from '../Controller/getDinozMissionDetail.controller.js';
 
 type Params = {
 	id: string;
-	group: string;
+	missionKey: string;
 };
 
-export async function getDinozMissionGroupHandler(req: FastifyRequest<{ Params: Params }>, reply: FastifyReply) {
+export async function getDinozMissionDetailHandler(req: FastifyRequest<{ Params: Params }>, reply: FastifyReply) {
 	try {
 		const userId = req.user.id;
 		const dinozId = Number(req.params.id);
-		const group = req.params.group;
+		const missionKey = req.params.missionKey;
 
 		if (!userId) {
 			return reply.code(401).send({ message: 'Authentication required' });
@@ -23,11 +23,15 @@ export async function getDinozMissionGroupHandler(req: FastifyRequest<{ Params: 
 			return reply.code(400).send({ message: 'Invalid dinoz id' });
 		}
 
+		if (!missionKey) {
+			return reply.code(400).send({ message: 'Invalid mission key' });
+		}
+
 		const result = await prisma.$transaction(tx =>
-			getDinozMissionGroup(tx, {
+			getDinozMissionDetail(tx, {
 				userId,
 				dinozId,
-				group
+				missionKey
 			})
 		);
 
