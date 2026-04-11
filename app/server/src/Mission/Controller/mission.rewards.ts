@@ -178,4 +178,9 @@ export async function applyMissionRewards(
 			}
 		}
 	}
+	console.log('[missions] rewards', {
+		missionKey: params.definition.key,
+		dinozId: params.dinozId,
+		rewards: params.definition.rewards
+	});
 }
