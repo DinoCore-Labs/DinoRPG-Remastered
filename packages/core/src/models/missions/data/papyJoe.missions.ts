@@ -209,6 +209,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
+				npcKey: 'madame_seyche',
 				nameKey: 'missions.papy.common.madameSeyche.name',
 				textKey: 'missions.papy.fflow.goals.madameSeyche.text'
 			}
