@@ -5,6 +5,7 @@ import type { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
 import type { Prisma } from '../../../../prisma/client.js';
 import { prisma } from '../../prisma.js';
 import { getMissionDefinitionByKey } from './mission.registry.js';
+import { applyMissionRewards } from './mission.rewards.js';
 
 type MissionTransaction = Prisma.TransactionClient;
 
@@ -86,8 +87,12 @@ async function finalizeMissionProgress(
 		}
 	});
 
-	// TODO: brancher applyMissionRewards ici quand tu connecteras
-	// XP / gold / items / collections à tes vrais services métier.
+	if (isCompleted) {
+		await applyMissionRewards(tx, {
+			dinozId: params.dinozId,
+			definition: params.definition
+		});
+	}
 
 	return {
 		missionKey: updatedMission.missionKey,
