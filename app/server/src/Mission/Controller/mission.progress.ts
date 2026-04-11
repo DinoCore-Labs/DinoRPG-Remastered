@@ -109,31 +109,32 @@ function countKilledMatches(goal: MissionKillGoal, defeatedMonsterKeys: MonsterK
 	}, 0);
 }
 
-export async function advanceDinozMissionOnMove(params: { dinozId: number; place: number }) {
-	return prisma.$transaction(async tx => {
-		const activeMission = await getActiveMissionState(tx, params.dinozId);
+export async function advanceDinozMissionOnMove(
+	tx: MissionTransaction,
+	params: { dinozId: number; place: number }
+): Promise<MissionProgressResult> {
+	const activeMission = await getActiveMissionState(tx, params.dinozId);
 
-		if (!activeMission || !activeMission.currentGoal) {
-			return null;
-		}
+	if (!activeMission || !activeMission.currentGoal) {
+		return null;
+	}
 
-		const goal = activeMission.currentGoal;
+	const goal = activeMission.currentGoal;
 
-		if (goal.type !== 'AT') {
-			return null;
-		}
+	if (goal.type !== 'AT') {
+		return null;
+	}
 
-		if (goal.place === null || goal.place !== params.place) {
-			return null;
-		}
+	if (goal.place === null || goal.place !== params.place) {
+		return null;
+	}
 
-		return finalizeMissionProgress(tx, {
-			dinozId: params.dinozId,
-			missionKey: activeMission.savedMission.missionKey,
-			nextProgression: activeMission.savedMission.progression + 1,
-			nextTracking: 0,
-			definition: activeMission.definition
-		});
+	return finalizeMissionProgress(tx, {
+		dinozId: params.dinozId,
+		missionKey: activeMission.savedMission.missionKey,
+		nextProgression: activeMission.savedMission.progression + 1,
+		nextTracking: 0,
+		definition: activeMission.definition
 	});
 }
 
