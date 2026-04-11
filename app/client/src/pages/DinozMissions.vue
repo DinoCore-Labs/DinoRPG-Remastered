@@ -1,97 +1,105 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.dinozMissions')" :header="$t(`dinozMissions.title`)" />
+	<TitleHeader :title="$t('pageTitle.dinozMissions')" :header="$t('dinozMissions.title')" />
 	<DZDisclaimer content="dinozMissions.disclaimer" />
-	<table>
+	<div v-if="loading" class="state">{{ $t('common.loading') }}</div>
+	<div v-else-if="errorMessage" class="state error">{{ errorMessage }}</div>
+	<table v-else-if="groupData && currentDinoz">
 		<tbody>
 			<tr>
 				<th class="dinoz">{{ $t('dinozMissions.dinoz') }}</th>
 				<th class="missions">{{ $t('dinozMissions.missions') }}</th>
-				<th class="see" />
 			</tr>
-			<!--<tr v-for="dinoz in dinozMissionsWithRewards" :key="dinoz.id">
-				<td class="dinoz">{{ dinoz.name }}</td>
+			<tr>
+				<td class="dinoz">
+					<div class="dinoz-name">{{ currentDinoz.name }}</div>
+				</td>
 				<td class="missions">
-					<ul>
-						<Tippy tag="li" theme="normal" v-for="mission in dinoz.missions" :key="mission.npc">
-							<img :src="getImgURL('design', 'info_button')" alt="info_button" />
-							<span>
-								{{ mission.missions.length }}/{{
-									npcMissions.find(npc => npc.name === mission.npc)?.missions?.length ?? 0
-								}}
-								{{ $t(`npc.name.${mission.npc}`) }}
-							</span>
-							<template #content>
-								<h1 v-html="formatContent($t('dinozMissions.missionsFrom', { npc: mission.npc }))"></h1>
-								<ul class="missions-summary">
-									<li v-for="innerMission in mission.missions" :key="innerMission.id">
-										<span class="center">
-											<img :src="getImgURL('design', 'info_button')" alt="info_button" />
-											<span>{{ $t(`missions.name.${innerMission.name}`) }}</span>
-										</span>
-										<table v-if="innerMission.rewards">
-											<tbody>
-												<tr>
-													<td v-if="innerMission.xp">
-														<div class="center">
-															<span class="xp">{{ innerMission.xp }}</span>
-															<img :src="getImgURL('icons', 'small_xp')" alt="xp" />
-														</div>
-													</td>
-													<td v-if="innerMission.gold">
-														<div class="center">
-															<span class="gold">{{ innerMission.gold }}</span>
-															<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
-														</div>
-													</td>
-													<td v-if="innerMission.items.length">
-														<div class="center" v-for="item in innerMission.items" :key="item.value">
-															<span class="item">{{ item.quantity }}</span>
-															<img
-																:src="getImgURL('item', `item_${itemNameList[item.value]}`)"
-																:alt="itemNameList[item.value]"
-															/>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</li>
-								</ul>
-							</template>
-						</Tippy>
-						<li>
-							<img :src="getImgURL('design', 'info_button')" alt="info_button" />
-							<span>
-								{{ $t('dinozMissions.total') }}
-								<span class="total">
-									{{ dinoz.missions.reduce((acc, mission) => acc + mission.missions.length, 0) }}/{{ totalMissions }}
+					<div class="group-summary">
+						<span class="summary-line">
+							{{ $t('dinozMissions.groupName') }} :
+							<strong>{{ groupData.group }}</strong>
+						</span>
+
+						<span class="summary-line">
+							{{ $t('dinozMissions.progress') }} :
+							<strong>{{ getCompletedCount(groupData) }}/{{ groupData.missions.length }}</strong>
+						</span>
+
+						<span class="summary-line" v-if="groupData.activeMissionKey">
+							{{ $t('dinozMissions.activeMission') }} :
+							<strong>{{ getMissionName(groupData.activeMissionKey) }}</strong>
+						</span>
+					</div>
+					<ul class="mission-list">
+						<li v-for="mission in groupData.missions" :key="mission.key">
+							<div class="mission-main">
+								<span class="mission-name">{{ $t(mission.nameKey) }}</span>
+								<span class="mission-status" :class="mission.status.toLowerCase()">
+									{{ $t(`dinozMissions.status.${mission.status.toLowerCase()}`) }}
 								</span>
-							</span>
+							</div>
+							<div class="mission-meta">
+								<span v-if="mission.isActive">
+									{{ $t('dinozMissions.currentProgress') }} :
+									{{ mission.progression ?? 0 }}
+								</span>
+								<span v-if="mission.isCompleted">
+									{{ $t('dinozMissions.completed') }}
+								</span>
+							</div>
+							<div class="mission-actions">
+								<button class="small-button" @click="loadMissionDetail(mission.key)">
+									{{ $t('dinozMissions.details') }}
+								</button>
+								<button v-if="mission.canStart" class="small-button start" @click="startMission(mission.key)">
+									{{ $t('dinozMissions.start') }}
+								</button>
+							</div>
+							<div v-if="selectedMissionDetail && selectedMissionDetail.key === mission.key" class="mission-detail">
+								<p>
+									<strong>{{ $t(selectedMissionDetail.nameKey) }}</strong>
+								</p>
+								<p>{{ $t(selectedMissionDetail.beginKey) }}</p>
+								<p v-if="selectedMissionDetail.currentGoal">
+									<strong>{{ $t('dinozMissions.currentGoal') }} :</strong>
+									{{ formatGoal(selectedMissionDetail.currentGoal) }}
+								</p>
+								<p>
+									<strong>{{ $t('dinozMissions.statusLabel') }} :</strong>
+									{{ $t(`dinozMissions.status.${selectedMissionDetail.status.toLowerCase()}`) }}
+								</p>
+								<p v-if="selectedMissionDetail.progression !== null">
+									<strong>{{ $t('dinozMissions.progression') }} :</strong>
+									{{ selectedMissionDetail.progression }}
+								</p>
+								<p v-if="selectedMissionDetail.tracking !== null">
+									<strong>{{ $t('dinozMissions.tracking') }} :</strong>
+									{{ selectedMissionDetail.tracking }}
+								</p>
+							</div>
 						</li>
 					</ul>
 				</td>
-				<td class="see">
-					<router-link :to="{ name: 'DinozPage', params: { id: dinoz.id } }" class="see-button">
-						{{ $t('dinozMissions.see') }}
-					</router-link>
-				</td>
-			</tr>-->
+			</tr>
 		</tbody>
 	</table>
 </template>
 
 <script lang="ts">
+import type { MissionGoal } from '@dinorpg/core/models/missions/missionGoal.js';
+import type {
+	DinozMissionDetailResponse,
+	DinozMissionGroupResponse
+} from '@dinorpg/core/models/missions/missionResponse.js';
 import { defineComponent } from 'vue';
-import TitleHeader from '../components/utils/TitleHeader.vue';
-//import { playerStore } from '../store/index.js';
-//import { MissionsPageData } from '@drpg/core/returnTypes/Dinoz';
-//import { MissionService } from '../services/MissionService.js';
-//import { npcMissions } from '@drpg/core/models/npc/NpcMissions';
-//import { RewardEnum } from '@drpg/core/models/enums/Parser';
-//import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-//import { errorHandler } from '../utils/errorHandler.js';
-//import { formatText } from '../utils/formatText.js';
+
 import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import { MissionService } from '../services/mission.service.js';
+import { dinozStore } from '../store/dinozStore.js';
+import { errorHandler } from '../utils/errorHandler.js';
+
+const MISSION_GROUP = 'papy_joe';
 
 export default defineComponent({
 	name: 'DinozMissions',
@@ -101,72 +109,106 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			//playerStore: playerStore(),
-			//data: [] as MissionsPageData,
-			//npcMissions,
-			//totalMissions: npcMissions.reduce((acc, npc) => acc + (npc.missions?.length || 0), 0),
-			//RewardEnum,
-			//itemNameList
+			dinozStore: dinozStore(),
+			loading: false,
+			errorMessage: '',
+			groupData: null as DinozMissionGroupResponse | null,
+			selectedMissionDetail: null as DinozMissionDetailResponse | null
 		};
 	},
 	computed: {
-		/*dinozMissionsWithRewards() {
-			return this.data.map(dinoz => ({
-				...dinoz,
-				missions: dinoz.missions.map(mission => ({
-					...mission,
-					missions: mission.missions.map(innerMission => {
-						const rewards =
-							this.npcMissions
-								.find(npc => npc.name === mission.npc)
-								?.missions?.find(m => m.missionId === innerMission.id)?.rewards || [];
-						const xp = rewards.find(r => r.rewardType === this.RewardEnum.EXPERIENCE);
-						const gold = rewards.find(r => r.rewardType === this.RewardEnum.GOLD);
-						const items = rewards.filter(r => r.rewardType === this.RewardEnum.ITEM);
-						return {
-							...innerMission,
-							rewards,
-							xp: xp ? ('value' in xp ? xp.value : 0) : 0,
-							gold: gold ? ('value' in gold ? gold.value : 0) : 0,
-							items
-						};
-					})
-				}))
-			}));
+		dinozId(): number {
+			return Number(this.$route.params.id);
+		},
+		currentDinoz() {
+			return this.dinozStore.getCurrentDinozId;
 		}
 	},
-	async mounted(): Promise<void> {
-		// Redirect to last page if no PDA
-		if (!this.playerStore.playerOptions.hasPMI) {
-			this.$toast.open({
-				message: formatText(this.$t(`toast.noPMI`)),
-				type: 'error'
-			});
-			this.$router.back();
-			return;
-		}
+	async mounted() {
+		await this.loadMissionGroup();
+	},
+	methods: {
+		async loadMissionGroup() {
+			this.loading = true;
+			this.errorMessage = '';
 
-		// Fetch data
-		try {
-			this.data = await MissionService.getGlobalMissions();
-		} catch (error) {
-			errorHandler.handle(error, this.$toast);
-			return;
-		}*/
+			try {
+				this.groupData = await MissionService.getDinozMissionGroup(this.dinozId, MISSION_GROUP);
+			} catch (error) {
+				errorHandler.handle(error, this.$toast);
+				this.errorMessage = this.$t('dinozMissions.loadError').toString();
+			} finally {
+				this.loading = false;
+			}
+		},
+
+		async loadMissionDetail(missionKey: string) {
+			try {
+				this.selectedMissionDetail = await MissionService.getDinozMissionDetail(this.dinozId, missionKey);
+			} catch (error) {
+				errorHandler.handle(error, this.$toast);
+			}
+		},
+
+		async startMission(missionKey: string) {
+			try {
+				await MissionService.startDinozMission(this.dinozId, missionKey);
+
+				await this.loadMissionGroup();
+				this.selectedMissionDetail = await MissionService.getDinozMissionDetail(this.dinozId, missionKey);
+
+				this.$toast.open({
+					message: this.$t('dinozMissions.startSuccess').toString(),
+					type: 'success'
+				});
+			} catch (error) {
+				errorHandler.handle(error, this.$toast);
+			}
+		},
+
+		getCompletedCount(group: DinozMissionGroupResponse) {
+			return group.missions.filter(mission => mission.isCompleted).length;
+		},
+
+		getMissionName(missionKey: string) {
+			const mission = this.groupData?.missions.find(entry => entry.key === missionKey);
+			return mission ? this.$t(mission.nameKey).toString() : missionKey;
+		},
+
+		formatGoal(goal: MissionGoal) {
+			switch (goal.type) {
+				case 'AT':
+					return goal.titleKey ? this.$t(goal.titleKey).toString() : this.$t('dinozMissions.goal.at').toString();
+
+				case 'TALK':
+					return `${this.$t('dinozMissions.goal.talk')} ${this.$t(goal.nameKey).toString()}`;
+
+				case 'ACTION':
+					return `${this.$t(goal.nameKey).toString()} - ${this.$t(goal.descriptionKey).toString()}`;
+
+				case 'KILL':
+					return `${this.$t('dinozMissions.goal.kill')} ${goal.kill.count}`;
+
+				default:
+					return goal.type;
+			}
+		}
 	}
 });
 </script>
 
 <style lang="scss" scoped>
-.disclaimer {
+.state {
 	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
+	padding: 8px;
+	font-size: 9pt;
+	background: #f3ca92;
+	border: 1px solid #c88f44;
+	color: #710;
+
+	&.error {
+		color: #a40000;
+	}
 }
 
 table {
@@ -179,7 +221,6 @@ table {
 
 	tr {
 		display: table-row;
-		cursor: help;
 
 		th {
 			font-size: 8pt;
@@ -197,12 +238,7 @@ table {
 			background-image: url('../assets/background/table_header.webp');
 			background-position: left bottom;
 
-			&.dinoz {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-			}
-
+			&.dinoz,
 			&.missions {
 				padding-left: 4px;
 				padding-right: 4px;
@@ -211,96 +247,127 @@ table {
 		}
 
 		td {
-			font-size: 16px;
+			font-size: 14px;
 			font-family: 'Trebuchet MS', Arial, sans-serif;
 			color: #710;
 			background-color: #f3ca92;
 			border: 1px solid #c88f44;
 			background-image: url('../assets/background/table_cell.webp');
 			background-position: -10px 0px;
+			vertical-align: top;
 
 			&.dinoz {
-				padding: 1px 5px;
+				padding: 6px 8px;
 				font-variant: small-caps;
+				width: 180px;
 			}
 
 			&.missions {
-				font-size: 9pt;
-				padding: 1px 5px;
-				font-weight: bold;
-
-				ul {
-					list-style-type: none;
-					background-color: #f4d9a8;
-					border-radius: 5px;
-					margin: 4px 8px;
-					padding: 4px 8px;
-
-					img {
-						padding-right: 8px;
-						padding-left: 4px;
-					}
-
-					.total {
-						color: #ea0000;
-					}
-				}
-			}
-
-			.see-button {
-				margin-left: 8px;
-				border-color: #c85d3f;
-				border-style: double;
-				background-color: #c85d3f;
-				color: #f3ca92;
-				background-clip: padding-box;
-				font-variant: small-caps;
-				font-size: 9pt;
-				padding: 0px 4px;
-				text-decoration: none;
-
-				&:hover {
-					background-color: #f3ca92;
-					color: #c85d3f;
-				}
+				padding: 6px 8px;
 			}
 		}
 	}
 }
 
-.missions-summary {
-	list-style-type: none;
-	color: white;
-	margin-left: 4px;
+.dinoz-name {
+	font-weight: bold;
+}
+
+.group-summary {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin-bottom: 8px;
+	font-size: 9pt;
+}
+
+.mission-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
 
 	li {
-		img {
-			width: 7px;
-			margin-right: 8px;
-			margin-left: 4px;
+		padding: 6px 0;
+		border-top: 1px solid rgba(120, 70, 20, 0.2);
+
+		&:first-child {
+			border-top: none;
 		}
+	}
+}
 
-		span {
-			font-size: 9pt;
-		}
+.mission-main {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+}
 
-		table {
-			width: auto;
-			margin: 2px 0;
-			margin-left: 18px;
+.mission-name {
+	font-weight: bold;
+	font-size: 9pt;
+}
 
-			td {
-				padding: 0px 2px;
+.mission-status {
+	font-size: 8pt;
+	font-weight: bold;
+	text-transform: uppercase;
 
-				img {
-					width: 8px;
-				}
+	&.locked {
+		color: #666;
+	}
 
-				.item + img {
-					width: 24px;
-				}
-			}
-		}
+	&.available {
+		color: #1b6d2a;
+	}
+
+	&.in_progress {
+		color: #a45b00;
+	}
+
+	&.completed {
+		color: #0060a4;
+	}
+}
+
+.mission-meta {
+	margin-top: 4px;
+	font-size: 8pt;
+}
+
+.mission-actions {
+	display: flex;
+	gap: 6px;
+	margin-top: 6px;
+}
+
+.small-button {
+	border-color: #c85d3f;
+	border-style: double;
+	background-color: #c85d3f;
+	color: #f3ca92;
+	background-clip: padding-box;
+	font-variant: small-caps;
+	font-size: 9pt;
+	padding: 0px 6px;
+	text-decoration: none;
+	cursor: pointer;
+
+	&:hover {
+		background-color: #f3ca92;
+		color: #c85d3f;
+	}
+}
+
+.mission-detail {
+	margin-top: 8px;
+	padding: 8px;
+	background: rgba(255, 248, 220, 0.55);
+	border: 1px solid #c88f44;
+	font-size: 8.5pt;
+
+	p {
+		margin: 4px 0;
 	}
 }
 </style>
