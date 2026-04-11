@@ -1,7 +1,7 @@
 import { MissionActionKey, MissionBackgroundKey, MissionMonsterKey } from './missionKey.js';
 
 export type MissionFightAction = {
-	name: string;
+	nameKey: string;
 	actionKey?: MissionActionKey;
 	monsterKeys?: MissionMonsterKey[] | null;
 	allyKeys: MissionMonsterKey[];
