@@ -7,13 +7,13 @@
 		</div>
 		<div class="action_content">
 			<template v-for="didi in dinozFullParty" :key="didi">
-				<!--<MissionHUDVue
+				<DinozMissionHUD
 					v-if="didi.missionHUD && didi.missionId"
 					:missionId="didi.missionId"
 					:dinozName="didi.name"
 					:dinozId="didi.id"
 					@abort="endMission(didi.id)"
-				/>-->
+				/>
 			</template>
 			<!--<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />-->
 			<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
@@ -109,7 +109,7 @@ import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 //import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { defineComponent, type PropType } from 'vue';
 import DZFollow from '../utils/DZFollow.vue';
-//import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
+import DinozMissionHUD from './DinozMissionHUD.vue';
 //import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 //import NPCModal from '../../components/modal/NPCModal.vue';
 import Resurrect from '../modal/ResurrectModal.vue';
@@ -149,14 +149,14 @@ export default defineComponent({
 			unfreezeSecondsLeft: 0,
 			restSecondsLeft: 0,
 			intervals: [] as number[],
-			DINOZ_STATE
-			//mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
-			//	?.missionHUD
+			DINOZ_STATE,
+			mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
+				?.missionHUD
 		};
 	},
 	components: {
 		Resurrect,
-		//MissionHUDVue,
+		DinozMissionHUD,
 		//NPCModal,
 		//MissionRewardModal,
 		DZDisclaimer,
