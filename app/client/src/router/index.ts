@@ -11,7 +11,6 @@ import AdminPage from '../pages/Admin/AdminPage.vue';
 import AdminSecretsPage from '../pages/Admin/AdminSecretsPage.vue';
 import AdminUserPage from '../pages/Admin/AdminUserPage.vue';
 import DialogPage from '../pages/DialogPage.vue';
-import DinozMissions from '../pages/DinozMissions.vue';
 import DinozPage from '../pages/DinozPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
 import FightPage from '../pages/FightPage.vue';
@@ -22,6 +21,7 @@ import Ingredients from '../pages/Ingredients.vue';
 import Inventory from '../pages/Inventory.vue';
 import LevelUpPage from '../pages/LevelUpPage.vue';
 import MainPage from '../pages/MainPage.vue';
+import MissionsPage from '../pages/MissionsPage.vue';
 import NewsPage from '../pages/NewsPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
 import ShopDinoz from '../pages/ShopDinoz.vue';
@@ -119,7 +119,7 @@ const routes: RouteRecord[] = [
 			{
 				path: '/dinoz/:id/missions/:group',
 				name: 'DinozMissions',
-				component: DinozMissions,
+				component: MissionsPage,
 				meta: { auth: true },
 				beforeEnter: requireOwnedDinozByParam('id')
 			},
