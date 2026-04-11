@@ -30,7 +30,7 @@
 		</tbody>
 	</table>
 
-	<MissionInformation
+	<MissionInformationModal
 		:enabled="information"
 		:mission="mission"
 		:dinozId="dinozId"
@@ -47,7 +47,7 @@ import { MissionService } from '../services/mission.service.js';
 import { errorHandler } from '../utils/errorHandler.js';
 import { formatText } from '../utils/formatText.js';
 import { getImgURL } from '../utils/getImgURL.js';
-//import MissionInformation from '../components/modal/MissionInformationModal.vue';
+import MissionInformationModal from '../components/modal/MissionInformationModal.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 
 type MissionStatusView = 'available' | 'unavailable' | 'ongoing' | 'finished';
@@ -82,7 +82,7 @@ function toMissionStatus(status: DinozMissionGroupItem['status']): MissionStatus
 export default defineComponent({
 	name: 'Missions',
 	components: {
-		//MissionInformation,
+		MissionInformationModal,
 		TitleHeader
 	},
 	data() {
