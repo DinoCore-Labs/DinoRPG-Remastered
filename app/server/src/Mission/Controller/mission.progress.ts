@@ -98,10 +98,10 @@ async function finalizeMissionProgress(
 }
 
 function countKilledMatches(goal: MissionKillGoal, defeatedMonsterKeys: MonsterKey[]): number {
-	const goalMonsterKeys = goal.kill.monsterKeys ?? [];
+	const goalMonsterKeys = goal.kill.monsterKeys;
 
-	if (goalMonsterKeys.length === 0) {
-		return 0;
+	if (!goalMonsterKeys || goalMonsterKeys.length === 0) {
+		return defeatedMonsterKeys.length;
 	}
 
 	return defeatedMonsterKeys.reduce((count, monsterKey) => {
@@ -221,7 +221,7 @@ export async function advanceDinozMissionOnFightWon(
 		return null;
 	}
 
-	if (goal.kill.zone != null && params.zone != null && goal.kill.zone !== params.zone) {
+	if (goal.kill.zone != null && goal.kill.zone !== params.zone) {
 		return null;
 	}
 
