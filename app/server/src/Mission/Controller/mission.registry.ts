@@ -2,10 +2,18 @@ import { missionList } from '@dinorpg/core/models/missions/data/index.js';
 import type { MissionDefinition } from '@dinorpg/core/models/missions/mission.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
+import { validateMissionDefinition } from './mission.validation.js';
+
 const missionByKey = new Map<string, MissionDefinition>();
 const missionsByGroup = new Map<string, MissionDefinition[]>();
 
 for (const mission of missionList) {
+	if (missionByKey.has(mission.key)) {
+		throw new ExpectedError(`Duplicate mission key "${mission.key}"`);
+	}
+
+	validateMissionDefinition(mission);
+
 	missionByKey.set(mission.key, mission);
 
 	const existingGroup = missionsByGroup.get(mission.group) ?? [];
