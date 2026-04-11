@@ -35,7 +35,19 @@ export async function getDinozMissionGroup(
 	});
 
 	const savedMissionByKey = new Map(savedMissions.map(mission => [mission.missionKey, mission]));
-	const activeMissionKey = savedMissions.find(mission => !mission.isCompleted)?.missionKey ?? null;
+	const activeMissionInGroupKey = savedMissions.find(mission => !mission.isCompleted)?.missionKey ?? null;
+
+	const activeMission = await tx.dinozMissions.findFirst({
+		where: {
+			dinozId: params.dinozId,
+			isCompleted: false
+		},
+		select: {
+			missionKey: true
+		}
+	});
+
+	const hasAnyActiveMission = activeMission !== null;
 
 	const missions = [];
 
@@ -84,7 +96,7 @@ export async function getDinozMissionGroup(
 		});
 
 		const status: DinozMissionStatus = isUnlocked ? 'AVAILABLE' : 'LOCKED';
-		const canStart = isUnlocked && activeMissionKey === null;
+		const canStart = isUnlocked && !hasAnyActiveMission;
 
 		missions.push({
 			key: definition.key,
@@ -104,7 +116,7 @@ export async function getDinozMissionGroup(
 
 	return {
 		group: params.group,
-		activeMissionKey,
+		activeMissionKey: activeMissionInGroupKey,
 		missions
 	};
 }
