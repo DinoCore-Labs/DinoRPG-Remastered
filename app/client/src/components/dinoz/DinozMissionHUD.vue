@@ -34,7 +34,6 @@ import { defineComponent, type PropType } from 'vue';
 import MissionInformationModal from '../../components/modal/MissionInformationModal.vue';
 
 type MissionStatusView = 'available' | 'unavailable' | 'ongoing' | 'finished';
-type GoalTextMode = 'current' | 'previous';
 
 type MissionListView = {
 	missionId: string;
@@ -223,7 +222,7 @@ export default defineComponent({
 					return false;
 			}
 		},
-		getGoalText(goal: MissionGoal, tracking: number, mode: GoalTextMode): string | null {
+		getGoalText(goal: MissionGoal, tracking: number): string | null {
 			switch (goal.type) {
 				case 'AT': {
 					if (goal.titleKey) {
