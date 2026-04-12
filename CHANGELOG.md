@@ -2,6 +2,24 @@
 
 ## 🔹 Core
 
+## 0.12.0
+
+### Minor Changes
+
+- bc9e852: Implement the full mission system across Prisma, core, backend, and frontend, and add the Papy Joe mission chain.
+
+  ### Added
+  - Prisma models and persistence for dinoz missions and progression
+  - shared mission definitions, goals, rewards, and interaction types in core
+  - backend mission progression, validation, rewards, and action handling
+  - frontend mission HUD, mission actions, validation flow, and reward modal
+  - Papy Joe missions with movement, talk, kill, action, and validation goals
+
+  ### Improved
+  - mission progression handling for grouped dinoz in movement and fights
+  - mission monster encounter weighting for kill objectives
+  - mission reward synchronization with frontend state
+
 ## 0.11.1
 
 ### Patch Changes
@@ -259,6 +277,29 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.13.0
+
+### Minor Changes
+
+- bc9e852: Implement the full mission system across Prisma, core, backend, and frontend, and add the Papy Joe mission chain.
+
+  ### Added
+  - Prisma models and persistence for dinoz missions and progression
+  - shared mission definitions, goals, rewards, and interaction types in core
+  - backend mission progression, validation, rewards, and action handling
+  - frontend mission HUD, mission actions, validation flow, and reward modal
+  - Papy Joe missions with movement, talk, kill, action, and validation goals
+
+  ### Improved
+  - mission progression handling for grouped dinoz in movement and fights
+  - mission monster encounter weighting for kill objectives
+  - mission reward synchronization with frontend state
+
+### Patch Changes
+
+- Updated dependencies [bc9e852]
+  - @dinorpg/core@0.12.0
 
 ## 0.12.1
 
@@ -578,6 +619,24 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.13.0
+
+### Minor Changes
+
+- bc9e852: Implement the full mission system across Prisma, core, backend, and frontend, and add the Papy Joe mission chain.
+
+  ### Added
+  - Prisma models and persistence for dinoz missions and progression
+  - shared mission definitions, goals, rewards, and interaction types in core
+  - backend mission progression, validation, rewards, and action handling
+  - frontend mission HUD, mission actions, validation flow, and reward modal
+  - Papy Joe missions with movement, talk, kill, action, and validation goals
+
+  ### Improved
+  - mission progression handling for grouped dinoz in movement and fights
+  - mission monster encounter weighting for kill objectives
+  - mission reward synchronization with frontend state
 
 ## 0.12.1
 
