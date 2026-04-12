@@ -115,6 +115,14 @@ export type MissionDigGoal = {
 	messageKey: string;
 };
 
+export type MissionValidateGoal = {
+	type: 'VALIDATE';
+	npcKey: MissionNpcKey;
+	place: PlaceEnum | null;
+	nameKey: string;
+	textKey: string;
+};
+
 export type MissionGoal =
 	| MissionAtGoal
 	| MissionTalkGoal
@@ -128,4 +136,5 @@ export type MissionGoal =
 	| MissionLockGoal
 	| MissionUseIngredientGoal
 	| MissionBranchGoal
-	| MissionDigGoal;
+	| MissionDigGoal
+	| MissionValidateGoal;
