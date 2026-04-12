@@ -3,15 +3,17 @@ import { Action, ActionFiche, actionList } from '@dinorpg/core/models/dinoz/dino
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
+import { MissionGoal } from '@dinorpg/core/models/missions/missionGoal.js';
 import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.js';
 
-import { Dinoz, DinozSkills, DinozState, DinozStatus } from '../../../../prisma/index.js';
+import { Dinoz, DinozMissions, DinozSkills, DinozState, DinozStatus } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
+import { resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
 import { prisma } from '../../prisma.js';
 import { buildConditionContext, BuildConditionContextOptions } from '../../utils/conditions/buildConditionContext.js';
 import { checkCondition } from '../../utils/conditions/checkCondition.js';
@@ -62,6 +64,32 @@ function getDialogActionFiche(dialog: { id: string; name: string }): ActionFiche
 	};
 }
 
+function getMissionActionFiche(goal: MissionGoal): ActionFiche | null {
+	switch (goal.type) {
+		case 'TALK':
+			return {
+				...actionList[Action.MISSION],
+				prop: 'mission',
+				label: goal.nameKey
+			};
+		case 'FIGHT':
+			return {
+				...actionList[Action.MISSION],
+				imgName: actionList[Action.FIGHT].imgName,
+				prop: 'mission',
+				label: 'missions.actions.fight'
+			};
+		case 'ACTION':
+			return {
+				...actionList[Action.MISSION],
+				prop: 'mission',
+				label: goal.nameKey
+			};
+		default:
+			return null;
+	}
+}
+
 /**
  * @summary Get available action from dinoz
  */
@@ -83,6 +111,7 @@ export async function getAvailableActions(
 		followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkills, 'skillId'>[];
+		missions: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking'>[];
 	},
 	user: UserForConditionCheck,
 	conditionOptions: BuildConditionContextOptions = {}
@@ -93,7 +122,6 @@ export async function getAvailableActions(
 	const placeGatherEntries = getPlaceGatherEntries(dinozPlace);
 	const normalGatherEntries = placeGatherEntries.filter(gather => !gather.cost);
 	const specialGatherEntries = placeGatherEntries.filter(gather => Boolean(gather.cost));
-
 	const contextCache = new Map<number, ReturnType<typeof buildConditionContext>>();
 
 	function getContext(activeDinozId: number) {
@@ -115,6 +143,7 @@ export async function getAvailableActions(
 
 	const maxDinoz = getUserMaxDinoz(user);
 
+	// Unfreeze action
 	if (dinoz.state === DinozState.frozen) {
 		const activeDinozCount = await getActiveDinozCount(user.id);
 
@@ -125,6 +154,7 @@ export async function getAvailableActions(
 		return [];
 	}
 
+	// Stop rest action
 	if (dinoz.state === DinozState.resting) {
 		return [actionList[Action.STOP_REST]];
 	}
@@ -185,6 +215,7 @@ export async function getAvailableActions(
 		}
 	}
 
+	// If dinoz is not alive, only show resurrect action
 	if (!isAlive(dinoz)) {
 		availableActions.push(actionList[Action.RESURRECT]);
 
@@ -199,10 +230,12 @@ export async function getAvailableActions(
 		return availableActions;
 	}
 
+	// Rest action
 	if (dinoz.life < Math.round(dinoz.maxLife / 2) && dinoz.fight) {
 		availableActions.push(actionList[Action.REST]);
 	}
 
+	// New action
 	if ((!dinoz.leaderId && !dinoz.fight) || !dinoz.gather) {
 		if (dinoz.remaining > 0) {
 			availableActions.push(actionList[Action.ACTION]);
@@ -211,6 +244,7 @@ export async function getAvailableActions(
 		}
 	}
 
+	// New group actions
 	if (
 		dinoz.followers.length > 0 &&
 		(!dinoz.fight || !dinoz.gather || dinoz.followers.filter(f => !f.fight).length > 0)
@@ -271,6 +305,7 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.DIG]);
 	}
 
+	// Itinerant merchant
 	const itinerant = await getSpecificSecret('itinerant');
 	if (!itinerant) throw new ExpectedError(`No itinerant merchant place found.`);
 
@@ -286,6 +321,7 @@ export async function getAvailableActions(
 		});
 	}
 
+	// Normal shop
 	const shopAvailable = Object.values(shopListV2).filter(
 		shop =>
 			shop.placeId === dinoz.placeId &&
@@ -303,18 +339,22 @@ export async function getAvailableActions(
 		);
 	}
 
+	// Level up action
 	if (canLevelUp(dinoz, gameConfig)) {
 		availableActions.push(actionList[Action.LEVEL_UP]);
 	}
 
+	// Market action
 	if (dinoz.placeId === PlaceEnum.PLACE_DU_MARCHE) {
 		availableActions.push(actionList[Action.MARKET]);
 	}
 
+	// Freeze action
 	if (canFreezeDinozAction(dinoz)) {
 		availableActions.push(actionList[Action.CONGEL]);
 	}
 
+	// Dialogs
 	const availableDialogs = await listAvailableDialogs({
 		userId: user.id,
 		dinozId: dinoz.id
@@ -322,6 +362,17 @@ export async function getAvailableActions(
 
 	for (const dialog of availableDialogs) {
 		pushUniqueAction(availableActions, getDialogActionFiche(dialog));
+	}
+
+	// Mission action
+	const resolvedMission = resolveCurrentMission(dinoz.missions);
+
+	if (resolvedMission?.currentGoal) {
+		const missionAction = getMissionActionFiche(resolvedMission.currentGoal);
+
+		if (missionAction) {
+			pushUniqueAction(availableActions, missionAction);
+		}
 	}
 
 	return availableActions;

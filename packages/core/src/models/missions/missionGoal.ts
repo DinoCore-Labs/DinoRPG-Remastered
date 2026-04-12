@@ -29,17 +29,30 @@ export type MissionAtGoal = {
 	titleKey?: string | null;
 };
 
-export type MissionTalkGoal = {
+type MissionTalkGoalBase = {
 	type: 'TALK';
 	nameKey: string;
 	npcKey?: MissionNpcKey;
-	textKey: string;
 	avatar?: MissionAvatarKey | null;
 	branches?: MissionTalkBranch[] | null;
 	frame?: MissionFrameKey | null;
 	background?: MissionBackgroundKey | null;
 	dialect?: MissionDialectKey | null;
 };
+
+export type MissionTalkModalGoal = MissionTalkGoalBase & {
+	display?: 'modal';
+	textKey: string;
+	dialogId?: never;
+};
+
+export type MissionTalkDialogGoal = MissionTalkGoalBase & {
+	display: 'dialog';
+	dialogId: string;
+	textKey?: never;
+};
+
+export type MissionTalkGoal = MissionTalkModalGoal | MissionTalkDialogGoal;
 
 export type MissionActionGoal = {
 	type: 'ACTION';
