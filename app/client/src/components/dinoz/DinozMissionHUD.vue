@@ -1,15 +1,17 @@
 <template>
 	<Tippy theme="normal" tag="div" v-if="currentMission" class="mission" @click="getInformation()">
 		<p class="dinozName">{{ dinozName }}</p>
-		<p class="name">
-			{{ $t(currentMission.nameKey) }}
-		</p>
-		<div class="detail" v-if="currentGoalText">
+		<p class="name">{{ $t(currentMission.nameKey) }}</p>
+		<div v-if="currentGoalText" class="detail">
 			{{ currentGoalText }}
+		</div>
+		<div v-if="previousStepText" class="previous-step">
+			<p class="name">{{ $t('missions.lastDialog') }}</p>
+			<p v-html="formatContent(previousStepText)" />
 		</div>
 		<template #content>
 			<h1>{{ $t(currentMission.nameKey) }}</h1>
-			<p v-html="formatContent($t(currentMission.beginKey))" />
+			<p v-html="formatContent($t(currentMission.beginKey).toString())" />
 		</template>
 	</Tippy>
 	<MissionInformationModal
@@ -22,16 +24,17 @@
 </template>
 
 <script lang="ts">
+import type { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import type { DinozCurrentMission } from '@dinorpg/core/models/missions/missionCurrent.js';
 import type { MissionGoal } from '@dinorpg/core/models/missions/missionGoal.js';
+import { missionList } from '@dinorpg/core/models/missions/data/index.js';
+import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { defineComponent, type PropType } from 'vue';
 
 import MissionInformationModal from '../../components/modal/MissionInformationModal.vue';
-import { formatText } from '../../utils/formatText.js';
-import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
-import type { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 
 type MissionStatusView = 'available' | 'unavailable' | 'ongoing' | 'finished';
+type GoalTextMode = 'current' | 'previous';
 
 type MissionListView = {
 	missionId: string;
@@ -69,34 +72,95 @@ export default defineComponent({
 	},
 	computed: {
 		mission(): MissionListView | undefined {
-			if (!this.currentMission) {
+			const mission = this.currentMission;
+			if (!mission) {
 				return undefined;
 			}
 			return {
-				missionId: this.currentMission.key,
-				missionKey: this.currentMission.key,
-				nameKey: this.currentMission.nameKey,
-				beginKey: this.currentMission.beginKey,
-				endKey: this.currentMission.endKey,
+				missionId: mission.key,
+				missionKey: mission.key,
+				nameKey: mission.nameKey,
+				beginKey: mission.beginKey,
+				endKey: mission.endKey,
 				status: 'ongoing',
 				canStart: false,
 				isCompleted: false,
 				isActive: true,
-				progression: this.currentMission.progression,
-				tracking: this.currentMission.tracking
+				progression: mission.progression,
+				tracking: mission.tracking
 			};
 		},
+		missionDefinition() {
+			const mission = this.currentMission;
+			if (!mission) {
+				return null;
+			}
+			return missionList.find(definition => definition.key === mission.key) ?? null;
+		},
+		currentGoal(): MissionGoal | null {
+			return this.currentMission?.currentGoal ?? null;
+		},
+		currentGoalIndex(): number {
+			const mission = this.currentMission;
+			const definition = this.missionDefinition;
+			const currentGoal = this.currentGoal;
+			if (!mission || !definition || !currentGoal) {
+				return -1;
+			}
+			if (
+				typeof mission.currentGoalIndex === 'number' &&
+				mission.currentGoalIndex >= 0 &&
+				mission.currentGoalIndex < definition.goals.length
+			) {
+				return mission.currentGoalIndex;
+			}
+			const matchedIndex = definition.goals.findIndex(goal => this.areGoalsEquivalent(goal, currentGoal));
+			if (matchedIndex !== -1) {
+				return matchedIndex;
+			}
+			if (
+				typeof mission.progression === 'number' &&
+				mission.progression >= 0 &&
+				mission.progression < definition.goals.length
+			) {
+				return mission.progression;
+			}
+			return -1;
+		},
+		previousGoal(): MissionGoal | null {
+			const definition = this.missionDefinition;
+			const tracking = this.currentMission?.tracking ?? 0;
+			const currentIndex = this.currentGoalIndex;
+			if (!definition || currentIndex <= 0) {
+				return null;
+			}
+			for (let index = currentIndex - 1; index >= 0; index--) {
+				const goal = definition.goals[index];
+
+				if (this.getGoalText(goal, tracking, 'previous')) {
+					return goal;
+				}
+			}
+			return null;
+		},
 		currentGoalText(): string {
-			if (!this.currentMission?.currentGoal) {
+			const goal = this.currentGoal;
+			const tracking = this.currentMission?.tracking ?? 0;
+			if (!goal) {
 				return '';
 			}
-			return this.formatGoal(this.currentMission.currentGoal, this.currentMission.tracking);
+			return this.getGoalText(goal, tracking, 'current') ?? '';
+		},
+		previousStepText(): string | null {
+			const goal = this.previousGoal;
+			const tracking = this.currentMission?.tracking ?? 0;
+			if (!goal) {
+				return null;
+			}
+			return this.getGoalText(goal, tracking, 'previous');
 		}
 	},
 	methods: {
-		formatContent(text: string): string {
-			return formatText(text);
-		},
 		getInformation(): void {
 			if (this.mission) {
 				this.information = true;
@@ -116,7 +180,35 @@ export default defineComponent({
 			}
 			return this.$t(`place.name.${place.name}`).toString();
 		},
-		formatGoal(goal: MissionGoal, tracking: number): string {
+		areGoalsEquivalent(left: MissionGoal, right: MissionGoal): boolean {
+			if (left.type !== right.type) {
+				return false;
+			}
+			switch (left.type) {
+				case 'AT':
+					return (
+						right.type === 'AT' &&
+						left.place === right.place &&
+						Boolean(left.hidden) === Boolean(right.hidden) &&
+						(left.titleKey ?? null) === (right.titleKey ?? null)
+					);
+				case 'TALK':
+					return right.type === 'TALK' && left.nameKey === right.nameKey && left.textKey === right.textKey;
+				case 'ACTION':
+					return (
+						right.type === 'ACTION' && left.nameKey === right.nameKey && left.descriptionKey === right.descriptionKey
+					);
+				case 'KILL':
+					return (
+						right.type === 'KILL' &&
+						left.kill.count === right.kill.count &&
+						left.kill.displayNameKey === right.kill.displayNameKey
+					);
+				default:
+					return false;
+			}
+		},
+		getGoalText(goal: MissionGoal, tracking: number, mode: GoalTextMode): string | null {
 			switch (goal.type) {
 				case 'AT': {
 					if (goal.titleKey) {
@@ -130,9 +222,13 @@ export default defineComponent({
 					}).toString();
 				}
 				case 'TALK':
-					return `${this.$t('dinozMissions.goal.talk')} ${this.$t(goal.nameKey).toString()}`;
+					return mode === 'current'
+						? `${this.$t('missions.goals.talk')} ${this.$t(goal.nameKey).toString()}`
+						: this.$t(goal.textKey).toString();
 				case 'ACTION':
-					return `${this.$t(goal.nameKey).toString()} - ${this.$t(goal.descriptionKey).toString()}`;
+					return mode === 'current'
+						? `${this.$t(goal.nameKey).toString()} - ${this.$t(goal.descriptionKey).toString()}`
+						: this.$t(goal.descriptionKey).toString();
 				case 'KILL': {
 					const targetName = goal.kill.displayNameKey
 						? this.$t(goal.kill.displayNameKey).toString()
@@ -140,7 +236,7 @@ export default defineComponent({
 					return `${tracking}/${goal.kill.count} ${targetName}`;
 				}
 				default:
-					return goal.type;
+					return null;
 			}
 		}
 	}
@@ -154,9 +250,12 @@ export default defineComponent({
 	font-weight: bold;
 }
 .mission {
-	padding: 5px;
+	padding: 0px 5px 5px 20px;
 	font-size: 10pt;
 	background-color: #bc683c;
+	background-image: url('../../assets/icons/small_missAct.webp');
+	background-position: 5px 13px;
+	background-repeat: no-repeat;
 	line-height: 10pt;
 	overflow: hidden;
 	color: #774828;
@@ -175,10 +274,6 @@ export default defineComponent({
 }
 .previous-step {
 	margin-top: 8px;
-	h2 {
-		text-align: left;
-		padding-left: 8px;
-	}
 	p {
 		font-size: 9pt !important;
 		line-height: 10.5pt !important;
