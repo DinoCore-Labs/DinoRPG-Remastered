@@ -230,9 +230,9 @@ export default defineComponent({
 					}).toString();
 				}
 				case 'TALK':
-					return mode === 'current'
-						? `${this.$t('missions.goals.talk')} ${this.$t(goal.nameKey).toString()}`
-						: this.$t(goal.nameKey).toString();
+					return this.$t('missions.goals.talk', {
+						nameKey: this.$t(goal.nameKey).toString()
+					}).toString();
 				case 'ACTION':
 					return mode === 'current'
 						? `${this.$t(goal.nameKey).toString()} - ${this.$t(goal.descriptionKey).toString()}`
@@ -244,7 +244,9 @@ export default defineComponent({
 					return `${tracking}/${goal.kill.count} ${targetName}`;
 				}
 				case 'VALIDATE':
-					return this.$t(goal.textKey).toString();
+					return this.$t('missions.goals.validate', {
+						nameKey: this.$t(goal.nameKey).toString()
+					}).toString();
 				default:
 					return null;
 			}

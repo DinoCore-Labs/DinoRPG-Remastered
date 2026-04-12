@@ -120,7 +120,6 @@ export type MissionValidateGoal = {
 	npcKey: MissionNpcKey;
 	place: PlaceEnum | null;
 	nameKey: string;
-	textKey: string;
 };
 
 export type MissionGoal =
