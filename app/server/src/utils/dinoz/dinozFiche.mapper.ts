@@ -4,6 +4,7 @@ import { DinozFiche, DinozFicheLite, DinozPublicFiche } from '@dinorpg/core/mode
 import { DinozRestInfos } from '@dinorpg/core/models/dinoz/dinozRest.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
+import { DinozCurrentMission } from '@dinorpg/core/models/missions/missionCurrent.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { evalCondition } from '@dinorpg/core/models/utils/conditions/evalConditions.js';
@@ -13,6 +14,7 @@ import { actualPlace, getMaxXp, getRace } from '@dinorpg/core/utils/dinozUtils.j
 import {
 	Dinoz,
 	DinozItems,
+	DinozMissions,
 	DinozSkills,
 	DinozState,
 	DinozStatus,
@@ -21,6 +23,7 @@ import {
 	UserItems,
 	UserRewards
 } from '../../../../prisma/index.js';
+import { getMissionDefinitionByKey } from '../../Mission/Controller/mission.registry.js';
 import { buildConditionContext } from '../conditions/buildConditionContext.js';
 import { UserForConditionCheck } from '../user/userConditionCheck.js';
 
@@ -61,7 +64,7 @@ export const toDinozFiche = (
 			| 'fight'
 			| 'gather'
 		> & {
-			//missions: DinozMission[];
+			missions?: Pick<DinozMissions, 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
 			items: Pick<DinozItems, 'itemId'>[];
 			status: Pick<DinozStatus, 'statusId'>[];
 			skills: Pick<DinozSkills, 'skillId' | 'state'>[];
@@ -89,7 +92,7 @@ export const toDinozFiche = (
 		state: dinoz.state,
 		stateTimer: dinoz.stateTimer?.toISOString(),
 		level: dinoz.level,
-		//missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId ?? null,
+		currentMission: getCurrentMission(dinoz),
 		leaderId: dinoz.leaderId,
 		followers: dinoz.followers,
 		life: dinoz.life,
@@ -250,4 +253,30 @@ export const calculateXPBonus = (
 export const canGoToThisPlace = (user: UserForConditionCheck, condition: Condition, activeDinoz: number) => {
 	const context = buildConditionContext(user, activeDinoz, defaultConditionKeyMaps);
 	return evalCondition(context, condition);
+};
+
+export const getCurrentMission = (dinoz: {
+	missions?: Pick<DinozMissions, 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
+}): DinozCurrentMission | null => {
+	const activeMission = dinoz.missions?.find(mission => !mission.isCompleted);
+
+	if (!activeMission) {
+		return null;
+	}
+
+	const definition = getMissionDefinitionByKey(activeMission.missionKey);
+	const currentGoalIndex = activeMission.progression;
+	const currentGoal = definition.goals[currentGoalIndex] ?? null;
+
+	return {
+		key: definition.key,
+		group: definition.group,
+		nameKey: definition.nameKey,
+		beginKey: definition.beginKey,
+		endKey: definition.endKey,
+		progression: activeMission.progression,
+		tracking: activeMission.tracking,
+		currentGoalIndex,
+		currentGoal
+	};
 };

@@ -43,7 +43,7 @@ export async function getDinozFicheRequest(dinozId: number, userId: string) {
 					canRename: true,
 					items: { select: { itemId: true } },
 					status: { select: { statusId: true } },
-					//missions: true,
+					missions: true,
 					skills: { select: { skillId: true, state: true } },
 					followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } }
 					//concentration: true,
