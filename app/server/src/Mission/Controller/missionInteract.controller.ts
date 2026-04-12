@@ -143,7 +143,6 @@ export async function startMissionInteraction(
 					dialogId: goal.dialogId
 				};
 			}
-
 			return {
 				mode: 'modal',
 				goalType: 'TALK',
@@ -156,7 +155,6 @@ export async function startMissionInteraction(
 				dialect: goal.dialect ?? null
 			};
 		}
-
 		case 'ACTION':
 			return {
 				mode: 'modal',
@@ -164,33 +162,27 @@ export async function startMissionInteraction(
 				nameKey: goal.nameKey,
 				textKey: goal.descriptionKey
 			};
-
 		case 'VALIDATE': {
 			assertValidateGoalCanBeUsed(goal, currentMission.state.dinozPlaceId);
-
 			return {
 				mode: 'modal',
 				goalType: 'VALIDATE',
 				npcKey: goal.npcKey,
-				nameKey: goal.nameKey,
-				textKey: goal.textKey
+				nameKey: goal.nameKey
 			};
 		}
-
 		case 'FIGHT': {
 			const fight = await processMissionFight({
 				userId,
 				dinozId,
 				goal
 			});
-
 			return {
 				mode: 'fight',
 				goalType: 'FIGHT',
 				fight
 			};
 		}
-
 		default:
 			throw new ExpectedError(`Mission goal "${goal.type}" is not interactable from Dinoz actions.`);
 	}
@@ -211,18 +203,15 @@ export async function completeMissionInteraction(
 			if (goal.type !== 'TALK' && goal.type !== 'ACTION' && goal.type !== 'VALIDATE') {
 				throw new ExpectedError(`Mission goal "${goal.type}" cannot be completed manually.`);
 			}
-
 			if (goal.type === 'VALIDATE') {
 				assertValidateGoalCanBeUsed(goal, currentMission.state.dinozPlaceId);
 			}
 			break;
-
 		case 'fight_victory':
 			if (goal.type !== 'FIGHT') {
 				throw new ExpectedError(`Mission goal "${goal.type}" cannot be completed from fight victory.`);
 			}
 			break;
-
 		default:
 			throw new ExpectedError('Unknown mission completion trigger.');
 	}

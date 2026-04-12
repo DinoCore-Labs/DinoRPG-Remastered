@@ -3252,6 +3252,8 @@
 			"atPlace": "Se rendre à {place}",
 			"atHidden": "Trouver le bon lieu",
 			"talk": "Parler à {nameKey}",
+			"action": "{nameKey}",
+			"kill": "Tuer {current}/{count} {nameKey}",
 			"validate": "Retourner voir {nameKey} pour valider la mission"
 		},
 		"validate": "Valider la mission",
@@ -3272,6 +3274,95 @@
 					"name": "Papy Joe",
 					"text": "Retourner voir Papy Joe pour valider la mission."
 				}
+			},
+			"dog": {
+				"name": "Le chien perdu",
+				"begin": "La Vieille Ducraft a perdu son caniche alors qu'elle visitait son fils dans les Collines Escarpées, sauras-tu le retrouver ?",
+				"end": "Uhmm... Elle ne perd rien pour attendre cette vieille peau ! Enfin, voilà pour toi",
+				"jacquelineDucraft": {
+					"name": "Jacqueline Ducraft",
+					"text": "Bonjour jeune homme ! Nioufniouf, mon petit amour de caniche, a disparu ! Je l'avais puni car il avait fait une bêtise...ohh... comme je regreettte ! Vite, retrouve-le s'il te plaît. Je suis certaine qu'il n'a pas pu grimper ces montagnes avec ses petites pattes, il doit donc être parti vers le Sud.",
+					"text2": "Mon NioufNiouf chéri !!! Pardonne-moi, ta moooman a été très méchante avec le gentil chienchien ! Merci jeune homme, retournez au plus vite chez ce vieux schnock pour obtenir votre récompense !"
+				},
+				"findNioufniouf": {
+					"name": "NioufNiouf",
+					"description": "Vous avez retrouvé NioufNiouf ! Ramenez-le vite à sa propriétaire !"
+				}
+			},
+			"kilgou": {
+				"name": "Les Goupignons des Collines",
+				"begin": "De nombreux Loups et Goupignons sévissent dans les Collines Escarpées au nord de Dinoville, le chef d'un village voisin cherche quelqu'un pour en tuer quelques-uns et ainsi leur faire peur pour qu'ils se calment, sauras-tu te montrer suffisamment fort ?",
+				"end": "Bravo, grâce à toi les Collines ont retrouvé un certain calme, félicitations !",
+				"kill": "Loups et Goupignons"
+			},
+			"kilwlf": {
+				"name": "La chasse aux loups",
+				"begin": "Récemment, les paysans ont beaucoup de problèmes avec des groupes de Loups qui attaquent leurs chèvres. Peux-tu faire un tour ici-et-là et en tuer quelques-uns histoire de les éloigner ?",
+				"end": "Bravo, c'est bien joué, avec ça ils ne devraient plus trop s'approcher des chèvres pendant quelque temps !",
+				"kill": "Loups"
+			},
+			"fflow": {
+				"name": "Le rosier en danger",
+				"begin": "Le rosier préféré de Madame Seyche est en sale état à cause de la canicule. Pourrais-tu aller chercher de l'Eau Pure à la Fontaine et lui en apporter ?",
+				"end": "Cette charmante Madame Seyche m'a félicité pour ton travail, tu as bien mérité ta récompense !",
+				"pureWater": {
+					"name": "Eau Pure",
+					"description": "Vous obtenez de l'Eau Pure qui est particulièrement conseillée pour arroser les fleurs..."
+				},
+				"madameSeyche": {
+					"name": "Madame Seyche",
+					"text": "Ooohhh merci mon petit, grâce à toi mon rosier va pouvoir retrouver de belles couleurs ! Retourne vite voir Papy Joe, il te donnera ta récompense..."
+				}
+			},
+			"kbook": {
+				"name": "Le livre de recettes",
+				"begin": "J'ai à nouveau reçu une demande de la ravissante Madame Seyche. Elle voudrait consulter un livre de recettes qui se trouve à l'Université, peux-tu aller lui chercher ?",
+				"end": "Bravo, grâce à toi Madame Seyche m'a remercié en m'envoyant un bout de Korgon grillé. Un vrai délice !",
+				"recipeBook": {
+					"name": "Livre de recettes",
+					"description": "Vous obtenez \"100 Façons de cuire un Korgon\", écrit et illustré par Gorak le borgne"
+				},
+				"madameSeyche": {
+					"name": "Madame Seyche",
+					"text": "OOOooooooh merci mon petit ! Je vais pouvoir expérimenter différentes recettes de Korgons, n'hésite pas à venir y goûter un peu de temps en temps !"
+				}
+			},
+			"msg": {
+				"name": "Les Timbres",
+				"begin": "J'ai très envie d'écrire une lettre à une certaine personne qui me tient à coeur. Mais il se trouve que mes Timbres ont été volés par des Goupignons Chapardeurs qui se regroupent habituellement à la Fontaine de Jouvence. Si tu les tues, je te laisserai utiliser mes Timbres, ça te va ?",
+				"end": "Merci, génial, je vais pouvoir écrire ma lettre ! Tiens, tu as bien mérité tes timbres...",
+				"kill": "Goupignons Chapardeurs",
+				"collectStamps": {
+					"name": "Ramasser les Timbres",
+					"description": "Bravo, vous récupérez les Timbres, ramenez-les vite à Papy Joe !"
+				}
+			},
+			"lettre": {
+				"name": "La lettre confidentielle",
+				"begin": "Uhm... Cette fois-ci c'est pour moi, Papy Joe, que tu vas travailler... J'aurais besoin de toi pour que tu apporte d'URGENCE cette lettre à une certaine personne à Dinoville. Il faut faire très vite surtout !",
+				"end": "Uhm ! Ehm... Une réponse ?! Déjà ?!? GENIAL ! Elle accepte mon invitation à dîner. C'est dans la poche : malgré mon grand âge, la nuit va être chaude !",
+				"madameSeyche": {
+					"name": "Madame Seyche",
+					"text": "Oohhhh mon petit, que m'apportes-tu cette fois ? Quoi ? Une lettre de papy ? .... ..... Apporte-lui vite cette réponse !"
+				}
+			},
+			"kilglu": {
+				"name": "Un étrange monstre",
+				"begin": "Un étrange monstre est apparu ces derniers temps dans le Royaume de Dinoville. Il est assez coriace et peut suivant les cas faire beaucoup de dégâts lors d'un combat. Pourrais-tu en tuer un et me le ramener pour que je puisse l'étudier ?",
+				"end": "Merci, c'est un beau spécimen. Voilà pour ta récompense !",
+				"kill": "Gluon"
+			},
+			"kilgnt": {
+				"name": "Les Géants",
+				"begin": "Je ne sais pas si tu t'en es aperçu, mais le Royaume de Dinoville est envahi par d'immenses Géants Verts qui ne semblent pas se nourrir que de légumes ! Peux-tu aller en exterminer une douzaine au plus vite ? Il s'agit d'un ordre du Roi, alors il faut faire vite !",
+				"end": "Ouf ! C'était juste ! Merci tu m'as bien aidé, je vais pouvoir parler de cet exploit au Roi demain pendant que nous jouerons au golf.",
+				"kill": "Géants Verts"
+			},
+			"kilcoq": {
+				"name": "L'exploit du mois",
+				"begin": "Uhm... J'ai encore un Golf de prévu avec le Roi le mois prochain, et figure toi qu'il veut encore entendre parler de tes exploits... Que dirais-tu d'aller tuer quelques Coqdur rapidement ? Tu seras bien récompensé !",
+				"end": "Ah ! Super ! Je vais maintenant réfléchir à rajouter un peu d'épique pour relever tout cela ! Le Roi devrait être ravi !",
+				"kill": "Coqs"
 			}
 		}
 	}

@@ -39,7 +39,7 @@ export const placeListv2 = definePlaces({
 
 	[PlaceEnum.UNIVERSITE]: {
 		placeId: PlaceEnum.UNIVERSITE,
-		name: 'univ',
+		name: 'universite',
 		map: MapZone.DINOLAND,
 		moves: [{ target: PlaceEnum.DINOVILLE }, { target: PlaceEnum.PAPY_JOE }, { target: PlaceEnum.COLLINES_ESCARPEES }],
 		gathers: [GatherType.CUEILLE1, GatherType.DAILY],
@@ -83,7 +83,7 @@ export const placeListv2 = definePlaces({
 
 	[PlaceEnum.FORCEBRUT]: {
 		placeId: PlaceEnum.FORCEBRUT,
-		name: 'frcbrt',
+		name: 'forcebrut',
 		map: MapZone.DINOLAND,
 		moves: [
 			{ target: PlaceEnum.PAPY_JOE },

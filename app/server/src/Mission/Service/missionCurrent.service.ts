@@ -4,7 +4,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import type { DinozMissions } from '../../../../prisma/index.js';
 
-export type DinozMissionState = Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking'>;
+export type DinozMissionState = Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>;
 
 export type ResolvedCurrentMission = {
 	state: DinozMissionState;
@@ -13,7 +13,7 @@ export type ResolvedCurrentMission = {
 };
 
 export function resolveCurrentMission(missions: DinozMissionState[]): ResolvedCurrentMission | null {
-	const activeMission = missions[0] ?? null;
+	const activeMission = missions.find(mission => !mission.isCompleted) ?? null;
 
 	if (!activeMission) {
 		return null;
