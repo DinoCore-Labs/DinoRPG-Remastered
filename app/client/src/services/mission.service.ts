@@ -1,4 +1,8 @@
 import type {
+	MissionInteractionCompleteResponse,
+	MissionInteractionStartResponse
+} from '@dinorpg/core/models/missions/missionInteraction.js';
+import type {
 	DinozMissionDetailResponse,
 	DinozMissionGroupResponse,
 	StartDinozMissionResponse,
@@ -35,6 +39,22 @@ export const MissionService = {
 	async stopDinozMission(dinozId: number, missionKey: string): Promise<StopDinozMissionResponse> {
 		return http()
 			.post(`/missions/dinoz/${dinozId}/mission/${missionKey}/stop`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => {
+				return Promise.reject(err);
+			});
+	},
+	async startAction(dinozId: number): Promise<MissionInteractionStartResponse> {
+		return http()
+			.post(`/missions/dinoz/${dinozId}/mission/action/start`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => {
+				return Promise.reject(err);
+			});
+	},
+	async completeAction(dinozId: number): Promise<MissionInteractionCompleteResponse> {
+		return http()
+			.post(`/missions/dinoz/${dinozId}/mission/action/complete`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => {
 				return Promise.reject(err);

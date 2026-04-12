@@ -2,6 +2,10 @@ import type { FastifyInstance } from 'fastify';
 
 import { getDinozMissionDetailHandler } from '../Service/getDinozMissionDetail.service.js';
 import { getDinozMissionGroupHandler } from '../Service/getDinozMissionGroup.service.js';
+import {
+	completeMissionInteractionController,
+	startMissionInteractionController
+} from '../Service/missionInteract.service.js';
 import { startDinozMissionHandler } from '../Service/startDinozMission.service.js';
 import { stopDinozMissionHandler } from '../Service/stopDinozMission.service.js';
 
@@ -33,5 +37,19 @@ export async function missionsRoutes(app: FastifyInstance) {
 			preHandler: [app.authenticate]
 		},
 		stopDinozMissionHandler
+	);
+	app.post(
+		'/dinoz/:id/mission/action/start',
+		{
+			preHandler: [app.authenticate]
+		},
+		startMissionInteractionController
+	);
+	app.post(
+		'/dinoz/:id/mission/action/complete',
+		{
+			preHandler: [app.authenticate]
+		},
+		completeMissionInteractionController
 	);
 }

@@ -1,7 +1,12 @@
 <template>
 	<div class="actions">
 		<Resurrect :enabled="resurrect" @close="resurrect = false" />
-		<!--<NPCModal v-if="NPCModal" :text="NPCModal" :npcName="npcName" @close="continueMission()" />-->
+		<MissionTalkModal
+			v-if="missionTalkTextKey && missionTalkNameKey"
+			:textKey="missionTalkTextKey"
+			:nameKey="missionTalkNameKey"
+			@close="closeMissionTalkModal"
+		/>
 		<div class="actions_top">
 			<p>{{ $t('dinozPage.action') }}</p>
 		</div>
@@ -59,7 +64,9 @@
 				<!--<p v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION">
 					{{ $t(`missions.actions.terminate`) }}
 				</p>-->
-				<!--<p v-else-if="action.name === 'mission'">{{ $t(`missions.npc.${action.prop}`) }}</p>-->
+				<p v-else-if="action.name === Action.MISSION">
+					{{ getMissionActionName(action) }}
+				</p>
 				<p v-else>
 					{{ action.forDinoz ? `${dinoz.followers.find(f => f.id === action.forDinoz)?.name}: ` : '' }}
 					{{ $t(`action.name.${action.name}`) }}
@@ -75,8 +82,10 @@
 					<!--<h1
 						v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION"
 						v-html="formatContent($t(`missions.actions.terminate`))"
-					/>
-					<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />-->
+					/>-->
+					<h1 v-else-if="action.name === Action.MISSION">
+						{{ getMissionActionName(action) }}
+					</h1>
 					<h1 v-else v-html="formatContent($t(`action.name.${action.name}`))" />
 
 					<!-- DESCRIPTION ACTIONS -->
@@ -85,10 +94,7 @@
 						v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.description`))"
 					/>
 					<p v-else-if="action.name === Action.NPC" v-html="formatContent($t(`npc.description`))" />
-					<!--<p
-						v-else-if="action.name === 'mission'"
-						v-html="formatContent($t(`missions.tooltip`, { mission: $t(`missions.name.${missionName}`) }))"
-					/>-->
+					<p v-else-if="action.name === Action.MISSION" v-html="formatContent(getMissionActionDescription())" />
 					<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
 				</template>
 			</Tippy>
@@ -102,21 +108,12 @@ import { Action, type ActionFiche } from '@dinorpg/core/models/dinoz/dinozAction
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
-//import { ConditionEnum, RewardEnum } from '@dinorpg/core/models/enums/Parser.js';
-//import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
-//import type { Rewarder } from '@dinorpg/core/models/rewards/rewarder.js';
-//import { orderDinozList, toSkillDetails } from '@drpg/core/utils/DinozUtils';
-//import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { defineComponent, type PropType } from 'vue';
 import DZFollow from '../utils/DZFollow.vue';
 import DinozMissionHUD from './DinozMissionHUD.vue';
-//import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
-//import NPCModal from '../../components/modal/NPCModal.vue';
 import Resurrect from '../modal/ResurrectModal.vue';
-//import { mixin } from '../../mixin/mixin.js';
 import { FightService } from '../../services';
 import { DinozService } from '../../services';
-//import { MissionService } from '../../services/index.js';
 import { dinozStore } from '../../store/dinozStore';
 import { sessionStore } from '../../store/sessionStore';
 import { userStore } from '../../store/userStore';
@@ -128,6 +125,8 @@ import eventBus from '../../events';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { itinerantShopNameList, shopNameList } from '../../constants/shop';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import MissionTalkModal from '../modal/MissionTalkModal.vue';
+import { MissionService } from '../../services/mission.service';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -146,13 +145,15 @@ export default defineComponent({
 			unfreezeSecondsLeft: 0,
 			restSecondsLeft: 0,
 			intervals: [] as number[],
-			DINOZ_STATE
+			DINOZ_STATE,
+			missionTalkTextKey: null as string | null,
+			missionTalkNameKey: null as string | null
 		};
 	},
 	components: {
 		Resurrect,
 		DinozMissionHUD,
-		//NPCModal,
+		MissionTalkModal,
 		//MissionRewardModal,
 		DZDisclaimer,
 		DZFollow
@@ -235,6 +236,31 @@ export default defineComponent({
 			}
 			return '';
 		},
+		getMissionActionName(action: ActionFiche) {
+			if (typeof action.label === 'string' && action.label.length > 0) {
+				return this.translateI18nText(action.label).toString();
+			}
+			return this.$t('action.name.mission').toString();
+		},
+		getMissionActionDescription(): string {
+			const goal = this.dinoz.currentMission?.currentGoal;
+			if (!goal) {
+				return this.$t('npc.description').toString();
+			}
+			switch (goal.type) {
+				case 'TALK':
+					if ('textKey' in goal && goal.textKey) {
+						return this.$t(goal.textKey).toString();
+					}
+					return this.$t('npc.description').toString();
+				case 'ACTION':
+					return this.$t(goal.descriptionKey).toString();
+				case 'FIGHT':
+					return this.$t('missions.actions.fight').toString();
+				default:
+					return this.$t('npc.description').toString();
+			}
+		},
 		async launch(action: ActionFiche) {
 			switch (action.name) {
 				case Action.IRMA:
@@ -302,60 +328,36 @@ export default defineComponent({
 					this.resurrect = true;
 					break;
 				case Action.MISSION:
-					/*if (typeof this.dinoz.missionId !== 'number') {
-						this.$toast.open({
-							message: this.$t('toast.missingData'),
-							type: 'error'
-						});
-						return;
-					}
-					if (this.mission && this.mission.actionType === ConditionEnum.FINISH_MISSION) {
-						this.missionReward = await MissionService.finishMission(
-							this.$route.params.id.toString(),
-							this.dinoz.missionId
-						);
-					} else if (this.mission && this.mission.actionType === ConditionEnum.LAUNCH_FIGHT) {
-						try {
-							this.npcName = action.prop as string;
-							const fight = await MissionService.startFightMission(
-								this.$route.params.id.toString(),
-								this.dinoz.missionId,
-								action.prop as string
-							);
-							this.sessionStore.setFightResult(fight);
-							this.$router.push({
-								name: 'Fight',
-								params: { dinozId: this.$route.params.id.toString() }
-							});
-						} catch (e) {
-							errorHandler.handle(e, this.$toast);
-						}
-					} else {
-						try {
-							if (this.mission && 'npcName' in this.mission) {
-								const npcName = this.mission.npcName;
-								const dialog = await MissionService.interactMission(
-									this.$route.params.id.toString(),
-									this.dinoz.missionId,
-									action.prop as string
-								);
+					try {
+						const result = await MissionService.startAction(this.dinozId);
+						switch (result.mode) {
+							case 'modal':
+								this.missionTalkNameKey = result.nameKey;
+								this.missionTalkTextKey = result.textKey;
+								break;
+							case 'dialog':
 								this.$router.push({
-									name: 'NPC',
-									params: { id: this.$route.params.id.toString(), npc: npcName },
-									query: { dialog: dialog }
+									name: 'DialogPage',
+									params: {
+										id: this.dinozId.toString(),
+										dialogId: result.dialogId
+									},
+									query: {
+										missionAction: '1'
+									}
 								});
-							} else {
-								this.npcName = action.prop as string;
-								this.NPCModal = await MissionService.interactMission(
-									this.$route.params.id.toString(),
-									this.dinoz.missionId,
-									action.prop as string
-								);
-							}
-						} catch (e) {
-							errorHandler.handle(e, this.$toast);
+								break;
+							/*case 'fight':
+								this.sessionStore.setFightResult(result.fight);
+								this.$router.push({
+									name: 'FightPage',
+									params: { dinozId: this.dinozId.toString() }
+								});
+								break;*/
 						}
-					}*/
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
 					break;
 				case Action.DIG:
 					try {
@@ -631,14 +633,23 @@ export default defineComponent({
 		},
 		endMission(dinozId: number) {
 			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche | undefined;
-
 			if (!dinozToUpdate) {
 				return;
 			}
-
 			dinozToUpdate.currentMission = null;
 			this.dinozStore.setDinoz(dinozToUpdate);
 			this.$emit('endMission');
+		},
+		async closeMissionTalkModal() {
+			try {
+				await MissionService.completeAction(this.dinozId);
+				this.missionTalkTextKey = null;
+				this.missionTalkNameKey = null;
+				await this.refreshDinoz();
+				await this.loadComponent();
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
 		}
 	},
 	computed: {

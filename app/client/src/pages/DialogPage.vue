@@ -8,7 +8,7 @@
 				<div class="portrait">
 					<AnimatedNPC v-if="swfName" :NPC="swfName" :flashvars="npcFlashvars" />
 					<DZButton :disabled="loading" @click="stop">
-						{{ $t('npc.leave') }}
+						{{ leaveButtonLabel }}
 					</DZButton>
 				</div>
 			</div>
@@ -40,60 +40,98 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DialogService } from '../services/dialog.service.js';
 import { FightService } from '../services';
 import { sessionStore } from '../store/sessionStore';
+import { MissionService } from '../services/mission.service.js';
 
 const route = useRoute();
 const router = useRouter();
+const { t, te } = useI18n();
 
 const dialogState = ref<DialogPhaseResponse | null>(null);
 const loaded = ref(false);
 const loading = ref(false);
 const error = ref<string | null>(null);
+const missionCompleted = ref(false);
 
 const dinozId = computed(() => Number(route.params.id));
 const dialogId = computed(() => String(route.params.dialogId));
+const resumePhaseId = computed(() => (typeof route.query.phaseId === 'string' ? route.query.phaseId : undefined));
+
+const isMissionDialog = computed(() => route.query.missionAction === '1');
+
+const isTerminalPhase = computed(() => {
+	const phase = dialogState.value;
+	if (!phase) {
+		return false;
+	}
+	if (phase.actions.startFight) {
+		return false;
+	}
+	if (phase.actions.missionsGroup) {
+		return false;
+	}
+	if (phase.actions.popup) {
+		return false;
+	}
+	return phase.links.length === 0;
+});
+
+const leaveButtonLabel = computed(() =>
+	isMissionDialog.value && isTerminalPhase.value ? t('npc.continue') : t('npc.leave')
+);
 
 const swfName = computed(() => dialogState.value?.pnj.gfx ?? null);
-const npcFlashvars = computed(() => {
-	if (!dialogState.value) return '';
 
+const npcFlashvars = computed(() => {
+	const phase = dialogState.value;
+	if (!phase) {
+		return '';
+	}
 	return new URLSearchParams({
-		frame: dialogState.value.pnj.frame ?? 'speak',
-		background: dialogState.value.pnj.background ?? '1'
+		frame: phase.pnj.frame ?? 'speak',
+		background: phase.pnj.background ?? '1'
 	}).toString();
 });
 
+const npcName = computed(() => translateText(dialogState.value?.name ?? ''));
 const pageTitle = computed(() => `PNJ - ${npcName.value}`);
 const headerTitle = computed(() => 'PNJ :');
 
-const { t, te } = useI18n();
+const sStore = sessionStore();
 
 function translateText(key: string | undefined): string {
 	const value = key ?? '';
-	return te(value) ? t(value) : value;
+	return te(value) ? t(value).toString() : value;
 }
 
 function renderDialogText(text: string | undefined): string {
 	return translateText(text).replace(/\n/g, '<br>');
 }
 
-const npcName = computed(() => translateText(dialogState.value?.name ?? ''));
+async function navigateBackToDinoz() {
+	await router.push({
+		name: 'DinozPage',
+		params: { id: String(dinozId.value) }
+	});
+}
 
-const sStore = sessionStore();
+async function completeMissionIfNeeded() {
+	if (!isMissionDialog.value || !isTerminalPhase.value || missionCompleted.value) {
+		return;
+	}
+	await MissionService.completeAction(dinozId.value);
+	missionCompleted.value = true;
+}
 
 async function handlePhaseActions(phase: DialogPhaseResponse) {
 	if (phase.actions.startFight) {
 		const fight = await FightService.processDialogFight(dinozId.value, phase.dialogId, phase.phaseId);
-
 		sStore.setFightResult(fight);
-
 		await router.push({
 			name: 'FightPage',
 			params: { dinozId: String(dinozId.value) }
 		});
-
 		return;
 	}
-
 	if (phase.actions.missionsGroup) {
 		await router.push({
 			name: 'DinozMissions',
@@ -102,26 +140,22 @@ async function handlePhaseActions(phase: DialogPhaseResponse) {
 				group: phase.actions.missionsGroup
 			}
 		});
-
 		return;
 	}
-
 	if (phase.actions.popup) {
 		// plus tard
 	}
 }
-
-const resumePhaseId = computed(() => (typeof route.query.phaseId === 'string' ? route.query.phaseId : undefined));
 
 async function loadDialog() {
 	if (!Number.isFinite(dinozId.value) || dinozId.value <= 0 || !dialogId.value) {
 		error.value = 'Dialogue invalide';
 		return;
 	}
-
 	loading.value = true;
 	error.value = null;
 	loaded.value = false;
+	missionCompleted.value = false;
 
 	try {
 		if (resumePhaseId.value) {
@@ -129,9 +163,7 @@ async function loadDialog() {
 		} else {
 			dialogState.value = await DialogService.startDialog(dinozId.value, dialogId.value);
 		}
-
 		loaded.value = true;
-
 		if (dialogState.value) {
 			await handlePhaseActions(dialogState.value);
 		}
@@ -143,15 +175,14 @@ async function loadDialog() {
 }
 
 async function chooseStep(linkId: string, confirmChoice: boolean) {
-	if (!dialogState.value) return;
-
+	if (!dialogState.value) {
+		return;
+	}
 	if (confirmChoice && !window.confirm('Confirmer cette action ?')) {
 		return;
 	}
-
 	loading.value = true;
 	error.value = null;
-
 	try {
 		dialogState.value = await DialogService.selectDialogLink(
 			dinozId.value,
@@ -159,7 +190,6 @@ async function chooseStep(linkId: string, confirmChoice: boolean) {
 			linkId,
 			dialogState.value.phaseId
 		);
-
 		if (dialogState.value) {
 			await handlePhaseActions(dialogState.value);
 		}
@@ -171,16 +201,22 @@ async function chooseStep(linkId: string, confirmChoice: boolean) {
 }
 
 async function stop() {
-	await router.push({
-		name: 'DinozPage',
-		params: { id: String(dinozId.value) }
-	});
+	loading.value = true;
+	error.value = null;
+	try {
+		await completeMissionIfNeeded();
+		await navigateBackToDinoz();
+	} catch (err) {
+		error.value = err instanceof Error ? err.message : 'Impossible de quitter le dialogue';
+	} finally {
+		loading.value = false;
+	}
 }
 
 onMounted(loadDialog);
 
 watch(
-	() => [route.params.id, route.params.dialogId],
+	() => [route.params.id, route.params.dialogId, route.query.phaseId],
 	() => {
 		loadDialog();
 	}
@@ -192,7 +228,6 @@ watch(
 	width: 95%;
 	align-self: center;
 }
-
 .box {
 	cursor: pointer;
 	background:
@@ -204,10 +239,8 @@ watch(
 	background-position-x: left, right, center, left, right, center, left, right, center;
 	background-position-y: top, top, top, bottom, bottom, bottom, 40px, 40px, 40px;
 	background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
-
 	padding-right: 5px;
 	padding-left: 5px;
-
 	.name {
 		margin-left: 15px;
 		padding-top: 15px;
@@ -216,7 +249,6 @@ watch(
 		font-size: 10pt;
 		color: #693118;
 	}
-
 	.content {
 		min-height: 148px;
 		padding: 1px;
@@ -226,7 +258,6 @@ watch(
 		display: flex;
 		justify-content: space-between;
 		gap: 15px;
-
 		.portrait {
 			display: flex;
 			flex-direction: column;
@@ -234,7 +265,6 @@ watch(
 			gap: 5px;
 			width: fit-content;
 		}
-
 		.dialog {
 			width: fit-content;
 			float: left;
@@ -248,7 +278,6 @@ watch(
 		}
 	}
 }
-
 #answer {
 	list-style: none;
 	padding-top: 5px;
@@ -256,7 +285,6 @@ watch(
 	background-color: #9a4029;
 	border: 1px solid white;
 	outline: 1px solid black;
-
 	li a {
 		display: block;
 		padding-left: 20px;
@@ -271,23 +299,19 @@ watch(
 		border-radius: 0;
 		cursor: pointer;
 		font-variant: small-caps;
-
 		&:first-letter {
 			font-size: 115%;
 		}
-
 		&:hover {
 			color: #9a4029;
 			background-color: #fdd58a;
 		}
 	}
 }
-
 .error {
 	margin-top: 10px;
 	color: #a40000;
 }
-
 .extra-action {
 	margin-top: 10px;
 }
