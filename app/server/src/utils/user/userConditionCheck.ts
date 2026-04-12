@@ -33,9 +33,10 @@ export type UserForConditionCheck = Pick<User, 'id'> & {
 		friendId?: string | number | null;
 		status: Pick<DinozStatus, 'statusId'>[];
 		missions?: {
-			missionId: number;
-			isFinished: boolean;
-			step: number;
+			missionKey: string;
+			progression: number;
+			tracking: number;
+			isCompleted: boolean;
 		}[];
 		items: Pick<DinozItems, 'itemId'>[];
 		skills: Pick<DinozSkills, 'skillId'>[];

@@ -6,7 +6,7 @@
 			<p>{{ $t('dinozPage.action') }}</p>
 		</div>
 		<div class="action_content">
-			<template v-for="didi in dinozFullParty" :key="didi">
+			<template v-for="didi in dinozFullParty" :key="didi.id">
 				<DinozMissionHUD
 					v-if="didi.currentMission"
 					:currentMission="didi.currentMission"
@@ -617,6 +617,17 @@ export default defineComponent({
 				this.dinoz?.followers.some(a => a.id === dinoz.id)
 			);
 			this.dinozFullParty.push(this.dinoz);
+
+			console.log('main dinoz', this.dinoz);
+			console.log('party', this.dinozFullParty);
+			console.log(
+				'current missions',
+				this.dinozFullParty.map(d => ({
+					id: d.id,
+					name: d.name,
+					currentMission: d.currentMission
+				}))
+			);
 		},
 		endMission(dinozId: number) {
 			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche | undefined;
