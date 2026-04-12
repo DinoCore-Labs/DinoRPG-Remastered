@@ -106,12 +106,14 @@ export function buildConditionContext(
 		])
 	);
 
-	const currentMission = activeDinoz.missions?.find(mission => !mission.isFinished);
+	const dinozMissions = activeDinoz.missions ?? [];
+
+	const currentMission = dinozMissions.find(mission => !mission.isCompleted);
 
 	const finishedMissionKeys = new Set(
-		(activeDinoz.missions ?? [])
-			.filter(mission => mission.isFinished)
-			.map(mission => maps.missionKeyById?.[mission.missionId])
+		dinozMissions
+			.filter(mission => mission.isCompleted)
+			.map(mission => mission.missionKey)
 			.filter((value): value is string => Boolean(value))
 	);
 
@@ -152,8 +154,8 @@ export function buildConditionContext(
 		},
 
 		missions: {
-			currentMissionKey: currentMission ? maps.missionKeyById?.[currentMission.missionId] : undefined,
-			currentMissionStep: currentMission?.step,
+			currentMissionKey: currentMission?.missionKey,
+			currentMissionStep: currentMission?.progression,
 			finishedMissionKeys
 		},
 
