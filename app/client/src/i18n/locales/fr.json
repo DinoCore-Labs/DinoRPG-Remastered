@@ -3251,7 +3251,8 @@
 		"goals": {
 			"atPlace": "Se rendre à {place}",
 			"atHidden": "Trouver le bon lieu",
-			"talk": "Parler à {nameKey}"
+			"talk": "Parler à {nameKey}",
+			"validate": "Retourner voir {nameKey} pour valider la mission"
 		},
 		"validate": "Valider la mission",
 		"papy": {
