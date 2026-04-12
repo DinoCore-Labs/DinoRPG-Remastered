@@ -267,7 +267,9 @@ export default defineComponent({
 				case 'FIGHT':
 					return this.$t('missions.actions.fight').toString();
 				case 'VALIDATE':
-					return this.$t(goal.textKey).toString();
+					return this.$t('missions.goals.validate', {
+						nameKey: this.$t(goal.nameKey).toString()
+					}).toString();
 				default:
 					return this.$t('npc.description').toString();
 			}
@@ -352,11 +354,13 @@ export default defineComponent({
 										this.missionReward = completion.rewardModal;
 									}
 									await this.refreshDinoz();
+									await this.$refreshGold();
+									await this.$refreshTreasureTicket();
 									await this.loadComponent();
 									break;
 								}
 								this.missionTalkNameKey = result.nameKey;
-								this.missionTalkTextKey = result.textKey;
+								this.missionTalkTextKey = result.textKey ?? null;
 								break;
 							}
 							case 'dialog':

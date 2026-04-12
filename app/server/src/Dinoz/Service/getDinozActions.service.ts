@@ -89,6 +89,8 @@ function getMissionActionFiche(goal: MissionGoal, currentPlace: PlaceEnum): Acti
 			if (goal.place !== null && goal.place !== currentPlace) {
 				return null;
 			}
+			console.log('goal.nameKey', goal.nameKey);
+			console.log(goal.place, currentPlace);
 			return {
 				...actionList[Action.MISSION],
 				prop: 'mission',
@@ -120,7 +122,7 @@ export async function getAvailableActions(
 		followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkills, 'skillId'>[];
-		missions: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking'>[];
+		missions: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
 	},
 	user: UserForConditionCheck,
 	conditionOptions: BuildConditionContextOptions = {}
@@ -373,12 +375,28 @@ export async function getAvailableActions(
 		pushUniqueAction(availableActions, getDialogActionFiche(dialog));
 	}
 
+	/*console.log(
+		'[missions:getAvailableActions]',
+		dinoz.missions.map(m => ({
+			id: m.id,
+			key: m.missionKey,
+			progression: m.progression,
+			tracking: m.tracking,
+			isCompleted: 'isCompleted' in m ? m.isCompleted : '__missing__'
+		}))
+	);*/
 	// Mission action
 	const resolvedMission = resolveCurrentMission(dinoz.missions);
 
+	/*console.log('[missions:resolvedCurrentMission]', {
+		resolvedKey: resolvedMission?.definition.key ?? null,
+		currentGoal: resolvedMission?.currentGoal ?? null,
+		currentPlace: actualPlace(dinoz).placeId
+	});*/
 	if (resolvedMission?.currentGoal) {
 		const missionAction = getMissionActionFiche(resolvedMission.currentGoal, actualPlace(dinoz).placeId);
 
+		//console.log('[missions:missionAction]', missionAction);
 		if (missionAction) {
 			pushUniqueAction(availableActions, missionAction);
 		}
