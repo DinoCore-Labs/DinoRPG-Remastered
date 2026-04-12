@@ -64,7 +64,7 @@ function getDialogActionFiche(dialog: { id: string; name: string }): ActionFiche
 	};
 }
 
-function getMissionActionFiche(goal: MissionGoal): ActionFiche | null {
+function getMissionActionFiche(goal: MissionGoal, currentPlace: PlaceEnum): ActionFiche | null {
 	switch (goal.type) {
 		case 'TALK':
 			return {
@@ -84,6 +84,15 @@ function getMissionActionFiche(goal: MissionGoal): ActionFiche | null {
 				...actionList[Action.MISSION],
 				prop: 'mission',
 				label: goal.nameKey
+			};
+		case 'VALIDATE':
+			if (goal.place !== null && goal.place !== currentPlace) {
+				return null;
+			}
+			return {
+				...actionList[Action.MISSION],
+				prop: 'mission',
+				label: 'missions.validate'
 			};
 		default:
 			return null;
@@ -368,7 +377,7 @@ export async function getAvailableActions(
 	const resolvedMission = resolveCurrentMission(dinoz.missions);
 
 	if (resolvedMission?.currentGoal) {
-		const missionAction = getMissionActionFiche(resolvedMission.currentGoal);
+		const missionAction = getMissionActionFiche(resolvedMission.currentGoal, actualPlace(dinoz).placeId);
 
 		if (missionAction) {
 			pushUniqueAction(availableActions, missionAction);

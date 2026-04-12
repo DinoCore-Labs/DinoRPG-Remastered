@@ -3253,6 +3253,7 @@
 			"atHidden": "Trouver le bon lieu",
 			"talk": "Parler à {nameKey}"
 		},
+		"validate": "Valider la mission",
 		"papy": {
 			"fish": {
 				"name": "Du poisson frais",
@@ -3265,6 +3266,10 @@
 				"madameSeyche": {
 					"name": "Madame Seyche",
 					"text": "Ooooohhhh merci mon petit, ce dîner va être très réussi grâce à toi ! Retourne vite voir Papy Joe pour obtenir ta récompense..."
+				},
+				"validation": {
+					"name": "Papy Joe",
+					"text": "Retourner voir Papy Joe pour valider la mission."
 				}
 			}
 		}

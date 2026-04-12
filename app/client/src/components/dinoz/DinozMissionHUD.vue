@@ -204,6 +204,14 @@ export default defineComponent({
 						left.kill.count === right.kill.count &&
 						left.kill.displayNameKey === right.kill.displayNameKey
 					);
+				case 'VALIDATE':
+					return (
+						right.type === 'VALIDATE' &&
+						left.npcKey === right.npcKey &&
+						left.place === right.place &&
+						left.nameKey === right.nameKey &&
+						left.textKey === right.textKey
+					);
 				default:
 					return false;
 			}
@@ -224,7 +232,7 @@ export default defineComponent({
 				case 'TALK':
 					return mode === 'current'
 						? `${this.$t('missions.goals.talk')} ${this.$t(goal.nameKey).toString()}`
-						: this.$t(goal.textKey).toString();
+						: this.$t(goal.nameKey).toString();
 				case 'ACTION':
 					return mode === 'current'
 						? `${this.$t(goal.nameKey).toString()} - ${this.$t(goal.descriptionKey).toString()}`
@@ -235,6 +243,8 @@ export default defineComponent({
 						: this.$t('dinozMissions.goal.kill').toString();
 					return `${tracking}/${goal.kill.count} ${targetName}`;
 				}
+				case 'VALIDATE':
+					return this.$t(goal.textKey).toString();
 				default:
 					return null;
 			}

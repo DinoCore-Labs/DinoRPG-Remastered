@@ -20,7 +20,13 @@
 					@abort="endMission(didi.id)"
 				/>
 			</template>
-			<!--<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />-->
+			<MissionRewardModal
+				v-if="missionReward"
+				:missionNameKey="missionReward.missionNameKey"
+				:textKey="missionReward.endKey"
+				:rewards="missionReward.rewards"
+				@close="closeMissionRewardModal"
+			/>
 			<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
 				{{ $t('dinoz.hud.following') }}
 				<template #content>
@@ -127,6 +133,8 @@ import { itinerantShopNameList, shopNameList } from '../../constants/shop';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import MissionTalkModal from '../modal/MissionTalkModal.vue';
 import { MissionService } from '../../services/mission.service';
+import type { MissionInteractionRewardModal } from '@dinorpg/core/models/missions/missionInteraction.js';
+import MissionRewardModal from '../modal/MissionRewardModal.vue';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -147,14 +155,15 @@ export default defineComponent({
 			intervals: [] as number[],
 			DINOZ_STATE,
 			missionTalkTextKey: null as string | null,
-			missionTalkNameKey: null as string | null
+			missionTalkNameKey: null as string | null,
+			missionReward: null as MissionInteractionRewardModal | null
 		};
 	},
 	components: {
 		Resurrect,
 		DinozMissionHUD,
 		MissionTalkModal,
-		//MissionRewardModal,
+		MissionRewardModal,
 		DZDisclaimer,
 		DZFollow
 	},
@@ -257,9 +266,14 @@ export default defineComponent({
 					return this.$t(goal.descriptionKey).toString();
 				case 'FIGHT':
 					return this.$t('missions.actions.fight').toString();
+				case 'VALIDATE':
+					return this.$t(goal.textKey).toString();
 				default:
 					return this.$t('npc.description').toString();
 			}
+		},
+		closeMissionRewardModal() {
+			this.missionReward = null;
 		},
 		async launch(action: ActionFiche) {
 			switch (action.name) {
@@ -331,10 +345,20 @@ export default defineComponent({
 					try {
 						const result = await MissionService.startAction(this.dinozId);
 						switch (result.mode) {
-							case 'modal':
+							case 'modal': {
+								if (result.goalType === 'VALIDATE') {
+									const completion = await MissionService.completeAction(this.dinozId);
+									if (completion.rewardModal) {
+										this.missionReward = completion.rewardModal;
+									}
+									await this.refreshDinoz();
+									await this.loadComponent();
+									break;
+								}
 								this.missionTalkNameKey = result.nameKey;
 								this.missionTalkTextKey = result.textKey;
 								break;
+							}
 							case 'dialog':
 								this.$router.push({
 									name: 'DialogPage',
@@ -593,18 +617,6 @@ export default defineComponent({
 					break;
 			}
 		} /*,
-		continueMission() {
-			this.NPCModal = undefined;
-			this.$emit('continueMission');
-		},
-		async validateMission() {
-			this.missionReward = undefined;
-			await this.refreshDinoz();
-			await this.$refreshGold();
-		},
-		npcDisplayName(npcId: number) {
-			return Object.values(npcList).find(npc => npc.id === npcId)?.name;
-		},
 		isSelling() {
 			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 			if (!dinoz) return false;
@@ -642,9 +654,12 @@ export default defineComponent({
 		},
 		async closeMissionTalkModal() {
 			try {
-				await MissionService.completeAction(this.dinozId);
+				const result = await MissionService.completeAction(this.dinozId);
 				this.missionTalkTextKey = null;
 				this.missionTalkNameKey = null;
+				if (result.rewardModal) {
+					this.missionReward = result.rewardModal;
+				}
 				await this.refreshDinoz();
 				await this.loadComponent();
 			} catch (e) {
@@ -653,15 +668,6 @@ export default defineComponent({
 		}
 	},
 	computed: {
-		/*missionName() {
-			if (this.dinoz.missionId) {
-				return missionsList[this.dinoz.missionId];
-			}
-			return undefined;
-		},
-		storeMission() {
-			return dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id)?.missionHUD || null;
-		},*/
 		leaderDinoz() {
 			if (!this.dinoz.leaderId) return;
 			return dinozStore().getDinoz(this.dinoz.leaderId);
