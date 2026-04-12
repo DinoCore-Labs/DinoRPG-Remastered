@@ -3237,6 +3237,16 @@
 		}
 	},
 	"missions": {
+		"header": "Liste des missions",
+		"th": { "title": "Titre", "status": "Statut" },
+		"status": {
+			"available": "Disponible",
+			"unavailable": "Indisponible",
+			"ongoing": "En cours",
+			"finished": "Terminée"
+		},
+		"accept": "Accepter la mission",
+		"giveUp": "Abandonner",
 		"goals": {
 			"atPlace": "Se rendre à {place}",
 			"atHidden": "Trouver le bon lieu"

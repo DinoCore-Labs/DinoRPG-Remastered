@@ -32,6 +32,12 @@ export type StartDinozMissionResponse = {
 	isCompleted: boolean;
 };
 
+export type StopDinozMissionResponse = {
+	success: true;
+	missionKey: MissionKey;
+	aborted: true;
+};
+
 export type DinozMissionDetailResponse = {
 	key: MissionKey;
 	group: MissionGroupKey;
