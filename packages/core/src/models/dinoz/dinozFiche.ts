@@ -1,3 +1,4 @@
+import { DinozCurrentMission } from '../missions/missionCurrent.js';
 import { ActionFiche } from './dinozActions.js';
 import { DinozRace } from './dinozRace.js';
 import { DinozRestInfos } from './dinozRest.js';
@@ -12,8 +13,7 @@ export interface DinozFiche {
 	display: string;
 	state: DinozState | null;
 	level: number;
-	//missionId: number | undefined | null;
-	//missionHUD: MissionHUD | null;
+	currentMission?: DinozCurrentMission | null;
 	leaderId: number | null;
 	followers: Pick<DinozFiche, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
 	life: number;
@@ -39,7 +39,6 @@ export interface DinozFiche {
 	gather: boolean;
 	rest?: DinozRestInfos | null;
 	stateTimer?: string;
-	//missions: DinozMission[];
 	//concentration: Concentration | null;
 	//tournament: Pick<TournamentState, 'id' | 'levelLimit'> | null;
 	/*npcAwait?: {
