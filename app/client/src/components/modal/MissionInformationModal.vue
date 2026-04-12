@@ -3,33 +3,20 @@
 		<div v-if="enabled" class="modal-background">
 			<div class="modal-box">
 				<button class="modal-close" @click="$emit('close')">X</button>
-
 				<p v-if="loading">
 					{{ $t('common.loading') }}
 				</p>
-
 				<p v-else-if="descriptionHtml" v-html="descriptionHtml" />
-
 				<div v-if="!loading" class="option">
 					<a v-if="mission?.status === 'available' && detail?.canStart" class="button" @click="startMission()">
 						{{ $t('missions.accept') }}
 					</a>
-
+					<a v-else-if="mission?.status === 'ongoing'" class="button" @click="stopMission()">
+						{{ $t('missions.giveUp') }}
+					</a>
 					<p v-else-if="mission?.status === 'available' && !detail?.canStart">
 						{{ $t('missions.already') }}
 					</p>
-
-					<p v-else-if="mission?.status === 'ongoing'">
-						{{ $t('missions.ongoingInfo') }}
-					</p>
-
-					<!--
-					TODO:
-					Remettre le bouton abandon quand un endpoint backend existera.
-					<a class="button" @click="stopMission()">
-						{{ $t('missions.giveUp') }}
-					</a>
-					-->
 				</div>
 			</div>
 		</div>
@@ -38,7 +25,6 @@
 
 <script lang="ts">
 import type { DinozMissionDetailResponse } from '@dinorpg/core/models/missions/missionResponse.js';
-import type { MissionGoal } from '@dinorpg/core/models/missions/missionGoal.js';
 import { defineComponent, type PropType } from 'vue';
 
 import { MissionService } from '../../services/mission.service.js';
@@ -80,20 +66,9 @@ export default defineComponent({
 			if (!this.detail || !this.mission) {
 				return '';
 			}
-
-			if (this.mission.status === 'available') {
+			if (this.mission.status === 'available' || this.mission.status === 'ongoing') {
 				return formatText(this.$t(this.detail.beginKey).toString());
 			}
-
-			if (this.mission.status === 'ongoing') {
-				const currentGoalText = this.detail.currentGoal ? this.formatGoal(this.detail.currentGoal) : '';
-				return formatText(
-					this.$t('missions.currentGoalText', {
-						goal: currentGoalText
-					}).toString()
-				);
-			}
-
 			return '';
 		}
 	},
@@ -120,7 +95,6 @@ export default defineComponent({
 				this.detail = null;
 				return;
 			}
-
 			try {
 				this.loading = true;
 				this.detail = await MissionService.getDinozMissionDetail(this.dinozId, this.mission.missionKey);
@@ -130,26 +104,6 @@ export default defineComponent({
 				this.loading = false;
 			}
 		},
-
-		formatGoal(goal: MissionGoal): string {
-			switch (goal.type) {
-				case 'AT':
-					return goal.titleKey ? this.$t(goal.titleKey).toString() : this.$t('dinozMissions.goal.at').toString();
-
-				case 'TALK':
-					return `${this.$t('dinozMissions.goal.talk')} ${this.$t(goal.nameKey).toString()}`;
-
-				case 'ACTION':
-					return `${this.$t(goal.nameKey).toString()} - ${this.$t(goal.descriptionKey).toString()}`;
-
-				case 'KILL':
-					return `${this.$t('dinozMissions.goal.kill')} ${goal.kill.count}`;
-
-				default:
-					return goal.type;
-			}
-		},
-
 		async startMission() {
 			if (!this.mission) {
 				this.$toast.open({
@@ -158,16 +112,29 @@ export default defineComponent({
 				});
 				return;
 			}
-
 			try {
 				await MissionService.startDinozMission(this.dinozId, this.mission.missionKey);
-
 				this.$emit('reload');
-
 				this.$router.push({
 					name: 'DinozPage',
 					params: { id: this.dinozId }
 				});
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
+		},
+		async stopMission() {
+			if (!this.mission) {
+				this.$toast.open({
+					message: this.$t('toast.missingData').toString(),
+					type: 'error'
+				});
+				return;
+			}
+			try {
+				await MissionService.stopDinozMission(this.dinozId, this.mission.missionKey);
+				this.$emit('reload');
+				this.$emit('close');
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 			}
@@ -189,10 +156,9 @@ export default defineComponent({
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	.modal-box {
-		background-image: url('../../assets/background/mission.webp');
 		background-repeat: no-repeat;
+		background-image: url('../../assets/background/bg_mission.webp');
 		width: 394px;
 		height: 296px;
 		position: absolute;
@@ -203,7 +169,6 @@ export default defineComponent({
 			0 0 0 1px #aa885f,
 			0 0 5px 1px #aa885f;
 		animation: blowUpModal 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-
 		p {
 			margin-bottom: 5px;
 			line-height: 12pt;
@@ -214,14 +179,12 @@ export default defineComponent({
 			text-align: justify;
 			font-size: 10pt;
 		}
-
 		.option {
 			margin-left: 35px;
 			margin-right: 35px;
 			padding-top: 10px;
 			border-top: 1px solid #e6b778;
 			font-weight: bold;
-
 			p {
 				margin-bottom: 0;
 				padding-left: 0;
@@ -231,37 +194,31 @@ export default defineComponent({
 				text-align: justify;
 				font-size: 10pt;
 			}
-
 			.button {
 				cursor: pointer;
 			}
 		}
 	}
 }
-
 .v-enter-active {
 	transition:
 		opacity 0.5s ease,
 		bottom 0.5s ease;
 	animation-delay: 0.35s;
 }
-
 .v-leave-active {
 	transition:
 		opacity 0.5s ease,
 		bottom 0.5s ease;
 }
-
 .v-enter-from {
 	bottom: 0;
 	opacity: 0;
 }
-
 .v-leave-to {
 	bottom: 0;
 	opacity: 0;
 }
-
 .modal-close {
 	min-width: 31px;
 	cursor: pointer;
@@ -277,14 +234,12 @@ export default defineComponent({
 	text-decoration: none;
 	font-variant: small-caps;
 	transition: all 0.15s;
-
 	&:hover,
 	&:focus,
 	&:active {
 		color: black;
 	}
 }
-
 @keyframes blowUpModal {
 	0% {
 		transform: scale(0);
