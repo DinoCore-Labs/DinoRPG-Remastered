@@ -14,7 +14,7 @@ export type MissionInteractionStartResponse =
 			goalType: 'TALK' | 'ACTION' | 'VALIDATE';
 			npcKey?: MissionNpcKey;
 			nameKey: string;
-			textKey: string;
+			textKey?: string;
 			avatar?: MissionAvatarKey | null;
 			frame?: MissionFrameKey | null;
 			background?: MissionBackgroundKey | null;

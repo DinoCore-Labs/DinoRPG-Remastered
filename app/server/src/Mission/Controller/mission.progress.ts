@@ -94,13 +94,13 @@ async function finalizeMissionProgress(
 		});
 	}
 
-	console.log('[missions] progress', {
+	/*console.log('[missions] progress', {
 		missionKey: params.missionKey,
 		dinozId: params.dinozId,
 		nextProgression: params.nextProgression,
 		nextTracking: params.nextTracking,
 		isCompleted
-	});
+	});*/
 
 	return {
 		missionKey: updatedMission.missionKey,

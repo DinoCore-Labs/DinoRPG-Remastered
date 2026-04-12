@@ -5,26 +5,31 @@
 				<div class="result">
 					{{ completionTitle }}
 				</div>
-
 				<p v-html="formatContent($t(textKey).toString())" />
-
 				<ul>
 					<li v-for="(reward, index) in rewards" :key="`${reward.type}-${index}`">
 						<template v-if="reward.type === 'XP'">
 							<img :src="getImgURL('icons', 'small_xp')" alt="xp" />
-							{{ reward.value }} {{ xpLabel }}
+							{{ reward.value }}
 						</template>
-
 						<template v-else-if="reward.type === 'GOLD'">
 							<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
-							{{ reward.value }} {{ goldLabel }}
+							{{ reward.value }}
 						</template>
-
 						<template v-else-if="reward.type === 'ITEM'">
+							<img
+								class="item"
+								:src="getImgURL('item', `item_${getItemImageKey(reward.itemKey)}`)"
+								:alt="getItemLabel(reward.itemKey)"
+							/>
 							{{ getItemLabel(reward.itemKey) }} x {{ reward.quantity }}
 						</template>
-
 						<template v-else-if="reward.type === 'COLLECTION'">
+							<img
+								class="item"
+								:src="getImgURL('epicRewards', `collec_${getCollectionImageKey(reward.collectionKey)}`)"
+								:alt="getCollectionLabel(reward.collectionKey)"
+							/>
 							{{ getCollectionLabel(reward.collectionKey) }}
 						</template>
 
@@ -65,6 +70,7 @@ import type { MissionReward } from '@dinorpg/core/models/missions/missionReward.
 import { defineComponent, type PropType } from 'vue';
 
 import DZButton from '../utils/DZButton.vue';
+import { itemList } from '@dinorpg/core/models/items/itemList.js';
 
 export default defineComponent({
 	name: 'MissionRewardModal',
@@ -94,12 +100,6 @@ export default defineComponent({
 			}
 			return missionName;
 		},
-		xpLabel(): string {
-			return this.$te('missions.xp') ? this.$t('missions.xp').toString() : 'XP';
-		},
-		goldLabel(): string {
-			return this.$te('missions.gold') ? this.$t('missions.gold').toString() : 'Gold';
-		},
 		continueLabel(): string {
 			return this.$te('missions.continue')
 				? this.$t('missions.continue').toString()
@@ -118,11 +118,21 @@ export default defineComponent({
 		getItemLabel(itemKey: string): string {
 			return this.translateWithFallback([`item.name.${itemKey}`, `items.name.${itemKey}`], itemKey);
 		},
+		getItemImageKey(itemKey: string): string {
+			const item = Object.values(itemList).find(entry => entry.name === itemKey);
+			if (!item) {
+				return itemKey;
+			}
+			return item.display || item.name;
+		},
 		getCollectionLabel(collectionKey: string): string {
 			return this.translateWithFallback(
 				[`rewards.name.${collectionKey}`, `collections.name.${collectionKey}`],
 				collectionKey
 			);
+		},
+		getCollectionImageKey(collectionKey: string): string {
+			return collectionKey;
 		},
 		getIngredientLabel(ingredientKey: string): string {
 			return this.translateWithFallback(
@@ -207,6 +217,10 @@ export default defineComponent({
 			border-top: 1px solid #e6b778;
 		}
 	}
+}
+.item {
+	width: 15px;
+	height: 15px;
 }
 .v-enter-active,
 .v-leave-active {

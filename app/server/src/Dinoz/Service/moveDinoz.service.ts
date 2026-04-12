@@ -127,10 +127,12 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 
 			// Mission progression related to MOVE action
 			await prisma.$transaction(async tx => {
-				await advanceDinozMissionOnMove(tx, {
-					dinozId,
-					place: finalPlace
-				});
+				for (const member of team) {
+					await advanceDinozMissionOnMove(tx, {
+						dinozId: member.id,
+						place: finalPlace
+					});
+				}
 			});
 		}
 	}

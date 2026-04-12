@@ -148,31 +148,24 @@ export async function applyMissionRewards(
 				await applyMissionXpReward(tx, params.dinozId, reward.value);
 				break;
 			}
-
 			case 'GOLD': {
 				await applyMissionGoldReward(tx, dinoz.userId, reward.value);
 				break;
 			}
-
 			case 'ITEM': {
 				await applyMissionItemReward(tx, dinoz.userId, reward.itemKey, reward.quantity);
 				break;
 			}
-
 			case 'COLLECTION': {
 				const result = await applyMissionCollectionReward(tx, dinoz.userId, reward.collectionKey);
-
 				if (result.created) {
 					const statTracking = statTrackingByCollectionKey[reward.collectionKey];
-
 					if (statTracking !== undefined) {
 						await incrementUserStat(statTracking, dinoz.userId, 1);
 					}
 				}
-
 				break;
 			}
-
 			default: {
 				throw new ExpectedError(`Unsupported mission reward type "${(reward as { type: string }).type}"`);
 			}

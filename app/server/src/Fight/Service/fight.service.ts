@@ -8,14 +8,15 @@ import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import { FightProcessResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
-import { getMonsterKeyById, monsterKeyById } from '@dinorpg/core/models/monster/monsterKeyMap.js';
+import { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
+import { getMonsterKeyById, monsterIdByKey, monsterKeyById } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 import { monsterList } from '@dinorpg/core/models/monster/monsterList.js';
 import { placeListv2, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { calculatePvExp, getMaxXp } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { Dinoz, DinozSkills, DinozStatus, User } from '../../../../prisma/index.js';
+import { Dinoz, DinozMissions, DinozSkills, DinozStatus, User } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { createCatch, removeCatch, updateCatch } from '../../Dinoz/Controller/dinozCatches.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
@@ -24,6 +25,7 @@ import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { advanceDinozMissionOnFightWon } from '../../Mission/Controller/mission.progress.js';
+import { resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { addMoney, removeMoney } from '../../User/Controller/money.controller.js';
@@ -135,8 +137,11 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
  *
  * @returns FightProcessResult
  **/
+type DinozToCheckMissionFight = {
+	missions: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
+};
 export async function fightMonstersAtPlace(
-	team: (DinozToGetFighter & DinozToRewardFight) /*& DinozToCheckMissionFight*/[],
+	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum,
 	user: Pick<User, 'id' | 'teacher' | 'cooker'>
 ) {
@@ -516,15 +521,6 @@ export async function rewardFight(
 		}
 	}
 
-	/*await createLog(
-		LogType.Fight,
-		playerId,
-		undefined,
-		fightResult.winner ? gold : -goldLost,
-		fightResult.winner ? totalWinXP : 0,
-		fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0)
-	);*/
-
 	const fighters = fightResult.fighters.map(f => {
 		return {
 			id: f.id,
@@ -614,129 +610,137 @@ function eventMonsterProba(
  * @returns List of monsters to fight
  */
 export async function generateMonsterList(
-	team: Pick<Dinoz, 'level' | 'placeId'> /*& DinozToCheckMissionFight*/[],
+	team: (Pick<Dinoz, 'level' | 'placeId'> & {
+		missions?: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
+	})[],
 	placeOfFight: PlaceEnum
 ): Promise<MonsterFiche[]> {
 	let teamPowerLevel = 0;
 	let greatestFighterLevel = 0;
 	for (const dinoz of team) {
 		teamPowerLevel += dinoz.level;
-		if (dinoz.level > greatestFighterLevel) greatestFighterLevel = dinoz.level;
+		if (dinoz.level > greatestFighterLevel) {
+			greatestFighterLevel = dinoz.level;
+		}
 	}
 	const diff = (team.length + 2) / (team.length * 2 + 1);
 	teamPowerLevel = Math.round(teamPowerLevel * diff);
-
 	const specialProb = getRandomNumber(0, 100);
-	const place = Object.values(placeListv2).find(place => place.placeId === placeOfFight);
+	const place = Object.values(placeListv2).find(entry => entry.placeId === placeOfFight);
 	if (!place) {
 		throw new ExpectedError(`This place doesn't exist.`);
 	}
 	const events = currentEvents();
 	let eventMonsterKilled = 0;
 	if (events.length > 0) {
-		//const playerEvent = await getPlayerEventProgression(team[0].playerId, events[0].name);
-		//eventMonsterKilled = playerEvent?.dailyProgression ?? 0;
+		// const playerEvent = await getPlayerEventProgression(team[0].playerId, events[0].name);
+		// eventMonsterKilled = playerEvent?.dailyProgression ?? 0;
 	}
-	const monsters = Object.values(monsterList)
-		// Filter the possible monsters to fight
-		.filter(m => {
-			// Filter monsters by place if defined
-			if (m.places && !m.places.includes(place.placeId)) return false;
-			// Filter event monsters
-			if (m.events && m.events.length > 0) {
-				if (events.length === 0) return false;
-				if (!m.events.some(event => events.map(e => e.name).includes(event))) return false;
+	const leader = team[0];
+	const leaderMission = leader?.missions && leader.missions.length > 0 ? resolveCurrentMission(leader.missions) : null;
+	const leaderKillGoal = leaderMission?.currentGoal?.type === 'KILL' ? leaderMission.currentGoal : null;
+	const leaderKillMonsterKeys = new Set<MonsterKey>(leaderKillGoal?.kill.monsterKeys ?? []);
+	const leaderKillForce = Boolean(leaderKillGoal?.kill.force);
+	const MISSION_MONSTER_ODDS_MULTIPLIER = 3;
+	function isLeaderMissionMonster(monster: MonsterFiche): boolean {
+		const monsterKey = getMonsterKeyById(monster.id);
+		return monsterKey !== null && leaderKillMonsterKeys.has(monsterKey);
+	}
+	const availableMonsters = Object.values(monsterList).filter(monster => {
+		if (monster.places && !monster.places.includes(place.placeId)) {
+			return false;
+		}
+		if (monster.events && monster.events.length > 0) {
+			if (events.length === 0) {
+				return false;
 			}
-			// Filter monsters by zones
-			return m.zones.includes(place.map);
-		})
-		// Calculate the probability of each monster to appear
-		.map(m => {
-			// 1 - If monster is a mission target, boost its probability
-			/*for (const dinoz of team) {
-				const actualStep = getActualStep(dinoz);
-				if (
-					actualStep &&
-					actualStep.requirement.actionType === ConditionEnum.KILL &&
-					actualStep.requirement.target.includes(m.name)
-				) {
-					return {
-						monster: m,
-						p: monsterLevelProba(greatestFighterLevel, m.odds * 10, m.level)
-					};
-				}
-			}*/
-			// 2 - If monster is special, check if it appears
-			if (m.special) {
-				const display = m.odds >= specialProb;
+			if (!monster.events.some(event => events.map(e => e.name).includes(event))) {
+				return false;
+			}
+		}
+		return monster.zones.includes(place.map);
+	});
+	const forcedMissionMonsterPool = availableMonsters.filter(monster => isLeaderMissionMonster(monster));
+	const monsters = availableMonsters
+		.map(monster => {
+			if (isLeaderMissionMonster(monster)) {
 				return {
-					monster: m,
-					p: monsterLevelProba(greatestFighterLevel, display ? 100 : 0, m.level)
-				};
-				// 3 - Event monsters (already filtered previously
-			} else if (m.events) {
-				return {
-					monster: m,
-					p: eventMonsterProba(greatestFighterLevel, m.odds, m.level, events[0], eventMonsterKilled)
-				};
-				// 4 - Default case
-			} else {
-				return {
-					monster: m,
-					p: monsterLevelProba(greatestFighterLevel, m.odds, m.level)
+					monster,
+					p: monsterLevelProba(greatestFighterLevel, monster.odds * MISSION_MONSTER_ODDS_MULTIPLIER, monster.level)
 				};
 			}
+			if (monster.special) {
+				const display = monster.odds >= specialProb;
+				return {
+					monster,
+					p: monsterLevelProba(greatestFighterLevel, display ? 100 : 0, monster.level)
+				};
+			}
+			if (monster.events) {
+				return {
+					monster,
+					p: eventMonsterProba(greatestFighterLevel, monster.odds, monster.level, events[0], eventMonsterKilled)
+				};
+			}
+			return {
+				monster,
+				p: monsterLevelProba(greatestFighterLevel, monster.odds, monster.level)
+			};
 		})
-		// Keep only monsters with a probability greater than 0
-		.filter(m => m.p > 0);
-
+		.filter(entry => entry.p > 0);
 	let monsterLevel = 0;
 	const monsterArray: MonsterFiche[] = [];
 	let total = 0;
-	for (const monsterArrayElement of monsters) {
-		if (monsterArrayElement.p === null) {
-			monsterLevel += monsterArrayElement.monster.level;
-			monsterArray.push(monsterArrayElement.monster);
-			monsters.shift();
+	for (const monsterEntry of monsters) {
+		if (monsterEntry.p === null) {
+			monsterLevel += monsterEntry.monster.level;
+			monsterArray.push(monsterEntry.monster);
 		} else {
-			total += monsterArrayElement.p;
+			total += monsterEntry.p;
 		}
 	}
-
 	if (monsterArray.length === 0 && total === 0) {
-		for (const monsterArrayElement of monsters) {
-			monsterArrayElement.p = 100;
+		for (const monsterEntry of monsters) {
+			monsterEntry.p = 100;
 		}
 	}
-
 	const mdelta = Math.max(Math.round(teamPowerLevel / 4), 2);
-	const ml = monsters.map(a => {
-		return { monster: a.monster, odds: a.p };
-	});
+	const ml = monsters.map(entry => ({
+		monster: entry.monster,
+		odds: entry.p
+	}));
+	if (
+		leaderKillForce &&
+		forcedMissionMonsterPool.length > 0 &&
+		!monsterArray.some(monster => isLeaderMissionMonster(monster))
+	) {
+		const forcedMonster = weightedRandom(
+			forcedMissionMonsterPool.map(monster => ({
+				monster,
+				odds: Math.max(monster.odds, 1)
+			}))
+		).monster;
+		monsterArray.push(forcedMonster);
+		monsterLevel += forcedMonster.level;
+	}
 	while (monsterLevel < teamPowerLevel) {
-		// Already calculted before
-		// const total = ml.reduce((acc, item) => acc + item.odds, 0);
-		const m = weightedRandom(ml).monster;
+		const selectedMonster = weightedRandom(ml).monster;
 		let count = 1;
-		if (m.groups) {
-			const weightedGroup = weightedRandom(m.groups).quantity;
+		if (selectedMonster.groups) {
+			const weightedGroup = weightedRandom(selectedMonster.groups).quantity;
 			count += weightedGroup;
 		}
 		for (let i = 0; i < count; i++) {
-			monsterLevel += m.level;
-			monsterArray.push(m);
-			if (m.groups && count > 1 && monsterLevel >= teamPowerLevel) {
+			monsterLevel += selectedMonster.level;
+			monsterArray.push(selectedMonster);
+			if (selectedMonster.groups && count > 1 && monsterLevel >= teamPowerLevel) {
 				break;
 			}
 		}
-		if (m.special) {
-			// TODO: Rework this part to avoid using delete
-
-			// delete monsters[randomIndex];
+		if (selectedMonster.special) {
 			break;
 		}
 		monsterLevel += mdelta;
 	}
-
 	return monsterArray;
 }

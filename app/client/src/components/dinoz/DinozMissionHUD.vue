@@ -180,6 +180,14 @@ export default defineComponent({
 			}
 			return this.$t(`place.name.${place.name}`).toString();
 		},
+		getKillTargetNames(goal: Extract<MissionGoal, { type: 'KILL' }>): string {
+			const monsterKeys = goal.kill.monsterKeys ?? [];
+			if (monsterKeys.length === 0) {
+				return this.$t('dinozMissions.goal.kill').toString();
+			}
+			const names = [...new Set(monsterKeys.map(monsterKey => this.$t(`monster.name.${monsterKey}`).toString()))];
+			return names.join(', ');
+		},
 		areGoalsEquivalent(left: MissionGoal, right: MissionGoal): boolean {
 			if (left.type !== right.type) {
 				return false;
@@ -209,8 +217,7 @@ export default defineComponent({
 						right.type === 'VALIDATE' &&
 						left.npcKey === right.npcKey &&
 						left.place === right.place &&
-						left.nameKey === right.nameKey &&
-						left.textKey === right.textKey
+						left.nameKey === right.nameKey
 					);
 				default:
 					return false;
@@ -234,19 +241,23 @@ export default defineComponent({
 						nameKey: this.$t(goal.nameKey).toString()
 					}).toString();
 				case 'ACTION':
-					return mode === 'current'
-						? `${this.$t(goal.nameKey).toString()} - ${this.$t(goal.descriptionKey).toString()}`
-						: this.$t(goal.descriptionKey).toString();
-				case 'KILL': {
-					const targetName = goal.kill.displayNameKey
-						? this.$t(goal.kill.displayNameKey).toString()
-						: this.$t('dinozMissions.goal.kill').toString();
-					return `${tracking}/${goal.kill.count} ${targetName}`;
-				}
+					return this.$t('missions.goals.action', {
+						nameKey: this.$t(goal.nameKey).toString()
+					}).toString();
 				case 'VALIDATE':
 					return this.$t('missions.goals.validate', {
 						nameKey: this.$t(goal.nameKey).toString()
 					}).toString();
+				case 'KILL': {
+					const targetName = goal.kill.displayNameKey
+						? this.$t(goal.kill.displayNameKey).toString()
+						: this.getKillTargetNames(goal);
+					return this.$t('missions.goals.kill', {
+						current: tracking,
+						count: goal.kill.count,
+						nameKey: targetName
+					}).toString();
+				}
 				default:
 					return null;
 			}
