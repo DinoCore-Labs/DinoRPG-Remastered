@@ -52,7 +52,6 @@ export default defineComponent({
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	.box {
 		cursor: pointer;
 		background-repeat: repeat-y;
@@ -60,21 +59,16 @@ export default defineComponent({
 		width: 90%;
 		min-height: 75px;
 		background:
-			url('../../assets/background/dialog_bg_top_left.webp'), url('../../assets/background/dialog_bg_top_right.webp'),
-			url('../../assets/background/dialog_bg_top_center.webp'),
-			url('../../assets/background/dialog_bg_footer_left.webp'),
-			url('../../assets/background/dialog_bg_footer_right.webp'),
-			url('../../assets/background/dialog_bg_footer_center.webp'),
-			url('../../assets/background/dialog_bg_center_left.webp'),
-			url('../../assets/background/dialog_bg_center_right.webp'),
-			url('../../assets/background/dialog_bg_center_center.webp');
+			url('../../assets/background/dialog_top_left.webp'), url('../../assets/background/dialog_top_right.webp'),
+			url('../../assets/background/dialog_top_center.webp'), url('../../assets/background/dialog_footer_left.webp'),
+			url('../../assets/background/dialog_footer_right.webp'), url('../../assets/background/dialog_footer_center.webp'),
+			url('../../assets/background/dialog_center_left.webp'), url('../../assets/background/dialog_center_right.webp'),
+			url('../../assets/background/dialog_center_center.webp');
 		background-position-x: left, right, center, left, right, center, left, right, center;
 		background-position-y: top, top, top, bottom, bottom, bottom, 40px, 40px, 40px;
 		background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
-
 		padding-right: 5px;
 		padding-left: 5px;
-
 		.name {
 			margin-left: 15px;
 			padding-top: 15px;
@@ -83,7 +77,6 @@ export default defineComponent({
 			font-size: 10pt;
 			color: #693118;
 		}
-
 		.content {
 			padding: 1px;
 			background-repeat: no-repeat;
@@ -92,7 +85,6 @@ export default defineComponent({
 			display: flex;
 			justify-content: space-between;
 			gap: 15px;
-
 			.dialog {
 				position: relative;
 				margin-bottom: 10px;
@@ -101,7 +93,6 @@ export default defineComponent({
 				font-size: 10pt;
 				font-style: italic;
 			}
-
 			.continue {
 				align-self: flex-end;
 				margin-right: 10px;
