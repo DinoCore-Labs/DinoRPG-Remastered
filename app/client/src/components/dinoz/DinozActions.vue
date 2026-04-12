@@ -8,8 +8,8 @@
 		<div class="action_content">
 			<template v-for="didi in dinozFullParty" :key="didi">
 				<DinozMissionHUD
-					v-if="didi.missionHUD && didi.missionId"
-					:missionId="didi.missionId"
+					v-if="didi.currentMission"
+					:currentMission="didi.currentMission"
 					:dinozName="didi.name"
 					:dinozId="didi.id"
 					@abort="endMission(didi.id)"
@@ -137,11 +137,8 @@ export default defineComponent({
 			shopNameList: shopNameList,
 			itinerantShopNameList: itinerantShopNameList,
 			resurrect: false as boolean,
-			//NPCModal: undefined as string | undefined,
-			//missionReward: undefined as Rewarder[] | undefined,
 			sessionStore: sessionStore(),
 			dinozStore: dinozStore(),
-			//MissionEnum: ConditionEnum,
 			Action,
 			itinerantName: '' as string,
 			dinozFullParty: [] as DinozFiche[],
@@ -149,9 +146,7 @@ export default defineComponent({
 			unfreezeSecondsLeft: 0,
 			restSecondsLeft: 0,
 			intervals: [] as number[],
-			DINOZ_STATE,
-			mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
-				?.missionHUD
+			DINOZ_STATE
 		};
 	},
 	components: {
@@ -600,14 +595,6 @@ export default defineComponent({
 			this.NPCModal = undefined;
 			this.$emit('continueMission');
 		},
-		endMission(dinozId: number) {
-			this.missionReward = undefined;
-			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche;
-			dinozToUpdate.missionHUD = null;
-			dinozToUpdate.missionId = undefined;
-			this.dinozStore.setDinoz(dinozToUpdate);
-			this.$emit('endMission');
-		},
 		async validateMission() {
 			this.missionReward = undefined;
 			await this.refreshDinoz();
@@ -630,6 +617,17 @@ export default defineComponent({
 				this.dinoz?.followers.some(a => a.id === dinoz.id)
 			);
 			this.dinozFullParty.push(this.dinoz);
+		},
+		endMission(dinozId: number) {
+			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche | undefined;
+
+			if (!dinozToUpdate) {
+				return;
+			}
+
+			dinozToUpdate.currentMission = null;
+			this.dinozStore.setDinoz(dinozToUpdate);
+			this.$emit('endMission');
 		}
 	},
 	computed: {
