@@ -32,6 +32,13 @@ export const papyJoeMissions: MissionDefinition[] = [
 				npcKey: 'madame_seyche',
 				nameKey: 'missions.papy.fish.madameSeyche.name',
 				textKey: 'missions.papy.fish.madameSeyche.text'
+			},
+			{
+				type: 'VALIDATE',
+				npcKey: 'papy_joe',
+				place: PlaceEnum.PAPY_JOE,
+				nameKey: 'missions.papy.fish.validation.name',
+				textKey: 'missions.papy.fish.validation.text'
 			}
 		],
 		rewards: [{ type: 'XP', value: 20 }],
