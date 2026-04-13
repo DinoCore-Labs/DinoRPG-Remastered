@@ -1,0 +1,15 @@
+{
+	"homepage": {
+		"connexion": "Anmeldung",
+		"news": "Neueste Nachricht",
+		"ranking": "Ruhmeshalle",
+		"help": "Spielleitfaden",
+		"fight": {
+			"message1": "Ah, Dinoville, das Juwel von Dinoland, der Ausgangspunkt jedes Abenteuers, das diesen Namen verdient.",
+			"message2": "Nach einer langen Reise bist du endlich an deinem Ziel angekommen, angezogen von Gerüchten über spannende Abenteuer, Reichtum und Ruhm.",
+			"message3": "Hier kannst du deinen ersten Gefährten rekrutieren und...",
+			"message4": "Endlich!",
+			"message5": "Hey du! Bist du bereit, dich dem Abenteuer anzuschließen?"
+		}
+	}
+}
