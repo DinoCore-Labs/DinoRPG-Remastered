@@ -12,6 +12,7 @@
 		</div>
 		<template v-if="!uStore.isLogged">
 			<div class="boxRoot">
+				<DZLocale />
 				<hr class="separator" />
 				<a class="connectLink">
 					<button class="connectBadge" @click="openRegisterMenu">{{ $t('topBar.createAccount') }}</button>
@@ -38,9 +39,12 @@
 import { defineComponent } from 'vue';
 import eventBus from '../../events';
 import { userStore } from '../../store/userStore';
+import DZLocale from '../utils/DZLocale.vue';
 export default defineComponent({
 	name: 'TopBar',
-	components: {},
+	components: {
+		DZLocale
+	},
 	setup() {
 		const uStore = userStore();
 		return { uStore };

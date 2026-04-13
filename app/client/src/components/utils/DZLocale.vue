@@ -1,21 +1,19 @@
 <template>
 	<div class="locale-wrapper">
-		<template>
-			<button class="locale-btn" @click="isOpen = !isOpen">
-				<img :src="getImgURL('design', 'translate')" alt="" />
-			</button>
-			<div v-if="isOpen" class="locale-dropdown">
-				<div
-					v-for="(lang, i) in langs"
-					:key="`Lang${i}`"
-					class="flag-list"
-					:class="[$i18n.locale === lang.short ? 'selected' : '']"
-					@click="switchLocale(lang.short)"
-				>
-					<Flag :lang="lang.short" :class="[$i18n.locale === lang.short ? 'selected' : '']" class="flag" />
-				</div>
+		<button class="locale-btn" @click="isOpen = !isOpen">
+			<img :src="getImgURL('lang', 'translate')" alt="" />
+		</button>
+		<div v-if="isOpen" class="locale-dropdown">
+			<div
+				v-for="(lang, i) in langs"
+				:key="`Lang${i}`"
+				class="flag-list"
+				:class="[$i18n.locale === lang.short ? 'selected' : '']"
+				@click="switchLocale(lang.short)"
+			>
+				<Flag :lang="lang.short" :class="[$i18n.locale === lang.short ? 'selected' : '']" class="flag" />
 			</div>
-		</template>
+		</div>
 	</div>
 </template>
 
