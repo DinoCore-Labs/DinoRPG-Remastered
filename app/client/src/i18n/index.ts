@@ -1,3 +1,4 @@
+import { Language } from '@dinorpg/core/models/config/language.js';
 import { createI18n, type I18n } from 'vue-i18n';
 
 import { localStore } from '../store/localStore';
@@ -8,46 +9,37 @@ const loadedLanguages: Array<string> = [];
 export interface LangInfos {
 	caption: string;
 	icon: string;
-	short: LocalesEnum;
+	short: Language;
 }
 
-export const LocalesEnum = {
-	EN: 'en',
-	FR: 'fr',
-	DE: 'de',
-	ES: 'es'
-} as const;
-
-export type LocalesEnum = (typeof LocalesEnum)[keyof typeof LocalesEnum];
-
 export const Locales: Record<string, LangInfos> = {
-	[LocalesEnum.FR]: {
+	[Language.FR]: {
 		caption: 'Français',
 		icon: '/src/assets/lang/lang_fr.webp',
-		short: LocalesEnum.FR
+		short: Language.FR
 	},
-	[LocalesEnum.EN]: {
+	[Language.EN]: {
 		caption: 'English',
 		icon: '/src/assets/lang/lang_en.webp',
-		short: LocalesEnum.EN
+		short: Language.EN
 	},
-	[LocalesEnum.ES]: {
+	[Language.ES]: {
 		caption: 'Spanish',
 		icon: '/src/assets/lang/lang_es.webp',
-		short: LocalesEnum.ES
+		short: Language.ES
 	},
-	[LocalesEnum.DE]: {
+	[Language.DE]: {
 		caption: 'German',
 		icon: '/src/assets/lang/lang_de.webp',
-		short: LocalesEnum.DE
+		short: Language.DE
 	}
 };
 
-export const defaultLocale = LocalesEnum.FR;
+export const defaultLocale = Language.FR;
 
 export const initI18n = async () => {
 	i18n = createI18n({
-		locale: localStore().getLanguage || LocalesEnum.FR,
+		locale: localStore().getLanguage || Language.FR,
 		fallbackLocale: defaultLocale,
 		silentFallbackWarn: true,
 		silentTranslationWarn: true,
