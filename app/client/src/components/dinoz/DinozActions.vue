@@ -148,7 +148,6 @@ export default defineComponent({
 			dinozStore: dinozStore(),
 			Action,
 			itinerantName: '' as string,
-			dinozFullParty: [] as DinozFiche[],
 			uStore: userStore(),
 			unfreezeSecondsLeft: 0,
 			restSecondsLeft: 0,
@@ -356,7 +355,6 @@ export default defineComponent({
 									await this.refreshDinoz();
 									await this.$refreshGold();
 									await this.$refreshTreasureTicket();
-									await this.loadComponent();
 									break;
 								}
 								this.missionTalkNameKey = result.nameKey;
@@ -630,23 +628,6 @@ export default defineComponent({
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
 		},
-		async loadComponent() {
-			this.dinozFullParty = dinozStore().getDinozList.filter(dinoz =>
-				this.dinoz?.followers.some(a => a.id === dinoz.id)
-			);
-			this.dinozFullParty.push(this.dinoz);
-
-			console.log('main dinoz', this.dinoz);
-			console.log('party', this.dinozFullParty);
-			console.log(
-				'current missions',
-				this.dinozFullParty.map(d => ({
-					id: d.id,
-					name: d.name,
-					currentMission: d.currentMission
-				}))
-			);
-		},
 		endMission(dinozId: number) {
 			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche | undefined;
 			if (!dinozToUpdate) {
@@ -665,13 +646,23 @@ export default defineComponent({
 					this.missionReward = result.rewardModal;
 				}
 				await this.refreshDinoz();
-				await this.loadComponent();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
 		}
 	},
 	computed: {
+		dinozFullParty(): DinozFiche[] {
+			const list = this.dinozStore.getDinozList ?? [];
+			const byId = new Map(list.map(dinoz => [dinoz.id, dinoz]));
+			const followerIds = this.dinoz.followers.map(follower => follower.id);
+
+			const followers = followerIds.map(id => byId.get(id)).filter((dinoz): dinoz is DinozFiche => dinoz !== undefined);
+
+			const current = byId.get(this.dinoz.id) ?? this.dinoz;
+
+			return [...followers, current];
+		},
 		leaderDinoz() {
 			if (!this.dinoz.leaderId) return;
 			return dinozStore().getDinoz(this.dinoz.leaderId);
@@ -684,13 +675,9 @@ export default defineComponent({
 		}
 	},
 	watch: {
-		/*storeMission: function (mission: MissionHUD) {
-			this.mission = mission;
-		},*/
 		dinoz: {
 			handler() {
 				this.dinozId = this.dinoz.id;
-				this.loadComponent();
 				this.updateRestCountdown();
 				this.updateUnfreezeCountdown();
 			},
@@ -699,7 +686,6 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		await this.loadComponent();
 		const intervalId = window.setInterval(() => this.updateUnfreezeCountdown(), 1000);
 		const intervalId2 = window.setInterval(() => this.updateRestCountdown(), 1000);
 		this.intervals.push(intervalId, intervalId2);
