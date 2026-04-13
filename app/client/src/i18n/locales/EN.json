@@ -1,0 +1,15 @@
+{
+	"homepage": {
+		"connexion": "Login",
+		"news": "Latest News",
+		"ranking": "Hall of Fame",
+		"help": "Game Guide",
+		"fight": {
+			"message1": "Ah, Dinoville, the jewel of Dinoland, the starting point of every adventure worth the name.",
+			"message2": "After a long journey, you have finally arrived at your destination, drawn by rumors of thrilling adventures, riches, and glory.",
+			"message3": "This is where you will be able to recruit your first companion and...",
+			"message4": "At last!",
+			"message5": "Hey you! Ready to join the adventure?"
+		}
+	}
+}

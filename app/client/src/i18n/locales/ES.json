@@ -1,0 +1,15 @@
+{
+	"homepage": {
+		"connexion": "Conexión",
+		"news": "Última noticia",
+		"ranking": "Salón de la Fama",
+		"help": "Guía del juego",
+		"fight": {
+			"message1": "Ah, Dinoville, la joya de Dinoland, el punto de partida de toda aventura digna de ese nombre.",
+			"message2": "Tras un largo viaje, por fin has llegado a tu destino, atraído por rumores de emocionantes aventuras, riquezas y gloria.",
+			"message3": "Aquí es donde podrás reclutar a tu primer compañero y...",
+			"message4": "¡Por fin!",
+			"message5": "¡Hola! ¿Listo para unirte a la aventura?"
+		}
+	}
+}
