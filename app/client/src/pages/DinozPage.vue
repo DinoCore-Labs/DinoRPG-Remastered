@@ -74,10 +74,14 @@ export default defineComponent({
 				for (const follower of this.dinozData.followers) {
 					const followerToUpdate = await DinozService.getDinozFiche(follower.id);
 					const followerIndex = dinozList.findIndex(dinoz => dinoz.id === followerToUpdate.id);
-					dinozList.splice(followerIndex, 1, {
-						...dinozList.find(dinoz => dinoz.id === followerToUpdate.id),
-						...followerToUpdate
-					});
+					if (followerIndex === -1) {
+						dinozList.push(followerToUpdate);
+					} else {
+						dinozList.splice(followerIndex, 1, {
+							...dinozList[followerIndex],
+							...followerToUpdate
+						});
+					}
 				}
 			}
 			const storedFollowers = dinozList.filter(d => d.leaderId === +dinozId);
