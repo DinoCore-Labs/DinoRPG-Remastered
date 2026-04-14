@@ -11,5 +11,36 @@
 			"message4": "Endlich!",
 			"message5": "Hey du! Bist du bereit, dich dem Abenteuer anzuschließen?"
 		}
+	},
+	"topBar": {
+		"createAccount": "Créer un compte",
+		"login": "Einloggen",
+		"menu": "Menü",
+		"leftUserMenu": {
+			"shop": "Boutique",
+			"dojo": "Dojo"
+		},
+		"authMenu": {
+			"name": "Pseudo :",
+			"namePlaceholder": "Votre pseudo...",
+			"password": "Mot de passe :",
+			"passwordPlaceholder": "Votre mot de passe...",
+			"nameOk": "✔ Pseudo disponible",
+			"nameBad": "✖ Pseudo déjà utilisé",
+			"accountCreatedWithSuccess": "Votre compte a été créé !",
+			"welcomeBack": "Content de te revoir Maître {name} !"
+		},
+		"userMenu": {
+			"account": "Mein Konto",
+			"ranking": "Rangliste",
+			"items": "Inventaire",
+			"ingredients": "Zutaten",
+			"news": "Neuigkeiten",
+			"cinema": "Kino",
+			"faq": "FAQ",
+			"guide": "Spielhandbuch",
+			"disconnect": "Ausloggen",
+			"goodbye": "Au revoir Maître {name}..."
+		}
 	}
 }
