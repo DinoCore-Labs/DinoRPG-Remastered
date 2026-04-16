@@ -378,6 +378,10 @@ model User {
 
   newsLikes NewsLike[]
   pollVotes PollVote[]
+
+  createdConversations Conversation[] @relation("CreatedConversations")
+  conversationLinks    Participant[]
+  sentMessages         Message[]
 }
 
 model UserDinozShop {
@@ -470,6 +474,70 @@ model UserWallet {
   user   User      @relation(fields: [userId], references: [id])
 
   @@unique([userId, type])
+}
+
+enum ConversationType {
+  DIRECT
+  GROUP
+  SYSTEM
+}
+
+model Conversation {
+  id              String           @id @default(uuid()) @db.Uuid
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  type            ConversationType @default(DIRECT)
+  title           String?
+  createdById     String?          @db.Uuid
+  pinnedMessageId Int?             @unique
+
+  createdBy     User?         @relation("CreatedConversations", fields: [createdById], references: [id], onDelete: SetNull)
+  pinnedMessage Message?      @relation("PinnedMessage", fields: [pinnedMessageId], references: [id], onDelete: SetNull)
+  participants  Participant[]
+  messages      Message[]
+
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@map("conversation")
+}
+
+model Participant {
+  id               Int       @id @default(autoincrement())
+  conversationId   String    @db.Uuid
+  userId           String?   @db.Uuid
+  joinedAt         DateTime  @default(now())
+  leftAt           DateTime?
+  userNameSnapshot String
+  lastReadAt       DateTime?
+  isArchived       Boolean   @default(false)
+  isMuted          Boolean   @default(false)
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user         User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@unique([conversationId, userId])
+  @@index([userId])
+  @@index([conversationId])
+  @@map("conversation_participant")
+}
+
+model Message {
+  id                 Int       @id @default(autoincrement())
+  conversationId     String    @db.Uuid
+  senderId           String?   @db.Uuid
+  content            String
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  deletedAt          DateTime?
+  senderNameSnapshot String
+
+  conversation Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User?         @relation(fields: [senderId], references: [id], onDelete: SetNull)
+  pinnedIn     Conversation? @relation("PinnedMessage")
+
+  @@index([conversationId, createdAt])
+  @@index([senderId])
+  @@map("message")
 }
 
 enum DinozState {
