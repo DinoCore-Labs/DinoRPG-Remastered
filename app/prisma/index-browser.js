@@ -408,6 +408,39 @@ exports.Prisma.UserWalletScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.ConversationScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  type: 'type',
+  title: 'title',
+  createdById: 'createdById',
+  pinnedMessageId: 'pinnedMessageId'
+};
+
+exports.Prisma.ParticipantScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  userId: 'userId',
+  joinedAt: 'joinedAt',
+  leftAt: 'leftAt',
+  userNameSnapshot: 'userNameSnapshot',
+  lastReadAt: 'lastReadAt',
+  isArchived: 'isArchived',
+  isMuted: 'isMuted'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  senderId: 'senderId',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt',
+  senderNameSnapshot: 'senderNameSnapshot'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -492,6 +525,12 @@ exports.MoneyType = exports.$Enums.MoneyType = {
   TREASURE_TICKET: 'TREASURE_TICKET'
 };
 
+exports.ConversationType = exports.$Enums.ConversationType = {
+  DIRECT: 'DIRECT',
+  GROUP: 'GROUP',
+  SYSTEM: 'SYSTEM'
+};
+
 exports.Prisma.ModelName = {
   Dinoz: 'Dinoz',
   DinozCatch: 'DinozCatch',
@@ -521,7 +560,10 @@ exports.Prisma.ModelName = {
   UserProfile: 'UserProfile',
   UserRewards: 'UserRewards',
   UserTracking: 'UserTracking',
-  UserWallet: 'UserWallet'
+  UserWallet: 'UserWallet',
+  Conversation: 'Conversation',
+  Participant: 'Participant',
+  Message: 'Message'
 };
 
 /**
