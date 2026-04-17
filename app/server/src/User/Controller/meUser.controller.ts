@@ -144,7 +144,8 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				wallets: {
 					where: { type: { in: ['GOLD', 'TREASURE_TICKET'] } },
 					select: { type: true, amount: true }
-				}
+				},
+				rewards: true
 			}
 		});
 
@@ -163,7 +164,8 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			treasureTicket,
 			priest: user.priest,
 			shopKeeper: user.shopKeeper,
-			dinoz: user.dinoz
+			dinoz: user.dinoz,
+			rewards: user.rewards.map(reward => reward.rewardId)
 		});
 	} catch (err) {
 		req.log.error(err);
