@@ -1,5 +1,4 @@
 import { DinozFiche } from '../dinoz/dinozFiche.js';
-import { UserReward } from './userReward.js';
 import { UserRole } from './userRole.js';
 
 export interface UserData {
@@ -9,5 +8,5 @@ export interface UserData {
 	gold: number;
 	treasureTicket: number;
 	dinoz: DinozFiche[];
-	rewards: UserReward[];
+	rewards: number[];
 }

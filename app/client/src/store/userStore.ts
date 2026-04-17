@@ -1,7 +1,6 @@
 import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import type { UserStore } from '@dinorpg/core/models/store/userStore.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
-import type { UserReward } from '@dinorpg/core/models/user/userReward.js';
 import type { UserRole } from '@dinorpg/core/models/user/userRole.js';
 import { defineStore } from 'pinia';
 
@@ -27,7 +26,7 @@ export const userStore = defineStore('userStore', {
 		getSortOption: (state: UserStore) => state.sortOption,
 		getRewards: (state: UserStore) => state.rewards,
 		hasReward: (state: UserStore) => {
-			return (rewardId: number) => state.rewards.some(reward => reward.rewardId === rewardId);
+			return (rewardId: number) => state.rewards.includes(rewardId);
 		},
 		canUseMessaging(): boolean {
 			return this.hasReward(Reward.MSG);
@@ -56,12 +55,12 @@ export const userStore = defineStore('userStore', {
 		setSortOption(sortOption: string): void {
 			this.sortOption = sortOption;
 		},
-		setRewards(rewards: UserReward[]) {
-			this.rewards = rewards;
+		setRewards(rewards: number[]) {
+			this.rewards = [...new Set(rewards)];
 		},
 		addReward(rewardId: number) {
-			if (!this.rewards.some(reward => reward.rewardId === rewardId)) {
-				this.rewards.push({ rewardId });
+			if (!this.rewards.includes(rewardId)) {
+				this.rewards.push(rewardId);
 			}
 		},
 		clearUser() {
