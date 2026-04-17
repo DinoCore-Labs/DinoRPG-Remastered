@@ -39,6 +39,7 @@ export const userStore = defineStore('userStore', {
 			this.role = data.role;
 			this.gold = data.gold;
 			this.treasureTicket = data.treasureTicket;
+			this.rewards = data.rewards ?? [];
 		},
 		setGold(gold: number) {
 			this.gold = gold;
