@@ -28,7 +28,7 @@
 	</div>
 
 	<div v-if="answerMode" class="answer">
-		<!--<Editor v-model="answer" />-->
+		<RichTextEditor v-model="answer" />
 		<DZButton @click="sendMessage()" :disabled="isSending">
 			{{ $t('modal.messagerie.newMsgSend') }}
 		</DZButton>
@@ -48,6 +48,7 @@ import { defineComponent, nextTick } from 'vue';
 import DZUser from '../utils/DZUser.vue';
 import DZButton from '../utils/DZButton.vue';
 import Message from './Message.vue';
+import RichTextEditor from '../richTextEditor/RichTextEditor.vue';
 import { localStore } from '../../store/localStore';
 import type { FullThread } from '@dinorpg/core/models/messaging/threadBasic.js';
 import { MessagerieService } from '../../services/messaging.service';
@@ -58,7 +59,7 @@ export default defineComponent({
 	props: {
 		threadId: { type: String, required: true }
 	},
-	components: { DZUser, Message, DZButton /*Editor */ },
+	components: { DZUser, Message, DZButton, RichTextEditor },
 	data() {
 		return {
 			answerMode: false,

@@ -59,7 +59,41 @@ export default defineComponent({
 		font-feature-settings: normal;
 		font-size: 16px;
 		font-variation-settings: normal;
-		word-break: break-word;
+		:deep(.spoiler) {
+			background-color: #444;
+			color: transparent;
+			border-radius: 4px;
+			transition:
+				color 0.2s ease,
+				background-color 0.2s ease;
+			cursor: pointer;
+		}
+		:deep(.spoiler:hover),
+		:deep(.spoiler:active) {
+			color: inherit;
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+		:deep(code) {
+			background-color: rgba(0, 0, 0, 0.1);
+			color: #222;
+			font-family: 'Cascadia Code', monospace;
+			font-size: 1.2rem;
+			padding: 2px 4px;
+			border-radius: 4px;
+		}
+		:deep(pre) {
+			background-color: #1e1e1e;
+			color: #f8f8f2;
+			padding: 8px;
+			border-radius: 6px;
+			overflow-x: auto;
+			font-family: monospace;
+		}
+		:deep(pre code) {
+			background: none;
+			color: inherit;
+			padding: 0;
+		}
 	}
 }
 </style>
