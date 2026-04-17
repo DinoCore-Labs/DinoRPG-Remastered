@@ -26,7 +26,7 @@ export default defineComponent({
 			type: String,
 			required: true,
 			validator: (value: string) =>
-				['bold', 'italic', 'bolditalic', 'strike', 'higlight', 'blockquote', 'spoiler', 'code'].includes(value)
+				['bold', 'italic', 'bolditalic', 'strike', 'highlight', 'blockquote', 'spoiler', 'code'].includes(value)
 		},
 		label: {
 			type: String,

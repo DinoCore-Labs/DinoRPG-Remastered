@@ -67,7 +67,6 @@ import {
 	applySelectedTextFormatting,
 	clearSelectedTextFormattingLogic,
 	formatEmote,
-	getFormattingLengthForType,
 	insertTextAtPositionLogic,
 	type TextSelection
 } from './RichTextFormatter';
@@ -140,7 +139,6 @@ export default defineComponent({
 		applyFormatting(type: FormattingType): void {
 			const element = this.$refs.textEditor as HTMLTextAreaElement;
 			let selection = this.getTextSelection(element);
-
 			// If no text was selected create a new formatted block at cursor position
 			if (!this.isValidSelection(selection)) {
 				selection = {
@@ -148,12 +146,10 @@ export default defineComponent({
 					end: element.selectionStart
 				};
 			}
-
 			try {
-				const { newFullText, modifiedPart } = applySelectedTextFormatting(this.editedText, selection, type);
-				const cursorPosition = selection.start + modifiedPart.length - getFormattingLengthForType(type);
+				const { newFullText, caretPosition } = applySelectedTextFormatting(this.editedText, selection, type);
 				this.editedText = newFullText;
-				this.updateCursorPosition(element, cursorPosition);
+				this.updateCursorPosition(element, caretPosition);
 			} catch (error) {
 				console.error('Error applying formatting:', error);
 			}
@@ -161,15 +157,13 @@ export default defineComponent({
 		clearFormatting(): void {
 			const element = this.$refs.textEditor as HTMLTextAreaElement;
 			const selection = this.getTextSelection(element);
-
 			if (!this.isValidSelection(selection)) {
 				return;
 			}
-
 			try {
-				const { newFullText, modifiedPart } = clearSelectedTextFormattingLogic(this.editedText, selection);
+				const { newFullText, caretPosition } = clearSelectedTextFormattingLogic(this.editedText, selection);
 				this.editedText = newFullText;
-				this.updateCursorPosition(element, selection.start + modifiedPart.length);
+				this.updateCursorPosition(element, caretPosition);
 			} catch (error) {
 				console.error('Error clearing formatting:', error);
 			}
@@ -177,7 +171,6 @@ export default defineComponent({
 		insertEmote(emote: string): void {
 			const element = this.$refs.textEditor as HTMLTextAreaElement;
 			const cursorPosition = element.selectionStart;
-
 			try {
 				const formattedCharacter = formatEmote(emote);
 				this.editedText = insertTextAtPositionLogic(this.editedText, cursorPosition, formattedCharacter);
@@ -221,17 +214,15 @@ export default defineComponent({
 			};
 		},
 		getPositionbeforeSelected(start: number): number {
-			// used to search formatting tag before selection, return new start position
 			let index = start - 1;
-			while (index >= 0 && /[*~]/.test(this.editedText[index])) {
+			while (index >= 0 && /[*~=|`>]/.test(this.editedText[index])) {
 				index--;
 			}
 			return index + 1;
 		},
 		getPositionAfterSelected(end: number): number {
-			// used to search formatting tag after selection, return new end position
 			let index = end;
-			while (index < this.editedText.length && /[*~]/.test(this.editedText[index])) {
+			while (index < this.editedText.length && /[*~=|`]/.test(this.editedText[index])) {
 				index++;
 			}
 			return index;

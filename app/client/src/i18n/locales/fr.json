@@ -307,6 +307,26 @@
 		"close": "Fermer",
 		"continue": "Continuer"
 	},
+	"richTextEditor": {
+		"boldButtonTitle": "G",
+		"boldButtonDescription": "Gras",
+		"italicButtonTitle": "I",
+		"italicButtonDescription": "Italique",
+		"boldItalicButtonTitle": "G+I",
+		"boldItalicButtonDescription": "Gras et italique",
+		"strikeButtonTitle": "B",
+		"strikeButtonDescription": "Barré",
+		"highlightButtonTitle": "==",
+		"highlightButtonDescription": "Surligné",
+		"blockquoteButtonTitle": "\" \"",
+		"blockquoteButtonDescription": "Citation",
+		"spoilerButtonTitle": "SP",
+		"spoilerButtonDescription": "Texte caché (spoiler)",
+		"codeButtonTitle": "< >",
+		"codeButtonDescription": "Code",
+		"cleanButtonDescription": "Supprimer le texte",
+		"buttonValidateAdvEditor": "Valider et envoyer le message"
+	},
 	"toast": {
 		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
 		"gold": "Vous avez obtenu {value} :gold:.",
