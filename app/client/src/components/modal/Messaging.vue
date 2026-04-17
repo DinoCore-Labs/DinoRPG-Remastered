@@ -86,10 +86,10 @@
 						class="search"
 						v-if="!newThread.participants || (newThread.participants && newThread.participants.length < 9)"
 					>
-						<label for="player">{{ $t('modal.messagerie.newMsgParticipants') }}</label>
+						<label for="user">{{ $t('modal.messagerie.newMsgParticipants') }}</label>
 						<DZSearch
 							background
-							entityType="player"
+							entityType="user"
 							place-holder="modal.messagerie.addParticipants"
 							@entity="participantThread"
 						/>
@@ -192,10 +192,10 @@ export default defineComponent({
 			this.selectedThreadId = null;
 			this.newThread = {} as NewThread;
 		},
-		participantThread(p: SelectOption<string>) {
+		participantThread(p: { id: string; name: string }) {
 			const participant = {
-				id: p.value,
-				name: p.label
+				id: p.id,
+				name: p.name
 			};
 			if (!this.newThread.participants) {
 				this.newThread.participants = [participant];

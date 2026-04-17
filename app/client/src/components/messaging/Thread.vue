@@ -4,40 +4,33 @@
 			<img :src="getImgURL('icons', 'small_browse_next')" />
 			<p>{{ $t('modal.messagerie.conversation') }}</p>
 		</div>
-
 		<div class="buttons">
 			<div class="clickable" @click="refresh()">
 				<img :src="getImgURL('icons', 'refresh')" />
 				<p>{{ $t('modal.messagerie.actualizeThread') }}</p>
 			</div>
-
 			<div @click="answerMsg()" class="clickable">
 				<img :src="getImgURL('icons', 'edit')" />
 				<p>{{ $t('modal.messagerie.responseConv') }}</p>
 			</div>
-
 			<div class="clickable" @click="showParticipants = !showParticipants">
 				<img :src="getImgURL('icons', 'player')" />
 				<p>{{ $t('modal.messagerie.participantsConv') }}</p>
 			</div>
 		</div>
-
 		<div id="participants" v-if="showParticipants && myThread">
 			<DZUser v-for="participant in myThread.participants" :user="participant.player" :key="participant.id" />
 		</div>
 	</div>
-
 	<div v-if="answerMode" class="answer">
 		<RichTextEditor v-model="answer" />
 		<DZButton @click="sendMessage()" :disabled="isSending">
 			{{ $t('modal.messagerie.newMsgSend') }}
 		</DZButton>
 	</div>
-
 	<div v-if="myThread && myThread.pinnedMessage">
 		<Message :message="myThread.pinnedMessage" />
 	</div>
-
 	<div id="conversation" ref="conversationRef" v-if="myThread" @scroll="onScroll">
 		<Message v-for="message in myThread.messages" :key="message.id" :message="message" />
 	</div>
