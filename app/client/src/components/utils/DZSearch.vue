@@ -5,7 +5,17 @@
 			background: background
 		}"
 	>
-		<input :id="entityType" type="text" :placeholder="$t(placeHolder)" v-model="searchValue" list="entities" />
+		<input
+			:id="entityType"
+			ref="searchInput"
+			type="text"
+			:placeholder="$t(placeHolder)"
+			v-model="searchValue"
+			@keydown.down.prevent="moveSelection(1)"
+			@keydown.up.prevent="moveSelection(-1)"
+			@keydown.enter.prevent="confirmSelection"
+			@keydown.esc.prevent="clearResults"
+		/>
 		<div>
 			<div
 				class="entitySearchResultsContainer"
@@ -14,13 +24,11 @@
 			>
 				<div
 					class="entities"
+					:class="{ active: activeIndex === index }"
 					v-for="(entity, index) in entityList"
-					:key="index"
-					@click="
-						$emit('entity', entity);
-						entityList = [];
-						searchValue = undefined;
-					"
+					:key="entity.id ?? index"
+					@mousedown.prevent="selectEntity(entity)"
+					@mouseenter="activeIndex = index"
 				>
 					<span>{{ entity.name }}</span>
 				</div>
@@ -41,36 +49,74 @@ export default defineComponent({
 		placeHolder: { type: String, required: true },
 		background: { type: Boolean, default: false }
 	},
+	emits: ['entity'],
 	data() {
 		return {
 			searchValue: undefined as string | undefined,
 			entityList: [] as Array<EntitySearch>,
-			awaitingSearch: false as boolean
+			activeIndex: -1 as number,
+			searchTimeout: undefined as ReturnType<typeof setTimeout> | undefined
 		};
 	},
-	emits: ['entity'],
 	methods: {
 		async getResults(): Promise<void> {
 			if (this.searchValue && this.searchValue.length >= 3) {
 				if (this.entityType === 'user') {
 					this.entityList = await UserService.search(this.searchValue);
-				} /*else if (this.entityType === 'clan') {
+				} /* else if (this.entityType === 'clan') {
 					this.entityList = await ClanService.searchClans(this.searchValue);
 				} */
 			} else {
 				this.entityList = [];
 			}
+			this.activeIndex = this.entityList.length > 0 ? 0 : -1;
+		},
+		selectEntity(entity: EntitySearch): void {
+			this.$emit('entity', entity);
+			this.entityList = [];
+			this.activeIndex = -1;
+			this.searchValue = undefined;
+		},
+		moveSelection(direction: 1 | -1): void {
+			if (this.entityList.length === 0) return;
+			if (this.activeIndex === -1) {
+				this.activeIndex = 0;
+				return;
+			}
+			const nextIndex = this.activeIndex + direction;
+			if (nextIndex < 0) {
+				this.activeIndex = this.entityList.length - 1;
+				return;
+			}
+			if (nextIndex >= this.entityList.length) {
+				this.activeIndex = 0;
+				return;
+			}
+			this.activeIndex = nextIndex;
+		},
+		confirmSelection(): void {
+			if (this.entityList.length === 0) return;
+			if (this.activeIndex < 0 || this.activeIndex >= this.entityList.length) return;
+			this.selectEntity(this.entityList[this.activeIndex]!);
+		},
+		clearResults(): void {
+			this.entityList = [];
+			this.activeIndex = -1;
 		}
 	},
 	watch: {
 		searchValue(): void {
-			if (!this.awaitingSearch) {
-				setTimeout(() => {
-					this.getResults();
-					this.awaitingSearch = false;
-				}, 700); // 0.7 sec delay
+			if (this.searchTimeout) {
+				clearTimeout(this.searchTimeout);
 			}
-			this.awaitingSearch = true;
+			this.searchTimeout = setTimeout(() => {
+				this.getResults();
+			}, 700);
+		}
+	},
+	beforeUnmount() {
+		if (this.searchTimeout) {
+			clearTimeout(this.searchTimeout);
 		}
 	}
 });
@@ -127,11 +173,13 @@ input {
 			width: calc(100% - 2px);
 		}
 		&:hover {
-			transition: outline-color 0.5s;
-			outline-color: #efdba8;
 			cursor: pointer;
 			background-color: rgb(203 124 73);
 		}
+	}
+	.entities.active {
+		background-color: rgb(203 124 73);
+		outline: 1px solid #efdba8;
 	}
 	.hide {
 		opacity: 0;
