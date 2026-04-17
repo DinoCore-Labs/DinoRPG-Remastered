@@ -24,23 +24,24 @@
 						</svg>
 						<span>{{ $t('topBar.userMenu.account') }}</span>
 					</RouterLink>
-					<!--<div
+					<div
 						:class="{
-							link: true
+							link: true,
+							disabled: !uStore.canUseMessaging
 						}"
 						@click="messagerie()"
 					>
-						<span v-if="playerStore.getNotifications.filter(n => n.severity === 'message').length > 0" class="badge">
+						<!--<span v-if="playerStore.getNotifications.filter(n => n.severity === 'message').length > 0" class="badge">
 							{{ playerStore.getNotifications.filter(n => n.severity === 'message').length }}
-						</span>
+						</span> -->
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon">
 							<path
 								d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4-8 5-8-5V6l8 5 8-5z"
 							></path>
 						</svg>
-						<span>{{ $t('topBar.rightMenu.messagerie') }}</span>
+						<span>{{ $t('topBar.userMenu.messagerie') }}</span>
 					</div>
-					<RouterLink v-if="playerStore.getClanId" class="link" :to="`/clan/${playerStore.getClanId}`">
+					<!--<RouterLink v-if="playerStore.getClanId" class="link" :to="`/clan/${playerStore.getClanId}`">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
 							<path
 								d="M21 9v2h-2V3h-2v2h-2V3h-2v2h-2V3H9v2H7V3H5v8H3V9H1v12h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9V9zm-10 3H9V9h2zm4 0h-2V9h2z"
@@ -218,6 +219,7 @@ import EventBus from '../../events/index.js';
 import { userStore } from '../../store/userStore.js';
 import { UserService } from '../../services/user.service.js';
 import { dinozStore } from '../../store/dinozStore.js';
+import eventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'UserMenu',
@@ -240,11 +242,16 @@ export default defineComponent({
 		},
 		close() {
 			this.menuCalled = false;
-		}
-		/*messagerie() {
-			EventBus.emit('message', true);
 		},
-		async cleanNotif(id: string) {
+		messagerie() {
+			if (!this.uStore.canUseMessaging) {
+				this.$toast.error(this.$t('modal.messagerie.locked'));
+				return;
+			}
+			this.menuCalled = false;
+			eventBus.emit('message', true);
+		}
+		/*async cleanNotif(id: string) {
 			try {
 				await NotificationService.readNotification(id);
 				const notifications = this.playerStore.getNotifications.filter(n => n.id !== id);
@@ -676,6 +683,19 @@ export default defineComponent({
 				box-shadow: rgb(189, 61, 0) 0px 0px 8px;
 				svg {
 					color: rgb(255, 255, 255);
+				}
+			}
+			&.disabled {
+				opacity: 0.45;
+				cursor: not-allowed;
+				pointer-events: auto;
+				&:hover {
+					color: rgb(108, 113, 136);
+					background-color: transparent;
+					box-shadow: none;
+					svg {
+						color: rgb(254, 125, 0);
+					}
 				}
 			}
 		}
