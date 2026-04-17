@@ -62,7 +62,7 @@ import {
 	type FormattingType,
 	type RichTextEditorFormattingButtonConfig
 } from './RichTextEditorConfig';
-import { formatText } from '../../utils/formatText';
+import { richFormatText } from '../../utils/richFormatText';
 import {
 	applySelectedTextFormatting,
 	clearSelectedTextFormattingLogic,
@@ -105,7 +105,7 @@ export default defineComponent({
 	computed: {
 		formattedPreview(): string {
 			// Conversion des marqueurs markdown en HTML pour la prévisualisation
-			return formatText(this.editedText);
+			return richFormatText(this.editedText);
 		}
 	},
 	watch: {

@@ -5,7 +5,7 @@
 			<div class="date">{{ formatDate(message.createdAt) }}</div>
 		</div>
 
-		<div class="message msg-content" v-html="message.content" />
+		<div class="message msg-content" v-html="formatMessage(message.content)" />
 	</div>
 </template>
 
@@ -16,6 +16,7 @@ import type { PropType } from 'vue';
 import { defineComponent } from 'vue';
 import DZUser from '../utils/DZUser.vue';
 import { formatDateTime } from '../../utils/formatDate';
+import { richFormatText } from '../../utils/richFormatText';
 
 export default defineComponent({
 	name: 'Message',
@@ -27,6 +28,9 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		formatMessage(value: string): string {
+			return richFormatText(value.toString());
+		},
 		formatDate(dateString: string) {
 			return formatDateTime(dateString);
 		}
