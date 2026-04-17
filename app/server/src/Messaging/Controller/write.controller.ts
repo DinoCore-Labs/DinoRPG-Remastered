@@ -8,7 +8,7 @@ import {
 	findExistingDirectConversation,
 	normalizeThreadTitle
 } from '../../utils/messaging/messaging.helper.js';
-import { assertMessagingAccess, assertUsersCanUseMessaging } from './messaging.access.js';
+import { assertMessagingAccess } from './messaging.access.js';
 import { getThread, getThreadBasicById } from './read.controller.js';
 
 export async function createThread(
@@ -62,8 +62,6 @@ export async function createThread(
 	if (participants.length !== participantIds.length) {
 		throw new ExpectedError('One or more participants were not found');
 	}
-
-	await assertUsersCanUseMessaging(participantIds);
 
 	const isDirect = participantIds.length === 1;
 
