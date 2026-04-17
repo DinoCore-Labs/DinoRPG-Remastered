@@ -1,6 +1,6 @@
 <template>
 	<div class="emote-grid">
-		<div v-for="(emote, i) in config.emoteEnum" :key="i" class="emote-item" @click="$emit('emote', emote)">
+		<div v-for="(emote, i) in config.emoteEnum" :key="emote" class="emote-item" @click="$emit('emote', emote)">
 			<div class="emote-thumb">
 				<img :src="config.iconEnum[emote]" />
 			</div>
