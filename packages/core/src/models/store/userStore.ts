@@ -1,3 +1,4 @@
+import { UserReward } from '../user/userReward.js';
 import { type UserRole } from '../user/userRole.js';
 
 export interface UserStore {
@@ -9,5 +10,6 @@ export interface UserStore {
 	priest: boolean;
 	shopKeeper: boolean;
 	sortOption: string;
+	rewards: UserReward[];
 	// clanId
 }

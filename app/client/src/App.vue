@@ -4,6 +4,7 @@
 		<LeftUserMenu />
 		<AuthMenu />
 		<UserMenu />
+		<Messaging />
 	</div>
 	<RouterView />
 	<Footer />
@@ -19,6 +20,7 @@ import AuthMenu from './components/tools/AuthMenu.vue';
 import UserMenu from './components/tools/UserMenu.vue';
 import LeftUserMenu from './components/tools/LeftUserMenu.vue';
 import Toast from './components/utils/Toast.vue';
+import Messaging from './components/modal/Messaging.vue';
 
 export default defineComponent({
 	name: 'App',
@@ -27,6 +29,7 @@ export default defineComponent({
 		LeftUserMenu,
 		AuthMenu,
 		UserMenu,
+		Messaging,
 		Footer,
 		Toast
 	}
