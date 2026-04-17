@@ -131,7 +131,6 @@ import type { NewThread, ThreadsBasic } from '@dinorpg/core/models/messaging/thr
 import { userStore } from '../../store/userStore';
 import { MessagerieService } from '../../services/messaging.service';
 import { errorHandler } from '../../utils/errorHandler';
-import type { SelectOption } from '../utils/DZSelect.vue';
 import { formatDateTime } from '../../utils/formatDate';
 import eventBus from '../../events';
 
