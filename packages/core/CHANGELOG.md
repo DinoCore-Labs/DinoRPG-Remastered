@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.13.0
+
+### Minor Changes
+
+- 7304d10: feat: implement private messaging, rich text editor, and messaging access flow
+
 ## 0.12.0
 
 ### Minor Changes

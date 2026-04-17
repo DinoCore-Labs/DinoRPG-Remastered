@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.14.0
+
+### Minor Changes
+
+- 7304d10: feat: implement private messaging, rich text editor, and messaging access flow
+
+### Patch Changes
+
+- Updated dependencies [7304d10]
+  - @dinorpg/core@0.13.0
+
 ## 0.13.0
 
 ### Minor Changes
