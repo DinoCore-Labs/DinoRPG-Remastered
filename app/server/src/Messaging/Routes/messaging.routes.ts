@@ -10,7 +10,7 @@ import {
 
 export async function messagingRoutes(app: FastifyInstance) {
 	app.get(
-		'/messaging/threads',
+		'/threads',
 		{
 			preHandler: [app.authenticate]
 		},
@@ -18,7 +18,7 @@ export async function messagingRoutes(app: FastifyInstance) {
 	);
 
 	app.get(
-		'/messaging/threads/:id',
+		'/threads/:id',
 		{
 			preHandler: [app.authenticate]
 		},
@@ -26,7 +26,7 @@ export async function messagingRoutes(app: FastifyInstance) {
 	);
 
 	app.get(
-		'/messaging/threads/:id/messages',
+		'/threads/:id/messages',
 		{
 			preHandler: [app.authenticate]
 		},
@@ -34,7 +34,7 @@ export async function messagingRoutes(app: FastifyInstance) {
 	);
 
 	app.post(
-		'/messaging/threads',
+		'/threads',
 		{
 			preHandler: [app.authenticate]
 		},
@@ -42,7 +42,7 @@ export async function messagingRoutes(app: FastifyInstance) {
 	);
 
 	app.post(
-		'/messaging/threads/:id/messages',
+		'/threads/:id/messages',
 		{
 			preHandler: [app.authenticate]
 		},
