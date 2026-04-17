@@ -23,10 +23,7 @@
 		</div>
 	</div>
 	<div v-if="answerMode" class="answer">
-		<RichTextEditor v-model="answer" />
-		<DZButton @click="sendMessage()" :disabled="isSending">
-			{{ $t('modal.messagerie.newMsgSend') }}
-		</DZButton>
+		<RichTextEditor v-model="answer" @send="sendMessageFromEditor" />
 	</div>
 	<div v-if="myThread && myThread.pinnedMessage">
 		<Message :message="myThread.pinnedMessage" />
@@ -87,11 +84,15 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 		},
-		async sendMessage() {
-			if (!this.answer.trim() || !this.myThread) return;
+		async sendMessageFromEditor(content: string) {
+			await this.sendMessage(content);
+		},
+		async sendMessage(content?: string) {
+			const messageToSend = (content ?? this.answer).trim();
+			if (!messageToSend || !this.myThread) return;
 			try {
 				this.isSending = true;
-				this.myThread = await MessagerieService.answerThread(this.myThread.id, this.answer);
+				this.myThread = await MessagerieService.answerThread(this.myThread.id, messageToSend);
 				this.answer = '';
 				this.answerMode = false;
 				this.currentThreadPage = 1;
