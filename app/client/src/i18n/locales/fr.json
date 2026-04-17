@@ -33,6 +33,7 @@
 		"userMenu": {
 			"account": "Mon Compte",
 			"ranking": "Classements",
+			"messagerie": "Messagerie",
 			"items": "Inventaire",
 			"ingredients": "Ingrédients",
 			"news": "News",
@@ -275,6 +276,10 @@
 		}
 	},
 	"modal": {
+		"messagerie": {
+			"system": "Système",
+			"locked": "Vous devez d'abord débloquer la messagerie."
+		},
 		"close": "Fermer",
 		"continue": "Continuer"
 	},

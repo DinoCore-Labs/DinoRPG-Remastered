@@ -22,6 +22,8 @@ type Events = {
 	refreshInventory: boolean;
 	equipItem: Array<DinozItems>;
 	unEquipItem: number;
+	message: boolean;
+	messageToPlayer: { name: string; id: string };
 };
 
 const eventBus = mitt<Events>();
