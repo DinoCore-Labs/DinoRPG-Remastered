@@ -90,6 +90,7 @@ export default defineComponent({
 			this.profile = profile;
 			//console.log(profile);
 			this.isOwner = this.profile.id === this.uStore.id;
+			userStore().setRewards(this.profile.rewards);
 			//console.log(this.profile.id);
 			//console.log(this.uStore.id);
 			//console.log(this.isOwner);
