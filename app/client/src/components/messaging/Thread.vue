@@ -2,23 +2,23 @@
 	<div id="threadPannel">
 		<div class="title">
 			<img :src="getImgURL('icons', 'small_browse_next')" />
-			<p>{{ $t('messagerie.conversation') }}</p>
+			<p>{{ $t('modal.messagerie.conversation') }}</p>
 		</div>
 
 		<div class="buttons">
 			<div class="clickable" @click="refresh()">
 				<img :src="getImgURL('icons', 'refresh')" />
-				<p>{{ $t('messagerie.actualizeThread') }}</p>
+				<p>{{ $t('modal.messagerie.actualizeThread') }}</p>
 			</div>
 
 			<div @click="answerMsg()" class="clickable">
 				<img :src="getImgURL('icons', 'edit')" />
-				<p>{{ $t('messagerie.responseConv') }}</p>
+				<p>{{ $t('modal.messagerie.responseConv') }}</p>
 			</div>
 
 			<div class="clickable" @click="showParticipants = !showParticipants">
 				<img :src="getImgURL('icons', 'player')" />
-				<p>{{ $t('messagerie.participantsConv') }}</p>
+				<p>{{ $t('modal.messagerie.participantsConv') }}</p>
 			</div>
 		</div>
 
@@ -30,7 +30,7 @@
 	<div v-if="answerMode" class="answer">
 		<!--<Editor v-model="answer" />-->
 		<DZButton @click="sendMessage()" :disabled="isSending">
-			{{ $t('messagerie.newMsgSend') }}
+			{{ $t('modal.messagerie.newMsgSend') }}
 		</DZButton>
 	</div>
 
@@ -78,7 +78,6 @@ export default defineComponent({
 		},
 		async scrollToBottom() {
 			await nextTick();
-
 			const conversationRef = this.$refs.conversationRef as HTMLDivElement | undefined;
 			if (conversationRef) {
 				conversationRef.scrollTop = conversationRef.scrollHeight;
@@ -96,7 +95,6 @@ export default defineComponent({
 		},
 		async sendMessage() {
 			if (!this.answer.trim() || !this.myThread) return;
-
 			try {
 				this.isSending = true;
 				this.myThread = await MessagerieService.answerThread(this.myThread.id, this.answer);
@@ -113,33 +111,25 @@ export default defineComponent({
 		},
 		async onScroll(event: Event) {
 			const target = event.target as HTMLDivElement;
-
 			if (!this.myThread || this.isLoadingOlder || !this.hasMoreMessages) {
 				return;
 			}
-
 			if (target.scrollTop > 20) {
 				return;
 			}
-
 			try {
 				this.isLoadingOlder = true;
-
 				const previousHeight = target.scrollHeight;
 				const nextPage = this.currentThreadPage + 1;
 				const olderMessages = await MessagerieService.loadMessages(this.myThread.id, nextPage);
-
 				if (olderMessages.messages.length === 0) {
 					this.hasMoreMessages = false;
 					return;
 				}
-
 				this.currentThreadPage = nextPage;
 				this.hasMoreMessages = olderMessages.hasMore;
 				this.myThread.messages = [...olderMessages.messages, ...this.myThread.messages];
-
 				await nextTick();
-
 				const newHeight = target.scrollHeight;
 				target.scrollTop = newHeight - previousHeight;
 			} catch (e) {

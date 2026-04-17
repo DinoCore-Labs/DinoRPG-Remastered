@@ -11,16 +11,16 @@
 				<div class="actions">
 					<div class="title">
 						<img :src="getImgURL('icons', 'small_browse_next')" />
-						<p>{{ $t('messagerie.actions') }}</p>
+						<p>{{ $t('modal.messagerie.actions') }}</p>
 					</div>
 					<div class="buttons">
 						<div @click="create()" class="clickable">
 							<img :src="getImgURL('icons', 'edit')" />
-							<span>{{ $t('messagerie.create') }}</span>
+							<span>{{ $t('modal.messagerie.create') }}</span>
 						</div>
 						<div @click="toggleSearch()" class="clickable">
 							<img :src="getImgURL('icons', 'search')" />
-							<span>{{ $t('messagerie.research') }}</span>
+							<span>{{ $t('modal.messagerie.research') }}</span>
 						</div>
 					</div>
 				</div>
@@ -30,14 +30,14 @@
 							<label for="conv_list_filter">
 								<img :src="getImgURL('icons', 'search')" class="size-10" />
 							</label>
-							<input v-model="searchQuery" id="conv_list_filter" :placeholder="$t('messagerie.search')" />
+							<input v-model="searchQuery" id="conv_list_filter" :placeholder="$t('modal.messagerie.search')" />
 						</div>
 					</div>
 				</div>
 				<div class="threads">
 					<div class="title">
 						<img :src="getImgURL('icons', 'thread')" />
-						<span>{{ $t('messagerie.conversations') }}</span>
+						<span>{{ $t('modal.messagerie.conversations') }}</span>
 					</div>
 					<div
 						v-for="thread in filteredThreads"
@@ -57,8 +57,8 @@
 						</p>
 						<div>
 							<span>
-								<b class="creator">{{ thread.createdBy?.name ?? $t('messagerie.system') }}</b
-								>, {{ thread.participants.length }} {{ $t('messagerie.participants') }},
+								<b class="creator">{{ thread.createdBy?.name ?? $t('modal.messagerie.system') }}</b
+								>, {{ thread.participants.length }} {{ $t('modal.messagerie.participants') }},
 							</span>
 							<span class="date">{{ formatDate(thread.updatedAt) }}</span>
 						</div>
@@ -73,24 +73,24 @@
 				}"
 			>
 				<DZButton class="mobile" back @click="unselect()">Retour</DZButton>
-				<DZDisclaimer help v-if="!threadSelected" content="messagerie.disclaimer" />
+				<DZDisclaimer help v-if="!threadSelected" content="modal.messagerie.disclaimer" />
 				<div class="creationMode" v-if="creationMode">
 					<div class="title">
-						<p>{{ $t('messagerie.newMsg') }}</p>
+						<p>{{ $t('modal.messagerie.newMsg') }}</p>
 					</div>
 					<div class="messageTitle">
-						<label for="title">{{ $t('messagerie.newMsgTitle') }}</label>
-						<input type="text" id="title" v-model="newThread.title" :placeholder="$t('messagerie.title')" />
+						<label for="title">{{ $t('modal.messagerie.newMsgTitle') }}</label>
+						<input type="text" id="title" v-model="newThread.title" :placeholder="$t('modal.messagerie.title')" />
 					</div>
 					<div
 						class="search"
 						v-if="!newThread.participants || (newThread.participants && newThread.participants.length < 9)"
 					>
-						<label for="player">{{ $t('messagerie.newMsgParticipants') }}</label>
+						<label for="player">{{ $t('modal.messagerie.newMsgParticipants') }}</label>
 						<DZSearch
 							background
 							entityType="player"
-							place-holder="messagerie.addParticipants"
+							place-holder="modal.messagerie.addParticipants"
 							@entity="participantThread"
 						/>
 					</div>
@@ -101,12 +101,12 @@
 						</template>
 					</div>
 					<div class="message">
-						<label for="message">{{ $t('messagerie.newMsgMessage') }}</label>
-						<textarea id="message" v-model="newThread.message" :placeholder="$t('messagerie.message')" />
+						<label for="message">{{ $t('modal.messagerie.newMsgMessage') }}</label>
+						<textarea id="message" v-model="newThread.message" :placeholder="$t('modal.messagerie.message')" />
 					</div>
 					<div class="send">
 						<DZButton @click="sendMessage" :disabled="isSending">
-							{{ $t('messagerie.newMsgSend') }}
+							{{ $t('modal.messagerie.newMsgSend') }}
 						</DZButton>
 					</div>
 				</div>
