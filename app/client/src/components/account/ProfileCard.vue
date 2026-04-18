@@ -88,26 +88,20 @@ import { UserService } from '../../services';
 
 export default defineComponent({
 	name: 'ProfileCard',
-
 	props: {
 		profile: { type: Object as PropType<UserProfile>, required: true },
 		isOwner: { type: Boolean, required: true }
 	},
-
 	emits: ['updated'],
-
 	setup(props, { emit }) {
 		const editing = ref(false);
-
 		const form = ref({
 			description: props.profile.description ?? '',
 			language: props.profile.language ?? '',
 			gender: props.profile.gender ?? '',
 			age: props.profile.age ?? null
 		});
-
 		const previewAvatar = ref<string | null>(null);
-
 		// Sync when profile changes
 		watch(
 			() => props.profile,
@@ -122,7 +116,6 @@ export default defineComponent({
 				editing.value = false;
 			}
 		);
-
 		async function onAvatarSelect(event: Event) {
 			const file = (event.target as HTMLInputElement).files?.[0];
 			if (!file) return;
@@ -132,19 +125,25 @@ export default defineComponent({
 			const updated = await UserService.uploadAvatar(file);
 			emit('updated', updated);
 		}
-
 		async function saveProfile() {
-			const updated = await UserService.updateProfile({
-				description: form.value.description,
-				language: form.value.language as any,
-				gender: form.value.gender as any,
-				age: form.value.age ? Number(form.value.age) : null
-			});
-
+			const payload: Partial<UserProfile> = {};
+			if (form.value.description !== (props.profile.description ?? '')) {
+				payload.description = form.value.description;
+			}
+			if (form.value.language && form.value.language !== props.profile.language) {
+				payload.language = form.value.language as UserProfile['language'];
+			}
+			if (form.value.gender && form.value.gender !== props.profile.gender) {
+				payload.gender = form.value.gender as UserProfile['gender'];
+			}
+			const normalizedAge = form.value.age ? Number(form.value.age) : null;
+			if (normalizedAge !== (props.profile.age ?? null)) {
+				payload.age = normalizedAge;
+			}
+			const updated = await UserService.updateProfile(payload);
 			editing.value = false;
 			emit('updated', updated);
 		}
-
 		function cancelEdit() {
 			editing.value = false;
 			previewAvatar.value = null;
@@ -155,7 +154,6 @@ export default defineComponent({
 				age: props.profile.age ?? null
 			};
 		}
-
 		return {
 			form,
 			editing,
