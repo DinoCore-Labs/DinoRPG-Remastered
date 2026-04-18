@@ -6,6 +6,11 @@ import { localStore } from '../store/localStore';
 let i18n: I18n;
 const loadedLanguages: Array<string> = [];
 
+export async function applyLanguage(language: Language) {
+	await loadLanguage(language);
+	localStore().setLanguage(language);
+}
+
 export interface LangInfos {
 	caption: string;
 	icon: string;
