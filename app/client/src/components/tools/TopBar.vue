@@ -25,6 +25,7 @@
 		</template>
 		<template v-else>
 			<div class="boxRoot">
+				<DZLocale />
 				<hr class="separator" />
 				<button @click="openUserMenu" class="playerBadge">{{ $t('topBar.menu') }}</button>
 				<!--
