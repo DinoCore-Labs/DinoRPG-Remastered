@@ -60,16 +60,17 @@ export const UserService = {
 			.catch(err => Promise.reject(err));
 	},
 	updateProfile(data: Partial<UserProfile>): Promise<UserProfile> {
-		const payload = {
-			description: data.description ?? null,
-			gender: data.gender ?? null,
-			language: data.language ?? null,
-			age: data.age ?? null
-		};
+		const payload: Partial<UserProfile> = {};
+
+		if (data.description !== undefined) payload.description = data.description;
+		if (data.gender !== undefined) payload.gender = data.gender;
+		if (data.language !== undefined) payload.language = data.language;
+		if (data.age !== undefined) payload.age = data.age;
+
 		return http()
 			.put('/users/me/profile', payload)
 			.then(res => res.data)
-			.catch(err => Promise.reject(err));
+			.catch(err => err.data);
 	},
 	uploadAvatar(file: File): Promise<UserProfile> {
 		const form = new FormData();
