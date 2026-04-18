@@ -42,5 +42,11 @@
 			"disconnect": "Ausloggen",
 			"goodbye": "Au revoir Maître {name}..."
 		}
+	},
+	"leftPanel": {
+		"wallets": {
+			"gold": "Goldstücke",
+			"treasureTicket": "Schatzbrief"
+		}
 	}
 }
