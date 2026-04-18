@@ -61,6 +61,7 @@
 		"fx": "Statuses",
 		"elements": "Information",
 		"level": "This level reflects the strength of your Dinoz.",
+		"slot": "This slot is empty, choose an item from the inventory to equip.&&//The equipped items can be used by your Dinoz in combat.//",
 		"action": "Actions",
 		"tabs": {
 			"map": "Map",
@@ -170,5 +171,23 @@
 			"criticalHitChance": "Critical Hit Chance",
 			"criticalHitDamage": "Critical Hit Bonus"
 		}
+	},
+	"pageTitle": {
+		"default": "DinoRPG",
+		"news": "DinoRPG [ Dinoland News ]",
+		"account": "DinoRPG [ Personal Information ]",
+		"shop": "DinoRPG [ Merchant: {shop} ]",
+		"faq": "DinoRPG [ FAQ ]",
+		"guide": "DinoRPG [ Game Guide ]",
+		"items": "DinoRPG [ Inventory ]",
+		"ingredients": "DinoRPG [ Ingredients ]",
+		"ranking": "DinoRPG [ Great Hall of Glory ]",
+		"dinozShop": "DinoRPG [ Dinoz Enclosure ]",
+		"dinoz": "DinoRPG [ Profile of {dinoz} ]",
+		"dinozNaming": "DinoRPG [ Choose Name ]",
+		"levelup": "DinoRPG [ Level-up of {dinoz} ]",
+		"gather": "DinoRPG [ {type} ]",
+		"fight": "DinoRPG [ Fight! ]",
+		"admin": "DinoRPG [ Admin Dashboard ]"
 	}
 }
