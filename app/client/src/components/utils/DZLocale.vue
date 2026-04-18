@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { loadLanguage, Locales } from '../../i18n';
+import { applyLanguage, Locales } from '../../i18n';
 import { localStore } from '../../store/localStore';
 import { userStore } from '../../store/userStore';
 import { UserService } from '../../services';
@@ -52,8 +52,7 @@ export default defineComponent({
 						await UserService.updateProfile({ language: locale });
 					}
 					// Changer la langue localement
-					loadLanguage(locale);
-					this.localStore.setLanguage(locale);
+					applyLanguage(locale);
 				} catch (err) {
 					console.error('Erreur lors de la mise à jour de la langue du joueur :', err);
 				}

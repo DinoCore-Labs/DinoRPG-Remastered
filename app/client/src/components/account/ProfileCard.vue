@@ -85,6 +85,8 @@
 import { defineComponent, type PropType, ref, watch } from 'vue';
 import type { UserProfile } from '@dinorpg/core/models/user/userProfile.js';
 import { UserService } from '../../services';
+import { applyLanguage } from '../../i18n';
+import { Language } from '@dinorpg/core/models/config/language.js';
 
 export default defineComponent({
 	name: 'ProfileCard',
@@ -119,9 +121,7 @@ export default defineComponent({
 		async function onAvatarSelect(event: Event) {
 			const file = (event.target as HTMLInputElement).files?.[0];
 			if (!file) return;
-
 			previewAvatar.value = URL.createObjectURL(file);
-
 			const updated = await UserService.uploadAvatar(file);
 			emit('updated', updated);
 		}
@@ -141,6 +141,9 @@ export default defineComponent({
 				payload.age = normalizedAge;
 			}
 			const updated = await UserService.updateProfile(payload);
+			if (payload.language) {
+				await applyLanguage(payload.language);
+			}
 			editing.value = false;
 			emit('updated', updated);
 		}
