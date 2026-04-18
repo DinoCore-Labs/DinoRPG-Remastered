@@ -284,6 +284,12 @@
 
 ## 🔹 Server
 
+## 0.14.1
+
+### Patch Changes
+
+- 50b38bb: feat add locale switcher
+
 ## 0.14.0
 
 ### Minor Changes
@@ -636,6 +642,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.14.1
+
+### Patch Changes
+
+- 50b38bb: feat add locale switcher
 
 ## 0.14.0
 
