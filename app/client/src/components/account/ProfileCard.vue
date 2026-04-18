@@ -86,7 +86,6 @@ import { defineComponent, type PropType, ref, watch } from 'vue';
 import type { UserProfile } from '@dinorpg/core/models/user/userProfile.js';
 import { UserService } from '../../services';
 import { applyLanguage } from '../../i18n';
-import { Language } from '@dinorpg/core/models/config/language.js';
 
 export default defineComponent({
 	name: 'ProfileCard',
