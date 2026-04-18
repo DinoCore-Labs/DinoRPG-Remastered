@@ -56,5 +56,119 @@
 		"github": "GitHub",
 		"version": "Alpha Version",
 		"thanks": "Thanks:"
+	},
+	"dinozPage": {
+		"fx": "Statuses",
+		"elements": "Information",
+		"level": "This level reflects the strength of your Dinoz.",
+		"action": "Actions",
+		"tabs": {
+			"map": "Map",
+			"inventory": "Inventory",
+			"details": "Details"
+		},
+		"chooseDinoz": {
+			"information": "Before taking control of your Dinoz, you must first give it a name.",
+			"nomDuDinoz": "Dinoz name:",
+			"pageName": "Choose name"
+		},
+		"inventory": {
+			"itemName": "Object name",
+			"stock": "Stock",
+			"actions": "Actions",
+			"full": "Stock full",
+			"sortBy": "Sort By",
+			"sort": {
+				"default": "By Default",
+				"nameAsc": "Name (A → Z)",
+				"nameDesc": "Name (Z → A)",
+				"priceAsc": "Price (increasing)",
+				"priceDesc": "Price (decreasing)",
+				"qtyAsc": "Quantity (increasing)",
+				"qtyDesc": "Quantity (decreasing)"
+			}
+		},
+		"details": {
+			"asc": "Ascending",
+			"desc": "Descending",
+			"th": {
+				"comp": "Skill",
+				"type": "Type",
+				"active": "Active"
+			},
+			"type": {
+				"name": {
+					"E": "Event",
+					"P": "Passive",
+					"A": "Attack",
+					"S": "Special",
+					"U": "Unique",
+					"I": "Summoning",
+					"C": "Collect"
+				},
+				"description": {
+					"E": "This skill **can trigger before each attack**",
+					"P": "This skill works **all the time**",
+					"A": "This skill **can replace** an attack",
+					"S": "This skill has a **particular effect**",
+					"U": "This skill will work **only once for all Dinoz**",
+					"I": "This skill allow to **summon the deity** with which the Dinoz has made a pact during the fight",
+					"C": "This skill **enables to collect ingredients** in different places"
+				}
+			},
+			"activate": {
+				"false": "**INACTIVE** && //An inactive skill will no longer be used by your Dinoz. Click to activate//",
+				"true": "**ACTIVE** && //Click here to deactivate//",
+				"locked": "Cannot be disabled"
+			},
+			"sort": {
+				"default": "Default",
+				"energy": "Energy",
+				"type": "Type",
+				"state": "Status",
+				"title": "Sort skills"
+			},
+			"statistics": "Characteristics",
+			"assaults": "Assaults",
+			"defenses": "Defenses",
+			"specials": "Specials",
+			"base": "Base",
+			"skill": "Skill",
+			"fireAssault": "Fire assault",
+			"woodAssault": "Wood assault",
+			"waterAssault": "Water assault",
+			"lightningAssault": "Lightning assault",
+			"airAssault": "Air assault",
+			"fireDefense": "Fire defense",
+			"woodDefense": "Wood defense",
+			"waterDefense": "Water defense",
+			"lightningDefense": "Lightning defense",
+			"airDefense": "Air defense",
+			"voidDefense": "Neutral defense",
+			"baseElementContribution": "Base element contribution",
+			"hpRegen": "HP regeneration",
+			"initiative": "Initiative",
+			"energy": "Energy",
+			"energyRecovery": "Energy recovery",
+			"maxFollowers": "Maximum followers",
+			"armor": "Armor",
+			"armorBreak": "Perforation",
+			"multihit": "Multi-hit",
+			"evasion": "Evasion",
+			"superEvasion": "Super Evasion",
+			"counter": "Counter",
+			"speed": "Turn Duration",
+			"fireSpeed": ":fire: Turn Duration",
+			"woodSpeed": ":wood: Turn Duration",
+			"waterSpeed": ":water: Turn Duration",
+			"lightningSpeed": ":lightning: Turn Duration",
+			"airSpeed": ":air: Turn Duration",
+			"bubbleRate": "Bubble rate",
+			"torchDamage": "Torch damage",
+			"acidBloodDamage": "Acid blood damage",
+			"baseValue": "Base value",
+			"criticalHitChance": "Critical Hit Chance",
+			"criticalHitDamage": "Critical Hit Bonus"
+		}
 	}
 }

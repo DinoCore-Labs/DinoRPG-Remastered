@@ -56,5 +56,119 @@
 		"github": "GitHub",
 		"version": "Alpha-Version",
 		"thanks": "Danksagungen:"
+	},
+	"dinozPage": {
+		"fx": "Status",
+		"elements": "Informationen",
+		"level": "Die Stufe spiegelt die Stärke deines Dinoz wider.",
+		"action": "Aktionen",
+		"tabs": {
+			"map": "Karte",
+			"inventory": "Inventar",
+			"details": "Details"
+		},
+		"chooseDinoz": {
+			"information": "Bevor der Dinoz dir zur Verfügung steht, musst du ihm zunächst einen Namen geben.",
+			"nomDuDinoz": "Name des Dinoz:",
+			"pageName": "Namensauswahl"
+		},
+		"inventory": {
+			"itemName": "Name des Gegenstands",
+			"stock": "Vorrat",
+			"actions": "Aktionen",
+			"full": "Vorrat gefüllt",
+			"sortBy": "Sortieren nach",
+			"sort": {
+				"default": "Standard",
+				"nameAsc": "Name (A → Z)",
+				"nameDesc": "Name (Z → A)",
+				"priceAsc": "Preis (aufsteigend)",
+				"priceDesc": "Preis (absteigend)",
+				"qtyAsc": "Menge (aufsteigend)",
+				"qtyDesc": "Menge (absteigend)"
+			}
+		},
+		"details": {
+			"asc": "Aufsteigend",
+			"desc": "Absteigend",
+			"th": {
+				"comp": "Fähigkeit",
+				"type": "Typ",
+				"active": "Aktiv"
+			},
+			"type": {
+				"name": {
+					"E": "Ereignis",
+					"P": "Passiv",
+					"A": "Angriff",
+					"S": "Spezial",
+					"U": "Ungewöhnlich",
+					"I": "Beschwörung",
+					"C": "Sammeln"
+				},
+				"description": {
+					"E": "Diese Fähigkeit **kann vor jedem Angriff ausgelöst werden**.",
+					"P": "Diese Fähigkeit ist **permanent**.",
+					"A": "Diese Fähigkeit kann einen Angriff **ersetzen**.",
+					"S": "Diese Fähigkeit hat einen **besonderen Effekt**.",
+					"U": "Diese Fähigkeit gilt nur **einmalig für alle Dinoz**.",
+					"I": "Diese Fähigkeit ermöglicht es, während des Kampfes **die Gottheit** zu beschwören, mit welcher der Dinoz einen Pakt geschlossen hat",
+					"C": "Diese Fähigkeit **ermöglicht das Sammeln von Zutaten** an verschiedenen Orten"
+				}
+			},
+			"activate": {
+				"false": "Aktuell **INAKTIV** &&//Eine inaktive Fähigkeit wird von deinem Dinoz nicht mehr benutzt. Klicken zum aktivieren.//",
+				"true": "Aktuell **aktiv** &&//Klicken zum deaktivieren.//",
+				"locked": "Kann nicht deaktiviert werden."
+			},
+			"sort": {
+				"default": "Standard",
+				"energy": "Energie",
+				"type": "Typ",
+				"state": "Zustand",
+				"title": "Fähigkeiten sortieren"
+			},
+			"statistics": "Eigenschaften",
+			"assaults": "Angriff",
+			"defenses": "Verteidigung",
+			"specials": "Sonstiges",
+			"base": "Base",
+			"skill": "Fähigkeit",
+			"fireAssault": "Feuerangriff",
+			"woodAssault": "Holzangriff",
+			"waterAssault": "Wasserangriff",
+			"lightningAssault": "Blitzangriff",
+			"airAssault": "Luftangriff",
+			"fireDefense": "Feuerabwehr",
+			"woodDefense": "Holzabwehr",
+			"waterDefense": "Wasserabwehr",
+			"lightningDefense": "Blitzabwehr",
+			"airDefense": "Luftabwehr",
+			"voidDefense": "Neutrale Abwehr",
+			"baseElementContribution": "Basiselementanteil",
+			"hpRegen": "LP-Regeneration",
+			"initiative": "Initiative",
+			"energy": "Energie",
+			"energyRecovery": "Energiegeneration",
+			"maxFollowers": "Maximale Anzahl von Begleitern",
+			"armor": "Rüstung",
+			"armorBreak": "Durchschlag",
+			"multihit": "Mehrfachschlag",
+			"evasion": "Ausweichen",
+			"superEvasion": "Super-Ausweichen",
+			"counter": "Gegenangriff",
+			"speed": "Rundendauer",
+			"fireSpeed": ":fire:-Rundendauer",
+			"woodSpeed": ":wood:-Rundendauer",
+			"waterSpeed": ":water:-Rundendauer",
+			"lightningSpeed": ":lightning:-Rundendauer",
+			"airSpeed": ":air:-Rundendauer",
+			"bubbleRate": "Rate der Lufthülle",
+			"torchDamage": "Fackelschaden",
+			"acidBloodDamage": "Schaden des säurehaltigen Blutes",
+			"baseValue": "Basiswert",
+			"criticalHitChance": "Chance auf kritischen Treffer",
+			"criticalHitDamage": "Schadensbonus kritischer Treffer"
+		}
 	}
 }

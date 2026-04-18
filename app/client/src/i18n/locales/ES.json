@@ -56,5 +56,119 @@
 		"github": "GitHub",
 		"version": "Versión Alpha",
 		"thanks": "Agradecimientos:"
+	},
+	"dinozPage": {
+		"fx": "Estatus",
+		"elements": "Información",
+		"level": "Este nivel presenta el poder de tu Dino.",
+		"action": "Acciones",
+		"tabs": {
+			"map": "Mapa",
+			"inventory": "Inventario",
+			"details": "Detalles"
+		},
+		"chooseDinoz": {
+			"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
+			"nomDuDinoz": "Nombre del Dino:",
+			"pageName": "Elegir nombre"
+		},
+		"inventory": {
+			"itemName": "Nombre del objeto",
+			"stock": "Almacén",
+			"actions": "Acciones",
+			"full": "Almacén lleno",
+			"sortBy": "Ordenar por",
+			"sort": {
+				"default": "Por defecto",
+				"nameAsc": "Nombre (A → Z)",
+				"nameDesc": "Nombre (Z → A)",
+				"priceAsc": "Precio (creciente)",
+				"priceDesc": "Precio (decreciente)",
+				"qtyAsc": "Cantidad (creciente)",
+				"qtyDesc": "Cantidad (decreciente)"
+			}
+		},
+		"details": {
+			"asc": "Creciente",
+			"desc": "Decreciente",
+			"th": {
+				"comp": "Competencia",
+				"type": "Tipo",
+				"active": "Activo"
+			},
+			"type": {
+				"name": {
+					"E": "Evento",
+					"P": "Permanente",
+					"A": "Ataque",
+					"S": "Especial",
+					"U": "Único",
+					"I": "Invocación",
+					"C": "Recolectar"
+				},
+				"description": {
+					"E": "Esta competencia **puede activarse antes de cada ataque**",
+					"P": "Esta competencia se aplica **en todo momento**",
+					"A": "Esta competencia **puede reemplazar** un ataque",
+					"S": "Esta competencia tiene un **efecto particular**",
+					"U": "Esta competencia se aplica **una sola vez para un conjunto de Dinos**",
+					"I": "Esta competencia te permite **invocar una divinidad** para que ayude a tu Dino en el combate.",
+					"C": "Esta competencia **permite recolectar ingredientes** en las diferentes zonas"
+				}
+			},
+			"activate": {
+				"false": "Actualmente **INACTIVO** &&//Una competencia inactiva no podrá ser utilizada por tu Dino. Haz clic aquí para activarla//",
+				"true": "Actualmente **activo** &&//Pincha aquí para desactivar//",
+				"locked": "No puede ser desactivada"
+			},
+			"sort": {
+				"default": "Por defecto",
+				"energy": "Energía",
+				"type": "Tipo",
+				"state": "Estado",
+				"title": "Ordenar las competencias"
+			},
+			"statistics": "Características",
+			"assaults": "Asaltos",
+			"defenses": "Defensa",
+			"specials": "Especiales",
+			"base": "Base",
+			"skill": "Habilidad",
+			"fireAssault": "Asalto de Fuego",
+			"woodAssault": "Asalto de Madera",
+			"waterAssault": "Asalto de Agua",
+			"lightningAssault": "Asalto de Rayo",
+			"airAssault": "Asalto de Aire",
+			"fireDefense": "Defensa al Fuego",
+			"woodDefense": "Defensa a la Madera",
+			"waterDefense": "Defensa al Agua",
+			"lightningDefense": "Defensa al Rayo",
+			"airDefense": "Defensa al Aire",
+			"voidDefense": "Elemento Vacío",
+			"baseElementContribution": "Contribución del elemento base",
+			"hpRegen": "Regeneración de PV",
+			"initiative": "Iniciativa",
+			"energy": "Energía",
+			"energyRecovery": "Recuperación de Energía",
+			"maxFollowers": "Número máximo de seguidores",
+			"armor": "Armadura",
+			"armorBreak": "Perforación",
+			"multihit": "Multi-golpe",
+			"evasion": "Esquiva",
+			"superEvasion": "Súper Evasión",
+			"counter": "Contra",
+			"speed": "Duración de un turno",
+			"fireSpeed": "Duración de un turno :fire:",
+			"woodSpeed": "Duración de un turno :wood:",
+			"waterSpeed": "Duración de un turno :water:",
+			"lightningSpeed": "Duración de un turno :lightning:",
+			"airSpeed": "Duración de un turno :air:",
+			"bubbleRate": "Porcentaje de Burbuja",
+			"torchDamage": "Daño de antorcha",
+			"acidBloodDamage": "Daño de sangre ácida",
+			"baseValue": "Valor base",
+			"criticalHitChance": "Probabilidad de golpe crítico",
+			"criticalHitDamage": "Bonus de golpe crítico"
+		}
 	}
 }
