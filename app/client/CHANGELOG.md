@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.14.1
+
+### Patch Changes
+
+- 50b38bb: feat add locale switcher
+
 ## 0.14.0
 
 ### Minor Changes
