@@ -62,6 +62,7 @@
 		"fx": "Statuts",
 		"elements": "Informations",
 		"level": "Ce niveau reflète la puissance de votre Dinoz.",
+		"slot": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper. &&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//",
 		"action": "Actions",
 		"tabs": {
 			"map": "Carte",
