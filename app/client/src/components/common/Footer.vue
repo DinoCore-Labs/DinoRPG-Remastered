@@ -11,12 +11,21 @@
 				<div>
 					<img class="logo" :src="getImgURL('background', '4dinoz')" alt="4 Dinoz" />
 				</div>
-				<p>
-					Ce jeu est un fan-project pour DinoRPG de <a href="https://motiontwin.com/" target="_blank">Motion Twin</a>.
-					Sauf indication contraire, tous les éléments graphiques sont tirés de ces jeux et sont donc la propriété de
-					Motion Twin. DinoRPG est Open Source et tout le monde est le bienvenu pour y participer. Vous pouvez consulter
-					le code source sur <a href="https://github.com/DinoCore-Labs/DinoRPG-Remastered" target="_blank">GitHub</a>.
-				</p>
+				<i18n-t keypath="footer.info" tag="p" scope="global">
+					<template #motionTwin>
+						<a href="https://motiontwin.com/" target="_blank" rel="noopener noreferrer">
+							{{ $t('footer.motionTwin') }}
+						</a>
+					</template>
+					<template #br>
+						<br />
+					</template>
+					<template #github>
+						<a href="https://github.com/DinoCore-Labs/DinoRPG-Remastered" target="_blank" rel="noopener noreferrer">
+							{{ $t('footer.github') }}
+						</a>
+					</template>
+				</i18n-t>
 				<div class="status">
 					<span>
 						<svg

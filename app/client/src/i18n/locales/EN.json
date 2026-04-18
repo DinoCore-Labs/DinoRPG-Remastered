@@ -48,5 +48,13 @@
 			"gold": "Gold coins",
 			"treasureTicket": "Treasury Note"
 		}
+	},
+	"footer": {
+		"dev": "Developers:",
+		"info": "This game is a fan project for DinoRPG by {motionTwin}.{br}Unless stated otherwise, all graphical assets are taken from these games and therefore remain the property of Motion Twin. DinoRPG is Open Source and everyone is welcome to contribute. You can view the source code on {github}.",
+		"motionTwin": "Motion Twin",
+		"github": "GitHub",
+		"version": "Alpha Version",
+		"thanks": "Thanks:"
 	}
 }

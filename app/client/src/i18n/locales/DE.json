@@ -48,5 +48,13 @@
 			"gold": "Goldstücke",
 			"treasureTicket": "Schatzbrief"
 		}
+	},
+	"footer": {
+		"dev": "Entwickler:",
+		"info": "Dieses Spiel ist ein Fanprojekt zu DinoRPG von {motionTwin}.{br}Sofern nicht anders angegeben, stammen alle grafischen Elemente aus diesen Spielen und sind daher Eigentum von Motion Twin. DinoRPG ist Open Source und jeder ist herzlich eingeladen, daran mitzuwirken. Den Quellcode kannst du auf {github} ansehen.",
+		"motionTwin": "Motion Twin",
+		"github": "GitHub",
+		"version": "Alpha-Version",
+		"thanks": "Danksagungen:"
 	}
 }
