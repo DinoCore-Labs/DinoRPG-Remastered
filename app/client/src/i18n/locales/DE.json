@@ -61,6 +61,7 @@
 		"fx": "Status",
 		"elements": "Informationen",
 		"level": "Die Stufe spiegelt die Stärke deines Dinoz wider.",
+		"slot": "Dieser Platz ist leer, wähle einen Gegenstand aus dem Inventar, den du ausrüsten möchtest. &&///Die ausgerüsteten Gegenstände können von deinem Dinoz im Kampf benutzt werden.//",
 		"action": "Aktionen",
 		"tabs": {
 			"map": "Karte",
@@ -170,5 +171,23 @@
 			"criticalHitChance": "Chance auf kritischen Treffer",
 			"criticalHitDamage": "Schadensbonus kritischer Treffer"
 		}
+	},
+	"pageTitle": {
+		"default": "DinoRPG",
+		"news": "DinoRPG [ Dinoland-Nachrichten ]",
+		"account": "DinoRPG [ Persönliche Informationen ]",
+		"shop": "DinoRPG [ Händler: {shop} ]",
+		"faq": "DinoRPG [ FAQ ]",
+		"guide": "DinoRPG [ Spielhandbuch ]",
+		"items": "DinoRPG [ Inventaire ]",
+		"ingredients": "DinoRPG [ Zutaten ]",
+		"ranking": "DinoRPG [ Die Große Ruhmeshalle ]",
+		"dinozShop": "DinoRPG [ Dinoz-Gehege ]",
+		"dinoz": "DinoRPG [ Profil von {dinoz} ]",
+		"dinozNaming": "DinoRPG [ Namen wählen ]",
+		"levelup": "DinoRPG [ Neue Stufe für {dinoz} ]",
+		"gather": "DinoRPG [ {type} ]",
+		"fight": "DinoRPG [ Kampf! ]",
+		"admin": "DinoRPG [ Administrationsseite ]"
 	}
 }
