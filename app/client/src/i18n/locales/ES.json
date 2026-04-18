@@ -42,5 +42,11 @@
 			"disconnect": "Desconectarse",
 			"goodbye": "Au revoir Maître {name}..."
 		}
+	},
+	"leftPanel": {
+		"wallets": {
+			"gold": "Monedas de oro",
+			"treasureTicket": "Bono del Tesoro"
+		}
 	}
 }
