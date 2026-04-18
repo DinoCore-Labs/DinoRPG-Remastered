@@ -61,6 +61,7 @@
 		"fx": "Estatus",
 		"elements": "Información",
 		"level": "Este nivel presenta el poder de tu Dino.",
+		"slot": "Este espacio está vacío, escoge un objeto del inventario para tu equipamiento. &&//Los objetos puestos aquí podrán ser utlizados por tu Dino durante el combate.//",
 		"action": "Acciones",
 		"tabs": {
 			"map": "Mapa",
@@ -170,5 +171,23 @@
 			"criticalHitChance": "Probabilidad de golpe crítico",
 			"criticalHitDamage": "Bonus de golpe crítico"
 		}
+	},
+	"pageTitle": {
+		"default": "DinoRPG",
+		"news": "DinoRPG [ La actualidad en Dinoland ]",
+		"account": "DinoRPG [ Información personal ]",
+		"shop": "DinoRPG [ Tienda : {shop} ]",
+		"faq": "DinoRPG [ Preguntas y respuestas ]",
+		"guide": "DinoRPG [ Guía del Juego ]",
+		"items": "DinoRPG [ Inventaire ]",
+		"ingredients": "DinoRPG [ Ingredientes ]",
+		"ranking": "DinoRPG [ Gran Hall de la Gloria ]",
+		"dinozShop": "DinoRPG [ Tienda de Dinos ]",
+		"dinoz": "DinoRPG [ Ficha de {dinoz} ]",
+		"dinozNaming": "DinoRPG [ Elegir nombre ]",
+		"levelup": "DinoRPG [ Subida de nivel para {dinoz} ]",
+		"gather": "DinoRPG [ {type} ]",
+		"fight": "DinoRPG [ ¡Combate! ]",
+		"admin": "DinoRPG [ Panel de Admin ]"
 	}
 }
