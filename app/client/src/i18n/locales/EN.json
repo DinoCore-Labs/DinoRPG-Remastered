@@ -3063,7 +3063,7 @@
 			}
 		},
 		"joveboze": {
-			"name": "Jovezboze",
+			"name": "Joveboze",
 			"dialog": {
 				"begin": "He'a li'l boy! Ya wanto kik old Scorpass?",
 				"trad": "Nobody here seems to ever understand what Joveboze is saying. You have a feeling that it's a local dialect of the Frishers, or even a language which Joveboze has created himself.",
@@ -3080,7 +3080,7 @@
 			}
 		},
 		"hydargol": {
-			"name": "Maître Hydargol",
+			"name": "Master Hydargol",
 			"dialog": {
 				"begin": "Les Chutes Mutantes sont l'un des Grands Lieux de méditation des moines Zenzen. C'est pour cette raison qu'on en trouve souvent dans le coin. En s'installant sur de grandes feuilles de nénuphars, ils essaient de méditer le plus longtemps... sans pour autant se faire entraîner par le courant ! <br> De nombreux moines s'étant un peu assoupis se sont offert une descente des chutes : en tout cas, personne ne les a jamais revus.",
 				"talk": ".........bon.jour......",
@@ -3110,7 +3110,7 @@
 			}
 		},
 		"padamoine": {
-			"name": "Apprenti padamoine",
+			"name": "Padamoon Apprentice",
 			"dialog": {
 				"begin": "Bonjour, heu... je suis Bémol, le padamoine de Maître Hydargol. Et heu... je dois lui amener ces feuilles de nénuphar. Le problème c'est que, heu... je viens de me rendre compte que j'avais le mal de mer... pourtant je dois me rendre sur les Iles Altantéinées ! Qu'est-ce que je vais bien pouvoir faire ???",
 				"help": "C'est vrai, vous acceptez de m'aider ?? Merci beaucoup !",
@@ -3122,7 +3122,7 @@
 			}
 		},
 		"archisage": {
-			"name": "Archisage",
+			"name": "ArchSage",
 			"dialog": {
 				"begin": "Au centre du Dôme se trouve la résidence de l'Archisage. Il s'agit d'un titre honorifique donné à un Archimage devenu trop vieux pour pouvoir utiliser ses pouvoirs magiques. Il n'en reste pas moins un personnage doué d'une très grande connaissance, même si ses propos peuvent parfois sembler confus.",
 				"enigm": "Bonjour bonjour bonjour ! Que viens-tu chercher ici ? Tu cherches quelque chose ? Puis-je t'aider ?",
@@ -3140,7 +3140,7 @@
 			}
 		},
 		"weirdMan": {
-			"name": "Homme bizarre",
+			"name": "Strange man",
 			"dialog": {
 				"begin": "Un individu bizarre maladroitement caché entre les arbres vous fixe avec un regard inquiétant... Il brandit une lanterne dans votre direction.",
 				"hi": "L'homme a l'air inquiet et continue à vous toiser sans rien dire...",
@@ -3166,7 +3166,7 @@
 			}
 		},
 		"speleleologue": {
-			"name": "Spélélélologue",
+			"name": "Popotholeler",
 			"dialog": {
 				"begin": "Un récent tremblement de terre semble avoir créé une fissure dans la paroi. Un air glacé s'en échappe et vous apercevez un homme bizarre qui inspecte les alentours.",
 				"talk": "Pfiiooooouuu !! Tu as vu cette fissure ? elle s'ouvre sur une gigantesque caverne dans laquelle règne un froid glacial ! Attention ! Si ton Dinoz y rentre, il sera entièrement congelé !",
@@ -3210,7 +3210,7 @@
 			}
 		},
 		"strangePteroz": {
-			"name": "Etrange Dinoz",
+			"name": "Strange Dinoz",
 			"dialog": {
 				"begin": "Un étrange Dinoz à l'allure menaçante est apparu sur votre chemin. Ses yeux rouges vous fixent intensément, il a l'air très féroce !",
 				"fight": "Vous avez vaincu un Ptéroz ! Vous obtenez le Trophée des ptéroz qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
@@ -3222,7 +3222,7 @@
 			}
 		},
 		"strangeHippo": {
-			"name": "Etrange Dinoz",
+			"name": "Strange Dinoz",
 			"dialog": {
 				"begin": "Un étrange Dinoz est apparu sur votre chemin, puis s'enfuit... Que désirez-vous faire ?",
 				"fight": "Vous avez vaincu un Dinoz rare : un Hippoclamp ! Vous obtenez le Trophée des Hippoclamps qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
@@ -3234,7 +3234,7 @@
 			}
 		},
 		"strangeRocky": {
-			"name": "Etrange Dinoz",
+			"name": "Strange Stone",
 			"dialog": {
 				"begin": "Une étrange pierre se dresse au milieu du chemin, Son emplacement ne semble pas très naturel... Que désirez vous faire ?",
 				"touch": "C'est étrange... la pierre semble chaude au toucher. Il n'y a rien d'autre de spécial... Peut-être vaut-il mieux ne pas insister...",
@@ -3249,7 +3249,7 @@
 			}
 		},
 		"papyJoe": {
-			"name": "Papy Joe",
+			"name": "Grandpa Joe",
 			"dialog": {
 				"begin": "Salut p'tit gars, je t'attendais..."
 			},
@@ -3263,16 +3263,16 @@
 		}
 	},
 	"missions": {
-		"header": "Liste des missions",
-		"th": { "title": "Titre", "status": "Statut" },
+		"header": "Missions list",
+		"th": { "title": "Title", "status": "Status" },
 		"status": {
 			"available": "Disponible",
 			"unavailable": "Indisponible",
 			"ongoing": "En cours",
 			"finished": "Terminée"
 		},
-		"accept": "Accepter la mission",
-		"giveUp": "Abandonner",
+		"accept": "Accept the Mission",
+		"giveUp": "Give up",
 		"lastDialog": "Dernière étape validée",
 		"goals": {
 			"atPlace": "Se rendre à {place}",
