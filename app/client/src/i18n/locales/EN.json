@@ -1910,79 +1910,79 @@
 	},
 	"shop": {
 		"dinoz": {
-			"header": "Enclos des Dinoz",
-			"help": "Bienvenue dans l'enclos à Dinoz ! Ici, **chaque jour**,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
+			"header": "Dinoz Enclosure",
+			"help": "Welcome to the Dinoz enclosure ! Here, **daily**, you can discover the various Dinoz options available for adoption. Choose the one that suits you best."
 		},
 		"confirm": {
-			"classic": "Désirez-vous acheter {quantity} {item} pour un total de {value} or ?",
-			"filou": "Désirez-vous acheter {quantity} bons pour un total de {sold} {item} ?",
-			"magic": "Désirez-vous acheter {item} pour un total de {sold} napodinos ?"
+			"classic": "Do you wish to buy {quantity} {item} for a total of {value} gold?",
+			"filou": "Do you wish to buy {quantity} goods for a total of {sold} {item}?",
+			"magic": "Do you wish to buy {item} for a total of {sold} napodinos?"
 		},
 		"item": {
-			"help": "Cliquez sur un objet dans la liste pour l'examiner...",
-			"advice": "**Conseil du jour :**",
-			"advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma : l'essayer, c'est l'adopter !",
-			"quantity": "Quantité",
-			"buy": "Acheter",
-			"sell": "Vendre pour {sell} :gold:",
-			"title": "Marchand : ",
-			"price": "Prix :",
+			"help": "Select an item from the list to examine it...",
+			"advice": "**Daily Tip:**",
+			"advice_1": "Do you want to play again without having to wait for tomorrow? Madam Irma's potion is here for you!",
+			"quantity": "Quantity",
+			"buy": "Buy",
+			"sell": "Sell for {gold} :gold:",
+			"title": "Merchant: ",
+			"price": "Price:",
 			"flying": {
-				"name": "Boutique volante de Dinoland",
-				"description": "La Boutique volante de Dinoland est accessible à tout endroit et permet à tout moment à votre Dinoz de se procurer des objets de base. En général, il suffit de siffler très fort pour qu'elle arrive. Il existe aussi de nombreuses autres Boutiques dans Dinoland, qui vendent chacune des objets spéciaux."
+				"name": "Dinoland Flying Shop",
+				"description": "The Dinoland Flying Shop is always accessible. Just whistle (loudly - the shop can be a little hard of hearing) and the store will come, allowing you to purchase a variety of basic items. As you explore Dinoland, you'll come across other Shops with more interesting items."
 			},
 			"forge": {
-				"name": "Boutique des Forges",
-				"description": "La Boutique des Forges est le lieu où sont vendus les objets construits grâce au feu du Grand Tout Chaud. On y trouve de nombreux objets utiles pour le Combat."
+				"name": "Forges Shop",
+				"description": "The Forges are where items made from the fire of the Big All-Hot are also sold. You can find lots of useful items for battle there."
 			},
 			"magic": {
-				"name": "Boutique Magique",
-				"description": "Au cœur d'une petite ruelle de Dinoville, les aventuriers se perdent parfois et trouvent alors la Boutique Magique... Les objets extrêmement rares et puissants qu'elle vend ne peuvent être achetés avec de vulgaires pièces d'or. Par contre, ces objets sont ensorcelés : une fois équipés sur un Dinoz, ils ne peuvent plus être enlevés avant plusieurs jours !"
+				"name": "Magic Shop",
+				"description": "Hidden away in a small Dinotown street, adventurers sometimes get lost and thus find the Magic Shop. Only extremely rare and powerful items are sold here. They can't be bought with common or garden gold coins. However, these items are bewitched: once equipped by a Dinoz, you won't be able to remove them for several days!"
 			},
 			"cursed": {
-				"name": "Boutique Maudite",
-				"description": "La Boutique Maudite vend des objets rarissimes introuvables ailleurs. Comme on raconte que quiconque y rentre est maudit à vie, seuls ceux qui le sont déjà osent s'y aventurer..."
+				"name": "Cursed Shop",
+				"description": "The Cursed Shop sells rare items that cannot be found elsewhere. As it is said that whoever enters it is cursed for life, only those who are already cursed dare to venture there..."
 			},
 			"fruity": {
-				"name": "Boutique Fruitée",
-				"description": "« Si vous laissez de l'or dans le seau pendu au vieil arbre, un fruit tombera ! »"
+				"name": "Fruity Shop",
+				"description": "\"If you leave gold in the bucket hanging from the old tree, a fruit will fall!\""
 			},
 			"razad": {
-				"name": "Chez Razad",
-				"description": "Razad est un vieux nomade ayant fui les steppes occidentales, devenues trop dangereuses pour son commerce. Aujourd'hui, sa boutique est bien plus modeste qu'avant, mais au moins il est installé en sécurité à l'Avant-Poste Rocky."
+				"name": "At Razad",
+				"description": "Razad is an old nomad who fled the western steppes, which had become too dangerous for his business. Today, his store is much more modest than before, but at least it is secured at the Rocky's Outpost."
 			},
 			"souk": {
-				"name": "Souk \"Ventes Éclair\"",
-				"description": "Le souk est installé un peu à l'écart des Pylônes de Magnétite, offrant une très jolie vue sur les arcs électriques qui se forment régulièrement dans cette région. Malheureusement, la boutique n'est pas hors d'atteinte de ces éclairs, ce qui pose quelques soucis évidents..."
+				"name": "Souk \"Lightning Sales\"",
+				"description": "The souk is located slightly away from the Magnetite Pylons, offering a very nice view of the electric arcs that often form in this region. Unfortunately, the shop is not out of the arcs' reach, which poses some obvious problems..."
 			},
 			"neerhel": {
-				"name": "Pourvoyeur de Toutemba",
-				"description": "La petite boutique du Pourvoyeur est cachée au fin fond des canyons de Toutemba dans une crique bien protégée. Normal quand on connaît les dangers que recelle la région..."
+				"name": "Provider of Neerhel",
+				"description": "The Purveyor's small shop is hidden in the depths of the Neerhel canyons, in a well protected creek. Very useful when you sense you are in danger."
 			},
 			"barbarian": {
-				"name": "Barbare Troqueur",
-				"description": "« Prix pas négociables. Vous pas toucher marchandises. PAS TOUCHER J'AI DIT ! Si vous toucher, moi BROYER vous !»"
+				"name": "Barbarian Barter",
+				"description": "\"No bargains. You not touch goods. NO TOUCHING! If you touch, me CRUSH you!\""
 			},
 			"secret": {
-				"name": "Boutique Secrète",
-				"description": "« La boutique secrète de la Team-W contient tous les objets des Steppes Magnétiques en un seul endroit, et surtout à prix très raisonnable ! »"
+				"name": "Secret Store",
+				"description": "\"Team-W's secret store contains all the Magnetic Steppes items in one place, and above all at very reasonable prices!\""
 			},
 			"elit": {
-				"name": "Boutique d'Elit",
-				"description": "Vous trouverez dans cette Boutique divers objets que les forces spéciales Végétox utilisent souvent au cours de leurs dangereuses missions."
+				"name": "Elite Boutique",
+				"description": "You will find in this shop various objects that the Vegetox special forces often use during their dangerous missions."
 			},
 			"chens": {
-				"name": "Boutique de Chen",
-				"description": "Chen met à votre disposition des compétences consommables, elles sont tellement puissantes qu'elles se détruisent après utilisation. Elles sont à utiliser avec parcimonie."
+				"name": "Chen's Shop",
+				"description": "Chen provides you with consumable skills, they are so powerful that they destroy themselves after use. They are to be used sparingly."
 			},
 			"merchant": {
-				"name": "Marchand Ambulant",
-				"description": "Le Marchand Ambulant se promène dans tout Dinoland et achète les Ingrédients des Maîtres Dinoz : il offre beaucoup d'or !",
-				"dimanche": "Le Marchand Ambulant a pris son jour de congé, il faudra patienter jusqu'à demain pour pouvoir vendre de nouveau vos ingrédients. Bien sûr, le Marchand Ambulant se sera déplacé à un lieu différent, il faudra donc le trouver avant de pouvoir vendre vos ingrédients."
+				"name": "Travelling Merchant",
+				"description": "The Traveling Merchant walks through all of Dinoland and buys the Ingredients from the Dinoz Masters: he offers a lot of gold!",
+				"dimanche": "The Traveling Merchant has taken his day off, wait until tomorrow to be able to sell your ingredients again. Of course, the Traveling Merchant will have moved to a different place, so it will be necessary to find him before you can sell your ingredients."
 			},
 			"filou": {
-				"name": "Homme Louche",
-				"description": "C'est assez cher, mais a priori, il n'existe pas d'autre façon d'en avoir facilement..."
+				"name": "Shadowy Man",
+				"description": "It's pretty expensive, but on the face of it, there is no other way to obtain it easily..."
 			}
 		}
 	},
