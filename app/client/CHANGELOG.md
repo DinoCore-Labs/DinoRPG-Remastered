@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.14.2
+
+### Patch Changes
+
+- 51518dd: i18n: add English translations
+
 ## 0.14.1
 
 ### Patch Changes
