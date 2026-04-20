@@ -3043,23 +3043,23 @@
 			}
 		},
 		"atlanteGuard": {
-			"name": "Garde Atlante",
+			"name": "Atlantean Guard",
 			"dialog": {
-				"begin": "L'accès au Dôme Soulaflotte n'est possible qu'en utilisant un Rascaphandre.",
-				"rasca": "Un Rascaphandre est un gros poisson avec des arêtes creuses. Il est capable de stocker une grande quantité d'oxygène et ainsi d'emmener son maître jusqu'aux profondeurs où se situe le Dôme Soulaflotte, sans que celui-ci ne meure asphyxié.",
-				"where": "Les Rascaphandres sont nombreux dans les eaux des alentours, il faut juste savoir les appeler.",
-				"call": "(soupir)... En fait, il faut un objet particulier : un appeau à Rascaphandre. C'est une petite flûte que l'on plonge dans l'eau et qui imite les ondes du grand requin noir maléfique des abysses pestilentielles, le repas préféré des Rascaphandres. Ils se précipitent alors et vous pouvez en utiliser un pour vous rendre au Dôme.",
-				"appeau": "Oui. L'appeau à Rascaphandre est fabriqué avec des arêtes de vieux Rascaphandre. Mais plus ils sont vieux, plus ils ont mauvais caractère et ils deviennent alors très dangereux...",
-				"old": "J'ai un ami pêcheur au Port de Prêche, si vous n'avez pas peur du danger, je peux lui demander de vous emmener chasser le vieux Rascaphandre géant... Allez le voir de ma part, il s'appelle Jovébozé.",
-				"thanks": "Je vous souhaite un bon séjour sur les Iles Atlantéinées."
+				"begin": "The Underwater Dome can only be accessed with a Scorpscuba.",
+				"rasca": "A Scorpscuba is a big fish with hollow bones that stores enough oxygen to travel to the depths of the Underwater Dome. Well, it usually stores enough oxygen...",
+				"where": "Scorpscubas are very common here. You just have to know how to call them.",
+				"call": "Oh dear, young Dinoz Masters, when will they understand. In fact, you need a special object: a Scorpscuba caller. It's a small flute that you place in the water. It simulates the wave pattern of a huge malefic black shark from the pestilential abyss, the perfect meal for all Scorpscubas. They dash for it and you use it to ride down to the Dome.",
+				"appeau": "Yes. A Scorpscuba Caller is made from the bones of very old Scorpscuba. Of course, the older Scorpscubas are far more bad-tempered and dangerous than younger ones....",
+				"old": "I have a friend, Joveboze, who is fisherman at Frish Port. If you think you're up to it, I'll ask him to take you out to hunt an old, giant Scorpscuba so you can get yourself a quality flute.",
+				"thanks": "Enjoy your stay on the Atlanteid Islands."
 			},
 			"choice": {
-				"rasca": "Un quoi ?!?",
-				"thanks": "Ok, merci !",
-				"where": "Vous savez où je peux en trouver un ?",
-				"call": "Super !... Heu... vous avez leur numéro ?",
-				"appeau": "Un Appeau...",
-				"old": "Uhm..."
+				"rasca": "A what?!?",
+				"thanks": "Ok, thanks!",
+				"where": "Do you know where I can find one?",
+				"call": "Great!... Hmmm... Have you got their number?",
+				"appeau": "A Caller...",
+				"old": "Shout donga donga..."
 			}
 		},
 		"joveboze": {
