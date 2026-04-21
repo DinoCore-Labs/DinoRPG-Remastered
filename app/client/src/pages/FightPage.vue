@@ -45,7 +45,7 @@ export default defineComponent({
 			sessionStore: sessionStore(),
 			fight: null as FightResult | null,
 			dinozId: Number(this.$route.params.dinozId as string),
-			lang: localStore().getLanguage ?? 'fr',
+			lang: (localStore().getLanguage ?? 'fr').toLowerCase(),
 			fightEnded: false,
 			fightTransformed: {} satisfies preFightLoader as preFightLoader,
 			loaded: false,
