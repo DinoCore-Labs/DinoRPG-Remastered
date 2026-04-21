@@ -13,7 +13,7 @@
 		}
 	},
 	"topBar": {
-		"createAccount": "Créer un compte",
+		"createAccount": "Crear una cuenta",
 		"login": "Acceder",
 		"menu": "Menú",
 		"leftUserMenu": {
@@ -21,26 +21,26 @@
 			"dojo": "Dojo"
 		},
 		"authMenu": {
-			"name": "Pseudo :",
-			"namePlaceholder": "Votre pseudo...",
-			"password": "Mot de passe :",
-			"passwordPlaceholder": "Votre mot de passe...",
-			"nameOk": "✔ Pseudo disponible",
-			"nameBad": "✖ Pseudo déjà utilisé",
-			"accountCreatedWithSuccess": "Votre compte a été créé !",
-			"welcomeBack": "Content de te revoir Maître {name} !"
+			"name": "Nombre de usuario:",
+			"namePlaceholder": "Tu nombre de usuario...",
+			"password": "Contraseña:",
+			"passwordPlaceholder": "Tu contraseña...",
+			"nameOk": "✔ Nombre de usuario disponible",
+			"nameBad": "✖ Nombre de usuario ya en uso",
+			"accountCreatedWithSuccess": "¡Tu cuenta ha sido creada!",
+			"welcomeBack": "¡Me alegra verte de nuevo, Maestro {name}!"
 		},
 		"userMenu": {
 			"account": "Mi Cuenta",
 			"ranking": "Clasificación",
-			"items": "Inventaire",
+			"items": "Inventario",
 			"ingredients": "Ingredientes",
 			"news": "Novedades",
 			"cinema": "Cine",
 			"faq": "FAQ",
 			"guide": "Guía del Juego",
 			"disconnect": "Desconectarse",
-			"goodbye": "Au revoir Maître {name}..."
+			"goodbye": "Adiós, Maestro {name}..."
 		}
 	},
 	"leftPanel": {
