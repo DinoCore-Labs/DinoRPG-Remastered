@@ -2982,17 +2982,6 @@
 		"leave": "Arrêter la discussion",
 		"openLink": "Ouvrir le lien",
 		"continue": "Continuer",
-		"hulot": {
-			"name": "Hulot",
-			"dialog": {
-				"begin": "Bonjour jeune dresseur !",
-				"tutorial_start": "Très bien, commençons le tutoriel."
-			},
-			"choice": {
-				"start_tutorial": "Commencer le tutoriel",
-				"continue": "Continuer"
-			}
-		},
 		"eugene": {
 			"name": "Professeur Eugène",
 			"dialog": {
