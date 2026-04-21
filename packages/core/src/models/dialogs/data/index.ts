@@ -8,7 +8,6 @@ import { papyJoeDialog } from './papy.dialog.js';
 import { professorEugeneDialog } from './prof.dialog.js';
 import { shamanMouDialog } from './shamanMou.dialog.js';
 import { speleleologueDialog, speleleologueIceDialog } from './spelele.dialog.js';
-import { testDialog } from './test.dialog.js';
 import { strangeHippoDialog, strangePterozDialog, strangeRockyDialog } from './totems.dialog.js';
 import { weirdManDialog } from './weirdMan.dialog.js';
 
@@ -31,7 +30,5 @@ export const dialogDefinitions = [
 	speleleologueDialog,
 	speleleologueIceDialog,
 	// Foret
-	weirdManDialog,
-	// Test
-	testDialog
+	weirdManDialog
 ];
