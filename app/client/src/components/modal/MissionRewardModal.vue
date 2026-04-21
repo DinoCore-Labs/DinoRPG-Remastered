@@ -123,7 +123,7 @@ export default defineComponent({
 			if (!item) {
 				return itemKey;
 			}
-			return item.display || item.name;
+			return item.name;
 		},
 		getCollectionLabel(collectionKey: string): string {
 			return this.translateWithFallback(
