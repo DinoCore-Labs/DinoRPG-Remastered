@@ -52,7 +52,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 	);
 	// Skills
 	app.get(
-		'skills/:id',
+		'/skills/:id',
 		{
 			preHandler: app.authenticate,
 			schema: {
@@ -63,7 +63,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		getDinozSkillHandler
 	);
 	app.patch(
-		'setskillstate/:id',
+		'/setskillstate/:id',
 		{
 			preHandler: app.authenticate,
 			schema: {

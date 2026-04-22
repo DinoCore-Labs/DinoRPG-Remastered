@@ -21,7 +21,7 @@ export const DinozService = {
 	},
 	async setSkillState(id: number, skillId: number, skillState: boolean): Promise<boolean> {
 		return http()
-			.put(`/dinoz/setskillstate/${id}`, {
+			.patch(`/dinoz/setskillstate/${id}`, {
 				skillId,
 				skillState
 			})
