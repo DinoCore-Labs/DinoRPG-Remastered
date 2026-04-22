@@ -3314,6 +3314,10 @@
 			"ongoing": "En cours",
 			"finished": "Terminée"
 		},
+		"unavailable": {
+			"title": "Mission Bloquée",
+			"description": "Cette Mission ne vous est pas accessible pour l'instant, il vous faudra revenir plus tard."
+		},
 		"accept": "Accepter la mission",
 		"giveUp": "Abandonner",
 		"lastDialog": "Dernière étape validée",
