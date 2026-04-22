@@ -67,6 +67,9 @@ function getDialogActionFiche(dialog: { id: string; name: string }): ActionFiche
 function getMissionActionFiche(goal: MissionGoal, currentPlace: PlaceEnum): ActionFiche | null {
 	switch (goal.type) {
 		case 'TALK':
+			if (goal.place != null && goal.place !== currentPlace) {
+				return null;
+			}
 			return {
 				...actionList[Action.MISSION],
 				prop: 'mission',
@@ -80,6 +83,9 @@ function getMissionActionFiche(goal: MissionGoal, currentPlace: PlaceEnum): Acti
 				label: 'missions.actions.fight'
 			};
 		case 'ACTION':
+			if (goal.place != null && goal.place !== currentPlace) {
+				return null;
+			}
 			return {
 				...actionList[Action.MISSION],
 				prop: 'mission',
