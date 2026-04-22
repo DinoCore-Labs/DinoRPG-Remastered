@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="pageTitle" :header="headerTitle" :subHeader="npcName" />
+	<TitleHeader :title="pageTitle" header="PNJ :" :subHeader="npcName" />
 	<div class="wrapper">
 		<div class="box">
 			<p class="name">{{ npcName }} :</p>
@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import type { DialogPhaseResponse } from '@dinorpg/core/models/dialogs/dialogResponse.js';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
@@ -39,8 +39,8 @@ import DZButton from '../components/utils/DZButton.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DialogService } from '../services/dialog.service.js';
 import { FightService } from '../services';
-import { sessionStore } from '../store/sessionStore';
 import { MissionService } from '../services/mission.service.js';
+import { sessionStore } from '../store/sessionStore';
 
 const route = useRoute();
 const router = useRouter();
@@ -52,26 +52,37 @@ const loading = ref(false);
 const error = ref<string | null>(null);
 const missionCompleted = ref(false);
 
+const sStore = sessionStore();
+
 const dinozId = computed(() => Number(route.params.id));
 const dialogId = computed(() => String(route.params.dialogId));
-const resumePhaseId = computed(() => (typeof route.query.phaseId === 'string' ? route.query.phaseId : undefined));
+const phaseId = computed(() => (typeof route.query.phaseId === 'string' ? route.query.phaseId : undefined));
 
 const isMissionDialog = computed(() => route.query.missionAction === '1');
+const isInlineMissionDialog = computed(
+	() => dialogId.value === '__mission__' && typeof route.query.missionTextKey === 'string'
+);
+
+const missionTextKey = computed(() =>
+	typeof route.query.missionTextKey === 'string' ? route.query.missionTextKey : ''
+);
+
+const missionNameKey = computed(() =>
+	typeof route.query.missionNameKey === 'string' ? route.query.missionNameKey : ''
+);
+
+const missionGfx = computed(() =>
+	typeof route.query.missionGfx === 'string' && route.query.missionGfx.length > 0 ? route.query.missionGfx : ''
+);
 
 const isTerminalPhase = computed(() => {
 	const phase = dialogState.value;
-	if (!phase) {
-		return false;
-	}
-	if (phase.actions.startFight) {
-		return false;
-	}
-	if (phase.actions.missionsGroup) {
-		return false;
-	}
-	if (phase.actions.popup) {
-		return false;
-	}
+
+	if (!phase) return false;
+	if (phase.actions.startFight) return false;
+	if (phase.actions.missionsGroup) return false;
+	if (phase.actions.popup) return false;
+
 	return phase.links.length === 0;
 });
 
@@ -83,9 +94,11 @@ const swfName = computed(() => dialogState.value?.pnj.gfx ?? null);
 
 const npcFlashvars = computed(() => {
 	const phase = dialogState.value;
+
 	if (!phase) {
 		return '';
 	}
+
 	return new URLSearchParams({
 		frame: phase.pnj.frame ?? 'speak',
 		background: phase.pnj.background ?? '1'
@@ -93,18 +106,39 @@ const npcFlashvars = computed(() => {
 });
 
 const npcName = computed(() => translateText(dialogState.value?.name ?? ''));
-const pageTitle = computed(() => `PNJ - ${npcName.value}`);
-const headerTitle = computed(() => 'PNJ :');
+const pageTitle = computed(() => (npcName.value ? `PNJ - ${npcName.value}` : 'PNJ'));
 
-const sStore = sessionStore();
-
-function translateText(key: string | undefined): string {
-	const value = key ?? '';
-	return te(value) ? t(value).toString() : value;
+function translateText(value?: string): string {
+	const text = value ?? '';
+	return te(text) ? t(text).toString() : text;
 }
 
-function renderDialogText(text: string | undefined): string {
+function renderDialogText(text?: string): string {
 	return translateText(text).replace(/\n/g, '<br>');
+}
+
+function buildInlineMissionDialogState(): DialogPhaseResponse {
+	return {
+		dialogId: '__mission__',
+		phaseId: '__mission__',
+		name: missionNameKey.value,
+		text: missionTextKey.value,
+		fast: false,
+		pnj: {
+			image: false,
+			gfx: missionGfx.value,
+			frame: 'speak',
+			background: '1'
+		},
+		links: [],
+		actions: {
+			startFight: undefined,
+			missionsGroup: undefined,
+			popup: undefined,
+			url: undefined,
+			statusKey: undefined
+		}
+	};
 }
 
 async function navigateBackToDinoz() {
@@ -118,6 +152,7 @@ async function completeMissionIfNeeded() {
 	if (!isMissionDialog.value || !isTerminalPhase.value || missionCompleted.value) {
 		return;
 	}
+
 	await MissionService.completeAction(dinozId.value);
 	missionCompleted.value = true;
 }
@@ -125,13 +160,17 @@ async function completeMissionIfNeeded() {
 async function handlePhaseActions(phase: DialogPhaseResponse) {
 	if (phase.actions.startFight) {
 		const fight = await FightService.processDialogFight(dinozId.value, phase.dialogId, phase.phaseId);
+
 		sStore.setFightResult(fight);
+
 		await router.push({
 			name: 'FightPage',
 			params: { dinozId: String(dinozId.value) }
 		});
+
 		return;
 	}
+
 	if (phase.actions.missionsGroup) {
 		await router.push({
 			name: 'DinozMissions',
@@ -140,30 +179,42 @@ async function handlePhaseActions(phase: DialogPhaseResponse) {
 				group: phase.actions.missionsGroup
 			}
 		});
+
 		return;
-	}
-	if (phase.actions.popup) {
-		// plus tard
 	}
 }
 
 async function loadDialog() {
-	if (!Number.isFinite(dinozId.value) || dinozId.value <= 0 || !dialogId.value) {
+	if (!Number.isFinite(dinozId.value) || dinozId.value <= 0) {
 		error.value = 'Dialogue invalide';
+		dialogState.value = null;
+		loaded.value = false;
 		return;
 	}
+
 	loading.value = true;
 	error.value = null;
 	loaded.value = false;
+	dialogState.value = null;
 	missionCompleted.value = false;
 
 	try {
-		if (resumePhaseId.value) {
-			dialogState.value = await DialogService.resumeDialog(dinozId.value, dialogId.value, resumePhaseId.value);
-		} else {
-			dialogState.value = await DialogService.startDialog(dinozId.value, dialogId.value);
+		if (isInlineMissionDialog.value) {
+			dialogState.value = buildInlineMissionDialogState();
+			loaded.value = true;
+			return;
 		}
+
+		if (!dialogId.value) {
+			throw new Error('Dialogue invalide');
+		}
+
+		dialogState.value = phaseId.value
+			? await DialogService.resumeDialog(dinozId.value, dialogId.value, phaseId.value)
+			: await DialogService.startDialog(dinozId.value, dialogId.value);
+
 		loaded.value = true;
+
 		if (dialogState.value) {
 			await handlePhaseActions(dialogState.value);
 		}
@@ -178,11 +229,14 @@ async function chooseStep(linkId: string, confirmChoice: boolean) {
 	if (!dialogState.value) {
 		return;
 	}
+
 	if (confirmChoice && !window.confirm('Confirmer cette action ?')) {
 		return;
 	}
+
 	loading.value = true;
 	error.value = null;
+
 	try {
 		dialogState.value = await DialogService.selectDialogLink(
 			dinozId.value,
@@ -190,6 +244,7 @@ async function chooseStep(linkId: string, confirmChoice: boolean) {
 			linkId,
 			dialogState.value.phaseId
 		);
+
 		if (dialogState.value) {
 			await handlePhaseActions(dialogState.value);
 		}
@@ -203,6 +258,7 @@ async function chooseStep(linkId: string, confirmChoice: boolean) {
 async function stop() {
 	loading.value = true;
 	error.value = null;
+
 	try {
 		await completeMissionIfNeeded();
 		await navigateBackToDinoz();
@@ -213,13 +269,19 @@ async function stop() {
 	}
 }
 
-onMounted(loadDialog);
-
 watch(
-	() => [route.params.id, route.params.dialogId, route.query.phaseId],
+	() => [
+		route.params.id,
+		route.params.dialogId,
+		route.query.phaseId,
+		route.query.missionTextKey,
+		route.query.missionNameKey,
+		route.query.missionGfx
+	],
 	() => {
-		loadDialog();
-	}
+		void loadDialog();
+	},
+	{ immediate: true }
 );
 </script>
 

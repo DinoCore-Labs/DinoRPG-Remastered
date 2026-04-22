@@ -613,7 +613,11 @@ export const shamanMouMissions: MissionDefinition[] = [
 			{ type: 'AT', place: PlaceEnum.UNIVERSITE, hidden: false },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'professor_eugene',
+				npcNameKey: 'npc.eugene.name',
+				gfx: 'professor',
 				place: PlaceEnum.UNIVERSITE,
 				nameKey: 'npc.shaman.pigeon.eugene.name',
 				textKey: 'npc.shaman.pigeon.eugene.text'

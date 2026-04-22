@@ -1,11 +1,4 @@
-import type {
-	MissionAvatarKey,
-	MissionBackgroundKey,
-	MissionDialectKey,
-	MissionFrameKey,
-	MissionKey,
-	MissionNpcKey
-} from './missionKey.js';
+import type { MissionAvatarKey, MissionDialectKey, MissionKey, MissionNpcKey } from './missionKey.js';
 import type { MissionReward } from './missionReward.js';
 
 export type MissionInteractionStartResponse =
@@ -16,16 +9,18 @@ export type MissionInteractionStartResponse =
 			nameKey: string;
 			textKey?: string;
 			avatar?: MissionAvatarKey | null;
-			frame?: MissionFrameKey | null;
-			background?: MissionBackgroundKey | null;
 			dialect?: MissionDialectKey | null;
 	  }
 	| {
 			mode: 'dialog';
 			goalType: 'TALK';
 			npcKey?: MissionNpcKey;
+			npcNameKey: string;
 			nameKey: string;
 			dialogId: string;
+			textKey: string;
+			gfx?: string | null;
+			dialect?: MissionDialectKey | null;
 	  }
 	| {
 			mode: 'fight';
