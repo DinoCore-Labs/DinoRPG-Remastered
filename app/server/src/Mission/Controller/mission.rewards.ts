@@ -1,31 +1,41 @@
+import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import type { MissionDefinition } from '@dinorpg/core/models/missions/mission.js';
-import type { MissionCollectionKey, MissionItemKey } from '@dinorpg/core/models/missions/missionKey.js';
+import type {
+	MissionCollectionKey,
+	MissionEffectKey,
+	MissionItemKey
+} from '@dinorpg/core/models/missions/missionKey.js';
 import { rewardIdByKey, statTrackingByCollectionKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { MoneyType, type Prisma } from '../../../../prisma/client.js';
+import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 
 type MissionTransaction = Prisma.TransactionClient;
 
 function resolveItemIdFromKey(itemKey: MissionItemKey): number {
 	const item = Object.values(itemList).find(entry => entry.name === itemKey);
-
 	if (!item) {
 		throw new ExpectedError(`Unknown mission item key "${itemKey}"`);
 	}
-
 	return item.itemId;
+}
+
+function resolveStatusIdFromEffectKey(effectKey: MissionEffectKey): number {
+	const statusId = dinozStatusIdByKey[effectKey];
+	if (statusId == null) {
+		throw new ExpectedError(`Unknown mission effect key "${effectKey}"`);
+	}
+	return statusId;
 }
 
 function getCollectionRewardId(collectionKey: string): number {
 	const rewardId = rewardIdByKey[collectionKey];
-
 	if (rewardId == null) {
 		throw new ExpectedError(`Unknown collection key "${collectionKey}"`);
 	}
-
 	return rewardId;
 }
 
@@ -63,7 +73,6 @@ async function applyMissionItemReward(
 	quantity: number
 ) {
 	const itemId = resolveItemIdFromKey(itemKey);
-
 	await tx.userItems.upsert({
 		where: {
 			itemId_userId: {
@@ -90,7 +99,6 @@ async function applyMissionCollectionReward(
 	collectionKey: MissionCollectionKey
 ) {
 	const rewardId = getCollectionRewardId(collectionKey);
-
 	const existingReward = await tx.userRewards.findUnique({
 		where: {
 			rewardId_userId: {
@@ -102,21 +110,18 @@ async function applyMissionCollectionReward(
 			userId: true
 		}
 	});
-
 	if (existingReward) {
 		return {
 			rewardId,
 			created: false
 		};
 	}
-
 	await tx.userRewards.create({
 		data: {
 			userId,
 			rewardId
 		}
 	});
-
 	return {
 		rewardId,
 		created: true
@@ -137,11 +142,9 @@ export async function applyMissionRewards(
 			userId: true
 		}
 	});
-
 	if (!dinoz) {
 		throw new ExpectedError(`Unknown dinoz "${params.dinozId}"`);
 	}
-
 	for (const reward of params.definition.rewards) {
 		switch (reward.type) {
 			case 'XP': {
@@ -164,6 +167,14 @@ export async function applyMissionRewards(
 						await incrementUserStat(statTracking, dinoz.userId, 1);
 					}
 				}
+				break;
+			}
+			case 'EFFECT': {
+				await addStatusToDinoz(params.dinozId, resolveStatusIdFromEffectKey(reward.effectKey));
+				break;
+			}
+			case 'REMOVE_EFFECT': {
+				await removeStatusFromDinoz(params.dinozId, resolveStatusIdFromEffectKey(reward.effectKey));
 				break;
 			}
 			default: {
