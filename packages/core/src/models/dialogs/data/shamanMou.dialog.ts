@@ -68,11 +68,11 @@ export const shamanMouDialog = defineDialog({
 			next: ['missions'],
 			effects: [{ type: 'effect', effect: 'shflag' }]
 		},
-		// Version safe tant que le groupe de missions "shaman" n'existe pas encore.
 		missions: {
 			id: 'missions',
-			text: 'npc.shamanMou.dialog.missions',
-			next: []
+			text: '',
+			next: [],
+			special: [{ type: 'missions', group: 'shaman' }]
 		}
 	},
 	links: {
