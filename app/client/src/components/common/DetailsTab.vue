@@ -704,8 +704,8 @@ export default defineComponent({
 					img {
 						float: left;
 						position: relative;
-						left: 17px;
-						top: 5px;
+						left: 14px;
+						top: 13px;
 						cursor: help;
 					}
 					background-image: url('../../assets/background/table_cell.webp');
