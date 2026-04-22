@@ -139,8 +139,12 @@ export async function startMissionInteraction(
 					mode: 'dialog',
 					goalType: 'TALK',
 					npcKey: goal.npcKey,
+					npcNameKey: goal.npcNameKey,
 					nameKey: goal.nameKey,
-					dialogId: goal.dialogId
+					dialogId: goal.dialogId,
+					textKey: goal.textKey,
+					gfx: goal.gfx ?? null,
+					dialect: goal.dialect ?? null
 				};
 			}
 			return {
@@ -150,8 +154,6 @@ export async function startMissionInteraction(
 				nameKey: goal.nameKey,
 				textKey: goal.textKey,
 				avatar: goal.avatar ?? null,
-				frame: goal.frame ?? null,
-				background: goal.background ?? null,
 				dialect: goal.dialect ?? null
 			};
 		}

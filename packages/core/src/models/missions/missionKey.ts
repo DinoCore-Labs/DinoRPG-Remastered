@@ -17,6 +17,5 @@ export type MissionUserVarKey = string;
 export type MissionGameVarKey = string;
 
 export type MissionAvatarKey = string;
-export type MissionFrameKey = string;
 export type MissionBackgroundKey = string;
 export type MissionDialectKey = string;
