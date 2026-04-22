@@ -50,7 +50,7 @@ export type MissionTalkModalGoal = MissionTalkGoalBase & {
 export type MissionTalkDialogGoal = MissionTalkGoalBase & {
 	display: 'dialog';
 	dialogId: string;
-	textKey?: never;
+	textKey?: string;
 };
 
 export type MissionTalkGoal = MissionTalkModalGoal | MissionTalkDialogGoal;

@@ -53,7 +53,6 @@ export const shamanMouMissions: MissionDefinition[] = [
 		labels: {},
 		limit: 20
 	},
-
 	{
 		key: 'init2',
 		group: SHAMAN_GROUP,
@@ -69,7 +68,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['barche'],
 					count: 1,
 					force: true,
-					displayNameKey: 'missions.shaman.init2.barche.kill'
+					displayNameKey: 'missions.shaman.init2.kill.barche'
 				}
 			},
 			{
@@ -92,7 +91,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 				kill: {
 					count: 6,
 					force: false,
-					displayNameKey: 'missions.shaman.init2.firstWave.kill'
+					displayNameKey: 'missions.shaman.init2.kill.wave'
 				}
 			},
 			{
@@ -100,14 +99,14 @@ export const shamanMouMissions: MissionDefinition[] = [
 				npcKey: 'gtc_forge_guard',
 				place: PlaceEnum.FORGES_DU_GTC,
 				nameKey: 'missions.shaman.init2.forgeGuard.name',
-				textKey: 'missions.shaman.init2.forgeGuard.text1'
+				textKey: 'missions.shaman.init2.forgeGuard.text'
 			},
 			{
 				type: 'KILL',
 				kill: {
 					count: 6,
 					force: false,
-					displayNameKey: 'missions.shaman.init2.secondWave.kill'
+					displayNameKey: 'missions.shaman.init2.kill.wave'
 				}
 			},
 			{
@@ -126,7 +125,6 @@ export const shamanMouMissions: MissionDefinition[] = [
 		labels: {},
 		limit: 20
 	},
-
 	{
 		key: 'burn',
 		group: SHAMAN_GROUP,
@@ -142,7 +140,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['flam'],
 					count: 3,
 					force: true,
-					displayNameKey: 'missions.shaman.burn.firstFlames.kill'
+					displayNameKey: 'missions.shaman.burn.kill.flam'
 				}
 			},
 			{
@@ -174,7 +172,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['flam'],
 					count: 5,
 					force: true,
-					displayNameKey: 'missions.shaman.burn.secondFlames.kill'
+					displayNameKey: 'missions.shaman.burn.kill.flam'
 				}
 			},
 			{
@@ -193,7 +191,6 @@ export const shamanMouMissions: MissionDefinition[] = [
 		labels: {},
 		limit: 10
 	},
-
 	{
 		key: 'barbec',
 		group: SHAMAN_GROUP,
@@ -265,7 +262,6 @@ export const shamanMouMissions: MissionDefinition[] = [
 		labels: {},
 		limit: 15
 	},
-
 	{
 		key: 'joke',
 		group: SHAMAN_GROUP,
@@ -299,7 +295,6 @@ export const shamanMouMissions: MissionDefinition[] = [
 		labels: {},
 		limit: 20
 	},
-
 	{
 		key: 'defend',
 		group: SHAMAN_GROUP,
@@ -314,14 +309,14 @@ export const shamanMouMissions: MissionDefinition[] = [
 				npcKey: 'gtc_forge_guard',
 				place: PlaceEnum.FORGES_DU_GTC,
 				nameKey: 'missions.shaman.defend.forgeGuard.name',
-				textKey: 'missions.shaman.defend.forgeGuard.text1'
+				textKey: 'missions.shaman.defend.forgeGuard.text'
 			},
 			{
 				type: 'KILL',
 				kill: {
 					count: 15,
 					force: false,
-					displayNameKey: 'missions.shaman.defend.firstWave.kill'
+					displayNameKey: 'missions.shaman.defend.kill.wave'
 				}
 			},
 			{
@@ -344,7 +339,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 				kill: {
 					count: 5,
 					force: false,
-					displayNameKey: 'missions.shaman.defend.secondWave.kill'
+					displayNameKey: 'missions.shaman.defend.kill.wave'
 				}
 			},
 			{
@@ -372,7 +367,6 @@ export const shamanMouMissions: MissionDefinition[] = [
 		labels: {},
 		limit: 20
 	},
-
 	{
 		key: 'shipmt',
 		group: SHAMAN_GROUP,
@@ -387,7 +381,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 				npcKey: 'dinoville_courier',
 				place: PlaceEnum.PENTES_DE_BASALTE,
 				nameKey: 'missions.shaman.shipmt.courier.name',
-				textKey: 'missions.shaman.shipmt.courier.text1'
+				textKey: 'missions.shaman.shipmt.courier.text'
 			},
 			{
 				type: 'KILL',
@@ -395,7 +389,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['goblin'],
 					count: 4,
 					force: true,
-					displayNameKey: 'missions.shaman.shipmt.firstGoblins.kill'
+					displayNameKey: 'missions.shaman.shipmt.kill'
 				}
 			},
 			{
@@ -433,7 +427,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['goblin'],
 					count: 6,
 					force: true,
-					displayNameKey: 'missions.shaman.shipmt.secondGoblins.kill'
+					displayNameKey: 'missions.shaman.shipmt.kill'
 				}
 			},
 			{
@@ -461,7 +455,6 @@ export const shamanMouMissions: MissionDefinition[] = [
 		labels: {},
 		limit: 10
 	},
-
 	{
 		key: 'sales',
 		group: SHAMAN_GROUP,
@@ -495,7 +488,6 @@ export const shamanMouMissions: MissionDefinition[] = [
 		labels: {},
 		limit: 20
 	},
-
 	{
 		key: 'ritual',
 		group: SHAMAN_GROUP,
@@ -518,7 +510,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					count: 1,
 					force: true,
 					zone: 1,
-					displayNameKey: 'missions.shaman.ritual.firstGoblin.kill'
+					displayNameKey: 'missions.shaman.ritual.kill'
 				}
 			},
 			{
@@ -540,7 +532,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['goblin'],
 					count: 3,
 					force: true,
-					displayNameKey: 'missions.shaman.ritual.secondGoblins.kill'
+					displayNameKey: 'missions.shaman.ritual.kill'
 				}
 			},
 			{
@@ -557,7 +549,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['goblin'],
 					count: 3,
 					force: true,
-					displayNameKey: 'missions.shaman.ritual.thirdGoblins.kill'
+					displayNameKey: 'missions.shaman.ritual.kill'
 				}
 			},
 			{
@@ -585,7 +577,6 @@ export const shamanMouMissions: MissionDefinition[] = [
 		labels: {},
 		limit: 20
 	},
-
 	{
 		key: 'hiero',
 		group: SHAMAN_GROUP,
@@ -611,7 +602,6 @@ export const shamanMouMissions: MissionDefinition[] = [
 		labels: {},
 		limit: 6
 	},
-
 	{
 		key: 'pigeon',
 		group: SHAMAN_GROUP,
@@ -625,8 +615,8 @@ export const shamanMouMissions: MissionDefinition[] = [
 				type: 'TALK',
 				npcKey: 'professor_eugene',
 				place: PlaceEnum.UNIVERSITE,
-				nameKey: 'missions.shaman.pigeon.eugene.name',
-				textKey: 'missions.shaman.pigeon.eugene.text'
+				nameKey: 'npc.shaman.pigeon.eugene.name',
+				textKey: 'npc.shaman.pigeon.eugene.text'
 			},
 			{ type: 'AT', place: PlaceEnum.ILE_WAIKIKI, hidden: false },
 			{
