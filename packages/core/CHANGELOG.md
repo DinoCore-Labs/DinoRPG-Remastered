@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.13.1
+
+### Patch Changes
+
+- e0d67f4: add shaman mou dialogs and missions
+
 ## 0.13.0
 
 ### Minor Changes
