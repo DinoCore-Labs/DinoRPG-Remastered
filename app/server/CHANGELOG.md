@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.14.2
+
+### Patch Changes
+
+- e0d67f4: add shaman mou dialogs and missions
+- Updated dependencies [e0d67f4]
+  - @dinorpg/core@0.13.1
+
 ## 0.14.1
 
 ### Patch Changes

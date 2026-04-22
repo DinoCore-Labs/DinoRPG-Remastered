@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.14.3
+
+### Patch Changes
+
+- e0d67f4: add shaman mou dialogs and missions
+
 ## 0.14.2
 
 ### Patch Changes
