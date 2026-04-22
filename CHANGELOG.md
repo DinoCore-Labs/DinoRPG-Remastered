@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.13.1
+
+### Patch Changes
+
+- e0d67f4: add shaman mou dialogs and missions
+
 ## 0.13.0
 
 ### Minor Changes
@@ -283,6 +289,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.14.2
+
+### Patch Changes
+
+- e0d67f4: add shaman mou dialogs and missions
+- Updated dependencies [e0d67f4]
+  - @dinorpg/core@0.13.1
 
 ## 0.14.1
 
@@ -642,6 +656,18 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.14.3
+
+### Patch Changes
+
+- e0d67f4: add shaman mou dialogs and missions
+
+## 0.14.2
+
+### Patch Changes
+
+- 51518dd: i18n: add English translations
 
 ## 0.14.1
 
