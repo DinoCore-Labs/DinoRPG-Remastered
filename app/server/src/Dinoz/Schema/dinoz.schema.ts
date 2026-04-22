@@ -34,5 +34,5 @@ export const setDinozNameBodySchema = z.object({
 
 export const setSkillStateBodySchema = z.object({
 	skillId: z.coerce.number().int().positive(),
-	state: z.boolean()
+	skillState: z.boolean()
 });
