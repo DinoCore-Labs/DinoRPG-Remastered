@@ -369,7 +369,10 @@ export default defineComponent({
 										dialogId: result.dialogId
 									},
 									query: {
-										missionAction: '1'
+										missionAction: '1',
+										missionTextKey: result.textKey,
+										missionGfx: result.gfx ?? '',
+										missionNpcNameKey: result.npcNameKey ?? ''
 									}
 								});
 								break;

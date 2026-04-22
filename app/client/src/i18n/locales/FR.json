@@ -3458,7 +3458,7 @@
 				"begin": "Ha, ces merguez d'Archelion m'ont donné la pêche ! Bon, je vois que tu es quelqu'un de capable ! Rends-moi un dernier petit service et je te laisserai mon Guide de Stratégie. La région du Grand Tout-Chaud est un habitat idéal pour les Archelions de toutes tailles... Sauvage, pas humide pour un sou et en perpetuelle éruption ! Mais il faut les tenir éloignés de nous si on ne veut pas leur servir de déjeuner... Je veux que tu me fabriques une sorte d'épouvantail à Archelions ! Il me faut donc des Griffes Taillées.",
 				"kill": {
 					"barche": "Bébé Archélion",
-					"wave": "Tous les monstres"
+					"wave": "monstres"
 				},
 				"claws": {
 					"name": "Ramasser les griffes",

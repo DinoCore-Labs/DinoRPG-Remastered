@@ -4,10 +4,8 @@ import { MissionFightAction, MissionKillInfos } from './missionFight.js';
 import {
 	MissionActionKey,
 	MissionAvatarKey,
-	MissionBackgroundKey,
 	MissionDialectKey,
 	MissionEffectKey,
-	MissionFrameKey,
 	MissionGroupKey,
 	MissionIngredientKey,
 	MissionItemKey,
@@ -36,8 +34,6 @@ type MissionTalkGoalBase = {
 	place?: PlaceEnum | null;
 	avatar?: MissionAvatarKey | null;
 	branches?: MissionTalkBranch[] | null;
-	frame?: MissionFrameKey | null;
-	background?: MissionBackgroundKey | null;
 	dialect?: MissionDialectKey | null;
 };
 
@@ -50,7 +46,9 @@ export type MissionTalkModalGoal = MissionTalkGoalBase & {
 export type MissionTalkDialogGoal = MissionTalkGoalBase & {
 	display: 'dialog';
 	dialogId: string;
-	textKey?: string;
+	textKey: string;
+	npcNameKey: string;
+	gfx?: string;
 };
 
 export type MissionTalkGoal = MissionTalkModalGoal | MissionTalkDialogGoal;
