@@ -3,6 +3,13 @@ import type { MissionDefinition } from '../mission.js';
 
 const PAPY_JOE_GROUP = 'papy_joe';
 
+const papyJoeValidateGoal = () => ({
+	type: 'VALIDATE' as const,
+	npcKey: 'papy_joe',
+	place: PlaceEnum.PAPY_JOE,
+	nameKey: 'npc.papyJoe.name'
+});
+
 export const papyJoeMissions: MissionDefinition[] = [
 	{
 		key: 'fish',
@@ -19,6 +26,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{
 				type: 'TALK',
 				npcKey: 'fish_merchant',
+				place: PlaceEnum.PORT_DE_PRECHE,
 				nameKey: 'missions.papy.fish.fishMerchant.name',
 				textKey: 'missions.papy.fish.fishMerchant.text'
 			},
@@ -30,15 +38,11 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{
 				type: 'TALK',
 				npcKey: 'madame_seyche',
+				place: PlaceEnum.DINOVILLE,
 				nameKey: 'missions.papy.fish.madameSeyche.name',
 				textKey: 'missions.papy.fish.madameSeyche.text'
 			},
-			{
-				type: 'VALIDATE',
-				npcKey: 'papy_joe',
-				place: PlaceEnum.PAPY_JOE,
-				nameKey: 'npc.papyJoe.name'
-			}
+			papyJoeValidateGoal()
 		],
 		rewards: [{ type: 'XP', value: 20 }],
 		labels: {},
@@ -59,6 +63,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{
 				type: 'TALK',
 				npcKey: 'jacqueline_ducraft',
+				place: PlaceEnum.COLLINES_ESCARPEES,
 				nameKey: 'missions.papy.dog.jacquelineDucraft.name',
 				textKey: 'missions.papy.dog.jacquelineDucraft.text'
 			},
@@ -70,6 +75,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{
 				type: 'ACTION',
 				actionKey: 'find_nioufniouf',
+				place: PlaceEnum.PORT_DE_PRECHE,
 				nameKey: 'missions.papy.dog.findNioufniouf.name',
 				descriptionKey: 'missions.papy.dog.findNioufniouf.description'
 			},
@@ -81,15 +87,11 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{
 				type: 'TALK',
 				npcKey: 'jacqueline_ducraft',
+				place: PlaceEnum.COLLINES_ESCARPEES,
 				nameKey: 'missions.papy.dog.jacquelineDucraft.name',
 				textKey: 'missions.papy.dog.jacquelineDucraft.text2'
 			},
-			{
-				type: 'VALIDATE',
-				npcKey: 'papy_joe',
-				place: PlaceEnum.PAPY_JOE,
-				nameKey: 'npc.papyJoe.name'
-			}
+			papyJoeValidateGoal()
 		],
 		rewards: [
 			{ type: 'XP', value: 15 },
@@ -119,12 +121,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 					displayNameKey: 'missions.papy.kilgou.kill'
 				}
 			},
-			{
-				type: 'VALIDATE',
-				npcKey: 'papy_joe',
-				place: PlaceEnum.PAPY_JOE,
-				nameKey: 'npc.papyJoe.name'
-			}
+			papyJoeValidateGoal()
 		],
 		rewards: [
 			{ type: 'XP', value: 30 },
@@ -197,12 +194,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 					displayNameKey: 'missions.papy.kilwlf.kill'
 				}
 			},
-			{
-				type: 'VALIDATE',
-				npcKey: 'papy_joe',
-				place: PlaceEnum.PAPY_JOE,
-				nameKey: 'npc.papyJoe.name'
-			}
+			papyJoeValidateGoal()
 		],
 		rewards: [
 			{ type: 'XP', value: 30 },
@@ -227,6 +219,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{
 				type: 'ACTION',
 				actionKey: 'find_pure_water',
+				place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 				nameKey: 'missions.papy.fflow.pureWater.name',
 				descriptionKey: 'missions.papy.fflow.pureWater.description'
 			},
@@ -238,15 +231,11 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{
 				type: 'TALK',
 				npcKey: 'madame_seyche',
+				place: PlaceEnum.DINOVILLE,
 				nameKey: 'missions.papy.fflow.madameSeyche.name',
 				textKey: 'missions.papy.fflow.madameSeyche.text'
 			},
-			{
-				type: 'VALIDATE',
-				npcKey: 'papy_joe',
-				place: PlaceEnum.PAPY_JOE,
-				nameKey: 'npc.papyJoe.name'
-			}
+			papyJoeValidateGoal()
 		],
 		rewards: [{ type: 'XP', value: 20 }],
 		labels: {},
@@ -268,6 +257,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{
 				type: 'ACTION',
 				actionKey: 'find_recipe_book',
+				place: PlaceEnum.UNIVERSITE,
 				nameKey: 'missions.papy.kbook.recipeBook.name',
 				descriptionKey: 'missions.papy.kbook.recipeBook.description'
 			},
@@ -279,15 +269,11 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{
 				type: 'TALK',
 				npcKey: 'madame_seyche',
+				place: PlaceEnum.DINOVILLE,
 				nameKey: 'missions.papy.kbook.madameSeyche.name',
 				textKey: 'missions.papy.kbook.madameSeyche.text'
 			},
-			{
-				type: 'VALIDATE',
-				npcKey: 'papy_joe',
-				place: PlaceEnum.PAPY_JOE,
-				nameKey: 'npc.papyJoe.name'
-			}
+			papyJoeValidateGoal()
 		],
 		rewards: [{ type: 'XP', value: 20 }],
 		labels: {},
@@ -318,15 +304,11 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{
 				type: 'ACTION',
 				actionKey: 'find_stamps',
+				place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 				nameKey: 'missions.papy.msg.collectStamps.name',
 				descriptionKey: 'missions.papy.msg.collectStamps.description'
 			},
-			{
-				type: 'VALIDATE',
-				npcKey: 'papy_joe',
-				place: PlaceEnum.PAPY_JOE,
-				nameKey: 'npc.papyJoe.name'
-			}
+			papyJoeValidateGoal()
 		],
 		rewards: [
 			{ type: 'COLLECTION', collectionKey: 'msg' },
@@ -351,15 +333,11 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{
 				type: 'TALK',
 				npcKey: 'madame_seyche',
+				place: PlaceEnum.DINOVILLE,
 				nameKey: 'missions.papy.lettre.madameSeyche.name',
 				textKey: 'missions.papy.lettre.madameSeyche.text'
 			},
-			{
-				type: 'VALIDATE',
-				npcKey: 'papy_joe',
-				place: PlaceEnum.PAPY_JOE,
-				nameKey: 'npc.papyJoe.name'
-			}
+			papyJoeValidateGoal()
 		],
 		rewards: [{ type: 'XP', value: 20 }],
 		labels: {},
@@ -382,12 +360,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 					displayNameKey: 'missions.papy.kilglu.kill'
 				}
 			},
-			{
-				type: 'VALIDATE',
-				npcKey: 'papy_joe',
-				place: PlaceEnum.PAPY_JOE,
-				nameKey: 'npc.papyJoe.name'
-			}
+			papyJoeValidateGoal()
 		],
 		rewards: [
 			{ type: 'XP', value: 30 },
@@ -413,12 +386,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 					displayNameKey: 'missions.papy.kilgnt.kill'
 				}
 			},
-			{
-				type: 'VALIDATE',
-				npcKey: 'papy_joe',
-				place: PlaceEnum.PAPY_JOE,
-				nameKey: 'npc.papyJoe.name'
-			}
+			papyJoeValidateGoal()
 		],
 		rewards: [
 			{ type: 'XP', value: 100 },
@@ -444,12 +412,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 					displayNameKey: 'missions.papy.kilcoq.kill'
 				}
 			},
-			{
-				type: 'VALIDATE',
-				npcKey: 'papy_joe',
-				place: PlaceEnum.PAPY_JOE,
-				nameKey: 'npc.papyJoe.name'
-			}
+			papyJoeValidateGoal()
 		],
 		rewards: [
 			{ type: 'XP', value: 200 },
