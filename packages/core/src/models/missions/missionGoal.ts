@@ -33,6 +33,7 @@ type MissionTalkGoalBase = {
 	type: 'TALK';
 	nameKey: string;
 	npcKey?: MissionNpcKey;
+	place?: PlaceEnum | null;
 	avatar?: MissionAvatarKey | null;
 	branches?: MissionTalkBranch[] | null;
 	frame?: MissionFrameKey | null;
@@ -58,6 +59,7 @@ export type MissionActionGoal = {
 	type: 'ACTION';
 	nameKey: string;
 	actionKey?: MissionActionKey;
+	place?: PlaceEnum | null;
 	descriptionKey: string;
 	waitSeconds?: number | null;
 };
