@@ -14,6 +14,10 @@ interface ShopConfig {
 	//buyableQuetzu: number;
 }
 
+interface WorldConfig {
+	disableSwampMovementBlock: boolean;
+}
+
 interface GeneralConfig {
 	initialMoney: number;
 	initialTreasureTicket: number;
@@ -28,6 +32,7 @@ interface StarterItem {
 export interface GameConfig {
 	dinoz: DinozConfig;
 	shop: ShopConfig;
+	world: WorldConfig;
 	general: GeneralConfig;
 }
 
@@ -43,6 +48,9 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 			dinozNumber: 30
 			//buyableQuetzu: 6
 		},
+		world: {
+			disableSwampMovementBlock: true
+		},
 		general: {
 			initialMoney: 1_000_000,
 			initialTreasureTicket: 500,
@@ -56,7 +64,6 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 			]
 		}
 	},
-
 	production: {
 		dinoz: {
 			maxLevel: 80,
@@ -67,6 +74,9 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		shop: {
 			dinozNumber: 20
 			//buyableQuetzu: 6
+		},
+		world: {
+			disableSwampMovementBlock: false
 		},
 		general: {
 			initialMoney: 100_000,
