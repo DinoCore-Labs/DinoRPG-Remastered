@@ -1,9 +1,11 @@
-import { Boss } from './bossList.js';
+import { Boss, bossList } from './bossList.js';
 import type { MonsterFiche } from './monsterFiche.js';
 import type { MonsterKey } from './monsterKey.js';
 import { Monster, monsterList } from './monsterList.js';
 
-export const monsterIdByKey: Readonly<Record<MonsterKey, Monster>> = {
+type MonsterLikeId = Monster | Boss;
+
+export const monsterIdByKey: Readonly<Record<MonsterKey, MonsterLikeId>> = {
 	goupi: Monster.GOUPIGNON,
 	goupi2: Monster.GOUPIGNON2,
 	goupi3: Monster.GOUPIGNON3,
@@ -98,27 +100,34 @@ export const monsterIdByKey: Readonly<Record<MonsterKey, Monster>> = {
 	grom3: Monster.SNOW_GROMSTER,
 	chima: Monster.CHIMCHEREE,
 	lapouf: Monster.LAPOUF,
+
+	pteroz: Boss.PTEROZ,
+	hippoclamp: Boss.HIPPOCLAMP,
+	rocky: Boss.ROCKY,
+
 	any: Monster.ANY
 };
 
+function getMonsterFicheById(id: MonsterLikeId): MonsterFiche {
+	const fiche = monsterList[id as Monster] ?? bossList[id as Boss];
+	if (!fiche) {
+		throw new Error(`Unknown monster/boss id "${id}" in monsterKeyMap`);
+	}
+	return fiche;
+}
+
 export const monsterByKey: Readonly<Record<MonsterKey, MonsterFiche>> = Object.freeze(
-	Object.fromEntries(Object.entries(monsterIdByKey).map(([key, monsterId]) => [key, monsterList[monsterId]])) as Record<
-		MonsterKey,
-		MonsterFiche
-	>
+	Object.fromEntries(
+		Object.entries(monsterIdByKey).map(([key, monsterId]) => [key, getMonsterFicheById(monsterId)])
+	) as Record<MonsterKey, MonsterFiche>
 );
 
-export const monsterKeyById: Readonly<Record<Monster, MonsterKey>> = Object.freeze(
-	Object.fromEntries(Object.entries(monsterIdByKey).map(([key, monsterId]) => [monsterId, key])) as Record<
-		Monster,
-		MonsterKey
+export const monsterKeyById: Readonly<Partial<Record<MonsterLikeId, MonsterKey>>> = Object.freeze(
+	Object.fromEntries(Object.entries(monsterIdByKey).map(([key, monsterId]) => [monsterId, key])) as Partial<
+		Record<MonsterLikeId, MonsterKey>
 	>
 );
 
 export function getMonsterKeyById(id: Monster | Boss): MonsterKey | null {
-	if (id in monsterKeyById) {
-		return monsterKeyById[id as Monster];
-	}
-
-	return null;
+	return monsterKeyById[id] ?? null;
 }
