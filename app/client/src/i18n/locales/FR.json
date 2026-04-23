@@ -3711,6 +3711,27 @@
 				},
 				"end": "J'aurais parié un de mes grigris qu'on tenait là une découverte fondamentale ! Dommage... En tous cas, merci pour la course et désolé pour le dérangement !"
 			}
+		},
+		"rodeur": {
+			"rodriz": {
+				"name": "Le Riz Amnésique",
+				"begin": "J'ai besoin de Riz pour recharger ma cape magique. On en trouve paraît-il dans le Marais Collant des Iles Atlantéinées. Peux-tu m'en rapporter suffisamment pour que je puisse à nouveau devenir invisible ? Vite, c'est urgent !",
+				"search": {
+					"name": "Chercher du Riz",
+					"text": "Aprés quelques recherches, vous trouvez un coin du Marais où pousse du Riz Amnésique, une variété trés rare de Riz aux propriétés étonnantes. Le seul problème c'est que des dizaines de Pirhanoz protègent l'accés. Il va falloir d'abord nettoyer le chemin !"
+				},
+				"kill": "Piranhos",
+				"pick": {
+					"name": "Ramasser le Riz",
+					"text": "Félicitations ! Vous obtenez du Riz Amnésique !"
+				},
+				"end": "Ah ! Uhm euh... En fait, j'avais mal compris. Un petit peu d'énergie foudre était seulement nécessaire pour recharger ma cape... Tiens, voilà pour toi, et tu peux garder le riz, je n'en ai pas besoin."
+			},
+			"rodlif": {
+				"name": "Les Dinoz Sombres",
+				"begin": "Trois Dinoz Sombres de Caushemesh t'attendent aux Chutes Mutantes. Va les vaincre et reviens me voir pour obtenir ta récompense... Je te conseille de ne pas tenter de les battre tout seul, car tu pourrais y laisser la vie de ton Dinoz !",
+				"end": "Pas mal pour un Dinoz faible de Dinoville... Tiens, voilà pour toi !"
+			}
 		}
 	}
 }
