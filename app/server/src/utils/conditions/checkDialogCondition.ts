@@ -1,4 +1,4 @@
-import { CompareMode, Condition } from '@dinorpg/core/models/conditions/conditions.js';
+import { CompareMode, Condition, MissionConditionStatus } from '@dinorpg/core/models/conditions/conditions.js';
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { resolveItemIdFromKey } from '@dinorpg/core/models/items/itemIdByKey.js';
 import { UserRole } from '@dinorpg/core/models/user/userRole.js';
@@ -84,18 +84,15 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 			}
 			return (context.user.items.get(itemId) ?? 0) > 0 || context.user.allDinozEquippedItemIds.has(itemId);
 		}
-		case 'mission':
+		case 'mission': {
 			if (condition.status.type === 'done') {
-				return getScenarioProgress(context, condition.key) > 0;
+				return context.dinoz.completedMissionKeys.has(condition.key);
 			}
 			if (condition.status.type === 'current') {
-				const progression = getScenarioProgress(context, condition.key);
-				if (condition.status.step == null) {
-					return progression > 0;
-				}
-				return progression === condition.status.step;
+				return context.dinoz.currentMissionKey === condition.key;
 			}
 			return false;
+		}
 		case 'admin':
 			return isAdminRole(context.user.role);
 		case 'date':
