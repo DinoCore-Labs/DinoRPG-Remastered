@@ -29,27 +29,20 @@ function getTriggeredMissionFightOnMove(
 	finalPlace: PlaceEnum
 ): TriggeredMissionFight | null {
 	const resolvedMission = resolveCurrentMission(member.missions);
-
 	if (!resolvedMission?.currentGoal) {
 		return null;
 	}
-
 	const currentGoal = resolvedMission.currentGoal;
-
 	if (currentGoal.type !== 'AT') {
 		return null;
 	}
-
 	if (currentGoal.place == null || currentGoal.place !== finalPlace) {
 		return null;
 	}
-
 	const nextGoal = resolvedMission.definition.goals[resolvedMission.state.progression + 1] ?? null;
-
 	if (!nextGoal || nextGoal.type !== 'FIGHT') {
 		return null;
 	}
-
 	return {
 		dinozId: member.id,
 		missionKey: resolvedMission.state.missionKey,
@@ -61,17 +54,14 @@ function sameTriggeredFight(a: TriggeredMissionFight, b: TriggeredMissionFight):
 	if (a.missionKey !== b.missionKey) {
 		return false;
 	}
-
 	if (a.monsterKeys.length !== b.monsterKeys.length) {
 		return false;
 	}
-
 	for (let i = 0; i < a.monsterKeys.length; i += 1) {
 		if (a.monsterKeys[i] !== b.monsterKeys[i]) {
 			return false;
 		}
 	}
-
 	return true;
 }
 
@@ -85,52 +75,39 @@ export async function movementListener(
 		...team.filter(member => member.id === activeDinoz),
 		...team.filter(member => member.id !== activeDinoz)
 	];
-
 	const triggeredFights = orderedTeam
 		.map(member => getTriggeredMissionFightOnMove(member, finalPlace))
 		.filter((fight): fight is TriggeredMissionFight => fight !== null);
-
 	const triggeredFight = triggeredFights[0];
-
 	if (!triggeredFight) {
 		return false;
 	}
-
 	const monsters = triggeredFight.monsterKeys.map(monsterKey => {
 		const monster = monsterByKey[monsterKey];
-
 		if (!monster) {
 			throw new ExpectedError(`Unknown mission monster key "${monsterKey}"`);
 		}
-
 		return monster;
 	});
-
 	const fightResult = calculateFightVsMonsters(team, user, finalPlace, monsters);
 	const result = await rewardFight(team, monsters, fightResult, finalPlace, user);
-
 	if (fightResult.winner) {
 		const teamIds = team.map(dinoz => dinoz.id);
-
 		await updateMultipleDinoz(teamIds, { placeId: finalPlace });
-
 		const dinozIdsToAdvance = triggeredFights
 			.filter(fight => sameTriggeredFight(fight, triggeredFight))
 			.map(fight => fight.dinozId);
-
 		await prisma.$transaction(async tx => {
 			for (const dinozId of dinozIdsToAdvance) {
 				await advanceDinozMissionOnMove(tx, {
 					dinozId,
 					place: finalPlace
 				});
-
 				await advanceDinozMissionOnFight(tx, {
 					dinozId
 				});
 			}
 		});
 	}
-
 	return result;
 }
