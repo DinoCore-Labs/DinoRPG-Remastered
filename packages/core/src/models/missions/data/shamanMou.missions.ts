@@ -618,8 +618,8 @@ export const shamanMouMissions: MissionDefinition[] = [
 				npcNameKey: 'npc.eugene.name',
 				gfx: 'professor',
 				place: PlaceEnum.UNIVERSITE,
-				nameKey: 'npc.shaman.pigeon.eugene.name',
-				textKey: 'npc.shaman.pigeon.eugene.text'
+				nameKey: 'missions.shaman.pigeon.eugene.name',
+				textKey: 'missions.shaman.pigeon.eugene.text'
 			},
 			{ type: 'AT', place: PlaceEnum.ILE_WAIKIKI, hidden: false },
 			{
