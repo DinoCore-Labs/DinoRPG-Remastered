@@ -16,6 +16,7 @@ interface ShopConfig {
 
 interface WorldConfig {
 	disableSwampMovementBlock: boolean;
+	disableSwampFightRules: boolean;
 }
 
 interface GeneralConfig {
@@ -49,7 +50,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 			//buyableQuetzu: 6
 		},
 		world: {
-			disableSwampMovementBlock: true
+			disableSwampMovementBlock: true,
+			disableSwampFightRules: false
 		},
 		general: {
 			initialMoney: 1_000_000,
@@ -76,7 +78,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 			//buyableQuetzu: 6
 		},
 		world: {
-			disableSwampMovementBlock: false
+			disableSwampMovementBlock: false,
+			disableSwampFightRules: true
 		},
 		general: {
 			initialMoney: 100_000,
