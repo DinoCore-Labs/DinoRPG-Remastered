@@ -67,10 +67,6 @@ const missionTextKey = computed(() =>
 	typeof route.query.missionTextKey === 'string' ? route.query.missionTextKey : ''
 );
 
-const missionNameKey = computed(() =>
-	typeof route.query.missionNameKey === 'string' ? route.query.missionNameKey : ''
-);
-
 const missionGfx = computed(() =>
 	typeof route.query.missionGfx === 'string' && route.query.missionGfx.length > 0 ? route.query.missionGfx : ''
 );
