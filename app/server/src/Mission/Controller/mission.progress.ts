@@ -218,7 +218,6 @@ export async function advanceDinozMissionOnFightWon(
 	params: {
 		dinozId: number;
 		defeatedMonsterKeys: MonsterKey[];
-		zone?: number | null;
 	}
 ): Promise<MissionProgressResult> {
 	const activeMission = await getActiveMissionState(tx, params.dinozId);
@@ -227,9 +226,6 @@ export async function advanceDinozMissionOnFightWon(
 	}
 	const goal = activeMission.currentGoal;
 	if (goal.type !== 'KILL') {
-		return null;
-	}
-	if (goal.kill.zone != null && goal.kill.zone !== params.zone) {
 		return null;
 	}
 	const killedCount = countKilledMatches(goal, params.defeatedMonsterKeys);
