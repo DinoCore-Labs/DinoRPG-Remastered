@@ -316,7 +316,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 				kill: {
 					count: 15,
 					force: false,
-					displayNameKey: 'missions.shaman.defend.kill.wave'
+					displayNameKey: 'missions.shaman.defend.kill'
 				}
 			},
 			{
@@ -339,7 +339,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 				kill: {
 					count: 5,
 					force: false,
-					displayNameKey: 'missions.shaman.defend.kill.wave'
+					displayNameKey: 'missions.shaman.defend.kill'
 				}
 			},
 			{
