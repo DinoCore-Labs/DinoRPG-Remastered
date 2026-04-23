@@ -6,6 +6,12 @@ import { jovebozeDialog } from './joveboze.dialog.js';
 import { padamoineDialog } from './padamoine.dialog.js';
 import { papyJoeDialog } from './papy.dialog.js';
 import { professorEugeneDialog } from './prof.dialog.js';
+import {
+	strangeRangerAfterSpyDialog,
+	strangeRangerIntroDialog,
+	strangeRangerRewardDialog,
+	strangeRangerTechDialog
+} from './rodeur.dialog.js';
 import { shamanMouDialog } from './shamanMou.dialog.js';
 import { speleleologueDialog, speleleologueIceDialog } from './spelele.dialog.js';
 import { strangeHippoDialog, strangePterozDialog, strangeRockyDialog } from './totems.dialog.js';
@@ -18,6 +24,7 @@ export const dialogDefinitions = [
 	padamoineDialog,
 	strangeRockyDialog,
 	papyJoeDialog,
+	strangeRangerAfterSpyDialog,
 	// Iles Atlantéinées
 	strangeHippoDialog,
 	coralMinerDialog,
@@ -27,6 +34,9 @@ export const dialogDefinitions = [
 	// GTC
 	strangePterozDialog,
 	shamanMouDialog,
+	strangeRangerIntroDialog,
+	strangeRangerTechDialog,
+	strangeRangerRewardDialog,
 	speleleologueDialog,
 	speleleologueIceDialog,
 	// Foret
