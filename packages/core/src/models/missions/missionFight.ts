@@ -6,10 +6,11 @@ export type MissionFightAction = {
 	actionKey?: MissionActionKey;
 	monsterKeys?: MissionMonsterKey[] | null;
 	allyKeys: MissionMonsterKey[];
+	place?: PlaceEnum;
 	beginText?: string | null;
 	beginMonsterKey?: MissionMonsterKey | null;
 	winText?: string | null;
-	lostText?: string | null;
+	endText?: string | null;
 	background?: MissionBackgroundKey | null;
 	timeoutSeconds?: number | null;
 };
@@ -20,9 +21,4 @@ export type MissionKillInfos = {
 	force: boolean;
 	zone?: number | null;
 	displayNameKey?: string | null;
-	triggerOnMove?: boolean;
-	triggerPlace?: PlaceEnum;
-	encounterMonsterKeys?: string[];
-	startTextKey?: string;
-	endTextKey?: string;
 };

@@ -61,18 +61,8 @@ export const rodeurMissions: MissionDefinition[] = [
 		goals: [
 			{ type: 'AT', place: PlaceEnum.CHUTES_MUTANTES, hidden: false },
 			{
-				type: 'KILL',
-				kill: {
-					monsterKeys: ['pteroz', 'hippoclamp', 'rocky'],
-					count: 3,
-					force: true,
-					displayNameKey: 'missions.rodeur.rodlif.kill.darkDinoz',
-					triggerOnMove: true,
-					triggerPlace: PlaceEnum.CHUTES_MUTANTES,
-					encounterMonsterKeys: ['pteroz', 'hippoclamp', 'rocky'],
-					startTextKey: 'missions.rodeur.rodlif.kill.start',
-					endTextKey: 'missions.rodeur.rodlif.kill.end'
-				}
+				type: 'FIGHT',
+				monsterKeys: ['pteroz', 'hippoclamp', 'rocky']
 			},
 			rodeurValidateGoal()
 		],
