@@ -19,6 +19,7 @@ export type DialogContext = {
 		gold: number;
 		scenarios: Map<string, DialogScenarioState>;
 		items: Map<number, number>;
+		allDinozEquippedItemIds: Set<number>;
 		ingredients: Map<number, number>;
 		effects: Set<string>;
 		tags: Set<string>;
@@ -54,21 +55,31 @@ function buildQuantityMap<T>(
 	getQuantity: (entry: T) => number
 ): Map<number, number> {
 	const map = new Map<number, number>();
-
 	for (const entry of entries) {
 		map.set(getId(entry), getQuantity(entry));
 	}
-
 	return map;
 }
 
 function buildNumberSet<T>(entries: T[], getValue: (entry: T) => number): Set<number> {
 	const set = new Set<number>();
-
 	for (const entry of entries) {
 		set.add(getValue(entry));
 	}
+	return set;
+}
 
+function buildAllDinozEquippedItemSet(
+	entries: Array<{
+		items: Array<{ itemId: number }>;
+	}>
+): Set<number> {
+	const set = new Set<number>();
+	for (const dinoz of entries) {
+		for (const item of dinoz.items) {
+			set.add(item.itemId);
+		}
+	}
 	return set;
 }
 
@@ -86,15 +97,12 @@ function buildEmptyNumberMap(): Map<string, number> {
 
 function buildRewardKeySet(entries: Array<{ rewardId: number }>): Set<string> {
 	const set = new Set<string>();
-
 	for (const entry of entries) {
 		const rewardKey = rewardKeyById[entry.rewardId];
-
 		if (rewardKey) {
 			set.add(rewardKey);
 		}
 	}
-
 	return set;
 }
 
@@ -147,7 +155,6 @@ export async function buildDialogContext(
 			}
 		}
 	});
-
 	const userItems = await tx.userItems.findMany({
 		where: { userId: params.userId },
 		select: {
@@ -155,7 +162,16 @@ export async function buildDialogContext(
 			quantity: true
 		}
 	});
-
+	const allUserDinoz = await tx.dinoz.findMany({
+		where: { userId: params.userId },
+		select: {
+			items: {
+				select: {
+					itemId: true
+				}
+			}
+		}
+	});
 	const userIngredients = await tx.userIngredients.findMany({
 		where: { userId: params.userId },
 		select: {
@@ -163,14 +179,12 @@ export async function buildDialogContext(
 			quantity: true
 		}
 	});
-
 	const userRewards = await tx.userRewards.findMany({
 		where: { userId: params.userId },
 		select: {
 			rewardId: true
 		}
 	});
-
 	const dinoz = await tx.dinoz.findUnique({
 		where: { id: params.dinozId },
 		select: {
@@ -197,19 +211,15 @@ export async function buildDialogContext(
 			}
 		}
 	});
-
 	if (!user) {
 		throw new ExpectedError(`User "${params.userId}" not found`);
 	}
-
 	if (!dinoz) {
 		throw new ExpectedError(`Dinoz "${params.dinozId}" not found`);
 	}
-
 	if (dinoz.userId !== params.userId) {
 		throw new ExpectedError(`Dinoz "${params.dinozId}" does not belong to user "${params.userId}"`);
 	}
-
 	return {
 		user: {
 			id: user.id,
@@ -222,6 +232,7 @@ export async function buildDialogContext(
 				entry => entry.itemId,
 				entry => entry.quantity
 			),
+			allDinozEquippedItemIds: buildAllDinozEquippedItemSet(allUserDinoz),
 			ingredients: buildQuantityMap(
 				userIngredients,
 				entry => entry.ingredientId,
