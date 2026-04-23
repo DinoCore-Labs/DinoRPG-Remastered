@@ -149,7 +149,11 @@ export async function fightMonstersAtPlace(
 	let monsters = await generateMonsterList(team, placeId);
 
 	// Marais Collant - No fights days.
-	if (SWAMP_FOG_DAYS.includes(dayOfWeek) && placeId === PlaceEnum.MARAIS_COLLANT) {
+	if (
+		gameConfig.world.disableSwampFightRules &&
+		SWAMP_FOG_DAYS.includes(dayOfWeek) &&
+		placeId === PlaceEnum.MARAIS_COLLANT
+	) {
 		monsters = [];
 		for (const dinoz of team) {
 			if (!dinoz.status.some(s => s.statusId === DinozStatusId.WEIRD_SWAMP_SEEN)) {
