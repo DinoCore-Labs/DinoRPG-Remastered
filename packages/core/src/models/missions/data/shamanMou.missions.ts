@@ -509,7 +509,6 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['goblin'],
 					count: 1,
 					force: true,
-					zone: 1,
 					displayNameKey: 'missions.shaman.ritual.kill'
 				}
 			},
