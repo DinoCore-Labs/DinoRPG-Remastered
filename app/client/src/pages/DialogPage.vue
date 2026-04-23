@@ -75,6 +75,10 @@ const missionGfx = computed(() =>
 	typeof route.query.missionGfx === 'string' && route.query.missionGfx.length > 0 ? route.query.missionGfx : ''
 );
 
+const missionNpcNameKey = computed(() =>
+	typeof route.query.missionNpcNameKey === 'string' ? route.query.missionNpcNameKey : ''
+);
+
 const isTerminalPhase = computed(() => {
 	const phase = dialogState.value;
 
@@ -94,11 +98,9 @@ const swfName = computed(() => dialogState.value?.pnj.gfx ?? null);
 
 const npcFlashvars = computed(() => {
 	const phase = dialogState.value;
-
 	if (!phase) {
 		return '';
 	}
-
 	return new URLSearchParams({
 		frame: phase.pnj.frame ?? 'speak',
 		background: phase.pnj.background ?? '1'
@@ -121,7 +123,7 @@ function buildInlineMissionDialogState(): DialogPhaseResponse {
 	return {
 		dialogId: '__mission__',
 		phaseId: '__mission__',
-		name: missionNameKey.value,
+		name: missionNpcNameKey.value,
 		text: missionTextKey.value,
 		fast: false,
 		pnj: {
@@ -152,7 +154,6 @@ async function completeMissionIfNeeded() {
 	if (!isMissionDialog.value || !isTerminalPhase.value || missionCompleted.value) {
 		return;
 	}
-
 	await MissionService.completeAction(dinozId.value);
 	missionCompleted.value = true;
 }
@@ -160,17 +161,13 @@ async function completeMissionIfNeeded() {
 async function handlePhaseActions(phase: DialogPhaseResponse) {
 	if (phase.actions.startFight) {
 		const fight = await FightService.processDialogFight(dinozId.value, phase.dialogId, phase.phaseId);
-
 		sStore.setFightResult(fight);
-
 		await router.push({
 			name: 'FightPage',
 			params: { dinozId: String(dinozId.value) }
 		});
-
 		return;
 	}
-
 	if (phase.actions.missionsGroup) {
 		await router.push({
 			name: 'DinozMissions',
@@ -179,7 +176,6 @@ async function handlePhaseActions(phase: DialogPhaseResponse) {
 				group: phase.actions.missionsGroup
 			}
 		});
-
 		return;
 	}
 }
@@ -191,30 +187,24 @@ async function loadDialog() {
 		loaded.value = false;
 		return;
 	}
-
 	loading.value = true;
 	error.value = null;
 	loaded.value = false;
 	dialogState.value = null;
 	missionCompleted.value = false;
-
 	try {
 		if (isInlineMissionDialog.value) {
 			dialogState.value = buildInlineMissionDialogState();
 			loaded.value = true;
 			return;
 		}
-
 		if (!dialogId.value) {
 			throw new Error('Dialogue invalide');
 		}
-
 		dialogState.value = phaseId.value
 			? await DialogService.resumeDialog(dinozId.value, dialogId.value, phaseId.value)
 			: await DialogService.startDialog(dinozId.value, dialogId.value);
-
 		loaded.value = true;
-
 		if (dialogState.value) {
 			await handlePhaseActions(dialogState.value);
 		}
@@ -229,14 +219,11 @@ async function chooseStep(linkId: string, confirmChoice: boolean) {
 	if (!dialogState.value) {
 		return;
 	}
-
 	if (confirmChoice && !window.confirm('Confirmer cette action ?')) {
 		return;
 	}
-
 	loading.value = true;
 	error.value = null;
-
 	try {
 		dialogState.value = await DialogService.selectDialogLink(
 			dinozId.value,
@@ -244,7 +231,6 @@ async function chooseStep(linkId: string, confirmChoice: boolean) {
 			linkId,
 			dialogState.value.phaseId
 		);
-
 		if (dialogState.value) {
 			await handlePhaseActions(dialogState.value);
 		}
@@ -258,7 +244,6 @@ async function chooseStep(linkId: string, confirmChoice: boolean) {
 async function stop() {
 	loading.value = true;
 	error.value = null;
-
 	try {
 		await completeMissionIfNeeded();
 		await navigateBackToDinoz();
@@ -276,6 +261,7 @@ watch(
 		route.query.phaseId,
 		route.query.missionTextKey,
 		route.query.missionNameKey,
+		route.query.missionNpcNameKey,
 		route.query.missionGfx
 	],
 	() => {
