@@ -1,5 +1,6 @@
 import { CompareMode, Condition } from '@dinorpg/core/models/conditions/conditions.js';
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
+import { resolveItemIdFromKey } from '@dinorpg/core/models/items/itemIdByKey.js';
 import { UserRole } from '@dinorpg/core/models/user/userRole.js';
 
 import { Role } from '../../../../prisma/index.js';
@@ -77,7 +78,10 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'skill':
 			return hasDinozSkill(context, Number(condition.key));
 		case 'hasobject': {
-			const itemId = Number(condition.key);
+			const itemId = resolveItemIdFromKey(condition.key);
+			if (itemId == null) {
+				throw new Error(`Unknown item key "${condition.key}" in dialog condition`);
+			}
 			return (context.user.items.get(itemId) ?? 0) > 0 || context.user.allDinozEquippedItemIds.has(itemId);
 		}
 		case 'mission':

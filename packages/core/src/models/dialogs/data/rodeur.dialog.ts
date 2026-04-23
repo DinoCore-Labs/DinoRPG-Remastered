@@ -188,7 +188,7 @@ export const strangeRangerRewardDialog = defineDialog({
 		frame: 'speak',
 		background: '1'
 	},
-	cond: parseCondition('mission(rodlif)+!hasobject(regen)'),
+	cond: parseCondition('mission(rodlif)+!hasobject(tik_bracelet)'),
 	first: 'begin',
 	phases: {
 		begin: {
@@ -199,6 +199,7 @@ export const strangeRangerRewardDialog = defineDialog({
 		next: {
 			id: 'next',
 			text: 'npc.rodeur.dialog.reward.next',
+			needCheck: false,
 			effects: [
 				{
 					type: 'giveItem',

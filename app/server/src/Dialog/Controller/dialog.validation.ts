@@ -157,7 +157,6 @@ function validateDialog(dialog: RuntimeDialog) {
 
 export function validateDialogs(dialogs: RuntimeDialog[]) {
 	validateDialogIds(dialogs);
-
 	for (const dialog of dialogs) {
 		validateDialog(dialog);
 	}
