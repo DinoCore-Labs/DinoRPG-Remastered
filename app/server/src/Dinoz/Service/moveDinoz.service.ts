@@ -8,6 +8,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
+import gameConfig from '../../config/game.config.js';
 import { fightMonstersAtPlace } from '../../Fight/Service/fight.service.js';
 import { movementListener } from '../../Fight/Service/movementListener.service.js';
 import { advanceDinozMissionOnMove } from '../../Mission/Controller/mission.progress.js';
@@ -109,7 +110,11 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 	const finalPlace = desiredPlace.gotoPlaceId ?? desiredPlace.placeId;
 
 	// Marais Collant - No movement days.
-	if (SWAMP_FLOODED_DAYS.includes(dayOfWeek) && currentPlace.placeId === PlaceEnum.MARAIS_COLLANT) {
+	if (
+		!gameConfig.world.disableSwampMovementBlock &&
+		SWAMP_FLOODED_DAYS.includes(dayOfWeek) &&
+		currentPlace.placeId === PlaceEnum.MARAIS_COLLANT
+	) {
 		if (!dinoz.status.some(s => s.statusId === DinozStatusId.WEIRD_SWAMP_SEEN)) {
 			await addStatusToDinoz(dinoz.id, DinozStatusId.WEIRD_SWAMP_SEEN);
 		}
