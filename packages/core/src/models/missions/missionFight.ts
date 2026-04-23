@@ -1,3 +1,4 @@
+import { PlaceEnum } from '../enums/PlaceEnum.js';
 import { MissionActionKey, MissionBackgroundKey, MissionMonsterKey } from './missionKey.js';
 
 export type MissionFightAction = {
@@ -19,4 +20,9 @@ export type MissionKillInfos = {
 	force: boolean;
 	zone?: number | null;
 	displayNameKey?: string | null;
+	triggerOnMove?: boolean;
+	triggerPlace?: PlaceEnum;
+	encounterMonsterKeys?: string[];
+	startTextKey?: string;
+	endTextKey?: string;
 };
