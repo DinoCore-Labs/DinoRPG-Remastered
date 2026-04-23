@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.14.3
+
+### Patch Changes
+
+- 1a7f794: add Rodeur dialogs and missions
+- Updated dependencies [1a7f794]
+  - @dinorpg/core@0.13.2
+
 ## 0.14.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.13.2
+
+### Patch Changes
+
+- 1a7f794: add Rodeur dialogs and missions
+
 ## 0.13.1
 
 ### Patch Changes
