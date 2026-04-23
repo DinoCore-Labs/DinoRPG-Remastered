@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.13.2
+
+### Patch Changes
+
+- 1a7f794: add Rodeur dialogs and missions
+
 ## 0.13.1
 
 ### Patch Changes
@@ -289,6 +295,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.14.3
+
+### Patch Changes
+
+- 1a7f794: add Rodeur dialogs and missions
+- Updated dependencies [1a7f794]
+  - @dinorpg/core@0.13.2
 
 ## 0.14.2
 
@@ -656,6 +670,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.14.4
+
+### Patch Changes
+
+- 1a7f794: add Rodeur dialogs and missions
 
 ## 0.14.3
 
