@@ -64,12 +64,12 @@ export const strangeRangerIntroDialog = defineDialog({
 		talk: {
 			id: 'talk',
 			text: 'npc.rodeur.choice.talk',
-			cond: parseCondition('!mission(rodriz)')
+			cond: parseCondition('!curmission(rodriz)')
 		},
 		talk2: {
 			id: 'talk2',
-			text: 'npc.rodeur.choice.talk',
-			cond: parseCondition('mission(rodriz)')
+			text: 'npc.rodeur.choice.talk2',
+			cond: parseCondition('curmission(rodriz)')
 		},
 		yes: {
 			id: 'yes',
@@ -148,12 +148,12 @@ export const strangeRangerTechDialog = defineDialog({
 		qual: {
 			id: 'qual',
 			text: 'npc.rodeur.choice.qual',
-			cond: parseCondition('!mission(rodlif)')
+			cond: parseCondition('!curmission(rodlif)')
 		},
 		qual2: {
 			id: 'qual2',
-			text: 'npc.rodeur.choice.qual',
-			cond: parseCondition('mission(rodlif)')
+			text: 'npc.rodeur.choice.qual2',
+			cond: parseCondition('curmission(rodlif)')
 		},
 		caush: {
 			id: 'caush',
