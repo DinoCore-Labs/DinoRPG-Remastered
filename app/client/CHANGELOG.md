@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.14.4
+
+### Patch Changes
+
+- 1a7f794: add Rodeur dialogs and missions
+
 ## 0.14.3
 
 ### Patch Changes
