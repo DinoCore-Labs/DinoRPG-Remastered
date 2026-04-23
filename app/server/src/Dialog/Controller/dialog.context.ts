@@ -36,6 +36,8 @@ export type DialogContext = {
 		statusIds: Set<number>;
 		skillIds: Set<number>;
 		itemIds: Set<number>;
+		currentMissionKey: string | null;
+		completedMissionKeys: Set<string>;
 	};
 	dialog: {
 		id: string;
@@ -211,6 +213,17 @@ export async function buildDialogContext(
 			}
 		}
 	});
+	const dinozMissions = await tx.dinozMissions.findMany({
+		where: { dinozId: params.dinozId },
+		select: {
+			missionKey: true,
+			isCompleted: true
+		}
+	});
+	const currentMission = dinozMissions.find(mission => !mission.isCompleted) ?? null;
+	const completedMissionKeys = new Set(
+		dinozMissions.filter(mission => mission.isCompleted).map(mission => mission.missionKey)
+	);
 	if (!user) {
 		throw new ExpectedError(`User "${params.userId}" not found`);
 	}
@@ -252,7 +265,9 @@ export async function buildDialogContext(
 			maxLife: dinoz.maxLife,
 			statusIds: buildNumberSet(dinoz.status, entry => entry.statusId),
 			skillIds: buildNumberSet(dinoz.skills, entry => entry.skillId),
-			itemIds: buildNumberSet(dinoz.items, entry => entry.itemId)
+			itemIds: buildNumberSet(dinoz.items, entry => entry.itemId),
+			currentMissionKey: currentMission?.missionKey ?? null,
+			completedMissionKeys
 		},
 		dialog: {
 			id: params.dialog.id,
