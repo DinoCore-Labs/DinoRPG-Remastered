@@ -23,79 +23,63 @@ function consume(state: ParserState): string {
 
 function parseCompareMode(state: ParserState): CompareMode {
 	const char = peek(state);
-
 	if (char === '+') {
 		state.position += 1;
 		return 'gte';
 	}
-
 	if (char === '-') {
 		state.position += 1;
 		return 'lte';
 	}
-
 	return 'eq';
 }
 
 function parseIdent(state: ParserState): string {
 	const start = state.position;
-
 	while (true) {
 		const char = peek(state);
 		if (!char) break;
-
 		const isLower = char >= 'a' && char <= 'z';
 		const isUpper = char >= 'A' && char <= 'Z';
 		const isDigit = char >= '0' && char <= '9';
 		const isUnderscore = char === '_';
-
 		if (!isLower && !isUpper && !isDigit && !isUnderscore) break;
 		state.position += 1;
 	}
-
 	if (start === state.position) {
 		fail(state, 'Expected identifier');
 	}
-
 	return state.source.slice(start, state.position);
 }
 
 function parseIntValue(state: ParserState): number {
 	const start = state.position;
-
 	while (true) {
 		const char = peek(state);
 		if (!char || char < '0' || char > '9') break;
 		state.position += 1;
 	}
-
 	if (start === state.position) {
 		fail(state, 'Expected integer');
 	}
-
 	return Number(state.source.slice(start, state.position));
 }
 
 function parseDateLiteral(state: ParserState): string {
 	const start = state.position;
-
 	while (true) {
 		const char = peek(state);
 		if (!char) break;
-
 		const isDigit = char >= '0' && char <= '9';
 		const isDash = char === '-';
 		const isSpace = char === ' ';
 		const isColon = char === ':';
-
 		if (!isDigit && !isDash && !isSpace && !isColon) break;
 		state.position += 1;
 	}
-
 	if (start === state.position) {
 		fail(state, 'Expected date literal');
 	}
-
 	return state.source.slice(start, state.position);
 }
 
@@ -108,7 +92,6 @@ function expect(state: ParserState, expected: string) {
 
 function parseCommand(command: string, state: ParserState): Condition {
 	expect(state, '(');
-
 	switch (command) {
 		case 'true':
 			expect(state, ')');
@@ -368,13 +351,10 @@ function parseCommand(command: string, state: ParserState): Condition {
 
 function parseExpr(state: ParserState, allowChain = true): Condition {
 	const char = peek(state);
-
 	let expr: Condition;
-
 	if (!char) {
 		fail(state, 'Unexpected end of expression');
 	}
-
 	if (char === '!') {
 		consume(state);
 		expr = { type: 'not', condition: parseExpr(state, false) };
@@ -386,17 +366,13 @@ function parseExpr(state: ParserState, allowChain = true): Condition {
 		const command = parseIdent(state).toLowerCase();
 		expr = parseCommand(command, state);
 	}
-
 	if (!allowChain) {
 		return expr;
 	}
-
 	const next = peek(state);
-
 	if (!next || next === ')') {
 		return expr;
 	}
-
 	if (next === '+') {
 		consume(state);
 		return {
@@ -405,7 +381,6 @@ function parseExpr(state: ParserState, allowChain = true): Condition {
 			right: parseExpr(state, true)
 		};
 	}
-
 	if (next === '|') {
 		consume(state);
 		return {
@@ -414,7 +389,6 @@ function parseExpr(state: ParserState, allowChain = true): Condition {
 			right: parseExpr(state, true)
 		};
 	}
-
 	fail(state, `Unexpected character "${next}"`);
 }
 
@@ -423,9 +397,7 @@ export function parseCondition(source: string): Condition {
 		source,
 		position: 0
 	};
-
 	const condition = parseExpr(state, true);
-
 	if (state.position < source.length) {
 		fail(state, 'Expression too long');
 	}

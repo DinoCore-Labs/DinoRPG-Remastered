@@ -13,7 +13,7 @@ export const strangeRangerIntroDialog = defineDialog({
 		frame: 'speak',
 		background: '1'
 	},
-	cond: parseCondition('active(rodeur)+!mission(rodriz)+level(15)'),
+	cond: parseCondition('!mission(rodriz)+level(15)'),
 	first: 'begin',
 	phases: {
 		begin: {
