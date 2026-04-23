@@ -3300,6 +3300,51 @@
 				"accept": "Accepter"
 			}
 		},
+		"rodeur": {
+			"name": "Rôdeur Etrange",
+			"dialog": {
+				"intro": {
+					"begin": ".........",
+					"go": "Ouf ! Il vaut mieux faire attention en rencontrant des étrangers...",
+					"talk": "Uh ?!??? Quoi ?? Vous pouvez me VOIR ?!? ..... Grrrrr....",
+					"yes": "Uhm... bien... je vois... on m'avait pourtant certifié que cette cape rendait invisible ! Est-ce que tu peux regarder l'indicateur dans le dos, il y a marqué quelque chose ?",
+					"read": "Quoi ?!? \"L'EAU BATTE-RIZ\" ? Uhm... le vendeur parlait effectivement de recharger quelque chose... il va donc falloir que j'utilise du... riz !?! Mais où vais-je pouvoir trouver cela ?!?",
+					"talk2": "Vite ! J'ai BESOIN de ce Riz !"
+				},
+				"tech": {
+					"begin": "Ma cape est à nouveau en panne... je commence à en avoir un peu marre...",
+					"qual": "QUOI ?!? Comment oses-tu parler ainsi de la grande technologie Caushemeshenne ! Sais-tu simplement combien d'années recherches il a fallu à nos scientifiques pour maîtriser l'Ether ?!?",
+					"qual2": "Au lieu de dire des conneries, tu ferrais mieux d'essayer de remplir ta mission...",
+					"caush": "Oui ! Tout à fait, la grande civilisation des Montagnes de Caushemesh, bien au delà des Steppes Magnétiques. Nous sommes bien plus développés que les barbares de Dinoville...",
+					"ether": "Aprés des centaines d'années de recherche, les Caushemeshens ont maîtrisés la puissance de l'Ether, un savant mélange des éléments Air et Vide. Celà nous donne une puissance technologique hors du commun, et les ingénieurs de Caushemesh sont les meilleurs de tout Dinoland !",
+					"next": "Vos Dinoz sont bien faibles comparés à ceux de Caushemesh, ils ne font pas le poids ahahahah ah ! Entraîne bien tes Dinoz, jeune maître, car un jour viendra où tu devras affronter des dangers bien plus grands !",
+					"more": "Mais j'en ai déjà trop dit... Pour te convaincre de la technologie de Caushemesh, que dirais-tu d'une petite mission ?"
+				},
+				"reward": {
+					"begin": "Pour ton information, les Dinoz Sombres que tu as rencontré jusqu'à présent n'étaient que des débutants que nous venons faire entraîner dans cette partie de Dinoland... La puissance des Dinoz de Caushemesh va bien au delà, et même votre Vénérable ne ferait pas le poids contre nos meilleurs maîtres Dinoz !",
+					"next2": "Enfin bon, je tiens ma promesse. Voici une récompense pour te convaincre de la supériorité de la  technologie de Caushemesh. Je n'en ai qu'un exemplaire, alors fais-en bon usage... Il s'agit d'un Bracelet en Tik, que tu pourras équiper sur le Dinoz de ton choix..."
+				},
+				"afterSpy": {
+					"begin": "Maintenant libéré de sa mission d'espionnage, le rôdeur s'est installé tranquillement non loin de dinoplaza. Les doigts de pied en éventail, il se détend au soleil... Mieux vaut le voir ici qu'en train de manigancer quelque chose de louche..."
+				}
+			},
+			"choice": {
+				"go": "Ce personnage a l'air dangereux... s'éloigner !",
+				"talk": "Lui parler",
+				"talk2": "Lui parler",
+				"yes": "Euh... Oui",
+				"read": "Lire l'indicateur",
+				"help": "Aider le Rôdeur",
+				"qual": "Sûrement de la mauvaise qualité...",
+				"qual2": "Sûrement de la mauvaise qualité...",
+				"caush": "Caushemesh ?",
+				"ether": "L'Ether ?",
+				"next": "Et...",
+				"next2": "(...)",
+				"more": "...",
+				"mission": "Accepter une mission"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
