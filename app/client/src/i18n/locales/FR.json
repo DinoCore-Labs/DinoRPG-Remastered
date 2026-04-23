@@ -3603,6 +3603,7 @@
 					"text2": "Merci pour l'aide, soldat ! J'ai vu plusieurs de ces monstres se réfugier dans les Pentes, il faut les poursuivre et les éliminer une bonne fois pour toutes !",
 					"text3": "Beau travail, soldat ! La victoire est à nous, et c'est grâce à votre intervention héroïque. Transmettez cette lettre de recommandation au Shaman Mou, il saura vous récompenser. ROMPEZ !!"
 				},
+				"kill": "monstres",
 				"scout": {
 					"name": "Eclaireur des Forges",
 					"text": "Ils se cachent dans les cavernes qui bordent les Pentes de Basalte m'sieur. Vous allez devoir les débusquer un à un !"
