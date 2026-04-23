@@ -1,77 +1,136 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
+import type { MissionFightGoal } from '@dinorpg/core/models/missions/missionGoal.js';
+import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
+import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { User } from '../../../../prisma/index.js';
+import { DinozMissions, User } from '../../../../prisma/index.js';
+import { updateMultipleDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
+import { advanceDinozMissionOnFight, advanceDinozMissionOnMove } from '../../Mission/Controller/mission.progress.js';
+import { resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
+import { prisma } from '../../prisma.js';
 import { DinozToGetFighter } from '../../utils/fight/fight.mapper.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
-import { DinozToRewardFight } from './fight.service.js';
+import { calculateFightVsMonsters, type DinozToRewardFight, rewardFight } from './fight.service.js';
+
+type DinozToCheckMissionFight = {
+	id: number;
+	missions: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
+};
+
+type TriggeredMissionFight = {
+	dinozId: number;
+	missionKey: string;
+	monsterKeys: MissionFightGoal['monsterKeys'];
+};
+
+function getTriggeredMissionFightOnMove(
+	member: DinozToCheckMissionFight,
+	finalPlace: PlaceEnum
+): TriggeredMissionFight | null {
+	const resolvedMission = resolveCurrentMission(member.missions);
+
+	if (!resolvedMission?.currentGoal) {
+		return null;
+	}
+
+	const currentGoal = resolvedMission.currentGoal;
+
+	if (currentGoal.type !== 'AT') {
+		return null;
+	}
+
+	if (currentGoal.place == null || currentGoal.place !== finalPlace) {
+		return null;
+	}
+
+	const nextGoal = resolvedMission.definition.goals[resolvedMission.state.progression + 1] ?? null;
+
+	if (!nextGoal || nextGoal.type !== 'FIGHT') {
+		return null;
+	}
+
+	return {
+		dinozId: member.id,
+		missionKey: resolvedMission.state.missionKey,
+		monsterKeys: nextGoal.monsterKeys
+	};
+}
+
+function sameTriggeredFight(a: TriggeredMissionFight, b: TriggeredMissionFight): boolean {
+	if (a.missionKey !== b.missionKey) {
+		return false;
+	}
+
+	if (a.monsterKeys.length !== b.monsterKeys.length) {
+		return false;
+	}
+
+	for (let i = 0; i < a.monsterKeys.length; i += 1) {
+		if (a.monsterKeys[i] !== b.monsterKeys[i]) {
+			return false;
+		}
+	}
+
+	return true;
+}
 
 export async function movementListener(
 	user: Pick<User, 'id' | 'teacher' | 'cooker'> & UserForConditionCheck,
-	team: (DinozToGetFighter & DinozToRewardFight) /*& DinozToGetActualStep*/[],
+	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	finalPlace: PlaceEnum,
 	activeDinoz: number
 ): Promise<FightResult | false> {
-	// Special actions
-	//const potentialSpecialActions = Object.values(specialActions).find(special => special.place === finalPlace);
+	const orderedTeam = [
+		...team.filter(member => member.id === activeDinoz),
+		...team.filter(member => member.id !== activeDinoz)
+	];
 
-	/*if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, player, player.dinoz[0].id)) {
-		if (potentialSpecialActions.opponents) {
-			// Trigger a fight against the opponents of the special action
-			const fightResult = calculateFightVsMonsters(team, player, finalPlace, potentialSpecialActions.opponents);
+	const triggeredFights = orderedTeam
+		.map(member => getTriggeredMissionFightOnMove(member, finalPlace))
+		.filter((fight): fight is TriggeredMissionFight => fight !== null);
 
-			const partyLeader = team.find(d => d.id === activeDinoz);
-			if (!partyLeader) {
-				throw new ExpectedError(`Cannot find dinoz ${activeDinoz} in the team`);
-			}
-			const result: FightResult = await rewardFight(
-				team,
-				potentialSpecialActions.opponents,
-				fightResult,
-				finalPlace,
-				player
-			);
-			if (fightResult.winner) {
-				await rewarder(potentialSpecialActions.reward, [partyLeader], player.id, true);
-				//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
-			}
-			if (potentialSpecialActions.startText) {
-				result.startText = potentialSpecialActions.startText;
-			}
-			if (potentialSpecialActions.endText) {
-				result.endText = potentialSpecialActions.endText;
-			}
-			return result;
-		} else {
-			await rewarder(potentialSpecialActions.reward, team, player.id, true);
-			//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
+	const triggeredFight = triggeredFights[0];
+
+	if (!triggeredFight) {
+		return false;
+	}
+
+	const monsters = triggeredFight.monsterKeys.map(monsterKey => {
+		const monster = monsterByKey[monsterKey];
+
+		if (!monster) {
+			throw new ExpectedError(`Unknown mission monster key "${monsterKey}"`);
 		}
-	}*/
 
-	// Check if any dinoz has an unfinished mission
-	/*const dinozMission = team.flatMap(dinoz => dinoz.missions).find(m => !m.isFinished);
+		return monster;
+	});
 
-	if (dinozMission) {
-		// Find the dinoz with the unfinished mission
-		const dinozWithMission = team.find(dinoz => dinoz.missions.some(m => m.missionId === dinozMission.missionId));
-		if (dinozWithMission) {
-			// Check the actual step of the dinoz with the unfinished mission
-			const actualStep = getActualStep(dinozWithMission);
+	const fightResult = calculateFightVsMonsters(team, user, finalPlace, monsters);
+	const result = await rewardFight(team, monsters, fightResult, finalPlace, user);
 
-			if (actualStep?.stepId !== undefined) {
-				if (actualStep.place === finalPlace && actualStep.requirement.actionType === ConditionEnum.KILL_BOSS) {
-					const fightResult = calculateFightVsMonsters(team, player, finalPlace, actualStep.requirement.target);
-					const result = await rewardFight(team, actualStep.requirement.target, fightResult, finalPlace, player);
-					if (fightResult.winner) {
-						const teamIds = team.map(dinoz => dinoz.id);
+	if (fightResult.winner) {
+		const teamIds = team.map(dinoz => dinoz.id);
 
-						await updateMissionStep(player.id, teamIds, dinozMission.missionId, actualStep.stepId + 1);
-						await updateMultipleDinoz(teamIds, { placeId: finalPlace });
-					}
-					return result;
-				}
+		await updateMultipleDinoz(teamIds, { placeId: finalPlace });
+
+		const dinozIdsToAdvance = triggeredFights
+			.filter(fight => sameTriggeredFight(fight, triggeredFight))
+			.map(fight => fight.dinozId);
+
+		await prisma.$transaction(async tx => {
+			for (const dinozId of dinozIdsToAdvance) {
+				await advanceDinozMissionOnMove(tx, {
+					dinozId,
+					place: finalPlace
+				});
+
+				await advanceDinozMissionOnFight(tx, {
+					dinozId
+				});
 			}
-		}
-	}*/
-	return false;
+		});
+	}
+
+	return result;
 }
