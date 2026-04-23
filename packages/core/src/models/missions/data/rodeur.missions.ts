@@ -32,7 +32,7 @@ export const rodeurMissions: MissionDefinition[] = [
 					monsterKeys: ['pira'],
 					count: 30,
 					force: true,
-					displayNameKey: 'missions.rodeur.rodriz.kill.pira'
+					displayNameKey: 'missions.rodeur.rodriz.kill'
 				}
 			},
 			{
