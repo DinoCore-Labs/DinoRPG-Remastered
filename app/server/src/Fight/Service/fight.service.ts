@@ -172,8 +172,7 @@ export async function fightMonstersAtPlace(
 			await prisma.$transaction(async tx => {
 				await advanceDinozMissionOnFightWon(tx, {
 					dinozId: leader.id,
-					defeatedMonsterKeys,
-					zone: null
+					defeatedMonsterKeys
 				});
 			});
 		}
