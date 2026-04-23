@@ -10,12 +10,10 @@ function getDialogLinks(dialog: RuntimeDialog): RuntimeDialogLink[] {
 
 function validateDialogIds(dialogs: RuntimeDialog[]) {
 	const seen = new Set<string>();
-
 	for (const dialog of dialogs) {
 		if (seen.has(dialog.id)) {
 			throw new Error(`Duplicate dialog id "${dialog.id}"`);
 		}
-
 		seen.add(dialog.id);
 	}
 }
@@ -72,14 +70,12 @@ function validateLinkTargets(dialog: RuntimeDialog) {
 function validateLinkUsage(dialog: RuntimeDialog) {
 	for (const link of getDialogLinks(dialog)) {
 		let found = false;
-
 		for (const phase of getDialogPhases(dialog)) {
 			if (phase.next.includes(link.id)) {
 				found = true;
 				break;
 			}
 		}
-
 		if (!found) {
 			throw new Error(`A link isn't used anywhere: "${link.id}" in dialog "${dialog.id}"`);
 		}
@@ -89,7 +85,6 @@ function validateLinkUsage(dialog: RuntimeDialog) {
 function validatePnjOverrides(dialog: RuntimeDialog) {
 	for (const phase of getDialogPhases(dialog)) {
 		if (!phase.pnj) continue;
-
 		if (phase.name === dialog.name && phase.pnj.gfx !== dialog.pnj.gfx) {
 			throw new Error(
 				`The GFX change must be followed by a name attribution in phase "${phase.id}" of dialog "${dialog.id}"`
@@ -103,10 +98,8 @@ function validateDangerousGivePatterns(dialog: RuntimeDialog) {
 		if (phase.needCheck === false) {
 			continue;
 		}
-
 		let hasGive = false;
 		let hasTest = false;
-
 		for (const effect of phase.effects) {
 			switch (effect.type) {
 				case 'scenario':
@@ -115,7 +108,6 @@ function validateDangerousGivePatterns(dialog: RuntimeDialog) {
 				case 'noEffect':
 					hasTest = true;
 					break;
-
 				case 'giveItem':
 				case 'giveIngredient':
 				case 'giveRandomItem':
@@ -126,19 +118,16 @@ function validateDangerousGivePatterns(dialog: RuntimeDialog) {
 					break;
 			}
 		}
-
 		for (const special of phase.special) {
 			switch (special.type) {
 				case 'useItem':
 				case 'useIngredient':
 					hasGive = true;
 					break;
-
 				default:
 					break;
 			}
 		}
-
 		if (hasGive && !hasTest) {
 			throw new Error(
 				`Giving/using an item or ingredient without scenario increment/test is dangerous in phase "${phase.id}" of dialog "${dialog.id}"`

@@ -34,92 +34,66 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 	if (!condition) {
 		return true;
 	}
-
 	switch (condition.type) {
 		case 'true':
 			return true;
-
 		case 'false':
 			return false;
-
 		case 'not':
 			return !checkDialogCondition(condition.condition, context);
-
 		case 'and':
 			return checkDialogCondition(condition.left, context) && checkDialogCondition(condition.right, context);
-
 		case 'or':
 			return checkDialogCondition(condition.left, context) || checkDialogCondition(condition.right, context);
-
 		case 'scenario':
 			return compareNumber(getScenarioProgress(context, condition.key), condition.phase, condition.compare);
-
 		case 'uvar':
 			return compareNumber(context.user.userVars.get(condition.key) ?? 0, condition.value, condition.compare);
-
 		case 'life':
 			return compareNumber(context.dinoz.life, condition.value, condition.compare);
-
 		case 'status':
 			return hasDinozStatus(context, condition.value);
-
 		case 'effect': {
 			const statusId = dinozStatusIdByKey[condition.key];
-
 			if (statusId != null) {
 				return hasDinozStatus(context, statusId);
 			}
-
 			return context.user.effects.has(condition.key);
 		}
-
 		case 'collection':
 			return context.user.collections.has(condition.key);
-
 		case 'tag':
 			return context.user.tags.has(condition.key);
-
 		case 'hasingredient':
 			return compareNumber(getUserIngredientQuantity(context, Number(condition.key)), condition.qty, condition.compare);
-
 		case 'level':
 			return context.dinoz.level >= condition.value;
-
 		case 'dinoz':
 			return context.dinoz.id === condition.value;
-
 		case 'position':
 			return String(context.dinoz.placeId) === condition.key;
-
 		case 'equip':
 			return context.dinoz.itemIds.has(Number(condition.key));
-
 		case 'skill':
 			return hasDinozSkill(context, Number(condition.key));
-
-		case 'hasobject':
-			return (context.user.items.get(Number(condition.key)) ?? 0) > 0;
-
+		case 'hasobject': {
+			const itemId = Number(condition.key);
+			return (context.user.items.get(itemId) ?? 0) > 0 || context.user.allDinozEquippedItemIds.has(itemId);
+		}
 		case 'mission':
 			if (condition.status.type === 'done') {
 				return getScenarioProgress(context, condition.key) > 0;
 			}
-
 			if (condition.status.type === 'current') {
 				const progression = getScenarioProgress(context, condition.key);
-
 				if (condition.status.step == null) {
 					return progression > 0;
 				}
-
 				return progression === condition.status.step;
 			}
-
 			return false;
-
 		case 'admin':
 			return isAdminRole(context.user.role);
-
 		case 'date':
 		case 'day':
 		case 'caushrock':
