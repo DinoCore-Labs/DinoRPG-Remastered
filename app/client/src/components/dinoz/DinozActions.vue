@@ -370,6 +370,7 @@ export default defineComponent({
 									},
 									query: {
 										missionAction: '1',
+										missionNameKey: result.nameKey,
 										missionTextKey: result.textKey,
 										missionGfx: result.gfx ?? '',
 										missionNpcNameKey: result.npcNameKey ?? ''
