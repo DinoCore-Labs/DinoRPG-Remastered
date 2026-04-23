@@ -2,6 +2,17 @@
 
 ## 🔹 Core
 
+## 0.13.3
+
+### Patch Changes
+
+- 92fcbf6: Fix mission dialog handling, translation keys, and swamp special rules configuration.
+  - fix mission dialog NPC name resolution
+  - fix current/completed mission checks in dialog conditions
+  - fix incorrect rodeur translation keys
+  - remove unused mission dialog params
+  - add config toggles for swamp movement and fight restrictions
+
 ## 0.13.2
 
 ### Patch Changes
@@ -295,6 +306,20 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.14.4
+
+### Patch Changes
+
+- 92fcbf6: Fix mission dialog handling, translation keys, and swamp special rules configuration.
+  - fix mission dialog NPC name resolution
+  - fix current/completed mission checks in dialog conditions
+  - fix incorrect rodeur translation keys
+  - remove unused mission dialog params
+  - add config toggles for swamp movement and fight restrictions
+
+- Updated dependencies [92fcbf6]
+  - @dinorpg/core@0.13.3
 
 ## 0.14.3
 
@@ -670,6 +695,17 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.14.5
+
+### Patch Changes
+
+- 92fcbf6: Fix mission dialog handling, translation keys, and swamp special rules configuration.
+  - fix mission dialog NPC name resolution
+  - fix current/completed mission checks in dialog conditions
+  - fix incorrect rodeur translation keys
+  - remove unused mission dialog params
+  - add config toggles for swamp movement and fight restrictions
 
 ## 0.14.4
 
