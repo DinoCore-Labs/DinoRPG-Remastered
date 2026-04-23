@@ -59,29 +59,29 @@ export const strangeRangerIntroDialog = defineDialog({
 	links: {
 		go: {
 			id: 'go',
-			text: 'npc.rodeur.dialog.choice.go'
+			text: 'npc.rodeur.choice.go'
 		},
 		talk: {
 			id: 'talk',
-			text: 'npc.rodeur.dialog.choice.talk',
+			text: 'npc.rodeur.choice.talk',
 			cond: parseCondition('!curmission(rodriz)')
 		},
 		talk2: {
 			id: 'talk2',
-			text: 'npc.rodeur.dialog.choice.talk',
+			text: 'npc.rodeur.choice.talk',
 			cond: parseCondition('curmission(rodriz)')
 		},
 		yes: {
 			id: 'yes',
-			text: 'npc.rodeur.dialog.choice.yes'
+			text: 'npc.rodeur.choice.yes'
 		},
 		read: {
 			id: 'read',
-			text: 'npc.rodeur.dialog.choice.read'
+			text: 'npc.rodeur.choice.read'
 		},
 		help: {
 			id: 'help',
-			text: 'npc.rodeur.dialog.choice.help'
+			text: 'npc.rodeur.choice.help'
 		}
 	}
 });
@@ -147,33 +147,33 @@ export const strangeRangerTechDialog = defineDialog({
 	links: {
 		qual: {
 			id: 'qual',
-			text: 'npc.rodeur.dialog.choice.qual',
+			text: 'npc.rodeur.choice.qual',
 			cond: parseCondition('!curmission(rodlif)')
 		},
 		qual2: {
 			id: 'qual2',
-			text: 'npc.rodeur.dialog.choice.qual',
+			text: 'npc.rodeur.choice.qual',
 			cond: parseCondition('curmission(rodlif)')
 		},
 		caush: {
 			id: 'caush',
-			text: 'npc.rodeur.dialog.choice.caush'
+			text: 'npc.rodeur.choice.caush'
 		},
 		ether: {
 			id: 'ether',
-			text: 'npc.rodeur.dialog.choice.ether'
+			text: 'npc.rodeur.choice.ether'
 		},
 		next: {
 			id: 'next',
-			text: 'npc.rodeur.dialog.choice.next'
+			text: 'npc.rodeur.choice.next'
 		},
 		more: {
 			id: 'more',
-			text: 'npc.rodeur.dialog.choice.more'
+			text: 'npc.rodeur.choice.more'
 		},
 		mission: {
 			id: 'mission',
-			text: 'npc.rodeur.dialog.choice.mission'
+			text: 'npc.rodeur.choice.mission'
 		}
 	}
 });
@@ -212,7 +212,7 @@ export const strangeRangerRewardDialog = defineDialog({
 	links: {
 		next2: {
 			id: 'next2',
-			text: 'npc.rodeur.dialog.choice.next2'
+			text: 'npc.rodeur.choice.next2'
 		}
 	}
 });
