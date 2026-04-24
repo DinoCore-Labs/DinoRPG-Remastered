@@ -212,6 +212,15 @@ export function transpileFight(
 					time: step.time
 				});
 				break;
+			case 'timeOut':
+				if (timeLimit) {
+					timeLimit -= step.delta;
+					history.push({
+						action: DinoAction.PAUSE,
+						time: step.delta
+					});
+				}
+				break;
 			case 'prepare':
 				// Prepare all Dinoz that participate in the fight
 				step.dinozList.forEach(d => {

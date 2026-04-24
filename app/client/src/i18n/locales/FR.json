@@ -2580,6 +2580,7 @@
 		},
 		"step": {
 			"timeLimit": "Le combat durera au maximum {time} unité de temps.",
+			"timeOut": "Le combat s'est terminé car il a atteint sa durée maximale.",
 			"arrive": "**{name}** est arrivé !",
 			"resist": "**{dinoz}** a résisté et réduit les dégâts.",
 			"hit": "**{fighter}** a effectué un assaut {elements} et a infligé **{damage}** dégâts à **{target}**.",
