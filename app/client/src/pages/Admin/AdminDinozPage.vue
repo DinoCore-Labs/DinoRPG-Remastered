@@ -1,6 +1,9 @@
 <template>
 	<div class="admin-dinoz-page">
 		<TitleHeader title="Admin - Dinoz" />
+		<div v-if="userId" class="top-actions">
+			<DZButton type="button" @click="goToOwner">Retour au joueur</DZButton>
+		</div>
 		<p v-if="loading">Chargement...</p>
 		<p v-else-if="error" class="red">{{ error }}</p>
 		<template v-else-if="dinoz && userId">
@@ -21,11 +24,12 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import type { AdminDinozDetails } from '@dinorpg/core/models/admin/adminDinoz.js';
 
 import TitleHeader from '../../components/utils/TitleHeader.vue';
+import DZButton from '../../components/utils/DZButton.vue';
 import { AdminDinozService } from '../../services/adminDinoz.service';
 import AdminDinozItemsForm from '../../components/admin/dinoz/AdminDinozItemsForm.vue';
 import AdminDinozLeaderForm from '../../components/admin/dinoz/AdminDinozLeaderForm.vue';
@@ -40,6 +44,7 @@ import AdminDinozSummaryCard from '../../components/admin/dinoz/AdminDinozSummar
 import AdminDinozMissionsForm from '../../components/admin/dinoz/AdminDinozMissionsForm.vue';
 
 const route = useRoute();
+const router = useRouter();
 
 const loading = ref(false);
 const error = ref('');
@@ -58,10 +63,8 @@ async function loadDinoz() {
 		error.value = 'Paramètres invalides.';
 		return;
 	}
-
 	loading.value = true;
 	error.value = '';
-
 	try {
 		dinoz.value = await AdminDinozService.getDinozDetails(userId.value, dinozId.value);
 	} catch (err) {
@@ -73,6 +76,16 @@ async function loadDinoz() {
 
 async function reloadDinoz() {
 	await loadDinoz();
+}
+
+function goToOwner() {
+	if (!userId.value) return;
+	router.push({
+		path: '/admin/user',
+		query: {
+			userId: userId.value
+		}
+	});
 }
 
 watch([userId, dinozId], loadDinoz, { immediate: true });
