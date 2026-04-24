@@ -4,7 +4,7 @@ import { missionList } from '@dinorpg/core/models/missions/data/index.js';
 import { MissionDefinition } from '@dinorpg/core/models/missions/mission.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { DinozState } from '../../../../prisma/index.js';
+import { DinozState, Prisma } from '../../../../prisma/index.js';
 import { addSkillToDinozWithEffects } from '../../Level/Service/learnSkill.service.js';
 import { prisma } from '../../prisma.js';
 
@@ -479,6 +479,9 @@ export async function updateAdminDinozMission(
 		throw new ExpectedError(`Aucune mission ${missionKey} trouvée pour ce Dinoz.`);
 	}
 
+	const missionState: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput =
+		payload.state === null ? Prisma.JsonNull : (payload.state as Prisma.InputJsonValue);
+
 	await prisma.dinozMissions.update({
 		where: {
 			missionKey_dinozId: {
@@ -489,7 +492,7 @@ export async function updateAdminDinozMission(
 		data: {
 			progression: payload.isCompleted ? definition.goals.length : payload.progression,
 			tracking: payload.tracking,
-			state: payload.state ?? null,
+			state: missionState,
 			isCompleted: payload.isCompleted
 		}
 	});
