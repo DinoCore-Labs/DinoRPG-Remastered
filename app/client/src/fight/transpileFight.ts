@@ -169,7 +169,8 @@ export function resolveStatus(status: FightStatus) {
 		case FightStatus.STUNNED:
 			return StatusEffect.Stun;
 		default:
-			return -1;
+			console.warn('[fight] Unsupported visual status:', status);
+			return undefined;
 	}
 }
 
@@ -204,6 +205,7 @@ export function transpileFight(
 		});
 	}
 	for (const [i, step] of fight.entries()) {
+		console.log(step);
 		switch (step.action) {
 			case 'timeLimit':
 				timeLimit = step.time;
