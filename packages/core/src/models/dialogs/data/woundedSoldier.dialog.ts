@@ -11,7 +11,7 @@ export const woundedSoldierDialog = defineDialog({
 	name: 'npc.woundedSoldier.name',
 	pnj: {
 		image: false,
-		gfx: 'sgarde',
+		gfx: 'soldier',
 		frame: 'speak',
 		background: '1'
 	},
