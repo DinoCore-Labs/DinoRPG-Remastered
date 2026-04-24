@@ -265,7 +265,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 	// Order a first time fighters by initiative (random if equal)
 	orderFighters(fightData);
 
-	// Update time of all fighters relatively to the first fighter (with the lowest time)
+	// Update time of all fighters relatively to the first fighter (with the lowest time) so the first fighter starts at time 0.
 	fightData.fighters.map(fighter => (fighter.time -= fightData.fighters[0].time));
 
 	let overtimePoisonDamage = 10;
@@ -497,9 +497,10 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 				attacker: f.attacker,
 				maxHp: f.maxHp,
 				startingHp: f.startingHp,
-				energy: f.maxEnergy, // starting energy is same as max energy
-				maxEnergy: f.maxEnergy,
-				energyRecovery: f.stats.special.energyRecovery ?? 1
+				// Start energy is the same as the max
+				energy: f.stats.special.energy,
+				maxEnergy: f.stats.special.energy,
+				energyRecovery: f.stats.special.energyRecovery
 			};
 		})
 	};
