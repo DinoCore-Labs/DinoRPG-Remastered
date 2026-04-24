@@ -1,6 +1,7 @@
 <template>
 	<div class="admin-user-page">
 		<TitleHeader v-if="user" title="Admin" header="User:" :sub-header="user.name ?? user.id" />
+		<TitleHeader v-else title="Admin - User" />
 		<AdminUserSearch
 			:model-value="selectedUserId"
 			@update:model-value="selectedUserId = $event"
@@ -22,7 +23,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+import type { AdminDinozSummary, AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
+
 import AdminUserSearch from '../../components/admin/user/AdminUserSearch.vue';
 import AdminUserSummaryCard from '../../components/admin/user/AdminUserSummaryCard.vue';
 import AdminUserProfileForm from '../../components/admin/user/AdminUserProfileForm.vue';
@@ -33,8 +38,10 @@ import AdminUserRewardsForm from '../../components/admin/user/AdminUserRewardsFo
 import AdminUserDinozList from '../../components/admin/user/AdminUserDinozList.vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 
-import type { AdminDinozSummary, AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
 import { AdminUserService } from '../../services/adminUsers.service';
+
+const route = useRoute();
+const router = useRouter();
 
 const selectedUserId = ref('');
 const loading = ref(false);
@@ -42,22 +49,22 @@ const error = ref<string | null>(null);
 const user = ref<AdminUserDetails | null>(null);
 const dinozList = ref<AdminDinozSummary[]>([]);
 
+const routeUserId = computed(() => (typeof route.query.userId === 'string' ? route.query.userId : undefined));
+
 async function loadUser(userId: string) {
 	loading.value = true;
 	error.value = null;
-
 	try {
 		const [userData, dinozData] = await Promise.all([
 			AdminUserService.getUserDetails(userId),
 			AdminUserService.getUserDinoz(userId)
 		]);
-
 		if (!userData) {
 			throw new Error("Ce joueur n'existe pas.");
 		}
-
 		user.value = userData as AdminUserDetails;
 		dinozList.value = dinozData;
+		selectedUserId.value = userId;
 	} catch (err) {
 		user.value = null;
 		dinozList.value = [];
@@ -69,6 +76,12 @@ async function loadUser(userId: string) {
 
 async function handleSelectUser(userId: string) {
 	selectedUserId.value = userId;
+
+	await router.replace({
+		path: '/admin/user',
+		query: { userId }
+	});
+
 	await loadUser(userId);
 }
 
@@ -76,6 +89,17 @@ async function reloadUser() {
 	if (!user.value) return;
 	await loadUser(user.value.id);
 }
+
+watch(
+	routeUserId,
+	async userId => {
+		if (!userId) return;
+		if (user.value?.id === userId) return;
+
+		await loadUser(userId);
+	},
+	{ immediate: true }
+);
 </script>
 
 <style scoped lang="scss">
@@ -83,7 +107,6 @@ async function reloadUser() {
 	display: flex;
 	flex-direction: column;
 }
-
 .red {
 	color: red;
 }
