@@ -9,6 +9,7 @@ import type {
 	TeleportAdminDinozPayload,
 	UpdateAdminDinozItemsPayload,
 	UpdateAdminDinozLeaderPayload,
+	UpdateAdminDinozMissionPayload,
 	UpdateAdminDinozProfilePayload,
 	UpdateAdminDinozSkillStatePayload,
 	UpdateAdminDinozStatePayload,
@@ -115,6 +116,28 @@ export const AdminDinozService = {
 	updateDinozItems(userId: string, dinozId: number, payload: UpdateAdminDinozItemsPayload): Promise<{ ok: boolean }> {
 		return http()
 			.patch(`/admin/user/${encodeURIComponent(userId)}/dinoz/${dinozId}/items`, payload)
+			.then(res => res.data)
+			.catch(err => Promise.reject(err));
+	},
+	updateDinozMission(
+		userId: string,
+		dinozId: number,
+		missionKey: string,
+		payload: UpdateAdminDinozMissionPayload
+	): Promise<{ ok: boolean }> {
+		return http()
+			.patch(
+				`/admin/user/${encodeURIComponent(userId)}/dinoz/${dinozId}/missions/${encodeURIComponent(missionKey)}`,
+				payload
+			)
+			.then(res => res.data)
+			.catch(err => Promise.reject(err));
+	},
+	makeDinozMissionReplayable(userId: string, dinozId: number, missionKey: string): Promise<{ ok: boolean }> {
+		return http()
+			.delete(
+				`/admin/user/${encodeURIComponent(userId)}/dinoz/${dinozId}/missions/${encodeURIComponent(missionKey)}/replayable`
+			)
 			.then(res => res.data)
 			.catch(err => Promise.reject(err));
 	}

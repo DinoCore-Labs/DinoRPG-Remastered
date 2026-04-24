@@ -14,6 +14,7 @@
 			<AdminDinozSkillsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
 			<AdminDinozUnlockableSkillsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
 			<AdminDinozItemsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozMissionsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
 		</template>
 	</div>
 </template>
@@ -36,6 +37,7 @@ import AdminDinozStateForm from '../../components/admin/dinoz/AdminDinozStateFor
 import AdminDinozStatsForm from '../../components/admin/dinoz/AdminDinozStatsForm.vue';
 import AdminDinozStatusForm from '../../components/admin/dinoz/AdminDinozStatusForm.vue';
 import AdminDinozSummaryCard from '../../components/admin/dinoz/AdminDinozSummaryCard.vue';
+import AdminDinozMissionsForm from '../../components/admin/dinoz/AdminDinozMissionsForm.vue';
 
 const route = useRoute();
 
