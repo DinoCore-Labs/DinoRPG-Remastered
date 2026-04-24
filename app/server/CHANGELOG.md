@@ -1,5 +1,22 @@
 # @dinorpg/server
 
+## 0.15.0
+
+### Minor Changes
+
+- a901d79: Improve Dinoz actions, fight resolution, and user data synchronization.
+
+  Added confirmation popups for inventory item usage and Dinoz actions such as digging, freezing, unfreezing, reincarnating, and unlocking new skills.
+
+  Improved fight stability by fixing timeout handling, death dialog resolution, critical hit bonus naming, special stat energy defaults, attacker defeat rules, and time reference mutation issues during fights.
+
+  Updated Dinoz user data handling by synchronizing sidebar data after the initial user load and making the Dinoz ordering utility safer to use from the backend.
+
+### Patch Changes
+
+- Updated dependencies [a901d79]
+  - @dinorpg/core@0.14.0
+
 ## 0.14.4
 
 ### Patch Changes
