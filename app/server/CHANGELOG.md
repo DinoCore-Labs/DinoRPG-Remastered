@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.15.1
+
+### Patch Changes
+
+- 2178350: Add admin support for Dinoz mission management, including mission editing, replay reset, and improved owner navigation between admin Dinoz and user pages.
+- Updated dependencies [2178350]
+  - @dinorpg/core@0.14.1
+
 ## 0.15.0
 
 ### Minor Changes

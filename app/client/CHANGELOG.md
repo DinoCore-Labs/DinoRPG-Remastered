@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.15.1
+
+### Patch Changes
+
+- 2178350: Add admin support for Dinoz mission management, including mission editing, replay reset, and improved owner navigation between admin Dinoz and user pages.
+
 ## 0.15.0
 
 ### Minor Changes
