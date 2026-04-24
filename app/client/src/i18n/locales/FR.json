@@ -170,7 +170,7 @@
 			"acidBloodDamage": "Dégâts de sang acide",
 			"baseValue": "Valeur de base",
 			"criticalHitChance": "Chance de coup critique",
-			"criticalHitDamage": "Bonus de coup critique"
+			"criticalHitBonus": "Bonus de coup critique"
 		}
 	},
 	"pageTitle": {

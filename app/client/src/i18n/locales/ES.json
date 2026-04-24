@@ -169,7 +169,7 @@
 			"acidBloodDamage": "Daño de sangre ácida",
 			"baseValue": "Valor base",
 			"criticalHitChance": "Probabilidad de golpe crítico",
-			"criticalHitDamage": "Bonus de golpe crítico"
+			"criticalHitBonus": "Bonus de golpe crítico"
 		}
 	},
 	"pageTitle": {

@@ -523,7 +523,7 @@ export default defineComponent({
 					// Filter out critical hit damage if critical hit chance is default (0%)
 					if (
 						special &&
-						special.name.startsWith('criticalHitDamage') &&
+						special.name.startsWith('criticalHitBonus') &&
 						global_critical_hit &&
 						global_critical_hit.value === 1
 					) {

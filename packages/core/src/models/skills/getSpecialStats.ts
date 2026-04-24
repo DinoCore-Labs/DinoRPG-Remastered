@@ -74,10 +74,8 @@ export enum SpecialStat {
 	LIGHTNING_SPEED = 'lightningSpeed',
 	AIR_SPEED = 'airSpeed',
 	// VOID_SPEED = 'voidSpeed'
-	// Critical Hit Chance
 	CRITICAL_HIT_CHANCE = 'criticalHitChance',
-	// Critical Hit Damage
-	CRITICAL_HIT_DAMAGE = 'criticalHitDamage'
+	CRITICAL_HIT_BONUS = 'criticalHitBonus'
 }
 
 // Special statistics handled as a %.
@@ -136,7 +134,7 @@ export enum SpecialStatAsPercent {
 	// AIR_MULTIHIT = 'airMultihit',
 	// VOID_MULTIHIT = 'voidMultihit'
 	CRITICAL_HIT_CHANCE = 'criticalHitChance',
-	CRITICAL_HIT_DAMAGE = 'criticalHitDamage'
+	CRITICAL_HIT_BONUS = 'criticalHitBonus'
 }
 
 export enum UniqueSpecialStatUsedInFights {
@@ -170,7 +168,7 @@ export const BaseSpecialStats = {
 	[SpecialStat.LIGHTNING_SPEED]: 1,
 	[SpecialStat.AIR_SPEED]: 1,
 	// [SpecialStat.VOID_SPEED]: 1
-	[SpecialStat.CRITICAL_HIT_DAMAGE]: 0.5
+	[SpecialStat.CRITICAL_HIT_BONUS]: 0.5
 };
 
 export const getSpecialStat = (

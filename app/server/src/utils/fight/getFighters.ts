@@ -151,8 +151,8 @@ export const initializeDinoz = (
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0,
 				[SpecialStat.CRITICAL_HIT_CHANCE]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_CHANCE)?.value ?? 0,
-				[SpecialStat.CRITICAL_HIT_DAMAGE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_DAMAGE)?.value ?? 0
+				[SpecialStat.CRITICAL_HIT_BONUS]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.CRITICAL_HIT_BONUS)?.value ?? 0
 			},
 			speed: {
 				[ElementType.AIR]: 1,
@@ -302,7 +302,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 				[SpecialStat.TORCH_DAMAGE]: 0, // No torch for clones
 				[SpecialStat.ACID_BLOOD_DAMAGE]: 0, // No acid blood for clones
 				[SpecialStat.CRITICAL_HIT_CHANCE]: dinoz.stats.special[SpecialStat.CRITICAL_HIT_CHANCE],
-				[SpecialStat.CRITICAL_HIT_DAMAGE]: dinoz.stats.special[SpecialStat.CRITICAL_HIT_DAMAGE]
+				[SpecialStat.CRITICAL_HIT_BONUS]: dinoz.stats.special[SpecialStat.CRITICAL_HIT_BONUS]
 			},
 			speed: dinoz.stats.speed
 		},
@@ -491,8 +491,8 @@ export const initializeMonster = (
 					getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0,
 				[SpecialStat.CRITICAL_HIT_CHANCE]:
 					getSpecialStat(similiDinoz, [], skills, SpecialStat.CRITICAL_HIT_CHANCE)?.value ?? 0,
-				[SpecialStat.CRITICAL_HIT_DAMAGE]:
-					getSpecialStat(similiDinoz, [], skills, SpecialStat.CRITICAL_HIT_DAMAGE)?.value ?? 0
+				[SpecialStat.CRITICAL_HIT_BONUS]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.CRITICAL_HIT_BONUS)?.value ?? 0
 			},
 			speed: {
 				[ElementType.AIR]: 1,
@@ -1070,13 +1070,13 @@ export const getFighterCriticalHitChance = (fighter: DetailedFighter) => {
 };
 
 /**
- * Determine the critical hit damage of the fighter.
- * The critical hit damage minimum is 0%. There is no maximum.
- * @param fighter The fighter to get the critical hit damage stat stat from.
- * @returns {number} Returns the critical hit damage of the fighter between 0 an 0.9.
+ * Determine the critical hit bonus of the fighter.
+ * The critical hit bonus minimum is 0%. There is no maximum.
+ * @param fighter The fighter to get the critical hit bonus stat stat from.
+ * @returns {number} Returns the critical hit bonus of the fighter
  */
-export const getFighterCriticalHitDamage = (fighter: DetailedFighter) => {
-	return Math.max(0, fighter.stats.special.criticalHitDamage);
+export const getFighterCriticalHitBonus = (fighter: DetailedFighter) => {
+	return Math.max(0, fighter.stats.special.criticalHitBonus);
 };
 
 export default getFighters;
