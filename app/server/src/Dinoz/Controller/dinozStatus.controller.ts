@@ -1,10 +1,17 @@
 import { prisma } from '../../prisma.js';
 
 export async function addStatusToDinoz(dinozId: number, statusId: number) {
-	await prisma.dinozStatus.create({
-		data: {
-			dinozId,
-			statusId
+	await prisma.dinozStatus.upsert({
+		where: {
+			statusId_dinozId: {
+				statusId,
+				dinozId
+			}
+		},
+		update: {},
+		create: {
+			statusId,
+			dinozId
 		}
 	});
 }
