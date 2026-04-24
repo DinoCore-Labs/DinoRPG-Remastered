@@ -99,8 +99,8 @@ export type PassiveEffects = {
 	// [Stat.VOID_MULTIHIT]?: [MathOperator.MULTIPLY, number];
 	// Critical Hit Chance
 	[Stat.CRITICAL_HIT_CHANCE]?: EffectDescriptor;
-	// Critical Hit Damage
-	[Stat.CRITICAL_HIT_DAMAGE]?: EffectDescriptor;
+	// Critical Hit Bonus
+	[Stat.CRITICAL_HIT_BONUS]?: EffectDescriptor;
 };
 
 export type EffectDescriptor =

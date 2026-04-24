@@ -6,7 +6,7 @@ import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from '@dinorpg/core/utils/fightCo
 
 import { SeededRandom } from '../prng.js';
 import { hasStatus } from './fightMethods.js';
-import { getFighterArmor, getFighterArmorBreak, getFighterCriticalHitDamage } from './getFighters.js';
+import { getFighterArmor, getFighterArmorBreak, getFighterCriticalHitBonus } from './getFighters.js';
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
@@ -154,7 +154,7 @@ export const calculateDamage = (
 ) => {
 	// Apply critical hit damage for assaults
 	if (isCloseCombat && isCritical) {
-		let crit_bonus = getFighterCriticalHitDamage(attacker);
+		let crit_bonus = getFighterCriticalHitBonus(attacker);
 		attack *= crit_bonus;
 	}
 

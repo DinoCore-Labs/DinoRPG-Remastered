@@ -80,8 +80,6 @@ export enum Stat {
 	// LIGHTNING_MULTIHIT = 'lightningMultihit',
 	// AIR_MULTIHIT = 'airMultihit',
 	// VOID_MULTIHIT = 'voidMultihit'
-	// Critical Hit Chance
 	CRITICAL_HIT_CHANCE = 'criticalHitChance',
-	// Critical Hit Damage
-	CRITICAL_HIT_DAMAGE = 'criticalHitDamage'
+	CRITICAL_HIT_BONUS = 'criticalHitBonus'
 }
