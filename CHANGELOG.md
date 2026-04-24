@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.14.1
+
+### Patch Changes
+
+- 2178350: Add admin support for Dinoz mission management, including mission editing, replay reset, and improved owner navigation between admin Dinoz and user pages.
+
 ## 0.14.0
 
 ### Minor Changes
@@ -318,6 +324,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.15.1
+
+### Patch Changes
+
+- 2178350: Add admin support for Dinoz mission management, including mission editing, replay reset, and improved owner navigation between admin Dinoz and user pages.
+- Updated dependencies [2178350]
+  - @dinorpg/core@0.14.1
 
 ## 0.15.0
 
@@ -724,6 +738,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.15.1
+
+### Patch Changes
+
+- 2178350: Add admin support for Dinoz mission management, including mission editing, replay reset, and improved owner navigation between admin Dinoz and user pages.
 
 ## 0.15.0
 
