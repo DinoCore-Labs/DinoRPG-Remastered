@@ -26,7 +26,7 @@ export const dialogDefinitions = [
 	padamoineDialog,
 	strangeRockyDialog,
 	papyJoeDialog,
-	//woundedSoldierDialog,
+	woundedSoldierDialog,
 	strangeRangerAfterSpyDialog,
 	// Iles Atlantéinées
 	strangeHippoDialog,
