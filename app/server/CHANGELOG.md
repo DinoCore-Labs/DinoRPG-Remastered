@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.15.2
+
+### Patch Changes
+
+- c14b8e1: add venerable and injured soldier
+- Updated dependencies [c14b8e1]
+  - @dinorpg/core@0.14.2
+
 ## 0.15.1
 
 ### Patch Changes

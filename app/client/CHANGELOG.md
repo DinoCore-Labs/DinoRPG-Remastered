@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.15.2
+
+### Patch Changes
+
+- c14b8e1: add venerable and injured soldier
+
 ## 0.15.1
 
 ### Patch Changes
