@@ -1,4 +1,7 @@
 import { DinozState } from '../dinoz/dinozState.js';
+import type { MissionGoal } from '../missions/missionGoal.js';
+import type { MissionGroupKey } from '../missions/missionKey.js';
+import type { MissionStateValue } from '../missions/missionState.js';
 
 export interface AdminDinozStatusEntry {
 	id: number;
@@ -31,6 +34,26 @@ export interface AdminDinozLeaderOption {
 	id: number;
 	name: string;
 	level: number;
+}
+
+export interface AdminDinozMissionEntry {
+	id: number;
+	missionKey: string;
+	group: MissionGroupKey | null;
+	nameKey: string | null;
+	beginKey: string | null;
+	endKey: string | null;
+	progression: number;
+	tracking: number;
+	goalCount: number | null;
+	isCompleted: boolean;
+	isCurrent: boolean;
+	state: MissionStateValue | null;
+	currentGoalIndex: number | null;
+	currentGoal: MissionGoal | null;
+	startedAt: string;
+	createdAt: string;
+	updatedAt: string;
 }
 
 export interface AdminDinozDetails {
@@ -68,4 +91,6 @@ export interface AdminDinozDetails {
 	items: AdminDinozItemEntry[];
 	followers: AdminDinozFollowerEntry[];
 	leaderOptions: AdminDinozLeaderOption[];
+	missions: AdminDinozMissionEntry[];
+	currentMission: AdminDinozMissionEntry | null;
 }

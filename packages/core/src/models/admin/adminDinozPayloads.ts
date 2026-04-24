@@ -1,4 +1,5 @@
 import { DinozState } from '../dinoz/dinozState.js';
+import type { MissionStateValue } from '../missions/missionState.js';
 
 export interface UpdateAdminDinozProfilePayload {
 	name: string;
@@ -68,7 +69,12 @@ export interface RemoveAdminDinozUnlockableSkillPayload {
 }
 
 export interface UpdateAdminDinozItemsPayload {
-	entries: {
-		itemId: number;
-	}[];
+	entries: { itemId: number }[];
+}
+
+export interface UpdateAdminDinozMissionPayload {
+	progression: number;
+	tracking: number;
+	state: MissionStateValue | null;
+	isCompleted: boolean;
 }
