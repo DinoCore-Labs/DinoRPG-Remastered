@@ -63,6 +63,8 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 					time: fightStep.time
 				})
 			];
+		case 'timeOut':
+			return [t(`fight.step.${fightStep.action}`)];
 		case 'prepare':
 			const actions: string[] = [];
 			fightStep.dinozList.forEach(d => {

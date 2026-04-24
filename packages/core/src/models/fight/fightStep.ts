@@ -38,6 +38,12 @@ export interface TimeLimitStep {
 	time: number;
 }
 
+// Mark the timeout of the fight. Attach the last time increment to deplete the timeout bar.
+export interface TimeoutStep {
+	action: 'timeOut';
+	delta: number;
+}
+
 export interface PrepareStep {
 	action: 'prepare';
 	dinozList: {
@@ -294,6 +300,7 @@ export interface LoseCostumeStep {
 
 export type FightStep =
 	| TimeLimitStep
+	| TimeoutStep
 	| PrepareStep
 	| ArriveStep
 	| LeaveStep

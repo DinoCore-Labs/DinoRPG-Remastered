@@ -4899,6 +4899,10 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 			// If timeout elapsed, return and end the fight.
 			if (fightData.timeout <= 0) {
 				fightData.endedByTimeout = true;
+				fightData.steps.push({
+					action: 'timeOut',
+					delta: deltaTime
+				});
 				return;
 			}
 		}
