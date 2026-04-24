@@ -5,7 +5,8 @@ import { defineStore } from 'pinia';
 export const dinozStore = defineStore('dinozStore', {
 	state: (): DinozStore => ({
 		dinozList: [],
-		currentDinozId: undefined
+		currentDinozId: undefined,
+		isHydrated: false
 	}),
 	getters: {
 		getDinozList: (state: DinozStore) => state.dinozList,
@@ -15,12 +16,16 @@ export const dinozStore = defineStore('dinozStore', {
 		getCurrentDinozId: (state: DinozStore) => state.currentDinozId
 	},
 	actions: {
-		setDinozList(dinozList: Array<DinozFiche>): void {
-			this.dinozList = dinozList;
-		},
 		setDinoz(dinoz: DinozFiche): void {
-			const dinozToUpdate = this.dinozList.findIndex(dinozs => dinozs.id === dinoz.id);
-			this.dinozList.splice(dinozToUpdate, 1, dinoz);
+			const index = this.dinozList.findIndex(current => current.id === dinoz.id);
+			if (index === -1) {
+				this.dinozList = [...this.dinozList, dinoz];
+				return;
+			}
+			this.dinozList = this.dinozList.map(current => (current.id === dinoz.id ? dinoz : current));
+		},
+		setDinozList(dinozList: DinozFiche[]): void {
+			this.dinozList = [...dinozList];
 		},
 		setCurrentDinozId(dinozId: number): void {
 			this.currentDinozId = dinozId;
@@ -28,6 +33,7 @@ export const dinozStore = defineStore('dinozStore', {
 		clearDinoz() {
 			this.dinozList = [];
 			this.currentDinozId = undefined;
+			this.isHydrated = false;
 		}
 	},
 	persist: {
