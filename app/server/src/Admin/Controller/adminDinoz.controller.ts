@@ -1,9 +1,65 @@
-import type { AdminDinozDetails } from '@dinorpg/core/models/admin/adminDinoz.js';
+import type { AdminDinozDetails, AdminDinozMissionEntry } from '@dinorpg/core/models/admin/adminDinoz.js';
+import { UpdateAdminDinozMissionPayload } from '@dinorpg/core/models/admin/adminDinozPayloads.js';
+import { missionList } from '@dinorpg/core/models/missions/data/index.js';
+import { MissionDefinition } from '@dinorpg/core/models/missions/mission.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { DinozState } from '../../../../prisma/index.js';
 import { addSkillToDinozWithEffects } from '../../Level/Service/learnSkill.service.js';
 import { prisma } from '../../prisma.js';
+
+const missionDefinitionByKey = new Map<string, MissionDefinition>(missionList.map(mission => [mission.key, mission]));
+
+function getMissionDefinitionOrThrow(missionKey: string): MissionDefinition {
+	const definition = missionDefinitionByKey.get(missionKey);
+
+	if (!definition) {
+		throw new ExpectedError(`Mission inconnue : ${missionKey}`);
+	}
+
+	return definition;
+}
+
+function toAdminMissionEntry(
+	mission: {
+		id: number;
+		missionKey: string;
+		progression: number;
+		tracking: number;
+		state: unknown;
+		isCompleted: boolean;
+		startedAt: Date;
+		createdAt: Date;
+		updatedAt: Date;
+	},
+	isCurrent: boolean
+): AdminDinozMissionEntry {
+	const definition = missionDefinitionByKey.get(mission.missionKey);
+	const currentGoalIndex =
+		definition && !mission.isCompleted && mission.progression >= 0 && mission.progression < definition.goals.length
+			? mission.progression
+			: null;
+
+	return {
+		id: mission.id,
+		missionKey: mission.missionKey,
+		group: definition?.group ?? null,
+		nameKey: definition?.nameKey ?? null,
+		beginKey: definition?.beginKey ?? null,
+		endKey: definition?.endKey ?? null,
+		progression: mission.progression,
+		tracking: mission.tracking,
+		goalCount: definition?.goals.length ?? null,
+		isCompleted: mission.isCompleted,
+		isCurrent,
+		state: (mission.state ?? null) as AdminDinozMissionEntry['state'],
+		currentGoalIndex,
+		currentGoal: currentGoalIndex !== null ? (definition?.goals[currentGoalIndex] ?? null) : null,
+		startedAt: mission.startedAt.toISOString(),
+		createdAt: mission.createdAt.toISOString(),
+		updatedAt: mission.updatedAt.toISOString()
+	};
+}
 
 async function getOwnedDinozOrThrow(userId: string, dinozId: number) {
 	const dinoz = await prisma.dinoz.findFirst({
@@ -48,6 +104,9 @@ async function getOwnedDinozOrThrow(userId: string, dinozId: number) {
 					name: true,
 					level: true
 				}
+			},
+			missions: {
+				orderBy: [{ isCompleted: 'asc' }, { updatedAt: 'desc' }]
 			}
 		}
 	});
@@ -77,6 +136,10 @@ export async function getAdminDinozDetails(userId: string, dinozId: number): Pro
 		},
 		orderBy: [{ level: 'desc' }, { id: 'asc' }]
 	});
+
+	const currentMissionId = dinoz.missions.find(mission => !mission.isCompleted)?.id ?? null;
+	const missions = dinoz.missions.map(mission => toAdminMissionEntry(mission, mission.id === currentMissionId));
+	const currentMission = missions.find(mission => mission.isCurrent) ?? null;
 
 	return {
 		id: dinoz.id,
@@ -112,7 +175,9 @@ export async function getAdminDinozDetails(userId: string, dinozId: number): Pro
 		unlockableSkills: dinoz.unlockableSkills,
 		items: dinoz.items,
 		followers: dinoz.followers,
-		leaderOptions
+		leaderOptions,
+		missions,
+		currentMission
 	};
 }
 
@@ -376,5 +441,87 @@ export async function updateAdminDinozItems(
 				itemId: entry.itemId
 			}))
 		});
+	});
+}
+
+export async function updateAdminDinozMission(
+	userId: string,
+	dinozId: number,
+	missionKey: string,
+	payload: UpdateAdminDinozMissionPayload
+) {
+	await getOwnedDinozOrThrow(userId, dinozId);
+
+	const definition = getMissionDefinitionOrThrow(missionKey);
+
+	if (!Number.isInteger(payload.progression) || payload.progression < 0) {
+		throw new ExpectedError('La progression doit être un entier positif.');
+	}
+
+	if (!Number.isInteger(payload.tracking) || payload.tracking < 0) {
+		throw new ExpectedError('Le tracking doit être un entier positif.');
+	}
+
+	if (!payload.isCompleted && payload.progression >= definition.goals.length) {
+		throw new ExpectedError('La progression dépasse le nombre d’étapes de la mission.');
+	}
+
+	const existingMission = await prisma.dinozMissions.findUnique({
+		where: {
+			missionKey_dinozId: {
+				missionKey,
+				dinozId
+			}
+		}
+	});
+
+	if (!existingMission) {
+		throw new ExpectedError(`Aucune mission ${missionKey} trouvée pour ce Dinoz.`);
+	}
+
+	await prisma.dinozMissions.update({
+		where: {
+			missionKey_dinozId: {
+				missionKey,
+				dinozId
+			}
+		},
+		data: {
+			progression: payload.isCompleted ? definition.goals.length : payload.progression,
+			tracking: payload.tracking,
+			state: payload.state ?? null,
+			isCompleted: payload.isCompleted
+		}
+	});
+}
+
+export async function makeAdminDinozMissionReplayable(userId: string, dinozId: number, missionKey: string) {
+	await getOwnedDinozOrThrow(userId, dinozId);
+	getMissionDefinitionOrThrow(missionKey);
+
+	const existingMission = await prisma.dinozMissions.findUnique({
+		where: {
+			missionKey_dinozId: {
+				missionKey,
+				dinozId
+			}
+		}
+	});
+
+	if (!existingMission) {
+		throw new ExpectedError(`Aucune mission ${missionKey} trouvée pour ce Dinoz.`);
+	}
+
+	if (!existingMission.isCompleted) {
+		throw new ExpectedError('Seules les missions terminées peuvent être rendues rejouables.');
+	}
+
+	await prisma.dinozMissions.delete({
+		where: {
+			missionKey_dinozId: {
+				missionKey,
+				dinozId
+			}
+		}
 	});
 }

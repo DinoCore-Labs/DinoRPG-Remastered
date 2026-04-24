@@ -19,12 +19,14 @@ import {
 	addAdminDinozStatusHandler,
 	addAdminDinozUnlockableSkillController,
 	getAdminDinozDetailsHandler,
+	makeAdminDinozMissionReplayableHandler,
 	removeAdminDinozSkillHandler,
 	removeAdminDinozStatusHandler,
 	removeAdminDinozUnlockableSkillController,
 	teleportAdminDinozHandler,
 	updateAdminDinozItemsHandler,
 	updateAdminDinozLeaderHandler,
+	updateAdminDinozMissionHandler,
 	updateAdminDinozProfileHandler,
 	updateAdminDinozSkillStateHandler,
 	updateAdminDinozStateHandler,
@@ -160,6 +162,16 @@ export async function adminRoutes(app: FastifyInstance) {
 		'/user/:userId/dinoz/:dinozId/items',
 		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminDinozItemsHandler
+	);
+	app.patch(
+		'/user/:userId/dinoz/:dinozId/missions/:missionKey',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminDinozMissionHandler
+	);
+	app.delete(
+		'/user/:userId/dinoz/:dinozId/missions/:missionKey/replayable',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		makeAdminDinozMissionReplayableHandler
 	);
 	// News
 	app.get(
