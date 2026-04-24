@@ -260,29 +260,37 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 	// Start the fight: handle skills and items that trigger at the beginning of the fight
 	startFight(fightData);
 
-	let turn = 0;
-
 	// Order a first time fighters by initiative (random if equal)
 	orderFighters(fightData);
 
 	// Update time of all fighters relatively to the first fighter (with the lowest time) so the first fighter starts at time 0.
-	fightData.fighters.map(fighter => (fighter.time -= fightData.fighters[0].time));
-
-	let overtimePoisonDamage = 10;
-
-	// STRATEGIE
-	fightData.fighters.forEach(fighter => {
-		if (!fighter.skills.some(skill => skill.id === Skill.STRATEGIE)) return;
-
-		applyStrategy(fightData, fighter);
+	const minTime = fightData.fighters[0].time;
+	fightData.fighters.map(fighter => {
+		fighter.time -= minTime;
+		if (fighter.time < 0) {
+			console.error('`Fighter time cannot be negative at init: ${time}`.', {
+				fightData: fightData,
+				time: fighter.time
+			});
+		}
+		if (fighter.energy !== fighter.maxEnergy) {
+			console.error('`Fighter energy not properly initialized: ${energy} != ${maxEnergy}`.', {
+				fightData: fightData,
+				energy: fighter.energy,
+				maxEnergy: fighter.maxEnergy
+			});
+		}
 	});
 
-	// Hack to not continue the fight if one side has no fighter
+	// Do not start the fight if one side has no fighter
 	if (fightData.fighters.filter(f => !f.attacker).length === 0) {
 		fightData.loser = 'defenders';
 	} else if (fightData.fighters.filter(f => f.attacker).length === 0) {
 		fightData.loser = 'attackers';
 	}
+
+	let turn = 0;
+	let overtimePoisonDamage = 10;
 
 	// Fight loop
 	while (!fightData.loser) {
