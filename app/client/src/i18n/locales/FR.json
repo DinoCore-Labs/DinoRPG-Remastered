@@ -3399,6 +3399,22 @@
 				}
 			}
 		},
+		"woundedSoldier": {
+			"name": "Soldat Blessé",
+			"dialog": {
+				"begin": "Sur le bord d'une rue, vous rencontrez un Soldat Blessé. Il a l'air vraiment mal en point, mais il est encore conscient.",
+				"talk": "................ du.. pain.... F'il te.... plait.... !",
+				"no": "Vous vous éloignez. Après tout, il est peut-être dangereux de soigner un inconnu !",
+				"give": "..... miam.... gloup... miam... MERFI !!! VE VAIS BEAUCOUP MIEUX !!! TU ES MON FAUVEUR !!!",
+				"derien": "ATTENDS !!! VE VAIS TE RECOMPENFER !!! Tu vois, Ve n'étais pas dans Fet état par haVard... Il Fe trouve que v'ai partiFipé à un entrainement FPECIAL dans les Cavernes de FoFFelave. F'est très dûr et Felà coute un peu d'arVent mais F'est grâce à Fa que V'ai pu devenir auFFi coFtaud ! TIENS ! Prends cette Carte de Membre pour ton Dinoz, Ve n'en ai plus beVoin..."
+			},
+			"choice": {
+				"talk": "Lui parler",
+				"give": "Donner un Pain Chaud au Soldat",
+				"no": "Ne rien lui donner",
+				"derien": "Euh.. De rien, au revoir"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"

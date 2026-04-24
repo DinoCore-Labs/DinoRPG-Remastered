@@ -17,6 +17,7 @@ import { speleleologueDialog, speleleologueIceDialog } from './spelele.dialog.js
 import { strangeHippoDialog, strangePterozDialog, strangeRockyDialog } from './totems.dialog.js';
 import { venerableDialog, venerableHurtDialog } from './venerable.dialog.js';
 import { weirdManDialog } from './weirdMan.dialog.js';
+import { woundedSoldierDialog } from './woundedSoldier.dialog.js';
 
 export const dialogDefinitions = [
 	// Dinoville
@@ -25,6 +26,7 @@ export const dialogDefinitions = [
 	padamoineDialog,
 	strangeRockyDialog,
 	papyJoeDialog,
+	//woundedSoldierDialog,
 	strangeRangerAfterSpyDialog,
 	// Iles Atlantéinées
 	strangeHippoDialog,
