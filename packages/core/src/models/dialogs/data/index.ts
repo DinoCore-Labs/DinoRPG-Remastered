@@ -15,6 +15,7 @@ import {
 import { shamanMouDialog } from './shamanMou.dialog.js';
 import { speleleologueDialog, speleleologueIceDialog } from './spelele.dialog.js';
 import { strangeHippoDialog, strangePterozDialog, strangeRockyDialog } from './totems.dialog.js';
+import { venerableDialog, venerableHurtDialog } from './venerable.dialog.js';
 import { weirdManDialog } from './weirdMan.dialog.js';
 
 export const dialogDefinitions = [
@@ -37,6 +38,8 @@ export const dialogDefinitions = [
 	strangeRangerIntroDialog,
 	strangeRangerTechDialog,
 	strangeRangerRewardDialog,
+	venerableDialog,
+	venerableHurtDialog,
 	speleleologueDialog,
 	speleleologueIceDialog,
 	// Foret
