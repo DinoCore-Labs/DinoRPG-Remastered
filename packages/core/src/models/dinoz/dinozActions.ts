@@ -37,6 +37,7 @@ export enum Action {
 export interface ActionFiche {
 	name: Action | GatherType;
 	imgName: string;
+	confirm?: boolean;
 	prop?: number | string;
 	label?: string;
 	special?: boolean;
@@ -90,7 +91,8 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.DIG]: {
 		name: Action.DIG,
-		imgName: 'act_dig'
+		imgName: 'act_dig',
+		confirm: true
 	},
 	//TODO: display text for front
 	[Action.CONCENTRATE]: {
@@ -147,11 +149,13 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.CONGEL]: {
 		name: Action.CONGEL,
-		imgName: 'act_congel'
+		imgName: 'act_congel',
+		confirm: true
 	},
 	[Action.STOP_CONGEL]: {
 		name: Action.STOP_CONGEL,
-		imgName: 'act_stop_congel'
+		imgName: 'act_stop_congel',
+		confirm: true
 	},
 	[Action.REST]: {
 		name: Action.REST,
@@ -163,7 +167,8 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.REINCARNATION]: {
 		name: Action.REINCARNATION,
-		imgName: 'act_resurrect'
+		imgName: 'act_resurrect',
+		confirm: true
 	},
 	[Action.FB_TOURNAMENT]: {
 		name: Action.FB_TOURNAMENT,
