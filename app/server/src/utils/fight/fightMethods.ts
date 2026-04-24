@@ -26,6 +26,7 @@ import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { bossList } from '@dinorpg/core/models/monster/bossList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { monsterList } from '@dinorpg/core/models/monster/monsterList.js';
+import { BaseSpecialStats, SpecialStat } from '@dinorpg/core/models/skills/getSpecialStats.js';
 import { SkillDetails } from '@dinorpg/core/models/skills/skillDetails.js';
 import { SkillLevel } from '@dinorpg/core/models/skills/skillLevel.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
@@ -34,7 +35,6 @@ import {
 	BASE_ASSAULT_ENERGY_COST,
 	BASE_ENERGY_COST,
 	CYCLE,
-	DEFAULT_MAX_ENERGY,
 	ENERGY_RECOVERY_BASE_FACTOR,
 	ENVIRONMENT_TIMEOUT,
 	FIGHT_INFINITE,
@@ -340,19 +340,24 @@ export const setMaxEnergy = (fighter: DetailedFighter, newMax: number) => {
 	if (newMax > MAXIMUM_MAX_ENERGY) {
 		fighter.maxEnergy = MAXIMUM_MAX_ENERGY;
 	} else if (newMax < 0) {
+		// Max energy cannot go below 1
 		fighter.maxEnergy = 1;
 	} else {
 		fighter.maxEnergy = newMax;
 	}
 
 	// Don't go below DEFAULT_MAX_ENERGY if fighter has Item.ENCHANTED_STEROID
-	if (fighter.maxEnergy < DEFAULT_MAX_ENERGY && fighter.items.some(item => item.itemId === Item.ENCHANTED_STEROID)) {
-		fighter.maxEnergy = DEFAULT_MAX_ENERGY;
+	if (
+		fighter.maxEnergy < BaseSpecialStats[SpecialStat.ENERGY] &&
+		fighter.items.some(item => item.itemId === Item.ENCHANTED_STEROID)
+	) {
+		fighter.maxEnergy = BaseSpecialStats[SpecialStat.ENERGY];
 	}
 
-	// Set fighter's current energy to minimum between energy and max energy
-	// Note: This is not done in the original fight algo
-	fighter.energy = Math.min(fighter.energy, fighter.maxEnergy);
+	// Set the fighter's energy if it is lower than the new max energy
+	if (fighter.energy > fighter.maxEnergy) {
+		fighter.energy = fighter.maxEnergy;
+	}
 };
 
 const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) => {

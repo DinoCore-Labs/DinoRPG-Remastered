@@ -186,13 +186,16 @@ export const getSpecialStat = (
 		}
 
 		// (Water + Air) / All
+		const sum =
+			(dinoz.nbrUpWater || 0) +
+			(dinoz.nbrUpWood || 0) +
+			(dinoz.nbrUpFire || 0) +
+			(dinoz.nbrUpLightning || 0) +
+			(dinoz.nbrUpAir || 0);
+
+		// Avoid potential division by 0
 		const value =
-			((dinoz.nbrUpWater || 0) + (dinoz.nbrUpAir || 0)) /
-			((dinoz.nbrUpWater || 0) +
-				(dinoz.nbrUpWood || 0) +
-				(dinoz.nbrUpFire || 0) +
-				(dinoz.nbrUpLightning || 0) +
-				(dinoz.nbrUpAir || 0));
+			sum !== 0 ? ((dinoz.nbrUpWater || 0) + (dinoz.nbrUpAir || 0)) / sum : BaseSpecialStats[SpecialStat.BUBBLE_RATE];
 
 		return {
 			name: 'bubbleRate',
