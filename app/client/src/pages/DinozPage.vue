@@ -56,47 +56,24 @@ export default defineComponent({
 			this.dinozData.name = newName;
 		},
 		async getFiche(): Promise<void> {
-			const dinozId = this.$route.params.id as string;
-			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-			//console.log(this.dinozData);
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
-			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id.toString() === dinozId);
-			if (dinozToUpdate === -1) {
-				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-				dinozList.push(this.dinozData);
-			} else {
-				dinozList.splice(dinozToUpdate, 1, {
-					...dinozList.find(dinoz => dinoz.id.toString() === dinozId),
-					...this.dinozData
-				});
+			const dinozId = parseInt(this.$route.params.id as string);
+			this.isReady = false;
+			this.dinozData = await DinozService.getDinozFiche(dinozId);
+			this.dinozStore.setDinoz(this.dinozData);
+			for (const follower of this.dinozData.followers) {
+				const followerToUpdate = await DinozService.getDinozFiche(follower.id);
+				this.dinozStore.setDinoz(followerToUpdate);
 			}
-			if (this.dinozData.followers.length >= 1) {
-				for (const follower of this.dinozData.followers) {
-					const followerToUpdate = await DinozService.getDinozFiche(follower.id);
-					const followerIndex = dinozList.findIndex(dinoz => dinoz.id === followerToUpdate.id);
-					if (followerIndex === -1) {
-						dinozList.push(followerToUpdate);
-					} else {
-						dinozList.splice(followerIndex, 1, {
-							...dinozList[followerIndex],
-							...followerToUpdate
-						});
-					}
+			const currentList = this.dinozStore.getDinozList as DinozFiche[];
+			for (const dinoz of currentList) {
+				if (dinoz.leaderId === dinozId && !this.dinozData.followers.some(follower => follower.id === dinoz.id)) {
+					this.dinozStore.setDinoz({
+						...dinoz,
+						leaderId: null
+					});
 				}
 			}
-			const storedFollowers = dinozList.filter(d => d.leaderId === +dinozId);
-			if (storedFollowers.length > 0) {
-				storedFollowers.map(d => {
-					if (!this.dinozData.followers.some(f => f.id === d.id)) {
-						d.leaderId = null;
-					}
-				});
-			}
-			this.dinozStore.setDinozList(dinozList);
-			/*this.userStore.setPlayerOptions({
-				...this.userStore.playerOptions
-			});*/
-			this.dinozStore.setCurrentDinozId(parseInt(dinozId));
+			this.dinozStore.setCurrentDinozId(dinozId);
 			this.isReady = true;
 		},
 		async refreshDinoz() {

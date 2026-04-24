@@ -254,22 +254,20 @@ const router = createRouter({
 	}*/
 });
 
+let sessionHydrated = false;
+
 router.beforeEach(async to => {
 	const user = userStore();
 	const dinoz = dinozStore();
-
 	// Helper: hydrate une fois si pas loggé
 	const tryHydrate = async (): Promise<boolean> => {
-		if (user.isLogged) return true;
-
+		if (sessionHydrated && user.isLogged) return true;
 		const data: UserData | null = await UserService.me().catch(() => null);
 		if (!data) return false;
-
 		user.setUser(data);
 		dinoz.setDinozList(data.dinoz);
 		return true;
 	};
-
 	// ✅ Pages publiques
 	if (to.meta.public) {
 		// si on arrive sur la home publique (ou toute page publique) et que la session est valide,
@@ -280,11 +278,9 @@ router.beforeEach(async to => {
 		}
 		return true;
 	}
-
 	// ✅ Pages protégées
 	if (to.meta.auth) {
 		const ok = await tryHydrate();
-
 		if (!ok) {
 			user.clearUser();
 			return {
@@ -293,13 +289,11 @@ router.beforeEach(async to => {
 			};
 		}
 	}
-
 	// ✅ Roles
 	if (to.meta.roles && user.role) {
 		const ok = to.meta.roles.some(r => is_granted(r, user.role!));
 		if (!ok) return { name: 'NewsPage' };
 	}
-
 	return true;
 });
 

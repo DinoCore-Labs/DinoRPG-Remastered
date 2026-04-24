@@ -122,13 +122,10 @@ export default defineComponent({
 		place(): string | null {
 			const currentDinozId = this.currentDinozId();
 			if (!currentDinozId) return this.place;
-
 			const currentDinoz = this.dinoz.getDinoz(currentDinozId) as DinozFiche | undefined;
 			if (!currentDinoz) return this.place;
-
 			const place = Object.values(placeList).find(place => place.placeId === currentDinoz.placeId);
 			if (!place) return this.place;
-
 			return place.name;
 		}
 	}

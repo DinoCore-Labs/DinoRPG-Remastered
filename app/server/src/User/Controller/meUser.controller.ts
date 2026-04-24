@@ -1,6 +1,7 @@
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
+import { getMaxXp } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
@@ -164,7 +165,10 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			treasureTicket,
 			priest: user.priest,
 			shopKeeper: user.shopKeeper,
-			dinoz: user.dinoz,
+			dinoz: user.dinoz.map(dinoz => ({
+				...dinoz,
+				maxExperience: getMaxXp(dinoz)
+			})),
 			rewards: user.rewards.map(reward => reward.rewardId)
 		});
 	} catch (err) {
