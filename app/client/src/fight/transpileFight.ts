@@ -452,20 +452,20 @@ export function transpileFight(
 				myFighter = activeFighters.find(f => f.id === step.fighter.id);
 				/*if (myFighter && myFighter.type === 'monster') {
 					const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
-					if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
+					if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.death) {
 						history.push({
 							action: DinoAction.TALK,
 							fid: myFighter.id,
-							message: t(`quest.${resolvedMonster.text.entrance}`)
+							message: t(`quest.${resolvedMonster.text.death}`)
 						});
 					}
 				} else if (myFighter && myFighter.type === 'boss') {
 					const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
-					if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
+					if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.death) {
 						history.push({
 							action: DinoAction.TALK,
 							fid: myFighter.id,
-							message: t(`quest.${resolvedBoss.text.entrance}`)
+							message: t(`quest.${resolvedBoss.text.death}`)
 						});
 					}
 				}*/
