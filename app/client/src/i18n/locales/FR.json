@@ -2435,6 +2435,7 @@
 		}
 	},
 	"action": {
+		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
 		"description": {
 			"fight": "Recherchez un monstre à combattre à cet endroit.",
 			"follow": "Votre Dinoz peut **suivre** un autre de vos Dinoz si vous le voulez, ils se déplaceront alors ensemble et s'aideront pendant les combats.",

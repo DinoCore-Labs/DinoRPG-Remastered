@@ -277,6 +277,16 @@ export default defineComponent({
 			this.missionReward = null;
 		},
 		async launch(action: ActionFiche) {
+			if (action.confirm) {
+				const res = await this.$confirm({
+					message: this.$t(`action.popupConfirm`, { action: this.$t(`action.name.${action.name}`) }),
+					header: this.$t('popup.attention'),
+					acceptLabel: this.$t('popup.accept'),
+					rejectLabel: this.$t('popup.reject'),
+					icon: 'pi pi-trash'
+				});
+				if (!res) return;
+			}
 			switch (action.name) {
 				case Action.IRMA:
 				case Action.IRMAS:
