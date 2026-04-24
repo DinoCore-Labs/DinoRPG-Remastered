@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.14.2
+
+### Patch Changes
+
+- c14b8e1: add venerable and injured soldier
+
 ## 0.14.1
 
 ### Patch Changes
@@ -324,6 +330,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.15.2
+
+### Patch Changes
+
+- c14b8e1: add venerable and injured soldier
+- Updated dependencies [c14b8e1]
+  - @dinorpg/core@0.14.2
 
 ## 0.15.1
 
@@ -738,6 +752,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.15.2
+
+### Patch Changes
+
+- c14b8e1: add venerable and injured soldier
 
 ## 0.15.1
 
