@@ -3348,6 +3348,57 @@
 				"mission": "Accepter une mission"
 			}
 		},
+		"venerable": {
+			"name": "Le Vénérable",
+			"intro": {
+				"dialog": {
+					"begin": "GWWWWWWWWAAAAAAARGGGGGGGHHHHHH !!!! Qui oooose venir me dérangerrr pendannt ma siiiessteee ?????",
+					"bye": "Vous avez raison, il y a des fois dans la vie ou il vaut mieux prendre son courage à deux mains et effectuer une retraite stratégique en vitesse, et si possible sans se faire voir...",
+					"moi": "UUUHMMMM ?? Et que me veux-tu au juste ??? Tu as intérêt à avoir une bonne raison, sinon je vais faire GRILLER ton Dinoz pour mon PETIT DEJEUNER !!!",
+					"korgon": "UHHMM ??? un KORGON, dis-tu ??? Où ça, Où ça ? Tu m'as donné faim !!",
+					"next1": "OOhhh ! Quel DOOMMMAAGGE !! Ca doit être ENERVANT alors ! Je comprends je comprends ! Dans ma jeunesse, j'ai souvent laissé échapper quelques petits déjeuners comme ça. Maintenant je les GRILLE directement, comme ça ils n'ont pas le temps de s'enfuir !",
+					"fight": "GROOOOAAARRH !!! Tu as GAGNE pour cette FOIS ! MAIS nous nous REVERRONS !",
+					"moi2": "UHMMMM ? Oui, bon, je me rappelle de ton Dinoz. Qu'est-ce que tu me veux encore ?",
+					"question": "Alors, mangeur de Korgon, est-ce que je peux GRILLER quelque chose pour toi ? Ou autre chose ? N'en demande pas trop, car sinon je te DECOUPE en petits morceaux croustillants qui seront parfaits pour mon PETIT DEJEUNER !!!",
+					"force": "UHHMM ??? Plus FORT tu dis ? BON... alors suis mon conseil : va voir le SHAMAN de Fosselave, il t'aidera à GRILLER tes ennemis !",
+					"fight2": "UHMM... J'ai une petite FAIM... que dirais-tu de remettre cela à plus tard ???"
+				},
+				"choice": {
+					"moi": "Euh... C'est moi !",
+					"moi2": "Euh... C'est moi ?",
+					"bye": "Partir discrètement",
+					"perdu": "Je me suis perdu en venant ici et...",
+					"chasse": "Je suis un Grand Chasseur de Dorogon, et je viens vous défier !",
+					"deal": "J'ai une affaire EN OR a vous proposer !",
+					"korgon": "Je courrais après un Korgon et...",
+					"auto": "Pourrais-je avoir un autographe ?",
+					"next0": "Je l'ai attrapé",
+					"next1": "Il m'a échappé",
+					"next2": "C'est efficace...",
+					"question": "Euh...",
+					"force": "J'aimerais que mon Dinoz soit plus fort !",
+					"fight": "Je vais vous ECRASER !",
+					"fight2": "Je vais vous ECRASER !"
+				}
+			},
+			"hurt": {
+				"dialog": {
+					"begin": "GRRrrrr....Grouph...Bouarkkk.....J'attends toujours ton aide. Je compte sur toi.",
+					"ok": "Vous partez, bien décidé à sauver le vénérable.",
+					"ko": "Très bien, prépare toi !",
+					"force2": "UHHMM ??? Plus FORT tu dis ? BON... alors suis mon conseil : va voir le SHAMAN de Fosselave, il t'aidera à GRILLER tes ennemis !",
+					"comb": "Bien joué, tu es prêt à aller défier les Dorogons de Nimbao.",
+					"ko2": "Tu es déjà prêt à aller défier les Dorogons de Nimbao. Bon courage !"
+				},
+				"choice": {
+					"ok": "Vous pouvez compter sur moi !",
+					"ko": "J'ai besoin de m'entraîner !",
+					"ko2": "J'ai besoin de m'entraîner.",
+					"force2": "J'aimerais que mon Dinoz soit plus fort !",
+					"comb": "En avant !"
+				}
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
