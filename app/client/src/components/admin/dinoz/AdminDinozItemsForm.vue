@@ -142,7 +142,6 @@ async function submit() {
 	margin-bottom: 10px;
 	background-color: #ecbd84;
 	padding: 5px;
-
 	&-container {
 		border: 2px solid #bc683c;
 		padding: 20px;
