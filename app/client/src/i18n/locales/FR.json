@@ -80,6 +80,7 @@
 			"actions": "Actions",
 			"full": "Stock plein",
 			"sortBy": "Trier par",
+			"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
 			"sort": {
 				"default": "Par défaut",
 				"nameAsc": "Nom (A → Z)",

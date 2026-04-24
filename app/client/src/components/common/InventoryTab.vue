@@ -145,88 +145,87 @@ export default defineComponent({
 		},
 		async useItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) <= 0) return;
-
 			const dinozId = this.$route.params.id as string;
-
-			try {
-				const result = await InventoryService.useInventoryItem(item.itemId, +dinozId);
-
-				await this.resfreshInventory();
-
-				const categories = result.effects.map(effect => effect.category);
-
-				if (result.createdDinoz) {
-					const dinozList = [...this.dinozStore.getDinozList, result.createdDinoz];
-					this.dinozStore.setDinozList(dinozList);
-
-					await this.$router.push({
-						name: 'DinozPage',
-						params: {
-							id: result.createdDinoz.id
-						}
-					});
-				}
-
-				if (categories.includes(ItemEffect.GOLD)) {
-					await this.$refreshGold();
-				}
-
-				if (
-					categories.some(category =>
-						[ItemEffect.ACTION, ItemEffect.HEAL, ItemEffect.RESURRECT, ItemEffect.SPHERE, ItemEffect.SPECIAL].includes(
-							category
-						)
-					)
-				) {
-					eventBus.emit('refreshDinoz', true);
-				}
-
-				for (const effect of result.effects) {
-					let message: string;
-
-					switch (effect.category) {
-						case ItemEffect.SPECIAL:
-							message = this.$t(`toast.special.${effect.value}`, {
-								value: this.$t(`items.name.${effect.effect}`),
-								qty: effect.quantity
-							});
-							break;
-
-						case ItemEffect.SPHERE:
-							message = this.$t(`toast.sphere`, {
-								value: this.$t(`skill.name.${effect.value}`)
-							});
-							break;
-
-						case ItemEffect.QUEST:
-							message = this.$t(`quest.${effect.value}`);
-							break;
-
-						case ItemEffect.RESURRECT:
-							message = this.$t(`toast.${effect.category}`);
-							break;
-
-						case ItemEffect.EGG:
-							message = this.$t(`toast.${effect.category}`, {
-								value: this.$t(`race.name.${effect.value}`)
-							});
-							break;
-
-						default:
-							message =
-								typeof effect.value === 'number'
-									? this.$t(`toast.${effect.category}`, { value: effect.value }, effect.value)
-									: this.$t(`toast.${effect.category}`, { value: effect.value });
-							break;
+			const res = await this.$confirm({
+				message: this.$t(`dinozPage.inventory.confirmUse`, {
+					name: this.$t(`items.name.${itemNameList[item.itemId]}`)
+				}),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+			if (res) {
+				try {
+					const result = await InventoryService.useInventoryItem(item.itemId, +dinozId);
+					await this.resfreshInventory();
+					const categories = result.effects.map(effect => effect.category);
+					if (result.createdDinoz) {
+						const dinozList = [...this.dinozStore.getDinozList, result.createdDinoz];
+						this.dinozStore.setDinozList(dinozList);
+						await this.$router.push({
+							name: 'DinozPage',
+							params: {
+								id: result.createdDinoz.id
+							}
+						});
 					}
-
-					this.$toast.open({
-						message: formatText(message),
-						type: 'info'
-					});
+					if (categories.includes(ItemEffect.GOLD)) {
+						await this.$refreshGold();
+					}
+					if (
+						categories.some(category =>
+							[
+								ItemEffect.ACTION,
+								ItemEffect.HEAL,
+								ItemEffect.RESURRECT,
+								ItemEffect.SPHERE,
+								ItemEffect.SPECIAL
+							].includes(category)
+						)
+					) {
+						eventBus.emit('refreshDinoz', true);
+					}
+					for (const effect of result.effects) {
+						let message: string;
+						switch (effect.category) {
+							case ItemEffect.SPECIAL:
+								message = this.$t(`toast.special.${effect.value}`, {
+									value: this.$t(`items.name.${effect.effect}`),
+									qty: effect.quantity
+								});
+								break;
+							case ItemEffect.SPHERE:
+								message = this.$t(`toast.sphere`, {
+									value: this.$t(`skill.name.${effect.value}`)
+								});
+								break;
+							case ItemEffect.QUEST:
+								message = this.$t(`quest.${effect.value}`);
+								break;
+							case ItemEffect.RESURRECT:
+								message = this.$t(`toast.${effect.category}`);
+								break;
+							case ItemEffect.EGG:
+								message = this.$t(`toast.${effect.category}`, {
+									value: this.$t(`race.name.${effect.value}`)
+								});
+								break;
+							default:
+								message =
+									typeof effect.value === 'number'
+										? this.$t(`toast.${effect.category}`, { value: effect.value }, effect.value)
+										: this.$t(`toast.${effect.category}`, { value: effect.value });
+								break;
+						}
+						this.$toast.open({
+							message: formatText(message),
+							type: 'info'
+						});
+					}
+				} catch (error) {
+					errorHandler.handle(error, this.$toast);
 				}
-			} catch (error) {
-				errorHandler.handle(error, this.$toast);
 			}
 		},
 		async equipItem(item: ItemFiche): Promise<void> {
