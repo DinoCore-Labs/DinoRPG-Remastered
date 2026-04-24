@@ -1,3 +1,4 @@
+import { UpdateAdminDinozMissionPayload } from '@dinorpg/core/models/admin/adminDinozPayloads.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { DinozState } from '../../../../prisma/index.js';
@@ -6,12 +7,14 @@ import {
 	addAdminDinozStatus,
 	addAdminDinozUnlockableSkill,
 	getAdminDinozDetails,
+	makeAdminDinozMissionReplayable,
 	removeAdminDinozSkill,
 	removeAdminDinozStatus,
 	removeAdminDinozUnlockableSkill,
 	teleportAdminDinoz,
 	updateAdminDinozItems,
 	updateAdminDinozLeader,
+	updateAdminDinozMission,
 	updateAdminDinozProfile,
 	updateAdminDinozSkillState,
 	updateAdminDinozState,
@@ -164,5 +167,38 @@ export async function updateAdminDinozItemsHandler(
 	reply: FastifyReply
 ) {
 	await updateAdminDinozItems(request.params.userId, Number(request.params.dinozId), request.body.entries);
+	return reply.send({ ok: true });
+}
+
+type MissionParams = {
+	userId: string;
+	dinozId: number;
+	missionKey: string;
+};
+
+export async function updateAdminDinozMissionHandler(
+	request: FastifyRequest<{ Params: MissionParams; Body: UpdateAdminDinozMissionPayload }>,
+	reply: FastifyReply
+) {
+	await updateAdminDinozMission(
+		request.params.userId,
+		Number(request.params.dinozId),
+		request.params.missionKey,
+		request.body
+	);
+
+	return reply.send({ ok: true });
+}
+
+export async function makeAdminDinozMissionReplayableHandler(
+	request: FastifyRequest<{ Params: MissionParams }>,
+	reply: FastifyReply
+) {
+	await makeAdminDinozMissionReplayable(
+		request.params.userId,
+		Number(request.params.dinozId),
+		request.params.missionKey
+	);
+
 	return reply.send({ ok: true });
 }
