@@ -185,37 +185,42 @@ export const getMaxFollowers = (dinoz: HasSkillsLike) => {
 	return max;
 };
 
-export const orderDinozList = <T extends Pick<DinozFiche, 'id' | 'order' | 'name' | 'leaderId' | 'followers'>[]>(
-	dinozList: T
-) => {
+export type OrderableDinoz = {
+	id: number;
+	order: number | null;
+	name: string;
+	leaderId: number | null;
+	followers: { id: number }[];
+};
+
+export const orderDinozList = <T extends OrderableDinoz>(dinozList: T[]): T[] => {
 	const sortedByOrderAndName = [...dinozList].sort((a, b) => {
-		if (a.order === null) {
-			a.order = a.id;
-		}
-		if (b.order === null) {
-			b.order = b.id;
-		}
-		if (a.order === b.order) {
+		const orderA = a.order ?? a.id;
+		const orderB = b.order ?? b.id;
+
+		if (orderA === orderB) {
 			return a.name.localeCompare(b.name);
 		}
-		return a.order - b.order;
+
+		return orderA - orderB;
 	});
 
-	// Group by leader
-	for (const leader of sortedByOrderAndName.filter(dinoz => dinoz.followers.length)) {
-		// Find all dinoz that follow this leader
+	for (const leader of sortedByOrderAndName.filter(dinoz => dinoz.followers.length > 0)) {
 		const followers = sortedByOrderAndName.filter(dinoz => dinoz.leaderId === leader.id);
 
-		// Remove them from the list
 		for (const follower of followers) {
-			sortedByOrderAndName.splice(
-				sortedByOrderAndName.findIndex(dinoz => dinoz.id === follower.id),
-				1
-			);
+			const followerIndex = sortedByOrderAndName.findIndex(dinoz => dinoz.id === follower.id);
+
+			if (followerIndex !== -1) {
+				sortedByOrderAndName.splice(followerIndex, 1);
+			}
 		}
 
-		// Add them after the leader
-		sortedByOrderAndName.splice(sortedByOrderAndName.findIndex(dinoz => dinoz.id === leader.id) + 1, 0, ...followers);
+		const leaderIndex = sortedByOrderAndName.findIndex(dinoz => dinoz.id === leader.id);
+
+		if (leaderIndex !== -1) {
+			sortedByOrderAndName.splice(leaderIndex + 1, 0, ...followers);
+		}
 	}
 
 	return sortedByOrderAndName;
