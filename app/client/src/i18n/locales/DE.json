@@ -251,11 +251,11 @@
 		"noResults": "Keine Ergebnisse"
 	},
 	"popup": {
-		"confirm": "Confirmer cette action ?",
-		"confirmBanAction": "Confirmer ce ban ?",
-		"attention": "Attention",
-		"accept": "Oui",
-		"reject": "Non"
+		"confirm": "Diese Aktion bestätigen?",
+		"confirmBanAction": "Wirklich bannen?",
+		"attention": "Achtung",
+		"accept": "Ja",
+		"reject": "Nein"
 	},
 	"dig": {
 		"item": "Votre Dinoz trouve : {item} x{quantity}",
