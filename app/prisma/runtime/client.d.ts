@@ -173,6 +173,8 @@ declare type BatchResponse = MultiBatchResponse | CompactedBatchResponse;
 
 declare type BatchTransactionOptions = {
     isolationLevel?: Transaction_2.IsolationLevel;
+    maxWait?: number;
+    timeout?: number;
 };
 
 /**
@@ -534,7 +536,8 @@ export declare namespace DMMF {
         SchemaField,
         SortOrder,
         TypeRef,
-        uniqueIndex    }
+        uniqueIndex
+    }
 }
 
 declare namespace DMMF_2 {
@@ -575,7 +578,8 @@ declare namespace DMMF_2 {
         SchemaField,
         SortOrder,
         TypeRef,
-        uniqueIndex    }
+        uniqueIndex
+    }
 }
 
 export declare function dmmfToRuntimeDataModel(dmmfDataModel: DMMF_2.Datamodel): RuntimeDataModel;
@@ -632,6 +636,8 @@ export declare type DynamicClientExtensionThisBuiltin<TypeMap extends TypeMapDef
         extArgs: ExtArgs;
     }>>;
     $transaction<P extends PrismaPromise<any>[]>(arg: [...P], options?: {
+        maxWait?: number;
+        timeout?: number;
         isolationLevel?: TypeMap['meta']['txIsolationLevel'];
     }): Promise<UnwrapTuple<P>>;
     $transaction<R>(fn: (client: Omit<DynamicClientExtensionThis<TypeMap, TypeMapCb, ExtArgs>, ITXClientDenyList>) => Promise<R>, options?: {
@@ -805,6 +811,13 @@ declare interface EngineConfig {
      * Runtime data model for enum lookups during parameterization.
      */
     runtimeDataModel: RuntimeDataModel;
+    /**
+     * Optional maximum size for the query plan cache. If not provided, a default size will be used.
+     * A value of `0` can be used to disable the cache entirely. A higher cache size can improve
+     * performance for applications that execute a large number of unique queries, while a smaller
+     * cache size can reduce memory usage.
+     */
+    queryPlanCacheMaxSize?: number;
 }
 
 declare type EngineEvent<E extends EngineEventType> = E extends QueryEventType ? QueryEvent : LogEvent;
@@ -2058,6 +2071,21 @@ export declare type PrismaClientOptions = PrismaClientMutuallyExclusiveOptions &
      */
     comments?: SqlCommenterPlugin[];
     /**
+     * Optional maximum size for the query plan cache. If not provided, a default size will be used.
+     * A value of `0` can be used to disable the cache entirely. A higher cache size can improve
+     * performance for applications that execute a large number of unique queries, while a smaller
+     * cache size can reduce memory usage.
+     *
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   adapter,
+     *   queryPlanCacheMaxSize: 100,
+     * })
+     * ```
+     */
+    queryPlanCacheMaxSize?: number;
+    /**
      * @internal
      * You probably don't want to use this. \`__internal\` is used by internal tooling.
      */
@@ -2121,6 +2149,8 @@ declare type PrismaPromiseBatchTransaction = {
     kind: 'batch';
     id: number;
     isolationLevel?: IsolationLevel_2;
+    maxWait?: number;
+    timeout?: number;
     index: number;
     lock: PromiseLike<void>;
 };
@@ -2203,7 +2233,7 @@ declare interface Queryable<Query, Result> extends AdapterInfo {
 }
 
 declare type QueryCompiler = {
-    compile(request: string): {};
+    compile(request: string): QueryPlanNode;
     compileBatch(batchRequest: string): BatchResponse;
     free(): void;
 };
