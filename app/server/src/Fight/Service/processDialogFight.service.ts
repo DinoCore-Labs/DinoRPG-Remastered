@@ -2,6 +2,7 @@ import { RuntimeDialog, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
+import { FightOutcome } from '@dinorpg/core/models/fight/fightResult.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -16,7 +17,7 @@ import { incrementUserStat } from '../../Stats/stats.service.js';
 import { checkDialogCondition } from '../../utils/conditions/checkDialogCondition.js';
 import { isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { ProcessDialogFightInput } from '../Schema/fightDialog.schema.js';
-import { calculateFightVsMonsters, rewardFight } from './fight.service.js';
+import { calculateFightVsMonsters, rewardFightVsMonsters } from './fight.service.js';
 
 function getDialogFightPhase(dialog: RuntimeDialog, phaseId: string): RuntimeDialogPhase {
 	const phase = dialog.phases[phaseId];
@@ -129,9 +130,11 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 	}
 
 	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters);
-	const result = await rewardFight(team, monsters, fightResult, dinozData.placeId, user);
+	const result = await rewardFightVsMonsters(team, monsters, fightResult, dinozData.placeId, user);
 
-	if (fightResult.winner && rewardStatusKey) {
+	const winner = fightResult.outcome === FightOutcome.AttackerWin;
+
+	if (winner && rewardStatusKey) {
 		const rewardStatusId = dinozStatusIdByKey[rewardStatusKey];
 
 		if (rewardStatusId == null) {
@@ -157,7 +160,7 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 		fightResult.fighters.filter(f => f.type === FighterType.MONSTER).length
 	);
 
-	const returnPhaseId = resolveDialogReturnPhase(phaseId, fightResult.winner);
+	const returnPhaseId = resolveDialogReturnPhase(phaseId, winner);
 
 	return reply.send({
 		...result,

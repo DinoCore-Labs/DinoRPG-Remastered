@@ -113,11 +113,21 @@ export type FightStats = {
 	>;
 };
 
+export enum FightOutcome {
+	// Left side, always a player
+	AttackerWin,
+	// Right side, can be player or monsters
+	DefenderWin,
+	// No one, all fighters on both side are dead
+	Tie,
+	// Fight timed out, rewards and other results depend on the context
+	Timeout
+}
 export interface FightProcessResult {
 	// Seed used for the fight
 	seed: string;
-	// true: attackers won, false: defenders won
-	winner: boolean;
+	// Outcome of the fight
+	outcome: FightOutcome;
 	// List of attackers
 	attackers: FighterResultFiche[];
 	// List of defenders

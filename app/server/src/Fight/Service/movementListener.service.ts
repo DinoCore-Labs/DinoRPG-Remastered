@@ -1,5 +1,5 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
-import { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
+import { FightOutcome, FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import type { MissionFightGoal } from '@dinorpg/core/models/missions/missionGoal.js';
 import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
@@ -11,7 +11,7 @@ import { resolveCurrentMission } from '../../Mission/Service/missionCurrent.serv
 import { prisma } from '../../prisma.js';
 import { DinozToGetFighter } from '../../utils/fight/fight.mapper.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
-import { calculateFightVsMonsters, type DinozToRewardFight, rewardFight } from './fight.service.js';
+import { calculateFightVsMonsters, type DinozToRewardFight, rewardFightVsMonsters } from './fight.service.js';
 
 type DinozToCheckMissionFight = {
 	id: number;
@@ -90,8 +90,9 @@ export async function movementListener(
 		return monster;
 	});
 	const fightResult = calculateFightVsMonsters(team, user, finalPlace, monsters);
-	const result = await rewardFight(team, monsters, fightResult, finalPlace, user);
-	if (fightResult.winner) {
+	const result = await rewardFightVsMonsters(team, monsters, fightResult, finalPlace, user);
+	const winner = fightResult.outcome === FightOutcome.AttackerWin;
+	if (winner) {
 		const teamIds = team.map(dinoz => dinoz.id);
 		await updateMultipleDinoz(teamIds, { placeId: finalPlace });
 		const dinozIdsToAdvance = triggeredFights
