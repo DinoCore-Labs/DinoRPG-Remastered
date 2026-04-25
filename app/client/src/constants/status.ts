@@ -34,7 +34,7 @@ export const statusList: {
 		26: 'astone',
 		27: 'totem',
 		28: 'tourna',
-		29: 'vmem', //NOT IMPLEMENTED YET
+		29: 'vmem',
 		30: 'vkill',
 		31: 'fflag',
 		32: 'ccard',
@@ -108,7 +108,7 @@ export const statusList: {
 		astone: 26,
 		totem: 27,
 		tourna: 28,
-		vmem: 29, //NOT IMPLEMENTED YET
+		vmem: 29,
 		vkill: 30,
 		fflag: 31,
 		ccard: 32,
