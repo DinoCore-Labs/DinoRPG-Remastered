@@ -242,13 +242,13 @@
 		}
 	},
 	"button": {
-		"buyDinoz": "Acheter un Dinoz !",
-		"chose": "Choisir",
-		"name": "Nommer !",
+		"buyDinoz": "Kaufe Dinoz!",
+		"chose": "Auswählen",
+		"name": "Benennen!",
 		"shop": "Boutique",
-		"search": "Rechercher",
-		"loading": "Chargement...",
-		"noResults": "Aucun résultat"
+		"search": "Suche",
+		"loading": "Wird geladen...",
+		"noResults": "Keine Ergebnisse"
 	},
 	"popup": {
 		"confirm": "Confirmer cette action ?",
