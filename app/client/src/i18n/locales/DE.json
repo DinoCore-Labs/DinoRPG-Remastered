@@ -259,8 +259,8 @@
 	},
 	"dig": {
 		"item": "Votre Dinoz trouve : {item} x{quantity}",
-		"gold": "Votre Dinoz a trouvé {gold} :gold: en creusant ici.",
-		"status": "En creusant, votre Dinoz a trouvé l'objet {item}. Il apparaîtra dans ses statuts. Félicitations !"
+		"gold": "Dein Dinoz hat {gold} :gold: ausgegraben.",
+		"status": "Beim Graben hat dein Dinoz den Gegenstand „{item}“ gefunden. Dieser wird nun beim ihm als Status angezeigt. Glückwunsch!"
 	},
 	"resurrection": {
 		"choice1": {
