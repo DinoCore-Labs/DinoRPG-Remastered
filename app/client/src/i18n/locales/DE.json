@@ -264,18 +264,18 @@
 	},
 	"resurrection": {
 		"choice1": {
-			"name": "**Choix 1 :**&&Résurrection",
-			"resurrect": "Ressusciter",
-			"explanation": "Vous pouvez ressusciter votre Dinoz, immédiatement et gratuitement :",
-			"list1": "il retournera à Dinoville",
-			"list2": "il perdra la moitié de ses points d'expérience actuels"
+			"name": "**Möglichkeit 1:**&&Auferstehung",
+			"resurrect": "Wiederbelebung",
+			"explanation": "Du kannst deinen Dinoz wiederbeleben, sofort und kostenlos:",
+			"list1": "er wird nach Dinoville zurückkehren",
+			"list2": "er verliert die Hälfte seiner aktuellen Erfahrungspunkte"
 		},
 		"choice2": {
-			"name": "**Choix 2 :**&&Potion d'Ange",
-			"resurrect": "Utiliser une potion",
-			"explanation": "Vous pouvez aussi ressusciter votre Dinoz en achetant une Potion d'Ange dans la {boutique} :",
-			"list1": "il restera au lieu actuel",
-			"list2": "il ne perdra aucun point d'expérience"
+			"name": "**Möglichkeit 2:**&&Engelstrank",
+			"resurrect": "Einen Trank benutzen",
+			"explanation": "Du kannst deinen Dinoz auch wiederbeleben, indem du einen Engelstrank in der {boutique} kaufst:",
+			"list1": "er bleibt am derzeitigen Ort",
+			"list2": "er wird keine Erfahrungspunkte verlieren"
 		}
 	},
 	"modal": {
@@ -406,23 +406,23 @@
 		"unknown": "Une erreur est survenue."
 	},
 	"tooltip": {
-		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
+		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
 		"item": {
-			"use": "Utiliser **immédiatement**",
-			"useOff": "Cet objet ne peut pas être **utilisé**",
-			"equipTitle": "Placer dans **l'équipement de combat**&&//Les objets équipés pourront être utilisés pendant les combats par votre Dinoz//",
-			"equipDescription": "//Les objets équipés pourront être utilisés pendant les combats par votre Dinoz//",
-			"equip": "Cet objet peut être placé dans **l'équipement de combat**",
-			"equipOff": "Cet objet **ne peut pas être placé** dans l'équipement de combat",
-			"maxQuantity": "Quantité maximale :"
+			"use": "**Sofort** benutzen",
+			"useOff": "Dieser Gegenstand kann **nicht direkt benutzt** werden",
+			"equipTitle": "Zur **Kampfausrüstung** hinzufügen&&//Angelegte Gegenstände können von deinen Dinoz im Kampf eingesetzt werden//",
+			"equipDescription": "//Ausgerüstete Gegenstände können von deinem Dinoz im Kampf genutzt werden//",
+			"equip": "Dieser Gegenstand **kann zur Kampfausrüstung** hinzugefügt werden",
+			"equipOff": "Dieser Gegenstand **kann nicht zur Kampfausrüstung** hinzugefügt werden",
+			"maxQuantity": "Maximale Anzahl:"
 		},
 		"shop": {
-			"buyMaxTopNote": "Vous possédez {own} exemplaire(s) de cet objet, sur {max} maximum.",
-			"buyMaxBottomNote": "//Cliquez ici pour remplir votre stock de cet objet.//",
-			"invalidQuantity": "Veuillez entrer une quantité **valide**.",
-			"invalidQuantity_foot": "//Vérifiez que vous avez bien entré un nombre ou que vous avez assez de place.//"
+			"buyMaxTopNote": "Du hast {own} Stück(e) dieses Gegenstands in deinem Besitz von bis zu {max} maximal.",
+			"buyMaxBottomNote": "//Klicke hier, um diesen Gegenstand vollends aufzufüllen.//",
+			"invalidQuantity": "Es ist eine **gültige** Menge erforderlich.",
+			"invalidQuantity_foot": "//Prüfe, ob die Anzahl korrekt ist und ob du Platz dafür hast.//"
 		},
-		"serverTime": "Temps du serveur"
+		"serverTime": "Server-Zeit"
 	},
 	"ranking": {
 		"title": "Classement :",
@@ -432,27 +432,27 @@
 			"completion": "Complétion"
 		},
 		"th": {
-			"pos": "Pos.",
-			"player": "Maître",
+			"pos": "Platz",
+			"player": "Meister",
 			"dinoz": "Dinoz",
-			"points": "Pts",
-			"average": "Moy.",
-			"completion": "Comp.",
-			"clans": "Clans",
-			"treasure": "Trésor du Clan"
+			"points": "Pkte",
+			"average": "Schn.",
+			"completion": "Vollst.",
+			"clans": "Klane",
+			"treasure": "Schatzkammer des Klans"
 		},
 		"disclaimer": {
-			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
-			"average": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la moyenne des niveaux de tous les Dinoz du joueur.",
-			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les Dinoz actifs et la progression dans l'histoire du jeu."
+			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
+			"average": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus dem Durchschnitt der Stufe aller Dinoz errechnet.",
+			"completion": "Die Spielerplatzierung wird täglich um Mitternacht aktualisiert und wird anhand einer Formel errechnet, die sowohl auf dem Fortschritt aller aktiven Dinoz, als auch auf dem Spielverlauf basiert."
 		},
 		"page": {
-			"previous": "Page précedente",
-			"next": "Page suivante"
+			"previous": "Vorherige Seite",
+			"next": "Nächste Seite"
 		},
 		"placeholder": {
-			"searchUser": "Rechercher un joueur",
-			"searchClan": "Rechercher un clan"
+			"searchPlayer": "Spielersuche",
+			"searchClan": "Klansuche"
 		}
 	},
 	"accountPage": {

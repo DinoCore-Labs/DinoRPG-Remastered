@@ -264,18 +264,18 @@
 	},
 	"resurrection": {
 		"choice1": {
-			"name": "**Choix 1 :**&&Résurrection",
-			"resurrect": "Ressusciter",
-			"explanation": "Vous pouvez ressusciter votre Dinoz, immédiatement et gratuitement :",
-			"list1": "il retournera à Dinoville",
-			"list2": "il perdra la moitié de ses points d'expérience actuels"
+			"name": "**Opción 1:**&&Resucitar",
+			"resurrect": "Resucitar",
+			"explanation": "Puedes resucitar a tu Dino, inmediatamente y sin costo:",
+			"list1": "volverá a Dinovilla",
+			"list2": "perderá la mitad de sus puntos de experiencia actuales"
 		},
 		"choice2": {
-			"name": "**Choix 2 :**&&Potion d'Ange",
-			"resurrect": "Utiliser une potion",
-			"explanation": "Vous pouvez aussi ressusciter votre Dinoz en achetant une Potion d'Ange dans la {boutique} :",
-			"list1": "il restera au lieu actuel",
-			"list2": "il ne perdra aucun point d'expérience"
+			"name": "**Opción 2:**&& Poción del ángel",
+			"resurrect": "Utilizar una poción",
+			"explanation": "También puedes resucitar a tu Dino comprando una Poción del Ángel en la {boutique}:",
+			"list1": "se quedará en el lugar actual",
+			"list2": "no perderá ningún punto de experiencia"
 		}
 	},
 	"modal": {
@@ -406,23 +406,23 @@
 		"unknown": "Une erreur est survenue."
 	},
 	"tooltip": {
-		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
+		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
 		"item": {
-			"use": "Utiliser **immédiatement**",
-			"useOff": "Cet objet ne peut pas être **utilisé**",
-			"equipTitle": "Placer dans **l'équipement de combat**&&//Les objets équipés pourront être utilisés pendant les combats par votre Dinoz//",
-			"equipDescription": "//Les objets équipés pourront être utilisés pendant les combats par votre Dinoz//",
-			"equip": "Cet objet peut être placé dans **l'équipement de combat**",
-			"equipOff": "Cet objet **ne peut pas être placé** dans l'équipement de combat",
-			"maxQuantity": "Quantité maximale :"
+			"use": "Utilizar **inmediatamente**",
+			"useOff": "Este objeto no puede ser **utilizado**",
+			"equipTitle": "Colocar en **el equipamiento de combate.**&&//Los objetos colocados aquí pueden ser utilizados por tu Dino durante el combate//",
+			"equipDescription": "//Los objetos colocados aquí pueden ser utilizados por tu Dino durante el combate//",
+			"equip": "Este objeto no puede ser **equipado.**",
+			"equipOff": "Este objeto no puede ser **equipado.**",
+			"maxQuantity": "Cantidad máxima:"
 		},
 		"shop": {
-			"buyMaxTopNote": "Vous possédez {own} exemplaire(s) de cet objet, sur {max} maximum.",
-			"buyMaxBottomNote": "//Cliquez ici pour remplir votre stock de cet objet.//",
-			"invalidQuantity": "Veuillez entrer une quantité **valide**.",
-			"invalidQuantity_foot": "//Vérifiez que vous avez bien entré un nombre ou que vous avez assez de place.//"
+			"buyMaxTopNote": "Posees {own} ejemplar(es) de este objeto, de un máximo de {max}.",
+			"buyMaxBottomNote": "//Haga clic aquí para llenar el stock de este artículo.//",
+			"invalidQuantity": "Por favor, introduzca una cantidad **válida**.",
+			"invalidQuantity_foot": "//Comprueba si has introducido un número válido o si tienes suficiente espacio.//"
 		},
-		"serverTime": "Temps du serveur"
+		"serverTime": "Hora del servidor"
 	},
 	"ranking": {
 		"title": "Classement :",
@@ -433,26 +433,26 @@
 		},
 		"th": {
 			"pos": "Pos.",
-			"player": "Maître",
-			"dinoz": "Dinoz",
+			"player": "Maestro",
+			"dinoz": "Dinos",
 			"points": "Pts",
-			"average": "Moy.",
+			"average": "Med.",
 			"completion": "Comp.",
-			"clans": "Clans",
-			"treasure": "Trésor du Clan"
+			"clans": "Clanes",
+			"treasure": "Tesoro del Clan"
 		},
 		"disclaimer": {
-			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
-			"average": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la moyenne des niveaux de tous les Dinoz du joueur.",
-			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les Dinoz actifs et la progression dans l'histoire du jeu."
+			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
+			"average": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
+			"completion": "Las clasificaciones de jugadores se actualizan a medianoche y se calculan utilizando la fórmula de finalización basada en los Dinos activos y el progreso en la historia del juego."
 		},
 		"page": {
-			"previous": "Page précedente",
-			"next": "Page suivante"
+			"previous": "Página anterior",
+			"next": "Página siguiente"
 		},
 		"placeholder": {
-			"searchUser": "Rechercher un joueur",
-			"searchClan": "Rechercher un clan"
+			"searchPlayer": "Buscar un Maestro",
+			"searchClan": "Buscar un Clan"
 		}
 	},
 	"accountPage": {
