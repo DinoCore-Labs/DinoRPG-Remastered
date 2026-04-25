@@ -31,7 +31,8 @@ export enum Action {
 	REST = 'rest',
 	STOP_REST = 'stop_rest',
 	REINCARNATION = 'reincarnation',
-	FB_TOURNAMENT = 'fb_tournament'
+	FB_TOURNAMENT = 'fb_tournament',
+	CEF = 'CEF'
 }
 
 export interface ActionFiche {
@@ -173,5 +174,9 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	[Action.FB_TOURNAMENT]: {
 		name: Action.FB_TOURNAMENT,
 		imgName: 'act_tournament'
+	},
+	[Action.CEF]: {
+		name: Action.CEF,
+		imgName: 'act_train'
 	}
 };
