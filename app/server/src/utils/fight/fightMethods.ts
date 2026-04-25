@@ -3,7 +3,7 @@ import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
 import { SkillType } from '@dinorpg/core/models/enums/SkillType.js';
 import { DetailedFighter } from '@dinorpg/core/models/fight/detailedFighter.js';
 import { AllFighterTypeExceptBoss, FighterType } from '@dinorpg/core/models/fight/fighterType.js';
-import { FightStats } from '@dinorpg/core/models/fight/fightResult.js';
+import { FightOutcome, FightStats } from '@dinorpg/core/models/fight/fightResult.js';
 import {
 	BadFightStatus,
 	FighterStatusData,
@@ -854,13 +854,14 @@ const attackSingleOpponent = (
 	target?: DetailedFighter,
 	goto?: boolean
 ) => {
+	// Unless specified, pick random opponent by default
+	// Do this first before the steps manipulations are done in case of error
+	const opponent = target ?? getRandomOpponent(fightData, fighter);
+	let realOpponent = opponent;
+
 	// Requirement for hit step consolidation: save history & temporary reset active history
 	const old_history = fightData.steps;
 	fightData.steps = [];
-
-	// Unless specified, pick random opponent by default
-	const opponent = target ?? getRandomOpponent(fightData, fighter);
-	let realOpponent = opponent;
 
 	if (goto) {
 		// Add moveTo step for attacker
@@ -921,13 +922,14 @@ const attackAllOpponents = (
 	opponents?: DetailedFighter[],
 	count?: number
 ) => {
+	// Attack each opponent
+	// Do this first before the steps manipulations are done in case of error
+	const targets = opponents ?? getOpponents(fightData, fighter);
+
 	// Requirement for hit step consolidation: save history & temporary reset active history
 	const old_history = fightData.steps;
 	let hit_steps: FightStep[][] = [];
 	fightData.steps = [];
-
-	// Attack each opponent
-	const targets = opponents ?? getOpponents(fightData, fighter);
 
 	// Reduce the list of impacted of opponents to a random count only if a specific count is impacted
 	if (count) {
@@ -4829,11 +4831,13 @@ export const checkDeaths = (fightData: DetailedFight) => {
 		}
 	}
 
-	// Set loser if only one team is alive
-	if (attackersAlive === 0) {
-		fightData.loser = 'attackers';
+	// Try to determine if the fight ended
+	if (attackersAlive === 0 && defendersAlive === 0) {
+		fightData.outcome = FightOutcome.Tie;
+	} else if (attackersAlive === 0) {
+		fightData.outcome = FightOutcome.DefenderWin;
 	} else if (defendersAlive === 0) {
-		fightData.loser = 'defenders';
+		fightData.outcome = FightOutcome.AttackerWin;
 	}
 };
 
@@ -4898,7 +4902,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 			// Time bar movement is handled on the front side
 			// If timeout elapsed, return and end the fight.
 			if (fightData.timeout <= 0) {
-				fightData.endedByTimeout = true;
+				fightData.outcome = FightOutcome.Timeout;
 				fightData.steps.push({
 					action: 'timeOut',
 					delta: deltaTime
@@ -4969,7 +4973,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		}
 
 		// Return if a winner has been determined
-		if (fightData.loser) {
+		if (fightData.outcome !== null) {
 			return;
 		}
 
@@ -5026,7 +5030,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	if (possibleEvent) {
 		activateEvent(fightData, possibleEvent);
 		checkDeaths(fightData);
-		if (fightData.loser) {
+		if (fightData.outcome !== null) {
 			return;
 		}
 	}

@@ -205,7 +205,7 @@ export function transpileFight(
 		});
 	}
 	for (const [i, step] of fight.entries()) {
-		console.log(step);
+		//console.log(step);
 		switch (step.action) {
 			case 'timeLimit':
 				timeLimit = step.time;

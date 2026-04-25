@@ -5,7 +5,7 @@ import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { currentEvents, EventDetails, GameEvent } from '@dinorpg/core/models/events/events.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
-import { FightProcessResult } from '@dinorpg/core/models/fight/fightResult.js';
+import { FightOutcome, FightProcessResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
@@ -119,11 +119,13 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 	}
 
 	// Update player stats
-	await incrementUserStat(
-		StatTracking.KILL_M,
-		user.id,
-		fight?.fighters.filter(f => f.type === FighterType.MONSTER).length ?? 0
-	);
+	if (fight.result) {
+		await incrementUserStat(
+			StatTracking.KILL_M,
+			user.id,
+			fight.fighters.filter(f => f.type === FighterType.MONSTER).length
+		);
+	}
 
 	return reply.send(fight);
 }
@@ -162,16 +164,15 @@ export async function fightMonstersAtPlace(
 		}
 	}
 	const fightResult = calculateFightVsMonsters(team, user, placeId, monsters);
-	const result = await rewardFight(team, monsters, fightResult, placeId, user);
+	const result = await rewardFightVsMonsters(team, monsters, fightResult, placeId, user);
 
 	// If any dinoz is on a mission, check if the fight result progress the mission
 	const leader = team[0];
-
-	if (fightResult.winner && leader) {
+	const winner = fightResult.outcome === FightOutcome.AttackerWin;
+	if (winner && leader) {
 		const defeatedMonsterKeys = monsters
 			.map(monster => getMonsterKeyById(monster.id))
 			.filter((key): key is NonNullable<typeof key> => key !== null);
-
 		if (defeatedMonsterKeys.length > 0) {
 			await prisma.$transaction(async tx => {
 				await advanceDinozMissionOnFightWon(tx, {
@@ -303,8 +304,8 @@ export function calculateFightBetweenPlayers(
 	return generateFight(fightConfiguration, place, rng);
 }
 
-export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];
-export async function rewardFight(
+export type DinozToRewardFight = Parameters<typeof rewardFightVsMonsters>[0][number];
+export async function rewardFightVsMonsters(
 	team: (Pick<Dinoz, 'id' | 'level' | 'experience' | 'life' | 'placeId'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkills, 'skillId'>[];
@@ -318,6 +319,9 @@ export async function rewardFight(
 	if (!team.length) {
 		throw new ExpectedError('userNotFound');
 	}
+
+	// Victory and rewards against monsters are granted only by defeating them. Tie counts as defeat.
+	const victory = fightResult.outcome === FightOutcome.AttackerWin;
 
 	const userId = user.id;
 
@@ -387,10 +391,10 @@ export async function rewardFight(
 				decrement: attacker.hpLost
 			},
 			experience: {
-				increment: fightResult.winner ? xp : 0
+				increment: victory ? xp : 0
 			}
 		});
-		//await createLog(LogType.XPEarned, playerId, d.id, fightResult.winner ? xp : 0);
+		//await createLog(LogType.XPEarned, playerId, d.id, victory ? xp : 0);
 		//await createLog(LogType.HPLost, playerId, d.id, attacker.hpLost);
 
 		// Log death if dinoz is dead
@@ -444,7 +448,7 @@ export async function rewardFight(
 	let itemWon = undefined;
 
 	for (const m of eventMonsters) {
-		if (m.events && m.events.length > 0 && fightResult.winner) {
+		if (m.events && m.events.length > 0 && victory) {
 			//await increasePlayerEventProgression(playerId, m.events[0]);
 			switch (m.events[0]) {
 				case GameEvent.CHRISTMAS:
@@ -467,7 +471,7 @@ export async function rewardFight(
 	}
 
 	// If attackers won
-	if (fightResult.winner) {
+	if (victory) {
 		await addMoney(userId, gold);
 	} else if (goldLost) {
 		await removeMoney(userId, goldLost);
@@ -545,11 +549,11 @@ export async function rewardFight(
 	});
 	return {
 		fighters: fighters,
-		goldEarned: fightResult.winner ? gold : -goldLost,
-		xpEarned: fightResult.winner ? totalWinXP : 0,
-		levelUp: fightResult.winner ? levelup : false,
+		goldEarned: victory ? gold : -goldLost,
+		xpEarned: victory ? totalWinXP : 0,
+		levelUp: victory ? levelup : false,
 		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
-		result: fightResult.winner,
+		result: victory,
 		history: fightResult.steps,
 		hpLost: fightResult.attackers.map(a => ({
 			id: a.dinozId,

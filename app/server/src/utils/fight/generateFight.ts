@@ -4,7 +4,7 @@ import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { DetailedFighter, FighterResultFiche } from '@dinorpg/core/models/fight/detailedFighter.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
-import { FightProcessResult, FightStats } from '@dinorpg/core/models/fight/fightResult.js';
+import { FightOutcome, FightProcessResult, FightStats } from '@dinorpg/core/models/fight/fightResult.js';
 import { FightStatus, FightStatusLength } from '@dinorpg/core/models/fight/fightStatus.js';
 import { FightStep, PrepareStep } from '@dinorpg/core/models/fight/fightStep.js';
 import { LifeEffect, NotificationList } from '@dinorpg/core/models/fight/transpiler.js';
@@ -25,7 +25,6 @@ import {
 	hasSkill,
 	hasStatus,
 	heal,
-	initStepFighter,
 	OVERTIME_ID,
 	playFighterTurn,
 	stepFighter,
@@ -38,10 +37,9 @@ export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
 	rng: SeededRandom;
 	place: PlaceEnum;
-	loser: 'attackers' | 'defenders' | null;
+	outcome: FightOutcome | null;
 	steps: FightStep[];
 	timeout?: number;
-	endedByTimeout: boolean;
 	initialDinozList: DinozToGetFighter[];
 	fighters: DetailedFighter[];
 	protectedFighters: number[];
@@ -106,10 +104,9 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 	// Initialize fight data using the provided configuration.
 	const fightData: DetailedFight = {
 		rng,
-		loser: null,
+		outcome: null,
 		steps: [] as FightStep[],
 		timeout: timeout,
-		endedByTimeout: false,
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
 		deads: [] as number[],
@@ -284,26 +281,16 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 
 	// Do not start the fight if one side has no fighter
 	if (fightData.fighters.filter(f => !f.attacker).length === 0) {
-		fightData.loser = 'defenders';
+		fightData.outcome = FightOutcome.AttackerWin;
 	} else if (fightData.fighters.filter(f => f.attacker).length === 0) {
-		fightData.loser = 'attackers';
+		fightData.outcome = FightOutcome.DefenderWin;
 	}
 
 	let turn = 0;
 	let overtimePoisonDamage = 10;
 
 	// Fight loop
-	while (!fightData.loser) {
-		// No fighters left, stop the fight.
-		if (!fightData.fighters.length) {
-			break;
-		}
-
-		// Timeout hit, stop the fight.
-		if (fightData.endedByTimeout) {
-			break;
-		}
-
+	while (fightData.outcome === null) {
 		// Order fighters by initiative (random if equal)
 		orderFighters(fightData);
 
@@ -359,6 +346,12 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		turn += 1;
 	}
 
+	const fightOutcome = fightData.outcome;
+
+	if (fightOutcome === null) {
+		throw new Error('Fight ended without outcome.');
+	}
+
 	const baoExists = fightData.fighters.some(
 		fighter => fighter.type === FighterType.MONSTER && fighter.name === monsterList[Monster.BAOBOB].name
 	);
@@ -371,21 +364,6 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		}
 		updateStat(fightData, fighter, 'endingHp', fighter.hp);
 	});
-
-	if (!fightData.loser) {
-		// The winner and loser will be calculated based on the remaining hp (%)
-		// That is, the loser will be the one with lowest endingHp / startingHp
-		// To avoid comparing non-integer numbers, instead of comparing
-		// attack.endingHp / attack.startingHp < defense.endingHp / defense.startingHp
-		// We can compare: attack.endingHp * defense.startingHp < defense.endingHp * attack.startingHp
-		// Note that, for this formula to work, we need to do it after processing `endingHp` stat
-		const left = fightData.stats.attack.endingHp * fightData.stats.defense.startingHp;
-		const right = fightData.stats.defense.endingHp * fightData.stats.attack.startingHp;
-
-		fightData.loser = left <= right ? 'attackers' : 'defenders';
-	}
-
-	const winner = fightData.loser === 'defenders';
 
 	// After fight regeneration
 	fightData.fighters.forEach(fighter => {
@@ -423,7 +401,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		}
 	});
 
-	if (winner) {
+	if (fightOutcome === FightOutcome.AttackerWin) {
 		// Curse if any M_CURSED_WAND
 		if (fightData.fighters.some(fighter => fighter.skills.some(skill => skill.id === Skill.M_CURSED_WAND))) {
 			fightData.fighters.forEach(f => {
@@ -485,7 +463,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 
 	return {
 		seed: config.seed,
-		winner,
+		outcome: fightOutcome,
 		attackers: attackersResults,
 		defenders: defendersResults,
 		catches,
