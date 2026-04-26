@@ -37,6 +37,7 @@ import { missionsRoutes } from './Mission/Routes/mission.routes.js';
 import { newsRoutes } from './News/Routes/news.routes.js';
 import { rankingRoutes } from './Ranking/Routes/ranking.routes.js';
 import { shopRoutes } from './Shop/Routes/shop.routes.js';
+import { trainingCenterRoutes } from './TrainingCenter/Routes/trainingCenter.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
 import version from './utils/version.js';
 
@@ -170,6 +171,7 @@ async function buildServer() {
 				{ name: 'Shop', description: 'Shops and purchases' },
 				{ name: 'Ranking', description: 'Player rankings and leaderboard' },
 				{ name: 'News', description: 'News endpoints' },
+				{ name: 'CEF', description: 'Fosselave training center' },
 				{ name: 'Admin', description: 'Administration endpoints' }
 			]
 		},
@@ -222,6 +224,7 @@ async function buildServer() {
 	server.register(adminRoutes, { prefix: 'api/admin' });
 	server.register(missionsRoutes, { prefix: 'api/missions' });
 	server.register(messagingRoutes, { prefix: 'api/messaging' });
+	server.register(trainingCenterRoutes, { prefix: 'api/cef' });
 
 	//------------------------------------------------------
 	// 10. Scheduler
