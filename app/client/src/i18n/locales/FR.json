@@ -199,7 +199,8 @@
 	},
 	"newsPage": {
 		"title": "Actualités de Dinoland",
-		"noTranslation": "Pas de traduction pour le moment",
+		"overload": "Voir les actualités plus anciennes",
+		"noTranslation": "L'actualité n'a pas été traduite, consultez les news dans une autre langue ou attendez qu'une traduction soit publiée",
 		"poll": {
 			"choose_option": "Le sondage se termine le {date}, votez pour votre choix:",
 			"choose_done": "Vote enregistré",

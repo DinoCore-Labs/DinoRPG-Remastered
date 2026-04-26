@@ -192,52 +192,53 @@
 	},
 	"adminPage": {
 		"news": {
-			"deleteSuccess": "News supprimée avec succès"
+			"deleteSuccess": "News erfolgreich gelöscht"
 		}
 	},
 	"newsPage": {
-		"title": "Actualités de Dinoland",
-		"noTranslation": "Pas de traduction pour le moment",
+		"actualites": "Neuigkeiten aus dem Dinoland",
+		"overload": "Ältere Neuigkeiten anzeigen",
+		"noTranslation": "Diese Neuigkeiten haben keine Übersetzung – du müsstest entweder eine andere Sprache zurate ziehen oder aber warten bis eine Übersetzung veröffentlicht wird",
 		"poll": {
-			"choose_option": "Le sondage se termine le {date}, votez pour votre choix:",
-			"choose_done": "Vote enregistré",
-			"select": "Voter",
-			"select_option": "Sélectionnez une option",
-			"total_participants": "{qty} votants"
+			"choose_option": "Die Umfrage endet am {date}. Treffe deine Wahl:",
+			"choose_done": "Stimme abgegeben",
+			"select": "Abstimmen",
+			"select_option": "Wähle eine Option",
+			"total_participants": "{qty} Wähler"
 		},
 		"roadmap": {
-			"title": "Découvrez les prochains événements sur DinoRPG !",
-			"small": "Prédiction d'Irma",
+			"title": "Entdecke die kommenden Events auf DinoRPG!",
+			"small": "Irmas Vorhersage",
 			"strong": {
-				"title1": "Alpha 0.5.0 (Bientôt)",
+				"title1": "Alpha 0.5.0 (Bald)",
 				"title2": "Alpha 0.6.0",
 				"title3": "Alpha 0.7.0",
 				"title4": "Alpha 0.8.0"
 			},
-			"help": "Cliquez sur une mise à jour ci-dessus pour obtenir d'avantage d'informations !",
-			"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
-			"futurTitle": "Avenir Dinolandien",
+			"help": "Klicke oben auf ein Update, um weitere Informationen zu erhalten!",
+			"disclaimer": "Da Madame Irmas Vorhersagen nicht unfehlbar sind, ist für diese Neuerungen kein Veröffentlichungsdatum verfügbar. Jedes Event wird jedoch zu gegebener Zeit offiziell auf der Website angekündigt.",
+			"futurTitle": "Dinoländische Zukunft",
 			"futureInfo1": {
-				"text1": "Mise en place de Bao Bob et de ses missions.",
-				"text2": "Mise en place de Dian Korgsey et de ses missions.",
-				"text3": "Mise en place de Nicolas Hulot et de ses missions.",
-				"text4": "Mise en place du Centre d'entraînement de Fosselave",
-				"text5": "Correction des bugs"
+				"text1": "Implementierung von Bao Bob und seinen Missionen.",
+				"text2": "Implementierung von Dian Korgsey und seinen Missionen.",
+				"text3": "Implementierung von Nicolas Hulot und seinen Missionen.",
+				"text4": "Implementierung des Trainingszentrums von Fosselave.",
+				"text5": "Fehlerbehebungen"
 			},
 			"futureInfo2": {
-				"text1": "Gestion des toasts et erreurs du backend (i18n)",
-				"text2": "Mise en place du Gardien de la forêt et ses missions",
-				"text3": "Déblocage de la Boutique Fruitée grâce à la branche fleurie du Gardien de la forêt",
-				"text4": "Correction des bugs"
+				"text1": "Verwaltung von Toasts und Backend-Fehlern (i18n).",
+				"text2": "Implementierung des Waldwächters und seiner Missionen.",
+				"text3": "Freischaltung des Fruchtladens durch den blühenden Zweig des Waldwächters.",
+				"text4": "Fehlerbehebungen"
 			},
 			"futureInfo3": {
-				"text1": "Mise en place des scénarios (prisma + db)",
-				"text2": "Mise en place du scénario tutoriel",
-				"text3": "Mise en place du scénario de l'être étrange",
-				"text4": "Correction des bugs"
+				"text1": "Implementierung der Szenarien (Prisma + DB).",
+				"text2": "Implementierung des Tutorial-Szenarios.",
+				"text3": "Implementierung des Szenarios des Seltsamen Wesens.",
+				"text4": "Fehlerbehebungen"
 			},
 			"futureInfo4": {
-				"text1": "À venir"
+				"text1": "Demnächst"
 			}
 		}
 	},
