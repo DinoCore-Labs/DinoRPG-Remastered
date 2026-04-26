@@ -4,7 +4,7 @@
 		<section class="training-card">
 			<img class="logo" :src="getImgURL('background', 'cef')" alt="C.E.F." />
 			<h2>{{ $t('trainingCenter.title') }}</h2>
-			<p class="intro" v-html="$t('trainingCenter.access')" />
+			<p class="intro" v-html="$t('trainingCenter.subtitle')" />
 			<img class="arena" :src="getImgURL('place', 's_cef')" alt="" />
 			<p class="description">
 				{{ $t('trainingCenter.description') }}
