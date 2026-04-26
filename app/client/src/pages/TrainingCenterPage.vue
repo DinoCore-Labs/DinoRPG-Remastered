@@ -148,7 +148,7 @@ export default defineComponent({
 				fightTransformed.value = {
 					...initPlace,
 					history: nextFight.filter(step => step !== undefined),
-					lang: locale.value.toUpperCase(),
+					lang: locale.value.toLocaleLowerCase(),
 					statusReward: result.statusReward
 				};
 				instance?.proxy?.$refreshGold?.();
