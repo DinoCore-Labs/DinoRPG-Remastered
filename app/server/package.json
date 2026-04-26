@@ -1,6 +1,6 @@
 {
 	"name": "@dinorpg/server",
-	"version": "0.15.3",
+	"version": "0.16.0",
 	"description": "",
 	"private": "true",
 	"type": "module",
