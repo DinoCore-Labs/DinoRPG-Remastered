@@ -4,19 +4,13 @@
 	<div class="training-center-page">
 		<section class="training-card">
 			<img class="logo" :src="getImgURL('background', 'cef')" alt="C.E.F." />
-
 			<h2>{{ $t('trainingCenter.title') }}</h2>
-
 			<p class="intro" v-html="$t('trainingCenter.subtitle')" />
-
 			<img class="arena" :src="getImgURL('place', 's_cef')" alt="" />
-
 			<p class="description">
 				{{ $t('trainingCenter.description') }}
 			</p>
-
 			<DZDisclaimer help content="trainingCenter.warning" />
-
 			<div class="programs">
 				<button
 					v-for="program in programs"
@@ -28,32 +22,26 @@
 					@click="start(program.key)"
 				>
 					<span class="name">{{ $t(program.labelKey) }}</span>
-
 					<span class="program-description">
 						{{ $t(program.descriptionKey) }}
 					</span>
-
 					<span class="price">
 						{{ program.price }}
 						<img :src="getImgURL('icons', 'small_gold')" alt="" />
 					</span>
-
 					<span v-if="program.xpMultiplier > 1" class="bonus">
 						+{{ Math.round((program.xpMultiplier - 1) * 100) }}%
 						{{ $t('trainingCenter.xpBonus') }}
 					</span>
 				</button>
 			</div>
-
 			<p class="note">
 				{{ $t('trainingCenter.monstersNote') }}
 			</p>
 		</section>
-
-		<!--<div v-if="loading" class="fight-wrapper">
+		<div v-if="loading" class="fight-wrapper">
 			<Loading />
-		</div>-->
-
+		</div>
 		<div v-if="fightTransformed && fight" class="fight-wrapper">
 			<Suspense>
 				<FightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />
@@ -79,7 +67,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
 import FightBounce from '../components/fight/FightBounce.vue';
-//import Loading from '../components/utils/Loading.vue';
+import Loading from '../components/utils/Loading.vue';
 import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { TrainingCenterService } from '../services/trainingCenter.service';
@@ -93,7 +81,7 @@ export default defineComponent({
 		DZDisclaimer,
 		FightBounce,
 		FightAnimation: defineAsyncComponent(() => import('../components/fight/FightAnimation.vue')),
-		//Loading,
+		Loading,
 		TitleHeader
 	},
 	setup() {
