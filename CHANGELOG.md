@@ -2,6 +2,16 @@
 
 ## 🔹 Core
 
+## 0.14.3
+
+### Patch Changes
+
+- aeb70fe: Update the roadmap and add the related EN/ES/DE translations.
+
+  This release fixes several missing or incorrect i18n keys, improves the egg acquisition toast display before redirecting, and adjusts fight result handling by determining the winner from the caller with better tie management.
+
+  It also includes several dependency updates, including Prisma, PixiJS, dotenv, Swagger UI, `@prisma/client-runtime-utils`, and the pnpm lockfile.
+
 ## 0.14.2
 
 ### Patch Changes
@@ -330,6 +340,19 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.15.3
+
+### Patch Changes
+
+- aeb70fe: Update the roadmap and add the related EN/ES/DE translations.
+
+  This release fixes several missing or incorrect i18n keys, improves the egg acquisition toast display before redirecting, and adjusts fight result handling by determining the winner from the caller with better tie management.
+
+  It also includes several dependency updates, including Prisma, PixiJS, dotenv, Swagger UI, `@prisma/client-runtime-utils`, and the pnpm lockfile.
+
+- Updated dependencies [aeb70fe]
+  - @dinorpg/core@0.14.3
 
 ## 0.15.2
 
@@ -752,6 +775,16 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.15.3
+
+### Patch Changes
+
+- aeb70fe: Update the roadmap and add the related EN/ES/DE translations.
+
+  This release fixes several missing or incorrect i18n keys, improves the egg acquisition toast display before redirecting, and adjusts fight result handling by determining the winner from the caller with better tie management.
+
+  It also includes several dependency updates, including Prisma, PixiJS, dotenv, Swagger UI, `@prisma/client-runtime-utils`, and the pnpm lockfile.
 
 ## 0.15.2
 
