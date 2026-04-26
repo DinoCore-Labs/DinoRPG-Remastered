@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.15.1
+
+### Patch Changes
+
+- b06fe72: add Bao Bob dialog and missions
+
 ## 0.15.0
 
 ### Minor Changes
@@ -350,6 +356,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.16.1
+
+### Patch Changes
+
+- b06fe72: add Bao Bob dialog and missions
+- Updated dependencies [b06fe72]
+  - @dinorpg/core@0.15.1
 
 ## 0.16.0
 
@@ -800,6 +814,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.16.1
+
+### Patch Changes
+
+- b06fe72: add Bao Bob dialog and missions
 
 ## 0.16.0
 
