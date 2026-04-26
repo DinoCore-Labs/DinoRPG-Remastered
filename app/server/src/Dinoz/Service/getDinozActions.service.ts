@@ -6,6 +6,11 @@ import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
 import { MissionGoal } from '@dinorpg/core/models/missions/missionGoal.js';
 import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
+import {
+	TRAINING_CENTER_MAX_LEVEL,
+	TRAINING_CENTER_PLACE,
+	TRAINING_CENTER_REQUIRED_STATUS
+} from '@dinorpg/core/models/trainingCenter/trainingCenter.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.js';
 
@@ -406,6 +411,15 @@ export async function getAvailableActions(
 		if (missionAction) {
 			pushUniqueAction(availableActions, missionAction);
 		}
+	}
+
+	const canUseTrainingCenter =
+		dinoz.placeId === TRAINING_CENTER_PLACE &&
+		dinoz.level < TRAINING_CENTER_MAX_LEVEL &&
+		dinoz.status.some(status => status.statusId === TRAINING_CENTER_REQUIRED_STATUS);
+
+	if (canUseTrainingCenter) {
+		pushUniqueAction(availableActions, actionList[Action.CEF]);
 	}
 
 	return availableActions;
