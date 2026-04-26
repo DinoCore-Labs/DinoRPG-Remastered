@@ -2,10 +2,10 @@
 	<TitleHeader :title="$t('pageTitle.dinoz')" :header="$t('trainingCenter.title')" />
 	<div class="training-center-page">
 		<section class="training-card">
-			<img class="logo" :src="getImgURL('places', 'cef')" alt="C.E.F." />
+			<img class="logo" :src="getImgURL('background', 'cef')" alt="C.E.F." />
 			<h2>{{ $t('trainingCenter.title') }}</h2>
 			<p class="intro" v-html="$t('trainingCenter.access')" />
-			<img class="arena" :src="getImgURL('backgrounds', 's_cef')" alt="" />
+			<img class="arena" :src="getImgURL('place', 's_cef')" alt="" />
 			<p class="description">
 				{{ $t('trainingCenter.description') }}
 			</p>
@@ -89,14 +89,9 @@ export default defineComponent({
 	justify-content: center;
 }
 .training-card {
-	width: min(560px, 100%);
 	padding: 1rem;
-	background: #c9915d;
-	color: #fff;
 	font-weight: 700;
 	text-align: left;
-	border-right: 3px solid #2d5f7c;
-	border-bottom: 3px solid #2d5f7c;
 	.logo {
 		display: block;
 		width: 122px;
