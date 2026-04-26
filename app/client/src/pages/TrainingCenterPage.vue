@@ -1,82 +1,178 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.dinoz')" :header="$t('trainingCenter.title')" />
+
 	<div class="training-center-page">
 		<section class="training-card">
 			<img class="logo" :src="getImgURL('background', 'cef')" alt="C.E.F." />
+
 			<h2>{{ $t('trainingCenter.title') }}</h2>
+
 			<p class="intro" v-html="$t('trainingCenter.subtitle')" />
+
 			<img class="arena" :src="getImgURL('place', 's_cef')" alt="" />
+
 			<p class="description">
 				{{ $t('trainingCenter.description') }}
 			</p>
+
 			<DZDisclaimer help content="trainingCenter.warning" />
+
 			<div class="programs">
 				<button
 					v-for="program in programs"
 					:key="program.key"
 					class="program"
+					:class="{ selected: selectedProgram === program.key }"
 					type="button"
+					:disabled="!canStartFight"
 					@click="start(program.key)"
 				>
 					<span class="name">{{ $t(program.labelKey) }}</span>
+
 					<span class="program-description">
 						{{ $t(program.descriptionKey) }}
 					</span>
+
 					<span class="price">
 						{{ program.price }}
 						<img :src="getImgURL('icons', 'small_gold')" alt="" />
 					</span>
+
 					<span v-if="program.xpMultiplier > 1" class="bonus">
 						+{{ Math.round((program.xpMultiplier - 1) * 100) }}%
 						{{ $t('trainingCenter.xpBonus') }}
 					</span>
 				</button>
 			</div>
+
 			<p class="note">
 				{{ $t('trainingCenter.monstersNote') }}
 			</p>
 		</section>
+
+		<!--<div v-if="loading" class="fight-wrapper">
+			<Loading />
+		</div>-->
+
+		<div v-if="fightTransformed && fight" class="fight-wrapper">
+			<Suspense>
+				<FightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />
+				<template #fallback>
+					<Loading />
+				</template>
+			</Suspense>
+			<FightBounce v-if="fightEnded" :fight="fight" :dinozId="dinozId" />
+		</div>
 	</div>
 </template>
 
 <script lang="ts">
+import type { FighterRecap, FightResult } from '@dinorpg/core/models/fight/fightResult.js';
+import type { FightStep } from '@dinorpg/core/models/fight/fightStep.js';
+import type { preFightLoader } from '@dinorpg/core/models/fight/transpiler.js';
 import {
 	trainingCenterPrograms,
 	type TrainingCenterProgramKey
 } from '@dinorpg/core/models/trainingCenter/trainingCenter.js';
-import { computed, defineComponent } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { computed, defineAsyncComponent, defineComponent, getCurrentInstance, ref, toRaw } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 
+import FightBounce from '../components/fight/FightBounce.vue';
+//import Loading from '../components/utils/Loading.vue';
 import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
+import { TrainingCenterService } from '../services/trainingCenter.service';
 import { getImgURL } from '../utils/getImgURL';
+import { errorHandler } from '../utils/errorHandler';
+import { resolveFightingPlace, transpileFight } from '../fight/transpileFight';
 
 export default defineComponent({
 	name: 'TrainingCenterPage',
 	components: {
 		DZDisclaimer,
+		FightBounce,
+		FightAnimation: defineAsyncComponent(() => import('../components/fight/FightAnimation.vue')),
+		//Loading,
 		TitleHeader
 	},
 	setup() {
 		const route = useRoute();
-		const router = useRouter();
+		const { t, locale } = useI18n();
+		const instance = getCurrentInstance();
+
+		const loading = ref(false);
+		const fightEnded = ref(false);
+		const fight = ref<FightResult | undefined>();
+		const fightTransformed = ref<preFightLoader | undefined>();
+		const selectedProgram = ref<TrainingCenterProgramKey | undefined>();
+
 		const dinozId = computed(() => Number(route.params.id));
 		const programs = Object.values(trainingCenterPrograms);
-		function start(program: TrainingCenterProgramKey) {
-			router.push({
-				name: 'fight',
-				params: {
-					id: dinozId.value
-				},
-				query: {
-					source: 'training_center',
-					program
+
+		const canStartFight = computed(() => {
+			return !loading.value && (!fightTransformed.value || fightEnded.value);
+		});
+
+		async function start(program: TrainingCenterProgramKey) {
+			if (!canStartFight.value) return;
+			try {
+				loading.value = true;
+				fightEnded.value = false;
+				fight.value = undefined;
+				fightTransformed.value = undefined;
+				selectedProgram.value = program;
+				const result = await TrainingCenterService.startTrainingCenterFight(dinozId.value, program);
+				fight.value = result;
+				const fightSteps = result.history as FightStep[];
+				const fighters = result.fighters as FighterRecap[];
+				if (!fightSteps || !fighters) {
+					return;
 				}
-			});
+				const nextFight = transpileFight(
+					structuredClone(toRaw(fighters)),
+					fightSteps,
+					t,
+					result.result,
+					undefined,
+					undefined,
+					true
+				);
+				if (!nextFight) {
+					return;
+				}
+				const initPlace = resolveFightingPlace(result.place, result.background);
+				if (!initPlace) {
+					return;
+				}
+				fightTransformed.value = {
+					...initPlace,
+					history: nextFight.filter(step => step !== undefined),
+					lang: locale.value.toUpperCase(),
+					statusReward: result.statusReward
+				};
+				instance?.proxy?.$refreshGold?.();
+			} catch (error) {
+				const toast = instance?.proxy?.$toast;
+				if (toast) {
+					errorHandler.handle(error, toast);
+				} else {
+					console.error(error);
+				}
+			} finally {
+				loading.value = false;
+			}
 		}
 		return {
+			canStartFight,
+			dinozId,
+			fight,
+			fightEnded,
+			fightTransformed,
 			getImgURL,
+			loading,
 			programs,
+			selectedProgram,
 			start
 		};
 	}
@@ -86,7 +182,9 @@ export default defineComponent({
 <style scoped lang="scss">
 .training-center-page {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
 }
 .training-card {
 	padding: 1rem;
@@ -127,7 +225,6 @@ export default defineComponent({
 	gap: 0.75rem;
 	margin-top: 1rem;
 }
-
 .program {
 	display: flex;
 	flex-direction: column;
@@ -139,8 +236,13 @@ export default defineComponent({
 	color: #9e2100;
 	font-weight: 700;
 	cursor: pointer;
-	&:hover {
+	&:hover,
+	&.selected {
 		background: #f8ca82;
+	}
+	&:disabled {
+		cursor: wait;
+		opacity: 0.65;
 	}
 	.name {
 		font-size: 1rem;
@@ -163,6 +265,13 @@ export default defineComponent({
 		color: #7d1400;
 		font-size: 0.75rem;
 	}
+}
+.fight-wrapper {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 1rem;
 }
 @media (max-width: 768px) {
 	.programs {
