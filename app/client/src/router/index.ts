@@ -27,6 +27,7 @@ import RankingPage from '../pages/RankingPage.vue';
 import ShopDinoz from '../pages/ShopDinoz.vue';
 import ShopItems from '../pages/ShopItems.vue';
 import ShopItinerant from '../pages/ShopItinerant.vue';
+import TrainingCenterPage from '../pages/TrainingCenterPage.vue';
 import { UserService } from '../services';
 import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
@@ -120,6 +121,13 @@ const routes: RouteRecord[] = [
 				path: '/dinoz/:id/missions/:group',
 				name: 'DinozMissions',
 				component: MissionsPage,
+				meta: { auth: true },
+				beforeEnter: requireOwnedDinozByParam('id')
+			},
+			{
+				path: '/dinoz/:id/training-center',
+				name: 'TrainingCenterPage',
+				component: TrainingCenterPage,
 				meta: { auth: true },
 				beforeEnter: requireOwnedDinozByParam('id')
 			},
