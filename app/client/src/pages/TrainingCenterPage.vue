@@ -152,6 +152,7 @@ export default defineComponent({
 					statusReward: result.statusReward
 				};
 				instance?.proxy?.$refreshGold?.();
+				fightEnded.value = true;
 			} catch (error) {
 				const toast = instance?.proxy?.$toast;
 				if (toast) {
