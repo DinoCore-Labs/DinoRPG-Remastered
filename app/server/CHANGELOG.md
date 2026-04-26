@@ -1,5 +1,20 @@
 # @dinorpg/server
 
+## 0.16.0
+
+### Minor Changes
+
+- d0548a7: Add Fosselave Training Center
+
+  Added the Fosselave Training Center feature with CEF programs, dedicated backend routes and services, frontend training page, available action integration, fight animation flow, and localized training center content.
+
+  Also added shared loading utilities with Loader, Spinner, and loadingStore, improved the training center page, fixed CEF fight animation locale handling, and ensured CEF fight results are displayed after the animation ends.
+
+### Patch Changes
+
+- Updated dependencies [d0548a7]
+  - @dinorpg/core@0.15.0
+
 ## 0.15.3
 
 ### Patch Changes
