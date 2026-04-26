@@ -65,7 +65,11 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 	if (!dinozData) throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
 
 	// Marais Collant - No fight days
-	if (SWAMP_FOG_DAYS.includes(dayOfWeek) && dinozData.placeId === PlaceEnum.MARAIS_COLLANT) {
+	if (
+		gameConfig.world.disableSwampFightRules &&
+		SWAMP_FOG_DAYS.includes(dayOfWeek) &&
+		dinozData.placeId === PlaceEnum.MARAIS_COLLANT
+	) {
 		if (!dinozData.status.some(s => s.statusId === DinozStatusId.WEIRD_SWAMP_SEEN)) {
 			await addStatusToDinoz(dinozData.id, DinozStatusId.WEIRD_SWAMP_SEEN);
 		}
