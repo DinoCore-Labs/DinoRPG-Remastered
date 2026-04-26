@@ -3884,6 +3884,122 @@
 					"text": "Oh ! Merci ! C'est très gentil de m'avoir apporté ces délicieux Piranhoz pour mon anniversaire ! Fait des gros bisoux à Monsieur Bao de ma part !"
 				},
 				"end": "J'aime bien faire des cadeaux... Tiens, voici ta récompense."
+			},
+			"troc": {
+				"name": "Le Troc des Iles Atlantéinées",
+				"begin": "Il y a un grand marché dans les Iles où on peut échanger ce que l'on veut. J'aimerais obtenir un porte-manteau contre cette banane, est-ce que tu peux t'en occuper ?",
+				"merchant": {
+					"name": "Un Marchand",
+					"text": "Cette banane a l'air délicieuse, je te l'échange contre ce cerf-volant !"
+				},
+				"lover": {
+					"name": "Un Amoureux",
+					"text": "Pfff... je pars a la Fontaine de Jouvence, et si tu veux je t'échange ce cerf-volant contre cette bague de fiancailles toute neuve... jamais servie..."
+				},
+				"jeweler": {
+					"name": "Un Bijoutier",
+					"text": "Quoi ?!!??? Mais que vois-je ?!!?? Cette Bague fait partie d'une ancienne collection Royale ! Je vous l'échange contre ce que j'ai de plus cher au monde : ma villa sur l'Ile du Totem ! Tenez, voilà les clés, vous ne pouvez pas refuser !"
+				},
+				"tourist": {
+					"name": "Un Touriste Enlisé",
+					"text": "J'en ai RAZ LE BOL de ce Marais de M...... !!!!! Ca fait trois fois que notre Camping-Car s'enlise, quelle idée à la c... de venir passer des VACANCES DANS UN MARAIS !!! Quoi ? Une villa sur l'Ile du Totem ? Ok, sans problème, je l'échange contre mon camping-car !"
+				},
+				"artist": {
+					"name": "Un Artiste Enthousiaste",
+					"text": "S.u.p.e.r. !! Je suis archi content ! Regarde ces visages ? C'est une composition art-ist-ique ! Quoi comment ça c'est nul ? Toi, tu ne comprends rien à l'Art avec un grand \"A\" ! D'ailleurs, mon oeuvre vaut bien un camping car, voilà, je confirme l'échange !"
+				},
+				"oldLady": {
+					"name": "Une Vieille Dame",
+					"text": "J'ai entendu que tu cherchais un porte-manteau ? Je te l'échange contre ce que tu veux... C'est quoi ça ? Des visages ? Ca ressemble a rien... mais bon, ça doit pas valoir grand chose, ce Monsieur Picassi est completement inconnu. Bon allez, prends ce porte-manteau en échange !"
+				},
+				"end": "Tu as trouvé mon porte-manteau ? J'espère que ce petit voyage t'auras appris que les plus grandes richesses sont éphémères !"
+			},
+			"kilksk": {
+				"name": "La chasse à la Kazkadine",
+				"begin": "J'ai reçu un appel urgent du Dome Soulaflotte. Les Atalantes s'inquiètent d'un grand nombre de Kazkadines des Profondeurs qui ont enhavi les lieux. Pourrais-tu emmener ton Dinoz faire un petit peu de nettoyage ? Attention à ne pas te faire électrocuter.",
+				"kill": "Kazkadine",
+				"end": "Bravo, c'était une mission branchée n'est-ce pas ?"
+			},
+			"kilang": {
+				"name": "Les anguilloz au vinaigre",
+				"begin": "Connais-tu le plat traditionnel des Anguilloz au Vinaigre ? C'est vraiment délicieux ! Peux-tu te procurer des Anguilloz fraîches et du vinaigre, puis apporter le tout à mon ami au Port de Prêche ? C'est pour un cadeau !",
+				"kill": "Anguilloz",
+				"wineMerchant": {
+					"name": "Marchand de Vins",
+					"text": "Uhm ? Tu viens de la part de M. Bao ? Tu cherches du vinaigre ?? Tiens, j'ai ce vieux Chateau Forcebrut qui devrait être parfait pour la cuisine."
+				},
+				"fisher": {
+					"name": "Pêcheur",
+					"text": "Tu cherches l'ami de M. Bao ? Il me semble qu'il était parti rendre visite à Madame Seyche a Dinoville."
+				},
+				"madameSeyche": {
+					"name": "Madame Seyche",
+					"text": "Ooooh le mignonn toupiti Dinoz !!! Quoi ? Vous cherchez l'ami de M. Bao ? Il est parti voir ce bon vieux Papy Joe, ils avaient des histoires d'hommes a discuter paraît-il !"
+				},
+				"adamNature": {
+					"name": "Adam Nature",
+					"text": "Uhmmm ! Des anguilloz au vinaigre !! J'adoooore ! Désolé de ne pas avoir attendu au Port de Prêche, je vais prévenir ce cher Bob pour qu'il te récompense correctement !"
+				},
+				"end": "Alors comme ça on se balade un peu partout pendant une Mission ? Adam m'as tout raconté, voilà pour toi."
+			},
+			"bigpch": {
+				"name": "La Grande Chasse",
+				"begin": "Je suis un petit peu embêté. J'ai promis à l'Archisage du Dome Soulaflotte que j'exterminerai 150 monstres des Iles Atlantéinées en à peine dix jours, mais je me suis cassé le bras et je ne peux pas trop me déplacer. Peux-tu t'occuper d'en tuer une trentaine pour moi ? Pour le reste, je me débrouillerai !",
+				"kill": "monstres",
+				"end": "Super ! Finalement, j'ai exterminé le reste moi-même, en me servant uniquement de mes pieds, mais je te remercie tout de même pour ton aide."
+			},
+			"rally1": {
+				"name": "Le Rallye des Sardines",
+				"begin": "Participe au Rallye des Sardines ! Rejoins le Port de Prêche le plus rapidement possible !",
+				"step": {
+					"name": "Etape du Rallye",
+					"description": "Vous avez franchi une étape du Rallye, vous devez maintenant rentrer voir M. Bao Bob !"
+				},
+				"end": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"rally2": {
+				"name": "Le Rallye des Poissons",
+				"begin": "Participe au Rallye des Poissons ! Rejoins le Port de Prêche le plus rapidement possible !",
+				"step": {
+					"name": "Etape du Rallye",
+					"description": "Vous avez franchi la première étape du Rallye, vous devez maintenant aller à l'Université !",
+					"description2": "Vous avez franchi la seconde étape du Rallye, vous devez maintenant retourner voir M. Bao Bob !"
+				},
+				"end": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"rally3": {
+				"name": "Le Rallye des Requins",
+				"begin": "Participe au Rallye des Requins ! Rejoins les Mines de Corail le plus rapidement possible !",
+				"step": {
+					"name": "Etape du Rallye",
+					"description": "Vous avez franchi la première étape du Rallye, vous devez maintenant aller à Forcebrut !",
+					"description2": "Vous avez franchi la seconde étape du Rallye, vous devez maintenant aller sur les Pentes de Basalte !",
+					"description3": "Vous avez franchi la dernière étape du Rallye, vous devez maintenant retourner voir M. Bao Bob !"
+				},
+				"end": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"rally4": {
+				"name": "Le Rallye des Baleines",
+				"begin": "Participe au Rallye des Baleines ! Rejoins Fosselave puis reviens ici le plus rapidement possible !",
+				"step": {
+					"name": "Etape du Rallye",
+					"description": "Vous avez franchi l'étape du Rallye, vous devez maintenant retourner chez M. Bao Bob au plus vite !"
+				},
+				"end": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"tour": {
+				"name": "Le Tour de Dinoland",
+				"begin": "Le Tour de Dinoland est la plus célebre des courses ! Faites le tour de Dinoland en moins de dix jours ! La première étape se situe sur l'Ile Waïkiki.",
+				"step": {
+					"name": "Etape du Tour",
+					"description": "Félicitations pour avoir franchi la première étape du Tour de Dinoland. La prochaine étape se trouve à Forcebrut. Bon courage !",
+					"description2": "Félicitations pour avoir franchi la seconde étape du Tour de Dinoland. La prochaine étape se trouve aux Collines Escarpées. Bon courage dans les côtes !",
+					"description3": "Félicitations pour avoir franchi la troisième étape du Tour de Dinoland. La prochaine étape se trouve à Fosselave. Bonne chance pour l'escalade du Grand Tout-Chaud !",
+					"description4": "Félicitations pour avoir franchi la quatrième étape du Tour de Dinoland. La prochaine étape se trouve au Camp Korgon de la Forêt de Grumhel. Evitez de vous faire ralentir par ces sales bestioles !",
+					"description5": "Félicitations pour avoir franchi la cinquième étape du Tour de Dinoland. La prochaine étape se trouve à l'Orée de la Forêt ! Attention à ne pas vous perdre sur le Chemin Sombre...",
+					"description6": "Félicitations pour avoir franchi la sixième étape du Tour de Dinoland ! La dernière étape consiste à rejoindre M. Bao Bob pour remporter ce Tour !"
+				},
+				"end": "Bravo ! C'était un magnifique Tour de Dinoland, voici une récompense digne de votre exploit !"
 			}
 		}
 	}
