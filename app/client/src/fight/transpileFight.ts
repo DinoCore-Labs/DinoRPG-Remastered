@@ -28,11 +28,11 @@ import {
 
 import type { TFunction } from './translateFightStep';
 
-export function resolveFightingPlace(placeId: number) {
+export function resolveFightingPlace(placeId: number, background?: string) {
 	const place = Object.values(placeListv2).find(p => p.placeId === placeId);
 	if (!place) return;
 	return {
-		bg: place.background,
+		bg: background ?? place.background,
 		top: place.top ?? 120,
 		bottom: place.bottom ?? 0,
 		right: 0,
