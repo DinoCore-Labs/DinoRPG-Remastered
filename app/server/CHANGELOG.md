@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.16.1
+
+### Patch Changes
+
+- b06fe72: add Bao Bob dialog and missions
+- Updated dependencies [b06fe72]
+  - @dinorpg/core@0.15.1
+
 ## 0.16.0
 
 ### Minor Changes
