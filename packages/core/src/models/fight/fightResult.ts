@@ -3,11 +3,14 @@ import { ElementType } from '../enums/ElementType.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
 import { MonsterFiche } from '../monster/monsterFiche.js';
 import { Monster } from '../monster/monsterList.js';
+import { TrainingCenterProgramKey } from '../trainingCenter/trainingCenter.js';
 import { FighterResultFiche } from './detailedFighter.js';
 import { FightText } from './fightDialog.js';
 import { FighterType } from './fighterType.js';
 import { FightStep } from './fightStep.js';
 import { EntranceEffect } from './transpiler.js';
+
+export type FightSource = 'normal' | 'dialog' | 'mission' | 'training_center';
 
 export type FightDialogReturn = {
 	dialogId: string;
@@ -35,6 +38,9 @@ export interface FightResult {
 	itemWon?: number;
 	statusReward?: DinozStatusId;
 	dialogReturn?: FightDialogReturn;
+	source?: FightSource;
+	background?: string;
+	trainingProgram?: TrainingCenterProgramKey;
 }
 
 export interface FighterRecap {
