@@ -229,7 +229,7 @@ export const baoBobMissions: MissionDefinition[] = [
 				type: 'ACTION',
 				actionKey: 'bao_bob_rally1_step',
 				place: PlaceEnum.PORT_DE_PRECHE,
-				nameKey: 'missions.baoBob.rally.step.name',
+				nameKey: 'missions.baoBob.rally1.step.name',
 				descriptionKey: 'missions.baoBob.rally1.step.description'
 			},
 			baoBobValidateGoal()
@@ -250,16 +250,16 @@ export const baoBobMissions: MissionDefinition[] = [
 				type: 'ACTION',
 				actionKey: 'bao_bob_rally2_step1',
 				place: PlaceEnum.PORT_DE_PRECHE,
-				nameKey: 'missions.baoBob.rally.step.name',
-				descriptionKey: 'missions.baoBob.rally2.step1.description'
+				nameKey: 'missions.baoBob.rally2.step.name',
+				descriptionKey: 'missions.baoBob.rally2.step.description'
 			},
 			{ type: 'AT', place: PlaceEnum.UNIVERSITE, hidden: false },
 			{
 				type: 'ACTION',
 				actionKey: 'bao_bob_rally2_step2',
 				place: PlaceEnum.UNIVERSITE,
-				nameKey: 'missions.baoBob.rally.step.name',
-				descriptionKey: 'missions.baoBob.rally2.step2.description'
+				nameKey: 'missions.baoBob.rally2.step.name',
+				descriptionKey: 'missions.baoBob.rally2.step.description2'
 			},
 			baoBobValidateGoal()
 		],
@@ -280,24 +280,24 @@ export const baoBobMissions: MissionDefinition[] = [
 				type: 'ACTION',
 				actionKey: 'bao_bob_rally3_step1',
 				place: PlaceEnum.MINES_DE_CORAIL,
-				nameKey: 'missions.baoBob.rally.step.name',
-				descriptionKey: 'missions.baoBob.rally3.step1.description'
+				nameKey: 'missions.baoBob.rally3.step.name',
+				descriptionKey: 'missions.baoBob.rally3.step.description'
 			},
 			{ type: 'AT', place: PlaceEnum.FORCEBRUT, hidden: false },
 			{
 				type: 'ACTION',
 				actionKey: 'bao_bob_rally3_step2',
 				place: PlaceEnum.FORCEBRUT,
-				nameKey: 'missions.baoBob.rally.step.name',
-				descriptionKey: 'missions.baoBob.rally3.step2.description'
+				nameKey: 'missions.baoBob.rally3.step.name',
+				descriptionKey: 'missions.baoBob.rally3.step.description2'
 			},
 			{ type: 'AT', place: PlaceEnum.PENTES_DE_BASALTE, hidden: false },
 			{
 				type: 'ACTION',
 				actionKey: 'bao_bob_rally3_step3',
 				place: PlaceEnum.PENTES_DE_BASALTE,
-				nameKey: 'missions.baoBob.rally.step.name',
-				descriptionKey: 'missions.baoBob.rally3.step3.description'
+				nameKey: 'missions.baoBob.rally3.step.name',
+				descriptionKey: 'missions.baoBob.rally3.step.description3'
 			},
 			baoBobValidateGoal()
 		],
@@ -318,7 +318,7 @@ export const baoBobMissions: MissionDefinition[] = [
 				type: 'ACTION',
 				actionKey: 'bao_bob_rally4_step',
 				place: PlaceEnum.FOSSELAVE,
-				nameKey: 'missions.baoBob.rally.step.name',
+				nameKey: 'missions.baoBob.rally4.step.name',
 				descriptionKey: 'missions.baoBob.rally4.step.description'
 			},
 			baoBobValidateGoal()
@@ -341,7 +341,7 @@ export const baoBobMissions: MissionDefinition[] = [
 				actionKey: 'bao_bob_tour_step1',
 				place: PlaceEnum.ILE_WAIKIKI,
 				nameKey: 'missions.baoBob.tour.step.name',
-				descriptionKey: 'missions.baoBob.tour.step1.description'
+				descriptionKey: 'missions.baoBob.tour.step.description'
 			},
 			{ type: 'AT', place: PlaceEnum.FORCEBRUT, hidden: false },
 			{
@@ -349,7 +349,7 @@ export const baoBobMissions: MissionDefinition[] = [
 				actionKey: 'bao_bob_tour_step2',
 				place: PlaceEnum.FORCEBRUT,
 				nameKey: 'missions.baoBob.tour.step.name',
-				descriptionKey: 'missions.baoBob.tour.step2.description'
+				descriptionKey: 'missions.baoBob.tour.step.description2'
 			},
 			{ type: 'AT', place: PlaceEnum.COLLINES_ESCARPEES, hidden: false },
 			{
@@ -357,7 +357,7 @@ export const baoBobMissions: MissionDefinition[] = [
 				actionKey: 'bao_bob_tour_step3',
 				place: PlaceEnum.COLLINES_ESCARPEES,
 				nameKey: 'missions.baoBob.tour.step.name',
-				descriptionKey: 'missions.baoBob.tour.step3.description'
+				descriptionKey: 'missions.baoBob.tour.step.description3'
 			},
 			{ type: 'AT', place: PlaceEnum.FOSSELAVE, hidden: false },
 			{
@@ -365,7 +365,7 @@ export const baoBobMissions: MissionDefinition[] = [
 				actionKey: 'bao_bob_tour_step4',
 				place: PlaceEnum.FOSSELAVE,
 				nameKey: 'missions.baoBob.tour.step.name',
-				descriptionKey: 'missions.baoBob.tour.step4.description'
+				descriptionKey: 'missions.baoBob.tour.step.description4'
 			},
 			{ type: 'AT', place: PlaceEnum.CAMP_KORGON, hidden: false },
 			{
@@ -373,7 +373,7 @@ export const baoBobMissions: MissionDefinition[] = [
 				actionKey: 'bao_bob_tour_step5',
 				place: PlaceEnum.CAMP_KORGON,
 				nameKey: 'missions.baoBob.tour.step.name',
-				descriptionKey: 'missions.baoBob.tour.step5.description'
+				descriptionKey: 'missions.baoBob.tour.step.description5'
 			},
 			{ type: 'AT', place: PlaceEnum.AUREE_DE_LA_FORET, hidden: false },
 			{
@@ -381,7 +381,7 @@ export const baoBobMissions: MissionDefinition[] = [
 				actionKey: 'bao_bob_tour_step6',
 				place: PlaceEnum.AUREE_DE_LA_FORET,
 				nameKey: 'missions.baoBob.tour.step.name',
-				descriptionKey: 'missions.baoBob.tour.step6.description'
+				descriptionKey: 'missions.baoBob.tour.step.description6'
 			},
 			baoBobValidateGoal()
 		],
