@@ -622,6 +622,14 @@ export default defineComponent({
 						errorHandler.handle(e, this.$toast);
 					}
 					break;
+				case Action.CEF:
+					this.$router.push({
+						name: 'TrainingCenterPage',
+						params: {
+							id: this.dinozId
+						}
+					});
+					break;
 				case Action.FB_TOURNAMENT:
 					/*this.$router.push({
 						name: 'Forcebrute',
