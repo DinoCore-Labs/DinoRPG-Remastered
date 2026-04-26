@@ -2468,7 +2468,8 @@
 			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant.",
 			"reincarnation": "Votre Dinoz peut se réincarner ! Il conservera la même destinée des éléments.",
 			"change_leader": "Votre Dinoz peut devenir le nouveau leader du groupe.",
-			"fb_tournament": "Accéder au Tournoi de Forcebrut."
+			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
+			"CEF": "Cher client, bienvenue au Centre d'Entraînement de Fosselave !"
 		},
 		"name": {
 			"fight": "Combattre",
@@ -2501,7 +2502,8 @@
 			"itinerant_shop": "Marchand Ambulant",
 			"reincarnation": "Réincarnation",
 			"change_leader": "Devenir Leader",
-			"fb_tournament": "Tournoi"
+			"fb_tournament": "Tournoi de Forcebrut",
+			"CEF": "Centre d'Entraînement de Fosselave"
 		}
 	},
 	"fight": {
@@ -2979,6 +2981,37 @@
 			"support4-1": "Vous trouverez souvent la réponse à vos questions directement sur le **Discord d'Eternaltwin**. && && Si ce n'est pas le cas, posez vos questions et quelqu'un de la communauté vous aidera.",
 			"security": "Sécurité de mon compte",
 			"security-1": "**Peu importe qui vous le demande**... && && Ne communiquez jamais vos identifiants et mots de passe !"
+		}
+	},
+	"trainingCenter": {
+		"title": "Centre d'Entraînement de Fosselave",
+		"subtitle": "Cher client, bienvenue à la L.T.C. Notre Centre est autorisé par l’I.D.R.L (Institut de recherche et d’apprentissage de Dinoz) et vous permet de développer la force musculaire et la performance de votre Dinoz avec l'aide de notre programme de combat sur mesure. ",
+		"description": "Le principe est simple : vous payez pour combattre contre un ou plusieurs monstres. Ce combat vous rapportera de l'expérience, mais pas d'or. Vous avez le choix entre trois difficultés.",
+		"warning": "N'oubliez pas de soigner votre Dinoz avant de choisir un programme ! Le C.E.F. ne consomme pas l'action quotidienne, mais chaque séance est payante.",
+		"monstersNote": "Les monstres rencontrés dépendent du niveau de votre Dinoz et sont tous des monstres du Grand Tout Chaud.",
+		"xpBonus": "XP",
+		"programs": {
+			"easy": {
+				"name": "Facile",
+				"description": "Un entraînement accessible."
+			},
+			"intermediate": {
+				"name": "Intermédiaire",
+				"description": "Un entraînement équilibré avec un bonus d'expérience."
+			},
+			"advanced": {
+				"name": "Avancé",
+				"description": "Un entraînement plus risqué avec un meilleur bonus d'expérience."
+			}
+		},
+		"errors": {
+			"invalidProgram": "Ce programme d'entraînement n'existe pas.",
+			"dinozMustBeNamed": "Votre Dinoz doit avoir un nom avant de s'entraîner.",
+			"unavailable": "Ce Dinoz ne peut pas s'entraîner pour le moment.",
+			"wrongPlace": "Votre Dinoz doit être à Fosselave pour accéder au Centre d'Entraînement.",
+			"levelTooHigh": "Le Centre d'Entraînement est réservé aux Dinoz de niveau inférieur à 30.",
+			"needMemberCard": "Votre Dinoz doit posséder une Carte de Membre pour accéder au Centre d'Entraînement.",
+			"notEnoughGold": "Vous n'avez pas assez d'or pour choisir ce programme."
 		}
 	},
 	"npc": {
