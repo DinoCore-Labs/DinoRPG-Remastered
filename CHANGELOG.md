@@ -2,6 +2,16 @@
 
 ## 🔹 Core
 
+## 0.15.0
+
+### Minor Changes
+
+- d0548a7: Add Fosselave Training Center
+
+  Added the Fosselave Training Center feature with CEF programs, dedicated backend routes and services, frontend training page, available action integration, fight animation flow, and localized training center content.
+
+  Also added shared loading utilities with Loader, Spinner, and loadingStore, improved the training center page, fixed CEF fight animation locale handling, and ensured CEF fight results are displayed after the animation ends.
+
 ## 0.14.3
 
 ### Patch Changes
@@ -340,6 +350,21 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.16.0
+
+### Minor Changes
+
+- d0548a7: Add Fosselave Training Center
+
+  Added the Fosselave Training Center feature with CEF programs, dedicated backend routes and services, frontend training page, available action integration, fight animation flow, and localized training center content.
+
+  Also added shared loading utilities with Loader, Spinner, and loadingStore, improved the training center page, fixed CEF fight animation locale handling, and ensured CEF fight results are displayed after the animation ends.
+
+### Patch Changes
+
+- Updated dependencies [d0548a7]
+  - @dinorpg/core@0.15.0
 
 ## 0.15.3
 
@@ -775,6 +800,16 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.16.0
+
+### Minor Changes
+
+- d0548a7: Add Fosselave Training Center
+
+  Added the Fosselave Training Center feature with CEF programs, dedicated backend routes and services, frontend training page, available action integration, fight animation flow, and localized training center content.
+
+  Also added shared loading utilities with Loader, Spinner, and loadingStore, improved the training center page, fixed CEF fight animation locale handling, and ensured CEF fight results are displayed after the animation ends.
 
 ## 0.15.3
 
