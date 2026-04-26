@@ -1,3 +1,4 @@
+import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import type { MissionConditionSource } from '@dinorpg/core/models/missions/missionCondition.js';
 import type { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
 import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
@@ -10,6 +11,9 @@ type MissionTransaction = Prisma.TransactionClient;
 type OwnedDinozForMissionStart = {
 	id: number;
 	level: number;
+	status: {
+		statusId: number;
+	}[];
 };
 
 type ParsedMissionStartCondition =
@@ -20,32 +24,30 @@ type ParsedMissionStartCondition =
 	| {
 			type: 'CAN_FIGHT';
 			monsterKey: MonsterKey;
-	  };
+	  }
+	| { type: 'HAS_EFFECT'; effectKey: string };
 
 function parseMissionStartConditionPart(part: string): ParsedMissionStartCondition {
 	const match = /^([a-zA-Z_]+)\(([^()]+)\)$/.exec(part.trim());
-
 	if (!match) {
 		throw new Error(`Unsupported mission condition "${part}"`);
 	}
-
 	const [, rawType, rawValue] = match;
 	const type = rawType.trim();
 	const value = rawValue.trim();
-
 	switch (type) {
 		case 'mission':
 			return {
 				type: 'MISSION_COMPLETED',
 				missionKey: value
 			};
-
 		case 'canfight':
 			return {
 				type: 'CAN_FIGHT',
 				monsterKey: value as MonsterKey
 			};
-
+		case 'fx':
+			return { type: 'HAS_EFFECT', effectKey: value };
 		default:
 			throw new Error(`Unsupported mission condition type "${type}"`);
 	}
@@ -75,18 +77,23 @@ async function checkMissionCompletedCondition(
 			isCompleted: true
 		}
 	});
-
 	return mission?.isCompleted === true;
 }
 
 function checkCanFightCondition(dinoz: OwnedDinozForMissionStart, monsterKey: MonsterKey): boolean {
 	const monster = monsterByKey[monsterKey];
-
 	if (!monster) {
 		throw new Error(`Unknown monster key "${monsterKey}"`);
 	}
-
 	return dinoz.level >= monster.level;
+}
+
+function checkEffectCondition(dinoz: OwnedDinozForMissionStart, effectKey: string): boolean {
+	const statusId = dinozStatusIdByKey[effectKey];
+	if (!statusId) {
+		throw new Error(`Unknown dinoz effect key "${effectKey}"`);
+	}
+	return dinoz.status.some(status => status.statusId === statusId);
 }
 
 export async function checkMissionStartCondition(
@@ -99,33 +106,32 @@ export async function checkMissionStartCondition(
 	if (!params.condition) {
 		return true;
 	}
-
 	const parsedConditions = parseMissionStartConditionSource(params.condition);
-
 	for (const condition of parsedConditions) {
 		switch (condition.type) {
 			case 'MISSION_COMPLETED': {
 				const isCompleted = await checkMissionCompletedCondition(tx, params.dinoz.id, condition.missionKey);
-
 				if (!isCompleted) {
 					return false;
 				}
-
 				break;
 			}
-
 			case 'CAN_FIGHT': {
 				const canFight = checkCanFightCondition(params.dinoz, condition.monsterKey);
-
 				if (!canFight) {
 					return false;
 				}
-
+				break;
+			}
+			case 'HAS_EFFECT': {
+				const hasEffect = checkEffectCondition(params.dinoz, condition.effectKey);
+				if (!hasEffect) {
+					return false;
+				}
 				break;
 			}
 		}
 	}
-
 	return true;
 }
 
@@ -137,7 +143,6 @@ export async function assertMissionStartCondition(
 	}
 ) {
 	const isAllowed = await checkMissionStartCondition(tx, params);
-
 	if (!isAllowed) {
 		throw new ExpectedError(`Mission start conditions are not satisfied`);
 	}
