@@ -10,17 +10,19 @@ export async function assertOwnedDinoz(tx: MissionTransaction, userId: string, d
 		select: {
 			id: true,
 			userId: true,
-			level: true
+			level: true,
+			status: {
+				select: {
+					statusId: true
+				}
+			}
 		}
 	});
-
 	if (!dinoz) {
 		throw new ExpectedError(`Unknown dinoz "${dinozId}"`);
 	}
-
 	if (dinoz.userId !== userId) {
 		throw new ExpectedError(`You are not allowed to access dinoz "${dinozId}"`);
 	}
-
 	return dinoz;
 }
