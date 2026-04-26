@@ -8,7 +8,7 @@
 				</div>
 				<div class="newsContent">
 					<h1 v-if="news.title">{{ news.title }}</h1>
-					<h1 v-else>{{ $t('news.noTranslation') }}</h1>
+					<h1 v-else>{{ $t('newsPage.noTranslation') }}</h1>
 					<span>{{ formatCreatedDate(news.publishedAt ?? news.createdAt) }}</span>
 				</div>
 			</div>
@@ -35,7 +35,7 @@
 		</div>
 	</div>
 	<a v-if="canLoadMore" class="overload" @click="overload(page + 1)">
-		{{ $t('news.overload') }}
+		{{ $t('newsPage.overload') }}
 	</a>
 	<Roadmap />
 </template>
