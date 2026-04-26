@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.16.1
+
+### Patch Changes
+
+- b06fe72: add Bao Bob dialog and missions
+
 ## 0.16.0
 
 ### Minor Changes
