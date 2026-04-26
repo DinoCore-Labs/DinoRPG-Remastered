@@ -3873,6 +3873,18 @@
 				"begin": "Trois Dinoz Sombres de Caushemesh t'attendent aux Chutes Mutantes. Va les vaincre et reviens me voir pour obtenir ta récompense... Je te conseille de ne pas tenter de les battre tout seul, car tu pourrais y laisser la vie de ton Dinoz !",
 				"end": "Pas mal pour un Dinoz faible de Dinoville... Tiens, voilà pour toi !"
 			}
+		},
+		"baoBob": {
+			"kilpir": {
+				"name": "Le cadeau d'anniversaire",
+				"begin": "C'est bientôt l'anniversaire de la petite Sophie de l'Ile Waikiki. Son plat préféré est le Pirhanoz du Marais Collant. Peux-tu lui en apporter quelques-uns de ma part ?",
+				"kill": "Piranhos",
+				"sophie": {
+					"name": "La petite Sophie",
+					"text": "Oh ! Merci ! C'est très gentil de m'avoir apporté ces délicieux Piranhoz pour mon anniversaire ! Fait des gros bisoux à Monsieur Bao de ma part !"
+				},
+				"end": "J'aime bien faire des cadeaux... Tiens, voici ta récompense."
+			}
 		}
 	}
 }
