@@ -6,6 +6,7 @@ import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { currentEvents, EventDetails, GameEvent } from '@dinorpg/core/models/events/events.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import { FightOutcome, FightProcessResult } from '@dinorpg/core/models/fight/fightResult.js';
+import { FightRewardOptions } from '@dinorpg/core/models/fight/fightReward.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
@@ -314,7 +315,8 @@ export async function rewardFightVsMonsters(
 	monsters: MonsterFiche[],
 	fightResult: FightProcessResult,
 	place: PlaceEnum,
-	user: Pick<User, 'id' | 'teacher'>
+	user: Pick<User, 'id' | 'teacher'>,
+	options: FightRewardOptions = {}
 ) {
 	if (!team.length) {
 		throw new ExpectedError('userNotFound');
@@ -370,6 +372,7 @@ export async function rewardFightVsMonsters(
 		xp = calculatePvExp(xp, d.level, gameConfig.dinoz.maxLevel, gameConfig.dinoz.initialMaxLevel);
 
 		xp = calculateXPBonus(d, xp, user);
+		xp = Math.max(0, Math.round(xp * (options.xpMultiplier ?? 1)));
 		const max = getMaxXp(d);
 		if (d.experience >= max) {
 			// No xp if the dinoz was already at max
@@ -399,7 +402,7 @@ export async function rewardFightVsMonsters(
 
 		// Log death if dinoz is dead
 		if (attacker.hpLost >= d.life) {
-			incrementUserStat(StatTracking.DEATHS, userId, 1);
+			await incrementUserStat(StatTracking.DEATHS, userId, 1);
 		}
 
 		// Add statuses
@@ -422,7 +425,7 @@ export async function rewardFightVsMonsters(
 		gold += (getRandomNumber(0, 36) + 43) * 10; // Gold base average: 610
 	}
 
-	const napo = team.filter(d => d.items.filter(i => i.itemId === Item.GOLDEN_NAPODINO)).length;
+	const napo = team.filter(d => d.items.some(i => i.itemId === Item.GOLDEN_NAPODINO)).length;
 	const fprob = getRandomNumber(0, 100) - 10 * napo;
 
 	let goldMultiplier = 1;
@@ -471,10 +474,12 @@ export async function rewardFightVsMonsters(
 	}
 
 	// If attackers won
-	if (victory) {
-		await addMoney(userId, gold);
-	} else if (goldLost) {
-		await removeMoney(userId, goldLost);
+	if (!options.disableGoldReward) {
+		if (victory) {
+			await addMoney(userId, gold);
+		} else if (goldLost) {
+			await removeMoney(userId, goldLost);
+		}
 	}
 
 	// Items used
@@ -482,12 +487,10 @@ export async function rewardFightVsMonsters(
 	for (const fighter of [...fightResult.attackers, ...fightResult.defenders]) {
 		for (const itemUsed of fighter.itemsUsed) {
 			const itemRef = itemList[itemUsed];
-
 			// Remove only classic items
 			if (itemRef.itemType === ItemType.CLASSIC) {
 				await removeItemFromDinoz(fighter.dinozId, itemUsed);
 			}
-
 			if (fighter.userId && itemUsed === Item.GOBLIN_MERGUEZ) {
 				if (!merguezPerPlayer[fighter.userId]) {
 					merguezPerPlayer[fighter.userId] = 0;
@@ -508,21 +511,17 @@ export async function rewardFightVsMonsters(
 	for (const dinozCatch of fightResult.catches) {
 		if (!dinozCatch.id) {
 			// New catch
-
 			// Ignore dead catch
 			if (dinozCatch.hp <= 0) continue;
-
 			// Create catch
 			await createCatch(dinozCatch.dinozId, dinozCatch.monsterId, dinozCatch.hp);
 		} else {
 			// Existing catch
-
 			// Delete catch if dead
 			if (dinozCatch.hp <= 0) {
 				await removeCatch(dinozCatch.id);
 				continue;
 			}
-
 			// Update catch
 			await updateCatch(dinozCatch.id, dinozCatch.hp);
 		}
@@ -549,7 +548,7 @@ export async function rewardFightVsMonsters(
 	});
 	return {
 		fighters: fighters,
-		goldEarned: victory ? gold : -goldLost,
+		goldEarned: options.disableGoldReward ? 0 : victory ? gold : -goldLost,
 		xpEarned: victory ? totalWinXP : 0,
 		levelUp: victory ? levelup : false,
 		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
