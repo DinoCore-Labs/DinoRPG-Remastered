@@ -2,6 +2,7 @@ import { archisageDialog } from './archisage.dialog.js';
 import { atlanteGuardDialog } from './atlanteGuard.dialog.js';
 import { baoBobDialog } from './baoBob.dialog.js';
 import { coralMinerDialog } from './coralMiner.dialog.js';
+import { dianKorgseyDialog } from './dianKorgsey.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
 import { jovebozeDialog } from './joveboze.dialog.js';
 import { padamoineDialog } from './padamoine.dialog.js';
@@ -47,5 +48,6 @@ export const dialogDefinitions = [
 	speleleologueDialog,
 	speleleologueIceDialog,
 	// Foret
-	weirdManDialog
+	weirdManDialog,
+	dianKorgseyDialog
 ];
