@@ -3485,6 +3485,29 @@
 				"potion": "Vous êtes donc un Singe Antique !!!"
 			}
 		},
+		"dian": {
+			"name": "Dian Korgsey",
+			"dialog": {
+				"begin": "Salut, éleveur... Ne fais pas un bruit, il ne faut surtout pas déranger les Korgons !",
+				"korgons": "Oui, ce sont les petites créatures qui se sont installées ici. De vraies petites teignes si on n'y prête pas gare ! Déjà, ne les regarde surtout pas dans les yeux... Et si l'un d'eux s'approche trop, tu peux toujours essayer de lui donner un bout de bois à grignoter.",
+				"why": "Ils pourraient prendre ça pour un défi ! Et là, je vous laisse imaginer ce qui se passerait si tous les Korgons du campement se mettaient dans la tête que vous étiez un ennemi... Les derniers à avoir essayé ont été servis en souper le soir même.",
+				"wood": "Ils adorent ça ! C'est d'ailleurs la raison pour laquelle ils se sont installés dans la Jungle de Grumhel. Fascinant n'est-ce pas ? Mais malheureusement pour nous, ils sont capables de manger tout et n'importe quoi, y compris les voyageurs imprudents.",
+				"tame": "Il y a bien longtemps, je pense que les Korgons étaient domestiqués. Probablement bien avant la chute de l'île de Jazz... Mais aujourd'hui, ils sont revenus totalement à l'état sauvage ! Pas moyen de les approcher sans risquer d'y perdre un bras. Quelques éleveurs s'y sont aussi frottés, mais personne n'a obtenu mieux de leur part qu'un grand coup de dents.",
+				"interest": "N'est-ce pas ! Je suis heureuse de voir que ces adorables Korgons vous plaisent autant ! Si cela vous intéresse, vous pourriez me rendre quelques petits services au Camp ?",
+				"service": "Parfait ! Voilà ce dont j'ai besoin...",
+				"nothing": "D'accord, bon voyage !"
+			},
+			"choice": {
+				"korgons": "Les Korgons ?",
+				"nothing": "Oh pardon, je m'en vais...",
+				"why": "Il ne faut pas les regarder ?",
+				"wood": "Ils mangent du bois ?",
+				"tame": "Personne n'en a jamais dressé ?",
+				"interest": "Tout ça est vraiment passionnant !",
+				"service": "Oui, avec plaisir !",
+				"missions": "Consulter la liste des Missions"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
