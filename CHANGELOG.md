@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.15.2
+
+### Patch Changes
+
+- 978f32c: add Dian Korgsey
+
 ## 0.15.1
 
 ### Patch Changes
@@ -814,6 +820,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.16.2
+
+### Patch Changes
+
+- 978f32c: add Dian Korgsey
 
 ## 0.16.1
 
