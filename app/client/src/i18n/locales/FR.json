@@ -4315,6 +4315,113 @@
 					"title": "Faire votre rapport à Dinoville"
 				}
 			}
+		},
+		"forestGuardian": {
+			"unmute": {
+				"name": "Le Gardien de la Forêt",
+				"begin": "Le parchemin qui vous est tombé dessus comporte ce message :&&« Trouvez 1 mesure d'eau filante, puis 1 mesure d'eau croupie, puis 1 mesure d'eau pure et enfin 1 mesure d'eau Bouillonnante. »&&À peine avez-vous fini de lire ce message qu'une petite gourde vide tombe à son tour du feuillage sur votre tête ! Poc !",
+				"end": "Le vieil arbre se penche vers vous dans un bruissement... Il secoue alors lentement son feuillage, faisant tomber quelques beaux fruits à vos pieds.",
+				"juminWater": {
+					"name": "Eau du Fleuve Jumin",
+					"description": "Vous remplissez la gourde du vieil arbre avec un peu d'eau du Fleuve Jumin. Voilà pour l'eau filante !"
+				},
+				"swampWater": {
+					"name": "Eau trouble",
+					"description": "Vous ajoutez dans la gourde du vieil arbre un peu d'eau du Marais Collant. Elle sent vraiment mauvais..."
+				},
+				"pureWater": {
+					"name": "Eau rafraîchissante",
+					"description": "Vous ajoutez dans la gourde du vieil arbre de l'eau claire de la Fontaine et vous en profitez pour vous y rafraîchir."
+				},
+				"boilingWater": {
+					"name": "Eau bouillonnante",
+					"description": "Vous complétez le contenu de la gourde avec un peu de l'eau bouillonnante qui inonde les Gorges. C'est chaud !"
+				},
+				"pourGourd": {
+					"name": "Verser la gourde sur les racines",
+					"description": "Les feuillages du vieil arbre s'agitent brusquement dans tous les sens et une lumière apaisante emplit la jungle tout autour de vous..."
+				}
+			},
+			"orchid": {
+				"name": "La main verte",
+				"begin": "Un parchemin pendouille à une branche. Vous pouvez y lire :&&« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle ».&&Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
+				"end": "Vous déposez la gourde vide au pied de l'arbre. Un gros fruit se décroche des branches supérieures et tombe à côté de vous avec un bruit mat.",
+				"takeWater": {
+					"name": "Prendre de l'eau",
+					"description": "Vous remplissez la gourde d'eau du Fleuve Jumin."
+				},
+				"waterOrchid": {
+					"name": "Arroser l'Orchidée",
+					"description": "Vous versez tout le contenu de la gourde sur une magnifique fleur qui doit être l'Orchidée Quidée. Aussitôt, celle-ci s'illumine de mille feux et de jolies gouttelettes de rosée perlent sur ses feuilles gracieuses."
+				},
+				"talkingOrchid": {
+					"name": "Orchidée Quidée parlante",
+					"text": "Quoi ?! Qu'est-ce que tu r'gardes comme ça ? T'as jamais vu une Orchidée pousser ?! T'as rien à faire ailleurs ? Allez du vent, laisse-moi, tu m'fais de l'ombre !!"
+				}
+			},
+			"licens": {
+				"name": "Permis de couper",
+				"begin": "Un parchemin, que vous n'aviez pas remarqué jusque-là, est ficelé à une racine. Vous pouvez y lire :&&« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisés dans la Jungle de Grumhel. Allez réguler leur travail. »",
+				"end": "Quelques fruits tombent de l'arbre autour de vous...",
+				"kill": "Roncivores ou Korgons"
+			},
+			"king": {
+				"name": "Le roi de la Jungle",
+				"begin": "Un message est inscrit sur un bout de tissu accroché à une branche :&&« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
+				"end": "Un fruit tombe à côté de vous. Tandis que vous vous penchez pour le ramasser, une grosse bourse pleine d'or tombée de nulle part s'écrase droit sur votre tête ! SCHLING !",
+				"cry": {
+					"name": "Pousser le cri du Roi de la Jungle",
+					"description": "Vous poussez un cri particulièrement ridicule, qui n'effraierait probablement même pas un Korgon... Il va falloir trouver mieux !"
+				},
+				"talkingOrchid": {
+					"name": "Orchidée Quidée parlante",
+					"text": "Encore là l'empaffé de la jungle ?! Qu'est-ce qu'il a l'autre à m'regarder comme ça ?"
+				},
+				"pickOrchid": {
+					"name": "Cueillir l'Orchidée",
+					"description": "Sans ménagement, vous arrachez l'orchidée et vous l'emmenez avec vous. Celle-ci crie, vous insulte copieusement et se débat autant qu'elle peut..."
+				},
+				"plantOrchid": {
+					"name": "Planter l'Orchidée",
+					"description": "Vous replantez d'un coup sec l'Orchidée Quidée qui ne manque pas de vous hurler dessus. Tandis que vous vous éloignez, vous pouvez encore l'entendre crier des atrocités à votre égard... Voilà qui fera bien l'affaire pour effrayer les touristes !"
+				}
+			},
+			"wishes": {
+				"name": "Faites vos voeux",
+				"begin": "Vous pouvez lire, gravé sur une branche :&&« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »&&Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
+				"end": "Quelques fruits tombent de l'arbre autour de vous...",
+				"throwCoin": {
+					"name": "Jeter une pièce",
+					"description": "Vous jetez une pièce au coeur des chutes et vous attendez quelques minutes... Évidemment rien ne se produit et vous décidez d'aller exaucer le voeu de réduire la population des monstres par vous-même."
+				},
+				"kill": "Roncivores ou Korgons"
+			},
+			"newplt": {
+				"name": "Un cric pour la forêt",
+				"begin": "Une longue bande de tissu est enroulée autour du vieil arbre :&&« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »&&Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
+				"end": "Deux gros fruits se décrochent et tombent dans un buisson près de vous...",
+				"volunteer": {
+					"name": "Bénévole « Paix Verte »",
+					"text": "Bonjour ! Toi aussi tu viens pour aider à déblayer toute cette roche ? Pour le moment, j'ai un gros problème sur les bras... Des monstres en tous genres viennent régulièrement m'empêcher de travailler... Tu peux faire quelque chose ?",
+					"text2": "Il ne faut plus perdre une seconde, continuons !",
+					"text3": "Je vais rester ici pour arroser les plantes survivantes. Va faire un rapport pour moi auprès du Gardien de la Forêt !"
+				},
+				"killAny": "Monstres en tous genres",
+				"liftRocks": {
+					"name": "Soulever les rochers",
+					"description": "Vous installez le cric puis commencez à soulever et pousser les rochers tombés sur la forêt... Mais tandis que vous pensiez être enfin au calme, un grognement inquiétant se fait entendre derrière vous...",
+					"description2": "L'opération vous occupe encore plusieurs heures, même avec le cric, mais vous parvenez tout de même à dégager de nombreux arbres et plantes ensevelies sous les rochers."
+				}
+			},
+			"gshop": {
+				"name": "Monnaie de singe",
+				"begin": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :&&« Déposez de l'or dans le seau pour votre ration quotidienne. »",
+				"end": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »",
+				"examineBucket": {
+					"name": "Examiner le seau",
+					"description": "Vous trouvez une petite branche fleurie dans le seau..."
+				}
+			}
 		}
 	}
 }
