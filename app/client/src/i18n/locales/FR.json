@@ -3508,6 +3508,42 @@
 				"missions": "Consulter la liste des Missions"
 			}
 		},
+		"nicolasHulot": {
+			"name": "Nicolas Mulot",
+			"dialog": {
+				"begin": "Un homme en tenue de safari se tient debout à l'Orée de la Jungle de Grumhel. Il a l'air d'attendre quelque chose...",
+				"welcome": "La Jungle de Grumhel ! Cet espace sauvage et encore vierge, protégé de toute agression extérieure par sa faune dangereuse, reste aujourd'hui une terre de mystère et de contraste qui séduit chaque année de nombreux explorateurs. Séquence frisson. \"À la découverte d'un Monde Sauvage\", c'est aujourd'hui, en ma compagnie !",
+				"who": "Nicolas Mulot, journaliste pour le magazine Ouïaïa et amoureux de Dinoland !",
+				"role": "Pas pour un journaliste de l'extrême comme moi. Il y a tout ce que je recherche ici : un monde inexploré, une faune et une flore riches, tant de choses fabuleuses à découvrir à chaque pas !",
+				"myst": "Je l'ignore encore... Mais... Mais je suis convaincu qu'il y a des choses fabuleuses qui se cachent dans cette jungle ! Il faut juste oser y entrer... Séquence peur bleue.",
+				"flora": "Ces arbres millénaires cachent aux yeux des hommes leurs plus beaux atours ! Mais pour qui sait regarder, c'est un ravissement pour les sens. Senteurs exotiques, fleurs multicolores, végétation luxuriante... La Jungle de Grumhel, \"Une Aventure au pays de Mère Nature\", séquence Exploration !",
+				"whynot": "Disons qu'il existe quelques plantes peu engageantes aussi... Comme la \"Toxicae Virulente Noire\" ou la \"Sauvagine Géante Dévoreuse de Foie\"...",
+				"fauna": "Entre les roncivores, les korgons et les fauve-souris, la Jungle de Grumhel recèle de dangers qui dépassent l'imagination ! À la fois Terre hostile et Terre Promise, cette partie de Dinoland ne se laissera pas si facilement apprivoiser...",
+				"fear": "Euh, comment dire... C'est... Disons un contretemps technique. Il serait plus prudent, je pense, de planifier d'abord une mission de reconnaissance. Avant de plonger corps et âme dans l'aventure, cela va de soi !",
+				"explore": "Ça serait une excellente idée ! Il faut dire qu'il n'y a pas beaucoup de passage par ici... Un petit coup de main serait le bienvenu... Séquence action.",
+				"other": "Oserez-vous plonger dans les mystères insondables de la Jungle de Grumhel ?",
+				"sick": "Alors que Nicolas Mulot se retourne pour vous répondre, vous constatez avec horreur qu'il a le visage tout boursouflé et couvert de verrues et autres boutons !",
+				"problem": "Euh... Bien le bonVour. Ne le prenez pas trop mal, mais Ve crois que les plantes que vous m'avez amené étaient comme dirait... eux toxViques... Ve crois bien que mon allervie aux plantes a pris une Fertaine ampleur... Vous pourriez peut-être m'aider à Drouver un remède ? ...",
+				"sickstatus": "Alors, vous avez trouvé un rebède ?",
+				"better": "Le remède que vous m'avez amené a été très efficace !"
+			},
+			"choice": {
+				"talk": "Lui parler",
+				"who": "Mais... Vous êtes qui ?",
+				"better": "Vous avez l'air d'aller bien mieux...",
+				"missions": "Consulter la liste des Missions",
+				"role": "Ça n'est pas un peu dangereux pour un journaliste ici ?",
+				"myst": "Quels genres de mystères existent ici ?",
+				"fauna": "Parlez-moi des animaux de la Jungle...",
+				"flora": "Il y a de belles plantes par ici ?",
+				"fear": "Ah... Vous voulez dire que vous n'osez pas voir ça par vous-même ?",
+				"whynot": "Pourquoi n'entrez-vous pas dans la jungle alors ?",
+				"explore": "Je peux vous aider si vous le voulez ?",
+				"other": "J'ai d'autres questions...",
+				"problem": "Ouh la ! Qu'est-ce qui vous arrive ?",
+				"curesearch": "Voyons voir ça..."
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
