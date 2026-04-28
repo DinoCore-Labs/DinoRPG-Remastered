@@ -4099,7 +4099,7 @@
 					"description": "Le Fikoïa est dissimulé sous une pile de feuilles de bananiers. Il va falloir le traîner jusqu'au camp..."
 				},
 				"dian": {
-					"name": "Parler à Dian Korgsey",
+					"name": "Dian Korgsey",
 					"text": "Ah vous voilà ! Quel dommage qu'ils aient coupé ce Fikoïa Cendré... C'est bien un travail de Korgon sudiste ça... Bon, impossible de remonter la rivière avec. Cachez-le ici, ça fera l'affaire. On se retrouve au Camp."
 				},
 				"hideFikoia": {
