@@ -142,11 +142,11 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 		beginKey: 'missions.dian.poison.begin',
 		endKey: 'missions.dian.poison.end',
 		goals: [
-			{ type: 'AT', place: PlaceEnum.COLLINES_ESCARPEES, hidden: false },
+			{ type: 'AT', place: PlaceEnum.COLLINES_HANTEES, hidden: false },
 			{
 				type: 'ACTION',
 				actionKey: 'dian_poison_sap',
-				place: PlaceEnum.COLLINES_ESCARPEES,
+				place: PlaceEnum.COLLINES_HANTEES,
 				nameKey: 'missions.dian.poison.sap.name',
 				descriptionKey: 'missions.dian.poison.sap.description'
 			},
@@ -154,7 +154,7 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 			{
 				type: 'ACTION',
 				actionKey: 'dian_poison_trap',
-				place: PlaceEnum.POSTE_DE_GARDE,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				nameKey: 'missions.dian.poison.trap.name',
 				descriptionKey: 'missions.dian.poison.trap.description'
 			},
