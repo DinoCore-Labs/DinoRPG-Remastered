@@ -230,7 +230,7 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 		],
 		rewards: [
 			{ type: 'GOLD', value: 3500 },
-			{ type: 'ITEM', itemKey: 'hotpan', quantity: 1 },
+			{ type: 'ITEM', itemKey: 'hot_bread', quantity: 1 },
 			{ type: 'XP', value: 100 }
 		],
 		labels: {},
