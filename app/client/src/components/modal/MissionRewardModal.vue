@@ -32,29 +32,33 @@
 							/>
 							{{ getCollectionLabel(reward.collectionKey) }}
 						</template>
-
 						<template v-else-if="reward.type === 'INGREDIENT'">
 							{{ getIngredientLabel(reward.ingredientKey) }} x {{ reward.quantity }}
 						</template>
-
 						<template v-else-if="reward.type === 'EFFECT'">
-							{{ reward.effectKey }}
+							<img
+								class="item"
+								:src="getImgURL('status', `fx_${getStatusImageKey(reward.effectKey)}`)"
+								:alt="getStatusLabel(reward.effectKey)"
+							/>
+							{{ getStatusLabel(reward.effectKey) }}
 						</template>
-
 						<template v-else-if="reward.type === 'REMOVE_EFFECT'">
-							{{ reward.effectKey }}
+							<img
+								class="item"
+								:src="getImgURL('status', `status_${getStatusImageKey(reward.effectKey)}`)"
+								:alt="getStatusLabel(reward.effectKey)"
+							/>
+							{{ getStatusLabel(reward.effectKey) }}
 						</template>
-
 						<template v-else-if="reward.type === 'USER_VAR'">
 							{{ reward.userVarKey }}
 						</template>
-
 						<template v-else-if="reward.type === 'GAME_VAR'">
 							{{ reward.gameVarKey }}
 						</template>
 					</li>
 				</ul>
-
 				<div class="option">
 					<DZButton class="continue" @click="$emit('close')">
 						{{ continueLabel }}
@@ -71,6 +75,8 @@ import { defineComponent, type PropType } from 'vue';
 
 import DZButton from '../utils/DZButton.vue';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import { statusList } from '../../constants/status';
+import type { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 
 export default defineComponent({
 	name: 'MissionRewardModal',
@@ -139,6 +145,30 @@ export default defineComponent({
 				[`ingredient.name.${ingredientKey}`, `ingredients.name.${ingredientKey}`],
 				ingredientKey
 			);
+		},
+		getStatusId(statusKey: string): DinozStatusId | undefined {
+			if (statusKey in statusList.id) {
+				return statusList.id[statusKey];
+			}
+			const numericStatusId = Number(statusKey);
+			if (!Number.isNaN(numericStatusId) && numericStatusId in statusList.imgName) {
+				return numericStatusId as DinozStatusId;
+			}
+			return undefined;
+		},
+		getStatusImageKey(statusKey: string): string {
+			const statusId = this.getStatusId(statusKey);
+			if (!statusId) {
+				return statusKey;
+			}
+			return statusList.imgName[statusId] ?? statusKey;
+		},
+		getStatusLabel(statusKey: string): string {
+			const statusId = this.getStatusId(statusKey);
+			if (!statusId) {
+				return statusKey;
+			}
+			return this.translateWithFallback([`status.name.${statusId}`], statusKey);
 		}
 	}
 });
