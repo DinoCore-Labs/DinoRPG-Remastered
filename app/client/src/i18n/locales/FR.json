@@ -3555,6 +3555,19 @@
 				"curesearch": "Voyons voir ça..."
 			}
 		},
+		"forestGuardian": {
+			"name": "Gardien de la Forêt",
+			"dialog": {
+				"begin": "Un immense arbre vous fait face... De toute évidence, il est particulièrement âgé et semble empreint d'une grande sagesse. Lentement, très lentement, ses feuilles s'abaissent dans votre direction et bruissent doucement.",
+				"shake": "Tandis que vous le secouez, si tant est qu'on puisse secouer un arbre si grand, vous percevez un étrange et long grognement venant de l'intérieur même de l'écorce ! Quelque chose tombe brusquement du feuillage sur votre tête : poc !",
+				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à votre grande surprise, vous constatez qu'il y a quelque chose d'écrit sur ce parchemin !"
+			},
+			"choice": {
+				"missions": "Consulter la liste des Missions",
+				"shake": "Secouer un peu cet arbre",
+				"item": "Aie ! Qu'est-ce que c'est ?"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
