@@ -210,7 +210,11 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 			{ type: 'AT', place: PlaceEnum.FLEUVE_JUMIN, hidden: false },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'dian_korgsey',
+				npcNameKey: 'npc.eugene.name',
+				gfx: 'dian',
 				place: PlaceEnum.FLEUVE_JUMIN,
 				nameKey: 'missions.dian.poison.dian.name',
 				textKey: 'missions.dian.poison.dian.text'
