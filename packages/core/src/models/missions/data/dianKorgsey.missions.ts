@@ -180,16 +180,16 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 				type: 'ACTION',
 				actionKey: 'dian_poison_tracks_fleuve',
 				place: PlaceEnum.FLEUVE_JUMIN,
-				nameKey: 'missions.dian.poison.tracksFleuve.name',
-				descriptionKey: 'missions.dian.poison.tracksFleuve.description'
+				nameKey: 'missions.dian.poison.track.name',
+				descriptionKey: 'missions.dian.poison.track.description'
 			},
 			{ type: 'AT', place: PlaceEnum.CHEMIN_GLAUQUE, hidden: true },
 			{
 				type: 'ACTION',
 				actionKey: 'dian_poison_tracks_chemin',
 				place: PlaceEnum.CHEMIN_GLAUQUE,
-				nameKey: 'missions.dian.poison.tracksChemin.name',
-				descriptionKey: 'missions.dian.poison.tracksChemin.description'
+				nameKey: 'missions.dian.poison.track.name',
+				descriptionKey: 'missions.dian.poison.track.description2'
 			},
 			{
 				type: 'KILL',

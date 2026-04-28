@@ -4088,13 +4088,10 @@
 					"description": "Tandis que vous avancez dans la Jungle Sauvage, un groupe de Korgons surgit tout autour de vous ! Il va falloir s'en débarrasser pour continuer..."
 				},
 				"ambushKill": "Korgons embusqués",
-				"tracksFleuve": {
+				"track": {
 					"name": "Traces au sol",
-					"description": "De larges traces dans le sol indiquent clairement qu'on a traîné quelque chose de très lourd depuis le Fleuve Jumin... Les traces continuent vers le sud."
-				},
-				"tracksChemin": {
-					"name": "Traces au sol",
-					"description": "La piste s'arrête ici... Mais à en juger par les grognements dans les buissons, on vous attendait de pied ferme !"
+					"description": "De larges traces dans le sol indiquent clairement qu'on a traîné quelque chose de très lourd depuis le Fleuve Jumin... Les traces continuent vers le sud.",
+					"description2": "La piste s'arrête ici... Mais à en juger par les grognements dans les buissons, on vous attendait de pied ferme !"
 				},
 				"korgonsOrAlliesKill": "Korgons ou alliés",
 				"fikoia": {
