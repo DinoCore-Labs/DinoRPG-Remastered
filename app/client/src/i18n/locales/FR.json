@@ -4024,6 +4024,92 @@
 				},
 				"end": "Bravo ! C'était un magnifique Tour de Dinoland, voici une récompense digne de votre exploit !"
 			}
+		},
+		"dian": {
+			"kswim": {
+				"name": "Comme un Korgon dans l'eau",
+				"begin": "La Jungle de Grumhel est un endroit fascinant ! Tenez, prenez les Korgons par exemple. Ils se sont adaptés à merveille à leur environnement ! Saviez-vous qu'ils fabriquaient leurs propres palmes afin de pouvoir traverser sans encombre le Fleuve Jumin ? Non ? Tenez, je veux bien vous en offrir une paire si vous me ramenez quelques fournitures de première nécessité...",
+				"end": "Voilà tout ce qu'il me fallait ! C'est parfait. Voici les Palmes des Korgons, comme convenu !",
+				"supplies": {
+					"name": "Examiner la liste de fournitures",
+					"description": "La liste de Dian Korgsey indique qu'elle a tout d'abord besoin de certains outils que l'on trouve aux Forges du Grand Tout-Chaud."
+				},
+				"tools": {
+					"name": "Prendre des Outils",
+					"description": "Vous récupérez une Trousse à Outils. La suite de la liste indique : « Branches de la forêt du volcan »..."
+				},
+				"wood": {
+					"name": "Couper du bois",
+					"description": "Vous récupérez quelques branches calcinées. La liste de fournitures se termine sur : « un grigri »..."
+				},
+				"grigri": {
+					"name": "Demander un grigri",
+					"description": "Le Shaman vous adresse un large sourire et vous tend un de ses grigris porte-bonheur. Merci !"
+				}
+			},
+			"rivals": {
+				"name": "Korgons du nord, Korgons du sud",
+				"begin": "Si les Korgons de cette partie de la Jungle de Grumhel sont quasiment sociables, il en existe au Sud, sur les bords du Chemin Glauque, qui sont autrement moins gentils. Je pense que si tu m'apportais une preuve de victoire sur ceux du Sud, les Korgons d'ici nous apprécieraient beaucoup plus !",
+				"end": "Ah, bonne idée les griffes ! Les Korgons ici ont l'air d'apprécier... Tiens, voilà pour ta peine.",
+				"kill": "Korgons du sud",
+				"trophy": {
+					"name": "Trouver un trophée",
+					"description": "Vous récupérez quelques Griffes de Korgons pour servir de trophée aux Korgons du nord..."
+				}
+			},
+			"kfood": {
+				"name": "Steak de bois",
+				"begin": "Il existe quelque part dans Grumhel une espèce rare d'arbre que les Korgons adorent : le Fikoïa Cendré ! J'ignore où on peut en trouver, mais je te paierai bien si tu m'en apportes !",
+				"end": "Ils vont se régaler avec ça, merci bien !",
+				"tree": {
+					"name": "Arbre étrange",
+					"description": "Vous remarquez un drôle d'arbre aux feuilles grises et qui sent le tabac froid... Sûrement un Fikoïa Cendré ! Mais tandis que vous vous apprêtez à en prendre quelques branches, des bruits se font entendre dans les fourrés..."
+				},
+				"kill": "Monstres attirés par le Fikoïa",
+				"branches": {
+					"name": "Prendre quelques branches",
+					"description": "Mieux vaut ne pas trop tarder par ici : vous préparez un gros fagot de bois et vous vous éloignez des fourrés..."
+				}
+			},
+			"poison": {
+				"name": "Rivalités korgons",
+				"begin": "Le Fikoïa Cendré que vous avez découvert va rapidement devenir un point stratégique pour les Korgons du sud... Il faut réagir vite ! Nous allons « piéger » quelques branches de cet arbre pour les dissuader de le manger... Évidemment, nous, nous saurons quelles branches ne pas toucher... Hi hi hi.",
+				"end": "C'est bien triste pour ce spécimen de Fikoïa, ils sont si rares ! Merci pour toute votre aide, on ne vous oubliera pas...",
+				"sap": {
+					"name": "Récupérer de la sève",
+					"description": "Vous récupérez de la Suintante Mordicus, une sève d'arbre au goût innommable. Le piège idéal pour ce travail."
+				},
+				"trap": {
+					"name": "Piéger le Fikoïa",
+					"description": "Ça alors ! Le Fikoïa a disparu ! Les Korgons du sud sont probablement passés avant vous..."
+				},
+				"ambush": {
+					"name": "Embuscade",
+					"description": "Tandis que vous avancez dans la Jungle Sauvage, un groupe de Korgons surgit tout autour de vous ! Il va falloir s'en débarrasser pour continuer..."
+				},
+				"ambushKill": "Korgons embusqués",
+				"tracksFleuve": {
+					"name": "Traces au sol",
+					"description": "De larges traces dans le sol indiquent clairement qu'on a traîné quelque chose de très lourd depuis le Fleuve Jumin... Les traces continuent vers le sud."
+				},
+				"tracksChemin": {
+					"name": "Traces au sol",
+					"description": "La piste s'arrête ici... Mais à en juger par les grognements dans les buissons, on vous attendait de pied ferme !"
+				},
+				"korgonsOrAlliesKill": "Korgons ou alliés",
+				"fikoia": {
+					"name": "Fikoïa Cendré",
+					"description": "Le Fikoïa est dissimulé sous une pile de feuilles de bananiers. Il va falloir le traîner jusqu'au camp..."
+				},
+				"dian": {
+					"name": "Parler à Dian Korgsey",
+					"text": "Ah vous voilà ! Quel dommage qu'ils aient coupé ce Fikoïa Cendré... C'est bien un travail de Korgon sudiste ça... Bon, impossible de remonter la rivière avec. Cachez-le ici, ça fera l'affaire. On se retrouve au Camp."
+				},
+				"hideFikoia": {
+					"name": "Cacher le Fikoïa",
+					"description": "Vous dissimulez à votre tour l'arbre sous quelques feuilles de bananiers."
+				}
+			}
 		}
 	}
 }
