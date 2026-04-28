@@ -102,11 +102,11 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 		beginKey: 'missions.dian.kfood.begin',
 		endKey: 'missions.dian.kfood.end',
 		goals: [
-			{ type: 'AT', place: PlaceEnum.POSTE_DE_GARDE, hidden: true },
+			{ type: 'AT', place: PlaceEnum.PORTE_DE_SYLVENOIRE, hidden: true },
 			{
 				type: 'ACTION',
 				actionKey: 'dian_kfood_tree',
-				place: PlaceEnum.POSTE_DE_GARDE,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				nameKey: 'missions.dian.kfood.tree.name',
 				descriptionKey: 'missions.dian.kfood.tree.description'
 			},
@@ -121,7 +121,7 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 			{
 				type: 'ACTION',
 				actionKey: 'dian_kfood_branches',
-				place: PlaceEnum.POSTE_DE_GARDE,
+				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				nameKey: 'missions.dian.kfood.branches.name',
 				descriptionKey: 'missions.dian.kfood.branches.description'
 			},
