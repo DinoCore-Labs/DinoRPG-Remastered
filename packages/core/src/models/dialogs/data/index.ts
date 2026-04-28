@@ -4,6 +4,7 @@ import { baoBobDialog } from './baoBob.dialog.js';
 import { coralMinerDialog } from './coralMiner.dialog.js';
 import { dianKorgseyDialog } from './dianKorgsey.dialog.js';
 import { nicolasHulotDialog } from './hulot.dialog.js';
+import { forestGuardianDialog } from './forestGuardian.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
 import { jovebozeDialog } from './joveboze.dialog.js';
 import { padamoineDialog } from './padamoine.dialog.js';
@@ -50,6 +51,6 @@ export const dialogDefinitions = [
 	speleleologueIceDialog,
 	// Foret
 	weirdManDialog,
-	dianKorgseyDialog,
 	nicolasHulotDialog
+	forestGuardianDialog
 ];
