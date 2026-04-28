@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.16.3
+
+### Patch Changes
+
+- e154d8a: add Nicolas Mulot
+
 ## 0.16.2
 
 ### Patch Changes
