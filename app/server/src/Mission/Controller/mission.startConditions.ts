@@ -17,18 +17,20 @@ type OwnedDinozForMissionStart = {
 };
 
 type ParsedMissionStartCondition =
-	| {
-			type: 'MISSION_COMPLETED';
-			missionKey: string;
-	  }
-	| {
-			type: 'CAN_FIGHT';
-			monsterKey: MonsterKey;
-	  }
+	| { type: 'MISSION_COMPLETED'; missionKey: string }
+	| { type: 'CAN_FIGHT'; monsterKey: MonsterKey }
 	| { type: 'HAS_EFFECT'; effectKey: string };
 
-function parseMissionStartConditionPart(part: string): ParsedMissionStartCondition {
-	const match = /^([a-zA-Z_]+)\(([^()]+)\)$/.exec(part.trim());
+type ParsedMissionStartConditionPart = {
+	negated: boolean;
+	condition: ParsedMissionStartCondition;
+};
+
+function parseMissionStartConditionPart(part: string): ParsedMissionStartConditionPart {
+	const trimmedPart = part.trim();
+	const negated = trimmedPart.startsWith('!');
+	const source = negated ? trimmedPart.slice(1).trim() : trimmedPart;
+	const match = /^([a-zA-Z_]+)\(([^()]+)\)$/.exec(source);
 	if (!match) {
 		throw new Error(`Unsupported mission condition "${part}"`);
 	}
@@ -38,27 +40,35 @@ function parseMissionStartConditionPart(part: string): ParsedMissionStartConditi
 	switch (type) {
 		case 'mission':
 			return {
-				type: 'MISSION_COMPLETED',
-				missionKey: value
+				negated,
+				condition: { type: 'MISSION_COMPLETED', missionKey: value }
 			};
 		case 'canfight':
 			return {
-				type: 'CAN_FIGHT',
-				monsterKey: value as MonsterKey
+				negated,
+				condition: { type: 'CAN_FIGHT', monsterKey: value as MonsterKey }
 			};
 		case 'fx':
-			return { type: 'HAS_EFFECT', effectKey: value };
+			return {
+				negated,
+				condition: { type: 'HAS_EFFECT', effectKey: value }
+			};
 		default:
 			throw new Error(`Unsupported mission condition type "${type}"`);
 	}
 }
 
-function parseMissionStartConditionSource(source: MissionConditionSource): ParsedMissionStartCondition[] {
+function parseMissionStartConditionSource(source: MissionConditionSource): ParsedMissionStartConditionPart[][] {
 	return source
-		.split('+')
-		.map(part => part.trim())
-		.filter(Boolean)
-		.map(parseMissionStartConditionPart);
+		.split('|')
+		.map(orPart =>
+			orPart
+				.split('+')
+				.map(andPart => andPart.trim())
+				.filter(Boolean)
+				.map(parseMissionStartConditionPart)
+		)
+		.filter(group => group.length > 0);
 }
 
 async function checkMissionCompletedCondition(
@@ -96,6 +106,23 @@ function checkEffectCondition(dinoz: OwnedDinozForMissionStart, effectKey: strin
 	return dinoz.status.some(status => status.statusId === statusId);
 }
 
+async function checkSingleMissionStartCondition(
+	tx: MissionTransaction,
+	params: {
+		dinoz: OwnedDinozForMissionStart;
+		condition: ParsedMissionStartCondition;
+	}
+): Promise<boolean> {
+	switch (params.condition.type) {
+		case 'MISSION_COMPLETED':
+			return checkMissionCompletedCondition(tx, params.dinoz.id, params.condition.missionKey);
+		case 'CAN_FIGHT':
+			return checkCanFightCondition(params.dinoz, params.condition.monsterKey);
+		case 'HAS_EFFECT':
+			return checkEffectCondition(params.dinoz, params.condition.effectKey);
+	}
+}
+
 export async function checkMissionStartCondition(
 	tx: MissionTransaction,
 	params: {
@@ -106,33 +133,25 @@ export async function checkMissionStartCondition(
 	if (!params.condition) {
 		return true;
 	}
-	const parsedConditions = parseMissionStartConditionSource(params.condition);
-	for (const condition of parsedConditions) {
-		switch (condition.type) {
-			case 'MISSION_COMPLETED': {
-				const isCompleted = await checkMissionCompletedCondition(tx, params.dinoz.id, condition.missionKey);
-				if (!isCompleted) {
-					return false;
-				}
-				break;
-			}
-			case 'CAN_FIGHT': {
-				const canFight = checkCanFightCondition(params.dinoz, condition.monsterKey);
-				if (!canFight) {
-					return false;
-				}
-				break;
-			}
-			case 'HAS_EFFECT': {
-				const hasEffect = checkEffectCondition(params.dinoz, condition.effectKey);
-				if (!hasEffect) {
-					return false;
-				}
+	const conditionGroups = parseMissionStartConditionSource(params.condition);
+	for (const group of conditionGroups) {
+		let groupIsValid = true;
+		for (const parsedCondition of group) {
+			const result = await checkSingleMissionStartCondition(tx, {
+				dinoz: params.dinoz,
+				condition: parsedCondition.condition
+			});
+			const finalResult = parsedCondition.negated ? !result : result;
+			if (!finalResult) {
+				groupIsValid = false;
 				break;
 			}
 		}
+		if (groupIsValid) {
+			return true;
+		}
 	}
-	return true;
+	return false;
 }
 
 export async function assertMissionStartCondition(
