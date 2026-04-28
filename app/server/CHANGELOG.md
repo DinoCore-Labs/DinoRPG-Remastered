@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.16.2
+
+### Patch Changes
+
+- e154d8a: add Nicolas Mulot
+- Updated dependencies [e154d8a]
+  - @dinorpg/core@0.15.3
+
 ## 0.16.1
 
 ### Patch Changes

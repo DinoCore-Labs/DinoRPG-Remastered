@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.15.3
+
+### Patch Changes
+
+- e154d8a: add Nicolas Mulot
+
 ## 0.15.2
 
 ### Patch Changes
