@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.15.3
+
+### Patch Changes
+
+- e154d8a: add Nicolas Mulot
+
 ## 0.15.2
 
 ### Patch Changes
@@ -362,6 +368,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.16.2
+
+### Patch Changes
+
+- e154d8a: add Nicolas Mulot
+- Updated dependencies [e154d8a]
+  - @dinorpg/core@0.15.3
 
 ## 0.16.1
 
@@ -820,6 +834,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.16.3
+
+### Patch Changes
+
+- e154d8a: add Nicolas Mulot
 
 ## 0.16.2
 
