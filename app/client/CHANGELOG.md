@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.16.2
+
+### Patch Changes
+
+- 978f32c: add Dian Korgsey
+
 ## 0.16.1
 
 ### Patch Changes
