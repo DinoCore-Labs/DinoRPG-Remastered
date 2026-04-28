@@ -150,7 +150,7 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 				nameKey: 'missions.dian.poison.sap.name',
 				descriptionKey: 'missions.dian.poison.sap.description'
 			},
-			{ type: 'AT', place: PlaceEnum.POSTE_DE_GARDE, hidden: false },
+			{ type: 'AT', place: PlaceEnum.PORTE_DE_SYLVENOIRE, hidden: false },
 			{
 				type: 'ACTION',
 				actionKey: 'dian_poison_trap',
