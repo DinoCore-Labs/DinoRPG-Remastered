@@ -234,7 +234,7 @@ export default defineComponent({
 					await this.resfreshInventory();
 					eventBus.emit('equipItem', items);
 				} catch (error) {
-					errorHandler.handle(error, this.$toast, this.$t);
+					errorHandler.handle(error, this.$toast);
 					return;
 				}
 			}
