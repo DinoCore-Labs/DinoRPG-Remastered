@@ -275,18 +275,25 @@ async function buildServer() {
 		// 1) Erreurs "attendues"
 		if (err instanceof ExpectedError) {
 			return reply.code(err.statusCode).send({
+				code: err.code,
 				message: err.message,
 				params: err.params ?? {}
 			});
 		}
-		// 2) Erreurs Fastify (validation, etc.)
+		// 2) Erreurs Fastify / validation
 		const fe = err as FastifyError;
 		if (typeof fe?.statusCode === 'number') {
-			return reply.code(fe.statusCode).send({ message: fe.message });
+			return reply.code(fe.statusCode).send({
+				code: 'request.invalid',
+				message: fe.message
+			});
 		}
 		// 3) Fallback 500
 		req.log.error(err);
-		return reply.code(500).send({ message: 'Internal Server Error' });
+		return reply.code(500).send({
+			code: 'server.internalError',
+			message: 'Internal Server Error'
+		});
 	});
 
 	return server;

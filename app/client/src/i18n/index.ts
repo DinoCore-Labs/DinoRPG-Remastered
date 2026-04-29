@@ -59,28 +59,29 @@ export const initI18n = async () => {
 			}
 		}
 	});
-
 	// load default language
 	const messages = await import(`./locales/${defaultLocale}.json`);
 	i18n.global.setLocaleMessage(defaultLocale, messages.default);
 	loadedLanguages.push(defaultLocale);
-
 	await loadLanguage(i18n.global.locale as string);
-
 	return i18n;
 };
+
+export function getI18n() {
+	if (!i18n) {
+		throw new Error('i18n has not been initialized');
+	}
+	return i18n;
+}
 
 export const loadLanguage = async (locale: string): Promise<string> => {
 	if (loadedLanguages.includes(locale)) {
 		return setI18nLanguage(locale);
 	}
-
 	// load locale messages with dynamic import
 	const messages = await import(`./locales/${locale}.json`);
-
 	i18n.global.setLocaleMessage(locale, messages.default);
 	loadedLanguages.push(locale);
-
 	return setI18nLanguage(locale);
 };
 
