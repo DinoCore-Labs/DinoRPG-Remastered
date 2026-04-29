@@ -35,27 +35,23 @@ export type AvailableDialogSummary = {
 
 export function getDialogPhase(dialog: RuntimeDialog, phaseId: string): RuntimeDialogPhase {
 	const phase = dialog.phases[phaseId];
-
 	if (!phase) {
-		throw new ExpectedError(`Unknown phase "${phaseId}" in dialog "${dialog.id}"`);
+		throw new Error(`Unknown phase "${phaseId}" in dialog "${dialog.id}"`);
 	}
-
 	return phase;
 }
 
 function getDialogLink(dialog: RuntimeDialog, linkId: string): RuntimeDialogLink {
 	const link = dialog.links[linkId];
-
 	if (!link) {
-		throw new ExpectedError(`Unknown link "${linkId}" in dialog "${dialog.id}"`);
+		throw new Error(`Unknown link "${linkId}" in dialog "${dialog.id}"`);
 	}
-
 	return link;
 }
 
 function ensurePhaseContainsLink(phase: RuntimeDialogPhase, linkId: string, dialogId: string) {
 	if (!phase.next.includes(linkId)) {
-		throw new ExpectedError(`Link "${linkId}" is not available from phase "${phase.id}" in dialog "${dialogId}"`);
+		throw new Error(`Link "${linkId}" is not available from phase "${phase.id}" in dialog "${dialogId}"`);
 	}
 }
 
@@ -65,10 +61,8 @@ function resolveVisibleLinks(
 	context: Awaited<ReturnType<typeof buildDialogContext>>
 ): DialogResponseLink[] {
 	const visibleLinks: DialogResponseLink[] = [];
-
 	for (const linkId of phase.next) {
 		const link = getDialogLink(dialog, linkId);
-
 		if (link.cond && !checkDialogCondition(link.cond, context)) {
 			continue;
 		}
@@ -95,27 +89,22 @@ export async function enterDialogPhase(
 		dinozId,
 		dialog
 	});
-
 	const phaseResult = await applyDialogPhaseEffects(tx, {
 		context: beforeContext,
 		dialog,
 		phase
 	});
-
 	// Mission progression related to TALK phases
 	await advanceDinozMissionOnTalk(tx, {
 		dinozId,
 		npcKey: dialog.id
 	});
-
 	const afterContext = await buildDialogContext(tx, {
 		userId,
 		dinozId,
 		dialog
 	});
-
 	const links = resolveVisibleLinks(dialog, phase, afterContext);
-
 	return {
 		dialogId: dialog.id,
 		phaseId: phase.id,
@@ -139,9 +128,8 @@ export async function assertDialogAvailability(
 		dinozId,
 		dialog
 	});
-
 	if (dialog.cond && !checkDialogCondition(dialog.cond, context)) {
-		throw new ExpectedError(`Dialog "${dialog.id}" is not available`);
+		throw new Error(`Dialog "${dialog.id}" is not available`);
 	}
 }
 
@@ -161,15 +149,12 @@ export async function listAvailableDialogs(params: {
 				dinozId: params.dinozId,
 				dialog
 			});
-
 			if (context.dinoz.placeId !== dialog.place) {
 				continue;
 			}
-
 			if (dialog.cond && !checkDialogCondition(dialog.cond, context)) {
 				continue;
 			}
-
 			availableDialogs.push({
 				id: dialog.id,
 				name: dialog.name,
@@ -177,7 +162,6 @@ export async function listAvailableDialogs(params: {
 				pnj: dialog.pnj
 			});
 		}
-
 		return availableDialogs;
 	});
 }
@@ -185,11 +169,8 @@ export async function listAvailableDialogs(params: {
 export async function startDialog(params: OpenDialogParams): Promise<DialogPhaseResponse> {
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
-
 		await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
-
 		const phase = getDialogPhase(dialog, dialog.first);
-
 		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId);
 	});
 }
@@ -197,26 +178,19 @@ export async function startDialog(params: OpenDialogParams): Promise<DialogPhase
 export async function selectDialogLink(params: SelectDialogLinkParams): Promise<DialogPhaseResponse> {
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
-
 		await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
-
 		const currentPhase = getDialogPhase(dialog, params.phaseId);
 		const selectedLink = getDialogLink(dialog, params.linkId);
-
 		ensurePhaseContainsLink(currentPhase, selectedLink.id, dialog.id);
-
 		const currentContext = await buildDialogContext(tx, {
 			userId: params.userId,
 			dinozId: params.dinozId,
 			dialog
 		});
-
 		if (selectedLink.cond && !checkDialogCondition(selectedLink.cond, currentContext)) {
-			throw new ExpectedError(`Link "${selectedLink.id}" is not currently available in dialog "${dialog.id}"`);
+			throw new Error(`Link "${selectedLink.id}" is not currently available in dialog "${dialog.id}"`);
 		}
-
 		const targetPhase = getDialogPhase(dialog, selectedLink.target);
-
 		return enterDialogPhase(tx, dialog, targetPhase, params.userId, params.dinozId);
 	});
 }
@@ -229,11 +203,8 @@ export async function resumeDialogPhase(params: {
 }): Promise<DialogPhaseResponse> {
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
-
 		await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
-
 		const phase = getDialogPhase(dialog, params.phaseId);
-
 		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId);
 	});
 }

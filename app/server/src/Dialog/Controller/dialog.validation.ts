@@ -37,7 +37,6 @@ function validateLinkIds(dialog: RuntimeDialog) {
 function validateBeginOrInjection(dialog: RuntimeDialog) {
 	const hasBegin = 'begin' in dialog.phases;
 	const hasInjection = dialog.inject.length > 0;
-
 	if (!hasBegin && !hasInjection) {
 		throw new Error(`No begin phase or injection in dialog "${dialog.id}"`);
 	}
@@ -140,13 +139,11 @@ function validateDialog(dialog: RuntimeDialog) {
 	validatePhaseIds(dialog);
 	validateLinkIds(dialog);
 	validateBeginOrInjection(dialog);
-
 	// Proche du comportement MT :
 	// les dialogues injecteurs sont ignorés pour les checks de graphe.
 	if (dialog.inject.length > 0) {
 		return;
 	}
-
 	validateFirstPhase(dialog);
 	validatePhaseLinks(dialog);
 	validateLinkTargets(dialog);

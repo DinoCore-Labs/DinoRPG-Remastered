@@ -61,17 +61,13 @@ function resolveFirstPhase(dialog: DialogDefinition): string {
 	if ('begin' in dialog.phases) {
 		return 'begin';
 	}
-
 	if (dialog.first) {
 		return dialog.first;
 	}
-
 	const firstPhase = Object.keys(dialog.phases)[0];
-
 	if (!firstPhase) {
 		throw new Error(`Dialog "${dialog.id}" has no phases`);
 	}
-
 	return firstPhase;
 }
 
@@ -79,9 +75,7 @@ function normalizeDialog(dialog: DialogDefinition): RuntimeDialog {
 	const phases = Object.fromEntries(
 		Object.entries(dialog.phases).map(([phaseId, phase]) => [phaseId, normalizePhase(dialog, phase)])
 	);
-
 	const links = Object.fromEntries(Object.entries(dialog.links).map(([linkId, link]) => [linkId, normalizeLink(link)]));
-
 	return {
 		id: dialog.id,
 		first: resolveFirstPhase(dialog),
