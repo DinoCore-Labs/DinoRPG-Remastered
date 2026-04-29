@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.15.4
+
+### Patch Changes
+
+- 060577c: add forest Guardian dialog and missions
+
 ## 0.15.3
 
 ### Patch Changes
@@ -834,6 +840,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.16.4
+
+### Patch Changes
+
+- 060577c: add forest Guardian dialog and missions
 
 ## 0.16.3
 
