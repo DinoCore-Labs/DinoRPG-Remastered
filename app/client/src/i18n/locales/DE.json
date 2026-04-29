@@ -190,6 +190,7 @@
 		"levelup": "DinoRPG [ Neue Stufe für {dinoz} ]",
 		"gather": "DinoRPG [ {type} ]",
 		"fight": "DinoRPG [ Kampf! ]",
+		"training": "DinoRPG [ C.E.F ]",
 		"admin": "DinoRPG [ Administrationsseite ]"
 	},
 	"adminPage": {
