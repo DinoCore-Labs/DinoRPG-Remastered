@@ -38,13 +38,10 @@ export async function getOwnProfileService(userId: string) {
 			}
 		}
 	});
-
 	if (!user || !user.profile) return null;
-
 	const avatar = user.profile.avatar
 		? `data:${user.profile.avatarType};base64,${Buffer.from(user.profile.avatar).toString('base64')}`
 		: null;
-
 	return {
 		id: user.id,
 		name: user.name,
@@ -101,13 +98,10 @@ export async function getUserProfileService(id: string) {
 			}
 		}
 	});
-
 	if (!user || !user.profile) return null;
-
 	const avatar = user.profile.avatar
 		? `data:${user.profile.avatarType};base64,${Buffer.from(user.profile.avatar).toString('base64')}`
 		: null;
-
 	return {
 		id: user.id,
 		name: user.name,
@@ -129,14 +123,27 @@ export async function getUserProfileService(id: string) {
 }
 
 export async function updateProfileService(userId: string, data: UpdateUserProfileInput) {
+	const updateData: {
+		description?: string | null;
+		language?: UpdateUserProfileInput['language'];
+		gender?: UpdateUserProfileInput['gender'];
+		age?: number | null;
+	} = {};
+	if ('description' in data) {
+		updateData.description = data.description?.trim() || null;
+	}
+	if ('language' in data) {
+		updateData.language = data.language;
+	}
+	if ('gender' in data) {
+		updateData.gender = data.gender;
+	}
+	if ('age' in data) {
+		updateData.age = data.age;
+	}
 	return prisma.userProfile.update({
 		where: { userId },
-		data: {
-			description: data.description ?? null,
-			language: data.language ?? null,
-			gender: data.gender ?? null,
-			age: data.age ?? null
-		}
+		data: updateData
 	});
 }
 
