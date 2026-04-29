@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.16.4
+
+### Patch Changes
+
+- 060577c: add forest Guardian dialog and missions
+
 ## 0.16.3
 
 ### Patch Changes
