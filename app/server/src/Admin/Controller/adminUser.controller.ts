@@ -86,11 +86,9 @@ export async function getAdminUserDetails(userId: string): Promise<AdminUserDeta
 			}*/
 		}
 	});
-
 	if (!user) {
 		return null;
 	}
-
 	return {
 		id: user.id,
 		name: user.name,

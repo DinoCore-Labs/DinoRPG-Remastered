@@ -15,26 +15,21 @@ export async function getAdminNewsListHandler(_req: FastifyRequest, reply: Fasti
 
 export async function getAdminNewsDetailsHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { id } = newsIdParamsSchema.parse(req.params);
-
 	const news = await newsService.getAdminNewsDetails(id);
 	return reply.send(newsService.mapAdminNews(news));
 }
 
 export async function createAdminNewsHandler(req: FastifyRequest, reply: FastifyReply) {
 	const contentType = req.headers['content-type'] ?? '';
-
 	if (contentType.includes('multipart/form-data')) {
 		const { payload, imageBuffer, imageMimeType } = await parseCreateMultipartNewsPayload(req);
 		const created = await newsService.createAdminNews(payload, imageBuffer, imageMimeType);
-
 		return reply.code(201).send(newsService.mapAdminNews(created));
 	}
-
 	const parsed = createNewsBodySchema.safeParse(req.body);
 	if (!parsed.success) {
-		throw new ExpectedError('Invalid news payload');
+		throw new ExpectedError('invalidNewsPayload');
 	}
-
 	const created = await newsService.createAdminNews(parsed.data);
 	return reply.code(201).send(newsService.mapAdminNews(created));
 }
@@ -42,27 +37,22 @@ export async function createAdminNewsHandler(req: FastifyRequest, reply: Fastify
 export async function updateAdminNewsHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { id } = newsIdParamsSchema.parse(req.params);
 	const contentType = req.headers['content-type'] ?? '';
-
 	if (contentType.includes('multipart/form-data')) {
 		const { payload, imageBuffer, imageMimeType } = await parseUpdateMultipartNewsPayload(req);
 		const updated = await newsService.updateAdminNews(id, payload, imageBuffer, imageMimeType);
 
 		return reply.send(newsService.mapAdminNews(updated));
 	}
-
 	const parsed = updateNewsBodySchema.safeParse(req.body);
 	if (!parsed.success) {
-		throw new ExpectedError('Invalid news payload');
+		throw new ExpectedError('invalidNewsPayload');
 	}
-
 	const updated = await newsService.updateAdminNews(id, parsed.data);
 	return reply.send(newsService.mapAdminNews(updated));
 }
 
 export async function deleteNewsHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { id } = newsIdParamsSchema.parse(req.params);
-
 	await newsService.deleteAdminNews(id);
-
 	return reply.send({ success: true });
 }

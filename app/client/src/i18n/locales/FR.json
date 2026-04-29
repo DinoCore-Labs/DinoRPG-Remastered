@@ -392,7 +392,9 @@
 		"dinozNotFound": "Le Dinoz {{dinozId}} n'a pas été trouvé.",
 		"invalidId": "L'id est invalide",
 		"invalidSkillId": "L'id de la compétence est invalide",
+		"skillNotFound": "Compétence introuvable.",
 		"notLeader": "Ce Dinoz n'est pas le leader de son groupe.",
+		"invalidLeader": "Leader invalide.",
 		"notEnoughIrma": "Vous n'avez pas assez de potion d'Irma.",
 		"missingIrma": "Vous avez besoin de potion d'Irma pour faire cette action.",
 		"dinozCannotLvlUp": "Le Dinoz ne peut pas monter de niveau.",
@@ -406,7 +408,16 @@
 		"missingStatus": "L'un de vos Dinoz ne remplit pas les conditions pour faire cette action.",
 		"noFight": "Aujourd'hui, le marais est perdu dans la brume... Vous ne trouverez aucun monstre à combattre.",
 		"noMovement": "Aujourd'hui, le marais est complètement inondé ! Vous ne pouvez pas vous déplacer ici. Vous devez attendre demain pour sortir de ce bourbier.",
-		"unknown": "Une erreur est survenue."
+		"cannotFollowSelf": "Un Dinoz ne peut pas se suivre lui-même.",
+		"lifeCannotExceedMaxLife": "La vie ne peut pas dépasser la vie maximale.",
+		"missionProgressionMustBePositiveInteger": "La progression doit être un entier positif ou nul.",
+		"missionTrackingMustBePositiveInteger": "Le tracking doit être un entier positif ou nul.",
+		"missionProgressionOutOfRange": "La progression dépasse le nombre d’étapes de la mission.",
+		"dinozMissionNotFound": "Aucune mission {missionKey} trouvée pour ce Dinoz.",
+		"onlyCompletedMissionsCanBeReplayable": "Seules les missions terminées peuvent être rendues rejouables.",
+		"invalidNewsPayload": "Les données de la news sont invalides.",
+		"unknown": "Une erreur est survenue.",
+		"unknownMission": "Mission inconnue : {missionKey}."
 	},
 	"tooltip": {
 		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",

@@ -12,11 +12,13 @@ const missionDefinitionByKey = new Map<string, MissionDefinition>(missionList.ma
 
 function getMissionDefinitionOrThrow(missionKey: string): MissionDefinition {
 	const definition = missionDefinitionByKey.get(missionKey);
-
 	if (!definition) {
-		throw new ExpectedError(`Mission inconnue : ${missionKey}`);
+		throw new ExpectedError('unknownMission', {
+			params: {
+				missionKey
+			}
+		});
 	}
-
 	return definition;
 }
 
@@ -39,7 +41,6 @@ function toAdminMissionEntry(
 		definition && !mission.isCompleted && mission.progression >= 0 && mission.progression < definition.goals.length
 			? mission.progression
 			: null;
-
 	return {
 		id: mission.id,
 		missionKey: mission.missionKey,
@@ -110,17 +111,18 @@ async function getOwnedDinozOrThrow(userId: string, dinozId: number) {
 			}
 		}
 	});
-
 	if (!dinoz) {
-		throw new ExpectedError('Dinoz introuvable.');
+		throw new ExpectedError('dinozNotFound', {
+			params: {
+				dinozId
+			}
+		});
 	}
-
 	return dinoz;
 }
 
 export async function getAdminDinozDetails(userId: string, dinozId: number): Promise<AdminDinozDetails> {
 	const dinoz = await getOwnedDinozOrThrow(userId, dinozId);
-
 	const leaderOptions = await prisma.dinoz.findMany({
 		where: {
 			userId,
@@ -136,11 +138,9 @@ export async function getAdminDinozDetails(userId: string, dinozId: number): Pro
 		},
 		orderBy: [{ level: 'desc' }, { id: 'asc' }]
 	});
-
 	const currentMissionId = dinoz.missions.find(mission => !mission.isCompleted)?.id ?? null;
 	const missions = dinoz.missions.map(mission => toAdminMissionEntry(mission, mission.id === currentMissionId));
 	const currentMission = missions.find(mission => mission.isCurrent) ?? null;
-
 	return {
 		id: dinoz.id,
 		userId: dinoz.userId,
@@ -192,7 +192,6 @@ export async function updateAdminDinozProfile(
 	}
 ) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	await prisma.dinoz.update({
 		where: { id: dinozId },
 		data
@@ -221,11 +220,9 @@ export async function updateAdminDinozStats(
 	}
 ) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	if (data.life > data.maxLife) {
-		throw new ExpectedError('La vie ne peut pas dépasser la vie maximale.');
+		throw new ExpectedError('lifeCannotExceedMaxLife');
 	}
-
 	await prisma.dinoz.update({
 		where: { id: dinozId },
 		data
@@ -241,7 +238,6 @@ export async function updateAdminDinozState(
 	}
 ) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	await prisma.dinoz.update({
 		where: { id: dinozId },
 		data: {
@@ -253,7 +249,6 @@ export async function updateAdminDinozState(
 
 export async function teleportAdminDinoz(userId: string, dinozId: number, placeId: number) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	await prisma.dinoz.update({
 		where: { id: dinozId },
 		data: { placeId }
@@ -262,11 +257,9 @@ export async function teleportAdminDinoz(userId: string, dinozId: number, placeI
 
 export async function updateAdminDinozLeader(userId: string, dinozId: number, leaderId: number | null) {
 	const dinoz = await getOwnedDinozOrThrow(userId, dinozId);
-
 	if (leaderId === dinozId) {
-		throw new ExpectedError('Un Dinoz ne peut pas se suivre lui-même.');
+		throw new ExpectedError('cannotFollowSelf');
 	}
-
 	if (leaderId !== null) {
 		const leader = await prisma.dinoz.findFirst({
 			where: {
@@ -278,16 +271,13 @@ export async function updateAdminDinozLeader(userId: string, dinozId: number, le
 				placeId: true
 			}
 		});
-
 		if (!leader) {
-			throw new ExpectedError('Leader invalide.');
+			throw new ExpectedError('invalidLeader');
 		}
-
 		if (leader.placeId !== dinoz.placeId) {
 			throw new ExpectedError('Le leader doit être sur le même lieu que le Dinoz.');
 		}
 	}
-
 	await prisma.dinoz.update({
 		where: { id: dinozId },
 		data: { leaderId }
@@ -296,7 +286,6 @@ export async function updateAdminDinozLeader(userId: string, dinozId: number, le
 
 export async function addAdminDinozStatus(userId: string, dinozId: number, statusId: number) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	const existing = await prisma.dinozStatus.findFirst({
 		where: {
 			dinozId,
@@ -304,11 +293,9 @@ export async function addAdminDinozStatus(userId: string, dinozId: number, statu
 		},
 		select: { id: true }
 	});
-
 	if (existing) {
 		return;
 	}
-
 	await prisma.dinozStatus.create({
 		data: {
 			dinozId,
@@ -319,7 +306,6 @@ export async function addAdminDinozStatus(userId: string, dinozId: number, statu
 
 export async function removeAdminDinozStatus(userId: string, dinozId: number, statusId: number) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	await prisma.dinozStatus.deleteMany({
 		where: {
 			dinozId,
@@ -337,7 +323,6 @@ export async function addAdminDinozSkill(
 	}
 ) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	await addSkillToDinozWithEffects({
 		dinozId,
 		userId,
@@ -356,7 +341,6 @@ export async function updateAdminDinozSkillState(
 	}
 ) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	const updated = await prisma.dinozSkills.updateMany({
 		where: {
 			dinozId,
@@ -366,15 +350,13 @@ export async function updateAdminDinozSkillState(
 			state: data.state
 		}
 	});
-
 	if (updated.count === 0) {
-		throw new ExpectedError('Compétence introuvable.');
+		throw new ExpectedError('skillNotFound');
 	}
 }
 
 export async function removeAdminDinozSkill(userId: string, dinozId: number, skillId: number) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	await prisma.dinozSkills.deleteMany({
 		where: {
 			dinozId,
@@ -385,7 +367,6 @@ export async function removeAdminDinozSkill(userId: string, dinozId: number, ski
 
 export async function addAdminDinozUnlockableSkill(userId: string, dinozId: number, skillId: number) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	const existing = await prisma.dinozSkillsUnlockable.findFirst({
 		where: {
 			dinozId,
@@ -397,7 +378,6 @@ export async function addAdminDinozUnlockableSkill(userId: string, dinozId: numb
 	if (existing) {
 		return;
 	}
-
 	await prisma.dinozSkillsUnlockable.create({
 		data: {
 			dinozId,
@@ -408,7 +388,6 @@ export async function addAdminDinozUnlockableSkill(userId: string, dinozId: numb
 
 export async function removeAdminDinozUnlockableSkill(userId: string, dinozId: number, skillId: number) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	await prisma.dinozSkillsUnlockable.deleteMany({
 		where: {
 			dinozId,
@@ -425,16 +404,12 @@ export async function updateAdminDinozItems(
 	}[]
 ) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	await prisma.$transaction(async tx => {
 		await tx.dinozItems.deleteMany({
 			where: { dinozId }
 		});
-
 		const filtered = entries.filter(entry => entry.itemId > 0);
-
 		if (filtered.length === 0) return;
-
 		await tx.dinozItems.createMany({
 			data: filtered.map(entry => ({
 				dinozId,
@@ -451,21 +426,16 @@ export async function updateAdminDinozMission(
 	payload: UpdateAdminDinozMissionPayload
 ) {
 	await getOwnedDinozOrThrow(userId, dinozId);
-
 	const definition = getMissionDefinitionOrThrow(missionKey);
-
 	if (!Number.isInteger(payload.progression) || payload.progression < 0) {
-		throw new ExpectedError('La progression doit être un entier positif.');
+		throw new ExpectedError('missionProgressionMustBePositiveInteger');
 	}
-
 	if (!Number.isInteger(payload.tracking) || payload.tracking < 0) {
-		throw new ExpectedError('Le tracking doit être un entier positif.');
+		throw new ExpectedError('missionTrackingMustBePositiveInteger');
 	}
-
 	if (!payload.isCompleted && payload.progression >= definition.goals.length) {
-		throw new ExpectedError('La progression dépasse le nombre d’étapes de la mission.');
+		throw new ExpectedError('missionProgressionOutOfRange');
 	}
-
 	const existingMission = await prisma.dinozMissions.findUnique({
 		where: {
 			missionKey_dinozId: {
@@ -474,14 +444,15 @@ export async function updateAdminDinozMission(
 			}
 		}
 	});
-
 	if (!existingMission) {
-		throw new ExpectedError(`Aucune mission ${missionKey} trouvée pour ce Dinoz.`);
+		throw new ExpectedError('dinozMissionNotFound', {
+			params: {
+				missionKey
+			}
+		});
 	}
-
 	const missionState: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput =
 		payload.state === null ? Prisma.JsonNull : (payload.state as Prisma.InputJsonValue);
-
 	await prisma.dinozMissions.update({
 		where: {
 			missionKey_dinozId: {
@@ -501,7 +472,6 @@ export async function updateAdminDinozMission(
 export async function makeAdminDinozMissionReplayable(userId: string, dinozId: number, missionKey: string) {
 	await getOwnedDinozOrThrow(userId, dinozId);
 	getMissionDefinitionOrThrow(missionKey);
-
 	const existingMission = await prisma.dinozMissions.findUnique({
 		where: {
 			missionKey_dinozId: {
@@ -510,15 +480,16 @@ export async function makeAdminDinozMissionReplayable(userId: string, dinozId: n
 			}
 		}
 	});
-
 	if (!existingMission) {
-		throw new ExpectedError(`Aucune mission ${missionKey} trouvée pour ce Dinoz.`);
+		throw new ExpectedError('dinozMissionNotFound', {
+			params: {
+				missionKey
+			}
+		});
 	}
-
 	if (!existingMission.isCompleted) {
-		throw new ExpectedError('Seules les missions terminées peuvent être rendues rejouables.');
+		throw new ExpectedError('onlyCompletedMissionsCanBeReplayable');
 	}
-
 	await prisma.dinozMissions.delete({
 		where: {
 			missionKey_dinozId: {
