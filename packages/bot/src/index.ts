@@ -1,3 +1,5 @@
+import 'dotenv/config';
+
 import {
 	type ChatInputCommandInteraction,
 	Client,
@@ -8,14 +10,11 @@ import {
 	Routes,
 	type SlashCommandBuilder
 } from 'discord.js';
-import dotenv from 'dotenv';
 
 import { fixRolesCommand } from './commands/fixroles.js';
 import { pingCommand } from './commands/ping.js';
 import registerGuildMemberAddEvent from './events/guildMemberAdd.js';
 import { handleXp } from './leveling/leveling.js';
-
-dotenv.config();
 
 // --- Types ---
 type Command = {
