@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.dinoz')" :header="$t('trainingCenter.title')" />
+	<TitleHeader :title="$t('pageTitle.training')" :header="$t('trainingCenter.title')" />
 
 	<div class="training-center-page">
 		<section class="training-card">
