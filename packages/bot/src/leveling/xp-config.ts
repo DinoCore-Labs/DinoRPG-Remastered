@@ -9,7 +9,7 @@ function getRoleId(envKey: string): string | undefined {
 
 export const XP_LEVELS = [
 	{ xp: 0, role: getRoleId('ROLE_LVL0'), name: 'Joueur Débutant', emoji: '' },
-	{ xp: 310, role: getRoleId('ROLE_LVL1'), name: 'Apprenti Dinoz', emoji: '' },
+	{ xp: 300, role: getRoleId('ROLE_LVL1'), name: 'Apprenti Dinoz', emoji: '' },
 	{ xp: 800, role: getRoleId('ROLE_LVL2'), name: 'Joueur Confirmé', emoji: '' },
 	{ xp: 2000, role: getRoleId('ROLE_LVL3'), name: 'Champion Dinoz', emoji: '⚡' },
 	{ xp: 5000, role: getRoleId('ROLE_LVL4'), name: 'Joueur Expert', emoji: '' },
