@@ -442,7 +442,7 @@
 		"serverTime": "Hora del servidor"
 	},
 	"ranking": {
-		"title": "Classement :",
+		"title": "Clasificación :",
 		"tabs": {
 			"players": "Joueurs",
 			"average": "Moyenne",
@@ -523,23 +523,23 @@
 	},
 	"dinoz": {
 		"hud": {
-			"following": "Ce Dinoz suit son chef de groupe.",
-			"gather": "Ce Dinoz peut récolter en ce lieu.",
-			"rest": "Ce Dinoz se repose.",
-			"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
-			"remainingActions": "Votre Dinoz peut encore effectuer des actions gratuites.",
-			"follow": "Le chef de groupe est {leader}.",
-			"followed": "Ce Dinoz est chef de groupe.",
-			"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
-			"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}"
+			"following": "Este Dino sigue a su líder de grupo.",
+			"gather": "Este Dino puede recolectar en este lugar.",
+			"rest": "Este Dino está descansando.",
+			"resting": "Tu Dino está actualmente descansando. Recuperará {hp} :pv: en {min} minutos.",
+			"remainingActions": "Tu Dino aún puede realizar acciones gratuitas.",
+			"follow": "El líder del grupo es {leader}.",
+			"followed": "Este Dino es el líder del grupo.",
+			"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando.",
+			"dojoTeam": "Este Dino está inscrito en un Torneo Inter-Dojo. No puede superar el nivel {max} mientras el torneo en curso no haya terminado.",
+			"unfreezeCountdown": "Tu Dino se está descongelando y estará disponible en {time}"
 		},
 		"stateReason": {
-			"frozen": "Votre Dinoz est congelé",
-			"sacrificed": "Votre Dinoz est sacrifié",
-			"selling": "Votre Dinoz est en vente",
+			"frozen": "Tu Dino está congelado",
+			"sacrificed": "Tu Dino está sacrificado",
+			"selling": "Tu Dino está en venta",
 			"superdom": "Votre Dinoz est au superdom",
-			"resting": "Votre Dinoz se repose"
+			"resting": "Tu Dino está descansando"
 		}
 	},
 	"race": {

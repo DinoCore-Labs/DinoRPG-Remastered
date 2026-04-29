@@ -442,7 +442,7 @@
 		"serverTime": "Server-Zeit"
 	},
 	"ranking": {
-		"title": "Classement :",
+		"title": "Rangliste :",
 		"tabs": {
 			"players": "Joueurs",
 			"average": "Moyenne",
@@ -523,23 +523,23 @@
 	},
 	"dinoz": {
 		"hud": {
-			"following": "Ce Dinoz suit son chef de groupe.",
-			"gather": "Ce Dinoz peut récolter en ce lieu.",
-			"rest": "Ce Dinoz se repose.",
-			"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
-			"remainingActions": "Votre Dinoz peut encore effectuer des actions gratuites.",
-			"follow": "Le chef de groupe est {leader}.",
-			"followed": "Ce Dinoz est chef de groupe.",
-			"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
-			"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}"
+			"following": "Dieser Dinoz folgt seinem Gruppenführer.",
+			"gather": "Dieser Dinoz kann hier etwas sammeln.",
+			"rest": "Dieser Dinoz ruht sich aus.",
+			"resting": "Dein Dinoz ruht sich derzeit aus. Er wird in {min} Minuten {hp} :pv: wiederherstellen.",
+			"remainingActions": "Deine Dinoz haben noch freie Aktionen übrig.",
+			"follow": "Der Gruppenführer ist {leader}.",
+			"followed": "Dieser Dinoz ist der Gruppenführer.",
+			"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
+			"dojoTeam": "Dieser Dinoz ist bei einem Wettkampf angemeldet. Er kann die Stufe {max} nicht überschreiten bis der laufende Wettkampf beendet ist.",
+			"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein"
 		},
 		"stateReason": {
-			"frozen": "Votre Dinoz est congelé",
-			"sacrificed": "Votre Dinoz est sacrifié",
-			"selling": "Votre Dinoz est en vente",
+			"frozen": "Dein Dinoz ist eingefroren.",
+			"sacrificed": "Dein Dinoz wurde geopfert.",
+			"selling": "Dein Dinoz wird verkauft.",
 			"superdom": "Votre Dinoz est au superdom",
-			"resting": "Votre Dinoz se repose"
+			"resting": "Dein Dinoz ruht sich aus."
 		}
 	},
 	"race": {
