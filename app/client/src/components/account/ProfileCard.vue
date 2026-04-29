@@ -143,7 +143,7 @@ export default defineComponent({
 			if (payload.language) {
 				await applyLanguage(payload.language);
 			}
-			console.log(updated);
+			//console.log(updated);
 			editing.value = false;
 			emit('updated', { ...props.profile, ...updated });
 		}
