@@ -10,11 +10,9 @@ type GetAvailableDialogsRequest = FastifyRequest<{
 
 export async function getAvailableDialogsHandler(req: GetAvailableDialogsRequest, reply: FastifyReply) {
 	const userId = req.user.id;
-
 	const dialogs = await listAvailableDialogs({
 		userId,
 		dinozId: req.query.dinozId
 	});
-
 	return reply.status(200).send(dialogs);
 }

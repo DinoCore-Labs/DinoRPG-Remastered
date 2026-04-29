@@ -17,6 +17,5 @@ export async function resumeDialogHandler(req: ResumeDialogRequest, reply: Fasti
 		dialogId: req.params.dialogId,
 		phaseId: req.body.phaseId
 	});
-
 	return reply.send(result);
 }

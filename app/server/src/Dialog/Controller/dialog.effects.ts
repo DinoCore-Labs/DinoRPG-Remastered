@@ -110,7 +110,6 @@ function assertEnoughQuantity(currentQuantity: number, requiredQuantity: number,
 
 async function addUserItem(tx: DialogTransaction, userId: string, itemId: number, count: number) {
 	assertPositiveCount(count, 'Item count');
-
 	await tx.userItems.upsert({
 		where: getUserItemWhere(userId, itemId),
 		create: {
@@ -128,21 +127,15 @@ async function addUserItem(tx: DialogTransaction, userId: string, itemId: number
 
 async function removeUserItem(tx: DialogTransaction, context: DialogContext, itemId: number, count: number) {
 	assertPositiveCount(count, 'Item count');
-
 	const currentQuantity = context.user.items.get(itemId) ?? 0;
-
 	assertEnoughQuantity(currentQuantity, count, `item ${itemId}`);
-
 	const remainingQuantity = currentQuantity - count;
-
 	if (remainingQuantity <= 0) {
 		await tx.userItems.delete({
 			where: getUserItemWhere(context.user.id, itemId)
 		});
-
 		return;
 	}
-
 	await tx.userItems.update({
 		where: getUserItemWhere(context.user.id, itemId),
 		data: {
@@ -153,7 +146,6 @@ async function removeUserItem(tx: DialogTransaction, context: DialogContext, ite
 
 async function addUserIngredient(tx: DialogTransaction, userId: string, ingredientId: number, count: number) {
 	assertPositiveCount(count, 'Ingredient count');
-
 	await tx.userIngredients.upsert({
 		where: getUserIngredientWhere(userId, ingredientId),
 		create: {
@@ -176,21 +168,15 @@ async function removeUserIngredient(
 	count: number
 ) {
 	assertPositiveCount(count, 'Ingredient count');
-
 	const currentQuantity = context.user.ingredients.get(ingredientId) ?? 0;
-
 	assertEnoughQuantity(currentQuantity, count, `ingredient ${ingredientId}`);
-
 	const remainingQuantity = currentQuantity - count;
-
 	if (remainingQuantity <= 0) {
 		await tx.userIngredients.delete({
 			where: getUserIngredientWhere(context.user.id, ingredientId)
 		});
-
 		return;
 	}
-
 	await tx.userIngredients.update({
 		where: getUserIngredientWhere(context.user.id, ingredientId),
 		data: {
@@ -201,9 +187,7 @@ async function removeUserIngredient(
 
 async function removeUserGold(tx: DialogTransaction, context: DialogContext, amount: number) {
 	assertPositiveCount(amount, 'Gold amount');
-
 	assertEnoughQuantity(context.user.gold, amount, 'gold');
-
 	await tx.userWallet.update({
 		where: { id: context.user.id, type: 'GOLD' },
 		data: {
@@ -218,7 +202,6 @@ async function healDinoz(tx: DialogTransaction, context: DialogContext, amount: 
 	if (!Number.isInteger(amount)) {
 		throw new Error(`Heal amount must be an integer, received "${amount}"`);
 	}
-
 	const nextLife = Math.max(0, Math.min(context.dinoz.maxLife, context.dinoz.life + amount));
 
 	await tx.dinoz.update({
@@ -233,9 +216,7 @@ function pickRandomItemId(itemIds: number[]): number {
 	if (itemIds.length === 0) {
 		throw new Error('giveRandomItem requires at least one item id');
 	}
-
 	const index = Math.floor(Math.random() * itemIds.length);
-
 	return itemIds[index]!;
 }
 
@@ -250,11 +231,9 @@ function getUserRewardWhere(userId: string, rewardId: number) {
 
 function getDialogRewardId(collectionKey: string): number {
 	const rewardId = rewardIdByKey[collectionKey];
-
 	if (!rewardId) {
 		throw new Error(`Unknown dialog collection key "${collectionKey}"`);
 	}
-
 	return rewardId;
 }
 
@@ -269,28 +248,24 @@ async function addUserCollection(
 	collectionKey: string
 ): Promise<AddUserCollectionResult> {
 	const rewardId = getDialogRewardId(collectionKey);
-
 	const existingReward = await tx.userRewards.findUnique({
 		where: getUserRewardWhere(userId, rewardId),
 		select: {
 			userId: true
 		}
 	});
-
 	if (existingReward) {
 		return {
 			rewardId,
 			created: false
 		};
 	}
-
 	await tx.userRewards.create({
 		data: {
 			userId,
 			rewardId
 		}
 	});
-
 	return {
 		rewardId,
 		created: true
@@ -299,11 +274,14 @@ async function addUserCollection(
 
 async function removeUserCollection(tx: DialogTransaction, context: DialogContext, collectionKey: string) {
 	const rewardId = getDialogRewardId(collectionKey);
-
 	if (!context.user.collections.has(collectionKey)) {
-		throw new ExpectedError(`Collection "${collectionKey}" is not owned by user "${context.user.id}"`);
+		throw new ExpectedError('collectionNotOwnedByUser', {
+			params: {
+				collectionKey,
+				userId: context.user.id
+			}
+		});
 	}
-
 	await tx.userRewards.delete({
 		where: getUserRewardWhere(context.user.id, rewardId)
 	});
@@ -311,11 +289,9 @@ async function removeUserCollection(tx: DialogTransaction, context: DialogContex
 
 function getDialogStatusId(statusKey: string): number {
 	const statusId = dinozStatusIdByKey[statusKey];
-
 	if (!statusId) {
 		throw new Error(`Unknown dialog status key "${statusKey}"`);
 	}
-
 	return statusId;
 }
 
@@ -328,11 +304,9 @@ function resolvePhasePnj(
 	phase: Pick<RuntimeDialogPhase, 'id' | 'pnj'>
 ): DialogPhaseResponse['pnj'] {
 	const pnj = phase.pnj ?? dialog.pnj;
-
 	if (!pnj) {
 		throw new Error(`Missing PNJ for phase "${phase.id}" in dialog "${dialog.id}"`);
 	}
-
 	return pnj;
 }
 
@@ -377,15 +351,12 @@ async function applyDialogEffect(
 			return;
 		case 'collection': {
 			const result = await addUserCollection(tx, context.user.id, effect.collection);
-
 			if (result.created) {
 				const statTracking = statTrackingByCollectionKey[effect.collection];
-
 				if (statTracking !== undefined) {
 					await incrementUserStat(statTracking, context.user.id, 1);
 				}
 			}
-
 			return;
 		}
 		case 'removeCollection':
@@ -440,7 +411,6 @@ async function applyDialogSpecial(
 		case 'fightGroup':
 		case 'none':
 			return;
-
 		default: {
 			const exhaustiveCheck: never = special;
 			return exhaustiveCheck;
@@ -453,16 +423,13 @@ export async function applyDialogPhaseEffects(
 	params: ApplyDialogPhaseEffectsParams
 ): Promise<ApplyDialogPhaseEffectsResult> {
 	const actions: DialogPhaseResponse['actions'] = {};
-
 	// On traite d’abord les "use*" qui représentent un coût d’entrée dans la phase.
 	for (const special of params.phase.special) {
 		await applyDialogSpecial(tx, params.context, params.dialog.id, params.phase.id, special, actions);
 	}
-
 	for (const effect of params.phase.effects) {
 		await applyDialogEffect(tx, params.context, params.dialog.id, params.phase.id, effect, actions);
 	}
-
 	return {
 		actions,
 		pnj: resolvePhasePnj(params.dialog, params.phase)

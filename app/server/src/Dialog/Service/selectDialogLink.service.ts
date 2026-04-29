@@ -17,7 +17,6 @@ type SelectDialogLinkRequest = FastifyRequest<{
 
 export async function selectDialogLinkHandler(req: SelectDialogLinkRequest, reply: FastifyReply) {
 	const userId = req.user.id;
-
 	const phase = await selectDialogLink({
 		userId,
 		dinozId: req.query.dinozId,
@@ -25,6 +24,5 @@ export async function selectDialogLinkHandler(req: SelectDialogLinkRequest, repl
 		phaseId: req.body.phaseId,
 		linkId: req.params.linkId
 	});
-
 	return reply.status(200).send(phase);
 }

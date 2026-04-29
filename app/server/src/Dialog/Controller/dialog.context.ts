@@ -225,13 +225,22 @@ export async function buildDialogContext(
 		dinozMissions.filter(mission => mission.isCompleted).map(mission => mission.missionKey)
 	);
 	if (!user) {
-		throw new ExpectedError(`User "${params.userId}" not found`);
+		throw new ExpectedError('userNotFound', { params: { authedId: params.userId } });
 	}
 	if (!dinoz) {
-		throw new ExpectedError(`Dinoz "${params.dinozId}" not found`);
+		throw new ExpectedError('dinozNotFound', {
+			params: {
+				dinozId: params.dinozId
+			}
+		});
 	}
 	if (dinoz.userId !== params.userId) {
-		throw new ExpectedError(`Dinoz "${params.dinozId}" does not belong to user "${params.userId}"`);
+		throw new ExpectedError('dinozDoesNotBelongToUser', {
+			params: {
+				dinozId: params.dinozId,
+				userId: params.userId
+			}
+		});
 	}
 	return {
 		user: {

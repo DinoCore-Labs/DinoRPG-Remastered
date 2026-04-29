@@ -9,17 +9,13 @@ const dialogRegistry = new Map<string, RuntimeDialog>();
 
 export function loadDialogs() {
 	dialogRegistry.clear();
-
 	const dialogs = normalizeDialogs(dialogDefinitions);
-
 	applyDialogInjections(dialogs);
 	validateDialogs(dialogs);
-
 	for (const dialog of dialogs) {
 		if (dialogRegistry.has(dialog.id)) {
 			throw new Error(`Duplicate dialog id "${dialog.id}"`);
 		}
-
 		dialogRegistry.set(dialog.id, dialog);
 	}
 	//console.log('Dialogs loaded:', [...dialogRegistry.keys()]);
@@ -27,11 +23,9 @@ export function loadDialogs() {
 
 export function getDialogById(dialogId: string): RuntimeDialog {
 	const dialog = dialogRegistry.get(dialogId);
-
 	if (!dialog) {
 		throw new Error(`Unknown dialog "${dialogId}"`);
 	}
-
 	return dialog;
 }
 
