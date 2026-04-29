@@ -60,7 +60,8 @@ export const forestGuardianMissions: MissionDefinition[] = [
 				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				nameKey: 'missions.forestGuardian.unmute.pourGourd.name',
 				descriptionKey: 'missions.forestGuardian.unmute.pourGourd.description'
-			}
+			},
+			guardianValidateGoal()
 		],
 		rewards: [
 			{ type: 'XP', value: 110 },
@@ -174,7 +175,8 @@ export const forestGuardianMissions: MissionDefinition[] = [
 				place: PlaceEnum.COLLINES_HANTEES,
 				nameKey: 'missions.forestGuardian.king.plantOrchid.name',
 				descriptionKey: 'missions.forestGuardian.king.plantOrchid.description'
-			}
+			},
+			guardianValidateGoal()
 		],
 		rewards: [
 			{ type: 'GOLD', value: 2500 },
@@ -332,7 +334,8 @@ export const forestGuardianMissions: MissionDefinition[] = [
 				place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 				nameKey: 'missions.forestGuardian.gshop.examineBucket.name',
 				descriptionKey: 'missions.forestGuardian.gshop.examineBucket.description'
-			}
+			},
+			guardianValidateGoal()
 		],
 		rewards: [
 			{ type: 'EFFECT', effectKey: 'gshop' },
