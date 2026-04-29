@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.15.4
+
+### Patch Changes
+
+- 060577c: add forest Guardian dialog and missions
+
 ## 0.15.3
 
 ### Patch Changes
