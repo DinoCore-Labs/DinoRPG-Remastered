@@ -1,5 +1,6 @@
 <template>
 	<TopBar />
+	<Spinner />
 	<div id="dynamic">
 		<LeftUserMenu />
 		<AuthMenu />
@@ -21,6 +22,7 @@ import UserMenu from './components/tools/UserMenu.vue';
 import LeftUserMenu from './components/tools/LeftUserMenu.vue';
 import Toast from './components/utils/Toast.vue';
 import Messaging from './components/modal/Messaging.vue';
+import Spinner from './components/utils/Spinner.vue';
 
 export default defineComponent({
 	name: 'App',
@@ -31,7 +33,8 @@ export default defineComponent({
 		UserMenu,
 		Messaging,
 		Footer,
-		Toast
+		Toast,
+		Spinner
 	}
 });
 </script>
