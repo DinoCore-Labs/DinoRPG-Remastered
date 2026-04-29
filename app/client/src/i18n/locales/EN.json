@@ -33,6 +33,7 @@
 		"userMenu": {
 			"account": "My Account",
 			"ranking": "Ranking",
+			"messagerie": "Messaging",
 			"items": "Inventory",
 			"ingredients": "Ingredients",
 			"news": "News",
@@ -79,6 +80,7 @@
 			"actions": "Actions",
 			"full": "Stock full",
 			"sortBy": "Sort By",
+			"confirmUse": "Do you confirm the use of {name} on your Dinoz?",
 			"sort": {
 				"default": "By Default",
 				"nameAsc": "Name (A → Z)",
