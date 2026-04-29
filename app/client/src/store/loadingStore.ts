@@ -1,20 +1,25 @@
 import { defineStore } from 'pinia';
-import { computed, type ComputedRef, type Ref, ref } from 'vue';
+import { computed, ref } from 'vue';
 
 export const useLoadingStore = defineStore('loading', () => {
-	const isLoading: Ref<boolean> = ref(false);
-	const isOn: ComputedRef<boolean> = computed((): boolean => isLoading.value);
-	const isOff: ComputedRef<boolean> = computed((): boolean => !isLoading.value);
+	const pendingRequests = ref(0);
+	const isOn = computed(() => pendingRequests.value > 0);
+	const isOff = computed(() => pendingRequests.value === 0);
 	const setLoaderOn = (): void => {
-		isLoading.value = true;
+		pendingRequests.value += 1;
 	};
 	const setLoaderOff = (): void => {
-		isLoading.value = false;
+		pendingRequests.value = Math.max(0, pendingRequests.value - 1);
+	};
+	const resetLoader = (): void => {
+		pendingRequests.value = 0;
 	};
 	return {
+		pendingRequests,
 		isOn,
 		isOff,
 		setLoaderOn,
-		setLoaderOff
+		setLoaderOff,
+		resetLoader
 	};
 });

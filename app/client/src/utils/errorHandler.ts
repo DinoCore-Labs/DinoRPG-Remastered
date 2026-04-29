@@ -2,6 +2,7 @@ import axios from 'axios';
 import type { ToastPluginApi } from 'vue-toast-notification';
 
 import { getI18n } from '../i18n';
+import { useLoadingStore } from '../store/loadingStore';
 
 type BackendErrorPayload =
 	| string
@@ -89,5 +90,6 @@ export const errorHandler = {
 			message: translateToast('unknown'),
 			type: 'error'
 		});
+		useLoadingStore().setLoaderOff();
 	}
 };

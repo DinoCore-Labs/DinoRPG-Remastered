@@ -20,38 +20,24 @@ const apiClient: AxiosInstance = axios.create({
 	}
 });
 
-let pendingRequests = 0;
-
 function startLoader(config: InternalAxiosRequestConfig): void {
 	if (config.silent) return;
-
-	pendingRequests += 1;
-
-	if (pendingRequests === 1) {
-		const loadingStore = useLoadingStore();
-		loadingStore.setLoaderOn();
-	}
+	const loadingStore = useLoadingStore();
+	loadingStore.setLoaderOn();
 }
 
 function stopLoader(config?: InternalAxiosRequestConfig): void {
 	if (config?.silent) return;
-
-	pendingRequests = Math.max(0, pendingRequests - 1);
-
-	if (pendingRequests === 0) {
-		const loadingStore = useLoadingStore();
-		loadingStore.setLoaderOff();
-	}
+	const loadingStore = useLoadingStore();
+	loadingStore.setLoaderOff();
 }
 
 apiClient.interceptors.request.use(
 	(config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
 		startLoader(config);
-
 		if (!(config.data instanceof FormData)) {
 			config.headers['Content-Type'] = 'application/json';
 		}
-
 		return config;
 	},
 	(error: AxiosError): Promise<never> => {
