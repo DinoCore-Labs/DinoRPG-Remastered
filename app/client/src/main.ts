@@ -6,6 +6,7 @@ import { createApp } from 'vue';
 import { plugin as VueTippy } from 'vue-tippy';
 
 import App from './App.vue';
+import Loading from './components/utils/Loading.vue';
 import { initI18n } from './i18n';
 import { mixins } from './mixins/mixins';
 import router from './router';
@@ -41,5 +42,6 @@ app.use(
 );
 app.use(VueTippy, vueTippyProps);
 app.mixin(mixins);
+app.component('Loading', Loading);
 
 app.mount('#app');
