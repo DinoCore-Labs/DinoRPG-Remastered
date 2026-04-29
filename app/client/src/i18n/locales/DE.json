@@ -210,35 +210,32 @@
 			"total_participants": "{qty} Wähler"
 		},
 		"roadmap": {
-			"title": "Entdecke die kommenden Events auf DinoRPG!",
+			"title": "Entdecke die kommenden Ereignisse in DinoRPG!",
 			"small": "Irmas Vorhersage",
 			"strong": {
-				"title1": "Alpha 0.5.0 (Bald)",
-				"title2": "Alpha 0.6.0",
-				"title3": "Alpha 0.7.0",
-				"title4": "Alpha 0.8.0"
+				"title1": "Alpha 0.6.0 (Bald)",
+				"title2": "Alpha 0.7.0",
+				"title3": "Alpha 0.8.0",
+				"title4": "Alpha 0.9.0"
 			},
 			"help": "Klicke oben auf ein Update, um weitere Informationen zu erhalten!",
-			"disclaimer": "Da Madame Irmas Vorhersagen nicht unfehlbar sind, ist für diese Neuerungen kein Veröffentlichungsdatum verfügbar. Jedes Event wird jedoch zu gegebener Zeit offiziell auf der Website angekündigt.",
+			"disclaimer": "Da Madame Irmas Vorhersagen nicht unfehlbar sind, gibt es für diese Neuerungen kein Veröffentlichungsdatum. Jedes Ereignis wird jedoch zu gegebener Zeit offiziell auf der Website angekündigt.",
 			"futurTitle": "Dinoländische Zukunft",
 			"futureInfo1": {
-				"text1": "Implementierung von Bao Bob und seinen Missionen.",
-				"text2": "Implementierung von Dian Korgsey und seinen Missionen.",
-				"text3": "Implementierung von Nicolas Hulot und seinen Missionen.",
-				"text4": "Implementierung des Trainingszentrums von Fosselave.",
-				"text5": "Fehlerbehebungen"
+				"text1": "Implementierung des Waldwächters und seiner Missionen",
+				"text2": "Freischaltung des Fruchtladens dank des blühenden Zweigs des Waldwächters",
+				"text3": "Implementierung von Skully und seinen Missionen",
+				"text4": "Fehlerbehebungen"
 			},
 			"futureInfo2": {
-				"text1": "Verwaltung von Toasts und Backend-Fehlern (i18n).",
-				"text2": "Implementierung des Waldwächters und seiner Missionen.",
-				"text3": "Freischaltung des Fruchtladens durch den blühenden Zweig des Waldwächters.",
+				"text1": "Implementierung der Szenarien (Prisma + Datenbank)",
+				"text2": "Implementierung des Tutorial-Szenarios",
+				"text3": "Implementierung des Szenarios des seltsamen Wesens",
 				"text4": "Fehlerbehebungen"
 			},
 			"futureInfo3": {
-				"text1": "Implementierung der Szenarien (Prisma + DB).",
-				"text2": "Implementierung des Tutorial-Szenarios.",
-				"text3": "Implementierung des Szenarios des Seltsamen Wesens.",
-				"text4": "Fehlerbehebungen"
+				"text1": "Implementierung des Züchtermarkts",
+				"text2": "Fehlerbehebungen"
 			},
 			"futureInfo4": {
 				"text1": "Demnächst"

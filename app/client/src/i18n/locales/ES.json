@@ -210,35 +210,32 @@
 			"total_participants": "{qty} votantes"
 		},
 		"roadmap": {
-			"title": "¡Descubre los próximos eventos de DinoRPG!",
+			"title": "¡Descubre los próximos eventos en DinoRPG!",
 			"small": "Predicción de Irma",
 			"strong": {
-				"title1": "Alpha 0.5.0 (Próximamente)",
-				"title2": "Alpha 0.6.0",
-				"title3": "Alpha 0.7.0",
-				"title4": "Alpha 0.8.0"
+				"title1": "Alpha 0.6.0 (Próximamente)",
+				"title2": "Alpha 0.7.0",
+				"title3": "Alpha 0.8.0",
+				"title4": "Alpha 0.9.0"
 			},
 			"help": "¡Haz clic en una actualización de arriba para obtener más información!",
-			"disclaimer": "Como las predicciones de Madame Irma no son infalibles, no hay fecha de lanzamiento disponible para ninguna de estas novedades. Sin embargo, cada evento será anunciado oficialmente en el sitio llegado el momento.",
-			"futurTitle": "Futuro dinolandés",
+			"disclaimer": "Como las predicciones de Madame Irma no son infalibles, no hay ninguna fecha de lanzamiento disponible para estas novedades. Sin embargo, cada evento será anunciado oficialmente en el sitio web cuando llegue el momento.",
+			"futurTitle": "Futuro Dinolandés",
 			"futureInfo1": {
-				"text1": "Implementación de Bao Bob y sus misiones.",
-				"text2": "Implementación de Dian Korgsey y sus misiones.",
-				"text3": "Implementación de Nicolas Hulot y sus misiones.",
-				"text4": "Implementación del Centro de entrenamiento de Fosselave.",
-				"text5": "Corrección de errores"
+				"text1": "Implementación del Guardián del bosque y sus misiones",
+				"text2": "Desbloqueo de la Tienda Frutal gracias a la rama florecida del Guardián del bosque",
+				"text3": "Implementación de Skully y sus misiones",
+				"text4": "Corrección de errores"
 			},
 			"futureInfo2": {
-				"text1": "Gestión de toasts y errores del backend (i18n).",
-				"text2": "Implementación del Guardián del bosque y sus misiones.",
-				"text3": "Desbloqueo de la Tienda Frutal gracias a la rama florida del Guardián del bosque.",
+				"text1": "Implementación de los escenarios (Prisma + base de datos)",
+				"text2": "Implementación del escenario tutorial",
+				"text3": "Implementación del escenario del Ser extraño",
 				"text4": "Corrección de errores"
 			},
 			"futureInfo3": {
-				"text1": "Implementación de los escenarios (Prisma + DB).",
-				"text2": "Implementación del escenario tutorial.",
-				"text3": "Implementación del escenario del Ser extraño.",
-				"text4": "Corrección de errores"
+				"text1": "Implementación del Mercado de criadores",
+				"text2": "Corrección de errores"
 			},
 			"futureInfo4": {
 				"text1": "Próximamente"
