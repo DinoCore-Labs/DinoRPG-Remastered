@@ -33,6 +33,7 @@
 		"userMenu": {
 			"account": "Mein Konto",
 			"ranking": "Rangliste",
+			"messagerie": "Nachrichten",
 			"items": "Inventar",
 			"ingredients": "Zutaten",
 			"news": "Neuigkeiten",
@@ -79,6 +80,7 @@
 			"actions": "Aktionen",
 			"full": "Vorrat gefüllt",
 			"sortBy": "Sortieren nach",
+			"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
 			"sort": {
 				"default": "Standard",
 				"nameAsc": "Name (A → Z)",

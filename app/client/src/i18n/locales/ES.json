@@ -33,6 +33,7 @@
 		"userMenu": {
 			"account": "Mi Cuenta",
 			"ranking": "Clasificación",
+			"messagerie": "Mensajería",
 			"items": "Inventario",
 			"ingredients": "Ingredientes",
 			"news": "Novedades",
@@ -79,6 +80,7 @@
 			"actions": "Acciones",
 			"full": "Almacén lleno",
 			"sortBy": "Ordenar por",
+			"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
 			"sort": {
 				"default": "Por defecto",
 				"nameAsc": "Nombre (A → Z)",
