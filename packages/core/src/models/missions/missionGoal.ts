@@ -94,6 +94,12 @@ export type MissionUseItemGoal = {
 	quantity: number;
 };
 
+export type MissionUseMoneyGoal = {
+	type: 'USE_MONEY';
+	moneyType: 'GOLD' | 'TREASURE_TICKET';
+	quantity: number;
+};
+
 export type MissionLockGoal = {
 	type: 'LOCK';
 };
@@ -132,6 +138,7 @@ export type MissionGoal =
 	| MissionFightGoal
 	| MissionFightActionGoal
 	| MissionUseItemGoal
+	| MissionUseMoneyGoal
 	| MissionLockGoal
 	| MissionUseIngredientGoal
 	| MissionBranchGoal
