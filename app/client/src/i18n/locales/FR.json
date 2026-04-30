@@ -3568,6 +3568,52 @@
 				"item": "Aie ! Qu'est-ce que c'est ?"
 			}
 		},
+		"skully": {
+			"name": "Skully",
+			"dialog": {
+				"begin": "Oh oh oh oh oh oh oh ! Ton Dinoz m'a l'air très mal en point !!",
+				"arg": "Un FANTOMEE ?!!??? Aaaahh !! Où ça !! où ça ??",
+				"arg2": "QUOI ?? Moi ??? Mais mais mais mais mais... Un peu de respect voyons ! Sinon vous ne ferez pas de vieux os ici, croyez-moi !&&Je suis une S.Q.U.E.L.E.T.T.E ! Une squelette oui ! Peut-être un peu décoiffée, mais pas un fantôme !!!",
+				"diff": "Tout d'abord, un fantôme est mort, et moi je suis juste... un peu fatiguée, je dois avoir des cernes, voilà tout...&&Et un fantôme, ça hante toujours quelque chose ou quelqu'un, alors que moi, je suis libre !!!&&... enfin presque.",
+				"free": "C'est un peu... uhmmm... compliqué... Disons que j'ai deux petits pépins techniques à régler.&&D'une part, seuls les Dinoz au bord de la mort et leurs maîtres peuvent me voir, d'autre part je ne peux pas quitter cet endroit lugubre...",
+				"haunt": "Hanter cet endroit ?!? Non mais vous RIGOLEZ ?!? Oh oh oh oh oh oh oh ! Rien que d'y penser j'en ai la chair de poule ! J'ai bien mieux à faire MOI oh oh !",
+				"do": "Uhm... C'est... INDISCRET ! Oh oh oh oh ! ..... Mais je vais quand même te raconter, une fois de plus si ça se trouve ! oh oh..... J'ai, vois-tu... un AMOUREUX ! On ne dirait pas comme ça, mais quand j'étais plus jeune j'avais de superbes tibias !",
+				"uhm": "Je te raconte tout ça ! oh oh oh ! Mais ça n'a aucune importance, car de toute façon j'ai une bonnédiction qui te fera rapidement tout oublier de moi !",
+				"bonne": "Oui, oh ! oh oh oh ! C'est comme une malédiction mais en mieux ! Je suis protégée par une bonnédiction pour éviter que les gens fassent des cauchemars et pour éloigner les scientifiques. Ils seraient trop ravis d'examiner la façon dont je me nourris, oh oh oh ! Je ne fais même plus attention à mon cholestérol. Bref, peu après m'avoir vue, les gens m'oublient aussitôt !",
+				"next": "N'est-ce pas !!! Du coup, comme je ne peux pas m'éloigner d'ici, comment veux-tu que je le retrouve ! Mon Mouldeur CHERI !!!",
+				"nohelp": "Tu ne peux m'aider de toute façon... oh oh oh ! Laisse-moi seule maintenant, je vais penser à lui, et n'oublie pas de m'oublier...",
+				"forgot": "Il vous a semblé un instant que vous parliez avec quelqu'un, mais vous n'arrivez pas à vous en rappeler les détails...",
+				"help": "VRAIIMMMEENTTT ?? OH OH OH OH OH !! Tu ferais ça pour moooaa ?!! Mais ça va être difficile pour toi, et à chacune de nos rencontres tu ne te souviendras de rien ou presque ! Es-tu vraiment certain de vouloir m'aider ???",
+				"accept": "OH OH OH OH OH !! Alors, s'il te plaît Monsieur le Maître Dinoz ! Aide-moi à retrouver Moulder et je te récompenserai comme il se doit !!",
+				"unlocked": "oh oh Oh Oh OH !! La bonnédiction est levée ! Tu vas maintenant pouvoir m'aider à trouver Mouldeur !",
+				"endBegin": "Merci pour ce que tu as fait pour nous ! Mouldeur et moi vivons désormais notre amour dans ce magnifique cadre avec vue sur la mer ! Quel bonheur de le savoir à mes côtés chaque jour !",
+				"dinoz": "Oh mais si ! Tu as fait beaucoup ! Reviens me voir quand tu auras plus de Dinoz, et je te donnerai un cadeau qui t'aidera dans ta quête !",
+				"pda": "Oh mais si ! Tu as fait beaucoup ! Tiens voilà pour toi... je t'offre ce magnifique Planificateur qui t'aidera dans ta quête à gérer tes différents Dinoz. Il sera rajouté à tes objets de collection, alors prends-en bien soin !",
+				"bye": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison."
+			},
+			"choice": {
+				"arg": "Ahhhh ! Un fanntôoommme !!!",
+				"bye": "S'enfuir en courant",
+				"shortcut": "(admin)",
+				"arg2": "Ici !!! Vous !!!",
+				"diff": "Et quelle différence ça fait ?",
+				"free": "Presque libre ? C'est-à-dire ?",
+				"haunt": "Vous hantez cet endroit alors !",
+				"do": "Ah ? Et quoi donc par exemple !",
+				"uhm": "Uhm....",
+				"bonne": "Une... bonnédiction ?!?",
+				"reset": "Je ne vous crois pas...",
+				"next": "C'est peu pratique...",
+				"nohelp": "Qui est Mouldeur ?",
+				"help": "Je pourrais vous aider...",
+				"forgot": "...",
+				"question": "Je ne vais rien oublier !",
+				"accept": "Oui ! Sans aucun doute !",
+				"maybe": "Il faut que j'y réfléchisse...",
+				"missions": "Que dois-je faire maintenant ?",
+				"nothing": "Ce n'était vraiment rien"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
