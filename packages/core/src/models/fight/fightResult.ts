@@ -1,6 +1,7 @@
 import { DinozStatusId } from '../dinoz/statusList.js';
 import { ElementType } from '../enums/ElementType.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
+import { MissionInteractionCompleteResponse } from '../missions/missionInteraction.js';
 import { MonsterFiche } from '../monster/monsterFiche.js';
 import { Monster } from '../monster/monsterList.js';
 import { TrainingCenterProgramKey } from '../trainingCenter/trainingCenter.js';
@@ -41,6 +42,7 @@ export interface FightResult {
 	source?: FightSource;
 	background?: string;
 	trainingProgram?: TrainingCenterProgramKey;
+	missionCompletion?: MissionInteractionCompleteResponse | null;
 }
 
 export interface FighterRecap {
