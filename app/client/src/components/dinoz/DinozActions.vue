@@ -133,7 +133,10 @@ import { itinerantShopNameList, shopNameList } from '../../constants/shop';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import MissionTalkModal from '../modal/MissionTalkModal.vue';
 import { MissionService } from '../../services/mission.service';
-import type { MissionInteractionRewardModal } from '@dinorpg/core/models/missions/missionInteraction.js';
+import type {
+	MissionInteractionRewardModal,
+	MissionInteractionStartResponse
+} from '@dinorpg/core/models/missions/missionInteraction.js';
 import MissionRewardModal from '../modal/MissionRewardModal.vue';
 
 export default defineComponent({
@@ -276,6 +279,64 @@ export default defineComponent({
 		closeMissionRewardModal() {
 			this.missionReward = null;
 		},
+		async handleMissionInteractionResult(result: MissionInteractionStartResponse) {
+			switch (result.mode) {
+				case 'modal': {
+					if (result.goalType === 'VALIDATE') {
+						const completion = await MissionService.completeAction(this.dinozId);
+						if (completion.rewardModal) {
+							this.missionReward = completion.rewardModal;
+						}
+						await this.refreshDinoz();
+						await this.$refreshGold();
+						await this.$refreshTreasureTicket();
+						return;
+					}
+					if (result.goalType === 'USE_ITEM' || result.goalType === 'USE_MONEY') {
+						const completion = await MissionService.completeAction(this.dinozId);
+						await this.refreshDinoz();
+						await this.$refreshGold();
+						await this.$refreshTreasureTicket();
+						eventBus.emit('refreshInventory', true);
+						if (completion.rewardModal) {
+							this.missionReward = completion.rewardModal;
+							return;
+						}
+						if (!completion.completed) {
+							const nextResult = await MissionService.startAction(this.dinozId);
+							await this.handleMissionInteractionResult(nextResult);
+						}
+						return;
+					}
+					this.missionTalkNameKey = result.nameKey;
+					this.missionTalkTextKey = result.textKey ?? null;
+					return;
+				}
+				case 'dialog':
+					this.$router.push({
+						name: 'DialogPage',
+						params: {
+							id: this.dinozId.toString(),
+							dialogId: result.dialogId
+						},
+						query: {
+							missionAction: '1',
+							missionNameKey: result.nameKey,
+							missionTextKey: result.textKey,
+							missionGfx: result.gfx ?? '',
+							missionNpcNameKey: result.npcNameKey ?? ''
+						}
+					});
+					return;
+				case 'fight':
+					this.sessionStore.setFightResult(result.fight);
+					this.$router.push({
+						name: 'FightPage',
+						params: { dinozId: this.dinozId.toString() }
+					});
+					return;
+			}
+		},
 		async launch(action: ActionFiche) {
 			if (action.confirm) {
 				const res = await this.$confirm({
@@ -355,46 +416,7 @@ export default defineComponent({
 				case Action.MISSION:
 					try {
 						const result = await MissionService.startAction(this.dinozId);
-						switch (result.mode) {
-							case 'modal': {
-								if (result.goalType === 'VALIDATE') {
-									const completion = await MissionService.completeAction(this.dinozId);
-									if (completion.rewardModal) {
-										this.missionReward = completion.rewardModal;
-									}
-									await this.refreshDinoz();
-									await this.$refreshGold();
-									await this.$refreshTreasureTicket();
-									break;
-								}
-								this.missionTalkNameKey = result.nameKey;
-								this.missionTalkTextKey = result.textKey ?? null;
-								break;
-							}
-							case 'dialog':
-								this.$router.push({
-									name: 'DialogPage',
-									params: {
-										id: this.dinozId.toString(),
-										dialogId: result.dialogId
-									},
-									query: {
-										missionAction: '1',
-										missionNameKey: result.nameKey,
-										missionTextKey: result.textKey,
-										missionGfx: result.gfx ?? '',
-										missionNpcNameKey: result.npcNameKey ?? ''
-									}
-								});
-								break;
-							case 'fight':
-								this.sessionStore.setFightResult(result.fight);
-								this.$router.push({
-									name: 'FightPage',
-									params: { dinozId: this.dinozId.toString() }
-								});
-								break;
-						}
+						await this.handleMissionInteractionResult(result);
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
