@@ -1,6 +1,12 @@
+import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { missionList } from '@dinorpg/core/models/missions/data/index.js';
 import type { MissionDefinition } from '@dinorpg/core/models/missions/mission.js';
-import type { MissionGoal, MissionValidateGoal } from '@dinorpg/core/models/missions/missionGoal.js';
+import type {
+	MissionGoal,
+	MissionUseItemGoal,
+	MissionUseMoneyGoal,
+	MissionValidateGoal
+} from '@dinorpg/core/models/missions/missionGoal.js';
 import type {
 	CompleteMissionInteractionInput,
 	MissionInteractionCompleteResponse,
@@ -10,6 +16,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { processMissionFight } from '../../Fight/Service/processMissionFight.service.js';
 import { prisma } from '../../prisma.js';
+import { removeTreasureTicket } from '../../User/Controller/money.controller.js';
 import { applyMissionRewards } from './mission.rewards.js';
 
 type MissionStateRow = {
@@ -25,6 +32,71 @@ type ActiveMissionState = {
 	definition: MissionDefinition;
 	goal: MissionGoal;
 };
+
+function resolveItemIdFromKey(itemKey: string): number {
+	const item = Object.values(itemList).find(entry => entry.name === itemKey);
+	if (!item) {
+		throw new ExpectedError(`Unknown mission item key "${itemKey}".`);
+	}
+	return item.itemId;
+}
+
+async function consumeMissionItemGoal(userId: string, goal: MissionUseItemGoal) {
+	const itemId = resolveItemIdFromKey(goal.itemKey);
+	const userItem = await prisma.userItems.findUnique({
+		where: {
+			itemId_userId: {
+				itemId,
+				userId
+			}
+		},
+		select: {
+			quantity: true
+		}
+	});
+	const currentQuantity = userItem?.quantity ?? 0;
+	if (currentQuantity < goal.quantity) {
+		throw new ExpectedError('notEnoughItems', {
+			params: {
+				itemKey: goal.itemKey,
+				required: goal.quantity,
+				current: currentQuantity
+			}
+		});
+	}
+	if (currentQuantity === goal.quantity) {
+		await prisma.userItems.delete({
+			where: {
+				itemId_userId: {
+					itemId,
+					userId
+				}
+			}
+		});
+		return;
+	}
+	await prisma.userItems.update({
+		where: {
+			itemId_userId: {
+				itemId,
+				userId
+			}
+		},
+		data: {
+			quantity: {
+				decrement: goal.quantity
+			}
+		}
+	});
+}
+
+async function consumeMissionMoneyGoal(userId: string, goal: MissionUseMoneyGoal) {
+	if (goal.moneyType === 'TREASURE_TICKET') {
+		await removeTreasureTicket(userId, goal.quantity);
+		return;
+	}
+	throw new ExpectedError(`Unsupported mission money type "${goal.moneyType}".`);
+}
 
 async function getActiveMissionState(userId: string, dinozId: number): Promise<ActiveMissionState | null> {
 	const missionState = await prisma.dinozMissions.findFirst({
@@ -46,23 +118,19 @@ async function getActiveMissionState(userId: string, dinozId: number): Promise<A
 			}
 		}
 	});
-
 	if (!missionState) {
 		return null;
 	}
-
 	const missionDefinition = missionList.find(mission => mission.key === missionState.missionKey) ?? null;
 	if (!missionDefinition) {
 		throw new ExpectedError(`Unknown mission definition "${missionState.missionKey}".`);
 	}
-
 	const goal = missionDefinition.goals[missionState.progression] ?? null;
 	if (!goal) {
 		throw new ExpectedError(
 			`No goal found for progression ${missionState.progression} in "${missionState.missionKey}".`
 		);
 	}
-
 	return {
 		state: {
 			id: missionState.id,
@@ -88,7 +156,6 @@ async function advanceMissionState(
 ): Promise<MissionInteractionCompleteResponse> {
 	const nextProgression = currentMission.state.progression + 1;
 	const isCompleted = nextProgression >= currentMission.definition.goals.length;
-
 	await prisma.$transaction(async tx => {
 		await tx.dinozMissions.update({
 			where: { id: currentMission.state.id },
@@ -98,7 +165,6 @@ async function advanceMissionState(
 				isCompleted
 			}
 		});
-
 		if (isCompleted) {
 			await applyMissionRewards(tx, {
 				dinozId,
@@ -106,7 +172,6 @@ async function advanceMissionState(
 			});
 		}
 	});
-
 	return {
 		ok: true,
 		completed: isCompleted,
@@ -129,9 +194,7 @@ export async function startMissionInteraction(
 	if (!currentMission) {
 		throw new ExpectedError('No active mission for this dinoz.');
 	}
-
 	const goal = currentMission.goal;
-
 	switch (goal.type) {
 		case 'TALK': {
 			if (goal.display === 'dialog') {
@@ -197,9 +260,7 @@ export async function completeMissionInteraction(
 	if (!currentMission) {
 		throw new ExpectedError('No active mission for this dinoz.');
 	}
-
 	const goal = currentMission.goal;
-
 	switch (input.trigger) {
 		case 'manual':
 			if (goal.type !== 'TALK' && goal.type !== 'ACTION' && goal.type !== 'VALIDATE') {
@@ -217,6 +278,5 @@ export async function completeMissionInteraction(
 		default:
 			throw new ExpectedError('Unknown mission completion trigger.');
 	}
-
 	return advanceMissionState(currentMission, input.dinozId);
 }
