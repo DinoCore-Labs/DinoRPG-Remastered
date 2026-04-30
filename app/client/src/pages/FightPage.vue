@@ -25,6 +25,7 @@ import { dinozStore } from '../store/dinozStore.js';
 import { localStore } from '../store/localStore.js';
 import { sessionStore } from '../store/sessionStore.js';
 import { userStore } from '../store/userStore.js';
+import { MissionService } from '../services/mission.service.js';
 
 export default defineComponent({
 	name: 'FightPage',
@@ -56,8 +57,15 @@ export default defineComponent({
 		display: { type: Object as PropType<FightResult>, required: false }
 	},
 	methods: {
-		onFightEnd() {
+		async onFightEnd() {
 			this.fightEnded = true;
+			if (this.fight?.source !== 'mission') {
+				return;
+			}
+			if (!this.fight.result) {
+				return;
+			}
+			await MissionService.completeAction(this.dinozId, 'fight_victory');
 		}
 	},
 	created(): void {
@@ -76,11 +84,9 @@ export default defineComponent({
 		if (fightResult) {
 			this.fight = fightResult;
 		}
-
 		const fightSteps = fightResult.history as FightStep[];
 		const fighters = fightResult.fighters as FighterRecap[];
 		if (!fightSteps || !fighters) return;
-
 		const nexFight = transpileFight(
 			structuredClone(toRaw(fighters)),
 			fightSteps,
@@ -101,7 +107,6 @@ export default defineComponent({
 				statusReward: this.fight.statusReward
 			};
 		}
-
 		this.loaded = true;
 		/*if (this.uStore.getPlayerOptions.skipFight) {
 			this.onFightEnd();
@@ -109,11 +114,9 @@ export default defineComponent({
 	},
 	unmounted(): void {
 		this.$refreshGold();
-
 		// Comment this to replay fight with refresh
 		this.loaded = false;
 		const dinozList = this.dinozStore.getDinozList;
-
 		if (!dinozList) {
 			this.$toast.open({
 				message: formatText(this.$t(`toast.missingData`)),

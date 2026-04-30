@@ -387,13 +387,13 @@ export default defineComponent({
 									}
 								});
 								break;
-							/*case 'fight':
+							case 'fight':
 								this.sessionStore.setFightResult(result.fight);
 								this.$router.push({
 									name: 'FightPage',
 									params: { dinozId: this.dinozId.toString() }
 								});
-								break;*/
+								break;
 						}
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);

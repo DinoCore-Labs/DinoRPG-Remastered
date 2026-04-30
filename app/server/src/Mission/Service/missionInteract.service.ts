@@ -6,23 +6,23 @@ import { completeMissionInteraction, startMissionInteraction } from '../Controll
 const paramsSchema = z.object({
 	id: z.coerce.number()
 });
+const completeBodySchema = z.object({
+	trigger: z.enum(['manual', 'fight_victory']).default('manual')
+});
 
 export async function startMissionInteractionController(req: FastifyRequest, reply: FastifyReply) {
 	const { id } = paramsSchema.parse(req.params);
-
 	const result = await startMissionInteraction(req.user.id, id);
-
 	return reply.send(result);
 }
 
 export async function completeMissionInteractionController(req: FastifyRequest, reply: FastifyReply) {
 	const { id } = paramsSchema.parse(req.params);
-
+	const body = completeBodySchema.parse(req.body ?? {});
 	const result = await completeMissionInteraction({
 		userId: req.user.id,
 		dinozId: id,
-		trigger: 'manual'
+		trigger: body.trigger
 	});
-
 	return reply.send(result);
 }

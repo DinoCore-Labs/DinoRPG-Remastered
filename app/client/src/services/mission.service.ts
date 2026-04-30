@@ -18,38 +18,36 @@ export const MissionService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-
 	async getDinozMissionDetail(dinozId: number, missionKey: string): Promise<DinozMissionDetailResponse> {
 		return http()
 			.get(`/missions/dinoz/${dinozId}/mission/${missionKey}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-
 	async startDinozMission(dinozId: number, missionKey: string): Promise<StartDinozMissionResponse> {
 		return http()
 			.post(`/missions/dinoz/${dinozId}/mission/${missionKey}/start`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-
 	async stopDinozMission(dinozId: number, missionKey: string): Promise<StopDinozMissionResponse> {
 		return http()
 			.post(`/missions/dinoz/${dinozId}/mission/${missionKey}/stop`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-
 	async startAction(dinozId: number): Promise<MissionInteractionStartResponse> {
 		return http()
 			.post(`/missions/dinoz/${dinozId}/mission/action/start`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-
-	async completeAction(dinozId: number): Promise<MissionInteractionCompleteResponse> {
+	async completeAction(
+		dinozId: number,
+		trigger: 'manual' | 'fight_victory' = 'manual'
+	): Promise<MissionInteractionCompleteResponse> {
 		return http()
-			.post(`/missions/dinoz/${dinozId}/mission/action/complete`)
+			.post(`/missions/dinoz/${dinozId}/mission/action/complete`, { trigger })
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}
