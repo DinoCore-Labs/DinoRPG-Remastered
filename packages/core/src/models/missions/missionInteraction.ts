@@ -4,7 +4,7 @@ import type { MissionReward } from './missionReward.js';
 export type MissionInteractionStartResponse =
 	| {
 			mode: 'modal';
-			goalType: 'TALK' | 'ACTION' | 'VALIDATE';
+			goalType: 'TALK' | 'ACTION' | 'USE_ITEM' | 'USE_MONEY' | 'VALIDATE';
 			npcKey?: MissionNpcKey;
 			nameKey: string;
 			textKey?: string;
@@ -24,7 +24,7 @@ export type MissionInteractionStartResponse =
 	  }
 	| {
 			mode: 'fight';
-			goalType: 'FIGHT';
+			goalType: 'FIGHT' | 'FIGHT_ACTION';
 			fight: unknown;
 	  };
 
