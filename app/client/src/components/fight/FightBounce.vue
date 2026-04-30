@@ -61,7 +61,7 @@
 					</Tippy>
 				</div>
 			</div>
-			<DZButton @click="returnToDinoz()">{{ $t(`fight.continue`) }}</DZButton>
+			<DZButton :disabled="loadingContinue" @click="returnToDinoz()">{{ $t(`fight.continue`) }}</DZButton>
 			<DZButton @click="toggleFightHistory()">{{
 				$t(`fight.history.${displayFightHistory ? 'hide' : 'display'}`)
 			}}</DZButton>
@@ -78,6 +78,8 @@ import translateFightStep from '../../fight/translateFightStep.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import { getItemFiche } from '@dinorpg/core/models/items/getItemFiche.js';
 import type { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
+import { MissionService } from '../../services/mission.service.js';
+import { errorHandler } from '../../utils/errorHandler.js';
 
 export default defineComponent({
 	name: 'FightBounce',
@@ -104,36 +106,47 @@ export default defineComponent({
 		return {
 			dinozStore: dinozStore(),
 			displayFightHistory: false,
-			fightHistory: undefined as string | undefined
+			fightHistory: undefined as string | undefined,
+			loadingContinue: false
 		};
 	},
 	methods: {
-		returnToDinoz() {
-			if (this.fight.result && this.fight.dialogReturn) {
-				this.$router.push({
-					name: 'DialogPage',
-					params: {
-						id: this.dinozId.toString(),
-						dialogId: this.fight.dialogReturn.dialogId
-					},
-					query: {
-						phaseId: this.fight.dialogReturn.phaseId
-					}
-				});
+		async returnToDinoz() {
+			if (this.loadingContinue) {
 				return;
 			}
-
-			this.$router.push({
-				name: 'DinozPage',
-				params: { id: this.dinozId.toString() }
-			});
+			this.loadingContinue = true;
+			try {
+				if (this.fight.source === 'mission' && this.fight.result) {
+					await MissionService.completeAction(this.dinozId, 'fight_victory');
+				}
+				if (this.fight.result && this.fight.dialogReturn) {
+					this.$router.push({
+						name: 'DialogPage',
+						params: {
+							id: this.dinozId.toString(),
+							dialogId: this.fight.dialogReturn.dialogId
+						},
+						query: {
+							phaseId: this.fight.dialogReturn.phaseId
+						}
+					});
+					return;
+				}
+				this.$router.push({
+					name: 'DinozPage',
+					params: { id: this.dinozId.toString() }
+				});
+			} catch (e) {
+				this.loadingContinue = false;
+				errorHandler.handle(e, this.$toast);
+			}
 		},
 		toggleFightHistory(): void {
 			if (this.displayFightHistory) {
 				this.displayFightHistory = false;
 				return;
 			}
-
 			if (!this.fightHistory) {
 				this.fightHistory = this.fight.history
 					.flatMap(step => translateFightStep(step, this.$t))

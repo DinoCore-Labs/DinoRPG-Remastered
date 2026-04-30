@@ -25,7 +25,6 @@ import { dinozStore } from '../store/dinozStore.js';
 import { localStore } from '../store/localStore.js';
 import { sessionStore } from '../store/sessionStore.js';
 import { userStore } from '../store/userStore.js';
-import { MissionService } from '../services/mission.service.js';
 
 export default defineComponent({
 	name: 'FightPage',
@@ -57,15 +56,8 @@ export default defineComponent({
 		display: { type: Object as PropType<FightResult>, required: false }
 	},
 	methods: {
-		async onFightEnd() {
+		onFightEnd() {
 			this.fightEnded = true;
-			if (this.fight?.source !== 'mission') {
-				return;
-			}
-			if (!this.fight.result) {
-				return;
-			}
-			await MissionService.completeAction(this.dinozId, 'fight_victory');
 		}
 	},
 	created(): void {
