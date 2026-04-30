@@ -196,8 +196,6 @@ export const skullyEndDialog = defineDialog({
 		}
 	},
 	links: {
-		// Adaptation volontaire : évite deux choix identiques visibles en même temps.
-		// Si tu veux garder le XML strict, remplace dinoz(2) par dinoz(1).
 		dinoz: {
 			id: 'dinoz',
 			text: 'npc.skully.choice.nothing',

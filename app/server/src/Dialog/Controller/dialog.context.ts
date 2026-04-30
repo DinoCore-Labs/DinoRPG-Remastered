@@ -25,6 +25,7 @@ export type DialogContext = {
 		tags: Set<string>;
 		collections: Set<string>;
 		userVars: Map<string, number>;
+		dinozCount: number;
 	};
 	dinoz: {
 		id: number;
@@ -38,6 +39,7 @@ export type DialogContext = {
 		itemIds: Set<number>;
 		currentMissionKey: string | null;
 		completedMissionKeys: Set<string>;
+		currentMissionProgression: number | null;
 	};
 	dialog: {
 		id: string;
@@ -217,6 +219,7 @@ export async function buildDialogContext(
 		where: { dinozId: params.dinozId },
 		select: {
 			missionKey: true,
+			progression: true,
 			isCompleted: true
 		}
 	});
@@ -263,7 +266,8 @@ export async function buildDialogContext(
 			effects: buildEmptyStringSet(),
 			tags: buildEmptyStringSet(),
 			collections: buildRewardKeySet(userRewards),
-			userVars: buildEmptyNumberMap()
+			userVars: buildEmptyNumberMap(),
+			dinozCount: allUserDinoz.length
 		},
 		dinoz: {
 			id: dinoz.id,
@@ -276,6 +280,7 @@ export async function buildDialogContext(
 			skillIds: buildNumberSet(dinoz.skills, entry => entry.skillId),
 			itemIds: buildNumberSet(dinoz.items, entry => entry.itemId),
 			currentMissionKey: currentMission?.missionKey ?? null,
+			currentMissionProgression: currentMission?.progression ?? null,
 			completedMissionKeys
 		},
 		dialog: {
