@@ -94,8 +94,7 @@ export const skullyIntroDialog = defineDialog({
 		accept: {
 			id: 'accept',
 			text: 'npc.skully.dialog.accept',
-			next: ['missions'],
-			effects: [{ type: 'effect', effect: 'skull' }]
+			next: ['missions']
 		},
 		missions: {
 			id: 'missions',
