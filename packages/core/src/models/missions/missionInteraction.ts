@@ -1,3 +1,4 @@
+import { FightResult } from '../fight/fightResult.js';
 import type { MissionAvatarKey, MissionDialectKey, MissionKey, MissionNpcKey } from './missionKey.js';
 import type { MissionReward } from './missionReward.js';
 
@@ -25,7 +26,7 @@ export type MissionInteractionStartResponse =
 	| {
 			mode: 'fight';
 			goalType: 'FIGHT' | 'FIGHT_ACTION';
-			fight: unknown;
+			fight: FightResult;
 	  };
 
 export type MissionInteractionRewardModal = {
