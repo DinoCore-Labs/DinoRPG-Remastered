@@ -258,7 +258,8 @@ export const mouldeurDialog = defineDialog({
 		},
 		end: {
 			id: 'end',
-			text: 'npc.mouldeur.dialog.end'
+			text: 'npc.mouldeur.dialog.end',
+			effects: [{ type: 'unlockMission', mission: 'skuend' }]
 		}
 	},
 	links: {

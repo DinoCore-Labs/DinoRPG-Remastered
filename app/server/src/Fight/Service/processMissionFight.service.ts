@@ -60,7 +60,7 @@ export async function processMissionFight(input: StartMissionGoalFightInput): Pr
 		return {
 			...result,
 			source: 'mission',
-			background: input.goal.fightAction.background ?? result.background,
+			background: input.goal.fightAction.background ?? undefined,
 			startText: input.goal.fightAction.beginText
 				? {
 						type: input.goal.fightAction.beginMonsterKey ? 'announce' : 'message',
