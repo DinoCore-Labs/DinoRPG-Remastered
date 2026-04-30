@@ -4511,9 +4511,32 @@
 				"end": "Merci, ce sont de précieuses informations que tu m'as rapporté là ! Mon Mouldeur chéri ne doit pas être très loin, nous serons bientôt réunis !"
 			},
 			"skul2": {
-				"name": "",
-				"begin": "",
-				"end": ""
+				"name": "Sur les trâces de Mouldeur",
+				"begin": "\"Je t'attendrai sur le lieu de notre rencontre\" Oh oh oh oh ! Comme c'est roooomantique mon Mouldeur chéri ! J'espère en tout cas qu'il m'attend encore là-bas ! Vite, rends toi dans ce magnifique lieu aux douces odeurs de nénuphars où nous nous sommes rencontrés, et ramène-moi mon amour !",
+				"stuckTourist": {
+					"name": "Un Touriste Enlisé",
+					"text": "J'en ai RAZ LE BOL de ce Marais de M...... !!!!! Ca fait trois fois que notre Camping-Car s'enlise, quelle idée à la c... de venir passer des VACANCES DANS UN MARAIS !!! Quoi ? Si j'ai vu un dénommé Mouldeur ? Ah ! oui, il est parti assister à une réunion de l'Amicale des Anguilloz Anonymes ! Fait attention si tu vas là-bas car elles sont du genre susceptible..."
+				},
+				"aaa": {
+					"name": "Réunion des A.A.A.",
+					"begin": "Alors que votre Dinoz s'approche, certaines Anguilloz se rendent compte de sa présence et l'attaquent !",
+					"win": "Aprés la défaite des Anguilloz, vous observez des traces de pas qui s'éloignent en direction de l'ouest..."
+				},
+				"fisherman": {
+					"name": "Pêcheur",
+					"text": "Ca mord bien dans l'coin : les poissons viennent voir les moines qui lévitent... Un gars qui s'appelle Mouldeur ? J'le connais bien : il est parti pêcher dans la baie aux Piranhoz. Fait gaffe mon gars, ça mordille ces saletés...",
+					"text2": "Mouldeur ? Il a dit qu'il retournait attendre sa femme au Marais... Pauv'gars, ça fait des années qu'il ne l'a pas revu... Remarquez à sa place je serais plutôt content..."
+				},
+				"piranhozBay": {
+					"name": "Baie aux Piranhoz",
+					"begin": "A peine vous entrez dans la baie que de nombreux Piranhoz se précipitent pour vous mordiller... Qui peut bien avoir envie de venir pêcher ici ???",
+					"win": "Une fois les Piranhoz vaincus, vous regardez aux alentours. Si Mouldeur est venu pêcher ici, il est déjà reparti..."
+				},
+				"swampSign": {
+					"name": "Panneau Indicateur",
+					"description": "Un panneau semble avoir été récemment dressé près d'un parterre de nénuphars. On peut y lire le message suivant : \"Marre des moustiques, rejoins moi là où je t'ai déclaré ma flamme. Mouldeur.\""
+				},
+				"end": "Ooohh oh oh oh oh ! Mouldeur chéri ! Je te sens plus proche de moi que jamais !"
 			},
 			"skul3": {
 				"name": "",
