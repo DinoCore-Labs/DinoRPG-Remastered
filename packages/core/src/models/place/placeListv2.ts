@@ -20,7 +20,6 @@ export const placeListv2 = definePlaces({
 	/* -------------------------------------------------
 	 * DINOVILLE
 	 * ------------------------------------------------- */
-
 	[PlaceEnum.DINOVILLE]: {
 		placeId: PlaceEnum.DINOVILLE,
 		name: 'dnv',
@@ -36,7 +35,6 @@ export const placeListv2 = definePlaces({
 		top: 155,
 		itinerant: true
 	},
-
 	[PlaceEnum.UNIVERSITE]: {
 		placeId: PlaceEnum.UNIVERSITE,
 		name: 'universite',
@@ -47,7 +45,6 @@ export const placeListv2 = definePlaces({
 		background: 's_univ',
 		itinerant: true
 	},
-
 	[PlaceEnum.FOUTAINE_DE_JOUVENCE]: {
 		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 		name: 'fountj',
@@ -64,7 +61,6 @@ export const placeListv2 = definePlaces({
 		top: 170,
 		itinerant: true
 	},
-
 	[PlaceEnum.PAPY_JOE]: {
 		placeId: PlaceEnum.PAPY_JOE,
 		name: 'papy',
@@ -80,7 +76,6 @@ export const placeListv2 = definePlaces({
 		top: 165,
 		itinerant: true
 	},
-
 	[PlaceEnum.FORCEBRUT]: {
 		placeId: PlaceEnum.FORCEBRUT,
 		name: 'forcebrut',
@@ -96,7 +91,6 @@ export const placeListv2 = definePlaces({
 		top: 120,
 		itinerant: true
 	},
-
 	[PlaceEnum.PLACE_DU_MARCHE]: {
 		placeId: PlaceEnum.PLACE_DU_MARCHE,
 		name: 'marche',
@@ -107,7 +101,6 @@ export const placeListv2 = definePlaces({
 		top: 155,
 		itinerant: true
 	},
-
 	[PlaceEnum.COLLINES_ESCARPEES]: {
 		placeId: PlaceEnum.COLLINES_ESCARPEES,
 		name: 'colesc',
@@ -119,7 +112,6 @@ export const placeListv2 = definePlaces({
 		top: 130,
 		itinerant: true
 	},
-
 	[PlaceEnum.PORT_DE_PRECHE]: {
 		placeId: PlaceEnum.PORT_DE_PRECHE,
 		name: 'port',
@@ -127,7 +119,7 @@ export const placeListv2 = definePlaces({
 		moves: [
 			{ target: PlaceEnum.FOUTAINE_DE_JOUVENCE },
 			{ target: PlaceEnum.GO_TO_ATLANTEINES_ISLAND, condition: 'fx(bouee)' },
-			{ target: PlaceEnum.CIMETIERE, condition: '(life(10-)|fx(skull))+active(skull)' },
+			{ target: PlaceEnum.CIMETIERE, condition: '(life(10-)|fx(skull))' },
 			{ target: PlaceEnum.GO_TO_MONSTER_ISLAND, condition: 'fx(monisl)' }
 		],
 		gathers: [GatherType.FISH, GatherType.ANNIV],
