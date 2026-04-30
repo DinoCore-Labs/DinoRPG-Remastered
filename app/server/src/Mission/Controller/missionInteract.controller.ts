@@ -248,6 +248,25 @@ export async function startMissionInteraction(
 				fight
 			};
 		}
+		case 'USE_ITEM':
+			return {
+				mode: 'modal',
+				goalType: 'USE_ITEM',
+				nameKey: 'missions.actions.useItem',
+				textKey: `missions.items.${goal.itemKey}`
+			};
+		case 'FIGHT_ACTION': {
+			const fight = await processMissionFight({
+				userId,
+				dinozId,
+				goal
+			});
+			return {
+				mode: 'fight',
+				goalType: 'FIGHT_ACTION',
+				fight
+			};
+		}
 		default:
 			throw new ExpectedError(`Mission goal "${goal.type}" is not interactable from Dinoz actions.`);
 	}
@@ -263,15 +282,27 @@ export async function completeMissionInteraction(
 	const goal = currentMission.goal;
 	switch (input.trigger) {
 		case 'manual':
-			if (goal.type !== 'TALK' && goal.type !== 'ACTION' && goal.type !== 'VALIDATE') {
+			if (
+				goal.type !== 'TALK' &&
+				goal.type !== 'ACTION' &&
+				goal.type !== 'VALIDATE' &&
+				goal.type !== 'USE_ITEM' &&
+				goal.type !== 'USE_MONEY'
+			) {
 				throw new ExpectedError(`Mission goal "${goal.type}" cannot be completed manually.`);
 			}
 			if (goal.type === 'VALIDATE') {
 				assertValidateGoalCanBeUsed(goal, currentMission.state.dinozPlaceId);
 			}
+			if (goal.type === 'USE_ITEM') {
+				await consumeMissionItemGoal(input.userId, goal);
+			}
+			if (goal.type === 'USE_MONEY') {
+				await consumeMissionMoneyGoal(input.userId, goal);
+			}
 			break;
 		case 'fight_victory':
-			if (goal.type !== 'FIGHT') {
+			if (goal.type !== 'FIGHT' && goal.type !== 'FIGHT_ACTION') {
 				throw new ExpectedError(`Mission goal "${goal.type}" cannot be completed from fight victory.`);
 			}
 			break;
