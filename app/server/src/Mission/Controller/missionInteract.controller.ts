@@ -242,10 +242,14 @@ export async function startMissionInteraction(
 				dinozId,
 				goal
 			});
+			const completion = fight.result ? await advanceMissionState(currentMission, dinozId) : null;
 			return {
 				mode: 'fight',
 				goalType: 'FIGHT',
-				fight
+				fight: {
+					...fight,
+					missionCompletion: completion
+				}
 			};
 		}
 		case 'USE_ITEM':
@@ -261,10 +265,14 @@ export async function startMissionInteraction(
 				dinozId,
 				goal
 			});
+			const completion = fight.result ? await advanceMissionState(currentMission, dinozId) : null;
 			return {
 				mode: 'fight',
 				goalType: 'FIGHT_ACTION',
-				fight
+				fight: {
+					...fight,
+					missionCompletion: completion
+				}
 			};
 		}
 		default:

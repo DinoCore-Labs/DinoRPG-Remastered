@@ -111,36 +111,24 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		async returnToDinoz() {
-			if (this.loadingContinue) {
+		returnToDinoz() {
+			if (this.fight.result && this.fight.dialogReturn) {
+				this.$router.push({
+					name: 'DialogPage',
+					params: {
+						id: this.dinozId.toString(),
+						dialogId: this.fight.dialogReturn.dialogId
+					},
+					query: {
+						phaseId: this.fight.dialogReturn.phaseId
+					}
+				});
 				return;
 			}
-			this.loadingContinue = true;
-			try {
-				if (this.fight.source === 'mission' && this.fight.result) {
-					await MissionService.completeAction(this.dinozId, 'fight_victory');
-				}
-				if (this.fight.result && this.fight.dialogReturn) {
-					this.$router.push({
-						name: 'DialogPage',
-						params: {
-							id: this.dinozId.toString(),
-							dialogId: this.fight.dialogReturn.dialogId
-						},
-						query: {
-							phaseId: this.fight.dialogReturn.phaseId
-						}
-					});
-					return;
-				}
-				this.$router.push({
-					name: 'DinozPage',
-					params: { id: this.dinozId.toString() }
-				});
-			} catch (e) {
-				this.loadingContinue = false;
-				errorHandler.handle(e, this.$toast);
-			}
+			this.$router.push({
+				name: 'DinozPage',
+				params: { id: this.dinozId.toString() }
+			});
 		},
 		toggleFightHistory(): void {
 			if (this.displayFightHistory) {
