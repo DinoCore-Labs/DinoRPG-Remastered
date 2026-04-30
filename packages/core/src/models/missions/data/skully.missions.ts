@@ -26,6 +26,7 @@ export const skullyMissions: MissionDefinition[] = [
 				dialogId: '__mission__',
 				npcKey: 'skully_papy_joe_1',
 				npcNameKey: 'npc.papyJoe.name',
+				gfx: 'papy',
 				place: PlaceEnum.PAPY_JOE,
 				nameKey: 'missions.skully.skul1.papyJoe.name',
 				textKey: 'missions.skully.skul1.papyJoe.text'
@@ -42,6 +43,7 @@ export const skullyMissions: MissionDefinition[] = [
 				dialogId: '__mission__',
 				npcKey: 'skully_papy_joe_2',
 				npcNameKey: 'npc.papyJoe.name',
+				gfx: 'papy',
 				place: PlaceEnum.PAPY_JOE,
 				nameKey: 'missions.skully.skul1.papyJoe.name',
 				textKey: 'missions.skully.skul1.papyJoe.text2'

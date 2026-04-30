@@ -401,6 +401,7 @@
 		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz {dinozId}.",
 		"OnlyLettersAndNumbers": "Nom incorrect ! Seulement entre 3 et 32 lettres et chiffres peuvent être utilisés.",
 		"tooManyActiveDinoz": "Vous avez déjà trop de Dinoz actifs.",
+		"notEnoughItems": "Vous n'avez pas la quantité attendue pour l'item requis.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or.",
 		"tooManyMagicItemEquiped": "Votre Dinoz ne peut pas équiper plus d'objets magiques.",
 		"maxQuantityInventory": "Vous avez déjà trop de cet objet dans votre inventaire",
