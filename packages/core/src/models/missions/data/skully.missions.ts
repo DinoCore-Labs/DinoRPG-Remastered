@@ -296,8 +296,8 @@ export const skullyMissions: MissionDefinition[] = [
 				textKey: 'missions.skully.skul5.shrimpMerchant.text'
 			},
 			{
-				type: 'USE_ITEM',
-				itemKey: 'treasure_voucher',
+				type: 'USE_MONEY',
+				moneyType: 'TREASURE_TICKET',
 				quantity: 3
 			},
 			{
