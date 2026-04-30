@@ -145,24 +145,34 @@ export const skullyMissions: MissionDefinition[] = [
 			{ type: 'AT', place: PlaceEnum.BAO_BOB, hidden: false },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'bao_bob_skully',
+				npcNameKey: 'npc.baoBob.name',
+				gfx: 'bob',
 				place: PlaceEnum.BAO_BOB,
 				nameKey: 'missions.skully.skul3.baoBob.name',
-				textKey: 'missions.skully.skul3.baoBob.text',
-				avatar: 'baobob'
+				textKey: 'missions.skully.skul3.baoBob.text'
 			},
 			{ type: 'AT', place: PlaceEnum.REPAIRE_DU_VENERABLE, hidden: false },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'bao_babe_1',
+				npcNameKey: 'npc.baoBabe.name',
+				gfx: 'baobabe',
 				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				nameKey: 'missions.skully.skul3.baoBabe.name',
-				textKey: 'missions.skully.skul3.baoBabe.text',
-				avatar: 'baobabe'
+				textKey: 'missions.skully.skul3.baoBabe.text'
 			},
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'bao_babe_2',
+				npcNameKey: 'npc.baoBabe.name',
+				gfx: 'baobabe',
 				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				nameKey: 'missions.skully.skul3.baoBabe2.name',
 				textKey: 'missions.skully.skul3.baoBabe2.text',
@@ -179,7 +189,11 @@ export const skullyMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'bao_babe_3',
+				npcNameKey: 'npc.baoBabe.name',
+				gfx: 'baobabe',
 				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				nameKey: 'missions.skully.skul3.baoBabe2.name',
 				textKey: 'missions.skully.skul3.baoBabe2.text2',
@@ -187,7 +201,11 @@ export const skullyMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'bao_babe_4',
+				npcNameKey: 'npc.baoBabe.name',
+				gfx: 'baobabe',
 				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				nameKey: 'missions.skully.skul3.baoBabe2.name',
 				textKey: 'missions.skully.skul3.baoBabe2.text3',
@@ -249,7 +267,7 @@ export const skullyMissions: MissionDefinition[] = [
 					place: PlaceEnum.PORT_DE_PRECHE,
 					monsterKeys: ['baratr', 'bamboo'],
 					allyKeys: [],
-					background: 'dome',
+					background: 's_dome',
 					beginMonsterKey: 'baratr',
 					beginText: 'missions.skully.skul4.enterBoat.begin',
 					winText: 'missions.skully.skul4.enterBoat.win'
