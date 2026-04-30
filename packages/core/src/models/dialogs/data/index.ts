@@ -17,6 +17,7 @@ import {
 	strangeRangerTechDialog
 } from './rodeur.dialog.js';
 import { shamanMouDialog } from './shamanMou.dialog.js';
+import { mouldeurDialog, skullyEndDialog, skullyIntroDialog, skullyMissionsDialog } from './skully.dialog.js';
 import { speleleologueDialog, speleleologueIceDialog } from './spelele.dialog.js';
 import { strangeHippoDialog, strangePterozDialog, strangeRockyDialog } from './totems.dialog.js';
 import { venerableDialog, venerableHurtDialog } from './venerable.dialog.js';
@@ -32,6 +33,9 @@ export const dialogDefinitions = [
 	papyJoeDialog,
 	woundedSoldierDialog,
 	strangeRangerAfterSpyDialog,
+	skullyIntroDialog,
+	skullyMissionsDialog,
+	skullyEndDialog,
 	// Iles Atlantéinées
 	strangeHippoDialog,
 	coralMinerDialog,
@@ -49,6 +53,7 @@ export const dialogDefinitions = [
 	venerableHurtDialog,
 	speleleologueDialog,
 	speleleologueIceDialog,
+	mouldeurDialog,
 	// Foret
 	weirdManDialog,
 	nicolasHulotDialog,
