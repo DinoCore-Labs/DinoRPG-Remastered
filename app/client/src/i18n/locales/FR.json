@@ -3642,6 +3642,9 @@
 		"baoBabe": {
 			"name": "Bao Babe"
 		},
+		"merguez": {
+			"name": "Vendeur de Merguez"
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
@@ -4562,9 +4565,32 @@
 				"end": "Oh oh oh oh oh ! En voilà une bonne solution pour ma bonnédiction ! Tiens, prends ça, de cette façon tu n'oublieras plus ni le chemin du Cimetière, ni ta chère Skully oh oh oh !"
 			},
 			"skul4": {
-				"name": "",
-				"begin": "",
-				"end": ""
+				"name": "Les touristes génants",
+				"begin": "\"Rejoins moi là où je t'ai déclaré ma flamme\" Oh oh oh oh ! Mon Mouldeur a vraiment un coeur en oooor ! Je n'oublierai jamais ce lieu délicieux où il nous avait emmenés, alors que nos os étaient encore tous jeunes... Et ce moment où il m'a tendu une merguez bien grillée et m'a demandé de l'épouser !",
+				"merguezSeller": {
+					"name": "Vendeur de Merguez",
+					"text": "Un client bizarre ? Oui, j'ai bien vu un type maigrichon qui est venu manger en lançant de grands soupirs... Il est parti se promener dans les ruines. Faites attention, on a des touristes d'un genre un peu particulier en ce moment...",
+					"text2": "Vous avez sauvé Jean-Claude ? Ah !! Merci beaucoup. Ces bandits des steppes génaient vraiment l'émergence du tourisme de masse dans ces ruines. Je ne sais pas comment vous remercier ! .... Mouldeur ? Il a promis de revenir si je lui préparais des crevettes au Napalm, mais je ne connais pas la recette..."
+				},
+				"visitRuins": {
+					"name": "Visiter les Ruines",
+					"begin": "Que le pouvoir du Bambooz soit avec moi ! Sus aux infidèles !",
+					"win": "Avant de s'écrouler, Barababor vous souffle les mots suivants : \"Nous avons capturé votre ami : il sera emmené en bateau dans nos steppes natales où il serra vendu comme esclave !\""
+				},
+				"suspiciousBoat": {
+					"name": "Chercher un Bateau louche",
+					"description": "Après quelques recherches, vous trouvez un Bateau définitivement bizarre sur les quais."
+				},
+				"enterBoat": {
+					"name": "Entrer dans le Bateau",
+					"begin": "Que le pouvoir du Bambooz soit avec moi ! Je vengerais mon frère !!!",
+					"win": "Après avoir vaincu les Bandits, vous libérez un homme ligoté dans le bateau..."
+				},
+				"freedMan": {
+					"name": "Homme Libéré",
+					"text": "Mmmerr mmerrciii !! Jejejej'ai eu trtrtrès pepeupeur vous sasavez ! Mouldeur ?? Nonon, je m'apeppelle Jean-Claude... Jeje susuis un ami du vendeur dede merguez ! Mermerci en tout cas de vovotre aide !"
+				},
+				"end": "Oh oh oh ! Mouldeur n'est pas très loin, merci beaucoup de ton aide mon jeune ami !"
 			},
 			"skul5": {
 				"name": "",
