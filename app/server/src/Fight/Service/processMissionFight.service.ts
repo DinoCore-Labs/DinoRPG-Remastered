@@ -45,17 +45,14 @@ export async function processMissionFight(input: StartMissionGoalFightInput): Pr
 		}
 		return monster;
 	});
-
 	const place = getMissionFightPlace(input.goal, dinozData.placeId);
 	const fightResult = calculateFightVsMonsters(team, user, place, monsters);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, place, user, {
-		disableGoldReward: true
+		disableGoldReward: false
 	});
-
 	for (const dinoz of team) {
 		await updateDinoz(dinoz.id, { fight: false });
 	}
-
 	if (input.goal.type === 'FIGHT_ACTION') {
 		return {
 			...result,
