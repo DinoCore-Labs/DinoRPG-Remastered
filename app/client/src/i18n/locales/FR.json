@@ -3614,6 +3614,30 @@
 				"nothing": "Ce n'était vraiment rien"
 			}
 		},
+		"mouldeur": {
+			"name": "Mouldeur",
+			"dialog": {
+				"begin": "Uhmm.... Quelle délicieuse odeur ces Crevettes au Napalm ! Elles me rappellent la cuisine de ma pauvre femme !",
+				"you": "C'est exact, enchanté ! Saviez-vous que dans ces ruines on peut trouver d'étranges cercles brûlés ? J'étudie ces phénomènes depuis longtemps, et je suis arrivé à la conclusion qu'il existe deux explications quant à ces étranges marques...",
+				"explain": "Tout laisse à penser qu'il pourrait s'agir de créatures étranges venues de l'espace et qui, en venant étudier les humains, se posent dans des endroits discrets... Comme elles crachent le feu, elles laisseraient ces étranges cercles de brûlé en repartant vers leur planète natale ! Et bien entendu, le Roi cache ces informations car il conspire avec elles ! Extraordinaire non ?",
+				"other": "Ah ? ... uhm... L'autre explication me semble beaucoup moins plausible, mais d'après le vendeur de merguez, il s'agirait des traces de feu de camp laissées par les touristes visitant les ruines...",
+				"ok": "Uhm ! Succulentes ces Crevettes au Napalm ! Et dire que je ne reverrai jamais ma charmante femme ! Oh combien nous nous aimions... les petits cris qu'elle poussait quand je revenais d'un apéro bien arrosé avec mes collègues me manquent... Et dire qu'elle est certainement morte...",
+				"ok2": "Quoi ? Nous mais vous rigolez j'espère. Je suis encore dans ma prime jeunesse ! Regardez comme mes os sont lisses : pas une ride ! Ah ah ah ah ah !",
+				"skully": "Quoi ? Vous connaissez Skully ?!?",
+				"exp": "............. Merci ! Cela veut dire que mon intuition ne me trompait pas et que j'ai bien fait de ne jamais chercher une autre femme pour la remplacer ! Oooohh ! Merci ! Mille fois merci de nous avoir aidés !",
+				"end": "Si ! C'est un véritable exploit !!! Accompagnez-moi jusqu'à ma femme je vous en prie, il me tarde tellement de pouvoir la contempler yeux-dans-les-yeux !!"
+			},
+			"choice": {
+				"you": "Vous êtes Mouldeur ?",
+				"explain": "Ah... Et ?",
+				"other": "Et l'autre explication ?",
+				"ok": "...",
+				"ok2": "Mais... vous aussi !",
+				"skully": "Skully vous cherche aussi...",
+				"exp": "(Expliquer toute l'histoire)",
+				"end": "Ce n'est vraiment rien..."
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
