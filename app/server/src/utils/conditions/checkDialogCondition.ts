@@ -70,7 +70,7 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'level':
 			return context.dinoz.level >= condition.value;
 		case 'dinoz':
-			return context.dinoz.id === condition.value;
+			return context.user.dinozCount >= condition.value;
 		case 'position':
 			return String(context.dinoz.placeId) === condition.key;
 		case 'equip':
@@ -89,7 +89,13 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 				return context.dinoz.completedMissionKeys.has(condition.key);
 			}
 			if (condition.status.type === 'current') {
-				return context.dinoz.currentMissionKey === condition.key;
+				if (context.dinoz.currentMissionKey !== condition.key) {
+					return false;
+				}
+				if (condition.status.step === undefined) {
+					return true;
+				}
+				return context.dinoz.currentMissionProgression === condition.status.step;
 			}
 			return false;
 		}
