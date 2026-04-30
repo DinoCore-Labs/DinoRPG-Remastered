@@ -22,7 +22,10 @@ export const skullyMissions: MissionDefinition[] = [
 			{ type: 'AT', place: PlaceEnum.PAPY_JOE, hidden: true },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'skully_papy_joe_1',
+				npcNameKey: 'npc.papyJoe.name',
 				place: PlaceEnum.PAPY_JOE,
 				nameKey: 'missions.skully.skul1.papyJoe.name',
 				textKey: 'missions.skully.skul1.papyJoe.text'
@@ -30,11 +33,15 @@ export const skullyMissions: MissionDefinition[] = [
 			{
 				type: 'USE_ITEM',
 				itemKey: 'goblin_merguez',
-				quantity: 3
+				quantity: 3,
+				nameKey: 'missions.skully.skul1.giveMerguez'
 			},
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'skully_papy_joe_2',
+				npcNameKey: 'npc.papyJoe.name',
 				place: PlaceEnum.PAPY_JOE,
 				nameKey: 'missions.skully.skul1.papyJoe.name',
 				textKey: 'missions.skully.skul1.papyJoe.text2'
@@ -298,7 +305,8 @@ export const skullyMissions: MissionDefinition[] = [
 			{
 				type: 'USE_MONEY',
 				moneyType: 'TREASURE_TICKET',
-				quantity: 3
+				quantity: 3,
+				nameKey: 'missions.skully.skul5.giveTreasureTickets'
 			},
 			{
 				type: 'TALK',
@@ -328,7 +336,8 @@ export const skullyMissions: MissionDefinition[] = [
 			{
 				type: 'USE_ITEM',
 				itemKey: 'sos_flame',
-				quantity: 5
+				quantity: 5,
+				nameKey: 'missions.skully.skul5.giveFlames'
 			},
 			{
 				type: 'TALK',
