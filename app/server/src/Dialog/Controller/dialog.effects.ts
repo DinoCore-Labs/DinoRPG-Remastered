@@ -8,6 +8,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/client.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
+import { unlockDinozMission } from '../../Mission/Controller/mission.progress.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { DialogContext } from './dialog.context.js';
 
@@ -362,8 +363,13 @@ async function applyDialogEffect(
 		case 'removeCollection':
 			await removeUserCollection(tx, context, effect.collection);
 			return;
-		case 'skill':
 		case 'unlockMission':
+			await unlockDinozMission(tx, {
+				dinozId: context.dinoz.id,
+				missionKey: effect.mission
+			});
+			return;
+		case 'skill':
 		case 'friend':
 		case 'moveRandom':
 		case 'dialect':

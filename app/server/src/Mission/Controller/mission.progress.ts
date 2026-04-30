@@ -250,3 +250,29 @@ export async function advanceDinozMissionOnFightWon(
 		definition: activeMission.definition
 	});
 }
+
+export async function unlockDinozMission(
+	tx: MissionTransaction,
+	params: {
+		dinozId: number;
+		missionKey: string;
+	}
+): Promise<MissionProgressResult> {
+	const activeMission = await getActiveMissionState(tx, params.dinozId);
+	if (!activeMission || !activeMission.currentGoal) {
+		return null;
+	}
+	if (activeMission.savedMission.missionKey !== params.missionKey) {
+		return null;
+	}
+	if (activeMission.currentGoal.type !== 'LOCK') {
+		return null;
+	}
+	return finalizeMissionProgress(tx, {
+		dinozId: params.dinozId,
+		missionKey: activeMission.savedMission.missionKey,
+		nextProgression: activeMission.savedMission.progression + 1,
+		nextTracking: 0,
+		definition: activeMission.definition
+	});
+}
