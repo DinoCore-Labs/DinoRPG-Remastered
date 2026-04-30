@@ -87,6 +87,30 @@ function getMissionActionFiche(goal: MissionGoal, currentPlace: PlaceEnum): Acti
 				prop: 'mission',
 				label: 'missions.actions.fight'
 			};
+		case 'FIGHT_ACTION': {
+			const fightAction = goal.fightAction;
+			if (fightAction.place != null && fightAction.place !== currentPlace) {
+				return null;
+			}
+			return {
+				...actionList[Action.MISSION],
+				imgName: actionList[Action.FIGHT].imgName,
+				prop: 'mission',
+				label: fightAction.nameKey
+			};
+		}
+		case 'USE_ITEM':
+			return {
+				...actionList[Action.MISSION],
+				prop: 'mission',
+				label: 'missions.actions.useItem'
+			};
+		case 'USE_MONEY':
+			return {
+				...actionList[Action.MISSION],
+				prop: 'mission',
+				label: 'missions.actions.useMoney'
+			};
 		case 'ACTION':
 			if (goal.place != null && goal.place !== currentPlace) {
 				return null;
@@ -100,8 +124,8 @@ function getMissionActionFiche(goal: MissionGoal, currentPlace: PlaceEnum): Acti
 			if (goal.place !== null && goal.place !== currentPlace) {
 				return null;
 			}
-			console.log('goal.nameKey', goal.nameKey);
-			console.log(goal.place, currentPlace);
+			//console.log('goal.nameKey', goal.nameKey);
+			//console.log(goal.place, currentPlace);
 			return {
 				...actionList[Action.MISSION],
 				prop: 'mission',
