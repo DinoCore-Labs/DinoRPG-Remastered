@@ -1,5 +1,8 @@
-import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
+import { FightText } from '@dinorpg/core/models/fight/fightDialog.js';
+import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
+import type { FighterRecap, FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import type { MissionFightActionGoal, MissionFightGoal } from '@dinorpg/core/models/missions/missionGoal.js';
+import { MissionMonsterKey } from '@dinorpg/core/models/missions/missionKey.js';
 import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
@@ -25,6 +28,43 @@ function getMissionFightPlace(goal: MissionFightGoal | MissionFightActionGoal, f
 		return goal.fightAction.place ?? fallbackPlace;
 	}
 	return fallbackPlace;
+}
+
+function resolveMissionFightSpeakerFid(fighters: FighterRecap[], monsterKey?: MissionMonsterKey | null): number | null {
+	if (!monsterKey) {
+		return null;
+	}
+	const monster = monsterByKey[monsterKey];
+	if (!monster) {
+		return null;
+	}
+	const speaker = fighters.find(
+		fighter =>
+			(fighter.type === FighterType.MONSTER || fighter.type === FighterType.BOSS) && fighter.name === monster.name
+	);
+	return speaker?.id ?? null;
+}
+
+function buildMissionStartText(
+	fighters: FighterRecap[],
+	beginText?: string | null,
+	beginMonsterKey?: MissionMonsterKey | null
+): FightText | undefined {
+	if (!beginText) {
+		return undefined;
+	}
+	const speakerFid = resolveMissionFightSpeakerFid(fighters, beginMonsterKey);
+	if (speakerFid !== null) {
+		return {
+			type: 'talk',
+			text: beginText,
+			speakerFid
+		};
+	}
+	return {
+		type: 'message',
+		text: beginText
+	};
 }
 
 export async function processMissionFight(input: StartMissionGoalFightInput): Promise<FightResult> {
@@ -61,12 +101,11 @@ export async function processMissionFight(input: StartMissionGoalFightInput): Pr
 			...result,
 			source: 'mission',
 			background: input.goal.fightAction.background ?? undefined,
-			startText: input.goal.fightAction.beginText
-				? {
-						type: input.goal.fightAction.beginMonsterKey ? 'announce' : 'message',
-						text: input.goal.fightAction.beginText
-					}
-				: undefined,
+			startText: buildMissionStartText(
+				result.fighters,
+				input.goal.fightAction.beginText,
+				input.goal.fightAction.beginMonsterKey
+			),
 			endText: input.goal.fightAction.winText
 				? {
 						type: 'message',

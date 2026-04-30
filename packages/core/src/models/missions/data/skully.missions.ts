@@ -232,7 +232,11 @@ export const skullyMissions: MissionDefinition[] = [
 			{ type: 'AT', place: PlaceEnum.RUINES_ASHPOUK, hidden: true },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'merguez_seller_1',
+				npcNameKey: 'npc.merguez.name',
+				gfx: 'merguez',
 				place: PlaceEnum.RUINES_ASHPOUK,
 				nameKey: 'missions.skully.skul4.merguezSeller.name',
 				textKey: 'missions.skully.skul4.merguezSeller.text',

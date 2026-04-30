@@ -174,6 +174,24 @@ export function resolveStatus(status: FightStatus) {
 	}
 }
 
+function pushFightText(history: transpiled[], fightText: FightText | undefined, t: TFunction) {
+	if (!fightText) {
+		return;
+	}
+	if (fightText.type === 'talk') {
+		history.push({
+			action: DinoAction.TALK,
+			fid: fightText.speakerFid,
+			message: t(fightText.text)
+		});
+		return;
+	}
+	history.push({
+		action: DinoAction.TEXT,
+		message: t(fightText.text)
+	});
+}
+
 export function transpileFight(
 	fighters: Array<FighterRecap>,
 	fight: Array<FightStep>,
@@ -365,12 +383,7 @@ export function transpileFight(
 					});
 					myFighter = undefined;
 				});
-				if (startText) {
-					history.push({
-						action: DinoAction.TEXT,
-						message: t(startText.text)
-					});
-				}
+				pushFightText(history, startText, t);
 				break;
 			case 'arrive':
 				myFighter = fighters.find(f => f.id === step.fid);
@@ -880,10 +893,7 @@ export function transpileFight(
 		}
 	}
 	if (endText && victory) {
-		history.push({
-			action: DinoAction.TEXT,
-			message: t(endText.text)
-		});
+		pushFightText(history, endText, t);
 	}
 	if (dojo) {
 		history.push({
