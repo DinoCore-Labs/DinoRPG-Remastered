@@ -198,12 +198,6 @@ export function transpileFight(
 	let counteringFighterCombo = 0;
 	let myFighter: FighterRecap | undefined;
 	let timeLimit: number | undefined;
-	if (startText) {
-		history.push({
-			action: DinoAction.TEXT,
-			message: t(`quest.${startText.text}`)
-		});
-	}
 	for (const [i, step] of fight.entries()) {
 		//console.log(step);
 		switch (step.action) {
@@ -369,9 +363,14 @@ export function transpileFight(
 							});
 						}
 					});
-
 					myFighter = undefined;
 				});
+				if (startText) {
+					history.push({
+						action: DinoAction.TEXT,
+						message: t(startText.text)
+					});
+				}
 				break;
 			case 'arrive':
 				myFighter = fighters.find(f => f.id === step.fid);
@@ -883,7 +882,7 @@ export function transpileFight(
 	if (endText && victory) {
 		history.push({
 			action: DinoAction.TEXT,
-			message: t(`quest.${endText.text}`)
+			message: t(endText.text)
 		});
 	}
 	if (dojo) {
