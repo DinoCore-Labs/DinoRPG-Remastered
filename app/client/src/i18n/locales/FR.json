@@ -3639,6 +3639,9 @@
 				"end": "Ce n'est vraiment rien..."
 			}
 		},
+		"baoBabe": {
+			"name": "Bao Babe"
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
@@ -4539,9 +4542,24 @@
 				"end": "Ooohh oh oh oh oh ! Mouldeur chéri ! Je te sens plus proche de moi que jamais !"
 			},
 			"skul3": {
-				"name": "",
-				"begin": "",
-				"end": ""
+				"name": "Mademoiselle Bao",
+				"begin": "Oh oh oh ! J'ai pensé à quelque chose de... problématique. Même si je retrouve Mouldeur, il va oublier à nouveau nos retrouvailles et repartir m'attendre quelque part. Il faut absolument que tu trouves une solution à ce problème avant d'aller voir Mouldeur. Va trouver cette chère Mademoiselle Bao, elle aura certainement une solution !",
+				"baoBob": {
+					"name": "Mademoiselle Bao ???",
+					"text": "Quoi ??? Mademoiselle Bao ?? Non mais... tu me prends pour qui au juste ? .......... Si tu cherches ma soeur, et bien elle se trouve en ce moment auprès du petit fils de l'ArchiDorogon : \"le Vénérable\" comme il aime se faire appeller maintenant... D'ailleurs si un jour son père l'apprend, il va passer un sale quart-d'heure..."
+				},
+				"baoBabe": {
+					"name": "Mademoiselle Bao",
+					"text": "Quoi ??? Mademoiselle Bao ?? Mais voyons.... celà fait une éternité que l'on ne m'a pas appellée comme celà. Je t'en prie, jeune homme, utilise mon prénom, appelle-moi Babe..."
+				},
+				"baoBabe2": {
+					"name": "Bao Babe",
+					"text": "Tu cherches mon conseil ? Ecoute, je dois d'abord finir ma partie de dames avec le petit-fils de l'ArchiDorogon. Son grand-père m'a fait promettre de venir lui tenir compagnie de temps-en-temps... Que dirais-tu d'aller chasser quelques gobelins en attendant que je finisse ?",
+					"text2": "Voilà ! J'ai fini ! Je l'ai battu à plate couture hi hi hi ! J'adooore le mettre en colère, il est tellement mignon quand ses narines commencent à souffler de la vapeur d'eau ! Mais tu voulais me demander un conseil ?",
+					"text3": ".......... Oh ? Vraiment ? ..... La solution à ce genre de bonnédiction est très simple : il suffit que quelqu'un garde une partie de Skully toujours avec lui pour ne rien oublier... A bientôt, jeune homme !"
+				},
+				"goblinKill": "Gobelins",
+				"end": "Oh oh oh oh oh ! En voilà une bonne solution pour ma bonnédiction ! Tiens, prends ça, de cette façon tu n'oublieras plus ni le chemin du Cimetière, ni ta chère Skully oh oh oh !"
 			},
 			"skul4": {
 				"name": "",
