@@ -103,13 +103,13 @@ function getMissionActionFiche(goal: MissionGoal, currentPlace: PlaceEnum): Acti
 			return {
 				...actionList[Action.MISSION],
 				prop: 'mission',
-				label: 'missions.actions.useItem'
+				label: goal.nameKey
 			};
 		case 'USE_MONEY':
 			return {
 				...actionList[Action.MISSION],
 				prop: 'mission',
-				label: 'missions.actions.useMoney'
+				label: goal.nameKey
 			};
 		case 'ACTION':
 			if (goal.place != null && goal.place !== currentPlace) {

@@ -1,4 +1,3 @@
-import { DinozFiche } from '../models/dinoz/dinozFiche.js';
 import { levelList } from '../models/dinoz/dinozLevel.js';
 import { DinozState } from '../models/dinoz/dinozState.js';
 import { DinozForMaxXp } from '../models/dinoz/dinozXP.js';

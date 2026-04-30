@@ -92,12 +92,14 @@ export type MissionUseItemGoal = {
 	type: 'USE_ITEM';
 	itemKey: MissionItemKey;
 	quantity: number;
+	nameKey: string;
 };
 
 export type MissionUseMoneyGoal = {
 	type: 'USE_MONEY';
 	moneyType: 'GOLD' | 'TREASURE_TICKET';
 	quantity: number;
+	nameKey: string;
 };
 
 export type MissionLockGoal = {

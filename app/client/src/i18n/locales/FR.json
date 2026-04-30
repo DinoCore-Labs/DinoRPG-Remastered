@@ -4492,6 +4492,48 @@
 					"description": "Vous trouvez une petite branche fleurie dans le seau..."
 				}
 			}
+		},
+		"skully": {
+			"skul1": {
+				"name": "Informations Préliminaires",
+				"begin": "Mouldeur a été touché par ma bonnédiction, alors que l'on faisait de vieux os ensemble, il m'a tout à coup oubliée et s'en est allé loin d'ici, le ruffian ! Il a sûrement dû donner des nouvelles à son neveu le ptit'Joe... Va le voir et tiens moi au courant !",
+				"papyJoe": {
+					"name": "Papy 'Ptit' Joe",
+					"text": "Oncle Mouldeur ? Ohlala ca fait des années que je n'ai pas entendu parler de lui... Si tu veux en savoir plus, ramène-moi trois merguez du Grand Tout Chaud !",
+					"text2": "Merci ! (crounch crounch) tout ce que je sais, c'est qu'oncle Mouldeur aimait beaucoup sa femme et a laissé un message pour elle gravé sur la Fontaine de Jouvence."
+				},
+				"giveMerguez": "Donner 3 Merguez",
+				"message": {
+					"name": "Lire le message",
+					"description": "Dans une des nombreuses gravures de la Fontaine de Jouvence, on peut lire le message suivant : \"Je t'attendrai sur le lieu de notre rencontre\""
+				},
+				"end": "Merci, ce sont de précieuses informations que tu m'as rapporté là ! Mon Mouldeur chéri ne doit pas être très loin, nous serons bientôt réunis !"
+			},
+			"skul2": {
+				"name": "",
+				"begin": "",
+				"end": ""
+			},
+			"skul3": {
+				"name": "",
+				"begin": "",
+				"end": ""
+			},
+			"skul4": {
+				"name": "",
+				"begin": "",
+				"end": ""
+			},
+			"skul5": {
+				"name": "",
+				"begin": "",
+				"end": ""
+			},
+			"skuend": {
+				"name": "",
+				"begin": "",
+				"end": ""
+			}
 		}
 	}
 }
