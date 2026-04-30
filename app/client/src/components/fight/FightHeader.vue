@@ -2,15 +2,12 @@
 	<div class="fighters-header" v-if="leftPlayer || rightPlayer">
 		<div class="player">
 			<span class="title">{{ $t(`fight.player`) }}</span>
-
 			<div v-if="leftPlayer">
 				<DZUser :user="leftPlayer" />
 			</div>
 			<span class="null-name" v-else> ??? </span>
 		</div>
-
 		<span class="vs">{{ $t(`fight.vs`) }}</span>
-
 		<div class="player">
 			<span class="title">{{ $t(`fight.player`) }}</span>
 			<div v-if="rightPlayer">
