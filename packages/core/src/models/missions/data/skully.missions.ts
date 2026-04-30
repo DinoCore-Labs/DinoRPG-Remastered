@@ -287,7 +287,11 @@ export const skullyMissions: MissionDefinition[] = [
 			{ type: 'AT', place: PlaceEnum.RUINES_ASHPOUK, hidden: true },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'merguez_seller_2',
+				npcNameKey: 'npc.merguez.name',
+				gfx: 'merguez',
 				place: PlaceEnum.RUINES_ASHPOUK,
 				nameKey: 'missions.skully.skul4.merguezSeller.name',
 				textKey: 'missions.skully.skul4.merguezSeller.text2',
@@ -312,11 +316,14 @@ export const skullyMissions: MissionDefinition[] = [
 		goals: [
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'skully_shrimps_1',
+				npcNameKey: 'npc.skully.name',
+				gfx: 'skully',
 				place: PlaceEnum.CIMETIERE,
 				nameKey: 'npc.skully.name',
-				textKey: 'missions.skully.skul5.skully.text',
-				avatar: 'skully'
+				textKey: 'missions.skully.skul5.skully.text'
 			},
 			{ type: 'AT', place: PlaceEnum.DOME_SOULAFLOTTE, hidden: false },
 			{
@@ -342,20 +349,26 @@ export const skullyMissions: MissionDefinition[] = [
 			{ type: 'AT', place: PlaceEnum.CIMETIERE, hidden: false },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'skully_shrimps_2',
+				npcNameKey: 'npc.skully.name',
+				gfx: 'skully',
 				place: PlaceEnum.CIMETIERE,
 				nameKey: 'npc.skully.name',
-				textKey: 'missions.skully.skul5.skully.text2',
-				avatar: 'skully'
+				textKey: 'missions.skully.skul5.skully.text2'
 			},
 			{ type: 'AT', place: PlaceEnum.FOSSELAVE, hidden: false },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'shaman_mou_napalm',
+				npcNameKey: 'npc.shamanMou.name',
+				gfx: 'shaman',
 				place: PlaceEnum.FOSSELAVE,
 				nameKey: 'npc.shamanMou.name',
-				textKey: 'missions.skully.skul5.shamanMou.text',
-				avatar: 'shaman'
+				textKey: 'missions.skully.skul5.shamanMou.text'
 			},
 			{
 				type: 'USE_ITEM',
@@ -374,17 +387,20 @@ export const skullyMissions: MissionDefinition[] = [
 			{ type: 'AT', place: PlaceEnum.CIMETIERE, hidden: false },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'skully_shrimps_3',
+				npcNameKey: 'npc.skully.name',
+				gfx: 'skully',
 				place: PlaceEnum.CIMETIERE,
 				nameKey: 'npc.skully.name',
-				textKey: 'missions.skully.skul5.skully.text3',
-				avatar: 'skully'
+				textKey: 'missions.skully.skul5.skully.text3'
 			},
 			{
 				type: 'AT',
 				place: PlaceEnum.REPAIRE_DU_VENERABLE,
 				hidden: false,
-				titleKey: 'missions.skully.skul5.korgonSearch.title'
+				titleKey: 'missions.skully.skul5.korgonSearch.name'
 			},
 			{
 				type: 'FIGHT_ACTION',
@@ -402,11 +418,14 @@ export const skullyMissions: MissionDefinition[] = [
 			{ type: 'AT', place: PlaceEnum.CIMETIERE, hidden: false },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'skully_shrimps_4',
+				npcNameKey: 'npc.skully.name',
+				gfx: 'skully',
 				place: PlaceEnum.CIMETIERE,
 				nameKey: 'npc.skully.name',
-				textKey: 'missions.skully.skul5.skully.text4',
-				avatar: 'skully'
+				textKey: 'missions.skully.skul5.skully.text4'
 			},
 			skullyValidateGoal()
 		],
@@ -428,11 +447,14 @@ export const skullyMissions: MissionDefinition[] = [
 			{ type: 'AT', place: PlaceEnum.RUINES_ASHPOUK, hidden: false },
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'merguez_seller_skuend',
+				npcNameKey: 'npc.merguez.name',
+				gfx: 'merguez',
 				place: PlaceEnum.RUINES_ASHPOUK,
-				nameKey: 'missions.skully.skul4.merguezSeller.name',
-				textKey: 'missions.skully.skuend.merguezSeller.text',
-				avatar: 'merguez'
+				nameKey: 'npc.merguez.name',
+				textKey: 'missions.skully.skuend.merguezSeller'
 			},
 			{ type: 'LOCK' },
 			skullyValidateGoal()
