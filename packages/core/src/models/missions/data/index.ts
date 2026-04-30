@@ -6,6 +6,7 @@ import { hulotMissions } from './hulot.missions.js';
 import { papyJoeMissions } from './papyJoe.missions.js';
 import { rodeurMissions } from './rodeur.missions.js';
 import { shamanMouMissions } from './shamanMou.missions.js';
+import { skullyMissions } from './skully.missions.js';
 
 export const missionList: MissionDefinition[] = [
 	...papyJoeMissions,
@@ -14,5 +15,6 @@ export const missionList: MissionDefinition[] = [
 	...baoBobMissions,
 	...dianKorgseyMissions,
 	...hulotMissions,
-	...forestGuardianMissions
+	...forestGuardianMissions,
+	...skullyMissions
 ];
