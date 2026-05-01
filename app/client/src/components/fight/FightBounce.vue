@@ -78,8 +78,6 @@ import translateFightStep from '../../fight/translateFightStep.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import { getItemFiche } from '@dinorpg/core/models/items/getItemFiche.js';
 import type { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
-import { MissionService } from '../../services/mission.service.js';
-import { errorHandler } from '../../utils/errorHandler.js';
 
 export default defineComponent({
 	name: 'FightBounce',
