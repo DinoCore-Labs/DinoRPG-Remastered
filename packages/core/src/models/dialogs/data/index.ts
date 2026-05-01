@@ -7,6 +7,7 @@ import { forestGuardianDialog } from './forestGuardian.dialog.js';
 import { nicolasHulotDialog } from './hulot.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
 import { jovebozeDialog } from './joveboze.dialog.js';
+import { merguezSellerDialog } from './merguezSeller.dialog.js';
 import { padamoineDialog } from './padamoine.dialog.js';
 import { papyJoeDialog } from './papy.dialog.js';
 import { professorEugeneDialog } from './prof.dialog.js';
@@ -45,6 +46,7 @@ export const dialogDefinitions = [
 	baoBobDialog,
 	// GTC
 	strangePterozDialog,
+	merguezSellerDialog,
 	shamanMouDialog,
 	strangeRangerIntroDialog,
 	strangeRangerTechDialog,
