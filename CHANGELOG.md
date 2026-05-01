@@ -2,6 +2,18 @@
 
 ## 🔹 Core
 
+## 0.16.0
+
+### Minor Changes
+
+- 5de4019: Add Skully dialog and mission flow.
+
+  Implemented Skully content with its mission chain, mission-specific actions, fight interactions, money/item usage steps, and localized mission/dialog texts.
+
+  Improved mission interaction handling so Dinoz actions can correctly start and complete Skully mission goals, including `FIGHT_ACTION`, `USE_ITEM`, and `USE_MONEY` steps.
+
+  Also hardened mission action resolution to avoid replaying already-consumed mission interactions after combat or when the player leaves the interaction flow.
+
 ## 0.15.4
 
 ### Patch Changes
@@ -374,6 +386,23 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.17.0
+
+### Minor Changes
+
+- 5de4019: Add Skully dialog and mission flow.
+
+  Implemented Skully content with its mission chain, mission-specific actions, fight interactions, money/item usage steps, and localized mission/dialog texts.
+
+  Improved mission interaction handling so Dinoz actions can correctly start and complete Skully mission goals, including `FIGHT_ACTION`, `USE_ITEM`, and `USE_MONEY` steps.
+
+  Also hardened mission action resolution to avoid replaying already-consumed mission interactions after combat or when the player leaves the interaction flow.
+
+### Patch Changes
+
+- Updated dependencies [5de4019]
+  - @dinorpg/core@0.16.0
 
 ## 0.16.2
 
@@ -840,6 +869,18 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.17.0
+
+### Minor Changes
+
+- 5de4019: Add Skully dialog and mission flow.
+
+  Implemented Skully content with its mission chain, mission-specific actions, fight interactions, money/item usage steps, and localized mission/dialog texts.
+
+  Improved mission interaction handling so Dinoz actions can correctly start and complete Skully mission goals, including `FIGHT_ACTION`, `USE_ITEM`, and `USE_MONEY` steps.
+
+  Also hardened mission action resolution to avoid replaying already-consumed mission interactions after combat or when the player leaves the interaction flow.
 
 ## 0.16.4
 
