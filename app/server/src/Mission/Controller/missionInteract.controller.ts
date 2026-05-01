@@ -16,7 +16,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { processMissionFight } from '../../Fight/Service/processMissionFight.service.js';
 import { prisma } from '../../prisma.js';
-import { removeTreasureTicket } from '../../User/Controller/money.controller.js';
+import { removeMoney, removeTreasureTicket } from '../../User/Controller/money.controller.js';
 import { applyMissionRewards } from './mission.rewards.js';
 
 type MissionStateRow = {
@@ -91,6 +91,10 @@ async function consumeMissionItemGoal(userId: string, goal: MissionUseItemGoal) 
 }
 
 async function consumeMissionMoneyGoal(userId: string, goal: MissionUseMoneyGoal) {
+	if (goal.moneyType === 'GOLD') {
+		await removeMoney(userId, goal.quantity);
+		return;
+	}
 	if (goal.moneyType === 'TREASURE_TICKET') {
 		await removeTreasureTicket(userId, goal.quantity);
 		return;
@@ -258,6 +262,12 @@ export async function startMissionInteraction(
 				goalType: 'USE_ITEM',
 				nameKey: 'missions.actions.useItem',
 				textKey: `missions.items.${goal.itemKey}`
+			};
+		case 'USE_MONEY':
+			return {
+				mode: 'modal',
+				goalType: 'USE_MONEY',
+				nameKey: 'goal.nameKey'
 			};
 		case 'FIGHT_ACTION': {
 			const fight = await processMissionFight({

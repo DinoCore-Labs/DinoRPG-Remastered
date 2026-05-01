@@ -30,5 +30,8 @@ export function validateMissionDefinition(mission: MissionDefinition) {
 		if (goal.type === 'USE_ITEM' && goal.quantity <= 0) {
 			throw new ExpectedError(`Mission "${mission.key}" has invalid USE_ITEM quantity`);
 		}
+		if (goal.type === 'USE_MONEY' && goal.quantity <= 0) {
+			throw new ExpectedError(`Mission "${mission.key}" has invalid USE_MONEY quantity`);
+		}
 	}
 }
