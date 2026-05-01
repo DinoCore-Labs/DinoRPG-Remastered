@@ -17,39 +17,39 @@ export const merguezSellerDialog = defineDialog({
 	phases: {
 		begin: {
 			id: 'begin',
-			text: 'npc.merguezSeller.dialog.begin',
+			text: 'npc.merguez.dialog.begin',
 			next: ['ah']
 		},
 		ah: {
 			id: 'ah',
-			text: 'npc.merguezSeller.dialog.ah',
+			text: 'npc.merguez.dialog.ah',
 			next: ['ok']
 		},
 		ok: {
 			id: 'ok',
-			text: 'npc.merguezSeller.dialog.ok',
+			text: 'npc.merguez.dialog.ok',
 			next: ['thanks'],
 			needCheck: false,
 			effects: [{ type: 'giveItem', itemId: Item.GOBLIN_MERGUEZ, count: 5 }]
 		},
 		thanks: {
 			id: 'thanks',
-			text: 'npc.merguezSeller.dialog.thanks',
+			text: 'npc.merguez.dialog.thanks',
 			next: []
 		}
 	},
 	links: {
 		ah: {
 			id: 'ah',
-			text: 'npc.merguezSeller.choice.ah'
+			text: 'npc.merguez.choice.ah'
 		},
 		ok: {
 			id: 'ok',
-			text: 'npc.merguezSeller.choice.ok'
+			text: 'npc.merguez.choice.ok'
 		},
 		thanks: {
 			id: 'thanks',
-			text: 'npc.merguezSeller.choice.thanks'
+			text: 'npc.merguez.choice.thanks'
 		}
 	}
 });
