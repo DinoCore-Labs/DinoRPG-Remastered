@@ -3643,7 +3643,18 @@
 			"name": "Bao Babe"
 		},
 		"merguez": {
-			"name": "Vendeur de Merguez"
+			"name": "Vendeur de Merguez",
+			"dialog": {
+				"begin": "Ola ola ola ! Elles sont bien graisseuses, mes merguez ! ....... Comment ? Quelle idée de venir vendre des merguez dans un endroit aussi lugubre ? Mais ces Ruines sont magnifiques !! Je suis certain qu'un jour ce sont des millions de touristes qui viendront les visiter !",
+				"ah": "Oui, tout à fait ! C'est un peu comme l'acre-aux-pôles : mon cousin y a fait une fortune en vendant des porte-clés en forme de temple. Alors ici, c'est décidé, je serai le premier ! Même si je dois attendre plusieurs années que le commerce se lance, pas question de laisser passer cette opportunité en or !",
+				"ok": "Tiens, ton Dinoz m'a l'air bien maigre... Prends ces merguez ! C'est gratuit à condition que tu ailles parler des Superbes Ruines Ashpouk à tes amis. Ok, tu n'oublieras pas alors ?",
+				"thanks": "De rien, de rien, c'est bon pour le business !"
+			},
+			"choice": {
+				"ah": "Ah....",
+				"ok": "Effectivement...",
+				"thanks": "Merci"
+			}
 		},
 		"dialog": {
 			"exit": "À bientôt.",
