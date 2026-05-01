@@ -378,7 +378,11 @@ export const skullyMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'TALK',
+				display: 'dialog',
+				dialogId: '__mission__',
 				npcKey: 'shaman_mou_napalm_2',
+				npcNameKey: 'npc.shamanMou.name',
+				gfx: 'shaman',
 				place: PlaceEnum.FOSSELAVE,
 				nameKey: 'npc.shamanMou.name',
 				textKey: 'missions.skully.skul5.shamanMou.text2',
