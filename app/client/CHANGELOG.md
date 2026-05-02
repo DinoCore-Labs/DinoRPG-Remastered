@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.17.1
+
+### Patch Changes
+
+- 3c8c010: add Merguez seller
+
 ## 0.17.0
 
 ### Minor Changes
