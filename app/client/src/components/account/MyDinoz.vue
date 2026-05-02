@@ -38,6 +38,7 @@ import { dinozPlacement } from '../../constants/dinozPlacement.js';
 import type { DinozPublicFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import type { UserProfile } from '@dinorpg/core/models/user/userProfile.js';
 import type { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
+import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 
 type StatutId = DinozStatusId;
 
@@ -64,10 +65,8 @@ export default defineComponent({
 	methods: {
 		style(dinoz: DinozPublicFiche): string {
 			const race = Object.entries(raceList).find(([k]) => Number(k) === dinoz.race.raceId)?.[1];
-
 			const first = dinoz.display.charAt(0);
 			const second = dinoz.display.charAt(1);
-
 			// si display trop court / invalide
 			if (!first || !second) {
 				return 'top: -15px; left: -15px;';
@@ -78,60 +77,28 @@ export default defineComponent({
 				if (!placement) {
 					return 'top: -15px; left: -15px;';
 				}
-
 				const taille = second === 'A' ? 9 : Number(second);
 				const safeTaille = Number.isFinite(taille) ? taille : 0;
-
 				const left = ((placement.adult.left - placement.baby.left) / 9) * safeTaille + placement.baby.left;
 				const top = ((placement.adult.top - placement.baby.top) / 9) * safeTaille + placement.baby.top;
-
 				return `position: absolute; left: ${left}px; top: ${top}px;`;
 			}
-
 			return 'top: -15px; left: -15px;';
 		},
-		unsortedDinozList() {
-			this.sortedDinozList =
-				this.profile?.dinoz.slice().sort((a, b) => {
-					return a.level - b.level;
-				}) ?? [];
-		},
 		updateSortedDinozList() {
-			this.sortedDinozList =
-				this.profile?.dinoz
-					.slice()
-					.sort((a, b) => {
-						if (a.order === null) {
-							a.order = a.id;
-						}
-						if (b.order === null) {
-							b.order = b.id;
-						}
-						if (a.order === b.order) {
-							return a.name.localeCompare(b.name);
-						}
-						return a.order - b.order;
-					})
-					.sort((a, b) => {
-						if (a.isFrozen && !b.isFrozen) {
-							return 1;
-						} else if (!a.isFrozen && b.isFrozen) {
-							return -1;
-						}
-						return 0;
-					}) ?? [];
+			this.sortedDinozList = orderDinozList(this.profile?.dinoz.slice() ?? []);
 		}
 	},
 	watch: {
 		profile: {
 			immediate: true,
 			handler() {
-				this.unsortedDinozList();
+				this.updateSortedDinozList();
 			}
 		}
 	},
 	mounted() {
-		this.unsortedDinozList();
+		this.updateSortedDinozList();
 	}
 });
 </script>
