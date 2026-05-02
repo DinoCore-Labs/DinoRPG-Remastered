@@ -5,7 +5,7 @@ import { defineDialog } from '../defineDialog.js';
 export const merguezSellerDialog = defineDialog({
 	id: 'merguez_seller',
 	place: PlaceEnum.RUINES_ASHPOUK,
-	name: 'npc.merguezSeller.name',
+	name: 'npc.merguez.name',
 	cond: { type: 'true' },
 	first: 'begin',
 	pnj: {
