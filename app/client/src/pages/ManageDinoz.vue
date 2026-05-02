@@ -27,9 +27,9 @@
 					<template #content>
 						<template v-for="status in dinoz.status" :key="status.statusId">
 							<img
-								v-if="statusList.displayed[status.statusId]"
-								:src="getImgURL('status', `fx_${statusList.imgName[status.statusId]}`)"
-								:alt="statusList.imgName[status.statusId]"
+								v-if="isDisplayedStatus(status.statusId)"
+								:src="getStatusImgURL(status.statusId)"
+								:alt="getStatusImgName(status.statusId)"
 							/>
 						</template>
 					</template>
@@ -90,6 +90,17 @@ export default defineComponent({
 	},
 	methods: {
 		getImgURL,
+		isDisplayedStatus(statusId: number): boolean {
+			const key = statusId as keyof typeof statusList.displayed;
+			return Boolean(statusList.displayed[key] && statusList.imgName[key]);
+		},
+		getStatusImgName(statusId: number): string {
+			const key = statusId as keyof typeof statusList.imgName;
+			return statusList.imgName[key] ?? '';
+		},
+		getStatusImgURL(statusId: number): string {
+			return getImgURL('status', `fx_${this.getStatusImgName(statusId)}`);
+		},
 		async changeOrder(index: number, direction: number) {
 			const targetIndex = index + direction;
 			if (targetIndex < 0 || targetIndex >= this.dinozList.length) {
