@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.16.1
+
+### Patch Changes
+
+- 3c8c010: add Merguez seller
+
 ## 0.16.0
 
 ### Minor Changes
@@ -386,6 +392,14 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.17.1
+
+### Patch Changes
+
+- 3c8c010: add Merguez seller
+- Updated dependencies [3c8c010]
+  - @dinorpg/core@0.16.1
 
 ## 0.17.0
 
@@ -869,6 +883,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.17.1
+
+### Patch Changes
+
+- 3c8c010: add Merguez seller
 
 ## 0.17.0
 
