@@ -25,11 +25,11 @@
 			<p class="place-name">{{ $t(`place.name.${place}`) }}</p>
 		</div>
 		<DinozList :currentDinozId="currentDinozId()"></DinozList>
-		<!--<a v-if="hasPDA" class="overviewButton" @click="goToPage('ManageDinoz')">
-			<img :src="getImgURL('icons', `small_edit`)" alt="edit" />
+		<a v-if="user.canManageDinozOrder" class="overviewButton" @click="goToPage('ManageDinoz')">
+			<img :src="getImgURL('icons', 'small_edit')" alt="edit" />
 			<span>{{ $t('button.sortDinoz') }}</span>
 		</a>
-		<a v-if="hasPMI" class="overviewButton" @click="goToPage('DinozMissions')">
+		<!--<a v-if="hasPMI" class="overviewButton" @click="goToPage('DinozMissions')">
 			<img :src="getImgURL('icons', `small_right`)" alt="missions" />
 			<span>{{ $t('button.dinozMissions') }}</span>
 		</a>
