@@ -25,11 +25,11 @@
 						<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 						<span>{{ $t('topBar.leftUserMenu.dojo') }}</span>
 					</RouterLink>
-					<!--
-					<RouterLink class="link" :to="`/manage`" v-if="playerStore.playerOptions.hasPDA">
+					<RouterLink class="link" :to="{ name: 'ManageDinoz' }" v-if="userStore.canManageDinozOrder">
 						<img :src="getImgURL('icons', 'act_pda')" alt="pda" />
-						<span>{{ $t('topBar.leftMenu.order') }}</span>
+						<span>{{ $t('topBar.leftUserMenu.order') }}</span>
 					</RouterLink>
+					<!--
 					<RouterLink class="link" :to="`/skill-trees`" v-if="playerStore.playerOptions.hasPAC">
 						<img :src="getImgURL('icons', 'act_pac')" />
 						<span>{{ $t('button.skills') }}</span>
@@ -180,6 +180,7 @@ import { userStore } from '../../store/userStore.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import eventBus from '../../events/index.js';
+import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 
 export default defineComponent({
 	name: 'LeftUserMenu',
@@ -209,7 +210,7 @@ export default defineComponent({
 			return beautifulNumber(this.userStore.treasureTicket);
 		},
 		dinozList(): Array<DinozFiche> {
-			return this.dinozStore.getDinozList as Array<DinozFiche>;
+			return orderDinozList(this.dinozStore.getDinozList as Array<DinozFiche>);
 		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
@@ -239,7 +240,6 @@ export default defineComponent({
 			}
 			// Le dinoz n'est pas suiveur
 			if (!dinoz.leaderId) return false;
-
 			const leader = this.dinozStore.getDinoz(dinoz.leaderId);
 			if (!leader) return false;
 			// Si le dinoz est follower et que le dinoz courrant est son leader
