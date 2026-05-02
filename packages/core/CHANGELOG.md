@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.16.1
+
+### Patch Changes
+
+- 3c8c010: add Merguez seller
+
 ## 0.16.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # @dinorpg/server
 
+## 0.17.1
+
+### Patch Changes
+
+- 3c8c010: add Merguez seller
+- Updated dependencies [3c8c010]
+  - @dinorpg/core@0.16.1
+
 ## 0.17.0
 
 ### Minor Changes
