@@ -45,10 +45,10 @@
 				</td>
 				<td class="order">
 					<button type="button" class="up" :disabled="index === 0" @click="changeOrder(index, -1)">
-						<img :src="getImgURL('icons', 'small_equip')" alt="arrow_up" />
+						<img :src="getImgURL('icons', 'small_page_up')" alt="arrow_up" />
 					</button>
 					<button type="button" class="down" :disabled="index === dinozList.length - 1" @click="changeOrder(index, 1)">
-						<img :src="getImgURL('icons', 'small_equip')" alt="arrow_down" />
+						<img :src="getImgURL('icons', 'small_page_down')" alt="arrow_down" />
 					</button>
 				</td>
 			</tr>
@@ -146,3 +146,109 @@ export default defineComponent({
 	}
 });
 </script>
+
+<style lang="scss" scoped>
+table {
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	background-color: #ecbd84;
+	border-collapse: separate;
+	border-spacing: 1px;
+	tr {
+		display: table-row;
+		cursor: help;
+		th {
+			font-size: 8pt;
+			text-shadow: 1px 1px 0px #356847;
+			height: 41px;
+			vertical-align: bottom;
+			color: #fffdba;
+			text-transform: uppercase;
+			font-weight: bold;
+			letter-spacing: 1pt;
+			text-align: left;
+			white-space: nowrap;
+			border: 1px solid #356847;
+			background-color: #c64e36;
+			background-image: url('../assets/background/table_header.webp');
+			background-position: left bottom;
+			padding-left: 4px;
+			padding-right: 4px;
+			padding-bottom: 8px;
+			&.order {
+				width: 18px;
+			}
+		}
+		td {
+			font-size: 9pt;
+			font-family: 'Trebuchet MS', Arial, sans-serif;
+			color: #710;
+			background-color: #f3ca92;
+			border: 1px solid #c88f44;
+			background-image: url('../assets/background/table_cell.webp');
+			background-position: -10px 0px;
+			padding: 2px 4px;
+			&.dinoz {
+				width: 50px;
+				text-align: center;
+			}
+			&.level {
+				text-align: center;
+			}
+			.life-full {
+				width: 70px;
+				height: 4px;
+				background-color: #8c492f;
+				border: 1px solid #8c492f;
+				overflow: hidden;
+				margin: 2px;
+				.life {
+					height: 4px;
+					background-color: #f9e94c;
+					border-right: 1px solid white;
+					box-sizing: border-box;
+				}
+			}
+			.experience-full {
+				width: 70px;
+				height: 4px;
+				background-color: #8c492f;
+				border: 1px solid #8c492f;
+				overflow: hidden;
+				margin: 2px;
+				.experience {
+					height: 4px;
+					background-color: #c487ea;
+					border-right: 1px solid white;
+					box-sizing: border-box;
+				}
+			}
+			&.order {
+				& > div {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border: 1px solid #f9e5b7;
+					background-color: #bb5e46;
+					margin: 1px;
+					text-align: center;
+					cursor: pointer;
+					width: 16px;
+					height: 16px;
+					&:hover {
+						border: 1px solid yellow;
+						background-color: #f9e5b7;
+					}
+					img {
+						width: 10px;
+					}
+					&.down img {
+						transform: rotate(180deg);
+					}
+				}
+			}
+		}
+	}
+}
+</style>
