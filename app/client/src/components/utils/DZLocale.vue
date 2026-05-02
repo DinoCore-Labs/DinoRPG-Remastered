@@ -11,7 +11,11 @@
 				:class="[$i18n.locale === lang.short ? 'selected' : '']"
 				@click="switchLocale(lang.short)"
 			>
-				<Flag :lang="lang.short" :class="[$i18n.locale === lang.short ? 'selected' : '']" class="flag" />
+				<Flag
+					:lang="lang.short.toLocaleLowerCase()"
+					:class="[$i18n.locale === lang.short ? 'selected' : '']"
+					class="flag"
+				/>
 			</div>
 		</div>
 	</div>
