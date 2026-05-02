@@ -2,6 +2,20 @@
 
 ## 🔹 Core
 
+## 0.17.0
+
+### Minor Changes
+
+- a51a2f0: Add PDA-based Dinoz order management.
+
+  Implemented the Manage Dinoz page unlocked by the PDA epic reward, allowing players to reorder their Dinoz from the side menus.
+
+  Added core return types and improved Dinoz ordering so active and frozen Dinoz keep their own sorted order while preserving follower placement after leaders.
+
+  Added PDA-protected server endpoints to fetch manageable Dinoz and update their order safely.
+
+  Added client service methods, route registration, PDA access checks through the user store, and updated Dinoz lists to reflect the custom order across the account and active Dinoz navigation.
+
 ## 0.16.1
 
 ### Patch Changes
@@ -392,6 +406,25 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.18.0
+
+### Minor Changes
+
+- a51a2f0: Add PDA-based Dinoz order management.
+
+  Implemented the Manage Dinoz page unlocked by the PDA epic reward, allowing players to reorder their Dinoz from the side menus.
+
+  Added core return types and improved Dinoz ordering so active and frozen Dinoz keep their own sorted order while preserving follower placement after leaders.
+
+  Added PDA-protected server endpoints to fetch manageable Dinoz and update their order safely.
+
+  Added client service methods, route registration, PDA access checks through the user store, and updated Dinoz lists to reflect the custom order across the account and active Dinoz navigation.
+
+### Patch Changes
+
+- Updated dependencies [a51a2f0]
+  - @dinorpg/core@0.17.0
 
 ## 0.17.1
 
@@ -883,6 +916,20 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.18.0
+
+### Minor Changes
+
+- a51a2f0: Add PDA-based Dinoz order management.
+
+  Implemented the Manage Dinoz page unlocked by the PDA epic reward, allowing players to reorder their Dinoz from the side menus.
+
+  Added core return types and improved Dinoz ordering so active and frozen Dinoz keep their own sorted order while preserving follower placement after leaders.
+
+  Added PDA-protected server endpoints to fetch manageable Dinoz and update their order safely.
+
+  Added client service methods, route registration, PDA access checks through the user store, and updated Dinoz lists to reflect the custom order across the account and active Dinoz navigation.
 
 ## 0.17.1
 
