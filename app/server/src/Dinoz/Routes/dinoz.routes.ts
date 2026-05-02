@@ -5,7 +5,8 @@ import {
 	dinozIdParamsSchema,
 	moveDinozSchema,
 	setDinozNameBodySchema,
-	setSkillStateBodySchema
+	setSkillStateBodySchema,
+	updateDinozOrdersBodySchema
 } from '../Schema/dinoz.schema.js';
 import { changeLeaderDinozGroup } from '../Service/changeLeaderDinozGroup.service.js';
 import { digWithDinozHandler } from '../Service/dig.service.js';
@@ -14,6 +15,7 @@ import { followDinoz } from '../Service/followDinoz.service.js';
 import { freezeDinoz } from '../Service/freezeDinoz.service.js';
 import { getDinozFiche } from '../Service/getDinozFiche.service.js';
 import { getDinozSkillHandler } from '../Service/getDinozSkill.service.js';
+import { getDinozToManageHandler, updateDinozOrdersHandler } from '../Service/manageDinoz.service.js';
 import { moveDinozHandler } from '../Service/moveDinoz.service.js';
 import { reincarnate } from '../Service/reincarnateDinoz.service.js';
 import { startResting } from '../Service/restDinoz.service.js';
@@ -73,6 +75,27 @@ export async function dinozRoutes(app: FastifyInstance) {
 			}
 		},
 		setSkillStateHandler
+	);
+	app.get(
+		'/manage',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Dinoz']
+			}
+		},
+		getDinozToManageHandler
+	);
+	app.patch(
+		'/orders',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Dinoz'],
+				body: updateDinozOrdersBodySchema
+			}
+		},
+		updateDinozOrdersHandler
 	);
 	// Actions
 	app.post(
@@ -218,4 +241,11 @@ export async function dinozRoutes(app: FastifyInstance) {
 		},
 		unfreezeDinoz
 	);
+}
+function getDinozToManage(id: string) {
+	throw new Error('Function not implemented.');
+}
+
+function updateDinozOrders(id: string, dinozIds: number[]) {
+	throw new Error('Function not implemented.');
 }
