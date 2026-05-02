@@ -21,6 +21,7 @@ import Ingredients from '../pages/Ingredients.vue';
 import Inventory from '../pages/Inventory.vue';
 import LevelUpPage from '../pages/LevelUpPage.vue';
 import MainPage from '../pages/MainPage.vue';
+import ManageDinoz from '../pages/ManageDinoz.vue';
 import MissionsPage from '../pages/MissionsPage.vue';
 import NewsPage from '../pages/NewsPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
@@ -130,6 +131,12 @@ const routes: RouteRecord[] = [
 				component: TrainingCenterPage,
 				meta: { auth: true },
 				beforeEnter: requireOwnedDinozByParam('id')
+			},
+			{
+				path: '/manage-dinoz',
+				name: 'ManageDinoz',
+				component: ManageDinoz,
+				meta: { auth: true }
 			},
 			{
 				path: '/ranking',
