@@ -36,3 +36,9 @@ export const setSkillStateBodySchema = z.object({
 	skillId: z.coerce.number().int().positive(),
 	skillState: z.boolean()
 });
+
+export const updateDinozOrdersBodySchema = z.object({
+	dinozIds: z.array(z.coerce.number().int().positive()).min(1)
+});
+
+export type UpdateDinozOrdersInput = z.infer<typeof updateDinozOrdersBodySchema>;
