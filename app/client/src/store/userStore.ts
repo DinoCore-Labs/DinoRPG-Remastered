@@ -30,6 +30,9 @@ export const userStore = defineStore('userStore', {
 		},
 		canUseMessaging(): boolean {
 			return this.hasReward(Reward.MSG);
+		},
+		canManageDinozOrder(): boolean {
+			return this.hasReward(Reward.PDA);
 		}
 	},
 	actions: {
