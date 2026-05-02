@@ -1,5 +1,5 @@
 import { levelList } from '../models/dinoz/dinozLevel.js';
-import { DinozState } from '../models/dinoz/dinozState.js';
+import { DINOZ_STATE, DinozState } from '../models/dinoz/dinozState.js';
 import { DinozForMaxXp } from '../models/dinoz/dinozXP.js';
 import { raceList } from '../models/dinoz/raceList.js';
 import { DinozStatusId } from '../models/dinoz/statusList.js';
@@ -12,22 +12,18 @@ import { operatorProcess } from '../models/utils/operatorProcess.js';
 
 export const getRace = (raceId: number) => {
 	const race = Object.values(raceList).find(r => r.raceId === raceId);
-
 	if (!race) {
 		throw new ExpectedError(`Race ${raceId} doesn't exist.`);
 	}
-
 	return race;
 };
 
 export const getMaxXp = (dinoz: DinozForMaxXp): number => {
 	const level = levelList.find(l => l.id === dinoz.level);
 	if (!level) throw new Error(`Level ${dinoz.level} doesn't exist.`);
-
 	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_3) && dinoz.level === 70) return 0;
 	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_2) && dinoz.level === 60) return 0;
 	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_1) && dinoz.level === 50) return 0;
-
 	return level.experience;
 };
 
@@ -35,11 +31,9 @@ export type HasPlaceId = { placeId: number };
 
 export const actualPlace = (dinoz: HasPlaceId) => {
 	const place = Object.values(placeListv2).find(p => p.placeId === dinoz.placeId);
-
 	if (!place) {
 		throw new Error(`Place ${dinoz.placeId} doesn't exist.`);
 	}
-
 	return place;
 };
 
@@ -54,7 +48,6 @@ export const calculatePvPxp = (opponentLevel: number, dinozLevel: number) => {
 	const XP_BASE = 1.2;
 	const XP_ADD = 0.8;
 	const PVP_COEF = 2.5;
-
 	// Factor based on the level difference
 	const levelDiff = (opponentLevel - dinozLevel) / opponentLevel;
 	// XP result solely base on the level difference
@@ -67,7 +60,6 @@ export const calculatePvPxp = (opponentLevel: number, dinozLevel: number) => {
 		// Else the opponent's level is equal or higher than the Dinoz, then apply the PVP coef and opponent level to the xp factor based on the level difference.
 		xp = xpFactor * PVP_COEF * opponentLevel;
 	}
-
 	// Set the minimum to the BASE PVP
 	return Math.max(xp, BASE_PVP_XP);
 };
@@ -92,22 +84,18 @@ export const calculatePvExp = (
 	const MINIMUM_XP_FACTOR = 1.0;
 	// Multiplicator constant to increase/decrease result as necessary
 	const XP_MULTIPLICATOR = 1.0;
-
 	// Factor based on the level difference
 	const levelDiff = (maxLevel - dinozLevel) / maxLevel;
-
 	// XP factor to apply to the total
 	let xpFactor = Math.max(XP_BASE + XP_ADD * levelDiff, MINIMUM_XP_FACTOR);
-
 	// Apply new factor when max level limit increases
 	if (maxLevel / initialMaxLevel > xpFactor) xpFactor = maxLevel / initialMaxLevel;
-
 	return Math.round(totalMonsterXp * xpFactor * XP_MULTIPLICATOR);
 };
 
 // Types "purs" (structurels) : juste ce dont la fonction a besoin
 export type DinozSkillLike = {
-	skillId: number; // ou Skill si ton enum est accessible dans core
+	skillId: number;
 };
 
 export type HasSkillsLike = {
@@ -138,40 +126,29 @@ export const getFollowableDinoz = <T extends FollowableDinozLike>(
 ): T[] => {
 	// Brave dinoz cannot follow others
 	if (potentialFollower.skills.some(s => s.skillId === Skill.BRAVE)) return [];
-
 	return dinozList.filter(dinoz => {
 		// Filter out current dinoz
 		if (dinoz.id === potentialFollower.id) return false;
-
 		// Filter out unavailable Dinoz (selling, resting...)
 		if (dinoz.state !== null) return false;
-
 		// Filter out Dinoz that already have a leader
 		if (dinoz.leaderId !== null) return false;
-
 		// Filter out Dinoz that are not in the same place
 		if (dinoz.placeId !== potentialFollower.placeId) return false;
-
 		// Filter out brave Dinoz
 		if (dinoz.skills.some(s => s.skillId === Skill.BRAVE)) return false;
-
 		// Filter out dead Dinoz
 		if (dinoz.life <= 0) return false;
-
 		const maxFollowers = getMaxFollowers(dinoz);
-
 		// Filter out Dinoz that have too many followers
 		if (dinoz.followers.length >= maxFollowers) return false;
-
 		return true;
 	});
 };
 
 export const getMaxFollowers = (dinoz: HasSkillsLike) => {
 	let max = BaseSpecialStats[SpecialStat.MAX_FOLLOWERS];
-
 	const skillsAffectingMaxFollowers = Object.values(skillList).filter(skill => skill.effects?.[Stat.MAX_FOLLOWERS]);
-
 	for (const skill of skillsAffectingMaxFollowers) {
 		if (dinoz.skills.some(s => s.skillId === skill.id)) {
 			const effect = skill.effects?.[Stat.MAX_FOLLOWERS];
@@ -180,7 +157,6 @@ export const getMaxFollowers = (dinoz: HasSkillsLike) => {
 			}
 		}
 	}
-
 	return max;
 };
 
@@ -188,39 +164,47 @@ export type OrderableDinoz = {
 	id: number;
 	order: number | null;
 	name: string;
-	leaderId: number | null;
-	followers: { id: number }[];
+	leaderId?: number | null;
+	followers?: { id: number }[];
+	state?: DinozState | null;
+	isFrozen?: boolean;
 };
 
-export const orderDinozList = <T extends OrderableDinoz>(dinozList: T[]): T[] => {
-	const sortedByOrderAndName = [...dinozList].sort((a, b) => {
+const isFrozenDinoz = (dinoz: OrderableDinoz): boolean => {
+	return dinoz.isFrozen === true || dinoz.state === DINOZ_STATE.frozen;
+};
+
+const sortByOrderAndName = <T extends OrderableDinoz>(dinozList: T[]): T[] => {
+	return [...dinozList].sort((a, b) => {
 		const orderA = a.order ?? a.id;
 		const orderB = b.order ?? b.id;
-
 		if (orderA === orderB) {
 			return a.name.localeCompare(b.name);
 		}
-
 		return orderA - orderB;
 	});
+};
 
-	for (const leader of sortedByOrderAndName.filter(dinoz => dinoz.followers.length > 0)) {
+const keepFollowersAfterLeader = <T extends OrderableDinoz>(dinozList: T[]): T[] => {
+	const sortedByOrderAndName = sortByOrderAndName(dinozList);
+	for (const leader of sortedByOrderAndName.filter(dinoz => (dinoz.followers?.length ?? 0) > 0)) {
 		const followers = sortedByOrderAndName.filter(dinoz => dinoz.leaderId === leader.id);
-
 		for (const follower of followers) {
 			const followerIndex = sortedByOrderAndName.findIndex(dinoz => dinoz.id === follower.id);
-
 			if (followerIndex !== -1) {
 				sortedByOrderAndName.splice(followerIndex, 1);
 			}
 		}
-
 		const leaderIndex = sortedByOrderAndName.findIndex(dinoz => dinoz.id === leader.id);
-
 		if (leaderIndex !== -1) {
 			sortedByOrderAndName.splice(leaderIndex + 1, 0, ...followers);
 		}
 	}
-
 	return sortedByOrderAndName;
+};
+
+export const orderDinozList = <T extends OrderableDinoz>(dinozList: T[]): T[] => {
+	const activeDinoz = dinozList.filter(dinoz => !isFrozenDinoz(dinoz));
+	const frozenDinoz = dinozList.filter(isFrozenDinoz);
+	return [...keepFollowersAfterLeader(activeDinoz), ...keepFollowersAfterLeader(frozenDinoz)];
 };
