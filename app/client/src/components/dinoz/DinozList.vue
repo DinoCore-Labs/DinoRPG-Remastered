@@ -71,11 +71,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { dinozStore } from '../../store/dinozStore.js';
-import { userStore } from '../../store/userStore.js';
 import { placeList } from '../../constants/place.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
-//import { orderDinozList } from '@drpg/core/utils/DinozUtils';
-import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
+import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 
 export default defineComponent({
 	name: 'DinozList',
@@ -84,10 +82,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			dinozStore: dinozStore(),
-			userStore: userStore(),
-			DINOZ_STATE
-			//hasPDA: false as boolean
+			dinozStore: dinozStore()
 		};
 	},
 	methods: {
@@ -126,15 +121,12 @@ export default defineComponent({
 	},
 	computed: {
 		dinozList(): Array<DinozFiche> {
-			return this.dinozStore.getDinozList as Array<DinozFiche>;
+			return orderDinozList(this.dinozStore.getDinozList as Array<DinozFiche>);
 		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
 		}
-	} /*,
-	mounted(): void {
-		this.hasPDA = this.playerStore.getPlayerOptions.hasPDA;
-	}*/
+	}
 });
 </script>
 
