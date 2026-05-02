@@ -18,7 +18,8 @@
 		"menu": "Menu",
 		"leftUserMenu": {
 			"shop": "Boutique",
-			"dojo": "Dojo"
+			"dojo": "Dojo",
+			"order": "Ordonner"
 		},
 		"authMenu": {
 			"name": "Pseudo :",
@@ -191,12 +192,19 @@
 		"gather": "DinoRPG [ {type} ]",
 		"fight": "DinoRPG [ Combat ! ]",
 		"training": "DinoRPG [ C.E.F ]",
+		"manageDinoz": "DinoRPG [ Gestion de mes Dinoz ]",
 		"admin": "DinoRPG [ Admin Dashboard ]"
 	},
 	"adminPage": {
 		"news": {
 			"deleteSuccess": "News supprimée avec succès"
 		}
+	},
+	"manageDinoz": {
+		"title": "Gestion de mes Dinoz",
+		"disclaimer": "Ce module de gestion est accessible grâce à votre **Pierre en Diamantite Agglomérée** : un véritable concentré de technologie !",
+		"dinoz": "Dinoz",
+		"elements": "Éléments"
 	},
 	"newsPage": {
 		"title": "Actualités de Dinoland",
@@ -249,7 +257,8 @@
 		"shop": "Boutique",
 		"search": "Rechercher",
 		"loading": "Chargement...",
-		"noResults": "Aucun résultat"
+		"noResults": "Aucun résultat",
+		"sortDinoz": "Gérer mes Dinoz"
 	},
 	"popup": {
 		"confirm": "Confirmer cette action ?",
