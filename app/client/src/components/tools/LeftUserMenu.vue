@@ -26,7 +26,7 @@
 						<span>{{ $t('topBar.leftUserMenu.dojo') }}</span>
 					</RouterLink>
 					<RouterLink class="link" :to="{ name: 'ManageDinoz' }" v-if="userStore.canManageDinozOrder">
-						<img :src="getImgURL('icons', 'act_pda')" alt="pda" />
+						<img :src="getImgURL('act', 'act_pda')" alt="pda" />
 						<span>{{ $t('topBar.leftUserMenu.order') }}</span>
 					</RouterLink>
 					<!--
@@ -39,7 +39,7 @@
 						<span>{{ $t('topBar.leftMenu.missions') }}</span>
 					</RouterLink>-->
 					<RouterLink class="link" :to="`/shop/dinoz`">
-						<img :src="getImgURL('icons', 'act_treasure')" alt="enclosure" />
+						<img :src="getImgURL('act', 'act_shop')" alt="enclosure" />
 						<span>{{ $t('topBar.leftUserMenu.enclosure') }}</span>
 					</RouterLink>
 				</div>
