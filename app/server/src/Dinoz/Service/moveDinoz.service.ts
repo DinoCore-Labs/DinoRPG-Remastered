@@ -11,8 +11,6 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import gameConfig from '../../config/game.config.js';
 import { fightMonstersAtPlace } from '../../Fight/Service/fight.service.js';
 import { movementListener } from '../../Fight/Service/movementListener.service.js';
-import { advanceDinozMissionOnMove } from '../../Mission/Controller/mission.progress.js';
-import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { canGoToThisPlace, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
@@ -123,22 +121,17 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 
 	let fight = await movementListener(user, team, finalPlace, dinozId);
 	if (!fight) {
-		fight = await fightMonstersAtPlace(team, finalPlace, user);
+		fight = await fightMonstersAtPlace(team, finalPlace, user, {
+			missionMoveDinozIds: team.map(member => member.id),
+			missionKillDinozIds: [dinozId]
+		});
 		if (fight.result) {
 			await updateMultipleDinoz(
 				team.map(d => d.id),
-				{ placeId: finalPlace }
-			);
-
-			// Mission progression related to MOVE action
-			await prisma.$transaction(async tx => {
-				for (const member of team) {
-					await advanceDinozMissionOnMove(tx, {
-						dinozId: member.id,
-						place: finalPlace
-					});
+				{
+					placeId: finalPlace
 				}
-			});
+			);
 		}
 	}
 	// Consume fight action

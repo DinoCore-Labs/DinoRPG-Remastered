@@ -10,7 +10,7 @@ import { FightRewardOptions } from '@dinorpg/core/models/fight/fightReward.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
-import { getMonsterKeyById, monsterIdByKey, monsterKeyById } from '@dinorpg/core/models/monster/monsterKeyMap.js';
+import { getMonsterKeyById } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 import { monsterList } from '@dinorpg/core/models/monster/monsterList.js';
 import { placeListv2, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
@@ -25,7 +25,7 @@ import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.c
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
-import { advanceDinozMissionOnFightWon } from '../../Mission/Controller/mission.progress.js';
+import { advanceDinozMissionOnFightWon, advanceDinozMissionOnMove } from '../../Mission/Controller/mission.progress.js';
 import { resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
@@ -53,17 +53,13 @@ import { movementListener } from './movementListener.service.js';
  */
 export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput }>, reply: FastifyReply) {
 	const dinozId = req.body.dinozId;
-
 	const dayOfWeek = new Date().getDay();
 	const authed = req.user;
-
 	// Get Dinoz info
 	const user = await getDinozFightDataRequest(dinozId, authed.id);
 	if (!user) throw new ExpectedError('userNotFound', { params: { id: authed.id } });
-
 	const dinozData = user.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
-
 	// Marais Collant - No fight days
 	if (
 		gameConfig.world.disableSwampFightRules &&
@@ -75,17 +71,13 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 		}
 		throw new ExpectedError('noFight');
 	}
-
 	if (dinozData.canRename) {
 		throw new ExpectedError(`Dinoz has to be named.`);
 	}
-
 	if (dinozData.state !== null) {
 		throw new ExpectedError(`Dinoz is not able to fight.`);
 	}
-
 	let team = user.dinoz;
-
 	// Go through followers and make those that are unavailable leave the group.
 	const unavailableFollowers = team.filter(d => d.life <= 0 || d.state !== null);
 
@@ -95,34 +87,27 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 		}
 		team = team.filter(d => d.life > 0 && d.state === null);
 	}
-
 	/*if (dinozData.concentration) {
 		throw new ExpectedError(translate(`concentration`, authed));
 	}*/
-
 	if (team.some(d => !d.fight)) {
 		throw new ExpectedError(`missingIrma`);
 	}
-
 	if (!isAlive(dinozData)) {
 		throw new ExpectedError(`dead`);
 	}
-
 	// Look for a special action that happens on the fight.
 	let fight = await movementListener(user, team, dinozData.placeId, dinozId);
-
 	// If no fight happened, trigger a regular fight.
 	if (!fight) {
 		fight = await fightMonstersAtPlace(team, dinozData.placeId, user);
 	}
-
 	// Consume fight action
 	for (const dino of team) {
 		await updateDinoz(dino.id, {
 			fight: false
 		});
 	}
-
 	// Update player stats
 	if (fight.result) {
 		await incrementUserStat(
@@ -131,7 +116,6 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 			fight.fighters.filter(f => f.type === FighterType.MONSTER).length
 		);
 	}
-
 	return reply.send(fight);
 }
 
@@ -147,14 +131,18 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 type DinozToCheckMissionFight = {
 	missions: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
 };
+type FightMonstersAtPlaceOptions = FightRewardOptions & {
+	missionMoveDinozIds?: number[];
+	missionKillDinozIds?: number[];
+};
 export async function fightMonstersAtPlace(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum,
-	user: Pick<User, 'id' | 'teacher' | 'cooker'>
+	user: Pick<User, 'id' | 'teacher' | 'cooker'>,
+	options: FightMonstersAtPlaceOptions = {}
 ) {
 	const dayOfWeek = new Date().getDay();
 	let monsters = await generateMonsterList(team, placeId);
-
 	// Marais Collant - No fights days.
 	if (
 		gameConfig.world.disableSwampFightRules &&
@@ -169,25 +157,35 @@ export async function fightMonstersAtPlace(
 		}
 	}
 	const fightResult = calculateFightVsMonsters(team, user, placeId, monsters);
-	const result = await rewardFightVsMonsters(team, monsters, fightResult, placeId, user);
-
-	// If any dinoz is on a mission, check if the fight result progress the mission
+	const result = await rewardFightVsMonsters(team, monsters, fightResult, placeId, user, options);
+	// If any dinoz is on a mission, check if the fight result progresses the mission.
 	const leader = team[0];
 	const winner = fightResult.outcome === FightOutcome.AttackerWin;
 	if (winner && leader) {
 		const defeatedMonsterKeys = monsters
 			.map(monster => getMonsterKeyById(monster.id))
 			.filter((key): key is NonNullable<typeof key> => key !== null);
-		if (defeatedMonsterKeys.length > 0) {
+		const missionMoveDinozIds = options.missionMoveDinozIds ?? [];
+		const missionKillDinozIds = options.missionKillDinozIds ?? [leader.id];
+		if (missionMoveDinozIds.length > 0 || defeatedMonsterKeys.length > 0) {
 			await prisma.$transaction(async tx => {
-				await advanceDinozMissionOnFightWon(tx, {
-					dinozId: leader.id,
-					defeatedMonsterKeys
-				});
+				for (const dinozId of missionMoveDinozIds) {
+					await advanceDinozMissionOnMove(tx, {
+						dinozId,
+						place: placeId
+					});
+				}
+				if (defeatedMonsterKeys.length > 0) {
+					for (const dinozId of missionKillDinozIds) {
+						await advanceDinozMissionOnFightWon(tx, {
+							dinozId,
+							defeatedMonsterKeys
+						});
+					}
+				}
 			});
 		}
 	}
-
 	return result;
 }
 
