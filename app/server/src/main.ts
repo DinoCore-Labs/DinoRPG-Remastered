@@ -8,7 +8,7 @@ async function main() {
 	try {
 		await server.listen({
 			port: cfg.port,
-			host: '0.0.0.0'
+			host: process.env.HOST ?? '127.0.0.1'
 		});
 		console.log(`🚀 Server ready at ${cfg.selfUrl.origin.replace(/\/$/, '')}`);
 		console.log(`📚 API docs at ${cfg.apiUrl.origin.replace(/\/$/, '')}/docs`);
