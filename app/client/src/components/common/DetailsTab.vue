@@ -663,6 +663,8 @@ export default defineComponent({
 	table {
 		margin-bottom: 10px;
 		border: 2px solid #bc683c;
+		border-collapse: collapse;
+		background-color: transparent;
 		:deep(tr) {
 			th {
 				max-width: 222px;
@@ -685,7 +687,7 @@ export default defineComponent({
 					img {
 						float: left;
 						position: relative;
-						margin-top: 8px;
+						margin-top: 6px;
 						margin-right: 5px;
 						vertical-align: bottom;
 					}
