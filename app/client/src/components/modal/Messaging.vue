@@ -111,11 +111,10 @@
 					</div>
 				</div>
 				<template v-if="!creationMode && selectedThreadId && threadSelected">
-					<Thread :thread-id="selectedThreadId" />
+					<Thread :thread-id="selectedThreadId" @thread-read="refreshUnreadThreads" />
 				</template>
 			</div>
 		</div>
-
 		<div class="close" @click="close()">X</div>
 	</dialog>
 </template>
@@ -133,6 +132,7 @@ import { MessagerieService } from '../../services/messaging.service';
 import { errorHandler } from '../../utils/errorHandler';
 import { formatDateTime } from '../../utils/formatDate';
 import eventBus from '../../events';
+import { messagingStore } from '../../store/messagingStore';
 
 export default defineComponent({
 	name: 'Messagerie',
@@ -149,7 +149,8 @@ export default defineComponent({
 			searchQuery: '',
 			notifiedThreads: [] as string[],
 			isSending: false,
-			uStore: userStore()
+			uStore: userStore(),
+			mStore: messagingStore()
 		};
 	},
 	computed: {
@@ -168,6 +169,7 @@ export default defineComponent({
 			}
 			try {
 				this.threads = await MessagerieService.getThreads();
+				this.mStore.setUnreadThreadsFromThreads(this.threads);
 				if (this.messageRef && !this.messageRef.open) {
 					this.messageRef.showModal();
 				}
@@ -249,6 +251,10 @@ export default defineComponent({
 		},
 		toggleSearch() {
 			this.isSearchVisible = !this.isSearchVisible;
+		},
+		async refreshUnreadThreads() {
+			await this.mStore.refreshUnreadThreads();
+			this.threads = await MessagerieService.getThreads();
 		}
 	},
 	mounted() {
