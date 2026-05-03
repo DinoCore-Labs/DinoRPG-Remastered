@@ -233,12 +233,20 @@ export default defineComponent({
 	},
 	methods: {
 		async logOff() {
-			this.$toast.success(this.$t('topBar.userMenu.goodbye', { name: this.uStore.getUserName }));
-			await UserService.logout();
-			this.uStore.clearUser();
-			this.dStore.clearDinoz();
-			this.menuCalled = false;
-			await this.$router.replace({ name: 'HomePage' });
+			const userName = this.uStore.getUserName;
+			try {
+				await UserService.logout();
+			} catch (error) {
+				console.warn('[logout] Server logout failed, clearing local session anyway', error);
+			} finally {
+				this.uStore.clearUser();
+				this.dStore.clearDinoz();
+				sessionStorage.removeItem('userStore');
+				sessionStorage.removeItem('dinozStore');
+				this.menuCalled = false;
+				this.$toast.success(this.$t('topBar.userMenu.goodbye', { name: userName }));
+				await this.$router.replace({ name: 'HomePage' });
+			}
 		},
 		close() {
 			this.menuCalled = false;
