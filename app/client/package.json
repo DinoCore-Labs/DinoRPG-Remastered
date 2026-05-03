@@ -18,7 +18,7 @@
 		"pixi.js": "^8.18.1",
 		"sanitize-html": "^2.17.3",
 		"vue": "^3.5.32",
-		"vue-i18n": "^11.3.2",
+		"vue-i18n": "^11.4.0",
 		"vue-router": "^5.0.4",
 		"vue-tippy": "^6.7.1",
 		"vue-toast-notification": "^3.1.3"
