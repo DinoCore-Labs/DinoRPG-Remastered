@@ -19,6 +19,7 @@ import {
 import { adminRoutes } from './Admin/Routes/admin.routes.js';
 import { loadConfig } from './config/config.js';
 import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
+import { versionRoutes } from './config/version.js';
 import { loadDialogs } from './Dialog/Controller/dialog.registry.js';
 import { dialogRoutes } from './Dialog/Routes/dialog.routes.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
@@ -225,6 +226,7 @@ async function buildServer() {
 	server.register(missionsRoutes, { prefix: 'api/missions' });
 	server.register(messagingRoutes, { prefix: 'api/messaging' });
 	server.register(trainingCenterRoutes, { prefix: 'api/cef' });
+	server.register(versionRoutes, { prefix: 'api' });
 
 	//------------------------------------------------------
 	// 10. Scheduler
