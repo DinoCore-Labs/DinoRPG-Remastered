@@ -9,11 +9,9 @@ import { getActiveDinozCount, getUserMaxDinoz } from '../Controller/getActiveDin
 export async function unfreezeDinoz(req: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
 	const userId = req.user.id;
 	const dinozId = Number(req.params.id);
-
 	if (!Number.isInteger(dinozId) || dinozId <= 0) {
 		throw new ExpectedError('Invalid dinoz id');
 	}
-
 	const [dinoz, user] = await Promise.all([
 		prisma.dinoz.findUnique({
 			where: { id: dinozId },
@@ -33,26 +31,22 @@ export async function unfreezeDinoz(req: FastifyRequest<{ Params: { id: string }
 			}
 		})
 	]);
-
 	if (!dinoz) {
 		throw new ExpectedError('No dinoz found');
 	}
-
 	if (!user) {
 		throw new ExpectedError('No user found');
 	}
-
 	if (dinoz.userId !== userId) {
 		throw new ExpectedError('Player does not own this dinoz');
 	}
-
 	const activeDinozCount = await getActiveDinozCount(userId);
-	const maxDinoz = getUserMaxDinoz(user);
-
+	const maxDinoz = getUserMaxDinoz({
+		leader: user.leader,
+		messie: user.messie
+	});
 	assertCanStartUnfreezingDinozAction(dinoz.state, activeDinozCount, maxDinoz);
-
 	const unfreezeAt = getUnfreezeAt();
-
 	await prisma.dinoz.update({
 		where: { id: dinoz.id },
 		data: {
@@ -60,7 +54,6 @@ export async function unfreezeDinoz(req: FastifyRequest<{ Params: { id: string }
 			stateTimer: unfreezeAt
 		}
 	});
-
 	return reply.send({
 		success: true,
 		unfreezeAt: unfreezeAt.toISOString()

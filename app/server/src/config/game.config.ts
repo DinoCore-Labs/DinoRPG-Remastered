@@ -41,7 +41,7 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 	development: {
 		dinoz: {
 			maxLevel: 80,
-			maxQuantity: 30,
+			maxQuantity: 18,
 			leaderBonus: 3,
 			initialMaxLevel: 50
 		},

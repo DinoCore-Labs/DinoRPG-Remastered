@@ -52,7 +52,7 @@ export function canStartUnfreezingDinozAction(state: DinozState | null, activeDi
 	if (state !== DinozState.frozen) {
 		return false;
 	}
-
+	console.log(activeDinozCount, maxDinoz);
 	return activeDinozCount < maxDinoz;
 }
 
@@ -64,7 +64,6 @@ export function assertCanStartUnfreezingDinozAction(
 	if (state !== DinozState.frozen) {
 		throw new ExpectedError('Dinoz is not frozen');
 	}
-
 	if (activeDinozCount >= maxDinoz) {
 		throw new ExpectedError('Dinoz limit reached');
 	}

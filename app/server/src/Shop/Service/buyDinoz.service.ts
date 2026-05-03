@@ -27,7 +27,10 @@ export async function buyDinoz(req: FastifyRequest<{ Params: BuyDinozParams }>, 
 		if (!player) {
 			throw new ExpectedError('userNotFound');
 		}
-		const maxDinoz = getUserMaxDinoz(player);
+		const maxDinoz = getUserMaxDinoz({
+			leader: player.leader,
+			messie: player.messie
+		});
 		if (dinozActive.length >= maxDinoz) {
 			throw new ExpectedError('tooManyActiveDinoz');
 		}

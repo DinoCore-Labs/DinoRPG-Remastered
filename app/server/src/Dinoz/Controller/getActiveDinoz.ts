@@ -19,7 +19,6 @@ export async function getActiveDinoz(userId: string) {
 			}
 		}
 	});
-
 	return dinozList;
 }
 
@@ -39,14 +38,11 @@ type DinozLimitUser = {
 
 export function getUserMaxDinoz(user: DinozLimitUser) {
 	let maxDinoz = gameConfig.dinoz.maxQuantity;
-
 	if (user.leader) {
 		maxDinoz += 3;
 	}
-
 	if (user.messie) {
 		maxDinoz += 3;
 	}
-
 	return maxDinoz;
 }

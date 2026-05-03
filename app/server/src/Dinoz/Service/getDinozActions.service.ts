@@ -187,16 +187,20 @@ export async function getAvailableActions(
 		return [actionList[Action.MARKET]];
 	}
 
-	const maxDinoz = getUserMaxDinoz(user);
+	const hasLeader = user.leader ?? user.dinoz.some(dinoz => dinoz.skills.some(skill => skill.skillId === Skill.LEADER));
+	const hasMessie = user.messie ?? user.dinoz.some(dinoz => dinoz.skills.some(skill => skill.skillId === Skill.MESSIE));
+
+	const maxDinoz = getUserMaxDinoz({
+		leader: hasLeader,
+		messie: hasMessie
+	});
 
 	// Unfreeze action
 	if (dinoz.state === DinozState.frozen) {
 		const activeDinozCount = await getActiveDinozCount(user.id);
-
 		if (canStartUnfreezingDinozAction(dinoz.state, activeDinozCount, maxDinoz)) {
 			return [actionList[Action.STOP_CONGEL]];
 		}
-
 		return [];
 	}
 
@@ -204,7 +208,6 @@ export async function getAvailableActions(
 	if (dinoz.state === DinozState.resting) {
 		return [actionList[Action.STOP_REST]];
 	}
-
 	if (dinoz.leaderId) {
 		availableActions.push(actionList[Action.UNFOLLOW]);
 		availableActions.push(actionList[Action.CHANGE_LEADER]);
@@ -225,7 +228,6 @@ export async function getAvailableActions(
 				skills: { select: { skillId: true, state: true } }
 			}
 		});
-
 		const dinozToFollow = getFollowableDinoz(
 			potentialDinozToFollow.map(candidate => ({
 				...candidate,
@@ -234,22 +236,17 @@ export async function getAvailableActions(
 			})),
 			dinoz
 		);
-
 		if (dinozToFollow.length > 0 && isAlive(dinoz) && dinoz.followers.length === 0) {
 			availableActions.push(actionList[Action.FOLLOW]);
 		}
 	}
-
 	if (dinoz.followers.length > 0) {
 		availableActions.push(actionList[Action.DISBAND]);
-
 		for (const follower of dinoz.followers) {
 			if (!follower.gather) {
 				continue;
 			}
-
 			const followerContext = getContext(follower.id);
-
 			for (const gatherFound of normalGatherEntries) {
 				if (checkCondition(gatherFound.condition, followerContext)) {
 					pushUniqueAction(availableActions, {
@@ -264,7 +261,6 @@ export async function getAvailableActions(
 	// If dinoz is not alive, only show resurrect action
 	if (!isAlive(dinoz)) {
 		availableActions.push(actionList[Action.RESURRECT]);
-
 		if (
 			dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) &&
 			dinoz.level >= 40 &&
@@ -272,7 +268,6 @@ export async function getAvailableActions(
 		) {
 			availableActions.push(actionList[Action.REINCARNATION]);
 		}
-
 		return availableActions;
 	}
 
@@ -299,13 +294,11 @@ export async function getAvailableActions(
 		if (index >= 0) {
 			availableActions.splice(index, 1);
 		}
-
 		if (dinoz.remaining <= 0 || dinoz.followers.filter(f => !f.fight).length > 0) {
 			index = availableActions.indexOf(actionList[Action.ACTION]);
 			if (index >= 0) {
 				availableActions.splice(index, 1);
 			}
-
 			if (dinoz.followers.some(follower => follower.remaining > 0)) {
 				availableActions.push(actionList[Action.ACTION]);
 			} else {
@@ -317,7 +310,6 @@ export async function getAvailableActions(
 	if (!dinoz.leaderId && dinoz.fight && dinoz.followers.filter(f => !f.fight).length <= 0) {
 		availableActions.push(actionList[Action.FIGHT]);
 	}
-
 	const currentContext = getContext(dinoz.id);
 
 	// Normal gather
@@ -332,7 +324,6 @@ export async function getAvailableActions(
 	// Special gather
 	for (const gatherFound of specialGatherEntries) {
 		const passes = checkCondition(gatherFound.condition, currentContext);
-
 		if (passes) {
 			pushUniqueAction(availableActions, getGatherActionFiche(gatherFound));
 		}
@@ -354,11 +345,9 @@ export async function getAvailableActions(
 	// Itinerant merchant
 	const itinerant = await getSpecificSecret('itinerant');
 	if (!itinerant) throw new ExpectedError(`No itinerant merchant place found.`);
-
 	const itinerantShop = Object.values(shopListV2)
 		.filter(shop => shop.type === ShopType.ITINERANT)
 		.find(shop => checkCondition(shop.condition, currentContext));
-
 	if (itinerantShop && +itinerant.value === dinoz.placeId) {
 		availableActions.push({
 			name: actionList[Action.ITINERANTSHOP].name,
@@ -374,7 +363,6 @@ export async function getAvailableActions(
 			shop.placeId !== PlaceEnum.NOWHERE &&
 			checkCondition(shop.condition, currentContext)
 	);
-
 	if (shopAvailable.length > 0) {
 		availableActions.push(
 			...shopAvailable.map(shop => ({
@@ -391,9 +379,9 @@ export async function getAvailableActions(
 	}
 
 	// Market action
-	if (dinoz.placeId === PlaceEnum.PLACE_DU_MARCHE) {
+	/*if (dinoz.placeId === PlaceEnum.PLACE_DU_MARCHE) {
 		availableActions.push(actionList[Action.MARKET]);
-	}
+	}*/
 
 	// Freeze action
 	if (canFreezeDinozAction(dinoz)) {
