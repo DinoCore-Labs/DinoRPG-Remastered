@@ -5,13 +5,13 @@
 		<div v-if="currentGoalText" class="detail">
 			{{ currentGoalText }}
 		</div>
-		<div v-if="previousStepText" class="previous-step">
-			<p class="name">{{ $t('missions.lastDialog') }}</p>
-			<p v-html="formatContent(previousStepText)" />
-		</div>
 		<template #content>
 			<h1>{{ $t(currentMission.nameKey) }}</h1>
 			<p v-html="formatContent($t(currentMission.beginKey).toString())" />
+			<div v-if="previousStepText" class="previous-step">
+				<p class="name">{{ $t('missions.lastDialog') }}</p>
+				<p v-html="formatContent(previousStepText)" />
+			</div>
 		</template>
 	</Tippy>
 	<MissionInformationModal
@@ -289,11 +289,13 @@ export default defineComponent({
 	font-variant: small-caps;
 	font-weight: bold;
 	color: white;
+	margin-top: -8px;
 }
 .detail {
 	font-style: italic;
 	color: #fce3bc;
 	font-size: 9pt;
+	margin-top: -8px;
 }
 .previous-step {
 	margin-top: 8px;
