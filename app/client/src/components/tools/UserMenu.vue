@@ -33,6 +33,7 @@
 						@click="messagerie()"
 					>
 						<span v-if="mStore.hasUnreadMessages" class="messageBadge">
+							<img :src="getImgURL('icons', 'mail_anim', false, true)" alt="" />
 							{{ mStore.unreadBadgeLabel }}
 						</span>
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon">
@@ -490,18 +491,6 @@ export default defineComponent({
 	transform: scale(1) translate(50%, -50%);
 	transform-origin: 100% 0% 0px;
 }
-.badge {
-	position: absolute;
-	top: 5px;
-	right: 13px;
-	background: red;
-	color: white;
-	font-size: 10px;
-	font-weight: bold;
-	border-radius: 50%;
-	padding: 1.5px 6px;
-	text-align: center;
-}
 .notifications {
 	display: flex;
 	flex-direction: column;
@@ -736,21 +725,19 @@ export default defineComponent({
 	position: relative;
 }
 .messageBadge {
+	display: flex;
+	align-items: center;
+	gap: 3px;
 	position: absolute;
-	top: -4px;
-	right: -4px;
-	min-width: 16px;
-	height: 16px;
-	padding: 0 4px;
-	border-radius: 999px;
-	background: #d92323;
-	color: #fff;
-	font-size: 10px;
+	top: -10px;
+	right: 10px;
+	background: red;
+	color: white;
+	font-size: 11.5px !important;
 	font-weight: bold;
-	line-height: 16px;
+	border-radius: 50%;
+	padding: 3px 6px;
 	text-align: center;
-	box-shadow: 0 0 0 1px #fff;
-	pointer-events: none;
 }
 .svgIcon {
 	user-select: none;
