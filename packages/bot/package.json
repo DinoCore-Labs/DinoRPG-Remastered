@@ -6,7 +6,9 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"dev": "tsc-watch --build ./tsconfig.json --onSuccess \"node dist/index.js\"",
-		"deploy": "tsc src/deploy.ts"
+		"build": "tsc --build ./tsconfig.json",
+		"start": "node dist/index.js",
+		"deploy:commands": "tsc --build ./tsconfig.json && node dist/deploy.js"
 	},
 	"keywords": [],
 	"author": "",
