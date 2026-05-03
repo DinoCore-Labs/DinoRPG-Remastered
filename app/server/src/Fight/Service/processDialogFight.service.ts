@@ -8,7 +8,13 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { buildDialogContext } from '../../Dialog/Controller/dialog.context.js';
+import { applyDialogPhaseEffects } from '../../Dialog/Controller/dialog.effects.js';
 import { getDialogById } from '../../Dialog/Controller/dialog.registry.js';
+import {
+	getDialogFightLockStatusKey,
+	getDialogReturnStatusKeys,
+	resolveDialogReturnPhase
+} from '../../Dialog/Controller/dialogReturnPhase.controller.js';
 import { addStatusToDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
@@ -35,7 +41,6 @@ function extractDialogFightData(phase: RuntimeDialogPhase): {
 } {
 	let monsters: MonsterFiche[] | null = null;
 	let rewardStatusKey: string | undefined;
-
 	for (const special of phase.special) {
 		if (special.type === 'startFight') {
 			monsters = special.fightId;
@@ -45,43 +50,20 @@ function extractDialogFightData(phase: RuntimeDialogPhase): {
 			rewardStatusKey = special.status;
 		}
 	}
-
 	if (!monsters || monsters.length === 0) {
 		throw new ExpectedError(`Phase "${phase.id}" does not define a dialog fight`);
 	}
-
 	return {
 		monsters,
 		rewardStatusKey
 	};
 }
 
-function resolveDialogReturnPhase(phaseId: string, won: boolean): string | undefined {
-	if (!won) return undefined;
-
-	switch (phaseId) {
-		case 'water_fight':
-			return 'water_win';
-		case 'fire_fight':
-			return 'fire_win';
-		case 'attack':
-			return 'attack_win';
-		case 'show':
-			return 'show_win';
-		case 'fight':
-			return 'fight_win';
-		default:
-			return undefined;
-	}
-}
-
 export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDialogFightInput }>, reply: FastifyReply) {
 	const { dinozId, dialogId, phaseId } = req.body;
 	const authed = req.user;
-
 	const dialog = getDialogById(dialogId);
 	const phase = getDialogFightPhase(dialog, phaseId);
-
 	const context = await prisma.$transaction(tx =>
 		buildDialogContext(tx, {
 			userId: authed.id,
@@ -89,86 +71,94 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 			dialog
 		})
 	);
-
 	if (context.dinoz.placeId !== dialog.place) {
 		throw new ExpectedError(`Dialog "${dialog.id}" is not available at this place`);
 	}
-
 	if (dialog.cond && !checkDialogCondition(dialog.cond, context)) {
 		throw new ExpectedError(`Dialog "${dialog.id}" is not available`);
 	}
-
 	const { monsters, rewardStatusKey } = extractDialogFightData(phase);
-
+	const returnPhaseId = resolveDialogReturnPhase(phaseId, true);
+	const returnPhase = returnPhaseId ? getDialogFightPhase(dialog, returnPhaseId) : undefined;
+	const returnStatusKeys = getDialogReturnStatusKeys(returnPhase);
+	const lockStatusKey = getDialogFightLockStatusKey(phase, returnPhase);
+	if (lockStatusKey) {
+		const lockStatusId = dinozStatusIdByKey[lockStatusKey];
+		if (lockStatusId == null) {
+			throw new ExpectedError(`Unknown dialog fight lock status "${lockStatusKey}"`);
+		}
+		if (context.dinoz.statusIds.has(lockStatusId)) {
+			throw new ExpectedError(`Dialog fight "${dialogId}:${phaseId}" has already been completed.`);
+		}
+	}
 	const user = await getDinozFightDataRequest(dinozId, authed.id);
 	if (!user) throw new ExpectedError('userNotFound', { params: { id: authed.id } });
-
 	const dinozData = user.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
-
 	if (dinozData.canRename) {
 		throw new ExpectedError('Dinoz has to be named.');
 	}
-
 	if (dinozData.state !== null) {
 		throw new ExpectedError('Dinoz is not able to fight.');
 	}
-
 	let team = user.dinoz;
-
 	const unavailableFollowers = team.filter(d => d.life <= 0 || d.state !== null);
-
 	if (unavailableFollowers.length > 0) {
 		for (const d of unavailableFollowers) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
 		team = team.filter(d => d.life > 0 && d.state === null);
 	}
-
 	if (!isAlive(dinozData)) {
 		throw new ExpectedError('dead');
 	}
-
 	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, dinozData.placeId, user);
-
 	const winner = fightResult.outcome === FightOutcome.AttackerWin;
-
-	if (winner && rewardStatusKey) {
+	if (winner && returnPhase) {
+		await prisma.$transaction(async tx => {
+			const rewardContext = await buildDialogContext(tx, {
+				userId: authed.id,
+				dinozId,
+				dialog
+			});
+			await applyDialogPhaseEffects(tx, {
+				context: rewardContext,
+				dialog,
+				phase: returnPhase,
+				applySpecials: false,
+				applyEffects: true
+			});
+		});
+	}
+	if (winner && rewardStatusKey && !returnStatusKeys.includes(rewardStatusKey)) {
 		const rewardStatusId = dinozStatusIdByKey[rewardStatusKey];
-
 		if (rewardStatusId == null) {
 			throw new ExpectedError(`Unknown dialog reward status "${rewardStatusKey}"`);
 		}
-
 		const alreadyHasStatus = dinozData.status.some(status => status.statusId === rewardStatusId);
-
 		if (!alreadyHasStatus) {
 			await addStatusToDinoz(dinozId, rewardStatusId);
 		}
 	}
-
 	for (const dino of team) {
 		await updateDinoz(dino.id, {
 			fight: false
 		});
 	}
-
 	await incrementUserStat(
 		StatTracking.KILL_M,
 		user.id,
 		fightResult.fighters.filter(f => f.type === FighterType.MONSTER).length
 	);
-
-	const returnPhaseId = resolveDialogReturnPhase(phaseId, winner);
-
 	return reply.send({
 		...result,
-		dialogReturn: returnPhaseId
-			? {
-					dialogId,
-					phaseId: returnPhaseId
-				}
-			: undefined
+		dialogReturn:
+			winner && returnPhaseId
+				? {
+						dialogId,
+						phaseId: returnPhaseId
+					}
+				: undefined
 	});
 }

@@ -1,6 +1,6 @@
 import { DialogPhaseResponse, DialogResponseLink } from '@dinorpg/core/models/dialogs/dialogResponse.js';
 import { RuntimeDialog, RuntimeDialogLink, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
-import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
+import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 
 import { Prisma } from '../../../../prisma/client.js';
 import { advanceDinozMissionOnTalk } from '../../Mission/Controller/mission.progress.js';
@@ -9,6 +9,10 @@ import { checkDialogCondition } from '../../utils/conditions/checkDialogConditio
 import { buildDialogContext } from '../Controller/dialog.context.js';
 import { applyDialogPhaseEffects } from '../Controller/dialog.effects.js';
 import { getDialogById, getDialogs } from '../Controller/dialog.registry.js';
+import {
+	findDialogFightPhaseByReturnPhase,
+	getDialogFightLockStatusKey
+} from '../Controller/dialogReturnPhase.controller.js';
 
 type DialogTransaction = Prisma.TransactionClient;
 
@@ -31,6 +35,12 @@ export type AvailableDialogSummary = {
 	name: string;
 	place: RuntimeDialog['place'];
 	pnj: RuntimeDialog['pnj'];
+};
+
+type EnterDialogPhaseOptions = {
+	applySpecials?: boolean;
+	applyEffects?: boolean;
+	advanceTalkMission?: boolean;
 };
 
 export function getDialogPhase(dialog: RuntimeDialog, phaseId: string): RuntimeDialogPhase {
@@ -73,7 +83,6 @@ function resolveVisibleLinks(
 			confirm: link.confirm
 		});
 	}
-
 	return visibleLinks;
 }
 
@@ -82,7 +91,8 @@ export async function enterDialogPhase(
 	dialog: RuntimeDialog,
 	phase: RuntimeDialogPhase,
 	userId: string,
-	dinozId: number
+	dinozId: number,
+	options: EnterDialogPhaseOptions = {}
 ): Promise<DialogPhaseResponse> {
 	const beforeContext = await buildDialogContext(tx, {
 		userId,
@@ -92,13 +102,16 @@ export async function enterDialogPhase(
 	const phaseResult = await applyDialogPhaseEffects(tx, {
 		context: beforeContext,
 		dialog,
-		phase
+		phase,
+		applySpecials: options.applySpecials,
+		applyEffects: options.applyEffects
 	});
-	// Mission progression related to TALK phases
-	await advanceDinozMissionOnTalk(tx, {
-		dinozId,
-		npcKey: dialog.id
-	});
+	if (options.advanceTalkMission !== false) {
+		await advanceDinozMissionOnTalk(tx, {
+			dinozId,
+			npcKey: dialog.id
+		});
+	}
 	const afterContext = await buildDialogContext(tx, {
 		userId,
 		dinozId,
@@ -195,6 +208,26 @@ export async function selectDialogLink(params: SelectDialogLinkParams): Promise<
 	});
 }
 
+function isCompletedFightReturnPhase(
+	dialog: RuntimeDialog,
+	returnPhase: RuntimeDialogPhase,
+	context: Awaited<ReturnType<typeof buildDialogContext>>
+): boolean {
+	const fightPhase = findDialogFightPhaseByReturnPhase(dialog, returnPhase.id);
+	if (!fightPhase) {
+		return false;
+	}
+	const statusKey = getDialogFightLockStatusKey(fightPhase, returnPhase);
+	if (!statusKey) {
+		return false;
+	}
+	const statusId = dinozStatusIdByKey[statusKey];
+	if (statusId == null) {
+		return false;
+	}
+	return context.dinoz.statusIds.has(statusId);
+}
+
 export async function resumeDialogPhase(params: {
 	userId: string;
 	dinozId: number;
@@ -203,8 +236,20 @@ export async function resumeDialogPhase(params: {
 }): Promise<DialogPhaseResponse> {
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
-		await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
 		const phase = getDialogPhase(dialog, params.phaseId);
-		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId);
+		const context = await buildDialogContext(tx, {
+			userId: params.userId,
+			dinozId: params.dinozId,
+			dialog
+		});
+		const completedFightReturnPhase = isCompletedFightReturnPhase(dialog, phase, context);
+		if (!completedFightReturnPhase) {
+			await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
+		}
+		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId, {
+			applySpecials: !completedFightReturnPhase,
+			applyEffects: !completedFightReturnPhase,
+			advanceTalkMission: !completedFightReturnPhase
+		});
 	});
 }
