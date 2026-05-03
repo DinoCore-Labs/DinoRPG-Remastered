@@ -219,32 +219,29 @@
 			"total_participants": "{qty} Wähler"
 		},
 		"roadmap": {
-			"title": "Entdecke die kommenden Ereignisse in DinoRPG!",
+			"title": "Entdecke die kommenden Ereignisse auf DinoRPG!",
 			"small": "Irmas Vorhersage",
 			"strong": {
-				"title1": "Alpha 0.6.0 (Bald)",
-				"title2": "Alpha 0.7.0",
-				"title3": "Alpha 0.8.0",
-				"title4": "Alpha 0.9.0"
+				"title1": "Alpha 0.7.0 (Bald)",
+				"title2": "Alpha 0.8.0",
+				"title3": "Alpha 0.9.0",
+				"title4": "Alpha 0.10.0"
 			},
-			"help": "Klicke oben auf ein Update, um weitere Informationen zu erhalten!",
-			"disclaimer": "Da Madame Irmas Vorhersagen nicht unfehlbar sind, gibt es für diese Neuerungen kein Veröffentlichungsdatum. Jedes Ereignis wird jedoch zu gegebener Zeit offiziell auf der Website angekündigt.",
-			"futurTitle": "Dinoländische Zukunft",
+			"help": "Klicke auf ein Update oben, um weitere Informationen zu erhalten!",
+			"disclaimer": "Madame Irmas Vorhersagen sind nicht unfehlbar, daher ist für keine dieser Neuerungen ein Veröffentlichungsdatum verfügbar. Jedes Ereignis wird jedoch zu gegebener Zeit offiziell auf der Website angekündigt.",
+			"futurTitle": "Dinolandische Zukunft",
 			"futureInfo1": {
-				"text1": "Implementierung des Waldwächters und seiner Missionen",
-				"text2": "Freischaltung des Fruchtladens dank des blühenden Zweigs des Waldwächters",
-				"text3": "Implementierung von Skully und seinen Missionen",
-				"text4": "Fehlerbehebungen"
-			},
-			"futureInfo2": {
 				"text1": "Implementierung der Szenarien (Prisma + Datenbank)",
 				"text2": "Implementierung des Tutorial-Szenarios",
 				"text3": "Implementierung des Szenarios des seltsamen Wesens",
 				"text4": "Fehlerbehebungen"
 			},
-			"futureInfo3": {
+			"futureInfo2": {
 				"text1": "Implementierung des Züchtermarkts",
 				"text2": "Fehlerbehebungen"
+			},
+			"futureInfo3": {
+				"text1": "Demnächst"
 			},
 			"futureInfo4": {
 				"text1": "Demnächst"
