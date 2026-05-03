@@ -219,32 +219,29 @@
 			"total_participants": "{qty} voters"
 		},
 		"roadmap": {
-			"title": "Discover the upcoming events in DinoRPG!",
+			"title": "Discover the upcoming events on DinoRPG!",
 			"small": "Irma's Prediction",
 			"strong": {
-				"title1": "Alpha 0.6.0 (Soon)",
-				"title2": "Alpha 0.7.0",
-				"title3": "Alpha 0.8.0",
-				"title4": "Alpha 0.9.0"
+				"title1": "Alpha 0.7.0 (Soon)",
+				"title2": "Alpha 0.8.0",
+				"title3": "Alpha 0.9.0",
+				"title4": "Alpha 0.10.0"
 			},
 			"help": "Click on an update above to get more information!",
-			"disclaimer": "Since Madame Irma's predictions are not infallible, no release date is available for these new features. However, each event will be officially announced on the website when the time comes.",
+			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
 			"futurTitle": "Dinolandian Future",
 			"futureInfo1": {
-				"text1": "Implementation of the Forest Guardian and his missions",
-				"text2": "Unlocking the Fruity Shop thanks to the Forest Guardian's flowering branch",
-				"text3": "Implementation of Skully and his missions",
+				"text1": "Implementation of scenarios (Prisma + database)",
+				"text2": "Implementation of the tutorial scenario",
+				"text3": "Implementation of the strange being scenario",
 				"text4": "Bug fixes"
 			},
 			"futureInfo2": {
-				"text1": "Implementation of scenarios (Prisma + database)",
-				"text2": "Implementation of the tutorial scenario",
-				"text3": "Implementation of the Strange Being scenario",
-				"text4": "Bug fixes"
-			},
-			"futureInfo3": {
 				"text1": "Implementation of the Breeders' Market",
 				"text2": "Bug fixes"
+			},
+			"futureInfo3": {
+				"text1": "Coming soon"
 			},
 			"futureInfo4": {
 				"text1": "Coming soon"
