@@ -2,6 +2,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import bcrypt from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { ACCESS_TOKEN_COOKIE, authCookieOptions } from '../../config/cookie.js';
 import { prisma } from '../../prisma.js';
 import { LoginUserInput } from '../Schema/user.schema.js';
 
@@ -33,11 +34,8 @@ export async function loginUser(
 
 	const token = req.jwt.sign(payload, { expiresIn: '7d' });
 
-	reply.setCookie('access_token', token, {
-		path: '/',
-		httpOnly: true,
-		secure: true,
-		sameSite: 'lax'
+	reply.setCookie(ACCESS_TOKEN_COOKIE, token, {
+		...authCookieOptions
 	});
 
 	return reply.send({ success: true });
