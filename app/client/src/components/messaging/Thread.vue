@@ -79,6 +79,7 @@ export default defineComponent({
 				this.currentThreadPage = 1;
 				this.hasMoreMessages = true;
 				this.myThread = await MessagerieService.getThread(this.threadId);
+				this.$emit('thread-read');
 				await this.scrollToBottom();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
@@ -134,14 +135,15 @@ export default defineComponent({
 			}
 		}
 	},
+	emits: ['thread-read'],
 	watch: {
 		async threadId() {
 			this.currentThreadPage = 1;
 			this.hasMoreMessages = true;
 			this.myThread = undefined;
-
 			try {
 				this.myThread = await MessagerieService.getThread(this.threadId);
+				this.$emit('thread-read');
 				await this.scrollToBottom();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
@@ -151,6 +153,7 @@ export default defineComponent({
 	async mounted() {
 		try {
 			this.myThread = await MessagerieService.getThread(this.threadId);
+			this.$emit('thread-read');
 			await this.scrollToBottom();
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
