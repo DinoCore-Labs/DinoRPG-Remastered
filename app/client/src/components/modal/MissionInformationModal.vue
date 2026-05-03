@@ -1,6 +1,6 @@
 <template>
 	<Transition>
-		<div v-if="enabled" class="modal-background">
+		<div v-if="enabled && mission" class="modal-background">
 			<div class="modal-box">
 				<button class="modal-close" @click="$emit('close')">X</button>
 				<p v-if="loading">
@@ -134,7 +134,6 @@ export default defineComponent({
 			try {
 				await MissionService.stopDinozMission(this.dinozId, this.mission.missionKey);
 				this.$emit('reload');
-				this.$emit('close');
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 			}
