@@ -74,6 +74,7 @@ import { dinozStore } from '../../store/dinozStore.js';
 import { placeList } from '../../constants/place.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
+import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 
 export default defineComponent({
 	name: 'DinozList',
@@ -121,7 +122,10 @@ export default defineComponent({
 	},
 	computed: {
 		dinozList(): Array<DinozFiche> {
-			return orderDinozList(this.dinozStore.getDinozList as Array<DinozFiche>);
+			const activeDinoz = (this.dinozStore.getDinozList as Array<DinozFiche>).filter(
+				dinoz => dinoz.state !== DINOZ_STATE.frozen
+			);
+			return orderDinozList(activeDinoz);
 		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
