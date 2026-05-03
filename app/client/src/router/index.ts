@@ -32,6 +32,7 @@ import TrainingCenterPage from '../pages/TrainingCenterPage.vue';
 import { UserService } from '../services';
 import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
+import { clearClientSession, isLogoutSessionInProgress } from '../utils/clearSession';
 import { is_granted } from '../utils/permission';
 import { requireOwnedDinozByParam } from './helper';
 
@@ -274,11 +275,21 @@ let sessionHydrated = false;
 router.beforeEach(async to => {
 	const user = userStore();
 	const dinoz = dinozStore();
+	if (isLogoutSessionInProgress()) {
+		clearClientSession();
+		if (to.meta.auth) {
+			return { name: 'HomePage' };
+		}
+		return true;
+	}
 	// Helper: hydrate une fois si pas loggé
 	const tryHydrate = async (): Promise<boolean> => {
 		if (sessionHydrated && user.isLogged) return true;
 		const data: UserData | null = await UserService.me().catch(() => null);
-		if (!data) return false;
+		if (!data || isLogoutSessionInProgress()) {
+			return false;
+		}
+		sessionHydrated = true;
 		user.setUser(data);
 		dinoz.setDinozList(data.dinoz);
 		return true;
