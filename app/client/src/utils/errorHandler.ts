@@ -58,6 +58,10 @@ function translateToast(code: string, params?: Record<string, unknown>): string 
 
 export const errorHandler = {
 	handle(err: unknown, toast: ToastPluginApi): void {
+		console.groupCollapsed('[errorHandler] called');
+		console.trace();
+		console.error(err);
+		console.groupEnd();
 		const loadingStore = useLoadingStore();
 		try {
 			if (axios.isAxiosError(err)) {
