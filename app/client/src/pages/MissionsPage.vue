@@ -28,11 +28,12 @@
 		</tr>
 	</DZTable>
 	<MissionInformationModal
+		v-if="mission"
 		:enabled="information"
 		:mission="mission"
 		:dinozId="dinozId"
-		@close="information = !information"
-		@reload="reload()"
+		@close="closeInformation"
+		@reload="handleMissionUpdated"
 	/>
 </template>
 
@@ -99,15 +100,21 @@ export default defineComponent({
 		getInformation(mission: MissionListView): void {
 			if (mission.status === 'ongoing' || mission.status === 'available') {
 				this.mission = mission;
-				this.information = !this.information;
+				this.information = true;
 			}
+		},
+		closeInformation(): void {
+			this.information = false;
+			this.mission = undefined;
+		},
+		async handleMissionUpdated(): Promise<void> {
+			this.closeInformation();
+			await this.loadMissions();
 		},
 		async loadMissions(): Promise<void> {
 			const dinozId = this.$route.params.id.toString();
-
 			try {
 				const response = await MissionService.getDinozMissionGroup(Number(dinozId), this.group);
-
 				this.missionList = response.missions.map(mission => ({
 					missionId: mission.key,
 					missionKey: mission.key,
@@ -124,10 +131,6 @@ export default defineComponent({
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 			}
-		},
-		async reload(): Promise<void> {
-			await this.loadMissions();
-			this.information = !this.information;
 		},
 		getLanguage() {
 			return this.$i18n.locale.toLocaleUpperCase();
