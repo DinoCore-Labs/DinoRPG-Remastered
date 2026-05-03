@@ -2,7 +2,9 @@ import axios from 'axios';
 import type { ToastPluginApi } from 'vue-toast-notification';
 
 import { getI18n } from '../i18n';
+import router from '../router';
 import { useLoadingStore } from '../store/loadingStore';
+import { clearClientSession } from './clearSession';
 
 type BackendErrorPayload =
 	| string
@@ -13,6 +15,8 @@ type BackendErrorPayload =
 			code?: string;
 			errors?: Array<{ message?: string; code?: string; path?: string[] }>;
 	  };
+
+let isClearingSession = false;
 
 function extractBackendCode(data: BackendErrorPayload): string | null {
 	if (!data) return null;
@@ -54,42 +58,61 @@ function translateToast(code: string, params?: Record<string, unknown>): string 
 
 export const errorHandler = {
 	handle(err: unknown, toast: ToastPluginApi): void {
-		if (axios.isAxiosError(err)) {
-			const status = err.response?.status;
-			const data = err.response?.data as BackendErrorPayload | undefined;
-			const code = data ? extractBackendCode(data) : null;
-			const params = data ? extractBackendParams(data) : undefined;
-			if (code) {
+		const loadingStore = useLoadingStore();
+		try {
+			if (axios.isAxiosError(err)) {
+				const status = err.response?.status;
+				const data = err.response?.data as BackendErrorPayload | undefined;
+				if (status === 401) {
+					if (!isClearingSession) {
+						isClearingSession = true;
+						clearClientSession();
+						void router.replace({ name: 'HomePage' }).finally(() => {
+							isClearingSession = false;
+						});
+					}
+					toast.open({
+						message: translateToast('Invalid_credentials'),
+						type: 'error'
+					});
+
+					return;
+				}
+				const code = data ? extractBackendCode(data) : null;
+				const params = data ? extractBackendParams(data) : undefined;
+				if (code) {
+					toast.open({
+						message: translateToast(code, params),
+						type: 'error'
+					});
+					return;
+				}
 				toast.open({
-					message: translateToast(code, params),
+					message: status ? `HTTP ${status}` : translateToast('unknown'),
+					type: 'error'
+				});
+				return;
+			}
+			if (err instanceof Error) {
+				toast.open({
+					message: err.message,
+					type: 'error'
+				});
+				return;
+			}
+			if (typeof err === 'string') {
+				toast.open({
+					message: translateToast(err),
 					type: 'error'
 				});
 				return;
 			}
 			toast.open({
-				message: status ? `HTTP ${status}` : translateToast('unknown'),
+				message: translateToast('unknown'),
 				type: 'error'
 			});
-			return;
+		} finally {
+			loadingStore.setLoaderOff();
 		}
-		if (err instanceof Error) {
-			toast.open({
-				message: err.message,
-				type: 'error'
-			});
-			return;
-		}
-		if (typeof err === 'string') {
-			toast.open({
-				message: translateToast(err),
-				type: 'error'
-			});
-			return;
-		}
-		toast.open({
-			message: translateToast('unknown'),
-			type: 'error'
-		});
-		useLoadingStore().setLoaderOff();
 	}
 };

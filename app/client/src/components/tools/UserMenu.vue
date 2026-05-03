@@ -220,6 +220,7 @@ import { userStore } from '../../store/userStore.js';
 import { UserService } from '../../services/user.service.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import eventBus from '../../events/index.js';
+import { clearClientSession } from '../../utils/clearSession.js';
 
 export default defineComponent({
 	name: 'UserMenu',
@@ -236,13 +237,8 @@ export default defineComponent({
 			const userName = this.uStore.getUserName;
 			try {
 				await UserService.logout();
-			} catch (error) {
-				console.warn('[logout] Server logout failed, clearing local session anyway', error);
 			} finally {
-				this.uStore.clearUser();
-				this.dStore.clearDinoz();
-				sessionStorage.removeItem('userStore');
-				sessionStorage.removeItem('dinozStore');
+				clearClientSession();
 				this.menuCalled = false;
 				this.$toast.success(this.$t('topBar.userMenu.goodbye', { name: userName }));
 				await this.$router.replace({ name: 'HomePage' });
