@@ -357,6 +357,12 @@
 
 ## 🔹 Bot
 
+## 0.3.0
+
+### Minor Changes
+
+- b495791: enable bot on server
+
 ## 0.2.5
 
 ### Patch Changes
