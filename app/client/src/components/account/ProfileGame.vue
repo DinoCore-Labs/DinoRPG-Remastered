@@ -102,7 +102,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue';
+import { defineComponent, defineAsyncComponent, type PropType } from 'vue';
 import { userStore } from '../../store/userStore.js';
 //import eventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/errorHandler.js';
@@ -113,7 +113,6 @@ import { RankingService } from '../../services/ranking.service.js';
 import DZButton from '../utils/DZButton.vue';
 //import { formatText } from '../../utils/formatText.js';
 import { formatDate } from '../../utils/formatDate.js';
-import DZUser from '../utils/DZUser.vue';
 import { type UserProfile } from '@dinorpg/core/models/user/userProfile.js';
 
 export default defineComponent({
@@ -133,7 +132,7 @@ export default defineComponent({
 		};
 	},
 	components: {
-		DZUser,
+		DZUser: defineAsyncComponent(() => import('../utils/DZUser.vue')),
 		DZButton
 	},
 	props: {

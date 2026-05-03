@@ -37,7 +37,7 @@ import GoalsCard from '../components/account/GoalsCard.vue';
 import EpicRewardsCard from '../components/account/EpicRewardsCard.vue';
 import ProfileGame from '../components/account/ProfileGame.vue';
 import MyDinoz from '../components/account/MyDinoz.vue';
-import { UserService } from '../services';
+import { UserService } from '../services/user.service.js';
 import { userStore } from '../store/userStore';
 import { sessionStore } from '../store/sessionStore';
 import type { UserProfile } from '@dinorpg/core/models/user/userProfile.js';

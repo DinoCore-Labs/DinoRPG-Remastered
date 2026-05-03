@@ -29,7 +29,7 @@ import ShopDinoz from '../pages/ShopDinoz.vue';
 import ShopItems from '../pages/ShopItems.vue';
 import ShopItinerant from '../pages/ShopItinerant.vue';
 import TrainingCenterPage from '../pages/TrainingCenterPage.vue';
-import { UserService } from '../services';
+import { UserService } from '../services/user.service.js';
 import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
 import { clearClientSession, isLogoutSessionInProgress } from '../utils/clearSession';

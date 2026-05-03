@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { UserService } from '../../services';
+import { UserService } from '../../services/user.service.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { userStore } from '../../store/userStore.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
