@@ -154,40 +154,50 @@ function assertValidateGoalCanBeUsed(goal: MissionValidateGoal, placeId: number)
 	}
 }
 
-async function advanceMissionState(
+async function advanceMissionStateOnce(
 	currentMission: ActiveMissionState,
 	dinozId: number
 ): Promise<MissionInteractionCompleteResponse> {
 	const nextProgression = currentMission.state.progression + 1;
 	const isCompleted = nextProgression >= currentMission.definition.goals.length;
-	await prisma.$transaction(async tx => {
-		await tx.dinozMissions.update({
-			where: { id: currentMission.state.id },
+	return prisma.$transaction(async tx => {
+		const updated = await tx.dinozMissions.updateMany({
+			where: {
+				id: currentMission.state.id,
+				progression: currentMission.state.progression,
+				isCompleted: false
+			},
 			data: {
 				progression: nextProgression,
 				tracking: 0,
 				isCompleted
 			}
 		});
+
+		if (updated.count !== 1) {
+			throw new ExpectedError('Mission fight has already been completed.');
+		}
+
 		if (isCompleted) {
 			await applyMissionRewards(tx, {
 				dinozId,
 				definition: currentMission.definition
 			});
 		}
+
+		return {
+			ok: true,
+			completed: isCompleted,
+			rewardModal: isCompleted
+				? {
+						missionKey: currentMission.definition.key,
+						missionNameKey: currentMission.definition.nameKey,
+						endKey: currentMission.definition.endKey,
+						rewards: currentMission.definition.rewards
+					}
+				: null
+		};
 	});
-	return {
-		ok: true,
-		completed: isCompleted,
-		rewardModal: isCompleted
-			? {
-					missionKey: currentMission.definition.key,
-					missionNameKey: currentMission.definition.nameKey,
-					endKey: currentMission.definition.endKey,
-					rewards: currentMission.definition.rewards
-				}
-			: null
-	};
 }
 
 export async function startMissionInteraction(
@@ -246,7 +256,7 @@ export async function startMissionInteraction(
 				dinozId,
 				goal
 			});
-			const completion = fight.result ? await advanceMissionState(currentMission, dinozId) : null;
+			const completion = fight.result ? await advanceMissionStateOnce(currentMission, dinozId) : null;
 			return {
 				mode: 'fight',
 				goalType: 'FIGHT',
@@ -275,7 +285,7 @@ export async function startMissionInteraction(
 				dinozId,
 				goal
 			});
-			const completion = fight.result ? await advanceMissionState(currentMission, dinozId) : null;
+			const completion = fight.result ? await advanceMissionStateOnce(currentMission, dinozId) : null;
 			return {
 				mode: 'fight',
 				goalType: 'FIGHT_ACTION',
@@ -320,12 +330,9 @@ export async function completeMissionInteraction(
 			}
 			break;
 		case 'fight_victory':
-			if (goal.type !== 'FIGHT' && goal.type !== 'FIGHT_ACTION') {
-				throw new ExpectedError(`Mission goal "${goal.type}" cannot be completed from fight victory.`);
-			}
-			break;
+			throw new ExpectedError('fight_victory is deprecated. Fight goals are completed by the fight result.');
 		default:
 			throw new ExpectedError('Unknown mission completion trigger.');
 	}
-	return advanceMissionState(currentMission, input.dinozId);
+	return advanceMissionStateOnce(currentMission, input.dinozId);
 }

@@ -17,7 +17,9 @@ type DialogTransaction = Prisma.TransactionClient;
 type ApplyDialogPhaseEffectsParams = {
 	context: DialogContext;
 	dialog: Pick<RuntimeDialog, 'id' | 'pnj'>;
-	phase: Pick<RuntimeDialogPhase, 'id' | 'effects' | 'special' | 'pnj'>;
+	phase: Pick<RuntimeDialogPhase, 'id' | 'pnj' | 'special' | 'effects'>;
+	applySpecials?: boolean;
+	applyEffects?: boolean;
 };
 
 type ApplyDialogPhaseEffectsResult = {
@@ -429,12 +431,15 @@ export async function applyDialogPhaseEffects(
 	params: ApplyDialogPhaseEffectsParams
 ): Promise<ApplyDialogPhaseEffectsResult> {
 	const actions: DialogPhaseResponse['actions'] = {};
-	// On traite d’abord les "use*" qui représentent un coût d’entrée dans la phase.
-	for (const special of params.phase.special) {
-		await applyDialogSpecial(tx, params.context, params.dialog.id, params.phase.id, special, actions);
+	if (params.applySpecials !== false) {
+		for (const special of params.phase.special) {
+			await applyDialogSpecial(tx, params.context, params.dialog.id, params.phase.id, special, actions);
+		}
 	}
-	for (const effect of params.phase.effects) {
-		await applyDialogEffect(tx, params.context, params.dialog.id, params.phase.id, effect, actions);
+	if (params.applyEffects !== false) {
+		for (const effect of params.phase.effects) {
+			await applyDialogEffect(tx, params.context, params.dialog.id, params.phase.id, effect, actions);
+		}
 	}
 	return {
 		actions,
