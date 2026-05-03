@@ -221,6 +221,7 @@ import { UserService } from '../../services/user.service.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import eventBus from '../../events/index.js';
 import { clearClientSession, startLogoutSession, stopLogoutSession } from '../../utils/clearSession.js';
+import { messagingStore } from '../../store/messagingStore.js';
 
 export default defineComponent({
 	name: 'UserMenu',
@@ -229,7 +230,8 @@ export default defineComponent({
 		return {
 			menuCalled: false,
 			uStore: userStore(),
-			dStore: dinozStore()
+			dStore: dinozStore(),
+			mStore: messagingStore()
 		};
 	},
 	methods: {
@@ -259,6 +261,14 @@ export default defineComponent({
 			}
 			this.menuCalled = false;
 			eventBus.emit('message', true);
+		},
+		syncMessagingUnreadPolling() {
+			if (this.uStore.isLogged && this.uStore.canUseMessaging) {
+				this.mStore.startUnreadPolling();
+				return;
+			}
+			this.mStore.stopUnreadPolling();
+			this.mStore.clearUnreadThreads();
 		}
 		/*async cleanNotif(id: string) {
 			try {
@@ -427,17 +437,28 @@ export default defineComponent({
 			}
 		}*/
 	},
+	beforeUnmount() {
+		this.mStore.stopUnreadPolling();
+	},
 	mounted() {
 		EventBus.on('userMenu', async e => {
 			this.menuCalled = e;
 		});
-	}
-	/*,
+	},
 	watch: {
-		'playerStore.getNotifications': function (notifications: Notification[]) {
-			this.notifications = notifications.map(notif => this.translateNotification(notif)).filter(n => n !== null);
+		'uStore.id': {
+			immediate: true,
+			handler() {
+				this.syncMessagingUnreadPolling();
+			}
+		},
+		'uStore.rewards': {
+			deep: true,
+			handler() {
+				this.syncMessagingUnreadPolling();
+			}
 		}
-	}*/
+	}
 });
 </script>
 
