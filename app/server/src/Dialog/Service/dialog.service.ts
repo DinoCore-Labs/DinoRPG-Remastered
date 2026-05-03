@@ -228,6 +228,10 @@ function isCompletedFightReturnPhase(
 	return context.dinoz.statusIds.has(statusId);
 }
 
+function isDialogFightReturnPhase(phaseId: string): boolean {
+	return ['fight_win', 'attack_win', 'show_win', 'water_win', 'fire_win'].includes(phaseId);
+}
+
 export async function resumeDialogPhase(params: {
 	userId: string;
 	dinozId: number;
@@ -237,19 +241,14 @@ export async function resumeDialogPhase(params: {
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
 		const phase = getDialogPhase(dialog, params.phaseId);
-		const context = await buildDialogContext(tx, {
-			userId: params.userId,
-			dinozId: params.dinozId,
-			dialog
-		});
-		const completedFightReturnPhase = isCompletedFightReturnPhase(dialog, phase, context);
-		if (!completedFightReturnPhase) {
+		const isFightReturnPhase = isDialogFightReturnPhase(phase.id);
+		if (!isFightReturnPhase) {
 			await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
 		}
 		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId, {
-			applySpecials: !completedFightReturnPhase,
-			applyEffects: !completedFightReturnPhase,
-			advanceTalkMission: !completedFightReturnPhase
+			applySpecials: !isFightReturnPhase,
+			applyEffects: !isFightReturnPhase,
+			advanceTalkMission: !isFightReturnPhase
 		});
 	});
 }
