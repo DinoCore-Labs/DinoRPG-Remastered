@@ -29,11 +29,12 @@
 							link: true,
 							disabled: !uStore.canUseMessaging
 						}"
+						class="messageIcon"
 						@click="messagerie()"
 					>
-						<!--<span v-if="playerStore.getNotifications.filter(n => n.severity === 'message').length > 0" class="badge">
-							{{ playerStore.getNotifications.filter(n => n.severity === 'message').length }}
-						</span> -->
+						<span v-if="mStore.hasUnreadMessages" class="messageBadge">
+							{{ mStore.unreadBadgeLabel }}
+						</span>
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon">
 							<path
 								d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4-8 5-8-5V6l8 5 8-5z"
@@ -730,6 +731,26 @@ export default defineComponent({
 			}
 		}
 	}
+}
+.messageIcon {
+	position: relative;
+}
+.messageBadge {
+	position: absolute;
+	top: -4px;
+	right: -4px;
+	min-width: 16px;
+	height: 16px;
+	padding: 0 4px;
+	border-radius: 999px;
+	background: #d92323;
+	color: #fff;
+	font-size: 10px;
+	font-weight: bold;
+	line-height: 16px;
+	text-align: center;
+	box-shadow: 0 0 0 1px #fff;
+	pointer-events: none;
 }
 .svgIcon {
 	user-select: none;
