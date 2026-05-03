@@ -5,10 +5,9 @@
 	"type": "module",
 	"main": "dist/index.js",
 	"scripts": {
-		"dev": "tsc-watch --build ./tsconfig.json --onSuccess \"node dist/index.js\"",
+		"dev:bot": "tsc-watch --build ./tsconfig.json --onSuccess \"node dist/index.js\"",
 		"build": "tsc --build ./tsconfig.json",
-		"start": "node dist/index.js",
-		"deploy:commands": "tsc --build ./tsconfig.json && node dist/deploy.js"
+		"start": "node dist/index.js"
 	},
 	"keywords": [],
 	"author": "",
