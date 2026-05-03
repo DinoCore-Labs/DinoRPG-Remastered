@@ -12,6 +12,7 @@ import { mixins } from './mixins/mixins';
 import router from './router';
 import ConfirmPlugin from './utils/confirmPlugin';
 import { createToastPlugin } from './utils/toast';
+import { startVersionChecker } from './utils/versionChecker';
 
 const vueTippyProps = {
 	directive: 'tippy',
@@ -45,3 +46,5 @@ app.mixin(mixins);
 app.component('Loading', Loading);
 
 app.mount('#app');
+
+startVersionChecker();
