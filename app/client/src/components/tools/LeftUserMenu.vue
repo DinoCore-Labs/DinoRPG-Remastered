@@ -37,11 +37,11 @@
 					<RouterLink class="link" :to="`/missions`" v-if="playerStore.playerOptions.hasPMI">
 						<img :src="getImgURL('icons', 'act_pmi')" alt="pmi" />
 						<span>{{ $t('topBar.leftMenu.missions') }}</span>
-					</RouterLink>
+					</RouterLink>-->
 					<RouterLink class="link" :to="`/shop/dinoz`">
 						<img :src="getImgURL('icons', 'act_treasure')" alt="enclosure" />
-						<span>{{ $t('topBar.leftMenu.enclosure') }}</span>
-					</RouterLink>-->
+						<span>{{ $t('topBar.leftUserMenu.enclosure') }}</span>
+					</RouterLink>
 				</div>
 			</div>
 			<div class="dinozList">

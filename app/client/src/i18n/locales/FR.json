@@ -19,7 +19,8 @@
 		"leftUserMenu": {
 			"shop": "Boutique",
 			"dojo": "Dojo",
-			"order": "Ordonner"
+			"order": "Ordonner",
+			"enclosure": "Enclos"
 		},
 		"authMenu": {
 			"name": "Pseudo :",

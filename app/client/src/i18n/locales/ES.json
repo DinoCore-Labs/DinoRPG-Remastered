@@ -19,7 +19,8 @@
 		"leftUserMenu": {
 			"shop": "Tienda",
 			"dojo": "Dojo",
-			"order": "Ordenar"
+			"order": "Ordenar",
+			"enclosure": "Tienda de Dinos"
 		},
 		"authMenu": {
 			"name": "Nombre de usuario:",
