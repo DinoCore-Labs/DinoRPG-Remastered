@@ -58,6 +58,7 @@ export const dialogDefinitions = [
 	mouldeurDialog,
 	// Foret
 	weirdManDialog,
+	dianKorgseyDialog,
 	nicolasHulotDialog,
 	forestGuardianDialog
 ];
