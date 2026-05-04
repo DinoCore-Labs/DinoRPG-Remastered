@@ -1,26 +1,26 @@
 <template>
-	<div class="password-modal-overlay">
+	<div class="modal-background">
 		<div class="password-modal">
-			<h3>{{ title }}</h3>
+			<h3>{{ $t('modal.password.title') }}</h3>
 			<div v-if="withOldPassword" class="field">
-				<label for="oldPassword">Ancien mot de passe</label>
-				<input id="oldPassword" v-model="form.oldPassword" type="password" autocomplete="current-password" />
+				<label for="oldPassword">{{ $t('modal.password.old') }}</label>
+				<DZInput id="oldPassword" v-model="form.oldPassword" type="password" autocomplete="current-password" />
 			</div>
 			<div class="field">
-				<label for="newPassword">Nouveau mot de passe</label>
-				<input id="newPassword" v-model="form.newPassword" type="password" autocomplete="new-password" />
+				<label for="newPassword">{{ $t('modal.password.new') }}</label>
+				<DZInput id="newPassword" v-model="form.newPassword" type="password" autocomplete="new-password" />
 			</div>
 			<div class="field">
-				<label for="confirmPassword">Confirmer le nouveau mot de passe</label>
-				<input id="confirmPassword" v-model="form.confirmPassword" type="password" autocomplete="new-password" />
+				<label for="confirmPassword">{{ $t('modal.password.confirm') }}</label>
+				<DZInput id="confirmPassword" v-model="form.confirmPassword" type="password" autocomplete="new-password" />
 			</div>
 			<p v-if="localError" class="password-error">{{ localError }}</p>
 			<p v-else-if="error" class="password-error">{{ error }}</p>
 			<div class="buttonLand">
 				<DZButton class="bSmall" @click="submit">
-					{{ loading ? 'Modification...' : 'Valider' }}
+					{{ loading ? $t('modal.modif') : $t('modal.valid') }}
 				</DZButton>
-				<DZButton class="bSmall" back @click="$emit('close')">Retour</DZButton>
+				<DZButton class="bSmall" back @click="$emit('close')">{{ $t('modal.close') }}</DZButton>
 			</div>
 		</div>
 	</div>
@@ -28,18 +28,19 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-
+import { useI18n } from 'vue-i18n';
+import DZInput from '../utils/DZInput.vue';
 import DZButton from '../utils/DZButton.vue';
+
+const { t } = useI18n();
 
 const props = withDefaults(
 	defineProps<{
-		title?: string;
 		loading?: boolean;
 		error?: string | null;
 		withOldPassword?: boolean;
 	}>(),
 	{
-		title: 'Modifier le mot de passe',
 		loading: false,
 		error: null,
 		withOldPassword: true
@@ -68,15 +69,15 @@ const form = reactive({
 function submit() {
 	localError.value = null;
 	if (props.withOldPassword && !form.oldPassword) {
-		localError.value = 'Veuillez renseigner l’ancien mot de passe.';
+		localError.value = t('password.errors.oldPasswordRequired');
 		return;
 	}
 	if (!form.newPassword || !form.confirmPassword) {
-		localError.value = 'Veuillez remplir les deux champs.';
+		localError.value = t('password.errors.fieldsRequired');
 		return;
 	}
 	if (form.newPassword !== form.confirmPassword) {
-		localError.value = 'Les nouveaux mots de passe ne correspondent pas.';
+		localError.value = t('password.errors.passwordMismatch');
 		return;
 	}
 	emit('submit', {
@@ -88,14 +89,20 @@ function submit() {
 </script>
 
 <style scoped lang="scss">
-.password-modal-overlay {
-	position: fixed;
-	inset: 0;
-	z-index: 1000;
+@use 'sass:color';
+.modal-background {
+	position: absolute;
+	background: color.adjust(#09092d, $alpha: -0.4);
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 999;
+	transition: all 0.3s;
 	display: flex;
-	align-items: center;
 	justify-content: center;
-	background-color: rgba(0, 0, 0, 0.55);
+	align-items: center;
+	flex-direction: column;
 }
 .password-modal {
 	width: min(420px, calc(100% - 32px));
