@@ -8,7 +8,7 @@ import { prisma } from '../../prisma.js';
 import { CreateUserInput } from '../Schema/user.schema.js';
 import { enforceSignupLimits } from '../Service/signupLimiter.service.js';
 
-const SALT_ROUNDS = 10;
+export const SALT_ROUNDS = 10;
 
 export async function createUser(
 	req: FastifyRequest<{

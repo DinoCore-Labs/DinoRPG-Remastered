@@ -6,8 +6,10 @@ import {
 	UpdateAdminUserUniqueSkillsPayload,
 	UpdateAdminUserWalletPayload
 } from '@dinorpg/core/models/admin/adminUserPayloads.js';
+import bcrypt from 'bcrypt';
 
 import { prisma } from '../../prisma.js';
+import { SALT_ROUNDS } from '../../User/Controller/createUser.controller.js';
 
 export async function getAdminUserDetails(userId: string): Promise<AdminUserDetails | null> {
 	const user = await prisma.user.findUnique({
@@ -328,4 +330,22 @@ export async function updateAdminUserRewards(userId: string, payload: UpdateAdmi
 			}
 		}
 	});
+}
+
+export async function updateAdminUserPassword(userId: string, newPassword: string) {
+	const user = await prisma.user.findUnique({
+		where: { id: userId },
+		select: { id: true }
+	});
+	if (!user) {
+		return false;
+	}
+	const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
+	await prisma.user.update({
+		where: { id: userId },
+		data: {
+			password: hashedPassword
+		}
+	});
+	return true;
 }

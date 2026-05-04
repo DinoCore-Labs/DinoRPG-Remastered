@@ -61,12 +61,10 @@ export const UserService = {
 	},
 	updateProfile(data: Partial<UserProfile>): Promise<UserProfile> {
 		const payload: Partial<UserProfile> = {};
-
 		if (data.description !== undefined) payload.description = data.description;
 		if (data.gender !== undefined) payload.gender = data.gender;
 		if (data.language !== undefined) payload.language = data.language;
 		if (data.age !== undefined) payload.age = data.age;
-
 		return http()
 			.put('/users/me/profile', payload)
 			.then(res => res.data)
@@ -78,6 +76,16 @@ export const UserService = {
 		return http()
 			.post('/users/me/avatar', form, {
 				headers: { 'Content-Type': 'multipart/form-data' }
+			})
+			.then(res => res.data)
+			.catch(err => Promise.reject(err));
+	},
+	changePassword(oldPassword: string, newPassword: string, confirmPassword: string): Promise<void> {
+		return http()
+			.patch('/users/me/password', {
+				oldPassword,
+				newPassword,
+				confirmPassword
 			})
 			.then(res => res.data)
 			.catch(err => Promise.reject(err));

@@ -44,6 +44,7 @@ import {
 	getAdminUserDinozHandler,
 	updateAdminUserIngredientsHandler,
 	updateAdminUserItemsHandler,
+	updateAdminUserPasswordHandler,
 	updateAdminUserProfileHandler,
 	updateAdminUserRewardsHandler,
 	updateAdminUserUniqueSkillsHandler,
@@ -91,6 +92,16 @@ export async function adminRoutes(app: FastifyInstance) {
 		'/user/:id/rewards',
 		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminUserRewardsHandler
+	);
+	app.patch(
+		'/user/:id/password',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		updateAdminUserPasswordHandler
 	);
 	// Dinoz
 	app.get(

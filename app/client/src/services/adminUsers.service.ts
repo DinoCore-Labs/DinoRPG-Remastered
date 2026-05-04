@@ -1,6 +1,7 @@
 import type { AdminDinozSummary, AdminUserDetails } from '@dinorpg/core/models/admin/adminUser.js';
 import type {
 	UpdateAdminUserInventoryPayload,
+	UpdateAdminUserPasswordPayload,
 	UpdateAdminUserProfilePayload,
 	UpdateAdminUserRewardsPayload,
 	UpdateAdminUserUniqueSkillsPayload,
@@ -55,6 +56,12 @@ export const AdminUserService = {
 	updateUserRewards(userId: string, payload: UpdateAdminUserRewardsPayload): Promise<void> {
 		return http()
 			.patch(`/admin/user/${encodeURIComponent(userId)}/rewards`, payload)
+			.then(res => res.data)
+			.catch(err => Promise.reject(err));
+	},
+	updateUserPassword(userId: string, payload: UpdateAdminUserPasswordPayload): Promise<void> {
+		return http()
+			.patch(`/admin/user/${encodeURIComponent(userId)}/password`, payload)
 			.then(res => res.data)
 			.catch(err => Promise.reject(err));
 	}

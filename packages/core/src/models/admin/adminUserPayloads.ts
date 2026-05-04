@@ -32,3 +32,8 @@ export interface UpdateAdminUserRewardsPayload {
 	rewardId: number;
 	operation: 'add' | 'remove';
 }
+
+export interface UpdateAdminUserPasswordPayload {
+	newPassword: string;
+	confirmPassword: string;
+}
