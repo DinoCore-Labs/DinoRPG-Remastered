@@ -72,9 +72,7 @@
 				<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 			</h3>
 			<dl>
-				<dt>
-					{{ $t(`accountPage.options.todo`) }}
-				</dt>
+				<DZButton @click="openPasswordModal">{{ $t(`accountPage.options.mdp`) }}</DZButton>
 				<dd></dd>
 				<dt>
 					{{ $t(`accountPage.options.todo`) }}
@@ -99,6 +97,14 @@
 			</div>
 		</div>
 	</transition>
+	<ChangePasswordModal
+		v-if="passwordModalOpen"
+		:loading="passwordLoading"
+		:error="passwordError"
+		:with-old-password="true"
+		@close="closePasswordModal"
+		@submit="submitPasswordChange"
+	/>
 </template>
 
 <script lang="ts">
@@ -114,6 +120,8 @@ import DZButton from '../utils/DZButton.vue';
 //import { formatText } from '../../utils/formatText.js';
 import { formatDate } from '../../utils/formatDate.js';
 import { type UserProfile } from '@dinorpg/core/models/user/userProfile.js';
+import ChangePasswordModal from '../modal/ChangePasswordModal.vue';
+import { UserService } from '../../services/user.service.js';
 
 export default defineComponent({
 	name: 'Profile',
@@ -126,14 +134,18 @@ export default defineComponent({
 			userPosition: null as number | null,
 			userPoints: null as number | null,
 			userDinozCount: null as number | null,
-			option: false as boolean
+			option: false as boolean,
 			//localStore: localStore(),
 			//dinozStore: dinozStore()
+			passwordModalOpen: false,
+			passwordLoading: false,
+			passwordError: null as string | null
 		};
 	},
 	components: {
 		DZUser: defineAsyncComponent(() => import('../utils/DZUser.vue')),
-		DZButton
+		DZButton,
+		ChangePasswordModal
 	},
 	props: {
 		profile: {
@@ -168,7 +180,32 @@ export default defineComponent({
 				this.userDinozCount = null;
 				errorHandler.handle(err, this.$toast);
 			}
-		} /*,
+		},
+		openPasswordModal() {
+			this.passwordError = null;
+			this.passwordModalOpen = true;
+		},
+		closePasswordModal() {
+			if (this.passwordLoading) {
+				return;
+			}
+			this.passwordError = null;
+			this.passwordModalOpen = false;
+		},
+		async submitPasswordChange(payload: { oldPassword?: string; newPassword: string; confirmPassword: string }) {
+			this.passwordError = null;
+			this.passwordLoading = true;
+			try {
+				await UserService.changePassword(payload.oldPassword ?? '', payload.newPassword, payload.confirmPassword);
+				this.passwordModalOpen = false;
+				this.$toast?.success?.('Mot de passe modifié avec succès.');
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			} finally {
+				this.passwordLoading = false;
+			}
+		}
+		/*,
 		hasPlume(): boolean {
 			return this.accountData.epicRewards.includes(Reward.PLUME);
 		},

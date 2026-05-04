@@ -67,3 +67,16 @@ export const userIdParamSchema = z.object({
 });
 
 export type UserIdParamInput = z.infer<typeof userIdParamSchema>;
+
+export const changeUserPasswordSchema = z
+	.object({
+		oldPassword: z.string().min(6),
+		newPassword: z.string().min(6),
+		confirmPassword: z.string().min(6)
+	})
+	.refine(data => data.newPassword === data.confirmPassword, {
+		message: 'Les mots de passe ne correspondent pas',
+		path: ['confirmPassword']
+	});
+
+export type ChangeUserPasswordInput = z.infer<typeof changeUserPasswordSchema>;

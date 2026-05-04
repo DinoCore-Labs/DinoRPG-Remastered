@@ -61,6 +61,18 @@ export const updateAdminUserRewardsSchema = z.object({
 	operation: z.enum(['add', 'remove'])
 });
 
+export const updateAdminUserPasswordSchema = z
+	.object({
+		newPassword: z.string().min(6),
+		confirmPassword: z.string().min(6)
+	})
+	.refine(data => data.newPassword === data.confirmPassword, {
+		message: 'Les mots de passe ne correspondent pas',
+		path: ['confirmPassword']
+	});
+
+export type UpdateAdminUserPasswordInput = z.infer<typeof updateAdminUserPasswordSchema>;
+
 export const adminSecretSchema = z.object({
 	key: z.string(),
 	value: z.string()

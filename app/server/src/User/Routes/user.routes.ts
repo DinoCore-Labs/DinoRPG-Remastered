@@ -14,6 +14,7 @@ import {
 	uploadAvatarController
 } from '../Controller/userProfile.controller.js';
 import {
+	changeUserPasswordSchema,
 	createUserResponseSchema,
 	createUserSchema,
 	loginResponseSchema,
@@ -23,6 +24,7 @@ import {
 	userIdParamSchema,
 	userNameParamSchema
 } from '../Schema/user.schema.js';
+import { changeUserPassword } from '../Service/changeUserPassword.service.js';
 
 export async function userRoutes(app: FastifyInstance) {
 	// Routes GET
@@ -47,6 +49,17 @@ export async function userRoutes(app: FastifyInstance) {
 			}
 		},
 		getOwnProfileController
+	);
+	app.patch(
+		'/me/password',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				tags: ['Users'],
+				body: changeUserPasswordSchema
+			}
+		},
+		changeUserPassword
 	);
 	// Check name of account creation
 	app.get(

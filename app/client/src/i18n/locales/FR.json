@@ -499,6 +499,7 @@
 		"editAccount": "Modifier le profil",
 		"options": {
 			"title": "Options du compte",
+			"mdp": "Modifier le mot de passe",
 			"todo": "à venir...",
 			"reset": "Réinitialiser le compte",
 			"retour": "Retour"

@@ -5,6 +5,7 @@ import {
 	getAdminUserDinoz,
 	updateAdminUserIngredients,
 	updateAdminUserItems,
+	updateAdminUserPassword,
 	updateAdminUserProfile,
 	updateAdminUserRewards,
 	updateAdminUserUniqueSkills,
@@ -14,6 +15,7 @@ import {
 	adminUserParamsSchema,
 	updateAdminUserIngredientsSchema,
 	updateAdminUserItemsSchema,
+	updateAdminUserPasswordSchema,
 	updateAdminUserProfileSchema,
 	updateAdminUserRewardsSchema,
 	updateAdminUserUniqueSkillsSchema,
@@ -98,5 +100,22 @@ export async function updateAdminUserRewardsHandler(request: FastifyRequest, rep
 		return reply.status(400).send({ message: 'Invalid request payload' });
 	}
 	await updateAdminUserRewards(parsedParams.data.id, parsedBody.data);
+	return reply.status(204).send();
+}
+
+export async function updateAdminUserPasswordHandler(request: FastifyRequest, reply: FastifyReply) {
+	const params = adminUserParamsSchema.safeParse(request.params);
+	const body = updateAdminUserPasswordSchema.safeParse(request.body);
+	if (!params.success || !body.success) {
+		return reply.status(400).send({
+			message: 'Invalid request payload'
+		});
+	}
+	const updated = await updateAdminUserPassword(params.data.id, body.data.newPassword);
+	if (!updated) {
+		return reply.status(404).send({
+			message: 'User not found'
+		});
+	}
 	return reply.status(204).send();
 }
