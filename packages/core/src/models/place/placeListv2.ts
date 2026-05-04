@@ -128,14 +128,13 @@ export const placeListv2 = definePlaces({
 		top: 140,
 		itinerant: true
 	},
-
 	[PlaceEnum.GO_TO_GRAND_TOUT_CHAUD]: {
 		placeId: PlaceEnum.GO_TO_GRAND_TOUT_CHAUD,
 		name: 'gogtc',
 		map: MapZone.GTOUTCHAUD,
 		moves: [],
 		gotoPlaceId: PlaceEnum.PENTES_DE_BASALTE,
-		background: 'bslt'
+		background: 's_pentes'
 	},
 
 	[PlaceEnum.GO_TO_ATLANTEINES_ISLAND]: {
@@ -146,7 +145,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.ILE_WAIKIKI,
 		background: 's_ilewkk'
 	},
-
 	[PlaceEnum.CIMETIERE]: {
 		placeId: PlaceEnum.CIMETIERE,
 		name: 'skull',
@@ -157,7 +155,6 @@ export const placeListv2 = definePlaces({
 		background: 's_graveyard',
 		top: 110
 	},
-
 	[PlaceEnum.GO_TO_DINOPLAZA]: {
 		placeId: PlaceEnum.GO_TO_DINOPLAZA,
 		name: 'goplaz',
@@ -166,7 +163,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.DINOPLAZA,
 		background: 'dw_plaza'
 	},
-
 	[PlaceEnum.GO_TO_MONSTER_ISLAND]: {
 		placeId: PlaceEnum.GO_TO_MONSTER_ISLAND,
 		name: 'gomisl',
@@ -175,11 +171,9 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.PORT_MONSTRUEUX,
 		background: 'go_swim'
 	},
-
 	/* -------------------------------------------------
 	 * GRAND TOUT CHAUD
 	 * ------------------------------------------------- */
-
 	[PlaceEnum.PENTES_DE_BASALTE]: {
 		placeId: PlaceEnum.PENTES_DE_BASALTE,
 		name: 'bslt',
@@ -191,7 +185,6 @@ export const placeListv2 = definePlaces({
 		top: 130,
 		itinerant: true
 	},
-
 	[PlaceEnum.FORGES_DU_GTC]: {
 		placeId: PlaceEnum.FORGES_DU_GTC,
 		name: 'forges',
@@ -208,7 +201,6 @@ export const placeListv2 = definePlaces({
 		top: 110,
 		itinerant: true
 	},
-
 	[PlaceEnum.RUINES_ASHPOUK]: {
 		placeId: PlaceEnum.RUINES_ASHPOUK,
 		name: 'rashpk',
@@ -220,7 +212,6 @@ export const placeListv2 = definePlaces({
 		top: 160,
 		itinerant: true
 	},
-
 	[PlaceEnum.FOSSELAVE]: {
 		placeId: PlaceEnum.FOSSELAVE,
 		name: 'fosslv',
@@ -232,7 +223,6 @@ export const placeListv2 = definePlaces({
 		top: 110,
 		itinerant: true
 	},
-
 	[PlaceEnum.REPAIRE_DU_VENERABLE]: {
 		placeId: PlaceEnum.REPAIRE_DU_VENERABLE,
 		name: 'vener',
@@ -247,7 +237,6 @@ export const placeListv2 = definePlaces({
 		top: 130,
 		itinerant: true
 	},
-
 	[PlaceEnum.TUNNEL_SOUS_LA_BRANCHE]: {
 		placeId: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 		name: 'tunel',
@@ -262,25 +251,22 @@ export const placeListv2 = definePlaces({
 		top: 130,
 		itinerant: true
 	},
-
 	[PlaceEnum.ETUNEL]: {
 		placeId: PlaceEnum.ETUNEL,
 		name: 'etunel',
 		map: MapZone.GTOUTCHAUD,
 		moves: [],
 		gotoPlaceId: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
-		background: 'gorges_fail'
+		background: 's_tunel'
 	},
-
 	[PlaceEnum.GO_TO_TUNNEL]: {
 		placeId: PlaceEnum.GO_TO_TUNNEL,
 		name: 'stunel',
 		map: MapZone.GTOUTCHAUD,
 		moves: [],
 		gotoPlaceId: PlaceEnum.GORGES_PROFONDES,
-		background: 'gorges'
+		background: 'cavern2'
 	},
-
 	[PlaceEnum.GORGES_PROFONDES]: {
 		placeId: PlaceEnum.GORGES_PROFONDES,
 		name: 'gorges',
@@ -290,16 +276,14 @@ export const placeListv2 = definePlaces({
 		background: 'cavern2',
 		top: 110
 	},
-
 	[PlaceEnum.GO_TO_COLLINES_ESCARPEES]: {
 		placeId: PlaceEnum.GO_TO_COLLINES_ESCARPEES,
 		name: 'gocol',
 		map: MapZone.DINOLAND,
 		moves: [],
 		gotoPlaceId: PlaceEnum.COLLINES_ESCARPEES,
-		background: 'colesc'
+		background: 's_colesc'
 	},
-
 	[PlaceEnum.GO_TO_CAMP_KORGON]: {
 		placeId: PlaceEnum.GO_TO_CAMP_KORGON,
 		name: 'gocamp',
@@ -308,7 +292,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.CAMP_KORGON,
 		background: 'camp'
 	},
-
 	[PlaceEnum.GO_TO_KARINBAO_TOWER]: {
 		placeId: PlaceEnum.GO_TO_KARINBAO_TOWER,
 		name: 'tourbt',
@@ -320,7 +303,6 @@ export const placeListv2 = definePlaces({
 		hide: true,
 		background: 'tourbt'
 	},
-
 	[PlaceEnum.GO_TO_CELESTIAL_ISLAND]: {
 		placeId: PlaceEnum.GO_TO_CELESTIAL_ISLAND,
 		name: 'toursk',
@@ -330,11 +312,9 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.CHEMIN_OBSERVATOIRE,
 		background: 'toursk'
 	},
-
 	/* -------------------------------------------------
 	 * ILES ATLANTEINEES
 	 * ------------------------------------------------- */
-
 	[PlaceEnum.ILE_WAIKIKI]: {
 		placeId: PlaceEnum.ILE_WAIKIKI,
 		name: 'ilewkk',
@@ -350,7 +330,6 @@ export const placeListv2 = definePlaces({
 		top: 110,
 		itinerant: true
 	},
-
 	[PlaceEnum.MARAIS_COLLANT]: {
 		placeId: PlaceEnum.MARAIS_COLLANT,
 		name: 'marais',
@@ -386,7 +365,6 @@ export const placeListv2 = definePlaces({
 		realPlaceId: PlaceEnum.MARAIS_COLLANT,
 		background: 'swamp_fog'
 	},
-
 	[PlaceEnum.MARFLD]: {
 		placeId: PlaceEnum.MARFLD,
 		name: 'marfld',
@@ -396,7 +374,6 @@ export const placeListv2 = definePlaces({
 		realPlaceId: PlaceEnum.MARAIS_COLLANT,
 		background: 'swamp_flood'
 	},
-
 	[PlaceEnum.MINES_DE_CORAIL]: {
 		placeId: PlaceEnum.MINES_DE_CORAIL,
 		name: 'corail',
@@ -415,7 +392,6 @@ export const placeListv2 = definePlaces({
 		top: 150,
 		itinerant: true
 	},
-
 	[PlaceEnum.ITLOST]: {
 		placeId: PlaceEnum.ITLOST,
 		name: 'itlost',
@@ -423,7 +399,6 @@ export const placeListv2 = definePlaces({
 		moves: [],
 		gotoPlaceId: PlaceEnum.MINES_DE_CORAIL
 	},
-
 	[PlaceEnum.BAO_BOB]: {
 		placeId: PlaceEnum.BAO_BOB,
 		name: 'baobob',
@@ -435,7 +410,6 @@ export const placeListv2 = definePlaces({
 		top: 130,
 		itinerant: true
 	},
-
 	[PlaceEnum.CHUTES_MUTANTES]: {
 		placeId: PlaceEnum.CHUTES_MUTANTES,
 		name: 'chutes',
@@ -453,7 +427,6 @@ export const placeListv2 = definePlaces({
 		top: 110,
 		itinerant: true
 	},
-
 	[PlaceEnum.GO_TO_DOME_SOULAFLOTTE]: {
 		placeId: PlaceEnum.GO_TO_DOME_SOULAFLOTTE,
 		name: 'rasca',
@@ -462,7 +435,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.DOME_SOULAFLOTTE,
 		background: 's_dome'
 	},
-
 	[PlaceEnum.DOME_SOULAFLOTTE]: {
 		placeId: PlaceEnum.DOME_SOULAFLOTTE,
 		name: 'dome',
@@ -473,14 +445,12 @@ export const placeListv2 = definePlaces({
 		background: 's_dome',
 		top: 110
 	},
-
 	[PlaceEnum.ITOTEM]: {
 		placeId: PlaceEnum.ITOTEM,
 		name: 'itotem',
 		map: MapZone.ILES,
 		moves: [{ target: PlaceEnum.MINES_DE_CORAIL }]
 	},
-
 	[PlaceEnum.GO_TO_PORT_DE_PRECHE]: {
 		placeId: PlaceEnum.GO_TO_PORT_DE_PRECHE,
 		name: 'goport',
@@ -489,7 +459,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.PORT_DE_PRECHE,
 		background: 's_port'
 	},
-
 	[PlaceEnum.GO_TO_FOREST]: {
 		placeId: PlaceEnum.GO_TO_FOREST,
 		name: 'gogrum',
@@ -498,7 +467,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.AUREE_DE_LA_FORET,
 		background: 'go_auree'
 	},
-
 	[PlaceEnum.GOSOMB]: {
 		placeId: PlaceEnum.GOSOMB,
 		name: 'gosomb',
@@ -507,7 +475,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.GOUFFRE,
 		background: 'dk_baobob'
 	},
-
 	[PlaceEnum.ATELIER_BROC]: {
 		placeId: PlaceEnum.ATELIER_BROC,
 		name: 'chbroc',
@@ -515,9 +482,8 @@ export const placeListv2 = definePlaces({
 		moves: [{ target: PlaceEnum.MARAIS_COLLANT }],
 		hide: true,
 		ground: GroundEnum.DIRT,
-		background: 'atelier'
+		background: 'broc'
 	},
-
 	[PlaceEnum.CHBRO2]: {
 		placeId: PlaceEnum.CHBRO2,
 		name: 'chbro2',
@@ -527,7 +493,6 @@ export const placeListv2 = definePlaces({
 		ground: GroundEnum.DIRT,
 		background: 'atelier2'
 	},
-
 	[PlaceEnum.ICEISL]: {
 		placeId: PlaceEnum.ICEISL,
 		name: 'iceisl',
@@ -535,7 +500,6 @@ export const placeListv2 = definePlaces({
 		moves: [{ target: PlaceEnum.MINES_DE_CORAIL }, { target: PlaceEnum.LABO, condition: 'scenario(smog,14)' }],
 		hide: true
 	},
-
 	[PlaceEnum.ICEIS2]: {
 		placeId: PlaceEnum.ICEIS2,
 		name: 'iceis2',
@@ -547,7 +511,6 @@ export const placeListv2 = definePlaces({
 		],
 		hide: true
 	},
-
 	[PlaceEnum.LABO]: {
 		placeId: PlaceEnum.LABO,
 		name: 'labo',
@@ -555,7 +518,6 @@ export const placeListv2 = definePlaces({
 		moves: [{ target: PlaceEnum.ICEIS2 }],
 		hide: true
 	},
-
 	[PlaceEnum.LABO2]: {
 		placeId: PlaceEnum.LABO2,
 		name: 'labo2',
@@ -563,7 +525,6 @@ export const placeListv2 = definePlaces({
 		moves: [{ target: PlaceEnum.ICEIS2 }],
 		hide: true
 	},
-
 	[PlaceEnum.LABO3]: {
 		placeId: PlaceEnum.LABO3,
 		name: 'labo3',
@@ -571,11 +532,9 @@ export const placeListv2 = definePlaces({
 		moves: [{ target: PlaceEnum.LABO2, condition: '!hasobject(pile)' }],
 		hide: true
 	},
-
 	/* -------------------------------------------------
 	 * FORET DE GRUMHEL
 	 * ------------------------------------------------- */
-
 	[PlaceEnum.AUREE_DE_LA_FORET]: {
 		placeId: PlaceEnum.AUREE_DE_LA_FORET,
 		name: 'auree',
@@ -586,7 +545,6 @@ export const placeListv2 = definePlaces({
 		background: 's_auree',
 		top: 120
 	},
-
 	[PlaceEnum.CHEMIN_GLAUQUE]: {
 		placeId: PlaceEnum.CHEMIN_GLAUQUE,
 		name: 'chemin',
@@ -601,7 +559,6 @@ export const placeListv2 = definePlaces({
 		background: 's_chemin',
 		top: 175
 	},
-
 	[PlaceEnum.COLLINES_HANTEES]: {
 		placeId: PlaceEnum.COLLINES_HANTEES,
 		name: 'collin',
@@ -612,7 +569,6 @@ export const placeListv2 = definePlaces({
 		background: 's_collin',
 		top: 175
 	},
-
 	[PlaceEnum.FLEUVE_JUMIN]: {
 		placeId: PlaceEnum.FLEUVE_JUMIN,
 		name: 'fleuve',
@@ -628,7 +584,6 @@ export const placeListv2 = definePlaces({
 		background: 's_fleuve',
 		top: 140
 	},
-
 	[PlaceEnum.CAMP_KORGON]: {
 		placeId: PlaceEnum.CAMP_KORGON,
 		name: 'camp',
@@ -639,7 +594,6 @@ export const placeListv2 = definePlaces({
 		background: 's_camp',
 		top: 150
 	},
-
 	[PlaceEnum.JUNGLE_SAUVAGE]: {
 		placeId: PlaceEnum.JUNGLE_SAUVAGE,
 		name: 'jungle',
@@ -650,7 +604,6 @@ export const placeListv2 = definePlaces({
 		background: 's_jungle',
 		top: 120
 	},
-
 	[PlaceEnum.PORTE_DE_SYLVENOIRE]: {
 		placeId: PlaceEnum.PORTE_DE_SYLVENOIRE,
 		name: 'garde',
@@ -664,7 +617,6 @@ export const placeListv2 = definePlaces({
 		background: 's_garde',
 		top: 120
 	},
-
 	[PlaceEnum.GO_TO_CHUTES]: {
 		placeId: PlaceEnum.GO_TO_CHUTES,
 		name: 'gochut',
@@ -673,7 +625,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.CHUTES_MUTANTES,
 		background: 'go_swim'
 	},
-
 	[PlaceEnum.GO_TO_GORGES_PROFONDES]: {
 		placeId: PlaceEnum.GO_TO_GORGES_PROFONDES,
 		name: 'gogorg',
@@ -682,7 +633,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.GORGES_PROFONDES,
 		background: 'gorges'
 	},
-
 	[PlaceEnum.GO_TO_STEPPES]: {
 		placeId: PlaceEnum.GO_TO_STEPPES,
 		name: 'gostep',
@@ -691,11 +641,9 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.FRONTIERE_CREPITANTE,
 		background: 'st_enter'
 	},
-
 	/* -------------------------------------------------
 	 * MONDE SOMBRE
 	 * ------------------------------------------------- */
-
 	[PlaceEnum.PORTAIL]: {
 		placeId: PlaceEnum.PORTAIL,
 		name: 'dkbao',
@@ -706,7 +654,6 @@ export const placeListv2 = definePlaces({
 		],
 		background: 'dk_baobob'
 	},
-
 	[PlaceEnum.GOUFFRE]: {
 		placeId: PlaceEnum.GOUFFRE,
 		name: 'dkchut',
@@ -719,7 +666,6 @@ export const placeListv2 = definePlaces({
 		],
 		background: 'dk_chutes'
 	},
-
 	[PlaceEnum.TOUR_SOMBRE]: {
 		placeId: PlaceEnum.TOUR_SOMBRE,
 		name: 'dktow',
@@ -734,7 +680,6 @@ export const placeListv2 = definePlaces({
 		],
 		background: 'dk_tower'
 	},
-
 	[PlaceEnum.TOUR_SOMBRE_1]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_1,
 		name: 'dktow2',
@@ -743,7 +688,6 @@ export const placeListv2 = definePlaces({
 		hide: true,
 		background: 'dk_toweret'
 	},
-
 	[PlaceEnum.TOUR_SOMBRE_2]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_2,
 		name: 'dktow3',
@@ -752,7 +696,6 @@ export const placeListv2 = definePlaces({
 		hide: true,
 		background: 'dk_toweret'
 	},
-
 	[PlaceEnum.TOUR_SOMBRE_DONJON_1]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_1,
 		name: 'dktow4',
@@ -765,7 +708,6 @@ export const placeListv2 = definePlaces({
 		hide: true,
 		background: 'dk_towerIn'
 	},
-
 	[PlaceEnum.TOUR_SOMBRE_DONJON_2]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_2,
 		name: 'dktowa',
@@ -774,7 +716,6 @@ export const placeListv2 = definePlaces({
 		hide: true,
 		background: 'dk_towerIn'
 	},
-
 	[PlaceEnum.TOUR_SOMBRE_DONJON_3]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_3,
 		name: 'dktowb',
@@ -783,7 +724,6 @@ export const placeListv2 = definePlaces({
 		hide: true,
 		background: 'dk_towerIn'
 	},
-
 	[PlaceEnum.TOUR_SOMBRE_DONJON_LAST]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_LAST,
 		name: 'dktows',
@@ -792,7 +732,6 @@ export const placeListv2 = definePlaces({
 		hide: true,
 		background: 'dk_towerIn'
 	},
-
 	[PlaceEnum.DARK_FAKE]: {
 		placeId: PlaceEnum.DARK_FAKE,
 		name: 'fake',
@@ -800,7 +739,6 @@ export const placeListv2 = definePlaces({
 		moves: [{ target: PlaceEnum.GOUFFRE }],
 		background: 'dk_damne'
 	},
-
 	[PlaceEnum.DARK_FAKE_2]: {
 		placeId: PlaceEnum.DARK_FAKE_2,
 		name: 'fake2',
@@ -808,7 +746,6 @@ export const placeListv2 = definePlaces({
 		moves: [{ target: PlaceEnum.PORTAIL }],
 		background: 'dk_damne'
 	},
-
 	[PlaceEnum.TOUR_SOMBRE_ENTREE]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_ENTREE,
 		name: 'gotow',
@@ -817,7 +754,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.TOUR_SOMBRE,
 		background: 'dk_towerIn'
 	},
-
 	[PlaceEnum.RETOUR_SURFACE]: {
 		placeId: PlaceEnum.RETOUR_SURFACE,
 		name: 'rechut',
@@ -826,7 +762,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.CHUTES_MUTANTES,
 		background: 'go_swim'
 	},
-
 	/* -------------------------------------------------
 	 * STEPPES MAGNETIQUES
 	 * ------------------------------------------------- */
