@@ -10,9 +10,20 @@
 	border-radius: 2px; /* Rounded borders */
 	padding: 16px; /* Padding */
 	position: fixed; /* Sit on top of the screen */
-	z-index: 1; /* Add a z-index if needed */
+	pointer-events: none;
+	z-index: 9999;
 	left: 50%; /* Center the snackbar */
 	bottom: 30px; /* 30px from the bottom */
+}
+.v-toast > * {
+	pointer-events: auto;
+}
+.v-toast.v-toast--bottom {
+	pointer-events: none;
+	z-index: 9999;
+}
+.v-toast.v-toast--bottom > * {
+	pointer-events: auto;
 }
 .v-toast__item {
 	background: rgb(201, 124, 72);
