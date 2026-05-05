@@ -1,6 +1,7 @@
 import { archisageDialog } from './archisage.dialog.js';
 import { atlanteGuardDialog } from './atlanteGuard.dialog.js';
 import { baoBobDialog } from './baoBob.dialog.js';
+import { baoFanDialog } from './baoFan.dialog.js';
 import { coralMinerDialog } from './coralMiner.dialog.js';
 import { dianKorgseyDialog } from './dianKorgsey.dialog.js';
 import { forestGuardianDialog } from './forestGuardian.dialog.js';
@@ -44,6 +45,7 @@ export const dialogDefinitions = [
 	hydargolDialog,
 	archisageDialog,
 	baoBobDialog,
+	baoFanDialog,
 	// GTC
 	strangePterozDialog,
 	merguezSellerDialog,
