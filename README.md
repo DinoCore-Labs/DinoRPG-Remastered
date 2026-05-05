@@ -11,6 +11,8 @@ DinoRPG Remastered est une recréation open-source et une modernisation du jeu n
 🌍 Original game: [Motion Twin](https://motiontwin.com/)  
 🦖 Project repository: https://github.com/DinoCore-Labs/DinoRPG-Remastered
 
+[![Crowdin](https://badges.crowdin.net/dinorpg-remastered/localized.svg)](https://crowdin.com/project/dinorpg-remastered)
+
 ## Table of Contents / Table des matières
 
 - [About the project](#about-the-project)
