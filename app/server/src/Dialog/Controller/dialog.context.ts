@@ -17,6 +17,7 @@ export type DialogContext = {
 		role: Role;
 		lang: string;
 		gold: number;
+		shopKeeper: boolean;
 		scenarios: Map<string, DialogScenarioState>;
 		items: Map<number, number>;
 		allDinozEquippedItemIds: Set<number>;
@@ -143,6 +144,7 @@ export async function buildDialogContext(
 		select: {
 			id: true,
 			role: true,
+			shopKeeper: true,
 			profile: {
 				select: {
 					language: true
@@ -249,6 +251,7 @@ export async function buildDialogContext(
 		user: {
 			id: user.id,
 			role: user.role,
+			shopKeeper: user.shopKeeper,
 			lang: user.profile?.language ?? 'fr',
 			gold: user.wallets[0]?.amount ?? 0,
 			scenarios: buildEmptyScenarioMap(),
