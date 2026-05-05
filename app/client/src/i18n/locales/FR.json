@@ -4053,7 +4053,7 @@
 					"name": "Chercher du Riz",
 					"text": "Aprés quelques recherches, vous trouvez un coin du Marais où pousse du Riz Amnésique, une variété trés rare de Riz aux propriétés étonnantes. Le seul problème c'est que des dizaines de Pirhanoz protègent l'accés. Il va falloir d'abord nettoyer le chemin !"
 				},
-				"kill": "Piranhos",
+				"kill": "Piranhoz",
 				"pick": {
 					"name": "Ramasser le Riz",
 					"text": "Félicitations ! Vous obtenez du Riz Amnésique !"
