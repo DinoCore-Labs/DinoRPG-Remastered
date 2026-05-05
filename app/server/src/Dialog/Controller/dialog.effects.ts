@@ -3,11 +3,14 @@ import { DialogPhaseResponse } from '@dinorpg/core/models/dialogs/dialogResponse
 import { RuntimeDialog, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
 import { DialogSpecial } from '@dinorpg/core/models/dialogs/dialogSpecial.js';
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
+import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { rewardIdByKey, statTrackingByCollectionKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/client.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
+import { getItemMaxQuantity } from '../../Inventory/Service/getAllItemsData.service.js';
 import { unlockDinozMission } from '../../Mission/Controller/mission.progress.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { DialogContext } from './dialog.context.js';
@@ -111,21 +114,44 @@ function assertEnoughQuantity(currentQuantity: number, requiredQuantity: number,
 	});
 }*/
 
-async function addUserItem(tx: DialogTransaction, userId: string, itemId: number, count: number) {
+const dialogItemsById = new Map(Object.values(itemList).map(item => [item.itemId, item]));
+
+function getDialogItemMaxQuantity(context: DialogContext, itemId: number) {
+	const item = dialogItemsById.get(itemId);
+	if (!item) {
+		throw new ExpectedError(`Item ${itemId} does not exist`);
+	}
+	if (item.itemId === Item.GOBLIN_MERGUEZ) {
+		return context.user.shopKeeper ? 150 : 100;
+	}
+	if (context.user.shopKeeper && item.itemType !== ItemType.MAGICAL) {
+		return Math.round(item.maxQuantity * 1.5);
+	}
+	return item.maxQuantity;
+}
+
+async function addUserItem(tx: DialogTransaction, context: DialogContext, itemId: number, count: number) {
 	assertPositiveCount(count, 'Item count');
+	const currentQuantity = context.user.items.get(itemId) ?? 0;
+	const maxQuantity = getDialogItemMaxQuantity(context, itemId);
+	const quantityToAdd = Math.min(count, maxQuantity - currentQuantity);
+	if (quantityToAdd <= 0) {
+		return;
+	}
 	await tx.userItems.upsert({
-		where: getUserItemWhere(userId, itemId),
+		where: getUserItemWhere(context.user.id, itemId),
 		create: {
-			userId,
+			userId: context.user.id,
 			itemId,
-			quantity: count
+			quantity: quantityToAdd
 		},
 		update: {
 			quantity: {
-				increment: count
+				increment: quantityToAdd
 			}
 		}
 	});
+	context.user.items.set(itemId, currentQuantity + quantityToAdd);
 }
 
 async function removeUserItem(tx: DialogTransaction, context: DialogContext, itemId: number, count: number) {
@@ -329,14 +355,14 @@ async function applyDialogEffect(
 			//await incrementScenarioProgress(tx, context.user.id, effect.scenarioKey, effect.delta);
 			return;
 		case 'giveItem':
-			await addUserItem(tx, context.user.id, effect.itemId, effect.count);
+			await addUserItem(tx, context, effect.itemId, effect.count);
 			return;
 		case 'giveIngredient':
 			await addUserIngredient(tx, context.user.id, effect.ingredientId, effect.count);
 			return;
 		case 'giveRandomItem': {
 			const itemId = pickRandomItemId(effect.itemIds);
-			await addUserItem(tx, context.user.id, itemId, 1);
+			await addUserItem(tx, context, itemId, 1);
 			return;
 		}
 		case 'heal':
