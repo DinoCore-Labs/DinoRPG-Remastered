@@ -1,0 +1,21 @@
+base_path: '.'
+preserve_hierarchy: true
+
+pull_request_title: 'chore(i18n): update translations from Crowdin'
+pull_request_labels:
+  - i18n
+  - translations
+  - crowdin
+
+commit_message: 'chore(i18n): update %language% translations from Crowdin'
+append_commit_message: false
+
+files:
+  - source: '/app/client/src/i18n/locales/FR.json'
+    translation: '/app/client/src/i18n/locales/%two_letters_code%.json'
+    languages_mapping:
+      two_letters_code:
+        en: EN
+        es: ES
+        de: DE
+    update_option: update_as_unapproved
