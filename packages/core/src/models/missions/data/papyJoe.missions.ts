@@ -118,6 +118,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 					monsterKeys: ['goupi', 'goupi2', 'goupi3', 'wolf'],
 					count: 6,
 					force: true,
+					place: PlaceEnum.COLLINES_ESCARPEES,
 					displayNameKey: 'missions.papy.kilgou.kill'
 				}
 			},
@@ -149,6 +150,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 					monsterKeys: ['wolf'],
 					count: 2,
 					force: true,
+					place: PlaceEnum.FORCEBRUT,
 					displayNameKey: 'missions.papy.kilwlf.kill'
 				}
 			},
@@ -163,6 +165,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 					monsterKeys: ['wolf'],
 					count: 2,
 					force: true,
+					place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 					displayNameKey: 'missions.papy.kilwlf.kill'
 				}
 			},
@@ -177,6 +180,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 					monsterKeys: ['wolf'],
 					count: 2,
 					force: true,
+					place: PlaceEnum.DINOVILLE,
 					displayNameKey: 'missions.papy.kilwlf.kill'
 				}
 			},
@@ -191,6 +195,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 					monsterKeys: ['wolf'],
 					count: 2,
 					force: true,
+					place: PlaceEnum.UNIVERSITE,
 					displayNameKey: 'missions.papy.kilwlf.kill'
 				}
 			},
@@ -298,6 +303,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 					monsterKeys: ['goupi', 'goupi2', 'goupi3'],
 					count: 15,
 					force: true,
+					place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 					displayNameKey: 'missions.papy.msg.kill'
 				}
 			},

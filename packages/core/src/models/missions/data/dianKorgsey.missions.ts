@@ -75,6 +75,7 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 					monsterKeys: ['korgon'],
 					count: 10,
 					force: true,
+					place: PlaceEnum.CHEMIN_GLAUQUE,
 					displayNameKey: 'missions.dian.rivals.kill'
 				}
 			},
@@ -115,6 +116,7 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 				kill: {
 					count: 6,
 					force: true,
+					place: PlaceEnum.PORTE_DE_SYLVENOIRE,
 					displayNameKey: 'missions.dian.kfood.kill'
 				}
 			},
@@ -172,6 +174,7 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 					monsterKeys: ['korgon'],
 					count: 3,
 					force: true,
+					place: PlaceEnum.JUNGLE_SAUVAGE,
 					displayNameKey: 'missions.dian.poison.ambushKill'
 				}
 			},
@@ -197,6 +200,7 @@ export const dianKorgseyMissions: MissionDefinition[] = [
 					monsterKeys: ['korgon', 'ronciv'],
 					count: 8,
 					force: true,
+					place: PlaceEnum.CHEMIN_GLAUQUE,
 					displayNameKey: 'missions.dian.poison.korgonsOrAlliesKill'
 				}
 			},

@@ -32,6 +32,7 @@ export const rodeurMissions: MissionDefinition[] = [
 					monsterKeys: ['pira'],
 					count: 30,
 					force: true,
+					place: PlaceEnum.MARAIS_COLLANT,
 					displayNameKey: 'missions.rodeur.rodriz.kill'
 				}
 			},
