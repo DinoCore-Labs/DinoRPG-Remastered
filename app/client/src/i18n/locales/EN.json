@@ -315,6 +315,19 @@
 			"participantsConv": "Participants",
 			"blockSender": "Block sender"
 		},
+		"password": {
+			"title": "Modifier le mot de passe",
+			"old": "Ancien mot de passe :",
+			"new": "Nouveau mot de passe :",
+			"confirm": "Confirmer le nouveau mot de passe :",
+			"errors": {
+				"oldPasswordRequired": "Veuillez renseigner l’ancien mot de passe.",
+				"fieldsRequired": "Veuillez remplir tous les champs.",
+				"passwordMismatch": "Les nouveaux mots de passe ne correspondent pas."
+			}
+		},
+		"modif": "Modification...",
+		"valid": "Valider",
 		"close": "Close",
 		"continue": "Continue"
 	},
@@ -408,6 +421,7 @@
 		"backpackFull": "There aren't any free space in the backpack of this dinoz.",
 		"OnlyLettersAndNumbers": "Incorrect name ! You can only use between 3 and 16 letters or numbers.",
 		"tooManyActiveDinoz": "You have too many active Dinoz.",
+		"notEnoughItems": "Vous n'avez pas la quantité attendue pour l'item requis.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or",
 		"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
 		"maxQuantityInventory": "You already too many of this item in your inventory.",
@@ -498,6 +512,7 @@
 		"editAccount": "Modifier le profil",
 		"options": {
 			"title": "Options du compte",
+			"mdp": "Modifier le MDP",
 			"todo": "à venir...",
 			"reset": "Réinitialiser le compte",
 			"retour": "Retour"
@@ -1429,7 +1444,6 @@
 			"air_sphere": "Air Sphere",
 			"void_sphere": "Void Sphere",
 			"demon_ticket": "Demon Ticket",
-			"treasure_coupon": "Treasury Note",
 			"moueffe_egg": "Moueffe Egg",
 			"moueffe_egg_rare": "Rare Moueffe Egg",
 			"pigmou_egg": "Softpig Egg",
@@ -1488,6 +1502,16 @@
 			"easter_egg": "Madame Urma's Egg",
 			"fire_cracker": "Firecracker",
 			"special_potion_irma": "Special Madame Irma's Potion",
+			"gold100": "Pièces d'or (x100)",
+			"gold500": "Pièces d'or (x500)",
+			"gold1000": "Pièces d'or (x1000)",
+			"gold2000": "Pièces d'or (x2000)",
+			"gold2500": "Pièces d'or (x2500)",
+			"gold3000": "Pièces d'or (x3000)",
+			"gold5000": "Pièces d'or (x5000)",
+			"gold10000": "Pièces d'or (x10000)",
+			"gold20000": "Pièces d'or (x20000)",
+			"gold50000": "Pièces d'or (x50000)",
 			"daily_ticket": "Daily Ticket",
 			"empty": "Empty",
 			"box_common": "Common box",
@@ -1560,7 +1584,6 @@
 			"air_sphere": "An Elemental Sphere allows your Dinoz to learn one spherical skill!",
 			"void_sphere": "An Elemental Sphere allows your Dinoz to learn one spherical skill!",
 			"demon_ticket": "You receive Demon Tickets when you sacrifice a Dinoz at the Demon shop. You can trade them for a Demon Dinoz once you have enough.",
-			"treasure_coupon": "A Treasury Note is worth 1000 Gold Coins and allows bidding on auctions in the Market Place. It simply needs to be cashed to be converted in gold coins.",
 			"moueffe_egg": "This strange egg is close to hatching into a beautiful Dinoz...",
 			"moueffe_egg_rare": "This strange little egg seems to be ready to transform into an amazing Dino!",
 			"pigmou_egg": "This strange egg is close to hatching into a beautiful Dinoz...",
@@ -1619,6 +1642,7 @@
 			"easter_egg": "An Urma's egg can be used to obtain an item among all those that exist in Dinoland. Will it be a rare or common item you'll get?",
 			"fire_cracker": "With this firecracker, you can set off fireworks in Dinotown to earn treasures!",
 			"special_potion_irma": "Madam Irma's famous potion allows the Dinoz who drinks it to *play a new action immediately* without having to wait for the next day. But you can only carry 3.",
+			"gold1": "Pièces d'or",
 			"daily_ticket": "This ticket allows you to unlock a daily box at the University.",
 			"box_common": "This box seems to contain common objects.",
 			"box_rare": "This shiny box seems to contain rare objects.",
@@ -3278,6 +3302,361 @@
 				"missions": "Consulter la liste des missions"
 			}
 		},
+		"shamanMou": {
+			"name": "Shaman Mou",
+			"dialog": {
+				"begin": "B'jour jeune av'turier, bienv'nue à Fosselave... la capitale du Grand T'chaud... Hésite pô à admirer nos super sculptures en basalte. Y'a aussi les bains de magma, là bas... Ca va te relaxer, tu verras c'est coooool... Si t'as faim, t'peux goûter not' spécialité : les merguez de Gobelin... Ca te ravigore, youuuhouuu, tu peux pas imaginer...",
+				"charm": "Ah ouais, c'est vrai... y parait que j'dois t'aider... Tiens, un Charme de Feu... ça aidera bien ton dinoz dans ses prochains combats.",
+				"boost": "Bouge pas, j'vais t'enchanter de la magie des Shamans... Oyééé, oyééé ! ZZZZzzzzzz... ... C'est bon, tu peux y'aller, t'es un balaise maintenant.",
+				"nothing": "Hey, essaye pas d'me rouler, ton dinoz a déjà un charme... Reviens me voir plus tard.",
+				"vener": "Uhmm... ? Le V'nérable ?... Quel bourrin celui là... hier il a failli me bouffer... tout ça parce qu'il me trouve trop agité, et que ça l'empêche de dormir... Tu veux vraiment y aller ? Boah... c'est toi qui voit... Tourne à droite aux Forges, et c'est tout droit.",
+				"force": "Fort ? le gros dorogon Vener' là ?... bah ouais un peu... C'est la première cause de mortalité chez les touristes, juste devant les crises cardiaques causées par nos merguez... Ha la la, qué p'tites natures ces touristes...",
+				"merci": "Tchao mon pote... à la prochaine...",
+				"souvenir": "Des souv'nirs ?... Bah... j'ai bien ma pile de feuilles d'incantations en retard là, mais je sais pas si ça t'interesse... J'peux te filer un autographe aussi, signé de mon vrai nom, Baston Labaf... non ? Ok tant pis... Sinon y'a des trucs de combats aux Forges... des équipements de combat, et tout ça là... Y'aura p'têt un truc cool pour toi.",
+				"more": "Uhmm.... Si ton Dinoz accepte de remplir quelques missions pour moi, j'lui confierai mon Guide de Stratégie. C'est super pratique...",
+				"accept": "Marché conclu...",
+				"missions": "(Bientôt disponible)"
+			},
+			"choice": {
+				"vener": "Le Vénérable...",
+				"souvenir": "On peut acheter des souvenirs dans le coin ?",
+				"missions": "Consulter la liste des Missions",
+				"charm": "On m'a parlé d'un charme...",
+				"acceptCharm": "Accepter le Charme",
+				"force": "Ah ? Et il est fort ?",
+				"merci": "Merci, je tiendrai compte de vos conseils !",
+				"more": "Et c'est tout ?",
+				"accept": "Accepter"
+			}
+		},
+		"rodeur": {
+			"name": "Rôdeur Etrange",
+			"dialog": {
+				"intro": {
+					"begin": ".........",
+					"go": "Ouf ! Il vaut mieux faire attention en rencontrant des étrangers...",
+					"talk": "Uh ?!??? Quoi ?? Vous pouvez me VOIR ?!? ..... Grrrrr....",
+					"yes": "Uhm... bien... je vois... on m'avait pourtant certifié que cette cape rendait invisible ! Est-ce que tu peux regarder l'indicateur dans le dos, il y a marqué quelque chose ?",
+					"read": "Quoi ?!? \"L'EAU BATTE-RIZ\" ? Uhm... le vendeur parlait effectivement de recharger quelque chose... il va donc falloir que j'utilise du... riz !?! Mais où vais-je pouvoir trouver cela ?!?",
+					"talk2": "Vite ! J'ai BESOIN de ce Riz !"
+				},
+				"tech": {
+					"begin": "Ma cape est à nouveau en panne... je commence à en avoir un peu marre...",
+					"qual": "QUOI ?!? Comment oses-tu parler ainsi de la grande technologie Caushemeshenne ! Sais-tu simplement combien d'années recherches il a fallu à nos scientifiques pour maîtriser l'Ether ?!?",
+					"qual2": "Au lieu de dire des conneries, tu ferrais mieux d'essayer de remplir ta mission...",
+					"caush": "Oui ! Tout à fait, la grande civilisation des Montagnes de Caushemesh, bien au delà des Steppes Magnétiques. Nous sommes bien plus développés que les barbares de Dinoville...",
+					"ether": "Aprés des centaines d'années de recherche, les Caushemeshens ont maîtrisés la puissance de l'Ether, un savant mélange des éléments Air et Vide. Celà nous donne une puissance technologique hors du commun, et les ingénieurs de Caushemesh sont les meilleurs de tout Dinoland !",
+					"next": "Vos Dinoz sont bien faibles comparés à ceux de Caushemesh, ils ne font pas le poids ahahahah ah ! Entraîne bien tes Dinoz, jeune maître, car un jour viendra où tu devras affronter des dangers bien plus grands !",
+					"more": "Mais j'en ai déjà trop dit... Pour te convaincre de la technologie de Caushemesh, que dirais-tu d'une petite mission ?"
+				},
+				"reward": {
+					"begin": "Pour ton information, les Dinoz Sombres que tu as rencontré jusqu'à présent n'étaient que des débutants que nous venons faire entraîner dans cette partie de Dinoland... La puissance des Dinoz de Caushemesh va bien au delà, et même votre Vénérable ne ferait pas le poids contre nos meilleurs maîtres Dinoz !",
+					"next2": "Enfin bon, je tiens ma promesse. Voici une récompense pour te convaincre de la supériorité de la  technologie de Caushemesh. Je n'en ai qu'un exemplaire, alors fais-en bon usage... Il s'agit d'un Bracelet en Tik, que tu pourras équiper sur le Dinoz de ton choix..."
+				},
+				"afterSpy": {
+					"begin": "Maintenant libéré de sa mission d'espionnage, le rôdeur s'est installé tranquillement non loin de dinoplaza. Les doigts de pied en éventail, il se détend au soleil... Mieux vaut le voir ici qu'en train de manigancer quelque chose de louche..."
+				}
+			},
+			"choice": {
+				"go": "Ce personnage a l'air dangereux... s'éloigner !",
+				"talk": "Lui parler",
+				"talk2": "Lui parler",
+				"yes": "Euh... Oui",
+				"read": "Lire l'indicateur",
+				"help": "Aider le Rôdeur",
+				"qual": "Sûrement de la mauvaise qualité...",
+				"qual2": "Sûrement de la mauvaise qualité...",
+				"caush": "Caushemesh ?",
+				"ether": "L'Ether ?",
+				"next": "Et...",
+				"next2": "(...)",
+				"more": "...",
+				"mission": "Accepter une mission"
+			}
+		},
+		"venerable": {
+			"name": "Le Vénérable",
+			"intro": {
+				"dialog": {
+					"begin": "GWWWWWWWWAAAAAAARGGGGGGGHHHHHH !!!! Qui oooose venir me dérangerrr pendannt ma siiiessteee ?????",
+					"bye": "Vous avez raison, il y a des fois dans la vie ou il vaut mieux prendre son courage à deux mains et effectuer une retraite stratégique en vitesse, et si possible sans se faire voir...",
+					"moi": "UUUHMMMM ?? Et que me veux-tu au juste ??? Tu as intérêt à avoir une bonne raison, sinon je vais faire GRILLER ton Dinoz pour mon PETIT DEJEUNER !!!",
+					"korgon": "UHHMM ??? un KORGON, dis-tu ??? Où ça, Où ça ? Tu m'as donné faim !!",
+					"next1": "OOhhh ! Quel DOOMMMAAGGE !! Ca doit être ENERVANT alors ! Je comprends je comprends ! Dans ma jeunesse, j'ai souvent laissé échapper quelques petits déjeuners comme ça. Maintenant je les GRILLE directement, comme ça ils n'ont pas le temps de s'enfuir !",
+					"fight": "GROOOOAAARRH !!! Tu as GAGNE pour cette FOIS ! MAIS nous nous REVERRONS !",
+					"moi2": "UHMMMM ? Oui, bon, je me rappelle de ton Dinoz. Qu'est-ce que tu me veux encore ?",
+					"question": "Alors, mangeur de Korgon, est-ce que je peux GRILLER quelque chose pour toi ? Ou autre chose ? N'en demande pas trop, car sinon je te DECOUPE en petits morceaux croustillants qui seront parfaits pour mon PETIT DEJEUNER !!!",
+					"force": "UHHMM ??? Plus FORT tu dis ? BON... alors suis mon conseil : va voir le SHAMAN de Fosselave, il t'aidera à GRILLER tes ennemis !",
+					"fight2": "UHMM... J'ai une petite FAIM... que dirais-tu de remettre cela à plus tard ???"
+				},
+				"choice": {
+					"moi": "Euh... C'est moi !",
+					"moi2": "Euh... C'est moi ?",
+					"bye": "Partir discrètement",
+					"perdu": "Je me suis perdu en venant ici et...",
+					"chasse": "Je suis un Grand Chasseur de Dorogon, et je viens vous défier !",
+					"deal": "J'ai une affaire EN OR a vous proposer !",
+					"korgon": "Je courrais après un Korgon et...",
+					"auto": "Pourrais-je avoir un autographe ?",
+					"next0": "Je l'ai attrapé",
+					"next1": "Il m'a échappé",
+					"next2": "C'est efficace...",
+					"question": "Euh...",
+					"force": "J'aimerais que mon Dinoz soit plus fort !",
+					"fight": "Je vais vous ECRASER !",
+					"fight2": "Je vais vous ECRASER !"
+				}
+			},
+			"hurt": {
+				"dialog": {
+					"begin": "GRRrrrr....Grouph...Bouarkkk.....J'attends toujours ton aide. Je compte sur toi.",
+					"ok": "Vous partez, bien décidé à sauver le vénérable.",
+					"ko": "Très bien, prépare toi !",
+					"force2": "UHHMM ??? Plus FORT tu dis ? BON... alors suis mon conseil : va voir le SHAMAN de Fosselave, il t'aidera à GRILLER tes ennemis !",
+					"comb": "Bien joué, tu es prêt à aller défier les Dorogons de Nimbao.",
+					"ko2": "Tu es déjà prêt à aller défier les Dorogons de Nimbao. Bon courage !"
+				},
+				"choice": {
+					"ok": "Vous pouvez compter sur moi !",
+					"ko": "J'ai besoin de m'entraîner !",
+					"ko2": "J'ai besoin de m'entraîner.",
+					"force2": "J'aimerais que mon Dinoz soit plus fort !",
+					"comb": "En avant !"
+				}
+			}
+		},
+		"woundedSoldier": {
+			"name": "Soldat Blessé",
+			"dialog": {
+				"begin": "Sur le bord d'une rue, vous rencontrez un Soldat Blessé. Il a l'air vraiment mal en point, mais il est encore conscient.",
+				"talk": "................ du.. pain.... F'il te.... plait.... !",
+				"no": "Vous vous éloignez. Après tout, il est peut-être dangereux de soigner un inconnu !",
+				"give": "..... miam.... gloup... miam... MERFI !!! VE VAIS BEAUCOUP MIEUX !!! TU ES MON FAUVEUR !!!",
+				"derien": "ATTENDS !!! VE VAIS TE RECOMPENFER !!! Tu vois, Ve n'étais pas dans Fet état par haVard... Il Fe trouve que v'ai partiFipé à un entrainement FPECIAL dans les Cavernes de FoFFelave. F'est très dûr et Felà coute un peu d'arVent mais F'est grâce à Fa que V'ai pu devenir auFFi coFtaud ! TIENS ! Prends cette Carte de Membre pour ton Dinoz, Ve n'en ai plus beVoin..."
+			},
+			"choice": {
+				"talk": "Lui parler",
+				"give": "Donner un Pain Chaud au Soldat",
+				"no": "Ne rien lui donner",
+				"derien": "Euh.. De rien, au revoir"
+			}
+		},
+		"baoBob": {
+			"name": "M. Bao Bob",
+			"dialog": {
+				"begin": "Bonjour, bonjour, bonjour, que me veux-tu, Maître Eleveur ?",
+				"question": "Une question ? Mmmmmm.... Que dirais-tu plutôt d'une petite Mission pour ton Dinoz ? Avec des amis, on organise des rallyes tout autour de Dinoland !",
+				"nothing": "Ah bon ? Alors parfait... Bon voyage !",
+				"quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel. <br> Je pourrais alors répondre à ton voeu le plus cher.",
+				"quest3": "Une question ? Mmmmm... Je vois que tu as obtenu les palmes des Korgons. <br> Cela veut-dire que tu devrais être capable de survivre... là-bas... peut-être...",
+				"where": "Mmmm.... Pour y aller, tu devras rassembler sept Dinoz. Pas forcément les tiens non, ils peuvent aussi être des Dinoz des membres de ton Clan. Et aprés je vous y enverrai... là-bas...",
+				"where2": "Mmm.... Il s'agit d'un lieu... Je ne peux pas t'en dire plus. Mais sâche que tu y trouvera une clé, oui, LA clé. Pour la porte de Sylvenoire. Elle te permettra de la continuer, ton aventure. Enfin, si tu survis bien entendu.",
+				"how": "Comment ? Mmm... Ecoute moi. Tu dois rassembler sept Dinoz ici. Les tiens ou ceux de membres de ton Clan. <br> Chaque Dinoz doit se concentrer. Quand vous serez sept, alors, à ce moment, vous pourrez aller là-bas.",
+				"danger": "Dangereux ? Mmm... pour faire simple, je dirais que tu n'as surement que peu de chance de survivre là-bas... <br> Mais qui ne tente rien n'a rien, n'est-ce pas ?",
+				"concen": "Mmm... Bien... je vais hypnotiser ton Dinoz. Il pourra mieux se concentrer de cette façon... <br> Ne t'inquiete pas, tu pourras à tout moment arrêter cela, si tu le désires.",
+				"quest4": "Une question ? Mmmmm... Il va te falloir des ingrédients pour que je t'aide. <br> Enfin, si je devine bien quelle question tu voulais me poser...",
+				"noingr": "Tsss tsss tsss.... Le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane. <br> Il me semble qu'il te manque quelquechose, mon cher.",
+				"ingr": "Poum poum palalam poum poum pam poum poum palalam pam ! Et voila, une magnifique Potion Anti Sedh pour toi...",
+				"potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !"
+			},
+			"choice": {
+				"question": "J'ai une question à vous poser...",
+				"nothing": "Rien du tout",
+				"mission": "Oui je veux bien",
+				"no": "Non merci",
+				"questQuestion": "Et ma question ?",
+				"bye": "Je dois partir",
+				"where": "Là-bas ?",
+				"where2": "Mais où exactement ?",
+				"how": "Comment dois-je faire ?",
+				"danger": "Et c'est dangereux ?",
+				"concen": "Je veux faire concentrer mon Dinoz !",
+				"ok": "D'accord",
+				"ingr": "Voilà les ingrédients !",
+				"noingr": "Voilà les ingrédients !",
+				"potion": "Vous êtes donc un Singe Antique !!!"
+			}
+		},
+		"baoFan": {
+			"name": "Fan de Bao",
+			"dialog": {
+				"begin": "Bonjour monsieur ! Vous avez parlé à Monsieur Bao ? Il est vraiment génniaaaaaalll non ???",
+				"ok": "Hein, que c'est vrai !! Il est trop cool ! J'ai même traversé la Forêt de Grumhel exprès pour qu'il me raconte plein d'histoires super ! Vous savez quoi, il a déjà assommé un Gorilloz démon, un jour ! Si si ! Et puis il était entouré de plein d'animaux méchants ! Et tu sais quoi ? Et ben il les a tous battus !",
+				"wah": "Oui ! Et M. Bao a bien voulu m'apprendre quelques trucs ! Il a dit que je suis très doué pour mon âge ! C'est bien, hein ? Attends regarde... je vais envoûter un truc, tu veux que je te montre ?",
+				"yes": ".............. Voilà, j'ai fini ! Tu le veux ? Tiens... C'est un Charme Bao ! Alors prends-en soin, hein ! Ça devrait aider ton Dinoz pendant quelques combats. Quand tout le fluide spitruel sera épuisé, tu pourras revenir me voir pour que je le recharge !",
+				"spirit": "Heu... oui c'est ça ! Spitri... péritel... spriti... ! Ho ils sont trop compliqués vos mots technologiques !",
+				"thanks": "Hooo tu t'en vas déjà... Tu reviendras, hein ? À bientôt alors !",
+				"nothing": "Ah... mais ton Dinoz a déjà un Charme Bao ! Regarde, y'a encore de l'énergie... tu vois ? Quand il ne marchera plus, je pourrai te le recharger.",
+				"no": "Ah bon ? Bon, ben tant pis pour toi alors... *boude*."
+			},
+			"choice": {
+				"ok": "Euh... oui",
+				"wah": "Waaahh !!",
+				"yes": "Ok !",
+				"no": "Non merci",
+				"spirit": "\"Spirituel\" tu veux dire ?",
+				"thanks": "Bon, je dois partir... merci beaucoup pour le Charme Bao !"
+			}
+		},
+		"dian": {
+			"name": "Dian Korgsey",
+			"dialog": {
+				"begin": "Salut, éleveur... Ne fais pas un bruit, il ne faut surtout pas déranger les Korgons !",
+				"korgons": "Oui, ce sont les petites créatures qui se sont installées ici. De vraies petites teignes si on n'y prête pas gare ! Déjà, ne les regarde surtout pas dans les yeux... Et si l'un d'eux s'approche trop, tu peux toujours essayer de lui donner un bout de bois à grignoter.",
+				"why": "Ils pourraient prendre ça pour un défi ! Et là, je vous laisse imaginer ce qui se passerait si tous les Korgons du campement se mettaient dans la tête que vous étiez un ennemi... Les derniers à avoir essayé ont été servis en souper le soir même.",
+				"wood": "Ils adorent ça ! C'est d'ailleurs la raison pour laquelle ils se sont installés dans la Jungle de Grumhel. Fascinant n'est-ce pas ? Mais malheureusement pour nous, ils sont capables de manger tout et n'importe quoi, y compris les voyageurs imprudents.",
+				"tame": "Il y a bien longtemps, je pense que les Korgons étaient domestiqués. Probablement bien avant la chute de l'île de Jazz... Mais aujourd'hui, ils sont revenus totalement à l'état sauvage ! Pas moyen de les approcher sans risquer d'y perdre un bras. Quelques éleveurs s'y sont aussi frottés, mais personne n'a obtenu mieux de leur part qu'un grand coup de dents.",
+				"interest": "N'est-ce pas ! Je suis heureuse de voir que ces adorables Korgons vous plaisent autant ! Si cela vous intéresse, vous pourriez me rendre quelques petits services au Camp ?",
+				"service": "Parfait ! Voilà ce dont j'ai besoin...",
+				"nothing": "D'accord, bon voyage !"
+			},
+			"choice": {
+				"korgons": "Les Korgons ?",
+				"nothing": "Oh pardon, je m'en vais...",
+				"why": "Il ne faut pas les regarder ?",
+				"wood": "Ils mangent du bois ?",
+				"tame": "Personne n'en a jamais dressé ?",
+				"interest": "Tout ça est vraiment passionnant !",
+				"service": "Oui, avec plaisir !",
+				"missions": "Consulter la liste des Missions"
+			}
+		},
+		"nicolasHulot": {
+			"name": "Nicolas Mulot",
+			"dialog": {
+				"begin": "Un homme en tenue de safari se tient debout à l'Orée de la Jungle de Grumhel. Il a l'air d'attendre quelque chose...",
+				"welcome": "La Jungle de Grumhel ! Cet espace sauvage et encore vierge, protégé de toute agression extérieure par sa faune dangereuse, reste aujourd'hui une terre de mystère et de contraste qui séduit chaque année de nombreux explorateurs. Séquence frisson. \"À la découverte d'un Monde Sauvage\", c'est aujourd'hui, en ma compagnie !",
+				"who": "Nicolas Mulot, journaliste pour le magazine Ouïaïa et amoureux de Dinoland !",
+				"role": "Pas pour un journaliste de l'extrême comme moi. Il y a tout ce que je recherche ici : un monde inexploré, une faune et une flore riches, tant de choses fabuleuses à découvrir à chaque pas !",
+				"myst": "Je l'ignore encore... Mais... Mais je suis convaincu qu'il y a des choses fabuleuses qui se cachent dans cette jungle ! Il faut juste oser y entrer... Séquence peur bleue.",
+				"flora": "Ces arbres millénaires cachent aux yeux des hommes leurs plus beaux atours ! Mais pour qui sait regarder, c'est un ravissement pour les sens. Senteurs exotiques, fleurs multicolores, végétation luxuriante... La Jungle de Grumhel, \"Une Aventure au pays de Mère Nature\", séquence Exploration !",
+				"whynot": "Disons qu'il existe quelques plantes peu engageantes aussi... Comme la \"Toxicae Virulente Noire\" ou la \"Sauvagine Géante Dévoreuse de Foie\"...",
+				"fauna": "Entre les roncivores, les korgons et les fauve-souris, la Jungle de Grumhel recèle de dangers qui dépassent l'imagination ! À la fois Terre hostile et Terre Promise, cette partie de Dinoland ne se laissera pas si facilement apprivoiser...",
+				"fear": "Euh, comment dire... C'est... Disons un contretemps technique. Il serait plus prudent, je pense, de planifier d'abord une mission de reconnaissance. Avant de plonger corps et âme dans l'aventure, cela va de soi !",
+				"explore": "Ça serait une excellente idée ! Il faut dire qu'il n'y a pas beaucoup de passage par ici... Un petit coup de main serait le bienvenu... Séquence action.",
+				"other": "Oserez-vous plonger dans les mystères insondables de la Jungle de Grumhel ?",
+				"sick": "Alors que Nicolas Mulot se retourne pour vous répondre, vous constatez avec horreur qu'il a le visage tout boursouflé et couvert de verrues et autres boutons !",
+				"problem": "Euh... Bien le bonVour. Ne le prenez pas trop mal, mais Ve crois que les plantes que vous m'avez amené étaient comme dirait... eux toxViques... Ve crois bien que mon allervie aux plantes a pris une Fertaine ampleur... Vous pourriez peut-être m'aider à Drouver un remède ? ...",
+				"sickstatus": "Alors, vous avez trouvé un rebède ?",
+				"better": "Le remède que vous m'avez amené a été très efficace !"
+			},
+			"choice": {
+				"talk": "Lui parler",
+				"who": "Mais... Vous êtes qui ?",
+				"better": "Vous avez l'air d'aller bien mieux...",
+				"missions": "Consulter la liste des Missions",
+				"role": "Ça n'est pas un peu dangereux pour un journaliste ici ?",
+				"myst": "Quels genres de mystères existent ici ?",
+				"fauna": "Parlez-moi des animaux de la Jungle...",
+				"flora": "Il y a de belles plantes par ici ?",
+				"fear": "Ah... Vous voulez dire que vous n'osez pas voir ça par vous-même ?",
+				"whynot": "Pourquoi n'entrez-vous pas dans la jungle alors ?",
+				"explore": "Je peux vous aider si vous le voulez ?",
+				"other": "J'ai d'autres questions...",
+				"problem": "Ouh la ! Qu'est-ce qui vous arrive ?",
+				"curesearch": "Voyons voir ça..."
+			}
+		},
+		"forestGuardian": {
+			"name": "Gardien de la Forêt",
+			"dialog": {
+				"begin": "Un immense arbre vous fait face... De toute évidence, il est particulièrement âgé et semble empreint d'une grande sagesse. Lentement, très lentement, ses feuilles s'abaissent dans votre direction et bruissent doucement.",
+				"shake": "Tandis que vous le secouez, si tant est qu'on puisse secouer un arbre si grand, vous percevez un étrange et long grognement venant de l'intérieur même de l'écorce ! Quelque chose tombe brusquement du feuillage sur votre tête : poc !",
+				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à votre grande surprise, vous constatez qu'il y a quelque chose d'écrit sur ce parchemin !"
+			},
+			"choice": {
+				"missions": "Consulter la liste des Missions",
+				"shake": "Secouer un peu cet arbre",
+				"item": "Aie ! Qu'est-ce que c'est ?"
+			}
+		},
+		"skully": {
+			"name": "Skully",
+			"dialog": {
+				"begin": "Oh oh oh oh oh oh oh ! Ton Dinoz m'a l'air très mal en point !!",
+				"arg": "Un FANTOMEE ?!!??? Aaaahh !! Où ça !! où ça ??",
+				"arg2": "QUOI ?? Moi ??? Mais mais mais mais mais... Un peu de respect voyons ! Sinon vous ne ferez pas de vieux os ici, croyez-moi !&&Je suis une S.Q.U.E.L.E.T.T.E ! Une squelette oui ! Peut-être un peu décoiffée, mais pas un fantôme !!!",
+				"diff": "Tout d'abord, un fantôme est mort, et moi je suis juste... un peu fatiguée, je dois avoir des cernes, voilà tout...&&Et un fantôme, ça hante toujours quelque chose ou quelqu'un, alors que moi, je suis libre !!!&&... enfin presque.",
+				"free": "C'est un peu... uhmmm... compliqué... Disons que j'ai deux petits pépins techniques à régler.&&D'une part, seuls les Dinoz au bord de la mort et leurs maîtres peuvent me voir, d'autre part je ne peux pas quitter cet endroit lugubre...",
+				"haunt": "Hanter cet endroit ?!? Non mais vous RIGOLEZ ?!? Oh oh oh oh oh oh oh ! Rien que d'y penser j'en ai la chair de poule ! J'ai bien mieux à faire MOI oh oh !",
+				"do": "Uhm... C'est... INDISCRET ! Oh oh oh oh ! ..... Mais je vais quand même te raconter, une fois de plus si ça se trouve ! oh oh..... J'ai, vois-tu... un AMOUREUX ! On ne dirait pas comme ça, mais quand j'étais plus jeune j'avais de superbes tibias !",
+				"uhm": "Je te raconte tout ça ! oh oh oh ! Mais ça n'a aucune importance, car de toute façon j'ai une bonnédiction qui te fera rapidement tout oublier de moi !",
+				"bonne": "Oui, oh ! oh oh oh ! C'est comme une malédiction mais en mieux ! Je suis protégée par une bonnédiction pour éviter que les gens fassent des cauchemars et pour éloigner les scientifiques. Ils seraient trop ravis d'examiner la façon dont je me nourris, oh oh oh ! Je ne fais même plus attention à mon cholestérol. Bref, peu après m'avoir vue, les gens m'oublient aussitôt !",
+				"next": "N'est-ce pas !!! Du coup, comme je ne peux pas m'éloigner d'ici, comment veux-tu que je le retrouve ! Mon Mouldeur CHERI !!!",
+				"nohelp": "Tu ne peux m'aider de toute façon... oh oh oh ! Laisse-moi seule maintenant, je vais penser à lui, et n'oublie pas de m'oublier...",
+				"forgot": "Il vous a semblé un instant que vous parliez avec quelqu'un, mais vous n'arrivez pas à vous en rappeler les détails...",
+				"help": "VRAIIMMMEENTTT ?? OH OH OH OH OH !! Tu ferais ça pour moooaa ?!! Mais ça va être difficile pour toi, et à chacune de nos rencontres tu ne te souviendras de rien ou presque ! Es-tu vraiment certain de vouloir m'aider ???",
+				"accept": "OH OH OH OH OH !! Alors, s'il te plaît Monsieur le Maître Dinoz ! Aide-moi à retrouver Moulder et je te récompenserai comme il se doit !!",
+				"unlocked": "oh oh Oh Oh OH !! La bonnédiction est levée ! Tu vas maintenant pouvoir m'aider à trouver Mouldeur !",
+				"endBegin": "Merci pour ce que tu as fait pour nous ! Mouldeur et moi vivons désormais notre amour dans ce magnifique cadre avec vue sur la mer ! Quel bonheur de le savoir à mes côtés chaque jour !",
+				"dinoz": "Oh mais si ! Tu as fait beaucoup ! Reviens me voir quand tu auras plus de Dinoz, et je te donnerai un cadeau qui t'aidera dans ta quête !",
+				"pda": "Oh mais si ! Tu as fait beaucoup ! Tiens voilà pour toi... je t'offre ce magnifique Planificateur qui t'aidera dans ta quête à gérer tes différents Dinoz. Il sera rajouté à tes objets de collection, alors prends-en bien soin !",
+				"bye": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison."
+			},
+			"choice": {
+				"arg": "Ahhhh ! Un fanntôoommme !!!",
+				"bye": "S'enfuir en courant",
+				"shortcut": "(admin)",
+				"arg2": "Ici !!! Vous !!!",
+				"diff": "Et quelle différence ça fait ?",
+				"free": "Presque libre ? C'est-à-dire ?",
+				"haunt": "Vous hantez cet endroit alors !",
+				"do": "Ah ? Et quoi donc par exemple !",
+				"uhm": "Uhm....",
+				"bonne": "Une... bonnédiction ?!?",
+				"reset": "Je ne vous crois pas...",
+				"next": "C'est peu pratique...",
+				"nohelp": "Qui est Mouldeur ?",
+				"help": "Je pourrais vous aider...",
+				"forgot": "...",
+				"question": "Je ne vais rien oublier !",
+				"accept": "Oui ! Sans aucun doute !",
+				"maybe": "Il faut que j'y réfléchisse...",
+				"missions": "Que dois-je faire maintenant ?",
+				"nothing": "Ce n'était vraiment rien"
+			}
+		},
+		"mouldeur": {
+			"name": "Mouldeur",
+			"dialog": {
+				"begin": "Uhmm.... Quelle délicieuse odeur ces Crevettes au Napalm ! Elles me rappellent la cuisine de ma pauvre femme !",
+				"you": "C'est exact, enchanté ! Saviez-vous que dans ces ruines on peut trouver d'étranges cercles brûlés ? J'étudie ces phénomènes depuis longtemps, et je suis arrivé à la conclusion qu'il existe deux explications quant à ces étranges marques...",
+				"explain": "Tout laisse à penser qu'il pourrait s'agir de créatures étranges venues de l'espace et qui, en venant étudier les humains, se posent dans des endroits discrets... Comme elles crachent le feu, elles laisseraient ces étranges cercles de brûlé en repartant vers leur planète natale ! Et bien entendu, le Roi cache ces informations car il conspire avec elles ! Extraordinaire non ?",
+				"other": "Ah ? ... uhm... L'autre explication me semble beaucoup moins plausible, mais d'après le vendeur de merguez, il s'agirait des traces de feu de camp laissées par les touristes visitant les ruines...",
+				"ok": "Uhm ! Succulentes ces Crevettes au Napalm ! Et dire que je ne reverrai jamais ma charmante femme ! Oh combien nous nous aimions... les petits cris qu'elle poussait quand je revenais d'un apéro bien arrosé avec mes collègues me manquent... Et dire qu'elle est certainement morte...",
+				"ok2": "Quoi ? Nous mais vous rigolez j'espère. Je suis encore dans ma prime jeunesse ! Regardez comme mes os sont lisses : pas une ride ! Ah ah ah ah ah !",
+				"skully": "Quoi ? Vous connaissez Skully ?!?",
+				"exp": "............. Merci ! Cela veut dire que mon intuition ne me trompait pas et que j'ai bien fait de ne jamais chercher une autre femme pour la remplacer ! Oooohh ! Merci ! Mille fois merci de nous avoir aidés !",
+				"end": "Si ! C'est un véritable exploit !!! Accompagnez-moi jusqu'à ma femme je vous en prie, il me tarde tellement de pouvoir la contempler yeux-dans-les-yeux !!"
+			},
+			"choice": {
+				"you": "Vous êtes Mouldeur ?",
+				"explain": "Ah... Et ?",
+				"other": "Et l'autre explication ?",
+				"ok": "...",
+				"ok2": "Mais... vous aussi !",
+				"skully": "Skully vous cherche aussi...",
+				"exp": "(Expliquer toute l'histoire)",
+				"end": "Ce n'est vraiment rien..."
+			}
+		},
+		"baoBabe": {
+			"name": "Bao Babe"
+		},
+		"merguez": {
+			"name": "Vendeur de Merguez",
+			"dialog": {
+				"begin": "Ola ola ola ! Elles sont bien graisseuses, mes merguez ! ....... Comment ? Quelle idée de venir vendre des merguez dans un endroit aussi lugubre ? Mais ces Ruines sont magnifiques !! Je suis certain qu'un jour ce sont des millions de touristes qui viendront les visiter !",
+				"ah": "Oui, tout à fait ! C'est un peu comme l'acre-aux-pôles : mon cousin y a fait une fortune en vendant des porte-clés en forme de temple. Alors ici, c'est décidé, je serai le premier ! Même si je dois attendre plusieurs années que le commerce se lance, pas question de laisser passer cette opportunité en or !",
+				"ok": "Tiens, ton Dinoz m'a l'air bien maigre... Prends ces merguez ! C'est gratuit à condition que tu ailles parler des Superbes Ruines Ashpouk à tes amis. Ok, tu n'oublieras pas alors ?",
+				"thanks": "De rien, de rien, c'est bon pour le business !"
+			},
+			"choice": {
+				"ah": "Ah....",
+				"ok": "Effectivement...",
+				"thanks": "Merci"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
@@ -3410,6 +3789,849 @@
 				"begin": "Uhm... J'ai encore un Golf de prévu avec le Roi le mois prochain, et figure toi qu'il veut encore entendre parler de tes exploits... Que dirais-tu d'aller tuer quelques Coqdur rapidement ? Tu seras bien récompensé !",
 				"end": "Ah ! Super ! Je vais maintenant réfléchir à rajouter un peu d'épique pour relever tout cela ! Le Roi devrait être ravi !",
 				"kill": "Coqs"
+			}
+		},
+		"shaman": {
+			"init1": {
+				"name": "La mise à l'épreuve",
+				"begin": "Yo... Alors, pour le Guide de stratégie, y faut aller l'traduire... aux ruines Ashpouk. Tu devrais en être capable.",
+				"inspect": {
+					"name": "Examiner les inscriptions",
+					"text": "Heu... t'y comprends quelque chose toi ? Moi j'pige que dalle... Si on avait un dictionnaire, on y arrivera sûrement..."
+				},
+				"dictionary": {
+					"title": "Trouver le dictionnaire",
+					"name": "Dictionnaire Ashpoukien",
+					"text": "Vous trouvez un vieux dictionnaire verdi de moisissure dans les rayons de la bibliothèque. Il porte le titre \"Ashpouk-Dinozien, des Editions Petit Lamousse\"."
+				},
+				"decipher": {
+					"name": "Déchiffrer les inscriptions",
+					"text": "Vous entreprenez de déchiffrer les mystérieuses inscriptions Ashpouk. Au terme de plusieurs heures de travail acharné, vous parvenez à en comprendre la quasi totalité : ça ressemble à s'y méprendre à une recette de cuisine..."
+				},
+				"end": "Mmmm... On dirait une recette... celle des légendaires Merguez d'Archelion. Cool... J'vais m'en préparer tout de suite, ça me donnera p't'être la pêche... En tout cas, t'as réussi à traduire ce truc... T'es vachement doué."
+			},
+			"init2": {
+				"name": "L'épouvantarchelion",
+				"begin": "Ha, ces merguez d'Archelion m'ont donné la pêche ! Bon, je vois que tu es quelqu'un de capable ! Rends-moi un dernier petit service et je te laisserai mon Guide de Stratégie. La région du Grand Tout-Chaud est un habitat idéal pour les Archelions de toutes tailles... Sauvage, pas humide pour un sou et en perpetuelle éruption ! Mais il faut les tenir éloignés de nous si on ne veut pas leur servir de déjeuner... Je veux que tu me fabriques une sorte d'épouvantail à Archelions ! Il me faut donc des Griffes Taillées.",
+				"kill": {
+					"barche": "Bébé Archélion",
+					"wave": "monstres"
+				},
+				"claws": {
+					"name": "Ramasser les griffes",
+					"text": "Vous récupérez deux grosses griffes de bébé Archelion. Il faut maintenant les tailler correctement."
+				},
+				"blacksmith": {
+					"name": "Forgeron",
+					"text": "Tailler des griffes d'Archelion ? Vous savez que c'est dangereux de se promener avec ce genre de choses ?! Même si ça les effraie un peu, ça attire TOUS les autres monstres !! Ah vraiment bravo ! En voilà déjà qui arrivent..."
+				},
+				"forgeGuard": {
+					"name": "Garde des forges",
+					"text": "C'est vous le responsable de tout ce bazar ?! On ne vous félicite pas hein ! Comment ça, c'est ce filou de Shaman qui vous envoie ? Il veut un Epouvantarchelion ? C'est facile, il suffit de... OH ! Attention en voilà d'autres !!",
+					"text2": "Bon donnez-moi ces Griffes que je nous en débarrasse ! Pour ce qui est des Archélions, pour les éloigner, voici une pommade odorante à appliquer chaque matin. Je vous préviens, ça sent fort..."
+				},
+				"end": "Ah ? Je ne savais pas pour les griffes ! Ben... Au temps pour moi... J'espère que le Garde des Forges ne vous a pas trop fait d'histoires. Merci pour la pommade, j'imagine que ça fera bien l'affaire ! Tenez voilà le Guide de Stratégie que j'ai en ma possession pour vous remercier."
+			},
+			"burn": {
+				"name": "Au feu !",
+				"begin": "Comme tu as dû le remarquer, la région est peuplée d'un nombre invraisemblable de Flammèches... Même si leur présence est nécessaire au grand équilibre cosmique, leur nombre progresse bien trop vite et doit être contrôlé ! Il faut réagir vite, rends-toi au Tunnel sous la Branche en longeant le cratère, leur présence là-bas est devenue critique !",
+				"kill": {
+					"flam": "Flammèche"
+				},
+				"inspectAshes": {
+					"name": "Examiner le tas de cendres",
+					"text": "Les cendres laissées par ces flammèches ont une odeur étrange... Ca ressemble fort à une odeur de friture ! Il faudrait enquêter à ce sujet..."
+				},
+				"artisan": {
+					"name": "Artisan des Forges",
+					"text": "Des flammèches qui sentent la friture vous dites ? Aucune idée. Mais il m'semble qu'il y a un genre d'odeur comme vous dites vers l'ouest..."
+				},
+				"sniff": {
+					"name": "Renifler",
+					"text": "Snif, snif... Pas de doute ! L'odeur de friture ici est la même que celle des cendres de Flammèches que vous avez combattues ! Pas de temps à perdre, il va falloir se battre pour faire le ménage..."
+				},
+				"search": {
+					"name": "Fouiller les environs",
+					"text": "De toutes évidences, ces flammèches sortent du Barbecue même du vendeur de Merguez... Il faut signaler ce problème au Shaman Mou !"
+				},
+				"end": "Tes actions ont partiellement rétabli l'équilibre dans la région, c'est un bon début ! Mais il va falloir faire quelque chose pour cette histoire de Barbecue... En attendant, voilà de quoi te récompenser."
+			},
+			"barbec": {
+				"name": "Le barbecue déjanté",
+				"begin": "Ce vendeur de Merguez aux ruines Ashpouk utilise un combustible spécial qui provoque l'apparition de nombreuses flammèches dans la région... Il faut faire quelque chose ! Toutefois, pas question d'empêcher ce pauvre vendeur de faire son travail, on va trouver une solution plus subtile. Commence par me récupérer quelques ingrédients: une branche séchée, une écaille de Dorogon et un morceau de basalte jaune. Broie et mélange bien le tout, et jette ça dans le barbecue !",
+				"branch": {
+					"name": "Ramasser une branche",
+					"text": "Vous trouvez le premier ingrédient par terre: une branche d'arbre séchée (voire calcinée)."
+				},
+				"stealScale": {
+					"name": "Voler une écaille au Vénérable",
+					"text": "Vous vous approchez du grand dorogon, mais celui-ci vous jette un regard noir et glacé qui ne laisse aucun doute: mieux vaut trouver un autre moyen !"
+				},
+				"searchBrokenScales": {
+					"name": "Chercher par terre",
+					"text": "Vous fouillez le repaire, mais vous ne trouvez que des écailles brisées ou séchées..."
+				},
+				"inspectEntrance": {
+					"name": "Examiner l'entrée du repaire",
+					"text": "En sortant de la caverne du Vénérable vous apercevez une belle écaille brillante sous un tas de cailloux ! Voilà qui évitera bien des complications..."
+				},
+				"basalt": {
+					"name": "Chercher du basalte",
+					"text": "Vous cherchez pendant plusieurs minutes un morceau de basalte jaune. Vous finissez par en trouver un en contrebas des pentes."
+				},
+				"grind": {
+					"name": "Broyer les ingrédients",
+					"text": "Vous broyez les différents ingrédients à grands coups de marteau: ça devrait faire l'affaire..."
+				},
+				"mix": {
+					"name": "Utiliser le mélange",
+					"text": "Sitôt le mélange jeté dans les flammes, de grands éclairs multicolores jaillissent de partout et crépitent tout autour du barbecue. Aussi rapidement qu'ils sont venus, les éclairs cessent et tout redevient normal..."
+				},
+				"end": "Bien joué ! Le mélange devrait réduire l'effet du combustible magique utilisé dans ce barbecue sans pour autant trop altérer le goût des délicieuses Merguez ! Tiens voilà une petite Flammèche apprivoisée pour te remercier."
+			},
+			"joke": {
+				"name": "Querelles",
+				"begin": "Le professeur Eugène de l'Université et moi-même entretenons depuis des années une vieille querelle... Nous n'arrivons jamais à tomber d'accord sur quelque sujet que ce soit ! Aide-moi à lui jouer un petit tour, à ce vieux grincheux. Il faut tout d'abord trouver des choses qui sentent suffisamment fort ! Le Port de Prêche est idéal pour ça...",
+				"fish": {
+					"name": "Prendre des restes de poisson",
+					"text": "Vous récupérez les pires morceaux de poisson parmi les invendus, notamment un terrifiant Poisson-Fétide !"
+				},
+				"trap": {
+					"name": "Piéger le bureau du professeur",
+					"text": "Vous disposez les restes malodorants du Poisson-Fétide dans les tiroirs du bureau du professeur Eugène... Hi hi hi !"
+				},
+				"end": "Ah ah ! C'est parfait ! Jamais je n'aurais imaginé que tu irais jusqu'à lui cacher un poisson Fétide dans son bureau... C'est machiavélique !"
+			},
+			"defend": {
+				"name": "La défense des Forges !",
+				"begin": "J'ai aperçu ce matin des cohortes de créatures avancer dans les montagnes en contrebas... Je parierais mon grigri qu'ils se dirigeaient tout droit vers les Forges du Grand Tout Chaud ! Porte-leur assistance sans plus tarder !",
+				"forgeGuard": {
+					"name": "Garde des Forges",
+					"text": "Au rapport soldat ! Va falloir tenir le choc ! Tenez vos positions !! Là-bas, voilà des monstres !",
+					"text2": "Merci pour l'aide, soldat ! J'ai vu plusieurs de ces monstres se réfugier dans les Pentes, il faut les poursuivre et les éliminer une bonne fois pour toutes !",
+					"text3": "Beau travail, soldat ! La victoire est à nous, et c'est grâce à votre intervention héroïque. Transmettez cette lettre de recommandation au Shaman Mou, il saura vous récompenser. ROMPEZ !!"
+				},
+				"kill": "monstres",
+				"scout": {
+					"name": "Eclaireur des Forges",
+					"text": "Ils se cachent dans les cavernes qui bordent les Pentes de Basalte m'sieur. Vous allez devoir les débusquer un à un !"
+				},
+				"banner": {
+					"name": "Ramasser leur bannière",
+					"text": "Vous trouvez la bannière de guerre portée par le chef de ces monstres ! Cela devrait faire plaisir au Garde des Forges..."
+				},
+				"end": "La lettre est élogieuse à ton sujet. Tu as bien mérité ta récompense pour cet acte de bravoure ! Et puisque tu as trouvé la Bannière de Guerre des monstres, je t'ajoute un petit quelque chose en bonus."
+			},
+			"shipmt": {
+				"name": "Le colis disparu",
+				"begin": "Il y a quelques temps, j'ai commandé à Papy Joe une nouvelle réserve de poudres pour mes rituels, mais mon colis n'est toujours pas arrivé ! Peut être qu'avec l'attaque récente des Forges, il a été perdu quelque part ? Peux-tu me le retrouver ? C'est très urgent !",
+				"courier": {
+					"name": "Convoyeur de Dinoville",
+					"text": "Au secours !! Je devais livrer un important colis en haut de ce volcan, mais un groupe de Gobelins hargneux m'est tombé dessus ! Ils m'ont volé mon paquet et depuis je ne sais plus quoi faire... Bouhouhou ! On va me renvoyer si je ne trouve pas une solution...",
+					"text2": "Merci mille fois, vous m'avez sauvé la vie ! Hé je crois que c'est mon colis là-bas !",
+					"text3": "J'ai vu plusieurs d'entre eux filer vers le nord... Retrouvez-les puis rejoignez-moi à Fosselave quand vous aurez trouvé la marchandise !",
+					"text4": "Ah vous avez retrouvé la précieuse marchandise ! Génial ! Je ne sais comment vous remercier... Je parlerai de vous en bien au Shaman !"
+				},
+				"kill": "Gobelins",
+				"package": {
+					"name": "Ramasser le colis",
+					"text": "Vous trouvez le colis près d'un gobelin... Malheureusement celui-ci est vide ! Il faut trouver où ils ont emmené son contenu..."
+				},
+				"noises": {
+					"name": "Des bruits suspects...",
+					"text": "Vous entendez des ricanements venant des ombres de la caverne. Certainement la bande de gobelins que vous recherchez !"
+				},
+				"goods": {
+					"name": "Récupérer la marchandise",
+					"text": "Vous ramassez des gourdes remplies de poudres multicolores, ce sont très certainement les produits commandés par le Shaman Mou."
+				},
+				"end": "Mon livreur vient juste de m'apporter ma commande. Il m'a expliqué toute l'aide précieuse que tu avais pu lui apporter et je t'en remercie ! Tiens voilà une potion et un petit pourboire en gage de ma gratitude !"
+			},
+			"sales": {
+				"name": "Commerce (peu) équitable",
+				"begin": "Pour me permettre de manger à ma faim, je vends de temps à autre des petites babioles sur le Marché de Dinoville. Comme je suis très pris en ce moment, pourrais-tu y aller à ma place ? Je te donnerai un généreux pourcentage des ventes ! Tu verras, ça se vend bien.",
+				"collect": {
+					"name": "Ramasser des babioles",
+					"text": "Vous récupérez quelques objets \"typiques\" (des pièges à touristes) traînant dans les ruines pour les revendre au Marché de Dinoville."
+				},
+				"sell": {
+					"name": "Marché de Dinoville",
+					"text": "Vous passez l'heure qui suit à revendre au plus offrant les babioles sans valeur ramassées dans les ruines... Tout le monde se les arrache au prix fort ! Le shaman avait raison, vous écoulez votre stock sans difficulté."
+				},
+				"end": "Merci bien, voilà ta part des ventes !"
+			},
+			"ritual": {
+				"name": "Rituel ridicule",
+				"begin": "La congrégation shamanique au sein de laquelle j'ai fait mes études me réclame chaque année un rituel en gage de cette formation. Evidemment, j'ai autre chose à faire que m'occuper de ces âneries ! Pourrais-tu t'en charger à ma place ? Les instructions sont arrivées dans ma boîte aux lettres, fais comme chez toi.",
+				"instructions": {
+					"name": "Prendre les instructions",
+					"text": "Vous récupérez la lettre de la Congrégation. Les instructions indiquent qu'il faut commencer par vaincre un Gobelin en combat singulier..."
+				},
+				"kill": "Gobelins",
+				"read": {
+					"name": "Lire la suite des instructions",
+					"text": "La lettre indique qu'il faut crier (fort): \"SHAMANA MANA !\""
+				},
+				"shamana": {
+					"name": "Crier shamana mana...",
+					"text": "SHAMANA MANA ! ... Oui bon passons à la suite..."
+				},
+				"donga": {
+					"name": "Crier donga donga...",
+					"text": "DONGA ! DONGAAA ! ... Voilà, il ne reste qu'à finaliser le rituel sur le versant ouest du volcan."
+				},
+				"waaah": {
+					"name": "Crier waaah...",
+					"text": "WAAAAAAAAH ! ..."
+				},
+				"crater": {
+					"name": "Jeter un caillou dans le cratère",
+					"text": "Vous jetez un caillou dans le grand cratère pour compléter le Rituel Ridicule."
+				},
+				"end": "A en juger par ta mine dépitée, tu dois maintenant comprendre pourquoi je n'avais aucune envie de m'occuper de ce rituel idiot... Enfin, merci pour le service, voilà de quoi couvrir le dérangement."
+			},
+			"hiero": {
+				"name": "Hiéroglyphes",
+				"begin": "J'ai entendu dire qu'il y avait dans les cavernes à l'ouest, celles qui mènent dans la Jungle de Grumhel, des hiéroglyphes de la plus haute importance pour mes recherches mystiques ! Vas-y et recopie-les pour moi. Attention, pour pénétrer dans ces cavernes, il te faudra un moyen de retrouver ton chemin dans l'obscurité !",
+				"copy": {
+					"name": "Copier les hiéroglyphes",
+					"text": "Vous recopiez tant bien que mal les hiéroglyphes sur le parchemin donné par le Shaman."
+				},
+				"end": "Hmmm... Très très intéressant... Hmmm... Voilà qui pourrait bien clouer le bec à ce vieux guignol de l'Université ! Merci en tous cas pour le petit service !"
+			},
+			"pigeon": {
+				"name": "Pigeon voyageur",
+				"begin": "Les découvertes récentes dans les cavernes sont une occasion inespérée de prouver mes théories à ce vieux farfelu de l'Université, le professeur Eugène ! Imaginez ça, des écritures anciennes qui parlent de notre époque ACTUELLE !! Il ne faut pas perdre un instant ! Apporte lui cette lettre !",
+				"eugene": {
+					"name": "Eugène (donner la lettre)",
+					"text": "Je vois que ce magicien de pacotille a encore trouvé quelque chose à me coller sous la moustache. Hmm... Hmm... OH ! Ca par exemple ! Il faut que j'en ai le coeur net... Montrez cette lettre à ma bonne amie le docteur Yolande de l'île de Waïkiki !"
+				},
+				"yolande": {
+					"name": "Docteur Yolande",
+					"text": "Oh ben ça ! Et ça vient des cavernes des Gorges Profondes, vous dites ? Ca alors, c'est vraiment incroyable ! Et vous l'avez montré à monsieur Pelletée, l'archéologue à Forcebrut ?"
+				},
+				"findPelletee": {
+					"name": "Trouver l'archéologue",
+					"text": "L'archéologue Pelletée ne semble pas être ici. Vous apprenez rapidement qu'il travaille en ce moment sur un chantier dans les Gorges Profondes..."
+				},
+				"pelletee": {
+					"name": "Archéologue Pelletée",
+					"text": "Oh... C'est amusant, on dirait à s'y méprendre les notes que j'ai laissé sur les parois des cavernes. Comment ? Et ce Shaman a pris ça pour des textes anciens ? Oh, mais non ! Ce sont justes des notes personnelles ! Je les ai écrites moi-même..."
+				},
+				"end": "J'aurais parié un de mes grigris qu'on tenait là une découverte fondamentale ! Dommage... En tous cas, merci pour la course et désolé pour le dérangement !"
+			}
+		},
+		"rodeur": {
+			"rodriz": {
+				"name": "Le Riz Amnésique",
+				"begin": "J'ai besoin de Riz pour recharger ma cape magique. On en trouve paraît-il dans le Marais Collant des Iles Atlantéinées. Peux-tu m'en rapporter suffisamment pour que je puisse à nouveau devenir invisible ? Vite, c'est urgent !",
+				"search": {
+					"name": "Chercher du Riz",
+					"text": "Aprés quelques recherches, vous trouvez un coin du Marais où pousse du Riz Amnésique, une variété trés rare de Riz aux propriétés étonnantes. Le seul problème c'est que des dizaines de Pirhanoz protègent l'accés. Il va falloir d'abord nettoyer le chemin !"
+				},
+				"kill": "Piranhoz",
+				"pick": {
+					"name": "Ramasser le Riz",
+					"text": "Félicitations ! Vous obtenez du Riz Amnésique !"
+				},
+				"end": "Ah ! Uhm euh... En fait, j'avais mal compris. Un petit peu d'énergie foudre était seulement nécessaire pour recharger ma cape... Tiens, voilà pour toi, et tu peux garder le riz, je n'en ai pas besoin."
+			},
+			"rodlif": {
+				"name": "Les Dinoz Sombres",
+				"begin": "Trois Dinoz Sombres de Caushemesh t'attendent aux Chutes Mutantes. Va les vaincre et reviens me voir pour obtenir ta récompense... Je te conseille de ne pas tenter de les battre tout seul, car tu pourrais y laisser la vie de ton Dinoz !",
+				"end": "Pas mal pour un Dinoz faible de Dinoville... Tiens, voilà pour toi !"
+			}
+		},
+		"baoBob": {
+			"kilpir": {
+				"name": "Le cadeau d'anniversaire",
+				"begin": "C'est bientôt l'anniversaire de la petite Sophie de l'Ile Waikiki. Son plat préféré est le Pirhanoz du Marais Collant. Peux-tu lui en apporter quelques-uns de ma part ?",
+				"kill": "Piranhos",
+				"sophie": {
+					"name": "La petite Sophie",
+					"text": "Oh ! Merci ! C'est très gentil de m'avoir apporté ces délicieux Piranhoz pour mon anniversaire ! Fait des gros bisoux à Monsieur Bao de ma part !"
+				},
+				"end": "J'aime bien faire des cadeaux... Tiens, voici ta récompense."
+			},
+			"troc": {
+				"name": "Le Troc des Iles Atlantéinées",
+				"begin": "Il y a un grand marché dans les Iles où on peut échanger ce que l'on veut. J'aimerais obtenir un porte-manteau contre cette banane, est-ce que tu peux t'en occuper ?",
+				"merchant": {
+					"name": "Un Marchand",
+					"text": "Cette banane a l'air délicieuse, je te l'échange contre ce cerf-volant !"
+				},
+				"lover": {
+					"name": "Un Amoureux",
+					"text": "Pfff... je pars a la Fontaine de Jouvence, et si tu veux je t'échange ce cerf-volant contre cette bague de fiancailles toute neuve... jamais servie..."
+				},
+				"jeweler": {
+					"name": "Un Bijoutier",
+					"text": "Quoi ?!!??? Mais que vois-je ?!!?? Cette Bague fait partie d'une ancienne collection Royale ! Je vous l'échange contre ce que j'ai de plus cher au monde : ma villa sur l'Ile du Totem ! Tenez, voilà les clés, vous ne pouvez pas refuser !"
+				},
+				"tourist": {
+					"name": "Un Touriste Enlisé",
+					"text": "J'en ai RAZ LE BOL de ce Marais de M...... !!!!! Ca fait trois fois que notre Camping-Car s'enlise, quelle idée à la c... de venir passer des VACANCES DANS UN MARAIS !!! Quoi ? Une villa sur l'Ile du Totem ? Ok, sans problème, je l'échange contre mon camping-car !"
+				},
+				"artist": {
+					"name": "Un Artiste Enthousiaste",
+					"text": "S.u.p.e.r. !! Je suis archi content ! Regarde ces visages ? C'est une composition art-ist-ique ! Quoi comment ça c'est nul ? Toi, tu ne comprends rien à l'Art avec un grand \"A\" ! D'ailleurs, mon oeuvre vaut bien un camping car, voilà, je confirme l'échange !"
+				},
+				"oldLady": {
+					"name": "Une Vieille Dame",
+					"text": "J'ai entendu que tu cherchais un porte-manteau ? Je te l'échange contre ce que tu veux... C'est quoi ça ? Des visages ? Ca ressemble a rien... mais bon, ça doit pas valoir grand chose, ce Monsieur Picassi est completement inconnu. Bon allez, prends ce porte-manteau en échange !"
+				},
+				"end": "Tu as trouvé mon porte-manteau ? J'espère que ce petit voyage t'auras appris que les plus grandes richesses sont éphémères !"
+			},
+			"kilksk": {
+				"name": "La chasse à la Kazkadine",
+				"begin": "J'ai reçu un appel urgent du Dome Soulaflotte. Les Atalantes s'inquiètent d'un grand nombre de Kazkadines des Profondeurs qui ont enhavi les lieux. Pourrais-tu emmener ton Dinoz faire un petit peu de nettoyage ? Attention à ne pas te faire électrocuter.",
+				"kill": "Kazkadine",
+				"end": "Bravo, c'était une mission branchée n'est-ce pas ?"
+			},
+			"kilang": {
+				"name": "Les anguilloz au vinaigre",
+				"begin": "Connais-tu le plat traditionnel des Anguilloz au Vinaigre ? C'est vraiment délicieux ! Peux-tu te procurer des Anguilloz fraîches et du vinaigre, puis apporter le tout à mon ami au Port de Prêche ? C'est pour un cadeau !",
+				"kill": "Anguilloz",
+				"wineMerchant": {
+					"name": "Marchand de Vins",
+					"text": "Uhm ? Tu viens de la part de M. Bao ? Tu cherches du vinaigre ?? Tiens, j'ai ce vieux Chateau Forcebrut qui devrait être parfait pour la cuisine."
+				},
+				"fisher": {
+					"name": "Pêcheur",
+					"text": "Tu cherches l'ami de M. Bao ? Il me semble qu'il était parti rendre visite à Madame Seyche a Dinoville."
+				},
+				"madameSeyche": {
+					"name": "Madame Seyche",
+					"text": "Ooooh le mignonn toupiti Dinoz !!! Quoi ? Vous cherchez l'ami de M. Bao ? Il est parti voir ce bon vieux Papy Joe, ils avaient des histoires d'hommes a discuter paraît-il !"
+				},
+				"adamNature": {
+					"name": "Adam Nature",
+					"text": "Uhmmm ! Des anguilloz au vinaigre !! J'adoooore ! Désolé de ne pas avoir attendu au Port de Prêche, je vais prévenir ce cher Bob pour qu'il te récompense correctement !"
+				},
+				"end": "Alors comme ça on se balade un peu partout pendant une Mission ? Adam m'as tout raconté, voilà pour toi."
+			},
+			"bigpch": {
+				"name": "La Grande Chasse",
+				"begin": "Je suis un petit peu embêté. J'ai promis à l'Archisage du Dome Soulaflotte que j'exterminerai 150 monstres des Iles Atlantéinées en à peine dix jours, mais je me suis cassé le bras et je ne peux pas trop me déplacer. Peux-tu t'occuper d'en tuer une trentaine pour moi ? Pour le reste, je me débrouillerai !",
+				"kill": "monstres",
+				"end": "Super ! Finalement, j'ai exterminé le reste moi-même, en me servant uniquement de mes pieds, mais je te remercie tout de même pour ton aide."
+			},
+			"rally1": {
+				"name": "Le Rallye des Sardines",
+				"begin": "Participe au Rallye des Sardines ! Rejoins le Port de Prêche le plus rapidement possible !",
+				"step": {
+					"name": "Etape du Rallye",
+					"description": "Vous avez franchi une étape du Rallye, vous devez maintenant rentrer voir M. Bao Bob !"
+				},
+				"end": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"rally2": {
+				"name": "Le Rallye des Poissons",
+				"begin": "Participe au Rallye des Poissons ! Rejoins le Port de Prêche le plus rapidement possible !",
+				"step": {
+					"name": "Etape du Rallye",
+					"description": "Vous avez franchi la première étape du Rallye, vous devez maintenant aller à l'Université !",
+					"description2": "Vous avez franchi la seconde étape du Rallye, vous devez maintenant retourner voir M. Bao Bob !"
+				},
+				"end": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"rally3": {
+				"name": "Le Rallye des Requins",
+				"begin": "Participe au Rallye des Requins ! Rejoins les Mines de Corail le plus rapidement possible !",
+				"step": {
+					"name": "Etape du Rallye",
+					"description": "Vous avez franchi la première étape du Rallye, vous devez maintenant aller à Forcebrut !",
+					"description2": "Vous avez franchi la seconde étape du Rallye, vous devez maintenant aller sur les Pentes de Basalte !",
+					"description3": "Vous avez franchi la dernière étape du Rallye, vous devez maintenant retourner voir M. Bao Bob !"
+				},
+				"end": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"rally4": {
+				"name": "Le Rallye des Baleines",
+				"begin": "Participe au Rallye des Baleines ! Rejoins Fosselave puis reviens ici le plus rapidement possible !",
+				"step": {
+					"name": "Etape du Rallye",
+					"description": "Vous avez franchi l'étape du Rallye, vous devez maintenant retourner chez M. Bao Bob au plus vite !"
+				},
+				"end": "Félicitations pour ce Rallye, voilà ton prix."
+			},
+			"tour": {
+				"name": "Le Tour de Dinoland",
+				"begin": "Le Tour de Dinoland est la plus célebre des courses ! Faites le tour de Dinoland en moins de dix jours ! La première étape se situe sur l'Ile Waïkiki.",
+				"step": {
+					"name": "Etape du Tour",
+					"description": "Félicitations pour avoir franchi la première étape du Tour de Dinoland. La prochaine étape se trouve à Forcebrut. Bon courage !",
+					"description2": "Félicitations pour avoir franchi la seconde étape du Tour de Dinoland. La prochaine étape se trouve aux Collines Escarpées. Bon courage dans les côtes !",
+					"description3": "Félicitations pour avoir franchi la troisième étape du Tour de Dinoland. La prochaine étape se trouve à Fosselave. Bonne chance pour l'escalade du Grand Tout-Chaud !",
+					"description4": "Félicitations pour avoir franchi la quatrième étape du Tour de Dinoland. La prochaine étape se trouve au Camp Korgon de la Forêt de Grumhel. Evitez de vous faire ralentir par ces sales bestioles !",
+					"description5": "Félicitations pour avoir franchi la cinquième étape du Tour de Dinoland. La prochaine étape se trouve à l'Orée de la Forêt ! Attention à ne pas vous perdre sur le Chemin Sombre...",
+					"description6": "Félicitations pour avoir franchi la sixième étape du Tour de Dinoland ! La dernière étape consiste à rejoindre M. Bao Bob pour remporter ce Tour !"
+				},
+				"end": "Bravo ! C'était un magnifique Tour de Dinoland, voici une récompense digne de votre exploit !"
+			}
+		},
+		"dian": {
+			"kswim": {
+				"name": "Comme un Korgon dans l'eau",
+				"begin": "La Jungle de Grumhel est un endroit fascinant ! Tenez, prenez les Korgons par exemple. Ils se sont adaptés à merveille à leur environnement ! Saviez-vous qu'ils fabriquaient leurs propres palmes afin de pouvoir traverser sans encombre le Fleuve Jumin ? Non ? Tenez, je veux bien vous en offrir une paire si vous me ramenez quelques fournitures de première nécessité...",
+				"end": "Voilà tout ce qu'il me fallait ! C'est parfait. Voici les Palmes des Korgons, comme convenu !",
+				"supplies": {
+					"name": "Examiner la liste de fournitures",
+					"description": "La liste de Dian Korgsey indique qu'elle a tout d'abord besoin de certains outils que l'on trouve aux Forges du Grand Tout-Chaud."
+				},
+				"tools": {
+					"name": "Prendre des Outils",
+					"description": "Vous récupérez une Trousse à Outils. La suite de la liste indique : « Branches de la forêt du volcan »..."
+				},
+				"wood": {
+					"name": "Couper du bois",
+					"description": "Vous récupérez quelques branches calcinées. La liste de fournitures se termine sur : « un grigri »..."
+				},
+				"grigri": {
+					"name": "Demander un grigri",
+					"description": "Le Shaman vous adresse un large sourire et vous tend un de ses grigris porte-bonheur. Merci !"
+				}
+			},
+			"rivals": {
+				"name": "Korgons du nord, Korgons du sud",
+				"begin": "Si les Korgons de cette partie de la Jungle de Grumhel sont quasiment sociables, il en existe au Sud, sur les bords du Chemin Glauque, qui sont autrement moins gentils. Je pense que si tu m'apportais une preuve de victoire sur ceux du Sud, les Korgons d'ici nous apprécieraient beaucoup plus !",
+				"end": "Ah, bonne idée les griffes ! Les Korgons ici ont l'air d'apprécier... Tiens, voilà pour ta peine.",
+				"kill": "Korgons du sud",
+				"trophy": {
+					"name": "Trouver un trophée",
+					"description": "Vous récupérez quelques Griffes de Korgons pour servir de trophée aux Korgons du nord..."
+				}
+			},
+			"kfood": {
+				"name": "Steak de bois",
+				"begin": "Il existe quelque part dans Grumhel une espèce rare d'arbre que les Korgons adorent : le Fikoïa Cendré ! J'ignore où on peut en trouver, mais je te paierai bien si tu m'en apportes !",
+				"end": "Ils vont se régaler avec ça, merci bien !",
+				"tree": {
+					"name": "Arbre étrange",
+					"description": "Vous remarquez un drôle d'arbre aux feuilles grises et qui sent le tabac froid... Sûrement un Fikoïa Cendré ! Mais tandis que vous vous apprêtez à en prendre quelques branches, des bruits se font entendre dans les fourrés..."
+				},
+				"kill": "Monstres attirés par le Fikoïa",
+				"branches": {
+					"name": "Prendre quelques branches",
+					"description": "Mieux vaut ne pas trop tarder par ici : vous préparez un gros fagot de bois et vous vous éloignez des fourrés..."
+				}
+			},
+			"poison": {
+				"name": "Rivalités korgons",
+				"begin": "Le Fikoïa Cendré que vous avez découvert va rapidement devenir un point stratégique pour les Korgons du sud... Il faut réagir vite ! Nous allons « piéger » quelques branches de cet arbre pour les dissuader de le manger... Évidemment, nous, nous saurons quelles branches ne pas toucher... Hi hi hi.",
+				"end": "C'est bien triste pour ce spécimen de Fikoïa, ils sont si rares ! Merci pour toute votre aide, on ne vous oubliera pas...",
+				"sap": {
+					"name": "Récupérer de la sève",
+					"description": "Vous récupérez de la Suintante Mordicus, une sève d'arbre au goût innommable. Le piège idéal pour ce travail."
+				},
+				"trap": {
+					"name": "Piéger le Fikoïa",
+					"description": "Ça alors ! Le Fikoïa a disparu ! Les Korgons du sud sont probablement passés avant vous..."
+				},
+				"ambush": {
+					"name": "Embuscade",
+					"description": "Tandis que vous avancez dans la Jungle Sauvage, un groupe de Korgons surgit tout autour de vous ! Il va falloir s'en débarrasser pour continuer..."
+				},
+				"ambushKill": "Korgons embusqués",
+				"track": {
+					"name": "Traces au sol",
+					"description": "De larges traces dans le sol indiquent clairement qu'on a traîné quelque chose de très lourd depuis le Fleuve Jumin... Les traces continuent vers le sud.",
+					"description2": "La piste s'arrête ici... Mais à en juger par les grognements dans les buissons, on vous attendait de pied ferme !"
+				},
+				"korgonsOrAlliesKill": "Korgons ou alliés",
+				"fikoia": {
+					"name": "Fikoïa Cendré",
+					"description": "Le Fikoïa est dissimulé sous une pile de feuilles de bananiers. Il va falloir le traîner jusqu'au camp..."
+				},
+				"dian": {
+					"name": "Dian Korgsey",
+					"text": "Ah vous voilà ! Quel dommage qu'ils aient coupé ce Fikoïa Cendré... C'est bien un travail de Korgon sudiste ça... Bon, impossible de remonter la rivière avec. Cachez-le ici, ça fera l'affaire. On se retrouve au Camp."
+				},
+				"hideFikoia": {
+					"name": "Cacher le Fikoïa",
+					"description": "Vous dissimulez à votre tour l'arbre sous quelques feuilles de bananiers."
+				}
+			}
+		},
+		"hulot": {
+			"seqact": {
+				"name": "La route du grand péril",
+				"begin": "Pour pénétrer dans la jungle, il faut d'abord franchir un endroit qu'on appelle le Chemin Glauque... C'est une route dangereuse qui part au nord ! Pourriez-vous y faire un peu de ménage pour moi ?",
+				"end": "On n'entend plus rien grogner par là-bas... C'est bon signe non ?",
+				"kill": "Monstres du Chemin Glauque"
+			},
+			"toxic": {
+				"name": "Allergies",
+				"begin": "Je suis victime d'allergies à certaines plantes de la Jungle... Mais j'ignore pour le moment lesquelles ! Pourriez-vous me trouver quelques plantes à l'air suspect, afin que je fasse quelques tests ?",
+				"end": "Ça m'a l'air d'aller... Je vais essayer de trouver laquelle de ces plantes provoque une allergie chez moi... Voilà pour le service.",
+				"figonicia": {
+					"name": "Figonicia Furonclée",
+					"text": "Vous cueillez une fleur boursouflée et toute poisseuse..."
+				},
+				"purulente": {
+					"name": "Purulente Noire",
+					"text": "La Purulente dégage un petit nuage de pollen malodorant vraiment suspect."
+				},
+				"visqueuse": {
+					"name": "Visqueuse des Boues",
+					"text": "Vous trouvez une sorte de gros nénuphar verdâtre étalé dans une large flaque d'eau croupie."
+				}
+			},
+			"map": {
+				"name": "Cartographie",
+				"begin": "Une bonne carte, ça aide toujours, il paraît. Seulement voilà, il n'en existe aucune pour la Jungle de Grumhel ! Pourriez-vous partir vers le nord et prendre quelques notes pour moi ? Il y a des collines à l'Est, ça pourrait être un bon endroit pour avoir une vue d'ensemble !",
+				"end": "Ça m'a l'air pas mal du tout ! Je vais étudier un peu tout cela pour bien préparer mon expédition de l'extrême.",
+				"kill": "Fauve-Souris espiègle",
+				"highPoint": {
+					"title": "Trouver un point élevé"
+				},
+				"findBat": {
+					"title": "Retrouver la Fauve-Souris"
+				},
+				"back": {
+					"title": "Retourner aux Collines Hantées"
+				},
+				"draw": {
+					"name": "Tracer une carte",
+					"text": "Vous vous installez en haut d'une vieille souche pour tracer la carte des environs... Soudain, une Fauve-Souris hideuse jaillit de nulle part et s'empare de votre bloc-notes d'un coup de dents ! D'un battement d'aile, elle s'éloigne et se pose sur une branche haute..."
+				},
+				"catch": {
+					"name": "Attraper la Fauve-Souris",
+					"text": "Vous êtes presque certain de l'entendre ricaner du haut de son perchoir... Vous attrapez une branche que vous secouez pour tenter de la faire tomber, mais celle-ci s'envole et s'éloigne dans la jungle !"
+				},
+				"bat": {
+					"name": "Fauve-Souris",
+					"text": "La vilaine bestiole s'est perchée au sommet d'un énorme arbre ! Elle vous fixe impassiblement."
+				},
+				"stone": {
+					"name": "Lancer une pierre",
+					"text": "Vous faites mouche ! La Fauve-Souris pousse un cri et laisse tomber votre bloc-notes au pied de son arbre. Agacée, elle se pose alors juste à côté et vous adresse un regard de défi..."
+				},
+				"notebook": {
+					"name": "Ramasser le carnet",
+					"text": "Vous récupérez finalement votre bloc-notes !"
+				},
+				"finish": {
+					"name": "Tracer la carte",
+					"text": "Vous finissez de tracer votre carte, en restant sur vos gardes cette fois-ci..."
+				}
+			},
+			"hucure": {
+				"name": "Remède",
+				"begin": "F'est bien aimable de votre part... Ve pense que les Boines de l'île des Futes mutantes pourraient m'aider... Prenez les blantes que vous m'avez amenées et allez les voir de ma bart... Snirf...",
+				"end": "Glou glou ! Merfi bien... Efpérons que fa fasse effet... Fa devenait limite là... Tenez prenez fette pofion en gave de gratitude.",
+				"plants": {
+					"name": "Prendre les plantes",
+					"text": "Vous récupérez les plantes toxiques de Nicolas Mulot. On dirait bien qu'il a essayé de s'en faire une infusion..."
+				},
+				"monk": {
+					"name": "Moine médecin",
+					"text": "Vous lui avez donné des Figonicia Furonclées ? De la Purulente Noire ?! Une Visqueuse des Boues !! Ouh la la... Il vaut mieux ne pas tarder ! Apportez-moi un peu de poudre de corail pour commencer.",
+					"text2": "Ramenez-moi quelques crocs de Korgons du Chemin Glauque et quelques paires d'ailes de Fauve-Souris du nord.",
+					"text3": "Parfait ! Je vais pouvoir me préparer un délicieux pot-au-feu avec tout ça... Pardon ? Ah vous veniez pour le remède ? Oui c'est vrai. J'en avais déjà une pleine caisse à vrai dire, servez-vous. Je vous garde un peu de pot-au-feu ?"
+				},
+				"coral": {
+					"name": "Morceau de corail",
+					"text": "Vous ramassez un bout de corail brisé : ça devrait bien faire l'affaire !"
+				},
+				"backCoral": {
+					"title": "Ramener le corail au moine"
+				},
+				"backIngredients": {
+					"title": "Ramener les ingrédients aux Chutes"
+				},
+				"korgon": {
+					"kill": "Korgons du Chemin Glauque"
+				},
+				"bat": {
+					"kill": "Fauve-Souris du nord"
+				},
+				"fangs": {
+					"name": "Ramasser des crocs",
+					"text": "Vous récupérez quelques crocs de Korgons."
+				},
+				"wings": {
+					"name": "Récupérer des ailes",
+					"text": "Vous récupérez une belle collection d'ailes de Fauve-Souris..."
+				},
+				"antidote": {
+					"name": "Caisse de remèdes",
+					"text": "Vous emportez trois ou quatre flacons d'antidote pour Nicolas Mulot, sait-on jamais..."
+				}
+			},
+			"bckpck": {
+				"name": "Kit de l'aventurier",
+				"begin": "Avant d'envisager mon voyage incroyable en terre inconnue, il me manque une chose primordiale ! Un bon sac à dos. J'ai perdu le mien en contournant les Chutes Mutantes... Pourriez-vous me le retrouver ?",
+				"end": "Euh vous allez rire... Figurez-vous que j'ai reçu justement un Sac à dos de rechange ! Je l'avais commandé en prévision de mon expédition... Bon écoutez, voilà ce qu'on va faire : je récupère mon vieux sac et je vous donne le nouveau ! Ça marche ?",
+				"extremeFisher": {
+					"name": "Pêcheur de l'extrême",
+					"text": "Un sac d'os qu'vous dites ? Nan j'crois pas avoir pêché ça ! Faudrait p'têt voir s'il aurait pas été emporté plutôt vers le marais avec les courants ? C'est qu'ça coule dans un sens pas banal ici..."
+				},
+				"seaweedCollector": {
+					"name": "Ramasseur d'algues",
+					"text": "Ah si j'm'en rappelle !! Un bin beau sac à dos qu'c'était celui-là, tout collé dans le bourbier d'une fougasse des marais qu'il était ! J'l'ai refilé à mon cousin de la mine, pour porter ses caillasses qu'c'est bin pratique ! Diou !"
+				},
+				"miners": {
+					"name": "Interroger les mineurs",
+					"text": "Vous questionnez quelques mineurs, on vous indique l'un d'eux du doigt..."
+				},
+				"restingMiner": {
+					"name": "Mineur qui prend sa pause",
+					"text": "Ouais. J'vois bien de quoi tu parles. Mais l'sac, je l'ai plus. [Il crache par terre] Ouais. Il a pas tenu deux jours le machin. Je l'ai envoyé à mon cousin du Port de Prêche. Ouais. Ça pouvait faire un bon filet, je me suis dit. [Il crache à nouveau]"
+				},
+				"busyFisher": {
+					"name": "Pêcheur affairé",
+					"text": "Le sac ? Oui je l'ai toujours ! Mais il est en piteux état ! Tenez, si ça peut vous rendre service, je peux vous le réparer et vous le laisser, il ne me sert pas à grand chose ici... Mais pour ça il me faut une bobine de fil et des aiguilles. On en vend à Dinoville je pense.",
+					"text2": "Ah c'est tout ce qu'il me faut pour rafistoler votre sac. [Il s'en occupe pendant une petite heure...] Voila ! Il devrait tenir pendant un petit moment encore."
+				},
+				"sewingMaterial": {
+					"name": "Trouver une bobine",
+					"text": "Vous faites rapidement le tour des étalages du marché pour trouver du Matériel de Couture. Vous finissez par trouver la boutique d'une couturière..."
+				},
+				"seamstress": {
+					"name": "Couturière",
+					"text": "Bien le bonjour Maître des Dinoz, bienvenue dans mon échoppe ! Du fil et des aiguilles ? Oui j'en vends mais ça n'est pas donné... Mais je veux bien vous en laisser gratuitement si vous me rendez un petit service ! Ma maison se trouve près de la fontaine et il ne se passe pas un soir sans qu'on y soit attaqué par ces monstrueux CoqDurs ! Aidez-moi et le matériel est à vous.",
+					"text2": "Merci mille fois pour votre intervention ! Voici le matériel comme promis..."
+				},
+				"coq": {
+					"kill": "CoqDurs acharnés"
+				},
+				"backDinoville": {
+					"title": "Faire votre rapport à Dinoville"
+				}
+			}
+		},
+		"forestGuardian": {
+			"unmute": {
+				"name": "Le Gardien de la Forêt",
+				"begin": "Le parchemin qui vous est tombé dessus comporte ce message :&&« Trouvez 1 mesure d'eau filante, puis 1 mesure d'eau croupie, puis 1 mesure d'eau pure et enfin 1 mesure d'eau Bouillonnante. »&&À peine avez-vous fini de lire ce message qu'une petite gourde vide tombe à son tour du feuillage sur votre tête ! Poc !",
+				"end": "Le vieil arbre se penche vers vous dans un bruissement... Il secoue alors lentement son feuillage, faisant tomber quelques beaux fruits à vos pieds.",
+				"juminWater": {
+					"name": "Eau du Fleuve Jumin",
+					"description": "Vous remplissez la gourde du vieil arbre avec un peu d'eau du Fleuve Jumin. Voilà pour l'eau filante !"
+				},
+				"swampWater": {
+					"name": "Eau trouble",
+					"description": "Vous ajoutez dans la gourde du vieil arbre un peu d'eau du Marais Collant. Elle sent vraiment mauvais..."
+				},
+				"pureWater": {
+					"name": "Eau rafraîchissante",
+					"description": "Vous ajoutez dans la gourde du vieil arbre de l'eau claire de la Fontaine et vous en profitez pour vous y rafraîchir."
+				},
+				"boilingWater": {
+					"name": "Eau bouillonnante",
+					"description": "Vous complétez le contenu de la gourde avec un peu de l'eau bouillonnante qui inonde les Gorges. C'est chaud !"
+				},
+				"pourGourd": {
+					"name": "Verser la gourde sur les racines",
+					"description": "Les feuillages du vieil arbre s'agitent brusquement dans tous les sens et une lumière apaisante emplit la jungle tout autour de vous..."
+				}
+			},
+			"orchid": {
+				"name": "La main verte",
+				"begin": "Un parchemin pendouille à une branche. Vous pouvez y lire :&&« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle ».&&Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
+				"end": "Vous déposez la gourde vide au pied de l'arbre. Un gros fruit se décroche des branches supérieures et tombe à côté de vous avec un bruit mat.",
+				"takeWater": {
+					"name": "Prendre de l'eau",
+					"description": "Vous remplissez la gourde d'eau du Fleuve Jumin."
+				},
+				"waterOrchid": {
+					"name": "Arroser l'Orchidée",
+					"description": "Vous versez tout le contenu de la gourde sur une magnifique fleur qui doit être l'Orchidée Quidée. Aussitôt, celle-ci s'illumine de mille feux et de jolies gouttelettes de rosée perlent sur ses feuilles gracieuses."
+				},
+				"talkingOrchid": {
+					"name": "Orchidée Quidée parlante",
+					"text": "Quoi ?! Qu'est-ce que tu r'gardes comme ça ? T'as jamais vu une Orchidée pousser ?! T'as rien à faire ailleurs ? Allez du vent, laisse-moi, tu m'fais de l'ombre !!"
+				}
+			},
+			"licens": {
+				"name": "Permis de couper",
+				"begin": "Un parchemin, que vous n'aviez pas remarqué jusque-là, est ficelé à une racine. Vous pouvez y lire :&&« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisés dans la Jungle de Grumhel. Allez réguler leur travail. »",
+				"end": "Quelques fruits tombent de l'arbre autour de vous...",
+				"kill": "Roncivores ou Korgons"
+			},
+			"king": {
+				"name": "Le roi de la Jungle",
+				"begin": "Un message est inscrit sur un bout de tissu accroché à une branche :&&« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
+				"end": "Un fruit tombe à côté de vous. Tandis que vous vous penchez pour le ramasser, une grosse bourse pleine d'or tombée de nulle part s'écrase droit sur votre tête ! SCHLING !",
+				"cry": {
+					"name": "Pousser le cri du Roi de la Jungle",
+					"description": "Vous poussez un cri particulièrement ridicule, qui n'effraierait probablement même pas un Korgon... Il va falloir trouver mieux !"
+				},
+				"talkingOrchid": {
+					"name": "Orchidée Quidée parlante",
+					"text": "Encore là l'empaffé de la jungle ?! Qu'est-ce qu'il a l'autre à m'regarder comme ça ?"
+				},
+				"pickOrchid": {
+					"name": "Cueillir l'Orchidée",
+					"description": "Sans ménagement, vous arrachez l'orchidée et vous l'emmenez avec vous. Celle-ci crie, vous insulte copieusement et se débat autant qu'elle peut..."
+				},
+				"plantOrchid": {
+					"name": "Planter l'Orchidée",
+					"description": "Vous replantez d'un coup sec l'Orchidée Quidée qui ne manque pas de vous hurler dessus. Tandis que vous vous éloignez, vous pouvez encore l'entendre crier des atrocités à votre égard... Voilà qui fera bien l'affaire pour effrayer les touristes !"
+				}
+			},
+			"wishes": {
+				"name": "Faites vos voeux",
+				"begin": "Vous pouvez lire, gravé sur une branche :&&« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »&&Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
+				"end": "Quelques fruits tombent de l'arbre autour de vous...",
+				"throwCoin": {
+					"name": "Jeter une pièce",
+					"description": "Vous jetez une pièce au coeur des chutes et vous attendez quelques minutes... Évidemment rien ne se produit et vous décidez d'aller exaucer le voeu de réduire la population des monstres par vous-même."
+				},
+				"kill": "Roncivores ou Korgons"
+			},
+			"newplt": {
+				"name": "Un cric pour la forêt",
+				"begin": "Une longue bande de tissu est enroulée autour du vieil arbre :&&« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »&&Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
+				"end": "Deux gros fruits se décrochent et tombent dans un buisson près de vous...",
+				"volunteer": {
+					"name": "Bénévole « Paix Verte »",
+					"text": "Bonjour ! Toi aussi tu viens pour aider à déblayer toute cette roche ? Pour le moment, j'ai un gros problème sur les bras... Des monstres en tous genres viennent régulièrement m'empêcher de travailler... Tu peux faire quelque chose ?",
+					"text2": "Il ne faut plus perdre une seconde, continuons !",
+					"text3": "Je vais rester ici pour arroser les plantes survivantes. Va faire un rapport pour moi auprès du Gardien de la Forêt !"
+				},
+				"killAny": "Monstres en tous genres",
+				"liftRocks": {
+					"name": "Soulever les rochers",
+					"description": "Vous installez le cric puis commencez à soulever et pousser les rochers tombés sur la forêt... Mais tandis que vous pensiez être enfin au calme, un grognement inquiétant se fait entendre derrière vous...",
+					"description2": "L'opération vous occupe encore plusieurs heures, même avec le cric, mais vous parvenez tout de même à dégager de nombreux arbres et plantes ensevelies sous les rochers."
+				}
+			},
+			"gshop": {
+				"name": "Monnaie de singe",
+				"begin": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :&&« Déposez de l'or dans le seau pour votre ration quotidienne. »",
+				"end": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »",
+				"examineBucket": {
+					"name": "Examiner le seau",
+					"description": "Vous trouvez une petite branche fleurie dans le seau..."
+				}
+			}
+		},
+		"skully": {
+			"skul1": {
+				"name": "Informations Préliminaires",
+				"begin": "Mouldeur a été touché par ma bonnédiction, alors que l'on faisait de vieux os ensemble, il m'a tout à coup oubliée et s'en est allé loin d'ici, le ruffian ! Il a sûrement dû donner des nouvelles à son neveu le ptit'Joe... Va le voir et tiens moi au courant !",
+				"papyJoe": {
+					"name": "Papy 'Ptit' Joe",
+					"text": "Oncle Mouldeur ? Ohlala ca fait des années que je n'ai pas entendu parler de lui... Si tu veux en savoir plus, ramène-moi trois merguez du Grand Tout Chaud !",
+					"text2": "Merci ! (crounch crounch) tout ce que je sais, c'est qu'oncle Mouldeur aimait beaucoup sa femme et a laissé un message pour elle gravé sur la Fontaine de Jouvence."
+				},
+				"giveMerguez": "Donner 3 Merguez",
+				"message": {
+					"name": "Lire le message",
+					"description": "Dans une des nombreuses gravures de la Fontaine de Jouvence, on peut lire le message suivant : \"Je t'attendrai sur le lieu de notre rencontre\""
+				},
+				"end": "Merci, ce sont de précieuses informations que tu m'as rapporté là ! Mon Mouldeur chéri ne doit pas être très loin, nous serons bientôt réunis !"
+			},
+			"skul2": {
+				"name": "Sur les trâces de Mouldeur",
+				"begin": "\"Je t'attendrai sur le lieu de notre rencontre\" Oh oh oh oh ! Comme c'est roooomantique mon Mouldeur chéri ! J'espère en tout cas qu'il m'attend encore là-bas ! Vite, rends toi dans ce magnifique lieu aux douces odeurs de nénuphars où nous nous sommes rencontrés, et ramène-moi mon amour !",
+				"stuckTourist": {
+					"name": "Un Touriste Enlisé",
+					"text": "J'en ai RAZ LE BOL de ce Marais de M...... !!!!! Ca fait trois fois que notre Camping-Car s'enlise, quelle idée à la c... de venir passer des VACANCES DANS UN MARAIS !!! Quoi ? Si j'ai vu un dénommé Mouldeur ? Ah ! oui, il est parti assister à une réunion de l'Amicale des Anguilloz Anonymes ! Fait attention si tu vas là-bas car elles sont du genre susceptible..."
+				},
+				"aaa": {
+					"name": "Réunion des A.A.A.",
+					"begin": "Alors que votre Dinoz s'approche, certaines Anguilloz se rendent compte de sa présence et l'attaquent !",
+					"win": "Aprés la défaite des Anguilloz, vous observez des traces de pas qui s'éloignent en direction de l'ouest..."
+				},
+				"fisherman": {
+					"name": "Pêcheur",
+					"text": "Ca mord bien dans l'coin : les poissons viennent voir les moines qui lévitent... Un gars qui s'appelle Mouldeur ? J'le connais bien : il est parti pêcher dans la baie aux Piranhoz. Fait gaffe mon gars, ça mordille ces saletés...",
+					"text2": "Mouldeur ? Il a dit qu'il retournait attendre sa femme au Marais... Pauv'gars, ça fait des années qu'il ne l'a pas revu... Remarquez à sa place je serais plutôt content..."
+				},
+				"piranhozBay": {
+					"name": "Baie aux Piranhoz",
+					"begin": "A peine vous entrez dans la baie que de nombreux Piranhoz se précipitent pour vous mordiller... Qui peut bien avoir envie de venir pêcher ici ???",
+					"win": "Une fois les Piranhoz vaincus, vous regardez aux alentours. Si Mouldeur est venu pêcher ici, il est déjà reparti..."
+				},
+				"swampSign": {
+					"name": "Panneau Indicateur",
+					"description": "Un panneau semble avoir été récemment dressé près d'un parterre de nénuphars. On peut y lire le message suivant : \"Marre des moustiques, rejoins moi là où je t'ai déclaré ma flamme. Mouldeur.\""
+				},
+				"end": "Ooohh oh oh oh oh ! Mouldeur chéri ! Je te sens plus proche de moi que jamais !"
+			},
+			"skul3": {
+				"name": "Mademoiselle Bao",
+				"begin": "Oh oh oh ! J'ai pensé à quelque chose de... problématique. Même si je retrouve Mouldeur, il va oublier à nouveau nos retrouvailles et repartir m'attendre quelque part. Il faut absolument que tu trouves une solution à ce problème avant d'aller voir Mouldeur. Va trouver cette chère Mademoiselle Bao, elle aura certainement une solution !",
+				"baoBob": {
+					"name": "Mademoiselle Bao ???",
+					"text": "Quoi ??? Mademoiselle Bao ?? Non mais... tu me prends pour qui au juste ? .......... Si tu cherches ma soeur, et bien elle se trouve en ce moment auprès du petit fils de l'ArchiDorogon : \"le Vénérable\" comme il aime se faire appeller maintenant... D'ailleurs si un jour son père l'apprend, il va passer un sale quart-d'heure..."
+				},
+				"baoBabe": {
+					"name": "Mademoiselle Bao",
+					"text": "Quoi ??? Mademoiselle Bao ?? Mais voyons.... celà fait une éternité que l'on ne m'a pas appellée comme celà. Je t'en prie, jeune homme, utilise mon prénom, appelle-moi Babe..."
+				},
+				"baoBabe2": {
+					"name": "Bao Babe",
+					"text": "Tu cherches mon conseil ? Ecoute, je dois d'abord finir ma partie de dames avec le petit-fils de l'ArchiDorogon. Son grand-père m'a fait promettre de venir lui tenir compagnie de temps-en-temps... Que dirais-tu d'aller chasser quelques gobelins en attendant que je finisse ?",
+					"text2": "Voilà ! J'ai fini ! Je l'ai battu à plate couture hi hi hi ! J'adooore le mettre en colère, il est tellement mignon quand ses narines commencent à souffler de la vapeur d'eau ! Mais tu voulais me demander un conseil ?",
+					"text3": ".......... Oh ? Vraiment ? ..... La solution à ce genre de bonnédiction est très simple : il suffit que quelqu'un garde une partie de Skully toujours avec lui pour ne rien oublier... A bientôt, jeune homme !"
+				},
+				"goblinKill": "Gobelins",
+				"end": "Oh oh oh oh oh ! En voilà une bonne solution pour ma bonnédiction ! Tiens, prends ça, de cette façon tu n'oublieras plus ni le chemin du Cimetière, ni ta chère Skully oh oh oh !"
+			},
+			"skul4": {
+				"name": "Les touristes génants",
+				"begin": "\"Rejoins moi là où je t'ai déclaré ma flamme\" Oh oh oh oh ! Mon Mouldeur a vraiment un coeur en oooor ! Je n'oublierai jamais ce lieu délicieux où il nous avait emmenés, alors que nos os étaient encore tous jeunes... Et ce moment où il m'a tendu une merguez bien grillée et m'a demandé de l'épouser !",
+				"merguezSeller": {
+					"name": "Vendeur de Merguez",
+					"text": "Un client bizarre ? Oui, j'ai bien vu un type maigrichon qui est venu manger en lançant de grands soupirs... Il est parti se promener dans les ruines. Faites attention, on a des touristes d'un genre un peu particulier en ce moment...",
+					"text2": "Vous avez sauvé Jean-Claude ? Ah !! Merci beaucoup. Ces bandits des steppes génaient vraiment l'émergence du tourisme de masse dans ces ruines. Je ne sais pas comment vous remercier ! .... Mouldeur ? Il a promis de revenir si je lui préparais des crevettes au Napalm, mais je ne connais pas la recette..."
+				},
+				"visitRuins": {
+					"name": "Visiter les Ruines",
+					"begin": "Que le pouvoir du Bambooz soit avec moi ! Sus aux infidèles !",
+					"win": "Avant de s'écrouler, Barababor vous souffle les mots suivants : \"Nous avons capturé votre ami : il sera emmené en bateau dans nos steppes natales où il serra vendu comme esclave !\""
+				},
+				"suspiciousBoat": {
+					"name": "Chercher un Bateau louche",
+					"description": "Après quelques recherches, vous trouvez un Bateau définitivement bizarre sur les quais."
+				},
+				"enterBoat": {
+					"name": "Entrer dans le Bateau",
+					"begin": "Que le pouvoir du Bambooz soit avec moi ! Je vengerais mon frère !!!",
+					"win": "Après avoir vaincu les Bandits, vous libérez un homme ligoté dans le bateau..."
+				},
+				"freedMan": {
+					"name": "Homme Libéré",
+					"text": "Mmmerr mmerrciii !! Jejejej'ai eu trtrtrès pepeupeur vous sasavez ! Mouldeur ?? Nonon, je m'apeppelle Jean-Claude... Jeje susuis un ami du vendeur dede merguez ! Mermerci en tout cas de vovotre aide !"
+				},
+				"end": "Oh oh oh ! Mouldeur n'est pas très loin, merci beaucoup de ton aide mon jeune ami !"
+			},
+			"skul5": {
+				"name": "Des crevettes au Napalm",
+				"begin": "Des \"Crevettes au Napalm\" ? Oh oh oh oh ! Quel doux souvenir que ce plat délicieux ! Bien, il va falloir que tu me rapportes un certain nombre d'ingrédients pour que je puisse préparer tout celà...",
+				"skully": {
+					"text": "Bien, tout d'abord, il me faut bien entendu de bonnes crevettes. Tu pourras en trouver au Marché du Dôme Soulaflotte ! Fais-vite !",
+					"text2": "Oh oh oh ! Ma-gni-fi-que ! Ces crevettes sont d'une fraicheur incomparable ! Bon, passons à la suite. Deuxième ingrédient indispensable : du Napalm. Pour en fabriquer il nous faut de la lave de bonne qualité...",
+					"text3": "Oh ! oh oh oh ! Quel superbe Napalm ! Mais la recette ne peut être complète sans que l'on y rajoute un ingrédient ab-so-lu-ment nécessaire... Les poils d'un Korgon bien gras ! Normalement, il devrait y en avoir du coté du Grand Tout Chaud, mais fait attention à ne pas voler le repas de quelqu'un d'autre ou tu pourrais bien le regretter !",
+					"text4": "Oh oh oh oh ! Je touille je touille !!! Et voilà ! Un magnifique plat de Crevettes au Napalm !"
+				},
+				"shrimpMerchant": {
+					"name": "Marchand de Crevettes",
+					"text": "Je suis désolé mais suite à des fraudes je n'accepte aucune pièce d'or en paiement de mes crevettes. Il va falloir me ramener 3 Bons du Trésor...",
+					"text2": "Merci, voici vos crevettes ! Bon appétit !"
+				},
+				"giveTreasureTickets": "Donner 3 Bons du Trésor",
+				"shamanMou": {
+					"text": "Du Napalm ? Uhmm... Pour cela, il va te falloir faire un mélange moitié Lave - moitié Flammèches. On ne manque pas de Lave par ici, alors apporte-moi 5 Boites de Flammèche pour que je te prépare le mélange...",
+					"text2": "A glou ! A glou ! A gadagagou glou ! Et voilà, du Napalm à faible densité tout chaud pour toi...."
+				},
+				"giveFlames": "Donner 5 Flammèches",
+				"korgonSearch": {
+					"name": "Chercher un Korgon",
+					"begin": "Kwwiiiiiiik !",
+					"win": "Vous avez capturé un Korgon bien gras... en espérant qu'il n'était pas destiné au diner de quelqu'un !"
+				},
+				"end": "Merci pour ton aide ! oh oh oh ! Bientôt mes retrouvailles avec mon tendre Mouldeur !"
+			},
+			"skuend": {
+				"name": "Les retrouvaillages",
+				"begin": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !",
+				"merguezSeller": "Ooooohh !! Il s'agit donc des fameuses crevettes au Napalm ?!? Voyons voir.... uhmm.... cela manque un peu de graisse mais c'est succulent. Nul doute que Mouldeur devrait bientôt se montrer... Mais regarde qui voilà !",
+				"end": "OOooooooh ! oh ! oh oh oh ! Mouldeur est revenu !!! Merci beaucoup !!"
 			}
 		}
 	}
