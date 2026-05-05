@@ -68,6 +68,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['barche'],
 					count: 1,
 					force: true,
+					place: PlaceEnum.REPAIRE_DU_VENERABLE,
 					displayNameKey: 'missions.shaman.init2.kill.barche'
 				}
 			},
@@ -91,6 +92,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 				kill: {
 					count: 6,
 					force: false,
+					place: PlaceEnum.FORGES_DU_GTC,
 					displayNameKey: 'missions.shaman.init2.kill.wave'
 				}
 			},
@@ -106,6 +108,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 				kill: {
 					count: 6,
 					force: false,
+					place: PlaceEnum.FORGES_DU_GTC,
 					displayNameKey: 'missions.shaman.init2.kill.wave'
 				}
 			},
@@ -140,6 +143,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['flam'],
 					count: 3,
 					force: true,
+					place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 					displayNameKey: 'missions.shaman.burn.kill.flam'
 				}
 			},
@@ -172,6 +176,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['flam'],
 					count: 5,
 					force: true,
+					place: PlaceEnum.RUINES_ASHPOUK,
 					displayNameKey: 'missions.shaman.burn.kill.flam'
 				}
 			},
@@ -316,6 +321,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 				kill: {
 					count: 15,
 					force: false,
+					place: PlaceEnum.FORGES_DU_GTC,
 					displayNameKey: 'missions.shaman.defend.kill'
 				}
 			},
@@ -339,6 +345,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 				kill: {
 					count: 5,
 					force: false,
+					place: PlaceEnum.PENTES_DE_BASALTE,
 					displayNameKey: 'missions.shaman.defend.kill'
 				}
 			},
@@ -389,6 +396,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['goblin'],
 					count: 4,
 					force: true,
+					place: PlaceEnum.PENTES_DE_BASALTE,
 					displayNameKey: 'missions.shaman.shipmt.kill'
 				}
 			},
@@ -427,6 +435,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['goblin'],
 					count: 6,
 					force: true,
+					place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 					displayNameKey: 'missions.shaman.shipmt.kill'
 				}
 			},
@@ -509,6 +518,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['goblin'],
 					count: 1,
 					force: true,
+					place: PlaceEnum.FOSSELAVE,
 					displayNameKey: 'missions.shaman.ritual.kill'
 				}
 			},
@@ -531,6 +541,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['goblin'],
 					count: 3,
 					force: true,
+					place: PlaceEnum.REPAIRE_DU_VENERABLE,
 					displayNameKey: 'missions.shaman.ritual.kill'
 				}
 			},
@@ -548,6 +559,7 @@ export const shamanMouMissions: MissionDefinition[] = [
 					monsterKeys: ['goblin'],
 					count: 3,
 					force: true,
+					place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 					displayNameKey: 'missions.shaman.ritual.kill'
 				}
 			},

@@ -26,6 +26,7 @@ export const baoBobMissions: MissionDefinition[] = [
 					monsterKeys: ['pira'],
 					count: 6,
 					force: true,
+					place: PlaceEnum.MARAIS_COLLANT,
 					displayNameKey: 'missions.baoBob.kilpir.kill'
 				}
 			},
@@ -121,6 +122,7 @@ export const baoBobMissions: MissionDefinition[] = [
 					monsterKeys: ['kazka'],
 					count: 6,
 					force: true,
+					place: PlaceEnum.DOME_SOULAFLOTTE,
 					displayNameKey: 'missions.baoBob.kilksk.kill'
 				}
 			},

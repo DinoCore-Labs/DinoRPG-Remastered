@@ -26,6 +26,7 @@ export const hulotMissions: MissionDefinition[] = [
 				kill: {
 					count: 6,
 					force: false,
+					place: PlaceEnum.CHEMIN_GLAUQUE,
 					displayNameKey: 'missions.hulot.seqact.kill'
 				}
 			},
@@ -132,6 +133,7 @@ export const hulotMissions: MissionDefinition[] = [
 					monsterKeys: ['bat'],
 					count: 1,
 					force: true,
+					place: PlaceEnum.CHEMIN_GLAUQUE,
 					displayNameKey: 'missions.hulot.map.kill'
 				}
 			},
@@ -215,6 +217,7 @@ export const hulotMissions: MissionDefinition[] = [
 					monsterKeys: ['korgon'],
 					count: 4,
 					force: true,
+					place: PlaceEnum.CHEMIN_GLAUQUE,
 					displayNameKey: 'missions.hulot.hucure.korgon.kill'
 				}
 			},
@@ -232,6 +235,7 @@ export const hulotMissions: MissionDefinition[] = [
 					monsterKeys: ['bat'],
 					count: 5,
 					force: true,
+					place: PlaceEnum.FLEUVE_JUMIN,
 					displayNameKey: 'missions.hulot.hucure.bat.kill'
 				}
 			},
@@ -340,6 +344,7 @@ export const hulotMissions: MissionDefinition[] = [
 					monsterKeys: ['coq'],
 					count: 2,
 					force: true,
+					place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 					displayNameKey: 'missions.hulot.bckpck.coq.kill'
 				}
 			},

@@ -19,6 +19,7 @@ export type MissionKillInfos = {
 	monsterKeys?: MissionMonsterKey[] | null;
 	count: number;
 	force: boolean;
+	place?: PlaceEnum | null;
 	zone?: number | null;
 	displayNameKey?: string | null;
 };

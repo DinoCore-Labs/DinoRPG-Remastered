@@ -80,7 +80,6 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 	let team = user.dinoz;
 	// Go through followers and make those that are unavailable leave the group.
 	const unavailableFollowers = team.filter(d => d.life <= 0 || d.state !== null);
-
 	if (unavailableFollowers.length > 0) {
 		for (const d of unavailableFollowers) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
@@ -179,7 +178,8 @@ export async function fightMonstersAtPlace(
 					for (const dinozId of missionKillDinozIds) {
 						await advanceDinozMissionOnFightWon(tx, {
 							dinozId,
-							defeatedMonsterKeys
+							defeatedMonsterKeys,
+							place: placeId
 						});
 					}
 				}
@@ -647,9 +647,10 @@ export async function generateMonsterList(
 	const leader = team[0];
 	const leaderMission = leader?.missions && leader.missions.length > 0 ? resolveCurrentMission(leader.missions) : null;
 	const leaderKillGoal = leaderMission?.currentGoal?.type === 'KILL' ? leaderMission.currentGoal : null;
-	const leaderKillMonsterKeys = new Set<MonsterKey>(leaderKillGoal?.kill.monsterKeys ?? []);
-	const leaderKillForce = Boolean(leaderKillGoal?.kill.force);
-	const MISSION_MONSTER_ODDS_MULTIPLIER = 3;
+	const leaderKillAppliesHere = !leaderKillGoal?.kill.place || leaderKillGoal.kill.place === placeOfFight;
+	const leaderKillMonsterKeys = new Set(leaderKillAppliesHere ? (leaderKillGoal?.kill.monsterKeys ?? []) : []);
+	const leaderKillForce = leaderKillAppliesHere && Boolean(leaderKillGoal?.kill.force);
+	const MISSION_MONSTER_ODDS_MULTIPLIER = 1.5;
 	function isLeaderMissionMonster(monster: MonsterFiche): boolean {
 		const monsterKey = getMonsterKeyById(monster.id);
 		return monsterKey !== null && leaderKillMonsterKeys.has(monsterKey);

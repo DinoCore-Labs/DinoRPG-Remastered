@@ -125,6 +125,7 @@ export const forestGuardianMissions: MissionDefinition[] = [
 					monsterKeys: ['korgon', 'ronciv'],
 					count: 8,
 					force: true,
+					place: PlaceEnum.CHEMIN_GLAUQUE,
 					displayNameKey: 'missions.forestGuardian.licens.kill'
 				}
 			},
@@ -209,6 +210,7 @@ export const forestGuardianMissions: MissionDefinition[] = [
 					monsterKeys: ['korgon', 'ronciv'],
 					count: 2,
 					force: true,
+					place: PlaceEnum.AUREE_DE_LA_FORET,
 					displayNameKey: 'missions.forestGuardian.wishes.kill'
 				}
 			},
@@ -219,6 +221,7 @@ export const forestGuardianMissions: MissionDefinition[] = [
 					monsterKeys: ['korgon', 'ronciv'],
 					count: 3,
 					force: true,
+					place: PlaceEnum.CHEMIN_GLAUQUE,
 					displayNameKey: 'missions.forestGuardian.wishes.kill'
 				}
 			},
@@ -229,6 +232,7 @@ export const forestGuardianMissions: MissionDefinition[] = [
 					monsterKeys: ['korgon', 'ronciv'],
 					count: 3,
 					force: true,
+					place: PlaceEnum.FLEUVE_JUMIN,
 					displayNameKey: 'missions.forestGuardian.wishes.kill'
 				}
 			},
@@ -239,6 +243,7 @@ export const forestGuardianMissions: MissionDefinition[] = [
 					monsterKeys: ['korgon', 'ronciv'],
 					count: 6,
 					force: true,
+					place: PlaceEnum.JUNGLE_SAUVAGE,
 					displayNameKey: 'missions.forestGuardian.wishes.kill'
 				}
 			},
@@ -272,6 +277,7 @@ export const forestGuardianMissions: MissionDefinition[] = [
 				kill: {
 					count: 3,
 					force: true,
+					place: PlaceEnum.RUINES_ASHPOUK,
 					displayNameKey: 'missions.forestGuardian.newplt.killAny'
 				}
 			},
@@ -287,6 +293,7 @@ export const forestGuardianMissions: MissionDefinition[] = [
 				kill: {
 					count: 6,
 					force: true,
+					place: PlaceEnum.RUINES_ASHPOUK,
 					displayNameKey: 'missions.forestGuardian.newplt.killAny'
 				}
 			},

@@ -184,6 +184,7 @@ export const skullyMissions: MissionDefinition[] = [
 					monsterKeys: ['goblin'],
 					count: 10,
 					force: true,
+					place: PlaceEnum.REPAIRE_DU_VENERABLE,
 					displayNameKey: 'missions.skully.skul3.goblinKill'
 				}
 			},
