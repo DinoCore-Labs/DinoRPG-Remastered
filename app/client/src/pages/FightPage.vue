@@ -1,6 +1,6 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.fight')" :header="$t(`fight.pageName`)" />
-	<div v-show="loaded" class="content">
+	<div v-if="loaded && fightTransformed?.history?.length" class="content">
 		<Suspense>
 			<FightAnimation :fight="fightTransformed" @animationEnded="onFightEnd" />
 			<template #fallback>
@@ -25,6 +25,7 @@ import { dinozStore } from '../store/dinozStore.js';
 import { localStore } from '../store/localStore.js';
 import { sessionStore } from '../store/sessionStore.js';
 import { userStore } from '../store/userStore.js';
+import { Fight } from '@eternaltwin/dinorpg_animations';
 
 export default defineComponent({
 	name: 'FightPage',
@@ -47,7 +48,8 @@ export default defineComponent({
 			dinozId: Number(this.$route.params.dinozId as string),
 			lang: (localStore().getLanguage ?? 'fr').toLowerCase(),
 			fightEnded: false,
-			fightTransformed: {} satisfies preFightLoader as preFightLoader,
+			fightTransformed: null as preFightLoader | null,
+			loadedFight: null as Fight | null,
 			loaded: false,
 			moneyGiven: false
 		};
@@ -62,7 +64,43 @@ export default defineComponent({
 	},
 	created(): void {
 		const fightResult = this.sessionStore.getFightResult;
-		if (fightResult === undefined) {
+		if (!fightResult) {
+			this.$toast.open({
+				message: this.$t('toast.viewFight'),
+				type: 'error'
+			});
+
+			this.$router.push({
+				name: 'DinozPage',
+				params: { id: this.dinozId }
+			});
+
+			return;
+		}
+		this.fight = fightResult;
+		const fightSteps = fightResult.history as FightStep[];
+		const fighters = fightResult.fighters as FighterRecap[];
+		if (!fightSteps?.length || !fighters?.length) {
+			this.$toast.open({
+				message: this.$t('toast.viewFight'),
+				type: 'error'
+			});
+
+			this.$router.push({
+				name: 'DinozPage',
+				params: { id: this.dinozId }
+			});
+			return;
+		}
+		const nextFight = transpileFight(
+			structuredClone(toRaw(fighters)),
+			fightSteps,
+			this.$t,
+			fightResult.result,
+			fightResult.startText,
+			fightResult.endText
+		);
+		if (!nextFight?.length) {
 			this.$toast.open({
 				message: this.$t('toast.viewFight'),
 				type: 'error'
@@ -73,36 +111,14 @@ export default defineComponent({
 			});
 			return;
 		}
-		if (fightResult) {
-			this.fight = fightResult;
-		}
-		const fightSteps = fightResult.history as FightStep[];
-		const fighters = fightResult.fighters as FighterRecap[];
-		if (!fightSteps || !fighters) return;
-		const nexFight = transpileFight(
-			structuredClone(toRaw(fighters)),
-			fightSteps,
-			this.$t,
-			fightResult.result,
-			fightResult.startText,
-			fightResult.endText
-		);
-		if (!nexFight) {
-			return;
-		}
-		if (this.fight) {
-			const initPlace = resolveFightingPlace(this.fight.place);
-			this.fightTransformed = {
-				...initPlace,
-				history: nexFight.filter(n => n != undefined),
-				lang: this.lang,
-				statusReward: this.fight.statusReward
-			};
-		}
+		const initPlace = resolveFightingPlace(this.fight.place);
+		this.fightTransformed = {
+			...initPlace,
+			history: nextFight.filter(n => n != undefined),
+			lang: this.lang,
+			statusReward: this.fight.statusReward
+		};
 		this.loaded = true;
-		/*if (this.uStore.getPlayerOptions.skipFight) {
-			this.onFightEnd();
-		}*/
 	},
 	unmounted(): void {
 		this.$refreshGold();
