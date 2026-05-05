@@ -1,319 +1,319 @@
 {
 	"homepage": {
-		"connexion": "Connexion",
-		"news": "Dernière News",
-		"ranking": "Hall de la Gloire",
-		"help": "Guide du Jeu",
+		"connexion": "Conexión",
+		"news": "Última noticia",
+		"ranking": "Salón de la Fama",
+		"help": "Guía del juego",
 		"fight": {
-			"message1": "Aaah, Dinoville, le joyaux de Dinoland, le point de départ de toute aventure qui se respecte.",
-			"message2": "Après un long périple, vous êtes enfin arrivé à votre destination, attiré par des rumeurs d'aventures palpitantes, de richesses, et de gloire.",
-			"message3": "C'est ici que vous pourrez recruter votre premier compagnon et...",
-			"message4": "Enfin !",
-			"message5": "Salut toi ! Prêt à rejoindre l'aventure ?"
+			"message1": "Ah, Dinoville, la joya de Dinoland, el punto de partida de toda aventura digna de ese nombre.",
+			"message2": "Tras un largo viaje, por fin has llegado a tu destino, atraído por rumores de emocionantes aventuras, riquezas y gloria.",
+			"message3": "Aquí es donde podrás reclutar a tu primer compañero y...",
+			"message4": "¡Por fin!",
+			"message5": "¡Hola! ¿Listo para unirte a la aventura?"
 		}
 	},
 	"topBar": {
-		"createAccount": "Créer un compte",
-		"login": "Se connecter",
-		"menu": "Menu",
+		"createAccount": "Crear una cuenta",
+		"login": "Acceder",
+		"menu": "Menú",
 		"leftUserMenu": {
-			"shop": "Boutique",
+			"shop": "Tienda",
 			"dojo": "Dojo",
-			"order": "Ordonner",
-			"enclosure": "Enclos"
+			"order": "Ordenar",
+			"enclosure": "Tienda de Dinos"
 		},
 		"authMenu": {
-			"name": "Pseudo :",
-			"namePlaceholder": "Votre pseudo...",
-			"password": "Mot de passe :",
-			"passwordPlaceholder": "Votre mot de passe...",
-			"nameOk": "✔ Pseudo disponible",
-			"nameBad": "✖ Pseudo déjà utilisé",
-			"accountCreatedWithSuccess": "Votre compte a été créé !",
-			"welcomeBack": "Content de te revoir Maître {name} !"
+			"name": "Nombre de usuario:",
+			"namePlaceholder": "Tu nombre de usuario...",
+			"password": "Contraseña:",
+			"passwordPlaceholder": "Tu contraseña...",
+			"nameOk": "✔ Nombre de usuario disponible",
+			"nameBad": "✖ Nombre de usuario ya en uso",
+			"accountCreatedWithSuccess": "¡Tu cuenta ha sido creada!",
+			"welcomeBack": "¡Me alegra verte de nuevo, Maestro {name}!"
 		},
 		"userMenu": {
-			"account": "Mon Compte",
-			"ranking": "Classements",
-			"messagerie": "Messagerie",
-			"items": "Inventaire",
-			"ingredients": "Ingrédients",
-			"news": "News",
-			"cinema": "Cinéma",
+			"account": "Mi Cuenta",
+			"ranking": "Clasificación",
+			"messagerie": "Mensajería",
+			"items": "Inventario",
+			"ingredients": "Ingredientes",
+			"news": "Novedades",
+			"cinema": "Cine",
 			"faq": "FAQ",
-			"guide": "Guide du Jeu",
-			"disconnect": "Déconnexion",
-			"goodbye": "Au revoir Maître {name}..."
+			"guide": "Guía del Juego",
+			"disconnect": "Desconectarse",
+			"goodbye": "Adiós, Maestro {name}..."
 		}
 	},
 	"leftPanel": {
 		"wallets": {
-			"gold": "Pièces d'or",
-			"treasureTicket": "Bons du trésor"
+			"gold": "Monedas de oro",
+			"treasureTicket": "Bono del Tesoro"
 		}
 	},
 	"footer": {
-		"dev": "Développeurs :",
-		"info": "Ce jeu est un fan-project pour DinoRPG de {motionTwin}.{br}Sauf indication contraire, tous les éléments graphiques sont tirés de ces jeux et sont donc la propriété de Motion Twin. DinoRPG est Open Source et tout le monde est le bienvenu pour y participer. Vous pouvez consulter le code source sur {github}.",
+		"dev": "Desarrolladores:",
+		"info": "Este juego es un fan project de DinoRPG de {motionTwin}.{br}Salvo que se indique lo contrario, todos los elementos gráficos provienen de estos juegos y, por lo tanto, son propiedad de Motion Twin. DinoRPG es Open Source y todo el mundo es bienvenido a participar. Puedes consultar el código fuente en {github}.",
 		"motionTwin": "Motion Twin",
 		"github": "GitHub",
-		"version": "Alpha Version",
-		"thanks": "Remerciements :"
+		"version": "Versión Alpha",
+		"thanks": "Agradecimientos:"
 	},
 	"dinozPage": {
-		"fx": "Statuts",
-		"elements": "Informations",
-		"level": "Ce niveau reflète la puissance de votre Dinoz.",
-		"slot": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper. &&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//",
-		"action": "Actions",
+		"fx": "Estatus",
+		"elements": "Información",
+		"level": "Este nivel presenta el poder de tu Dino.",
+		"slot": "Este espacio está vacío, escoge un objeto del inventario para tu equipamiento. &&//Los objetos puestos aquí podrán ser utlizados por tu Dino durante el combate.//",
+		"action": "Acciones",
 		"tabs": {
-			"map": "Carte",
-			"inventory": "Inventaire",
-			"details": "Détails"
+			"map": "Mapa",
+			"inventory": "Inventario",
+			"details": "Detalles"
 		},
 		"chooseDinoz": {
-			"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
-			"nomDuDinoz": "Nom du Dinoz :",
-			"pageName": "Choix du Nom"
+			"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
+			"nomDuDinoz": "Nombre del Dino:",
+			"pageName": "Elegir nombre"
 		},
 		"inventory": {
-			"itemName": "Nom de l'objet",
-			"stock": "Stock",
-			"actions": "Actions",
-			"full": "Stock plein",
-			"sortBy": "Trier par",
+			"itemName": "Nombre del objeto",
+			"stock": "Almacén",
+			"actions": "Acciones",
+			"full": "Almacén lleno",
+			"sortBy": "Ordenar por",
 			"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
 			"sort": {
-				"default": "Par défaut",
-				"nameAsc": "Nom (A → Z)",
-				"nameDesc": "Nom (Z → A)",
-				"priceAsc": "Prix (croissant)",
-				"priceDesc": "Prix (décroissant)",
-				"qtyAsc": "Quantité (croissante)",
-				"qtyDesc": "Quantité (décroissante)"
+				"default": "Por defecto",
+				"nameAsc": "Nombre (A → Z)",
+				"nameDesc": "Nombre (Z → A)",
+				"priceAsc": "Precio (creciente)",
+				"priceDesc": "Precio (decreciente)",
+				"qtyAsc": "Cantidad (creciente)",
+				"qtyDesc": "Cantidad (decreciente)"
 			}
 		},
 		"details": {
-			"asc": "Ascendant",
-			"desc": "Descendant",
+			"asc": "Creciente",
+			"desc": "Decreciente",
 			"th": {
-				"comp": "Compétence",
-				"type": "Type",
-				"active": "Actif"
+				"comp": "Competencia",
+				"type": "Tipo",
+				"active": "Activo"
 			},
 			"type": {
 				"name": {
-					"E": "Événement",
-					"P": "Permanent",
-					"A": "Attaque",
-					"S": "Spécial",
-					"U": "Unique",
-					"I": "Invocation",
-					"C": "Collecte"
+					"E": "Evento",
+					"P": "Permanente",
+					"A": "Ataque",
+					"S": "Especial",
+					"U": "Único",
+					"I": "Invocación",
+					"C": "Recolectar"
 				},
 				"description": {
-					"E": "Cette compétence **peut se déclencher avant chaque attaque**",
-					"P": "Cette compétence s'applique **à tout moment**",
-					"A": "Cette compétence **peut remplacer** une attaque",
-					"S": "Cette compétence a un **effet particulier**",
-					"U": "Cette compétence ne s'appliquera qu'**une seule fois pour l'ensemble des Dinoz**",
-					"I": "Cette compétence permet d'**invoquer la divinité** avec laquelle le Dinoz a pactisé pendant le combat",
-					"C": "Cette compétence **permet de collecter des ingrédients** dans différents lieux"
+					"E": "Esta competencia **puede activarse antes de cada ataque**",
+					"P": "Esta competencia se aplica **en todo momento**",
+					"A": "Esta competencia **puede reemplazar** un ataque",
+					"S": "Esta competencia tiene un **efecto particular**",
+					"U": "Esta competencia se aplica **una sola vez para un conjunto de Dinos**",
+					"I": "Esta competencia te permite **invocar una divinidad** para que ayude a tu Dino en el combate.",
+					"C": "Esta competencia **permite recolectar ingredientes** en las diferentes zonas"
 				}
 			},
 			"activate": {
-				"false": "Actuellement **INACTIF** &&//Une compétence inactive ne sera plus utilisée par votre Dinoz. Cliquez pour activer//",
-				"true": "Actuellement **ACTIF** &&//Cliquez pour désactiver//",
-				"locked": "Ne peut pas être désactivé"
+				"false": "Actualmente **INACTIVO** &&//Una competencia inactiva no podrá ser utilizada por tu Dino. Haz clic aquí para activarla//",
+				"true": "Actualmente **activo** &&//Pincha aquí para desactivar//",
+				"locked": "No puede ser desactivada"
 			},
 			"sort": {
-				"default": "Défaut",
-				"energy": "Énergie",
-				"type": "Type",
-				"state": "État",
-				"title": "Trier les compétences"
+				"default": "Por defecto",
+				"energy": "Energía",
+				"type": "Tipo",
+				"state": "Estado",
+				"title": "Ordenar las competencias"
 			},
-			"statistics": "Caractéristiques",
-			"assaults": "Assauts",
-			"defenses": "Défenses",
-			"specials": "Spéciales",
+			"statistics": "Características",
+			"assaults": "Asaltos",
+			"defenses": "Defensa",
+			"specials": "Especiales",
 			"base": "Base",
-			"skill": "Skill",
-			"fireAssault": "Assaut de Feu",
-			"woodAssault": "Assaut de Bois",
-			"waterAssault": "Assaut d'Eau",
-			"lightningAssault": "Assaut de Foudre",
-			"airAssault": "Assaut d'Air",
-			"fireDefense": "Défense de Feu",
-			"woodDefense": "Défense de Bois",
-			"waterDefense": "Défense d'Eau",
-			"lightningDefense": "Défense de Foudre",
-			"airDefense": "Défense d'Air",
-			"voidDefense": "Défense Neutre",
-			"baseElementContribution": "Contribution de l'élément de base",
-			"hpRegen": "Régénération de PV",
-			"initiative": "Initiative",
-			"energy": "Énergie",
-			"energyRecovery": "Récupération d'énergie",
-			"maxFollowers": "Nombre maximum de suiveurs",
-			"armor": "Armure",
-			"armorBreak": "Perforation",
-			"multihit": "Multi-coups",
-			"evasion": "Esquive",
-			"superEvasion": "Super Esquive",
-			"counter": "Contre",
-			"speed": "Durée d'un tour",
-			"fireSpeed": "Durée d'un tour :fire:",
-			"woodSpeed": "Durée d'un tour :wood:",
-			"waterSpeed": "Durée d'un tour :water:",
-			"lightningSpeed": "Durée d'un tour :lightning:",
-			"airSpeed": "Durée d'un tour :air:",
-			"bubbleRate": "Taux de bulle",
-			"torchDamage": "Dégâts de la torche",
-			"acidBloodDamage": "Dégâts de sang acide",
-			"baseValue": "Valeur de base",
-			"criticalHitChance": "Chance de coup critique",
-			"criticalHitBonus": "Bonus de coup critique"
+			"skill": "Habilidad",
+			"fireAssault": "Asalto de Fuego",
+			"woodAssault": "Asalto de Madera",
+			"waterAssault": "Asalto de Agua",
+			"lightningAssault": "Asalto de Rayo",
+			"airAssault": "Asalto de Aire",
+			"fireDefense": "Defensa al Fuego",
+			"woodDefense": "Defensa a la Madera",
+			"waterDefense": "Defensa al Agua",
+			"lightningDefense": "Defensa al Rayo",
+			"airDefense": "Defensa al Aire",
+			"voidDefense": "Elemento Vacío",
+			"baseElementContribution": "Contribución del elemento base",
+			"hpRegen": "Regeneración de PV",
+			"initiative": "Iniciativa",
+			"energy": "Energía",
+			"energyRecovery": "Recuperación de Energía",
+			"maxFollowers": "Número máximo de seguidores",
+			"armor": "Armadura",
+			"armorBreak": "Perforación",
+			"multihit": "Multi-golpe",
+			"evasion": "Esquiva",
+			"superEvasion": "Súper Evasión",
+			"counter": "Contra",
+			"speed": "Duración de un turno",
+			"fireSpeed": "Duración de un turno :fire:",
+			"woodSpeed": "Duración de un turno :wood:",
+			"waterSpeed": "Duración de un turno :water:",
+			"lightningSpeed": "Duración de un turno :lightning:",
+			"airSpeed": "Duración de un turno :air:",
+			"bubbleRate": "Porcentaje de Burbuja",
+			"torchDamage": "Daño de antorcha",
+			"acidBloodDamage": "Daño de sangre ácida",
+			"baseValue": "Valor base",
+			"criticalHitChance": "Probabilidad de golpe crítico",
+			"criticalHitBonus": "Bonus de golpe crítico"
 		}
 	},
 	"pageTitle": {
 		"default": "DinoRPG",
-		"news": "DinoRPG [ L'actualité de Dinoland ]",
-		"account": "DinoRPG [ Informations personnelles ]",
-		"shop": "DinoRPG [ Marchand : {shop} ]",
-		"faq": "DinoRPG [ FAQ ]",
-		"guide": "DinoRPG [ Guide du Jeu ]",
+		"news": "DinoRPG [ La actualidad en Dinoland ]",
+		"account": "DinoRPG [ Información personal ]",
+		"shop": "DinoRPG [ Tienda : {shop} ]",
+		"faq": "DinoRPG [ Preguntas y respuestas ]",
+		"guide": "DinoRPG [ Guía del Juego ]",
 		"items": "DinoRPG [ Inventaire ]",
-		"ingredients": "DinoRPG [ Ingrédients ]",
-		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
-		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
-		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
-		"dinozNaming": "DinoRPG [ Choix du Nom ]",
-		"levelup": "DinoRPG [ Niveau supplémentaire pour {dinoz} ]",
+		"ingredients": "DinoRPG [ Ingredientes ]",
+		"ranking": "DinoRPG [ Gran Hall de la Gloria ]",
+		"dinozShop": "DinoRPG [ Tienda de Dinos ]",
+		"dinoz": "DinoRPG [ Ficha de {dinoz} ]",
+		"dinozNaming": "DinoRPG [ Elegir nombre ]",
+		"levelup": "DinoRPG [ Subida de nivel para {dinoz} ]",
 		"gather": "DinoRPG [ {type} ]",
-		"fight": "DinoRPG [ Combat ! ]",
+		"fight": "DinoRPG [ ¡Combate! ]",
 		"training": "DinoRPG [ C.E.F ]",
-		"manageDinoz": "DinoRPG [ Gestion de mes Dinoz ]",
-		"admin": "DinoRPG [ Admin Dashboard ]"
+		"manageDinoz": "DinoRPG [ Gestión de mi Dino ]",
+		"admin": "DinoRPG [ Panel de Admin ]"
 	},
 	"adminPage": {
 		"news": {
-			"deleteSuccess": "News supprimée avec succès"
+			"deleteSuccess": "Noticia eliminada con éxito"
 		}
 	},
 	"manageDinoz": {
-		"title": "Gestion de mes Dinoz",
-		"disclaimer": "Ce module de gestion est accessible grâce à votre **Pierre en Diamantite Agglomérée** : un véritable concentré de technologie !",
-		"dinoz": "Dinoz",
-		"elements": "Éléments"
+		"title": "Gestión de mis Dinos",
+		"disclaimer": "Este módulo de gestión es accesible gracias a su **Piedra Diamante Aglomerada**: ¡un verdadero concentrado de tecnología!",
+		"dinoz": "Dinos",
+		"elements": "Elementos"
 	},
 	"newsPage": {
-		"title": "Actualités de Dinoland",
-		"overload": "Voir les actualités plus anciennes",
-		"noTranslation": "L'actualité n'a pas été traduite, consultez les news dans une autre langue ou attendez qu'une traduction soit publiée",
+		"title": "La actualidad en Dinoland",
+		"overload": "Mostrar noticias antiguas",
+		"noTranslation": "La noticia no ha sido traducida. Consulta las novedades en otro idioma o espera a que se publique una traducción",
 		"poll": {
-			"choose_option": "Le sondage se termine le {date}, votez pour votre choix:",
-			"choose_done": "Vote enregistré",
-			"select": "Voter",
-			"select_option": "Sélectionnez une option",
-			"total_participants": "{qty} votants"
+			"choose_option": "La encuesta termina el {date}. Vota por tu elección:",
+			"choose_done": "Voto registrado",
+			"select": "Votar",
+			"select_option": "Seleccione una opción",
+			"total_participants": "{qty} votantes"
 		},
 		"roadmap": {
-			"title": "Découvrez les prochains événements sur DinoRPG !",
-			"small": "Prédiction d'Irma",
+			"title": "¡Descubre los próximos eventos de DinoRPG!",
+			"small": "Predicción de Irma",
 			"strong": {
-				"title1": "Alpha 0.7.0 (Bientôt)",
+				"title1": "Alpha 0.7.0 (Próximamente)",
 				"title2": "Alpha 0.8.0",
 				"title3": "Alpha 0.9.0",
 				"title4": "Alpha 0.10.0"
 			},
-			"help": "Cliquez sur une mise à jour ci-dessus pour obtenir d'avantage d'informations !",
-			"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
-			"futurTitle": "Avenir Dinolandien",
+			"help": "¡Haz clic en una actualización de arriba para obtener más información!",
+			"disclaimer": "Las predicciones de Madame Irma no son infalibles, por lo que no hay ninguna fecha de lanzamiento disponible para estas novedades. Sin embargo, cada evento será anunciado oficialmente en el sitio cuando llegue el momento.",
+			"futurTitle": "Futuro dinolandés",
 			"futureInfo1": {
-				"text1": "Mise en place des scénarios (prisma + db)",
-				"text2": "Mise en place du scénario tutoriel",
-				"text3": "Mise en place du scénario de l'être étrange",
-				"text4": "Correction des bugs"
+				"text1": "Implementación de los escenarios (Prisma + base de datos)",
+				"text2": "Implementación del escenario tutorial",
+				"text3": "Implementación del escenario del ser extraño",
+				"text4": "Corrección de errores"
 			},
 			"futureInfo2": {
-				"text1": "Mise en place du Marché aux éleveurs",
-				"text2": "Correction des bugs"
+				"text1": "Implementación del Mercado de Criadores",
+				"text2": "Corrección de errores"
 			},
 			"futureInfo3": {
-				"text1": "À venir"
+				"text1": "Próximamente"
 			},
 			"futureInfo4": {
-				"text1": "À venir"
+				"text1": "Próximamente"
 			}
 		}
 	},
 	"button": {
-		"buyDinoz": "Acheter un Dinoz !",
-		"chose": "Choisir",
-		"name": "Nommer !",
-		"shop": "Boutique",
-		"search": "Rechercher",
-		"loading": "Chargement...",
-		"noResults": "Aucun résultat",
-		"sortDinoz": "Gérer mes Dinoz"
+		"buyDinoz": "¡Comprar un Dino!",
+		"chose": "Comprar",
+		"name": "Confirmar",
+		"shop": "Ir a la tienda",
+		"search": "Buscar",
+		"loading": "Cargando...",
+		"noResults": "No hay resultados",
+		"sortDinoz": "Administrar mis Dinos"
 	},
 	"popup": {
-		"confirm": "Confirmer cette action ?",
-		"confirmBanAction": "Confirmer ce ban ?",
-		"attention": "Attention",
-		"accept": "Oui",
-		"reject": "Non"
+		"confirm": "¿Confirmas esta acción?",
+		"confirmBanAction": "¿Confirmas este baneo?",
+		"attention": "Atención",
+		"accept": "Sí",
+		"reject": "No"
 	},
 	"dig": {
 		"item": "Votre Dinoz trouve : {item} x{quantity}",
-		"gold": "Votre Dinoz a trouvé {gold} :gold: en creusant ici.",
-		"status": "En creusant, votre Dinoz a trouvé l'objet {item}. Il apparaîtra dans ses statuts. Félicitations !"
+		"gold": "Tu Dino encontró {gold} :gold: mientras cavaba aquí.",
+		"status": "Mientras excavaba, tu Dino encontró el objeto {item}. Aparecerá en su estatus. ¡Felicitaciones!"
 	},
 	"resurrection": {
 		"choice1": {
-			"name": "**Choix 1 :**&&Résurrection",
-			"resurrect": "Ressusciter",
-			"explanation": "Vous pouvez ressusciter votre Dinoz, immédiatement et gratuitement :",
-			"list1": "il retournera à Dinoville",
-			"list2": "il perdra la moitié de ses points d'expérience actuels"
+			"name": "**Opción 1:**&&Resucitar",
+			"resurrect": "Resucitar",
+			"explanation": "Puedes resucitar a tu Dino, inmediatamente y sin costo:",
+			"list1": "volverá a Dinovilla",
+			"list2": "perderá la mitad de sus puntos de experiencia actuales"
 		},
 		"choice2": {
-			"name": "**Choix 2 :**&&Potion d'Ange",
-			"resurrect": "Utiliser une potion",
-			"explanation": "Vous pouvez aussi ressusciter votre Dinoz en achetant une Potion d'Ange dans la {boutique} :",
-			"list1": "il restera au lieu actuel",
-			"list2": "il ne perdra aucun point d'expérience"
+			"name": "**Opción 2:**&& Poción del ángel",
+			"resurrect": "Utilizar una poción",
+			"explanation": "También puedes resucitar a tu Dino comprando una Poción del Ángel en la {boutique}:",
+			"list1": "se quedará en el lugar actual",
+			"list2": "no perderá ningún punto de experiencia"
 		}
 	},
 	"modal": {
 		"messagerie": {
 			"system": "Système",
 			"locked": "Vous devez d'abord débloquer la messagerie.",
-			"actions": "Actions",
-			"create": "Écrire",
-			"research": "Rechercher",
-			"search": "Rechercher une conversation...",
-			"conversations": "Conversations",
-			"disclaimer": "Veuillez sélectionner une conversation.",
-			"close": "Fermer",
-			"participants": "participants",
-			"newMsg": "Nouveau message",
-			"newMsgTitle": "Titre de la conversation :",
-			"title": "Votre titre...",
-			"newMsgParticipants": "Ajouter un destinataire :",
-			"addParticipants": "Ajouter un joueur...",
-			"newMsgMessage": "Votre message :",
-			"message": "Votre message...",
-			"newMsgSend": "Envoyer le message",
-			"playerNotFound": "Ce joueur n'existe pas !",
-			"conversation": "Cette conversation",
-			"actualizeThread": "Actualiser la conversation",
-			"responseConv": "Répondre",
-			"pinnedConv": "Épingler",
-			"deletedConv": "Supprimer",
-			"participantsConv": "Participants",
-			"blockSender": "Bloquer l'expéditeur"
+			"actions": "Acciones",
+			"create": "Escribir",
+			"research": "Buscar",
+			"search": "Buscar una conversación...",
+			"conversations": "Conversaciones",
+			"disclaimer": "Por favor seleccione una conversación.",
+			"close": "Cerrar",
+			"participants": "participantes",
+			"newMsg": "Nuevo mensaje",
+			"newMsgTitle": "Título de la conversación:",
+			"title": "Tu título...",
+			"newMsgParticipants": "Agregar un destinatario:",
+			"addParticipants": "Agrega un jugador...",
+			"newMsgMessage": "Tu mensaje:",
+			"message": "Tu mensaje...",
+			"newMsgSend": "Enviar mensaje",
+			"playerNotFound": "¡Este jugador no existe!",
+			"conversation": "Esta conversación",
+			"actualizeThread": "Actualizar conversación",
+			"responseConv": "Responder",
+			"pinnedConv": "Fijar",
+			"deletedConv": "Eliminar",
+			"participantsConv": "Participantes",
+			"blockSender": "Bloquear remitente"
 		},
 		"password": {
 			"title": "Modifier le mot de passe",
@@ -328,7 +328,7 @@
 		},
 		"modif": "Modification...",
 		"valid": "Valider",
-		"close": "Fermer",
+		"close": "Cerrar",
 		"continue": "Continuer"
 	},
 	"richTextEditor": {
@@ -352,12 +352,12 @@
 		"buttonValidateAdvEditor": "Valider et envoyer le message"
 	},
 	"toast": {
-		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
-		"gold": "Vous avez obtenu {value} :gold:.",
-		"sphere": "Votre Dinoz a appris la compétence {value}.",
-		"action": "Vous avez consommé {value} :irma: et pouvez refaire des actions.",
-		"resurrect": "Votre Dinoz est ressuscité.",
-		"egg": "Vous avez ouvert un œuf de {value}.",
+		"heal": "Tu Dino ha recuperado {value} :hp:.",
+		"gold": "Recibiste {value} :gold:.",
+		"sphere": "Tu Dino ha aprendido la competencia {value}.",
+		"action": "Has consumido {value} :irma: y puedes realizar acciones de nuevo.",
+		"resurrect": "Tu Dino ha resucitado.",
+		"egg": "Has abierto un huevo de {value}.",
 		"dinozAlreadySelling": "Votre Dinoz est déjà en vente.",
 		"noPDA": "Tu as besoin de la Pierre en Diamantite Agglomérée pour accéder à cette page.",
 		"noPMI": "Tu as besoin du Petit Missionnaire Illustré pour accéder à cette page.",
@@ -383,31 +383,31 @@
 			"offerClaimed": "Vos gains ont été récupérés"
 		},
 		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
-		"notEnoughQuantity": "Vous n'avez pas assez d'ingrédients...",
-		"itemBought": "Vous avez acheté {quantity} {itemName}.",
-		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:.",
-		"needIngredientToSell": "Vous devez posséder les ingrédients à vendre.",
-		"finishGrid": "Félicitations ! Vous avez gagné 1000 :gold: pour avoir terminé la grille !",
-		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements.",
-		"maxDinozSelected": "Vous avez déjà sélectionné le nombre maximum de Dinoz",
-		"noDinozSelected": "Aucun Dinoz sélectionné",
-		"basicError": "Une erreur est survenue",
+		"notEnoughQuantity": "No tienes suficientes ingredientes...",
+		"itemBought": "Has comprado {quantity} {itemName}.",
+		"ingredientSold": "Vendiste tus ingredientes por un total de {value} :gold:.",
+		"needIngredientToSell": "Debes tener los ingredientes que quieres vender.",
+		"finishGrid": "¡Felicidades! ¡Has ganado 1000 :gold: por completar el tablero!",
+		"errorFetchingRankings": "Se produjo un error al obtener la clasificación.",
+		"maxDinozSelected": "Ya has seleccionado el máximo número de Dinos",
+		"noDinozSelected": "Ningún Dino seleccionado",
+		"basicError": "Se ha producido un error",
 		"special": {
-			"box_common": "La boîte commune contenait {qty} {value} !",
-			"box_rare": "La boîte rare contenait {qty} {value} !",
-			"box_epic": "La boîte épique contenait {qty} {value} !",
-			"box_legendary": "La boîte légendaire contenait {qty} {value} !",
-			"devil_ointment": "Vous avez soigné le statut maudit de votre Dinoz.",
-			"amnesic_rice": "Votre Dinoz ne sait plus comment il se prénomme, il a également perdu toute son expérience :xp: !",
-			"pampleboum": "Ouille ! Il y avait un noyau dans ce pampleboum !"
+			"box_common": "¡La caja común contenía {qty} {value}!",
+			"box_rare": "¡La caja rara contenía {qty} {value}!",
+			"box_epic": "¡La caja épica contenía {qty} {value}!",
+			"box_legendary": "¡La caja legendaria contenía {qty} {value}!",
+			"devil_ointment": "Has eliminado el estado maldito de tu Dino.",
+			"amnesic_rice": "¡Tu Dino ha olvidado su nombre y además perdió todo su :xp: !",
+			"pampleboum": "¡Ay! ¡Había un hoyo en este Pomelum!"
 		},
 		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
 		"Invalid_credentials": "Identifiants incorrects.",
 		"Missing_device_cookie": "Impossible d’identifier votre navigateur. Veuillez autoriser les cookies et réessayer.",
 		"Too_many_accounts_created_from_this_device_this_month": "Trop de comptes ont été créés depuis ce navigateur ce mois-ci. Veuillez réessayer le mois prochain.",
 		"Too_many_accounts_created_from_this_network_this_month": "Trop de comptes ont été créés depuis ce réseau ce mois-ci. Veuillez réessayer le mois prochain.",
-		"userNotFound": "Le joueur {authedId} n'a pas été trouvé.",
-		"dinozNotFound": "Le Dinoz {dinozId} n'a pas été trouvé.",
+		"userNotFound": "Le joueur {{authedId}} n'a pas été trouvé.",
+		"dinozNotFound": "Le Dinoz {{dinozId}} n'a pas été trouvé.",
 		"dinozDoesNotBelongToUser": "Le Dinoz {dinozId} n'appartient pas au joueur {userId}.",
 		"invalidId": "L'id est invalide",
 		"invalidSkillId": "L'id de la compétence est invalide",
@@ -441,26 +441,26 @@
 		"unknownMission": "Mission inconnue : {missionKey}."
 	},
 	"tooltip": {
-		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
+		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
 		"item": {
-			"use": "Utiliser **immédiatement**",
-			"useOff": "Cet objet ne peut pas être **utilisé**",
-			"equipTitle": "Placer dans **l'équipement de combat**&&//Les objets équipés pourront être utilisés pendant les combats par votre Dinoz//",
-			"equipDescription": "//Les objets équipés pourront être utilisés pendant les combats par votre Dinoz//",
-			"equip": "Cet objet peut être placé dans **l'équipement de combat**",
-			"equipOff": "Cet objet **ne peut pas être placé** dans l'équipement de combat",
-			"maxQuantity": "Quantité maximale :"
+			"use": "Utilizar **inmediatamente**",
+			"useOff": "Este objeto no puede ser **utilizado**",
+			"equipTitle": "Colocar en **el equipamiento de combate.**&&//Los objetos colocados aquí pueden ser utilizados por tu Dino durante el combate//",
+			"equipDescription": "//Los objetos colocados aquí pueden ser utilizados por tu Dino durante el combate//",
+			"equip": "Este objeto no puede ser **equipado.**",
+			"equipOff": "Este objeto no puede ser **equipado.**",
+			"maxQuantity": "Cantidad máxima:"
 		},
 		"shop": {
-			"buyMaxTopNote": "Vous possédez {own} exemplaire(s) de cet objet, sur {max} maximum.",
-			"buyMaxBottomNote": "//Cliquez ici pour remplir votre stock de cet objet.//",
-			"invalidQuantity": "Veuillez entrer une quantité **valide**.",
-			"invalidQuantity_foot": "//Vérifiez que vous avez bien entré un nombre ou que vous avez assez de place.//"
+			"buyMaxTopNote": "Posees {own} ejemplar(es) de este objeto, de un máximo de {max}.",
+			"buyMaxBottomNote": "//Haga clic aquí para llenar el stock de este artículo.//",
+			"invalidQuantity": "Por favor, introduzca una cantidad **válida**.",
+			"invalidQuantity_foot": "//Comprueba si has introducido un número válido o si tienes suficiente espacio.//"
 		},
-		"serverTime": "Temps du serveur"
+		"serverTime": "Hora del servidor"
 	},
 	"ranking": {
-		"title": "Classement :",
+		"title": "Clasificación :",
 		"tabs": {
 			"players": "Joueurs",
 			"average": "Moyenne",
@@ -468,30 +468,30 @@
 		},
 		"th": {
 			"pos": "Pos.",
-			"player": "Maître",
-			"dinoz": "Dinoz",
+			"player": "Maestro",
+			"dinoz": "Dinos",
 			"points": "Pts",
-			"average": "Moy.",
+			"average": "Med.",
 			"completion": "Comp.",
-			"clans": "Clans",
-			"treasure": "Trésor du Clan"
+			"clans": "Clanes",
+			"treasure": "Tesoro del Clan"
 		},
 		"disclaimer": {
-			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
-			"average": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la moyenne des niveaux de tous les Dinoz du joueur.",
-			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les Dinoz actifs et la progression dans l'histoire du jeu."
+			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
+			"average": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
+			"completion": "Las clasificaciones de jugadores se actualizan a medianoche y se calculan utilizando la fórmula de finalización basada en los Dinos activos y el progreso en la historia del juego."
 		},
 		"page": {
-			"previous": "Page précedente",
-			"next": "Page suivante"
+			"previous": "Página anterior",
+			"next": "Página siguiente"
 		},
 		"placeholder": {
 			"searchUser": "Rechercher un joueur",
-			"searchClan": "Rechercher un clan"
+			"searchClan": "Buscar un Clan"
 		}
 	},
 	"accountPage": {
-		"title": "Mon Compte",
+		"title": "Mi Cuenta",
 		"userTitle": "Joueur : {name}",
 		"noDescription": "Aucune description sur ce profil...",
 		"editProfile": "Editer mon profil",
@@ -504,7 +504,7 @@
 		"profil": "Profil DinoRPG",
 		"player": "Joueur :",
 		"dinoz": "Dinoz :",
-		"ranking": "Classement :",
+		"ranking": "Clasificación :",
 		"inscription": "Inscrit le",
 		"clan": "Clan :",
 		"completion": "Complétion",
@@ -542,23 +542,23 @@
 	},
 	"dinoz": {
 		"hud": {
-			"following": "Ce Dinoz suit son chef de groupe.",
-			"gather": "Ce Dinoz peut récolter en ce lieu.",
-			"rest": "Ce Dinoz se repose.",
-			"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
-			"remainingActions": "Votre Dinoz peut encore effectuer des actions gratuites.",
-			"follow": "Le chef de groupe est {leader}.",
-			"followed": "Ce Dinoz est chef de groupe.",
-			"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
-			"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}"
+			"following": "Este Dino sigue a su líder de grupo.",
+			"gather": "Este Dino puede recolectar en este lugar.",
+			"rest": "Este Dino está descansando.",
+			"resting": "Tu Dino está actualmente descansando. Recuperará {hp} :pv: en {min} minutos.",
+			"remainingActions": "Tu Dino aún puede realizar acciones gratuitas.",
+			"follow": "El líder del grupo es {leader}.",
+			"followed": "Este Dino es el líder del grupo.",
+			"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando.",
+			"dojoTeam": "Este Dino está inscrito en un Torneo Inter-Dojo. No puede superar el nivel {max} mientras el torneo en curso no haya terminado.",
+			"unfreezeCountdown": "Tu Dino se está descongelando y estará disponible en {time}"
 		},
 		"stateReason": {
-			"frozen": "Votre Dinoz est congelé",
-			"sacrificed": "Votre Dinoz est sacrifié",
-			"selling": "Votre Dinoz est en vente",
+			"frozen": "Tu Dino está congelado",
+			"sacrificed": "Tu Dino está sacrificado",
+			"selling": "Tu Dino está en venta",
 			"superdom": "Votre Dinoz est au superdom",
-			"resting": "Votre Dinoz se repose"
+			"resting": "Tu Dino está descansando"
 		}
 	},
 	"race": {
@@ -691,7 +691,7 @@
 			"CrampeChronique": "Crampe chronique",
 			"BarriereElectrifiee": "Barrière électrifiée",
 			"Agilite": "Agilité",
-			"Esquive": "Esquive",
+			"Esquive": "Esquiva",
 			"Elasticite": "Élasticité",
 			"MaitriseCorporelle": "Maîtrise corporelle",
 			"CompetenceDouble": "Compétence double",
@@ -1379,9 +1379,9 @@
 	"items": {
 		"disclaimer": "Ici, sont regroupés tous les objets que vous avez pu obtenir au cours de vos aventures.",
 		"tname": "Nom",
-		"tstock": "Stock",
+		"tstock": "Almacén",
 		"name": {
-			"gold": "Pièces d'or",
+			"gold": "Monedas de oro",
 			"potion_irma": "Potion de Madame Irma",
 			"potion_angel": "Potion d'Ange",
 			"cloud_burger": "Nuage Burger",
@@ -1644,7 +1644,7 @@
 			"easter_egg": "Un oeuf d'Urma permet d'obtenir un objet parmi tous ceux qui existent à Dinoland. Objet Rare ou commun, la chance sera-t-elle de votre côté ?",
 			"fire_cracker": "Ce pétard vous permet de déclencher un feu d'artifice à Dinoville pour gagner des trésors !",
 			"special_potion_irma": "La fameuse Potion de Madame Irma permet au Dinoz qui la boit de *jouer une nouvelle action immédiatement* sans devoir attendre le lendemain. Mais vous ne pouvez en porter que 3.",
-			"gold1": "Pièces d'or",
+			"gold1": "Monedas de oro",
 			"daily_ticket": "Ce ticket vous permet d'ouvrir une case quotidienne à l'université.",
 			"box_common": "Cette boîte semble contenir des objets assez communs.",
 			"box_rare": "Cette boîte brillante semble contenir des objets rares.",
@@ -1657,8 +1657,8 @@
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
-		"tname": "Ingrédients",
-		"tstock": "Stock",
+		"tname": "Ingredientes",
+		"tstock": "Almacén",
 		"tquantity": "Quantité",
 		"name": {
 			"merou_lujidane": "Mérou Lujidané",
@@ -2187,7 +2187,7 @@
 			"chix4a": "TamagoDino",
 			"chjx1a": "Fleur de feu",
 			"chjx1b": "étoile d'or",
-			"chjx2a": "Pièces d'or",
+			"chjx2a": "Monedas de oro",
 			"chjx2b": "Champignon pour petites personnes",
 			"chjx3a": "Carapace habitée",
 			"chjx3b": "Champignon agressif",
@@ -2507,7 +2507,7 @@
 			"follow": "Suivre",
 			"unfollow": "Ne plus suivre",
 			"levelup": "Niveau Supplémentaire !",
-			"resurrect": "Ressusciter",
+			"resurrect": "Resucitar",
 			"dig": "Creuser",
 			"cueille": "Cueillir",
 			"fish": "Pêcher",
@@ -2533,7 +2533,7 @@
 			"itinerant_shop": "Marchand Ambulant",
 			"reincarnation": "Réincarnation",
 			"change_leader": "Devenir Leader",
-			"fb_tournament": "Tournoi de Forcebrut",
+			"fb_tournament": "Tournoi",
 			"CEF": "Centre d'Entraînement de Fosselave"
 		}
 	},
@@ -2652,7 +2652,7 @@
 		"event": {
 			"christmas_ticket": "Il semblerait que ce monstre possédait un ticket de Noël sur lui. Quelle aubaine !"
 		},
-		"player": "Maître",
+		"player": "Maestro",
 		"vs": "VS"
 	},
 	"gather": {
@@ -2687,7 +2687,7 @@
 	},
 	"faq": {
 		"intro": "Vous pouvez trouver ici toutes les réponses à vos questions sur le jeu. Essayez toutefois de ne pas trop utiliser cette section, car de nombreux secrets sont plus amusants si vous les découvrez par vous-même en cherchant un peu.",
-		"search": "Rechercher",
+		"search": "Buscar",
 		"qa": "Questions / Réponses :",
 		"faq1": {
 			"question": "Pourquoi les deux dernières missions de Papy Joe ne se débloquent pas ?",
@@ -3111,13 +3111,13 @@
 				"give": "Ah ! Je vois que toi aussi tu aime bien ce Corail dûr comme la pierre ! Tiens, j'te donne cet enchantillon, je l'ai cassé tout à l'heure !"
 			},
 			"choice": {
-				"yes": "Oui",
-				"nothing": "Oui",
-				"repair": "Oui",
-				"nothing2": "Oui",
-				"repair2": "Oui",
+				"yes": "Sí",
+				"nothing": "Sí",
+				"repair": "Sí",
+				"nothing2": "Sí",
+				"repair2": "Sí",
 				"give": "Génial !",
-				"no": "Non",
+				"no": "No",
 				"thanks": "Merci !",
 				"next": "Ah bon...",
 				"next2": "Vraiment...",
@@ -3147,7 +3147,7 @@
 			}
 		},
 		"joveboze": {
-			"name": "Joveboze",
+			"name": "Jovezboze",
 			"dialog": {
 				"begin": "Ol'a el chti ga ! Té vi laté du viou Rasca ?",
 				"trad": "Personne ici ne semble comprendre ce que dit Jovébozé. D'après les informations que vous avez recueillies, il s'agirait d'un dialecte local de Prêcheurs, voire d'un dialecte spécifique à Jovébozé...",
@@ -3834,7 +3834,7 @@
 				"name": "L'exploit du mois",
 				"begin": "Uhm... J'ai encore un Golf de prévu avec le Roi le mois prochain, et figure toi qu'il veut encore entendre parler de tes exploits... Que dirais-tu d'aller tuer quelques Coqdur rapidement ? Tu seras bien récompensé !",
 				"end": "Ah ! Super ! Je vais maintenant réfléchir à rajouter un peu d'épique pour relever tout cela ! Le Roi devrait être ravi !",
-				"kill": "Coqdurs"
+				"kill": "Coqs"
 			}
 		},
 		"shaman": {
