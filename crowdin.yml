@@ -18,4 +18,8 @@ files:
         en: EN
         es: ES
         de: DE
+    translation_replace:
+      'en.json': 'EN.json'
+      'es.json': 'ES.json'
+      'de.json': 'DE.json'
     update_option: update_as_unapproved
