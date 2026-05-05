@@ -101,14 +101,7 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 	if (dinozData.state !== null) {
 		throw new ExpectedError('Dinoz is not able to fight.');
 	}
-	let team = user.dinoz;
-	const unavailableFollowers = team.filter(d => d.life <= 0 || d.state !== null);
-	if (unavailableFollowers.length > 0) {
-		for (const d of unavailableFollowers) {
-			await updateDinoz(d.id, { leader: { disconnect: true } });
-		}
-		team = team.filter(d => d.life > 0 && d.state === null);
-	}
+	const team = [dinozData];
 	if (!isAlive(dinozData)) {
 		throw new ExpectedError('dead');
 	}
