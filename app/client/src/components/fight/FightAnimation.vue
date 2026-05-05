@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue';
+import { defineComponent, toRaw, type PropType } from 'vue';
 import { Fight } from '@eternaltwin/dinorpg_animations';
 import type { preFightLoader } from '@dinorpg/core/models/fight/transpiler.js';
 
@@ -17,13 +17,20 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			loadedFight: null as unknown as Fight
+			loadedFight: null as Fight | null
 		};
 	},
 	methods: {
-		loadAnimation() {
-			const container = this.$refs.container as HTMLCanvasElement;
-			this.loadedFight = new Fight(this.fight);
+		async loadAnimation() {
+			await this.$nextTick();
+			const fight = this.fight;
+			const container = this.$refs.container as HTMLDivElement | undefined;
+			if (!container || !fight?.history?.length) {
+				return;
+			}
+			this.loadedFight?.destroy();
+			container.replaceChildren();
+			this.loadedFight = new Fight(toRaw(fight));
 			const display = this.loadedFight.getDisplay();
 			display.style.maxWidth = '100%';
 			container.appendChild(display);
@@ -32,8 +39,8 @@ export default defineComponent({
 	mounted() {
 		this.loadAnimation();
 	},
-	unmounted() {
-		this.loadedFight.destroy();
+	beforeUnmount() {
+		this.loadedFight?.destroy();
 	}
 });
 </script>

@@ -229,7 +229,7 @@ function isCompletedFightReturnPhase(
 }
 
 function isDialogFightReturnPhase(phaseId: string): boolean {
-	return ['fight_win', 'attack_win', 'show_win', 'water_win', 'fire_win'].includes(phaseId);
+	return ['fight_win', 'attack_win', 'show_win', 'water_win', 'fire_win', 'comb_win'].includes(phaseId);
 }
 
 export async function resumeDialogPhase(params: {
