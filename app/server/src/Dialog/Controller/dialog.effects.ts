@@ -10,7 +10,6 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/client.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
-import { getItemMaxQuantity } from '../../Inventory/Service/getAllItemsData.service.js';
 import { unlockDinozMission } from '../../Mission/Controller/mission.progress.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { DialogContext } from './dialog.context.js';
@@ -122,7 +121,7 @@ function getDialogItemMaxQuantity(context: DialogContext, itemId: number) {
 		throw new ExpectedError(`Item ${itemId} does not exist`);
 	}
 	if (item.itemId === Item.GOBLIN_MERGUEZ) {
-		return context.user.shopKeeper ? 150 : 100;
+		return context.user.shopKeeper ? 150 : 20;
 	}
 	if (context.user.shopKeeper && item.itemType !== ItemType.MAGICAL) {
 		return Math.round(item.maxQuantity * 1.5);

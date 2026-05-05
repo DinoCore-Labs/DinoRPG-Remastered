@@ -12,7 +12,7 @@ export const getItemMaxQuantity = (
 	item: ItemFiche
 ) => {
 	if (item.itemId === Item.GOBLIN_MERGUEZ && userInventory.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD)) {
-		return userInventory.shopKeeper ? 150 : 100;
+		return userInventory.shopKeeper ? 150 : 20;
 	}
 	if (userInventory.shopKeeper && item.itemType !== ItemType.MAGICAL) {
 		return Math.round(item.maxQuantity * 1.5);
