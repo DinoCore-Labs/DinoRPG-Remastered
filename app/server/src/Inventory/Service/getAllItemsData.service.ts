@@ -1,6 +1,7 @@
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -10,32 +11,24 @@ export const getItemMaxQuantity = (
 	userInventory: NonNullable<Awaited<ReturnType<typeof getUserInventoryDataRequest>>>,
 	item: ItemFiche
 ) => {
-	if (
-		item.itemId === Item.GOBLIN_MERGUEZ /*&&
-		playerInventoryData.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD)*/
-	) {
+	if (item.itemId === Item.GOBLIN_MERGUEZ && userInventory.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD)) {
 		return userInventory.shopKeeper ? 150 : 100;
 	}
-
 	if (userInventory.shopKeeper && item.itemType !== ItemType.MAGICAL) {
 		return Math.round(item.maxQuantity * 1.5);
 	}
-
 	return item.maxQuantity;
 };
 
 export async function getAllItemsData(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;
 	if (!userId) return reply.status(401).send({ error: 'Unauthorized' });
-
 	try {
 		const userInventoryData = await getUserInventoryDataRequest(userId);
 		if (!userInventoryData) {
 			return reply.status(404).send({ error: 'No inventory data found for user' });
 		}
-
 		const itemsById = new Map(Object.values(itemList).map(item => [item.itemId, item]));
-
 		const dto = userInventoryData.items.map(i => {
 			const item = itemsById.get(i.itemId);
 			if (!item) {
