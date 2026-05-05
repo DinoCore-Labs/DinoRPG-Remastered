@@ -3518,6 +3518,27 @@
 				"potion": "Vous êtes donc un Singe Antique !!!"
 			}
 		},
+		"baoFan": {
+			"name": "Fan de Bao",
+			"dialog": {
+				"begin": "Bonjour monsieur ! Vous avez parlé à Monsieur Bao ? Il est vraiment génniaaaaaalll non ???",
+				"ok": "Hein, que c'est vrai !! Il est trop cool ! J'ai même traversé la Forêt de Grumhel exprès pour qu'il me raconte plein d'histoires super ! Vous savez quoi, il a déjà assommé un Gorilloz démon, un jour ! Si si ! Et puis il était entouré de plein d'animaux méchants ! Et tu sais quoi ? Et ben il les a tous battus !",
+				"wah": "Oui ! Et M. Bao a bien voulu m'apprendre quelques trucs ! Il a dit que je suis très doué pour mon âge ! C'est bien, hein ? Attends regarde... je vais envoûter un truc, tu veux que je te montre ?",
+				"yes": ".............. Voilà, j'ai fini ! Tu le veux ? Tiens... C'est un Charme Bao ! Alors prends-en soin, hein ! Ça devrait aider ton Dinoz pendant quelques combats. Quand tout le fluide spitruel sera épuisé, tu pourras revenir me voir pour que je le recharge !",
+				"spirit": "Heu... oui c'est ça ! Spitri... péritel... spriti... ! Ho ils sont trop compliqués vos mots technologiques !",
+				"thanks": "Hooo tu t'en vas déjà... Tu reviendras, hein ? À bientôt alors !",
+				"nothing": "Ah... mais ton Dinoz a déjà un Charme Bao ! Regarde, y'a encore de l'énergie... tu vois ? Quand il ne marchera plus, je pourrai te le recharger.",
+				"no": "Ah bon ? Bon, ben tant pis pour toi alors... *boude*."
+			},
+			"choice": {
+				"ok": "Euh... oui",
+				"wah": "Waaahh !!",
+				"yes": "Ok !",
+				"no": "Non merci",
+				"spirit": "\"Spirituel\" tu veux dire ?",
+				"thanks": "Bon, je dois partir... merci beaucoup pour le Charme Bao !"
+			}
+		},
 		"dian": {
 			"name": "Dian Korgsey",
 			"dialog": {
