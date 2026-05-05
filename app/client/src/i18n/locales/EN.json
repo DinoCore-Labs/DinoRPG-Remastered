@@ -486,7 +486,7 @@
 			"next": "Next page"
 		},
 		"placeholder": {
-			"searchPlayer": "Search a player",
+			"searchUser": "Rechercher un joueur",
 			"searchClan": "Search a clan"
 		}
 	},
@@ -504,10 +504,10 @@
 		"profil": "Profil DinoRPG",
 		"player": "Player:",
 		"dinoz": "Dinoz:",
-		"ranking": "Classement :",
+		"ranking": "Ranking:",
 		"inscription": "Inscrit le",
 		"clan": "Clan :",
-		"completion": "Complétion",
+		"completion": "Completion",
 		"rewards": "Récompenses épiques",
 		"editAccount": "Modifier le profil",
 		"options": {
@@ -1499,6 +1499,7 @@
 			"candle_card": "Anniversary Candle Card",
 			"christmas_ticket": "Xmas Ticket",
 			"tictac_ticket": "Tac Tickets",
+			"anniversary_ticket": "Ticket d'Anniversaire",
 			"easter_egg": "Madame Urma's Egg",
 			"fire_cracker": "Firecracker",
 			"special_potion_irma": "Special Madame Irma's Potion",
@@ -1639,10 +1640,11 @@
 			"candle_card": "This Anniversary card gives you access to the sandcastle game at the Frish Port",
 			"christmas_ticket": "Use to play in the Snowplough Game and earn 1,000 gold coins, 5,000 or a Santaz.",
 			"tictac_ticket": "These Tac Tickets will allow you to dig in Grandpa Joe's garden, in search of treasures hidden by his great-grandfather.",
+			"anniversary_ticket": "This Anniversary card gives you access to the sandcastle game at the Frish Port",
 			"easter_egg": "An Urma's egg can be used to obtain an item among all those that exist in Dinoland. Will it be a rare or common item you'll get?",
 			"fire_cracker": "With this firecracker, you can set off fireworks in Dinotown to earn treasures!",
 			"special_potion_irma": "Madam Irma's famous potion allows the Dinoz who drinks it to *play a new action immediately* without having to wait for the next day. But you can only carry 3.",
-			"gold1": "Pièces d'or",
+			"gold1": "Gold coins",
 			"daily_ticket": "This ticket allows you to unlock a daily box at the University.",
 			"box_common": "This box seems to contain common objects.",
 			"box_rare": "This shiny box seems to contain rare objects.",
@@ -2465,6 +2467,7 @@
 		}
 	},
 	"action": {
+		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
 		"description": {
 			"fight": "Search for a monster to fight at this location.",
 			"follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
@@ -2496,7 +2499,8 @@
 			"itinerant_shop": "The Itinerant Merchant travels throughout Dinoland and buys *Ingredients* from Dinoz Masters: he pays well.",
 			"reincarnation": "Your Dinoz can be reincarnated! It will keep the same destiny of the elements.",
 			"change_leader": "Your Dinoz can become the new leader of the group.",
-			"fb_tournament": "Access the BrutForce Tournament."
+			"fb_tournament": "Access the BrutForce Tournament.",
+			"CEF": "Cher client, bienvenue au Centre d'Entraînement de Fosselave !"
 		},
 		"name": {
 			"fight": "Fight",
@@ -2529,7 +2533,8 @@
 			"itinerant_shop": "Travelling Merchant",
 			"reincarnation": "Reincarnate",
 			"change_leader": "Become Leader",
-			"fb_tournament": "Tournament"
+			"fb_tournament": "Tournament",
+			"CEF": "Centre d'Entraînement de Fosselave"
 		}
 	},
 	"fight": {
@@ -2564,6 +2569,7 @@
 			"hippo": "Hippoclamp",
 			"rocky": "Rocky",
 			"pira": "Pirhanoz",
+			"pira2": "Pirhaloz",
 			"kazka": "Kazkadine",
 			"anguil": "Eeloz",
 			"korgon": "Facetious Korgon",
@@ -2573,6 +2579,7 @@
 			"goblin": "Goblin",
 			"bat": "Tawny-Bat | Tawny-Bat | Tawny-Bats",
 			"ronciv": "Bramble Eater | Bramble Eater | Bramble Eaters",
+			"gardien": "Gardien Arboricole",
 			"grdien": "Tree Guardian",
 			"rkrgns": "Korgon Reinforcement",
 			"egrllz": "Gorilloz Spirit",
@@ -2609,6 +2616,7 @@
 		},
 		"step": {
 			"timeLimit": "The fight will last at maximum {time} units of time.",
+			"timeOut": "Le combat s'est terminé car il a atteint sa durée maximale.",
 			"arrive": "**{name}** has arrived !",
 			"resist": "**{dinoz}** resisted and reduced the damage.",
 			"hit": "**{fighter}** performed an assault {elements} and dealt **{damage}** damage to **{target}**.",
@@ -3006,9 +3014,40 @@
 			"security-1": "**No matter who asks for it**... && && **Never** disclose your login credentials and passwords !"
 		}
 	},
+	"trainingCenter": {
+		"title": "Centre d'Entraînement de Fosselave",
+		"subtitle": "Cher client, bienvenue à la L.T.C. Notre Centre est autorisé par l’I.D.R.L (Institut de recherche et d’apprentissage de Dinoz) et vous permet de développer la force musculaire et la performance de votre Dinoz avec l'aide de notre programme de combat sur mesure. ",
+		"description": "Le principe est simple : vous payez pour combattre contre un ou plusieurs monstres. Ce combat vous rapportera de l'expérience, mais pas d'or. Vous avez le choix entre trois difficultés.",
+		"warning": "N'oubliez pas de soigner votre Dinoz avant de choisir un programme ! Le C.E.F. ne consomme pas l'action quotidienne, mais chaque séance est payante.",
+		"monstersNote": "Les monstres rencontrés dépendent du niveau de votre Dinoz et sont tous des monstres du Grand Tout Chaud.",
+		"xpBonus": "XP",
+		"programs": {
+			"easy": {
+				"name": "Facile",
+				"description": "Un entraînement accessible."
+			},
+			"intermediate": {
+				"name": "Intermédiaire",
+				"description": "Un entraînement équilibré avec un bonus d'expérience."
+			},
+			"advanced": {
+				"name": "Avancé",
+				"description": "Un entraînement plus risqué avec un meilleur bonus d'expérience."
+			}
+		},
+		"errors": {
+			"invalidProgram": "Ce programme d'entraînement n'existe pas.",
+			"dinozMustBeNamed": "Votre Dinoz doit avoir un nom avant de s'entraîner.",
+			"unavailable": "Ce Dinoz ne peut pas s'entraîner pour le moment.",
+			"wrongPlace": "Votre Dinoz doit être à Fosselave pour accéder au Centre d'Entraînement.",
+			"levelTooHigh": "Le Centre d'Entraînement est réservé aux Dinoz de niveau inférieur à 30.",
+			"needMemberCard": "Votre Dinoz doit posséder une Carte de Membre pour accéder au Centre d'Entraînement.",
+			"notEnoughGold": "Vous n'avez pas assez d'or pour choisir ce programme."
+		}
+	},
 	"npc": {
 		"description": "You can talk to this person.",
-		"stop": "Stop chatting",
+		"leave": "Arrêter la discussion",
 		"openLink": "Open link",
 		"continue": "Continue",
 		"eugene": {
@@ -3029,10 +3068,10 @@
 				"learn": "So, your Dinoz wants to learn a technique? For this, your Dinoz will have to fight a monster. I will train him only if he is victorious. By the way, which technique do you want me to teach him?",
 				"water": "Alright. If your Dinoz wins this fight, I will teach him how to use the Buoy. With this item, your Dinoz will be able to cross short distances of water.",
 				"fire": "Climbing isn't an easy technique to master, you must be in possession of the Climbing Gear in order to learn it. If your Dinoz wins the battle against this monster, I'll provide some equipment and teach him the basics. Your Dinoz will then be able to climb the Big All-Hot.",
-				"water_win": "Well done! You were very impressive! As promised, I will give your Dinoz a buoy. Your Dinoz should now be able to access the Atlanteid Islands to the south of Dinoland. Good luck, and be careful!",
-				"fire_win": "Well done! You were very impressive! As promised, I will give your Dinoz the Climbing Gear. Your Dinoz should now be able to climb up the precipitous slopes of the Big All-Hot. The Monsters there are very warm, so be careful when you're climbing!",
 				"learn_water": "You want the Buoy? First you're going to have to fight this monster!",
 				"learn_fire": "Did you come to get the Climbing Gear? To get it, you'll need to fight this monster first.",
+				"water_fight": "Bravo, beau combat ! Comme promis, je viens de donner la Bouée à ton Dinoz. Maintenant il devrait pouvoir accéder aux Iles Atlantéinées au sud de Dinoland. Bonne chance, et sois prudent !",
+				"fire_fight": "Bravo, beau combat ! Ton Dinoz possède maintenant le Matériel d'Escalade, et il devrait pouvoir gravir les pentes escarpées du volcan du Grand Tout Chaud. Les monstres là-bas sont très chaleureux, alors fais attention en t'y rendant !",
 				"learn_done": "I have nothing else to teach to your Dinoz. But don't worry, there are people throughout Dinoland who will teach it new techniques!"
 			},
 			"choice": {
@@ -3045,7 +3084,7 @@
 				"stone": "This Old Stone?",
 				"stone_yes": "Of course, here it is.",
 				"stone_no": "Hey! Don't touch it! Before, I would like to know something...",
-				"menu": "Back",
+				"back": "Retour",
 				"noquestion": "None of these",
 				"learn": "Learn",
 				"water": "Swimming with a buoy",
@@ -3375,7 +3414,7 @@
 			}
 		},
 		"venerable": {
-			"name": "Le Vénérable",
+			"name": "The Venerable",
 			"intro": {
 				"dialog": {
 					"begin": "GWWWWWWWWAAAAAAARGGGGGGGHHHHHH !!!! Qui oooose venir me dérangerrr pendannt ma siiiessteee ?????",
@@ -3664,12 +3703,19 @@
 	},
 	"missions": {
 		"header": "Missions list",
-		"th": { "title": "Title", "status": "Status" },
+		"th": {
+			"title": "Title",
+			"status": "Status"
+		},
 		"status": {
 			"available": "Disponible",
 			"unavailable": "Indisponible",
 			"ongoing": "En cours",
 			"finished": "Terminée"
+		},
+		"unavailable": {
+			"title": "Mission Bloquée",
+			"description": "Cette Mission ne vous est pas accessible pour l'instant, il vous faudra revenir plus tard."
 		},
 		"accept": "Accept the Mission",
 		"giveUp": "Give up",
@@ -3697,7 +3743,7 @@
 					"text": "Ooooohhhh merci mon petit, ce dîner va être très réussi grâce à toi ! Retourne vite voir Papy Joe pour obtenir ta récompense..."
 				},
 				"validation": {
-					"name": "Papy Joe",
+					"name": "Grandpa Joe",
 					"text": "Retourner voir Papy Joe pour valider la mission."
 				}
 			},
@@ -3732,7 +3778,7 @@
 				"begin": "Le rosier préféré de Madame Seyche est en sale état à cause de la canicule. Pourrais-tu aller chercher de l'Eau Pure à la Fontaine et lui en apporter ?",
 				"end": "Cette charmante Madame Seyche m'a félicité pour ton travail, tu as bien mérité ta récompense !",
 				"pureWater": {
-					"name": "Eau Pure",
+					"name": "Pure Water",
 					"description": "Vous obtenez de l'Eau Pure qui est particulièrement conseillée pour arroser les fleurs..."
 				},
 				"madameSeyche": {
@@ -3814,7 +3860,7 @@
 				"name": "L'épouvantarchelion",
 				"begin": "Ha, ces merguez d'Archelion m'ont donné la pêche ! Bon, je vois que tu es quelqu'un de capable ! Rends-moi un dernier petit service et je te laisserai mon Guide de Stratégie. La région du Grand Tout-Chaud est un habitat idéal pour les Archelions de toutes tailles... Sauvage, pas humide pour un sou et en perpetuelle éruption ! Mais il faut les tenir éloignés de nous si on ne veut pas leur servir de déjeuner... Je veux que tu me fabriques une sorte d'épouvantail à Archelions ! Il me faut donc des Griffes Taillées.",
 				"kill": {
-					"barche": "Bébé Archélion",
+					"barche": "Baby Archelion",
 					"wave": "monstres"
 				},
 				"claws": {
@@ -3836,7 +3882,7 @@
 				"name": "Au feu !",
 				"begin": "Comme tu as dû le remarquer, la région est peuplée d'un nombre invraisemblable de Flammèches... Même si leur présence est nécessaire au grand équilibre cosmique, leur nombre progresse bien trop vite et doit être contrôlé ! Il faut réagir vite, rends-toi au Tunnel sous la Branche en longeant le cratère, leur présence là-bas est devenue critique !",
 				"kill": {
-					"flam": "Flammèche"
+					"flam": "Flamelet"
 				},
 				"inspectAshes": {
 					"name": "Examiner le tas de cendres",
@@ -4091,7 +4137,7 @@
 			"kilang": {
 				"name": "Les anguilloz au vinaigre",
 				"begin": "Connais-tu le plat traditionnel des Anguilloz au Vinaigre ? C'est vraiment délicieux ! Peux-tu te procurer des Anguilloz fraîches et du vinaigre, puis apporter le tout à mon ami au Port de Prêche ? C'est pour un cadeau !",
-				"kill": "Anguilloz",
+				"kill": "Eeloz",
 				"wineMerchant": {
 					"name": "Marchand de Vins",
 					"text": "Uhm ? Tu viens de la part de M. Bao ? Tu cherches du vinaigre ?? Tiens, j'ai ce vieux Chateau Forcebrut qui devrait être parfait pour la cuisine."
