@@ -11,6 +11,7 @@ export async function assertOwnedDinoz(tx: MissionTransaction, userId: string, d
 			id: true,
 			userId: true,
 			level: true,
+			placeId: true,
 			status: {
 				select: {
 					statusId: true
