@@ -378,7 +378,7 @@ export const placeList: Array<PlaceDisplayed> = [
 	},
 	{
 		placeId: 33,
-		name: 'chbroc', //OK
+		name: 'broc', //OK
 		posLeft: 259,
 		posTop: 219,
 		icon: PlaceIcon.DEFAULT,
