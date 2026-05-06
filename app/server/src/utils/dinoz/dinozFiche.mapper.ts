@@ -24,6 +24,7 @@ import {
 	UserRewards
 } from '../../../../prisma/index.js';
 import { getMissionDefinitionByKey } from '../../Mission/Controller/mission.registry.js';
+import { resolveDisplayedMissionGoal } from '../../Mission/Service/missionCurrent.service.js';
 import { buildConditionContext } from '../conditions/buildConditionContext.js';
 import { UserForConditionCheck } from '../user/userConditionCheck.js';
 
@@ -257,17 +258,23 @@ export const canGoToThisPlace = (user: UserForConditionCheck, condition: Conditi
 };
 
 export const getCurrentMission = (dinoz: {
+	placeId: number | null;
 	missions?: Pick<DinozMissions, 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
 }): DinozCurrentMission | null => {
 	const activeMission = dinoz.missions?.find(mission => !mission.isCompleted);
-
 	if (!activeMission) {
 		return null;
 	}
-
 	const definition = getMissionDefinitionByKey(activeMission.missionKey);
-	const currentGoalIndex = activeMission.progression;
-	const currentGoal = definition.goals[currentGoalIndex] ?? null;
+	const persistedGoalIndex = activeMission.progression;
+	const persistedGoal = definition.goals[persistedGoalIndex] ?? null;
+	const displayedGoal = resolveDisplayedMissionGoal({
+		goals: definition.goals,
+		currentGoalIndex: persistedGoalIndex,
+		currentGoal: persistedGoal,
+		tracking: activeMission.tracking,
+		currentPlaceId: dinoz.placeId
+	});
 
 	return {
 		key: definition.key,
@@ -277,7 +284,7 @@ export const getCurrentMission = (dinoz: {
 		endKey: definition.endKey,
 		progression: activeMission.progression,
 		tracking: activeMission.tracking,
-		currentGoalIndex,
-		currentGoal
+		currentGoalIndex: displayedGoal.currentGoalIndex,
+		currentGoal: displayedGoal.currentGoal
 	};
 };
