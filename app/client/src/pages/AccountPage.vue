@@ -11,7 +11,7 @@
 				<EpicRewardsCard :epicRewards="profile.rewards" :isOwner="isOwner" />
 			</div>
 		</div>
-		<div>
+		<div class="infos">
 			<ul class="onglets">
 				<li :class="tabSelected === 1 ? 'active' : ''">
 					<a @click="sStore.setTabAccount(1)">{{ $t('accountPage.tabs.dinoz') }}</a>
@@ -200,7 +200,7 @@ export default defineComponent({
 }
 @media (max-width: 539px) {
 	.onglets {
-		width: 95%;
+		max-width: 90%;
 	}
 }
 </style>

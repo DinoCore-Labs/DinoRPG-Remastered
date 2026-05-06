@@ -32,7 +32,6 @@
 				<input type="number" v-model="form.age" min="1" max="120" placeholder="Age" />
 				<textarea v-model="form.description" maxlength="500" placeholder="Description..."></textarea>
 			</div>
-
 			<!-- Buttons -->
 			<div class="buttons-edit">
 				<button class="btn save" @click="saveProfile">
@@ -43,7 +42,6 @@
 				</button>
 			</div>
 		</div>
-
 		<!-- ===================== -->
 		<!--     MODE LECTURE     -->
 		<!-- ===================== -->
@@ -57,7 +55,6 @@
 				<!-- Info -->
 				<div class="info">
 					<h2>{{ profile.name }}</h2>
-
 					<div class="tags">
 						<span v-if="profile.language">🌍 {{ profile.language }}</span>
 						<span v-if="profile.gender === 'MALE'"><img :src="getImgURL('icons', 'male')" alt="Male" /></span>
@@ -172,7 +169,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .profile-card {
 	padding: 4 8px;
-	width: 100%;
+	width: 97%;
 	margin: auto;
 	display: flex;
 	flex-direction: column;
@@ -324,7 +321,6 @@ export default defineComponent({
 	opacity: 0.5;
 	font-style: italic;
 }
-
 /* BUTTONS */
 .btn {
 	display: inline-flex;
