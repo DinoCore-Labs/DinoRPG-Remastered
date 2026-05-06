@@ -76,14 +76,17 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 	if (dinozData.state !== null) {
 		throw new ExpectedError(`Dinoz is not able to fight.`);
 	}
-	let team = user.dinoz;
+	let team = orderFightTeamByActiveDinoz(user.dinoz, dinozId);
 	// Go through followers and make those that are unavailable leave the group.
 	const unavailableFollowers = team.filter(d => d.life <= 0 || d.state !== null);
 	if (unavailableFollowers.length > 0) {
 		for (const d of unavailableFollowers) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
-		team = team.filter(d => d.life > 0 && d.state === null);
+		team = orderFightTeamByActiveDinoz(
+			team.filter(d => d.life > 0 && d.state === null),
+			dinozId
+		);
 	}
 	/*if (dinozData.concentration) {
 		throw new ExpectedError(translate(`concentration`, authed));
@@ -127,11 +130,14 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
  * @returns FightProcessResult
  **/
 type DinozToCheckMissionFight = {
+	id: number;
+	placeId: PlaceEnum | null;
 	missions: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
 };
 type FightMonstersAtPlaceOptions = FightRewardOptions & {
 	missionMoveDinozIds?: number[];
 	missionKillDinozIds?: number[];
+	missionSourceDinozId?: number;
 };
 export async function fightMonstersAtPlace(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
@@ -140,7 +146,7 @@ export async function fightMonstersAtPlace(
 	options: FightMonstersAtPlaceOptions = {}
 ) {
 	const dayOfWeek = new Date().getDay();
-	let monsters = await generateMonsterList(team, placeId);
+	let monsters = await generateMonsterList(team, placeId, options.missionSourceDinozId);
 	// Marais Collant - No fights days.
 	if (
 		gameConfig.world.disableSwampFightRules &&
@@ -157,15 +163,16 @@ export async function fightMonstersAtPlace(
 	const fightResult = calculateFightVsMonsters(team, user, placeId, monsters);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, placeId, user, options);
 	// If any dinoz is on a mission, check if the fight result progresses the mission.
-	const leader = team[0];
+	const missionSourceDinoz =
+		options.missionSourceDinozId != null ? team.find(dinoz => dinoz.id === options.missionSourceDinozId) : team[0];
 	const winner = fightResult.outcome === FightOutcome.AttackerWin;
-	if (winner && leader) {
+	if (winner && missionSourceDinoz) {
 		const defeatedMonsterKeys = monsters
 			.map(monster => getMonsterKeyById(monster.id))
 			.filter((key): key is NonNullable<typeof key> => key !== null);
 		const missionMoveDinozIds = options.missionMoveDinozIds ?? [];
-		const missionKillDinozIds = options.missionKillDinozIds ?? [leader.id];
-		if (missionMoveDinozIds.length > 0 || defeatedMonsterKeys.length > 0) {
+		const missionKillDinozIds = options.missionKillDinozIds ?? [missionSourceDinoz.id];
+		if (missionMoveDinozIds.length > 0 || (defeatedMonsterKeys.length > 0 && missionKillDinozIds.length > 0)) {
 			await prisma.$transaction(async tx => {
 				for (const dinozId of missionMoveDinozIds) {
 					await advanceDinozMissionOnMove(tx, {
@@ -617,10 +624,11 @@ function eventMonsterProba(
  * @returns List of monsters to fight
  */
 export async function generateMonsterList(
-	team: (Pick<Dinoz, 'level' | 'placeId'> & {
+	team: (Pick<Dinoz, 'id' | 'level' | 'placeId'> & {
 		missions?: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
 	})[],
-	placeOfFight: PlaceEnum
+	placeOfFight: PlaceEnum,
+	missionSourceDinozId?: number
 ): Promise<MonsterFiche[]> {
 	let teamPowerLevel = 0;
 	let greatestFighterLevel = 0;
@@ -643,17 +651,20 @@ export async function generateMonsterList(
 		// const playerEvent = await getPlayerEventProgression(team[0].playerId, events[0].name);
 		// eventMonsterKilled = playerEvent?.dailyProgression ?? 0;
 	}
-	const leader = team[0];
-	const leaderMission =
-		leader?.missions && leader.missions.length > 0 ? resolveCurrentMission(leader.missions, leader.placeId) : null;
-	const leaderKillGoal = leaderMission?.currentGoal?.type === 'KILL' ? leaderMission.currentGoal : null;
-	const leaderKillAppliesHere = !leaderKillGoal?.kill.place || leaderKillGoal.kill.place === placeOfFight;
-	const leaderKillMonsterKeys = new Set(leaderKillAppliesHere ? (leaderKillGoal?.kill.monsterKeys ?? []) : []);
-	const leaderKillForce = leaderKillAppliesHere && Boolean(leaderKillGoal?.kill.force);
+	const missionSourceDinoz =
+		missionSourceDinozId != null ? team.find(dinoz => dinoz.id === missionSourceDinozId) : team[0];
+	const missionSourceMission =
+		missionSourceDinoz?.missions && missionSourceDinoz.missions.length > 0
+			? resolveCurrentMission(missionSourceDinoz.missions, missionSourceDinoz.placeId)
+			: null;
+	const missionKillGoal = missionSourceMission?.currentGoal?.type === 'KILL' ? missionSourceMission.currentGoal : null;
+	const missionKillAppliesHere = !missionKillGoal?.kill.place || missionKillGoal.kill.place === placeOfFight;
+	const missionKillMonsterKeys = new Set(missionKillAppliesHere ? (missionKillGoal?.kill.monsterKeys ?? []) : []);
+	const missionKillForce = missionKillAppliesHere && Boolean(missionKillGoal?.kill.force);
 	const MISSION_MONSTER_ODDS_MULTIPLIER = 1.5;
 	function isLeaderMissionMonster(monster: MonsterFiche): boolean {
 		const monsterKey = getMonsterKeyById(monster.id);
-		return monsterKey !== null && leaderKillMonsterKeys.has(monsterKey);
+		return monsterKey !== null && missionKillMonsterKeys.has(monsterKey);
 	}
 	const availableMonsters = Object.values(monsterList).filter(monster => {
 		if (monster.places && !monster.places.includes(place.placeId)) {
@@ -719,7 +730,7 @@ export async function generateMonsterList(
 		odds: entry.p
 	}));
 	if (
-		leaderKillForce &&
+		missionKillForce &&
 		forcedMissionMonsterPool.length > 0 &&
 		!monsterArray.some(monster => isLeaderMissionMonster(monster))
 	) {
@@ -752,4 +763,12 @@ export async function generateMonsterList(
 		monsterLevel += mdelta;
 	}
 	return monsterArray;
+}
+
+function orderFightTeamByActiveDinoz<T extends { id: number }>(team: T[], activeDinozId: number): T[] {
+	const activeDinoz = team.find(dinoz => dinoz.id === activeDinozId);
+	if (!activeDinoz) {
+		return team;
+	}
+	return [activeDinoz, ...team.filter(dinoz => dinoz.id !== activeDinozId)];
 }
