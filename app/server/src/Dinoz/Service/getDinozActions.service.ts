@@ -409,7 +409,7 @@ export async function getAvailableActions(
 		}))
 	);*/
 	// Mission action
-	const resolvedMission = resolveCurrentMission(dinoz.missions);
+	const resolvedMission = resolveCurrentMission(dinoz.missions, dinoz.placeId);
 
 	/*console.log('[missions:resolvedCurrentMission]', {
 		resolvedKey: resolvedMission?.definition.key ?? null,

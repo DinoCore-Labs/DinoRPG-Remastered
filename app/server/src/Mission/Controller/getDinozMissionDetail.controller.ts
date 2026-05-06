@@ -1,6 +1,7 @@
 import type { DinozMissionDetailResponse, DinozMissionStatus } from '@dinorpg/core/models/missions/missionResponse.js';
 
 import type { Prisma } from '../../../../prisma/client.js';
+import { resolveDisplayedMissionGoal } from '../Service/missionCurrent.service.js';
 import { assertOwnedDinoz } from './mission.access.js';
 import { getMissionDefinitionByKey } from './mission.registry.js';
 import { checkMissionStartCondition } from './mission.startConditions.js';
@@ -17,7 +18,6 @@ export async function getDinozMissionDetail(
 ): Promise<DinozMissionDetailResponse> {
 	const dinoz = await assertOwnedDinoz(tx, params.userId, params.dinozId);
 	const definition = getMissionDefinitionByKey(params.missionKey);
-
 	const savedMission = await tx.dinozMissions.findUnique({
 		where: {
 			missionKey_dinozId: {
@@ -32,15 +32,12 @@ export async function getDinozMissionDetail(
 			isCompleted: true
 		}
 	});
-
 	const activeMission = await tx.dinozMissions.findFirst({
 		where: {
 			dinozId: params.dinozId,
 			isCompleted: false
 		},
-		select: {
-			missionKey: true
-		}
+		select: { missionKey: true }
 	});
 
 	if (savedMission?.isCompleted) {
@@ -61,11 +58,16 @@ export async function getDinozMissionDetail(
 			currentGoal: null
 		};
 	}
-
 	if (savedMission && !savedMission.isCompleted) {
 		const currentGoalIndex = savedMission.progression;
-		const currentGoal = definition.goals[currentGoalIndex] ?? null;
-
+		const persistedCurrentGoal = definition.goals[currentGoalIndex] ?? null;
+		const displayedGoal = resolveDisplayedMissionGoal({
+			goals: definition.goals,
+			currentGoalIndex,
+			currentGoal: persistedCurrentGoal,
+			tracking: savedMission.tracking,
+			currentPlaceId: dinoz.placeId
+		});
 		return {
 			key: definition.key,
 			group: definition.group,
@@ -79,18 +81,15 @@ export async function getDinozMissionDetail(
 			isActive: true,
 			progression: savedMission.progression,
 			tracking: savedMission.tracking,
-			currentGoalIndex,
-			currentGoal
+			currentGoalIndex: displayedGoal.currentGoalIndex,
+			currentGoal: displayedGoal.currentGoal
 		};
 	}
-
 	const isUnlocked = await checkMissionStartCondition(tx, {
 		dinoz,
 		condition: definition.condition
 	});
-
 	const status: DinozMissionStatus = isUnlocked ? 'AVAILABLE' : 'LOCKED';
-
 	return {
 		key: definition.key,
 		group: definition.group,

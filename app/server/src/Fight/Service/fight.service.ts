@@ -9,7 +9,6 @@ import { FightOutcome, FightProcessResult } from '@dinorpg/core/models/fight/fig
 import { FightRewardOptions } from '@dinorpg/core/models/fight/fightReward.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
-import { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
 import { getMonsterKeyById } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 import { monsterList } from '@dinorpg/core/models/monster/monsterList.js';
 import { placeListv2, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
@@ -645,7 +644,8 @@ export async function generateMonsterList(
 		// eventMonsterKilled = playerEvent?.dailyProgression ?? 0;
 	}
 	const leader = team[0];
-	const leaderMission = leader?.missions && leader.missions.length > 0 ? resolveCurrentMission(leader.missions) : null;
+	const leaderMission =
+		leader?.missions && leader.missions.length > 0 ? resolveCurrentMission(leader.missions, leader.placeId) : null;
 	const leaderKillGoal = leaderMission?.currentGoal?.type === 'KILL' ? leaderMission.currentGoal : null;
 	const leaderKillAppliesHere = !leaderKillGoal?.kill.place || leaderKillGoal.kill.place === placeOfFight;
 	const leaderKillMonsterKeys = new Set(leaderKillAppliesHere ? (leaderKillGoal?.kill.monsterKeys ?? []) : []);

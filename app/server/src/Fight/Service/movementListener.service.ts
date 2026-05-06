@@ -15,6 +15,7 @@ import { calculateFightVsMonsters, type DinozToRewardFight, rewardFightVsMonster
 
 type DinozToCheckMissionFight = {
 	id: number;
+	placeId: PlaceEnum | null;
 	missions: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
 };
 
@@ -28,7 +29,7 @@ function getTriggeredMissionFightOnMove(
 	member: DinozToCheckMissionFight,
 	finalPlace: PlaceEnum
 ): TriggeredMissionFight | null {
-	const resolvedMission = resolveCurrentMission(member.missions);
+	const resolvedMission = resolveCurrentMission(member.missions, member.placeId);
 	if (!resolvedMission?.currentGoal) {
 		return null;
 	}
