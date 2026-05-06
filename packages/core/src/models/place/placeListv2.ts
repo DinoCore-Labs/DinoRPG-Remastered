@@ -477,7 +477,7 @@ export const placeListv2 = definePlaces({
 	},
 	[PlaceEnum.ATELIER_BROC]: {
 		placeId: PlaceEnum.ATELIER_BROC,
-		name: 'chbroc',
+		name: 'broc',
 		map: MapZone.ILES,
 		moves: [{ target: PlaceEnum.MARAIS_COLLANT }],
 		hide: true,
