@@ -2,7 +2,7 @@
 	<div class="dinozList">
 		<Tippy class="dinoz" tag="div" v-for="(dinoz, index) in sortedDinozList" :key="index" theme="small" interactive>
 			<Suspense>
-				<DinozWithoutFlash :display="dinoz.display" :life="1" flip :isFrozen="dinoz.isFrozen" />
+				<DinozAnimation :display="dinoz.display" :life="dinoz.life / dinoz.maxLife" flip :isFrozen="dinoz.isFrozen" />
 				<template #fallback><Loading /></template>
 			</Suspense>
 			<RouterLink class="name" :to="`/dinoz/${dinoz.id}`" v-if="isOwner">
@@ -45,7 +45,7 @@ type StatutId = DinozStatusId;
 export default defineComponent({
 	name: 'MyDinoz',
 	components: {
-		DinozWithoutFlash: defineAsyncComponent(() => import('../dinoz/DinozAnimation.vue'))
+		DinozAnimation: defineAsyncComponent(() => import('../dinoz/DinozAnimation.vue'))
 	},
 	props: {
 		profile: {

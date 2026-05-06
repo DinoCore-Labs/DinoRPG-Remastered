@@ -12,6 +12,7 @@ export async function getOwnProfileService(userId: string) {
 					name: true,
 					display: true,
 					life: true,
+					maxLife: true,
 					level: true,
 					raceId: true,
 					status: {
@@ -72,6 +73,7 @@ export async function getUserProfileService(id: string) {
 					name: true,
 					display: true,
 					life: true,
+					maxLife: true,
 					level: true,
 					raceId: true,
 					status: {
