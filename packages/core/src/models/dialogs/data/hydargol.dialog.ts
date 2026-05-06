@@ -123,13 +123,13 @@ export const hydargolDialog: DialogDefinition = {
 			id: 'help',
 			text: 'npc.hydargol.choice.help',
 			target: 'help',
-			cond: parseCondition('!fx(nenuph)+!collec(perle)')
+			cond: parseCondition('!userfx(zenbro)+!userfx(nenuph)+!collec(perle)')
 		},
 		give: {
 			id: 'give',
 			text: 'npc.hydargol.choice.give',
 			target: 'give',
-			cond: parseCondition('fx(nenuph)+!fx(chutes)')
+			cond: parseCondition('fx(nenuph)+!fx(chutes)+!collec(perle)')
 		},
 		act: {
 			id: 'act',

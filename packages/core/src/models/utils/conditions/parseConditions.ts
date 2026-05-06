@@ -127,6 +127,11 @@ function parseCommand(command: string, state: ParserState): Condition {
 			expect(state, ')');
 			return { type: 'effect', key };
 		}
+		case 'userfx': {
+			const key = parseIdent(state);
+			expect(state, ')');
+			return { type: 'userEffect', key };
+		}
 		case 'collec': {
 			const key = parseIdent(state);
 			expect(state, ')');

@@ -17,6 +17,7 @@ export type Condition =
 	| { type: 'caushrock'; direction: number }
 	| { type: 'level'; value: number }
 	| { type: 'effect'; key: string }
+	| { type: 'userEffect'; key: string }
 	| { type: 'collection'; key: string }
 	| { type: 'time'; value: number; user: boolean }
 	| { type: 'mission'; key: string; status: MissionConditionStatus }

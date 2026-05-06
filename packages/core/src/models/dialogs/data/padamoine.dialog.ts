@@ -6,7 +6,7 @@ export const padamoineDialog: DialogDefinition = {
 	id: 'padamoine',
 	name: 'npc.padamoine.name',
 	place: PlaceEnum.PORT_DE_PRECHE,
-	cond: parseCondition('fx(zenbro)'),
+	cond: parseCondition('fx(zenbro)+!userfx(nenuph)+!collec(perle)'),
 	pnj: {
 		image: false,
 		gfx: 'padamoine',
