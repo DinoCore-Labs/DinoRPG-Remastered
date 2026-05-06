@@ -103,6 +103,11 @@ export function evalCondition(context: ConditionsContext, condition: Condition):
 			if (!statusId) return false;
 			return context.dinoz.statusIds.has(statusId);
 		}
+		case 'userEffect': {
+			const statusId = dinozStatusIdByKey[condition.key];
+			if (statusId == null) return false;
+			return context.user.allDinozStatusIds?.has(statusId) ?? false;
+		}
 		case 'collection':
 			return context.user.collectionKeys.has(condition.key);
 		case 'time': {

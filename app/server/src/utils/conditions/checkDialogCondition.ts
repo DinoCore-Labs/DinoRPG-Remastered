@@ -61,6 +61,13 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 			}
 			return context.user.effects.has(condition.key);
 		}
+		case 'userEffect': {
+			const statusId = dinozStatusIdByKey[condition.key];
+			if (statusId == null) {
+				return false;
+			}
+			return context.user.allDinozStatusIds.has(statusId);
+		}
 		case 'collection':
 			return context.user.collections.has(condition.key);
 		case 'tag':

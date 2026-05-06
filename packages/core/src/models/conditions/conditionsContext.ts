@@ -30,6 +30,7 @@ export type ConditionsContext = {
 		ingredientQuantities: Record<string, number>;
 		collectionKeys: Set<string>;
 		scenarios: Record<string, ScenarioState>;
+		allDinozStatusIds?: Set<number>;
 		uvars: Record<string, number>;
 		gvars: Record<string, number>;
 		dinozCount: number;

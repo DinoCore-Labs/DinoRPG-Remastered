@@ -21,6 +21,7 @@ export type DialogContext = {
 		scenarios: Map<string, DialogScenarioState>;
 		items: Map<number, number>;
 		allDinozEquippedItemIds: Set<number>;
+		allDinozStatusIds: Set<number>;
 		ingredients: Map<number, number>;
 		effects: Set<string>;
 		tags: Set<string>;
@@ -135,6 +136,20 @@ export function hasDinozSkill(context: DialogContext, skillId: number): boolean 
 	return context.dinoz.skillIds.has(skillId);
 }
 
+function buildAllDinozStatusSet(
+	entries: Array<{
+		status: Array<{ statusId: number }>;
+	}>
+): Set<number> {
+	const set = new Set<number>();
+	for (const dinoz of entries) {
+		for (const status of dinoz.status) {
+			set.add(status.statusId);
+		}
+	}
+	return set;
+}
+
 export async function buildDialogContext(
 	tx: DialogTransaction,
 	params: BuildDialogContextParams
@@ -171,11 +186,8 @@ export async function buildDialogContext(
 	const allUserDinoz = await tx.dinoz.findMany({
 		where: { userId: params.userId },
 		select: {
-			items: {
-				select: {
-					itemId: true
-				}
-			}
+			items: { select: { itemId: true } },
+			status: { select: { statusId: true } }
 		}
 	});
 	const userIngredients = await tx.userIngredients.findMany({
@@ -261,6 +273,7 @@ export async function buildDialogContext(
 				entry => entry.quantity
 			),
 			allDinozEquippedItemIds: buildAllDinozEquippedItemSet(allUserDinoz),
+			allDinozStatusIds: buildAllDinozStatusSet(allUserDinoz),
 			ingredients: buildQuantityMap(
 				userIngredients,
 				entry => entry.ingredientId,
