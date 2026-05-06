@@ -44,30 +44,23 @@ export async function learnSkill(
 ): Promise<LearnSkillData> {
 	const authed = req.user;
 	const dinozId = Number(req.params.id);
-
 	const skillIdList = req.body.skillIdList ?? [];
 	const tryNumber = Number(req.body.tryNumber);
-
 	const result: LearnSkillData = {
 		newMaxExperience: 0
 		//discoveredSkill: 0
 	};
-
 	// --- Fetch dinoz for level up ---
-	const dinozSkills = /*event ? await getEventDinozForLevelUp(dinozId) : */ await getDinozForLevelUp(dinozId);
-
+	let dinozSkills = /*event ? await getEventDinozForLevelUp(dinozId) : */ await getDinozForLevelUp(dinozId);
 	if (!dinozSkills) {
 		throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
 	}
-
 	// ownership
 	if (!dinozSkills.user || dinozSkills.user.id !== authed.id) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${authed.id}`, { statusCode: 403 });
 	}
-
 	// --- Tournament / canLevelUp ---
 	let canLevelUp = false;
-
 	/*if (event) {
 		const dinoz = await tournamentDinoz(dinozId);
 		if (!dinoz.FBTournament) {
@@ -80,22 +73,19 @@ export async function learnSkill(
 	canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
 	}*/
 	canLevelUp = dinozSkills.level < gameConfig.dinoz.maxLevel; /*+ 1 <= tournament.levelLimit*/
-
 	if (!canLevelUp) {
 		throw new ExpectedError('dinozCannotLvlUp', { params: { id: dinozId } });
 	}
-
 	// must be named
 	if (dinozSkills.canRename) {
 		throw new ExpectedError(`Dinoz has to be named.`, { statusCode: 400 });
 	}
-
 	// race
-	const dinozRace = Object.values(raceList).find(r => r.raceId === dinozSkills.raceId);
+	const dinozRaceId = dinozSkills.raceId;
+	const dinozRace = Object.values(raceList).find(r => r.raceId === dinozRaceId);
 	if (!dinozRace) {
-		throw new ExpectedError(`Dinoz race ${dinozSkills.raceId} doesn't exist.`, { statusCode: 500 });
+		throw new ExpectedError(`Dinoz race ${dinozRaceId} doesn't exist.`, { statusCode: 500 });
 	}
-
 	// --- compute learnables/unlockables for this tryNumber ---
 	const skills = getDinozLearnableSkills(
 		req,
@@ -105,30 +95,24 @@ export async function learnSkill(
 		tryNumber
 		// event
 	);
-
 	const isLearnableSkills =
 		skillIdList.length === 1 && skillIdList.every(skillId => skills.learnableSkills.some(s => s.skillId === skillId));
-
 	const isUnlockableSkills =
 		skillIdList.length === skills.unlockableSkills.length &&
 		skillIdList.every(skillId => skills.unlockableSkills.some(s => s.skillId === skillId));
-
 	if (!isLearnableSkills && !isUnlockableSkills) {
 		throw new ExpectedError(`Dinoz ${dinozId} can't learn this`, { statusCode: 400 });
 	}
-
 	// --- Apply learn ---
 	if (isUnlockableSkills) {
 		await removeUnlockableSkillsFromDinoz(dinozId, skillIdList /*event*/);
 	} else {
 		const wantedSkillId = skillIdList[0];
-
 		const skill = Object.values(skillList).find(s => s.id === wantedSkillId);
 		if (!skill) {
 			throw new ExpectedError(`Skill ${wantedSkillId} doesn't exist.`, { statusCode: 404 });
 		}
-
-		await addSkillToDinozWithEffects({
+		dinozSkills = await addSkillToDinozWithEffects({
 			dinozId,
 			userId: authed.id,
 			skillId: wantedSkillId,
@@ -136,28 +120,21 @@ export async function learnSkill(
 			computeUnlockables: true
 		});
 	}
-
 	// --- Update dinoz data (level up resolution) ---
 	const newDinozData = getNewDinozDataFromLevelUp(dinozId, tryNumber, dinozSkills, dinozRace);
-
 	/*if (event) {
 		await updateEventDinoz(newDinozData.id, newDinozData);
 		result.newMaxExperience = 1;
 		return result;
 	}*/
-
 	await updateDinoz(newDinozData.id, newDinozData);
-
 	/*if (newDinozData.level % 10 === 0) {
 		checkAnnounce(PantheonMotif.race, newDinozData.id.toString(), newDinozData.display);
 	}*/
-
 	// Update player points + logs
 	await updatePoints(dinozSkills.user.id, 1);
 	//await createLog(LogType.LevelUp, dinozSkills.user.id, dinozSkills.id, newDinozData.level.toString());
-
 	result.newMaxExperience = levelList.find(l => l.id === dinozSkills.level + 1)?.experience ?? 0;
-
 	// Stats
 	await incrementUserStat(StatTracking.LVL_UP, dinozSkills.user.id, 1);
 	switch (skills.element) {
@@ -179,59 +156,44 @@ export async function learnSkill(
 		default:
 			break;
 	}
-
 	//await checkFBCreation(dinozSkills.level + 1);
-
 	return result;
 }
 
+type DinozForLevelUp = NonNullable<Awaited<ReturnType<typeof getDinozForLevelUp>>>;
 export async function addSkillToDinozWithEffects(params: {
 	dinozId: number;
 	userId: string;
 	skillId: number;
 	state?: boolean;
 	computeUnlockables?: boolean;
-}) {
+}): Promise<DinozForLevelUp> {
 	const { dinozId, userId, skillId, state = true, computeUnlockables = true } = params;
-
 	const dinozSkills = await getDinozForLevelUp(dinozId);
 	if (!dinozSkills) {
 		throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
 	}
-
 	if (!dinozSkills.user || dinozSkills.user.id !== userId) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${userId}`, { statusCode: 403 });
 	}
-
 	const alreadyHasSkill = dinozSkills.skills.some(ds => ds.skillId === skillId);
 	if (alreadyHasSkill) {
 		throw new ExpectedError(`Dinoz ${dinozId} already has skill ${skillId}`, { statusCode: 400 });
 	}
-
 	const skill = Object.values(skillList).find(s => s.id === skillId);
 	if (!skill) {
 		throw new ExpectedError(`Skill ${skillId} doesn't exist.`, { statusCode: 404 });
 	}
-
 	await applySkillEffect(dinozSkills, skill, userId);
 	await addSkillToDinoz(dinozId, skillId, state);
-
-	// Garder les données locales à jour pour le calcul des unlockables
-	dinozSkills.skills.push({ skillId });
-
-	// Discover skill for player
-	// (chez toi: dinozSkills.user.discoveredSkills ? adapte si différent)
-	/*if (!dinozSkills.user.discoveredSkills.includes(skill.id)) {
-			await setPlayer(dinozSkills.user.id, {
-				discoveredSkills: [...dinozSkills.user.discoveredSkills, skill.id]
-			});
-			result.discoveredSkill = skill.id;
-		}*/
-
-	// Cas spécial Brave
+	// Important : recharger le Dinoz après application des effets.
+	// Sinon les stats locales restent stale et le level up écrase les bonus.
+	const updatedDinozSkills = await getDinozForLevelUp(dinozId);
+	if (!updatedDinozSkills) {
+		throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
+	}
 	if (skill.id === Skill.BRAVE) {
 		const dinoz = await getFollowingDinoz(dinozId);
-
 		if (dinoz && dinoz.followers.length > 0) {
 			for (const follower of dinoz.followers) {
 				await updateDinoz(follower.id, { leader: { disconnect: true } });
@@ -240,16 +202,13 @@ export async function addSkillToDinozWithEffects(params: {
 			await updateDinoz(dinozId, { leader: { disconnect: true } });
 		}
 	}
-
 	if (computeUnlockables) {
 		const newUnlockableSkills = Object.values(skillList)
 			.filter(s => s.unlockedFrom?.some(id => id === skillId))
 			.filter(s =>
-				s.unlockedFrom?.every(
-					id => id === skillId || dinozSkills.skills.some(existingSkill => existingSkill.skillId === id)
-				)
+				s.unlockedFrom?.every(id => updatedDinozSkills.skills.some(existingSkill => existingSkill.skillId === id))
 			)
-			.filter(s => !s.raceId || s.raceId.includes(dinozSkills.raceId))
+			.filter(s => !s.raceId || s.raceId.includes(updatedDinozSkills.raceId))
 			.map(s => ({
 				skillId: s.id,
 				dinozId
@@ -259,4 +218,5 @@ export async function addSkillToDinozWithEffects(params: {
 			await addMultipleUnlockableSkills(newUnlockableSkills);
 		}
 	}
+	return updatedDinozSkills;
 }
