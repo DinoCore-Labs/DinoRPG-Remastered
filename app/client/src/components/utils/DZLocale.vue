@@ -49,17 +49,17 @@ export default defineComponent({
 			}
 		},
 		async switchLocale(locale: Language): Promise<void> {
-			if (this.$i18n.locale !== locale) {
-				try {
-					// Mettre à jour la langue du joueur sur le backend
-					if (this.userStore.id) {
-						await UserService.updateProfile({ language: locale });
-					}
-					// Changer la langue localement
-					applyLanguage(locale);
-				} catch (err) {
-					console.error('Erreur lors de la mise à jour de la langue du joueur :', err);
+			this.isOpen = false;
+			if (this.$i18n.locale === locale) {
+				return;
+			}
+			try {
+				if (this.userStore.id) {
+					await UserService.updateProfile({ language: locale });
 				}
+				applyLanguage(locale);
+			} catch (err) {
+				console.error('Erreur lors de la mise à jour de la langue du joueur :', err);
 			}
 		}
 	}

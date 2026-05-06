@@ -15,7 +15,7 @@
 				<h2 class="name">{{ uStore.getUserName }}</h2>
 			</div>
 			<div class="shortCutMenu">
-				<div class="shortCuts">
+				<div class="shortCuts" @click="closeOnShortcutLinkClick">
 					<RouterLink class="link" :to="`/user`">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon">
 							<path
@@ -255,6 +255,14 @@ export default defineComponent({
 		},
 		close() {
 			this.menuCalled = false;
+		},
+		closeOnShortcutLinkClick(event: MouseEvent) {
+			const target = event.target as HTMLElement | null;
+			if (!target) return;
+			const link = target.closest('a.link');
+			if (link) {
+				this.close();
+			}
 		},
 		messagerie() {
 			if (!this.uStore.canUseMessaging) {
@@ -652,8 +660,6 @@ export default defineComponent({
 	background-color: rgb(29, 32, 40);
 	.shortCuts {
 		display: flex;
-		-moz-box-pack: center;
-		justify-content: center;
 		flex-wrap: wrap;
 		gap: 10px;
 		.link {
@@ -674,7 +680,7 @@ export default defineComponent({
 				margin: 0px;
 				font-family: arial, sans-serif;
 				font-weight: 400;
-				font-size: 1rem;
+				font-size: 0.8rem;
 				line-height: 1.66;
 				text-align: center;
 			}
@@ -751,24 +757,18 @@ export default defineComponent({
 }
 .name {
 	margin: 0px;
-	font-size: 29px;
+	font-size: 25px;
 	letter-spacing: -0.24px;
 	font-family: arial, sans-serif;
 	line-height: 1.2;
-	font-weight: 600;
 	text-align: right;
 	background-color: rgb(254, 125, 0);
 	-moz-box-flex: 1;
 	flex-grow: 1;
-	padding-left: 16px;
-	padding-right: 16px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 .burgerClose {
-	display: inline-flex;
-	-moz-box-align: center;
-	align-items: center;
-	-moz-box-pack: center;
-	justify-content: center;
 	position: relative;
 	box-sizing: border-box;
 	background-color: transparent;
@@ -777,16 +777,11 @@ export default defineComponent({
 	margin: 0px;
 	cursor: pointer;
 	user-select: none;
-	vertical-align: middle;
 	appearance: none;
 	text-decoration: none;
-	text-align: center;
 	flex: 0 0 auto;
-	border-radius: 50%;
 	overflow: visible;
 	transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
-	padding: 5px;
-	font-size: 1.2rem;
 	color: rgb(255, 255, 255);
 }
 .close {

@@ -3,7 +3,7 @@
 		<div v-show="menuCalled" class="backDrop" @click="close()"></div>
 	</Transition>
 	<Transition name="slide">
-		<div v-show="menuCalled" class="root">
+		<div v-show="menuCalled" class="root" @click="closeOnMenuLinkClick">
 			<div class="player">
 				<div class="money">{{ beautifulMoney }} <img :src="getImgURL('icons', 'small_gold')" alt="or" /></div>
 				<div class="money">{{ beautifulTreasureTicket }} <img :src="getImgURL('icons', 'ticket')" alt="ticket" /></div>
@@ -39,7 +39,7 @@
 						<span>{{ $t('topBar.leftMenu.missions') }}</span>
 					</RouterLink>-->
 					<RouterLink class="link" :to="`/shop/dinoz`">
-						<img :src="getImgURL('act', 'act_shop')" alt="enclosure" />
+						<img :src="getImgURL('act', 'act_boutique')" alt="enclosure" />
 						<span>{{ $t('topBar.leftUserMenu.enclosure') }}</span>
 					</RouterLink>
 				</div>
@@ -219,6 +219,14 @@ export default defineComponent({
 	methods: {
 		close() {
 			this.menuCalled = false;
+		},
+		closeOnMenuLinkClick(event: MouseEvent) {
+			const target = event.target as HTMLElement | null;
+			if (!target) return;
+			const link = target.closest('a');
+			if (link) {
+				this.close();
+			}
 		},
 		getBarWidth(actual: number, max: number): string {
 			if (actual > max) actual = max;
