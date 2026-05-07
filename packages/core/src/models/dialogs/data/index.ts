@@ -21,6 +21,12 @@ import {
 import { shamanMouDialog } from './shamanMou.dialog.js';
 import { mouldeurDialog, skullyEndDialog, skullyIntroDialog, skullyMissionsDialog } from './skully.dialog.js';
 import { speleleologueDialog, speleleologueIceDialog } from './spelele.dialog.js';
+import {
+	starquestFinalDialog,
+	starquestIntroDialog,
+	starquestMegawolfHintDialog,
+	starquestProgressHintDialog
+} from './starQuest.dialog.js';
 import { strangeHippoDialog, strangePterozDialog, strangeRockyDialog } from './totems.dialog.js';
 import { venerableDialog, venerableHurtDialog } from './venerable.dialog.js';
 import { weirdManDialog } from './weirdMan.dialog.js';
@@ -38,6 +44,10 @@ export const dialogDefinitions = [
 	skullyIntroDialog,
 	skullyMissionsDialog,
 	skullyEndDialog,
+	starquestIntroDialog,
+	starquestMegawolfHintDialog,
+	starquestProgressHintDialog,
+	starquestFinalDialog,
 	// Iles Atlantéinées
 	strangeHippoDialog,
 	coralMinerDialog,
