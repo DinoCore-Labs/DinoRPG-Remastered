@@ -1,5 +1,6 @@
 import { CompareMode, Condition, MissionConditionStatus } from '@dinorpg/core/models/conditions/conditions.js';
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
+import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { resolveItemIdFromKey } from '@dinorpg/core/models/items/itemIdByKey.js';
 import { UserRole } from '@dinorpg/core/models/user/userRole.js';
 
@@ -108,10 +109,13 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		}
 		case 'admin':
 			return isAdminRole(context.user.role);
+		case 'time':
+			return (context.user.stats.get(StatTracking.P_DAYS) ?? 0) >= condition.value;
+		case 'active':
+			return context.world.activeFeatures.has(condition.key);
 		case 'date':
 		case 'day':
 		case 'caushrock':
-		case 'time':
 		case 'canfight':
 		case 'random':
 		case 'gvar':
@@ -119,7 +123,6 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'hour':
 		case 'swait':
 		case 'dungeon':
-		case 'active':
 		case 'clanact':
 		case 'friend':
 		case 'event':
