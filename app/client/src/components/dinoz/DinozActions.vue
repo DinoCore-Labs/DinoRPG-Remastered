@@ -672,14 +672,19 @@ export default defineComponent({
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
 		},
-		endMission(dinozId: number) {
+		async endMission(dinozId: number) {
 			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche | undefined;
-			if (!dinozToUpdate) {
-				return;
+			if (dinozToUpdate) {
+				this.dinozStore.setDinoz({
+					...dinozToUpdate,
+					currentMission: null
+				});
 			}
-			dinozToUpdate.currentMission = null;
-			this.dinozStore.setDinoz(dinozToUpdate);
-			this.$emit('endMission');
+			try {
+				await this.refreshDinoz();
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
 		},
 		async closeMissionTalkModal() {
 			try {
