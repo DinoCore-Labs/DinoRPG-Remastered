@@ -11,6 +11,10 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { Prisma } from '../../../../prisma/client.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { unlockDinozMission } from '../../Mission/Controller/mission.progress.js';
+import {
+	incrementUserScenarioProgression,
+	setUserScenarioProgression
+} from '../../Scenario/Controller/scenarioProgress.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { DialogContext } from './dialog.context.js';
 
@@ -348,10 +352,18 @@ async function applyDialogEffect(
 ) {
 	switch (effect.type) {
 		case 'scenario':
-			//await upsertScenarioProgress(tx, context.user.id, effect.scenarioKey, effect.phase);
+			await setUserScenarioProgression(tx, {
+				userId: context.user.id,
+				scenarioKey: effect.scenario,
+				progression: effect.phase
+			});
 			return;
 		case 'scenarioDelta':
-			//await incrementScenarioProgress(tx, context.user.id, effect.scenarioKey, effect.delta);
+			await incrementUserScenarioProgression(tx, {
+				userId: context.user.id,
+				scenarioKey: effect.scenario,
+				delta: effect.delta
+			});
 			return;
 		case 'giveItem':
 			await addUserItem(tx, context, effect.itemId, effect.count);
