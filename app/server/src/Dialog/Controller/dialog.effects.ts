@@ -71,52 +71,6 @@ function assertEnoughQuantity(currentQuantity: number, requiredQuantity: number,
 		throw new ExpectedError(`Not enough ${resourceLabel}: required ${requiredQuantity}, current ${currentQuantity}`);
 	}
 }
-
-/*async function upsertScenarioProgress(tx: DialogTransaction, userId: string, scenarioKey: string, progression: number) {
-	await tx.userQuest.upsert({
-		where: getUserQuestWhere(userId, scenarioKey),
-		create: {
-			userId,
-			questKey: scenarioKey,
-			progression,
-			tracking: 0
-		},
-		update: {
-			progression
-		}
-	});
-}*/
-
-/*async function incrementScenarioProgress(tx: DialogTransaction, userId: string, scenarioKey: string, delta: number) {
-	const existingScenario = await tx.userQuest.findUnique({
-		where: getUserQuestWhere(userId, scenarioKey),
-		select: {
-			id: true,
-			progression: true
-		}
-	});
-
-	if (!existingScenario) {
-		await tx.userQuest.create({
-			data: {
-				userId,
-				questKey: scenarioKey,
-				progression: delta,
-				tracking: 0
-			}
-		});
-
-		return;
-	}
-
-	await tx.userQuest.update({
-		where: { id: existingScenario.id },
-		data: {
-			progression: existingScenario.progression + delta
-		}
-	});
-}*/
-
 const dialogItemsById = new Map(Object.values(itemList).map(item => [item.itemId, item]));
 
 function getDialogItemMaxQuantity(context: DialogContext, itemId: number) {
