@@ -3727,6 +3727,9 @@
 			"talk": "Parler à {nameKey}",
 			"action": "{nameKey}",
 			"kill": "Tuer {current}/{count} {nameKey}",
+			"useItem": "{nameKey}",
+			"useMoney": "{nameKey}",
+			"fightAction": "{nameKey}",
 			"validate": "Retourner voir {nameKey} pour valider la mission"
 		},
 		"validate": "Valider la mission",
