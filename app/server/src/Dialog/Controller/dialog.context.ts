@@ -3,6 +3,7 @@ import { rewardKeyById } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma, Role } from '../../../../prisma/client.js';
+import gameConfig from '../../config/game.config.js';
 
 type DialogTransaction = Prisma.TransactionClient;
 
@@ -28,6 +29,7 @@ export type DialogContext = {
 		collections: Set<string>;
 		userVars: Map<string, number>;
 		dinozCount: number;
+		stats: Map<string, number>;
 	};
 	dinoz: {
 		id: number;
@@ -46,6 +48,9 @@ export type DialogContext = {
 	dialog: {
 		id: string;
 		place: RuntimeDialog['place'];
+	};
+	world: {
+		activeFeatures: Set<string>;
 	};
 };
 
@@ -87,10 +92,6 @@ function buildAllDinozEquippedItemSet(
 		}
 	}
 	return set;
-}
-
-function buildEmptyScenarioMap(): Map<string, DialogScenarioState> {
-	return new Map<string, DialogScenarioState>();
 }
 
 function buildEmptyStringSet(): Set<string> {
@@ -150,6 +151,36 @@ function buildAllDinozStatusSet(
 	return set;
 }
 
+function buildScenarioMap(
+	entries: Array<{
+		scenarioKey: string;
+		progression: number;
+		tracking: number;
+	}>
+): Map<string, DialogScenarioState> {
+	const map = new Map<string, DialogScenarioState>();
+	for (const entry of entries) {
+		map.set(entry.scenarioKey, {
+			progression: entry.progression,
+			tracking: entry.tracking
+		});
+	}
+	return map;
+}
+
+function buildStringNumberMap(
+	entries: Array<{
+		stat: string;
+		quantity: number;
+	}>
+): Map<string, number> {
+	const map = new Map<string, number>();
+	for (const entry of entries) {
+		map.set(entry.stat, entry.quantity);
+	}
+	return map;
+}
+
 export async function buildDialogContext(
 	tx: DialogTransaction,
 	params: BuildDialogContextParams
@@ -201,6 +232,25 @@ export async function buildDialogContext(
 		where: { userId: params.userId },
 		select: {
 			rewardId: true
+		}
+	});
+	const userScenarios = await tx.userScenario.findMany({
+		where: {
+			userId: params.userId
+		},
+		select: {
+			scenarioKey: true,
+			progression: true,
+			tracking: true
+		}
+	});
+	const userStats = await tx.userTracking.findMany({
+		where: {
+			userId: params.userId
+		},
+		select: {
+			stat: true,
+			quantity: true
 		}
 	});
 	const dinoz = await tx.dinoz.findUnique({
@@ -266,7 +316,8 @@ export async function buildDialogContext(
 			shopKeeper: user.shopKeeper,
 			lang: user.profile?.language ?? 'fr',
 			gold: user.wallets[0]?.amount ?? 0,
-			scenarios: buildEmptyScenarioMap(),
+			scenarios: buildScenarioMap(userScenarios),
+			stats: buildStringNumberMap(userStats),
 			items: buildQuantityMap(
 				userItems,
 				entry => entry.itemId,
@@ -302,6 +353,9 @@ export async function buildDialogContext(
 		dialog: {
 			id: params.dialog.id,
 			place: params.dialog.place
+		},
+		world: {
+			activeFeatures: new Set(gameConfig.world.activeFeatures)
 		}
 	};
 }
