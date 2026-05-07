@@ -88,6 +88,7 @@ export const monsterKeys = [
 	'pteroz',
 	'hippoclamp',
 	'rocky',
+	'megawolf',
 	'any'
 ] as const;
 

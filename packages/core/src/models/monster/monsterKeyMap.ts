@@ -104,6 +104,7 @@ export const monsterIdByKey: Readonly<Record<MonsterKey, MonsterLikeId>> = {
 	pteroz: Boss.PTEROZ,
 	hippoclamp: Boss.HIPPOCLAMP,
 	rocky: Boss.ROCKY,
+	megawolf: Boss.MEGA_WOLF,
 
 	any: Monster.ANY
 };
