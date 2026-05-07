@@ -219,6 +219,26 @@ export default defineComponent({
 						left.place === right.place &&
 						left.nameKey === right.nameKey
 					);
+				case 'USE_ITEM':
+					return (
+						right.type === 'USE_ITEM' &&
+						left.itemKey === right.itemKey &&
+						left.quantity === right.quantity &&
+						left.nameKey === right.nameKey
+					);
+				case 'USE_MONEY':
+					return (
+						right.type === 'USE_MONEY' &&
+						left.moneyType === right.moneyType &&
+						left.quantity === right.quantity &&
+						left.nameKey === right.nameKey
+					);
+				case 'FIGHT_ACTION':
+					return (
+						right.type === 'FIGHT_ACTION' &&
+						left.fightAction.nameKey === right.fightAction.nameKey &&
+						(left.fightAction.actionKey ?? null) === (right.fightAction.actionKey ?? null)
+					);
 				default:
 					return false;
 			}
@@ -258,6 +278,18 @@ export default defineComponent({
 						nameKey: targetName
 					}).toString();
 				}
+				case 'USE_ITEM':
+					return this.$t('missions.goals.useItem', {
+						nameKey: this.$t(goal.nameKey).toString()
+					}).toString();
+				case 'USE_MONEY':
+					return this.$t('missions.goals.useMoney', {
+						nameKey: this.$t(goal.nameKey).toString()
+					}).toString();
+				case 'FIGHT_ACTION':
+					return this.$t('missions.goals.fightAction', {
+						nameKey: this.$t(goal.fightAction.nameKey).toString()
+					}).toString();
 				default:
 					return null;
 			}
