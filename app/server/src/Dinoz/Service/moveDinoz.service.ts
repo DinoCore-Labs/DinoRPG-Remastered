@@ -3,6 +3,7 @@ import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { TemporaryStatus } from '@dinorpg/core/models/enums/TemporaryStatus.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
+import { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { placeListv2, SWAMP_FLOODED_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace } from '@dinorpg/core/utils/dinozUtils.js';
@@ -11,6 +12,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import gameConfig from '../../config/game.config.js';
 import { fightMonstersAtPlace } from '../../Fight/Service/fight.service.js';
 import { movementListener } from '../../Fight/Service/movementListener.service.js';
+import { processScenarioMoveFight } from '../../Scenario/Service/scenarioMoveFight.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { canGoToThisPlace, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
@@ -118,8 +120,16 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 		}
 		throw new ExpectedError('noMovement', { params: { placeName: currentPlace.name } });
 	}
-
-	let fight = await movementListener(user, team, finalPlace, dinozId);
+	let fight: FightResult | false = await processScenarioMoveFight({
+		user,
+		team,
+		dinozId,
+		fromPlace: currentPlace.placeId,
+		toPlace: finalPlace
+	});
+	if (!fight) {
+		fight = await movementListener(user, team, finalPlace, dinozId);
+	}
 	if (!fight) {
 		fight = await fightMonstersAtPlace(team, finalPlace, user, {
 			missionMoveDinozIds: team.map(member => member.id),
