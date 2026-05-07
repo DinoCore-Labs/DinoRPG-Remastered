@@ -1,5 +1,5 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
-import { FightOutcome } from '@dinorpg/core/models/fight/fightResult.js';
+import { FightOutcome, FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
 import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
@@ -66,10 +66,10 @@ async function addUserItemTx(tx: ScenarioTransaction, userId: string, itemId: It
 	});
 }
 
-export async function processScenarioMoveFight(input: ScenarioMoveFightInput) {
+export async function processScenarioMoveFight(input: ScenarioMoveFightInput): Promise<FightResult | false> {
 	const shouldStartMegawolf = await shouldStartStarMegawolfFight(input);
 	if (!shouldStartMegawolf) {
-		return null;
+		return false;
 	}
 	const monsters = [monsterByKey[STAR_MEGAWOLF_KEY]];
 	const fightResult = calculateFightVsMonsters(input.team, input.user, input.toPlace, monsters);
@@ -88,7 +88,6 @@ export async function processScenarioMoveFight(input: ScenarioMoveFightInput) {
 				progression: 2
 			});
 		});
-
 		await updateMultipleDinoz(
 			input.team.map(dinoz => dinoz.id),
 			{
