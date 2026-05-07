@@ -17,6 +17,7 @@ interface ShopConfig {
 interface WorldConfig {
 	disableSwampMovementBlock: boolean;
 	disableSwampFightRules: boolean;
+	activeFeatures: string[];
 }
 
 interface GeneralConfig {
@@ -51,7 +52,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		},
 		world: {
 			disableSwampMovementBlock: true,
-			disableSwampFightRules: false
+			disableSwampFightRules: false,
+			activeFeatures: ['starquest']
 		},
 		general: {
 			initialMoney: 1_000_000,
@@ -79,7 +81,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		},
 		world: {
 			disableSwampMovementBlock: false,
-			disableSwampFightRules: true
+			disableSwampFightRules: true,
+			activeFeatures: ['starquest']
 		},
 		general: {
 			initialMoney: 100_000,
