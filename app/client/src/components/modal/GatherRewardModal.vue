@@ -4,7 +4,6 @@
 			<div v-if="rewardList.ingredients.length === 0 && rewardList.item.length === 0 && rewardList.gold === 0">
 				<span class="nothing">{{ $t('gather.nothing') }}</span>
 			</div>
-
 			<div v-if="rewardList.gold > 0" class="item-container">
 				<Tippy theme="normal" tag="img" :src="getImgURL('item', 'item_gold')" alt="gold">
 					<template #content>
@@ -17,8 +16,7 @@
 					<span>{{ formatContent($t('items.name.gold')) }}</span>
 				</div>
 			</div>
-
-			<div v-for="ingredient in rewardList.ingredients" :key="ingredient.ingredientId" class="ingredient-container">
+			<div v-for="ingredient in displayedIngredients" :key="ingredient.displayKey" class="ingredient-container">
 				<Tippy
 					theme="normal"
 					tag="img"
@@ -31,17 +29,15 @@
 						<p v-html="formatContent($t(`ingredients.description.${ingredient.name?.toLowerCase()}`))" />
 					</template>
 				</Tippy>
-				<div :class="{ 'name-info': true, 'is-max': isMaxQuantity(ingredient.ingredientId) }">
-					<span v-if="ingredient.quantity && ingredient.quantity > 1">x{{ ingredient.quantity }} </span>
+
+				<div :class="{ 'name-info': true, 'is-max': ingredient.displayCount >= ingredient.maxQuantity }">
 					<span>
 						{{ formatContent($t(`ingredients.name.${ingredient.name}`)) }}
 					</span>
-					<span class="ingredient-count">
-						({{ `${getIngredientCount(ingredient.ingredientId)}/${ingredient.maxQuantity}` }})
-					</span>
+
+					<span class="ingredient-count"> ({{ `${ingredient.displayCount}/${ingredient.maxQuantity}` }}) </span>
 				</div>
 			</div>
-
 			<div v-for="item in rewardList.item" :key="item.id" class="item-container">
 				<Tippy
 					theme="normal"
@@ -63,7 +59,6 @@
 					<span>{{ formatContent($t(`items.name.${getItemName(item.id)}`)) }}</span>
 				</div>
 			</div>
-
 			<a class="button" @click="$emit('close')">
 				{{ $t('modal.continue') }}
 			</a>
@@ -76,6 +71,15 @@ import { defineComponent, type PropType } from 'vue';
 import type { GatherRewards } from '@dinorpg/core/models/gather/gatherRewards.js';
 import { userStore } from '../../store/userStore';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
+
+type GatherIngredientReward = GatherRewards['ingredients'][number];
+
+type DisplayIngredientReward = GatherIngredientReward & {
+	displayKey: string;
+	displayCount: number;
+};
+
+const getRewardQuantity = (ingredient: GatherIngredientReward) => Math.max(1, ingredient.quantity ?? 1);
 
 export default defineComponent({
 	name: 'GatherRewardModal',
@@ -126,6 +130,34 @@ export default defineComponent({
 				return ingredient.quantity;
 			}
 			return 0;
+		}
+	},
+	computed: {
+		displayedIngredients(): DisplayIngredientReward[] {
+			const totalWonByIngredient = new Map<number, number>();
+			for (const ingredient of this.rewardList.ingredients) {
+				totalWonByIngredient.set(
+					ingredient.ingredientId,
+					(totalWonByIngredient.get(ingredient.ingredientId) ?? 0) + getRewardQuantity(ingredient)
+				);
+			}
+			const displayedByIngredient = new Map<number, number>();
+			return this.rewardList.ingredients.flatMap((ingredient, rewardIndex) => {
+				const quantity = getRewardQuantity(ingredient);
+				const totalWon = totalWonByIngredient.get(ingredient.ingredientId) ?? quantity;
+				const finalCount = this.getIngredientCount(ingredient.ingredientId);
+				const startCount = Math.max(0, finalCount - totalWon);
+				return Array.from({ length: quantity }, (_, unitIndex) => {
+					const nextDisplayed = (displayedByIngredient.get(ingredient.ingredientId) ?? 0) + 1;
+					displayedByIngredient.set(ingredient.ingredientId, nextDisplayed);
+					return {
+						...ingredient,
+						quantity: 1,
+						displayKey: `${ingredient.ingredientId}-${rewardIndex}-${unitIndex}`,
+						displayCount: Math.min(ingredient.maxQuantity, startCount + nextDisplayed)
+					};
+				});
+			});
 		}
 	}
 });
