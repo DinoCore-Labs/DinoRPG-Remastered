@@ -149,6 +149,11 @@ export type UserProfile = $Result.DefaultSelection<Prisma.$UserProfilePayload>
  */
 export type UserRewards = $Result.DefaultSelection<Prisma.$UserRewardsPayload>
 /**
+ * Model UserScenario
+ * 
+ */
+export type UserScenario = $Result.DefaultSelection<Prisma.$UserScenarioPayload>
+/**
  * Model UserTracking
  * 
  */
@@ -699,6 +704,16 @@ export class PrismaClient<
   get userRewards(): Prisma.UserRewardsDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.userScenario`: Exposes CRUD operations for the **UserScenario** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserScenarios
+    * const userScenarios = await prisma.userScenario.findMany()
+    * ```
+    */
+  get userScenario(): Prisma.UserScenarioDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.userTracking`: Exposes CRUD operations for the **UserTracking** model.
     * Example usage:
     * ```ts
@@ -1208,6 +1223,7 @@ export namespace Prisma {
     UserItems: 'UserItems',
     UserProfile: 'UserProfile',
     UserRewards: 'UserRewards',
+    UserScenario: 'UserScenario',
     UserTracking: 'UserTracking',
     UserWallet: 'UserWallet',
     Conversation: 'Conversation',
@@ -1228,7 +1244,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dinoz" | "dinozCatch" | "dinozItems" | "dinozMissions" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "jobDefinition" | "jobRun" | "news" | "newsTranslation" | "poll" | "pollOption" | "pollOptionTranslation" | "pollVote" | "newsLike" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userTracking" | "userWallet" | "conversation" | "participant" | "message"
+      modelProps: "dinoz" | "dinozCatch" | "dinozItems" | "dinozMissions" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "jobDefinition" | "jobRun" | "news" | "newsTranslation" | "poll" | "pollOption" | "pollOptionTranslation" | "pollVote" | "newsLike" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userScenario" | "userTracking" | "userWallet" | "conversation" | "participant" | "message"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3230,6 +3246,80 @@ export namespace Prisma {
           }
         }
       }
+      UserScenario: {
+        payload: Prisma.$UserScenarioPayload<ExtArgs>
+        fields: Prisma.UserScenarioFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserScenarioFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserScenarioPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserScenarioFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserScenarioPayload>
+          }
+          findFirst: {
+            args: Prisma.UserScenarioFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserScenarioPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserScenarioFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserScenarioPayload>
+          }
+          findMany: {
+            args: Prisma.UserScenarioFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserScenarioPayload>[]
+          }
+          create: {
+            args: Prisma.UserScenarioCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserScenarioPayload>
+          }
+          createMany: {
+            args: Prisma.UserScenarioCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserScenarioCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserScenarioPayload>[]
+          }
+          delete: {
+            args: Prisma.UserScenarioDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserScenarioPayload>
+          }
+          update: {
+            args: Prisma.UserScenarioUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserScenarioPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserScenarioDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserScenarioUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserScenarioUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserScenarioPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserScenarioUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserScenarioPayload>
+          }
+          aggregate: {
+            args: Prisma.UserScenarioAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserScenario>
+          }
+          groupBy: {
+            args: Prisma.UserScenarioGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserScenarioGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserScenarioCountArgs<ExtArgs>
+            result: $Utils.Optional<UserScenarioCountAggregateOutputType> | number
+          }
+        }
+      }
       UserTracking: {
         payload: Prisma.$UserTrackingPayload<ExtArgs>
         fields: Prisma.UserTrackingFieldRefs
@@ -3735,6 +3825,7 @@ export namespace Prisma {
     userItems?: UserItemsOmit
     userProfile?: UserProfileOmit
     userRewards?: UserRewardsOmit
+    userScenario?: UserScenarioOmit
     userTracking?: UserTrackingOmit
     userWallet?: UserWalletOmit
     conversation?: ConversationOmit
@@ -4060,6 +4151,7 @@ export namespace Prisma {
     ingredients: number
     items: number
     rewards: number
+    scenarios: number
     statsTracking: number
     wallets: number
     dinoz: number
@@ -4076,6 +4168,7 @@ export namespace Prisma {
     ingredients?: boolean | UserCountOutputTypeCountIngredientsArgs
     items?: boolean | UserCountOutputTypeCountItemsArgs
     rewards?: boolean | UserCountOutputTypeCountRewardsArgs
+    scenarios?: boolean | UserCountOutputTypeCountScenariosArgs
     statsTracking?: boolean | UserCountOutputTypeCountStatsTrackingArgs
     wallets?: boolean | UserCountOutputTypeCountWalletsArgs
     dinoz?: boolean | UserCountOutputTypeCountDinozArgs
@@ -4124,6 +4217,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountRewardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UserRewardsWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountScenariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserScenarioWhereInput
   }
 
   /**
@@ -27623,6 +27723,7 @@ export namespace Prisma {
     profile?: boolean | User$profileArgs<ExtArgs>
     ranking?: boolean | User$rankingArgs<ExtArgs>
     rewards?: boolean | User$rewardsArgs<ExtArgs>
+    scenarios?: boolean | User$scenariosArgs<ExtArgs>
     statsTracking?: boolean | User$statsTrackingArgs<ExtArgs>
     wallets?: boolean | User$walletsArgs<ExtArgs>
     dinoz?: boolean | User$dinozArgs<ExtArgs>
@@ -27700,6 +27801,7 @@ export namespace Prisma {
     profile?: boolean | User$profileArgs<ExtArgs>
     ranking?: boolean | User$rankingArgs<ExtArgs>
     rewards?: boolean | User$rewardsArgs<ExtArgs>
+    scenarios?: boolean | User$scenariosArgs<ExtArgs>
     statsTracking?: boolean | User$statsTrackingArgs<ExtArgs>
     wallets?: boolean | User$walletsArgs<ExtArgs>
     dinoz?: boolean | User$dinozArgs<ExtArgs>
@@ -27723,6 +27825,7 @@ export namespace Prisma {
       profile: Prisma.$UserProfilePayload<ExtArgs> | null
       ranking: Prisma.$RankingPayload<ExtArgs> | null
       rewards: Prisma.$UserRewardsPayload<ExtArgs>[]
+      scenarios: Prisma.$UserScenarioPayload<ExtArgs>[]
       statsTracking: Prisma.$UserTrackingPayload<ExtArgs>[]
       wallets: Prisma.$UserWalletPayload<ExtArgs>[]
       dinoz: Prisma.$DinozPayload<ExtArgs>[]
@@ -28150,6 +28253,7 @@ export namespace Prisma {
     profile<T extends User$profileArgs<ExtArgs> = {}>(args?: Subset<T, User$profileArgs<ExtArgs>>): Prisma__UserProfileClient<$Result.GetResult<Prisma.$UserProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     ranking<T extends User$rankingArgs<ExtArgs> = {}>(args?: Subset<T, User$rankingArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     rewards<T extends User$rewardsArgs<ExtArgs> = {}>(args?: Subset<T, User$rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserRewardsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    scenarios<T extends User$scenariosArgs<ExtArgs> = {}>(args?: Subset<T, User$scenariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     statsTracking<T extends User$statsTrackingArgs<ExtArgs> = {}>(args?: Subset<T, User$statsTrackingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTrackingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     wallets<T extends User$walletsArgs<ExtArgs> = {}>(args?: Subset<T, User$walletsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserWalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     dinoz<T extends User$dinozArgs<ExtArgs> = {}>(args?: Subset<T, User$dinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -28737,6 +28841,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: UserRewardsScalarFieldEnum | UserRewardsScalarFieldEnum[]
+  }
+
+  /**
+   * User.scenarios
+   */
+  export type User$scenariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioInclude<ExtArgs> | null
+    where?: UserScenarioWhereInput
+    orderBy?: UserScenarioOrderByWithRelationInput | UserScenarioOrderByWithRelationInput[]
+    cursor?: UserScenarioWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScenarioScalarFieldEnum | UserScenarioScalarFieldEnum[]
   }
 
   /**
@@ -35674,6 +35802,1168 @@ export namespace Prisma {
 
 
   /**
+   * Model UserScenario
+   */
+
+  export type AggregateUserScenario = {
+    _count: UserScenarioCountAggregateOutputType | null
+    _avg: UserScenarioAvgAggregateOutputType | null
+    _sum: UserScenarioSumAggregateOutputType | null
+    _min: UserScenarioMinAggregateOutputType | null
+    _max: UserScenarioMaxAggregateOutputType | null
+  }
+
+  export type UserScenarioAvgAggregateOutputType = {
+    id: number | null
+    progression: number | null
+    tracking: number | null
+  }
+
+  export type UserScenarioSumAggregateOutputType = {
+    id: number | null
+    progression: number | null
+    tracking: number | null
+  }
+
+  export type UserScenarioMinAggregateOutputType = {
+    id: number | null
+    scenarioKey: string | null
+    progression: number | null
+    tracking: number | null
+    startedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type UserScenarioMaxAggregateOutputType = {
+    id: number | null
+    scenarioKey: string | null
+    progression: number | null
+    tracking: number | null
+    startedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+  }
+
+  export type UserScenarioCountAggregateOutputType = {
+    id: number
+    scenarioKey: number
+    progression: number
+    tracking: number
+    state: number
+    startedAt: number
+    createdAt: number
+    updatedAt: number
+    userId: number
+    _all: number
+  }
+
+
+  export type UserScenarioAvgAggregateInputType = {
+    id?: true
+    progression?: true
+    tracking?: true
+  }
+
+  export type UserScenarioSumAggregateInputType = {
+    id?: true
+    progression?: true
+    tracking?: true
+  }
+
+  export type UserScenarioMinAggregateInputType = {
+    id?: true
+    scenarioKey?: true
+    progression?: true
+    tracking?: true
+    startedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type UserScenarioMaxAggregateInputType = {
+    id?: true
+    scenarioKey?: true
+    progression?: true
+    tracking?: true
+    startedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+  }
+
+  export type UserScenarioCountAggregateInputType = {
+    id?: true
+    scenarioKey?: true
+    progression?: true
+    tracking?: true
+    state?: true
+    startedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type UserScenarioAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserScenario to aggregate.
+     */
+    where?: UserScenarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserScenarios to fetch.
+     */
+    orderBy?: UserScenarioOrderByWithRelationInput | UserScenarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserScenarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserScenarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserScenarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserScenarios
+    **/
+    _count?: true | UserScenarioCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserScenarioAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserScenarioSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserScenarioMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserScenarioMaxAggregateInputType
+  }
+
+  export type GetUserScenarioAggregateType<T extends UserScenarioAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserScenario]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserScenario[P]>
+      : GetScalarType<T[P], AggregateUserScenario[P]>
+  }
+
+
+
+
+  export type UserScenarioGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserScenarioWhereInput
+    orderBy?: UserScenarioOrderByWithAggregationInput | UserScenarioOrderByWithAggregationInput[]
+    by: UserScenarioScalarFieldEnum[] | UserScenarioScalarFieldEnum
+    having?: UserScenarioScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserScenarioCountAggregateInputType | true
+    _avg?: UserScenarioAvgAggregateInputType
+    _sum?: UserScenarioSumAggregateInputType
+    _min?: UserScenarioMinAggregateInputType
+    _max?: UserScenarioMaxAggregateInputType
+  }
+
+  export type UserScenarioGroupByOutputType = {
+    id: number
+    scenarioKey: string
+    progression: number
+    tracking: number
+    state: JsonValue | null
+    startedAt: Date
+    createdAt: Date
+    updatedAt: Date
+    userId: string
+    _count: UserScenarioCountAggregateOutputType | null
+    _avg: UserScenarioAvgAggregateOutputType | null
+    _sum: UserScenarioSumAggregateOutputType | null
+    _min: UserScenarioMinAggregateOutputType | null
+    _max: UserScenarioMaxAggregateOutputType | null
+  }
+
+  type GetUserScenarioGroupByPayload<T extends UserScenarioGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserScenarioGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserScenarioGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserScenarioGroupByOutputType[P]>
+            : GetScalarType<T[P], UserScenarioGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserScenarioSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    scenarioKey?: boolean
+    progression?: boolean
+    tracking?: boolean
+    state?: boolean
+    startedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userScenario"]>
+
+  export type UserScenarioSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    scenarioKey?: boolean
+    progression?: boolean
+    tracking?: boolean
+    state?: boolean
+    startedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userScenario"]>
+
+  export type UserScenarioSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    scenarioKey?: boolean
+    progression?: boolean
+    tracking?: boolean
+    state?: boolean
+    startedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userScenario"]>
+
+  export type UserScenarioSelectScalar = {
+    id?: boolean
+    scenarioKey?: boolean
+    progression?: boolean
+    tracking?: boolean
+    state?: boolean
+    startedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+  }
+
+  export type UserScenarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "scenarioKey" | "progression" | "tracking" | "state" | "startedAt" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["userScenario"]>
+  export type UserScenarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserScenarioIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserScenarioIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserScenarioPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserScenario"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      scenarioKey: string
+      progression: number
+      tracking: number
+      state: Prisma.JsonValue | null
+      startedAt: Date
+      createdAt: Date
+      updatedAt: Date
+      userId: string
+    }, ExtArgs["result"]["userScenario"]>
+    composites: {}
+  }
+
+  type UserScenarioGetPayload<S extends boolean | null | undefined | UserScenarioDefaultArgs> = $Result.GetResult<Prisma.$UserScenarioPayload, S>
+
+  type UserScenarioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserScenarioFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: UserScenarioCountAggregateInputType | true
+    }
+
+  export interface UserScenarioDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserScenario'], meta: { name: 'UserScenario' } }
+    /**
+     * Find zero or one UserScenario that matches the filter.
+     * @param {UserScenarioFindUniqueArgs} args - Arguments to find a UserScenario
+     * @example
+     * // Get one UserScenario
+     * const userScenario = await prisma.userScenario.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserScenarioFindUniqueArgs>(args: SelectSubset<T, UserScenarioFindUniqueArgs<ExtArgs>>): Prisma__UserScenarioClient<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserScenario that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserScenarioFindUniqueOrThrowArgs} args - Arguments to find a UserScenario
+     * @example
+     * // Get one UserScenario
+     * const userScenario = await prisma.userScenario.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserScenarioFindUniqueOrThrowArgs>(args: SelectSubset<T, UserScenarioFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserScenarioClient<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserScenario that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserScenarioFindFirstArgs} args - Arguments to find a UserScenario
+     * @example
+     * // Get one UserScenario
+     * const userScenario = await prisma.userScenario.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserScenarioFindFirstArgs>(args?: SelectSubset<T, UserScenarioFindFirstArgs<ExtArgs>>): Prisma__UserScenarioClient<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserScenario that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserScenarioFindFirstOrThrowArgs} args - Arguments to find a UserScenario
+     * @example
+     * // Get one UserScenario
+     * const userScenario = await prisma.userScenario.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserScenarioFindFirstOrThrowArgs>(args?: SelectSubset<T, UserScenarioFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserScenarioClient<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserScenarios that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserScenarioFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserScenarios
+     * const userScenarios = await prisma.userScenario.findMany()
+     * 
+     * // Get first 10 UserScenarios
+     * const userScenarios = await prisma.userScenario.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userScenarioWithIdOnly = await prisma.userScenario.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserScenarioFindManyArgs>(args?: SelectSubset<T, UserScenarioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserScenario.
+     * @param {UserScenarioCreateArgs} args - Arguments to create a UserScenario.
+     * @example
+     * // Create one UserScenario
+     * const UserScenario = await prisma.userScenario.create({
+     *   data: {
+     *     // ... data to create a UserScenario
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserScenarioCreateArgs>(args: SelectSubset<T, UserScenarioCreateArgs<ExtArgs>>): Prisma__UserScenarioClient<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserScenarios.
+     * @param {UserScenarioCreateManyArgs} args - Arguments to create many UserScenarios.
+     * @example
+     * // Create many UserScenarios
+     * const userScenario = await prisma.userScenario.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserScenarioCreateManyArgs>(args?: SelectSubset<T, UserScenarioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserScenarios and returns the data saved in the database.
+     * @param {UserScenarioCreateManyAndReturnArgs} args - Arguments to create many UserScenarios.
+     * @example
+     * // Create many UserScenarios
+     * const userScenario = await prisma.userScenario.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserScenarios and only return the `id`
+     * const userScenarioWithIdOnly = await prisma.userScenario.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserScenarioCreateManyAndReturnArgs>(args?: SelectSubset<T, UserScenarioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserScenario.
+     * @param {UserScenarioDeleteArgs} args - Arguments to delete one UserScenario.
+     * @example
+     * // Delete one UserScenario
+     * const UserScenario = await prisma.userScenario.delete({
+     *   where: {
+     *     // ... filter to delete one UserScenario
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserScenarioDeleteArgs>(args: SelectSubset<T, UserScenarioDeleteArgs<ExtArgs>>): Prisma__UserScenarioClient<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserScenario.
+     * @param {UserScenarioUpdateArgs} args - Arguments to update one UserScenario.
+     * @example
+     * // Update one UserScenario
+     * const userScenario = await prisma.userScenario.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserScenarioUpdateArgs>(args: SelectSubset<T, UserScenarioUpdateArgs<ExtArgs>>): Prisma__UserScenarioClient<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserScenarios.
+     * @param {UserScenarioDeleteManyArgs} args - Arguments to filter UserScenarios to delete.
+     * @example
+     * // Delete a few UserScenarios
+     * const { count } = await prisma.userScenario.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserScenarioDeleteManyArgs>(args?: SelectSubset<T, UserScenarioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserScenarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserScenarioUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserScenarios
+     * const userScenario = await prisma.userScenario.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserScenarioUpdateManyArgs>(args: SelectSubset<T, UserScenarioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserScenarios and returns the data updated in the database.
+     * @param {UserScenarioUpdateManyAndReturnArgs} args - Arguments to update many UserScenarios.
+     * @example
+     * // Update many UserScenarios
+     * const userScenario = await prisma.userScenario.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserScenarios and only return the `id`
+     * const userScenarioWithIdOnly = await prisma.userScenario.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserScenarioUpdateManyAndReturnArgs>(args: SelectSubset<T, UserScenarioUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserScenario.
+     * @param {UserScenarioUpsertArgs} args - Arguments to update or create a UserScenario.
+     * @example
+     * // Update or create a UserScenario
+     * const userScenario = await prisma.userScenario.upsert({
+     *   create: {
+     *     // ... data to create a UserScenario
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserScenario we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserScenarioUpsertArgs>(args: SelectSubset<T, UserScenarioUpsertArgs<ExtArgs>>): Prisma__UserScenarioClient<$Result.GetResult<Prisma.$UserScenarioPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserScenarios.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserScenarioCountArgs} args - Arguments to filter UserScenarios to count.
+     * @example
+     * // Count the number of UserScenarios
+     * const count = await prisma.userScenario.count({
+     *   where: {
+     *     // ... the filter for the UserScenarios we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserScenarioCountArgs>(
+      args?: Subset<T, UserScenarioCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserScenarioCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserScenario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserScenarioAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserScenarioAggregateArgs>(args: Subset<T, UserScenarioAggregateArgs>): Prisma.PrismaPromise<GetUserScenarioAggregateType<T>>
+
+    /**
+     * Group by UserScenario.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserScenarioGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserScenarioGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserScenarioGroupByArgs['orderBy'] }
+        : { orderBy?: UserScenarioGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserScenarioGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserScenarioGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserScenario model
+   */
+  readonly fields: UserScenarioFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserScenario.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserScenarioClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserScenario model
+   */
+  interface UserScenarioFieldRefs {
+    readonly id: FieldRef<"UserScenario", 'Int'>
+    readonly scenarioKey: FieldRef<"UserScenario", 'String'>
+    readonly progression: FieldRef<"UserScenario", 'Int'>
+    readonly tracking: FieldRef<"UserScenario", 'Int'>
+    readonly state: FieldRef<"UserScenario", 'Json'>
+    readonly startedAt: FieldRef<"UserScenario", 'DateTime'>
+    readonly createdAt: FieldRef<"UserScenario", 'DateTime'>
+    readonly updatedAt: FieldRef<"UserScenario", 'DateTime'>
+    readonly userId: FieldRef<"UserScenario", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserScenario findUnique
+   */
+  export type UserScenarioFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioInclude<ExtArgs> | null
+    /**
+     * Filter, which UserScenario to fetch.
+     */
+    where: UserScenarioWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserScenario findUniqueOrThrow
+   */
+  export type UserScenarioFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioInclude<ExtArgs> | null
+    /**
+     * Filter, which UserScenario to fetch.
+     */
+    where: UserScenarioWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserScenario findFirst
+   */
+  export type UserScenarioFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioInclude<ExtArgs> | null
+    /**
+     * Filter, which UserScenario to fetch.
+     */
+    where?: UserScenarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserScenarios to fetch.
+     */
+    orderBy?: UserScenarioOrderByWithRelationInput | UserScenarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserScenarios.
+     */
+    cursor?: UserScenarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserScenarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserScenarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserScenarios.
+     */
+    distinct?: UserScenarioScalarFieldEnum | UserScenarioScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserScenario findFirstOrThrow
+   */
+  export type UserScenarioFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioInclude<ExtArgs> | null
+    /**
+     * Filter, which UserScenario to fetch.
+     */
+    where?: UserScenarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserScenarios to fetch.
+     */
+    orderBy?: UserScenarioOrderByWithRelationInput | UserScenarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserScenarios.
+     */
+    cursor?: UserScenarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserScenarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserScenarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserScenarios.
+     */
+    distinct?: UserScenarioScalarFieldEnum | UserScenarioScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserScenario findMany
+   */
+  export type UserScenarioFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioInclude<ExtArgs> | null
+    /**
+     * Filter, which UserScenarios to fetch.
+     */
+    where?: UserScenarioWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserScenarios to fetch.
+     */
+    orderBy?: UserScenarioOrderByWithRelationInput | UserScenarioOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserScenarios.
+     */
+    cursor?: UserScenarioWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserScenarios from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserScenarios.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserScenarios.
+     */
+    distinct?: UserScenarioScalarFieldEnum | UserScenarioScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserScenario create
+   */
+  export type UserScenarioCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserScenario.
+     */
+    data: XOR<UserScenarioCreateInput, UserScenarioUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserScenario createMany
+   */
+  export type UserScenarioCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserScenarios.
+     */
+    data: UserScenarioCreateManyInput | UserScenarioCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserScenario createManyAndReturn
+   */
+  export type UserScenarioCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserScenarios.
+     */
+    data: UserScenarioCreateManyInput | UserScenarioCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserScenario update
+   */
+  export type UserScenarioUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserScenario.
+     */
+    data: XOR<UserScenarioUpdateInput, UserScenarioUncheckedUpdateInput>
+    /**
+     * Choose, which UserScenario to update.
+     */
+    where: UserScenarioWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserScenario updateMany
+   */
+  export type UserScenarioUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserScenarios.
+     */
+    data: XOR<UserScenarioUpdateManyMutationInput, UserScenarioUncheckedUpdateManyInput>
+    /**
+     * Filter which UserScenarios to update
+     */
+    where?: UserScenarioWhereInput
+    /**
+     * Limit how many UserScenarios to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserScenario updateManyAndReturn
+   */
+  export type UserScenarioUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * The data used to update UserScenarios.
+     */
+    data: XOR<UserScenarioUpdateManyMutationInput, UserScenarioUncheckedUpdateManyInput>
+    /**
+     * Filter which UserScenarios to update
+     */
+    where?: UserScenarioWhereInput
+    /**
+     * Limit how many UserScenarios to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserScenario upsert
+   */
+  export type UserScenarioUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserScenario to update in case it exists.
+     */
+    where: UserScenarioWhereUniqueInput
+    /**
+     * In case the UserScenario found by the `where` argument doesn't exist, create a new UserScenario with this data.
+     */
+    create: XOR<UserScenarioCreateInput, UserScenarioUncheckedCreateInput>
+    /**
+     * In case the UserScenario was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserScenarioUpdateInput, UserScenarioUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserScenario delete
+   */
+  export type UserScenarioDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioInclude<ExtArgs> | null
+    /**
+     * Filter which UserScenario to delete.
+     */
+    where: UserScenarioWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * UserScenario deleteMany
+   */
+  export type UserScenarioDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserScenarios to delete
+     */
+    where?: UserScenarioWhereInput
+    /**
+     * Limit how many UserScenarios to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserScenario without action
+   */
+  export type UserScenarioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserScenario
+     */
+    select?: UserScenarioSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserScenario
+     */
+    omit?: UserScenarioOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserScenarioInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model UserTracking
    */
 
@@ -41851,6 +43141,21 @@ export namespace Prisma {
   export type UserRewardsScalarFieldEnum = (typeof UserRewardsScalarFieldEnum)[keyof typeof UserRewardsScalarFieldEnum]
 
 
+  export const UserScenarioScalarFieldEnum: {
+    id: 'id',
+    scenarioKey: 'scenarioKey',
+    progression: 'progression',
+    tracking: 'tracking',
+    state: 'state',
+    startedAt: 'startedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    userId: 'userId'
+  };
+
+  export type UserScenarioScalarFieldEnum = (typeof UserScenarioScalarFieldEnum)[keyof typeof UserScenarioScalarFieldEnum]
+
+
   export const UserTrackingScalarFieldEnum: {
     id: 'id',
     stat: 'stat',
@@ -43613,6 +44918,7 @@ export namespace Prisma {
     profile?: XOR<UserProfileNullableScalarRelationFilter, UserProfileWhereInput> | null
     ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
     rewards?: UserRewardsListRelationFilter
+    scenarios?: UserScenarioListRelationFilter
     statsTracking?: UserTrackingListRelationFilter
     wallets?: UserWalletListRelationFilter
     dinoz?: DinozListRelationFilter
@@ -43647,6 +44953,7 @@ export namespace Prisma {
     profile?: UserProfileOrderByWithRelationInput
     ranking?: RankingOrderByWithRelationInput
     rewards?: UserRewardsOrderByRelationAggregateInput
+    scenarios?: UserScenarioOrderByRelationAggregateInput
     statsTracking?: UserTrackingOrderByRelationAggregateInput
     wallets?: UserWalletOrderByRelationAggregateInput
     dinoz?: DinozOrderByRelationAggregateInput
@@ -43684,6 +44991,7 @@ export namespace Prisma {
     profile?: XOR<UserProfileNullableScalarRelationFilter, UserProfileWhereInput> | null
     ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
     rewards?: UserRewardsListRelationFilter
+    scenarios?: UserScenarioListRelationFilter
     statsTracking?: UserTrackingListRelationFilter
     wallets?: UserWalletListRelationFilter
     dinoz?: DinozListRelationFilter
@@ -44072,6 +45380,84 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"UserRewards"> | number
     rewardId?: IntWithAggregatesFilter<"UserRewards"> | number
     userId?: UuidNullableWithAggregatesFilter<"UserRewards"> | string | null
+  }
+
+  export type UserScenarioWhereInput = {
+    AND?: UserScenarioWhereInput | UserScenarioWhereInput[]
+    OR?: UserScenarioWhereInput[]
+    NOT?: UserScenarioWhereInput | UserScenarioWhereInput[]
+    id?: IntFilter<"UserScenario"> | number
+    scenarioKey?: StringFilter<"UserScenario"> | string
+    progression?: IntFilter<"UserScenario"> | number
+    tracking?: IntFilter<"UserScenario"> | number
+    state?: JsonNullableFilter<"UserScenario">
+    startedAt?: DateTimeFilter<"UserScenario"> | Date | string
+    createdAt?: DateTimeFilter<"UserScenario"> | Date | string
+    updatedAt?: DateTimeFilter<"UserScenario"> | Date | string
+    userId?: UuidFilter<"UserScenario"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserScenarioOrderByWithRelationInput = {
+    id?: SortOrder
+    scenarioKey?: SortOrder
+    progression?: SortOrder
+    tracking?: SortOrder
+    state?: SortOrderInput | SortOrder
+    startedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserScenarioWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    scenarioKey_userId?: UserScenarioScenarioKeyUserIdCompoundUniqueInput
+    AND?: UserScenarioWhereInput | UserScenarioWhereInput[]
+    OR?: UserScenarioWhereInput[]
+    NOT?: UserScenarioWhereInput | UserScenarioWhereInput[]
+    scenarioKey?: StringFilter<"UserScenario"> | string
+    progression?: IntFilter<"UserScenario"> | number
+    tracking?: IntFilter<"UserScenario"> | number
+    state?: JsonNullableFilter<"UserScenario">
+    startedAt?: DateTimeFilter<"UserScenario"> | Date | string
+    createdAt?: DateTimeFilter<"UserScenario"> | Date | string
+    updatedAt?: DateTimeFilter<"UserScenario"> | Date | string
+    userId?: UuidFilter<"UserScenario"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "scenarioKey_userId">
+
+  export type UserScenarioOrderByWithAggregationInput = {
+    id?: SortOrder
+    scenarioKey?: SortOrder
+    progression?: SortOrder
+    tracking?: SortOrder
+    state?: SortOrderInput | SortOrder
+    startedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    _count?: UserScenarioCountOrderByAggregateInput
+    _avg?: UserScenarioAvgOrderByAggregateInput
+    _max?: UserScenarioMaxOrderByAggregateInput
+    _min?: UserScenarioMinOrderByAggregateInput
+    _sum?: UserScenarioSumOrderByAggregateInput
+  }
+
+  export type UserScenarioScalarWhereWithAggregatesInput = {
+    AND?: UserScenarioScalarWhereWithAggregatesInput | UserScenarioScalarWhereWithAggregatesInput[]
+    OR?: UserScenarioScalarWhereWithAggregatesInput[]
+    NOT?: UserScenarioScalarWhereWithAggregatesInput | UserScenarioScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserScenario"> | number
+    scenarioKey?: StringWithAggregatesFilter<"UserScenario"> | string
+    progression?: IntWithAggregatesFilter<"UserScenario"> | number
+    tracking?: IntWithAggregatesFilter<"UserScenario"> | number
+    state?: JsonNullableWithAggregatesFilter<"UserScenario">
+    startedAt?: DateTimeWithAggregatesFilter<"UserScenario"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"UserScenario"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserScenario"> | Date | string
+    userId?: UuidWithAggregatesFilter<"UserScenario"> | string
   }
 
   export type UserTrackingWhereInput = {
@@ -45859,6 +47245,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -45893,6 +47280,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -45927,6 +47315,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -45961,6 +47350,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -46334,6 +47724,86 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     rewardId?: IntFieldUpdateOperationsInput | number
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserScenarioCreateInput = {
+    scenarioKey: string
+    progression?: number
+    tracking?: number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutScenariosInput
+  }
+
+  export type UserScenarioUncheckedCreateInput = {
+    id?: number
+    scenarioKey: string
+    progression?: number
+    tracking?: number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type UserScenarioUpdateInput = {
+    scenarioKey?: StringFieldUpdateOperationsInput | string
+    progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutScenariosNestedInput
+  }
+
+  export type UserScenarioUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    scenarioKey?: StringFieldUpdateOperationsInput | string
+    progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserScenarioCreateManyInput = {
+    id?: number
+    scenarioKey: string
+    progression?: number
+    tracking?: number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type UserScenarioUpdateManyMutationInput = {
+    scenarioKey?: StringFieldUpdateOperationsInput | string
+    progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserScenarioUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    scenarioKey?: StringFieldUpdateOperationsInput | string
+    progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserTrackingCreateInput = {
@@ -48146,6 +49616,12 @@ export namespace Prisma {
     none?: UserRewardsWhereInput
   }
 
+  export type UserScenarioListRelationFilter = {
+    every?: UserScenarioWhereInput
+    some?: UserScenarioWhereInput
+    none?: UserScenarioWhereInput
+  }
+
   export type UserTrackingListRelationFilter = {
     every?: UserTrackingWhereInput
     some?: UserTrackingWhereInput
@@ -48195,6 +49671,10 @@ export namespace Prisma {
   }
 
   export type UserRewardsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserScenarioOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -48578,6 +50058,57 @@ export namespace Prisma {
   export type UserRewardsSumOrderByAggregateInput = {
     id?: SortOrder
     rewardId?: SortOrder
+  }
+
+  export type UserScenarioScenarioKeyUserIdCompoundUniqueInput = {
+    scenarioKey: string
+    userId: string
+  }
+
+  export type UserScenarioCountOrderByAggregateInput = {
+    id?: SortOrder
+    scenarioKey?: SortOrder
+    progression?: SortOrder
+    tracking?: SortOrder
+    state?: SortOrder
+    startedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserScenarioAvgOrderByAggregateInput = {
+    id?: SortOrder
+    progression?: SortOrder
+    tracking?: SortOrder
+  }
+
+  export type UserScenarioMaxOrderByAggregateInput = {
+    id?: SortOrder
+    scenarioKey?: SortOrder
+    progression?: SortOrder
+    tracking?: SortOrder
+    startedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserScenarioMinOrderByAggregateInput = {
+    id?: SortOrder
+    scenarioKey?: SortOrder
+    progression?: SortOrder
+    tracking?: SortOrder
+    startedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type UserScenarioSumOrderByAggregateInput = {
+    id?: SortOrder
+    progression?: SortOrder
+    tracking?: SortOrder
   }
 
   export type UserTrackingStatUserIdCompoundUniqueInput = {
@@ -49827,6 +51358,13 @@ export namespace Prisma {
     connect?: UserRewardsWhereUniqueInput | UserRewardsWhereUniqueInput[]
   }
 
+  export type UserScenarioCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserScenarioCreateWithoutUserInput, UserScenarioUncheckedCreateWithoutUserInput> | UserScenarioCreateWithoutUserInput[] | UserScenarioUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserScenarioCreateOrConnectWithoutUserInput | UserScenarioCreateOrConnectWithoutUserInput[]
+    createMany?: UserScenarioCreateManyUserInputEnvelope
+    connect?: UserScenarioWhereUniqueInput | UserScenarioWhereUniqueInput[]
+  }
+
   export type UserTrackingCreateNestedManyWithoutUserInput = {
     create?: XOR<UserTrackingCreateWithoutUserInput, UserTrackingUncheckedCreateWithoutUserInput> | UserTrackingCreateWithoutUserInput[] | UserTrackingUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserTrackingCreateOrConnectWithoutUserInput | UserTrackingCreateOrConnectWithoutUserInput[]
@@ -49928,6 +51466,13 @@ export namespace Prisma {
     connectOrCreate?: UserRewardsCreateOrConnectWithoutUserInput | UserRewardsCreateOrConnectWithoutUserInput[]
     createMany?: UserRewardsCreateManyUserInputEnvelope
     connect?: UserRewardsWhereUniqueInput | UserRewardsWhereUniqueInput[]
+  }
+
+  export type UserScenarioUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserScenarioCreateWithoutUserInput, UserScenarioUncheckedCreateWithoutUserInput> | UserScenarioCreateWithoutUserInput[] | UserScenarioUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserScenarioCreateOrConnectWithoutUserInput | UserScenarioCreateOrConnectWithoutUserInput[]
+    createMany?: UserScenarioCreateManyUserInputEnvelope
+    connect?: UserScenarioWhereUniqueInput | UserScenarioWhereUniqueInput[]
   }
 
   export type UserTrackingUncheckedCreateNestedManyWithoutUserInput = {
@@ -50071,6 +51616,20 @@ export namespace Prisma {
     update?: UserRewardsUpdateWithWhereUniqueWithoutUserInput | UserRewardsUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserRewardsUpdateManyWithWhereWithoutUserInput | UserRewardsUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserRewardsScalarWhereInput | UserRewardsScalarWhereInput[]
+  }
+
+  export type UserScenarioUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserScenarioCreateWithoutUserInput, UserScenarioUncheckedCreateWithoutUserInput> | UserScenarioCreateWithoutUserInput[] | UserScenarioUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserScenarioCreateOrConnectWithoutUserInput | UserScenarioCreateOrConnectWithoutUserInput[]
+    upsert?: UserScenarioUpsertWithWhereUniqueWithoutUserInput | UserScenarioUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserScenarioCreateManyUserInputEnvelope
+    set?: UserScenarioWhereUniqueInput | UserScenarioWhereUniqueInput[]
+    disconnect?: UserScenarioWhereUniqueInput | UserScenarioWhereUniqueInput[]
+    delete?: UserScenarioWhereUniqueInput | UserScenarioWhereUniqueInput[]
+    connect?: UserScenarioWhereUniqueInput | UserScenarioWhereUniqueInput[]
+    update?: UserScenarioUpdateWithWhereUniqueWithoutUserInput | UserScenarioUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserScenarioUpdateManyWithWhereWithoutUserInput | UserScenarioUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserScenarioScalarWhereInput | UserScenarioScalarWhereInput[]
   }
 
   export type UserTrackingUpdateManyWithoutUserNestedInput = {
@@ -50273,6 +51832,20 @@ export namespace Prisma {
     update?: UserRewardsUpdateWithWhereUniqueWithoutUserInput | UserRewardsUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: UserRewardsUpdateManyWithWhereWithoutUserInput | UserRewardsUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: UserRewardsScalarWhereInput | UserRewardsScalarWhereInput[]
+  }
+
+  export type UserScenarioUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserScenarioCreateWithoutUserInput, UserScenarioUncheckedCreateWithoutUserInput> | UserScenarioCreateWithoutUserInput[] | UserScenarioUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserScenarioCreateOrConnectWithoutUserInput | UserScenarioCreateOrConnectWithoutUserInput[]
+    upsert?: UserScenarioUpsertWithWhereUniqueWithoutUserInput | UserScenarioUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserScenarioCreateManyUserInputEnvelope
+    set?: UserScenarioWhereUniqueInput | UserScenarioWhereUniqueInput[]
+    disconnect?: UserScenarioWhereUniqueInput | UserScenarioWhereUniqueInput[]
+    delete?: UserScenarioWhereUniqueInput | UserScenarioWhereUniqueInput[]
+    connect?: UserScenarioWhereUniqueInput | UserScenarioWhereUniqueInput[]
+    update?: UserScenarioUpdateWithWhereUniqueWithoutUserInput | UserScenarioUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserScenarioUpdateManyWithWhereWithoutUserInput | UserScenarioUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserScenarioScalarWhereInput | UserScenarioScalarWhereInput[]
   }
 
   export type UserTrackingUncheckedUpdateManyWithoutUserNestedInput = {
@@ -50506,6 +52079,20 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRewardsInput, UserUpdateWithoutRewardsInput>, UserUncheckedUpdateWithoutRewardsInput>
+  }
+
+  export type UserCreateNestedOneWithoutScenariosInput = {
+    create?: XOR<UserCreateWithoutScenariosInput, UserUncheckedCreateWithoutScenariosInput>
+    connectOrCreate?: UserCreateOrConnectWithoutScenariosInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutScenariosNestedInput = {
+    create?: XOR<UserCreateWithoutScenariosInput, UserUncheckedCreateWithoutScenariosInput>
+    connectOrCreate?: UserCreateOrConnectWithoutScenariosInput
+    upsert?: UserUpsertWithoutScenariosInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutScenariosInput, UserUpdateWithoutScenariosInput>, UserUncheckedUpdateWithoutScenariosInput>
   }
 
   export type UserCreateNestedOneWithoutStatsTrackingInput = {
@@ -51542,6 +53129,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
@@ -51575,6 +53163,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
@@ -51917,6 +53506,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
@@ -51950,6 +53540,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
@@ -53747,6 +55338,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -53780,6 +55372,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -53885,6 +55478,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -53918,6 +55512,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -53983,6 +55578,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -54016,6 +55612,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -54103,6 +55700,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -54136,6 +55734,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -54168,6 +55767,7 @@ export namespace Prisma {
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -54201,6 +55801,7 @@ export namespace Prisma {
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -54250,6 +55851,7 @@ export namespace Prisma {
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -54283,6 +55885,7 @@ export namespace Prisma {
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -54424,6 +56027,37 @@ export namespace Prisma {
 
   export type UserRewardsCreateManyUserInputEnvelope = {
     data: UserRewardsCreateManyUserInput | UserRewardsCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserScenarioCreateWithoutUserInput = {
+    scenarioKey: string
+    progression?: number
+    tracking?: number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserScenarioUncheckedCreateWithoutUserInput = {
+    id?: number
+    scenarioKey: string
+    progression?: number
+    tracking?: number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserScenarioCreateOrConnectWithoutUserInput = {
+    where: UserScenarioWhereUniqueInput
+    create: XOR<UserScenarioCreateWithoutUserInput, UserScenarioUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserScenarioCreateManyUserInputEnvelope = {
+    data: UserScenarioCreateManyUserInput | UserScenarioCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -54874,6 +56508,37 @@ export namespace Prisma {
     userId?: UuidNullableFilter<"UserRewards"> | string | null
   }
 
+  export type UserScenarioUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserScenarioWhereUniqueInput
+    update: XOR<UserScenarioUpdateWithoutUserInput, UserScenarioUncheckedUpdateWithoutUserInput>
+    create: XOR<UserScenarioCreateWithoutUserInput, UserScenarioUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserScenarioUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserScenarioWhereUniqueInput
+    data: XOR<UserScenarioUpdateWithoutUserInput, UserScenarioUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserScenarioUpdateManyWithWhereWithoutUserInput = {
+    where: UserScenarioScalarWhereInput
+    data: XOR<UserScenarioUpdateManyMutationInput, UserScenarioUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserScenarioScalarWhereInput = {
+    AND?: UserScenarioScalarWhereInput | UserScenarioScalarWhereInput[]
+    OR?: UserScenarioScalarWhereInput[]
+    NOT?: UserScenarioScalarWhereInput | UserScenarioScalarWhereInput[]
+    id?: IntFilter<"UserScenario"> | number
+    scenarioKey?: StringFilter<"UserScenario"> | string
+    progression?: IntFilter<"UserScenario"> | number
+    tracking?: IntFilter<"UserScenario"> | number
+    state?: JsonNullableFilter<"UserScenario">
+    startedAt?: DateTimeFilter<"UserScenario"> | Date | string
+    createdAt?: DateTimeFilter<"UserScenario"> | Date | string
+    updatedAt?: DateTimeFilter<"UserScenario"> | Date | string
+    userId?: UuidFilter<"UserScenario"> | string
+  }
+
   export type UserTrackingUpsertWithWhereUniqueWithoutUserInput = {
     where: UserTrackingWhereUniqueInput
     update: XOR<UserTrackingUpdateWithoutUserInput, UserTrackingUncheckedUpdateWithoutUserInput>
@@ -55113,6 +56778,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -55146,6 +56812,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -55195,6 +56862,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -55228,6 +56896,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -55260,6 +56929,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -55293,6 +56963,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -55342,6 +57013,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -55375,6 +57047,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -55408,6 +57081,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -55441,6 +57115,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -55490,6 +57165,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -55523,6 +57199,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -55556,6 +57233,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -55589,6 +57267,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -55638,6 +57317,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -55671,6 +57351,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -55704,6 +57385,7 @@ export namespace Prisma {
     items?: UserItemsCreateNestedManyWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -55737,6 +57419,7 @@ export namespace Prisma {
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -55786,6 +57469,7 @@ export namespace Prisma {
     items?: UserItemsUpdateManyWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -55819,6 +57503,7 @@ export namespace Prisma {
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -55852,6 +57537,7 @@ export namespace Prisma {
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -55885,6 +57571,7 @@ export namespace Prisma {
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -55934,6 +57621,7 @@ export namespace Prisma {
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -55967,6 +57655,159 @@ export namespace Prisma {
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUncheckedUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+  }
+
+  export type UserCreateWithoutScenariosInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserUncheckedCreateWithoutScenariosInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeUncheckedCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+  }
+
+  export type UserCreateOrConnectWithoutScenariosInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutScenariosInput, UserUncheckedCreateWithoutScenariosInput>
+  }
+
+  export type UserUpsertWithoutScenariosInput = {
+    update: XOR<UserUpdateWithoutScenariosInput, UserUncheckedUpdateWithoutScenariosInput>
+    create: XOR<UserCreateWithoutScenariosInput, UserUncheckedCreateWithoutScenariosInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutScenariosInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutScenariosInput, UserUncheckedUpdateWithoutScenariosInput>
+  }
+
+  export type UserUpdateWithoutScenariosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutScenariosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -56001,6 +57842,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
     dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
@@ -56034,6 +57876,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
     dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
@@ -56083,6 +57926,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
     dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
@@ -56116,6 +57960,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
     dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
@@ -56149,6 +57994,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
     dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
@@ -56182,6 +58028,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
     dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
@@ -56231,6 +58078,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
     dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
@@ -56264,6 +58112,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
     dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
@@ -56297,6 +58146,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -56330,6 +58180,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -56467,6 +58318,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -56500,6 +58352,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -56624,6 +58477,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -56657,6 +58511,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -56739,6 +58594,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -56772,6 +58628,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -56832,6 +58689,7 @@ export namespace Prisma {
     profile?: UserProfileCreateNestedOneWithoutUserInput
     ranking?: RankingCreateNestedOneWithoutUserInput
     rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
     wallets?: UserWalletCreateNestedManyWithoutUserInput
     dinoz?: DinozCreateNestedManyWithoutUserInput
@@ -56865,6 +58723,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
     ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
     rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
     statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
     wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
@@ -56974,6 +58833,7 @@ export namespace Prisma {
     profile?: UserProfileUpdateOneWithoutUserNestedInput
     ranking?: RankingUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUpdateManyWithoutUserNestedInput
     dinoz?: DinozUpdateManyWithoutUserNestedInput
@@ -57007,6 +58867,7 @@ export namespace Prisma {
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
     rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
     statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
     wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
@@ -57564,6 +59425,17 @@ export namespace Prisma {
     rewardId: number
   }
 
+  export type UserScenarioCreateManyUserInput = {
+    id?: number
+    scenarioKey: string
+    progression?: number
+    tracking?: number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UserTrackingCreateManyUserInput = {
     id?: number
     stat: string
@@ -57722,6 +59594,38 @@ export namespace Prisma {
   export type UserRewardsUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     rewardId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type UserScenarioUpdateWithoutUserInput = {
+    scenarioKey?: StringFieldUpdateOperationsInput | string
+    progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserScenarioUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    scenarioKey?: StringFieldUpdateOperationsInput | string
+    progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserScenarioUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    scenarioKey?: StringFieldUpdateOperationsInput | string
+    progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
+    state?: NullableJsonNullValueInput | InputJsonValue
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserTrackingUpdateWithoutUserInput = {
