@@ -394,6 +394,18 @@ exports.Prisma.UserRewardsScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.UserScenarioScalarFieldEnum = {
+  id: 'id',
+  scenarioKey: 'scenarioKey',
+  progression: 'progression',
+  tracking: 'tracking',
+  state: 'state',
+  startedAt: 'startedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
 exports.Prisma.UserTrackingScalarFieldEnum = {
   id: 'id',
   stat: 'stat',
@@ -559,6 +571,7 @@ exports.Prisma.ModelName = {
   UserItems: 'UserItems',
   UserProfile: 'UserProfile',
   UserRewards: 'UserRewards',
+  UserScenario: 'UserScenario',
   UserTracking: 'UserTracking',
   UserWallet: 'UserWallet',
   Conversation: 'Conversation',
