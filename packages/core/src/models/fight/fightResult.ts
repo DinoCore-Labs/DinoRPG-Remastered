@@ -11,11 +11,18 @@ import { FighterType } from './fighterType.js';
 import { FightStep } from './fightStep.js';
 import { EntranceEffect } from './transpiler.js';
 
-export type FightSource = 'normal' | 'dialog' | 'mission' | 'training_center';
+export type FightSource = 'normal' | 'dialog' | 'mission' | 'training_center' | 'scenario';
 
 export type FightDialogReturn = {
 	dialogId: string;
 	phaseId: string;
+};
+
+export type FightScenarioReturn = {
+	key: string;
+	fightKey: string;
+	progressed: boolean;
+	progression: number;
 };
 export interface FightResult {
 	fighters: FighterRecap[];
@@ -43,6 +50,7 @@ export interface FightResult {
 	background?: string;
 	trainingProgram?: TrainingCenterProgramKey;
 	missionCompletion?: MissionInteractionCompleteResponse | null;
+	scenario?: FightScenarioReturn;
 }
 
 export interface FighterRecap {
