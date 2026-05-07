@@ -241,11 +241,7 @@ export const placeListv2 = definePlaces({
 		placeId: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 		name: 'tunel',
 		map: MapZone.GTOUTCHAUD,
-		moves: [
-			{ target: PlaceEnum.FOSSELAVE },
-			{ target: PlaceEnum.ETUNEL, condition: '!fx(lantrn)' },
-			{ target: PlaceEnum.GO_TO_TUNNEL, condition: 'fx(lantrn)' }
-		],
+		moves: [{ target: PlaceEnum.FOSSELAVE }, { target: PlaceEnum.GO_TO_TUNNEL, condition: 'fx(lantrn)' }],
 		ground: GroundEnum.DIRT,
 		background: 's_tunel',
 		top: 130,
