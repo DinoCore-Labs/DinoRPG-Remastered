@@ -385,7 +385,8 @@ exports.Prisma.UserProfileScalarFieldEnum = {
   language: 'language',
   gender: 'gender',
   age: 'age',
-  description: 'description'
+  description: 'description',
+  customText: 'customText'
 };
 
 exports.Prisma.UserRewardsScalarFieldEnum = {

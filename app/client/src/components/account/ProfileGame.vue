@@ -55,14 +55,23 @@
 				</dd>
 			</dl>
 			<div class="profilContent" v-if="!isEditOn">
-				<!--<div v-html="customText" class="contentTexte" />-->
+				<div class="contentTexte">{{ customText }}</div>
 			</div>
-			<!--<textarea v-if="isEditOn" v-model="customTextEdit" class="editTexte" />-->
+			<textarea
+				v-if="canEditProfileDescription && isEditOn"
+				v-model="customTextEdit"
+				class="editTexte"
+				maxlength="1000"
+			/>
 			<div class="buttonLand" v-if="isMyAccount()">
 				<DZButton @click="option = true">{{ $t(`accountPage.editAccount`) }}</DZButton>
-				<!--<a v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)" class="tinybutton">OK</a>
-				<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
-				<DZButton href="" v-if="hasPMI()">{{ $t(`myAccount.quest`) }}</DZButton>-->
+				<DZButton v-if="canEditProfileDescription && isEditOn" @click="setCustomText(customTextEdit)" class="bSmall"
+					>OK</DZButton
+				>
+				<DZButton v-if="canEditProfileDescription && !isEditOn" @click="startProfileTextEdit" class="bSmall">
+					{{ $t(`accountPage.edit`) }}
+				</DZButton>
+				<!-- <DZButton href="" v-if="hasPMI()">{{ $t(`myAccount.quest`) }}</DZButton> -->
 			</div>
 		</div>
 		<div class="profil" v-else>
@@ -129,8 +138,8 @@ export default defineComponent({
 		return {
 			uStore: userStore(),
 			isEditOn: false as boolean,
-			//customText: this.accountData?.customText as string | null,
-			//customTextEdit: this.accountData?.customText ?? '',
+			customText: this.profile?.customText as string | null,
+			customTextEdit: this.profile?.customText ?? '',
 			userPosition: null as number | null,
 			userPoints: null as number | null,
 			userDinozCount: null as number | null,
@@ -204,11 +213,29 @@ export default defineComponent({
 			} finally {
 				this.passwordLoading = false;
 			}
+		},
+		startProfileTextEdit() {
+			this.customTextEdit = this.customText ?? '';
+			this.isEditOn = true;
+		},
+		async setCustomText(message: string): Promise<void> {
+			try {
+				const customText = message.trim() || null;
+				await UserService.updateProfile({
+					customText
+				});
+				this.customText = customText ?? '';
+				this.customTextEdit = customText ?? '';
+				this.isEditOn = false;
+				this.$toast.open({
+					message: this.$t('accountPage.descriptionUpdated'),
+					type: 'success'
+				});
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
 		}
 		/*,
-		hasPlume(): boolean {
-			return this.accountData.epicRewards.includes(Reward.PLUME);
-		},
 		hasPMI(): boolean {
 			return this.accountData.epicRewards.includes(Reward.PMI);
 		}*/
@@ -235,32 +262,29 @@ export default defineComponent({
 			}
 			EventBus.emit('isLoading', true);
 		},
-		async setCustomText(message: string): Promise<void> {
-			EventBus.emit('isLoading', true);
-			try {
-				await PlayerService.setCustomText(message);
-				EventBus.emit('isLoading', false);
-				this.customText = message;
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
-				return;
-			}
-			this.isEditOn = false;
-		},
-		goToRankingPage(e: Event) {
-			e.preventDefault();
-			goTo(this.$router, 'Ranking');
-		},
 		goToClan(id: number) {
 			this.$router.push({ name: 'Clan', params: { id } });
 		},
 	}*/
+	},
+	computed: {
+		canEditProfileDescription(): boolean {
+			return this.isMyAccount() && this.uStore.canEditProfileDescription;
+		}
 	},
 	watch: {
 		'profile.id': {
 			immediate: true,
 			handler() {
 				this.fetchUserPosition();
+			}
+		},
+		'profile.customText': {
+			immediate: true,
+			handler(customText: string | null) {
+				this.customText = customText ?? '';
+				this.customTextEdit = customText ?? '';
+				this.isEditOn = false;
 			}
 		}
 	}

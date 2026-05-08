@@ -36,6 +36,7 @@ export type LoginResponse = z.infer<typeof loginResponseSchema>;
 // User profile update
 export const updateUserProfileSchema = z.object({
 	description: z.string().max(500).optional(),
+	customText: z.string().max(1000).optional(),
 	language: z.nativeEnum(Language).nullable().optional(),
 	gender: z.nativeEnum(Gender).nullable().optional(),
 	age: z.number().int().min(1).max(120).nullable().optional()
@@ -48,6 +49,7 @@ export const updateUserProfileResponseSchema = z.object({
 	success: z.literal(true),
 	profile: z.object({
 		description: z.string().max(500).nullable().optional(),
+		customText: z.string().max(1000).nullable().optional(),
 		language: z.nativeEnum(Language).nullable().optional(),
 		gender: z.nativeEnum(Gender).nullable().optional(),
 		age: z.number().int().min(1).max(120).nullable().optional()

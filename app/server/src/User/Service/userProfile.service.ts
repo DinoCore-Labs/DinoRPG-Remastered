@@ -1,3 +1,5 @@
+import { custom } from 'zod';
+
 import { prisma } from '../../prisma.js';
 import { toDinozPublicFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { UpdateUserProfileInput } from '../Schema/user.schema.js';
@@ -48,6 +50,7 @@ export async function getOwnProfileService(userId: string) {
 		name: user.name,
 		createdAt: user.createdDate,
 		description: user.profile.description,
+		customText: user.profile.customText,
 		language: user.profile.language,
 		gender: user.profile.gender,
 		age: user.profile.age,
@@ -109,6 +112,7 @@ export async function getUserProfileService(id: string) {
 		name: user.name,
 		createdAt: user.createdDate,
 		description: user.profile.description,
+		customText: user.profile.customText,
 		language: user.profile.language,
 		gender: user.profile.gender,
 		age: user.profile.age,
@@ -127,12 +131,16 @@ export async function getUserProfileService(id: string) {
 export async function updateProfileService(userId: string, data: UpdateUserProfileInput) {
 	const updateData: {
 		description?: string | null;
+		customText?: string | null;
 		language?: UpdateUserProfileInput['language'];
 		gender?: UpdateUserProfileInput['gender'];
 		age?: number | null;
 	} = {};
 	if ('description' in data) {
 		updateData.description = data.description?.trim() || null;
+	}
+	if ('customText' in data) {
+		updateData.customText = data.customText?.trim() || null;
 	}
 	if ('language' in data) {
 		updateData.language = data.language;
