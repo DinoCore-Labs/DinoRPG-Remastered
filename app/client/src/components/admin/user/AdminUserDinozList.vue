@@ -1,14 +1,16 @@
 <template>
 	<div class="card">
 		<div class="card-container">
-			<h3>Dinoz</h3>
-			<div v-if="dinozList.length === 0">Aucun dinoz.</div>
-			<div v-else class="dinoz-actions">
-				<div class="field">
-					<label for="dinozSelect">Sélectionner un dinoz</label>
-					<DZSelect id="dinozSelect" v-model="selectedDinozId" :options="dinozOptions" />
+			<div class="card-container">
+				<h3>Dinoz</h3>
+				<div v-if="dinozList.length === 0">Aucun dinoz.</div>
+				<div v-else class="dinoz-actions">
+					<div class="field">
+						<label for="dinozSelect">Sélectionner un dinoz</label>
+						<DZSelect id="dinozSelect" v-model="selectedDinozId" :options="dinozOptions" />
+					</div>
+					<DZButton type="button" :disabled="selectedDinozId === undefined" @click="editSelectedDinoz">Éditer</DZButton>
 				</div>
-				<DZButton type="button" :disabled="selectedDinozId === undefined" @click="editSelectedDinoz">Éditer</DZButton>
 			</div>
 		</div>
 	</div>

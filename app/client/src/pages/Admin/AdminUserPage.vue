@@ -17,6 +17,7 @@
 			<AdminUserInventoryForm :user="user" type="items" @updated="reloadUser" />
 			<AdminUserInventoryForm :user="user" type="ingredients" @updated="reloadUser" />
 			<AdminUserRewardsForm :user="user" @updated="reloadUser" />
+			<AdminUserScenariosForm v-if="user" :user="user" @updated="reloadUser" />
 			<AdminUserDinozList :user-id="user.id" :dinoz-list="dinozList" />
 		</template>
 	</div>
@@ -36,6 +37,7 @@ import AdminUserUniqueSkillsForm from '../../components/admin/user/AdminUserUniq
 import AdminUserInventoryForm from '../../components/admin/user/AdminUserInventoryForm.vue';
 import AdminUserRewardsForm from '../../components/admin/user/AdminUserRewardsForm.vue';
 import AdminUserDinozList from '../../components/admin/user/AdminUserDinozList.vue';
+import AdminUserScenariosForm from '../../components/admin/user/AdminUserScenariosForm.vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 
 import { AdminUserService } from '../../services/adminUsers.service';
