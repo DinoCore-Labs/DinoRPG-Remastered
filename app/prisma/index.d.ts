@@ -33582,6 +33582,7 @@ export namespace Prisma {
     gender: $Enums.Gender | null
     age: number | null
     description: string | null
+    customText: string | null
   }
 
   export type UserProfileMaxAggregateOutputType = {
@@ -33593,6 +33594,7 @@ export namespace Prisma {
     gender: $Enums.Gender | null
     age: number | null
     description: string | null
+    customText: string | null
   }
 
   export type UserProfileCountAggregateOutputType = {
@@ -33604,6 +33606,7 @@ export namespace Prisma {
     gender: number
     age: number
     description: number
+    customText: number
     _all: number
   }
 
@@ -33625,6 +33628,7 @@ export namespace Prisma {
     gender?: true
     age?: true
     description?: true
+    customText?: true
   }
 
   export type UserProfileMaxAggregateInputType = {
@@ -33636,6 +33640,7 @@ export namespace Prisma {
     gender?: true
     age?: true
     description?: true
+    customText?: true
   }
 
   export type UserProfileCountAggregateInputType = {
@@ -33647,6 +33652,7 @@ export namespace Prisma {
     gender?: true
     age?: true
     description?: true
+    customText?: true
     _all?: true
   }
 
@@ -33745,6 +33751,7 @@ export namespace Prisma {
     gender: $Enums.Gender | null
     age: number | null
     description: string | null
+    customText: string | null
     _count: UserProfileCountAggregateOutputType | null
     _avg: UserProfileAvgAggregateOutputType | null
     _sum: UserProfileSumAggregateOutputType | null
@@ -33775,6 +33782,7 @@ export namespace Prisma {
     gender?: boolean
     age?: boolean
     description?: boolean
+    customText?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userProfile"]>
 
@@ -33787,6 +33795,7 @@ export namespace Prisma {
     gender?: boolean
     age?: boolean
     description?: boolean
+    customText?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userProfile"]>
 
@@ -33799,6 +33808,7 @@ export namespace Prisma {
     gender?: boolean
     age?: boolean
     description?: boolean
+    customText?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userProfile"]>
 
@@ -33811,9 +33821,10 @@ export namespace Prisma {
     gender?: boolean
     age?: boolean
     description?: boolean
+    customText?: boolean
   }
 
-  export type UserProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "avatar" | "avatarType" | "language" | "gender" | "age" | "description", ExtArgs["result"]["userProfile"]>
+  export type UserProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "avatar" | "avatarType" | "language" | "gender" | "age" | "description" | "customText", ExtArgs["result"]["userProfile"]>
   export type UserProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -33838,6 +33849,7 @@ export namespace Prisma {
       gender: $Enums.Gender | null
       age: number | null
       description: string | null
+      customText: string | null
     }, ExtArgs["result"]["userProfile"]>
     composites: {}
   }
@@ -34270,6 +34282,7 @@ export namespace Prisma {
     readonly gender: FieldRef<"UserProfile", 'Gender'>
     readonly age: FieldRef<"UserProfile", 'Int'>
     readonly description: FieldRef<"UserProfile", 'String'>
+    readonly customText: FieldRef<"UserProfile", 'String'>
   }
     
 
@@ -43126,7 +43139,8 @@ export namespace Prisma {
     language: 'language',
     gender: 'gender',
     age: 'age',
-    description: 'description'
+    description: 'description',
+    customText: 'customText'
   };
 
   export type UserProfileScalarFieldEnum = (typeof UserProfileScalarFieldEnum)[keyof typeof UserProfileScalarFieldEnum]
@@ -45274,6 +45288,7 @@ export namespace Prisma {
     gender?: EnumGenderNullableFilter<"UserProfile"> | $Enums.Gender | null
     age?: IntNullableFilter<"UserProfile"> | number | null
     description?: StringNullableFilter<"UserProfile"> | string | null
+    customText?: StringNullableFilter<"UserProfile"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -45286,6 +45301,7 @@ export namespace Prisma {
     gender?: SortOrderInput | SortOrder
     age?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
+    customText?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -45301,6 +45317,7 @@ export namespace Prisma {
     gender?: EnumGenderNullableFilter<"UserProfile"> | $Enums.Gender | null
     age?: IntNullableFilter<"UserProfile"> | number | null
     description?: StringNullableFilter<"UserProfile"> | string | null
+    customText?: StringNullableFilter<"UserProfile"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId">
 
@@ -45313,6 +45330,7 @@ export namespace Prisma {
     gender?: SortOrderInput | SortOrder
     age?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
+    customText?: SortOrderInput | SortOrder
     _count?: UserProfileCountOrderByAggregateInput
     _avg?: UserProfileAvgOrderByAggregateInput
     _max?: UserProfileMaxOrderByAggregateInput
@@ -45332,6 +45350,7 @@ export namespace Prisma {
     gender?: EnumGenderNullableWithAggregatesFilter<"UserProfile"> | $Enums.Gender | null
     age?: IntNullableWithAggregatesFilter<"UserProfile"> | number | null
     description?: StringNullableWithAggregatesFilter<"UserProfile"> | string | null
+    customText?: StringNullableWithAggregatesFilter<"UserProfile"> | string | null
   }
 
   export type UserRewardsWhereInput = {
@@ -47620,6 +47639,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     age?: number | null
     description?: string | null
+    customText?: string | null
     user: UserCreateNestedOneWithoutProfileInput
   }
 
@@ -47632,6 +47652,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     age?: number | null
     description?: string | null
+    customText?: string | null
   }
 
   export type UserProfileUpdateInput = {
@@ -47642,6 +47663,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
   }
 
@@ -47654,6 +47676,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserProfileCreateManyInput = {
@@ -47665,6 +47688,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     age?: number | null
     description?: string | null
+    customText?: string | null
   }
 
   export type UserProfileUpdateManyMutationInput = {
@@ -47675,6 +47699,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserProfileUncheckedUpdateManyInput = {
@@ -47686,6 +47711,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserRewardsCreateInput = {
@@ -49975,6 +50001,7 @@ export namespace Prisma {
     gender?: SortOrder
     age?: SortOrder
     description?: SortOrder
+    customText?: SortOrder
   }
 
   export type UserProfileAvgOrderByAggregateInput = {
@@ -49990,6 +50017,7 @@ export namespace Prisma {
     gender?: SortOrder
     age?: SortOrder
     description?: SortOrder
+    customText?: SortOrder
   }
 
   export type UserProfileMinOrderByAggregateInput = {
@@ -50001,6 +50029,7 @@ export namespace Prisma {
     gender?: SortOrder
     age?: SortOrder
     description?: SortOrder
+    customText?: SortOrder
   }
 
   export type UserProfileSumOrderByAggregateInput = {
@@ -55972,6 +56001,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     age?: number | null
     description?: string | null
+    customText?: string | null
   }
 
   export type UserProfileUncheckedCreateWithoutUserInput = {
@@ -55982,6 +56012,7 @@ export namespace Prisma {
     gender?: $Enums.Gender | null
     age?: number | null
     description?: string | null
+    customText?: string | null
   }
 
   export type UserProfileCreateOrConnectWithoutUserInput = {
@@ -56443,6 +56474,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserProfileUncheckedUpdateWithoutUserInput = {
@@ -56453,6 +56485,7 @@ export namespace Prisma {
     gender?: NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
     age?: NullableIntFieldUpdateOperationsInput | number | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type RankingUpsertWithoutUserInput = {
