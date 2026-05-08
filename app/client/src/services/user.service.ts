@@ -62,6 +62,7 @@ export const UserService = {
 	updateProfile(data: Partial<UserProfile>): Promise<UserProfile> {
 		const payload: Partial<UserProfile> = {};
 		if (data.description !== undefined) payload.description = data.description;
+		if (data.customText !== undefined) payload.customText = data.customText;
 		if (data.gender !== undefined) payload.gender = data.gender;
 		if (data.language !== undefined) payload.language = data.language;
 		if (data.age !== undefined) payload.age = data.age;

@@ -11,6 +11,7 @@ export interface UserProfile {
 	avatar: string | null; // Base64 depuis le backend
 	avatarType: string | null; // ex: "image/webp"
 	description: string | null;
+	customText: string | null;
 	language: Language | null;
 	gender: Gender | null;
 	age: number | null;

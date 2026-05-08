@@ -33,6 +33,9 @@ export const userStore = defineStore('userStore', {
 		},
 		canManageDinozOrder(): boolean {
 			return this.hasReward(Reward.PDA);
+		},
+		canEditProfileDescription(): boolean {
+			return this.hasReward(Reward.PLUME);
 		}
 	},
 	actions: {

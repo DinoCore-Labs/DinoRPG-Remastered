@@ -442,6 +442,7 @@ model UserProfile {
   gender      Gender?
   age         Int?
   description String?
+  customText  String?
 }
 
 model UserRewards {

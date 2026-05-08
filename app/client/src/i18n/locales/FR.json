@@ -510,6 +510,8 @@
 		"completion": "Complétion",
 		"rewards": "Récompenses épiques",
 		"editAccount": "Modifier le profil",
+		"edit": "Editer",
+		"descriptionUpdated": "Description mise à jour !",
 		"options": {
 			"title": "Options du compte",
 			"mdp": "Modifier le MDP",
