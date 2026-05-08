@@ -399,7 +399,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{ type: 'GOLD', value: 5000 }
 		],
 		labels: {},
-		condition: 'mission(kilglu)+canfight(gvert)',
+		condition: 'mission(kilglu)+canfight(gvert, 11)',
 		limit: 10
 	},
 	{
@@ -425,7 +425,7 @@ export const papyJoeMissions: MissionDefinition[] = [
 			{ type: 'GOLD', value: 8000 }
 		],
 		labels: {},
-		condition: 'mission(kilgnt)+canfight(coq)',
+		condition: 'mission(kilgnt)+canfight(coq, 18)',
 		limit: 20
 	}
 ];
