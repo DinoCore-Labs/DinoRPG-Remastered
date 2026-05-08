@@ -1,3 +1,4 @@
+import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
@@ -52,7 +53,10 @@ export async function resurrectDinoz(req: FastifyRequest<{ Params: Params }>, _r
 		})
 	);
 	await incrementUserStat(StatTracking.DEATHS, dinozData.user.id, 1);
-	return {
-		questTextKey: progressed ? 'scenarios.star.texts.resurrectStarFound' : undefined
-	};
+	return progressed
+		? {
+				category: ItemEffect.QUEST,
+				value: 'scenarios.star.texts.resurrectStarFound'
+			}
+		: undefined;
 }

@@ -65,7 +65,7 @@ export default defineComponent({
 				const rez = await DinozService.resurrectDinoz(dinozId);
 				if (rez && rez.category === ItemEffect.QUEST) {
 					this.$toast.open({
-						message: formatText(this.$t(`quest.${rez.value}`)),
+						message: formatText(this.$t(String(rez.value))),
 						type: 'info'
 					});
 				}
