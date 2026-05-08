@@ -375,7 +375,7 @@ export const starquestBaoBobDialog: DialogDefinition = {
 	cond: parseCondition('scenario(star,6)+(admin()|hour(5)|hour(6)|hour(7))'),
 	pnj: {
 		image: false,
-		gfx: 'baobob',
+		gfx: 'bob',
 		frame: 'speak',
 		background: '1'
 	},
