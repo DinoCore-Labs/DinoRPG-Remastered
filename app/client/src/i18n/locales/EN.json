@@ -190,9 +190,9 @@
 		"dinoz": "DinoRPG [ Profile of {dinoz} ]",
 		"dinozNaming": "DinoRPG [ Choose Name ]",
 		"levelup": "DinoRPG [ Level-up of {dinoz} ]",
-		"gather": "DinoRPG [ {type} ]",
+		"gather": "DinoRPG [ {type}]",
 		"fight": "DinoRPG [ Fight! ]",
-		"training": "DinoRPG [ C.E.F ]",
+		"training": "DinoRPG [ L.T.C ]",
 		"manageDinoz": "DinoRPG [ Manage my Dinoz ]",
 		"admin": "DinoRPG [ Admin Dashboard ]"
 	},
@@ -316,18 +316,18 @@
 			"blockSender": "Block sender"
 		},
 		"password": {
-			"title": "Modifier le mot de passe",
-			"old": "Ancien mot de passe :",
-			"new": "Nouveau mot de passe :",
-			"confirm": "Confirmer le nouveau mot de passe :",
+			"title": "Modify password",
+			"old": "Old password:",
+			"new": "New password:",
+			"confirm": "Confirm New Password:",
 			"errors": {
-				"oldPasswordRequired": "Veuillez renseigner l’ancien mot de passe.",
-				"fieldsRequired": "Veuillez remplir tous les champs.",
-				"passwordMismatch": "Les nouveaux mots de passe ne correspondent pas."
+				"oldPasswordRequired": "Please enter old password.",
+				"fieldsRequired": "Please fill all fields.",
+				"passwordMismatch": "New passwords don't match."
 			}
 		},
-		"modif": "Modification...",
-		"valid": "Valider",
+		"modif": "Modify...",
+		"valid": "Validate",
 		"close": "Close",
 		"continue": "Continue"
 	},
@@ -358,31 +358,31 @@
 		"action": "You consumed {value} :irma: and may take further action.",
 		"resurrect": "Your Dinoz is resurrected.",
 		"egg": "You opened a {value}'s Egg.",
-		"dinozAlreadySelling": "Votre Dinoz est déjà en vente.",
-		"noPDA": "Tu as besoin de la Pierre en Diamantite Agglomérée pour accéder à cette page.",
-		"noPMI": "Tu as besoin du Petit Missionnaire Illustré pour accéder à cette page.",
-		"noPAC": "Tu as besoin du Parchemin des Aptitudes Compilées pour accéder à cette page.",
-		"dinozListMissing": "Liste des Dinoz manquante.",
-		"viewFight": "Vous avez déjà visionné ce combat.",
-		"dinozDataMissing": "Données du Dinoz manquantes.",
-		"selectADinozAtMarketFirst": "Vous devez d'abord amener un Dinoz au marché.",
-		"unknownDinoz": "Dinoz inconnu.",
-		"noFollowers": "Le Dinoz n'est pas suivi.",
-		"leaderChanged": "Votre Dinoz est le nouveau leader du groupe",
-		"missingUser": "Utilisateur manquant.",
-		"missingData": "Données manquantes.",
-		"reincarnation": "Votre Dinoz s'est réincarné.",
-		"loginToLike": "Connectez-vous pour aimer cette news.",
+		"dinozAlreadySelling": "Your Dinoz is already for sale.",
+		"noPDA": "You need the Diamantite Pebble to access this page.",
+		"noPMI": "You need the Illustrated Mission Guidebook to access this page.",
+		"noPAC": "You need the Scroll of Compiled Abilities to access this page.",
+		"dinozListMissing": "Dinoz list missing.",
+		"viewFight": "You've already seen this fight.",
+		"dinozDataMissing": "Dinoz data missing.",
+		"selectADinozAtMarketFirst": "You must first bring a Dinoz to the market.",
+		"unknownDinoz": "Unknown Dinoz.",
+		"noFollowers": "Dinoz is not followed.",
+		"leaderChanged": "Your Dinoz is the new party leader",
+		"missingUser": "Missing user.",
+		"missingData": "Missing data.",
+		"reincarnation": "Your Dinoz has been reincarnated.",
+		"loginToLike": "Sign in to like this news.",
 		"shovelMine": "You aren't going to dig right next to the miner !?!",
 		"market": {
-			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
-			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",
-			"offerCreated": "Votre offre a été créée.",
-			"offerCancelled": "Votre offre a été annulée.",
-			"notEnoughItems": "Vous n'avez pas assez de cet objet.",
-			"offerClaimed": "Vos gains ont été récupérés"
+			"minimalValueError": "Your offer's total value doesn't reach the minimal value.",
+			"tooManyItems": "You cannot sell more than {items} different items at a time.",
+			"offerCreated": "Your offer has been created.",
+			"offerCancelled": "Your offer has been cancelled.",
+			"notEnoughItems": "You don't have enough of this item.",
+			"offerClaimed": "Your earnings have been collected"
 		},
-		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
+		"isSelling": "Your Dinoz is currently on sale at the Tamer Market.",
 		"notEnoughQuantity": "You don't have enough ingredients...",
 		"itemBought": "You bought {quantity} {itemName}.",
 		"ingredientSold": "You sold your ingredients for a total of {value} :gold:.",
@@ -401,19 +401,19 @@
 			"amnesic_rice": "Your Dinoz doesn't remember its name anymore and also lost all of its experience :xp:!",
 			"pampleboum": "Ouch! There was a pit in this grapeboom!"
 		},
-		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
-		"Invalid_credentials": "Identifiants incorrects.",
-		"Missing_device_cookie": "Impossible d’identifier votre navigateur. Veuillez autoriser les cookies et réessayer.",
-		"Too_many_accounts_created_from_this_device_this_month": "Trop de comptes ont été créés depuis ce navigateur ce mois-ci. Veuillez réessayer le mois prochain.",
-		"Too_many_accounts_created_from_this_network_this_month": "Trop de comptes ont été créés depuis ce réseau ce mois-ci. Veuillez réessayer le mois prochain.",
+		"Invalid_email_or_password": "Invalid username or password.",
+		"Invalid_credentials": "Incorrect credentials.",
+		"Missing_device_cookie": "Could not identify your browser. Please allow cookies and try again.",
+		"Too_many_accounts_created_from_this_device_this_month": "Too many accounts were created from this browser this month. Please try again next month.",
+		"Too_many_accounts_created_from_this_network_this_month": "Too many accounts were created from this network this month. Please try again next month.",
 		"userNotFound": "The player {{authedId}} was not found.",
 		"dinozNotFound": "The Dinoz {{id}} was not found.",
-		"dinozDoesNotBelongToUser": "Le Dinoz {dinozId} n'appartient pas au joueur {userId}.",
+		"dinozDoesNotBelongToUser": "Dinoz {dinozId} doesn't belong to player {userId}.",
 		"invalidId": "id was not found.",
-		"invalidSkillId": "L'id de la compétence est invalide",
-		"skillNotFound": "Compétence introuvable.",
+		"invalidSkillId": "Skill id is invalid",
+		"skillNotFound": "Skill not found.",
 		"notLeader": "This Dinoz is not the leader of its group.",
-		"invalidLeader": "Leader invalide.",
+		"invalidLeader": "Invalid Leader.",
 		"notEnoughIrma": "You don't have enough Irma potion.",
 		"missingIrma": "You need an Irma potion to do this action.",
 		"dinozCannotLvlUp": "The Dinoz cannot level up because it is registered to the Inter Dojo Tournament.",
@@ -421,24 +421,24 @@
 		"backpackFull": "There aren't any free space in the backpack of this dinoz.",
 		"OnlyLettersAndNumbers": "Incorrect name ! You can only use between 3 and 16 letters or numbers.",
 		"tooManyActiveDinoz": "You have too many active Dinoz.",
-		"notEnoughItems": "Vous n'avez pas la quantité attendue pour l'item requis.",
+		"notEnoughItems": "You don't have enough of this item.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or",
 		"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
 		"maxQuantityInventory": "You already too many of this item in your inventory.",
 		"missingStatus": "One of your Dinoz doesn't fulfill the requirements to do this action.",
 		"noFight": "Today, the swamp is surrounded by a thick fog. You won't find any monsters to fight.",
 		"noMovement": "Today, the swamp is flooded ! You can't move there. You'll have to wait tomorrow to get out of this quagmire.",
-		"cannotFollowSelf": "Un Dinoz ne peut pas se suivre lui-même.",
-		"lifeCannotExceedMaxLife": "La vie ne peut pas dépasser la vie maximale.",
-		"missionProgressionMustBePositiveInteger": "La progression doit être un entier positif ou nul.",
-		"missionTrackingMustBePositiveInteger": "Le tracking doit être un entier positif ou nul.",
-		"missionProgressionOutOfRange": "La progression dépasse le nombre d’étapes de la mission.",
-		"dinozMissionNotFound": "Aucune mission {missionKey} trouvée pour ce Dinoz.",
-		"onlyCompletedMissionsCanBeReplayable": "Seules les missions terminées peuvent être rendues rejouables.",
-		"invalidNewsPayload": "Les données de la news sont invalides.",
-		"collectionNotOwnedByUser": "La collection {collectionKey} n'appartient pas au joueur {userId}.",
-		"unknown": "Une erreur est survenue.",
-		"unknownMission": "Mission inconnue : {missionKey}."
+		"cannotFollowSelf": "A Dinoz can't follow himself.",
+		"lifeCannotExceedMaxLife": "Life can't exceed maximum life.",
+		"missionProgressionMustBePositiveInteger": "Progress must be a positive or null integer.",
+		"missionTrackingMustBePositiveInteger": "Tracking must be a positive or null integer.",
+		"missionProgressionOutOfRange": "The progress exceeds the number of mission steps.",
+		"dinozMissionNotFound": "No {missionKey} mission found for this Dinoz.",
+		"onlyCompletedMissionsCanBeReplayable": "Only completed missions can be replayed.",
+		"invalidNewsPayload": "The news data is invalid.",
+		"collectionNotOwnedByUser": "The {collectionKey} collection does not belong to player {userId}.",
+		"unknown": "An error occurred.",
+		"unknownMission": "Unknown mission: {missionKey}."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -486,59 +486,61 @@
 			"next": "Next page"
 		},
 		"placeholder": {
-			"searchUser": "Rechercher un joueur",
+			"searchUser": "Search a player",
 			"searchClan": "Search a clan"
 		}
 	},
 	"accountPage": {
 		"title": "My Account",
-		"userTitle": "Joueur : {name}",
-		"noDescription": "Aucune description sur ce profil...",
-		"editProfile": "Editer mon profil",
-		"changeAvatar": "Changer l'avatar",
-		"save": "Sauvegarder le profil",
-		"cancel": "Annuler les changements",
-		"gender_male": "♂ Homme",
-		"gender_female": "♀ Femme",
-		"gender_other": "Pas de préférence",
-		"profil": "Profil DinoRPG",
+		"userTitle": "Player: {name}",
+		"noDescription": "No description on this profile...",
+		"editProfile": "Edit my profile",
+		"changeAvatar": "Change avatar",
+		"save": "Save Profile",
+		"cancel": "Discard changes",
+		"gender_male": "♂️ Man",
+		"gender_female": "♀️ Woman",
+		"gender_other": "No preferences",
+		"profil": "DinoRPG Profile",
 		"player": "Player:",
 		"dinoz": "Dinoz:",
 		"ranking": "Ranking:",
-		"inscription": "Inscrit le",
-		"clan": "Clan :",
+		"inscription": "Registered on",
+		"clan": "Clan:",
 		"completion": "Completion",
-		"rewards": "Récompenses épiques",
-		"editAccount": "Modifier le profil",
+		"rewards": "Epic rewards",
+		"editAccount": "Edit Profile",
+		"edit": "Editer",
+		"descriptionUpdated": "Description mise à jour !",
 		"options": {
-			"title": "Options du compte",
-			"mdp": "Modifier le MDP",
-			"todo": "à venir...",
-			"reset": "Réinitialiser le compte",
-			"retour": "Retour"
+			"title": "Account Options",
+			"mdp": "Modify Password",
+			"todo": "coming...",
+			"reset": "Reset account",
+			"retour": "Return"
 		},
 		"goals": {
-			"title": "Statistiques DinoRPG",
+			"title": "DinoRPG Statistics",
 			"points": "points",
-			"linkStats": "Statistiques",
+			"linkStats": "Statistics",
 			"linkGains": "Gains",
 			"help": {
-				"question": "Que signifient ces compteurs ?",
-				"response": "Ces compteurs augmentent en réalisant certaines actions sur DinoRPG. && **Vous gagnez des icônes, des titres et des points en franchissant certains paliers de compteurs.** && Les compteurs **dorés** représentent des gains rares ou difficiles à obtenir !"
+				"question": "What do those counters mean?",
+				"response": "Those counters increase when certain actions are done on DinoRPG. && **You can earn icons, titles and points by reaching certain thresholds of those.** && The golden counters represent rare rewards or some that are difficult to obtain."
 			},
 			"achievements": {
 				"reward": "{name} x {quantity}"
 			},
-			"todo": "à venir..."
+			"todo": "coming..."
 		},
 		"tabs": {
-			"dinoz": "Mes Dinoz",
-			"friends": "Mes Amis"
+			"dinoz": "My Dinoz",
+			"friends": "My Friends"
 		},
-		"level": "Niveau"
+		"level": "Level"
 	},
 	"userCard": {
-		"title": "Aller sur le profil DinoRPG de {user}"
+		"title": "Go to {user}'s DinoRPG profile"
 	},
 	"dinoz": {
 		"hud": {
@@ -1499,20 +1501,20 @@
 			"candle_card": "Anniversary Candle Card",
 			"christmas_ticket": "Xmas Ticket",
 			"tictac_ticket": "Tac Tickets",
-			"anniversary_ticket": "Ticket d'Anniversaire",
+			"anniversary_ticket": "Anniversary Ticket",
 			"easter_egg": "Madame Urma's Egg",
 			"fire_cracker": "Firecracker",
 			"special_potion_irma": "Special Madame Irma's Potion",
-			"gold100": "Pièces d'or (x100)",
-			"gold500": "Pièces d'or (x500)",
-			"gold1000": "Pièces d'or (x1000)",
-			"gold2000": "Pièces d'or (x2000)",
-			"gold2500": "Pièces d'or (x2500)",
-			"gold3000": "Pièces d'or (x3000)",
-			"gold5000": "Pièces d'or (x5000)",
+			"gold100": "Gold Pieces (x100)",
+			"gold500": "Gold Pieces (x500)",
+			"gold1000": "Gold Pieces (x1000)",
+			"gold2000": "Gold Pieces (x2000)",
+			"gold2500": "Gold Pieces (x2500)",
+			"gold3000": "Gold Pieces (x3000)",
+			"gold5000": "Gold Pieces (x5000)",
 			"gold10000": "Pièces d'or (x10000)",
 			"gold20000": "Pièces d'or (x20000)",
-			"gold50000": "Pièces d'or (x50000)",
+			"gold50000": "Gold Pieces (x50000)",
 			"daily_ticket": "Daily Ticket",
 			"empty": "Empty",
 			"box_common": "Common box",
@@ -1770,7 +1772,7 @@
 			"ilewkk": "Waïkiki Island",
 			"goport": "Swim to Frish Port",
 			"chbroc": "Go to Klutz' Workshop",
-			"broc": "Atelier de Broc",
+			"broc": "Broc Workshop",
 			"godnv": "Return to Dinotown",
 			"dplaza": "Dinoplaza",
 			"villa": "Villa",
@@ -1877,7 +1879,7 @@
 			"marais": "This swamp in the middle of the archipelago is a real problem for travelers! Depending on the days, it changes its state. People say it has been like this for thousands of years. Some even think that it's a giant living creature with a terrible sense of humor. The water level is low today: you can move safely.",
 			"corail": "Large quantities of Coral have recently surfaced after having been submerged underwater for years. Coral is extremely popular in Dinoland due to its extraordinary strength. The mines employ hundreds of people.",
 			"ilewkk": "Waïkiki is a small island which forms part of the Atlanteid archipelago. It stands out for its purple palm trees, whose long leaves are used to give bright colors to many clothes on Dinoland. Local humans also practice a very famous Martial Art, Waïkikidô.",
-			"broc": "Au sommet du roc des îles atlantéinées se trouve un atelier. Certains disent que l'inventeur qui a élu domicile à cet endroit s'est isolé pour ne pas entendre les ricanements des autres, mais celui-ci semble avoir un but bien précis...",
+			"broc": "On the top of a rock on the Atlanteid Islands sits a workshop. Some say that the inventor who chose to live there did so to escape the mockery of the other citizens, but it seems to have a more specific purpose...",
 			"dplaza": "This new area is difficult to get to, but many residents migrate here in order to flee the congestion of the capital. You can find everything there, and it has recently become a very fashionable place, where new attractions such as the Dinoz Competition are springing up.",
 			"villa": "A villa apparently, which looks more like a holiday cottage on wheels, seemingly abandoned on the beach, bears the sign: \"Warning, Disgruntled Dinoz\". Maybe it's best to find another route...?",
 			"dcine": "At the foothills of the Small Canyon, one of the Pre-dinozian caves has been converted into a magnificent Cinema. The latest movies are shown here and budding filmmakers can even come here to learn how to make their own films.",
@@ -2468,7 +2470,7 @@
 		}
 	},
 	"action": {
-		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
+		"popupConfirm": "Do you confirm the action {action} for your Dinoz?",
 		"description": {
 			"fight": "Search for a monster to fight at this location.",
 			"follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
@@ -2535,7 +2537,7 @@
 			"reincarnation": "Reincarnate",
 			"change_leader": "Become Leader",
 			"fb_tournament": "Tournament",
-			"CEF": "Centre d'Entraînement de Fosselave"
+			"CEF": "Lavapit Training Center"
 		}
 	},
 	"fight": {
@@ -2617,7 +2619,7 @@
 		},
 		"step": {
 			"timeLimit": "The fight will last at maximum {time} units of time.",
-			"timeOut": "Le combat s'est terminé car il a atteint sa durée maximale.",
+			"timeOut": "The battle ended as it reached its maximum hardness.",
 			"arrive": "**{name}** has arrived !",
 			"resist": "**{dinoz}** resisted and reduced the damage.",
 			"hit": "**{fighter}** performed an assault {elements} and dealt **{damage}** damage to **{target}**.",
@@ -2684,6 +2686,7 @@
 			"daily": "daily rewards"
 		},
 		"disclaimer": "Click on {number} grid box(es) to search for {search}",
+		"discarded": "Discarded!",
 		"nothing": "Your Dinoz did not find anything..."
 	},
 	"faq": {
@@ -2982,7 +2985,7 @@
 			"cdc2": "...Battle :",
 			"cdc2-1": "A Battle is launched when two clans face each other. A battle lasts for _3 days_, and at the end, the Clan with the highest **score** wins. && && A Battle takes place at a specific location. You will need to move your Dinoz to this location for them to participate. A player can have up to _3 Dinoz_ in a Battle, and in any case, a Clan cannot have more than _45 Dinoz_ in a Battle. && && Here is a simplified Battle view:",
 			"cdc2-2": "At the top, you can see the current **score** of the Battle, and at the bottom, the remaining time before the end of the Battle. && && Dinoz that have joined the Battle can move one square, then they must wait for a certain number of minutes before they can move again. It is possible to accumulate actions if you do not use them immediately. && && You can click on a Dinoz to move it or to know who it belongs to. Only the owner of a Dinoz can move it. && && _We remind you that sharing accounts between players is prohibited, and in case of violation of the rules, all involved accounts will be permanently blocked._ && && Good organization among Clan members is therefore necessary to win the victory.",
-			"cdc3": "Score",
+			"cdc3": "Rating",
 			"cdc3-1": "As you can see on the Battle display, each Clan has **a score line**, blue for the Clan on the left and red for the Clan on the right. && && Every _15 minutes_, each Clan scores as many points as the advancement of its score line. Thus, in the example above, the Clan on the left (blue line) will score 2 points and the Clan on the right (red line) 4 points. && && The score line is positioned as follows: it indicates the position of the first Dinoz of the Clan that has not been surpassed by a Dinoz of the opposing Clan. && && **Warning!** An opposing Dinoz can thus make a breakthrough that will push back your score line, preventing you from scoring points in the next calculation. && && Reminder: a Battle lasts for _3 days_, and at the end, the Clan with the highest **score** wins.",
 			"cdc4": "...Fights :",
 			"cdc4-1": "If a Dinoz tries to move to the location occupied by an enemy Dinoz, a fight ensues. All Dinoz within 10 squares around the two combatants participate in the fight, according to the following scheme :",
@@ -3016,8 +3019,8 @@
 		}
 	},
 	"trainingCenter": {
-		"title": "Centre d'Entraînement de Fosselave",
-		"subtitle": "Cher client, bienvenue à la L.T.C. Notre Centre est autorisé par l’I.D.R.L (Institut de recherche et d’apprentissage de Dinoz) et vous permet de développer la force musculaire et la performance de votre Dinoz avec l'aide de notre programme de combat sur mesure. ",
+		"title": "Lavapit Training Center",
+		"subtitle": "Cher client, bienvenue au C.E.F. Notre Centre est autorisé par l’I.R.A.D (Institut de recherche et d’apprentissage de Dinoz) et vous permet de développer la force musculaire et la performance de votre Dinoz avec l'aide de notre programme de combat sur mesure. ",
 		"description": "Le principe est simple : vous payez pour combattre contre un ou plusieurs monstres. Ce combat vous rapportera de l'expérience, mais pas d'or. Vous avez le choix entre trois difficultés.",
 		"warning": "N'oubliez pas de soigner votre Dinoz avant de choisir un programme ! Le C.E.F. ne consomme pas l'action quotidienne, mais chaque séance est payante.",
 		"monstersNote": "Les monstres rencontrés dépendent du niveau de votre Dinoz et sont tous des monstres du Grand Tout Chaud.",
@@ -3085,7 +3088,7 @@
 				"stone": "This Old Stone?",
 				"stone_yes": "Of course, here it is.",
 				"stone_no": "Hey! Don't touch it! Before, I would like to know something...",
-				"back": "Retour",
+				"back": "Return",
 				"noquestion": "None of these",
 				"learn": "Learn",
 				"water": "Swimming with a buoy",
@@ -3695,6 +3698,90 @@
 				"ah": "Ah....",
 				"ok": "Effectivement...",
 				"thanks": "Merci"
+			}
+		},
+		"strangeBeing": {
+			"name": "Être Étrange",
+			"choice": {
+				"yes": "Euh... oui ?",
+				"no": "Pas question",
+				"nothing": "De rien...",
+				"dom": "Effectivement, quel dommage !",
+				"star": "Des étoiles ?",
+				"how": "Et comment trouver ces étoiles ?",
+				"ah": "\"Ah\" ?",
+				"et": "Et ?",
+				"listen": "Écouter",
+				"end": "...",
+				"giveStars": "Donner les 7 Étoiles",
+				"ok": "..."
+			},
+			"dialog": {
+				"intro": {
+					"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
+					"no": "Effectivement, il vaut mieux éviter de s'attirer des problèmes avec des gens bizarres !",
+					"yes": ". . . . . Thank you . . . . very . . . Bziiiiiiiiiiiiiiiiiiit ! Ah ! Voilà ! Mon traducteur simultané est réparé !",
+					"nothing": "C'est tout à votre honneur du poil ! Comme j'essayais de vous le dire à l'instant, j'ai un petit problème technicologique.",
+					"dom": "Voilà, j'aurais donc besoin de votre gentille aide pour pouvoir retrouver pour moi des crystaux de (TcEtCiNo)...",
+					"star": "Oui, tout à fait ! Si vous m'en ramenez exactement sept d'entre elles, je pourrais reprendre ma traversée.",
+					"how": "C'est relativement simple. Il va falloir vous résoudre un certain nombre de spectaculaires divinations.",
+					"ah": "Oui, donc, voilà ! Je vais chercher le Guide du Touriste, ne quittez pas je reviens dans un instant..."
+				},
+				"megawolfHint": {
+					"begin": "Le Guide a dit : \"Un mégaloup t'attends dans la capitale !\"",
+					"et": "Et ? C'est tout ! Il va falloir vous débroussailler tout seul maintenant, désolé d'être aussi éclectique !"
+				},
+				"progressHint": {
+					"begin": "Ah ! Je vois que tu avances dans ta quête ! Voyons voir ce que le Guide du Touriste nous raconte ensuite...",
+					"star2": "Je lis dans le Guide : \"le graisseux enthousiaste appréciera un nuage transporté\"... ça te dit quelque chose ?",
+					"star3": "Guide du Touriste, page 879 alinéa b : \"quand on est englué jusqu'au cou, rien ne vaut un bon gâteau\". C'est clair, non ?",
+					"star4": "Je cite : \"L'appel au trou sombre te servira\" ... tu as une idée ??",
+					"star5": "Les vieux os apprécient parait-il la vue d'un ... capsicum.",
+					"star6": "Annexe B du Guide du Touriste : \"Visite l'homme-dieu quand il sera midi à Pek-1\".",
+					"star7": "C'est la dernière étoile qui manque ! Le Guide raconte \"au pays de Saru tu reviendras de parmi les morts sans artifice\".",
+					"end": "Votre langage local est tout de même bizarre... en tout cas, moi, je n'y comprends rien !"
+				},
+				"final": {
+					"begin": ".... Ouiiiiii !!! Merci ! merci ! merci ! Grâce à toi je vais enfin pouvoir retourner sur (PuOsEniLa) !",
+					"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvé dans ton monde !",
+					"give": "L'Être Étrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait..."
+				}
+			}
+		},
+		"merguezSellerQuest": {
+			"name": "Vendeur de Merguez (quête)",
+			"choice": {
+				"ok": "...",
+				"star": "Ah ?"
+			},
+			"dialog": {
+				"begin": "Ohhh je vois que ton Dinoz transporte un nuage burger ! Savais-tu que cela était très mauvais pour la santé ? A moins que tu ne veuilles que ton Dinoz ne devienne aussi gros qu'un Sumo ?!?",
+				"ok": "Enlève-moi ce vilain Burger et viens plutôt goûter mes merguez à la place ! Tiens, je te donne en cadeau de fidélité ce truc que j'ai trouvé par terre !",
+				"star": "Chouette ! Le vendeur de merguez vous a confié l'une des sept étoiles magiques !"
+			}
+		},
+		"skullyQuest": {
+			"name": "Skully (quête)",
+			"choice": {
+				"ok": "...",
+				"star": "Ah ?"
+			},
+			"dialog": {
+				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Mais que vois-je là !!! N'est-ce pas un magnifique exemplaire de \"Capsicum annuum\" ! Quelle couleur, quelle odeur, c'est ma-gni-fi-que !",
+				"ok": "Je te remercie vraiment ! oh oh oh ! En échange pour m'avoir offert cette vision splendide, je vais te donner un truc que j'ai trouvé en cherchant un os que j'avais perdu ! Tiens !",
+				"star": "Félicitations ! Grâce à Skully, vous avez récupéré la 5ème étoile magique ! Plus que deux !"
+			}
+		},
+		"baobobQuest": {
+			"name": "Bao Bob (quête)",
+			"choice": {
+				"ok": "Je cherche...",
+				"star": "???"
+			},
+			"dialog": {
+				"begin": "Que viens-tu faire à cette heure si matinale chez moi ?",
+				"ok": "Ah ! Oui, je suis encore dans les vappes, je n'avais pas réalisé. Tiens, je l'avais gardé pour toi, j'espère en tout cas qu'elle ne t'attirera pas trop d'ennuis...",
+				"star": "Sur ces mots étranges, Bao Bob vous confie la 6ème étoile magique ! Plus qu'une dernière !!!"
 			}
 		},
 		"dialog": {
@@ -4682,6 +4769,18 @@
 				"begin": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !",
 				"merguezSeller": "Ooooohh !! Il s'agit donc des fameuses crevettes au Napalm ?!? Voyons voir.... uhmm.... cela manque un peu de graisse mais c'est succulent. Nul doute que Mouldeur devrait bientôt se montrer... Mais regarde qui voilà !",
 				"end": "OOooooooh ! oh ! oh oh oh ! Mouldeur est revenu !!! Merci beaucoup !!"
+			}
+		}
+	},
+	"scenarios": {
+		"star": {
+			"name": "La Plume Sidérale",
+			"texts": {
+				"fightMegawolf": "Au moment où vous approchez, un immense loup apparait !",
+				"fightStarFound": "A la fin du combat, vous apercevez un objet brillant : il s'agit d'une des 7 étoiles magiques !",
+				"eatStarFound": "Après avoir avalé la Tarte, votre Dinoz aperçoit quelque chose qui brille à quelques mètres... Félicitations ! Vous avez trouvé l'une des 7 étoiles magiques !",
+				"digStarFound": "Au premier coup de pelle, vous entendez un bruit étrange. En creusant un peu vous trouvez l'une des 7 étoiles magiques ! Félicitations !",
+				"resurrectStarFound": "Alors qu'il se réveille à Dinoville, votre Dinoz s'aperçoit que quelqu'un lui a confié la dernière étoile magique ! Ses souvenirs sont troubles, mais il se rappelle de Dinoz étranges, inconnus jusque là, à l'allure de singes au pelage multicolore... Ce sont eux qui lui ont confié la 7ème étoile, mais qui sont-ils ?!?"
 			}
 		}
 	}
