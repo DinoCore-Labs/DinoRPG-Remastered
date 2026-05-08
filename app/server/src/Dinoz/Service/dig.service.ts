@@ -41,7 +41,7 @@ async function applyDigReward(userId: string, dinozId: number, reward: DigReward
 					progression: reward.progression
 				})
 			);
-			return null;
+			return reward;
 	}
 }
 

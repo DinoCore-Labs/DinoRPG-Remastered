@@ -37,7 +37,12 @@ export const digTreasures: DigTreasure[] = [
 		place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
 		cond: c('scenario(star,4)'),
 		rewards: [
-			{ type: 'scenario', scenarioKey: 'star', progression: 5 },
+			{
+				type: 'scenario',
+				scenarioKey: 'star',
+				progression: 5,
+				messageKey: 'scenarios.star.texts.digStarFound'
+			},
 			{ type: 'item', itemId: itemList[Item.MAGIC_STAR].itemId, quantity: 1 }
 		]
 	}
