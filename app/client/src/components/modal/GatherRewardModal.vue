@@ -29,13 +29,20 @@
 						<p v-html="formatContent($t(`ingredients.description.${ingredient.name?.toLowerCase()}`))" />
 					</template>
 				</Tippy>
-
-				<div :class="{ 'name-info': true, 'is-max': ingredient.displayCount >= ingredient.maxQuantity }">
+				<div
+					:class="{
+						'name-info': true,
+						'is-max': !ingredient.isDiscarded && ingredient.displayCount >= ingredient.maxQuantity,
+						'is-discarded': ingredient.isDiscarded
+					}"
+				>
 					<span>
 						{{ formatContent($t(`ingredients.name.${ingredient.name}`)) }}
 					</span>
-
-					<span class="ingredient-count"> ({{ `${ingredient.displayCount}/${ingredient.maxQuantity}` }}) </span>
+					<span v-if="ingredient.isDiscarded" class="ingredient-count ingredient-count--discarded">
+						({{ $t('gather.discarded') }})
+					</span>
+					<span v-else class="ingredient-count"> ({{ `${ingredient.displayCount}/${ingredient.maxQuantity}` }}) </span>
 				</div>
 			</div>
 			<div v-for="item in rewardList.item" :key="item.id" class="item-container">
@@ -71,12 +78,14 @@ import { defineComponent, type PropType } from 'vue';
 import type { GatherRewards } from '@dinorpg/core/models/gather/gatherRewards.js';
 import { userStore } from '../../store/userStore';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import type { GatherIngredientInventoryState } from '@dinorpg/core/models/gather/gatherResult.js';
 
 type GatherIngredientReward = GatherRewards['ingredients'][number];
 
 type DisplayIngredientReward = GatherIngredientReward & {
 	displayKey: string;
 	displayCount: number;
+	isDiscarded: boolean;
 };
 
 const getRewardQuantity = (ingredient: GatherIngredientReward) => Math.max(1, ingredient.quantity ?? 1);
@@ -86,7 +95,7 @@ export default defineComponent({
 	props: {
 		rewards: { type: Object as PropType<GatherRewards>, required: true },
 		ingredientsAtMaxQuantity: {
-			type: Array as PropType<{ ingredientId: number; quantity: number; isMaxQuantity: boolean }[]>,
+			type: Array as PropType<GatherIngredientInventoryState[]>,
 			required: true
 		}
 	},
@@ -130,6 +139,10 @@ export default defineComponent({
 				return ingredient.quantity;
 			}
 			return 0;
+		},
+		getIngredientPreviousCount(ingredientId: number, fallback = 0) {
+			const ingredient = this.ingredientsAtMaxQuantity.find(ingre => ingre.ingredientId === ingredientId);
+			return ingredient?.quantityBefore ?? fallback;
 		}
 	},
 	computed: {
@@ -146,15 +159,19 @@ export default defineComponent({
 				const quantity = getRewardQuantity(ingredient);
 				const totalWon = totalWonByIngredient.get(ingredient.ingredientId) ?? quantity;
 				const finalCount = this.getIngredientCount(ingredient.ingredientId);
-				const startCount = Math.max(0, finalCount - totalWon);
+				const fallbackStartCount = Math.max(0, finalCount - totalWon);
+				const startCount = this.getIngredientPreviousCount(ingredient.ingredientId, fallbackStartCount);
 				return Array.from({ length: quantity }, (_, unitIndex) => {
 					const nextDisplayed = (displayedByIngredient.get(ingredient.ingredientId) ?? 0) + 1;
 					displayedByIngredient.set(ingredient.ingredientId, nextDisplayed);
+					const rawDisplayCount = startCount + nextDisplayed;
+					const isDiscarded = rawDisplayCount > ingredient.maxQuantity;
 					return {
 						...ingredient,
 						quantity: 1,
 						displayKey: `${ingredient.ingredientId}-${rewardIndex}-${unitIndex}`,
-						displayCount: Math.min(ingredient.maxQuantity, startCount + nextDisplayed)
+						displayCount: Math.min(ingredient.maxQuantity, rawDisplayCount),
+						isDiscarded
 					};
 				});
 			});
@@ -206,10 +223,14 @@ export default defineComponent({
 	span {
 		color: white;
 	}
-	&.is-max {
+	&.is-discarded {
 		span {
 			color: red;
 		}
+	}
+	.ingredient-count--discarded {
+		color: red;
+		font-weight: bold;
 	}
 	.ingredient-count {
 		font-size: 12px;
