@@ -210,7 +210,10 @@ export default defineComponent({
 			return beautifulNumber(this.userStore.treasureTicket);
 		},
 		dinozList(): Array<DinozFiche> {
-			return orderDinozList(this.dinozStore.getDinozList as Array<DinozFiche>);
+			const activeDinoz = (this.dinozStore.getDinozList as Array<DinozFiche>).filter(
+				dinoz => dinoz.state !== DINOZ_STATE.frozen
+			);
+			return orderDinozList(activeDinoz);
 		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
