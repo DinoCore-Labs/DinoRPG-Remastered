@@ -5,14 +5,12 @@ import { DinozStatusId } from './statusList.js';
 export type DigReward =
 	| { type: 'status'; statusId: DinozStatusId }
 	| { type: 'item'; itemId: number; quantity: number }
-	| { type: 'scenario'; scenarioKey: string; progression: number };
-
-export type DigTreasure = {
-	id: string;
-	place: PlaceEnum;
-	cond?: Condition;
-	rewards: DigReward[];
-};
+	| {
+			type: 'scenario';
+			scenarioKey: string;
+			progression: number;
+			messageKey?: string;
+	  };
 
 export type DigResponse = {
 	treasureId: string | null;
@@ -20,5 +18,18 @@ export type DigResponse = {
 		| { type: 'gold'; amount: number }
 		| { type: 'status'; statusId: number }
 		| { type: 'item'; itemId: number; quantity: number }
+		| {
+				type: 'scenario';
+				scenarioKey: string;
+				progression: number;
+				messageKey?: string;
+		  }
 	>;
+};
+
+export type DigTreasure = {
+	id: string;
+	place: PlaceEnum;
+	cond?: Condition;
+	rewards: DigReward[];
 };

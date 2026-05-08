@@ -458,6 +458,14 @@ export default defineComponent({
 									});
 									break;
 								}
+								case 'scenario':
+									if (reward.messageKey) {
+										this.$toast.open({
+											message: this.$t(reward.messageKey),
+											type: 'success'
+										});
+									}
+									break;
 							}
 						}
 						eventBus.emit('refreshInventory', true);
