@@ -5,6 +5,7 @@ import { resolveItemIdFromKey } from '@dinorpg/core/models/items/itemIdByKey.js'
 import { UserRole } from '@dinorpg/core/models/user/userRole.js';
 
 import { Role } from '../../../../prisma/index.js';
+import gameConfig from '../../config/game.config.js';
 import {
 	DialogContext,
 	getScenarioProgress,
@@ -30,6 +31,10 @@ function unsupportedCondition(condition: Condition): boolean {
 
 function isAdminRole(role: UserRole): boolean {
 	return role === Role.ADMIN || role === Role.SUPER_ADMIN;
+}
+
+function getGameHour(date: Date) {
+	return date.getHours();
 }
 
 export function checkDialogCondition(condition: Condition | null | undefined, context: DialogContext): boolean {
@@ -113,6 +118,8 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 			return (context.user.stats.get(StatTracking.P_DAYS) ?? 0) >= condition.value;
 		case 'active':
 			return context.world.activeFeatures.has(condition.key);
+		case 'hour':
+			return getGameHour(context.now) === condition.value;
 		case 'date':
 		case 'day':
 		case 'caushrock':
@@ -120,7 +127,6 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'random':
 		case 'gvar':
 		case 'race':
-		case 'hour':
 		case 'swait':
 		case 'dungeon':
 		case 'clanact':
