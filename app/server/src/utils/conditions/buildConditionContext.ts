@@ -2,6 +2,7 @@ import { ConditionsContext } from '@dinorpg/core/models/conditions/conditionsCon
 import { ConditionKeyMaps } from '@dinorpg/core/models/conditions/defaultConditionKeyMaps.js';
 import { dinozStatusKeyById } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
+import { tr } from 'zod/locales';
 
 import { UserForConditionCheck } from '../user/userConditionCheck.js';
 
@@ -97,11 +98,12 @@ export function buildConditionContext(
 	);
 
 	const scenarios = Object.fromEntries(
-		(player.quests ?? []).map(quest => [
-			quest.questKey,
+		(player.scenarios ?? []).map(scenario => [
+			scenario.scenarioKey,
 			{
-				step: quest.progression,
-				updatedAt: quest.updatedAt ?? null
+				step: scenario.progression,
+				tracking: scenario.tracking,
+				updatedAt: scenario.updatedAt ?? null
 			}
 		])
 	);
