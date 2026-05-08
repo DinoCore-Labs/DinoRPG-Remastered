@@ -1,6 +1,7 @@
-import { type DinozItems } from '@dinorpg/core/models/dinoz/dinozItems.js';
+import { EquipItemResponse } from '@dinorpg/core/models/dinoz/dinozItems.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
-import { type Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyRequest } from 'fastify';
@@ -25,7 +26,7 @@ type EquipItemBody = {
 
 export async function equipItem(
 	req: FastifyRequest<{ Params: EquipItemParams; Body: EquipItemBody }>
-): Promise<DinozItems[]> {
+): Promise<EquipItemResponse> {
 	const dinozId = Number(req.params.dinozId);
 	if (!Number.isFinite(dinozId)) {
 		throw new ExpectedError('invalidId');
@@ -88,5 +89,44 @@ export async function equipItem(
 		const itemIndex = dinoz.items.findIndex(i => i.id === dinozItem.id);
 		if (itemIndex >= 0) dinoz.items.splice(itemIndex, 1);
 	}
-	return dinoz.items.map(i => ({ itemId: i.itemId }));
+	return {
+		items: dinoz.items.map(i => ({ itemId: i.itemId })),
+		refreshDinoz: shouldRefreshDinozAfterEquip({
+			equip,
+			itemId,
+			placeId: dinoz.placeId,
+			scenarios: dinoz.user.scenarios
+		})
+	};
 }
+
+function shouldRefreshDinozAfterEquip(input: {
+	equip: boolean;
+	itemId: number;
+	placeId: PlaceEnum;
+	scenarios: Array<{ scenarioKey: string; progression: number }>;
+}) {
+	if (!input.equip) {
+		return false;
+	}
+	return SCENARIO_EQUIP_REFRESH_RULES.some(rule => {
+		const scenario = input.scenarios.find(s => s.scenarioKey === rule.scenarioKey);
+
+		return input.itemId === rule.itemId && input.placeId === rule.placeId && scenario?.progression === rule.progression;
+	});
+}
+
+const SCENARIO_EQUIP_REFRESH_RULES = [
+	{
+		scenarioKey: 'star',
+		progression: 2,
+		itemId: Item.CLOUD_BURGER,
+		placeId: PlaceEnum.RUINES_ASHPOUK
+	},
+	{
+		scenarioKey: 'star',
+		progression: 5,
+		itemId: Item.LITTLE_PEPPER,
+		placeId: PlaceEnum.CIMETIERE
+	}
+] as const;
