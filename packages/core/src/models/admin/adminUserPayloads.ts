@@ -1,3 +1,4 @@
+import { ScenarioKey } from '../scenarios/scenarioList.js';
 import { UserRole } from '../user/userRole.js';
 import { AdminUserUniqueSkills } from './adminUser.js';
 
@@ -36,4 +37,10 @@ export interface UpdateAdminUserRewardsPayload {
 export interface UpdateAdminUserPasswordPayload {
 	newPassword: string;
 	confirmPassword: string;
+}
+
+export interface UpdateAdminUserScenarioPayload {
+	scenarioKey: ScenarioKey;
+	progression: number;
+	tracking: number;
 }
