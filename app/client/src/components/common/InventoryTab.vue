@@ -235,9 +235,12 @@ export default defineComponent({
 			if ((item.quantity ?? 0) > 0) {
 				const dinozId = parseInt(this.$route.params.id as string);
 				try {
-					const items = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
+					const result = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
 					await this.resfreshInventory();
-					eventBus.emit('equipItem', items);
+					eventBus.emit('equipItem', result.items);
+					if (result.refreshDinoz) {
+						eventBus.emit('refreshDinoz', true);
+					}
 				} catch (error) {
 					errorHandler.handle(error, this.$toast);
 					return;

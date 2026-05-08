@@ -5,6 +5,7 @@ export async function getDinozEquipItemRequest(dinozId: number) {
 		where: { id: dinozId },
 		select: {
 			id: true,
+			placeId: true,
 			user: {
 				select: {
 					id: true,
@@ -13,7 +14,13 @@ export async function getDinozEquipItemRequest(dinozId: number) {
 					items: {
 						select: { id: true, itemId: true, quantity: true }
 					},
-					rewards: true
+					rewards: true,
+					scenarios: {
+						select: {
+							scenarioKey: true,
+							progression: true
+						}
+					}
 				}
 			},
 			items: { select: { id: true, itemId: true } },

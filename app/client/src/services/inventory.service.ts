@@ -1,4 +1,4 @@
-import type { DinozItems } from '@dinorpg/core/models/dinoz/dinozItems.js';
+import type { EquipItemResponse } from '@dinorpg/core/models/dinoz/dinozItems.js';
 import type { IngredientFicheDTO } from '@dinorpg/core/models/ingredients/ingredientFiche.js';
 import type { UseItemResult } from '@dinorpg/core/models/items/itemFeedback.js';
 import type { ItemFicheDTO } from '@dinorpg/core/models/items/itemFiche.js';
@@ -24,7 +24,7 @@ export const InventoryService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	equipInventoryItem(dinozId: number, itemId: number, equip: boolean): Promise<Array<DinozItems>> {
+	equipInventoryItem(dinozId: number, itemId: number, equip: boolean): Promise<EquipItemResponse> {
 		return http()
 			.put(`/inventory/equip/${dinozId}`, {
 				itemId,
