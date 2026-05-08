@@ -47,6 +47,7 @@ import {
 	updateAdminUserPasswordHandler,
 	updateAdminUserProfileHandler,
 	updateAdminUserRewardsHandler,
+	updateAdminUserScenarioHandler,
 	updateAdminUserUniqueSkillsHandler,
 	updateAdminUserWalletHandler
 } from '../Service/adminUserHandler.service.js';
@@ -102,6 +103,16 @@ export async function adminRoutes(app: FastifyInstance) {
 			}
 		},
 		updateAdminUserPasswordHandler
+	);
+	app.patch(
+		'/user/:id/scenarios',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		updateAdminUserScenarioHandler
 	);
 	// Dinoz
 	app.get(

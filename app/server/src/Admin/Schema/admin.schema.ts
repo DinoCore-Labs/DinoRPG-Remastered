@@ -1,3 +1,4 @@
+import { ScenarioKey, scenarioList } from '@dinorpg/core/models/scenarios/scenarioList.js';
 import { z } from 'zod';
 
 import { MoneyType, Role } from '../../../../prisma/index.js';
@@ -139,3 +140,22 @@ export const updateAdminDinozBodySchema = z.object({
 
 	leaderId: z.number().int().positive().nullable().optional()
 });
+
+const scenarioKeys = Object.keys(scenarioList) as [ScenarioKey, ...ScenarioKey[]];
+
+export const updateAdminUserScenarioSchema = z
+	.object({
+		scenarioKey: z.enum(scenarioKeys),
+		progression: z.number().int().min(0),
+		tracking: z.number().int().min(0).default(0)
+	})
+	.superRefine((data, ctx) => {
+		const scenario = scenarioList[data.scenarioKey];
+		if (data.progression > scenario.maxProgression) {
+			ctx.addIssue({
+				code: z.ZodIssueCode.custom,
+				path: ['progression'],
+				message: `La progression ne peut pas dépasser ${scenario.maxProgression}.`
+			});
+		}
+	});

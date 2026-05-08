@@ -3,9 +3,11 @@ import {
 	UpdateAdminUserInventoryPayload,
 	UpdateAdminUserProfilePayload,
 	UpdateAdminUserRewardsPayload,
+	UpdateAdminUserScenarioPayload,
 	UpdateAdminUserUniqueSkillsPayload,
 	UpdateAdminUserWalletPayload
 } from '@dinorpg/core/models/admin/adminUserPayloads.js';
+import { scenarioList } from '@dinorpg/core/models/scenarios/scenarioList.js';
 import bcrypt from 'bcrypt';
 
 import { prisma } from '../../prisma.js';
@@ -64,16 +66,18 @@ export async function getAdminUserDetails(userId: string): Promise<AdminUserDeta
 				orderBy: {
 					ingredientId: 'asc'
 				}
-			}
-			/*quests: {
+			},
+			scenarios: {
 				select: {
-					questId: true,
-					progression: true
+					scenarioKey: true,
+					progression: true,
+					tracking: true,
+					state: true
 				},
 				orderBy: {
-					questId: 'asc'
+					scenarioKey: 'asc'
 				}
-			},
+			} /*
 			banCase: {
 				select: {
 					id: true,
@@ -91,6 +95,7 @@ export async function getAdminUserDetails(userId: string): Promise<AdminUserDeta
 	if (!user) {
 		return null;
 	}
+	const userScenariosByKey = new Map(user.scenarios.map(scenario => [scenario.scenarioKey, scenario]));
 	return {
 		id: user.id,
 		name: user.name,
@@ -118,9 +123,20 @@ export async function getAdminUserDetails(userId: string): Promise<AdminUserDeta
 			teacher: user.teacher,
 			matelasseur: user.matelasseur,
 			messie: user.messie
-		}
-		/*quests: user.quests,
-		banCase: user.banCase
+		},
+		scenarios: Object.values(scenarioList).map(scenario => {
+			const userScenario = userScenariosByKey.get(scenario.key);
+			return {
+				scenarioKey: scenario.key,
+				sid: scenario.sid,
+				nameKey: scenario.nameKey,
+				maxProgression: scenario.maxProgression,
+				progression: userScenario?.progression ?? 0,
+				tracking: userScenario?.tracking ?? 0,
+				state: userScenario?.state ?? null
+			};
+		})
+		/*banCase: user.banCase
 			? {
 					...user.banCase,
 					banDate: user.banCase.banDate ? user.banCase.banDate.toISOString() : null,
@@ -348,4 +364,32 @@ export async function updateAdminUserPassword(userId: string, newPassword: strin
 		}
 	});
 	return true;
+}
+
+export async function updateAdminUserScenario(userId: string, payload: UpdateAdminUserScenarioPayload): Promise<void> {
+	const scenario = scenarioList[payload.scenarioKey];
+	if (!scenario) {
+		throw new Error(`Unknown scenario "${payload.scenarioKey}"`);
+	}
+	if (payload.progression > scenario.maxProgression) {
+		throw new Error(`Scenario progression cannot exceed ${scenario.maxProgression}`);
+	}
+	await prisma.userScenario.upsert({
+		where: {
+			scenarioKey_userId: {
+				userId,
+				scenarioKey: payload.scenarioKey
+			}
+		},
+		create: {
+			userId,
+			scenarioKey: payload.scenarioKey,
+			progression: payload.progression,
+			tracking: payload.tracking
+		},
+		update: {
+			progression: payload.progression,
+			tracking: payload.tracking
+		}
+	});
 }
