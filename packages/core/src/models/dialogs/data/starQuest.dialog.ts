@@ -263,3 +263,159 @@ export const starquestFinalDialog: DialogDefinition = {
 		}
 	}
 };
+
+export const starquestMerguezSellerDialog: DialogDefinition = {
+	id: 'starquest_merguez_seller',
+	name: 'npc.merguezSellerQuest.name',
+	place: PlaceEnum.RUINES_ASHPOUK,
+	cond: parseCondition('scenario(star,2)+equip(burger)'),
+	pnj: {
+		image: false,
+		gfx: 'merguez',
+		frame: 'speak',
+		background: '1'
+	},
+	phases: {
+		begin: {
+			id: 'begin',
+			text: 'npc.merguezSellerQuest.dialog.begin',
+			next: ['ok']
+		},
+		ok: {
+			id: 'ok',
+			text: 'npc.merguezSellerQuest.dialog.ok',
+			next: ['star']
+		},
+		star: {
+			id: 'star',
+			text: 'npc.merguezSellerQuest.dialog.star',
+			fast: true,
+			effects: [
+				{
+					type: 'giveItem',
+					itemId: Item.MAGIC_STAR,
+					count: 1
+				},
+				{
+					type: 'scenario',
+					scenario: 'star',
+					phase: 3
+				}
+			]
+		}
+	},
+	links: {
+		ok: {
+			id: 'ok',
+			text: 'common.dots'
+		},
+		star: {
+			id: 'star',
+			text: 'npc.merguezSellerQuest.choice.star'
+		}
+	}
+};
+
+export const starquestSkullyDialog: DialogDefinition = {
+	id: 'starquest_skully',
+	name: 'npc.skully.name',
+	place: PlaceEnum.CIMETIERE,
+	cond: parseCondition('scenario(star,5)+equip(ppoiv)'),
+	pnj: {
+		image: false,
+		gfx: 'skully',
+		frame: 'speak',
+		background: '1'
+	},
+	phases: {
+		begin: {
+			id: 'begin',
+			text: 'npc.skullyQuest.dialog.begin',
+			next: ['ok']
+		},
+		ok: {
+			id: 'ok',
+			text: 'npc.skullyQuest.dialog.ok',
+			next: ['star']
+		},
+		star: {
+			id: 'star',
+			text: 'npc.skullyQuest.dialog.star',
+			fast: true,
+			effects: [
+				{
+					type: 'giveItem',
+					itemId: Item.MAGIC_STAR,
+					count: 1
+				},
+				{
+					type: 'scenario',
+					scenario: 'star',
+					phase: 6
+				}
+			]
+		}
+	},
+	links: {
+		ok: {
+			id: 'ok',
+			text: 'common.dots'
+		},
+		star: {
+			id: 'star',
+			text: 'npc.skullyQuest.choice.star'
+		}
+	}
+};
+
+export const starquestBaoBobDialog: DialogDefinition = {
+	id: 'starquest_bao_bob',
+	name: 'npc.baobob.name',
+	place: PlaceEnum.BAO_BOB,
+	cond: parseCondition('scenario(star,6)+(admin()|hour(5)|hour(6)|hour(7))'),
+	pnj: {
+		image: false,
+		gfx: 'baobob',
+		frame: 'speak',
+		background: '1'
+	},
+	phases: {
+		begin: {
+			id: 'begin',
+			text: 'npc.baobobQuest.dialog.begin',
+			next: ['ok']
+		},
+		ok: {
+			id: 'ok',
+			text: 'npc.baobobQuest.dialog.ok',
+			next: ['star']
+		},
+		star: {
+			id: 'star',
+			text: 'npc.baobobQuest.dialog.star',
+			fast: true,
+			effects: [
+				{
+					type: 'giveItem',
+					itemId: Item.MAGIC_STAR,
+					count: 1
+				},
+				{
+					type: 'scenario',
+					scenario: 'star',
+					phase: 7
+				}
+			]
+		}
+	},
+	links: {
+		ok: {
+			id: 'ok',
+			text: 'npc.baobobQuest.choice.ok'
+		},
+		star: {
+			id: 'star',
+			text: 'npc.baobobQuest.choice.star'
+		}
+	}
+};

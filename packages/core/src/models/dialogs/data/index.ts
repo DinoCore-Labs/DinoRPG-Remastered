@@ -22,10 +22,13 @@ import { shamanMouDialog } from './shamanMou.dialog.js';
 import { mouldeurDialog, skullyEndDialog, skullyIntroDialog, skullyMissionsDialog } from './skully.dialog.js';
 import { speleleologueDialog, speleleologueIceDialog } from './spelele.dialog.js';
 import {
+	starquestBaoBobDialog,
 	starquestFinalDialog,
 	starquestIntroDialog,
 	starquestMegawolfHintDialog,
-	starquestProgressHintDialog
+	starquestMerguezSellerDialog,
+	starquestProgressHintDialog,
+	starquestSkullyDialog
 } from './starQuest.dialog.js';
 import { strangeHippoDialog, strangePterozDialog, strangeRockyDialog } from './totems.dialog.js';
 import { venerableDialog, venerableHurtDialog } from './venerable.dialog.js';
@@ -44,6 +47,7 @@ export const dialogDefinitions = [
 	skullyIntroDialog,
 	skullyMissionsDialog,
 	skullyEndDialog,
+	starquestSkullyDialog,
 	starquestIntroDialog,
 	starquestMegawolfHintDialog,
 	starquestProgressHintDialog,
@@ -55,10 +59,12 @@ export const dialogDefinitions = [
 	hydargolDialog,
 	archisageDialog,
 	baoBobDialog,
+	starquestBaoBobDialog,
 	baoFanDialog,
 	// GTC
 	strangePterozDialog,
 	merguezSellerDialog,
+	starquestMerguezSellerDialog,
 	shamanMouDialog,
 	strangeRangerIntroDialog,
 	strangeRangerTechDialog,
