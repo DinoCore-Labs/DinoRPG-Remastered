@@ -3748,6 +3748,7 @@
 		"merguezSellerQuest": {
 			"name": "Vendeur de Merguez (quête)",
 			"choice": {
+				"ok": "...",
 				"star": "Ah ?"
 			},
 			"dialog": {
@@ -3759,6 +3760,7 @@
 		"skullyQuest": {
 			"name": "Skully (quête)",
 			"choice": {
+				"ok": "...",
 				"star": "Ah ?"
 			},
 			"dialog": {
