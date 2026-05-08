@@ -307,7 +307,7 @@ export const starquestMerguezSellerDialog: DialogDefinition = {
 	links: {
 		ok: {
 			id: 'ok',
-			text: 'common.dots'
+			text: 'npc.merguezSellerQuest.choice.ok'
 		},
 		star: {
 			id: 'star',
@@ -359,7 +359,7 @@ export const starquestSkullyDialog: DialogDefinition = {
 	links: {
 		ok: {
 			id: 'ok',
-			text: 'common.dots'
+			text: 'npc.skullyQuest.choice.ok'
 		},
 		star: {
 			id: 'star',

@@ -170,9 +170,14 @@ export default defineComponent({
 				}
 				if (
 					categories.some(category =>
-						[ItemEffect.ACTION, ItemEffect.HEAL, ItemEffect.RESURRECT, ItemEffect.SPHERE, ItemEffect.SPECIAL].includes(
-							category
-						)
+						[
+							ItemEffect.ACTION,
+							ItemEffect.HEAL,
+							ItemEffect.RESURRECT,
+							ItemEffect.SPHERE,
+							ItemEffect.QUEST,
+							ItemEffect.SPECIAL
+						].includes(category)
 					)
 				) {
 					eventBus.emit('refreshDinoz', true);
@@ -192,7 +197,7 @@ export default defineComponent({
 							});
 							break;
 						case ItemEffect.QUEST:
-							message = this.$t(`scenario.${effect.value}`);
+							message = this.$t(String(effect.value));
 							break;
 						case ItemEffect.RESURRECT:
 							message = this.$t(`toast.${effect.category}`);
