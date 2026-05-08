@@ -38,10 +38,15 @@ export interface AdminUserProfile {
 	description: string | null;
 }
 
-/*export interface AdminUserQuest {
-	questId: number;
+export interface AdminUserScenario {
+	scenarioKey: string;
+	sid: number;
+	nameKey: string;
 	progression: number;
-}*/
+	tracking: number;
+	maxProgression: number;
+	state: unknown | null;
+}
 
 /*export interface AdminBanCase {
 	id: number;
@@ -65,7 +70,7 @@ export interface AdminUserDetails {
 	items: AdminUserItem[];
 	ingredients: AdminUserIngredient[];
 	uniqueSkills: AdminUserUniqueSkills;
-	//quests: AdminUserQuest[];
+	scenarios: AdminUserScenario[];
 	//banCase: AdminBanCase | null;
 }
 
