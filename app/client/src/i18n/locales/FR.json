@@ -3711,7 +3711,8 @@
 				"et": "Et ?",
 				"listen": "Écouter",
 				"end": "...",
-				"giveStars": "Donner les 7 Étoiles"
+				"giveStars": "Donner les 7 Étoiles",
+				"ok": "..."
 			},
 			"dialog": {
 				"intro": {
