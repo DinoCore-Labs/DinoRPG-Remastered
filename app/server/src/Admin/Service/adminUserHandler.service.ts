@@ -8,6 +8,7 @@ import {
 	updateAdminUserPassword,
 	updateAdminUserProfile,
 	updateAdminUserRewards,
+	updateAdminUserScenario,
 	updateAdminUserUniqueSkills,
 	updateAdminUserWallet
 } from '../Controller/adminUser.controller.js';
@@ -18,6 +19,7 @@ import {
 	updateAdminUserPasswordSchema,
 	updateAdminUserProfileSchema,
 	updateAdminUserRewardsSchema,
+	updateAdminUserScenarioSchema,
 	updateAdminUserUniqueSkillsSchema,
 	updateAdminUserWalletSchema
 } from '../Schema/admin.schema.js';
@@ -117,5 +119,17 @@ export async function updateAdminUserPasswordHandler(request: FastifyRequest, re
 			message: 'User not found'
 		});
 	}
+	return reply.status(204).send();
+}
+
+export async function updateAdminUserScenarioHandler(request: FastifyRequest, reply: FastifyReply) {
+	const parsedParams = adminUserParamsSchema.safeParse(request.params);
+	const parsedBody = updateAdminUserScenarioSchema.safeParse(request.body);
+	if (!parsedParams.success || !parsedBody.success) {
+		return reply.status(400).send({
+			message: 'Invalid request payload'
+		});
+	}
+	await updateAdminUserScenario(parsedParams.data.id, parsedBody.data);
 	return reply.status(204).send();
 }
