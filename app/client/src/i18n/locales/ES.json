@@ -510,6 +510,8 @@
 		"completion": "Complétion",
 		"rewards": "Récompenses épiques",
 		"editAccount": "Modifier le profil",
+		"edit": "Editer",
+		"descriptionUpdated": "Description mise à jour !",
 		"options": {
 			"title": "Options du compte",
 			"mdp": "Modifier le MDP",
@@ -3698,6 +3700,90 @@
 				"thanks": "Merci"
 			}
 		},
+		"strangeBeing": {
+			"name": "Être Étrange",
+			"choice": {
+				"yes": "Euh... oui ?",
+				"no": "Pas question",
+				"nothing": "De rien...",
+				"dom": "Effectivement, quel dommage !",
+				"star": "Des étoiles ?",
+				"how": "Et comment trouver ces étoiles ?",
+				"ah": "\"Ah\" ?",
+				"et": "Et ?",
+				"listen": "Écouter",
+				"end": "...",
+				"giveStars": "Donner les 7 Étoiles",
+				"ok": "..."
+			},
+			"dialog": {
+				"intro": {
+					"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
+					"no": "Effectivement, il vaut mieux éviter de s'attirer des problèmes avec des gens bizarres !",
+					"yes": ". . . . . Thank you . . . . very . . . Bziiiiiiiiiiiiiiiiiiit ! Ah ! Voilà ! Mon traducteur simultané est réparé !",
+					"nothing": "C'est tout à votre honneur du poil ! Comme j'essayais de vous le dire à l'instant, j'ai un petit problème technicologique.",
+					"dom": "Voilà, j'aurais donc besoin de votre gentille aide pour pouvoir retrouver pour moi des crystaux de (TcEtCiNo)...",
+					"star": "Oui, tout à fait ! Si vous m'en ramenez exactement sept d'entre elles, je pourrais reprendre ma traversée.",
+					"how": "C'est relativement simple. Il va falloir vous résoudre un certain nombre de spectaculaires divinations.",
+					"ah": "Oui, donc, voilà ! Je vais chercher le Guide du Touriste, ne quittez pas je reviens dans un instant..."
+				},
+				"megawolfHint": {
+					"begin": "Le Guide a dit : \"Un mégaloup t'attends dans la capitale !\"",
+					"et": "Et ? C'est tout ! Il va falloir vous débroussailler tout seul maintenant, désolé d'être aussi éclectique !"
+				},
+				"progressHint": {
+					"begin": "Ah ! Je vois que tu avances dans ta quête ! Voyons voir ce que le Guide du Touriste nous raconte ensuite...",
+					"star2": "Je lis dans le Guide : \"le graisseux enthousiaste appréciera un nuage transporté\"... ça te dit quelque chose ?",
+					"star3": "Guide du Touriste, page 879 alinéa b : \"quand on est englué jusqu'au cou, rien ne vaut un bon gâteau\". C'est clair, non ?",
+					"star4": "Je cite : \"L'appel au trou sombre te servira\" ... tu as une idée ??",
+					"star5": "Les vieux os apprécient parait-il la vue d'un ... capsicum.",
+					"star6": "Annexe B du Guide du Touriste : \"Visite l'homme-dieu quand il sera midi à Pek-1\".",
+					"star7": "C'est la dernière étoile qui manque ! Le Guide raconte \"au pays de Saru tu reviendras de parmi les morts sans artifice\".",
+					"end": "Votre langage local est tout de même bizarre... en tout cas, moi, je n'y comprends rien !"
+				},
+				"final": {
+					"begin": ".... Ouiiiiii !!! Merci ! merci ! merci ! Grâce à toi je vais enfin pouvoir retourner sur (PuOsEniLa) !",
+					"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvé dans ton monde !",
+					"give": "L'Être Étrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait..."
+				}
+			}
+		},
+		"merguezSellerQuest": {
+			"name": "Vendeur de Merguez (quête)",
+			"choice": {
+				"ok": "...",
+				"star": "Ah ?"
+			},
+			"dialog": {
+				"begin": "Ohhh je vois que ton Dinoz transporte un nuage burger ! Savais-tu que cela était très mauvais pour la santé ? A moins que tu ne veuilles que ton Dinoz ne devienne aussi gros qu'un Sumo ?!?",
+				"ok": "Enlève-moi ce vilain Burger et viens plutôt goûter mes merguez à la place ! Tiens, je te donne en cadeau de fidélité ce truc que j'ai trouvé par terre !",
+				"star": "Chouette ! Le vendeur de merguez vous a confié l'une des sept étoiles magiques !"
+			}
+		},
+		"skullyQuest": {
+			"name": "Skully (quête)",
+			"choice": {
+				"ok": "...",
+				"star": "Ah ?"
+			},
+			"dialog": {
+				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Mais que vois-je là !!! N'est-ce pas un magnifique exemplaire de \"Capsicum annuum\" ! Quelle couleur, quelle odeur, c'est ma-gni-fi-que !",
+				"ok": "Je te remercie vraiment ! oh oh oh ! En échange pour m'avoir offert cette vision splendide, je vais te donner un truc que j'ai trouvé en cherchant un os que j'avais perdu ! Tiens !",
+				"star": "Félicitations ! Grâce à Skully, vous avez récupéré la 5ème étoile magique ! Plus que deux !"
+			}
+		},
+		"baobobQuest": {
+			"name": "Bao Bob (quête)",
+			"choice": {
+				"ok": "Je cherche...",
+				"star": "???"
+			},
+			"dialog": {
+				"begin": "Que viens-tu faire à cette heure si matinale chez moi ?",
+				"ok": "Ah ! Oui, je suis encore dans les vappes, je n'avais pas réalisé. Tiens, je l'avais gardé pour toi, j'espère en tout cas qu'elle ne t'attirera pas trop d'ennuis...",
+				"star": "Sur ces mots étranges, Bao Bob vous confie la 6ème étoile magique ! Plus qu'une dernière !!!"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
@@ -4683,6 +4769,18 @@
 				"begin": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !",
 				"merguezSeller": "Ooooohh !! Il s'agit donc des fameuses crevettes au Napalm ?!? Voyons voir.... uhmm.... cela manque un peu de graisse mais c'est succulent. Nul doute que Mouldeur devrait bientôt se montrer... Mais regarde qui voilà !",
 				"end": "OOooooooh ! oh ! oh oh oh ! Mouldeur est revenu !!! Merci beaucoup !!"
+			}
+		}
+	},
+	"scenarios": {
+		"star": {
+			"name": "La Plume Sidérale",
+			"texts": {
+				"fightMegawolf": "Au moment où vous approchez, un immense loup apparait !",
+				"fightStarFound": "A la fin du combat, vous apercevez un objet brillant : il s'agit d'une des 7 étoiles magiques !",
+				"eatStarFound": "Après avoir avalé la Tarte, votre Dinoz aperçoit quelque chose qui brille à quelques mètres... Félicitations ! Vous avez trouvé l'une des 7 étoiles magiques !",
+				"digStarFound": "Au premier coup de pelle, vous entendez un bruit étrange. En creusant un peu vous trouvez l'une des 7 étoiles magiques ! Félicitations !",
+				"resurrectStarFound": "Alors qu'il se réveille à Dinoville, votre Dinoz s'aperçoit que quelqu'un lui a confié la dernière étoile magique ! Ses souvenirs sont troubles, mais il se rappelle de Dinoz étranges, inconnus jusque là, à l'allure de singes au pelage multicolore... Ce sont eux qui lui ont confié la 7ème étoile, mais qui sont-ils ?!?"
 			}
 		}
 	}
