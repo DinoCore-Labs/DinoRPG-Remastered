@@ -9,6 +9,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { MoneyType } from '../../../../prisma/index.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { prisma } from '../../prisma.js';
+import { setUserScenarioProgression } from '../../Scenario/Controller/scenarioProgress.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { addMoney } from '../../User/Controller/money.controller.js';
 import { buildConditionContext } from '../../utils/conditions/buildConditionContext.js';
@@ -32,9 +33,15 @@ async function applyDigReward(userId: string, dinozId: number, reward: DigReward
 		case 'item':
 			await addItemToInventory(userId, reward.itemId, reward.quantity);
 			return reward;
-		/*case 'scenario':
-			await setScenarioProgress(tx, userId, reward.scenarioKey, reward.progression);
-			return reward;*/
+		case 'scenario':
+			await prisma.$transaction(tx =>
+				setUserScenarioProgression(tx, {
+					userId,
+					scenarioKey: reward.scenarioKey,
+					progression: reward.progression
+				})
+			);
+			return null;
 	}
 }
 
@@ -44,10 +51,8 @@ async function breakShovel(dinozId: number, statusIds: Set<number>) {
 		await addStatusToDinoz(dinozId, DinozStatusId.BROKEN_SHOVEL);
 		return;
 	}
-
 	if (hasStatus(statusIds, DinozStatusId.ENHANCED_SHOVEL)) {
 		const shouldBreak = Math.random() < 0.25;
-
 		if (shouldBreak) {
 			await removeStatusFromDinoz(dinozId, DinozStatusId.ENHANCED_SHOVEL);
 			await addStatusToDinoz(dinozId, DinozStatusId.BROKEN_ENHANCED_SHOVEL);
@@ -81,6 +86,13 @@ export async function digWithDinoz(userId: string, dinozId: number) {
 			rewards: {
 				select: {
 					rewardId: true
+				}
+			},
+			scenarios: {
+				select: {
+					scenarioKey: true,
+					progression: true,
+					tracking: true
 				}
 			},
 			wallets: {
@@ -117,43 +129,31 @@ export async function digWithDinoz(userId: string, dinozId: number) {
 			}
 		}
 	});
-
 	if (!player) {
 		throw new ExpectedError(`User ${userId} not found`);
 	}
-
 	const activeDinoz = player.dinoz.find(dinoz => dinoz.id === dinozId);
-
 	if (!activeDinoz) {
 		throw new ExpectedError(`Dinoz ${dinozId} not found`);
 	}
-
 	const statusIds = new Set(activeDinoz.status.map(status => status.statusId));
-
 	if (!hasStatus(statusIds, DinozStatusId.SHOVEL) && !hasStatus(statusIds, DinozStatusId.ENHANCED_SHOVEL)) {
 		throw new ExpectedError(`Dinoz ${dinozId} cannot dig`);
 	}
-
 	if (activeDinoz.placeId === PlaceEnum.MINES_DE_CORAIL) {
 		throw new ExpectedError('shovelMine');
 	}
-
 	if (activeDinoz.life <= 0) {
 		throw new ExpectedError('dead');
 	}
-
 	const conditionContext = buildConditionContext(player, dinozId, defaultConditionKeyMaps);
-
 	const treasure = digTreasures.find(entry => {
 		if (entry.place !== activeDinoz.placeId) return false;
 		if (!entry.cond) return true;
-
 		return checkCondition(entry.cond, conditionContext);
 	});
-
 	return prisma.$transaction(async () => {
 		const rewards = [];
-
 		if (treasure) {
 			for (const reward of treasure.rewards) {
 				rewards.push(await applyDigReward(player.id, activeDinoz.id, reward));
@@ -163,10 +163,8 @@ export async function digWithDinoz(userId: string, dinozId: number) {
 			await addMoney(player.id, gold);
 			rewards.push({ type: 'gold', amount: gold });
 		}
-
 		await breakShovel(activeDinoz.id, statusIds);
 		await incrementUserStat(StatTracking.BROKEN_SHOVEL, player.id, 1);
-
 		return {
 			treasureId: treasure?.id ?? null,
 			rewards
@@ -183,8 +181,6 @@ type DigWithDinozRequest = FastifyRequest<{
 export async function digWithDinozHandler(req: DigWithDinozRequest, reply: FastifyReply) {
 	const userId = req.user.id;
 	const dinozId = req.params.id;
-
 	const result = await digWithDinoz(userId, dinozId);
-
 	return reply.send(result);
 }
