@@ -255,7 +255,7 @@ export const starquestFinalDialog: DialogDefinition = {
 	links: {
 		ok: {
 			id: 'ok',
-			text: 'common.dots'
+			text: 'npc.strangeBeing.choice.ok'
 		},
 		give: {
 			id: 'give',
