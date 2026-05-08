@@ -192,7 +192,7 @@ export default defineComponent({
 							});
 							break;
 						case ItemEffect.QUEST:
-							message = this.$t(`quest.${effect.value}`);
+							message = this.$t(`scenario.${effect.value}`);
 							break;
 						case ItemEffect.RESURRECT:
 							message = this.$t(`toast.${effect.category}`);
