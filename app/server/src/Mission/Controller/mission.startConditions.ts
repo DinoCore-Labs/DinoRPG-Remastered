@@ -18,13 +18,24 @@ type OwnedDinozForMissionStart = {
 
 type ParsedMissionStartCondition =
 	| { type: 'MISSION_COMPLETED'; missionKey: string }
-	| { type: 'CAN_FIGHT'; monsterKey: MonsterKey }
+	| { type: 'CAN_FIGHT'; monsterKey: MonsterKey; requiredLevel?: number }
 	| { type: 'HAS_EFFECT'; effectKey: string };
 
 type ParsedMissionStartConditionPart = {
 	negated: boolean;
 	condition: ParsedMissionStartCondition;
 };
+
+function parseCanFightRequiredLevel(rawLevel: string | undefined, part: string): number | undefined {
+	if (!rawLevel) {
+		return undefined;
+	}
+	const requiredLevel = Number(rawLevel);
+	if (!Number.isInteger(requiredLevel) || requiredLevel <= 0) {
+		throw new Error(`Invalid canfight required level "${rawLevel}" in mission condition "${part}"`);
+	}
+	return requiredLevel;
+}
 
 function parseMissionStartConditionPart(part: string): ParsedMissionStartConditionPart {
 	const trimmedPart = part.trim();
@@ -36,23 +47,45 @@ function parseMissionStartConditionPart(part: string): ParsedMissionStartConditi
 	}
 	const [, rawType, rawValue] = match;
 	const type = rawType.trim();
-	const value = rawValue.trim();
+	const args = rawValue
+		.split(',')
+		.map(arg => arg.trim())
+		.filter(Boolean);
 	switch (type) {
-		case 'mission':
+		case 'mission': {
+			const [missionKey] = args;
+			if (!missionKey || args.length !== 1) {
+				throw new Error(`Invalid mission condition "${part}"`);
+			}
 			return {
 				negated,
-				condition: { type: 'MISSION_COMPLETED', missionKey: value }
+				condition: { type: 'MISSION_COMPLETED', missionKey }
 			};
-		case 'canfight':
+		}
+		case 'canfight': {
+			const [monsterKey, rawRequiredLevel] = args;
+			if (!monsterKey || args.length > 2) {
+				throw new Error(`Invalid canfight condition "${part}"`);
+			}
 			return {
 				negated,
-				condition: { type: 'CAN_FIGHT', monsterKey: value as MonsterKey }
+				condition: {
+					type: 'CAN_FIGHT',
+					monsterKey: monsterKey as MonsterKey,
+					requiredLevel: parseCanFightRequiredLevel(rawRequiredLevel, part)
+				}
 			};
-		case 'fx':
+		}
+		case 'fx': {
+			const [effectKey] = args;
+			if (!effectKey || args.length !== 1) {
+				throw new Error(`Invalid fx condition "${part}"`);
+			}
 			return {
 				negated,
-				condition: { type: 'HAS_EFFECT', effectKey: value }
+				condition: { type: 'HAS_EFFECT', effectKey }
 			};
+		}
 		default:
 			throw new Error(`Unsupported mission condition type "${type}"`);
 	}
@@ -90,12 +123,16 @@ async function checkMissionCompletedCondition(
 	return mission?.isCompleted === true;
 }
 
-function checkCanFightCondition(dinoz: OwnedDinozForMissionStart, monsterKey: MonsterKey): boolean {
+function checkCanFightCondition(
+	dinoz: OwnedDinozForMissionStart,
+	monsterKey: MonsterKey,
+	requiredLevel?: number
+): boolean {
 	const monster = monsterByKey[monsterKey];
 	if (!monster) {
 		throw new Error(`Unknown monster key "${monsterKey}"`);
 	}
-	return dinoz.level >= monster.level;
+	return dinoz.level >= (requiredLevel ?? monster.level);
 }
 
 function checkEffectCondition(dinoz: OwnedDinozForMissionStart, effectKey: string): boolean {
@@ -117,7 +154,7 @@ async function checkSingleMissionStartCondition(
 		case 'MISSION_COMPLETED':
 			return checkMissionCompletedCondition(tx, params.dinoz.id, params.condition.missionKey);
 		case 'CAN_FIGHT':
-			return checkCanFightCondition(params.dinoz, params.condition.monsterKey);
+			return checkCanFightCondition(params.dinoz, params.condition.monsterKey, params.condition.requiredLevel);
 		case 'HAS_EFFECT':
 			return checkEffectCondition(params.dinoz, params.condition.effectKey);
 	}
