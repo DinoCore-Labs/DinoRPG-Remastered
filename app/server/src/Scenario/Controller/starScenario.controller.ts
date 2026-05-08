@@ -1,3 +1,4 @@
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 
 import type { Prisma } from '../../../../prisma/index.js';
@@ -37,19 +38,36 @@ export async function advanceStarScenarioWithRewardTx(
 	}
 ) {
 	const current = await getUserScenarioProgression(tx, input.userId, STAR_SCENARIO_KEY);
-
 	if (current.progression !== input.expectedProgression) {
 		return false;
 	}
-
 	await addMagicStarTx(tx, input.userId);
-
 	await setUserScenarioProgression(tx, {
 		userId: input.userId,
 		scenarioKey: STAR_SCENARIO_KEY,
 		progression: input.nextProgression,
 		tracking: current.tracking
 	});
-
 	return true;
+}
+
+export async function advanceStarScenarioOnNaturalResurrectTx(
+	tx: ScenarioTransaction,
+	input: {
+		userId: string;
+		deathPlaceId: PlaceEnum;
+		resurrectPlaceId: PlaceEnum;
+	}
+) {
+	if (input.deathPlaceId !== PlaceEnum.JUNGLE_SAUVAGE) {
+		return false;
+	}
+	if (input.resurrectPlaceId !== PlaceEnum.DINOVILLE) {
+		return false;
+	}
+	return advanceStarScenarioWithRewardTx(tx, {
+		userId: input.userId,
+		expectedProgression: 7,
+		nextProgression: 8
+	});
 }
