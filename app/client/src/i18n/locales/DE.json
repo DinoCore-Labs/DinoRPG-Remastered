@@ -2684,6 +2684,7 @@
 			"daily": "récompenses quotidiennes"
 		},
 		"disclaimer": "Cliquez sur {number} case(s) de la grille pour trouver des {search}",
+		"discarded": "Jeté !",
 		"nothing": "Votre Dinoz n'a rien trouvé..."
 	},
 	"faq": {
