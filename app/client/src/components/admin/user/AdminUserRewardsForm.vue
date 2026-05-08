@@ -1,32 +1,40 @@
 <template>
 	<div class="card">
 		<div class="card-container">
-			<h3>Rewards</h3>
-			<ul class="reward-list">
-				<li v-for="reward in user.rewards" :key="reward.rewardId" class="reward-row">
-					<img class="reward-icon" :src="rewardIcon(reward.rewardId)" :alt="rewardName(reward.rewardId)" />
-					<div class="reward-info">
-						<strong>{{ rewardName(reward.rewardId) }}</strong>
-						<span>ID: {{ reward.rewardId }}</span>
+			<div class="card-container">
+				<h3>Rewards</h3>
+				<ul class="reward-list">
+					<li v-for="reward in user.rewards" :key="reward.rewardId" class="reward-row">
+						<img class="reward-icon" :src="rewardIcon(reward.rewardId)" :alt="rewardName(reward.rewardId)" />
+						<div class="reward-info">
+							<strong>{{ rewardName(reward.rewardId) }}</strong>
+							<span>ID: {{ reward.rewardId }}</span>
+						</div>
+					</li>
+				</ul>
+				<form class="reward-form" @submit.prevent="submit">
+					<div class="field">
+						<label for="rewardSelect">Reward</label>
+						<DZSelect id="rewardSelect" v-model="form.rewardId" :options="rewardOptions" />
 					</div>
-				</li>
-			</ul>
-			<form class="reward-form" @submit.prevent="submit">
-				<div class="field">
-					<label for="rewardSelect">Reward</label>
-					<DZSelect id="rewardSelect" v-model="form.rewardId" :options="rewardOptions" />
-				</div>
-				<div class="field">
-					<label>Opération</label>
-					<div class="radio-group">
-						<DZRadio id="rewardAdd" name="rewardOperation" v-model="form.operation" value="add" label="Ajouter" />
-						<DZRadio id="rewardRemove" name="rewardOperation" v-model="form.operation" value="remove" label="Retirer" />
+					<div class="field">
+						<label>Opération</label>
+						<div class="radio-group">
+							<DZRadio id="rewardAdd" name="rewardOperation" v-model="form.operation" value="add" label="Ajouter" />
+							<DZRadio
+								id="rewardRemove"
+								name="rewardOperation"
+								v-model="form.operation"
+								value="remove"
+								label="Retirer"
+							/>
+						</div>
 					</div>
-				</div>
-				<DZButton type="submit" :disabled="submitting">
-					{{ submitting ? 'Enregistrement...' : 'Modifier' }}
-				</DZButton>
-			</form>
+					<DZButton type="submit" :disabled="submitting">
+						{{ submitting ? 'Enregistrement...' : 'Modifier' }}
+					</DZButton>
+				</form>
+			</div>
 		</div>
 	</div>
 </template>
@@ -42,7 +50,6 @@ import type { SelectOption } from '../../utils/DZSelect.vue';
 import DZRadio from '../../utils/DZRadio.vue';
 import DZButton from '../../utils/DZButton.vue';
 
-// À adapter selon où se trouve ta liste réelle
 import { Reward, rewardList } from '@dinorpg/core/models/rewards/rewardList.js';
 import { getImgURL } from '../../../utils/getImgURL';
 
@@ -81,7 +88,6 @@ function rewardIcon(rewardId: number): string {
 
 async function submit() {
 	submitting.value = true;
-
 	try {
 		await AdminUserService.updateUserRewards(props.user.id, {
 			rewardId: form.rewardId,
@@ -110,7 +116,7 @@ async function submit() {
 }
 .reward-list {
 	display: flex;
-	flex-direction: column;
+	flex-wrap: wrap;
 	gap: 6px;
 	margin: 0 0 16px;
 	padding: 0;
