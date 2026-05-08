@@ -17,9 +17,10 @@ export type UserForConditionCheck = Pick<User, 'id'> & {
 	messie?: boolean;
 	items: Pick<UserItems, 'itemId' | 'quantity'>[];
 	rewards: Pick<UserRewards, 'rewardId'>[];
-	quests?: {
-		questKey: string;
+	scenarios?: {
+		scenarioKey: string;
 		progression: number;
+		tracking: number;
 		updatedAt?: Date | null;
 	}[];
 	ingredients?: Pick<UserIngredients, 'ingredientId' | 'quantity'>[];
