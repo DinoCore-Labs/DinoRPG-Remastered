@@ -52,6 +52,7 @@ export type DialogContext = {
 	world: {
 		activeFeatures: Set<string>;
 	};
+	now: Date;
 };
 
 type BuildDialogContextParams = {
@@ -356,6 +357,7 @@ export async function buildDialogContext(
 		},
 		world: {
 			activeFeatures: new Set(gameConfig.world.activeFeatures)
-		}
+		},
+		now: new Date()
 	};
 }

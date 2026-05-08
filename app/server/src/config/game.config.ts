@@ -24,6 +24,7 @@ interface GeneralConfig {
 	initialMoney: number;
 	initialTreasureTicket: number;
 	starterPack: StarterItem[];
+	gameTimeZone?: string;
 }
 
 interface StarterItem {
@@ -65,7 +66,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 				{ itemId: 4, quantity: 10 }, // pain chaud
 				{ itemId: 5, quantity: 10 }, // tarte
 				{ itemId: 997, quantity: 50 } // daily ticket
-			]
+			],
+			gameTimeZone: 'Europe/Paris'
 		}
 	},
 	production: {
@@ -94,7 +96,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 				{ itemId: 4, quantity: 1 }, // pain chaud
 				{ itemId: 5, quantity: 2 }, // tarte
 				{ itemId: 997, quantity: 2 } // daily ticket
-			]
+			],
+			gameTimeZone: 'UTC'
 		}
 	}
 };
