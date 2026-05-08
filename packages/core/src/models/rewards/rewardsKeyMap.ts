@@ -9,7 +9,8 @@ export const rewardIdByKey: Record<string, Reward> = {
 	msg: Reward.MSG,
 	vener: Reward.VENER,
 	tour: Reward.TOUR,
-	pda: Reward.PDA
+	pda: Reward.PDA,
+	plume: Reward.PLUME
 };
 
 export const rewardKeyById: Partial<Record<number, string>> = Object.fromEntries(
@@ -24,5 +25,6 @@ export const statTrackingByCollectionKey: Partial<Record<string, StatTracking>> 
 	msg: StatTracking.MSG,
 	vener: StatTracking.VENER,
 	tour: StatTracking.TOUR,
-	pda: StatTracking.PDA
+	pda: StatTracking.PDA,
+	plume: StatTracking.PLUME
 };
