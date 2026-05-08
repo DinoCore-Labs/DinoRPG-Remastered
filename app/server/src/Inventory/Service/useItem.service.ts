@@ -1,13 +1,13 @@
 import { raceList } from '@dinorpg/core/models/dinoz/raceList.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
-//import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { RaceEnum } from '@dinorpg/core/models/enums/Race.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { ItemFeedBack, SpecialItemResult, UseItemResult } from '@dinorpg/core/models/items/itemFeedback.js';
 import { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
-//import { SWAMP_FLOODED_DAYS } from '@dinorpg/core/models/place/placeList.js';
+import { SWAMP_FLOODED_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
 import { SkillDetails } from '@dinorpg/core/models/skills/skillDetails.js';
 import { skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
@@ -23,8 +23,10 @@ import { getActiveDinoz } from '../../Dinoz/Controller/getActiveDinoz.js';
 import { getDinozFicheItemRequest } from '../../Dinoz/Controller/getDinozFicheItem.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { applySkillEffect } from '../../Level/Controller/applySkillEffect.controller.js';
+import { prisma } from '../../prisma.js';
 import { updateDinozCount } from '../../Ranking/Controller/updateDinozCount.js';
 import { updatePoints } from '../../Ranking/Controller/updatePoints.js';
+import { advanceStarScenarioWithRewardTx } from '../../Scenario/Controller/starScenario.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { addMoney } from '../../User/Controller/money.controller.js';
 import { toDinozFiche, UserForDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
@@ -45,106 +47,102 @@ export async function useItemHandler(
 	_reply: FastifyReply
 ): Promise<UseItemResult> {
 	const authed = req.user;
-
 	const dinozId = +req.params.dinozId;
 	const itemId = +req.params.itemId;
-
 	const dinoz = await getDinozFicheItemRequest(dinozId);
+	const dayOfWeek = new Date().getDay();
 	if (!dinoz || !dinoz.user) {
 		throw new ExpectedError(`Player ${dinozId} doesn't exist.`, { statusCode: 404 });
 	}
-
 	if (dinoz.user.id !== authed.id) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player.`, { statusCode: 403 });
 	}
-
 	const item = Object.values(itemList).find(i => i.itemId === itemId);
 	if (!item) {
 		throw new ExpectedError(`This item didn't exist`, { statusCode: 404 });
 	}
-
 	const itemData = dinoz.user.items.find(i => i.itemId === itemId);
 	if (!itemData || itemData.quantity <= 0) {
 		throw new ExpectedError(`notEnoughItems`, { params: { id: itemData?.id } });
 	}
-
 	const effects: ItemFeedBack[] = [];
 	let createdDinoz: UseItemResult['createdDinoz'];
-
 	switch (item.effect?.category) {
 		case ItemEffect.ACTION: {
 			await updateDinoz(dinoz.id, { fight: true, gather: true });
 			effects.push({ category: ItemEffect.ACTION, value: 1 });
 			break;
 		}
-
 		case ItemEffect.HEAL: {
 			const initialLife = dinoz.life;
 			await updateDinoz(dinoz.id, heal(dinoz, item.effect.value * (dinoz.user.cooker ? 1.1 : 1)));
-
 			const refreshed = await getDinozFicheItemRequest(dinozId);
 			const newLife = refreshed?.life ?? initialLife;
 			const lifeHealed = Math.max(0, newLife - initialLife);
-
 			effects.push({ category: ItemEffect.HEAL, value: lifeHealed });
+			if (
+				item.itemId === Item.MEAT_PIE &&
+				dinoz.placeId === PlaceEnum.MARAIS_COLLANT &&
+				SWAMP_FLOODED_DAYS.includes(dayOfWeek)
+			) {
+				const progressed = await prisma.$transaction(tx =>
+					advanceStarScenarioWithRewardTx(tx, {
+						userId: dinoz.user!.id,
+						expectedProgression: 3,
+						nextProgression: 4
+					})
+				);
+				if (progressed) {
+					effects.push({
+						category: ItemEffect.QUEST,
+						value: 'scenarios.star.texts.eatStarFound'
+					});
+				}
+			}
 			await incrementUserStat(StatTracking.HEAL_PV, dinoz.user.id, lifeHealed);
 			break;
 		}
-
 		case ItemEffect.RESURRECT: {
 			await updateDinoz(dinoz.id, resurrect(dinoz));
 			effects.push({ category: ItemEffect.RESURRECT });
-
 			await incrementUserStat(StatTracking.DEATHS, dinoz.user.id, 1);
 			break;
 		}
-
 		case ItemEffect.EGG: {
 			const result = await hatchEgg(item, authed);
-
 			effects.push({
 				category: ItemEffect.EGG,
 				value: raceList[result.race].name
 			});
-
 			createdDinoz = result.dinoz;
 			break;
 		}
-
 		case ItemEffect.SPHERE: {
 			const skillToLearn = learnNextSphereSkill(dinoz, item.effect.value);
 			const skill = Object.values(skillList).find(s => s.id === skillToLearn);
 			if (!skill) {
 				throw new ExpectedError(`Skill ${skillToLearn} doesn't exist.`, { statusCode: 404 });
 			}
-
 			await applySkillEffect(dinoz, skill, dinoz.user.id);
 			await addSkillToDinoz(dinozId, skillToLearn);
-
 			effects.push({ category: ItemEffect.SPHERE, value: skill.name });
 			break;
 		}
-
 		case ItemEffect.GOLD: {
 			await addMoney(dinoz.user.id, item.effect.value);
 			effects.push({ category: ItemEffect.GOLD, value: item.effect.value });
 			break;
 		}
-
 		case ItemEffect.SPECIAL: {
 			const result = await useSpecialItem(dinoz, item);
-
 			if (result?.specialEffect) {
 				effects.push(result.specialEffect);
 			}
-
 			if (result?.extraEffects?.length) {
 				effects.push(...result.extraEffects);
 			}
-
 			break;
 		}
-
 		default:
 			throw new ExpectedError('Unsupported item effect', { statusCode: 400 });
 	}
@@ -162,23 +160,18 @@ async function hatchEgg(item: ItemFiche, authed: Pick<User, 'id'>) {
 	if (!item || !item.effect || item.effect.category != ItemEffect.EGG) {
 		throw new ExpectedError('Missing item, egg effect or item is not an egg');
 	}
-
 	let race = item.effect.race;
-
 	const dinozActive = await getActiveDinoz(authed.id);
 	const player = dinozActive[0].user;
-
 	if (!player) {
 		throw new ExpectedError(`Player missing`);
 	}
-
 	if (dinozActive.length > 0) {
 		const maxDinoz = gameConfig.dinoz.maxQuantity + (player.leader ? 3 : 0) + (player.messie ? 3 : 0);
 		if (dinozActive.length >= maxDinoz) {
 			throw new ExpectedError('tooManyActiveDinoz');
 		}
 	}
-
 	let randomDisplay = '0';
 
 	switch (item.itemId) {
