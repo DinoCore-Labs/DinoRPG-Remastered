@@ -73,8 +73,8 @@
 				<table>
 					<tbody>
 						<tr>
-							<th class="name">{{ $t('details.th.comp') }}</th>
-							<th class="type">{{ $t('details.th.type') }}</th>
+							<th class="name">{{ $t('dinozPage.details.th.comp') }}</th>
+							<th class="type">{{ $t('dinozPage.details.th.type') }}</th>
 							<th class="type">{{ $t('levelup.level') }}</th>
 							<th class="type"></th>
 						</tr>
