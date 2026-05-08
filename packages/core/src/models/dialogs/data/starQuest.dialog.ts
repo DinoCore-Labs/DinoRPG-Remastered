@@ -318,7 +318,7 @@ export const starquestMerguezSellerDialog: DialogDefinition = {
 
 export const starquestSkullyDialog: DialogDefinition = {
 	id: 'starquest_skully',
-	name: 'npc.skully.name',
+	name: 'npc.skullyQuest.name',
 	place: PlaceEnum.CIMETIERE,
 	cond: parseCondition('scenario(star,5)+equip(ppoiv)'),
 	pnj: {
@@ -370,7 +370,7 @@ export const starquestSkullyDialog: DialogDefinition = {
 
 export const starquestBaoBobDialog: DialogDefinition = {
 	id: 'starquest_bao_bob',
-	name: 'npc.baobob.name',
+	name: 'npc.baobobQuest.name',
 	place: PlaceEnum.BAO_BOB,
 	cond: parseCondition('scenario(star,6)+(admin()|hour(5)|hour(6)|hour(7))'),
 	pnj: {
