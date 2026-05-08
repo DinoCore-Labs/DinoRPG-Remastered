@@ -86,8 +86,13 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 			return context.user.dinozCount >= condition.value;
 		case 'position':
 			return String(context.dinoz.placeId) === condition.key;
-		case 'equip':
-			return context.dinoz.itemIds.has(Number(condition.key));
+		case 'equip': {
+			const itemId = resolveItemIdFromKey(condition.key);
+			if (itemId == null) {
+				throw new Error(`Unknown item key "${condition.key}" in dialog condition`);
+			}
+			return context.dinoz.itemIds.has(itemId);
+		}
 		case 'skill':
 			return hasDinozSkill(context, Number(condition.key));
 		case 'hasobject': {

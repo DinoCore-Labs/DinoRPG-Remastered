@@ -3743,40 +3743,40 @@
 					"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvé dans ton monde !",
 					"give": "L'Être Étrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait..."
 				}
+			}
+		},
+		"merguezSellerQuest": {
+			"name": "Vendeur de Merguez (quête)",
+			"choice": {
+				"star": "Ah ?"
 			},
-			"merguezSellerQuest": {
-				"name": "Vendeur de Merguez (quête)",
-				"choice": {
-					"star": "Ah ?"
-				},
-				"dialog": {
-					"begin": "Ohhh je vois que ton Dinoz transporte un nuage burger ! Savais-tu que cela était très mauvais pour la santé ? A moins que tu ne veuilles que ton Dinoz ne devienne aussi gros qu'un Sumo ?!?",
-					"ok": "Enlève-moi ce vilain Burger et viens plutôt goûter mes merguez à la place ! Tiens, je te donne en cadeau de fidélité ce truc que j'ai trouvé par terre !",
-					"star": "Chouette ! Le vendeur de merguez vous a confié l'une des sept étoiles magiques !"
-				}
+			"dialog": {
+				"begin": "Ohhh je vois que ton Dinoz transporte un nuage burger ! Savais-tu que cela était très mauvais pour la santé ? A moins que tu ne veuilles que ton Dinoz ne devienne aussi gros qu'un Sumo ?!?",
+				"ok": "Enlève-moi ce vilain Burger et viens plutôt goûter mes merguez à la place ! Tiens, je te donne en cadeau de fidélité ce truc que j'ai trouvé par terre !",
+				"star": "Chouette ! Le vendeur de merguez vous a confié l'une des sept étoiles magiques !"
+			}
+		},
+		"skullyQuest": {
+			"name": "Skully (quête)",
+			"choice": {
+				"star": "Ah ?"
 			},
-			"skullyQuest": {
-				"name": "Skully (quête)",
-				"choice": {
-					"star": "Ah ?"
-				},
-				"dialog": {
-					"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Mais que vois-je là !!! N'est-ce pas un magnifique exemplaire de \"Capsicum annuum\" ! Quelle couleur, quelle odeur, c'est ma-gni-fi-que !",
-					"ok": "Je te remercie vraiment ! oh oh oh ! En échange pour m'avoir offert cette vision splendide, je vais te donner un truc que j'ai trouvé en cherchant un os que j'avais perdu ! Tiens !",
-					"star": "Félicitations ! Grâce à Skully, vous avez récupéré la 5ème étoile magique ! Plus que deux !"
-				}
+			"dialog": {
+				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Mais que vois-je là !!! N'est-ce pas un magnifique exemplaire de \"Capsicum annuum\" ! Quelle couleur, quelle odeur, c'est ma-gni-fi-que !",
+				"ok": "Je te remercie vraiment ! oh oh oh ! En échange pour m'avoir offert cette vision splendide, je vais te donner un truc que j'ai trouvé en cherchant un os que j'avais perdu ! Tiens !",
+				"star": "Félicitations ! Grâce à Skully, vous avez récupéré la 5ème étoile magique ! Plus que deux !"
+			}
+		},
+		"baobobQuest": {
+			"name": "Bao Bob (quête)",
+			"choice": {
+				"ok": "Je cherche...",
+				"star": "???"
 			},
-			"baobobQuest": {
-				"name": "Bao Bob (quête)",
-				"choice": {
-					"ok": "Je cherche...",
-					"star": "???"
-				},
-				"dialog": {
-					"begin": "Que viens-tu faire à cette heure si matinale chez moi ?",
-					"ok": "Ah ! Oui, je suis encore dans les vappes, je n'avais pas réalisé. Tiens, je l'avais gardé pour toi, j'espère en tout cas qu'elle ne t'attirera pas trop d'ennuis...",
-					"star": "Sur ces mots étranges, Bao Bob vous confie la 6ème étoile magique ! Plus qu'une dernière !!!"
-				}
+			"dialog": {
+				"begin": "Que viens-tu faire à cette heure si matinale chez moi ?",
+				"ok": "Ah ! Oui, je suis encore dans les vappes, je n'avais pas réalisé. Tiens, je l'avais gardé pour toi, j'espère en tout cas qu'elle ne t'attirera pas trop d'ennuis...",
+				"star": "Sur ces mots étranges, Bao Bob vous confie la 6ème étoile magique ! Plus qu'une dernière !!!"
 			}
 		},
 		"dialog": {
