@@ -255,6 +255,33 @@ exports.Prisma.NewsTranslationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.OfferScalarFieldEnum = {
+  id: 'id',
+  sellerId: 'sellerId',
+  sellerName: 'sellerName',
+  endDate: 'endDate',
+  dinozId: 'dinozId',
+  dinozDetails: 'dinozDetails',
+  total: 'total',
+  status: 'status'
+};
+
+exports.Prisma.OfferItemScalarFieldEnum = {
+  id: 'id',
+  offerId: 'offerId',
+  itemId: 'itemId',
+  quantity: 'quantity',
+  isIngredient: 'isIngredient'
+};
+
+exports.Prisma.OfferBidScalarFieldEnum = {
+  id: 'id',
+  offerId: 'offerId',
+  userId: 'userId',
+  userName: 'userName',
+  value: 'value'
+};
+
 exports.Prisma.PollScalarFieldEnum = {
   id: 'id',
   newsId: 'newsId',
@@ -520,6 +547,12 @@ exports.Language = exports.$Enums.Language = {
   DE: 'DE'
 };
 
+exports.OfferStatus = exports.$Enums.OfferStatus = {
+  ONGOING: 'ONGOING',
+  ENDED: 'ENDED',
+  CLAIMED: 'CLAIMED'
+};
+
 exports.Role = exports.$Enums.Role = {
   PLAYER: 'PLAYER',
   MODERATOR: 'MODERATOR',
@@ -556,6 +589,9 @@ exports.Prisma.ModelName = {
   JobRun: 'JobRun',
   News: 'News',
   NewsTranslation: 'NewsTranslation',
+  Offer: 'Offer',
+  OfferItem: 'OfferItem',
+  OfferBid: 'OfferBid',
   Poll: 'Poll',
   PollOption: 'PollOption',
   PollOptionTranslation: 'PollOptionTranslation',

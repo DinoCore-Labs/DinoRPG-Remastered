@@ -46,6 +46,7 @@ model Dinoz {
   unlockableSkills   DinozSkillsUnlockable[] 
   status             DinozStatus[]
   missions           DinozMissions[]
+  marketOffers       Offer[]                @relation("OfferDinoz")
 
   userId             String                 @db.Uuid
   user               User                   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)  
@@ -156,6 +157,7 @@ model JobDefinition {
   createdAt    DateTime  @default(now()) @db.Timestamptz(3)
   updatedAt    DateTime  @updatedAt      @db.Timestamptz(3)
 
+  @@index([enabled, nextRunAt])
   @@map("job_definition")
 }
 
@@ -214,6 +216,53 @@ model NewsTranslation {
   @@unique([newsId, lang])
   @@index([lang])
   @@map("news_translations")
+}
+
+model Offer {
+  id           Int         @id @default(autoincrement())
+  sellerId     String?     @db.Uuid
+  sellerName   String
+  endDate      DateTime    @db.Timestamptz(3)
+  dinozId      Int?
+  dinozDetails String?
+  total        Int
+  status       OfferStatus @default(ONGOING)
+
+  seller User?  @relation("OfferSeller", fields: [sellerId], references: [id], onDelete: SetNull)
+  dinoz  Dinoz? @relation("OfferDinoz", fields: [dinozId], references: [id], onDelete: SetNull)
+
+  items OfferItem[]
+  bids  OfferBid[]
+
+  @@index([status, endDate])
+  @@index([sellerId])
+  @@index([dinozId])
+}
+
+model OfferItem {
+  id           Int     @id @default(autoincrement())
+  offerId      Int
+  itemId       Int
+  quantity     Int
+  isIngredient Boolean
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@index([offerId])
+}
+
+model OfferBid {
+  id       Int     @id @default(autoincrement())
+  offerId  Int
+  userId   String? @db.Uuid
+  userName String
+  value    Int
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  user  User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([offerId])
+  @@index([userId])
 }
 
 model Poll {
@@ -363,6 +412,9 @@ model User {
   scenarios     UserScenario[]
   statsTracking UserTracking[]
   wallets       UserWallet[]
+
+  marketOffers Offer[]            @relation("OfferSeller")
+  marketBids   OfferBid[]
 
   dinoz         Dinoz[]
   dinozShop     UserDinozShop[]
@@ -620,4 +672,10 @@ enum JobStatus {
   RUNNING
   SUCCESS
   FAILED
+}
+
+enum OfferStatus {
+  ONGOING
+  ENDED
+  CLAIMED
 }
