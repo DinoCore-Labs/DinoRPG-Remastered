@@ -9,11 +9,14 @@ export const MarketService = {
 		bidderId: string | null = null,
 		expired = false,
 		page = 1,
-		onlyMines = false
+		onlyMines = false,
+		silent = false
 	): Promise<MarketListResponse> {
 		const apiFilter = filter === 'bids' ? 'all' : filter;
+
 		return http()
 			.get<MarketListResponse>(`/market/list/${apiFilter}`, {
+				silent,
 				params: {
 					page,
 					...(expired ? { expired } : {}),
