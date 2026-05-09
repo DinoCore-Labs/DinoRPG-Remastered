@@ -122,7 +122,6 @@ import { userStore } from '../../store/userStore.js';
 //import eventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { RankingService } from '../../services/ranking.service.js';
-//import { dinozStore, localStore, playerStore } from '../../store/index.js';
 //import { goTo } from '../../utils/goTo.js';
 //import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import DZButton from '../utils/DZButton.vue';
