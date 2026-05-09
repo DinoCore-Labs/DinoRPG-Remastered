@@ -43,6 +43,8 @@
 			"faq": "FAQ",
 			"guide": "Spielhandbuch",
 			"disconnect": "Ausloggen",
+			"system": "Réglages",
+			"skipLevelAnimation": "Passer l'animation des level up",
 			"goodbye": "Auf Wiedersehen, Meister {name}..."
 		}
 	},
