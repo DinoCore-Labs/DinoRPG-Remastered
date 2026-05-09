@@ -2,9 +2,9 @@
 	<tr>
 		<td v-if="offer.dinoz" :data-dinoz-level="offer.dinoz.level" :class="{ dinoz: true, 'has-dinoz': !!offer.dinoz }">
 			<DinozMini :display="offer.dinoz.display" />
-			<DZButton size="small" @click="details = !details">
+			<button class="button-component" @click="details = !details">
 				{{ $t('market.detail') }}
-			</DZButton>
+			</button>
 		</td>
 		<td v-else />
 		<td class="items-td">
@@ -66,10 +66,10 @@
 		<td class="bid-action">
 			<div v-if="!isExpired && !ownOffer">
 				<DZInput type="number" min="1" v-model="bidValue" />
-				<DZButton size="small" @click="bid">
+				<button class="button-component" @click="bid">
 					{{ $t('market.bid') }}
 					<img :src="getImgURL('icons', 'ticket', true)" />
-				</DZButton>
+				</button>
 			</div>
 		</td>
 	</tr>
@@ -306,7 +306,6 @@ export default defineComponent({
 .dinoz-details {
 	.dinoz-name-race {
 		text-align: center;
-
 		.race {
 			font-variant: small-caps;
 		}
@@ -379,7 +378,6 @@ export default defineComponent({
 		}
 	}
 }
-
 .items {
 	display: flex;
 	align-items: center;
@@ -437,7 +435,6 @@ export default defineComponent({
 		}
 	}
 }
-
 .bid-action {
 	text-align: center;
 	input {
@@ -451,6 +448,28 @@ export default defineComponent({
 		img {
 			margin-left: 3px;
 		}
+	}
+}
+.button-component {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 9pt;
+	font-variant: small-caps;
+	line-height: 7pt;
+	cursor: pointer;
+	text-decoration: none;
+	min-height: 28px;
+	border-color: #c5482c;
+	border-style: double;
+	background-clip: padding-box;
+	background-color: #c5482c;
+	color: #ffee92;
+	padding: 2px 4px;
+	&:hover {
+		background-color: #ffee92;
+		color: #c5482c;
 	}
 }
 </style>
