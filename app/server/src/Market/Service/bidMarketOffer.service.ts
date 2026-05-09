@@ -6,6 +6,7 @@ import { MoneyType, OfferStatus } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 import { assertUserHasDinozAtMarket } from '../Helpers/market.helper.js';
 import { bidOfferBodySchema, offerIdParamsSchema } from '../Schema/market.schema.js';
+import { scheduleNextMarketOfferExpiration } from './expireMarketOffers.service.js';
 
 export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;
@@ -115,6 +116,7 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 			}
 		});
 	});
+	await scheduleNextMarketOfferExpiration();
 
 	return reply.send({ ok: true });
 }

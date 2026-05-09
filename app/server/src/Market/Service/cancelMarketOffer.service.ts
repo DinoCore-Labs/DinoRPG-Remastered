@@ -6,6 +6,7 @@ import { prisma } from '../../prisma.js';
 import { assertUserHasDinozAtMarket } from '../Helpers/market.helper.js';
 import { addOfferContentToInventoryTx, assertUserCanReceiveOfferContent } from '../Helpers/marketInventory.helper.js';
 import { offerIdParamsSchema } from '../Schema/market.schema.js';
+import { scheduleNextMarketOfferExpiration } from './expireMarketOffers.service.js';
 
 export async function cancelMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;
@@ -76,6 +77,7 @@ export async function cancelMarketOffer(req: FastifyRequest, reply: FastifyReply
 			where: { id: offer.id }
 		});
 	});
+	await scheduleNextMarketOfferExpiration();
 
 	return reply.send({ ok: true });
 }

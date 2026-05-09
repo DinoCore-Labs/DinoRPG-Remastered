@@ -8,6 +8,7 @@ import { prisma } from '../../prisma.js';
 import { assertUserHasDinozAtMarket } from '../Helpers/market.helper.js';
 import { assertUserOwnsOfferContent, removeOfferContentFromInventoryTx } from '../Helpers/marketInventory.helper.js';
 import { createMarketOfferBodySchema } from '../Schema/market.schema.js';
+import { scheduleNextMarketOfferExpiration } from './expireMarketOffers.service.js';
 
 export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;
@@ -133,6 +134,7 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 
 		return createdOffer;
 	});
+	await scheduleNextMarketOfferExpiration();
 
 	return reply.send(offer);
 }
