@@ -43,6 +43,8 @@
 			"faq": "FAQ",
 			"guide": "Guide du Jeu",
 			"disconnect": "Déconnexion",
+			"system": "Réglages",
+			"skipLevelAnimation": "Passer l'animation des level up",
 			"goodbye": "Au revoir Maître {name}..."
 		}
 	},

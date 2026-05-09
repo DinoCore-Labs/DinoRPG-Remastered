@@ -19,7 +19,6 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
 import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
-import { userStore } from '../../store/userStore';
 
 export default defineComponent({
 	name: 'LevelUpGrid',
@@ -34,7 +33,8 @@ export default defineComponent({
 			}>,
 			required: true
 		},
-		element: { type: Number, required: true }
+		element: { type: Number, required: true },
+		skipAnimation: { type: Boolean, default: false }
 	},
 	data() {
 		return {
@@ -43,8 +43,7 @@ export default defineComponent({
 			increment: 0 as number,
 			isSpinOver: false as boolean,
 			speed: 50 as number,
-			isSpinning: false as boolean,
-			userStore: userStore()
+			isSpinning: false as boolean
 		};
 	},
 	computed: {
@@ -98,9 +97,7 @@ export default defineComponent({
 		const water = new Array(this.grid.water).fill('water');
 		const lightning = new Array(this.grid.lightning).fill('lightning');
 		const air = new Array(this.grid.air).fill('air');
-
 		this.levelUpGrid = this.levelUpGrid.concat(fire).concat(wood).concat(water).concat(lightning).concat(air);
-
 		const target = ElementType[this.element]?.toLowerCase();
 		const selectElement = this.levelUpGrid.reduce((a: number[], e: string, i: number) => {
 			if (target && e === target) a.push(i);
@@ -108,15 +105,15 @@ export default defineComponent({
 		}, []);
 		const randomIdx = Math.floor(Math.random() * selectElement.length);
 		this.selectedIndex = selectElement[randomIdx] ?? 0;
-		this.isSpinning = !this.isSpinning;
-		/*if (this.userStore.getPlayerOptions.skipLevel) {
+		this.isSpinning = true;
+		if (this.skipAnimation) {
 			this.increment = this.selectedIndex;
 			this.isSpinning = false;
 			this.isSpinOver = true;
 			this.$emit('spinOver');
-		} else {*/
+			return;
+		}
 		this.spin();
-		//}
 	}
 });
 </script>
