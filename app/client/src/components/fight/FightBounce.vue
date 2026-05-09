@@ -61,6 +61,9 @@
 					</Tippy>
 				</div>
 			</div>
+			<DZButton v-if="canShowAnimation" @click="showAnimation()">
+				{{ $t('fight.showAnimation') }}
+			</DZButton>
 			<DZButton :disabled="loadingContinue" @click="returnToDinoz()">{{ $t(`fight.continue`) }}</DZButton>
 			<DZButton @click="toggleFightHistory()">{{
 				$t(`fight.history.${displayFightHistory ? 'hide' : 'display'}`)
@@ -96,9 +99,11 @@ export default defineComponent({
 		}
 	},
 	components: { DZButton },
+	emits: ['showAnimation'],
 	props: {
 		fight: { type: Object as PropType<FightResult>, required: true },
-		dinozId: { type: Number, required: true }
+		dinozId: { type: Number, required: true },
+		canShowAnimation: { type: Boolean, default: false }
 	},
 	data() {
 		return {
@@ -109,6 +114,9 @@ export default defineComponent({
 		};
 	},
 	methods: {
+		showAnimation(): void {
+			this.$emit('showAnimation');
+		},
 		returnToDinoz() {
 			if (this.fight.result && this.fight.dialogReturn) {
 				this.$router.push({

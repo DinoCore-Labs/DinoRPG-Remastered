@@ -5,11 +5,13 @@ import { defineStore } from 'pinia';
 export const localStore = defineStore('localStore', {
 	state: (): StateLocalStore => ({
 		langue: undefined,
-		skipLevelAnimation: false
+		skipLevelAnimation: false,
+		skipFightAnimation: true
 	}),
 	getters: {
 		getLanguage: (state: StateLocalStore) => state.langue,
-		getSkipLevelAnimation: (state: StateLocalStore) => state.skipLevelAnimation ?? false
+		getSkipLevelAnimation: (state: StateLocalStore) => state.skipLevelAnimation,
+		getSkipFightAnimation: (state: StateLocalStore) => state.skipFightAnimation
 	},
 	actions: {
 		setLanguage(langue: Language): void {
@@ -17,6 +19,9 @@ export const localStore = defineStore('localStore', {
 		},
 		setSkipLevelAnimation(skipLevelAnimation: boolean): void {
 			this.skipLevelAnimation = skipLevelAnimation;
+		},
+		setSkipFightAnimation(skipFightAnimation: boolean): void {
+			this.skipFightAnimation = skipFightAnimation;
 		}
 	},
 	persist: {
