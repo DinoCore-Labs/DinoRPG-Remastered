@@ -226,25 +226,26 @@
 			"small": "Irmas Vorhersage",
 			"strong": {
 				"title1": "Alpha 0.7.0 (Bald)",
-				"title2": "Alpha 0.8.0",
-				"title3": "Alpha 0.9.0",
-				"title4": "Alpha 0.10.0"
+				"title2": "Alpha 0.9.0",
+				"title3": "Alpha 0.10.0",
+				"title4": "Alpha 0.11.0"
 			},
 			"help": "Klicke auf ein Update oben, um weitere Informationen zu erhalten!",
 			"disclaimer": "Madame Irmas Vorhersagen sind nicht unfehlbar, daher ist für keine dieser Neuerungen ein Veröffentlichungsdatum verfügbar. Jedes Ereignis wird jedoch zu gegebener Zeit offiziell auf der Website angekündigt.",
 			"futurTitle": "Dinolandische Zukunft",
 			"futureInfo1": {
 				"text1": "Implementierung der Szenarien (Prisma + Datenbank)",
-				"text2": "Implementierung des Tutorial-Szenarios",
-				"text3": "Implementierung des Szenarios des seltsamen Wesens",
-				"text4": "Fehlerbehebungen"
+				"text2": "Implementierung des Tutorial-Szenarios"
 			},
 			"futureInfo2": {
 				"text1": "Implementierung des Züchtermarkts",
-				"text2": "Fehlerbehebungen"
+				"text2": "Fehlerbehebungen",
+				"text3": "Madame X et ses missions",
+				"text4": "Implementierung des Tutorial-Szenarios"
 			},
 			"futureInfo3": {
-				"text1": "Demnächst"
+				"text1": "Demnächst",
+				"text2": "Implementierung des Tutorial-Szenarios"
 			},
 			"futureInfo4": {
 				"text1": "Demnächst"
