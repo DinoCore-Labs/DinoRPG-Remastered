@@ -1,0 +1,37 @@
+.df {
+	display: flex;
+	&.jcsb {
+		justify-content: space-between;
+	}
+	&.aic {
+		align-items: center;
+	}
+	&.jcc {
+		justify-content: center;
+	}
+	&.fww {
+		flex-wrap: wrap;
+	}
+	&.fdc {
+		flex-direction: column;
+	}
+	&.g4 {
+		gap: 4px;
+	}
+	&.g8 {
+		gap: 8px;
+	}
+	&.center {
+		width: 95%;
+		align-self: center;
+	}
+}
+.p2-4 {
+	padding: 2px 4px;
+}
+.mt-1 {
+	margin-top: 1rem;
+}
+.ttu {
+	text-transform: uppercase;
+}
