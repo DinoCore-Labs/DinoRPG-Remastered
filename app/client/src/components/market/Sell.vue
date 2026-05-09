@@ -50,7 +50,6 @@
 						<div v-for="item in items" :key="`item-${item.itemId}`" class="item">
 							<Tippy tag="img" theme="normal" :src="getImgURL('item', `item_${item.name}`)">
 								<p>{{ $t(`items.name.${item.name}`) }}</p>
-
 								<template #content>
 									<h1>{{ $t(`items.name.${item.name}`) }}</h1>
 									<p>{{ $t(`items.description.${item.name}`) }}</p>
@@ -119,17 +118,9 @@ import { dinozStore } from '../../store/dinozStore';
 import { errorHandler } from '../../utils/errorHandler';
 import { formatText } from '../../utils/formatText';
 import { MARKET_MAX_ITEMS, MARKET_MIN_VALUE } from '../../utils/market';
-import { raceList } from '@dinorpg/core/models/dinoz/raceList.js';
 
 type SellableIngredient = IngredientFiche & { quantity: number };
 type SellableItem = ItemFiche & { quantity: number };
-
-type MarketSellDinoz = {
-	id: number;
-	name: string;
-	level: number;
-	raceId: number;
-};
 
 export default defineComponent({
 	name: 'Sell',
@@ -144,7 +135,7 @@ export default defineComponent({
 		return {
 			MARKET_MIN_VALUE,
 			dStore: dinozStore(),
-			dinoz: null as MarketSellDinoz | null,
+			dinoz: null as DinozFiche | null,
 			ingredients: [] as SellableIngredient[],
 			items: [] as SellableItem[],
 			sellDinoz: false,
@@ -182,14 +173,10 @@ export default defineComponent({
 			this.totalValue = this.getTotalValue();
 		},
 		getDinozValue(): number {
-			if (!this.dinoz) {
+			if (!this.dinoz?.race) {
 				return 0;
 			}
-			const race = Object.values(raceList).find(currentRace => currentRace.raceId === this.dinoz?.raceId);
-			if (!race) {
-				return 0;
-			}
-			return Math.ceil(race.price * this.dinoz.level ** 0.5);
+			return Math.ceil(this.dinoz.race.price * this.dinoz.level ** 0.5);
 		},
 		getTotalValue() {
 			const dinozValue = this.sellDinoz ? this.getDinozValue() : 0;
@@ -209,6 +196,13 @@ export default defineComponent({
 			if (this.totalValue < calculatedValue || calculatedValue < MARKET_MIN_VALUE) {
 				this.$toast.open({
 					message: formatText(this.$t('toast.market.minimalValueError')),
+					type: 'error'
+				});
+				return;
+			}
+			if (this.sellDinoz && !this.dinoz?.race) {
+				this.$toast.open({
+					message: formatText(this.$t('toast.unknownDinoz')),
 					type: 'error'
 				});
 				return;
