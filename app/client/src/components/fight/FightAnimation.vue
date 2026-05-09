@@ -20,6 +20,7 @@ export default defineComponent({
 			loadedFight: null as Fight | null
 		};
 	},
+	emits: ['animationEnded'],
 	methods: {
 		async loadAnimation() {
 			await this.$nextTick();
@@ -30,7 +31,11 @@ export default defineComponent({
 			}
 			this.loadedFight?.destroy();
 			container.replaceChildren();
-			this.loadedFight = new Fight(toRaw(fight));
+			const loadedFight = new Fight(toRaw(fight));
+			(loadedFight as Fight & { onFightEnd?: () => void }).onFightEnd = () => {
+				this.$emit('animationEnded');
+			};
+			this.loadedFight = loadedFight;
 			const display = this.loadedFight.getDisplay();
 			display.style.maxWidth = '100%';
 			container.appendChild(display);

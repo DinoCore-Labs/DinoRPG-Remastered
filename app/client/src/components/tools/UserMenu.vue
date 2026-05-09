@@ -200,6 +200,23 @@
 						<span class="slider round"></span>
 					</label>
 				</div>
+				<div class="parameter">
+					<svg class="svgIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
+						<path
+							d="m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4z"
+						></path>
+					</svg>
+					<span class="param" v-html="formatContent($t('topBar.userMenu.skipFightAnimation'))"></span>
+					<label class="switch">
+						<input
+							:checked="localStore.getSkipFightAnimation"
+							class="optionCheckbox"
+							type="checkbox"
+							@change="onSkipFightAnimationChange"
+						/>
+						<span class="slider round"></span>
+					</label>
+				</div>
 			</div>
 			<!--</div>
 			<div class="notifications" v-if="notifications.length > 0">
@@ -305,6 +322,10 @@ export default defineComponent({
 		onSkipLevelAnimationChange(event: Event): void {
 			const target = event.target as HTMLInputElement | null;
 			this.localStore.setSkipLevelAnimation(target?.checked ?? false);
+		},
+		onSkipFightAnimationChange(event: Event): void {
+			const target = event.target as HTMLInputElement | null;
+			this.localStore.setSkipFightAnimation(target?.checked ?? false);
 		}
 		/*async cleanNotif(id: string) {
 			try {

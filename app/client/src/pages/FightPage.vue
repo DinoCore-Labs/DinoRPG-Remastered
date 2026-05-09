@@ -1,13 +1,19 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.fight')" :header="$t(`fight.pageName`)" />
 	<div v-if="loaded && fightTransformed?.history?.length" class="content">
-		<Suspense>
+		<Suspense v-if="fightTransformed && (!localStore.getSkipFightAnimation || showFightAnimation)">
 			<FightAnimation :fight="fightTransformed" @animationEnded="onFightEnd" />
 			<template #fallback>
 				<Loading />
 			</template>
 		</Suspense>
-		<FightBounce v-if="fight" :fight="fight" :dinozId="dinozId" />
+		<FightBounce
+			v-if="fight && (fightEnded || localStore.getSkipFightAnimation)"
+			:fight="fight"
+			:dinozId="dinozId"
+			:can-show-animation="localStore.getSkipFightAnimation && !showFightAnimation"
+			@show-animation="showFight"
+		/>
 	</div>
 </template>
 
@@ -22,10 +28,10 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { formatText } from '../utils/formatText.js';
 import FightBounce from '../components/fight/FightBounce.vue';
 import { dinozStore } from '../store/dinozStore.js';
-import { localStore } from '../store/localStore.js';
 import { sessionStore } from '../store/sessionStore.js';
 import { userStore } from '../store/userStore.js';
 import { Fight } from '@eternaltwin/dinorpg_animations';
+import { localStore } from '../store/localStore.js';
 
 export default defineComponent({
 	name: 'FightPage',
@@ -44,6 +50,7 @@ export default defineComponent({
 			uStore: userStore(),
 			dinozStore: dinozStore(),
 			sessionStore: sessionStore(),
+			localStore: localStore(),
 			fight: null as FightResult | null,
 			dinozId: Number(this.$route.params.dinozId as string),
 			lang: (localStore().getLanguage ?? 'fr').toLowerCase(),
@@ -51,7 +58,8 @@ export default defineComponent({
 			fightTransformed: null as preFightLoader | null,
 			loadedFight: null as Fight | null,
 			loaded: false,
-			moneyGiven: false
+			moneyGiven: false,
+			showFightAnimation: false
 		};
 	},
 	props: {
@@ -60,6 +68,9 @@ export default defineComponent({
 	methods: {
 		onFightEnd() {
 			this.fightEnded = true;
+		},
+		showFight(): void {
+			this.showFightAnimation = true;
 		}
 	},
 	created(): void {
