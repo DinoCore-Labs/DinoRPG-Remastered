@@ -106,6 +106,12 @@
 			<ul class="skills">
 				<SkillTooltip v-for="marketSkill in displayedSkills" :key="marketSkill.skillId" :skill="marketSkill.skill.id">
 					<li>
+						<img
+							v-for="element in marketSkill.skill.element"
+							:key="`${marketSkill.skillId}-${element}`"
+							:src="getImgURL('elements', `elem_${ElementNames[element]}`)"
+							:alt="ElementNames[element]"
+						/>
 						<span>{{ $t(`skill.name.${marketSkill.skill.name}`) }}</span>
 					</li>
 				</SkillTooltip>
@@ -142,6 +148,7 @@ import { statusList } from '../../constants/status';
 import { userStore } from '../../store/userStore';
 import { errorHandler } from '../../utils/errorHandler';
 import { formatMarketTime, getOfferMinimumBid, isOfferExpired } from '../../utils/market';
+import { ElementNames } from '@dinorpg/core/models/enums/ElementType.js';
 
 type MarketSkill = {
 	skillId: number;
@@ -177,6 +184,7 @@ export default defineComponent({
 			formatMarketTime,
 			statusList,
 			skillList,
+			ElementNames,
 			bidValue: 0,
 			details: false
 		};
@@ -197,10 +205,8 @@ export default defineComponent({
 			return race ? this.$t(`race.name.${race.name}`) : '';
 		},
 		displayedSkills(): MarketSkill[] {
-			if (!this.offer.dinoz) {
-				return [];
-			}
-			return this.offer.dinoz.skills.reduce<MarketSkill[]>((acc, currentSkill) => {
+			const skills = this.offer.dinoz?.skills ?? [];
+			return skills.reduce<MarketSkill[]>((acc, currentSkill) => {
 				const skill = skillList[currentSkill.skillId as keyof typeof skillList];
 				if (!skill) {
 					return acc;
@@ -213,10 +219,8 @@ export default defineComponent({
 			}, []);
 		},
 		displayedStatuses(): MarketStatus[] {
-			if (!this.offer.dinoz) {
-				return [];
-			}
-			return this.offer.dinoz.status.reduce<MarketStatus[]>((acc, currentStatus) => {
+			const statuses = this.offer.dinoz?.status ?? [];
+			return statuses.reduce<MarketStatus[]>((acc, currentStatus) => {
 				const displayedKey = currentStatus.statusId as keyof typeof statusList.displayed;
 				const imgNameKey = currentStatus.statusId as keyof typeof statusList.imgName;
 				const isDisplayed = statusList.displayed[displayedKey];

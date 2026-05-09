@@ -5,6 +5,29 @@ import { prisma } from '../../prisma.js';
 import { assertUserHasDinozAtMarket } from '../Helpers/market.helper.js';
 import { marketListParamsSchema, marketListQuerySchema } from '../Schema/market.schema.js';
 
+const marketDinozSelect = {
+	id: true,
+	name: true,
+	display: true,
+	level: true,
+	raceId: true,
+	nbrUpFire: true,
+	nbrUpWater: true,
+	nbrUpWood: true,
+	nbrUpLightning: true,
+	nbrUpAir: true,
+	skills: {
+		select: {
+			skillId: true
+		}
+	},
+	status: {
+		select: {
+			statusId: true
+		}
+	}
+};
+
 export async function listMarketOffers(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;
 
@@ -74,13 +97,7 @@ export async function listMarketOffers(req: FastifyRequest, reply: FastifyReply)
 					}
 				},
 				dinoz: {
-					select: {
-						id: true,
-						name: true,
-						display: true,
-						level: true,
-						raceId: true
-					}
+					select: marketDinozSelect
 				},
 				items: true,
 				bids: {
