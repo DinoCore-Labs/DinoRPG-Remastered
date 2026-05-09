@@ -14,6 +14,7 @@
 				v-if="availableSkills.upChance && availableSkills.element"
 				:grid="availableSkills.upChance"
 				:element="availableSkills.element"
+				:skip-animation="localStore.getSkipLevelAnimation"
 				@spinOver="spinOver"
 			/>
 			<div class="dinozWrapper">
@@ -240,6 +241,7 @@ import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
 import DZButton from '../components/utils/DZButton.vue';
 //import SkillTree from '../components/dinoz/SkillTree.vue';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { localStore } from '../store/localStore.js';
 
 export default defineComponent({
 	name: 'LevelUp',
@@ -263,7 +265,8 @@ export default defineComponent({
 			ElementType: ElementType,
 			isSpinOver: false as boolean,
 			position: dinozPlacement,
-			dinoz: undefined as DinozFiche | undefined
+			dinoz: undefined as DinozFiche | undefined,
+			localStore: localStore()
 		};
 	},
 	props: {
