@@ -119,9 +119,17 @@ import { dinozStore } from '../../store/dinozStore';
 import { errorHandler } from '../../utils/errorHandler';
 import { formatText } from '../../utils/formatText';
 import { MARKET_MAX_ITEMS, MARKET_MIN_VALUE } from '../../utils/market';
+import { raceList } from '@dinorpg/core/models/dinoz/raceList.js';
 
 type SellableIngredient = IngredientFiche & { quantity: number };
 type SellableItem = ItemFiche & { quantity: number };
+
+type MarketSellDinoz = {
+	id: number;
+	name: string;
+	level: number;
+	raceId: number;
+};
 
 export default defineComponent({
 	name: 'Sell',
@@ -136,7 +144,7 @@ export default defineComponent({
 		return {
 			MARKET_MIN_VALUE,
 			dStore: dinozStore(),
-			dinoz: null as DinozFiche | null,
+			dinoz: null as MarketSellDinoz | null,
 			ingredients: [] as SellableIngredient[],
 			items: [] as SellableItem[],
 			sellDinoz: false,
@@ -148,7 +156,6 @@ export default defineComponent({
 		toggleSellDinoz() {
 			this.totalValue = this.getTotalValue();
 		},
-
 		changeItemCount(type: 'ingredient' | 'item', item: SellableIngredient | SellableItem, value: number) {
 			const name = item.name;
 			if (!this.selectedItems[name]) {
@@ -174,11 +181,18 @@ export default defineComponent({
 			this.selectedItems[name].count = nextCount;
 			this.totalValue = this.getTotalValue();
 		},
-		getTotalValue() {
-			let dinozValue = 0;
-			if (this.sellDinoz && this.dinoz) {
-				dinozValue = Math.ceil(this.dinoz.race.price * this.dinoz.level ** 0.5);
+		getDinozValue(): number {
+			if (!this.dinoz) {
+				return 0;
 			}
+			const race = Object.values(raceList).find(currentRace => currentRace.raceId === this.dinoz?.raceId);
+			if (!race) {
+				return 0;
+			}
+			return Math.ceil(race.price * this.dinoz.level ** 0.5);
+		},
+		getTotalValue() {
+			const dinozValue = this.sellDinoz ? this.getDinozValue() : 0;
 			const contentValue = Object.entries(this.selectedItems).reduce((total, [name, selected]) => {
 				if (selected.count <= 0) return total;
 				if (selected.type === 'ingredient') {
