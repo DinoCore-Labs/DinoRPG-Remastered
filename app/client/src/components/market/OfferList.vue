@@ -1,22 +1,18 @@
 <template>
 	<DZDisclaimer help :content="$t('market.disclaimer')" />
-
 	<div class="header df aic jcsb center">
 		<DZButton @click="changeTab(2)">
 			{{ $t('market.makeAnOffer') }}
 		</DZButton>
-
 		<Tippy theme="small" tag="div" class="treasury-notes dz-golden-box no-shadow df aic g4 p2-4">
 			<span>{{ userStore.treasureTicket }}</span>
-			<img :src="getImgURL('icons', 'ticket', true)" :alt="$t('market.treasureTicket')" />
+			<img :src="getImgURL('icons', 'ticket')" :alt="$t('market.yourTreasuryNotes')" />
 			<template #content>
 				{{ $t('market.yourTreasuryNotes') }}
 			</template>
 		</Tippy>
-
 		<DZSelect id="offer-filter-select" v-model="filter" :options="filterOptions" @change="changeFilter" />
 	</div>
-
 	<DZTable>
 		<tr>
 			<th class="dinoz-header">{{ $t('market.dinoz') }}</th>
@@ -24,7 +20,6 @@
 			<th>{{ $t('market.details') }}</th>
 			<th class="bid-action-header"></th>
 		</tr>
-
 		<OfferLine
 			v-for="offer in offers"
 			:key="offer.id"
@@ -34,7 +29,6 @@
 			@bid="onBid"
 		/>
 	</DZTable>
-
 	<div class="pagination-controls">
 		<button @click="previousPage" :disabled="currentPage === 1">
 			<img class="left" src="/src/assets/button/button-back-arrow.webp" />
@@ -44,7 +38,6 @@
 			<img class="right" src="/src/assets/button/button-back-arrow.webp" />
 		</button>
 	</div>
-
 	<DZDisclaimer help :content="$t('market.currency')" />
 </template>
 
