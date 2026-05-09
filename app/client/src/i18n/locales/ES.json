@@ -226,25 +226,26 @@
 			"small": "Predicción de Irma",
 			"strong": {
 				"title1": "Alpha 0.7.0 (Próximamente)",
-				"title2": "Alpha 0.8.0",
-				"title3": "Alpha 0.9.0",
-				"title4": "Alpha 0.10.0"
+				"title2": "Alpha 0.9.0",
+				"title3": "Alpha 0.10.0",
+				"title4": "Alpha 0.11.0"
 			},
 			"help": "¡Haz clic en una actualización de arriba para obtener más información!",
 			"disclaimer": "Las predicciones de Madame Irma no son infalibles, por lo que no hay ninguna fecha de lanzamiento disponible para estas novedades. Sin embargo, cada evento será anunciado oficialmente en el sitio cuando llegue el momento.",
 			"futurTitle": "Futuro dinolandés",
 			"futureInfo1": {
 				"text1": "Implementación de los escenarios (Prisma + base de datos)",
-				"text2": "Implementación del escenario tutorial",
-				"text3": "Implementación del escenario del ser extraño",
-				"text4": "Corrección de errores"
+				"text2": "Implementación del escenario tutorial"
 			},
 			"futureInfo2": {
 				"text1": "Implementación del Mercado de Criadores",
-				"text2": "Corrección de errores"
+				"text2": "Corrección de errores",
+				"text3": "Madame X et ses missions",
+				"text4": "Implementación del escenario tutorial"
 			},
 			"futureInfo3": {
-				"text1": "Próximamente"
+				"text1": "Próximamente",
+				"text2": "Implementación del escenario tutorial"
 			},
 			"futureInfo4": {
 				"text1": "Próximamente"
