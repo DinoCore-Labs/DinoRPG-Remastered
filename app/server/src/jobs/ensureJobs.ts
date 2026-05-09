@@ -1,5 +1,6 @@
 import { MARKET_EXPIRATION_INTERVAL_MS, MARKET_EXPIRATION_JOB_KEY } from '@dinorpg/core/models/market/constants.js';
 
+import { getNextMarketOfferExpirationDate } from '../Market/Service/expireMarketOffers.service.js';
 import { prisma } from '../prisma.js';
 import { nextDailyAtUtc } from './helpers/time.js';
 
@@ -46,6 +47,7 @@ export async function ensureJobsExist() {
 		},
 		update: {}
 	});
+	const nextMarketExpiration = await getNextMarketOfferExpirationDate();
 	await prisma.jobDefinition.upsert({
 		where: {
 			key: MARKET_EXPIRATION_JOB_KEY
@@ -55,14 +57,15 @@ export async function ensureJobsExist() {
 			name: 'Expire market offers',
 			type: 'INTERVAL',
 			timezone: 'UTC',
-			intervalMs: MARKET_EXPIRATION_INTERVAL_MS,
-			nextRunAt: new Date(Date.now() + MARKET_EXPIRATION_INTERVAL_MS),
+			intervalMs: null,
+			nextRunAt: nextMarketExpiration,
 			lockTimeoutS: 30,
 			enabled: true
 		},
 		update: {
 			type: 'INTERVAL',
-			intervalMs: MARKET_EXPIRATION_INTERVAL_MS,
+			intervalMs: null,
+			nextRunAt: nextMarketExpiration,
 			lockTimeoutS: 30,
 			enabled: true
 		}
