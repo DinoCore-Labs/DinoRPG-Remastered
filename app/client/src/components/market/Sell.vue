@@ -1,8 +1,6 @@
 <template>
 	<DZDisclaimer help :content="$t('market.sellView.disclaimer')" />
-
 	<h4>{{ $t('market.sellView.prepareYourOffer') }}</h4>
-
 	<table>
 		<tbody>
 			<tr>
