@@ -236,3 +236,175 @@ export default defineComponent({
 	}
 });
 </script>
+
+<style lang="scss" scoped>
+.details {
+	display: none;
+}
+.dinoz {
+	position: relative;
+	&.has-dinoz {
+		&:before {
+			content: attr(data-dinoz-level);
+			display: block;
+			position: absolute;
+			top: 0px;
+			left: -4px;
+			border: 1px solid #ffee92;
+			background-color: #c2381a;
+			color: #ffee92;
+			padding: 2px 4px;
+		}
+	}
+}
+.dinoz-details {
+	.dinoz-name-race {
+		text-align: center;
+
+		.race {
+			font-variant: small-caps;
+		}
+	}
+	.status {
+		list-style-type: none;
+		margin-left: 12px;
+		li {
+			display: inline-block;
+			&:not(:last-child) {
+				margin-right: 1px;
+			}
+		}
+	}
+	.stats {
+		list-style-type: none;
+		margin-left: 4px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		li {
+			position: relative;
+			display: inline-flex;
+			align-items: center;
+			justify-content: space-around;
+			min-width: 42px;
+			font-size: 10pt;
+			font-weight: bold;
+			color: white;
+			letter-spacing: -0.2pt;
+			z-index: 2;
+			padding-right: 4px;
+			&:not(:last-child) {
+				margin-right: 2px;
+			}
+			&::before {
+				content: '';
+				position: absolute;
+				width: 80%;
+				height: 13px;
+				background-color: #90452c;
+				left: 20%;
+				top: 5px;
+				border-radius: 10px;
+				z-index: -1;
+			}
+			& > img {
+				width: 22px;
+			}
+			span {
+				margin-left: 2px;
+			}
+		}
+	}
+	.skills {
+		list-style-type: none;
+		margin-left: 12px;
+		height: 150px;
+		overflow-y: auto;
+		li {
+			display: flex;
+			gap: 2px;
+			font-size: 9pt;
+			img {
+				width: 13px;
+			}
+			span {
+				color: #710;
+			}
+		}
+	}
+}
+
+.items {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	justify-content: center;
+	& > div {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 1px;
+		padding: 1px;
+		img {
+			border: 1px solid #6e3d23;
+		}
+		span {
+			color: #ffee92;
+			font-size: 7pt;
+		}
+	}
+}
+.bid {
+	color: #52646b;
+	p {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		&:first-letter {
+			font-size: inherit;
+		}
+		& > span:last-child {
+			text-align: right;
+		}
+		.user {
+			margin-left: 5px;
+		}
+		.bid-value {
+			font-weight: bold;
+			& + img {
+				margin-left: 3px;
+				margin-right: 3px;
+			}
+		}
+	}
+	.time {
+		display: flex;
+		align-items: center;
+		color: white;
+		background-color: #bc683c;
+		margin-top: 3px;
+		margin-bottom: 3px;
+		padding-right: 4px;
+		border-radius: 7px;
+		img {
+			margin-right: 5px;
+		}
+	}
+}
+
+.bid-action {
+	text-align: center;
+	input {
+		max-width: 80px;
+		display: inline-block;
+		margin-bottom: 5px;
+	}
+	:deep(a span) {
+		display: flex;
+		align-items: center;
+		img {
+			margin-left: 3px;
+		}
+	}
+}
+</style>
