@@ -45,6 +45,7 @@
 			"disconnect": "Log out",
 			"system": "Réglages",
 			"skipLevelAnimation": "Passer l'animation des level up",
+			"skipFightAnimation": "Passer l'animation des combats",
 			"goodbye": "Goodbye, Master {name}..."
 		}
 	},
@@ -2547,6 +2548,7 @@
 		"win": "You **win** this fight!",
 		"lose": "You have **lost**...",
 		"lvlup": "A Dinoz gained a **new level**!",
+		"showAnimation": "Afficher le combat",
 		"continue": "Continue",
 		"history": {
 			"display": "Display History",
