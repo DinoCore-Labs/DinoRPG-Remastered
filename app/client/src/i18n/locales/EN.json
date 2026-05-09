@@ -235,16 +235,17 @@
 			"futurTitle": "Dinolandian Future",
 			"futureInfo1": {
 				"text1": "Implementation of scenarios (Prisma + database)",
-				"text2": "Implementation of the tutorial scenario",
-				"text3": "Implementation of the strange being scenario",
-				"text4": "Bug fixes"
+				"text2": "Implementation of the tutorial scenario"
 			},
 			"futureInfo2": {
 				"text1": "Implementation of the Breeders' Market",
-				"text2": "Bug fixes"
+				"text2": "Bug fixes",
+				"text3": "Madame X et ses missions",
+				"text4": "Implementation of the tutorial scenario"
 			},
 			"futureInfo3": {
-				"text1": "Coming soon"
+				"text1": "Coming soon",
+				"text2": "Implementation of the tutorial scenario"
 			},
 			"futureInfo4": {
 				"text1": "Coming soon"
