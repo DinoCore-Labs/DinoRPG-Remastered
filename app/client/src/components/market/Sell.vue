@@ -8,7 +8,6 @@
 				<td>
 					<div class="df aic">
 						<DZCheckbox id="sell-dinoz" v-model="sellDinoz" @change="toggleSellDinoz" />
-
 						<label v-if="dinoz" for="sell-dinoz">
 							{{ $t('market.sellView.sellYourDinoz') }}
 							{{ dinoz.name }}
@@ -16,7 +15,6 @@
 					</div>
 				</td>
 			</tr>
-
 			<tr>
 				<td>{{ $t('market.sellView.itemsAndIngredients') }}</td>
 				<td>
@@ -24,15 +22,12 @@
 						<div v-for="ingredient in ingredients" :key="`ingredient-${ingredient.ingredientId}`" class="item">
 							<Tippy tag="img" theme="normal" :src="getImgURL('ingredients', ingredient.name)">
 								<p>{{ $t(`ingredients.name.${ingredient.name}`) }}</p>
-
 								<template #content>
 									<h1>{{ $t(`ingredients.name.${ingredient.name}`) }}</h1>
 									<p>{{ $t(`ingredients.description.${ingredient.name}`) }}</p>
 								</template>
 							</Tippy>
-
 							<div class="count">{{ selectedItems[ingredient.name]?.count || '' }}</div>
-
 							<div class="change-count">
 								<Tippy
 									tag="img"
@@ -42,7 +37,6 @@
 								>
 									<template #content>{{ $t('market.sellView.add') }}</template>
 								</Tippy>
-
 								<Tippy
 									tag="img"
 									theme="small"
@@ -53,7 +47,6 @@
 								</Tippy>
 							</div>
 						</div>
-
 						<div v-for="item in items" :key="`item-${item.itemId}`" class="item">
 							<Tippy tag="img" theme="normal" :src="getImgURL('item', `item_${item.name}`)">
 								<p>{{ $t(`items.name.${item.name}`) }}</p>
@@ -63,9 +56,7 @@
 									<p>{{ $t(`items.description.${item.name}`) }}</p>
 								</template>
 							</Tippy>
-
 							<div class="count">{{ selectedItems[item.name]?.count || '' }}</div>
-
 							<div class="change-count">
 								<Tippy
 									tag="img"
@@ -75,7 +66,6 @@
 								>
 									<template #content>{{ $t('market.sellView.add') }}</template>
 								</Tippy>
-
 								<Tippy
 									tag="img"
 									theme="small"
@@ -89,18 +79,15 @@
 					</div>
 				</td>
 			</tr>
-
 			<tr>
 				<td>{{ $t('market.sellView.offerMinimalValue') }}</td>
 				<td>
 					<DZDisclaimer help :content="$t('market.sellView.minimalValueDisclaimer', { minValue: MARKET_MIN_VALUE })" />
-
 					<div class="total">
 						<DZInput type="number" v-model="totalValue" />
 					</div>
 				</td>
 			</tr>
-
 			<tr>
 				<td class="empty" />
 				<td>
@@ -271,14 +258,14 @@ export default defineComponent({
 			const ingredients = await InventoryService.getAllIngredientsData();
 			this.ingredients = ingredients
 				.map(ingredient => ({
-					...ingredientList[ingredient.ingredientId as keyof typeof ingredientList],
+					...ingredientList[ingredient.id as keyof typeof ingredientList],
 					quantity: ingredient.quantity
 				}))
 				.filter(ingredient => ingredient.quantity > 0);
 			const items = await InventoryService.getAllItemsData();
 			this.items = items
 				.map(item => ({
-					...itemList[item.itemId as keyof typeof itemList],
+					...itemList[item.id as keyof typeof itemList],
 					quantity: item.quantity
 				}))
 				.filter(item => item.quantity > 0 && item.price && item.sellable !== false);
