@@ -67,9 +67,6 @@
 				<p v-else-if="action.name === Action.NPC">
 					{{ getNpcActionName(action) }}
 				</p>
-				<!--<p v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION">
-					{{ $t(`missions.actions.terminate`) }}
-				</p>-->
 				<p v-else-if="action.name === Action.MISSION">
 					{{ getMissionActionName(action) }}
 				</p>
@@ -85,15 +82,10 @@
 					<h1 v-else-if="action.name === 'npc'">
 						{{ getNpcActionName(action) }}
 					</h1>
-					<!--<h1
-						v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION"
-						v-html="formatContent($t(`missions.actions.terminate`))"
-					/>-->
 					<h1 v-else-if="action.name === Action.MISSION">
 						{{ getMissionActionName(action) }}
 					</h1>
 					<h1 v-else v-html="formatContent($t(`action.name.${action.name}`))" />
-
 					<!-- DESCRIPTION ACTIONS -->
 					<p
 						v-if="action.name === 'shop'"
@@ -104,7 +96,7 @@
 					<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
 				</template>
 			</Tippy>
-			<!--<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />-->
+			<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
 		</div>
 	</div>
 </template>
@@ -670,12 +662,12 @@ export default defineComponent({
 					console.log(action.name);
 					break;
 			}
-		} /*,
+		},
 		isSelling() {
 			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 			if (!dinoz) return false;
 			return dinoz.state === DINOZ_STATE.selling;
-		},*/,
+		},
 		goToLeader() {
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
