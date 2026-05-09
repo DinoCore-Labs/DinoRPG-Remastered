@@ -16,8 +16,8 @@ export const MarketService = {
 			.get<MarketListResponse>(`/market/list/${apiFilter}`, {
 				params: {
 					page,
-					expired,
-					onlyMines,
+					...(expired ? { expired } : {}),
+					...(onlyMines ? { onlyMines } : {}),
 					...(sellerId ? { sellerId } : {}),
 					...(bidderId ? { bidderId } : {})
 				}
