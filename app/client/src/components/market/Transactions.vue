@@ -25,7 +25,7 @@
 					<td>
 						<p v-if="offer.bids.length" class="bid">
 							<span>{{ offer.bids[0].value }}</span>
-							<img :src="getImgURL('icons', 'ticket', true)" />
+							<img :src="getImgURL('icons', 'ticket')" />
 							<span>{{ $t('market.by') }}</span>
 							<DZUser v-if="offer.bids[0].user" :user="offer.bids[0].user" />
 						</p>
@@ -50,7 +50,7 @@
 				<td>
 					<p v-if="ownOffer.bids.length" class="bid">
 						<span>{{ ownOffer.bids[0].value }}</span>
-						<img :src="getImgURL('icons', 'ticket', true)" />
+						<img :src="getImgURL('icons', 'ticket')" />
 						<span>{{ $t('market.by') }}</span>
 						<DZUser v-if="ownOffer.bids[0].user" :user="ownOffer.bids[0].user" />
 					</p>
@@ -64,7 +64,7 @@
 				<td>{{ $t('market.timeLeft') }}</td>
 				<td>
 					<span class="time">
-						<img :src="getImgURL('design', 'small_chrono')" :alt="$t('market.timeLeft')" />
+						<img :src="getImgURL('icons', 'small_chrono')" :alt="$t('market.timeLeft')" />
 						<Tippy theme="small">
 							{{ formatMarketTime(Math.ceil(ownOffer.endDate.getTime() / 1000) - now) }}
 							<template #content>
