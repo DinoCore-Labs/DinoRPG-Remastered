@@ -1,3 +1,5 @@
+import { MARKET_EXPIRATION_JOB_KEY } from '@dinorpg/core/models/market/constants.js';
+
 import { MoneyType, OfferStatus } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
@@ -129,4 +131,35 @@ export async function expireDueMarketOffers() {
 	return {
 		processed
 	};
+}
+
+export async function getNextMarketOfferExpirationDate(): Promise<Date | null> {
+	const nextOffer = await prisma.offer.findFirst({
+		where: {
+			status: OfferStatus.ONGOING
+		},
+		select: {
+			endDate: true
+		},
+		orderBy: {
+			endDate: 'asc'
+		}
+	});
+
+	return nextOffer?.endDate ?? null;
+}
+
+export async function scheduleNextMarketOfferExpiration(): Promise<Date | null> {
+	const nextRunAt = await getNextMarketOfferExpirationDate();
+
+	await prisma.jobDefinition.update({
+		where: {
+			key: MARKET_EXPIRATION_JOB_KEY
+		},
+		data: {
+			nextRunAt
+		}
+	});
+
+	return nextRunAt;
 }

@@ -3,7 +3,24 @@ import { nextDailyAtUtc } from './helpers/time.js';
 
 const INSTANCE_ID = process.env.INSTANCE_ID ?? `local-${process.pid}`;
 
-type JobHandler = () => Promise<void>;
+type JobHandlerResult = void | { nextRunAt?: Date | null };
+type JobHandler = () => Promise<JobHandlerResult>;
+
+function resolveNextRun(
+	job: {
+		type: 'DAILY_AT' | 'INTERVAL';
+		dailyHour: number | null;
+		dailyMinute: number | null;
+		intervalMs: number | null;
+	},
+	result: JobHandlerResult
+) {
+	if (result && typeof result === 'object' && 'nextRunAt' in result) {
+		return result.nextRunAt ?? null;
+	}
+
+	return computeNextRun(job);
+}
 
 function computeNextRun(job: {
 	type: 'DAILY_AT' | 'INTERVAL';
@@ -70,9 +87,9 @@ export function startScheduler(
 
 			try {
 				log.info(`[jobs] start ${job.key}`);
-				await handler();
+				const result = await handler();
 
-				const nextRunAt = computeNextRun(job as any);
+				const nextRunAt = resolveNextRun(job as any, result);
 
 				await prisma.jobDefinition.update({
 					where: { id: job.id },
