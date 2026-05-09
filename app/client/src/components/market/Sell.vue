@@ -290,3 +290,76 @@ export default defineComponent({
 	}
 });
 </script>
+
+<style lang="scss" scoped>
+h4 {
+	background-color: #bc683c;
+	color: #ffee92;
+	font-variant: small-caps;
+	padding: 2px 4px;
+	font-weight: normal;
+}
+table {
+	width: 95%;
+	table-layout: fixed;
+	align-self: center;
+	td {
+		font-size: 9pt;
+		padding: 2px 4px;
+		&:first-child {
+			background-color: #ecbd84;
+			color: #f8efa4;
+			border-radius: 8px;
+			padding: 4px 8px;
+			text-align: center;
+			width: 230px;
+			&.empty {
+				background-color: transparent;
+			}
+		}
+		input[type='checkbox'] {
+			margin-right: 5px;
+		}
+		label {
+			cursor: pointer;
+			user-select: none;
+		}
+		.item {
+			display: flex;
+			margin-right: 10px;
+			& > img {
+				background-color: #bc683c;
+				padding: 1px;
+			}
+			.count {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				background-color: #bc683c;
+				padding: 1px;
+				color: #ffee92;
+				box-sizing: border-box;
+				height: 34px;
+				width: 34px;
+				outline: 1px solid #ebd18b;
+				outline-offset: -2px;
+				margin-left: -1px;
+				user-select: none;
+			}
+			.change-count {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				img {
+					cursor: pointer;
+					user-select: none;
+					&:hover {
+						outline: 1px solid white;
+						outline-offset: -1px;
+					}
+				}
+			}
+		}
+	}
+}
+</style>

@@ -118,3 +118,42 @@ export default defineComponent({
 	}
 });
 </script>
+
+<style lang="scss" scoped>
+select {
+	background-color: #bc683c;
+	border: none;
+	color: #fce3bc;
+	font-weight: bold;
+}
+.dinoz-header {
+	width: 50px;
+}
+.items-header {
+	width: 194px;
+}
+.pagination-controls {
+	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	button {
+		background-color: transparent;
+		margin: 0 10px;
+		padding: 5px 10px;
+		border: none;
+		cursor: pointer;
+		&:disabled {
+			cursor: not-allowed;
+		}
+		.left,
+		.right {
+			height: auto;
+			width: 10px;
+		}
+		.right {
+			transform: rotate(180deg);
+		}
+	}
+}
+</style>

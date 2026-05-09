@@ -1,7 +1,6 @@
 <template>
 	<template v-if="myExpiredOffers.length">
 		<h4>{{ $t('market.transactionView.myExpiredOffers') }}</h4>
-
 		<table>
 			<tr>
 				<td>{{ $t('market.transactionView.bid') }}</td>
@@ -12,17 +11,13 @@
 				</td>
 			</tr>
 		</table>
-
 		<DZTable>
 			<OfferLine :offer="myExpiredOffers[0]" :now="now" />
 		</DZTable>
 	</template>
-
 	<DZDisclaimer v-else help :content="$t('market.transactionView.noExpiredOffer')" />
-
 	<template v-if="wonOffers.length">
 		<h4>{{ $t('market.transactionView.yourWonOffer') }}</h4>
-
 		<template v-for="offer in wonOffers" :key="offer.id">
 			<table>
 				<tr>
@@ -34,27 +29,21 @@
 							<span>{{ $t('market.by') }}</span>
 							<DZUser v-if="offer.bids[0].user" :user="offer.bids[0].user" />
 						</p>
-
 						<p v-else>{{ $t('market.transactionView.noBidYet') }}</p>
-
 						<DZButton @click="claimOffer(offer.id)">
 							{{ $t('market.transactionView.claim') }}
 						</DZButton>
 					</td>
 				</tr>
 			</table>
-
 			<DZTable>
 				<OfferLine :offer="offer" :now="now" />
 			</DZTable>
 		</template>
 	</template>
-
 	<DZDisclaimer v-else help :content="$t('market.transactionView.noWonOffer')" />
-
 	<template v-if="ownOffer">
 		<h4>{{ $t('market.transactionView.yourOngoingOffer') }}</h4>
-
 		<table>
 			<tr>
 				<td>{{ $t('market.transactionView.bid') }}</td>
@@ -65,15 +54,12 @@
 						<span>{{ $t('market.by') }}</span>
 						<DZUser v-if="ownOffer.bids[0].user" :user="ownOffer.bids[0].user" />
 					</p>
-
 					<p v-else>{{ $t('market.transactionView.noBidYet') }}</p>
-
 					<DZButton @click="cancelOffer">
 						{{ $t('market.transactionView.cancel') }}
 					</DZButton>
 				</td>
 			</tr>
-
 			<tr>
 				<td>{{ $t('market.timeLeft') }}</td>
 				<td>
@@ -81,7 +67,6 @@
 						<img :src="getImgURL('design', 'small_chrono')" :alt="$t('market.timeLeft')" />
 						<Tippy theme="small">
 							{{ formatMarketTime(Math.ceil(ownOffer.endDate.getTime() / 1000) - now) }}
-
 							<template #content>
 								{{ ownOffer.endDate.toLocaleString() }}
 							</template>
@@ -90,17 +75,13 @@
 				</td>
 			</tr>
 		</table>
-
 		<DZTable>
 			<OfferLine :offer="ownOffer" :now="now" />
 		</DZTable>
 	</template>
-
 	<DZDisclaimer v-else help :content="$t('market.transactionView.noOnGoingOffer')" />
-
 	<template v-if="offers.length">
 		<h4>{{ $t('market.transactionView.yourActiveBids') }}</h4>
-
 		<DZTable>
 			<tr>
 				<th class="dinoz-header">{{ $t('market.dinoz') }}</th>
@@ -108,11 +89,9 @@
 				<th>{{ $t('market.details') }}</th>
 				<th class="bid-action-header"></th>
 			</tr>
-
 			<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" :update-offer="updateOffer" />
 		</DZTable>
 	</template>
-
 	<DZDisclaimer v-else help :content="$t('market.transactionView.noActiveBid')" />
 </template>
 
@@ -218,3 +197,68 @@ export default defineComponent({
 	}
 });
 </script>
+
+<style lang="scss" scoped>
+.dinoz-header {
+	width: 50px;
+}
+h4 {
+	background-color: #bc683c;
+	color: #ffee92;
+	font-variant: small-caps;
+	padding: 2px 4px;
+	font-weight: normal;
+}
+table {
+	width: 95%;
+	table-layout: fixed;
+	align-self: center;
+	td {
+		font-size: 9pt;
+		padding: 2px 4px;
+		&:first-child {
+			background-color: #ecbd84;
+			color: #f8efa4;
+			border-radius: 8px;
+			padding: 4px 8px;
+			text-align: center;
+			width: 230px;
+			vertical-align: middle;
+		}
+		.bid {
+			display: flex;
+			align-items: center;
+			margin-bottom: 5px;
+			img {
+				margin-right: 5px;
+				margin-left: 5px;
+			}
+			.user {
+				margin-left: 5px;
+			}
+		}
+		.time {
+			display: inline-flex;
+			align-items: center;
+			color: white;
+			background-color: #bc683c;
+			margin-top: 3px;
+			margin-bottom: 3px;
+			padding-right: 4px;
+			border-radius: 7px;
+			img {
+				margin-right: 5px;
+			}
+		}
+	}
+}
+:deep(.dinoz) {
+	width: 50px;
+}
+:deep(.items-td) {
+	width: 194px;
+}
+:deep(.bid-action) {
+	width: 80px;
+}
+</style>
