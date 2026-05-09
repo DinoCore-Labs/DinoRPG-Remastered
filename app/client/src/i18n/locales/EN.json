@@ -43,9 +43,9 @@
 			"faq": "FAQ",
 			"guide": "Game Guide",
 			"disconnect": "Log out",
-			"system": "Réglages",
-			"skipLevelAnimation": "Passer l'animation des level up",
-			"skipFightAnimation": "Passer l'animation des combats",
+			"system": "Settings",
+			"skipLevelAnimation": "Skip level up animation",
+			"skipFightAnimation": "Skip battle animation",
 			"goodbye": "Goodbye, Master {name}..."
 		}
 	},
@@ -240,7 +240,7 @@
 			"futureInfo2": {
 				"text1": "Implementation of the Breeders' Market",
 				"text2": "Bug fixes",
-				"text3": "Madame X et ses missions",
+				"text3": "Madame X and her missions",
 				"text4": "Implementation of the tutorial scenario"
 			},
 			"futureInfo3": {
@@ -515,7 +515,7 @@
 		"rewards": "Epic rewards",
 		"editAccount": "Edit Profile",
 		"edit": "Editer",
-		"descriptionUpdated": "Description mise à jour !",
+		"descriptionUpdated": "Description updated!",
 		"options": {
 			"title": "Account Options",
 			"mdp": "Modify Password",
@@ -1516,8 +1516,8 @@
 			"gold2500": "Gold Pieces (x2500)",
 			"gold3000": "Gold Pieces (x3000)",
 			"gold5000": "Gold Pieces (x5000)",
-			"gold10000": "Pièces d'or (x10000)",
-			"gold20000": "Pièces d'or (x20000)",
+			"gold10000": "Gold Pieces (x10000)",
+			"gold20000": "Gold Pieces (x20000)",
 			"gold50000": "Gold Pieces (x50000)",
 			"daily_ticket": "Daily Ticket",
 			"empty": "Empty",
