@@ -500,7 +500,11 @@
 		"invalidNewsPayload": "Les données de la news sont invalides.",
 		"collectionNotOwnedByUser": "La collection {collectionKey} n'appartient pas au joueur {userId}.",
 		"unknown": "Une erreur est survenue.",
-		"unknownMission": "Mission inconnue : {missionKey}."
+		"unknownMission": "Mission inconnue : {missionKey}.",
+		"offerInProgress": "Vous ne pouvez pas annuler une enchère ayant au moins une offre.",
+		"noDinozAtMarket": "Vous n'avez aucun Dinoz au marché.",
+		"alreadyOffer": "Vous avez déjà une vente en cours.",
+		"bidsOngoing": "Vous avez encore des enchères en cours."
 	},
 	"tooltip": {
 		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
