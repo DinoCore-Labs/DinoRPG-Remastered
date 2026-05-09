@@ -104,20 +104,17 @@
 		</td>
 		<td>
 			<ul class="skills">
-				<SkillTooltip v-for="skill in offer.dinoz.skills" :key="skill.skillId" :skill="skillList[skill.skillId]?.id">
+				<SkillTooltip v-for="marketSkill in displayedSkills" :key="marketSkill.skillId" :skill="marketSkill.skill.id">
 					<li>
-						<span>{{ $t(`skill.name.${skillList[skill.skillId]?.name}`) }}</span>
+						<span>{{ $t(`skill.name.${marketSkill.skill.name}`) }}</span>
 					</li>
 				</SkillTooltip>
 			</ul>
 		</td>
 		<td>
-			<template v-for="status in offer.dinoz.status" :key="status.statusId">
-				<Tippy v-if="statusList.displayed[status.statusId]" theme="normal">
-					<img
-						:src="getImgURL('status', `fx_${statusList.imgName[status.statusId]}`)"
-						:alt="statusList.imgName[status.statusId]"
-					/>
+			<template v-for="status in displayedStatuses" :key="status.statusId">
+				<Tippy theme="normal">
+					<img :src="getImgURL('status', `fx_${status.imgName}`)" :alt="status.imgName" />
 					<template #content>
 						<h1>{{ $t(`status.name.${status.statusId}`) }}</h1>
 						<p>{{ $t(`status.description.${status.statusId}`) }}</p>
@@ -145,6 +142,16 @@ import { statusList } from '../../constants/status';
 import { userStore } from '../../store/userStore';
 import { errorHandler } from '../../utils/errorHandler';
 import { formatMarketTime, getOfferMinimumBid, isOfferExpired } from '../../utils/market';
+
+type MarketSkill = {
+	skillId: number;
+	skill: (typeof skillList)[keyof typeof skillList];
+};
+
+type MarketStatus = {
+	statusId: number;
+	imgName: string;
+};
 
 export default defineComponent({
 	name: 'OfferLine',
@@ -188,6 +195,41 @@ export default defineComponent({
 			if (!this.offer.dinoz) return '';
 			const race = Object.values(raceList).find(currentRace => currentRace.raceId === this.offer.dinoz?.raceId);
 			return race ? this.$t(`race.name.${race.name}`) : '';
+		},
+		displayedSkills(): MarketSkill[] {
+			if (!this.offer.dinoz) {
+				return [];
+			}
+			return this.offer.dinoz.skills.reduce<MarketSkill[]>((acc, currentSkill) => {
+				const skill = skillList[currentSkill.skillId as keyof typeof skillList];
+				if (!skill) {
+					return acc;
+				}
+				acc.push({
+					skillId: currentSkill.skillId,
+					skill
+				});
+				return acc;
+			}, []);
+		},
+		displayedStatuses(): MarketStatus[] {
+			if (!this.offer.dinoz) {
+				return [];
+			}
+			return this.offer.dinoz.status.reduce<MarketStatus[]>((acc, currentStatus) => {
+				const displayedKey = currentStatus.statusId as keyof typeof statusList.displayed;
+				const imgNameKey = currentStatus.statusId as keyof typeof statusList.imgName;
+				const isDisplayed = statusList.displayed[displayedKey];
+				const imgName = statusList.imgName[imgNameKey];
+				if (!isDisplayed || !imgName) {
+					return acc;
+				}
+				acc.push({
+					statusId: currentStatus.statusId,
+					imgName
+				});
+				return acc;
+			}, []);
 		}
 	},
 	methods: {
