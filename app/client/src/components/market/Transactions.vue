@@ -124,11 +124,12 @@ export default defineComponent({
 			myExpiredOffers: [] as EnhancedMarketOffer[],
 			offers: [] as EnhancedMarketOffer[],
 			wonOffers: [] as EnhancedMarketOffer[],
+			timeTimer: null as ReturnType<typeof setInterval> | null,
 			refreshTimer: null as ReturnType<typeof setInterval> | null
 		};
 	},
 	methods: {
-		async fetchOffers() {
+		async fetchOffers(silent = false) {
 			const userId = this.userStore.id;
 			if (!userId) {
 				this.$toast.open({
@@ -139,13 +140,13 @@ export default defineComponent({
 				return;
 			}
 			try {
-				const { offers } = await MarketService.getList('all', null, userId, false);
+				const { offers } = await MarketService.getList('all', null, userId, false, 1, false, silent);
 				this.offers = formatMarketOffers(offers);
-				const { offers: ownOffers } = await MarketService.getList('all', userId, null, false);
+				const { offers: ownOffers } = await MarketService.getList('all', userId, null, false, 1, false, silent);
 				this.ownOffer = formatMarketOffers(ownOffers)[0] ?? null;
-				const { offers: wonOffers } = await MarketService.getList('all', null, userId, true, 1, true);
+				const { offers: wonOffers } = await MarketService.getList('all', null, userId, true, 1, true, silent);
 				this.wonOffers = formatMarketOffers(wonOffers);
-				const { offers: myExpiredOffers } = await MarketService.getList('all', userId, null, true, 1, true);
+				const { offers: myExpiredOffers } = await MarketService.getList('all', userId, null, true, 1, true, silent);
 				this.myExpiredOffers = formatMarketOffers(myExpiredOffers);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
@@ -184,13 +185,18 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		await this.fetchOffers();
-		this.refreshTimer = setInterval(async () => {
+		await this.fetchOffers(false);
+		this.timeTimer = setInterval(() => {
 			this.now = Math.ceil(Date.now() / 1000);
-			await this.fetchOffers();
-		}, 2_000);
+		}, 1_000);
+		this.refreshTimer = setInterval(async () => {
+			await this.fetchOffers(true);
+		}, 5_000);
 	},
 	beforeUnmount() {
+		if (this.timeTimer) {
+			clearInterval(this.timeTimer);
+		}
 		if (this.refreshTimer) {
 			clearInterval(this.refreshTimer);
 		}

@@ -75,6 +75,7 @@ export default defineComponent({
 			currentPage: 1,
 			totalOffer: 0,
 			totalPages: 0,
+			timeTimer: null as ReturnType<typeof setInterval> | null,
 			refreshTimer: null as ReturnType<typeof setInterval> | null
 		};
 	},
@@ -88,9 +89,17 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		async fetchOffers() {
+		async fetchOffers(silent = false) {
 			try {
-				const { offers, total } = await MarketService.getList(this.filter, null, null, false, this.currentPage);
+				const { offers, total } = await MarketService.getList(
+					this.filter,
+					null,
+					null,
+					false,
+					this.currentPage,
+					false,
+					silent
+				);
 				this.offers = formatMarketOffers(offers);
 				this.totalOffer = total;
 				this.totalPages = Math.ceil(this.totalOffer / MARKET_PAGE_SIZE);
@@ -121,14 +130,19 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		await this.fetchOffers();
+		await this.fetchOffers(false);
 		await refreshTreasureTicket();
-		this.refreshTimer = setInterval(async () => {
+		this.timeTimer = setInterval(() => {
 			this.now = Math.ceil(Date.now() / 1000);
-			await this.fetchOffers();
-		}, 2_000);
+		}, 1_000);
+		this.refreshTimer = setInterval(async () => {
+			await this.fetchOffers(true);
+		}, 5_000);
 	},
 	beforeUnmount() {
+		if (this.timeTimer) {
+			clearInterval(this.timeTimer);
+		}
 		if (this.refreshTimer) {
 			clearInterval(this.refreshTimer);
 		}
