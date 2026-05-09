@@ -225,10 +225,10 @@
 			"title": "Discover the upcoming events on DinoRPG!",
 			"small": "Irma's Prediction",
 			"strong": {
-				"title1": "Alpha 0.7.0 (Soon)",
-				"title2": "Alpha 0.8.0",
-				"title3": "Alpha 0.9.0",
-				"title4": "Alpha 0.10.0"
+				"title1": "Alpha 0.8.0 (Soon)",
+				"title2": "Alpha 0.9.0",
+				"title3": "Alpha 0.10.0",
+				"title4": "Alpha 0.11.0"
 			},
 			"help": "Click on an update above to get more information!",
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
@@ -514,7 +514,7 @@
 		"completion": "Completion",
 		"rewards": "Epic rewards",
 		"editAccount": "Edit Profile",
-		"edit": "Editer",
+		"edit": "Edit",
 		"descriptionUpdated": "Description updated!",
 		"options": {
 			"title": "Account Options",
@@ -2549,7 +2549,7 @@
 		"win": "You **win** this fight!",
 		"lose": "You have **lost**...",
 		"lvlup": "A Dinoz gained a **new level**!",
-		"showAnimation": "Afficher le combat",
+		"showAnimation": "Show battle",
 		"continue": "Continue",
 		"history": {
 			"display": "Display History",
@@ -3032,7 +3032,7 @@
 		"xpBonus": "XP",
 		"programs": {
 			"easy": {
-				"name": "Facile",
+				"name": "Easy",
 				"description": "Un entraînement accessible."
 			},
 			"intermediate": {
@@ -3056,7 +3056,7 @@
 	},
 	"npc": {
 		"description": "You can talk to this person.",
-		"leave": "Arrêter la discussion",
+		"leave": "Stop chatting",
 		"openLink": "Open link",
 		"continue": "Continue",
 		"eugene": {
@@ -3079,8 +3079,8 @@
 				"fire": "Climbing isn't an easy technique to master, you must be in possession of the Climbing Gear in order to learn it. If your Dinoz wins the battle against this monster, I'll provide some equipment and teach him the basics. Your Dinoz will then be able to climb the Big All-Hot.",
 				"learn_water": "You want the Buoy? First you're going to have to fight this monster!",
 				"learn_fire": "Did you come to get the Climbing Gear? To get it, you'll need to fight this monster first.",
-				"water_fight": "Bravo, beau combat ! Comme promis, je viens de donner la Bouée à ton Dinoz. Maintenant il devrait pouvoir accéder aux Iles Atlantéinées au sud de Dinoland. Bonne chance, et sois prudent !",
-				"fire_fight": "Bravo, beau combat ! Ton Dinoz possède maintenant le Matériel d'Escalade, et il devrait pouvoir gravir les pentes escarpées du volcan du Grand Tout Chaud. Les monstres là-bas sont très chaleureux, alors fais attention en t'y rendant !",
+				"water_fight": "Well done! You were very impressive! As promised, I will give your Dinoz a buoy. Your Dinoz should now be able to access the Atlanteid Islands to the south of Dinoland. Good luck, and be careful!",
+				"fire_fight": "Well done! You were very impressive! As promised, I will give your Dinoz the Climbing Gear. Your Dinoz should now be able to climb up the precipitous slopes of the Big All-Hot. The Monsters there are very warm, so be careful when you're climbing!",
 				"learn_done": "I have nothing else to teach to your Dinoz. But don't worry, there are people throughout Dinoland who will teach it new techniques!"
 			},
 			"choice": {
