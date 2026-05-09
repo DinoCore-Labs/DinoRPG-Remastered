@@ -35,7 +35,7 @@
 			<p>
 				<span>{{ $t('market.timeLeft') }}:</span>
 				<span class="time">
-					<img :src="getImgURL('design', 'small_chrono')" :alt="$t('market.timeLeft')" />
+					<img :src="getImgURL('icons', 'small_chrono')" :alt="$t('market.timeLeft')" />
 					<Tippy theme="small">
 						<span v-if="isExpired">{{ $t('market.auctionExpired') }}</span>
 						<span v-else>{{ formatMarketTime(Math.ceil(offer.endDate.getTime() / 1000) - now) }}</span>
@@ -49,7 +49,7 @@
 				<span>{{ $t('market.highestBid') }}:</span>
 				<span>
 					<span class="bid-value">{{ bestBid.value }}</span>
-					<img :src="getImgURL('icons', 'ticket', true)" />
+					<img :src="getImgURL('icons', 'ticket')" />
 					<span>{{ $t('market.by') }} </span>
 					<DZUser v-if="bestBid.user" :user="bestBid.user" />
 					<span v-else>{{ bestBid.userName }}</span>
@@ -59,7 +59,7 @@
 				<span>{{ $t('market.minimumPrice') }}:</span>
 				<span>
 					<span class="bid-value">{{ Math.ceil(offer.total / 1000) }}</span>
-					<img :src="getImgURL('icons', 'ticket', true)" />
+					<img :src="getImgURL('icons', 'ticket')" />
 				</span>
 			</p>
 		</td>
