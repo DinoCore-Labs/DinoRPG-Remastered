@@ -197,11 +197,69 @@
 		"fight": "DinoRPG [ Combat ! ]",
 		"training": "DinoRPG [ C.E.F ]",
 		"manageDinoz": "DinoRPG [ Gestion de mes Dinoz ]",
+		"market": "DinoRPG [ Marché des Éleveurs ]",
 		"admin": "DinoRPG [ Admin Dashboard ]"
 	},
 	"adminPage": {
 		"news": {
 			"deleteSuccess": "News supprimée avec succès"
+		}
+	},
+	"market": {
+		"title": "Marché des Éleveurs",
+		"disclaimer": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
+		"allOffers": "Toutes les offres",
+		"myTransactions": "Mes transactions",
+		"sell": "Vendre",
+		"history": "Historique",
+		"dinoz": "Dinoz",
+		"items": "Objets",
+		"makeAnOffer": "Faire une offre",
+		"filter": "Filtrer",
+		"all": "Tout",
+		"seller": "Vendeur",
+		"timeLeft": "Temps restant",
+		"auctionExpired": "Enchère expirée",
+		"minimumPrice": "Prix mini",
+		"highestBid": "Enchère actuelle",
+		"by": "par",
+		"details": "Détails",
+		"time": "{days}j {hours}h {minutes}m {seconds}s",
+		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Éleveurs peuvent être obtenus de diverses façons dans Dinoland. La **Banque de Dinoland** peut vous les racheter au taux de **1** :ticket: **= 1000** :gold: mais elle n'en émet plus.",
+		"back": "Retour",
+		"bid": "Enchérir",
+		"detail": "Voir détails",
+		"yourTreasuryNotes": "Vos Bons du Trésor",
+		"sellView": {
+			"disclaimer": "Ici, vous pouvez construire votre offre, elle sera soumise aux autres Maîtres Dinoz. Si vous vendez un Dinoz ou des objets, ces derniers seront indisponibles pendant la durée de l'offre.",
+			"prepareYourOffer": "Préparer votre offre",
+			"sellYourDinoz": "Vendre votre Dinoz",
+			"itemsAndIngredients": "Objets et Ingrédients",
+			"offerMinimalValue": "Valeur MINIMALE de votre offre",
+			"minimalValueDisclaimer": "Votre offre doit avoir, au MINIMUM, une valeur de **{minValue}** :gold: pour être validée.",
+			"create": "Créer l'offre",
+			"add": "Ajouter",
+			"remove": "Retirer"
+		},
+		"transactionView": {
+			"yourOngoingOffer": "Votre offre en cours",
+			"yourWonOffer": "Vos offres gagnées",
+			"myExpiredOffers": "Vos ventes expirées",
+			"noExpiredOffer": "Vous n'avez aucune vente expirée à récupérer.",
+			"claimExpired": "Récupérer ma vente",
+			"noOnGoingOffer": "Vous n'avez aucune offre en cours.",
+			"noWonOffer": "Vous n'avez aucune offre à récupérer",
+			"claim": "Récupérer mes gains",
+			"bid": "Mise",
+			"noBidYet": "Aucune mise pour l'instant.",
+			"cancel": "Annuler",
+			"yourActiveBids": "Vos mises en cours",
+			"noActiveBid": "Vous n'avez enchéri sur aucune offre pour le moment."
+		},
+		"historyView": {
+			"lastOffers": "Voici les dernières ventes qui ont été effectuées par les joueurs :",
+			"yourOwnOffers": "Vos mises",
+			"yourOwnBids": "Vos achats"
 		}
 	},
 	"manageDinoz": {
