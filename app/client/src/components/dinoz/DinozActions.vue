@@ -501,10 +501,10 @@ export default defineComponent({
 					await this.refreshDinoz();
 					break;
 				case Action.MARKET:
-					/*this.$router.push({
+					this.$router.push({
 						name: 'MarketPage',
 						params: { tab: 0 }
-					});*/
+					});
 					break;
 				case Action.FOLLOW: {
 					if (!this.dinozStore.getDinozList) {
