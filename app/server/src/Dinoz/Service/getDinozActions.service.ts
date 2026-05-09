@@ -379,9 +379,9 @@ export async function getAvailableActions(
 	}
 
 	// Market action
-	/*if (dinoz.placeId === PlaceEnum.PLACE_DU_MARCHE) {
+	if (dinoz.placeId === PlaceEnum.PLACE_DU_MARCHE) {
 		availableActions.push(actionList[Action.MARKET]);
-	}*/
+	}
 
 	// Freeze action
 	if (canFreezeDinozAction(dinoz)) {
