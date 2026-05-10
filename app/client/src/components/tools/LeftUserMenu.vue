@@ -44,6 +44,9 @@
 					</RouterLink>
 				</div>
 			</div>
+			<div class="dinozCapacity" :class="{ full: activeDinozCount >= userStore.maxDinoz }">
+				{{ $t('leftPanel.dinozCapacity', { current: activeDinozCount, max: userStore.maxDinoz }) }}
+			</div>
 			<div class="dinozList">
 				<RouterLink
 					v-for="(dinoz, index) in dinozList"
@@ -67,7 +70,6 @@
 						</p>
 						<span class="place">{{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }}</span>
 					</div>
-
 					<div class="bars">
 						<span class="tinyBar">
 							<span class="life" :style="getBarWidth(dinoz.life, dinoz.maxLife)"></span>
@@ -217,6 +219,9 @@ export default defineComponent({
 		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);
+		},
+		activeDinozCount(): number {
+			return this.dinozStore.getDinozList.filter(dinoz => dinoz.state !== DINOZ_STATE.frozen).length;
 		}
 	},
 	methods: {
@@ -275,6 +280,19 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.dinozCapacity {
+	padding: 6px 8px;
+	text-align: center;
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: rgb(255, 238, 146);
+	background-color: rgb(42, 46, 58);
+	border-top: 1px solid rgb(58, 63, 78);
+	border-bottom: 1px solid rgb(58, 63, 78);
+	&.full {
+		color: #ff8c63;
+	}
+}
 .shortCutMenu {
 	padding: 16px;
 	background-color: rgb(29, 32, 40);
@@ -449,7 +467,7 @@ export default defineComponent({
 	.dinoz {
 		cursor: pointer;
 		display: grid;
-		grid-template-columns: 50px 3fr repeat(3, 1fr) 30px;
+		grid-template-columns: 45px 3fr repeat(3, 1fr) 20px;
 		width: 100%;
 		color: rgb(108, 113, 136);
 		text-decoration: none;
@@ -458,20 +476,24 @@ export default defineComponent({
 			box-shadow: rgb(189, 61, 0) 0px 0px 8px;
 			color: rgb(255, 255, 255);
 		}
+		.display {
+			margin-top: 15px;
+			margin-bottom: -20px;
+		}
 		.dinozName {
 			place-self: center;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			.place {
-				font-size: small;
+				font-size: 0.65em;
+
 				text-align: center;
 			}
 		}
 		.dead {
 			text-decoration: line-through;
 		}
-
 		.bars {
 			place-self: center;
 			.tinyBar {

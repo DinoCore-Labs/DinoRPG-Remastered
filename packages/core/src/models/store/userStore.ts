@@ -9,6 +9,7 @@ export interface UserStore {
 	priest: boolean;
 	shopKeeper: boolean;
 	sortOption: string;
+	maxDinoz: number;
 	rewards: number[];
 	// clanId
 }
