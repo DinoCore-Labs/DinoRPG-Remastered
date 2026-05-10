@@ -8,5 +8,6 @@ export interface UserData {
 	gold: number;
 	treasureTicket: number;
 	dinoz: DinozFiche[];
+	maxDinoz: number;
 	rewards: number[];
 }

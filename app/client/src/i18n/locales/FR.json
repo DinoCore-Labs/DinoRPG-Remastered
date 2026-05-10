@@ -53,7 +53,8 @@
 		"wallets": {
 			"gold": "Pièces d'or",
 			"treasureTicket": "Bons du trésor"
-		}
+		},
+		"dinozCapacity": "Dinoz : {current}/{max}"
 	},
 	"footer": {
 		"dev": "Développeurs :",

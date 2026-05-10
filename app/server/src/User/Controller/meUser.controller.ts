@@ -4,6 +4,7 @@ import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { getMaxXp, orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { getUserMaxDinoz } from '../../Dinoz/Controller/getActiveDinoz.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
@@ -14,7 +15,6 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 	try {
 		const userId = req.user.id;
 		if (!userId) return reply.code(401).send({ message: 'Authentication required' });
-
 		await prisma.$transaction(async tx => {
 			const user = await tx.user.findUnique({
 				where: { id: userId },
@@ -34,15 +34,11 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 					}
 				}
 			});
-
 			const now = new Date();
-
 			const isFirstLoginToday = !user?.lastLogin || !isSameDay(now, user.lastLogin);
-
 			if (isFirstLoginToday) {
 				// Update completion
 				const completion = await calculatePlayerCompletion(userId);
-
 				await tx.ranking.upsert({
 					where: { userId },
 					update: { completion },
@@ -52,11 +48,9 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				await incrementUserStat(StatTracking.P_DAYS, userId, 1);
 				// Give 1 daily ticket
 				await addItemToInventory(userId, Item.DAILY_TICKET, 1);
-
 				// Tik bracelet regen (& alive)
 				const dinozWithTikBracelet =
 					user?.dinoz.filter(d => d.life > 0 && d.items.some(i => i.itemId === Item.TIK_BRACELET)) ?? [];
-
 				for (const d of dinozWithTikBracelet) {
 					const newHp = Math.min(d.life + 10, d.maxLife);
 					await tx.dinoz.update({
@@ -64,44 +58,35 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 						data: { life: newHp }
 					});
 				}
-
 				/*const event = currentEvents()[0];
 				if (event && event.name === GameEvent.CHRISTMAS) {
 					await increaseItemQuantity(userId, Item.CHRISTMAS_TICKET, 1);
 				}*/
-
 				// Give 3 action for active dinoz
 				const leadersWithVeilleuse = (user?.dinoz ?? []).filter(d =>
 					d.skills.some(s => s.skillId === Skill.VEILLEUSE && s.state === true)
 				);
-
 				// Reset remaining for each dinoz
 				for (const d of user?.dinoz ?? []) {
 					let remaining = 3;
-
 					if (user?.matelasseur) remaining++;
-
 					if (d.skills.some(s => s.skillId === Skill.GROS_DORMEUR && s.state === true)) {
 						remaining++;
 					}
-
 					// if this dinoz is a follower of a leader with veilleuse
 					const hasLeaderVeilleuse = leadersWithVeilleuse.some(leader => leader.followers.some(f => f.id === d.id));
 					if (hasLeaderVeilleuse) remaining++;
-
 					await tx.dinoz.update({
 						where: { id: d.id },
 						data: { remaining }
 					});
 				}
-
 				await tx.user.update({
 					where: { id: userId },
 					data: { lastLogin: new Date() }
 				});
 			}
 		});
-
 		const user = await prisma.user.findUnique({
 			where: { id: userId },
 			select: {
@@ -110,6 +95,8 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				role: true,
 				priest: true,
 				shopKeeper: true,
+				leader: true,
+				messie: true,
 				dinoz: {
 					select: {
 						id: true,
@@ -124,7 +111,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 						order: true,
 						raceId: true,
 						state: true,
-						//missions: true,
+						missions: true,
 						nbrUpFire: true,
 						nbrUpWood: true,
 						nbrUpWater: true,
@@ -149,20 +136,22 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				rewards: true
 			}
 		});
-
 		if (!user) {
 			return reply.status(404).send({ message: 'User not found' });
 		}
-
 		const gold = user.wallets.find(w => w.type === 'GOLD')?.amount ?? 0;
 		const treasureTicket = user.wallets.find(w => w.type === 'TREASURE_TICKET')?.amount ?? 0;
-
+		const maxDinoz = getUserMaxDinoz({
+			leader: user.leader,
+			messie: user.messie
+		});
 		return reply.send({
 			id: user.id,
 			name: user.name,
 			role: user.role,
 			gold,
 			treasureTicket,
+			maxDinoz,
 			priest: user.priest,
 			shopKeeper: user.shopKeeper,
 			dinoz: orderDinozList(

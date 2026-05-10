@@ -24,6 +24,9 @@
 			</div>
 			<p class="place-name">{{ $t(`place.name.${place}`) }}</p>
 		</div>
+		<div class="dinozCapacity" :class="{ full: activeDinozCount >= user.maxDinoz }">
+			{{ $t('leftPanel.dinozCapacity', { current: activeDinozCount, max: user.maxDinoz }) }}
+		</div>
 		<DinozList :currentDinozId="currentDinozId()"></DinozList>
 		<a v-if="user.canManageDinozOrder" class="overviewButton" @click="goToPage('ManageDinoz')">
 			<img :src="getImgURL('icons', 'small_edit')" alt="edit" />
@@ -54,6 +57,7 @@ import DZSelect from '../utils/DZSelect.vue';
 import DinozList from '../dinoz/DinozList.vue';
 import { placeList } from '../../constants/place';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 
 type WalletKey = 'GOLD' | 'TREASURE_TICKET';
 
@@ -127,12 +131,28 @@ export default defineComponent({
 			const place = Object.values(placeList).find(place => place.placeId === currentDinoz.placeId);
 			if (!place) return this.place;
 			return place.name;
+		},
+		activeDinozCount(): number {
+			return this.dinoz.getDinozList.filter(dinoz => dinoz.state !== DINOZ_STATE.frozen).length;
 		}
 	}
 });
 </script>
 
 <style lang="scss" scoped>
+.dinozCapacity {
+	margin: 0 0 4px;
+	padding: 2px 4px;
+	text-align: center;
+	font-size: 8pt;
+	font-weight: bold;
+	color: #8e3e26;
+	background: #f7d99b;
+	border: 1px solid #d69e68;
+	&.full {
+		color: #b53018;
+	}
+}
 .link {
 	display: flex;
 	flex-direction: column;

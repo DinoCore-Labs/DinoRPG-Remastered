@@ -14,6 +14,7 @@ export const userStore = defineStore('userStore', {
 		priest: false,
 		shopKeeper: false,
 		sortOption: 'default',
+		maxDinoz: 0,
 		rewards: []
 	}),
 	getters: {
@@ -45,6 +46,7 @@ export const userStore = defineStore('userStore', {
 			this.role = data.role;
 			this.gold = data.gold;
 			this.treasureTicket = data.treasureTicket;
+			this.maxDinoz = data.maxDinoz;
 			this.rewards = data.rewards ?? [];
 		},
 		setGold(gold: number) {
@@ -79,6 +81,7 @@ export const userStore = defineStore('userStore', {
 			this.priest = false;
 			this.shopKeeper = false;
 			this.sortOption = 'default';
+			this.maxDinoz = 0;
 			this.rewards = [];
 		}
 	},
