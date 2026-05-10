@@ -290,15 +290,16 @@ router.beforeEach(async to => {
 		return true;
 	}
 	// Helper: hydrate une fois si pas loggé
-	const tryHydrate = async (): Promise<boolean> => {
-		if (sessionHydrated && user.isLogged) return true;
-		const data: UserData | null = await UserService.me().catch(() => null);
+	const tryHydrate = async (force = false): Promise<boolean> => {
+		if (!force && sessionHydrated && user.isLogged) return true;
+		const data: UserData | null = await UserService.me({ silent: true }).catch(() => null);
 		if (!data || isLogoutSessionInProgress()) {
 			return false;
 		}
 		sessionHydrated = true;
 		user.setUser(data);
 		dinoz.setDinozList(data.dinoz);
+
 		return true;
 	};
 	// ✅ Pages publiques

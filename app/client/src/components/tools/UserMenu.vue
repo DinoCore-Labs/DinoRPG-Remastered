@@ -269,6 +269,7 @@ export default defineComponent({
 	data() {
 		return {
 			menuCalled: false,
+			refreshUser: false,
 			uStore: userStore(),
 			dStore: dinozStore(),
 			mStore: messagingStore(),
@@ -303,7 +304,26 @@ export default defineComponent({
 				this.close();
 			}
 		},
-		messagerie() {
+		async refreshUserSnapshot() {
+			if (!this.uStore.isLogged || this.refreshUser) {
+				return;
+			}
+			this.refreshUser = true;
+			try {
+				const data = await UserService.me({ silent: true });
+				this.uStore.setUser(data);
+				this.dStore.setDinozList(data.dinoz);
+				this.syncMessagingUnreadPolling();
+			} catch {
+				// On garde l'état actuel du store si /me échoue temporairement.
+			} finally {
+				this.refreshUser = false;
+			}
+		},
+		async messagerie() {
+			if (!this.uStore.canUseMessaging) {
+				await this.refreshUserSnapshot();
+			}
 			if (!this.uStore.canUseMessaging) {
 				this.$toast.error(this.$t('modal.messagerie.locked'));
 				return;
