@@ -7,3 +7,9 @@ export interface RankingEntry {
 	dinozCount: number;
 	user: Pick<UserData, 'id' | 'name'>;
 }
+
+export type RankingPositionResponse = {
+	position: number | null;
+	points: number | null;
+	dinozCount: number | null;
+};
