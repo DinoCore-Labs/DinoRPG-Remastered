@@ -34,6 +34,7 @@ import { itinerantMerchantMoveJob } from './jobs/handlers/itinerantMerchantMove.
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
 import { startScheduler } from './jobs/scheduler.js';
 import { levelRoutes } from './Level/Routes/level.routes.js';
+import { appDiscordClient } from './logger/appDiscordClient.js';
 import { marketRoutes } from './Market/Routes/market.routes.js';
 import { messagingRoutes } from './Messaging/Routes/messaging.routes.js';
 import { missionsRoutes } from './Mission/Routes/mission.routes.js';
@@ -296,10 +297,18 @@ async function buildServer() {
 			});
 		}
 		// 3) Fallback 500
-		req.log.error(err);
+		const errorId = randomUUID();
+		req.log.error({ err, errorId }, 'Unhandled server error');
+		appDiscordClient.sendError(err, {
+			scope: 'server.errorHandler',
+			errorId,
+			req,
+			reply
+		});
 		return reply.code(500).send({
 			code: 'server.internalError',
-			message: 'Internal Server Error'
+			message: 'Internal Server Error',
+			errorId
 		});
 	});
 
