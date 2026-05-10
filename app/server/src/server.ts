@@ -19,7 +19,6 @@ import {
 import { adminRoutes } from './Admin/Routes/admin.routes.js';
 import { loadConfig } from './config/config.js';
 import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
-import { versionRoutes } from './config/version.js';
 import { loadDialogs } from './Dialog/Controller/dialog.registry.js';
 import { dialogRoutes } from './Dialog/Routes/dialog.routes.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
@@ -41,6 +40,7 @@ import { shopRoutes } from './Shop/Routes/shop.routes.js';
 import { trainingCenterRoutes } from './TrainingCenter/Routes/trainingCenter.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
 import version from './utils/version.js';
+import { versionRoutes } from './Version/Routes/version.routes.js';
 
 const cfg = loadConfig();
 
