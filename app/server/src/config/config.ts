@@ -6,6 +6,10 @@ export interface Secrets {
 	deviceCookie: string;
 }
 
+export interface DiscordConfig {
+	logWebhookUrl: string;
+}
+
 export interface Config {
 	readonly env: 'development' | 'production' | 'test';
 	readonly isProduction: boolean;
@@ -15,6 +19,7 @@ export interface Config {
 	readonly databaseUrl: string;
 	readonly salt: string;
 	readonly secrets: Secrets;
+	readonly discord: DiscordConfig;
 }
 
 /* -----------------------------------------------------
@@ -70,6 +75,10 @@ export function config(env: Record<string, string | undefined>): Config {
 		deviceCookie: env.DEVICE_COOKIE ?? 'dz_device_cookie'
 	};
 
+	const discord: DiscordConfig = {
+		logWebhookUrl: env.DISCORD_LOG_WEBHOOK_URL ?? ''
+	};
+
 	return {
 		env: environment,
 		isProduction,
@@ -78,7 +87,8 @@ export function config(env: Record<string, string | undefined>): Config {
 		selfUrl,
 		databaseUrl,
 		salt: salt,
-		secrets
+		secrets,
+		discord
 	};
 }
 
