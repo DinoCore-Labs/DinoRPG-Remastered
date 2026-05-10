@@ -3,48 +3,30 @@ import type { IngredientFiche } from '@dinorpg/core/models/ingredients/ingredien
 import type { DinozShopFicheLite } from '@dinorpg/core/models/shop/dinozShopFiche.js';
 import type { ItemShopFiche, ShopDTO, ShopFeedBack } from '@dinorpg/core/models/shop/shopFiche.js';
 
-import { http } from '../utils/http';
+import { api } from '../utils/http';
 
 export const ShopService = {
-	async getDinozFromDinozShop(): Promise<DinozShopFicheLite[]> {
-		return http()
-			.get('shop/dinoz')
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	getDinozFromDinozShop(): Promise<DinozShopFicheLite[]> {
+		return api.get<DinozShopFicheLite[]>('/shop/dinoz');
 	},
-	async buyDinoz(id: number): Promise<DinozFiche> {
-		return http()
-			.post(`shop/dinoz/buydinoz/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	buyDinoz(id: number): Promise<DinozFiche> {
+		return api.post<DinozFiche>(`/shop/dinoz/buydinoz/${id}`);
 	},
-	async getItemsFromItemShop(shopId: number): Promise<Array<ItemShopFiche>> {
-		return http()
-			.get(`/shop/getshop/${shopId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	getItemsFromItemShop(shopId: number): Promise<ItemShopFiche[]> {
+		return api.get<ItemShopFiche[]>(`/shop/getshop/${shopId}`);
 	},
-	async buyItem(shopId: number, itemId: number, quantity: number): Promise<ShopFeedBack> {
-		return http()
-			.put(`/shop/buyitem/${shopId}`, {
-				itemId: itemId,
-				quantity: quantity
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	buyItem(shopId: number, itemId: number, quantity: number): Promise<ShopFeedBack> {
+		return api.put<ShopFeedBack>(`/shop/buyitem/${shopId}`, {
+			itemId,
+			quantity
+		});
 	},
-	async getIngredientsFromIngredientsShop(dinozId: number): Promise<Array<IngredientFiche>> {
-		return http()
-			.get(`/shop/getitinerantshop/${dinozId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	getIngredientsFromIngredientsShop(dinozId: number): Promise<IngredientFiche[]> {
+		return api.get<IngredientFiche[]>(`/shop/getitinerantshop/${dinozId}`);
 	},
-	async sellIngredient(dinozId: number, ingredients: ShopDTO[]): Promise<{ gold: number }> {
-		return http()
-			.put(`/shop/sellingredient/${dinozId}`, {
-				ingredients: ingredients
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	sellIngredient(dinozId: number, ingredients: ShopDTO[]): Promise<{ gold: number }> {
+		return api.put<{ gold: number }>(`/shop/sellingredient/${dinozId}`, {
+			ingredients
+		});
 	}
 };
