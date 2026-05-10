@@ -1,7 +1,35 @@
-dist
-**/dist
-**/.next
-node_modules
+# Dependencies
+node_modules/
+
+# Builds
+dist/
+build/
+coverage/
+.cache/
+
+# Prisma 
 prisma
 **/prisma
+
+# Generated
+.pnpm-store/
+.turbo/
+
+# Assets
+**/assets/**
+**/public/**
+**/uploads/**
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.gif
+**/*.webp
+**/*.svg
+**/*.ico
+**/*.mp3
+**/*.ogg
+**/*.wav
+**/*.mp4
+**/*.webm
+
 pnpm-lock.yaml
