@@ -1,28 +1,18 @@
 import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 
-import { http } from '../utils/http';
+import { api } from '../utils/http';
 
 export const FightService = {
-	async processFight(dinozId: number): Promise<FightResult> {
-		return http()
-			.put('/fight/:id', {
-				dinozId
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => {
-				Promise.reject(err);
-			});
+	processFight(dinozId: number): Promise<FightResult> {
+		return api.put<FightResult>(`/fight/${dinozId}`, {
+			dinozId
+		});
 	},
-	async processDialogFight(dinozId: number, dialogId: string, phaseId: string) {
-		return http()
-			.put(`/fight/dialog`, {
-				dinozId,
-				dialogId,
-				phaseId
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => {
-				Promise.reject(err);
-			});
+	processDialogFight(dinozId: number, dialogId: string, phaseId: string): Promise<FightResult> {
+		return api.put<FightResult>('/fight/dialog', {
+			dinozId,
+			dialogId,
+			phaseId
+		});
 	}
 };
