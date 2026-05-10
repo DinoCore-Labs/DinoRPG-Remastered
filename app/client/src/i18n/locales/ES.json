@@ -53,7 +53,8 @@
 		"wallets": {
 			"gold": "Monedas de oro",
 			"treasureTicket": "Bono del Tesoro"
-		}
+		},
+		"dinozCapacity": "Dinoz : {current}/{max}"
 	},
 	"footer": {
 		"dev": "Desarrolladores:",
