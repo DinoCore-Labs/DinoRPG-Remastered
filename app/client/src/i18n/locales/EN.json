@@ -53,7 +53,8 @@
 		"wallets": {
 			"gold": "Gold coins",
 			"treasureTicket": "Treasury Note"
-		}
+		},
+		"dinozCapacity": "Dinoz : {current}/{max}"
 	},
 	"footer": {
 		"dev": "Developers:",
