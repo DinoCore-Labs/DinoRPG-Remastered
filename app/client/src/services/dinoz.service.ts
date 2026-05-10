@@ -4,6 +4,7 @@ import type { UnfreezeDinozResponse } from '@dinorpg/core/models/dinoz/dinozRest
 import type { ManageDinozPageData } from '@dinorpg/core/models/dinoz/manageDinoz.js';
 import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import type { ItemFeedBack } from '@dinorpg/core/models/items/itemFeedback.js';
+import type { AxiosRequestConfig } from 'axios';
 
 import { api } from '../utils/http';
 
@@ -13,8 +14,8 @@ export const DinozService = {
 			name: newName
 		});
 	},
-	getDinozFiche(id: number): Promise<DinozFiche> {
-		return api.get<DinozFiche>(`/dinoz/fiche/${id}`);
+	getDinozFiche(id: number, config?: AxiosRequestConfig): Promise<DinozFiche> {
+		return api.get<DinozFiche>(`/dinoz/fiche/${id}`, config);
 	},
 	setSkillState(id: number, skillId: number, skillState: boolean): Promise<boolean> {
 		return api.patch<boolean>(`/dinoz/setskillstate/${id}`, {

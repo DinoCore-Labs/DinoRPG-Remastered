@@ -28,6 +28,10 @@ import DinozName from '../components/dinoz/DinozName.vue';
 import DinozActions from '../components/dinoz/DinozActions.vue';
 import TabPanels from '../components/common/TabPanels.vue';
 
+function isRenderableDinozFiche(dinoz: DinozFiche | undefined): dinoz is DinozFiche {
+	return !!dinoz && !!dinoz.race && Array.isArray(dinoz.borderPlace) && Array.isArray(dinoz.followers);
+}
+
 export default defineComponent({
 	name: 'DinozPage',
 	data() {
@@ -55,18 +59,27 @@ export default defineComponent({
 			this.nameChoosen = true;
 			this.dinozData.name = newName;
 		},
-		async getFiche(): Promise<void> {
+		async getFiche(options: { silent?: boolean; keepReady?: boolean } = {}): Promise<void> {
 			const dinozId = parseInt(this.$route.params.id as string);
-			this.isReady = false;
-			this.dinozData = await DinozService.getDinozFiche(dinozId);
-			this.dinozStore.setDinoz(this.dinozData);
-			for (const follower of this.dinozData.followers) {
-				const followerToUpdate = await DinozService.getDinozFiche(follower.id);
-				this.dinozStore.setDinoz(followerToUpdate);
+			if (!options.keepReady) {
+				this.isReady = false;
 			}
+			const dinozData = await DinozService.getDinozFiche(dinozId, {
+				silent: options.silent ?? false
+			});
+			this.dinozData = dinozData;
+			this.dinozStore.setDinoz(dinozData);
+			await Promise.all(
+				dinozData.followers.map(async follower => {
+					const followerToUpdate = await DinozService.getDinozFiche(follower.id, {
+						silent: true
+					});
+					this.dinozStore.setDinoz(followerToUpdate);
+				})
+			);
 			const currentList = this.dinozStore.getDinozList as DinozFiche[];
 			for (const dinoz of currentList) {
-				if (dinoz.leaderId === dinozId && !this.dinozData.followers.some(follower => follower.id === dinoz.id)) {
+				if (dinoz.leaderId === dinozId && !dinozData.followers.some(follower => follower.id === dinoz.id)) {
 					this.dinozStore.setDinoz({
 						...dinoz,
 						leaderId: null
@@ -74,15 +87,36 @@ export default defineComponent({
 				}
 			}
 			this.dinozStore.setCurrentDinozId(dinozId);
+			this.nameChoosen = dinozData.name !== '?';
 			this.isReady = true;
 		},
 		async refreshDinoz() {
 			try {
-				await this.getFiche();
+				await this.getFiche({
+					silent: true,
+					keepReady: true
+				});
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
+			}
+		},
+		async loadDinozPage(dinozId: number): Promise<void> {
+			const cachedDinoz = this.dinozStore.getDinoz(dinozId);
+			if (isRenderableDinozFiche(cachedDinoz)) {
+				this.dinozData = cachedDinoz;
+				this.nameChoosen = cachedDinoz.name !== '?';
+				this.isReady = true;
+				await this.getFiche({
+					silent: true,
+					keepReady: true
+				});
 				return;
 			}
+			await this.getFiche({
+				silent: false,
+				keepReady: false
+			});
+			this.nameChoosen = this.dinozData.name !== '?';
 		}
 	},
 	// Get dinoz data
@@ -93,16 +127,14 @@ export default defineComponent({
 			}
 		});
 		eventBus.on('equipItem', items => {
-			this.dinozData.items = items.map(i => {
-				return i.itemId;
-			});
+			this.dinozData.items = items.map(i => i.itemId);
 			eventBus.emit('refreshDinozStats', true);
 		});
+		const dinozId = parseInt(this.$route.params.id as string);
 		try {
-			await this.getFiche();
+			await this.loadDinozPage(dinozId);
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
-			return;
 		}
 		this.nameChoosen = this.dinozData.name !== '?';
 	},
@@ -114,7 +146,12 @@ export default defineComponent({
 		// Reload page if player go on another dinoz page
 		'$route.params.id': async function (to) {
 			if (to !== undefined && this.$route.name === 'DinozPage') {
-				await this.getFiche();
+				const dinozId = Number(to);
+				try {
+					await this.loadDinozPage(dinozId);
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+				}
 			}
 		},
 		'dinozData.name': function () {
