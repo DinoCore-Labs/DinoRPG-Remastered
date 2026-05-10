@@ -11,9 +11,7 @@ export async function getUserRankingSummary(userId: string) {
 			user: { select: { name: true } }
 		}
 	});
-
 	if (!current) throw new ExpectedError('User ranking not found');
-
 	const above = await prisma.ranking.count({
 		where: {
 			OR: [
@@ -25,6 +23,5 @@ export async function getUserRankingSummary(userId: string) {
 			]
 		}
 	});
-
 	return { position: above + 1, points: current.points, dinozCount: current.dinozCount };
 }

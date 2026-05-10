@@ -31,7 +31,7 @@ export async function rankingRoutes(app: FastifyInstance) {
 		async (req, reply) => {
 			const { userId } = req.params;
 			const data = await getUserRankingSummary(userId);
-			return reply.send({ data });
+			return reply.send(data);
 		}
 	);
 }
