@@ -1,3 +1,4 @@
+import { logSchedulerError, logSchedulerSuccess } from '../logger/Helpers/logScheduler.js';
 import { prisma } from '../prisma.js';
 import { nextDailyAtUtc } from './helpers/time.js';
 
@@ -18,7 +19,6 @@ function resolveNextRun(
 	if (result && typeof result === 'object' && 'nextRunAt' in result) {
 		return result.nextRunAt ?? null;
 	}
-
 	return computeNextRun(job);
 }
 
@@ -41,7 +41,6 @@ function computeNextRun(job: {
 async function acquireLock(jobId: string, lockTimeoutS: number) {
 	const now = new Date();
 	const expiredBefore = new Date(now.getTime() - lockTimeoutS * 1000);
-
 	const updated = await prisma.jobDefinition.updateMany({
 		where: {
 			id: jobId,
@@ -53,7 +52,6 @@ async function acquireLock(jobId: string, lockTimeoutS: number) {
 			status: 'RUNNING'
 		}
 	});
-
 	return updated.count === 1;
 }
 
@@ -64,7 +62,6 @@ export function startScheduler(
 ) {
 	const timer = setInterval(async () => {
 		const now = new Date();
-
 		const dueJobs = await prisma.jobDefinition.findMany({
 			where: {
 				enabled: true,
@@ -73,24 +70,18 @@ export function startScheduler(
 			orderBy: { nextRunAt: 'asc' },
 			take: 20
 		});
-
 		for (const job of dueJobs) {
 			const handler = handlers[job.key];
 			if (!handler) continue;
-
 			const locked = await acquireLock(job.id, job.lockTimeoutS);
 			if (!locked) continue;
-
 			const run = await prisma.jobRun.create({
 				data: { jobId: job.id, triggeredBy: 'scheduler' }
 			});
-
 			try {
 				log.info(`[jobs] start ${job.key}`);
 				const result = await handler();
-
 				const nextRunAt = resolveNextRun(job as any, result);
-
 				await prisma.jobDefinition.update({
 					where: { id: job.id },
 					data: {
@@ -102,19 +93,30 @@ export function startScheduler(
 						lockedBy: null
 					}
 				});
-
 				await prisma.jobRun.update({
 					where: { id: run.id },
 					data: { endedAt: new Date(), success: true }
 				});
-
+				logSchedulerSuccess('jobs.scheduler', {
+					jobKey: job.key,
+					jobId: job.id,
+					jobRunId: run.id,
+					status: 'SUCCESS',
+					nextRunAt,
+					instanceId: INSTANCE_ID
+				});
 				log.info(`[jobs] done ${job.key}`);
 			} catch (err: any) {
 				const msg = String(err?.message ?? err);
 				log.error({ err }, `[jobs] failed ${job.key}`);
-
+				logSchedulerError('jobs.scheduler', err, {
+					jobKey: job.key,
+					jobId: job.id,
+					jobRunId: run.id,
+					status: 'FAILED',
+					instanceId: INSTANCE_ID
+				});
 				const nextRunAt = computeNextRun(job as any);
-
 				await prisma.jobDefinition.update({
 					where: { id: job.id },
 					data: {
@@ -126,7 +128,6 @@ export function startScheduler(
 						lockedBy: null
 					}
 				});
-
 				await prisma.jobRun.update({
 					where: { id: run.id },
 					data: { endedAt: new Date(), success: false, error: msg }
@@ -134,8 +135,6 @@ export function startScheduler(
 			}
 		}
 	}, tickMs);
-
 	log.info(`[jobs] scheduler started (tick=${tickMs}ms, instance=${INSTANCE_ID})`);
-
 	return () => clearInterval(timer);
 }
