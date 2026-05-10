@@ -3,34 +3,22 @@ import type { IngredientFicheDTO } from '@dinorpg/core/models/ingredients/ingred
 import type { UseItemResult } from '@dinorpg/core/models/items/itemFeedback.js';
 import type { ItemFicheDTO } from '@dinorpg/core/models/items/itemFiche.js';
 
-import { http } from '../utils/http';
+import { api } from '../utils/http';
 
 export const InventoryService = {
-	getAllItemsData(): Promise<Array<ItemFicheDTO>> {
-		return http()
-			.get('/inventory/all/items')
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	getAllItemsData(): Promise<ItemFicheDTO[]> {
+		return api.get<ItemFicheDTO[]>('/inventory/all/items');
 	},
-	getAllIngredientsData(): Promise<Array<IngredientFicheDTO>> {
-		return http()
-			.get('/inventory/all/ingredients')
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	getAllIngredientsData(): Promise<IngredientFicheDTO[]> {
+		return api.get<IngredientFicheDTO[]>('/inventory/all/ingredients');
 	},
-	async useInventoryItem(itemId: number, dinozId: number): Promise<UseItemResult> {
-		return http()
-			.get(`/inventory/${dinozId}/${itemId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	useInventoryItem(itemId: number, dinozId: number): Promise<UseItemResult> {
+		return api.get<UseItemResult>(`/inventory/${dinozId}/${itemId}`);
 	},
 	equipInventoryItem(dinozId: number, itemId: number, equip: boolean): Promise<EquipItemResponse> {
-		return http()
-			.put(`/inventory/equip/${dinozId}`, {
-				itemId,
-				equip
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		return api.put<EquipItemResponse>(`/inventory/equip/${dinozId}`, {
+			itemId,
+			equip
+		});
 	}
 };
