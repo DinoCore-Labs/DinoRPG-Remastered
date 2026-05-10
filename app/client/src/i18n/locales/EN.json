@@ -2507,7 +2507,7 @@
 			"reincarnation": "Your Dinoz can be reincarnated! It will keep the same destiny of the elements.",
 			"change_leader": "Your Dinoz can become the new leader of the group.",
 			"fb_tournament": "Access the BrutForce Tournament.",
-			"CEF": "Cher client, bienvenue au Centre d'Entraînement de Fosselave !"
+			"CEF": "Dear customer, welcome to the Lavapit Training Center!"
 		},
 		"name": {
 			"fight": "Fight",
@@ -2570,7 +2570,7 @@
 			"piglou": "Piglounou",
 			"piglo2": "Pigloubi",
 			"piglo3": "Piglouglou",
-			"piglo4": "Super Piglou",
+			"piglo4": "Great Piglou",
 			"piglo5": "Ultra Piglou",
 			"febrez": "Febrez",
 			"pteroz": "Pteroz",
@@ -2587,7 +2587,7 @@
 			"goblin": "Goblin",
 			"bat": "Tawny-Bat | Tawny-Bat | Tawny-Bats",
 			"ronciv": "Bramble Eater | Bramble Eater | Bramble Eaters",
-			"gardien": "Gardien Arboricole",
+			"gardien": "Tree Guardian",
 			"grdien": "Tree Guardian",
 			"rkrgns": "Korgon Reinforcement",
 			"egrllz": "Gorilloz Spirit",
@@ -3025,7 +3025,7 @@
 	},
 	"trainingCenter": {
 		"title": "Lavapit Training Center",
-		"subtitle": "Cher client, bienvenue au C.E.F. Notre Centre est autorisé par l’I.R.A.D (Institut de recherche et d’apprentissage de Dinoz) et vous permet de développer la force musculaire et la performance de votre Dinoz avec l'aide de notre programme de combat sur mesure. ",
+		"subtitle": "Dear customer, welcome to the L.T.C. Our Center is authorized by the I.D.R.L (Institute of Dinoz Research & Learning) and allows you to develop the muscular strength and performance of your Dinoz with our Combat-on-Measure program's help.",
 		"description": "Le principe est simple : vous payez pour combattre contre un ou plusieurs monstres. Ce combat vous rapportera de l'expérience, mais pas d'or. Vous avez le choix entre trois difficultés.",
 		"warning": "N'oubliez pas de soigner votre Dinoz avant de choisir un programme ! Le C.E.F. ne consomme pas l'action quotidienne, mais chaque séance est payante.",
 		"monstersNote": "Les monstres rencontrés dépendent du niveau de votre Dinoz et sont tous des monstres du Grand Tout Chaud.",
@@ -3040,12 +3040,12 @@
 				"description": "Un entraînement équilibré avec un bonus d'expérience."
 			},
 			"advanced": {
-				"name": "Avancé",
+				"name": "Advanced",
 				"description": "Un entraînement plus risqué avec un meilleur bonus d'expérience."
 			}
 		},
 		"errors": {
-			"invalidProgram": "Ce programme d'entraînement n'existe pas.",
+			"invalidProgram": "This program does not exist.",
 			"dinozMustBeNamed": "Votre Dinoz doit avoir un nom avant de s'entraîner.",
 			"unavailable": "Ce Dinoz ne peut pas s'entraîner pour le moment.",
 			"wrongPlace": "Votre Dinoz doit être à Fosselave pour accéder au Centre d'Entraînement.",
@@ -3226,23 +3226,23 @@
 			},
 			"choice": {
 				"enigm": "Heu... Y'a quelqu'un ?",
-				"next": "Je voudrais savoir...",
-				"tresor": "(Un trésor ?!?) Oui c'est ça !",
-				"quoi": "... Quoi ?",
-				"show": "Montrer les ingrédients"
+				"next": "I'd like to know...",
+				"tresor": "(A treasure?) Yes, that's right!",
+				"quoi": "... What?",
+				"show": "Review the list of supplies"
 			}
 		},
 		"weirdMan": {
 			"name": "Strange man",
 			"dialog": {
-				"begin": "Un individu bizarre maladroitement caché entre les arbres vous fixe avec un regard inquiétant... Il brandit une lanterne dans votre direction.",
-				"hi": "L'homme a l'air inquiet et continue à vous toiser sans rien dire...",
-				"approach": "A peine faites-vous un pas dans sa direction que l'homme bondit, terrorisé, et se jette dans un fourré un peu plus loin ! Un instant plus tard, sa tête émerge du feuillage et vous fixe à nouveau avec inquiétude...",
-				"run": "Vous prenez vos jambes à votre cou !",
-				"ignore": "Vous tournez la tête ailleurs pour essayer de l'ignorer. Mais tandis que vous jetez à nouveau un coup d'oeil dans sa direction, vous constatez avec surprise qu'il se dresse face à vous droit comme un piquet !! Vous ne pouvez vous empêcher de pousser un cri de surprise ! Il vous colle alors sa lanterne sous le nez et vous renifle bruyamment...",
-				"intro": "Peur ? Peur de quoi ? Les ombres ou les voix ? Vous avez peur aussi ? On a tous peur ! Moi je les ai vus !",
-				"leave": "Vous reculez lentement puis vous tournez les talons sans prendre la peine de jeter un regard derrière vous...",
-				"seenWhat": "Gorgoth !! Celui qu'on appelle l'innommable mangeur de têtes de la noirceur abyssale !!",
+				"begin": "A strange and awkward looking person is hiding behind the trees... He brandishes a lantern and shines it in your direction.",
+				"hi": "The man seems very worried and continues to look at you without saying anything...",
+				"approach": "You barely take a step in his direction before the man jumps, frightened, into a bush! A moment later, he lifts his head out of the bush and looks at you again with a look of anxiety strewn across his face...",
+				"run": "You run away as fast as you possibly can!",
+				"ignore": "You turn your head to ignore him. But while glancing in his direction,  you notice with surprise that he's now standing right in front of you!  You can't prevent yourself from letting out a cry of surprise! He puts his lantern under your nose and starts sniffing you noisily...",
+				"intro": "Scared? Scared of what? The shadows or my voice? You're scared too? We're all scared! I've seen them!",
+				"leave": "You step back slowly and move away without looking back...",
+				"seenWhat": "Gorgoth! The head eater from the dark abyss!!",
 				"show": "Il terrorise tout ce qui vit dans la Jungle de Grumhel !! Sachant que la Jungle terrorise déjà tout le monde. Tenez regardez, il est juste là (il pointe du doigt la végétation épaisse et noire) !",
 				"fight": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grand surprise qu'il a disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à son cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les endroits obscurs."
 			},
