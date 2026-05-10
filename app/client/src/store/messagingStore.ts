@@ -10,7 +10,6 @@ export const messagingStore = defineStore('messagingStore', {
 	}),
 	getters: {
 		hasUnreadMessages: state => state.unreadThreadsCount > 0,
-
 		unreadBadgeLabel: state => {
 			if (state.unreadThreadsCount > 9) {
 				return '9+';
@@ -24,8 +23,7 @@ export const messagingStore = defineStore('messagingStore', {
 		},
 		async refreshUnreadThreads() {
 			try {
-				const threads = await MessagerieService.getThreads();
-
+				const threads = await MessagerieService.getThreads({ silent: true });
 				this.setUnreadThreadsFromThreads(threads);
 			} catch {
 				// On garde l'ancien état pour éviter de faire disparaître la pastille

@@ -253,13 +253,17 @@ export default defineComponent({
 			this.isSearchVisible = !this.isSearchVisible;
 		},
 		async refreshUnreadThreads() {
-			await this.mStore.refreshUnreadThreads();
-			this.threads = await MessagerieService.getThreads();
+			try {
+				const threads = await MessagerieService.getThreads({ silent: true });
+				this.threads = threads;
+				this.mStore.setUnreadThreadsFromThreads(threads);
+			} catch {
+				// silencieux : pas besoin de toast pour un refresh de pastille
+			}
 		}
 	},
 	mounted() {
 		this.messageRef = this.$refs.messageRef as HTMLDialogElement;
-		//this.notifiedThreads = this.pStore.getNotifications.map(notification => notification.message);
 		eventBus.on('message', async () => {
 			await this.open();
 		});
@@ -277,11 +281,6 @@ export default defineComponent({
 			};
 		});
 	}
-	/*watch: {
-		'pStore.getNotifications': function () {
-			this.notifiedThreads = this.pStore.getNotifications.map(notification => notification.message);
-		}
-	}*/
 });
 </script>
 

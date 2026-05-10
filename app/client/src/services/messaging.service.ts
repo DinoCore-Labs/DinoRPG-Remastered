@@ -3,8 +3,10 @@ import type { FullThread, PaginatedThreadMessages, ThreadsBasic } from '@dinorpg
 import { api } from '../utils/http';
 
 export const MessagerieService = {
-	getThreads(): Promise<ThreadsBasic[]> {
-		return api.get<ThreadsBasic[]>('/messaging/threads');
+	getThreads(options?: { silent?: boolean }): Promise<ThreadsBasic[]> {
+		return api.get('/messaging/threads', {
+			silent: options?.silent ?? false
+		});
 	},
 	getThread(threadId: string): Promise<FullThread> {
 		return api.get<FullThread>(`/messaging/threads/${threadId}`);
