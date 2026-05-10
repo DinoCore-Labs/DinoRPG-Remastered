@@ -1,59 +1,37 @@
 import type { AdminNewsPayload } from '@dinorpg/core/models/admin/adminNewsPayload.js';
 import type { AdminNewsListItem, DetailedNews } from '@dinorpg/core/models/news/news.js';
 
-import { http } from '../utils/http';
+import { api } from '../utils/http';
+
+const getAdminNewsPath = (newsId: number): string => `/admin/news/${newsId}`;
+
+const createNewsFormData = (payload: AdminNewsPayload | Partial<AdminNewsPayload>, image: File): FormData => {
+	const formData = new FormData();
+	formData.append('image', image);
+	formData.append('payload', JSON.stringify(payload));
+	return formData;
+};
 
 export const AdminNewsService = {
-	async getAdminNewsList(): Promise<AdminNewsListItem[]> {
-		return http()
-			.get('/admin/news')
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	getAdminNewsList(): Promise<AdminNewsListItem[]> {
+		return api.get<AdminNewsListItem[]>('/admin/news');
 	},
-	async getAdminNewsDetails(newsId: number): Promise<DetailedNews> {
-		return http()
-			.get(`/admin/news/${newsId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	getAdminNewsDetails(newsId: number): Promise<DetailedNews> {
+		return api.get<DetailedNews>(getAdminNewsPath(newsId));
 	},
-	async createAdminNews(payload: AdminNewsPayload): Promise<DetailedNews> {
-		return http()
-			.post('/admin/news', payload)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	createAdminNews(payload: AdminNewsPayload): Promise<DetailedNews> {
+		return api.post<DetailedNews>('/admin/news', payload);
 	},
-	async updateAdminNews(newsId: number, payload: Partial<AdminNewsPayload>): Promise<DetailedNews> {
-		return http()
-			.put(`/admin/news/${newsId}`, payload)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	updateAdminNews(newsId: number, payload: Partial<AdminNewsPayload>): Promise<DetailedNews> {
+		return api.put<DetailedNews>(getAdminNewsPath(newsId), payload);
 	},
-	async createAdminNewsWithImage(payload: AdminNewsPayload, image: File): Promise<DetailedNews> {
-		const formData = new FormData();
-		formData.append('image', image);
-		formData.append('payload', JSON.stringify(payload));
-		return http()
-			.post('/admin/news', formData)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	createAdminNewsWithImage(payload: AdminNewsPayload, image: File): Promise<DetailedNews> {
+		return api.post<DetailedNews>('/admin/news', createNewsFormData(payload, image));
 	},
-	async updateAdminNewsWithImage(
-		newsId: number,
-		payload: Partial<AdminNewsPayload>,
-		image: File
-	): Promise<DetailedNews> {
-		const formData = new FormData();
-		formData.append('image', image);
-		formData.append('payload', JSON.stringify(payload));
-		return http()
-			.put(`/admin/news/${newsId}`, formData)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	updateAdminNewsWithImage(newsId: number, payload: Partial<AdminNewsPayload>, image: File): Promise<DetailedNews> {
+		return api.put<DetailedNews>(getAdminNewsPath(newsId), createNewsFormData(payload, image));
 	},
-	async deleteNews(newsId: number) {
-		return http()
-			.delete(`/admin/news/${newsId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	deleteNews(newsId: number): Promise<void> {
+		return api.delete<void>(getAdminNewsPath(newsId));
 	}
 };
