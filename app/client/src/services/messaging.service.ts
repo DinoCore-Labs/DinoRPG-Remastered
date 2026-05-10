@@ -1,48 +1,33 @@
 import type { FullThread, PaginatedThreadMessages, ThreadsBasic } from '@dinorpg/core/models/messaging/threadBasic.js';
 
-import { http } from '../utils/http';
+import { api } from '../utils/http';
 
 export const MessagerieService = {
-	async getThreads(): Promise<ThreadsBasic[]> {
-		return http()
-			.get('/messaging/threads')
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	getThreads(): Promise<ThreadsBasic[]> {
+		return api.get<ThreadsBasic[]>('/messaging/threads');
 	},
-	async getThread(threadId: string): Promise<FullThread> {
-		return http()
-			.get(`/messaging/threads/${threadId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	getThread(threadId: string): Promise<FullThread> {
+		return api.get<FullThread>(`/messaging/threads/${threadId}`);
 	},
-	async loadMessages(threadId: string, page: number): Promise<PaginatedThreadMessages> {
-		return http()
-			.get(`/messaging/threads/${threadId}/messages`, {
-				params: { page }
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	loadMessages(threadId: string, page: number): Promise<PaginatedThreadMessages> {
+		return api.get<PaginatedThreadMessages>(`/messaging/threads/${threadId}/messages`, {
+			params: { page }
+		});
 	},
-	async createThread(
-		participantIds: Array<string> | undefined,
+	createThread(
+		participantIds: string[] | undefined,
 		title: string | undefined,
 		message: string
 	): Promise<ThreadsBasic> {
-		return http()
-			.post('/messaging/threads', {
-				participantIds: participantIds ?? [],
-				title,
-				message
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+		return api.post<ThreadsBasic>('/messaging/threads', {
+			participantIds: participantIds ?? [],
+			title,
+			message
+		});
 	},
-	async answerThread(threadId: string, message: string): Promise<FullThread> {
-		return http()
-			.post(`/messaging/threads/${threadId}/messages`, {
-				message
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	answerThread(threadId: string, message: string): Promise<FullThread> {
+		return api.post<FullThread>(`/messaging/threads/${threadId}/messages`, {
+			message
+		});
 	}
 };
