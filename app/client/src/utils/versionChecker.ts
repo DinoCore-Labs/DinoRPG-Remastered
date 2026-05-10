@@ -1,4 +1,4 @@
-import { VersionService } from '../services/version.service';
+import { VersionService } from '../services/version.service.js';
 
 const CURRENT_VERSION = import.meta.env.VITE_APP_VERSION;
 
