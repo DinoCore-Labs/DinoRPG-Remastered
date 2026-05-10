@@ -3,6 +3,7 @@ import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import type { UserProfile } from '@dinorpg/core/models/user/userProfile.js';
 import type { UserToolTip } from '@dinorpg/core/models/user/userToolTip.js';
 import type { EntitySearch } from '@dinorpg/core/models/utils/entitySearch.js';
+import type { AxiosRequestConfig } from 'axios';
 
 import { api } from '../utils/http';
 
@@ -22,8 +23,8 @@ export const UserService = {
 	logout(): Promise<void> {
 		return api.delete<void>('/users/logout');
 	},
-	me(): Promise<UserData> {
-		return api.get<UserData>('/users/me');
+	me(config?: AxiosRequestConfig): Promise<UserData> {
+		return api.get<UserData>('/users/me', config);
 	},
 	checkName(name: string): Promise<CheckNameResponse> {
 		return api.get<CheckNameResponse>(`/users/check-name/${encodeURIComponent(name)}`, {
