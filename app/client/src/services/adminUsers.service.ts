@@ -9,67 +9,43 @@ import type {
 	UpdateAdminUserWalletPayload
 } from '@dinorpg/core/models/admin/adminUserPayloads.js';
 
-import { http } from '../utils/http';
+import { api } from '../utils/http';
+
+type OkResponse = {
+	ok: boolean;
+};
+
+const getAdminUserPath = (userId: string): string => `/admin/user/${encodeURIComponent(userId)}`;
 
 export const AdminUserService = {
 	getUserDetails(userId: string): Promise<AdminUserDetails> {
-		return http()
-			.get(`/admin/user/${encodeURIComponent(userId)}`)
-			.then(res => res.data)
-			.catch(err => Promise.reject(err));
+		return api.get<AdminUserDetails>(getAdminUserPath(userId));
 	},
 	getUserDinoz(userId: string): Promise<AdminDinozSummary[]> {
-		return http()
-			.get(`/admin/user/${encodeURIComponent(userId)}/dinoz`)
-			.then(res => res.data)
-			.catch(err => Promise.reject(err));
+		return api.get<AdminDinozSummary[]>(`${getAdminUserPath(userId)}/dinoz`);
 	},
-	updateUserProfile(userId: string, payload: UpdateAdminUserProfilePayload): Promise<{ ok: boolean }> {
-		return http()
-			.patch(`/admin/user/${encodeURIComponent(userId)}/profile`, payload)
-			.then(res => res.data)
-			.catch(err => Promise.reject(err));
+	updateUserProfile(userId: string, payload: UpdateAdminUserProfilePayload): Promise<OkResponse> {
+		return api.patch<OkResponse>(`${getAdminUserPath(userId)}/profile`, payload);
 	},
-	updateUserWallet(userId: string, payload: UpdateAdminUserWalletPayload): Promise<{ ok: boolean }> {
-		return http()
-			.post(`/admin/user/${encodeURIComponent(userId)}/wallets/update`, payload)
-			.then(res => res.data)
-			.catch(err => Promise.reject(err));
+	updateUserWallet(userId: string, payload: UpdateAdminUserWalletPayload): Promise<OkResponse> {
+		return api.post<OkResponse>(`${getAdminUserPath(userId)}/wallets/update`, payload);
 	},
-	updateUserUniqueSkills(userId: string, payload: UpdateAdminUserUniqueSkillsPayload): Promise<{ ok: boolean }> {
-		return http()
-			.patch(`/admin/user/${encodeURIComponent(userId)}/unique-skills`, payload)
-			.then(res => res.data)
-			.catch(err => Promise.reject(err));
+	updateUserUniqueSkills(userId: string, payload: UpdateAdminUserUniqueSkillsPayload): Promise<OkResponse> {
+		return api.patch<OkResponse>(`${getAdminUserPath(userId)}/unique-skills`, payload);
 	},
 	updateUserItems(userId: string, payload: UpdateAdminUserInventoryPayload): Promise<void> {
-		return http()
-			.patch(`/admin/user/${encodeURIComponent(userId)}/items`, payload)
-			.then(res => res.data)
-			.catch(err => Promise.reject(err));
+		return api.patch<void>(`${getAdminUserPath(userId)}/items`, payload);
 	},
 	updateUserIngredients(userId: string, payload: UpdateAdminUserInventoryPayload): Promise<void> {
-		return http()
-			.patch(`/admin/user/${encodeURIComponent(userId)}/ingredients`, payload)
-			.then(res => res.data)
-			.catch(err => Promise.reject(err));
+		return api.patch<void>(`${getAdminUserPath(userId)}/ingredients`, payload);
 	},
 	updateUserRewards(userId: string, payload: UpdateAdminUserRewardsPayload): Promise<void> {
-		return http()
-			.patch(`/admin/user/${encodeURIComponent(userId)}/rewards`, payload)
-			.then(res => res.data)
-			.catch(err => Promise.reject(err));
+		return api.patch<void>(`${getAdminUserPath(userId)}/rewards`, payload);
 	},
 	updateUserPassword(userId: string, payload: UpdateAdminUserPasswordPayload): Promise<void> {
-		return http()
-			.patch(`/admin/user/${encodeURIComponent(userId)}/password`, payload)
-			.then(res => res.data)
-			.catch(err => Promise.reject(err));
+		return api.patch<void>(`${getAdminUserPath(userId)}/password`, payload);
 	},
 	updateUserScenario(userId: string, payload: UpdateAdminUserScenarioPayload): Promise<void> {
-		return http()
-			.patch(`/admin/user/${encodeURIComponent(userId)}/scenarios`, payload)
-			.then(response => response.data)
-			.catch(error => Promise.reject(error));
+		return api.patch<void>(`${getAdminUserPath(userId)}/scenarios`, payload);
 	}
 };
