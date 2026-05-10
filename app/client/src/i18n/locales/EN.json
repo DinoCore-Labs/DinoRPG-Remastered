@@ -43,6 +43,9 @@
 			"faq": "FAQ",
 			"guide": "Game Guide",
 			"disconnect": "Log out",
+			"system": "Settings",
+			"skipLevelAnimation": "Skip level up animation",
+			"skipFightAnimation": "Skip battle animation",
 			"goodbye": "Goodbye, Master {name}..."
 		}
 	},
@@ -222,26 +225,27 @@
 			"title": "Discover the upcoming events on DinoRPG!",
 			"small": "Irma's Prediction",
 			"strong": {
-				"title1": "Alpha 0.7.0 (Soon)",
-				"title2": "Alpha 0.8.0",
-				"title3": "Alpha 0.9.0",
-				"title4": "Alpha 0.10.0"
+				"title1": "Alpha 0.8.0 (Soon)",
+				"title2": "Alpha 0.9.0",
+				"title3": "Alpha 0.10.0",
+				"title4": "Alpha 0.11.0"
 			},
 			"help": "Click on an update above to get more information!",
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
 			"futurTitle": "Dinolandian Future",
 			"futureInfo1": {
 				"text1": "Implementation of scenarios (Prisma + database)",
-				"text2": "Implementation of the tutorial scenario",
-				"text3": "Implementation of the strange being scenario",
-				"text4": "Bug fixes"
+				"text2": "Implementation of the tutorial scenario"
 			},
 			"futureInfo2": {
 				"text1": "Implementation of the Breeders' Market",
-				"text2": "Bug fixes"
+				"text2": "Bug fixes",
+				"text3": "Madame X and her missions",
+				"text4": "Implementation of the tutorial scenario"
 			},
 			"futureInfo3": {
-				"text1": "Coming soon"
+				"text1": "Coming soon",
+				"text2": "Implementation of the tutorial scenario"
 			},
 			"futureInfo4": {
 				"text1": "Coming soon"
@@ -510,8 +514,8 @@
 		"completion": "Completion",
 		"rewards": "Epic rewards",
 		"editAccount": "Edit Profile",
-		"edit": "Editer",
-		"descriptionUpdated": "Description mise à jour !",
+		"edit": "Edit",
+		"descriptionUpdated": "Description updated!",
 		"options": {
 			"title": "Account Options",
 			"mdp": "Modify Password",
@@ -1512,8 +1516,8 @@
 			"gold2500": "Gold Pieces (x2500)",
 			"gold3000": "Gold Pieces (x3000)",
 			"gold5000": "Gold Pieces (x5000)",
-			"gold10000": "Pièces d'or (x10000)",
-			"gold20000": "Pièces d'or (x20000)",
+			"gold10000": "Gold Pieces (x10000)",
+			"gold20000": "Gold Pieces (x20000)",
 			"gold50000": "Gold Pieces (x50000)",
 			"daily_ticket": "Daily Ticket",
 			"empty": "Empty",
@@ -2503,7 +2507,7 @@
 			"reincarnation": "Your Dinoz can be reincarnated! It will keep the same destiny of the elements.",
 			"change_leader": "Your Dinoz can become the new leader of the group.",
 			"fb_tournament": "Access the BrutForce Tournament.",
-			"CEF": "Cher client, bienvenue au Centre d'Entraînement de Fosselave !"
+			"CEF": "Dear customer, welcome to the Lavapit Training Center!"
 		},
 		"name": {
 			"fight": "Fight",
@@ -2545,6 +2549,7 @@
 		"win": "You **win** this fight!",
 		"lose": "You have **lost**...",
 		"lvlup": "A Dinoz gained a **new level**!",
+		"showAnimation": "Show battle",
 		"continue": "Continue",
 		"history": {
 			"display": "Display History",
@@ -2565,7 +2570,7 @@
 			"piglou": "Piglounou",
 			"piglo2": "Pigloubi",
 			"piglo3": "Piglouglou",
-			"piglo4": "Super Piglou",
+			"piglo4": "Great Piglou",
 			"piglo5": "Ultra Piglou",
 			"febrez": "Febrez",
 			"pteroz": "Pteroz",
@@ -2582,7 +2587,7 @@
 			"goblin": "Goblin",
 			"bat": "Tawny-Bat | Tawny-Bat | Tawny-Bats",
 			"ronciv": "Bramble Eater | Bramble Eater | Bramble Eaters",
-			"gardien": "Gardien Arboricole",
+			"gardien": "Tree Guardian",
 			"grdien": "Tree Guardian",
 			"rkrgns": "Korgon Reinforcement",
 			"egrllz": "Gorilloz Spirit",
@@ -3020,14 +3025,14 @@
 	},
 	"trainingCenter": {
 		"title": "Lavapit Training Center",
-		"subtitle": "Cher client, bienvenue au C.E.F. Notre Centre est autorisé par l’I.R.A.D (Institut de recherche et d’apprentissage de Dinoz) et vous permet de développer la force musculaire et la performance de votre Dinoz avec l'aide de notre programme de combat sur mesure. ",
+		"subtitle": "Dear customer, welcome to the L.T.C. Our Center is authorized by the I.D.R.L (Institute of Dinoz Research & Learning) and allows you to develop the muscular strength and performance of your Dinoz with our Combat-on-Measure program's help.",
 		"description": "Le principe est simple : vous payez pour combattre contre un ou plusieurs monstres. Ce combat vous rapportera de l'expérience, mais pas d'or. Vous avez le choix entre trois difficultés.",
 		"warning": "N'oubliez pas de soigner votre Dinoz avant de choisir un programme ! Le C.E.F. ne consomme pas l'action quotidienne, mais chaque séance est payante.",
 		"monstersNote": "Les monstres rencontrés dépendent du niveau de votre Dinoz et sont tous des monstres du Grand Tout Chaud.",
 		"xpBonus": "XP",
 		"programs": {
 			"easy": {
-				"name": "Facile",
+				"name": "Easy",
 				"description": "Un entraînement accessible."
 			},
 			"intermediate": {
@@ -3035,23 +3040,23 @@
 				"description": "Un entraînement équilibré avec un bonus d'expérience."
 			},
 			"advanced": {
-				"name": "Avancé",
+				"name": "Advanced",
 				"description": "Un entraînement plus risqué avec un meilleur bonus d'expérience."
 			}
 		},
 		"errors": {
-			"invalidProgram": "Ce programme d'entraînement n'existe pas.",
+			"invalidProgram": "This program does not exist.",
 			"dinozMustBeNamed": "Votre Dinoz doit avoir un nom avant de s'entraîner.",
 			"unavailable": "Ce Dinoz ne peut pas s'entraîner pour le moment.",
 			"wrongPlace": "Votre Dinoz doit être à Fosselave pour accéder au Centre d'Entraînement.",
 			"levelTooHigh": "Le Centre d'Entraînement est réservé aux Dinoz de niveau inférieur à 30.",
 			"needMemberCard": "Votre Dinoz doit posséder une Carte de Membre pour accéder au Centre d'Entraînement.",
-			"notEnoughGold": "Vous n'avez pas assez d'or pour choisir ce programme."
+			"notEnoughGold": "You don't have enough gold to choose this program."
 		}
 	},
 	"npc": {
 		"description": "You can talk to this person.",
-		"leave": "Arrêter la discussion",
+		"leave": "Stop chatting",
 		"openLink": "Open link",
 		"continue": "Continue",
 		"eugene": {
@@ -3074,8 +3079,8 @@
 				"fire": "Climbing isn't an easy technique to master, you must be in possession of the Climbing Gear in order to learn it. If your Dinoz wins the battle against this monster, I'll provide some equipment and teach him the basics. Your Dinoz will then be able to climb the Big All-Hot.",
 				"learn_water": "You want the Buoy? First you're going to have to fight this monster!",
 				"learn_fire": "Did you come to get the Climbing Gear? To get it, you'll need to fight this monster first.",
-				"water_fight": "Bravo, beau combat ! Comme promis, je viens de donner la Bouée à ton Dinoz. Maintenant il devrait pouvoir accéder aux Iles Atlantéinées au sud de Dinoland. Bonne chance, et sois prudent !",
-				"fire_fight": "Bravo, beau combat ! Ton Dinoz possède maintenant le Matériel d'Escalade, et il devrait pouvoir gravir les pentes escarpées du volcan du Grand Tout Chaud. Les monstres là-bas sont très chaleureux, alors fais attention en t'y rendant !",
+				"water_fight": "Well done! You were very impressive! As promised, I will give your Dinoz a buoy. Your Dinoz should now be able to access the Atlanteid Islands to the south of Dinoland. Good luck, and be careful!",
+				"fire_fight": "Well done! You were very impressive! As promised, I will give your Dinoz the Climbing Gear. Your Dinoz should now be able to climb up the precipitous slopes of the Big All-Hot. The Monsters there are very warm, so be careful when you're climbing!",
 				"learn_done": "I have nothing else to teach to your Dinoz. But don't worry, there are people throughout Dinoland who will teach it new techniques!"
 			},
 			"choice": {
@@ -3170,114 +3175,114 @@
 		"hydargol": {
 			"name": "Master Hydargol",
 			"dialog": {
-				"begin": "Les Chutes Mutantes sont l'un des Grands Lieux de méditation des moines Zenzen. C'est pour cette raison qu'on en trouve souvent dans le coin. En s'installant sur de grandes feuilles de nénuphars, ils essaient de méditer le plus longtemps... sans pour autant se faire entraîner par le courant ! <br> De nombreux moines s'étant un peu assoupis se sont offert une descente des chutes : en tout cas, personne ne les a jamais revus.",
-				"talk": ".........bon.jour......",
-				"help": "....Ah ? Euh... oui... peux-tu... m'apporter...Zzzz... zzz...",
-				"get": "...Ah ? Euh... oui... m'apporter... une feuille... de nénuphar...",
-				"where": "...trouve... mon... apprenti padamoine... Zzz... zzz...",
-				"give": "...merci.... je vais pouvoir.... enfin... méditer sur... les Chutes !!!! Je t'offre cette Perle en récompense... elle rejoindra ta Collection d'objets !",
-				"act": "Youhouhhh !!! C'est génial ! Regarde... je flotte !",
-				"gant": "Oooh !!! C'est un Gant des Zors que tu as là ? GENIAL !!!",
-				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes, autour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et accéder à la Forêt de Grumhel qui se trouve au-delà.",
-				"super": "Bon, si tu me promets de me laisser utiliser ton Gant de temps en temps, je te prête les feuilles de nénuphar qui te permettront de passer les Chutes... marché conclu ?",
-				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure ! Et fait attention, la Forêt au delà est très dangereuse !"
+				"begin": "The Mutant Falls are one of the most popular places for Zenzen monks to meditate. That's why you can often find them walking around here. They often sit on large waterlily pads, and try to meditate for as long as possible... without being swept away by the current! <br> Many monks who fall asleep often fall in and are never seen again.",
+				"talk": "......hel.lo......",
+				"help": "Ah? Uh ... yes ... can you ... bring me ...Zzzz ... zzz....",
+				"get": "Ah? Uh ... yes ... bring me ... a... waterlily.....pad.....",
+				"where": "Find ... my ... apprentice padamonk ... Zzz ... zzz....",
+				"give": "Thanks... at last...I'll be able to......meditate at... the Falls!!!! I would like to offer you this Pearl as a reward.  It has been added to your collection of items!",
+				"act": "Youhouhhh!!! That's amazing! Look... I'm levitating!",
+				"gant": "Oooh!!! You have a Zors Glove, that's incredible!",
+				"why": "Let me explain. The Zors glove has the ability to stop the Falls from flowing. This means that, with the help of the waterlily pad, you'll be able to go around the Falls and access Grumhel Forest.",
+				"super": "Well, if you promise to let me use your Glove from time-to-time, I lend you my waterlily pad which will allow you to pass through the Falls ... Do we have a deal?",
+				"ok": "Here's your waterlily pad ... Now you'll be able to pass through the Falls. Good luck for the rest of your adventure! And take care, the Forest is very dangerous!"
 			},
 			"choice": {
-				"talk": "Parler au Maître Hydargol",
-				"hello": "Bonjour !",
-				"help": "Puis-je vous être utile ?",
-				"give": "Donner les feuilles de nénuphars",
-				"act": "Alors quoi de neuf ?",
-				"get": "Vous apporter... ?",
-				"where": "Et où je vais trouver cela ?",
-				"gant": "Montrer le Gant des Zors",
-				"why": "Ah ? Pourquoi ?",
-				"super": "Super !",
+				"talk": "Talk to Master Hydargol",
+				"hello": "Hello!",
+				"help": "Can I help you?",
+				"give": "Give the waterlily pads",
+				"act": "So, what's up?",
+				"get": "Bring you... ?",
+				"where": "Where can I find one?",
+				"gant": "Show Zors Glove",
+				"why": "Ah? Why?",
+				"super": "That's great news!",
 				"ok": "Ok",
-				"no": "Pas question"
+				"no": "No way"
 			}
 		},
 		"padamoine": {
 			"name": "Padamoon Apprentice",
 			"dialog": {
-				"begin": "Bonjour, heu... je suis Bémol, le padamoine de Maître Hydargol. Et heu... je dois lui amener ces feuilles de nénuphar. Le problème c'est que, heu... je viens de me rendre compte que j'avais le mal de mer... pourtant je dois me rendre sur les Iles Altantéinées ! Qu'est-ce que je vais bien pouvoir faire ???",
-				"help": "C'est vrai, vous acceptez de m'aider ?? Merci beaucoup !",
-				"get": "Vous avez l'air digne de confiance. Tenez, je vous confie ces feuilles de nénuphar, et que la Sainte Force soit avec vous !"
+				"begin": "Hello! I'm Damper, padamonk of Master Hydargol. I've been sent to fetch these waterlily pads for him. The problem is that, I just realized that I get seasick... and I need to take the waterlily pads to the Atlanteid Islands. I don't know what to do!!!",
+				"help": "Really, you'll help me?? Thank you so much!",
+				"get": "I'm so glad that I can count on you! Here, take the waterlily pads. Thank you again!"
 			},
 			"choice": {
-				"help": "Je dois justement y aller aussi. Je peux lui app...",
-				"get": "Heu... De rien"
+				"help": "I'm going there too. I can take them with me if you would like?",
+				"get": "Hum... You're welcome"
 			}
 		},
 		"archisage": {
 			"name": "ArchSage",
 			"dialog": {
-				"begin": "Au centre du Dôme se trouve la résidence de l'Archisage. Il s'agit d'un titre honorifique donné à un Archimage devenu trop vieux pour pouvoir utiliser ses pouvoirs magiques. Il n'en reste pas moins un personnage doué d'une très grande connaissance, même si ses propos peuvent parfois sembler confus.",
-				"enigm": "Bonjour bonjour bonjour ! Que viens-tu chercher ici ? Tu cherches quelque chose ? Puis-je t'aider ?",
-				"next": "Ah ! Ne dis rien ! Je sais, je suis sûr, certain, tout à fait ! Tu cherches un GRAND TRESOR !",
-				"tresor": "Alors écoute, voilà je vais te dire. Ecoute-moi. Oui. Je vais te raconter. Si tu me rapportes. Oui tout cela. Tu veux savoir quoi ? et surtout quoi n'est pas !",
-				"quoi": "Alors écoute. Mon premier est collant, mon deuxième basaltique, mon troisième est de l'eau pure. Il te faudra un outil, ça oui. Un outil pour trouver tout cela. Reviens me voir et je t'apprendrai le trésor, mais attention au danger ! F-O-E !",
-				"show": "Oh ! Bravo ! Bravo ! Merci pour tout ça, et surtout bravo ! Voilà, c'est fait, ton Dinoz a un GRAND TRESOR !"
+				"begin": "The Archsage mansion is at the center of the dome. It's an honorary title given to an Archmage who is too old to use his magic powers. Nonetheless, he is a person of great knowledge even if his words are sometimes too difficult to understand.",
+				"enigm": "Hello hello! What are you looking for? Do you want something? Maybe I can help you?",
+				"next": "Oh! Bravo! Bravo! Thanks, and bravo again! Here's your reward, your Dinoz received a BIG TREASURE!",
+				"tresor": "Listen to me OK? I'll tell you how to get what you're looking for. If you bring me everything I need yes, you understand, yes? Now, what do you want to know?",
+				"quoi": "Listen. My first is sticky, my second basaltic, my third is pure water. You will need a tool, that yes. A tool to find all. Come back to me and I will give you the treasure, but beware of the danger! F-O-E!",
+				"show": "Oh! Bravo! Bravo! Thanks, and bravo again! Here's your reward, your Dinoz received a BIG TREASURE!"
 			},
 			"choice": {
-				"enigm": "Heu... Y'a quelqu'un ?",
-				"next": "Je voudrais savoir...",
-				"tresor": "(Un trésor ?!?) Oui c'est ça !",
-				"quoi": "... Quoi ?",
-				"show": "Montrer les ingrédients"
+				"enigm": "Hello... Is someone there?",
+				"next": "I'd like to know...",
+				"tresor": "(A treasure?) Yes, that's right!",
+				"quoi": "... What?",
+				"show": "Review the list of supplies"
 			}
 		},
 		"weirdMan": {
 			"name": "Strange man",
 			"dialog": {
-				"begin": "Un individu bizarre maladroitement caché entre les arbres vous fixe avec un regard inquiétant... Il brandit une lanterne dans votre direction.",
-				"hi": "L'homme a l'air inquiet et continue à vous toiser sans rien dire...",
-				"approach": "A peine faites-vous un pas dans sa direction que l'homme bondit, terrorisé, et se jette dans un fourré un peu plus loin ! Un instant plus tard, sa tête émerge du feuillage et vous fixe à nouveau avec inquiétude...",
-				"run": "Vous prenez vos jambes à votre cou !",
-				"ignore": "Vous tournez la tête ailleurs pour essayer de l'ignorer. Mais tandis que vous jetez à nouveau un coup d'oeil dans sa direction, vous constatez avec surprise qu'il se dresse face à vous droit comme un piquet !! Vous ne pouvez vous empêcher de pousser un cri de surprise ! Il vous colle alors sa lanterne sous le nez et vous renifle bruyamment...",
-				"intro": "Peur ? Peur de quoi ? Les ombres ou les voix ? Vous avez peur aussi ? On a tous peur ! Moi je les ai vus !",
-				"leave": "Vous reculez lentement puis vous tournez les talons sans prendre la peine de jeter un regard derrière vous...",
-				"seenWhat": "Gorgoth !! Celui qu'on appelle l'innommable mangeur de têtes de la noirceur abyssale !!",
-				"show": "Il terrorise tout ce qui vit dans la Jungle de Grumhel !! Sachant que la Jungle terrorise déjà tout le monde. Tenez regardez, il est juste là (il pointe du doigt la végétation épaisse et noire) !",
-				"fight": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grand surprise qu'il a disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à son cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les endroits obscurs."
+				"begin": "A strange and awkward looking person is hiding behind the trees... He brandishes a lantern and shines it in your direction.",
+				"hi": "The man seems very worried and continues to look at you without saying anything...",
+				"approach": "You barely take a step in his direction before the man jumps, frightened, into a bush! A moment later, he lifts his head out of the bush and looks at you again with a look of anxiety strewn across his face...",
+				"run": "You run away as fast as you possibly can!",
+				"ignore": "You turn your head to ignore him. But while glancing in his direction,  you notice with surprise that he's now standing right in front of you!  You can't prevent yourself from letting out a cry of surprise! He puts his lantern under your nose and starts sniffing you noisily...",
+				"intro": "Scared? Scared of what? The shadows or my voice? You're scared too? We're all scared! I've seen them!",
+				"leave": "You step back slowly and move away without looking back...",
+				"seenWhat": "Gorgoth! The head eater from the dark abyss!!",
+				"show": "It terrorizes every living creature in the Grumhel Jungle!! Look! There it is! (He points to a clearing in the jungle's dense vegetation)!\\t",
+				"fight": "While you are searching for the strange man, you notice that he has disappeared...\\nThe good news is that he dropped his lantern whilst he was running away. You can use this lantern to help guide you in dark places."
 			},
 			"choice": {
-				"hi": "Euh... Bonjour ?",
-				"approach": "Tenter de s'approcher...",
-				"ignore": "L'ignorer",
-				"run": "Partir en courant !",
-				"intro": "Argh ! Vous m'avez fait peur !",
-				"seenWhat": "Vu quoi ?",
-				"leave": "Euh je vais vous laisser...",
-				"show": "Erk ! Il a l'air dangereux !",
-				"fight": "Attaquer Gorgoth (l'innommable mangeur de têtes de la noirceur abyssale) !"
+				"hi": "Hum... Hello?",
+				"approach": "Approach carefully...",
+				"ignore": "Ignore him",
+				"run": "Run away!",
+				"intro": "ARGH! You scared me!",
+				"seenWhat": "Seen what?",
+				"leave": "Hmm, I have to leave now...",
+				"show": "Yuk! It seems extremely dangerous!",
+				"fight": "Attack Gorgoth (the head eater from the dark abyss)!"
 			}
 		},
 		"speleleologue": {
 			"name": "Popotholeler",
 			"dialog": {
-				"begin": "Un récent tremblement de terre semble avoir créé une fissure dans la paroi. Un air glacé s'en échappe et vous apercevez un homme bizarre qui inspecte les alentours.",
-				"talk": "Pfiiooooouuu !! Tu as vu cette fissure ? elle s'ouvre sur une gigantesque caverne dans laquelle règne un froid glacial ! Attention ! Si ton Dinoz y rentre, il sera entièrement congelé !",
-				"gla": "Tu vois !! Ça pèle dans le coin hein.... D'après mes études thermodynamiques, les courants de magma chaud du Grand Tout Chaud absorbent la chaleur des roches supraconductrices et créent donc dans le sous-sol un refroidissement par convection. Un véritable Frigo naturel en fait !",
-				"ok": "N'est-ce pas !? Je suis un grand explorateur des cavernes et autres souterrains étranges, c'est mon métier, je suis spélélélologue ! J'ai obtenu mon diplôme en Spélélologie à l'Université de Dinoville, option naturalgorithmie !",
-				"ok2": "N'est-ce pas !? J'ai couru ici dés que j'ai entendu parler du tremblement de terre, et du coup j'ai été le premier à découvrir cette grotte ! Je lui ai déjà trouvé un nom : La Grotte du Zéro Relatif ! Ça te plaît ?",
-				"ok3": "N'est-ce pas !? Bon, tu m'es sympatique et je vais donc te donner une ASTUCE ! Si tu mets ton Dinoz dans la Grotte du Zéro Relatif, il sera congelé...",
-				"congel": "Oui ! Con-ge-lé ! Mais la température est tellement basse qu'il ne mourra pas ! Tu ne pourras plus te servir de ce Dinoz, mais du coup il ne comptera plus dans ta LIMITE de nombre de Dinoz, ce qui te permettra d'obtenir PLUS de Dinoz ! Il faudra par contre faire attention aux effets secondaires...",
-				"congel2": "Oui, à partir du moment où ton Dinoz est congelé, il ne compte plus dans ta LIMITE, mais tu ne peux le décongeler que si tu es à nouveau en dessous de la LIMITE, cela veut dire qu'il faudra congeler un autre Dinoz pour le remplacer... Et puis, ton Dinoz mettra de toute façon un jour entier à décongeler, il faudra donc un peu de patience... Tu as compris ?",
-				"thanks": "De rien ! N'hésite pas a faire appel à moi si un jour tu as besoin de mon aide pour explorer un souterrain mystérieux !",
-				"bye": "Tchaw ! Et surtout fais attention à ne pas t'approcher de cette fissure !"
+				"begin": "A recent earthquake has cracked the rock face. An ice-cold wind blows in your direction and you notice a strange man standing nearby, inspecting the crack.",
+				"talk": "Pheewww!! Do you see this crack? It opens into an enormous cavern, it's ice-cold inside! Hey! Be careful! If your Dinoz enters the cavern he'll be frozen immediately!",
+				"gla": "You see!! It's cold around here... According to my thermodynamic studies, the hot magma flows from the Big All-Hot and the heat is absorbed from the supra conductive rocks. This creates a strange cooling effect through convection. In effect, it's a natural fridge inside!",
+				"ok": "Isn't it!? I often explore the caverns and other strange underground lairs. That's my job, I'm a popotholeler! I got my degree in Speleleology from Dinotown University!",
+				"ok2": "Right?? I came here immediately after I heard about the earthquake. It seems I was the first person to discover this cave! I've already given it a name: The Relative Zero Cave! What do you think?",
+				"ok3": "Thanks! As you've been so nice to me, I'll give you a little tip. If you put your Dinoz in the Relative Zero Cave, he'll be frozen...",
+				"congel": "Yup! Fro-zen! But the good thing is that the temperature is not so low that it will kill your Dinoz. It will only freeze it temporarily! You won't be able to use this Dinoz anymore. But it will not count in your Dinoz LIMIT. So you can have MORE Dinoz! But you'll have to keep an eye on the side effects...",
+				"congel2": "Yes, from the moment your Dinoz is frozen, it will not count towards your LIMIT. You will only be able to defrost it if you are under the LIMIT. This means that you will have to freeze another Dinoz for this one to take its place... your Dinoz will take one full day to defrost, you will have to be very patient... do you understand?",
+				"thanks": "You're welcome! Don't hesitate to call me if you need any help exploring any mysterious underground lairs!",
+				"bye": "Bye! And make sure you don't come too close to this crack!"
 			},
 			"choice": {
-				"talk": "Lui parler",
-				"gla": "Glaglagla !",
-				"bye": "Dire au revoir",
-				"ok": "C'est... passionnant",
-				"ok2": "C'est... génial",
-				"ok3": "C'est... magnifique",
-				"congel": "Congelé ?",
-				"congel2": "Des effets secondaires ???",
-				"again": "Non, rien du tout !",
-				"thanks": "Oui, merci beaucoup !"
+				"talk": "Talk to the strange man",
+				"gla": "Glaglagla!",
+				"bye": "Say goodbye",
+				"ok": "Fascinating!...",
+				"ok2": "Impressive!...",
+				"ok3": "What... a great name",
+				"congel": "Frozen?",
+				"congel2": "Side effects??",
+				"again": "Nope, I didn't understand anything!",
+				"thanks": "Yes, thanks a lot!"
 			}
 		},
 		"speleleologue_ice": {
@@ -3300,13 +3305,13 @@
 		"strangePteroz": {
 			"name": "Strange Dinoz",
 			"dialog": {
-				"begin": "Un étrange Dinoz à l'allure menaçante est apparu sur votre chemin. Ses yeux rouges vous fixent intensément, il a l'air très féroce !",
-				"fight": "Vous avez vaincu un Ptéroz ! Vous obtenez le Trophée des ptéroz qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
-				"leave": "Ouf ! Un pas de plus et ce Dinoz vous attaquait !"
+				"begin": "You come across a strange and menacing Dinoz. It's staring at you intensely with its red eyes, it seems really fierce!",
+				"fight": "You have defeated a Pteroz and earned the Pteroz Trophy. This will allow you to buy Pteroz in the Dinoz Shop. Congratulations!",
+				"leave": "Phewww! One more step and this Dinoz would have attacked you!"
 			},
 			"choice": {
-				"fight": "Le combattre !",
-				"leave": "S'enfuir !"
+				"fight": "Fight!",
+				"leave": "Run away!"
 			}
 		},
 		"strangeHippo": {
@@ -3402,8 +3407,8 @@
 			},
 			"choice": {
 				"go": "Ce personnage a l'air dangereux... s'éloigner !",
-				"talk": "Lui parler",
-				"talk2": "Lui parler",
+				"talk": "Talk to the strange man",
+				"talk2": "Talk to the strange man",
 				"yes": "Euh... Oui",
 				"read": "Lire l'indicateur",
 				"help": "Aider le Rôdeur",
@@ -3478,7 +3483,7 @@
 				"derien": "ATTENDS !!! VE VAIS TE RECOMPENFER !!! Tu vois, Ve n'étais pas dans Fet état par haVard... Il Fe trouve que v'ai partiFipé à un entrainement FPECIAL dans les Cavernes de FoFFelave. F'est très dûr et Felà coute un peu d'arVent mais F'est grâce à Fa que V'ai pu devenir auFFi coFtaud ! TIENS ! Prends cette Carte de Membre pour ton Dinoz, Ve n'en ai plus beVoin..."
 			},
 			"choice": {
-				"talk": "Lui parler",
+				"talk": "Talk to the strange man",
 				"give": "Donner un Pain Chaud au Soldat",
 				"no": "Ne rien lui donner",
 				"derien": "Euh.. De rien, au revoir"
@@ -3584,7 +3589,7 @@
 				"better": "Le remède que vous m'avez amené a été très efficace !"
 			},
 			"choice": {
-				"talk": "Lui parler",
+				"talk": "Talk to the strange man",
 				"who": "Mais... Vous êtes qui ?",
 				"better": "Vous avez l'air d'aller bien mieux...",
 				"missions": "Consulter la liste des Missions",
@@ -3704,7 +3709,7 @@
 			"name": "Être Étrange",
 			"choice": {
 				"yes": "Euh... oui ?",
-				"no": "Pas question",
+				"no": "No way",
 				"nothing": "De rien...",
 				"dom": "Effectivement, quel dommage !",
 				"star": "Des étoiles ?",
