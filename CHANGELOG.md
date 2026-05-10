@@ -458,6 +458,12 @@
 
 ## 🔹 Server
 
+## 0.21.0
+
+### Minor Changes
+
+- 539f93f: Add Discord-based server logging for unhandled errors, service failures, scheduler executions, and server lifecycle events.
+
 ## 0.20.0
 
 ### Minor Changes
