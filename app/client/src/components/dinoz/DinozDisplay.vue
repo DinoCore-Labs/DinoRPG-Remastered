@@ -87,38 +87,28 @@ export default defineComponent({
 			if (!dinoz || dinoz.length < 2) {
 				return 'top: -15px;';
 			}
-
 			if (this.dinozRace === 'moueffe' || this.dinozRace === 'pigmou') {
 				const sizeChar = dinoz[1];
 				if (!sizeChar) return 'top: -15px;';
-
 				const taille = parseInt(sizeChar === 'A' ? '9' : sizeChar, 10);
 				if (Number.isNaN(taille)) return 'top: -15px;';
-
 				const key = dinoz[0] as keyof typeof dinozPlacement.fliped;
 				const fliped = dinozPlacement.fliped[key];
 				if (!fliped) return 'top: -15px;';
-
 				const left = ((fliped.adult.left - fliped.baby.left) / 9) * taille + fliped.baby.left;
 				const top = ((fliped.adult.top - fliped.baby.top) / 9) * taille + fliped.baby.top;
-
 				return `position: absolute; left: ${left}px; top: ${top}px;`;
 			}
-
 			return 'top: -15px;';
 		},
 		getDinozId(shift: number): number | null {
 			const list = this.dinozStore.getDinozList ?? [];
 			if (list.length === 0) return null;
-
 			const currentIndex = list.findIndex(d => d.id === this.dinozData.id);
 			if (currentIndex === -1) return null;
-
 			const newIndex = currentIndex + shift;
-
 			if (newIndex < 0) return list[list.length - 1]!.id;
 			if (newIndex >= list.length) return list[0]!.id;
-
 			return list[newIndex]!.id;
 		}
 	}

@@ -63,11 +63,9 @@ export default defineComponent({
 					errorHandler.handle(err, this.$toast);
 					return;
 				}
-
 				// Update dinozList in store
 				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
 				const dinozToUpdate = dinozList.find(dinoz => dinoz.id == this.dinozData.id);
-
 				if (!dinozToUpdate) {
 					this.$toast.open({
 						message: this.$t('toast.dinozNotFound'),
@@ -75,11 +73,8 @@ export default defineComponent({
 					});
 					return;
 				}
-
 				dinozToUpdate.name = this.dinozName;
-
 				this.dinozStore.setDinozList(dinozList);
-
 				// Set parent's data to display dinoz page
 				this.$emit('setNameChoosen', this.dinozName);
 			}
