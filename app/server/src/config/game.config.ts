@@ -5,7 +5,6 @@ type GameEnv = 'development' | 'production';
 interface DinozConfig {
 	maxLevel: number;
 	maxQuantity: number;
-	leaderBonus: number;
 	initialMaxLevel: number;
 }
 
@@ -44,7 +43,6 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		dinoz: {
 			maxLevel: 80,
 			maxQuantity: 18,
-			leaderBonus: 3,
 			initialMaxLevel: 50
 		},
 		shop: {
@@ -74,7 +72,6 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		dinoz: {
 			maxLevel: 80,
 			maxQuantity: 18,
-			leaderBonus: 3,
 			initialMaxLevel: 50
 		},
 		shop: {
