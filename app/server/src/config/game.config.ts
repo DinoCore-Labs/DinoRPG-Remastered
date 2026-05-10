@@ -78,7 +78,7 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 			initialMaxLevel: 50
 		},
 		shop: {
-			dinozNumber: 20
+			dinozNumber: 30
 			//buyableQuetzu: 6
 		},
 		world: {
