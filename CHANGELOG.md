@@ -2,6 +2,14 @@
 
 ## 🔹 Core
 
+## 0.18.1
+
+### Patch Changes
+
+- a36a9ac: Refactor frontend HTTP layer by adding typed API helpers and migrating services to use direct response unwrapping.
+
+  This simplifies service calls, improves response typing, removes repeated Axios `.then/.catch` boilerplate, and supports silent background requests for endpoints such as version checks.
+
 ## 0.18.0
 
 ### Minor Changes
@@ -422,6 +430,17 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.19.1
+
+### Patch Changes
+
+- a36a9ac: Refactor frontend HTTP layer by adding typed API helpers and migrating services to use direct response unwrapping.
+
+  This simplifies service calls, improves response typing, removes repeated Axios `.then/.catch` boilerplate, and supports silent background requests for endpoints such as version checks.
+
+- Updated dependencies [a36a9ac]
+  - @dinorpg/core@0.18.1
 
 ## 0.19.0
 
@@ -947,6 +966,14 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.19.1
+
+### Patch Changes
+
+- a36a9ac: Refactor frontend HTTP layer by adding typed API helpers and migrating services to use direct response unwrapping.
+
+  This simplifies service calls, improves response typing, removes repeated Axios `.then/.catch` boilerplate, and supports silent background requests for endpoints such as version checks.
 
 ## 0.19.0
 
