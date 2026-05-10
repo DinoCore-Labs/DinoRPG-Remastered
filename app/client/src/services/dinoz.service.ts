@@ -5,121 +5,72 @@ import type { ManageDinozPageData } from '@dinorpg/core/models/dinoz/manageDinoz
 import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import type { ItemFeedBack } from '@dinorpg/core/models/items/itemFeedback.js';
 
-import { http } from '../utils/http';
+import { api } from '../utils/http';
 
 export const DinozService = {
-	async setDinozName(id: number, newName: string): Promise<void> {
-		return http()
-			.put(`/dinoz/setname/${id}`, { name: newName })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	setDinozName(id: number, newName: string): Promise<void> {
+		return api.put<void>(`/dinoz/setname/${id}`, {
+			name: newName
+		});
 	},
-	async getDinozFiche(id: number): Promise<DinozFiche> {
-		return http()
-			.get(`/dinoz/fiche/${id}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	getDinozFiche(id: number): Promise<DinozFiche> {
+		return api.get<DinozFiche>(`/dinoz/fiche/${id}`);
 	},
-	async setSkillState(id: number, skillId: number, skillState: boolean): Promise<boolean> {
-		return http()
-			.patch(`/dinoz/setskillstate/${id}`, {
-				skillId,
-				skillState
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	setSkillState(id: number, skillId: number, skillState: boolean): Promise<boolean> {
+		return api.patch<boolean>(`/dinoz/setskillstate/${id}`, {
+			skillId,
+			skillState
+		});
 	},
-	async useIrma(dinozId: number): Promise<ItemFeedBack> {
-		return http()
-			.post(`/dinoz/${dinozId}/irma`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	useIrma(dinozId: number): Promise<ItemFeedBack> {
+		return api.post<ItemFeedBack>(`/dinoz/${dinozId}/irma`);
 	},
-	async move(dinozId: number, placeId: number): Promise<FightResult> {
-		return http()
-			.put(`/dinoz/move`, {
-				placeId: placeId,
-				dinozId: dinozId
-			})
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	move(dinozId: number, placeId: number): Promise<FightResult> {
+		return api.put<FightResult>('/dinoz/move', {
+			placeId,
+			dinozId
+		});
 	},
-	async resurrectDinoz(dinozId: number): Promise<void | ItemFeedBack> {
-		return http()
-			.put(`/dinoz/resurrect/${dinozId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	resurrectDinoz(dinozId: number): Promise<void | ItemFeedBack> {
+		return api.put<void | ItemFeedBack>(`/dinoz/resurrect/${dinozId}`);
 	},
-	async reincarnate(dinozId: number): Promise<void> {
-		return http()
-			.post(`/dinoz/reincarnate/${dinozId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	reincarnate(dinozId: number): Promise<void> {
+		return api.post<void>(`/dinoz/reincarnate/${dinozId}`);
 	},
-	async follow(dinozId: number, targetId: number): Promise<void> {
-		return http()
-			.post(`/dinoz/${dinozId}/follow/${targetId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	follow(dinozId: number, targetId: number): Promise<void> {
+		return api.post<void>(`/dinoz/${dinozId}/follow/${targetId}`);
 	},
-	async unfollow(dinozId: number): Promise<void> {
-		return http()
-			.post(`/dinoz/${dinozId}/unfollow`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	unfollow(dinozId: number): Promise<void> {
+		return api.post<void>(`/dinoz/${dinozId}/unfollow`);
 	},
-	async disband(dinozId: number): Promise<void> {
-		return http()
-			.post(`/dinoz/${dinozId}/disband`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+
+	disband(dinozId: number): Promise<void> {
+		return api.post<void>(`/dinoz/${dinozId}/disband`);
 	},
-	async changeLeader(followerId: number, currentLeaderId: number): Promise<void> {
-		return http()
-			.post(`/dinoz/${followerId}/change/${currentLeaderId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	changeLeader(followerId: number, currentLeaderId: number): Promise<void> {
+		return api.post<void>(`/dinoz/${followerId}/change/${currentLeaderId}`);
 	},
-	async restDinoz(dinozId: number): Promise<void> {
-		return http()
-			.post(`/dinoz/${dinozId}/rest`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	restDinoz(dinozId: number): Promise<void> {
+		return api.post<void>(`/dinoz/${dinozId}/rest`);
 	},
-	async stopRestDinoz(dinozId: number): Promise<void> {
-		return http()
-			.post(`/dinoz/${dinozId}/stop-rest`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	stopRestDinoz(dinozId: number): Promise<void> {
+		return api.post<void>(`/dinoz/${dinozId}/stop-rest`);
 	},
-	async dig(dinozId: number): Promise<DigResponse> {
-		return http()
-			.get(`/dinoz/dig/${dinozId}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	dig(dinozId: number): Promise<DigResponse> {
+		return api.get<DigResponse>(`/dinoz/dig/${dinozId}`);
 	},
-	async congel(dinozId: number): Promise<void> {
-		return http()
-			.post(`/dinoz/${dinozId}/freeze`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	congel(dinozId: number): Promise<void> {
+		return api.post<void>(`/dinoz/${dinozId}/freeze`);
 	},
-	async stopCongel(dinozId: number): Promise<UnfreezeDinozResponse> {
-		return http()
-			.post(`/dinoz/${dinozId}/unfreeze`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	stopCongel(dinozId: number): Promise<UnfreezeDinozResponse> {
+		return api.post<UnfreezeDinozResponse>(`/dinoz/${dinozId}/unfreeze`);
 	},
-	async getDinozToManage(): Promise<ManageDinozPageData> {
-		return http()
-			.get('/dinoz/manage')
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	getDinozToManage(): Promise<ManageDinozPageData> {
+		return api.get<ManageDinozPageData>('/dinoz/manage');
 	},
-	async updateOrders(dinozIds: number[]): Promise<ManageDinozPageData> {
-		return http()
-			.patch('/dinoz/orders', { dinozIds })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
+	updateOrders(dinozIds: number[]): Promise<ManageDinozPageData> {
+		return api.patch<ManageDinozPageData>('/dinoz/orders', {
+			dinozIds
+		});
 	}
 };
