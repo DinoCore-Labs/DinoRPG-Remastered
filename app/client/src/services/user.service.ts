@@ -53,5 +53,12 @@ export const UserService = {
 				'Content-Type': 'multipart/form-data'
 			}
 		});
+	},
+	changePassword(oldPassword: string, newPassword: string, confirmPassword: string): Promise<void> {
+		return api.patch<void>('/users/me/password', {
+			oldPassword,
+			newPassword,
+			confirmPassword
+		});
 	}
 };
