@@ -2319,7 +2319,7 @@
 			"litter": "Literature Prize",
 			"clover": "DinoLoto Winner",
 			"pac": "Scroll of Compiled Abilities",
-			"card": "Deluxe Merguez Loyalty Card",
+			"merguez_card": "Carte de Fidélité Merguez Deluxe",
 			"beta": "Betasaurus Bone"
 		},
 		"description": {
@@ -2534,7 +2534,7 @@
 			"litter": "This Literature Prize is awarded to you in recognition of your prose, which has moved thousands of Dinoz masters. It will continue to endure through the ages as long as Dinoland does not experience a second catastrophe like the collapse of Jazz Island. Suffice it to say, that won't be anytime soon...",
 			"clover": "You have been awarded this prize for being the owner of the luckiest Dinoz in Dinoland (as selected by the DinoLoto draw)! Congratulations!",
 			"pac": "The Scroll of Compiled Abilities is a sophisticated artifact that lists instantly all the skills mastered by your Dinoz. It gives a clear overview and a detailed breakdown of each talent in one look.",
-			"card": "Grilled to perfection and stamped by the **Merguez Seller** himself, this sacred card rewords the most enduring stomachs. After devouring a nasty amount of merguez, you are now promoted to **Official Grand Glutton**.",
+			"merguez_card": "Grillée à la perfection et tamponnée par le **Vendeur de Merguez** lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de **Grand Gourmand Officiel**.",
 			"beta": "Congratulations! You have been one of the pioneers of DinoRPG. You are ready to take on new challenges such as this betasaurus. Maybe it's all a mishap in the end?"
 		}
 	},
@@ -3762,12 +3762,25 @@
 				"begin": "Ola ola ola ! Elles sont bien graisseuses, mes merguez ! ....... Comment ? Quelle idée de venir vendre des merguez dans un endroit aussi lugubre ? Mais ces Ruines sont magnifiques !! Je suis certain qu'un jour ce sont des millions de touristes qui viendront les visiter !",
 				"ah": "Oui, tout à fait ! C'est un peu comme l'acre-aux-pôles : mon cousin y a fait une fortune en vendant des porte-clés en forme de temple. Alors ici, c'est décidé, je serai le premier ! Même si je dois attendre plusieurs années que le commerce se lance, pas question de laisser passer cette opportunité en or !",
 				"ok": "Tiens, ton Dinoz m'a l'air bien maigre... Prends ces merguez ! C'est gratuit à condition que tu ailles parler des Superbes Ruines Ashpouk à tes amis. Ok, tu n'oublieras pas alors ?",
-				"thanks": "De rien, de rien, c'est bon pour le business !"
+				"thanks": "De rien, de rien, c'est bon pour le business !",
+				"ok_card": "Ah, un fidèle client ! Avec ta carte merguez, je peux directement t'en donner 100. Régale-toi !",
+				"thanks_card": "Avec ça, tu as de quoi transformer le champ de bataille en barbecue en géant.",
+				"begin_merguez": "Je te lance un défi : utilise mes merguez en combat. Si tu prouves ta fidélité, tu auras une carte très spéciale.",
+				"merguez_step_1": "Alors ? Tu as commencé à utiliser mes merguez ? Il faut que ça grille en combat, pas dans ton sac !",
+				"merguez_step_2": "Pas mal du tout ! Tu commences à comprendre la puissance de la merguez. Continue comme ça, tu n'es plus très loin de la vraie récompense.",
+				"merguez_step_3": "Maintenant, il faut confirmer. Continue à utiliser des merguez en combat, et reviens me voir quand tu seras un vrai habitué.",
+				"merguez_step_4": "Incroyable ! Tu as prouvé ta fidélité à la merguez. Voici ta carte de fidélité : avec elle, je pourrai t'en donner 100 d'un coup !"
 			},
 			"choice": {
 				"ah": "Ah....",
 				"ok": "Effectivement...",
-				"thanks": "Merci"
+				"thanks": "Merci",
+				"thanks_card": "Parfait !",
+				"begin_merguez": "Commencer le défi merguez",
+				"merguez_step_1": "Le défi merguez ?",
+				"merguez_step_2": "J'ai utilisé des merguez !",
+				"merguez_step_3": "Et maintenant ?",
+				"merguez_step_4": "J'ai terminé ton défi !"
 			}
 		},
 		"strangeBeing": {
@@ -4852,6 +4865,9 @@
 				"digStarFound": "Au premier coup de pelle, vous entendez un bruit étrange. En creusant un peu vous trouvez l'une des 7 étoiles magiques ! Félicitations !",
 				"resurrectStarFound": "Alors qu'il se réveille à Dinoville, votre Dinoz s'aperçoit que quelqu'un lui a confié la dernière étoile magique ! Ses souvenirs sont troubles, mais il se rappelle de Dinoz étranges, inconnus jusque là, à l'allure de singes au pelage multicolore... Ce sont eux qui lui ont confié la 7ème étoile, mais qui sont-ils ?!?"
 			}
+		},
+		"merguez": {
+			"name": "Le Mystère de la Merguez"
 		}
 	}
 }
