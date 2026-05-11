@@ -208,12 +208,11 @@ export const remainingXPToLevelUp = (
 export const isMaxLevel = (dinoz: Pick<Dinoz, 'level'>, config: Config) => dinoz.level >= config.dinoz.maxLevel;
 
 export const canLevelUp = (
-	dinoz: Pick<Dinoz, 'experience' | 'level'> & {
-		status: Pick<DinozStatus, 'statusId'>[];
-	},
+	dinoz: Pick<Dinoz, 'level' | 'experience'> & { status: Pick<DinozStatus, 'statusId'>[] },
 	config: Config
 ) => {
-	return remainingXPToLevelUp(dinoz) <= 0 && !isMaxLevel(dinoz, config);
+	const maxExperience = getMaxXp(dinoz);
+	return maxExperience > 0 && dinoz.experience >= maxExperience && !isMaxLevel(dinoz, config);
 };
 
 export const backpackSlot = (

@@ -18,12 +18,32 @@ export const getRace = (raceId: number) => {
 	return race;
 };
 
+const levelLimitStatusByLevel: Partial<Record<number, DinozStatusId>> = {
+	50: DinozStatusId.BROKEN_LIMIT_1,
+	60: DinozStatusId.BROKEN_LIMIT_2,
+	70: DinozStatusId.BROKEN_LIMIT_3
+};
+
+export const getRequiredLevelLimitStatus = (level: number): DinozStatusId | null => {
+	return levelLimitStatusByLevel[level] ?? null;
+};
+
+export const isDinozBlockedByLevelLimit = (dinoz: DinozForMaxXp): boolean => {
+	const requiredStatusId = getRequiredLevelLimitStatus(dinoz.level);
+	if (!requiredStatusId) {
+		return false;
+	}
+	return !dinoz.status.some(status => status.statusId === requiredStatusId);
+};
+
 export const getMaxXp = (dinoz: DinozForMaxXp): number => {
 	const level = levelList.find(l => l.id === dinoz.level);
-	if (!level) throw new Error(`Level ${dinoz.level} doesn't exist.`);
-	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_3) && dinoz.level === 70) return 0;
-	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_2) && dinoz.level === 60) return 0;
-	if (dinoz.status.some(s => s.statusId !== DinozStatusId.BROKEN_LIMIT_1) && dinoz.level === 50) return 0;
+	if (!level) {
+		throw new Error(`Level ${dinoz.level} doesn't exist.`);
+	}
+	if (isDinozBlockedByLevelLimit(dinoz)) {
+		return 0;
+	}
 	return level.experience;
 };
 

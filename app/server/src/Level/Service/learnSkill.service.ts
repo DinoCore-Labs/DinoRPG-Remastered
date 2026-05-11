@@ -5,6 +5,7 @@ import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import type { LearnSkillData } from '@dinorpg/core/models/skills/learnSkillData.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
+import { getMaxXp } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import gameConfig from '../../config/game.config.js';
@@ -134,7 +135,10 @@ export async function learnSkill(
 	// Update player points + logs
 	await updatePoints(dinozSkills.user.id, 1);
 	//await createLog(LogType.LevelUp, dinozSkills.user.id, dinozSkills.id, newDinozData.level.toString());
-	result.newMaxExperience = levelList.find(l => l.id === dinozSkills.level + 1)?.experience ?? 0;
+	result.newMaxExperience = getMaxXp({
+		level: newDinozData.level,
+		status: dinozSkills.status
+	});
 	// Stats
 	await incrementUserStat(StatTracking.LVL_UP, dinozSkills.user.id, 1);
 	switch (skills.element) {

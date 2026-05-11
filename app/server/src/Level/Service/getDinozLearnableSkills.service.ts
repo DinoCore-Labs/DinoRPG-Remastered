@@ -1,8 +1,8 @@
-import { levelList } from '@dinorpg/core/models/dinoz/dinozLevel.js';
 import { DinozRace } from '@dinorpg/core/models/dinoz/dinozRace.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
+import { getMaxXp, isDinozBlockedByLevelLimit } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyRequest } from 'fastify';
 
 import { Dinoz, DinozItems, DinozSkills, DinozSkillsUnlockable, DinozStatus, User } from '../../../../prisma/index.js';
@@ -42,14 +42,25 @@ export function getDinozLearnableSkills(
 		throw new ExpectedError(`Dinoz ${dinozId} is already at max level.`);
 	}
 
-	const level = levelList.find(level => level.id === dinoz.level);
-	if (!level) {
-		throw new ExpectedError(`Level ${dinoz.level} doesn't exist.`);
+	if (isDinozBlockedByLevelLimit(dinoz)) {
+		throw new ExpectedError('dinozLevelCapReached', {
+			statusCode: 400,
+			params: {
+				dinozId,
+				level: dinoz.level
+			}
+		});
 	}
-	const maxExperience = level.experience;
+
+	const maxExperience = getMaxXp(dinoz);
 
 	if (dinoz.experience < maxExperience /*&& !event*/) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't have enough experience`);
+		throw new ExpectedError('dinozNotEnoughExperience', {
+			statusCode: 400,
+			params: {
+				dinozId
+			}
+		});
 	}
 
 	// Check if dinoz has 'Plan de carrière' skill or cube object
