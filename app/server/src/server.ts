@@ -280,8 +280,27 @@ async function buildServer() {
 	// EXTRA: Errors
 	//------------------------------------------------------
 	server.setErrorHandler((err, req, reply) => {
+		const sendToDiscord = (error: unknown, scope: string) => {
+			const errorId = randomUUID();
+			req.log.warn({ err: error, errorId }, `[${scope}] Request error`);
+			void Promise.resolve(
+				appDiscordClient.sendError(error, {
+					scope,
+					errorId,
+					req,
+					reply
+				})
+			).catch(discordError => {
+				req.log.warn({ err: discordError, errorId }, '[discord] Failed to send error log');
+			});
+			return errorId;
+		};
 		// 1) Erreurs "attendues"
 		if (err instanceof ExpectedError) {
+			const shouldNotifyDiscord = err.statusCode >= 400 && err.statusCode < 500;
+			if (shouldNotifyDiscord) {
+				sendToDiscord(err, 'server.expectedError');
+			}
 			return reply.code(err.statusCode).send({
 				code: err.code,
 				message: err.message,
@@ -291,6 +310,11 @@ async function buildServer() {
 		// 2) Erreurs Fastify / validation
 		const fe = err as FastifyError;
 		if (typeof fe?.statusCode === 'number') {
+			const shouldNotifyDiscord =
+				fe.statusCode >= 400 && fe.statusCode < 500 && fe.statusCode !== 401 && fe.statusCode !== 403;
+			if (shouldNotifyDiscord) {
+				sendToDiscord(fe, 'server.fastifyError');
+			}
 			return reply.code(fe.statusCode).send({
 				code: 'request.invalid',
 				message: fe.message
@@ -299,11 +323,15 @@ async function buildServer() {
 		// 3) Fallback 500
 		const errorId = randomUUID();
 		req.log.error({ err, errorId }, 'Unhandled server error');
-		appDiscordClient.sendError(err, {
-			scope: 'server.errorHandler',
-			errorId,
-			req,
-			reply
+		void Promise.resolve(
+			appDiscordClient.sendError(err, {
+				scope: 'server.errorHandler',
+				errorId,
+				req,
+				reply
+			})
+		).catch(discordError => {
+			req.log.warn({ err: discordError, errorId }, '[discord] Failed to send error log');
 		});
 		return reply.code(500).send({
 			code: 'server.internalError',
