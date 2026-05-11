@@ -505,7 +505,9 @@
 		"offerInProgress": "Vous ne pouvez pas annuler une enchère ayant au moins une offre.",
 		"noDinozAtMarket": "Vous n'avez aucun Dinoz au marché.",
 		"alreadyOffer": "Vous avez déjà une vente en cours.",
-		"bidsOngoing": "Vous avez encore des enchères en cours."
+		"bidsOngoing": "Vous avez encore des enchères en cours.",
+		"dinozLevelCapReached": "Votre Dinoz a atteint le palier du niveau {level}. Vous devez débloquer la limite de niveau avant de continuer.",
+		"dinozNotEnoughExperience": "Votre Dinoz n'a pas assez d'expérience pour monter de niveau."
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
