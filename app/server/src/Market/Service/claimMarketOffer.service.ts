@@ -1,7 +1,7 @@
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { OfferStatus } from '../../../../prisma/index.js';
+import { MoneyType, OfferStatus } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 import { assertUserHasDinozAtMarket } from '../Helpers/market.helper.js';
 import { addOfferContentToInventoryTx, assertUserCanReceiveOfferContent } from '../Helpers/marketInventory.helper.js';
@@ -43,14 +43,24 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 	}
 
 	const winnerBid = offer.bids[0];
-	const hasWinner = Boolean(winnerBid?.userId);
-	const targetUserId = hasWinner ? winnerBid!.userId! : offer.sellerId;
+	const winnerId = winnerBid?.userId ?? null;
+	const sellerId = offer.sellerId;
 
-	if (!targetUserId) {
+	const hasWinner = Boolean(winnerId);
+	const isSeller = sellerId === userId;
+	const isWinner = winnerId === userId;
+
+	if (!isSeller && !isWinner) {
 		throw new ExpectedError('invalidOffer');
 	}
 
-	if (userId !== targetUserId) {
+	if (!hasWinner && !isSeller) {
+		throw new ExpectedError('invalidOffer');
+	}
+
+	const contentTargetUserId = hasWinner ? winnerId : sellerId;
+
+	if (!contentTargetUserId) {
 		throw new ExpectedError('invalidOffer');
 	}
 
@@ -68,7 +78,7 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 			quantity: item.quantity
 		}));
 
-	await assertUserCanReceiveOfferContent(targetUserId, {
+	await assertUserCanReceiveOfferContent(contentTargetUserId, {
 		items,
 		ingredients,
 		dinozId: offer.dinozId,
@@ -76,21 +86,56 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 	});
 
 	await prisma.$transaction(async tx => {
+		const claimed = await tx.offer.updateMany({
+			where: {
+				id: offer.id,
+				status: OfferStatus.ENDED
+			},
+			data: {
+				status: OfferStatus.CLAIMED
+			}
+		});
+
+		if (claimed.count !== 1) {
+			throw new ExpectedError('invalidOffer');
+		}
+
+		if (hasWinner && winnerBid && sellerId) {
+			await tx.userWallet.upsert({
+				where: {
+					userId_type: {
+						userId: sellerId,
+						type: MoneyType.TREASURE_TICKET
+					}
+				},
+				create: {
+					userId: sellerId,
+					type: MoneyType.TREASURE_TICKET,
+					amount: winnerBid.value
+				},
+				update: {
+					amount: {
+						increment: winnerBid.value
+					}
+				}
+			});
+		}
+
 		if (offer.dinozId && offer.dinoz) {
 			if (hasWinner) {
 				await tx.dinoz.update({
 					where: { id: offer.dinozId },
 					data: {
-						userId: targetUserId,
+						userId: contentTargetUserId,
 						state: null,
 						leaderId: null
 					}
 				});
 
-				if (offer.sellerId) {
+				if (sellerId) {
 					await transferDinozRankingTx(tx, {
-						sellerId: offer.sellerId,
-						winnerId: targetUserId,
+						sellerId,
+						winnerId: contentTargetUserId,
 						dinozLevel: offer.dinoz.level
 					});
 				}
@@ -104,14 +149,7 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 			}
 		}
 
-		await addOfferContentToInventoryTx(tx, targetUserId, items, ingredients);
-
-		await tx.offer.update({
-			where: { id: offer.id },
-			data: {
-				status: OfferStatus.CLAIMED
-			}
-		});
+		await addOfferContentToInventoryTx(tx, contentTargetUserId, items, ingredients);
 	});
 
 	return reply.send({ ok: true });
