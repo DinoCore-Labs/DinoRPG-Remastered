@@ -86,6 +86,6 @@ export const userStore = defineStore('userStore', {
 		}
 	},
 	persist: {
-		storage: window.sessionStorage
+		storage: window.localStorage
 	}
 });

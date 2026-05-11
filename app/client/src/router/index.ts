@@ -294,6 +294,7 @@ router.beforeEach(async to => {
 		if (!force && sessionHydrated && user.isLogged) return true;
 		const data: UserData | null = await UserService.me({ silent: true }).catch(() => null);
 		if (!data || isLogoutSessionInProgress()) {
+			clearClientSession();
 			return false;
 		}
 		sessionHydrated = true;

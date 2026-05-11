@@ -37,6 +37,6 @@ export const dinozStore = defineStore('dinozStore', {
 		}
 	},
 	persist: {
-		storage: window.sessionStorage
+		storage: window.localStorage
 	}
 });
