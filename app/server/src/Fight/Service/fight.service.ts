@@ -27,6 +27,7 @@ import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDi
 import { advanceDinozMissionOnFightWon, advanceDinozMissionOnMove } from '../../Mission/Controller/mission.progress.js';
 import { resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
 import { prisma } from '../../prisma.js';
+import { advanceMerguezScenarioOnMerguezUsedTx } from '../../Scenario/Controller/merguezScenario.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { addMoney, removeMoney } from '../../User/Controller/money.controller.js';
 import { calculateXPBonus, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
@@ -511,9 +512,13 @@ export async function rewardFightVsMonsters(
 	// Handle goblin merguez
 	for (const [userId, merguezUsed] of Object.entries(merguezPerPlayer)) {
 		await incrementUserStat(StatTracking.MERGUEZ, userId, merguezUsed);
+		await prisma.$transaction(tx =>
+			advanceMerguezScenarioOnMerguezUsedTx(tx, {
+				userId,
+				usedCount: merguezUsed
+			})
+		);
 	}
-
-	//scenarioChecker(playerId, fightResult, monsters);
 
 	// Catches
 	for (const dinozCatch of fightResult.catches) {

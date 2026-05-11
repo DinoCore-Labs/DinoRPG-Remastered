@@ -1,7 +1,9 @@
+import { merguezScenario } from './data/merguezScenario.js';
 import { starScenario } from './data/starScenario.js';
 
 export const scenarioList = {
-	star: starScenario
+	star: starScenario,
+	merguez: merguezScenario
 } as const;
 
 export type ScenarioKey = keyof typeof scenarioList;

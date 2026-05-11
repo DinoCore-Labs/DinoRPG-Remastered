@@ -6,6 +6,12 @@ import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { rewardIdByKey, statTrackingByCollectionKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
+import {
+	MERGUEZ_CARD_MAX_QUANTITY,
+	MERGUEZ_CARD_REWARD_KEY,
+	MERGUEZ_DEFAULT_MAX_QUANTITY,
+	MERGUEZ_SHOPKEEPER_MAX_QUANTITY
+} from '@dinorpg/core/models/scenarios/data/merguezScenario.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/client.js';
@@ -32,15 +38,6 @@ type ApplyDialogPhaseEffectsResult = {
 	actions: DialogPhaseResponse['actions'];
 	pnj: DialogPhaseResponse['pnj'];
 };
-
-function getUserQuestWhere(userId: string, questKey: string) {
-	return {
-		questKey_userId: {
-			questKey,
-			userId
-		}
-	};
-}
 
 function getUserItemWhere(userId: string, itemId: number) {
 	return {
@@ -79,7 +76,9 @@ function getDialogItemMaxQuantity(context: DialogContext, itemId: number) {
 		throw new ExpectedError(`Item ${itemId} does not exist`);
 	}
 	if (item.itemId === Item.GOBLIN_MERGUEZ) {
-		return context.user.shopKeeper ? 150 : 20;
+		const userHasMerguezCard = context.user.collections.has(MERGUEZ_CARD_REWARD_KEY);
+		const maxQuantity = userHasMerguezCard ? MERGUEZ_CARD_MAX_QUANTITY : MERGUEZ_DEFAULT_MAX_QUANTITY;
+		return context.user.shopKeeper ? Math.max(MERGUEZ_SHOPKEEPER_MAX_QUANTITY, maxQuantity) : maxQuantity;
 	}
 	if (context.user.shopKeeper && item.itemType !== ItemType.MAGICAL) {
 		return Math.round(item.maxQuantity * 1.5);
