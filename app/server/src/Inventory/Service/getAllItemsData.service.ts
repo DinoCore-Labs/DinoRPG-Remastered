@@ -2,6 +2,10 @@ import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
+import {
+	MERGUEZ_CARD_MAX_QUANTITY,
+	MERGUEZ_SHOPKEEPER_MAX_QUANTITY
+} from '@dinorpg/core/models/scenarios/data/merguezScenario.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -11,8 +15,9 @@ export const getItemMaxQuantity = (
 	userInventory: NonNullable<Awaited<ReturnType<typeof getUserInventoryDataRequest>>>,
 	item: ItemFiche
 ) => {
-	if (item.itemId === Item.GOBLIN_MERGUEZ && userInventory.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD)) {
-		return userInventory.shopKeeper ? 150 : 20;
+	const hasMerguezCard = userInventory.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD);
+	if (item.itemId === Item.GOBLIN_MERGUEZ && hasMerguezCard) {
+		return userInventory.shopKeeper ? MERGUEZ_SHOPKEEPER_MAX_QUANTITY : MERGUEZ_CARD_MAX_QUANTITY;
 	}
 	if (userInventory.shopKeeper && item.itemType !== ItemType.MAGICAL) {
 		return Math.round(item.maxQuantity * 1.5);

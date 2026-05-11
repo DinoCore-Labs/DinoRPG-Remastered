@@ -2319,7 +2319,7 @@
 			"litter": "Prix de Littérature",
 			"clover": "Gagnant de DinoLoto",
 			"pac": "Parchemin des Aptitudes Compilées",
-			"card": "Carte de Fidélité Merguez Deluxe",
+			"merguez_card": "Carte de Fidélité Merguez Deluxe",
 			"beta": "Os de betasaurus"
 		},
 		"description": {
@@ -2534,7 +2534,7 @@
 			"litter": "Ce prix de Littérature vous est remis pour saluer votre prose ayant ému des milliers de maîtres Dinoz. Elle continuera à traverser les âges tant que Dinoland ne connaîtra pas de deuxième catastrophe telle que l'effondrement de l'île de Jazz. Autant dire que ce ne sera pas avant longtemps...",
 			"clover": "Ce prix vous a été remis pour avoir été le maître Dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Félicitations !",
 			"pac": "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé de leurs talents en un seul regard.",
-			"card": "Grillée à la perfection et tamponnée par le **Vendeur de Merguez** lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de **Grand Gourmand Officiel**.",
+			"merguez_card": "Grillée à la perfection et tamponnée par le **Vendeur de Merguez** lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de **Grand Gourmand Officiel**.",
 			"beta": "Félicitations ! Vous avez été un des pionniers sur DinoRPG. Vous êtes prêt à relever de tout nouveaux défis comme ce betasaurus. Peut-être est-ce une erreur finalement ?"
 		}
 	},

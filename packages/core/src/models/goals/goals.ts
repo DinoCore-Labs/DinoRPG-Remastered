@@ -507,8 +507,8 @@ export const goals: Record<StatTracking, Goal> = {
 			ES: 'Este medallón prueba que has terminado la búsqueda del Smog.'
 		}
 	},
-	[StatTracking.CARD]: {
-		id: StatTracking.CARD,
+	[StatTracking.MERGUEZ_CARD]: {
+		id: StatTracking.MERGUEZ_CARD,
 		name: {
 			EN: 'Merguez Deluxe Loyalty Card', // TODO: Translation pending review
 			FR: 'Carte DE Fidélité Merguez Deluxe',
