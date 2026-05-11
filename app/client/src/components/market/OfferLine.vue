@@ -148,7 +148,7 @@ import { statusList } from '../../constants/status';
 import { userStore } from '../../store/userStore';
 import { errorHandler } from '../../utils/errorHandler';
 import { formatMarketTime, getOfferMinimumBid, isOfferExpired } from '../../utils/market';
-import { ElementNames } from '@dinorpg/core/models/enums/ElementType.js';
+import { ElementNames, ElementType } from '@dinorpg/core/models/enums/ElementType.js';
 
 type MarketSkill = {
 	skillId: number;
@@ -158,6 +158,20 @@ type MarketSkill = {
 type MarketStatus = {
 	statusId: number;
 	imgName: string;
+};
+
+const marketSkillElementOrder: Record<number, number> = {
+	[ElementType.FIRE]: 1,
+	[ElementType.WATER]: 2,
+	[ElementType.WOOD]: 3,
+	[ElementType.LIGHTNING]: 4,
+	[ElementType.AIR]: 5,
+	[ElementType.VOID]: 6
+};
+
+const getMarketSkillElementRank = (marketSkill: MarketSkill) => {
+	const element = marketSkill.skill.element[0] ?? ElementType.VOID;
+	return marketSkillElementOrder[element] ?? Number.MAX_SAFE_INTEGER;
 };
 
 export default defineComponent({
@@ -206,17 +220,25 @@ export default defineComponent({
 		},
 		displayedSkills(): MarketSkill[] {
 			const skills = this.offer.dinoz?.skills ?? [];
-			return skills.reduce<MarketSkill[]>((acc, currentSkill) => {
-				const skill = skillList[currentSkill.skillId as keyof typeof skillList];
-				if (!skill) {
+			return skills
+				.reduce<MarketSkill[]>((acc, currentSkill) => {
+					const skill = skillList[currentSkill.skillId as keyof typeof skillList];
+					if (!skill) {
+						return acc;
+					}
+					acc.push({
+						skillId: currentSkill.skillId,
+						skill
+					});
 					return acc;
-				}
-				acc.push({
-					skillId: currentSkill.skillId,
-					skill
+				}, [])
+				.sort((a, b) => {
+					const elementDiff = getMarketSkillElementRank(a) - getMarketSkillElementRank(b);
+					if (elementDiff !== 0) {
+						return elementDiff;
+					}
+					return a.skillId - b.skillId;
 				});
-				return acc;
-			}, []);
 		},
 		displayedStatuses(): MarketStatus[] {
 			const statuses = this.offer.dinoz?.status ?? [];
