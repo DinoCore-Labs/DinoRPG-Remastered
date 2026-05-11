@@ -28,5 +28,5 @@ export const statTrackingByCollectionKey: Partial<Record<string, StatTracking>> 
 	tour: StatTracking.TOUR,
 	pda: StatTracking.PDA,
 	plume: StatTracking.PLUME,
-	merguez_card: StatTracking.MERGUEZ
+	merguez_card: StatTracking.MERGUEZ_CARD
 };
