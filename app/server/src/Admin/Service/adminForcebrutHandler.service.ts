@@ -19,15 +19,12 @@ function toAdminForcebrutOpponent(opponent: {
 	level: number;
 	life: number;
 	maxLife: number;
-	experience: number;
 	nbrUpFire: number;
 	nbrUpWood: number;
 	nbrUpWater: number;
 	nbrUpLightning: number;
 	nbrUpAir: number;
 	skillIds: number[];
-	itemIds: number[];
-	statusIds: number[];
 	enabled: boolean;
 	createdAt: Date;
 	updatedAt: Date;

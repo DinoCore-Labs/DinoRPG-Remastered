@@ -10,8 +10,6 @@ import { getMaxXp } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { Prisma } from '../../../../prisma/index.js';
-import gameConfig from '../../config/game.config.js';
-import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { calculateFightBetweenPlayers } from '../../Fight/Service/fight.service.js';
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { prisma } from '../../prisma.js';
@@ -44,13 +42,11 @@ function getNextMedalStatus(step: number): DinozStatusId | null {
 function calculateForcebrutXp(opponentLevel: number, dinozLevel: number) {
 	const levelRatio = opponentLevel / Math.max(dinozLevel, 1);
 	const baseXp = opponentLevel * 3 + 10;
-
 	return Math.max(1, Math.round(baseXp * Math.max(0.35, levelRatio)));
 }
 
 async function consumeIrmaPotionTx(tx: Prisma.TransactionClient, userId: string) {
 	const irmaItemId = itemList[Item.POTION_IRMA].itemId;
-
 	const result = await tx.userItems.updateMany({
 		where: {
 			userId,
@@ -65,11 +61,9 @@ async function consumeIrmaPotionTx(tx: Prisma.TransactionClient, userId: string)
 			}
 		}
 	});
-
 	if (result.count !== 1) {
 		throw new ExpectedError('forcebrut.notEnoughIrma', { statusCode: 400 });
 	}
-
 	await tx.userItems.deleteMany({
 		where: {
 			userId,
@@ -93,8 +87,6 @@ function mapOpponentToFighter(opponent: {
 	nbrUpLightning: number;
 	nbrUpAir: number;
 	skillIds: number[];
-	itemIds: number[];
-	statusIds: number[];
 }): DinozToGetFighter {
 	const FORCEBRUT_OPPONENT_ID_OFFSET = 1_000_000_000;
 	return {
@@ -111,8 +103,8 @@ function mapOpponentToFighter(opponent: {
 		nbrUpLightning: opponent.nbrUpLightning,
 		nbrUpAir: opponent.nbrUpAir,
 		skills: opponent.skillIds.filter(skillId => !FORBIDDEN_FORCEBRUT_SKILLS.has(skillId)).map(skillId => ({ skillId })),
-		items: opponent.itemIds.map(itemId => ({ itemId })),
-		status: opponent.statusIds.map(statusId => ({ statusId })),
+		items: [],
+		status: [],
 		catches: []
 	};
 }
@@ -120,7 +112,6 @@ function mapOpponentToFighter(opponent: {
 export async function getForcebrutOpponent(req: FastifyRequest<{ Params: ForcebrutParams }>, reply: FastifyReply) {
 	const dinozId = Number(req.params.id);
 	const userId = req.user.id;
-
 	const dinoz = await prisma.dinoz.findFirst({
 		where: {
 			id: dinozId,
@@ -139,23 +130,18 @@ export async function getForcebrutOpponent(req: FastifyRequest<{ Params: Forcebr
 			}
 		}
 	});
-
 	if (!dinoz) {
 		throw new ExpectedError('dinozNotFound', { statusCode: 404 });
 	}
-
 	if (dinoz.placeId !== PlaceEnum.FORCEBRUT) {
 		throw new ExpectedError('forcebrut.wrongPlace', { statusCode: 400 });
 	}
-
 	if (!isAlive(dinoz)) {
 		throw new ExpectedError('dead', { statusCode: 400 });
 	}
-
 	if (!dinoz.status.some(status => status.statusId === DinozStatusId.TOURNA)) {
 		throw new ExpectedError('forcebrut.notRegistered', { statusCode: 400 });
 	}
-
 	const opponent = await prisma.forcebrutTournamentOpponent.findFirst({
 		where: {
 			step: dinoz.FBTournamentStep + 1,
@@ -169,18 +155,15 @@ export async function getForcebrutOpponent(req: FastifyRequest<{ Params: Forcebr
 			level: true
 		}
 	});
-
 	if (!opponent) {
 		throw new ExpectedError('forcebrut.noOpponent', { statusCode: 404 });
 	}
-
 	return reply.send(opponent);
 }
 
 export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: ForcebrutParams }>, reply: FastifyReply) {
 	const dinozId = Number(req.params.id);
 	const userId = req.user.id;
-
 	const dinoz = await prisma.dinoz.findFirst({
 		where: {
 			id: dinozId,
@@ -237,46 +220,36 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 			}
 		}
 	});
-
 	if (!dinoz) {
 		throw new ExpectedError('dinozNotFound', { statusCode: 404 });
 	}
-
 	if (dinoz.placeId !== PlaceEnum.FORCEBRUT) {
 		throw new ExpectedError('forcebrut.wrongPlace', { statusCode: 400 });
 	}
-
 	if (dinoz.state !== null) {
 		throw new ExpectedError('forcebrut.unavailableDinoz', { statusCode: 400 });
 	}
-
 	if (!isAlive(dinoz)) {
 		throw new ExpectedError('dead', { statusCode: 400 });
 	}
-
 	if (!dinoz.status.some(status => status.statusId === DinozStatusId.TOURNA)) {
 		throw new ExpectedError('forcebrut.notRegistered', { statusCode: 400 });
 	}
-
 	const opponent = await prisma.forcebrutTournamentOpponent.findFirst({
 		where: {
 			step: dinoz.FBTournamentStep + 1,
 			enabled: true
 		}
 	});
-
 	if (!opponent) {
 		throw new ExpectedError('forcebrut.noOpponent', { statusCode: 404 });
 	}
-
 	const playerFighter: DinozToGetFighter = {
 		...dinoz,
 		skills: dinoz.skills.filter(skill => !FORBIDDEN_FORCEBRUT_SKILLS.has(skill.skillId)),
 		catches: []
 	};
-
 	const opponentFighter = mapOpponentToFighter(opponent);
-
 	const fightResult = calculateFightBetweenPlayers(
 		STANDARD_PVP_RULES,
 		[playerFighter],
@@ -285,43 +258,33 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 		false,
 		PlaceEnum.FORCEBRUT
 	);
-
 	const victory = fightResult.outcome === FightOutcome.AttackerWin;
 	const attacker = fightResult.attackers.find(fighter => fighter.dinozId === dinoz.id);
 
 	if (!attacker) {
 		throw new ExpectedError(`Attacker ${dinoz.id} doesn't exist.`);
 	}
-
 	let goldEarned = 0;
 	let xpEarned = 0;
 	let levelUp = false;
 	let statusReward: DinozStatusId | null = null;
-
 	if (victory) {
 		const goldMultiplierRoll = getRandomNumber(0, 100);
 		let goldMultiplier = 1;
-
 		if (goldMultiplierRoll < 1) goldMultiplier = 10;
 		else if (goldMultiplierRoll < 11) goldMultiplier = 3;
-
 		goldEarned = (getRandomNumber(0, 10) + 28) * 10 * goldMultiplier;
-
 		xpEarned = calculateForcebrutXp(opponent.level, dinoz.level);
 		xpEarned = calculateXPBonus(dinoz, xpEarned, dinoz.user);
-
 		const maxXp = getMaxXp(dinoz);
-
 		if (dinoz.experience >= maxXp) {
 			levelUp = true;
 			xpEarned = 0;
 		} else if (dinoz.experience + xpEarned >= maxXp) {
 			levelUp = true;
 		}
-
 		statusReward = getNextMedalStatus(dinoz.FBTournamentStep + 1);
 	}
-
 	await prisma.$transaction(async tx => {
 		await consumeIrmaPotionTx(tx, userId);
 
@@ -341,7 +304,6 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 				}
 			}
 		});
-
 		if (victory && goldEarned > 0) {
 			await tx.userWallet.update({
 				where: {
@@ -357,7 +319,6 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 				}
 			});
 		}
-
 		if (victory && statusReward !== null) {
 			await tx.dinozStatus.upsert({
 				where: {
@@ -374,9 +335,7 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 			});
 		}
 	});
-
 	let merguezUsed = 0;
-
 	for (const fighter of fightResult.attackers) {
 		for (const itemUsed of fighter.itemsUsed) {
 			const itemRef = itemList[itemUsed];

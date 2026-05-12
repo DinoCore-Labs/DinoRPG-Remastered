@@ -141,7 +141,6 @@ model ForcebrutTournamentOpponent {
   level Int
   life Int @default(100)
   maxLife Int @default(100)
-  experience Int @default(0)
 
   nbrUpFire Int @default(0)
   nbrUpWood Int @default(0)
@@ -150,8 +149,6 @@ model ForcebrutTournamentOpponent {
   nbrUpAir Int @default(0)
 
   skillIds Int[] @default([])
-  itemIds Int[] @default([])
-  statusIds Int[] @default([])
 
   enabled Boolean @default(true)
 

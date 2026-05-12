@@ -172,15 +172,12 @@ export const adminForcebrutOpponentBodySchema = z.object({
 	level: z.coerce.number().int().min(1),
 	life: z.coerce.number().int().min(0).default(100),
 	maxLife: z.coerce.number().int().min(1).default(100),
-	experience: z.coerce.number().int().min(0).default(0),
 	nbrUpFire: z.coerce.number().int().min(0).default(0),
 	nbrUpWood: z.coerce.number().int().min(0).default(0),
 	nbrUpWater: z.coerce.number().int().min(0).default(0),
 	nbrUpLightning: z.coerce.number().int().min(0).default(0),
 	nbrUpAir: z.coerce.number().int().min(0).default(0),
 	skillIds: z.array(z.coerce.number().int().positive()).default([]),
-	itemIds: z.array(z.coerce.number().int().positive()).default([]),
-	statusIds: z.array(z.coerce.number().int().positive()).default([]),
 	enabled: z.boolean().default(true)
 });
 

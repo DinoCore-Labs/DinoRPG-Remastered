@@ -13257,15 +13257,12 @@ export namespace Prisma {
     level: number | null
     life: number | null
     maxLife: number | null
-    experience: number | null
     nbrUpFire: number | null
     nbrUpWood: number | null
     nbrUpWater: number | null
     nbrUpLightning: number | null
     nbrUpAir: number | null
     skillIds: number | null
-    itemIds: number | null
-    statusIds: number | null
   }
 
   export type ForcebrutTournamentOpponentSumAggregateOutputType = {
@@ -13275,15 +13272,12 @@ export namespace Prisma {
     level: number | null
     life: number | null
     maxLife: number | null
-    experience: number | null
     nbrUpFire: number | null
     nbrUpWood: number | null
     nbrUpWater: number | null
     nbrUpLightning: number | null
     nbrUpAir: number | null
     skillIds: number[]
-    itemIds: number[]
-    statusIds: number[]
   }
 
   export type ForcebrutTournamentOpponentMinAggregateOutputType = {
@@ -13295,7 +13289,6 @@ export namespace Prisma {
     level: number | null
     life: number | null
     maxLife: number | null
-    experience: number | null
     nbrUpFire: number | null
     nbrUpWood: number | null
     nbrUpWater: number | null
@@ -13315,7 +13308,6 @@ export namespace Prisma {
     level: number | null
     life: number | null
     maxLife: number | null
-    experience: number | null
     nbrUpFire: number | null
     nbrUpWood: number | null
     nbrUpWater: number | null
@@ -13335,15 +13327,12 @@ export namespace Prisma {
     level: number
     life: number
     maxLife: number
-    experience: number
     nbrUpFire: number
     nbrUpWood: number
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
     skillIds: number
-    itemIds: number
-    statusIds: number
     enabled: number
     createdAt: number
     updatedAt: number
@@ -13358,15 +13347,12 @@ export namespace Prisma {
     level?: true
     life?: true
     maxLife?: true
-    experience?: true
     nbrUpFire?: true
     nbrUpWood?: true
     nbrUpWater?: true
     nbrUpLightning?: true
     nbrUpAir?: true
     skillIds?: true
-    itemIds?: true
-    statusIds?: true
   }
 
   export type ForcebrutTournamentOpponentSumAggregateInputType = {
@@ -13376,15 +13362,12 @@ export namespace Prisma {
     level?: true
     life?: true
     maxLife?: true
-    experience?: true
     nbrUpFire?: true
     nbrUpWood?: true
     nbrUpWater?: true
     nbrUpLightning?: true
     nbrUpAir?: true
     skillIds?: true
-    itemIds?: true
-    statusIds?: true
   }
 
   export type ForcebrutTournamentOpponentMinAggregateInputType = {
@@ -13396,7 +13379,6 @@ export namespace Prisma {
     level?: true
     life?: true
     maxLife?: true
-    experience?: true
     nbrUpFire?: true
     nbrUpWood?: true
     nbrUpWater?: true
@@ -13416,7 +13398,6 @@ export namespace Prisma {
     level?: true
     life?: true
     maxLife?: true
-    experience?: true
     nbrUpFire?: true
     nbrUpWood?: true
     nbrUpWater?: true
@@ -13436,15 +13417,12 @@ export namespace Prisma {
     level?: true
     life?: true
     maxLife?: true
-    experience?: true
     nbrUpFire?: true
     nbrUpWood?: true
     nbrUpWater?: true
     nbrUpLightning?: true
     nbrUpAir?: true
     skillIds?: true
-    itemIds?: true
-    statusIds?: true
     enabled?: true
     createdAt?: true
     updatedAt?: true
@@ -13546,15 +13524,12 @@ export namespace Prisma {
     level: number
     life: number
     maxLife: number
-    experience: number
     nbrUpFire: number
     nbrUpWood: number
     nbrUpWater: number
     nbrUpLightning: number
     nbrUpAir: number
     skillIds: number[]
-    itemIds: number[]
-    statusIds: number[]
     enabled: boolean
     createdAt: Date
     updatedAt: Date
@@ -13588,15 +13563,12 @@ export namespace Prisma {
     level?: boolean
     life?: boolean
     maxLife?: boolean
-    experience?: boolean
     nbrUpFire?: boolean
     nbrUpWood?: boolean
     nbrUpWater?: boolean
     nbrUpLightning?: boolean
     nbrUpAir?: boolean
     skillIds?: boolean
-    itemIds?: boolean
-    statusIds?: boolean
     enabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -13611,15 +13583,12 @@ export namespace Prisma {
     level?: boolean
     life?: boolean
     maxLife?: boolean
-    experience?: boolean
     nbrUpFire?: boolean
     nbrUpWood?: boolean
     nbrUpWater?: boolean
     nbrUpLightning?: boolean
     nbrUpAir?: boolean
     skillIds?: boolean
-    itemIds?: boolean
-    statusIds?: boolean
     enabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -13634,15 +13603,12 @@ export namespace Prisma {
     level?: boolean
     life?: boolean
     maxLife?: boolean
-    experience?: boolean
     nbrUpFire?: boolean
     nbrUpWood?: boolean
     nbrUpWater?: boolean
     nbrUpLightning?: boolean
     nbrUpAir?: boolean
     skillIds?: boolean
-    itemIds?: boolean
-    statusIds?: boolean
     enabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -13657,21 +13623,18 @@ export namespace Prisma {
     level?: boolean
     life?: boolean
     maxLife?: boolean
-    experience?: boolean
     nbrUpFire?: boolean
     nbrUpWood?: boolean
     nbrUpWater?: boolean
     nbrUpLightning?: boolean
     nbrUpAir?: boolean
     skillIds?: boolean
-    itemIds?: boolean
-    statusIds?: boolean
     enabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ForcebrutTournamentOpponentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "step" | "name" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "skillIds" | "itemIds" | "statusIds" | "enabled" | "createdAt" | "updatedAt", ExtArgs["result"]["forcebrutTournamentOpponent"]>
+  export type ForcebrutTournamentOpponentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "step" | "name" | "raceId" | "display" | "level" | "life" | "maxLife" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "skillIds" | "enabled" | "createdAt" | "updatedAt", ExtArgs["result"]["forcebrutTournamentOpponent"]>
 
   export type $ForcebrutTournamentOpponentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ForcebrutTournamentOpponent"
@@ -13685,15 +13648,12 @@ export namespace Prisma {
       level: number
       life: number
       maxLife: number
-      experience: number
       nbrUpFire: number
       nbrUpWood: number
       nbrUpWater: number
       nbrUpLightning: number
       nbrUpAir: number
       skillIds: number[]
-      itemIds: number[]
-      statusIds: number[]
       enabled: boolean
       createdAt: Date
       updatedAt: Date
@@ -14128,15 +14088,12 @@ export namespace Prisma {
     readonly level: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
     readonly life: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
     readonly maxLife: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
-    readonly experience: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
     readonly nbrUpFire: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
     readonly nbrUpWood: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
     readonly nbrUpWater: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
     readonly nbrUpLightning: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
     readonly nbrUpAir: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
     readonly skillIds: FieldRef<"ForcebrutTournamentOpponent", 'Int[]'>
-    readonly itemIds: FieldRef<"ForcebrutTournamentOpponent", 'Int[]'>
-    readonly statusIds: FieldRef<"ForcebrutTournamentOpponent", 'Int[]'>
     readonly enabled: FieldRef<"ForcebrutTournamentOpponent", 'Boolean'>
     readonly createdAt: FieldRef<"ForcebrutTournamentOpponent", 'DateTime'>
     readonly updatedAt: FieldRef<"ForcebrutTournamentOpponent", 'DateTime'>
@@ -48254,15 +48211,12 @@ export namespace Prisma {
     level: 'level',
     life: 'life',
     maxLife: 'maxLife',
-    experience: 'experience',
     nbrUpFire: 'nbrUpFire',
     nbrUpWood: 'nbrUpWood',
     nbrUpWater: 'nbrUpWater',
     nbrUpLightning: 'nbrUpLightning',
     nbrUpAir: 'nbrUpAir',
     skillIds: 'skillIds',
-    itemIds: 'itemIds',
-    statusIds: 'statusIds',
     enabled: 'enabled',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -49464,15 +49418,12 @@ export namespace Prisma {
     level?: IntFilter<"ForcebrutTournamentOpponent"> | number
     life?: IntFilter<"ForcebrutTournamentOpponent"> | number
     maxLife?: IntFilter<"ForcebrutTournamentOpponent"> | number
-    experience?: IntFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpFire?: IntFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpWood?: IntFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpWater?: IntFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpLightning?: IntFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpAir?: IntFilter<"ForcebrutTournamentOpponent"> | number
     skillIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
-    itemIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
-    statusIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
     enabled?: BoolFilter<"ForcebrutTournamentOpponent"> | boolean
     createdAt?: DateTimeFilter<"ForcebrutTournamentOpponent"> | Date | string
     updatedAt?: DateTimeFilter<"ForcebrutTournamentOpponent"> | Date | string
@@ -49487,15 +49438,12 @@ export namespace Prisma {
     level?: SortOrder
     life?: SortOrder
     maxLife?: SortOrder
-    experience?: SortOrder
     nbrUpFire?: SortOrder
     nbrUpWood?: SortOrder
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
     skillIds?: SortOrder
-    itemIds?: SortOrder
-    statusIds?: SortOrder
     enabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -49513,15 +49461,12 @@ export namespace Prisma {
     level?: IntFilter<"ForcebrutTournamentOpponent"> | number
     life?: IntFilter<"ForcebrutTournamentOpponent"> | number
     maxLife?: IntFilter<"ForcebrutTournamentOpponent"> | number
-    experience?: IntFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpFire?: IntFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpWood?: IntFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpWater?: IntFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpLightning?: IntFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpAir?: IntFilter<"ForcebrutTournamentOpponent"> | number
     skillIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
-    itemIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
-    statusIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
     enabled?: BoolFilter<"ForcebrutTournamentOpponent"> | boolean
     createdAt?: DateTimeFilter<"ForcebrutTournamentOpponent"> | Date | string
     updatedAt?: DateTimeFilter<"ForcebrutTournamentOpponent"> | Date | string
@@ -49536,15 +49481,12 @@ export namespace Prisma {
     level?: SortOrder
     life?: SortOrder
     maxLife?: SortOrder
-    experience?: SortOrder
     nbrUpFire?: SortOrder
     nbrUpWood?: SortOrder
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
     skillIds?: SortOrder
-    itemIds?: SortOrder
-    statusIds?: SortOrder
     enabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -49567,15 +49509,12 @@ export namespace Prisma {
     level?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
     life?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
     maxLife?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
-    experience?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpFire?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpWood?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpWater?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpLightning?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
     nbrUpAir?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
     skillIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
-    itemIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
-    statusIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
     enabled?: BoolWithAggregatesFilter<"ForcebrutTournamentOpponent"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"ForcebrutTournamentOpponent"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ForcebrutTournamentOpponent"> | Date | string
@@ -52131,15 +52070,12 @@ export namespace Prisma {
     level: number
     life?: number
     maxLife?: number
-    experience?: number
     nbrUpFire?: number
     nbrUpWood?: number
     nbrUpWater?: number
     nbrUpLightning?: number
     nbrUpAir?: number
     skillIds?: ForcebrutTournamentOpponentCreateskillIdsInput | number[]
-    itemIds?: ForcebrutTournamentOpponentCreateitemIdsInput | number[]
-    statusIds?: ForcebrutTournamentOpponentCreatestatusIdsInput | number[]
     enabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52154,15 +52090,12 @@ export namespace Prisma {
     level: number
     life?: number
     maxLife?: number
-    experience?: number
     nbrUpFire?: number
     nbrUpWood?: number
     nbrUpWater?: number
     nbrUpLightning?: number
     nbrUpAir?: number
     skillIds?: ForcebrutTournamentOpponentCreateskillIdsInput | number[]
-    itemIds?: ForcebrutTournamentOpponentCreateitemIdsInput | number[]
-    statusIds?: ForcebrutTournamentOpponentCreatestatusIdsInput | number[]
     enabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52176,15 +52109,12 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     life?: IntFieldUpdateOperationsInput | number
     maxLife?: IntFieldUpdateOperationsInput | number
-    experience?: IntFieldUpdateOperationsInput | number
     nbrUpFire?: IntFieldUpdateOperationsInput | number
     nbrUpWood?: IntFieldUpdateOperationsInput | number
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     skillIds?: ForcebrutTournamentOpponentUpdateskillIdsInput | number[]
-    itemIds?: ForcebrutTournamentOpponentUpdateitemIdsInput | number[]
-    statusIds?: ForcebrutTournamentOpponentUpdatestatusIdsInput | number[]
     enabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52199,15 +52129,12 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     life?: IntFieldUpdateOperationsInput | number
     maxLife?: IntFieldUpdateOperationsInput | number
-    experience?: IntFieldUpdateOperationsInput | number
     nbrUpFire?: IntFieldUpdateOperationsInput | number
     nbrUpWood?: IntFieldUpdateOperationsInput | number
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     skillIds?: ForcebrutTournamentOpponentUpdateskillIdsInput | number[]
-    itemIds?: ForcebrutTournamentOpponentUpdateitemIdsInput | number[]
-    statusIds?: ForcebrutTournamentOpponentUpdatestatusIdsInput | number[]
     enabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52222,15 +52149,12 @@ export namespace Prisma {
     level: number
     life?: number
     maxLife?: number
-    experience?: number
     nbrUpFire?: number
     nbrUpWood?: number
     nbrUpWater?: number
     nbrUpLightning?: number
     nbrUpAir?: number
     skillIds?: ForcebrutTournamentOpponentCreateskillIdsInput | number[]
-    itemIds?: ForcebrutTournamentOpponentCreateitemIdsInput | number[]
-    statusIds?: ForcebrutTournamentOpponentCreatestatusIdsInput | number[]
     enabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52244,15 +52168,12 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     life?: IntFieldUpdateOperationsInput | number
     maxLife?: IntFieldUpdateOperationsInput | number
-    experience?: IntFieldUpdateOperationsInput | number
     nbrUpFire?: IntFieldUpdateOperationsInput | number
     nbrUpWood?: IntFieldUpdateOperationsInput | number
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     skillIds?: ForcebrutTournamentOpponentUpdateskillIdsInput | number[]
-    itemIds?: ForcebrutTournamentOpponentUpdateitemIdsInput | number[]
-    statusIds?: ForcebrutTournamentOpponentUpdatestatusIdsInput | number[]
     enabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52267,15 +52188,12 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     life?: IntFieldUpdateOperationsInput | number
     maxLife?: IntFieldUpdateOperationsInput | number
-    experience?: IntFieldUpdateOperationsInput | number
     nbrUpFire?: IntFieldUpdateOperationsInput | number
     nbrUpWood?: IntFieldUpdateOperationsInput | number
     nbrUpWater?: IntFieldUpdateOperationsInput | number
     nbrUpLightning?: IntFieldUpdateOperationsInput | number
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     skillIds?: ForcebrutTournamentOpponentUpdateskillIdsInput | number[]
-    itemIds?: ForcebrutTournamentOpponentUpdateitemIdsInput | number[]
-    statusIds?: ForcebrutTournamentOpponentUpdatestatusIdsInput | number[]
     enabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54997,15 +54915,12 @@ export namespace Prisma {
     level?: SortOrder
     life?: SortOrder
     maxLife?: SortOrder
-    experience?: SortOrder
     nbrUpFire?: SortOrder
     nbrUpWood?: SortOrder
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
     skillIds?: SortOrder
-    itemIds?: SortOrder
-    statusIds?: SortOrder
     enabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -55018,15 +54933,12 @@ export namespace Prisma {
     level?: SortOrder
     life?: SortOrder
     maxLife?: SortOrder
-    experience?: SortOrder
     nbrUpFire?: SortOrder
     nbrUpWood?: SortOrder
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
     skillIds?: SortOrder
-    itemIds?: SortOrder
-    statusIds?: SortOrder
   }
 
   export type ForcebrutTournamentOpponentMaxOrderByAggregateInput = {
@@ -55038,7 +54950,6 @@ export namespace Prisma {
     level?: SortOrder
     life?: SortOrder
     maxLife?: SortOrder
-    experience?: SortOrder
     nbrUpFire?: SortOrder
     nbrUpWood?: SortOrder
     nbrUpWater?: SortOrder
@@ -55058,7 +54969,6 @@ export namespace Prisma {
     level?: SortOrder
     life?: SortOrder
     maxLife?: SortOrder
-    experience?: SortOrder
     nbrUpFire?: SortOrder
     nbrUpWood?: SortOrder
     nbrUpWater?: SortOrder
@@ -55076,15 +54986,12 @@ export namespace Prisma {
     level?: SortOrder
     life?: SortOrder
     maxLife?: SortOrder
-    experience?: SortOrder
     nbrUpFire?: SortOrder
     nbrUpWood?: SortOrder
     nbrUpWater?: SortOrder
     nbrUpLightning?: SortOrder
     nbrUpAir?: SortOrder
     skillIds?: SortOrder
-    itemIds?: SortOrder
-    statusIds?: SortOrder
   }
 
   export type EnumJobTypeFilter<$PrismaModel = never> = {
@@ -57281,25 +57188,7 @@ export namespace Prisma {
     set: number[]
   }
 
-  export type ForcebrutTournamentOpponentCreateitemIdsInput = {
-    set: number[]
-  }
-
-  export type ForcebrutTournamentOpponentCreatestatusIdsInput = {
-    set: number[]
-  }
-
   export type ForcebrutTournamentOpponentUpdateskillIdsInput = {
-    set?: number[]
-    push?: number | number[]
-  }
-
-  export type ForcebrutTournamentOpponentUpdateitemIdsInput = {
-    set?: number[]
-    push?: number | number[]
-  }
-
-  export type ForcebrutTournamentOpponentUpdatestatusIdsInput = {
     set?: number[]
     push?: number | number[]
   }
