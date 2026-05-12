@@ -7,15 +7,12 @@ export interface AdminForcebrutOpponent {
 	level: number;
 	life: number;
 	maxLife: number;
-	experience: number;
 	nbrUpFire: number;
 	nbrUpWood: number;
 	nbrUpWater: number;
 	nbrUpLightning: number;
 	nbrUpAir: number;
 	skillIds: number[];
-	itemIds: number[];
-	statusIds: number[];
 	enabled: boolean;
 	createdAt: string;
 	updatedAt: string;
@@ -29,14 +26,11 @@ export interface AdminForcebrutOpponentPayload {
 	level: number;
 	life: number;
 	maxLife: number;
-	experience: number;
 	nbrUpFire: number;
 	nbrUpWood: number;
 	nbrUpWater: number;
 	nbrUpLightning: number;
 	nbrUpAir: number;
 	skillIds: number[];
-	itemIds: number[];
-	statusIds: number[];
 	enabled: boolean;
 }

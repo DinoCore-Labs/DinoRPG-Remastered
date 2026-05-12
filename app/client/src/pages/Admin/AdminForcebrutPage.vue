@@ -72,10 +72,6 @@
 						<DZInput id="maxLife" v-model.number="form.maxLife" type="number" min="1" />
 					</div>
 					<div class="field">
-						<label for="experience">Expérience</label>
-						<DZInput id="experience" v-model.number="form.experience" type="number" min="0" />
-					</div>
-					<div class="field">
 						<label for="nbrUpFire">Feu</label>
 						<DZInput id="nbrUpFire" v-model.number="form.nbrUpFire" type="number" min="0" />
 					</div>
@@ -124,14 +120,6 @@
 						</div>
 					</div>
 					<div class="field field--wide">
-						<label for="itemIds">Objets équipés</label>
-						<DZInput id="itemIds" v-model="itemIdsInput" type="text" placeholder="Ex: 12, 25" />
-					</div>
-					<div class="field field--wide">
-						<label for="statusIds">Statuts</label>
-						<DZInput id="statusIds" v-model="statusIdsInput" type="text" placeholder="Ex: 4, 8" />
-					</div>
-					<div class="field field--wide">
 						<DZCheckbox id="enabled" v-model="form.enabled">Adversaire activé</DZCheckbox>
 					</div>
 				</div>
@@ -177,8 +165,6 @@
 							<td class="display">{{ opponent.display }}</td>
 							<td>{{ opponent.enabled ? 'Oui' : 'Non' }}</td>
 							<td>{{ opponent.skillIds.join(', ') || '-' }}</td>
-							<td>{{ opponent.itemIds.join(', ') || '-' }}</td>
-							<td>{{ opponent.statusIds.join(', ') || '-' }}</td>
 							<td class="row-actions">
 								<DZButton type="button" @click="editOpponent(opponent)">Modifier</DZButton>
 								<DZButton type="button" @click="deleteOpponent(opponent)">Supprimer</DZButton>
@@ -210,7 +196,6 @@ import DinozAnimation from '../../components/dinoz/DinozAnimation.vue';
 import { skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { raceList } from '../../constants/race';
 
-const skillIdsInput = ref('');
 const skillSearch = ref('');
 
 type RaceOption = {
@@ -246,7 +231,6 @@ const skillOptions = computed<SkillOption[]>(() => {
 		.map(skill => {
 			const id = skill.id ?? skill.skillId;
 			const rawName = skill.name ?? skill.nameKey ?? `skill.${id}`;
-
 			return id
 				? {
 						id,
@@ -260,11 +244,9 @@ const skillOptions = computed<SkillOption[]>(() => {
 
 const filteredSkillOptions = computed<SkillOption[]>(() => {
 	const search = skillSearch.value.trim().toLowerCase();
-
 	if (!search) {
 		return skillOptions.value;
 	}
-
 	return skillOptions.value.filter(skill => skill.label.toLowerCase().includes(search));
 });
 
@@ -276,7 +258,6 @@ function addSkill(skillId: number) {
 	if (form.skillIds.includes(skillId)) {
 		return;
 	}
-
 	form.skillIds = [...form.skillIds, skillId];
 }
 
@@ -357,36 +338,19 @@ const form = reactive<AdminForcebrutOpponentPayload>({
 	level: 1,
 	life: 100,
 	maxLife: 100,
-	experience: 0,
 	nbrUpFire: 0,
 	nbrUpWood: 0,
 	nbrUpWater: 0,
 	nbrUpLightning: 0,
 	nbrUpAir: 0,
 	skillIds: [],
-	itemIds: [],
-	statusIds: [],
 	enabled: true
 });
-
-function parseNumberList(value: string): number[] {
-	return value
-		.split(',')
-		.map(entry => Number(entry.trim()))
-		.filter(entry => Number.isInteger(entry) && entry > 0);
-}
-
-function fillNumberInputs() {
-	itemIdsInput.value = form.itemIds.join(', ');
-	statusIdsInput.value = form.statusIds.join(', ');
-}
 
 function buildPayload(): AdminForcebrutOpponentPayload {
 	return {
 		...form,
-		skillIds: form.skillIds.map(Number).filter(skillId => Number.isInteger(skillId) && skillId > 0),
-		itemIds: parseNumberList(itemIdsInput.value),
-		statusIds: parseNumberList(statusIdsInput.value)
+		skillIds: form.skillIds.map(Number).filter(skillId => Number.isInteger(skillId) && skillId > 0)
 	};
 }
 
@@ -401,18 +365,13 @@ function resetForm() {
 	form.level = 1;
 	form.life = 100;
 	form.maxLife = 100;
-	form.experience = 0;
 	form.nbrUpFire = 0;
 	form.nbrUpWood = 0;
 	form.nbrUpWater = 0;
 	form.nbrUpLightning = 0;
 	form.nbrUpAir = 0;
 	form.skillIds = [];
-	form.itemIds = [];
-	form.statusIds = [];
 	form.enabled = true;
-
-	fillNumberInputs();
 }
 
 function editOpponent(opponent: AdminForcebrutOpponent) {
@@ -426,18 +385,13 @@ function editOpponent(opponent: AdminForcebrutOpponent) {
 	form.level = opponent.level;
 	form.life = opponent.life;
 	form.maxLife = opponent.maxLife;
-	form.experience = opponent.experience;
 	form.nbrUpFire = opponent.nbrUpFire;
 	form.nbrUpWood = opponent.nbrUpWood;
 	form.nbrUpWater = opponent.nbrUpWater;
 	form.nbrUpLightning = opponent.nbrUpLightning;
 	form.nbrUpAir = opponent.nbrUpAir;
 	form.skillIds = [...opponent.skillIds];
-	form.itemIds = [...opponent.itemIds];
-	form.statusIds = [...opponent.statusIds];
 	form.enabled = opponent.enabled;
-
-	fillNumberInputs();
 }
 
 async function loadOpponents() {
