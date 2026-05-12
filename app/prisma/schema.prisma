@@ -138,10 +138,9 @@ model ForcebrutTournamentOpponent {
   raceId  Int
   display String @db.VarChar
 
-  level      Int
-  life       Int @default(100)
-  maxLife    Int @default(100)
-  experience Int @default(0)
+  level   Int
+  life    Int @default(100)
+  maxLife Int @default(100)
 
   nbrUpFire      Int @default(0)
   nbrUpWood      Int @default(0)
@@ -149,9 +148,7 @@ model ForcebrutTournamentOpponent {
   nbrUpLightning Int @default(0)
   nbrUpAir       Int @default(0)
 
-  skillIds  Int[] @default([])
-  itemIds   Int[] @default([])
-  statusIds Int[] @default([])
+  skillIds Int[] @default([])
 
   enabled Boolean @default(true)
 
