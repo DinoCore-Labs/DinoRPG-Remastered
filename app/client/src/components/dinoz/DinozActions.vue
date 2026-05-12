@@ -653,10 +653,10 @@ export default defineComponent({
 					});
 					break;
 				case Action.FB_TOURNAMENT:
-					/*this.$router.push({
-						name: 'Forcebrute',
-						query: { dinozId: +this.$route.params.id }
-					});*/
+					this.$router.push({
+						name: 'ForcebrutPage',
+						query: { dinozId: this.dinozId }
+					});
 					break;
 				default:
 					console.log(action.name);

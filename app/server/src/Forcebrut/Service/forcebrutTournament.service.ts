@@ -1,5 +1,3 @@
-// app/server/src/Forcebrut/Service/forcebrutTournament.service.ts
-
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
