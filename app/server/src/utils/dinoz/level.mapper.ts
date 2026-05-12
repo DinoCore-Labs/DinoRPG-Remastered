@@ -190,8 +190,8 @@ export const reincarnateDinoz = (race: DinozRace, display: string): Prisma.Dinoz
 		maxLife: 100,
 		placeId: PlaceEnum.DINOVILLE,
 		life: 1,
-		seed: seed
-		//FBTournamentStep: 0
+		seed: seed,
+		FBTournamentStep: 0
 	};
 };
 
