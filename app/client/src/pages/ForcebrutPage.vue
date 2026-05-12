@@ -19,7 +19,7 @@
 			<div class="opponentCard">
 				<DinozWithoutFlash :display="opponent.display" :flip="false" :key="opponent.display" :life="1" />
 				<div class="opponentInfo">
-					<p class="name">{{ opponent.name }}</p>
+					<p class="name">{{ opponentFullName }}</p>
 					<p class="lvl">{{ $t('accountPage.level') }} {{ opponent.level }}</p>
 				</div>
 			</div>
@@ -28,7 +28,7 @@
 	<div class="fight" v-if="!fightTransformed && opponent">
 		<button class="launch-fight" @click="launchFight">
 			<img :src="getImgURL('act', 'act_attack')" alt="" />
-			<span>{{ $t('fb_tournament.fight', { opponent: opponent.name }) }}</span>
+			<span>{{ $t('fb_tournament.fight', { opponent: opponentFullName }) }}</span>
 		</button>
 	</div>
 	<div class="wrapper" v-if="fightTransformed && fight">
@@ -61,6 +61,7 @@ import { userStore } from '../store/userStore';
 import { errorHandler } from '../utils/errorHandler';
 import { resolveFightingPlace, transpileFight } from '../fight/transpileFight';
 import { localStore } from '../store/localStore';
+import { getForcebrutTournamentName } from '../constants/forcebrutName';
 
 export default defineComponent({
 	name: 'ForcebrutPage',
@@ -87,6 +88,16 @@ export default defineComponent({
 	computed: {
 		dinozId(): number {
 			return Number(this.$route.params.id);
+		},
+		opponentFullName(): string {
+			if (!this.opponent) {
+				return '';
+			}
+			return getForcebrutTournamentName({
+				name: this.opponent.name,
+				display: this.opponent.display,
+				step: this.opponent.step
+			});
 		}
 	},
 	methods: {
