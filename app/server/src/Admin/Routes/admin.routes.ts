@@ -6,6 +6,8 @@ import { newsIdParamsSchema } from '../../News/Schema/news.schema.js';
 import { prisma } from '../../prisma.js';
 import {
 	adminErrorResponseSchema,
+	adminForcebrutOpponentBodySchema,
+	adminForcebrutOpponentParamsSchema,
 	adminJobKeyParamsSchema,
 	adminRunJobResponseSchema,
 	adminSecretKeyParamsSchema,
@@ -32,6 +34,13 @@ import {
 	updateAdminDinozStateHandler,
 	updateAdminDinozStatsHandler
 } from '../Service/adminDinozHandler.service.js';
+import {
+	createAdminForcebrutOpponentHandler,
+	deleteAdminForcebrutOpponentHandler,
+	getAdminForcebrutOpponentDetailsHandler,
+	getAdminForcebrutOpponentsHandler,
+	updateAdminForcebrutOpponentHandler
+} from '../Service/adminForcebrutHandler.service.js';
 import {
 	createAdminNewsHandler,
 	deleteNewsHandler,
@@ -354,5 +363,50 @@ export async function adminRoutes(app: FastifyInstance) {
 				value: updatedSecret.value
 			});
 		}
+	);
+	// Forcebrut tournament opponents
+	app.get(
+		'/forcebrut/opponents',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: { tags: ['Admin'] }
+		},
+		getAdminForcebrutOpponentsHandler
+	);
+	app.get(
+		'/forcebrut/opponents/:id',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: { tags: ['Admin'], params: adminForcebrutOpponentParamsSchema }
+		},
+		getAdminForcebrutOpponentDetailsHandler
+	);
+	app.post(
+		'/forcebrut/opponents',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: { tags: ['Admin'], body: adminForcebrutOpponentBodySchema }
+		},
+		createAdminForcebrutOpponentHandler
+	);
+	app.put(
+		'/forcebrut/opponents/:id',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin'],
+				params: adminForcebrutOpponentParamsSchema,
+				body: adminForcebrutOpponentBodySchema
+			}
+		},
+		updateAdminForcebrutOpponentHandler
+	);
+	app.delete(
+		'/forcebrut/opponents/:id',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: { tags: ['Admin'], params: adminForcebrutOpponentParamsSchema }
+		},
+		deleteAdminForcebrutOpponentHandler
 	);
 }
