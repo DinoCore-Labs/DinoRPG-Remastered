@@ -159,3 +159,30 @@ export const updateAdminUserScenarioSchema = z
 			});
 		}
 	});
+
+export const adminForcebrutOpponentParamsSchema = z.object({
+	id: z.coerce.number().int().positive()
+});
+
+export const adminForcebrutOpponentBodySchema = z.object({
+	step: z.coerce.number().int().min(1),
+	name: z.string().trim().min(1).max(32),
+	raceId: z.coerce.number().int().positive(),
+	display: z.string().trim().min(1),
+	level: z.coerce.number().int().min(1),
+	life: z.coerce.number().int().min(0).default(100),
+	maxLife: z.coerce.number().int().min(1).default(100),
+	experience: z.coerce.number().int().min(0).default(0),
+	nbrUpFire: z.coerce.number().int().min(0).default(0),
+	nbrUpWood: z.coerce.number().int().min(0).default(0),
+	nbrUpWater: z.coerce.number().int().min(0).default(0),
+	nbrUpLightning: z.coerce.number().int().min(0).default(0),
+	nbrUpAir: z.coerce.number().int().min(0).default(0),
+	skillIds: z.array(z.coerce.number().int().positive()).default([]),
+	itemIds: z.array(z.coerce.number().int().positive()).default([]),
+	statusIds: z.array(z.coerce.number().int().positive()).default([]),
+	enabled: z.boolean().default(true)
+});
+
+export type AdminForcebrutOpponentParams = z.infer<typeof adminForcebrutOpponentParamsSchema>;
+export type AdminForcebrutOpponentBody = z.infer<typeof adminForcebrutOpponentBodySchema>;
