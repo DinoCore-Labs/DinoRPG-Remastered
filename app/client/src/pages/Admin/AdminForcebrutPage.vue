@@ -150,8 +150,6 @@
 							<th>Display</th>
 							<th>Actif</th>
 							<th>Skills</th>
-							<th>Items</th>
-							<th>Statuts</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -496,6 +494,7 @@ label {
 .row-actions,
 .table-header {
 	display: flex;
+	flex-direction: column;
 	gap: 10px;
 	align-items: center;
 }
