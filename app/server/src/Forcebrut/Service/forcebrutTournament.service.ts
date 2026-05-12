@@ -96,8 +96,9 @@ function mapOpponentToFighter(opponent: {
 	itemIds: number[];
 	statusIds: number[];
 }): DinozToGetFighter {
+	const FORCEBRUT_OPPONENT_ID_OFFSET = 1_000_000_000;
 	return {
-		id: -opponent.id,
+		id: FORCEBRUT_OPPONENT_ID_OFFSET + opponent.id,
 		userId: null,
 		name: opponent.name,
 		display: opponent.display,
@@ -130,7 +131,7 @@ export async function getForcebrutOpponent(req: FastifyRequest<{ Params: Forcebr
 			placeId: true,
 			life: true,
 			state: true,
-			forcebrutTournamentStep: true,
+			FBTournamentStep: true,
 			status: {
 				select: {
 					statusId: true
@@ -157,7 +158,7 @@ export async function getForcebrutOpponent(req: FastifyRequest<{ Params: Forcebr
 
 	const opponent = await prisma.forcebrutTournamentOpponent.findFirst({
 		where: {
-			step: dinoz.forcebrutTournamentStep + 1,
+			step: dinoz.FBTournamentStep + 1,
 			enabled: true
 		},
 		select: {
@@ -196,7 +197,7 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 			experience: true,
 			placeId: true,
 			state: true,
-			forcebrutTournamentStep: true,
+			FBTournamentStep: true,
 			nbrUpFire: true,
 			nbrUpWood: true,
 			nbrUpWater: true,
@@ -259,7 +260,7 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 
 	const opponent = await prisma.forcebrutTournamentOpponent.findFirst({
 		where: {
-			step: dinoz.forcebrutTournamentStep + 1,
+			step: dinoz.FBTournamentStep + 1,
 			enabled: true
 		}
 	});
@@ -318,7 +319,7 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 			levelUp = true;
 		}
 
-		statusReward = getNextMedalStatus(dinoz.forcebrutTournamentStep + 1);
+		statusReward = getNextMedalStatus(dinoz.FBTournamentStep + 1);
 	}
 
 	await prisma.$transaction(async tx => {
@@ -335,7 +336,7 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 				experience: {
 					increment: victory ? xpEarned : 0
 				},
-				forcebrutTournamentStep: {
+				FBTournamentStep: {
 					increment: victory ? 1 : 0
 				}
 			}
