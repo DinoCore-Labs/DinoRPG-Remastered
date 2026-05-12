@@ -148,6 +148,7 @@ exports.Prisma.DinozScalarFieldEnum = {
   fight: 'fight',
   gather: 'gather',
   leaderId: 'leaderId',
+  FBTournamentStep: 'FBTournamentStep',
   userId: 'userId'
 };
 
@@ -199,6 +200,29 @@ exports.Prisma.DinozStatusScalarFieldEnum = {
   id: 'id',
   statusId: 'statusId',
   dinozId: 'dinozId'
+};
+
+exports.Prisma.ForcebrutTournamentOpponentScalarFieldEnum = {
+  id: 'id',
+  step: 'step',
+  name: 'name',
+  raceId: 'raceId',
+  display: 'display',
+  level: 'level',
+  life: 'life',
+  maxLife: 'maxLife',
+  experience: 'experience',
+  nbrUpFire: 'nbrUpFire',
+  nbrUpWood: 'nbrUpWood',
+  nbrUpWater: 'nbrUpWater',
+  nbrUpLightning: 'nbrUpLightning',
+  nbrUpAir: 'nbrUpAir',
+  skillIds: 'skillIds',
+  itemIds: 'itemIds',
+  statusIds: 'statusIds',
+  enabled: 'enabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.JobDefinitionScalarFieldEnum = {
@@ -585,6 +609,7 @@ exports.Prisma.ModelName = {
   DinozSkills: 'DinozSkills',
   DinozSkillsUnlockable: 'DinozSkillsUnlockable',
   DinozStatus: 'DinozStatus',
+  ForcebrutTournamentOpponent: 'ForcebrutTournamentOpponent',
   JobDefinition: 'JobDefinition',
   JobRun: 'JobRun',
   News: 'News',
