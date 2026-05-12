@@ -325,9 +325,6 @@ const loading = ref(false);
 const error = ref<string | null>(null);
 const editingOpponent = ref<AdminForcebrutOpponent | null>(null);
 
-const itemIdsInput = ref('');
-const statusIdsInput = ref('');
-
 const form = reactive<AdminForcebrutOpponentPayload>({
 	step: 1,
 	name: '',
