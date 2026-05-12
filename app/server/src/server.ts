@@ -24,6 +24,7 @@ import { loadDialogs } from './Dialog/Controller/dialog.registry.js';
 import { dialogRoutes } from './Dialog/Routes/dialog.routes.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
 import { fightRoutes } from './Fight/Routes/fight.routes.js';
+import { forcebrutRoutes } from './Forcebrut/Routes/forcebrutTournament.routes.js';
 import { gatherRoutes } from './Gather/Routes/gather.routes.js';
 import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
 import { ensureJobsExist } from './jobs/ensureJobs.js';
@@ -231,6 +232,7 @@ async function buildServer() {
 	server.register(messagingRoutes, { prefix: 'api/messaging' });
 	server.register(trainingCenterRoutes, { prefix: 'api/cef' });
 	server.register(marketRoutes, { prefix: 'api/market' });
+	server.register(forcebrutRoutes, { prefix: 'api/forcebrutTournament' });
 	server.register(versionRoutes, { prefix: 'api' });
 
 	//------------------------------------------------------
