@@ -47,6 +47,7 @@ model Dinoz {
   status           DinozStatus[]
   missions         DinozMissions[]
   marketOffers     Offer[]                 @relation("OfferDinoz")
+  FBTournamentStep Int                     @default(0)
 
   userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -126,6 +127,39 @@ model DinozStatus {
   @@unique([statusId, dinozId])
   @@index([dinozId])
   @@map("dinoz_status")
+}
+
+model ForcebrutTournamentOpponent {
+  id Int @id @default(autoincrement())
+
+  step Int @unique
+
+  name    String @db.VarChar()
+  raceId  Int
+  display String @db.VarChar
+
+  level      Int
+  life       Int @default(100)
+  maxLife    Int @default(100)
+  experience Int @default(0)
+
+  nbrUpFire      Int @default(0)
+  nbrUpWood      Int @default(0)
+  nbrUpWater     Int @default(0)
+  nbrUpLightning Int @default(0)
+  nbrUpAir       Int @default(0)
+
+  skillIds  Int[] @default([])
+  itemIds   Int[] @default([])
+  statusIds Int[] @default([])
+
+  enabled Boolean @default(true)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([enabled, step])
+  @@map("forcebrut_tournament_opponent")
 }
 
 model JobDefinition {
