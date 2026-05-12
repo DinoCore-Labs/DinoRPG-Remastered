@@ -14,6 +14,7 @@ import DialogPage from '../pages/DialogPage.vue';
 import DinozPage from '../pages/DinozPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
 import FightPage from '../pages/FightPage.vue';
+import ForcebrutPage from '../pages/ForcebrutPage.vue';
 import GatherPage from '../pages/GatherPage.vue';
 import HelpPage from '../pages/HelpPage.vue';
 import HomePage from '../pages/HomePage.vue';
@@ -131,6 +132,13 @@ const routes: RouteRecord[] = [
 				path: '/dinoz/:id/training-center',
 				name: 'TrainingCenterPage',
 				component: TrainingCenterPage,
+				meta: { auth: true },
+				beforeEnter: requireOwnedDinozByParam('id')
+			},
+			{
+				path: '/dinoz/:id/forcebrut',
+				name: 'ForcebrutPage',
+				component: ForcebrutPage,
 				meta: { auth: true },
 				beforeEnter: requireOwnedDinozByParam('id')
 			},
