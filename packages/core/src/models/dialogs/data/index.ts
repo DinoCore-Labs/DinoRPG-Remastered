@@ -4,6 +4,7 @@ import { baoBobDialog } from './baoBob.dialog.js';
 import { baoFanDialog } from './baoFan.dialog.js';
 import { coralMinerDialog } from './coralMiner.dialog.js';
 import { dianKorgseyDialog } from './dianKorgsey.dialog.js';
+import { forcebrutOrganizerDialog } from './forcebrutOrganizer.dialog.js';
 import { forestGuardianDialog } from './forestGuardian.dialog.js';
 import { nicolasHulotDialog } from './hulot.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
@@ -52,6 +53,7 @@ export const dialogDefinitions = [
 	starquestMegawolfHintDialog,
 	starquestProgressHintDialog,
 	starquestFinalDialog,
+	forcebrutOrganizerDialog,
 	// Iles Atlantéinées
 	strangeHippoDialog,
 	coralMinerDialog,
