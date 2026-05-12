@@ -4,6 +4,9 @@
 		<li :class="{ active: $route.path.startsWith('/admin/user') }">
 			<RouterLink to="/admin/user">User</RouterLink>
 		</li>
+		<li :class="{ active: $route.path.startsWith('/admin/forcebrut') }">
+			<RouterLink to="/admin/forcebrut">Forcebrut</RouterLink>
+		</li>
 		<li :class="{ active: $route.path.startsWith('/admin/news') }">
 			<RouterLink to="/admin/news">News</RouterLink>
 		</li>
