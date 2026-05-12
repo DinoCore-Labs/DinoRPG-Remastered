@@ -232,7 +232,7 @@ async function buildServer() {
 	server.register(messagingRoutes, { prefix: 'api/messaging' });
 	server.register(trainingCenterRoutes, { prefix: 'api/cef' });
 	server.register(marketRoutes, { prefix: 'api/market' });
-	server.register(forcebrutRoutes, { prefix: 'api/forcebrutTournament' });
+	server.register(forcebrutRoutes, { prefix: 'api/forcebrut' });
 	server.register(versionRoutes, { prefix: 'api' });
 
 	//------------------------------------------------------

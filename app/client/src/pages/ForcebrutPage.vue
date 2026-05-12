@@ -7,27 +7,27 @@
 				<DinozWithoutFlash :display="dinoz.display" flip :key="dinoz.display" :life="1" />
 				<div class="dinozInfo">
 					<p class="name">{{ dinoz.name }}</p>
-					<p class="lvl">{{ $t('myAccount.level') }} {{ dinoz.level }}</p>
+					<p class="lvl">{{ $t('accountPage.level') }} {{ dinoz.level }}</p>
 				</div>
 			</div>
 		</div>
 		<div class="vs">
-			<img :src="getImgURL('design', 'vs')" alt="" />
+			<img :src="getImgURL('background', 'vs')" alt="" />
 			<span class="stage">{{ $t('fb_tournament.stage', { stage: opponent.step }) }}</span>
 		</div>
 		<div class="opponent">
 			<div class="opponentCard">
-				<DinozWithoutFlash :display="opponent.display" flip :key="opponent.display" :life="1" />
+				<DinozWithoutFlash :display="opponent.display" :flip="false" :key="opponent.display" :life="1" />
 				<div class="opponentInfo">
 					<p class="name">{{ opponent.name }}</p>
-					<p class="lvl">{{ $t('myAccount.level') }} {{ opponent.level }}</p>
+					<p class="lvl">{{ $t('accountPage.level') }} {{ opponent.level }}</p>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="fight" v-if="!fightTransformed && opponent">
 		<button class="launch-fight" @click="launchFight">
-			<img :src="getImgURL('icons', 'act_attack')" alt="" />
+			<img :src="getImgURL('act', 'act_attack')" alt="" />
 			<span>{{ $t('fb_tournament.fight', { opponent: opponent.name }) }}</span>
 		</button>
 	</div>
@@ -99,10 +99,8 @@ export default defineComponent({
 			try {
 				this.fight = await ForcebrutService.fight(this.dinozId);
 				this.sessionStore.setFightResult(this.fight);
-
 				const fightSteps = this.fight.history as FightStep[];
 				const fighters = this.fight.fighters as FighterRecap[];
-
 				const transformedFight = transpileFight(
 					structuredClone(toRaw(fighters)),
 					fightSteps,
@@ -112,9 +110,7 @@ export default defineComponent({
 					undefined,
 					true
 				);
-
 				if (!transformedFight) return;
-
 				this.fightTransformed = {
 					...resolveFightingPlace(PlaceEnum.FORCEBRUT),
 					history: transformedFight.filter(Boolean),
