@@ -49,6 +49,11 @@ export type DinozSkillsUnlockable = $Result.DefaultSelection<Prisma.$DinozSkills
  */
 export type DinozStatus = $Result.DefaultSelection<Prisma.$DinozStatusPayload>
 /**
+ * Model ForcebrutTournamentOpponent
+ * 
+ */
+export type ForcebrutTournamentOpponent = $Result.DefaultSelection<Prisma.$ForcebrutTournamentOpponentPayload>
+/**
  * Model JobDefinition
  * 
  */
@@ -530,6 +535,16 @@ export class PrismaClient<
     * ```
     */
   get dinozStatus(): Prisma.DinozStatusDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.forcebrutTournamentOpponent`: Exposes CRUD operations for the **ForcebrutTournamentOpponent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ForcebrutTournamentOpponents
+    * const forcebrutTournamentOpponents = await prisma.forcebrutTournamentOpponent.findMany()
+    * ```
+    */
+  get forcebrutTournamentOpponent(): Prisma.ForcebrutTournamentOpponentDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.jobDefinition`: Exposes CRUD operations for the **JobDefinition** model.
@@ -1261,6 +1276,7 @@ export namespace Prisma {
     DinozSkills: 'DinozSkills',
     DinozSkillsUnlockable: 'DinozSkillsUnlockable',
     DinozStatus: 'DinozStatus',
+    ForcebrutTournamentOpponent: 'ForcebrutTournamentOpponent',
     JobDefinition: 'JobDefinition',
     JobRun: 'JobRun',
     News: 'News',
@@ -1305,7 +1321,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dinoz" | "dinozCatch" | "dinozItems" | "dinozMissions" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "jobDefinition" | "jobRun" | "news" | "newsTranslation" | "offer" | "offerItem" | "offerBid" | "poll" | "pollOption" | "pollOptionTranslation" | "pollVote" | "newsLike" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userScenario" | "userTracking" | "userWallet" | "conversation" | "participant" | "message"
+      modelProps: "dinoz" | "dinozCatch" | "dinozItems" | "dinozMissions" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "forcebrutTournamentOpponent" | "jobDefinition" | "jobRun" | "news" | "newsTranslation" | "offer" | "offerItem" | "offerBid" | "poll" | "pollOption" | "pollOptionTranslation" | "pollVote" | "newsLike" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userScenario" | "userTracking" | "userWallet" | "conversation" | "participant" | "message"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1824,6 +1840,80 @@ export namespace Prisma {
           count: {
             args: Prisma.DinozStatusCountArgs<ExtArgs>
             result: $Utils.Optional<DinozStatusCountAggregateOutputType> | number
+          }
+        }
+      }
+      ForcebrutTournamentOpponent: {
+        payload: Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>
+        fields: Prisma.ForcebrutTournamentOpponentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ForcebrutTournamentOpponentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ForcebrutTournamentOpponentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ForcebrutTournamentOpponentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ForcebrutTournamentOpponentPayload>
+          }
+          findFirst: {
+            args: Prisma.ForcebrutTournamentOpponentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ForcebrutTournamentOpponentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ForcebrutTournamentOpponentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ForcebrutTournamentOpponentPayload>
+          }
+          findMany: {
+            args: Prisma.ForcebrutTournamentOpponentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ForcebrutTournamentOpponentPayload>[]
+          }
+          create: {
+            args: Prisma.ForcebrutTournamentOpponentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ForcebrutTournamentOpponentPayload>
+          }
+          createMany: {
+            args: Prisma.ForcebrutTournamentOpponentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ForcebrutTournamentOpponentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ForcebrutTournamentOpponentPayload>[]
+          }
+          delete: {
+            args: Prisma.ForcebrutTournamentOpponentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ForcebrutTournamentOpponentPayload>
+          }
+          update: {
+            args: Prisma.ForcebrutTournamentOpponentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ForcebrutTournamentOpponentPayload>
+          }
+          deleteMany: {
+            args: Prisma.ForcebrutTournamentOpponentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ForcebrutTournamentOpponentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ForcebrutTournamentOpponentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ForcebrutTournamentOpponentPayload>[]
+          }
+          upsert: {
+            args: Prisma.ForcebrutTournamentOpponentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ForcebrutTournamentOpponentPayload>
+          }
+          aggregate: {
+            args: Prisma.ForcebrutTournamentOpponentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateForcebrutTournamentOpponent>
+          }
+          groupBy: {
+            args: Prisma.ForcebrutTournamentOpponentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ForcebrutTournamentOpponentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ForcebrutTournamentOpponentCountArgs<ExtArgs>
+            result: $Utils.Optional<ForcebrutTournamentOpponentCountAggregateOutputType> | number
           }
         }
       }
@@ -4088,6 +4178,7 @@ export namespace Prisma {
     dinozSkills?: DinozSkillsOmit
     dinozSkillsUnlockable?: DinozSkillsUnlockableOmit
     dinozStatus?: DinozStatusOmit
+    forcebrutTournamentOpponent?: ForcebrutTournamentOpponentOmit
     jobDefinition?: JobDefinitionOmit
     jobRun?: JobRunOmit
     news?: NewsOmit
@@ -4717,6 +4808,7 @@ export namespace Prisma {
     remaining: number | null
     order: number | null
     leaderId: number | null
+    FBTournamentStep: number | null
   }
 
   export type DinozSumAggregateOutputType = {
@@ -4737,6 +4829,7 @@ export namespace Prisma {
     remaining: number | null
     order: number | null
     leaderId: number | null
+    FBTournamentStep: number | null
   }
 
   export type DinozMinAggregateOutputType = {
@@ -4767,6 +4860,7 @@ export namespace Prisma {
     fight: boolean | null
     gather: boolean | null
     leaderId: number | null
+    FBTournamentStep: number | null
     userId: string | null
   }
 
@@ -4798,6 +4892,7 @@ export namespace Prisma {
     fight: boolean | null
     gather: boolean | null
     leaderId: number | null
+    FBTournamentStep: number | null
     userId: string | null
   }
 
@@ -4829,6 +4924,7 @@ export namespace Prisma {
     fight: number
     gather: number
     leaderId: number
+    FBTournamentStep: number
     userId: number
     _all: number
   }
@@ -4852,6 +4948,7 @@ export namespace Prisma {
     remaining?: true
     order?: true
     leaderId?: true
+    FBTournamentStep?: true
   }
 
   export type DinozSumAggregateInputType = {
@@ -4872,6 +4969,7 @@ export namespace Prisma {
     remaining?: true
     order?: true
     leaderId?: true
+    FBTournamentStep?: true
   }
 
   export type DinozMinAggregateInputType = {
@@ -4902,6 +5000,7 @@ export namespace Prisma {
     fight?: true
     gather?: true
     leaderId?: true
+    FBTournamentStep?: true
     userId?: true
   }
 
@@ -4933,6 +5032,7 @@ export namespace Prisma {
     fight?: true
     gather?: true
     leaderId?: true
+    FBTournamentStep?: true
     userId?: true
   }
 
@@ -4964,6 +5064,7 @@ export namespace Prisma {
     fight?: true
     gather?: true
     leaderId?: true
+    FBTournamentStep?: true
     userId?: true
     _all?: true
   }
@@ -5082,6 +5183,7 @@ export namespace Prisma {
     fight: boolean
     gather: boolean
     leaderId: number | null
+    FBTournamentStep: number
     userId: string
     _count: DinozCountAggregateOutputType | null
     _avg: DinozAvgAggregateOutputType | null
@@ -5132,6 +5234,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: boolean
+    FBTournamentStep?: boolean
     userId?: boolean
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
@@ -5174,6 +5277,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: boolean
+    FBTournamentStep?: boolean
     userId?: boolean
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5207,6 +5311,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: boolean
+    FBTournamentStep?: boolean
     userId?: boolean
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5240,10 +5345,11 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: boolean
+    FBTournamentStep?: boolean
     userId?: boolean
   }
 
-  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "canRename" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "remaining" | "order" | "createdDate" | "updatedDate" | "seed" | "state" | "stateTimer" | "fight" | "gather" | "leaderId" | "userId", ExtArgs["result"]["dinoz"]>
+  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "canRename" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "remaining" | "order" | "createdDate" | "updatedDate" | "seed" | "state" | "stateTimer" | "fight" | "gather" | "leaderId" | "FBTournamentStep" | "userId", ExtArgs["result"]["dinoz"]>
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
@@ -5308,6 +5414,7 @@ export namespace Prisma {
       fight: boolean
       gather: boolean
       leaderId: number | null
+      FBTournamentStep: number
       userId: string
     }, ExtArgs["result"]["dinoz"]>
     composites: {}
@@ -5769,6 +5876,7 @@ export namespace Prisma {
     readonly fight: FieldRef<"Dinoz", 'Boolean'>
     readonly gather: FieldRef<"Dinoz", 'Boolean'>
     readonly leaderId: FieldRef<"Dinoz", 'Int'>
+    readonly FBTournamentStep: FieldRef<"Dinoz", 'Int'>
     readonly userId: FieldRef<"Dinoz", 'String'>
   }
     
@@ -13127,6 +13235,1288 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: DinozStatusInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ForcebrutTournamentOpponent
+   */
+
+  export type AggregateForcebrutTournamentOpponent = {
+    _count: ForcebrutTournamentOpponentCountAggregateOutputType | null
+    _avg: ForcebrutTournamentOpponentAvgAggregateOutputType | null
+    _sum: ForcebrutTournamentOpponentSumAggregateOutputType | null
+    _min: ForcebrutTournamentOpponentMinAggregateOutputType | null
+    _max: ForcebrutTournamentOpponentMaxAggregateOutputType | null
+  }
+
+  export type ForcebrutTournamentOpponentAvgAggregateOutputType = {
+    id: number | null
+    step: number | null
+    raceId: number | null
+    level: number | null
+    life: number | null
+    maxLife: number | null
+    experience: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+    skillIds: number | null
+    itemIds: number | null
+    statusIds: number | null
+  }
+
+  export type ForcebrutTournamentOpponentSumAggregateOutputType = {
+    id: number | null
+    step: number | null
+    raceId: number | null
+    level: number | null
+    life: number | null
+    maxLife: number | null
+    experience: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+    skillIds: number[]
+    itemIds: number[]
+    statusIds: number[]
+  }
+
+  export type ForcebrutTournamentOpponentMinAggregateOutputType = {
+    id: number | null
+    step: number | null
+    name: string | null
+    raceId: number | null
+    display: string | null
+    level: number | null
+    life: number | null
+    maxLife: number | null
+    experience: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+    enabled: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ForcebrutTournamentOpponentMaxAggregateOutputType = {
+    id: number | null
+    step: number | null
+    name: string | null
+    raceId: number | null
+    display: string | null
+    level: number | null
+    life: number | null
+    maxLife: number | null
+    experience: number | null
+    nbrUpFire: number | null
+    nbrUpWood: number | null
+    nbrUpWater: number | null
+    nbrUpLightning: number | null
+    nbrUpAir: number | null
+    enabled: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ForcebrutTournamentOpponentCountAggregateOutputType = {
+    id: number
+    step: number
+    name: number
+    raceId: number
+    display: number
+    level: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    skillIds: number
+    itemIds: number
+    statusIds: number
+    enabled: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ForcebrutTournamentOpponentAvgAggregateInputType = {
+    id?: true
+    step?: true
+    raceId?: true
+    level?: true
+    life?: true
+    maxLife?: true
+    experience?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    skillIds?: true
+    itemIds?: true
+    statusIds?: true
+  }
+
+  export type ForcebrutTournamentOpponentSumAggregateInputType = {
+    id?: true
+    step?: true
+    raceId?: true
+    level?: true
+    life?: true
+    maxLife?: true
+    experience?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    skillIds?: true
+    itemIds?: true
+    statusIds?: true
+  }
+
+  export type ForcebrutTournamentOpponentMinAggregateInputType = {
+    id?: true
+    step?: true
+    name?: true
+    raceId?: true
+    display?: true
+    level?: true
+    life?: true
+    maxLife?: true
+    experience?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ForcebrutTournamentOpponentMaxAggregateInputType = {
+    id?: true
+    step?: true
+    name?: true
+    raceId?: true
+    display?: true
+    level?: true
+    life?: true
+    maxLife?: true
+    experience?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ForcebrutTournamentOpponentCountAggregateInputType = {
+    id?: true
+    step?: true
+    name?: true
+    raceId?: true
+    display?: true
+    level?: true
+    life?: true
+    maxLife?: true
+    experience?: true
+    nbrUpFire?: true
+    nbrUpWood?: true
+    nbrUpWater?: true
+    nbrUpLightning?: true
+    nbrUpAir?: true
+    skillIds?: true
+    itemIds?: true
+    statusIds?: true
+    enabled?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ForcebrutTournamentOpponentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ForcebrutTournamentOpponent to aggregate.
+     */
+    where?: ForcebrutTournamentOpponentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ForcebrutTournamentOpponents to fetch.
+     */
+    orderBy?: ForcebrutTournamentOpponentOrderByWithRelationInput | ForcebrutTournamentOpponentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ForcebrutTournamentOpponentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ForcebrutTournamentOpponents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ForcebrutTournamentOpponents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ForcebrutTournamentOpponents
+    **/
+    _count?: true | ForcebrutTournamentOpponentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ForcebrutTournamentOpponentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ForcebrutTournamentOpponentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ForcebrutTournamentOpponentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ForcebrutTournamentOpponentMaxAggregateInputType
+  }
+
+  export type GetForcebrutTournamentOpponentAggregateType<T extends ForcebrutTournamentOpponentAggregateArgs> = {
+        [P in keyof T & keyof AggregateForcebrutTournamentOpponent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateForcebrutTournamentOpponent[P]>
+      : GetScalarType<T[P], AggregateForcebrutTournamentOpponent[P]>
+  }
+
+
+
+
+  export type ForcebrutTournamentOpponentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ForcebrutTournamentOpponentWhereInput
+    orderBy?: ForcebrutTournamentOpponentOrderByWithAggregationInput | ForcebrutTournamentOpponentOrderByWithAggregationInput[]
+    by: ForcebrutTournamentOpponentScalarFieldEnum[] | ForcebrutTournamentOpponentScalarFieldEnum
+    having?: ForcebrutTournamentOpponentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ForcebrutTournamentOpponentCountAggregateInputType | true
+    _avg?: ForcebrutTournamentOpponentAvgAggregateInputType
+    _sum?: ForcebrutTournamentOpponentSumAggregateInputType
+    _min?: ForcebrutTournamentOpponentMinAggregateInputType
+    _max?: ForcebrutTournamentOpponentMaxAggregateInputType
+  }
+
+  export type ForcebrutTournamentOpponentGroupByOutputType = {
+    id: number
+    step: number
+    name: string
+    raceId: number
+    display: string
+    level: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    skillIds: number[]
+    itemIds: number[]
+    statusIds: number[]
+    enabled: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: ForcebrutTournamentOpponentCountAggregateOutputType | null
+    _avg: ForcebrutTournamentOpponentAvgAggregateOutputType | null
+    _sum: ForcebrutTournamentOpponentSumAggregateOutputType | null
+    _min: ForcebrutTournamentOpponentMinAggregateOutputType | null
+    _max: ForcebrutTournamentOpponentMaxAggregateOutputType | null
+  }
+
+  type GetForcebrutTournamentOpponentGroupByPayload<T extends ForcebrutTournamentOpponentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ForcebrutTournamentOpponentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ForcebrutTournamentOpponentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ForcebrutTournamentOpponentGroupByOutputType[P]>
+            : GetScalarType<T[P], ForcebrutTournamentOpponentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ForcebrutTournamentOpponentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    step?: boolean
+    name?: boolean
+    raceId?: boolean
+    display?: boolean
+    level?: boolean
+    life?: boolean
+    maxLife?: boolean
+    experience?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    skillIds?: boolean
+    itemIds?: boolean
+    statusIds?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["forcebrutTournamentOpponent"]>
+
+  export type ForcebrutTournamentOpponentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    step?: boolean
+    name?: boolean
+    raceId?: boolean
+    display?: boolean
+    level?: boolean
+    life?: boolean
+    maxLife?: boolean
+    experience?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    skillIds?: boolean
+    itemIds?: boolean
+    statusIds?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["forcebrutTournamentOpponent"]>
+
+  export type ForcebrutTournamentOpponentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    step?: boolean
+    name?: boolean
+    raceId?: boolean
+    display?: boolean
+    level?: boolean
+    life?: boolean
+    maxLife?: boolean
+    experience?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    skillIds?: boolean
+    itemIds?: boolean
+    statusIds?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["forcebrutTournamentOpponent"]>
+
+  export type ForcebrutTournamentOpponentSelectScalar = {
+    id?: boolean
+    step?: boolean
+    name?: boolean
+    raceId?: boolean
+    display?: boolean
+    level?: boolean
+    life?: boolean
+    maxLife?: boolean
+    experience?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    skillIds?: boolean
+    itemIds?: boolean
+    statusIds?: boolean
+    enabled?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ForcebrutTournamentOpponentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "step" | "name" | "raceId" | "display" | "level" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "skillIds" | "itemIds" | "statusIds" | "enabled" | "createdAt" | "updatedAt", ExtArgs["result"]["forcebrutTournamentOpponent"]>
+
+  export type $ForcebrutTournamentOpponentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ForcebrutTournamentOpponent"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      step: number
+      name: string
+      raceId: number
+      display: string
+      level: number
+      life: number
+      maxLife: number
+      experience: number
+      nbrUpFire: number
+      nbrUpWood: number
+      nbrUpWater: number
+      nbrUpLightning: number
+      nbrUpAir: number
+      skillIds: number[]
+      itemIds: number[]
+      statusIds: number[]
+      enabled: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["forcebrutTournamentOpponent"]>
+    composites: {}
+  }
+
+  type ForcebrutTournamentOpponentGetPayload<S extends boolean | null | undefined | ForcebrutTournamentOpponentDefaultArgs> = $Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload, S>
+
+  type ForcebrutTournamentOpponentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ForcebrutTournamentOpponentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ForcebrutTournamentOpponentCountAggregateInputType | true
+    }
+
+  export interface ForcebrutTournamentOpponentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ForcebrutTournamentOpponent'], meta: { name: 'ForcebrutTournamentOpponent' } }
+    /**
+     * Find zero or one ForcebrutTournamentOpponent that matches the filter.
+     * @param {ForcebrutTournamentOpponentFindUniqueArgs} args - Arguments to find a ForcebrutTournamentOpponent
+     * @example
+     * // Get one ForcebrutTournamentOpponent
+     * const forcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ForcebrutTournamentOpponentFindUniqueArgs>(args: SelectSubset<T, ForcebrutTournamentOpponentFindUniqueArgs<ExtArgs>>): Prisma__ForcebrutTournamentOpponentClient<$Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ForcebrutTournamentOpponent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ForcebrutTournamentOpponentFindUniqueOrThrowArgs} args - Arguments to find a ForcebrutTournamentOpponent
+     * @example
+     * // Get one ForcebrutTournamentOpponent
+     * const forcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ForcebrutTournamentOpponentFindUniqueOrThrowArgs>(args: SelectSubset<T, ForcebrutTournamentOpponentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ForcebrutTournamentOpponentClient<$Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ForcebrutTournamentOpponent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ForcebrutTournamentOpponentFindFirstArgs} args - Arguments to find a ForcebrutTournamentOpponent
+     * @example
+     * // Get one ForcebrutTournamentOpponent
+     * const forcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ForcebrutTournamentOpponentFindFirstArgs>(args?: SelectSubset<T, ForcebrutTournamentOpponentFindFirstArgs<ExtArgs>>): Prisma__ForcebrutTournamentOpponentClient<$Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ForcebrutTournamentOpponent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ForcebrutTournamentOpponentFindFirstOrThrowArgs} args - Arguments to find a ForcebrutTournamentOpponent
+     * @example
+     * // Get one ForcebrutTournamentOpponent
+     * const forcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ForcebrutTournamentOpponentFindFirstOrThrowArgs>(args?: SelectSubset<T, ForcebrutTournamentOpponentFindFirstOrThrowArgs<ExtArgs>>): Prisma__ForcebrutTournamentOpponentClient<$Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ForcebrutTournamentOpponents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ForcebrutTournamentOpponentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ForcebrutTournamentOpponents
+     * const forcebrutTournamentOpponents = await prisma.forcebrutTournamentOpponent.findMany()
+     * 
+     * // Get first 10 ForcebrutTournamentOpponents
+     * const forcebrutTournamentOpponents = await prisma.forcebrutTournamentOpponent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const forcebrutTournamentOpponentWithIdOnly = await prisma.forcebrutTournamentOpponent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ForcebrutTournamentOpponentFindManyArgs>(args?: SelectSubset<T, ForcebrutTournamentOpponentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ForcebrutTournamentOpponent.
+     * @param {ForcebrutTournamentOpponentCreateArgs} args - Arguments to create a ForcebrutTournamentOpponent.
+     * @example
+     * // Create one ForcebrutTournamentOpponent
+     * const ForcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.create({
+     *   data: {
+     *     // ... data to create a ForcebrutTournamentOpponent
+     *   }
+     * })
+     * 
+     */
+    create<T extends ForcebrutTournamentOpponentCreateArgs>(args: SelectSubset<T, ForcebrutTournamentOpponentCreateArgs<ExtArgs>>): Prisma__ForcebrutTournamentOpponentClient<$Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ForcebrutTournamentOpponents.
+     * @param {ForcebrutTournamentOpponentCreateManyArgs} args - Arguments to create many ForcebrutTournamentOpponents.
+     * @example
+     * // Create many ForcebrutTournamentOpponents
+     * const forcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ForcebrutTournamentOpponentCreateManyArgs>(args?: SelectSubset<T, ForcebrutTournamentOpponentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ForcebrutTournamentOpponents and returns the data saved in the database.
+     * @param {ForcebrutTournamentOpponentCreateManyAndReturnArgs} args - Arguments to create many ForcebrutTournamentOpponents.
+     * @example
+     * // Create many ForcebrutTournamentOpponents
+     * const forcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ForcebrutTournamentOpponents and only return the `id`
+     * const forcebrutTournamentOpponentWithIdOnly = await prisma.forcebrutTournamentOpponent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ForcebrutTournamentOpponentCreateManyAndReturnArgs>(args?: SelectSubset<T, ForcebrutTournamentOpponentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ForcebrutTournamentOpponent.
+     * @param {ForcebrutTournamentOpponentDeleteArgs} args - Arguments to delete one ForcebrutTournamentOpponent.
+     * @example
+     * // Delete one ForcebrutTournamentOpponent
+     * const ForcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.delete({
+     *   where: {
+     *     // ... filter to delete one ForcebrutTournamentOpponent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ForcebrutTournamentOpponentDeleteArgs>(args: SelectSubset<T, ForcebrutTournamentOpponentDeleteArgs<ExtArgs>>): Prisma__ForcebrutTournamentOpponentClient<$Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ForcebrutTournamentOpponent.
+     * @param {ForcebrutTournamentOpponentUpdateArgs} args - Arguments to update one ForcebrutTournamentOpponent.
+     * @example
+     * // Update one ForcebrutTournamentOpponent
+     * const forcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ForcebrutTournamentOpponentUpdateArgs>(args: SelectSubset<T, ForcebrutTournamentOpponentUpdateArgs<ExtArgs>>): Prisma__ForcebrutTournamentOpponentClient<$Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ForcebrutTournamentOpponents.
+     * @param {ForcebrutTournamentOpponentDeleteManyArgs} args - Arguments to filter ForcebrutTournamentOpponents to delete.
+     * @example
+     * // Delete a few ForcebrutTournamentOpponents
+     * const { count } = await prisma.forcebrutTournamentOpponent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ForcebrutTournamentOpponentDeleteManyArgs>(args?: SelectSubset<T, ForcebrutTournamentOpponentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ForcebrutTournamentOpponents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ForcebrutTournamentOpponentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ForcebrutTournamentOpponents
+     * const forcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ForcebrutTournamentOpponentUpdateManyArgs>(args: SelectSubset<T, ForcebrutTournamentOpponentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ForcebrutTournamentOpponents and returns the data updated in the database.
+     * @param {ForcebrutTournamentOpponentUpdateManyAndReturnArgs} args - Arguments to update many ForcebrutTournamentOpponents.
+     * @example
+     * // Update many ForcebrutTournamentOpponents
+     * const forcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ForcebrutTournamentOpponents and only return the `id`
+     * const forcebrutTournamentOpponentWithIdOnly = await prisma.forcebrutTournamentOpponent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ForcebrutTournamentOpponentUpdateManyAndReturnArgs>(args: SelectSubset<T, ForcebrutTournamentOpponentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ForcebrutTournamentOpponent.
+     * @param {ForcebrutTournamentOpponentUpsertArgs} args - Arguments to update or create a ForcebrutTournamentOpponent.
+     * @example
+     * // Update or create a ForcebrutTournamentOpponent
+     * const forcebrutTournamentOpponent = await prisma.forcebrutTournamentOpponent.upsert({
+     *   create: {
+     *     // ... data to create a ForcebrutTournamentOpponent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ForcebrutTournamentOpponent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ForcebrutTournamentOpponentUpsertArgs>(args: SelectSubset<T, ForcebrutTournamentOpponentUpsertArgs<ExtArgs>>): Prisma__ForcebrutTournamentOpponentClient<$Result.GetResult<Prisma.$ForcebrutTournamentOpponentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ForcebrutTournamentOpponents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ForcebrutTournamentOpponentCountArgs} args - Arguments to filter ForcebrutTournamentOpponents to count.
+     * @example
+     * // Count the number of ForcebrutTournamentOpponents
+     * const count = await prisma.forcebrutTournamentOpponent.count({
+     *   where: {
+     *     // ... the filter for the ForcebrutTournamentOpponents we want to count
+     *   }
+     * })
+    **/
+    count<T extends ForcebrutTournamentOpponentCountArgs>(
+      args?: Subset<T, ForcebrutTournamentOpponentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ForcebrutTournamentOpponentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ForcebrutTournamentOpponent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ForcebrutTournamentOpponentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ForcebrutTournamentOpponentAggregateArgs>(args: Subset<T, ForcebrutTournamentOpponentAggregateArgs>): Prisma.PrismaPromise<GetForcebrutTournamentOpponentAggregateType<T>>
+
+    /**
+     * Group by ForcebrutTournamentOpponent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ForcebrutTournamentOpponentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ForcebrutTournamentOpponentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ForcebrutTournamentOpponentGroupByArgs['orderBy'] }
+        : { orderBy?: ForcebrutTournamentOpponentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ForcebrutTournamentOpponentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetForcebrutTournamentOpponentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ForcebrutTournamentOpponent model
+   */
+  readonly fields: ForcebrutTournamentOpponentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ForcebrutTournamentOpponent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ForcebrutTournamentOpponentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ForcebrutTournamentOpponent model
+   */
+  interface ForcebrutTournamentOpponentFieldRefs {
+    readonly id: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly step: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly name: FieldRef<"ForcebrutTournamentOpponent", 'String'>
+    readonly raceId: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly display: FieldRef<"ForcebrutTournamentOpponent", 'String'>
+    readonly level: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly life: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly maxLife: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly experience: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly nbrUpFire: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly nbrUpWood: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly nbrUpWater: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly nbrUpLightning: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly nbrUpAir: FieldRef<"ForcebrutTournamentOpponent", 'Int'>
+    readonly skillIds: FieldRef<"ForcebrutTournamentOpponent", 'Int[]'>
+    readonly itemIds: FieldRef<"ForcebrutTournamentOpponent", 'Int[]'>
+    readonly statusIds: FieldRef<"ForcebrutTournamentOpponent", 'Int[]'>
+    readonly enabled: FieldRef<"ForcebrutTournamentOpponent", 'Boolean'>
+    readonly createdAt: FieldRef<"ForcebrutTournamentOpponent", 'DateTime'>
+    readonly updatedAt: FieldRef<"ForcebrutTournamentOpponent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ForcebrutTournamentOpponent findUnique
+   */
+  export type ForcebrutTournamentOpponentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+    /**
+     * Filter, which ForcebrutTournamentOpponent to fetch.
+     */
+    where: ForcebrutTournamentOpponentWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ForcebrutTournamentOpponent findUniqueOrThrow
+   */
+  export type ForcebrutTournamentOpponentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+    /**
+     * Filter, which ForcebrutTournamentOpponent to fetch.
+     */
+    where: ForcebrutTournamentOpponentWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ForcebrutTournamentOpponent findFirst
+   */
+  export type ForcebrutTournamentOpponentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+    /**
+     * Filter, which ForcebrutTournamentOpponent to fetch.
+     */
+    where?: ForcebrutTournamentOpponentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ForcebrutTournamentOpponents to fetch.
+     */
+    orderBy?: ForcebrutTournamentOpponentOrderByWithRelationInput | ForcebrutTournamentOpponentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ForcebrutTournamentOpponents.
+     */
+    cursor?: ForcebrutTournamentOpponentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ForcebrutTournamentOpponents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ForcebrutTournamentOpponents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ForcebrutTournamentOpponents.
+     */
+    distinct?: ForcebrutTournamentOpponentScalarFieldEnum | ForcebrutTournamentOpponentScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ForcebrutTournamentOpponent findFirstOrThrow
+   */
+  export type ForcebrutTournamentOpponentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+    /**
+     * Filter, which ForcebrutTournamentOpponent to fetch.
+     */
+    where?: ForcebrutTournamentOpponentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ForcebrutTournamentOpponents to fetch.
+     */
+    orderBy?: ForcebrutTournamentOpponentOrderByWithRelationInput | ForcebrutTournamentOpponentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ForcebrutTournamentOpponents.
+     */
+    cursor?: ForcebrutTournamentOpponentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ForcebrutTournamentOpponents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ForcebrutTournamentOpponents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ForcebrutTournamentOpponents.
+     */
+    distinct?: ForcebrutTournamentOpponentScalarFieldEnum | ForcebrutTournamentOpponentScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ForcebrutTournamentOpponent findMany
+   */
+  export type ForcebrutTournamentOpponentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+    /**
+     * Filter, which ForcebrutTournamentOpponents to fetch.
+     */
+    where?: ForcebrutTournamentOpponentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ForcebrutTournamentOpponents to fetch.
+     */
+    orderBy?: ForcebrutTournamentOpponentOrderByWithRelationInput | ForcebrutTournamentOpponentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ForcebrutTournamentOpponents.
+     */
+    cursor?: ForcebrutTournamentOpponentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ForcebrutTournamentOpponents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ForcebrutTournamentOpponents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ForcebrutTournamentOpponents.
+     */
+    distinct?: ForcebrutTournamentOpponentScalarFieldEnum | ForcebrutTournamentOpponentScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ForcebrutTournamentOpponent create
+   */
+  export type ForcebrutTournamentOpponentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ForcebrutTournamentOpponent.
+     */
+    data: XOR<ForcebrutTournamentOpponentCreateInput, ForcebrutTournamentOpponentUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ForcebrutTournamentOpponent createMany
+   */
+  export type ForcebrutTournamentOpponentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ForcebrutTournamentOpponents.
+     */
+    data: ForcebrutTournamentOpponentCreateManyInput | ForcebrutTournamentOpponentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ForcebrutTournamentOpponent createManyAndReturn
+   */
+  export type ForcebrutTournamentOpponentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+    /**
+     * The data used to create many ForcebrutTournamentOpponents.
+     */
+    data: ForcebrutTournamentOpponentCreateManyInput | ForcebrutTournamentOpponentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ForcebrutTournamentOpponent update
+   */
+  export type ForcebrutTournamentOpponentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ForcebrutTournamentOpponent.
+     */
+    data: XOR<ForcebrutTournamentOpponentUpdateInput, ForcebrutTournamentOpponentUncheckedUpdateInput>
+    /**
+     * Choose, which ForcebrutTournamentOpponent to update.
+     */
+    where: ForcebrutTournamentOpponentWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ForcebrutTournamentOpponent updateMany
+   */
+  export type ForcebrutTournamentOpponentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ForcebrutTournamentOpponents.
+     */
+    data: XOR<ForcebrutTournamentOpponentUpdateManyMutationInput, ForcebrutTournamentOpponentUncheckedUpdateManyInput>
+    /**
+     * Filter which ForcebrutTournamentOpponents to update
+     */
+    where?: ForcebrutTournamentOpponentWhereInput
+    /**
+     * Limit how many ForcebrutTournamentOpponents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ForcebrutTournamentOpponent updateManyAndReturn
+   */
+  export type ForcebrutTournamentOpponentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+    /**
+     * The data used to update ForcebrutTournamentOpponents.
+     */
+    data: XOR<ForcebrutTournamentOpponentUpdateManyMutationInput, ForcebrutTournamentOpponentUncheckedUpdateManyInput>
+    /**
+     * Filter which ForcebrutTournamentOpponents to update
+     */
+    where?: ForcebrutTournamentOpponentWhereInput
+    /**
+     * Limit how many ForcebrutTournamentOpponents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ForcebrutTournamentOpponent upsert
+   */
+  export type ForcebrutTournamentOpponentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ForcebrutTournamentOpponent to update in case it exists.
+     */
+    where: ForcebrutTournamentOpponentWhereUniqueInput
+    /**
+     * In case the ForcebrutTournamentOpponent found by the `where` argument doesn't exist, create a new ForcebrutTournamentOpponent with this data.
+     */
+    create: XOR<ForcebrutTournamentOpponentCreateInput, ForcebrutTournamentOpponentUncheckedCreateInput>
+    /**
+     * In case the ForcebrutTournamentOpponent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ForcebrutTournamentOpponentUpdateInput, ForcebrutTournamentOpponentUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ForcebrutTournamentOpponent delete
+   */
+  export type ForcebrutTournamentOpponentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+    /**
+     * Filter which ForcebrutTournamentOpponent to delete.
+     */
+    where: ForcebrutTournamentOpponentWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ForcebrutTournamentOpponent deleteMany
+   */
+  export type ForcebrutTournamentOpponentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ForcebrutTournamentOpponents to delete
+     */
+    where?: ForcebrutTournamentOpponentWhereInput
+    /**
+     * Limit how many ForcebrutTournamentOpponents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ForcebrutTournamentOpponent without action
+   */
+  export type ForcebrutTournamentOpponentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForcebrutTournamentOpponent
+     */
+    select?: ForcebrutTournamentOpponentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForcebrutTournamentOpponent
+     */
+    omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
   }
 
 
@@ -46777,6 +48167,7 @@ export namespace Prisma {
     fight: 'fight',
     gather: 'gather',
     leaderId: 'leaderId',
+    FBTournamentStep: 'FBTournamentStep',
     userId: 'userId'
   };
 
@@ -46852,6 +48243,32 @@ export namespace Prisma {
   };
 
   export type DinozStatusScalarFieldEnum = (typeof DinozStatusScalarFieldEnum)[keyof typeof DinozStatusScalarFieldEnum]
+
+
+  export const ForcebrutTournamentOpponentScalarFieldEnum: {
+    id: 'id',
+    step: 'step',
+    name: 'name',
+    raceId: 'raceId',
+    display: 'display',
+    level: 'level',
+    life: 'life',
+    maxLife: 'maxLife',
+    experience: 'experience',
+    nbrUpFire: 'nbrUpFire',
+    nbrUpWood: 'nbrUpWood',
+    nbrUpWater: 'nbrUpWater',
+    nbrUpLightning: 'nbrUpLightning',
+    nbrUpAir: 'nbrUpAir',
+    skillIds: 'skillIds',
+    itemIds: 'itemIds',
+    statusIds: 'statusIds',
+    enabled: 'enabled',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ForcebrutTournamentOpponentScalarFieldEnum = (typeof ForcebrutTournamentOpponentScalarFieldEnum)[keyof typeof ForcebrutTournamentOpponentScalarFieldEnum]
 
 
   export const JobDefinitionScalarFieldEnum: {
@@ -47532,6 +48949,7 @@ export namespace Prisma {
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
+    FBTournamentStep?: IntFilter<"Dinoz"> | number
     userId?: UuidFilter<"Dinoz"> | string
     catches?: DinozCatchListRelationFilter
     leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
@@ -47573,6 +48991,7 @@ export namespace Prisma {
     fight?: SortOrder
     gather?: SortOrder
     leaderId?: SortOrderInput | SortOrder
+    FBTournamentStep?: SortOrder
     userId?: SortOrder
     catches?: DinozCatchOrderByRelationAggregateInput
     leader?: DinozOrderByWithRelationInput
@@ -47617,6 +49036,7 @@ export namespace Prisma {
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
+    FBTournamentStep?: IntFilter<"Dinoz"> | number
     userId?: UuidFilter<"Dinoz"> | string
     catches?: DinozCatchListRelationFilter
     leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
@@ -47658,6 +49078,7 @@ export namespace Prisma {
     fight?: SortOrder
     gather?: SortOrder
     leaderId?: SortOrderInput | SortOrder
+    FBTournamentStep?: SortOrder
     userId?: SortOrder
     _count?: DinozCountOrderByAggregateInput
     _avg?: DinozAvgOrderByAggregateInput
@@ -47697,6 +49118,7 @@ export namespace Prisma {
     fight?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     gather?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     leaderId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
+    FBTournamentStep?: IntWithAggregatesFilter<"Dinoz"> | number
     userId?: UuidWithAggregatesFilter<"Dinoz"> | string
   }
 
@@ -48028,6 +49450,135 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"DinozStatus"> | number
     statusId?: IntWithAggregatesFilter<"DinozStatus"> | number
     dinozId?: IntNullableWithAggregatesFilter<"DinozStatus"> | number | null
+  }
+
+  export type ForcebrutTournamentOpponentWhereInput = {
+    AND?: ForcebrutTournamentOpponentWhereInput | ForcebrutTournamentOpponentWhereInput[]
+    OR?: ForcebrutTournamentOpponentWhereInput[]
+    NOT?: ForcebrutTournamentOpponentWhereInput | ForcebrutTournamentOpponentWhereInput[]
+    id?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    step?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    name?: StringFilter<"ForcebrutTournamentOpponent"> | string
+    raceId?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    display?: StringFilter<"ForcebrutTournamentOpponent"> | string
+    level?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    life?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    maxLife?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    experience?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpFire?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpWood?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpWater?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpLightning?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpAir?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    skillIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
+    itemIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
+    statusIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
+    enabled?: BoolFilter<"ForcebrutTournamentOpponent"> | boolean
+    createdAt?: DateTimeFilter<"ForcebrutTournamentOpponent"> | Date | string
+    updatedAt?: DateTimeFilter<"ForcebrutTournamentOpponent"> | Date | string
+  }
+
+  export type ForcebrutTournamentOpponentOrderByWithRelationInput = {
+    id?: SortOrder
+    step?: SortOrder
+    name?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    skillIds?: SortOrder
+    itemIds?: SortOrder
+    statusIds?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ForcebrutTournamentOpponentWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    step?: number
+    AND?: ForcebrutTournamentOpponentWhereInput | ForcebrutTournamentOpponentWhereInput[]
+    OR?: ForcebrutTournamentOpponentWhereInput[]
+    NOT?: ForcebrutTournamentOpponentWhereInput | ForcebrutTournamentOpponentWhereInput[]
+    name?: StringFilter<"ForcebrutTournamentOpponent"> | string
+    raceId?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    display?: StringFilter<"ForcebrutTournamentOpponent"> | string
+    level?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    life?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    maxLife?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    experience?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpFire?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpWood?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpWater?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpLightning?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpAir?: IntFilter<"ForcebrutTournamentOpponent"> | number
+    skillIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
+    itemIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
+    statusIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
+    enabled?: BoolFilter<"ForcebrutTournamentOpponent"> | boolean
+    createdAt?: DateTimeFilter<"ForcebrutTournamentOpponent"> | Date | string
+    updatedAt?: DateTimeFilter<"ForcebrutTournamentOpponent"> | Date | string
+  }, "id" | "step">
+
+  export type ForcebrutTournamentOpponentOrderByWithAggregationInput = {
+    id?: SortOrder
+    step?: SortOrder
+    name?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    skillIds?: SortOrder
+    itemIds?: SortOrder
+    statusIds?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ForcebrutTournamentOpponentCountOrderByAggregateInput
+    _avg?: ForcebrutTournamentOpponentAvgOrderByAggregateInput
+    _max?: ForcebrutTournamentOpponentMaxOrderByAggregateInput
+    _min?: ForcebrutTournamentOpponentMinOrderByAggregateInput
+    _sum?: ForcebrutTournamentOpponentSumOrderByAggregateInput
+  }
+
+  export type ForcebrutTournamentOpponentScalarWhereWithAggregatesInput = {
+    AND?: ForcebrutTournamentOpponentScalarWhereWithAggregatesInput | ForcebrutTournamentOpponentScalarWhereWithAggregatesInput[]
+    OR?: ForcebrutTournamentOpponentScalarWhereWithAggregatesInput[]
+    NOT?: ForcebrutTournamentOpponentScalarWhereWithAggregatesInput | ForcebrutTournamentOpponentScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    step?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    name?: StringWithAggregatesFilter<"ForcebrutTournamentOpponent"> | string
+    raceId?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    display?: StringWithAggregatesFilter<"ForcebrutTournamentOpponent"> | string
+    level?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    life?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    maxLife?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    experience?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpFire?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpWood?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpWater?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpLightning?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    nbrUpAir?: IntWithAggregatesFilter<"ForcebrutTournamentOpponent"> | number
+    skillIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
+    itemIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
+    statusIds?: IntNullableListFilter<"ForcebrutTournamentOpponent">
+    enabled?: BoolWithAggregatesFilter<"ForcebrutTournamentOpponent"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"ForcebrutTournamentOpponent"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ForcebrutTournamentOpponent"> | Date | string
   }
 
   export type JobDefinitionWhereInput = {
@@ -50056,6 +51607,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
@@ -50096,6 +51648,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
     userId: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -50133,6 +51686,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
@@ -50173,6 +51727,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -50212,6 +51767,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
     userId: string
   }
 
@@ -50241,6 +51797,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
   }
 
   export type DinozUncheckedUpdateManyInput = {
@@ -50271,6 +51828,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -50563,6 +52121,164 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type ForcebrutTournamentOpponentCreateInput = {
+    step: number
+    name: string
+    raceId: number
+    display: string
+    level: number
+    life?: number
+    maxLife?: number
+    experience?: number
+    nbrUpFire?: number
+    nbrUpWood?: number
+    nbrUpWater?: number
+    nbrUpLightning?: number
+    nbrUpAir?: number
+    skillIds?: ForcebrutTournamentOpponentCreateskillIdsInput | number[]
+    itemIds?: ForcebrutTournamentOpponentCreateitemIdsInput | number[]
+    statusIds?: ForcebrutTournamentOpponentCreatestatusIdsInput | number[]
+    enabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ForcebrutTournamentOpponentUncheckedCreateInput = {
+    id?: number
+    step: number
+    name: string
+    raceId: number
+    display: string
+    level: number
+    life?: number
+    maxLife?: number
+    experience?: number
+    nbrUpFire?: number
+    nbrUpWood?: number
+    nbrUpWater?: number
+    nbrUpLightning?: number
+    nbrUpAir?: number
+    skillIds?: ForcebrutTournamentOpponentCreateskillIdsInput | number[]
+    itemIds?: ForcebrutTournamentOpponentCreateitemIdsInput | number[]
+    statusIds?: ForcebrutTournamentOpponentCreatestatusIdsInput | number[]
+    enabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ForcebrutTournamentOpponentUpdateInput = {
+    step?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    skillIds?: ForcebrutTournamentOpponentUpdateskillIdsInput | number[]
+    itemIds?: ForcebrutTournamentOpponentUpdateitemIdsInput | number[]
+    statusIds?: ForcebrutTournamentOpponentUpdatestatusIdsInput | number[]
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ForcebrutTournamentOpponentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    step?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    skillIds?: ForcebrutTournamentOpponentUpdateskillIdsInput | number[]
+    itemIds?: ForcebrutTournamentOpponentUpdateitemIdsInput | number[]
+    statusIds?: ForcebrutTournamentOpponentUpdatestatusIdsInput | number[]
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ForcebrutTournamentOpponentCreateManyInput = {
+    id?: number
+    step: number
+    name: string
+    raceId: number
+    display: string
+    level: number
+    life?: number
+    maxLife?: number
+    experience?: number
+    nbrUpFire?: number
+    nbrUpWood?: number
+    nbrUpWater?: number
+    nbrUpLightning?: number
+    nbrUpAir?: number
+    skillIds?: ForcebrutTournamentOpponentCreateskillIdsInput | number[]
+    itemIds?: ForcebrutTournamentOpponentCreateitemIdsInput | number[]
+    statusIds?: ForcebrutTournamentOpponentCreatestatusIdsInput | number[]
+    enabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ForcebrutTournamentOpponentUpdateManyMutationInput = {
+    step?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    skillIds?: ForcebrutTournamentOpponentUpdateskillIdsInput | number[]
+    itemIds?: ForcebrutTournamentOpponentUpdateitemIdsInput | number[]
+    statusIds?: ForcebrutTournamentOpponentUpdatestatusIdsInput | number[]
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ForcebrutTournamentOpponentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    step?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    skillIds?: ForcebrutTournamentOpponentUpdateskillIdsInput | number[]
+    itemIds?: ForcebrutTournamentOpponentUpdateitemIdsInput | number[]
+    statusIds?: ForcebrutTournamentOpponentUpdatestatusIdsInput | number[]
+    enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type JobDefinitionCreateInput = {
@@ -52767,6 +54483,7 @@ export namespace Prisma {
     fight?: SortOrder
     gather?: SortOrder
     leaderId?: SortOrder
+    FBTournamentStep?: SortOrder
     userId?: SortOrder
   }
 
@@ -52788,6 +54505,7 @@ export namespace Prisma {
     remaining?: SortOrder
     order?: SortOrder
     leaderId?: SortOrder
+    FBTournamentStep?: SortOrder
   }
 
   export type DinozMaxOrderByAggregateInput = {
@@ -52818,6 +54536,7 @@ export namespace Prisma {
     fight?: SortOrder
     gather?: SortOrder
     leaderId?: SortOrder
+    FBTournamentStep?: SortOrder
     userId?: SortOrder
   }
 
@@ -52849,6 +54568,7 @@ export namespace Prisma {
     fight?: SortOrder
     gather?: SortOrder
     leaderId?: SortOrder
+    FBTournamentStep?: SortOrder
     userId?: SortOrder
   }
 
@@ -52870,6 +54590,7 @@ export namespace Prisma {
     remaining?: SortOrder
     order?: SortOrder
     leaderId?: SortOrder
+    FBTournamentStep?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -53257,6 +54978,113 @@ export namespace Prisma {
     id?: SortOrder
     statusId?: SortOrder
     dinozId?: SortOrder
+  }
+
+  export type IntNullableListFilter<$PrismaModel = never> = {
+    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    has?: number | IntFieldRefInput<$PrismaModel> | null
+    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
+    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type ForcebrutTournamentOpponentCountOrderByAggregateInput = {
+    id?: SortOrder
+    step?: SortOrder
+    name?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    skillIds?: SortOrder
+    itemIds?: SortOrder
+    statusIds?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ForcebrutTournamentOpponentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    step?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    skillIds?: SortOrder
+    itemIds?: SortOrder
+    statusIds?: SortOrder
+  }
+
+  export type ForcebrutTournamentOpponentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    step?: SortOrder
+    name?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ForcebrutTournamentOpponentMinOrderByAggregateInput = {
+    id?: SortOrder
+    step?: SortOrder
+    name?: SortOrder
+    raceId?: SortOrder
+    display?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    enabled?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ForcebrutTournamentOpponentSumOrderByAggregateInput = {
+    id?: SortOrder
+    step?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    skillIds?: SortOrder
+    itemIds?: SortOrder
+    statusIds?: SortOrder
   }
 
   export type EnumJobTypeFilter<$PrismaModel = never> = {
@@ -54434,14 +56262,6 @@ export namespace Prisma {
     raceId?: SortOrder
   }
 
-  export type IntNullableListFilter<$PrismaModel = never> = {
-    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    has?: number | IntFieldRefInput<$PrismaModel> | null
-    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
-    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
   export type UserGatherCountOrderByAggregateInput = {
     id?: SortOrder
     place?: SortOrder
@@ -55455,6 +57275,33 @@ export namespace Prisma {
     delete?: DinozWhereInput | boolean
     connect?: DinozWhereUniqueInput
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutStatusInput, DinozUpdateWithoutStatusInput>, DinozUncheckedUpdateWithoutStatusInput>
+  }
+
+  export type ForcebrutTournamentOpponentCreateskillIdsInput = {
+    set: number[]
+  }
+
+  export type ForcebrutTournamentOpponentCreateitemIdsInput = {
+    set: number[]
+  }
+
+  export type ForcebrutTournamentOpponentCreatestatusIdsInput = {
+    set: number[]
+  }
+
+  export type ForcebrutTournamentOpponentUpdateskillIdsInput = {
+    set?: number[]
+    push?: number | number[]
+  }
+
+  export type ForcebrutTournamentOpponentUpdateitemIdsInput = {
+    set?: number[]
+    push?: number | number[]
+  }
+
+  export type ForcebrutTournamentOpponentUpdatestatusIdsInput = {
+    set?: number[]
+    push?: number | number[]
   }
 
   export type JobRunCreateNestedManyWithoutJobInput = {
@@ -57772,6 +59619,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -57811,6 +59659,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
     userId: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
@@ -57852,6 +59701,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -57890,6 +59740,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     userId: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -58195,6 +60046,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -58234,6 +60086,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
@@ -58291,6 +60144,7 @@ export namespace Prisma {
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
     leaderId?: IntNullableFilter<"Dinoz"> | number | null
+    FBTournamentStep?: IntFilter<"Dinoz"> | number
     userId?: UuidFilter<"Dinoz"> | string
   }
 
@@ -58566,6 +60420,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     items?: DinozItemsCreateNestedManyWithoutDinozInput
@@ -58605,6 +60460,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
     userId: string
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
@@ -58657,6 +60513,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -58696,6 +60553,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
@@ -58732,6 +60590,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
@@ -58771,6 +60630,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
     userId: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -58823,6 +60683,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
@@ -58862,6 +60723,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -58898,6 +60760,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
@@ -58937,6 +60800,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
     userId: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -58989,6 +60853,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
@@ -59028,6 +60893,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -59064,6 +60930,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
@@ -59103,6 +60970,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
     userId: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -59155,6 +61023,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
@@ -59194,6 +61063,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -59230,6 +61100,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
@@ -59269,6 +61140,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
     userId: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -59321,6 +61193,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
@@ -59360,6 +61233,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -59396,6 +61270,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
@@ -59435,6 +61310,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
     userId: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -59487,6 +61363,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
@@ -59526,6 +61403,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -60024,6 +61902,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
@@ -60063,6 +61942,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
     userId: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
@@ -60244,6 +62124,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
@@ -60283,6 +62164,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -61935,6 +63817,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     leader?: DinozCreateNestedOneWithoutFollowersInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
@@ -61974,6 +63857,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
@@ -64881,6 +66765,7 @@ export namespace Prisma {
     stateTimer?: Date | string | null
     fight?: boolean
     gather?: boolean
+    FBTournamentStep?: number
     userId: string
   }
 
@@ -64970,6 +66855,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUpdateManyWithoutDinozNestedInput
@@ -65008,6 +66894,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
@@ -65046,6 +66933,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -65529,6 +67417,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     leaderId?: number | null
+    FBTournamentStep?: number
   }
 
   export type UserDinozShopCreateManyUserInput = {
@@ -65795,6 +67684,7 @@ export namespace Prisma {
     stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     leader?: DinozUpdateOneWithoutFollowersNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
@@ -65834,6 +67724,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
@@ -65872,6 +67763,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserDinozShopUpdateWithoutUserInput = {
