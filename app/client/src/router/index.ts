@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import AccountPage from '../pages/AccountPage.vue';
 import AdminDinozPage from '../pages/Admin/AdminDinozPage.vue';
+import AdminForcebrutPage from '../pages/Admin/AdminForcebrutPage.vue';
 import AdminJobsPage from '../pages/Admin/AdminJobsPage.vue';
 import AdminNewsEditPage from '../pages/Admin/AdminNewsEditPage.vue';
 import AdminNewsPage from '../pages/Admin/AdminNewsPage.vue';
@@ -238,6 +239,12 @@ const routes: RouteRecord[] = [
 						path: '/admin/dinoz',
 						name: 'AdminDinoz',
 						component: AdminDinozPage,
+						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
+					},
+					{
+						path: '/admin/forcebrut',
+						name: 'AdminForcebrut',
+						component: AdminForcebrutPage,
 						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
 					},
 					{
