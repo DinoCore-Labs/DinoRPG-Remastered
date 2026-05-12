@@ -632,6 +632,18 @@
 			"resting": "Votre Dinoz se repose"
 		}
 	},
+	"fb_tournament": {
+		"title": "Tournoi de Forcebrut",
+		"disclaimer": "Chaque combat du tournoi consomme une Potion d’Irma. En cas de victoire, votre Dinoz progresse vers l’adversaire suivant.",
+		"stage": "Palier {stage}",
+		"fight": "Combattre {opponent}"
+	},
+	"forcebrut": {
+		"notEnoughIrma": "Vous devez posséder une Potion d’Irma pour participer au tournoi.",
+		"notRegistered": "Ce Dinoz n’est pas inscrit au Tournoi de Forcebrut.",
+		"wrongPlace": "Votre Dinoz doit être à Forcebrut pour participer au tournoi.",
+		"noOpponent": "Aucun adversaire n’est encore disponible pour ce palier."
+	},
 	"race": {
 		"race": "Race :",
 		"name": {
