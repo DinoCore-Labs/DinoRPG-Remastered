@@ -191,7 +191,7 @@ table {
 			padding: 2px 4px;
 			&.dinoz {
 				width: 50px;
-				text-align: center;
+				padding-top: 20px;
 			}
 			&.level {
 				text-align: center;
