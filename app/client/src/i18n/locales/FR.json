@@ -636,7 +636,8 @@
 		"title": "Tournoi de Forcebrut",
 		"disclaimer": "Chaque combat du tournoi consomme une Potion d’Irma. En cas de victoire, votre Dinoz progresse vers l’adversaire suivant.",
 		"stage": "Palier {stage}",
-		"fight": "Combattre {opponent}"
+		"fight": "Combattre {opponent}",
+		"completed": "Votre Dinoz a vaincu tous les adversaires disponibles du tournoi."
 	},
 	"forcebrut": {
 		"notEnoughIrma": "Vous devez posséder une Potion d’Irma pour participer au tournoi.",
