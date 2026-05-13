@@ -142,9 +142,11 @@ export async function getForcebrutOpponent(req: FastifyRequest<{ Params: Forcebr
 	if (!dinoz.status.some(status => status.statusId === DinozStatusId.TOURNA)) {
 		throw new ExpectedError('forcebrut.notRegistered', { statusCode: 400 });
 	}
-	const opponent = await prisma.forcebrutTournamentOpponent.findFirst({
+	const currentStep = dinoz.FBTournamentStep ?? 0;
+	const nextStep = currentStep + 1;
+	const nextOpponent = await prisma.forcebrutTournamentOpponent.findFirst({
 		where: {
-			step: dinoz.FBTournamentStep + 1,
+			step: nextStep,
 			enabled: true
 		},
 		select: {
@@ -155,10 +157,36 @@ export async function getForcebrutOpponent(req: FastifyRequest<{ Params: Forcebr
 			level: true
 		}
 	});
-	if (!opponent) {
-		throw new ExpectedError('forcebrut.noOpponent', { statusCode: 404 });
+	if (nextOpponent) {
+		return reply.send({
+			...nextOpponent,
+			canFight: true,
+			completed: false
+		});
 	}
-	return reply.send(opponent);
+	if (currentStep > 0) {
+		const lastOpponent = await prisma.forcebrutTournamentOpponent.findFirst({
+			where: {
+				step: currentStep,
+				enabled: true
+			},
+			select: {
+				id: true,
+				step: true,
+				name: true,
+				display: true,
+				level: true
+			}
+		});
+		if (lastOpponent) {
+			return reply.send({
+				...lastOpponent,
+				canFight: false,
+				completed: true
+			});
+		}
+	}
+	throw new ExpectedError('forcebrut.noOpponent', { statusCode: 404 });
 }
 
 export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: ForcebrutParams }>, reply: FastifyReply) {
