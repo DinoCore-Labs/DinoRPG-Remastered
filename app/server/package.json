@@ -10,6 +10,7 @@
 		"start": "node dist/main.js",
 		"dev": "tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\"",
 		"db:sync:dev": "prisma migrate dev && prisma generate && prisma db seed",
+		"db:seed": "prisma db seed",
 		"db:studio": "prisma studio --config prisma.config.ts"
 	},
 	"packageManager": "pnpm@10.12.1",
