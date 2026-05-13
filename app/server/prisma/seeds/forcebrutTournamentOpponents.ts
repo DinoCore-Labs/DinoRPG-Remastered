@@ -62,7 +62,7 @@ export const forcebrutTournamentOpponentsSeed = [
 		nbrUpWater: 3,
 		nbrUpLightning: 1,
 		nbrUpAir: 1,
-		skillIds: [11102, 41102, 31101, 31103, 31102, 11103, 11101, 51102],
+		skillIds: [11102, 41102, 31101, 31103, 31102, 11103, 11101, 51102, 61103],
 		enabled: true
 	},
   {
@@ -78,7 +78,7 @@ export const forcebrutTournamentOpponentsSeed = [
 		nbrUpWater: 2,
 		nbrUpLightning: 0,
 		nbrUpAir: 0,
-		skillIds: [11102, 11201, 11103, 11101, 31101, 31103, 11203, 11202, 21101],
+		skillIds: [11102, 11201, 11103, 11101, 31101, 31103, 11203, 11202, 21101, 61103],
 		enabled: true
 	},
   {
@@ -190,7 +190,7 @@ export const forcebrutTournamentOpponentsSeed = [
 		nbrUpWater: 2,
 		nbrUpLightning: 1,
 		nbrUpAir: 3,
-		skillIds: [11311, 11102, 11201, 31102, 31101, 41102, 21103, 21206, 11204, 51102, 51203, 11202, 11206, 11103, 11205, 51306],
+		skillIds: [11311, 11102, 11201, 31102, 31101, 41102, 21103, 21206, 11204, 51102, 51203, 11202, 11206, 11103, 11205, 51306, 61103],
 		enabled: true
 	},
   {
@@ -206,7 +206,7 @@ export const forcebrutTournamentOpponentsSeed = [
 		nbrUpWater: 2,
 		nbrUpLightning: 0,
 		nbrUpAir: 3,
-		skillIds: [11102, 11201, 11307, 31101, 11303, 11101, 11205, 11203, 31103, 21103, 21206, 11103, 11202, 51102, 51203, 51306, 21101],
+		skillIds: [11102, 11201, 11307, 31101, 11303, 11101, 11205, 11203, 31103, 21103, 21206, 11103, 11202, 51102, 51203, 51306, 21101, 61103],
 		enabled: true
 	},
   {
@@ -254,7 +254,7 @@ export const forcebrutTournamentOpponentsSeed = [
 		nbrUpWater: 2,
 		nbrUpLightning: 14,
 		nbrUpAir: 1,
-		skillIds: [41102, 11102, 31101 ,41201, 41204, 41103, 41101, 31103, 11203, 21101, 21103, 41202, 41308, 41206, 41305, 41309, 41203, 41312, 41205, 51101],
+		skillIds: [41102, 11102, 31101 ,41201, 41204, 41103, 41101, 31103, 11203, 21101, 21103, 41202, 41308, 41206, 41305, 41309, 41203, 41312, 41205, 51101, 61104],
 		enabled: true
 	},
   {
@@ -319,6 +319,86 @@ export const forcebrutTournamentOpponentsSeed = [
 		nbrUpLightning: 11,
 		nbrUpAir: 8,
 		skillIds: [11102,41102,31101,51105,41204,51103,11203,41103,41201,41202,21101,31103,51101,51201,51302,51102,51203,51305,31102,41309,41308,41304,41101],
+		enabled: true
+	},
+  {
+		step: 21,
+		name: 'Vadatée',
+		raceId: 3,
+		display: '193543F953600000',
+		level: 26,
+		life: 130,
+		maxLife: 130,
+		nbrUpFire: 14,
+		nbrUpWood: 0,
+		nbrUpWater: 4,
+		nbrUpLightning: 6,
+		nbrUpAir: 5,
+		skillIds: [11102,41102,31101,31102,11311,11201,11304,11307,11101,11103,11202,11206,11301,41201,41103,41204,51102,51203,51306,41202,41304,51305,51101,11205,31103,31205, 61103],
+		enabled: true
+	},
+  {
+		step: 22,
+		name: 'Ptilutus',
+		raceId: 13,
+		display: '8934284567640000',
+		level: 27,
+		life: 130,
+		maxLife: 130,
+		nbrUpFire: 2,
+		nbrUpWood: 5,
+		nbrUpWater: 16,
+		nbrUpLightning: 3,
+		nbrUpAir: 2,
+		skillIds: [31312,31101,41102,31201,31203,21202,31202,51103,11102,31311,31102,31103,31206,31304,31301,21101,11203,21203,41201,41205,51101,21102,21204,31205,31310,31303],
+		enabled: true
+	},
+  {
+		step: 23,
+		name: 'Ludotigos',
+		raceId: 9,
+		display: '48AA741G84300000',
+		level: 28,
+		life: 150,
+		maxLife: 150,
+		nbrUpFire: 2,
+		nbrUpWood: 11,
+		nbrUpWater: 6,
+		nbrUpLightning: 3,
+		nbrUpAir: 7,
+		skillIds: [51103,31201,31101,21202,31102,21201,31103,21206,21103,21101,21203,21102,21204,21306,21303,51206,31204,41103,41204,41202,51101,51201,51205,51302,11103,11101,31301],
+		enabled: true
+	},
+  {
+		step: 24,
+		name: 'Durtonsa',
+		raceId: 3,
+		display: '190A32E9A2520000',
+		level: 29,
+		life: 150,
+		maxLife: 150,
+		nbrUpFire: 19,
+		nbrUpWood: 0,
+		nbrUpWater: 3,
+		nbrUpLightning: 6,
+		nbrUpAir: 4,
+		skillIds: [11311,41102,11102,11201,11312,31101,31102,11304,11307,11103,11202,61103,11206,11301,11101,11203,11204,41201,11302,11309,51102,51203,51306,51305,41103,41204,41304,41202,31103],
+		enabled: true
+	},
+  {
+		step: 25,
+		name: 'Moltapaise',
+		raceId: 14,
+		display: '9943350339300000',
+		level: 30,
+		life: 120,
+		maxLife: 120,
+		nbrUpFire: 7,
+		nbrUpWood: 6,
+		nbrUpWater: 5,
+		nbrUpLightning: 7,
+		nbrUpAir: 7,
+		skillIds: [21202,51103,41102,11201,11102,31202,31101,11103,11101,11203,11202,21102,21204,21103,21206,21101,31304,31303,31102,41201,41103,41204,41202,51205,51101,51102,41101,51201,51203],
 		enabled: true
 	}
 ] as const;
