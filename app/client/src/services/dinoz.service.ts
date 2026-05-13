@@ -17,6 +17,9 @@ export const DinozService = {
 	getDinozFiche(id: number, config?: AxiosRequestConfig): Promise<DinozFiche> {
 		return api.get<DinozFiche>(`/dinoz/fiche/${id}`, config);
 	},
+	getDinozMenu(config?: AxiosRequestConfig): Promise<DinozFiche[]> {
+		return api.get('/dinoz/menu', config);
+	},
 	setSkillState(id: number, skillId: number, skillState: boolean): Promise<boolean> {
 		return api.patch<boolean>(`/dinoz/setskillstate/${id}`, {
 			skillId,

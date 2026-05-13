@@ -49,8 +49,8 @@
 			</div>
 			<div class="dinozList">
 				<RouterLink
-					v-for="(dinoz, index) in dinozList"
-					:key="index"
+					v-for="dinoz in dinozList"
+					:key="dinoz.id"
 					:to="`/dinoz/${dinoz.id}`"
 					class="dinoz"
 					:class="{
@@ -59,7 +59,7 @@
 						exhausted: dinoz.remaining === 0 && !dinoz.fight
 					}"
 				>
-					<DinozMini class="display" :display="dinoz.display" :key="dinoz.display" />
+					<DinozMini class="display" :display="dinoz.display" :key="`${dinoz.id}-${dinoz.display}`" />
 					<div class="dinozName">
 						<p
 							:class="{
@@ -192,7 +192,9 @@ export default defineComponent({
 			menuCalled: false,
 			dinozStore: dinozStore(),
 			userStore: userStore(),
-			DINOZ_STATE
+			DINOZ_STATE,
+			isRefreshingDinozMenu: false,
+			lastDinozMenuRefreshAt: 0
 		};
 	},
 	computed: {
@@ -269,11 +271,32 @@ export default defineComponent({
 				return true;
 			}
 			return !!selectedDinoz?.followers.map(d => d.id).includes(dinoz.id);
+		},
+		async refreshDinozMenu(force = false) {
+			const now = Date.now();
+			if (this.isRefreshingDinozMenu) {
+				return;
+			}
+			if (!force && now - this.lastDinozMenuRefreshAt < 10_000) {
+				return;
+			}
+			this.isRefreshingDinozMenu = true;
+			try {
+				await this.dinozStore.refreshDinozMenu({
+					silent: true
+				});
+				this.lastDinozMenuRefreshAt = now;
+			} finally {
+				this.isRefreshingDinozMenu = false;
+			}
 		}
 	},
 	mounted() {
 		eventBus.on('leftUserMenu', async e => {
 			this.menuCalled = e;
+			if (e) {
+				await this.refreshDinozMenu(true);
+			}
 		});
 	}
 });
@@ -373,7 +396,7 @@ export default defineComponent({
 	fill: currentcolor;
 	flex-shrink: 0;
 	transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1);
-	font-size: 2rem;
+	font-size: 1.2rem;
 }
 .money {
 	margin: 0px;
@@ -391,11 +414,6 @@ export default defineComponent({
 	padding-right: 16px;
 }
 .burgerClose {
-	display: inline-flex;
-	-moz-box-align: center;
-	align-items: center;
-	-moz-box-pack: center;
-	justify-content: center;
 	position: relative;
 	box-sizing: border-box;
 	background-color: transparent;
@@ -404,16 +422,11 @@ export default defineComponent({
 	margin: 0px;
 	cursor: pointer;
 	user-select: none;
-	vertical-align: middle;
 	appearance: none;
 	text-decoration: none;
-	text-align: center;
 	flex: 0 0 auto;
-	border-radius: 50%;
 	overflow: visible;
 	transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
-	padding: 5px;
-	font-size: 1.2rem;
 	color: rgb(255, 255, 255);
 }
 .close {
