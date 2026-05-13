@@ -1,6 +1,9 @@
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import type { DinozStore } from '@dinorpg/core/models/store/dinozStore.js';
+import type { AxiosRequestConfig } from 'axios';
 import { defineStore } from 'pinia';
+
+import { DinozService } from '../services/dinoz.service.js';
 
 export const dinozStore = defineStore('dinozStore', {
 	state: (): DinozStore => ({
@@ -26,6 +29,10 @@ export const dinozStore = defineStore('dinozStore', {
 		},
 		setDinozList(dinozList: DinozFiche[]): void {
 			this.dinozList = [...dinozList];
+		},
+		async refreshDinozMenu(config?: AxiosRequestConfig): Promise<void> {
+			const dinozList = await DinozService.getDinozMenu(config);
+			this.setDinozList(dinozList);
 		},
 		setCurrentDinozId(dinozId: number): void {
 			this.currentDinozId = dinozId;

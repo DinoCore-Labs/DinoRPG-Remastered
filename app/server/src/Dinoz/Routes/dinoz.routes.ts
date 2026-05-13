@@ -14,6 +14,7 @@ import { disband } from '../Service/disbandDinozTeam.service.js';
 import { followDinoz } from '../Service/followDinoz.service.js';
 import { freezeDinoz } from '../Service/freezeDinoz.service.js';
 import { getDinozFiche } from '../Service/getDinozFiche.service.js';
+import { getDinozMenu } from '../Service/getDinozMenu.service.js';
 import { getDinozSkillHandler } from '../Service/getDinozSkill.service.js';
 import { getDinozToManageHandler, updateDinozOrdersHandler } from '../Service/manageDinoz.service.js';
 import { moveDinozHandler } from '../Service/moveDinoz.service.js';
@@ -28,6 +29,17 @@ import { unfreezeDinoz } from '../Service/unfreezeDinoz.service.js';
 import { useIrma } from '../Service/useIrma.service.js';
 
 export async function dinozRoutes(app: FastifyInstance) {
+	// Menu
+	app.get(
+		'/menu',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Dinoz']
+			}
+		},
+		getDinozMenu
+	);
 	// Fiche
 	app.get(
 		'/fiche/:id',
@@ -241,11 +253,4 @@ export async function dinozRoutes(app: FastifyInstance) {
 		},
 		unfreezeDinoz
 	);
-}
-function getDinozToManage(id: string) {
-	throw new Error('Function not implemented.');
-}
-
-function updateDinozOrders(id: string, dinozIds: number[]) {
-	throw new Error('Function not implemented.');
 }
