@@ -632,6 +632,19 @@
 			"resting": "Tu Dino está descansando"
 		}
 	},
+	"fb_tournament": {
+		"title": "Tournoi",
+		"disclaimer": "Chaque combat du tournoi consomme une Potion d’Irma. En cas de victoire, votre Dinoz progresse vers l’adversaire suivant.",
+		"stage": "Palier {stage}",
+		"fight": "Combattre {opponent}",
+		"completed": "Votre Dinoz a vaincu tous les adversaires disponibles du tournoi."
+	},
+	"forcebrut": {
+		"notEnoughIrma": "Vous devez posséder une Potion d’Irma pour participer au tournoi.",
+		"notRegistered": "Ce Dinoz n’est pas inscrit au Tournoi de Forcebrut.",
+		"wrongPlace": "Votre Dinoz doit être à Forcebrut pour participer au tournoi.",
+		"noOpponent": "Aucun adversaire n’est encore disponible pour ce palier."
+	},
 	"race": {
 		"race": "Race :",
 		"name": {
@@ -3865,6 +3878,20 @@
 				"begin": "Que viens-tu faire à cette heure si matinale chez moi ?",
 				"ok": "Ah ! Oui, je suis encore dans les vappes, je n'avais pas réalisé. Tiens, je l'avais gardé pour toi, j'espère en tout cas qu'elle ne t'attirera pas trop d'ennuis...",
 				"star": "Sur ces mots étranges, Bao Bob vous confie la 6ème étoile magique ! Plus qu'une dernière !!!"
+			}
+		},
+		"forcebrutOrganizer": {
+			"name": "Organisateur du Tournoi",
+			"dialog": {
+				"begin": "Bonjour, ô Grand Maître Dinoz ! Le Grand Tournoi de Forcebrut est ouvert à tous ceux qui désirent mesurer leurs Dinoz à ceux des autres joueurs. Je vous y inscris ?",
+				"yes": "Malheureusement, comme le précise le règlement intérieur, paragraphe 15.48 alinéa H, l'accès au Tournoi est ouvert uniquement aux Dinoz ayant en leur possession une relique d'une civilisation ancienne. C'est l'unique condition pour participer... N'hésitez pas à revenir quand votre Dinoz en aura trouvé une. Bonne journée et bon séjour à Forcebrut !",
+				"ok": "Oh ! Je vois que votre Dinoz possède un Totem Ashpouk ! Très bien, je l'inscris donc sur la liste des participants au Tournoi, il pourra donc désormais y accéder directement. Bonne journée monsieur le Maître Dinoz !",
+				"no": "Très bien, vous n'êtes nullement obligé de vous inscrire, surtout si vos Dinoz ne sont pas prêts à se mesurer à de puissants adversaires. C'est vrai que le Tournoi peut être très dangereux pour les Dinoz inexpérimentés. Bonne journée et bon séjour à Forcebrut !"
+			},
+			"choice": {
+				"yes": "Ho, bonne idée !",
+				"ok": "Oui, merci !",
+				"no": "Heu, non merci... Mes Dinoz ont encore besoin d'entrainement"
 			}
 		},
 		"dialog": {
