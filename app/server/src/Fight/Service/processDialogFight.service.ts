@@ -17,7 +17,6 @@ import {
 } from '../../Dialog/Controller/dialogReturnPhase.controller.js';
 import { addStatusToDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
-import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { checkDialogCondition } from '../../utils/conditions/checkDialogCondition.js';
@@ -133,11 +132,6 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 		if (!alreadyHasStatus) {
 			await addStatusToDinoz(dinozId, rewardStatusId);
 		}
-	}
-	for (const dino of team) {
-		await updateDinoz(dino.id, {
-			fight: false
-		});
 	}
 	await incrementUserStat(
 		StatTracking.KILL_M,
