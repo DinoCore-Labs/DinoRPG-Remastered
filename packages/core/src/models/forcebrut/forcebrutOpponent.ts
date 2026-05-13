@@ -4,4 +4,6 @@ export type ForcebrutOpponent = {
 	name: string;
 	display: string;
 	level: number;
+	canFight: boolean;
+	completed?: boolean;
 };

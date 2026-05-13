@@ -25,11 +25,16 @@
 			</div>
 		</div>
 	</div>
-	<div class="fight" v-if="!fightTransformed && opponent">
+	<div class="fight" v-if="!fightTransformed && opponent && canFightOpponent">
 		<button class="launch-fight" @click="launchFight">
 			<img :src="getImgURL('act', 'act_attack')" alt="" />
 			<span>{{ $t('fb_tournament.fight', { opponent: opponentFullName }) }}</span>
 		</button>
+	</div>
+	<div class="fight fight--completed" v-if="!fightTransformed && opponent && !canFightOpponent">
+		<p>
+			{{ $t('fb_tournament.completed') }}
+		</p>
 	</div>
 	<div class="wrapper" v-if="fightTransformed && fight">
 		<Suspense>
@@ -98,6 +103,9 @@ export default defineComponent({
 				display: this.opponent.display,
 				step: this.opponent.step
 			});
+		},
+		canFightOpponent(): boolean {
+			return Boolean(this.opponent?.canFight);
 		}
 	},
 	methods: {
@@ -105,8 +113,10 @@ export default defineComponent({
 			this.dinoz = this.dinozStore.getDinoz(this.dinozId);
 			this.opponent = await ForcebrutService.getOpponent(this.dinozId);
 		},
-
 		async launchFight() {
+			if (!this.canFightOpponent) {
+				return;
+			}
 			try {
 				this.fight = await ForcebrutService.fight(this.dinozId);
 				this.sessionStore.setFightResult(this.fight);
@@ -234,6 +244,17 @@ export default defineComponent({
 	margin-top: 10px;
 	width: 80%;
 	height: 50px;
+}
+.fight--completed {
+	height: auto;
+	min-height: 50px;
+	padding: 10px;
+	text-align: center;
+	p {
+		margin: 0;
+		color: #fce3bc;
+		font-weight: bold;
+	}
 }
 .launch-fight {
 	display: flex;
