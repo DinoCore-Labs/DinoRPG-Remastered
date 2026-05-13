@@ -48,64 +48,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { beautifulNumber } from '../../utils/beautifulNumber';
-import { userStore } from '../../store/userStore';
-import { dinozStore } from '../../store/dinozStore';
-import DZButton from '../utils/DZButton.vue';
-import DZSelect from '../utils/DZSelect.vue';
-import DinozList from '../dinoz/DinozList.vue';
-import { placeList } from '../../constants/place';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
+import { defineComponent } from 'vue';
+
+import { placeList } from '../../constants/place';
+import { dinozStore } from '../../store/dinozStore';
+import { userStore } from '../../store/userStore';
+import { beautifulNumber } from '../../utils/beautifulNumber';
+import DinozList from '../dinoz/DinozList.vue';
+import DZButton from '../utils/DZButton.vue';
+import DZSelect from '../utils/DZSelect.vue';
 
 type WalletKey = 'GOLD' | 'TREASURE_TICKET';
 
 export default defineComponent({
 	name: 'LeftPanel',
-	data() {
-		return {
-			user: userStore(),
-			dinoz: dinozStore(),
-			selectedWallet: 'GOLD' as WalletKey
-		};
-	},
 	components: {
 		DZButton,
 		DZSelect,
 		DinozList
 	},
-	methods: {
-		beautifulNumber,
-		goToPage(pageName: string) {
-			this.$router.push({ name: pageName });
-		},
-		goToDinozPage() {
-			this.$router.push({
-				name: 'DinozPage',
-				params: { id: this.currentDinozId() }
-			});
-		},
-		currentDinozId(): number | undefined {
-			return this.dinoz.getCurrentDinozId;
-		},
-		changeTimezone(date: Date, ianatz: string) {
-			const invdate = new Date(
-				date.toLocaleString('en-US', {
-					timeZone: ianatz
-				})
-			);
-			const diff = date.getTime() - invdate.getTime();
-			return new Date(date.getTime() - diff); // needs to substract
-		},
-		getPlaceImage(place: string | null) {
-			if (!place) return;
-			const today = this.changeTimezone(new Date(), 'GMT').getDay();
-			if (place === 'marais' && !(today === 1 || today === 2 || today === 5)) {
-				return new URL(`/src/assets/place/marais_fog.webp`, import.meta.url).toString();
-			}
-			return new URL(`/src/assets/place/${place}.webp`, import.meta.url).toString();
-		}
+	data() {
+		return {
+			user: userStore(),
+			dinoz: dinozStore(),
+			selectedWallet: 'GOLD' as WalletKey,
+			isRefreshingDinozMenu: false,
+			lastDinozMenuRefreshAt: 0
+		};
 	},
 	computed: {
 		walletOptions() {
@@ -125,15 +96,83 @@ export default defineComponent({
 		},
 		place(): string | null {
 			const currentDinozId = this.currentDinozId();
-			if (!currentDinozId) return this.place;
+			if (!currentDinozId) return null;
 			const currentDinoz = this.dinoz.getDinoz(currentDinozId) as DinozFiche | undefined;
-			if (!currentDinoz) return this.place;
+			if (!currentDinoz) return null;
 			const place = Object.values(placeList).find(place => place.placeId === currentDinoz.placeId);
-			if (!place) return this.place;
+			if (!place) return null;
 			return place.name;
 		},
 		activeDinozCount(): number {
 			return this.dinoz.getDinozList.filter(dinoz => dinoz.state !== DINOZ_STATE.frozen).length;
+		}
+	},
+	watch: {
+		'$route.fullPath': {
+			async handler() {
+				await this.refreshDinozMenu();
+			}
+		}
+	},
+	async mounted() {
+		await this.refreshDinozMenu(true);
+		document.addEventListener('visibilitychange', this.refreshDinozMenuOnVisibilityChange);
+	},
+	beforeUnmount() {
+		document.removeEventListener('visibilitychange', this.refreshDinozMenuOnVisibilityChange);
+	},
+	methods: {
+		beautifulNumber,
+		async refreshDinozMenu(force = false) {
+			if (!this.user.isLogged) return;
+			const now = Date.now();
+			if (this.isRefreshingDinozMenu) return;
+			// évite de relancer l'endpoint à chaque micro-navigation
+			if (!force && now - this.lastDinozMenuRefreshAt < 10_000) return;
+			this.isRefreshingDinozMenu = true;
+			try {
+				await this.dinoz.refreshDinozMenu({
+					silent: true
+				});
+				this.lastDinozMenuRefreshAt = now;
+			} finally {
+				this.isRefreshingDinozMenu = false;
+			}
+		},
+		async refreshDinozMenuOnVisibilityChange() {
+			if (document.visibilityState !== 'visible') return;
+			await this.refreshDinozMenu(true);
+		},
+		goToPage(pageName: string) {
+			this.$router.push({ name: pageName });
+		},
+		goToDinozPage() {
+			const currentDinozId = this.currentDinozId();
+			if (!currentDinozId) return;
+			this.$router.push({
+				name: 'DinozPage',
+				params: { id: currentDinozId }
+			});
+		},
+		currentDinozId(): number | undefined {
+			return this.dinoz.getCurrentDinozId;
+		},
+		changeTimezone(date: Date, ianatz: string) {
+			const invdate = new Date(
+				date.toLocaleString('en-US', {
+					timeZone: ianatz
+				})
+			);
+			const diff = date.getTime() - invdate.getTime();
+			return new Date(date.getTime() - diff);
+		},
+		getPlaceImage(place: string | null) {
+			if (!place) return;
+			const today = this.changeTimezone(new Date(), 'GMT').getDay();
+			if (place === 'marais' && !(today === 1 || today === 2 || today === 5)) {
+				return new URL(`/src/assets/place/marais_fog.webp`, import.meta.url).toString();
+			}
+			return new URL(`/src/assets/place/${place}.webp`, import.meta.url).toString();
 		}
 	}
 });
