@@ -5,6 +5,10 @@ import { defineStore } from 'pinia';
 
 import { DinozService } from '../services/dinoz.service.js';
 
+let dinozMenuRefreshPromise: Promise<void> | null = null;
+let lastDinozMenuRefreshAt = 0;
+const DINOZ_MENU_REFRESH_TTL_MS = 10_000;
+
 export const dinozStore = defineStore('dinozStore', {
 	state: (): DinozStore => ({
 		dinozList: [],
@@ -30,9 +34,23 @@ export const dinozStore = defineStore('dinozStore', {
 		setDinozList(dinozList: DinozFiche[]): void {
 			this.dinozList = [...dinozList];
 		},
-		async refreshDinozMenu(config?: AxiosRequestConfig): Promise<void> {
-			const dinozList = await DinozService.getDinozMenu(config);
-			this.setDinozList(dinozList);
+		async refreshDinozMenu(config?: AxiosRequestConfig, options: { force?: boolean } = {}): Promise<void> {
+			const now = Date.now();
+			if (!options.force && now - lastDinozMenuRefreshAt < DINOZ_MENU_REFRESH_TTL_MS) {
+				return;
+			}
+			if (dinozMenuRefreshPromise) {
+				return dinozMenuRefreshPromise;
+			}
+			dinozMenuRefreshPromise = DinozService.getDinozMenu(config)
+				.then(dinozList => {
+					this.setDinozList(dinozList);
+					lastDinozMenuRefreshAt = Date.now();
+				})
+				.finally(() => {
+					dinozMenuRefreshPromise = null;
+				});
+			return dinozMenuRefreshPromise;
 		},
 		setCurrentDinozId(dinozId: number): void {
 			this.currentDinozId = dinozId;
