@@ -507,7 +507,13 @@
 		"alreadyOffer": "Vous avez déjà une vente en cours.",
 		"bidsOngoing": "Vous avez encore des enchères en cours.",
 		"dinozLevelCapReached": "Votre Dinoz a atteint le palier du niveau {level}. Vous devez débloquer la limite de niveau avant de continuer.",
-		"dinozNotEnoughExperience": "Votre Dinoz n'a pas assez d'expérience pour monter de niveau."
+		"dinozNotEnoughExperience": "Votre Dinoz n'a pas assez d'expérience pour monter de niveau.",
+		"forcebrut": {
+			"notEnoughIrma": "Vous devez posséder une Potion d’Irma pour participer au tournoi.",
+			"notRegistered": "Ce Dinoz n’est pas inscrit au Tournoi de Forcebrut.",
+			"wrongPlace": "Votre Dinoz doit être à Forcebrut pour participer au tournoi.",
+			"noOpponent": "Aucun adversaire n’est encore disponible pour ce palier."
+		}
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -638,12 +644,6 @@
 		"stage": "Palier {stage}",
 		"fight": "Combattre {opponent}",
 		"completed": "Votre Dinoz a vaincu tous les adversaires disponibles du tournoi."
-	},
-	"forcebrut": {
-		"notEnoughIrma": "Vous devez posséder une Potion d’Irma pour participer au tournoi.",
-		"notRegistered": "Ce Dinoz n’est pas inscrit au Tournoi de Forcebrut.",
-		"wrongPlace": "Votre Dinoz doit être à Forcebrut pour participer au tournoi.",
-		"noOpponent": "Aucun adversaire n’est encore disponible pour ce palier."
 	},
 	"race": {
 		"race": "Race:",
