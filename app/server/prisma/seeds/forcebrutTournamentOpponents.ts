@@ -575,7 +575,7 @@ export const forcebrutTournamentOpponentsSeed = [
 		nbrUpLightning: 4,
 		nbrUpAir: 3,
 		skillIds: [11403,21201,11307,11312,31202,11303,11404,11501,11302,11103,11102,11101,11206,11202,11301,11308,11201,11311,11203,11304,11310,11309,21103,21206,21102,31102,41103,41204,41202,41309,51102,51203,51305,61103],
-		enabled: false
+		enabled: true
 	},
   {
 		step: 37,
@@ -591,7 +591,7 @@ export const forcebrutTournamentOpponentsSeed = [
 		nbrUpLightning: 2,
 		nbrUpAir: 3,
 		skillIds: [11102,21401,21307,31101,11203,21101,21203,21311,21201,21206,21303,21404,21204,21405,21202,21306,21304,41103,41204,51101,51201,51302,21305],
-		enabled: false
+		enabled: true
 	},
   {
 		step: 38,
@@ -607,7 +607,7 @@ export const forcebrutTournamentOpponentsSeed = [
 		nbrUpLightning: 3,
 		nbrUpAir: 4,
 		skillIds: [11102,41102,21202,21401,21201,21307,21301,51103,31101,21309,11203,41103,41204,21101,21103,21102,21203,21311,21405,21206,21303,21305,21404,21204,21306,21304,51101,51201,51302],
-		enabled: false
+		enabled: true
 	},
   {
 		step: 39,
@@ -623,7 +623,7 @@ export const forcebrutTournamentOpponentsSeed = [
 		nbrUpLightning: 4,
 		nbrUpAir: 10,
 		skillIds: [11102,21201,51103,21309,31101,51206,11203,31103,31205,31309,31206,21101,21103,21102,51312,21204,21203,21311,21401,51101,51102,51203,51201,51302,51305,41103,41204,41202,41309],
-		enabled: false
+		enabled: true
 	},
   {
 		step: 40,
@@ -639,6 +639,6 @@ export const forcebrutTournamentOpponentsSeed = [
 		nbrUpLightning: 2,
 		nbrUpAir: 3,
 		skillIds: [31101,11201,21201,21309,11307,11303,21202,21101,21102,21204,11102,11103,11101,11206,11202,11308,11301,11312,11408,11311,11403,11204,11309,11407,11310,11203,11304,11302,11404,11501,41103,41204,51102,51203,51306],
-		enabled: false
+		enabled: true
 	}
 ] as const;
