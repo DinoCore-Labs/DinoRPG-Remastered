@@ -146,25 +146,43 @@ export async function assertDialogAvailability(
 	}
 }
 
+function withDialogContext(
+	context: Awaited<ReturnType<typeof buildDialogContext>>,
+	dialog: RuntimeDialog
+): Awaited<ReturnType<typeof buildDialogContext>> {
+	return {
+		...context,
+		dialog: {
+			id: dialog.id,
+			place: dialog.place
+		}
+	};
+}
+
 export async function listAvailableDialogs(params: {
 	userId: string;
 	dinozId: number;
 }): Promise<AvailableDialogSummary[]> {
 	return prisma.$transaction(async tx => {
 		const availableDialogs: AvailableDialogSummary[] = [];
-		/*console.log(
-			'Registered dialogs:',
-			getDialogs().map(dialog => dialog.id)
-		);*/
-		for (const dialog of getDialogs()) {
-			const context = await buildDialogContext(tx, {
-				userId: params.userId,
-				dinozId: params.dinozId,
-				dialog
-			});
-			if (context.dinoz.placeId !== dialog.place) {
+		const dialogs = getDialogs();
+
+		if (dialogs.length === 0) {
+			return availableDialogs;
+		}
+		const baseContext = await buildDialogContext(tx, {
+			userId: params.userId,
+			dinozId: params.dinozId,
+			dialog: {
+				id: dialogs[0].id,
+				place: dialogs[0].place
+			}
+		});
+		for (const dialog of dialogs) {
+			if (baseContext.dinoz.placeId !== dialog.place) {
 				continue;
 			}
+			const context = withDialogContext(baseContext, dialog);
 			if (dialog.cond && !checkDialogCondition(dialog.cond, context)) {
 				continue;
 			}

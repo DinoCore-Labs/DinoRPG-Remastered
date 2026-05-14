@@ -104,7 +104,7 @@
 							v-if="dinoz.fight"
 							:src="getImgURL('icons', 'small_attack')"
 							v-tippy="{
-								content: formatContent($t('dinoz.hud.following')),
+								content: formatContent($t('dinoz.hud.fight')),
 								theme: 'small'
 							}"
 							alt="fight"
