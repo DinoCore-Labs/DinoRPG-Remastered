@@ -18,7 +18,7 @@ import { Dinoz, DinozMissions, DinozSkills, DinozState, DinozStatus } from '../.
 import gameConfig from '../../config/game.config.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
-import { resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
+import { type DinozMissionState, resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
 import { prisma } from '../../prisma.js';
 import { buildConditionContext, BuildConditionContextOptions } from '../../utils/conditions/buildConditionContext.js';
 import { checkCondition } from '../../utils/conditions/checkCondition.js';
@@ -29,6 +29,25 @@ import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
 import { getActiveDinozCount, getUserMaxDinoz } from '../Controller/getActiveDinoz.js';
 
 type GatherEntry = CompiledGatherData;
+
+type FollowableDinozCandidate = Pick<Dinoz, 'id' | 'placeId' | 'leaderId' | 'state' | 'life'> & {
+	followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
+	skills: Pick<DinozSkills, 'skillId' | 'state'>[];
+};
+
+export type AvailableActionsPreloadedContext = {
+	activeDinozCount?: number;
+	followableDinozCandidates?: FollowableDinozCandidate[];
+	itinerantPlaceId?: number;
+};
+
+export async function getItinerantPlaceId(): Promise<number> {
+	const itinerant = await getSpecificSecret('itinerant');
+	if (!itinerant) {
+		throw new ExpectedError(`No itinerant merchant place found.`);
+	}
+	return +itinerant.value;
+}
 
 function getPlaceGatherEntries(place: { gathers?: number[] }): GatherEntry[] {
 	return (place.gathers ?? []).map(type => getCompiledGather(type));
@@ -142,8 +161,8 @@ function getMissionActionFiche(goal: MissionGoal, currentPlace: PlaceEnum): Acti
 export async function getAvailableActions(
 	dinoz: Pick<
 		Dinoz,
-		| 'level'
 		| 'id'
+		| 'level'
 		| 'experience'
 		| 'leaderId'
 		| 'fight'
@@ -154,13 +173,14 @@ export async function getAvailableActions(
 		| 'placeId'
 		| 'life'
 	> & {
-		followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather'>[];
+		followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
-		skills: Pick<DinozSkills, 'skillId'>[];
-		missions: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
+		skills: Pick<DinozSkills, 'skillId' | 'state'>[];
+		missions: DinozMissionState[];
 	},
 	user: UserForConditionCheck,
-	conditionOptions: BuildConditionContextOptions = {}
+	conditionOptions: BuildConditionContextOptions = {},
+	preloadedContext: AvailableActionsPreloadedContext = {}
 ) {
 	const availableActions: ActionFiche[] = [];
 
@@ -197,7 +217,7 @@ export async function getAvailableActions(
 
 	// Unfreeze action
 	if (dinoz.state === DinozState.frozen) {
-		const activeDinozCount = await getActiveDinozCount(user.id);
+		const activeDinozCount = preloadedContext.activeDinozCount ?? (await getActiveDinozCount(user.id));
 		if (canStartUnfreezingDinozAction(dinoz.state, activeDinozCount, maxDinoz)) {
 			return [actionList[Action.STOP_CONGEL]];
 		}
@@ -212,22 +232,39 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.UNFOLLOW]);
 		availableActions.push(actionList[Action.CHANGE_LEADER]);
 	} else {
-		const potentialDinozToFollow = await prisma.dinoz.findMany({
-			where: {
-				id: { not: dinoz.id },
-				userId: user.id,
-				state: null
-			},
-			select: {
-				id: true,
-				placeId: true,
-				leaderId: true,
-				state: true,
-				life: true,
-				followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
-				skills: { select: { skillId: true, state: true } }
-			}
-		});
+		const potentialDinozToFollow =
+			preloadedContext.followableDinozCandidates?.filter(
+				candidate => candidate.id !== dinoz.id && candidate.state === null
+			) ??
+			(await prisma.dinoz.findMany({
+				where: {
+					id: { not: dinoz.id },
+					userId: user.id,
+					state: null
+				},
+				select: {
+					id: true,
+					placeId: true,
+					leaderId: true,
+					state: true,
+					life: true,
+					followers: {
+						select: {
+							id: true,
+							fight: true,
+							remaining: true,
+							gather: true,
+							name: true
+						}
+					},
+					skills: {
+						select: {
+							skillId: true,
+							state: true
+						}
+					}
+				}
+			}));
 		const dinozToFollow = getFollowableDinoz(
 			potentialDinozToFollow.map(candidate => ({
 				...candidate,
@@ -257,7 +294,6 @@ export async function getAvailableActions(
 			}
 		}
 	}
-
 	// If dinoz is not alive, only show resurrect action
 	if (!isAlive(dinoz)) {
 		availableActions.push(actionList[Action.RESURRECT]);
@@ -270,12 +306,10 @@ export async function getAvailableActions(
 		}
 		return availableActions;
 	}
-
 	// Rest action
 	if (dinoz.life < Math.round(dinoz.maxLife / 2) && dinoz.fight) {
 		availableActions.push(actionList[Action.REST]);
 	}
-
 	// New action
 	if ((!dinoz.leaderId && !dinoz.fight) || !dinoz.gather) {
 		if (dinoz.remaining > 0) {
@@ -284,7 +318,6 @@ export async function getAvailableActions(
 			availableActions.push(actionList[Action.IRMA]);
 		}
 	}
-
 	// New group actions
 	if (
 		dinoz.followers.length > 0 &&
@@ -306,12 +339,10 @@ export async function getAvailableActions(
 			}
 		}
 	}
-
 	if (!dinoz.leaderId && dinoz.fight && dinoz.followers.filter(f => !f.fight).length <= 0) {
 		availableActions.push(actionList[Action.FIGHT]);
 	}
 	const currentContext = getContext(dinoz.id);
-
 	// Normal gather
 	if (dinoz.gather) {
 		for (const gatherFound of normalGatherEntries) {
@@ -320,7 +351,6 @@ export async function getAvailableActions(
 			}
 		}
 	}
-
 	// Special gather
 	for (const gatherFound of specialGatherEntries) {
 		const passes = checkCondition(gatherFound.condition, currentContext);
@@ -328,11 +358,9 @@ export async function getAvailableActions(
 			pushUniqueAction(availableActions, getGatherActionFiche(gatherFound));
 		}
 	}
-
 	if (dinoz.placeId === PlaceEnum.FORCEBRUT && dinoz.status.some(s => s.statusId === DinozStatusId.TOURNA)) {
 		availableActions.push(actionList[Action.FB_TOURNAMENT]);
 	}
-
 	// Dig action
 	if (
 		dinoz.status.some(
@@ -341,21 +369,18 @@ export async function getAvailableActions(
 	) {
 		availableActions.push(actionList[Action.DIG]);
 	}
-
 	// Itinerant merchant
-	const itinerant = await getSpecificSecret('itinerant');
-	if (!itinerant) throw new ExpectedError(`No itinerant merchant place found.`);
+	const itinerantPlaceId = preloadedContext.itinerantPlaceId ?? (await getItinerantPlaceId());
 	const itinerantShop = Object.values(shopListV2)
 		.filter(shop => shop.type === ShopType.ITINERANT)
 		.find(shop => checkCondition(shop.condition, currentContext));
-	if (itinerantShop && +itinerant.value === dinoz.placeId) {
+	if (itinerantShop && itinerantPlaceId === dinoz.placeId) {
 		availableActions.push({
 			name: actionList[Action.ITINERANTSHOP].name,
 			imgName: actionList[Action.ITINERANTSHOP].imgName,
 			prop: itinerantShop.shopId
 		});
 	}
-
 	// Normal shop
 	const shopAvailable = Object.values(shopListV2).filter(
 		shop =>
@@ -372,32 +397,26 @@ export async function getAvailableActions(
 			}))
 		);
 	}
-
 	// Level up action
 	if (canLevelUp(dinoz, gameConfig)) {
 		availableActions.push(actionList[Action.LEVEL_UP]);
 	}
-
 	// Market action
 	if (dinoz.placeId === PlaceEnum.PLACE_DU_MARCHE) {
 		availableActions.push(actionList[Action.MARKET]);
 	}
-
 	// Freeze action
 	if (canFreezeDinozAction(dinoz)) {
 		availableActions.push(actionList[Action.CONGEL]);
 	}
-
 	// Dialogs
 	const availableDialogs = await listAvailableDialogs({
 		userId: user.id,
 		dinozId: dinoz.id
 	});
-
 	for (const dialog of availableDialogs) {
 		pushUniqueAction(availableActions, getDialogActionFiche(dialog));
 	}
-
 	/*console.log(
 		'[missions:getAvailableActions]',
 		dinoz.missions.map(m => ({
@@ -410,7 +429,6 @@ export async function getAvailableActions(
 	);*/
 	// Mission action
 	const resolvedMission = resolveCurrentMission(dinoz.missions, dinoz.placeId);
-
 	/*console.log('[missions:resolvedCurrentMission]', {
 		resolvedKey: resolvedMission?.definition.key ?? null,
 		currentGoal: resolvedMission?.currentGoal ?? null,
@@ -418,21 +436,17 @@ export async function getAvailableActions(
 	});*/
 	if (resolvedMission?.currentGoal) {
 		const missionAction = getMissionActionFiche(resolvedMission.currentGoal, actualPlace(dinoz).placeId);
-
 		//console.log('[missions:missionAction]', missionAction);
 		if (missionAction) {
 			pushUniqueAction(availableActions, missionAction);
 		}
 	}
-
 	const canUseTrainingCenter =
 		dinoz.placeId === TRAINING_CENTER_PLACE &&
 		dinoz.level < TRAINING_CENTER_MAX_LEVEL &&
 		dinoz.status.some(status => status.statusId === TRAINING_CENTER_REQUIRED_STATUS);
-
 	if (canUseTrainingCenter) {
 		pushUniqueAction(availableActions, actionList[Action.CEF]);
 	}
-
 	return availableActions;
 }
