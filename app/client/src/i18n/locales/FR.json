@@ -619,6 +619,7 @@
 	},
 	"dinoz": {
 		"hud": {
+			"fight": "Ce Dinoz peut combattre.",
 			"following": "Ce Dinoz suit son chef de groupe.",
 			"gather": "Ce Dinoz peut récolter en ce lieu.",
 			"rest": "Ce Dinoz se repose.",
