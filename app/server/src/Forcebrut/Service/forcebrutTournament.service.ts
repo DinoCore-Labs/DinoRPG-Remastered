@@ -42,7 +42,7 @@ function getNextMedalStatus(step: number): DinozStatusId | null {
 function calculateForcebrutXp(opponentLevel: number, dinozLevel: number) {
 	const levelRatio = opponentLevel / Math.max(dinozLevel, 1);
 	const baseXp = opponentLevel * 3 + 10;
-	const forcebrutBonus = 1.2;
+	const forcebrutBonus = 1.15;
 	return Math.max(1, Math.round(baseXp * Math.max(0.35, levelRatio) * forcebrutBonus));
 }
 
