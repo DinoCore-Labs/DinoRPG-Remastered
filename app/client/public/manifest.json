@@ -1,0 +1,55 @@
+{
+	"id": "/",
+	"name": "DinoRPG Remastered",
+	"short_name": "DinoRPG",
+	"description": "DinoRPG Remastered est la reprise par des fans du jeu originel par MotionTwin. Modèle économique 100% gratuit, venez élever des dinoz et devenir le plus grand maître de tout Dinoland !",
+	"lang": "fr-FR",
+	"dir": "ltr",
+	"start_url": "https://dinnorpg.fr",
+	"scope": "https://dinnorpg.fr",
+	"display": "standalone",
+	"orientation": "any",
+	"background_color": "#ffffff",
+	"theme_color": "#c97c48",
+	"categories": ["games"],
+	"icons": [
+		{
+			"src": ".favicon.ico",
+			"sizes": "16x16",
+			"type": "image/x-icon",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "./drpg.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
+		}
+	],
+	"shortcuts": [
+    {
+      "name": "Home",
+      "url": "/",
+      "description": "Page d'accueil de DinoRPG Remastered"
+    },
+		{
+			"name": "Actualités",
+			"short_name": "News",
+			"description": "Voir les dernières actualités de DinoRPG Remastered",
+			"url": "/news"
+		},
+		{
+			"name": "Classement",
+			"short_name": "Ranking",
+			"description": "Consulter le classement des joueurs",
+			"url": "/ranking"
+		},
+		{
+			"name": "Aide",
+			"short_name": "Aide",
+			"description": "Consulter l'aide du jeu",
+			"url": "/help"
+		}
+	],
+  "prefer_related_applications": false
+}
