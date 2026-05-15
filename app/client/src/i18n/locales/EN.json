@@ -294,17 +294,21 @@
 			"futurTitle": "Dinolandian Future",
 			"futureInfo1": {
 				"text1": "Implementation of scenarios (Prisma + database)",
-				"text2": "Implementation of the tutorial scenario"
+				"text2": "Implementation of the tutorial scenario",
+				"text3": "Madame X et ses missions",
+				"text4": "Les compétences doubles",
+				"text5": "Madame X and her missions"
 			},
 			"futureInfo2": {
 				"text1": "Implementation of the Breeders' Market",
 				"text2": "Bug fixes",
-				"text3": "Madame X and her missions",
-				"text4": "Implementation of the tutorial scenario"
+				"text3": "Madame X and her missions"
 			},
 			"futureInfo3": {
 				"text1": "Coming soon",
-				"text2": "Implementation of the tutorial scenario"
+				"text2": "Implementation of the tutorial scenario",
+				"text3": "Le tournoi inter dojo (event PVP)",
+				"text4": "Correction de bugs"
 			},
 			"futureInfo4": {
 				"text1": "Coming soon"
