@@ -284,27 +284,31 @@
 			"title": "Découvrez les prochains événements sur DinoRPG !",
 			"small": "Prédiction d'Irma",
 			"strong": {
-				"title1": "Alpha 0.8.0 (Bientôt)",
-				"title2": "Alpha 0.9.0",
-				"title3": "Alpha 0.10.0",
-				"title4": "Alpha 0.11.0"
+				"title1": "Alpha 0.9.0 (Bientôt)",
+				"title2": "Alpha 0.10.0",
+				"title3": "Alpha 0.11.0",
+				"title4": "Alpha 0.12.0"
 			},
 			"help": "Cliquez sur une mise à jour ci-dessus pour obtenir d'avantage d'informations !",
 			"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
 			"futurTitle": "Avenir Dinolandien",
 			"futureInfo1": {
-				"text1": "Mise en place du Marché aux éleveurs",
-				"text2": "Correction des bugs"
+				"text1": "Intégration d'un système de logs",
+				"text2": "Scénario du parchemin ???",
+				"text3": "Madame X et ses missions",
+				"text4": "Les compétences doubles",
+				"text5": "Correction des bugs"
 			},
 			"futureInfo2": {
-				"text1": "Scénario ou missions du Vendeur de Merguez",
-				"text2": "Scénario tutoriel et le guide Michel",
-				"text3": "Madame X et ses missions",
-				"text4": "Correction des bugs"
+				"text1": "Les clans",
+				"text2": "Le Maître élémentaire et ses missions",
+				"text3": "Correction des bugs"
 			},
 			"futureInfo3": {
-				"text1": "Les clans",
-				"text2": "Correction des bugs"
+				"text1": "La chasse aux Monstres (event PVE)",
+				"text2": "Maître Zenith et le dojo",
+				"text3": "Le tournoi inter dojo (event PVP)",
+				"text4": "Correction de bugs"
 			},
 			"futureInfo4": {
 				"text1": "À venir"
