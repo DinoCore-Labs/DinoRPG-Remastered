@@ -30,3 +30,9 @@ export async function getDinozToReincarnate(dinozId: number) {
 		}
 	});
 }
+
+export async function removeAllMissionsFromDinoz(dinozId: number) {
+	await prisma.dinozMissions.deleteMany({
+		where: { dinozId: dinozId }
+	});
+}

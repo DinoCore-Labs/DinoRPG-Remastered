@@ -13,7 +13,7 @@ import {
 } from '../Controller/addMultipleSkill.controller.js';
 import { addSkillToDinoz } from '../Controller/addSkillToDinoz.controller.js';
 import { addStatusToDinoz, removeAllStatusFromDinoz } from '../Controller/dinozStatus.controller.js';
-import { getDinozToReincarnate } from '../Controller/getDinozToReincarnate.controller.js';
+import { getDinozToReincarnate, removeAllMissionsFromDinoz } from '../Controller/getDinozToReincarnate.controller.js';
 import { updateDinoz } from '../Controller/updateDinoz.controller.js';
 
 type Params = {
@@ -58,7 +58,7 @@ export async function reincarnate(req: FastifyRequest<{ Params: Params }>, _repl
 		}
 	}
 	promises.push(removeAllStatusFromDinoz(dinoz.id));
-	//promises.push(removeAllMissionsFromDinoz(dinoz.id));
+	promises.push(removeAllMissionsFromDinoz(dinoz.id));
 	promises.push(removeAllUnlockableSkillsFromDinoz(dinoz.id));
 	promises.push(updatePoints(authed.id, -dinoz.level));
 	promises.push(computeUSkillsForUser(authed.id));
