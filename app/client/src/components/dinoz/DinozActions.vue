@@ -561,6 +561,7 @@ export default defineComponent({
 							return dinoz;
 						});
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
+						this.$toast.open({ message: formatText(this.$t(`toast.disband`)), type: 'success' });
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
