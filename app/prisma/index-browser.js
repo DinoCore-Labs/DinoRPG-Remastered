@@ -222,6 +222,39 @@ exports.Prisma.ForcebrutTournamentOpponentScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.GameLogScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  retention: 'retention',
+  values: 'values',
+  metadata: 'metadata',
+  userId: 'userId',
+  dinozId: 'dinozId',
+  actorUserId: 'actorUserId',
+  userNameSnapshot: 'userNameSnapshot',
+  dinozNameSnapshot: 'dinozNameSnapshot',
+  actorNameSnapshot: 'actorNameSnapshot',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.GameLogHourlyScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  bucketAt: 'bucketAt',
+  total: 'total',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.GameLogDailyScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  day: 'day',
+  total: 'total',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.JobDefinitionScalarFieldEnum = {
   id: 'id',
   key: 'key',
@@ -536,6 +569,64 @@ exports.DinozState = exports.$Enums.DinozState = {
   unfreezing: 'unfreezing'
 };
 
+exports.GameLogType = exports.$Enums.GameLogType = {
+  PlayerCreated: 'PlayerCreated',
+  PlayerConnected: 'PlayerConnected',
+  PlayerReset: 'PlayerReset',
+  PlayerDeleted: 'PlayerDeleted',
+  PlayerBanned: 'PlayerBanned',
+  PlayerUnbanned: 'PlayerUnbanned',
+  CreateDinoz: 'CreateDinoz',
+  Move: 'Move',
+  LevelUp: 'LevelUp',
+  XPEarned: 'XPEarned',
+  HPLost: 'HPLost',
+  Death: 'Death',
+  Revive: 'Revive',
+  Fight: 'Fight',
+  FightWon: 'FightWon',
+  FightLost: 'FightLost',
+  ItemUsed: 'ItemUsed',
+  ItemBought: 'ItemBought',
+  ItemFound: 'ItemFound',
+  IngredientSold: 'IngredientSold',
+  GoldWon: 'GoldWon',
+  GoldLost: 'GoldLost',
+  MissionFinished: 'MissionFinished',
+  MissionCanceled: 'MissionCanceled',
+  Gather: 'Gather',
+  GridFinished: 'GridFinished',
+  OfferNew: 'OfferNew',
+  OfferBid: 'OfferBid',
+  OfferCancelled: 'OfferCancelled',
+  OfferExpired: 'OfferExpired',
+  OfferWon: 'OfferWon',
+  AdminUpdateDinoz: 'AdminUpdateDinoz',
+  AdminAddStatus: 'AdminAddStatus',
+  AdminRemoveStatus: 'AdminRemoveStatus',
+  AdminAddSkill: 'AdminAddSkill',
+  AdminRemoveSkill: 'AdminRemoveSkill',
+  AdminAddUnlockableSkill: 'AdminAddUnlockableSkill',
+  AdminRemoveUnlockableSkill: 'AdminRemoveUnlockableSkill',
+  AdminAddMoney: 'AdminAddMoney',
+  AdminRemoveMoney: 'AdminRemoveMoney',
+  AdminAddReward: 'AdminAddReward',
+  AdminRemoveReward: 'AdminRemoveReward',
+  AdminAddItem: 'AdminAddItem',
+  AdminRemoveItem: 'AdminRemoveItem',
+  AdminAddIngredient: 'AdminAddIngredient',
+  AdminRemoveIngredient: 'AdminRemoveIngredient',
+  AdminUpdateMission: 'AdminUpdateMission',
+  AdminUpdateScenario: 'AdminUpdateScenario',
+  AdminUpdateUser: 'AdminUpdateUser',
+  AdminUpdateSecret: 'AdminUpdateSecret'
+};
+
+exports.GameLogRetention = exports.$Enums.GameLogRetention = {
+  TEMPORARY: 'TEMPORARY',
+  AUDIT: 'AUDIT'
+};
+
 exports.JobType = exports.$Enums.JobType = {
   DAILY_AT: 'DAILY_AT',
   INTERVAL: 'INTERVAL'
@@ -607,6 +698,9 @@ exports.Prisma.ModelName = {
   DinozSkillsUnlockable: 'DinozSkillsUnlockable',
   DinozStatus: 'DinozStatus',
   ForcebrutTournamentOpponent: 'ForcebrutTournamentOpponent',
+  GameLog: 'GameLog',
+  GameLogHourly: 'GameLogHourly',
+  GameLogDaily: 'GameLogDaily',
   JobDefinition: 'JobDefinition',
   JobRun: 'JobRun',
   News: 'News',
