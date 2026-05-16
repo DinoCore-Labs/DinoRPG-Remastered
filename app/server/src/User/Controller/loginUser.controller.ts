@@ -2,7 +2,9 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import bcrypt from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { GameLogType } from '../../../../prisma/index.js';
 import { ACCESS_TOKEN_COOKIE, authCookieOptions } from '../../config/cookie.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 import { LoginUserInput } from '../Schema/user.schema.js';
 
@@ -30,5 +32,18 @@ export async function loginUser(
 	reply.setCookie(ACCESS_TOKEN_COOKIE, token, {
 		...authCookieOptions
 	});
+	safeCreateGameLog(
+		{
+			type: GameLogType.PlayerConnected,
+			userId: user.id,
+			userNameSnapshot: user.name,
+			metadata: {
+				ip: req.ip,
+				userAgent: req.headers['user-agent'] ?? null,
+				deviceId: (req as FastifyRequest & { deviceId?: string }).deviceId ?? null
+			}
+		},
+		req.log
+	);
 	return reply.send({ success: true });
 }
