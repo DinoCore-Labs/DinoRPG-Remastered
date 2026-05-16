@@ -2688,7 +2688,14 @@
 			"baratr": "Baratribor",
 			"bamboo": "Bambooz",
 			"swampmf": "Bourbeoz",
-			"swampmf2": "Brumoz"
+			"swampmf2": "Brumoz",
+			"merch1": "Marchand Louche",
+			"merch2": "Marchand en Colère",
+			"gang1": "Jean-Hubert",
+			"gang2": "Charles-Edouard",
+			"gang3": "Louis-Stanislas",
+			"suspc": "Suspect",
+			"suspc1": "Suspect Numéro 1"
 		},
 		"status": {
 			"asleep": "endormi",
@@ -3775,6 +3782,41 @@
 		},
 		"baoBabe": {
 			"name": "Bao Babe"
+		},
+		"madameX": {
+			"name": "Madame X",
+			"dialog": {
+				"begin": "Alors que vous passiez par Forcebrut, vous rencontrez une femme, qui semblait justement vous attendre.",
+				"talk": "Tiens donc, voilà donc ce jeune Maître Eleveur dont j'ai tant entendu parler ? Il semble que Papy Joe dise beaucoup de bien à propos de toi, tant tu t'appliques à remplir ses missions ?",
+				"talk2": "Puisque tu sembles être quelqu'un à qui on peut faire confiance, j'aurais moi aussi aimé te confier quelques missions, libre à toi d'accepter ou non !",
+				"question": "Qui je suis ?!? Ah ah ah ! Pardonne-moi, mon jeune ami, j'avais complètement oublié de me présenter ! Je suis.... .... ....",
+				"question2": "... désolée... je m'excuse. Je viens juste de me rappeler que je ne pouvais justement pas révéler qui je suis, car cela pourrait t'attirer de gros ennuis ! Mais comme c'est tout de même très malpoli, je vais te révéler quelque chose d'intéressant...",
+				"double": "Voyons voir... Je suppose que jusqu'à présent, tu as appris que chaque compétence correspondait à un unique élément parmi les cinq élements possibles ? Par exemple, Colère correspond à l'élément Feu et Perception correspond à l'élément Eau.",
+				"double2": "EEt bien... c'est faux ! Il existe des compétences spéciales, qui sont associées non pas à un seul mais à DEUX éléments ! On les appelle les compétences-doubles. Une compétence-double peut s'apprendre à partir de l'un des deux éléments qui la composent, mais demande de connaître au préalable une compétence de chacun des deux éléments.",
+				"double3": "Je comprends tout à fait ta surprise, c'est un secret bien gardé. Cependant pour pouvoir apprendre ces compétences, il est nécessaire de maîtriser Compétence-Double, une compétence secrète que seuls les Drag.... mais j'en ai déjà trop dit !",
+				"learn": "Oh c'est plutôt simple, regarde, il me suffit de faire \"ça\" et...",
+				"dolearn": "Ouah ! Ca a marché ! Tu vois que c'était facile ? Ton Dinoz maîtrise désormais Compétence-Double, félicitations !",
+				"no": "Non... ça ne marche pas... si ça te picote quand je fait \"ça`\" ou si ton Dinoz n'a pas encore appris les compétences, te permettant de maîtriser Compétence-Double, ça ne marchera pas. Reviens me voir plus tard pour que l'on réessaie !",
+				"already": "A ton avis ? .... Il me semble que tu l'as déjà appris ! Ah ah ah !"
+			},
+			"choice": {
+				"talk": "Lui parler",
+				"talk2": "...",
+				"mission": "Liste de Missions",
+				"question": "Mais qui êtes-vous ?",
+				"question2": "Vous êtes ?",
+				"double": "Ah ?",
+				"double2": "Oui !",
+				"double3": "!!!",
+				"learn": "Comment l'apprendre ?",
+				"already": "Comment l'apprendre ?",
+				"learn1": "Et ?",
+				"learn2": "Ah ??",
+				"learn3": "Hein ???",
+				"learn4": "Oh !",
+				"learn5": "Quoi...",
+				"no": "(ouille)"
+			}
 		},
 		"merguez": {
 			"name": "Vendeur de Merguez",
@@ -4883,6 +4925,185 @@
 				"begin": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !",
 				"merguezSeller": "Ooooohh !! Il s'agit donc des fameuses crevettes au Napalm ?!? Voyons voir.... uhmm.... cela manque un peu de graisse mais c'est succulent. Nul doute que Mouldeur devrait bientôt se montrer... Mais regarde qui voilà !",
 				"end": "OOooooooh ! oh ! oh oh oh ! Mouldeur est revenu !!! Merci beaucoup !!"
+			}
+		},
+		"madameX": {
+			"mmex1": {
+				"name": "La Mallette Noire",
+				"begin": "Un bateau est arrivé la nuit dernière au Port de Prêche, il a déposé une petite malette noire pour moi. Peux-tu me la ramener ? Surtout ne l'ouvre pas !",
+				"take": {
+					"name": "Prendre la Malette Noire",
+					"text": "Vous avez obtenu la Malette Noire auprès d'un homme avec un long imperméable. Cette mission semble plutôt facile !"
+				},
+				"madameX": {
+					"name": "Madame X",
+					"text": "C'est étrange... Cette malette... ELLE A ETE PIEGEE !"
+				},
+				"trap": {
+					"name": "Piège !",
+					"begin": "Un Gluon avait été glissé dans la malette, sans doute dans le but d'attaquer Madame X !",
+					"win": "Madame X est ravie que vous ayez déminé la malette a sa place !"
+				},
+				"end": "Merci pour ta précieuse aide, voici ta récompense !"
+			},
+			"mmex2": {
+				"name": "Le Marchand Traître",
+				"begin": "Il semblerait qu'il y ait un traître à la cour du Roi. Il fait passer ses informations grâce à un marchand qui se présente de temps en temps à Dinoville. Arrête ce marchand et amène-le moi pour que je puisse l'interroger !",
+				"search1": {
+					"name": "Chercher le Marchand",
+					"text": "Vous avez trouvé un marchand particulièrement louche qui semble correspondre à la description..."
+				},
+				"attack1": {
+					"name": "A l'Attaaaaque !",
+					"begin": "Au secourrrss !!!",
+					"win": "Après vérification, ce Marchand était innocent ! Le pauvre..."
+				},
+				"search2": {
+					"name": "Chercher le Marchand",
+					"text": "Vous avez trouvé LE marchand qui correspond exactement à la description... Il ne peut pas y avoir d'erreur cette fois ! (a priori)"
+				},
+				"attack2": {
+					"name": "A l'Attaaaaque !",
+					"begin": "Aarrrgg !!!",
+					"win": "Vous avez capturé le marchand ! Il va falloir le ramener à Madame X"
+				},
+				"end": "Merci d'avoir ramené ce traître au Royaume ! Ne t'inquiete pas je sais comment je vais le faire avouer !! J'espère par contre que tu ne t'es pas trompé de personne..."
+			},
+			"mmex3": {
+				"name": "La Course-Poursuite",
+				"begin": "J'ai reçu un rapport de police comme quoi un Dinoz avait attaqué des marchands à Dinoville récemment. Pourrais-tu enquêter sur cette étrange affaire ?",
+				"portrait": {
+					"name": "Portrait-Robot",
+					"text": "Le Portrait-Robot du Dinoz accusé d'avoir attaqué les marchands ressemble étrangement à votre Dinoz. Simple coïncidence ou complot ?"
+				},
+				"investigate": {
+					"name": "Enquêter",
+					"begin": "Alors que vous cherchiez des indices, des marchands en colère trouvent et attaquent votre Dinoz !",
+					"win": "La situation va devenir complexe à expliquer... mieux vaut peut-être en informer Madame X ?"
+				},
+				"madameX": {
+					"name": "Madame X",
+					"text": ".... (vous expliquez toute l'histoire) ... Quoi ! Alors c'était vraiment ton Dinoz qu'ils recherchaient ?!? hmm... je comprends. Il va me falloir du temps pour faire enterrer cette affaire. En attendant, va te planquer aux Collines Escarpées !"
+				},
+				"wait": {
+					"name": "Attendre",
+					"text": "Vous attendez que Madame X vous contacte..."
+				},
+				"messagemx": {
+					"name": "Message MX",
+					"text": "Un message signé \"MX\" vous attend, il précise juste \"Retourne à Dinoville au plus vite\""
+				},
+				"merchant": {
+					"name": "Marchand",
+					"text": "Oh ! Alors c'est vous qui êtes le maître du fameux jumeau ?!? Ah ah ah ! C'est vrai que votre Dinoz ressemble beaucoup à celui qu'on a attrapé hier ! Mais ne vous inquiétez pas, le vrai coupable a été capturé par la Police d'Elite Royale, donc vous ne craignez plus rien !"
+				},
+				"end": "J'ai réussi à te couvrir pour cette fois, grâce à mes relations. Mais si jamais tu fais une seule fois une telle faute dans une mission, je serais obligée de te lâcher, et tu n'auras alors jamais travaillé pour moi. Capito ?"
+			},
+			"mmex4": {
+				"name": "Les Iles c'est Kool",
+				"begin": "Nous avons isolé un groupe d'individu qui cultive des herbes illégales dans le Marais Collant et les exporte ensuite vers la capitale. Nous devons envoyer un agent sur place. Il faut bien entendu que ton Dinoz soit capable de se déplacer aux Iles Atlantéinées.",
+				"investigate": {
+					"name": "Enquêter",
+					"text": "L'odeur assez forte et les sons du Djembé qu'on entend depuis très loin vous permettent de facilement localiser une bande de délinquants aux cheveux longs et gras."
+				},
+				"fight": {
+					"name": "Les Neutraliser",
+					"begin": "Aarrg !! Un Borg ! Je pense qu'il vaudrait mieux combattre ensemble pour cette fois !!",
+					"win": "Après votre victoire commune, il semblerait que les trois délinquants veuillent discuter avec vous..."
+				},
+				"jeanH1": {
+					"name": "Jean-Hubert",
+					"text": "Yo mec ! Je comprends que tu kiff trop pas ce qu'on fait ici, mais c'est trop kool, alors abuse pas mec !"
+				},
+				"charlesE": {
+					"name": "Charles-Edouard",
+					"text": "Eh mon pote ! Tu t'es battu à donf là ! Trop kool ! Mais nous dénonce pas, les keufs me gavent, et la beach c'est trop kool !"
+				},
+				"louisS1": {
+					"name": "Louis-Stanislas",
+					"text": "Mes deux associés voulaient exprimer leur gratitude à votre encontre, et vous demander humblement si un arrangement n'était pas possible pour que nous puissions éviter les affres de la prison qui nous feraient gâcher ce que tous les grand poêtes ont surnommé \"nos plus belles années\". Merci de votre compréhension."
+				},
+				"madameX1": {
+					"name": "Madame X",
+					"text": "QUOI ? Tu as sympathisé avec des hors-la-loi ? ... Je ne suis pas certain que tu fasses un très bon agent après-tout... Enfin bref : ils ont enfreint la loi, et même s'ils sont très gentils ils n'en sont pas moins coupables !"
+				},
+				"madameX2": {
+					"name": "Madame X",
+					"text": "Puisque tu insistes, je vais m'arranger pour que les circonstances atténuantes leurs soient accordées, mais ils devront quand même faire des travaux d'intêret public, comme le rangement de la bibliothèque de l'Université ! Et tu vas les aider, puisque tu les aimes bien !"
+				},
+				"louisS2": {
+					"name": "Louis-Stanislas",
+					"text": "Je vous remercie de nous avoir aidé à éviter le pire. Nous serons ravis de ranger la bibliothèque de l'Université, surtout si vous êtes avec nous pour nous soutenir le moral pendant ces longues heures de labeur !"
+				},
+				"organize": {
+					"name": "Ranger la Bibliothèque",
+					"text": "Votre Dinoz aide Jean-Hubert, Charles-Edouard et Louis-Stanislas à ranger la grande bibliothèque de l'Université..."
+				},
+				"jeanH2": {
+					"name": "Jean-Hubert",
+					"text": "Trop kool mec ! Nous on retourne aux Iles, car c'est trop kool ! Mais promis on déconnera plus ! Tchaw !!"
+				},
+				"end": "La loi est la loi, et toute infraction mérite sanction."
+			},
+			"mmex5": {
+				"name": "Le Complot Ashpouk",
+				"begin": "Un trafic de fausses reliques de la civilisation Ashpouk semble avoir lieu, et il se pourrait que des notables y soient mêlés. Nous devons envoyer un agent sur place pour enquêter. Il faut bien entendu que ton Dinoz soit capable de se déplacer jusqu'au Grand-Tout-Chaud.",
+				"informer": {
+					"name": "L'Indic",
+					"text": "Je suis le responsable de la collecte de renseignements pour Madame X dans ce quartier. On nous a signalé que des choses étranges se passaient la nuit du côté des Ruines Ashpouk..."
+				},
+				"hide1": {
+					"name": "Se Planquer",
+					"text": "Votre Dinoz prend la planque, et se prépare à prendre en filature les suspects qui viennent trafiquer dans le coin."
+				},
+				"suspects1": {
+					"name": "Suspects !",
+					"text": "Votre Dinoz a repéré des suspects, qui semblent rassembler de la terre prise dans les Ruines pour la stocker dans de grands sacs... Pour quelle raison ? Vous décidez de les suivre."
+				},
+				"stalking1": {
+					"name": "Filature",
+					"text": "Les suspects s'éloignent en direction du Nord"
+				},
+				"stalking2": {
+					"name": "Filature",
+					"text": "Apparemment les suspects se sont doutés de quelque chose car ils ont accéléré et se sont évanouis dans la nature..."
+				},
+				"suspects2": {
+					"name": "Suspects !",
+					"text": "Vous reconnaissez l'un des suspects dans une rue de Fosselave !"
+				},
+				"challenge": {
+					"name": "Lui foncer dessus !"
+				},
+				"search": {
+					"name": "Fouiller",
+					"text": "Après avoir vaincu le suspect, vous trouvez sur lui plusieurs sachets de terre en provenance des ruines ainsi qu'une carte de visite au nom de \"El Signor Don Fuego\". Il est temps de faire votre rapport a Madame X !"
+				},
+				"madameX": {
+					"name": "Madame X",
+					"text": "El Signor Don Fuego ? Tiens c'est une drôle de coïncidence... c'est l'un des marchands les plus en vue à Fosselave, et il dispose de nombreux soutiens à la Cour. Pour le faire tomber, il faudrait trouver des preuves qui l'impliquent directement !"
+				},
+				"hide2": {
+					"name": "Se Planquer",
+					"text": "\"Les planques c'est toujours la partie la moins drôle du métier...\" C'est toujours ce que vous avait raconté votre Grand Père Der'hik. Maintenant vous comprenez ce qu'il voulait dire..."
+				},
+				"suspects3": {
+					"name": "Suspects !",
+					"text": "Des hommes ressemblant étrangement aux suspects arrivent, discutent avec le vendeur de Merguez, avant de repartir..."
+				},
+				"merguezSeller": {
+					"name": "Vendeur de Merguez",
+					"text": "Ce que me voulaient ces touristes ? Ils voulaient juste pouvoir utiliser mon nouveau Four-à-Pain avec lequel je compte fabriquer prochainement mes Sandwichs de Gobelin... Apparemment, ils y ont fait cuire des poteries. Ils sont retournés à Fosselave pour les amener à leur patron."
+				},
+				"suspects4": {
+					"name": "Suspects !",
+					"text": "Vous reconnaissez les trois suspects dans une rue de Fosselave !"
+				},
+				"challenge2": {
+					"name": "Leur foncer dessus !",
+					"win": "Après avoir vaincu les suspects, ils vous avouent fabriquer des fausses reliques à l'aide de la terre des Ruines Ashpouk ! Il vaut mieux les amener à Madame X..."
+				},
+				"end": "Super, des pigeons ! Je vais m'arranger pour qu'ils témoignent contre Don Fuego. Cela tombe bien, il commencait justement à devenir beaucoup trop riche, et il était trop populaire à la Cour pour qu'on se débarrasse de lui par les moyens classiques... Merci pour le coup de main !"
 			}
 		}
 	},
