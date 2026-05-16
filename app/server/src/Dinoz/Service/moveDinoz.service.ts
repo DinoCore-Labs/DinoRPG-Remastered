@@ -125,6 +125,41 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 			);
 		}
 	}
+	if (fight?.result) {
+		const toNullableString = (value: unknown) => {
+			return typeof value === 'string' ? value : null;
+		};
+		const toNullableNumber = (value: unknown) => {
+			return typeof value === 'number' ? value : null;
+		};
+		const encounteredMonsters = fight.fighters
+			.filter(f => f.type === FighterType.MONSTER || f.type === FighterType.BOSS)
+			.map(f => ({
+				id: f.id,
+				type: String(f.type),
+				key: toNullableString('key' in f ? f.key : null),
+				name: toNullableString('name' in f ? f.name : null),
+				level: toNullableNumber('level' in f ? f.level : null)
+			}));
+		safeCreateGameLog(
+			{
+				type: GameLogType.Fight,
+				userId: user.id,
+				userNameSnapshot: user.name,
+				dinozId: dinoz.id,
+				dinozNameSnapshot: dinoz.name,
+				metadata: {
+					fromPlaceId: currentPlace.placeId,
+					toPlaceId: finalPlace,
+					result: fight.result,
+					teamDinozIds: team.map(member => member.id),
+					monsterCount: encounteredMonsters.length,
+					monsters: encounteredMonsters
+				}
+			},
+			req.log
+		);
+	}
 	// Consume fight action
 	for (const dino of team) {
 		await updateDinoz(dino.id, {
