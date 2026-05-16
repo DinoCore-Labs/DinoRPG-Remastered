@@ -1,3 +1,7 @@
+import {
+	GAME_LOG_MAINTENANCE_INTERVAL_MS,
+	GAME_LOG_MAINTENANCE_JOB_KEY
+} from '@dinorpg/core/models/gamelog/constants.js';
 import { MARKET_EXPIRATION_INTERVAL_MS, MARKET_EXPIRATION_JOB_KEY } from '@dinorpg/core/models/market/constants.js';
 
 import { getNextMarketOfferExpirationDate } from '../Market/Service/expireMarketOffers.service.js';
@@ -5,6 +9,7 @@ import { prisma } from '../prisma.js';
 import { nextDailyAtUtc } from './helpers/time.js';
 
 export async function ensureJobsExist() {
+	// Dinoz shop
 	await prisma.jobDefinition.upsert({
 		where: { key: 'reset-dinoz-shop' },
 		create: {
@@ -19,6 +24,7 @@ export async function ensureJobsExist() {
 		},
 		update: {}
 	});
+	// Itinerant Merchant
 	await prisma.jobDefinition.upsert({
 		where: { key: 'itinerant-merchant-move' },
 		create: {
@@ -33,6 +39,7 @@ export async function ensureJobsExist() {
 		},
 		update: {}
 	});
+	// Heal fountain
 	await prisma.jobDefinition.upsert({
 		where: { key: 'heal-fountain-pearl-dinoz' },
 		create: {
@@ -47,6 +54,7 @@ export async function ensureJobsExist() {
 		},
 		update: {}
 	});
+	// Offers Market
 	const nextMarketExpiration = await getNextMarketOfferExpirationDate();
 	await prisma.jobDefinition.upsert({
 		where: {
@@ -67,6 +75,28 @@ export async function ensureJobsExist() {
 			intervalMs: null,
 			nextRunAt: nextMarketExpiration,
 			lockTimeoutS: 30,
+			enabled: true
+		}
+	});
+	// Gamelog
+	await prisma.jobDefinition.upsert({
+		where: {
+			key: GAME_LOG_MAINTENANCE_JOB_KEY
+		},
+		create: {
+			key: GAME_LOG_MAINTENANCE_JOB_KEY,
+			name: 'Aggregate and purge game logs',
+			type: 'INTERVAL',
+			timezone: 'UTC',
+			intervalMs: GAME_LOG_MAINTENANCE_INTERVAL_MS,
+			nextRunAt: new Date(Date.now() + GAME_LOG_MAINTENANCE_INTERVAL_MS),
+			lockTimeoutS: 300,
+			enabled: true
+		},
+		update: {
+			type: 'INTERVAL',
+			intervalMs: GAME_LOG_MAINTENANCE_INTERVAL_MS,
+			lockTimeoutS: 300,
 			enabled: true
 		}
 	});
