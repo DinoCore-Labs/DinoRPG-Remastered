@@ -9,6 +9,7 @@ import { forestGuardianDialog } from './forestGuardian.dialog.js';
 import { nicolasHulotDialog } from './hulot.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
 import { jovebozeDialog } from './joveboze.dialog.js';
+import { madameXDialog } from './madameX.dialog.js';
 import { merguezSellerDialog } from './merguezSeller.dialog.js';
 import { padamoineDialog } from './padamoine.dialog.js';
 import { papyJoeDialog } from './papy.dialog.js';
@@ -48,6 +49,7 @@ export const dialogDefinitions = [
 	skullyIntroDialog,
 	skullyMissionsDialog,
 	skullyEndDialog,
+	madameXDialog,
 	starquestSkullyDialog,
 	starquestIntroDialog,
 	starquestMegawolfHintDialog,
