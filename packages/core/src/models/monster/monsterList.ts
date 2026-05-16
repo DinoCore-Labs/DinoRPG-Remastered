@@ -70,6 +70,13 @@ export enum Monster {
 	SCORPWINK_THIEF_2 = 'SCORPWINK_THIEF_2',
 	TRIPOU_THE_SOFTY = 'TRIPOU_THE_SOFTY',
 	EMMEMA_BANDIT = 'EMMEMA_BANDIT',
+	MERCHANT_1 = 'MERCHANT_1',
+	MERCHANT_2 = 'MERCHANT_2',
+	GANG_1 = 'GANG_1',
+	GANG_2 = 'GANG_2',
+	GANG_3 = 'GANG_3',
+	SUSPECT = 'SUSPECT',
+	SUSPECT_1 = 'SUSPECT_1',
 	BARABABOR = 'BARABABOR',
 	BARATRIBOR = 'BARATRIBOR',
 	MERGUEZ_THIEF = 'MERGUEZ_THIEF',
@@ -1564,6 +1571,148 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 1,
 		zones: [],
 		canBeCaptured: true
+	},
+	[Monster.MERCHANT_1]: {
+		id: Monster.MERCHANT_1,
+		name: 'merch1',
+		level: 5,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 30,
+		odds: 100,
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig3',
+		size: 70
+	},
+	[Monster.MERCHANT_2]: {
+		id: Monster.MERCHANT_2,
+		name: 'merch2',
+		level: 5,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 2,
+		bonus_defense: 2,
+		resilience: 40,
+		hp: 30,
+		odds: 100,
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig2',
+		size: 50
+	},
+	[Monster.GANG_1]: {
+		id: Monster.GANG_1,
+		name: 'gang1',
+		level: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 10,
+		bonus_defense: 10,
+		resilience: 40,
+		hp: 100,
+		odds: 100,
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig3'
+	},
+	[Monster.GANG_2]: {
+		id: Monster.GANG_2,
+		name: 'gang2',
+		level: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 10,
+		bonus_defense: 1,
+		resilience: 40,
+		hp: 100,
+		odds: 100,
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig3'
+	},
+	[Monster.GANG_3]: {
+		id: Monster.GANG_3,
+		name: 'gang3',
+		level: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 10,
+		bonus_defense: 1,
+		resilience: 40,
+		hp: 100,
+		odds: 100,
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig3'
+	},
+	[Monster.SUSPECT]: {
+		id: Monster.SUSPECT,
+		name: 'suspc',
+		level: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 3,
+		bonus_defense: 3,
+		resilience: 40,
+		hp: 40,
+		odds: 100,
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig1'
+	},
+	[Monster.SUSPECT_1]: {
+		id: Monster.SUSPECT_1,
+		name: 'suspc1',
+		level: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 3,
+		bonus_defense: 3,
+		resilience: 40,
+		hp: 40,
+		odds: 100,
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig2'
 	},
 	[Monster.MERGUEZ_THIEF]: {
 		id: Monster.MERGUEZ_THIEF,
