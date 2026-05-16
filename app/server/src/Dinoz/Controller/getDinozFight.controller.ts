@@ -5,13 +5,13 @@ export async function getDinozFightDataRequest(dinozId: number, userId: string) 
 		where: { id: userId },
 		select: {
 			id: true,
+			name: true,
 			wallets: {
 				where: { type: 'GOLD' },
 				select: { amount: true }
 			},
 			items: { select: { itemId: true, quantity: true } },
 			rewards: { select: { rewardId: true } },
-			//quests: { select: { questId: true, progression: true } },
 			ranking: { select: { dinozCount: true, points: true } },
 			ingredients: { select: { ingredientId: true, quantity: true } },
 			teacher: true,
