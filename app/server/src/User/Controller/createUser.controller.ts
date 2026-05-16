@@ -2,7 +2,9 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import bcrypt from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { GameLogType } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { prisma } from '../../prisma.js';
 import { CreateUserInput } from '../Schema/user.schema.js';
@@ -17,7 +19,6 @@ export async function createUser(
 	reply: FastifyReply
 ) {
 	const { password, name } = req.body;
-
 	// 1) Anti multi-signup protection
 	try {
 		await enforceSignupLimits(req);
@@ -28,7 +29,6 @@ export async function createUser(
 		req.log.error(e);
 		return reply.code(500).send({ message: 'Internal Server Error' });
 	}
-
 	// 2) Vérifier que le user n'existe pas déjà
 	const user = await prisma.user.findUnique({
 		where: {
@@ -40,7 +40,6 @@ export async function createUser(
 			message: 'User already exists with this name'
 		});
 	}
-
 	try {
 		const hash = await bcrypt.hash(password, SALT_ROUNDS);
 		// ➜ 1. Créer le user
@@ -65,15 +64,13 @@ export async function createUser(
 				wallets: true
 			}
 		});
-
 		// ➜ 2. Créer automatiquement le ranking associé
 		await prisma.ranking.create({
 			data: {
 				userId: user.id
 			}
 		});
-
-		// 3) Créer automatiquement le userProfile associé
+		// ➜ 3. Créer automatiquement le userProfile associé
 		await prisma.userProfile.create({
 			data: {
 				userId: user.id,
@@ -85,12 +82,23 @@ export async function createUser(
 				avatarType: null
 			}
 		});
-
-		// 4) Ajouter les items de départ dans l'inventaire
+		// ➜ 4. Ajouter les items de départ dans l'inventaire
 		for (const starterItem of gameConfig.general.starterPack) {
 			await addItemToInventory(user.id, starterItem.itemId, starterItem.quantity);
 		}
-
+		safeCreateGameLog(
+			{
+				type: GameLogType.PlayerCreated,
+				userId: user.id,
+				userNameSnapshot: user.name,
+				metadata: {
+					ip: req.ip,
+					userAgent: req.headers['user-agent'] ?? null,
+					deviceId: (req as FastifyRequest & { deviceId?: string }).deviceId ?? null
+				}
+			},
+			req.log
+		);
 		return reply.code(201).send(user);
 	} catch (e) {
 		return reply.code(500).send(e);
