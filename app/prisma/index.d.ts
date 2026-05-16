@@ -54,6 +54,21 @@ export type DinozStatus = $Result.DefaultSelection<Prisma.$DinozStatusPayload>
  */
 export type ForcebrutTournamentOpponent = $Result.DefaultSelection<Prisma.$ForcebrutTournamentOpponentPayload>
 /**
+ * Model GameLog
+ * 
+ */
+export type GameLog = $Result.DefaultSelection<Prisma.$GameLogPayload>
+/**
+ * Model GameLogHourly
+ * 
+ */
+export type GameLogHourly = $Result.DefaultSelection<Prisma.$GameLogHourlyPayload>
+/**
+ * Model GameLogDaily
+ * 
+ */
+export type GameLogDaily = $Result.DefaultSelection<Prisma.$GameLogDailyPayload>
+/**
  * Model JobDefinition
  * 
  */
@@ -224,14 +239,68 @@ export const DinozState: {
 export type DinozState = (typeof DinozState)[keyof typeof DinozState]
 
 
-export const Language: {
-  FR: 'FR',
-  EN: 'EN',
-  ES: 'ES',
-  DE: 'DE'
+export const GameLogRetention: {
+  TEMPORARY: 'TEMPORARY',
+  AUDIT: 'AUDIT'
 };
 
-export type Language = (typeof Language)[keyof typeof Language]
+export type GameLogRetention = (typeof GameLogRetention)[keyof typeof GameLogRetention]
+
+
+export const GameLogType: {
+  PlayerCreated: 'PlayerCreated',
+  PlayerConnected: 'PlayerConnected',
+  PlayerReset: 'PlayerReset',
+  PlayerDeleted: 'PlayerDeleted',
+  PlayerBanned: 'PlayerBanned',
+  PlayerUnbanned: 'PlayerUnbanned',
+  CreateDinoz: 'CreateDinoz',
+  Move: 'Move',
+  LevelUp: 'LevelUp',
+  XPEarned: 'XPEarned',
+  HPLost: 'HPLost',
+  Death: 'Death',
+  Revive: 'Revive',
+  Fight: 'Fight',
+  FightWon: 'FightWon',
+  FightLost: 'FightLost',
+  ItemUsed: 'ItemUsed',
+  ItemBought: 'ItemBought',
+  ItemFound: 'ItemFound',
+  IngredientSold: 'IngredientSold',
+  GoldWon: 'GoldWon',
+  GoldLost: 'GoldLost',
+  MissionFinished: 'MissionFinished',
+  MissionCanceled: 'MissionCanceled',
+  Gather: 'Gather',
+  GridFinished: 'GridFinished',
+  OfferNew: 'OfferNew',
+  OfferBid: 'OfferBid',
+  OfferCancelled: 'OfferCancelled',
+  OfferExpired: 'OfferExpired',
+  OfferWon: 'OfferWon',
+  AdminUpdateDinoz: 'AdminUpdateDinoz',
+  AdminAddStatus: 'AdminAddStatus',
+  AdminRemoveStatus: 'AdminRemoveStatus',
+  AdminAddSkill: 'AdminAddSkill',
+  AdminRemoveSkill: 'AdminRemoveSkill',
+  AdminAddUnlockableSkill: 'AdminAddUnlockableSkill',
+  AdminRemoveUnlockableSkill: 'AdminRemoveUnlockableSkill',
+  AdminAddMoney: 'AdminAddMoney',
+  AdminRemoveMoney: 'AdminRemoveMoney',
+  AdminAddReward: 'AdminAddReward',
+  AdminRemoveReward: 'AdminRemoveReward',
+  AdminAddItem: 'AdminAddItem',
+  AdminRemoveItem: 'AdminRemoveItem',
+  AdminAddIngredient: 'AdminAddIngredient',
+  AdminRemoveIngredient: 'AdminRemoveIngredient',
+  AdminUpdateMission: 'AdminUpdateMission',
+  AdminUpdateScenario: 'AdminUpdateScenario',
+  AdminUpdateUser: 'AdminUpdateUser',
+  AdminUpdateSecret: 'AdminUpdateSecret'
+};
+
+export type GameLogType = (typeof GameLogType)[keyof typeof GameLogType]
 
 
 export const Gender: {
@@ -241,6 +310,34 @@ export const Gender: {
 };
 
 export type Gender = (typeof Gender)[keyof typeof Gender]
+
+
+export const JobType: {
+  DAILY_AT: 'DAILY_AT',
+  INTERVAL: 'INTERVAL'
+};
+
+export type JobType = (typeof JobType)[keyof typeof JobType]
+
+
+export const JobStatus: {
+  IDLE: 'IDLE',
+  RUNNING: 'RUNNING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED'
+};
+
+export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]
+
+
+export const Language: {
+  FR: 'FR',
+  EN: 'EN',
+  ES: 'ES',
+  DE: 'DE'
+};
+
+export type Language = (typeof Language)[keyof typeof Language]
 
 
 export const MoneyType: {
@@ -267,6 +364,15 @@ export const NewsType: {
 export type NewsType = (typeof NewsType)[keyof typeof NewsType]
 
 
+export const OfferStatus: {
+  ONGOING: 'ONGOING',
+  ENDED: 'ENDED',
+  CLAIMED: 'CLAIMED'
+};
+
+export type OfferStatus = (typeof OfferStatus)[keyof typeof OfferStatus]
+
+
 export const Role: {
   PLAYER: 'PLAYER',
   MODERATOR: 'MODERATOR',
@@ -275,33 +381,6 @@ export const Role: {
 };
 
 export type Role = (typeof Role)[keyof typeof Role]
-
-
-export const JobType: {
-  DAILY_AT: 'DAILY_AT',
-  INTERVAL: 'INTERVAL'
-};
-
-export type JobType = (typeof JobType)[keyof typeof JobType]
-
-
-export const JobStatus: {
-  IDLE: 'IDLE',
-  RUNNING: 'RUNNING',
-  SUCCESS: 'SUCCESS',
-  FAILED: 'FAILED'
-};
-
-export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]
-
-
-export const OfferStatus: {
-  ONGOING: 'ONGOING',
-  ENDED: 'ENDED',
-  CLAIMED: 'CLAIMED'
-};
-
-export type OfferStatus = (typeof OfferStatus)[keyof typeof OfferStatus]
 
 }
 
@@ -313,25 +392,17 @@ export type DinozState = $Enums.DinozState
 
 export const DinozState: typeof $Enums.DinozState
 
-export type Language = $Enums.Language
+export type GameLogRetention = $Enums.GameLogRetention
 
-export const Language: typeof $Enums.Language
+export const GameLogRetention: typeof $Enums.GameLogRetention
+
+export type GameLogType = $Enums.GameLogType
+
+export const GameLogType: typeof $Enums.GameLogType
 
 export type Gender = $Enums.Gender
 
 export const Gender: typeof $Enums.Gender
-
-export type MoneyType = $Enums.MoneyType
-
-export const MoneyType: typeof $Enums.MoneyType
-
-export type NewsType = $Enums.NewsType
-
-export const NewsType: typeof $Enums.NewsType
-
-export type Role = $Enums.Role
-
-export const Role: typeof $Enums.Role
 
 export type JobType = $Enums.JobType
 
@@ -341,9 +412,25 @@ export type JobStatus = $Enums.JobStatus
 
 export const JobStatus: typeof $Enums.JobStatus
 
+export type Language = $Enums.Language
+
+export const Language: typeof $Enums.Language
+
+export type MoneyType = $Enums.MoneyType
+
+export const MoneyType: typeof $Enums.MoneyType
+
+export type NewsType = $Enums.NewsType
+
+export const NewsType: typeof $Enums.NewsType
+
 export type OfferStatus = $Enums.OfferStatus
 
 export const OfferStatus: typeof $Enums.OfferStatus
+
+export type Role = $Enums.Role
+
+export const Role: typeof $Enums.Role
 
 /**
  * ##  Prisma Client ʲˢ
@@ -545,6 +632,36 @@ export class PrismaClient<
     * ```
     */
   get forcebrutTournamentOpponent(): Prisma.ForcebrutTournamentOpponentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.gameLog`: Exposes CRUD operations for the **GameLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GameLogs
+    * const gameLogs = await prisma.gameLog.findMany()
+    * ```
+    */
+  get gameLog(): Prisma.GameLogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.gameLogHourly`: Exposes CRUD operations for the **GameLogHourly** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GameLogHourlies
+    * const gameLogHourlies = await prisma.gameLogHourly.findMany()
+    * ```
+    */
+  get gameLogHourly(): Prisma.GameLogHourlyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.gameLogDaily`: Exposes CRUD operations for the **GameLogDaily** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GameLogDailies
+    * const gameLogDailies = await prisma.gameLogDaily.findMany()
+    * ```
+    */
+  get gameLogDaily(): Prisma.GameLogDailyDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.jobDefinition`: Exposes CRUD operations for the **JobDefinition** model.
@@ -1277,6 +1394,9 @@ export namespace Prisma {
     DinozSkillsUnlockable: 'DinozSkillsUnlockable',
     DinozStatus: 'DinozStatus',
     ForcebrutTournamentOpponent: 'ForcebrutTournamentOpponent',
+    GameLog: 'GameLog',
+    GameLogHourly: 'GameLogHourly',
+    GameLogDaily: 'GameLogDaily',
     JobDefinition: 'JobDefinition',
     JobRun: 'JobRun',
     News: 'News',
@@ -1321,7 +1441,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dinoz" | "dinozCatch" | "dinozItems" | "dinozMissions" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "forcebrutTournamentOpponent" | "jobDefinition" | "jobRun" | "news" | "newsTranslation" | "offer" | "offerItem" | "offerBid" | "poll" | "pollOption" | "pollOptionTranslation" | "pollVote" | "newsLike" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userScenario" | "userTracking" | "userWallet" | "conversation" | "participant" | "message"
+      modelProps: "dinoz" | "dinozCatch" | "dinozItems" | "dinozMissions" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "forcebrutTournamentOpponent" | "gameLog" | "gameLogHourly" | "gameLogDaily" | "jobDefinition" | "jobRun" | "news" | "newsTranslation" | "offer" | "offerItem" | "offerBid" | "poll" | "pollOption" | "pollOptionTranslation" | "pollVote" | "newsLike" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userScenario" | "userTracking" | "userWallet" | "conversation" | "participant" | "message"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1914,6 +2034,228 @@ export namespace Prisma {
           count: {
             args: Prisma.ForcebrutTournamentOpponentCountArgs<ExtArgs>
             result: $Utils.Optional<ForcebrutTournamentOpponentCountAggregateOutputType> | number
+          }
+        }
+      }
+      GameLog: {
+        payload: Prisma.$GameLogPayload<ExtArgs>
+        fields: Prisma.GameLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GameLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GameLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogPayload>
+          }
+          findFirst: {
+            args: Prisma.GameLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GameLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogPayload>
+          }
+          findMany: {
+            args: Prisma.GameLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogPayload>[]
+          }
+          create: {
+            args: Prisma.GameLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogPayload>
+          }
+          createMany: {
+            args: Prisma.GameLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GameLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogPayload>[]
+          }
+          delete: {
+            args: Prisma.GameLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogPayload>
+          }
+          update: {
+            args: Prisma.GameLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.GameLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GameLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GameLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogPayload>[]
+          }
+          upsert: {
+            args: Prisma.GameLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogPayload>
+          }
+          aggregate: {
+            args: Prisma.GameLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGameLog>
+          }
+          groupBy: {
+            args: Prisma.GameLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GameLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GameLogCountArgs<ExtArgs>
+            result: $Utils.Optional<GameLogCountAggregateOutputType> | number
+          }
+        }
+      }
+      GameLogHourly: {
+        payload: Prisma.$GameLogHourlyPayload<ExtArgs>
+        fields: Prisma.GameLogHourlyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GameLogHourlyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogHourlyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GameLogHourlyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogHourlyPayload>
+          }
+          findFirst: {
+            args: Prisma.GameLogHourlyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogHourlyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GameLogHourlyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogHourlyPayload>
+          }
+          findMany: {
+            args: Prisma.GameLogHourlyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogHourlyPayload>[]
+          }
+          create: {
+            args: Prisma.GameLogHourlyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogHourlyPayload>
+          }
+          createMany: {
+            args: Prisma.GameLogHourlyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GameLogHourlyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogHourlyPayload>[]
+          }
+          delete: {
+            args: Prisma.GameLogHourlyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogHourlyPayload>
+          }
+          update: {
+            args: Prisma.GameLogHourlyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogHourlyPayload>
+          }
+          deleteMany: {
+            args: Prisma.GameLogHourlyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GameLogHourlyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GameLogHourlyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogHourlyPayload>[]
+          }
+          upsert: {
+            args: Prisma.GameLogHourlyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogHourlyPayload>
+          }
+          aggregate: {
+            args: Prisma.GameLogHourlyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGameLogHourly>
+          }
+          groupBy: {
+            args: Prisma.GameLogHourlyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GameLogHourlyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GameLogHourlyCountArgs<ExtArgs>
+            result: $Utils.Optional<GameLogHourlyCountAggregateOutputType> | number
+          }
+        }
+      }
+      GameLogDaily: {
+        payload: Prisma.$GameLogDailyPayload<ExtArgs>
+        fields: Prisma.GameLogDailyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GameLogDailyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogDailyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GameLogDailyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogDailyPayload>
+          }
+          findFirst: {
+            args: Prisma.GameLogDailyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogDailyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GameLogDailyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogDailyPayload>
+          }
+          findMany: {
+            args: Prisma.GameLogDailyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogDailyPayload>[]
+          }
+          create: {
+            args: Prisma.GameLogDailyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogDailyPayload>
+          }
+          createMany: {
+            args: Prisma.GameLogDailyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GameLogDailyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogDailyPayload>[]
+          }
+          delete: {
+            args: Prisma.GameLogDailyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogDailyPayload>
+          }
+          update: {
+            args: Prisma.GameLogDailyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogDailyPayload>
+          }
+          deleteMany: {
+            args: Prisma.GameLogDailyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GameLogDailyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GameLogDailyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogDailyPayload>[]
+          }
+          upsert: {
+            args: Prisma.GameLogDailyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameLogDailyPayload>
+          }
+          aggregate: {
+            args: Prisma.GameLogDailyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGameLogDaily>
+          }
+          groupBy: {
+            args: Prisma.GameLogDailyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GameLogDailyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GameLogDailyCountArgs<ExtArgs>
+            result: $Utils.Optional<GameLogDailyCountAggregateOutputType> | number
           }
         }
       }
@@ -4179,6 +4521,9 @@ export namespace Prisma {
     dinozSkillsUnlockable?: DinozSkillsUnlockableOmit
     dinozStatus?: DinozStatusOmit
     forcebrutTournamentOpponent?: ForcebrutTournamentOpponentOmit
+    gameLog?: GameLogOmit
+    gameLogHourly?: GameLogHourlyOmit
+    gameLogDaily?: GameLogDailyOmit
     jobDefinition?: JobDefinitionOmit
     jobRun?: JobRunOmit
     news?: NewsOmit
@@ -4296,6 +4641,7 @@ export namespace Prisma {
     status: number
     missions: number
     marketOffers: number
+    logs: number
   }
 
   export type DinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4307,6 +4653,7 @@ export namespace Prisma {
     status?: boolean | DinozCountOutputTypeCountStatusArgs
     missions?: boolean | DinozCountOutputTypeCountMissionsArgs
     marketOffers?: boolean | DinozCountOutputTypeCountMarketOffersArgs
+    logs?: boolean | DinozCountOutputTypeCountLogsArgs
   }
 
   // Custom InputTypes
@@ -4374,6 +4721,13 @@ export namespace Prisma {
    */
   export type DinozCountOutputTypeCountMarketOffersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OfferWhereInput
+  }
+
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GameLogWhereInput
   }
 
 
@@ -4589,6 +4943,8 @@ export namespace Prisma {
     createdConversations: number
     conversationLinks: number
     sentMessages: number
+    logs: number
+    actedLogs: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4608,6 +4964,8 @@ export namespace Prisma {
     createdConversations?: boolean | UserCountOutputTypeCountCreatedConversationsArgs
     conversationLinks?: boolean | UserCountOutputTypeCountConversationLinksArgs
     sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
+    logs?: boolean | UserCountOutputTypeCountLogsArgs
+    actedLogs?: boolean | UserCountOutputTypeCountActedLogsArgs
   }
 
   // Custom InputTypes
@@ -4731,6 +5089,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSentMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MessageWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GameLogWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountActedLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GameLogWhereInput
   }
 
 
@@ -5246,6 +5618,7 @@ export namespace Prisma {
     missions?: boolean | Dinoz$missionsArgs<ExtArgs>
     marketOffers?: boolean | Dinoz$marketOffersArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    logs?: boolean | Dinoz$logsArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
 
@@ -5361,6 +5734,7 @@ export namespace Prisma {
     missions?: boolean | Dinoz$missionsArgs<ExtArgs>
     marketOffers?: boolean | Dinoz$marketOffersArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    logs?: boolean | Dinoz$logsArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DinozIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5385,6 +5759,7 @@ export namespace Prisma {
       missions: Prisma.$DinozMissionsPayload<ExtArgs>[]
       marketOffers: Prisma.$OfferPayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs>
+      logs: Prisma.$GameLogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5820,6 +6195,7 @@ export namespace Prisma {
     missions<T extends Dinoz$missionsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$missionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozMissionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     marketOffers<T extends Dinoz$marketOffersArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$marketOffersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    logs<T extends Dinoz$logsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6496,6 +6872,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
+  }
+
+  /**
+   * Dinoz.logs
+   */
+  export type Dinoz$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    where?: GameLogWhereInput
+    orderBy?: GameLogOrderByWithRelationInput | GameLogOrderByWithRelationInput[]
+    cursor?: GameLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GameLogScalarFieldEnum | GameLogScalarFieldEnum[]
   }
 
   /**
@@ -14474,6 +14874,3392 @@ export namespace Prisma {
      * Omit specific fields from the ForcebrutTournamentOpponent
      */
     omit?: ForcebrutTournamentOpponentOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GameLog
+   */
+
+  export type AggregateGameLog = {
+    _count: GameLogCountAggregateOutputType | null
+    _avg: GameLogAvgAggregateOutputType | null
+    _sum: GameLogSumAggregateOutputType | null
+    _min: GameLogMinAggregateOutputType | null
+    _max: GameLogMaxAggregateOutputType | null
+  }
+
+  export type GameLogAvgAggregateOutputType = {
+    id: number | null
+    dinozId: number | null
+  }
+
+  export type GameLogSumAggregateOutputType = {
+    id: bigint | null
+    dinozId: number | null
+  }
+
+  export type GameLogMinAggregateOutputType = {
+    id: bigint | null
+    type: $Enums.GameLogType | null
+    retention: $Enums.GameLogRetention | null
+    userId: string | null
+    dinozId: number | null
+    actorUserId: string | null
+    userNameSnapshot: string | null
+    dinozNameSnapshot: string | null
+    actorNameSnapshot: string | null
+    createdAt: Date | null
+  }
+
+  export type GameLogMaxAggregateOutputType = {
+    id: bigint | null
+    type: $Enums.GameLogType | null
+    retention: $Enums.GameLogRetention | null
+    userId: string | null
+    dinozId: number | null
+    actorUserId: string | null
+    userNameSnapshot: string | null
+    dinozNameSnapshot: string | null
+    actorNameSnapshot: string | null
+    createdAt: Date | null
+  }
+
+  export type GameLogCountAggregateOutputType = {
+    id: number
+    type: number
+    retention: number
+    values: number
+    metadata: number
+    userId: number
+    dinozId: number
+    actorUserId: number
+    userNameSnapshot: number
+    dinozNameSnapshot: number
+    actorNameSnapshot: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type GameLogAvgAggregateInputType = {
+    id?: true
+    dinozId?: true
+  }
+
+  export type GameLogSumAggregateInputType = {
+    id?: true
+    dinozId?: true
+  }
+
+  export type GameLogMinAggregateInputType = {
+    id?: true
+    type?: true
+    retention?: true
+    userId?: true
+    dinozId?: true
+    actorUserId?: true
+    userNameSnapshot?: true
+    dinozNameSnapshot?: true
+    actorNameSnapshot?: true
+    createdAt?: true
+  }
+
+  export type GameLogMaxAggregateInputType = {
+    id?: true
+    type?: true
+    retention?: true
+    userId?: true
+    dinozId?: true
+    actorUserId?: true
+    userNameSnapshot?: true
+    dinozNameSnapshot?: true
+    actorNameSnapshot?: true
+    createdAt?: true
+  }
+
+  export type GameLogCountAggregateInputType = {
+    id?: true
+    type?: true
+    retention?: true
+    values?: true
+    metadata?: true
+    userId?: true
+    dinozId?: true
+    actorUserId?: true
+    userNameSnapshot?: true
+    dinozNameSnapshot?: true
+    actorNameSnapshot?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type GameLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GameLog to aggregate.
+     */
+    where?: GameLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogs to fetch.
+     */
+    orderBy?: GameLogOrderByWithRelationInput | GameLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GameLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GameLogs
+    **/
+    _count?: true | GameLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GameLogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GameLogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GameLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GameLogMaxAggregateInputType
+  }
+
+  export type GetGameLogAggregateType<T extends GameLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateGameLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGameLog[P]>
+      : GetScalarType<T[P], AggregateGameLog[P]>
+  }
+
+
+
+
+  export type GameLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GameLogWhereInput
+    orderBy?: GameLogOrderByWithAggregationInput | GameLogOrderByWithAggregationInput[]
+    by: GameLogScalarFieldEnum[] | GameLogScalarFieldEnum
+    having?: GameLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GameLogCountAggregateInputType | true
+    _avg?: GameLogAvgAggregateInputType
+    _sum?: GameLogSumAggregateInputType
+    _min?: GameLogMinAggregateInputType
+    _max?: GameLogMaxAggregateInputType
+  }
+
+  export type GameLogGroupByOutputType = {
+    id: bigint
+    type: $Enums.GameLogType
+    retention: $Enums.GameLogRetention
+    values: string[]
+    metadata: JsonValue | null
+    userId: string | null
+    dinozId: number | null
+    actorUserId: string | null
+    userNameSnapshot: string | null
+    dinozNameSnapshot: string | null
+    actorNameSnapshot: string | null
+    createdAt: Date
+    _count: GameLogCountAggregateOutputType | null
+    _avg: GameLogAvgAggregateOutputType | null
+    _sum: GameLogSumAggregateOutputType | null
+    _min: GameLogMinAggregateOutputType | null
+    _max: GameLogMaxAggregateOutputType | null
+  }
+
+  type GetGameLogGroupByPayload<T extends GameLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GameLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GameLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GameLogGroupByOutputType[P]>
+            : GetScalarType<T[P], GameLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GameLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    retention?: boolean
+    values?: boolean
+    metadata?: boolean
+    userId?: boolean
+    dinozId?: boolean
+    actorUserId?: boolean
+    userNameSnapshot?: boolean
+    dinozNameSnapshot?: boolean
+    actorNameSnapshot?: boolean
+    createdAt?: boolean
+    user?: boolean | GameLog$userArgs<ExtArgs>
+    dinoz?: boolean | GameLog$dinozArgs<ExtArgs>
+    actorUser?: boolean | GameLog$actorUserArgs<ExtArgs>
+  }, ExtArgs["result"]["gameLog"]>
+
+  export type GameLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    retention?: boolean
+    values?: boolean
+    metadata?: boolean
+    userId?: boolean
+    dinozId?: boolean
+    actorUserId?: boolean
+    userNameSnapshot?: boolean
+    dinozNameSnapshot?: boolean
+    actorNameSnapshot?: boolean
+    createdAt?: boolean
+    user?: boolean | GameLog$userArgs<ExtArgs>
+    dinoz?: boolean | GameLog$dinozArgs<ExtArgs>
+    actorUser?: boolean | GameLog$actorUserArgs<ExtArgs>
+  }, ExtArgs["result"]["gameLog"]>
+
+  export type GameLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    retention?: boolean
+    values?: boolean
+    metadata?: boolean
+    userId?: boolean
+    dinozId?: boolean
+    actorUserId?: boolean
+    userNameSnapshot?: boolean
+    dinozNameSnapshot?: boolean
+    actorNameSnapshot?: boolean
+    createdAt?: boolean
+    user?: boolean | GameLog$userArgs<ExtArgs>
+    dinoz?: boolean | GameLog$dinozArgs<ExtArgs>
+    actorUser?: boolean | GameLog$actorUserArgs<ExtArgs>
+  }, ExtArgs["result"]["gameLog"]>
+
+  export type GameLogSelectScalar = {
+    id?: boolean
+    type?: boolean
+    retention?: boolean
+    values?: boolean
+    metadata?: boolean
+    userId?: boolean
+    dinozId?: boolean
+    actorUserId?: boolean
+    userNameSnapshot?: boolean
+    dinozNameSnapshot?: boolean
+    actorNameSnapshot?: boolean
+    createdAt?: boolean
+  }
+
+  export type GameLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "retention" | "values" | "metadata" | "userId" | "dinozId" | "actorUserId" | "userNameSnapshot" | "dinozNameSnapshot" | "actorNameSnapshot" | "createdAt", ExtArgs["result"]["gameLog"]>
+  export type GameLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | GameLog$userArgs<ExtArgs>
+    dinoz?: boolean | GameLog$dinozArgs<ExtArgs>
+    actorUser?: boolean | GameLog$actorUserArgs<ExtArgs>
+  }
+  export type GameLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | GameLog$userArgs<ExtArgs>
+    dinoz?: boolean | GameLog$dinozArgs<ExtArgs>
+    actorUser?: boolean | GameLog$actorUserArgs<ExtArgs>
+  }
+  export type GameLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | GameLog$userArgs<ExtArgs>
+    dinoz?: boolean | GameLog$dinozArgs<ExtArgs>
+    actorUser?: boolean | GameLog$actorUserArgs<ExtArgs>
+  }
+
+  export type $GameLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GameLog"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs> | null
+      dinoz: Prisma.$DinozPayload<ExtArgs> | null
+      actorUser: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      type: $Enums.GameLogType
+      retention: $Enums.GameLogRetention
+      values: string[]
+      metadata: Prisma.JsonValue | null
+      userId: string | null
+      dinozId: number | null
+      actorUserId: string | null
+      userNameSnapshot: string | null
+      dinozNameSnapshot: string | null
+      actorNameSnapshot: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["gameLog"]>
+    composites: {}
+  }
+
+  type GameLogGetPayload<S extends boolean | null | undefined | GameLogDefaultArgs> = $Result.GetResult<Prisma.$GameLogPayload, S>
+
+  type GameLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GameLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: GameLogCountAggregateInputType | true
+    }
+
+  export interface GameLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GameLog'], meta: { name: 'GameLog' } }
+    /**
+     * Find zero or one GameLog that matches the filter.
+     * @param {GameLogFindUniqueArgs} args - Arguments to find a GameLog
+     * @example
+     * // Get one GameLog
+     * const gameLog = await prisma.gameLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GameLogFindUniqueArgs>(args: SelectSubset<T, GameLogFindUniqueArgs<ExtArgs>>): Prisma__GameLogClient<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GameLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GameLogFindUniqueOrThrowArgs} args - Arguments to find a GameLog
+     * @example
+     * // Get one GameLog
+     * const gameLog = await prisma.gameLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GameLogFindUniqueOrThrowArgs>(args: SelectSubset<T, GameLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GameLogClient<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GameLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogFindFirstArgs} args - Arguments to find a GameLog
+     * @example
+     * // Get one GameLog
+     * const gameLog = await prisma.gameLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GameLogFindFirstArgs>(args?: SelectSubset<T, GameLogFindFirstArgs<ExtArgs>>): Prisma__GameLogClient<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GameLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogFindFirstOrThrowArgs} args - Arguments to find a GameLog
+     * @example
+     * // Get one GameLog
+     * const gameLog = await prisma.gameLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GameLogFindFirstOrThrowArgs>(args?: SelectSubset<T, GameLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__GameLogClient<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GameLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GameLogs
+     * const gameLogs = await prisma.gameLog.findMany()
+     * 
+     * // Get first 10 GameLogs
+     * const gameLogs = await prisma.gameLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const gameLogWithIdOnly = await prisma.gameLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GameLogFindManyArgs>(args?: SelectSubset<T, GameLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GameLog.
+     * @param {GameLogCreateArgs} args - Arguments to create a GameLog.
+     * @example
+     * // Create one GameLog
+     * const GameLog = await prisma.gameLog.create({
+     *   data: {
+     *     // ... data to create a GameLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends GameLogCreateArgs>(args: SelectSubset<T, GameLogCreateArgs<ExtArgs>>): Prisma__GameLogClient<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GameLogs.
+     * @param {GameLogCreateManyArgs} args - Arguments to create many GameLogs.
+     * @example
+     * // Create many GameLogs
+     * const gameLog = await prisma.gameLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GameLogCreateManyArgs>(args?: SelectSubset<T, GameLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GameLogs and returns the data saved in the database.
+     * @param {GameLogCreateManyAndReturnArgs} args - Arguments to create many GameLogs.
+     * @example
+     * // Create many GameLogs
+     * const gameLog = await prisma.gameLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GameLogs and only return the `id`
+     * const gameLogWithIdOnly = await prisma.gameLog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GameLogCreateManyAndReturnArgs>(args?: SelectSubset<T, GameLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GameLog.
+     * @param {GameLogDeleteArgs} args - Arguments to delete one GameLog.
+     * @example
+     * // Delete one GameLog
+     * const GameLog = await prisma.gameLog.delete({
+     *   where: {
+     *     // ... filter to delete one GameLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GameLogDeleteArgs>(args: SelectSubset<T, GameLogDeleteArgs<ExtArgs>>): Prisma__GameLogClient<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GameLog.
+     * @param {GameLogUpdateArgs} args - Arguments to update one GameLog.
+     * @example
+     * // Update one GameLog
+     * const gameLog = await prisma.gameLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GameLogUpdateArgs>(args: SelectSubset<T, GameLogUpdateArgs<ExtArgs>>): Prisma__GameLogClient<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GameLogs.
+     * @param {GameLogDeleteManyArgs} args - Arguments to filter GameLogs to delete.
+     * @example
+     * // Delete a few GameLogs
+     * const { count } = await prisma.gameLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GameLogDeleteManyArgs>(args?: SelectSubset<T, GameLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GameLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GameLogs
+     * const gameLog = await prisma.gameLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GameLogUpdateManyArgs>(args: SelectSubset<T, GameLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GameLogs and returns the data updated in the database.
+     * @param {GameLogUpdateManyAndReturnArgs} args - Arguments to update many GameLogs.
+     * @example
+     * // Update many GameLogs
+     * const gameLog = await prisma.gameLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GameLogs and only return the `id`
+     * const gameLogWithIdOnly = await prisma.gameLog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GameLogUpdateManyAndReturnArgs>(args: SelectSubset<T, GameLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GameLog.
+     * @param {GameLogUpsertArgs} args - Arguments to update or create a GameLog.
+     * @example
+     * // Update or create a GameLog
+     * const gameLog = await prisma.gameLog.upsert({
+     *   create: {
+     *     // ... data to create a GameLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GameLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GameLogUpsertArgs>(args: SelectSubset<T, GameLogUpsertArgs<ExtArgs>>): Prisma__GameLogClient<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GameLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogCountArgs} args - Arguments to filter GameLogs to count.
+     * @example
+     * // Count the number of GameLogs
+     * const count = await prisma.gameLog.count({
+     *   where: {
+     *     // ... the filter for the GameLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends GameLogCountArgs>(
+      args?: Subset<T, GameLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GameLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GameLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GameLogAggregateArgs>(args: Subset<T, GameLogAggregateArgs>): Prisma.PrismaPromise<GetGameLogAggregateType<T>>
+
+    /**
+     * Group by GameLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GameLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GameLogGroupByArgs['orderBy'] }
+        : { orderBy?: GameLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GameLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGameLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GameLog model
+   */
+  readonly fields: GameLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GameLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GameLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends GameLog$userArgs<ExtArgs> = {}>(args?: Subset<T, GameLog$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    dinoz<T extends GameLog$dinozArgs<ExtArgs> = {}>(args?: Subset<T, GameLog$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    actorUser<T extends GameLog$actorUserArgs<ExtArgs> = {}>(args?: Subset<T, GameLog$actorUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GameLog model
+   */
+  interface GameLogFieldRefs {
+    readonly id: FieldRef<"GameLog", 'BigInt'>
+    readonly type: FieldRef<"GameLog", 'GameLogType'>
+    readonly retention: FieldRef<"GameLog", 'GameLogRetention'>
+    readonly values: FieldRef<"GameLog", 'String[]'>
+    readonly metadata: FieldRef<"GameLog", 'Json'>
+    readonly userId: FieldRef<"GameLog", 'String'>
+    readonly dinozId: FieldRef<"GameLog", 'Int'>
+    readonly actorUserId: FieldRef<"GameLog", 'String'>
+    readonly userNameSnapshot: FieldRef<"GameLog", 'String'>
+    readonly dinozNameSnapshot: FieldRef<"GameLog", 'String'>
+    readonly actorNameSnapshot: FieldRef<"GameLog", 'String'>
+    readonly createdAt: FieldRef<"GameLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GameLog findUnique
+   */
+  export type GameLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    /**
+     * Filter, which GameLog to fetch.
+     */
+    where: GameLogWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLog findUniqueOrThrow
+   */
+  export type GameLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    /**
+     * Filter, which GameLog to fetch.
+     */
+    where: GameLogWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLog findFirst
+   */
+  export type GameLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    /**
+     * Filter, which GameLog to fetch.
+     */
+    where?: GameLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogs to fetch.
+     */
+    orderBy?: GameLogOrderByWithRelationInput | GameLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GameLogs.
+     */
+    cursor?: GameLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GameLogs.
+     */
+    distinct?: GameLogScalarFieldEnum | GameLogScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLog findFirstOrThrow
+   */
+  export type GameLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    /**
+     * Filter, which GameLog to fetch.
+     */
+    where?: GameLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogs to fetch.
+     */
+    orderBy?: GameLogOrderByWithRelationInput | GameLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GameLogs.
+     */
+    cursor?: GameLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GameLogs.
+     */
+    distinct?: GameLogScalarFieldEnum | GameLogScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLog findMany
+   */
+  export type GameLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    /**
+     * Filter, which GameLogs to fetch.
+     */
+    where?: GameLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogs to fetch.
+     */
+    orderBy?: GameLogOrderByWithRelationInput | GameLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GameLogs.
+     */
+    cursor?: GameLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GameLogs.
+     */
+    distinct?: GameLogScalarFieldEnum | GameLogScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLog create
+   */
+  export type GameLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GameLog.
+     */
+    data: XOR<GameLogCreateInput, GameLogUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLog createMany
+   */
+  export type GameLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GameLogs.
+     */
+    data: GameLogCreateManyInput | GameLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GameLog createManyAndReturn
+   */
+  export type GameLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * The data used to create many GameLogs.
+     */
+    data: GameLogCreateManyInput | GameLogCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GameLog update
+   */
+  export type GameLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GameLog.
+     */
+    data: XOR<GameLogUpdateInput, GameLogUncheckedUpdateInput>
+    /**
+     * Choose, which GameLog to update.
+     */
+    where: GameLogWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLog updateMany
+   */
+  export type GameLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GameLogs.
+     */
+    data: XOR<GameLogUpdateManyMutationInput, GameLogUncheckedUpdateManyInput>
+    /**
+     * Filter which GameLogs to update
+     */
+    where?: GameLogWhereInput
+    /**
+     * Limit how many GameLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GameLog updateManyAndReturn
+   */
+  export type GameLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * The data used to update GameLogs.
+     */
+    data: XOR<GameLogUpdateManyMutationInput, GameLogUncheckedUpdateManyInput>
+    /**
+     * Filter which GameLogs to update
+     */
+    where?: GameLogWhereInput
+    /**
+     * Limit how many GameLogs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GameLog upsert
+   */
+  export type GameLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GameLog to update in case it exists.
+     */
+    where: GameLogWhereUniqueInput
+    /**
+     * In case the GameLog found by the `where` argument doesn't exist, create a new GameLog with this data.
+     */
+    create: XOR<GameLogCreateInput, GameLogUncheckedCreateInput>
+    /**
+     * In case the GameLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GameLogUpdateInput, GameLogUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLog delete
+   */
+  export type GameLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    /**
+     * Filter which GameLog to delete.
+     */
+    where: GameLogWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLog deleteMany
+   */
+  export type GameLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GameLogs to delete
+     */
+    where?: GameLogWhereInput
+    /**
+     * Limit how many GameLogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GameLog.user
+   */
+  export type GameLog$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * GameLog.dinoz
+   */
+  export type GameLog$dinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
+  }
+
+  /**
+   * GameLog.actorUser
+   */
+  export type GameLog$actorUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * GameLog without action
+   */
+  export type GameLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GameLogHourly
+   */
+
+  export type AggregateGameLogHourly = {
+    _count: GameLogHourlyCountAggregateOutputType | null
+    _avg: GameLogHourlyAvgAggregateOutputType | null
+    _sum: GameLogHourlySumAggregateOutputType | null
+    _min: GameLogHourlyMinAggregateOutputType | null
+    _max: GameLogHourlyMaxAggregateOutputType | null
+  }
+
+  export type GameLogHourlyAvgAggregateOutputType = {
+    id: number | null
+    total: number | null
+  }
+
+  export type GameLogHourlySumAggregateOutputType = {
+    id: bigint | null
+    total: number | null
+  }
+
+  export type GameLogHourlyMinAggregateOutputType = {
+    id: bigint | null
+    type: $Enums.GameLogType | null
+    bucketAt: Date | null
+    total: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GameLogHourlyMaxAggregateOutputType = {
+    id: bigint | null
+    type: $Enums.GameLogType | null
+    bucketAt: Date | null
+    total: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GameLogHourlyCountAggregateOutputType = {
+    id: number
+    type: number
+    bucketAt: number
+    total: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type GameLogHourlyAvgAggregateInputType = {
+    id?: true
+    total?: true
+  }
+
+  export type GameLogHourlySumAggregateInputType = {
+    id?: true
+    total?: true
+  }
+
+  export type GameLogHourlyMinAggregateInputType = {
+    id?: true
+    type?: true
+    bucketAt?: true
+    total?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GameLogHourlyMaxAggregateInputType = {
+    id?: true
+    type?: true
+    bucketAt?: true
+    total?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GameLogHourlyCountAggregateInputType = {
+    id?: true
+    type?: true
+    bucketAt?: true
+    total?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type GameLogHourlyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GameLogHourly to aggregate.
+     */
+    where?: GameLogHourlyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogHourlies to fetch.
+     */
+    orderBy?: GameLogHourlyOrderByWithRelationInput | GameLogHourlyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GameLogHourlyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogHourlies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogHourlies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GameLogHourlies
+    **/
+    _count?: true | GameLogHourlyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GameLogHourlyAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GameLogHourlySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GameLogHourlyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GameLogHourlyMaxAggregateInputType
+  }
+
+  export type GetGameLogHourlyAggregateType<T extends GameLogHourlyAggregateArgs> = {
+        [P in keyof T & keyof AggregateGameLogHourly]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGameLogHourly[P]>
+      : GetScalarType<T[P], AggregateGameLogHourly[P]>
+  }
+
+
+
+
+  export type GameLogHourlyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GameLogHourlyWhereInput
+    orderBy?: GameLogHourlyOrderByWithAggregationInput | GameLogHourlyOrderByWithAggregationInput[]
+    by: GameLogHourlyScalarFieldEnum[] | GameLogHourlyScalarFieldEnum
+    having?: GameLogHourlyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GameLogHourlyCountAggregateInputType | true
+    _avg?: GameLogHourlyAvgAggregateInputType
+    _sum?: GameLogHourlySumAggregateInputType
+    _min?: GameLogHourlyMinAggregateInputType
+    _max?: GameLogHourlyMaxAggregateInputType
+  }
+
+  export type GameLogHourlyGroupByOutputType = {
+    id: bigint
+    type: $Enums.GameLogType
+    bucketAt: Date
+    total: number
+    createdAt: Date
+    updatedAt: Date
+    _count: GameLogHourlyCountAggregateOutputType | null
+    _avg: GameLogHourlyAvgAggregateOutputType | null
+    _sum: GameLogHourlySumAggregateOutputType | null
+    _min: GameLogHourlyMinAggregateOutputType | null
+    _max: GameLogHourlyMaxAggregateOutputType | null
+  }
+
+  type GetGameLogHourlyGroupByPayload<T extends GameLogHourlyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GameLogHourlyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GameLogHourlyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GameLogHourlyGroupByOutputType[P]>
+            : GetScalarType<T[P], GameLogHourlyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GameLogHourlySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    bucketAt?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["gameLogHourly"]>
+
+  export type GameLogHourlySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    bucketAt?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["gameLogHourly"]>
+
+  export type GameLogHourlySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    bucketAt?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["gameLogHourly"]>
+
+  export type GameLogHourlySelectScalar = {
+    id?: boolean
+    type?: boolean
+    bucketAt?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type GameLogHourlyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "bucketAt" | "total" | "createdAt" | "updatedAt", ExtArgs["result"]["gameLogHourly"]>
+
+  export type $GameLogHourlyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GameLogHourly"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      type: $Enums.GameLogType
+      bucketAt: Date
+      total: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["gameLogHourly"]>
+    composites: {}
+  }
+
+  type GameLogHourlyGetPayload<S extends boolean | null | undefined | GameLogHourlyDefaultArgs> = $Result.GetResult<Prisma.$GameLogHourlyPayload, S>
+
+  type GameLogHourlyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GameLogHourlyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: GameLogHourlyCountAggregateInputType | true
+    }
+
+  export interface GameLogHourlyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GameLogHourly'], meta: { name: 'GameLogHourly' } }
+    /**
+     * Find zero or one GameLogHourly that matches the filter.
+     * @param {GameLogHourlyFindUniqueArgs} args - Arguments to find a GameLogHourly
+     * @example
+     * // Get one GameLogHourly
+     * const gameLogHourly = await prisma.gameLogHourly.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GameLogHourlyFindUniqueArgs>(args: SelectSubset<T, GameLogHourlyFindUniqueArgs<ExtArgs>>): Prisma__GameLogHourlyClient<$Result.GetResult<Prisma.$GameLogHourlyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GameLogHourly that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GameLogHourlyFindUniqueOrThrowArgs} args - Arguments to find a GameLogHourly
+     * @example
+     * // Get one GameLogHourly
+     * const gameLogHourly = await prisma.gameLogHourly.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GameLogHourlyFindUniqueOrThrowArgs>(args: SelectSubset<T, GameLogHourlyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GameLogHourlyClient<$Result.GetResult<Prisma.$GameLogHourlyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GameLogHourly that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogHourlyFindFirstArgs} args - Arguments to find a GameLogHourly
+     * @example
+     * // Get one GameLogHourly
+     * const gameLogHourly = await prisma.gameLogHourly.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GameLogHourlyFindFirstArgs>(args?: SelectSubset<T, GameLogHourlyFindFirstArgs<ExtArgs>>): Prisma__GameLogHourlyClient<$Result.GetResult<Prisma.$GameLogHourlyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GameLogHourly that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogHourlyFindFirstOrThrowArgs} args - Arguments to find a GameLogHourly
+     * @example
+     * // Get one GameLogHourly
+     * const gameLogHourly = await prisma.gameLogHourly.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GameLogHourlyFindFirstOrThrowArgs>(args?: SelectSubset<T, GameLogHourlyFindFirstOrThrowArgs<ExtArgs>>): Prisma__GameLogHourlyClient<$Result.GetResult<Prisma.$GameLogHourlyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GameLogHourlies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogHourlyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GameLogHourlies
+     * const gameLogHourlies = await prisma.gameLogHourly.findMany()
+     * 
+     * // Get first 10 GameLogHourlies
+     * const gameLogHourlies = await prisma.gameLogHourly.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const gameLogHourlyWithIdOnly = await prisma.gameLogHourly.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GameLogHourlyFindManyArgs>(args?: SelectSubset<T, GameLogHourlyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogHourlyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GameLogHourly.
+     * @param {GameLogHourlyCreateArgs} args - Arguments to create a GameLogHourly.
+     * @example
+     * // Create one GameLogHourly
+     * const GameLogHourly = await prisma.gameLogHourly.create({
+     *   data: {
+     *     // ... data to create a GameLogHourly
+     *   }
+     * })
+     * 
+     */
+    create<T extends GameLogHourlyCreateArgs>(args: SelectSubset<T, GameLogHourlyCreateArgs<ExtArgs>>): Prisma__GameLogHourlyClient<$Result.GetResult<Prisma.$GameLogHourlyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GameLogHourlies.
+     * @param {GameLogHourlyCreateManyArgs} args - Arguments to create many GameLogHourlies.
+     * @example
+     * // Create many GameLogHourlies
+     * const gameLogHourly = await prisma.gameLogHourly.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GameLogHourlyCreateManyArgs>(args?: SelectSubset<T, GameLogHourlyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GameLogHourlies and returns the data saved in the database.
+     * @param {GameLogHourlyCreateManyAndReturnArgs} args - Arguments to create many GameLogHourlies.
+     * @example
+     * // Create many GameLogHourlies
+     * const gameLogHourly = await prisma.gameLogHourly.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GameLogHourlies and only return the `id`
+     * const gameLogHourlyWithIdOnly = await prisma.gameLogHourly.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GameLogHourlyCreateManyAndReturnArgs>(args?: SelectSubset<T, GameLogHourlyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogHourlyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GameLogHourly.
+     * @param {GameLogHourlyDeleteArgs} args - Arguments to delete one GameLogHourly.
+     * @example
+     * // Delete one GameLogHourly
+     * const GameLogHourly = await prisma.gameLogHourly.delete({
+     *   where: {
+     *     // ... filter to delete one GameLogHourly
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GameLogHourlyDeleteArgs>(args: SelectSubset<T, GameLogHourlyDeleteArgs<ExtArgs>>): Prisma__GameLogHourlyClient<$Result.GetResult<Prisma.$GameLogHourlyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GameLogHourly.
+     * @param {GameLogHourlyUpdateArgs} args - Arguments to update one GameLogHourly.
+     * @example
+     * // Update one GameLogHourly
+     * const gameLogHourly = await prisma.gameLogHourly.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GameLogHourlyUpdateArgs>(args: SelectSubset<T, GameLogHourlyUpdateArgs<ExtArgs>>): Prisma__GameLogHourlyClient<$Result.GetResult<Prisma.$GameLogHourlyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GameLogHourlies.
+     * @param {GameLogHourlyDeleteManyArgs} args - Arguments to filter GameLogHourlies to delete.
+     * @example
+     * // Delete a few GameLogHourlies
+     * const { count } = await prisma.gameLogHourly.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GameLogHourlyDeleteManyArgs>(args?: SelectSubset<T, GameLogHourlyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GameLogHourlies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogHourlyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GameLogHourlies
+     * const gameLogHourly = await prisma.gameLogHourly.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GameLogHourlyUpdateManyArgs>(args: SelectSubset<T, GameLogHourlyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GameLogHourlies and returns the data updated in the database.
+     * @param {GameLogHourlyUpdateManyAndReturnArgs} args - Arguments to update many GameLogHourlies.
+     * @example
+     * // Update many GameLogHourlies
+     * const gameLogHourly = await prisma.gameLogHourly.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GameLogHourlies and only return the `id`
+     * const gameLogHourlyWithIdOnly = await prisma.gameLogHourly.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GameLogHourlyUpdateManyAndReturnArgs>(args: SelectSubset<T, GameLogHourlyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogHourlyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GameLogHourly.
+     * @param {GameLogHourlyUpsertArgs} args - Arguments to update or create a GameLogHourly.
+     * @example
+     * // Update or create a GameLogHourly
+     * const gameLogHourly = await prisma.gameLogHourly.upsert({
+     *   create: {
+     *     // ... data to create a GameLogHourly
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GameLogHourly we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GameLogHourlyUpsertArgs>(args: SelectSubset<T, GameLogHourlyUpsertArgs<ExtArgs>>): Prisma__GameLogHourlyClient<$Result.GetResult<Prisma.$GameLogHourlyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GameLogHourlies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogHourlyCountArgs} args - Arguments to filter GameLogHourlies to count.
+     * @example
+     * // Count the number of GameLogHourlies
+     * const count = await prisma.gameLogHourly.count({
+     *   where: {
+     *     // ... the filter for the GameLogHourlies we want to count
+     *   }
+     * })
+    **/
+    count<T extends GameLogHourlyCountArgs>(
+      args?: Subset<T, GameLogHourlyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GameLogHourlyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GameLogHourly.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogHourlyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GameLogHourlyAggregateArgs>(args: Subset<T, GameLogHourlyAggregateArgs>): Prisma.PrismaPromise<GetGameLogHourlyAggregateType<T>>
+
+    /**
+     * Group by GameLogHourly.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogHourlyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GameLogHourlyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GameLogHourlyGroupByArgs['orderBy'] }
+        : { orderBy?: GameLogHourlyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GameLogHourlyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGameLogHourlyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GameLogHourly model
+   */
+  readonly fields: GameLogHourlyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GameLogHourly.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GameLogHourlyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GameLogHourly model
+   */
+  interface GameLogHourlyFieldRefs {
+    readonly id: FieldRef<"GameLogHourly", 'BigInt'>
+    readonly type: FieldRef<"GameLogHourly", 'GameLogType'>
+    readonly bucketAt: FieldRef<"GameLogHourly", 'DateTime'>
+    readonly total: FieldRef<"GameLogHourly", 'Int'>
+    readonly createdAt: FieldRef<"GameLogHourly", 'DateTime'>
+    readonly updatedAt: FieldRef<"GameLogHourly", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GameLogHourly findUnique
+   */
+  export type GameLogHourlyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+    /**
+     * Filter, which GameLogHourly to fetch.
+     */
+    where: GameLogHourlyWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogHourly findUniqueOrThrow
+   */
+  export type GameLogHourlyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+    /**
+     * Filter, which GameLogHourly to fetch.
+     */
+    where: GameLogHourlyWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogHourly findFirst
+   */
+  export type GameLogHourlyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+    /**
+     * Filter, which GameLogHourly to fetch.
+     */
+    where?: GameLogHourlyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogHourlies to fetch.
+     */
+    orderBy?: GameLogHourlyOrderByWithRelationInput | GameLogHourlyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GameLogHourlies.
+     */
+    cursor?: GameLogHourlyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogHourlies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogHourlies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GameLogHourlies.
+     */
+    distinct?: GameLogHourlyScalarFieldEnum | GameLogHourlyScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogHourly findFirstOrThrow
+   */
+  export type GameLogHourlyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+    /**
+     * Filter, which GameLogHourly to fetch.
+     */
+    where?: GameLogHourlyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogHourlies to fetch.
+     */
+    orderBy?: GameLogHourlyOrderByWithRelationInput | GameLogHourlyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GameLogHourlies.
+     */
+    cursor?: GameLogHourlyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogHourlies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogHourlies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GameLogHourlies.
+     */
+    distinct?: GameLogHourlyScalarFieldEnum | GameLogHourlyScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogHourly findMany
+   */
+  export type GameLogHourlyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+    /**
+     * Filter, which GameLogHourlies to fetch.
+     */
+    where?: GameLogHourlyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogHourlies to fetch.
+     */
+    orderBy?: GameLogHourlyOrderByWithRelationInput | GameLogHourlyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GameLogHourlies.
+     */
+    cursor?: GameLogHourlyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogHourlies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogHourlies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GameLogHourlies.
+     */
+    distinct?: GameLogHourlyScalarFieldEnum | GameLogHourlyScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogHourly create
+   */
+  export type GameLogHourlyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+    /**
+     * The data needed to create a GameLogHourly.
+     */
+    data: XOR<GameLogHourlyCreateInput, GameLogHourlyUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogHourly createMany
+   */
+  export type GameLogHourlyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GameLogHourlies.
+     */
+    data: GameLogHourlyCreateManyInput | GameLogHourlyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GameLogHourly createManyAndReturn
+   */
+  export type GameLogHourlyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+    /**
+     * The data used to create many GameLogHourlies.
+     */
+    data: GameLogHourlyCreateManyInput | GameLogHourlyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GameLogHourly update
+   */
+  export type GameLogHourlyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+    /**
+     * The data needed to update a GameLogHourly.
+     */
+    data: XOR<GameLogHourlyUpdateInput, GameLogHourlyUncheckedUpdateInput>
+    /**
+     * Choose, which GameLogHourly to update.
+     */
+    where: GameLogHourlyWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogHourly updateMany
+   */
+  export type GameLogHourlyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GameLogHourlies.
+     */
+    data: XOR<GameLogHourlyUpdateManyMutationInput, GameLogHourlyUncheckedUpdateManyInput>
+    /**
+     * Filter which GameLogHourlies to update
+     */
+    where?: GameLogHourlyWhereInput
+    /**
+     * Limit how many GameLogHourlies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GameLogHourly updateManyAndReturn
+   */
+  export type GameLogHourlyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+    /**
+     * The data used to update GameLogHourlies.
+     */
+    data: XOR<GameLogHourlyUpdateManyMutationInput, GameLogHourlyUncheckedUpdateManyInput>
+    /**
+     * Filter which GameLogHourlies to update
+     */
+    where?: GameLogHourlyWhereInput
+    /**
+     * Limit how many GameLogHourlies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GameLogHourly upsert
+   */
+  export type GameLogHourlyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+    /**
+     * The filter to search for the GameLogHourly to update in case it exists.
+     */
+    where: GameLogHourlyWhereUniqueInput
+    /**
+     * In case the GameLogHourly found by the `where` argument doesn't exist, create a new GameLogHourly with this data.
+     */
+    create: XOR<GameLogHourlyCreateInput, GameLogHourlyUncheckedCreateInput>
+    /**
+     * In case the GameLogHourly was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GameLogHourlyUpdateInput, GameLogHourlyUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogHourly delete
+   */
+  export type GameLogHourlyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+    /**
+     * Filter which GameLogHourly to delete.
+     */
+    where: GameLogHourlyWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogHourly deleteMany
+   */
+  export type GameLogHourlyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GameLogHourlies to delete
+     */
+    where?: GameLogHourlyWhereInput
+    /**
+     * Limit how many GameLogHourlies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GameLogHourly without action
+   */
+  export type GameLogHourlyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogHourly
+     */
+    select?: GameLogHourlySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogHourly
+     */
+    omit?: GameLogHourlyOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model GameLogDaily
+   */
+
+  export type AggregateGameLogDaily = {
+    _count: GameLogDailyCountAggregateOutputType | null
+    _avg: GameLogDailyAvgAggregateOutputType | null
+    _sum: GameLogDailySumAggregateOutputType | null
+    _min: GameLogDailyMinAggregateOutputType | null
+    _max: GameLogDailyMaxAggregateOutputType | null
+  }
+
+  export type GameLogDailyAvgAggregateOutputType = {
+    id: number | null
+    total: number | null
+  }
+
+  export type GameLogDailySumAggregateOutputType = {
+    id: bigint | null
+    total: number | null
+  }
+
+  export type GameLogDailyMinAggregateOutputType = {
+    id: bigint | null
+    type: $Enums.GameLogType | null
+    day: Date | null
+    total: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GameLogDailyMaxAggregateOutputType = {
+    id: bigint | null
+    type: $Enums.GameLogType | null
+    day: Date | null
+    total: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type GameLogDailyCountAggregateOutputType = {
+    id: number
+    type: number
+    day: number
+    total: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type GameLogDailyAvgAggregateInputType = {
+    id?: true
+    total?: true
+  }
+
+  export type GameLogDailySumAggregateInputType = {
+    id?: true
+    total?: true
+  }
+
+  export type GameLogDailyMinAggregateInputType = {
+    id?: true
+    type?: true
+    day?: true
+    total?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GameLogDailyMaxAggregateInputType = {
+    id?: true
+    type?: true
+    day?: true
+    total?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type GameLogDailyCountAggregateInputType = {
+    id?: true
+    type?: true
+    day?: true
+    total?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type GameLogDailyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GameLogDaily to aggregate.
+     */
+    where?: GameLogDailyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogDailies to fetch.
+     */
+    orderBy?: GameLogDailyOrderByWithRelationInput | GameLogDailyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GameLogDailyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogDailies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogDailies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GameLogDailies
+    **/
+    _count?: true | GameLogDailyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: GameLogDailyAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: GameLogDailySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GameLogDailyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GameLogDailyMaxAggregateInputType
+  }
+
+  export type GetGameLogDailyAggregateType<T extends GameLogDailyAggregateArgs> = {
+        [P in keyof T & keyof AggregateGameLogDaily]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGameLogDaily[P]>
+      : GetScalarType<T[P], AggregateGameLogDaily[P]>
+  }
+
+
+
+
+  export type GameLogDailyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GameLogDailyWhereInput
+    orderBy?: GameLogDailyOrderByWithAggregationInput | GameLogDailyOrderByWithAggregationInput[]
+    by: GameLogDailyScalarFieldEnum[] | GameLogDailyScalarFieldEnum
+    having?: GameLogDailyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GameLogDailyCountAggregateInputType | true
+    _avg?: GameLogDailyAvgAggregateInputType
+    _sum?: GameLogDailySumAggregateInputType
+    _min?: GameLogDailyMinAggregateInputType
+    _max?: GameLogDailyMaxAggregateInputType
+  }
+
+  export type GameLogDailyGroupByOutputType = {
+    id: bigint
+    type: $Enums.GameLogType
+    day: Date
+    total: number
+    createdAt: Date
+    updatedAt: Date
+    _count: GameLogDailyCountAggregateOutputType | null
+    _avg: GameLogDailyAvgAggregateOutputType | null
+    _sum: GameLogDailySumAggregateOutputType | null
+    _min: GameLogDailyMinAggregateOutputType | null
+    _max: GameLogDailyMaxAggregateOutputType | null
+  }
+
+  type GetGameLogDailyGroupByPayload<T extends GameLogDailyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GameLogDailyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GameLogDailyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GameLogDailyGroupByOutputType[P]>
+            : GetScalarType<T[P], GameLogDailyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GameLogDailySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    day?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["gameLogDaily"]>
+
+  export type GameLogDailySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    day?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["gameLogDaily"]>
+
+  export type GameLogDailySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    day?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["gameLogDaily"]>
+
+  export type GameLogDailySelectScalar = {
+    id?: boolean
+    type?: boolean
+    day?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type GameLogDailyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "day" | "total" | "createdAt" | "updatedAt", ExtArgs["result"]["gameLogDaily"]>
+
+  export type $GameLogDailyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GameLogDaily"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: bigint
+      type: $Enums.GameLogType
+      day: Date
+      total: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["gameLogDaily"]>
+    composites: {}
+  }
+
+  type GameLogDailyGetPayload<S extends boolean | null | undefined | GameLogDailyDefaultArgs> = $Result.GetResult<Prisma.$GameLogDailyPayload, S>
+
+  type GameLogDailyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GameLogDailyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: GameLogDailyCountAggregateInputType | true
+    }
+
+  export interface GameLogDailyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GameLogDaily'], meta: { name: 'GameLogDaily' } }
+    /**
+     * Find zero or one GameLogDaily that matches the filter.
+     * @param {GameLogDailyFindUniqueArgs} args - Arguments to find a GameLogDaily
+     * @example
+     * // Get one GameLogDaily
+     * const gameLogDaily = await prisma.gameLogDaily.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GameLogDailyFindUniqueArgs>(args: SelectSubset<T, GameLogDailyFindUniqueArgs<ExtArgs>>): Prisma__GameLogDailyClient<$Result.GetResult<Prisma.$GameLogDailyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GameLogDaily that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GameLogDailyFindUniqueOrThrowArgs} args - Arguments to find a GameLogDaily
+     * @example
+     * // Get one GameLogDaily
+     * const gameLogDaily = await prisma.gameLogDaily.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GameLogDailyFindUniqueOrThrowArgs>(args: SelectSubset<T, GameLogDailyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GameLogDailyClient<$Result.GetResult<Prisma.$GameLogDailyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GameLogDaily that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogDailyFindFirstArgs} args - Arguments to find a GameLogDaily
+     * @example
+     * // Get one GameLogDaily
+     * const gameLogDaily = await prisma.gameLogDaily.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GameLogDailyFindFirstArgs>(args?: SelectSubset<T, GameLogDailyFindFirstArgs<ExtArgs>>): Prisma__GameLogDailyClient<$Result.GetResult<Prisma.$GameLogDailyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GameLogDaily that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogDailyFindFirstOrThrowArgs} args - Arguments to find a GameLogDaily
+     * @example
+     * // Get one GameLogDaily
+     * const gameLogDaily = await prisma.gameLogDaily.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GameLogDailyFindFirstOrThrowArgs>(args?: SelectSubset<T, GameLogDailyFindFirstOrThrowArgs<ExtArgs>>): Prisma__GameLogDailyClient<$Result.GetResult<Prisma.$GameLogDailyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GameLogDailies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogDailyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GameLogDailies
+     * const gameLogDailies = await prisma.gameLogDaily.findMany()
+     * 
+     * // Get first 10 GameLogDailies
+     * const gameLogDailies = await prisma.gameLogDaily.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const gameLogDailyWithIdOnly = await prisma.gameLogDaily.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GameLogDailyFindManyArgs>(args?: SelectSubset<T, GameLogDailyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogDailyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GameLogDaily.
+     * @param {GameLogDailyCreateArgs} args - Arguments to create a GameLogDaily.
+     * @example
+     * // Create one GameLogDaily
+     * const GameLogDaily = await prisma.gameLogDaily.create({
+     *   data: {
+     *     // ... data to create a GameLogDaily
+     *   }
+     * })
+     * 
+     */
+    create<T extends GameLogDailyCreateArgs>(args: SelectSubset<T, GameLogDailyCreateArgs<ExtArgs>>): Prisma__GameLogDailyClient<$Result.GetResult<Prisma.$GameLogDailyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GameLogDailies.
+     * @param {GameLogDailyCreateManyArgs} args - Arguments to create many GameLogDailies.
+     * @example
+     * // Create many GameLogDailies
+     * const gameLogDaily = await prisma.gameLogDaily.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GameLogDailyCreateManyArgs>(args?: SelectSubset<T, GameLogDailyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GameLogDailies and returns the data saved in the database.
+     * @param {GameLogDailyCreateManyAndReturnArgs} args - Arguments to create many GameLogDailies.
+     * @example
+     * // Create many GameLogDailies
+     * const gameLogDaily = await prisma.gameLogDaily.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GameLogDailies and only return the `id`
+     * const gameLogDailyWithIdOnly = await prisma.gameLogDaily.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GameLogDailyCreateManyAndReturnArgs>(args?: SelectSubset<T, GameLogDailyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogDailyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GameLogDaily.
+     * @param {GameLogDailyDeleteArgs} args - Arguments to delete one GameLogDaily.
+     * @example
+     * // Delete one GameLogDaily
+     * const GameLogDaily = await prisma.gameLogDaily.delete({
+     *   where: {
+     *     // ... filter to delete one GameLogDaily
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GameLogDailyDeleteArgs>(args: SelectSubset<T, GameLogDailyDeleteArgs<ExtArgs>>): Prisma__GameLogDailyClient<$Result.GetResult<Prisma.$GameLogDailyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GameLogDaily.
+     * @param {GameLogDailyUpdateArgs} args - Arguments to update one GameLogDaily.
+     * @example
+     * // Update one GameLogDaily
+     * const gameLogDaily = await prisma.gameLogDaily.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GameLogDailyUpdateArgs>(args: SelectSubset<T, GameLogDailyUpdateArgs<ExtArgs>>): Prisma__GameLogDailyClient<$Result.GetResult<Prisma.$GameLogDailyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GameLogDailies.
+     * @param {GameLogDailyDeleteManyArgs} args - Arguments to filter GameLogDailies to delete.
+     * @example
+     * // Delete a few GameLogDailies
+     * const { count } = await prisma.gameLogDaily.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GameLogDailyDeleteManyArgs>(args?: SelectSubset<T, GameLogDailyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GameLogDailies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogDailyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GameLogDailies
+     * const gameLogDaily = await prisma.gameLogDaily.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GameLogDailyUpdateManyArgs>(args: SelectSubset<T, GameLogDailyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GameLogDailies and returns the data updated in the database.
+     * @param {GameLogDailyUpdateManyAndReturnArgs} args - Arguments to update many GameLogDailies.
+     * @example
+     * // Update many GameLogDailies
+     * const gameLogDaily = await prisma.gameLogDaily.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GameLogDailies and only return the `id`
+     * const gameLogDailyWithIdOnly = await prisma.gameLogDaily.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GameLogDailyUpdateManyAndReturnArgs>(args: SelectSubset<T, GameLogDailyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogDailyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GameLogDaily.
+     * @param {GameLogDailyUpsertArgs} args - Arguments to update or create a GameLogDaily.
+     * @example
+     * // Update or create a GameLogDaily
+     * const gameLogDaily = await prisma.gameLogDaily.upsert({
+     *   create: {
+     *     // ... data to create a GameLogDaily
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GameLogDaily we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GameLogDailyUpsertArgs>(args: SelectSubset<T, GameLogDailyUpsertArgs<ExtArgs>>): Prisma__GameLogDailyClient<$Result.GetResult<Prisma.$GameLogDailyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GameLogDailies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogDailyCountArgs} args - Arguments to filter GameLogDailies to count.
+     * @example
+     * // Count the number of GameLogDailies
+     * const count = await prisma.gameLogDaily.count({
+     *   where: {
+     *     // ... the filter for the GameLogDailies we want to count
+     *   }
+     * })
+    **/
+    count<T extends GameLogDailyCountArgs>(
+      args?: Subset<T, GameLogDailyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GameLogDailyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GameLogDaily.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogDailyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GameLogDailyAggregateArgs>(args: Subset<T, GameLogDailyAggregateArgs>): Prisma.PrismaPromise<GetGameLogDailyAggregateType<T>>
+
+    /**
+     * Group by GameLogDaily.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GameLogDailyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GameLogDailyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GameLogDailyGroupByArgs['orderBy'] }
+        : { orderBy?: GameLogDailyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GameLogDailyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGameLogDailyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GameLogDaily model
+   */
+  readonly fields: GameLogDailyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GameLogDaily.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GameLogDailyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GameLogDaily model
+   */
+  interface GameLogDailyFieldRefs {
+    readonly id: FieldRef<"GameLogDaily", 'BigInt'>
+    readonly type: FieldRef<"GameLogDaily", 'GameLogType'>
+    readonly day: FieldRef<"GameLogDaily", 'DateTime'>
+    readonly total: FieldRef<"GameLogDaily", 'Int'>
+    readonly createdAt: FieldRef<"GameLogDaily", 'DateTime'>
+    readonly updatedAt: FieldRef<"GameLogDaily", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GameLogDaily findUnique
+   */
+  export type GameLogDailyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
+    /**
+     * Filter, which GameLogDaily to fetch.
+     */
+    where: GameLogDailyWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogDaily findUniqueOrThrow
+   */
+  export type GameLogDailyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
+    /**
+     * Filter, which GameLogDaily to fetch.
+     */
+    where: GameLogDailyWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogDaily findFirst
+   */
+  export type GameLogDailyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
+    /**
+     * Filter, which GameLogDaily to fetch.
+     */
+    where?: GameLogDailyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogDailies to fetch.
+     */
+    orderBy?: GameLogDailyOrderByWithRelationInput | GameLogDailyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GameLogDailies.
+     */
+    cursor?: GameLogDailyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogDailies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogDailies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GameLogDailies.
+     */
+    distinct?: GameLogDailyScalarFieldEnum | GameLogDailyScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogDaily findFirstOrThrow
+   */
+  export type GameLogDailyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
+    /**
+     * Filter, which GameLogDaily to fetch.
+     */
+    where?: GameLogDailyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogDailies to fetch.
+     */
+    orderBy?: GameLogDailyOrderByWithRelationInput | GameLogDailyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GameLogDailies.
+     */
+    cursor?: GameLogDailyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogDailies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogDailies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GameLogDailies.
+     */
+    distinct?: GameLogDailyScalarFieldEnum | GameLogDailyScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogDaily findMany
+   */
+  export type GameLogDailyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
+    /**
+     * Filter, which GameLogDailies to fetch.
+     */
+    where?: GameLogDailyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GameLogDailies to fetch.
+     */
+    orderBy?: GameLogDailyOrderByWithRelationInput | GameLogDailyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GameLogDailies.
+     */
+    cursor?: GameLogDailyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GameLogDailies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GameLogDailies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GameLogDailies.
+     */
+    distinct?: GameLogDailyScalarFieldEnum | GameLogDailyScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogDaily create
+   */
+  export type GameLogDailyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
+    /**
+     * The data needed to create a GameLogDaily.
+     */
+    data: XOR<GameLogDailyCreateInput, GameLogDailyUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogDaily createMany
+   */
+  export type GameLogDailyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GameLogDailies.
+     */
+    data: GameLogDailyCreateManyInput | GameLogDailyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GameLogDaily createManyAndReturn
+   */
+  export type GameLogDailyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
+    /**
+     * The data used to create many GameLogDailies.
+     */
+    data: GameLogDailyCreateManyInput | GameLogDailyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GameLogDaily update
+   */
+  export type GameLogDailyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
+    /**
+     * The data needed to update a GameLogDaily.
+     */
+    data: XOR<GameLogDailyUpdateInput, GameLogDailyUncheckedUpdateInput>
+    /**
+     * Choose, which GameLogDaily to update.
+     */
+    where: GameLogDailyWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogDaily updateMany
+   */
+  export type GameLogDailyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GameLogDailies.
+     */
+    data: XOR<GameLogDailyUpdateManyMutationInput, GameLogDailyUncheckedUpdateManyInput>
+    /**
+     * Filter which GameLogDailies to update
+     */
+    where?: GameLogDailyWhereInput
+    /**
+     * Limit how many GameLogDailies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GameLogDaily updateManyAndReturn
+   */
+  export type GameLogDailyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
+    /**
+     * The data used to update GameLogDailies.
+     */
+    data: XOR<GameLogDailyUpdateManyMutationInput, GameLogDailyUncheckedUpdateManyInput>
+    /**
+     * Filter which GameLogDailies to update
+     */
+    where?: GameLogDailyWhereInput
+    /**
+     * Limit how many GameLogDailies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GameLogDaily upsert
+   */
+  export type GameLogDailyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
+    /**
+     * The filter to search for the GameLogDaily to update in case it exists.
+     */
+    where: GameLogDailyWhereUniqueInput
+    /**
+     * In case the GameLogDaily found by the `where` argument doesn't exist, create a new GameLogDaily with this data.
+     */
+    create: XOR<GameLogDailyCreateInput, GameLogDailyUncheckedCreateInput>
+    /**
+     * In case the GameLogDaily was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GameLogDailyUpdateInput, GameLogDailyUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogDaily delete
+   */
+  export type GameLogDailyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
+    /**
+     * Filter which GameLogDaily to delete.
+     */
+    where: GameLogDailyWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * GameLogDaily deleteMany
+   */
+  export type GameLogDailyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GameLogDailies to delete
+     */
+    where?: GameLogDailyWhereInput
+    /**
+     * Limit how many GameLogDailies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GameLogDaily without action
+   */
+  export type GameLogDailyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLogDaily
+     */
+    select?: GameLogDailySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLogDaily
+     */
+    omit?: GameLogDailyOmit<ExtArgs> | null
   }
 
 
@@ -32979,6 +36765,8 @@ export namespace Prisma {
     createdConversations?: boolean | User$createdConversationsArgs<ExtArgs>
     conversationLinks?: boolean | User$conversationLinksArgs<ExtArgs>
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
+    logs?: boolean | User$logsArgs<ExtArgs>
+    actedLogs?: boolean | User$actedLogsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -33059,6 +36847,8 @@ export namespace Prisma {
     createdConversations?: boolean | User$createdConversationsArgs<ExtArgs>
     conversationLinks?: boolean | User$conversationLinksArgs<ExtArgs>
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
+    logs?: boolean | User$logsArgs<ExtArgs>
+    actedLogs?: boolean | User$actedLogsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -33085,6 +36875,8 @@ export namespace Prisma {
       createdConversations: Prisma.$ConversationPayload<ExtArgs>[]
       conversationLinks: Prisma.$ParticipantPayload<ExtArgs>[]
       sentMessages: Prisma.$MessagePayload<ExtArgs>[]
+      logs: Prisma.$GameLogPayload<ExtArgs>[]
+      actedLogs: Prisma.$GameLogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -33515,6 +37307,8 @@ export namespace Prisma {
     createdConversations<T extends User$createdConversationsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     conversationLinks<T extends User$conversationLinksArgs<ExtArgs> = {}>(args?: Subset<T, User$conversationLinksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sentMessages<T extends User$sentMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    logs<T extends User$logsArgs<ExtArgs> = {}>(args?: Subset<T, User$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    actedLogs<T extends User$actedLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$actedLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -34381,6 +38175,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
+  }
+
+  /**
+   * User.logs
+   */
+  export type User$logsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    where?: GameLogWhereInput
+    orderBy?: GameLogOrderByWithRelationInput | GameLogOrderByWithRelationInput[]
+    cursor?: GameLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GameLogScalarFieldEnum | GameLogScalarFieldEnum[]
+  }
+
+  /**
+   * User.actedLogs
+   */
+  export type User$actedLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameLog
+     */
+    select?: GameLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameLog
+     */
+    omit?: GameLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameLogInclude<ExtArgs> | null
+    where?: GameLogWhereInput
+    orderBy?: GameLogOrderByWithRelationInput | GameLogOrderByWithRelationInput[]
+    cursor?: GameLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GameLogScalarFieldEnum | GameLogScalarFieldEnum[]
   }
 
   /**
@@ -48225,6 +52067,48 @@ export namespace Prisma {
   export type ForcebrutTournamentOpponentScalarFieldEnum = (typeof ForcebrutTournamentOpponentScalarFieldEnum)[keyof typeof ForcebrutTournamentOpponentScalarFieldEnum]
 
 
+  export const GameLogScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    retention: 'retention',
+    values: 'values',
+    metadata: 'metadata',
+    userId: 'userId',
+    dinozId: 'dinozId',
+    actorUserId: 'actorUserId',
+    userNameSnapshot: 'userNameSnapshot',
+    dinozNameSnapshot: 'dinozNameSnapshot',
+    actorNameSnapshot: 'actorNameSnapshot',
+    createdAt: 'createdAt'
+  };
+
+  export type GameLogScalarFieldEnum = (typeof GameLogScalarFieldEnum)[keyof typeof GameLogScalarFieldEnum]
+
+
+  export const GameLogHourlyScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    bucketAt: 'bucketAt',
+    total: 'total',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type GameLogHourlyScalarFieldEnum = (typeof GameLogHourlyScalarFieldEnum)[keyof typeof GameLogHourlyScalarFieldEnum]
+
+
+  export const GameLogDailyScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    day: 'day',
+    total: 'total',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type GameLogDailyScalarFieldEnum = (typeof GameLogDailyScalarFieldEnum)[keyof typeof GameLogDailyScalarFieldEnum]
+
+
   export const JobDefinitionScalarFieldEnum: {
     id: 'id',
     key: 'key',
@@ -48716,6 +52600,48 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'BigInt'
+   */
+  export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
+    
+
+
+  /**
+   * Reference to a field of type 'BigInt[]'
+   */
+  export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'GameLogType'
+   */
+  export type EnumGameLogTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GameLogType'>
+    
+
+
+  /**
+   * Reference to a field of type 'GameLogType[]'
+   */
+  export type ListEnumGameLogTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GameLogType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'GameLogRetention'
+   */
+  export type EnumGameLogRetentionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GameLogRetention'>
+    
+
+
+  /**
+   * Reference to a field of type 'GameLogRetention[]'
+   */
+  export type ListEnumGameLogRetentionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GameLogRetention[]'>
+    
+
+
+  /**
    * Reference to a field of type 'JobType'
    */
   export type EnumJobTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobType'>
@@ -48915,6 +52841,7 @@ export namespace Prisma {
     missions?: DinozMissionsListRelationFilter
     marketOffers?: OfferListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    logs?: GameLogListRelationFilter
   }
 
   export type DinozOrderByWithRelationInput = {
@@ -48957,6 +52884,7 @@ export namespace Prisma {
     missions?: DinozMissionsOrderByRelationAggregateInput
     marketOffers?: OfferOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
+    logs?: GameLogOrderByRelationAggregateInput
   }
 
   export type DinozWhereUniqueInput = Prisma.AtLeast<{
@@ -49002,6 +52930,7 @@ export namespace Prisma {
     missions?: DinozMissionsListRelationFilter
     marketOffers?: OfferListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    logs?: GameLogListRelationFilter
   }, "id">
 
   export type DinozOrderByWithAggregationInput = {
@@ -49518,6 +53447,224 @@ export namespace Prisma {
     enabled?: BoolWithAggregatesFilter<"ForcebrutTournamentOpponent"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"ForcebrutTournamentOpponent"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ForcebrutTournamentOpponent"> | Date | string
+  }
+
+  export type GameLogWhereInput = {
+    AND?: GameLogWhereInput | GameLogWhereInput[]
+    OR?: GameLogWhereInput[]
+    NOT?: GameLogWhereInput | GameLogWhereInput[]
+    id?: BigIntFilter<"GameLog"> | bigint | number
+    type?: EnumGameLogTypeFilter<"GameLog"> | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFilter<"GameLog"> | $Enums.GameLogRetention
+    values?: StringNullableListFilter<"GameLog">
+    metadata?: JsonNullableFilter<"GameLog">
+    userId?: UuidNullableFilter<"GameLog"> | string | null
+    dinozId?: IntNullableFilter<"GameLog"> | number | null
+    actorUserId?: UuidNullableFilter<"GameLog"> | string | null
+    userNameSnapshot?: StringNullableFilter<"GameLog"> | string | null
+    dinozNameSnapshot?: StringNullableFilter<"GameLog"> | string | null
+    actorNameSnapshot?: StringNullableFilter<"GameLog"> | string | null
+    createdAt?: DateTimeFilter<"GameLog"> | Date | string
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    actorUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type GameLogOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    retention?: SortOrder
+    values?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    actorUserId?: SortOrderInput | SortOrder
+    userNameSnapshot?: SortOrderInput | SortOrder
+    dinozNameSnapshot?: SortOrderInput | SortOrder
+    actorNameSnapshot?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    dinoz?: DinozOrderByWithRelationInput
+    actorUser?: UserOrderByWithRelationInput
+  }
+
+  export type GameLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    AND?: GameLogWhereInput | GameLogWhereInput[]
+    OR?: GameLogWhereInput[]
+    NOT?: GameLogWhereInput | GameLogWhereInput[]
+    type?: EnumGameLogTypeFilter<"GameLog"> | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFilter<"GameLog"> | $Enums.GameLogRetention
+    values?: StringNullableListFilter<"GameLog">
+    metadata?: JsonNullableFilter<"GameLog">
+    userId?: UuidNullableFilter<"GameLog"> | string | null
+    dinozId?: IntNullableFilter<"GameLog"> | number | null
+    actorUserId?: UuidNullableFilter<"GameLog"> | string | null
+    userNameSnapshot?: StringNullableFilter<"GameLog"> | string | null
+    dinozNameSnapshot?: StringNullableFilter<"GameLog"> | string | null
+    actorNameSnapshot?: StringNullableFilter<"GameLog"> | string | null
+    createdAt?: DateTimeFilter<"GameLog"> | Date | string
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    actorUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type GameLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    retention?: SortOrder
+    values?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    actorUserId?: SortOrderInput | SortOrder
+    userNameSnapshot?: SortOrderInput | SortOrder
+    dinozNameSnapshot?: SortOrderInput | SortOrder
+    actorNameSnapshot?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: GameLogCountOrderByAggregateInput
+    _avg?: GameLogAvgOrderByAggregateInput
+    _max?: GameLogMaxOrderByAggregateInput
+    _min?: GameLogMinOrderByAggregateInput
+    _sum?: GameLogSumOrderByAggregateInput
+  }
+
+  export type GameLogScalarWhereWithAggregatesInput = {
+    AND?: GameLogScalarWhereWithAggregatesInput | GameLogScalarWhereWithAggregatesInput[]
+    OR?: GameLogScalarWhereWithAggregatesInput[]
+    NOT?: GameLogScalarWhereWithAggregatesInput | GameLogScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"GameLog"> | bigint | number
+    type?: EnumGameLogTypeWithAggregatesFilter<"GameLog"> | $Enums.GameLogType
+    retention?: EnumGameLogRetentionWithAggregatesFilter<"GameLog"> | $Enums.GameLogRetention
+    values?: StringNullableListFilter<"GameLog">
+    metadata?: JsonNullableWithAggregatesFilter<"GameLog">
+    userId?: UuidNullableWithAggregatesFilter<"GameLog"> | string | null
+    dinozId?: IntNullableWithAggregatesFilter<"GameLog"> | number | null
+    actorUserId?: UuidNullableWithAggregatesFilter<"GameLog"> | string | null
+    userNameSnapshot?: StringNullableWithAggregatesFilter<"GameLog"> | string | null
+    dinozNameSnapshot?: StringNullableWithAggregatesFilter<"GameLog"> | string | null
+    actorNameSnapshot?: StringNullableWithAggregatesFilter<"GameLog"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"GameLog"> | Date | string
+  }
+
+  export type GameLogHourlyWhereInput = {
+    AND?: GameLogHourlyWhereInput | GameLogHourlyWhereInput[]
+    OR?: GameLogHourlyWhereInput[]
+    NOT?: GameLogHourlyWhereInput | GameLogHourlyWhereInput[]
+    id?: BigIntFilter<"GameLogHourly"> | bigint | number
+    type?: EnumGameLogTypeFilter<"GameLogHourly"> | $Enums.GameLogType
+    bucketAt?: DateTimeFilter<"GameLogHourly"> | Date | string
+    total?: IntFilter<"GameLogHourly"> | number
+    createdAt?: DateTimeFilter<"GameLogHourly"> | Date | string
+    updatedAt?: DateTimeFilter<"GameLogHourly"> | Date | string
+  }
+
+  export type GameLogHourlyOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    bucketAt?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GameLogHourlyWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    type_bucketAt?: GameLogHourlyTypeBucketAtCompoundUniqueInput
+    AND?: GameLogHourlyWhereInput | GameLogHourlyWhereInput[]
+    OR?: GameLogHourlyWhereInput[]
+    NOT?: GameLogHourlyWhereInput | GameLogHourlyWhereInput[]
+    type?: EnumGameLogTypeFilter<"GameLogHourly"> | $Enums.GameLogType
+    bucketAt?: DateTimeFilter<"GameLogHourly"> | Date | string
+    total?: IntFilter<"GameLogHourly"> | number
+    createdAt?: DateTimeFilter<"GameLogHourly"> | Date | string
+    updatedAt?: DateTimeFilter<"GameLogHourly"> | Date | string
+  }, "id" | "type_bucketAt">
+
+  export type GameLogHourlyOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    bucketAt?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: GameLogHourlyCountOrderByAggregateInput
+    _avg?: GameLogHourlyAvgOrderByAggregateInput
+    _max?: GameLogHourlyMaxOrderByAggregateInput
+    _min?: GameLogHourlyMinOrderByAggregateInput
+    _sum?: GameLogHourlySumOrderByAggregateInput
+  }
+
+  export type GameLogHourlyScalarWhereWithAggregatesInput = {
+    AND?: GameLogHourlyScalarWhereWithAggregatesInput | GameLogHourlyScalarWhereWithAggregatesInput[]
+    OR?: GameLogHourlyScalarWhereWithAggregatesInput[]
+    NOT?: GameLogHourlyScalarWhereWithAggregatesInput | GameLogHourlyScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"GameLogHourly"> | bigint | number
+    type?: EnumGameLogTypeWithAggregatesFilter<"GameLogHourly"> | $Enums.GameLogType
+    bucketAt?: DateTimeWithAggregatesFilter<"GameLogHourly"> | Date | string
+    total?: IntWithAggregatesFilter<"GameLogHourly"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"GameLogHourly"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"GameLogHourly"> | Date | string
+  }
+
+  export type GameLogDailyWhereInput = {
+    AND?: GameLogDailyWhereInput | GameLogDailyWhereInput[]
+    OR?: GameLogDailyWhereInput[]
+    NOT?: GameLogDailyWhereInput | GameLogDailyWhereInput[]
+    id?: BigIntFilter<"GameLogDaily"> | bigint | number
+    type?: EnumGameLogTypeFilter<"GameLogDaily"> | $Enums.GameLogType
+    day?: DateTimeFilter<"GameLogDaily"> | Date | string
+    total?: IntFilter<"GameLogDaily"> | number
+    createdAt?: DateTimeFilter<"GameLogDaily"> | Date | string
+    updatedAt?: DateTimeFilter<"GameLogDaily"> | Date | string
+  }
+
+  export type GameLogDailyOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    day?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GameLogDailyWhereUniqueInput = Prisma.AtLeast<{
+    id?: bigint | number
+    type_day?: GameLogDailyTypeDayCompoundUniqueInput
+    AND?: GameLogDailyWhereInput | GameLogDailyWhereInput[]
+    OR?: GameLogDailyWhereInput[]
+    NOT?: GameLogDailyWhereInput | GameLogDailyWhereInput[]
+    type?: EnumGameLogTypeFilter<"GameLogDaily"> | $Enums.GameLogType
+    day?: DateTimeFilter<"GameLogDaily"> | Date | string
+    total?: IntFilter<"GameLogDaily"> | number
+    createdAt?: DateTimeFilter<"GameLogDaily"> | Date | string
+    updatedAt?: DateTimeFilter<"GameLogDaily"> | Date | string
+  }, "id" | "type_day">
+
+  export type GameLogDailyOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    day?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: GameLogDailyCountOrderByAggregateInput
+    _avg?: GameLogDailyAvgOrderByAggregateInput
+    _max?: GameLogDailyMaxOrderByAggregateInput
+    _min?: GameLogDailyMinOrderByAggregateInput
+    _sum?: GameLogDailySumOrderByAggregateInput
+  }
+
+  export type GameLogDailyScalarWhereWithAggregatesInput = {
+    AND?: GameLogDailyScalarWhereWithAggregatesInput | GameLogDailyScalarWhereWithAggregatesInput[]
+    OR?: GameLogDailyScalarWhereWithAggregatesInput[]
+    NOT?: GameLogDailyScalarWhereWithAggregatesInput | GameLogDailyScalarWhereWithAggregatesInput[]
+    id?: BigIntWithAggregatesFilter<"GameLogDaily"> | bigint | number
+    type?: EnumGameLogTypeWithAggregatesFilter<"GameLogDaily"> | $Enums.GameLogType
+    day?: DateTimeWithAggregatesFilter<"GameLogDaily"> | Date | string
+    total?: IntWithAggregatesFilter<"GameLogDaily"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"GameLogDaily"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"GameLogDaily"> | Date | string
   }
 
   export type JobDefinitionWhereInput = {
@@ -50638,6 +54785,8 @@ export namespace Prisma {
     createdConversations?: ConversationListRelationFilter
     conversationLinks?: ParticipantListRelationFilter
     sentMessages?: MessageListRelationFilter
+    logs?: GameLogListRelationFilter
+    actedLogs?: GameLogListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -50675,6 +54824,8 @@ export namespace Prisma {
     createdConversations?: ConversationOrderByRelationAggregateInput
     conversationLinks?: ParticipantOrderByRelationAggregateInput
     sentMessages?: MessageOrderByRelationAggregateInput
+    logs?: GameLogOrderByRelationAggregateInput
+    actedLogs?: GameLogOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -50715,6 +54866,8 @@ export namespace Prisma {
     createdConversations?: ConversationListRelationFilter
     conversationLinks?: ParticipantListRelationFilter
     sentMessages?: MessageListRelationFilter
+    logs?: GameLogListRelationFilter
+    actedLogs?: GameLogListRelationFilter
   }, "id" | "name">
 
   export type UserOrderByWithAggregationInput = {
@@ -51557,6 +55710,7 @@ export namespace Prisma {
     missions?: DinozMissionsCreateNestedManyWithoutDinozInput
     marketOffers?: OfferCreateNestedManyWithoutDinozInput
     user: UserCreateNestedOneWithoutDinozInput
+    logs?: GameLogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateInput = {
@@ -51597,6 +55751,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsUncheckedCreateNestedManyWithoutDinozInput
     marketOffers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUpdateInput = {
@@ -51636,6 +55791,7 @@ export namespace Prisma {
     missions?: DinozMissionsUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUpdateManyWithoutDinozNestedInput
     user?: UserUpdateOneRequiredWithoutDinozNestedInput
+    logs?: GameLogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateInput = {
@@ -51676,6 +55832,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUncheckedUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateManyInput = {
@@ -52195,6 +56352,234 @@ export namespace Prisma {
     nbrUpAir?: IntFieldUpdateOperationsInput | number
     skillIds?: ForcebrutTournamentOpponentUpdateskillIdsInput | number[]
     enabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogCreateInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+    user?: UserCreateNestedOneWithoutLogsInput
+    dinoz?: DinozCreateNestedOneWithoutLogsInput
+    actorUser?: UserCreateNestedOneWithoutActedLogsInput
+  }
+
+  export type GameLogUncheckedCreateInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: string | null
+    dinozId?: number | null
+    actorUserId?: string | null
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GameLogUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutLogsNestedInput
+    dinoz?: DinozUpdateOneWithoutLogsNestedInput
+    actorUser?: UserUpdateOneWithoutActedLogsNestedInput
+  }
+
+  export type GameLogUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    actorUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogCreateManyInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: string | null
+    dinozId?: number | null
+    actorUserId?: string | null
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GameLogUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    actorUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogHourlyCreateInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    bucketAt: Date | string
+    total?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GameLogHourlyUncheckedCreateInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    bucketAt: Date | string
+    total?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GameLogHourlyUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    bucketAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogHourlyUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    bucketAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogHourlyCreateManyInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    bucketAt: Date | string
+    total?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GameLogHourlyUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    bucketAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogHourlyUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    bucketAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogDailyCreateInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    day: Date | string
+    total?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GameLogDailyUncheckedCreateInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    day: Date | string
+    total?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GameLogDailyUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    day?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogDailyUncheckedUpdateInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    day?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogDailyCreateManyInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    day: Date | string
+    total?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GameLogDailyUpdateManyMutationInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    day?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogDailyUncheckedUpdateManyInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    day?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -53307,6 +57692,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -53344,6 +57731,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUpdateInput = {
@@ -53381,6 +57770,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -53418,6 +57809,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -54336,6 +58729,12 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
+  export type GameLogListRelationFilter = {
+    every?: GameLogWhereInput
+    some?: GameLogWhereInput
+    none?: GameLogWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -54370,6 +58769,10 @@ export namespace Prisma {
   }
 
   export type OfferOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GameLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -54994,18 +59397,49 @@ export namespace Prisma {
     skillIds?: SortOrder
   }
 
-  export type EnumJobTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.JobType | EnumJobTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumJobTypeFilter<$PrismaModel> | $Enums.JobType
+  export type BigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
   }
 
-  export type EnumJobStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.JobStatus | EnumJobStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumJobStatusFilter<$PrismaModel> | $Enums.JobStatus
+  export type EnumGameLogTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameLogType | EnumGameLogTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GameLogType[] | ListEnumGameLogTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameLogType[] | ListEnumGameLogTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameLogTypeFilter<$PrismaModel> | $Enums.GameLogType
+  }
+
+  export type EnumGameLogRetentionFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameLogRetention | EnumGameLogRetentionFieldRefInput<$PrismaModel>
+    in?: $Enums.GameLogRetention[] | ListEnumGameLogRetentionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameLogRetention[] | ListEnumGameLogRetentionFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameLogRetentionFilter<$PrismaModel> | $Enums.GameLogRetention
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type UuidNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -55021,6 +59455,229 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
+  export type GameLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    retention?: SortOrder
+    values?: SortOrder
+    metadata?: SortOrder
+    userId?: SortOrder
+    dinozId?: SortOrder
+    actorUserId?: SortOrder
+    userNameSnapshot?: SortOrder
+    dinozNameSnapshot?: SortOrder
+    actorNameSnapshot?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GameLogAvgOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type GameLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    retention?: SortOrder
+    userId?: SortOrder
+    dinozId?: SortOrder
+    actorUserId?: SortOrder
+    userNameSnapshot?: SortOrder
+    dinozNameSnapshot?: SortOrder
+    actorNameSnapshot?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GameLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    retention?: SortOrder
+    userId?: SortOrder
+    dinozId?: SortOrder
+    actorUserId?: SortOrder
+    userNameSnapshot?: SortOrder
+    dinozNameSnapshot?: SortOrder
+    actorNameSnapshot?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type GameLogSumOrderByAggregateInput = {
+    id?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type BigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
+  export type EnumGameLogTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameLogType | EnumGameLogTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GameLogType[] | ListEnumGameLogTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameLogType[] | ListEnumGameLogTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameLogTypeWithAggregatesFilter<$PrismaModel> | $Enums.GameLogType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGameLogTypeFilter<$PrismaModel>
+    _max?: NestedEnumGameLogTypeFilter<$PrismaModel>
+  }
+
+  export type EnumGameLogRetentionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameLogRetention | EnumGameLogRetentionFieldRefInput<$PrismaModel>
+    in?: $Enums.GameLogRetention[] | ListEnumGameLogRetentionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameLogRetention[] | ListEnumGameLogRetentionFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameLogRetentionWithAggregatesFilter<$PrismaModel> | $Enums.GameLogRetention
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGameLogRetentionFilter<$PrismaModel>
+    _max?: NestedEnumGameLogRetentionFilter<$PrismaModel>
+  }
+
+  export type UuidNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type GameLogHourlyTypeBucketAtCompoundUniqueInput = {
+    type: $Enums.GameLogType
+    bucketAt: Date | string
+  }
+
+  export type GameLogHourlyCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    bucketAt?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GameLogHourlyAvgOrderByAggregateInput = {
+    id?: SortOrder
+    total?: SortOrder
+  }
+
+  export type GameLogHourlyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    bucketAt?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GameLogHourlyMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    bucketAt?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GameLogHourlySumOrderByAggregateInput = {
+    id?: SortOrder
+    total?: SortOrder
+  }
+
+  export type GameLogDailyTypeDayCompoundUniqueInput = {
+    type: $Enums.GameLogType
+    day: Date | string
+  }
+
+  export type GameLogDailyCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    day?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GameLogDailyAvgOrderByAggregateInput = {
+    id?: SortOrder
+    total?: SortOrder
+  }
+
+  export type GameLogDailyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    day?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GameLogDailyMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    day?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type GameLogDailySumOrderByAggregateInput = {
+    id?: SortOrder
+    total?: SortOrder
+  }
+
+  export type EnumJobTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobType | EnumJobTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobTypeFilter<$PrismaModel> | $Enums.JobType
+  }
+
+  export type EnumJobStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobStatus | EnumJobStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobStatusFilter<$PrismaModel> | $Enums.JobStatus
   }
 
   export type JobRunListRelationFilter = {
@@ -55128,24 +59785,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumJobStatusFilter<$PrismaModel>
     _max?: NestedEnumJobStatusFilter<$PrismaModel>
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type BoolNullableFilter<$PrismaModel = never> = {
@@ -55369,28 +60008,11 @@ export namespace Prisma {
     _max?: NestedEnumLanguageFilter<$PrismaModel>
   }
 
-  export type UuidNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
-  }
-
   export type EnumOfferStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.OfferStatus | EnumOfferStatusFieldRefInput<$PrismaModel>
     in?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumOfferStatusFilter<$PrismaModel> | $Enums.OfferStatus
-  }
-
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
   }
 
   export type OfferItemListRelationFilter = {
@@ -55456,21 +60078,6 @@ export namespace Prisma {
     id?: SortOrder
     dinozId?: SortOrder
     total?: SortOrder
-  }
-
-  export type UuidNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumOfferStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -56758,6 +61365,13 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type GameLogCreateNestedManyWithoutDinozInput = {
+    create?: XOR<GameLogCreateWithoutDinozInput, GameLogUncheckedCreateWithoutDinozInput> | GameLogCreateWithoutDinozInput[] | GameLogUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutDinozInput | GameLogCreateOrConnectWithoutDinozInput[]
+    createMany?: GameLogCreateManyDinozInputEnvelope
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+  }
+
   export type DinozCatchUncheckedCreateNestedManyWithoutDinozInput = {
     create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
@@ -56812,6 +61426,13 @@ export namespace Prisma {
     connectOrCreate?: OfferCreateOrConnectWithoutDinozInput | OfferCreateOrConnectWithoutDinozInput[]
     createMany?: OfferCreateManyDinozInputEnvelope
     connect?: OfferWhereUniqueInput | OfferWhereUniqueInput[]
+  }
+
+  export type GameLogUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<GameLogCreateWithoutDinozInput, GameLogUncheckedCreateWithoutDinozInput> | GameLogCreateWithoutDinozInput[] | GameLogUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutDinozInput | GameLogCreateOrConnectWithoutDinozInput[]
+    createMany?: GameLogCreateManyDinozInputEnvelope
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -56980,6 +61601,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDinozInput, UserUpdateWithoutDinozInput>, UserUncheckedUpdateWithoutDinozInput>
   }
 
+  export type GameLogUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<GameLogCreateWithoutDinozInput, GameLogUncheckedCreateWithoutDinozInput> | GameLogCreateWithoutDinozInput[] | GameLogUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutDinozInput | GameLogCreateOrConnectWithoutDinozInput[]
+    upsert?: GameLogUpsertWithWhereUniqueWithoutDinozInput | GameLogUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: GameLogCreateManyDinozInputEnvelope
+    set?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    disconnect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    delete?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    update?: GameLogUpdateWithWhereUniqueWithoutDinozInput | GameLogUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: GameLogUpdateManyWithWhereWithoutDinozInput | GameLogUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: GameLogScalarWhereInput | GameLogScalarWhereInput[]
+  }
+
   export type DinozCatchUncheckedUpdateManyWithoutDinozNestedInput = {
     create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
@@ -57092,6 +61727,20 @@ export namespace Prisma {
     deleteMany?: OfferScalarWhereInput | OfferScalarWhereInput[]
   }
 
+  export type GameLogUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<GameLogCreateWithoutDinozInput, GameLogUncheckedCreateWithoutDinozInput> | GameLogCreateWithoutDinozInput[] | GameLogUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutDinozInput | GameLogCreateOrConnectWithoutDinozInput[]
+    upsert?: GameLogUpsertWithWhereUniqueWithoutDinozInput | GameLogUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: GameLogCreateManyDinozInputEnvelope
+    set?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    disconnect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    delete?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    update?: GameLogUpdateWithWhereUniqueWithoutDinozInput | GameLogUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: GameLogUpdateManyWithWhereWithoutDinozInput | GameLogUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: GameLogScalarWhereInput | GameLogScalarWhereInput[]
+  }
+
   export type DinozCreateNestedOneWithoutCatchesInput = {
     create?: XOR<DinozCreateWithoutCatchesInput, DinozUncheckedCreateWithoutCatchesInput>
     connectOrCreate?: DinozCreateOrConnectWithoutCatchesInput
@@ -57193,6 +61842,83 @@ export namespace Prisma {
     push?: number | number[]
   }
 
+  export type GameLogCreatevaluesInput = {
+    set: string[]
+  }
+
+  export type UserCreateNestedOneWithoutLogsInput = {
+    create?: XOR<UserCreateWithoutLogsInput, UserUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLogsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type DinozCreateNestedOneWithoutLogsInput = {
+    create?: XOR<DinozCreateWithoutLogsInput, DinozUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutLogsInput
+    connect?: DinozWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutActedLogsInput = {
+    create?: XOR<UserCreateWithoutActedLogsInput, UserUncheckedCreateWithoutActedLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActedLogsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BigIntFieldUpdateOperationsInput = {
+    set?: bigint | number
+    increment?: bigint | number
+    decrement?: bigint | number
+    multiply?: bigint | number
+    divide?: bigint | number
+  }
+
+  export type EnumGameLogTypeFieldUpdateOperationsInput = {
+    set?: $Enums.GameLogType
+  }
+
+  export type EnumGameLogRetentionFieldUpdateOperationsInput = {
+    set?: $Enums.GameLogRetention
+  }
+
+  export type GameLogUpdatevaluesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type UserUpdateOneWithoutLogsNestedInput = {
+    create?: XOR<UserCreateWithoutLogsInput, UserUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLogsInput
+    upsert?: UserUpsertWithoutLogsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLogsInput, UserUpdateWithoutLogsInput>, UserUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type DinozUpdateOneWithoutLogsNestedInput = {
+    create?: XOR<DinozCreateWithoutLogsInput, DinozUncheckedCreateWithoutLogsInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutLogsInput
+    upsert?: DinozUpsertWithoutLogsInput
+    disconnect?: DinozWhereInput | boolean
+    delete?: DinozWhereInput | boolean
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutLogsInput, DinozUpdateWithoutLogsInput>, DinozUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type UserUpdateOneWithoutActedLogsNestedInput = {
+    create?: XOR<UserCreateWithoutActedLogsInput, UserUncheckedCreateWithoutActedLogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutActedLogsInput
+    upsert?: UserUpsertWithoutActedLogsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutActedLogsInput, UserUpdateWithoutActedLogsInput>, UserUncheckedUpdateWithoutActedLogsInput>
+  }
+
   export type JobRunCreateNestedManyWithoutJobInput = {
     create?: XOR<JobRunCreateWithoutJobInput, JobRunUncheckedCreateWithoutJobInput> | JobRunCreateWithoutJobInput[] | JobRunUncheckedCreateWithoutJobInput[]
     connectOrCreate?: JobRunCreateOrConnectWithoutJobInput | JobRunCreateOrConnectWithoutJobInput[]
@@ -57213,10 +61939,6 @@ export namespace Prisma {
 
   export type EnumJobStatusFieldUpdateOperationsInput = {
     set?: $Enums.JobStatus
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type JobRunUpdateManyWithoutJobNestedInput = {
@@ -57989,6 +62711,20 @@ export namespace Prisma {
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
+  export type GameLogCreateNestedManyWithoutUserInput = {
+    create?: XOR<GameLogCreateWithoutUserInput, GameLogUncheckedCreateWithoutUserInput> | GameLogCreateWithoutUserInput[] | GameLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutUserInput | GameLogCreateOrConnectWithoutUserInput[]
+    createMany?: GameLogCreateManyUserInputEnvelope
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+  }
+
+  export type GameLogCreateNestedManyWithoutActorUserInput = {
+    create?: XOR<GameLogCreateWithoutActorUserInput, GameLogUncheckedCreateWithoutActorUserInput> | GameLogCreateWithoutActorUserInput[] | GameLogUncheckedCreateWithoutActorUserInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutActorUserInput | GameLogCreateOrConnectWithoutActorUserInput[]
+    createMany?: GameLogCreateManyActorUserInputEnvelope
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+  }
+
   export type UserGatherUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput> | UserGatherCreateWithoutUserInput[] | UserGatherUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserGatherCreateOrConnectWithoutUserInput | UserGatherCreateOrConnectWithoutUserInput[]
@@ -58111,6 +62847,20 @@ export namespace Prisma {
     connectOrCreate?: MessageCreateOrConnectWithoutSenderInput | MessageCreateOrConnectWithoutSenderInput[]
     createMany?: MessageCreateManySenderInputEnvelope
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
+  }
+
+  export type GameLogUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<GameLogCreateWithoutUserInput, GameLogUncheckedCreateWithoutUserInput> | GameLogCreateWithoutUserInput[] | GameLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutUserInput | GameLogCreateOrConnectWithoutUserInput[]
+    createMany?: GameLogCreateManyUserInputEnvelope
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+  }
+
+  export type GameLogUncheckedCreateNestedManyWithoutActorUserInput = {
+    create?: XOR<GameLogCreateWithoutActorUserInput, GameLogUncheckedCreateWithoutActorUserInput> | GameLogCreateWithoutActorUserInput[] | GameLogUncheckedCreateWithoutActorUserInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutActorUserInput | GameLogCreateOrConnectWithoutActorUserInput[]
+    createMany?: GameLogCreateManyActorUserInputEnvelope
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
@@ -58361,6 +63111,34 @@ export namespace Prisma {
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
   }
 
+  export type GameLogUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GameLogCreateWithoutUserInput, GameLogUncheckedCreateWithoutUserInput> | GameLogCreateWithoutUserInput[] | GameLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutUserInput | GameLogCreateOrConnectWithoutUserInput[]
+    upsert?: GameLogUpsertWithWhereUniqueWithoutUserInput | GameLogUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GameLogCreateManyUserInputEnvelope
+    set?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    disconnect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    delete?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    update?: GameLogUpdateWithWhereUniqueWithoutUserInput | GameLogUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GameLogUpdateManyWithWhereWithoutUserInput | GameLogUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GameLogScalarWhereInput | GameLogScalarWhereInput[]
+  }
+
+  export type GameLogUpdateManyWithoutActorUserNestedInput = {
+    create?: XOR<GameLogCreateWithoutActorUserInput, GameLogUncheckedCreateWithoutActorUserInput> | GameLogCreateWithoutActorUserInput[] | GameLogUncheckedCreateWithoutActorUserInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutActorUserInput | GameLogCreateOrConnectWithoutActorUserInput[]
+    upsert?: GameLogUpsertWithWhereUniqueWithoutActorUserInput | GameLogUpsertWithWhereUniqueWithoutActorUserInput[]
+    createMany?: GameLogCreateManyActorUserInputEnvelope
+    set?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    disconnect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    delete?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    update?: GameLogUpdateWithWhereUniqueWithoutActorUserInput | GameLogUpdateWithWhereUniqueWithoutActorUserInput[]
+    updateMany?: GameLogUpdateManyWithWhereWithoutActorUserInput | GameLogUpdateManyWithWhereWithoutActorUserInput[]
+    deleteMany?: GameLogScalarWhereInput | GameLogScalarWhereInput[]
+  }
+
   export type UserGatherUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput> | UserGatherCreateWithoutUserInput[] | UserGatherUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserGatherCreateOrConnectWithoutUserInput | UserGatherCreateOrConnectWithoutUserInput[]
@@ -58603,6 +63381,34 @@ export namespace Prisma {
     update?: MessageUpdateWithWhereUniqueWithoutSenderInput | MessageUpdateWithWhereUniqueWithoutSenderInput[]
     updateMany?: MessageUpdateManyWithWhereWithoutSenderInput | MessageUpdateManyWithWhereWithoutSenderInput[]
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
+  }
+
+  export type GameLogUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<GameLogCreateWithoutUserInput, GameLogUncheckedCreateWithoutUserInput> | GameLogCreateWithoutUserInput[] | GameLogUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutUserInput | GameLogCreateOrConnectWithoutUserInput[]
+    upsert?: GameLogUpsertWithWhereUniqueWithoutUserInput | GameLogUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: GameLogCreateManyUserInputEnvelope
+    set?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    disconnect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    delete?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    update?: GameLogUpdateWithWhereUniqueWithoutUserInput | GameLogUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: GameLogUpdateManyWithWhereWithoutUserInput | GameLogUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: GameLogScalarWhereInput | GameLogScalarWhereInput[]
+  }
+
+  export type GameLogUncheckedUpdateManyWithoutActorUserNestedInput = {
+    create?: XOR<GameLogCreateWithoutActorUserInput, GameLogUncheckedCreateWithoutActorUserInput> | GameLogCreateWithoutActorUserInput[] | GameLogUncheckedCreateWithoutActorUserInput[]
+    connectOrCreate?: GameLogCreateOrConnectWithoutActorUserInput | GameLogCreateOrConnectWithoutActorUserInput[]
+    upsert?: GameLogUpsertWithWhereUniqueWithoutActorUserInput | GameLogUpsertWithWhereUniqueWithoutActorUserInput[]
+    createMany?: GameLogCreateManyActorUserInputEnvelope
+    set?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    disconnect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    delete?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+    update?: GameLogUpdateWithWhereUniqueWithoutActorUserInput | GameLogUpdateWithWhereUniqueWithoutActorUserInput[]
+    updateMany?: GameLogUpdateManyWithWhereWithoutActorUserInput | GameLogUpdateManyWithWhereWithoutActorUserInput[]
+    deleteMany?: GameLogScalarWhereInput | GameLogScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutDinozShopInput = {
@@ -59205,18 +64011,40 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedEnumJobTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.JobType | EnumJobTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumJobTypeFilter<$PrismaModel> | $Enums.JobType
+  export type NestedBigIntFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntFilter<$PrismaModel> | bigint | number
   }
 
-  export type NestedEnumJobStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.JobStatus | EnumJobStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumJobStatusFilter<$PrismaModel> | $Enums.JobStatus
+  export type NestedEnumGameLogTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameLogType | EnumGameLogTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GameLogType[] | ListEnumGameLogTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameLogType[] | ListEnumGameLogTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameLogTypeFilter<$PrismaModel> | $Enums.GameLogType
+  }
+
+  export type NestedEnumGameLogRetentionFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameLogRetention | EnumGameLogRetentionFieldRefInput<$PrismaModel>
+    in?: $Enums.GameLogRetention[] | ListEnumGameLogRetentionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameLogRetention[] | ListEnumGameLogRetentionFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameLogRetentionFilter<$PrismaModel> | $Enums.GameLogRetention
+  }
+
+  export type NestedUuidNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -59231,6 +64059,87 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedBigIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    in?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    notIn?: bigint[] | number[] | ListBigIntFieldRefInput<$PrismaModel>
+    lt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    lte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gt?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    gte?: bigint | number | BigIntFieldRefInput<$PrismaModel>
+    not?: NestedBigIntWithAggregatesFilter<$PrismaModel> | bigint | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedBigIntFilter<$PrismaModel>
+    _min?: NestedBigIntFilter<$PrismaModel>
+    _max?: NestedBigIntFilter<$PrismaModel>
+  }
+
+  export type NestedEnumGameLogTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameLogType | EnumGameLogTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.GameLogType[] | ListEnumGameLogTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameLogType[] | ListEnumGameLogTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameLogTypeWithAggregatesFilter<$PrismaModel> | $Enums.GameLogType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGameLogTypeFilter<$PrismaModel>
+    _max?: NestedEnumGameLogTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumGameLogRetentionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameLogRetention | EnumGameLogRetentionFieldRefInput<$PrismaModel>
+    in?: $Enums.GameLogRetention[] | ListEnumGameLogRetentionFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameLogRetention[] | ListEnumGameLogRetentionFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameLogRetentionWithAggregatesFilter<$PrismaModel> | $Enums.GameLogRetention
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGameLogRetentionFilter<$PrismaModel>
+    _max?: NestedEnumGameLogRetentionFilter<$PrismaModel>
+  }
+
+  export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumJobTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobType | EnumJobTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobType[] | ListEnumJobTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobTypeFilter<$PrismaModel> | $Enums.JobType
+  }
+
+  export type NestedEnumJobStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.JobStatus | EnumJobStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.JobStatus[] | ListEnumJobStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumJobStatusFilter<$PrismaModel> | $Enums.JobStatus
   }
 
   export type NestedEnumJobTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -59251,23 +64160,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumJobStatusFilter<$PrismaModel>
     _max?: NestedEnumJobStatusFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
@@ -59334,36 +64226,11 @@ export namespace Prisma {
     _max?: NestedEnumLanguageFilter<$PrismaModel>
   }
 
-  export type NestedUuidNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
-  }
-
   export type NestedEnumOfferStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.OfferStatus | EnumOfferStatusFieldRefInput<$PrismaModel>
     in?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.OfferStatus[] | ListEnumOfferStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumOfferStatusFilter<$PrismaModel> | $Enums.OfferStatus
-  }
-
-  export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumOfferStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -59518,6 +64385,7 @@ export namespace Prisma {
     missions?: DinozMissionsCreateNestedManyWithoutDinozInput
     marketOffers?: OfferCreateNestedManyWithoutDinozInput
     user: UserCreateNestedOneWithoutDinozInput
+    logs?: GameLogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutFollowersInput = {
@@ -59557,6 +64425,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsUncheckedCreateNestedManyWithoutDinozInput
     marketOffers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutFollowersInput = {
@@ -59600,6 +64469,7 @@ export namespace Prisma {
     missions?: DinozMissionsCreateNestedManyWithoutDinozInput
     marketOffers?: OfferCreateNestedManyWithoutDinozInput
     user: UserCreateNestedOneWithoutDinozInput
+    logs?: GameLogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutLeaderInput = {
@@ -59639,6 +64509,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsUncheckedCreateNestedManyWithoutDinozInput
     marketOffers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutLeaderInput = {
@@ -59829,6 +64700,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutDinozInput = {
@@ -59865,11 +64738,51 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutDinozInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutDinozInput, UserUncheckedCreateWithoutDinozInput>
+  }
+
+  export type GameLogCreateWithoutDinozInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+    user?: UserCreateNestedOneWithoutLogsInput
+    actorUser?: UserCreateNestedOneWithoutActedLogsInput
+  }
+
+  export type GameLogUncheckedCreateWithoutDinozInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: string | null
+    actorUserId?: string | null
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GameLogCreateOrConnectWithoutDinozInput = {
+    where: GameLogWhereUniqueInput
+    create: XOR<GameLogCreateWithoutDinozInput, GameLogUncheckedCreateWithoutDinozInput>
+  }
+
+  export type GameLogCreateManyDinozInputEnvelope = {
+    data: GameLogCreateManyDinozInput | GameLogCreateManyDinozInput[]
+    skipDuplicates?: boolean
   }
 
   export type DinozCatchUpsertWithWhereUniqueWithoutDinozInput = {
@@ -59945,6 +64858,7 @@ export namespace Prisma {
     missions?: DinozMissionsUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUpdateManyWithoutDinozNestedInput
     user?: UserUpdateOneRequiredWithoutDinozNestedInput
+    logs?: GameLogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutFollowersInput = {
@@ -59984,6 +64898,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUncheckedUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUpsertWithWhereUniqueWithoutLeaderInput = {
@@ -60245,6 +65160,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDinozInput = {
@@ -60281,6 +65198,42 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+  }
+
+  export type GameLogUpsertWithWhereUniqueWithoutDinozInput = {
+    where: GameLogWhereUniqueInput
+    update: XOR<GameLogUpdateWithoutDinozInput, GameLogUncheckedUpdateWithoutDinozInput>
+    create: XOR<GameLogCreateWithoutDinozInput, GameLogUncheckedCreateWithoutDinozInput>
+  }
+
+  export type GameLogUpdateWithWhereUniqueWithoutDinozInput = {
+    where: GameLogWhereUniqueInput
+    data: XOR<GameLogUpdateWithoutDinozInput, GameLogUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type GameLogUpdateManyWithWhereWithoutDinozInput = {
+    where: GameLogScalarWhereInput
+    data: XOR<GameLogUpdateManyMutationInput, GameLogUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type GameLogScalarWhereInput = {
+    AND?: GameLogScalarWhereInput | GameLogScalarWhereInput[]
+    OR?: GameLogScalarWhereInput[]
+    NOT?: GameLogScalarWhereInput | GameLogScalarWhereInput[]
+    id?: BigIntFilter<"GameLog"> | bigint | number
+    type?: EnumGameLogTypeFilter<"GameLog"> | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFilter<"GameLog"> | $Enums.GameLogRetention
+    values?: StringNullableListFilter<"GameLog">
+    metadata?: JsonNullableFilter<"GameLog">
+    userId?: UuidNullableFilter<"GameLog"> | string | null
+    dinozId?: IntNullableFilter<"GameLog"> | number | null
+    actorUserId?: UuidNullableFilter<"GameLog"> | string | null
+    userNameSnapshot?: StringNullableFilter<"GameLog"> | string | null
+    dinozNameSnapshot?: StringNullableFilter<"GameLog"> | string | null
+    actorNameSnapshot?: StringNullableFilter<"GameLog"> | string | null
+    createdAt?: DateTimeFilter<"GameLog"> | Date | string
   }
 
   export type DinozCreateWithoutCatchesInput = {
@@ -60319,6 +65272,7 @@ export namespace Prisma {
     missions?: DinozMissionsCreateNestedManyWithoutDinozInput
     marketOffers?: OfferCreateNestedManyWithoutDinozInput
     user: UserCreateNestedOneWithoutDinozInput
+    logs?: GameLogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutCatchesInput = {
@@ -60358,6 +65312,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsUncheckedCreateNestedManyWithoutDinozInput
     marketOffers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutCatchesInput = {
@@ -60412,6 +65367,7 @@ export namespace Prisma {
     missions?: DinozMissionsUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUpdateManyWithoutDinozNestedInput
     user?: UserUpdateOneRequiredWithoutDinozNestedInput
+    logs?: GameLogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutCatchesInput = {
@@ -60451,6 +65407,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUncheckedUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutItemsInput = {
@@ -60489,6 +65446,7 @@ export namespace Prisma {
     missions?: DinozMissionsCreateNestedManyWithoutDinozInput
     marketOffers?: OfferCreateNestedManyWithoutDinozInput
     user: UserCreateNestedOneWithoutDinozInput
+    logs?: GameLogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutItemsInput = {
@@ -60528,6 +65486,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsUncheckedCreateNestedManyWithoutDinozInput
     marketOffers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutItemsInput = {
@@ -60582,6 +65541,7 @@ export namespace Prisma {
     missions?: DinozMissionsUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUpdateManyWithoutDinozNestedInput
     user?: UserUpdateOneRequiredWithoutDinozNestedInput
+    logs?: GameLogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutItemsInput = {
@@ -60621,6 +65581,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUncheckedUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutMissionsInput = {
@@ -60659,6 +65620,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     marketOffers?: OfferCreateNestedManyWithoutDinozInput
     user: UserCreateNestedOneWithoutDinozInput
+    logs?: GameLogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutMissionsInput = {
@@ -60698,6 +65660,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillsUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     marketOffers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutMissionsInput = {
@@ -60752,6 +65715,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUpdateManyWithoutDinozNestedInput
     user?: UserUpdateOneRequiredWithoutDinozNestedInput
+    logs?: GameLogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutMissionsInput = {
@@ -60791,6 +65755,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutSkillsInput = {
@@ -60829,6 +65794,7 @@ export namespace Prisma {
     missions?: DinozMissionsCreateNestedManyWithoutDinozInput
     marketOffers?: OfferCreateNestedManyWithoutDinozInput
     user: UserCreateNestedOneWithoutDinozInput
+    logs?: GameLogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutSkillsInput = {
@@ -60868,6 +65834,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsUncheckedCreateNestedManyWithoutDinozInput
     marketOffers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutSkillsInput = {
@@ -60922,6 +65889,7 @@ export namespace Prisma {
     missions?: DinozMissionsUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUpdateManyWithoutDinozNestedInput
     user?: UserUpdateOneRequiredWithoutDinozNestedInput
+    logs?: GameLogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutSkillsInput = {
@@ -60961,6 +65929,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUncheckedUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutUnlockableSkillsInput = {
@@ -60999,6 +65968,7 @@ export namespace Prisma {
     missions?: DinozMissionsCreateNestedManyWithoutDinozInput
     marketOffers?: OfferCreateNestedManyWithoutDinozInput
     user: UserCreateNestedOneWithoutDinozInput
+    logs?: GameLogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutUnlockableSkillsInput = {
@@ -61038,6 +66008,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsUncheckedCreateNestedManyWithoutDinozInput
     marketOffers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutUnlockableSkillsInput = {
@@ -61092,6 +66063,7 @@ export namespace Prisma {
     missions?: DinozMissionsUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUpdateManyWithoutDinozNestedInput
     user?: UserUpdateOneRequiredWithoutDinozNestedInput
+    logs?: GameLogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutUnlockableSkillsInput = {
@@ -61131,6 +66103,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUncheckedUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutStatusInput = {
@@ -61169,6 +66142,7 @@ export namespace Prisma {
     missions?: DinozMissionsCreateNestedManyWithoutDinozInput
     marketOffers?: OfferCreateNestedManyWithoutDinozInput
     user: UserCreateNestedOneWithoutDinozInput
+    logs?: GameLogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutStatusInput = {
@@ -61208,6 +66182,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillsUnlockableUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsUncheckedCreateNestedManyWithoutDinozInput
     marketOffers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutStatusInput = {
@@ -61262,6 +66237,7 @@ export namespace Prisma {
     missions?: DinozMissionsUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUpdateManyWithoutDinozNestedInput
     user?: UserUpdateOneRequiredWithoutDinozNestedInput
+    logs?: GameLogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutStatusInput = {
@@ -61301,6 +66277,517 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUncheckedUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type UserCreateWithoutLogsInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    marketOffers?: OfferCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+  }
+
+  export type UserUncheckedCreateWithoutLogsInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    marketOffers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeUncheckedCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+  }
+
+  export type UserCreateOrConnectWithoutLogsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutLogsInput, UserUncheckedCreateWithoutLogsInput>
+  }
+
+  export type DinozCreateWithoutLogsInput = {
+    name: string
+    canRename?: boolean
+    raceId: number
+    display: string
+    level?: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining?: number
+    order?: number | null
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    seed: string
+    state?: $Enums.DinozState | null
+    stateTimer?: Date | string | null
+    fight?: boolean
+    gather?: boolean
+    FBTournamentStep?: number
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+    items?: DinozItemsCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillsCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillsUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionsCreateNestedManyWithoutDinozInput
+    marketOffers?: OfferCreateNestedManyWithoutDinozInput
+    user: UserCreateNestedOneWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutLogsInput = {
+    id?: number
+    name: string
+    canRename?: boolean
+    raceId: number
+    display: string
+    level?: number
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    remaining?: number
+    order?: number | null
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    seed: string
+    state?: $Enums.DinozState | null
+    stateTimer?: Date | string | null
+    fight?: boolean
+    gather?: boolean
+    leaderId?: number | null
+    FBTournamentStep?: number
+    userId: string
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    items?: DinozItemsUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillsUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillsUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionsUncheckedCreateNestedManyWithoutDinozInput
+    marketOffers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutLogsInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutLogsInput, DinozUncheckedCreateWithoutLogsInput>
+  }
+
+  export type UserCreateWithoutActedLogsInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    marketOffers?: OfferCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutActedLogsInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    marketOffers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeUncheckedCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutActedLogsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutActedLogsInput, UserUncheckedCreateWithoutActedLogsInput>
+  }
+
+  export type UserUpsertWithoutLogsInput = {
+    update: XOR<UserUpdateWithoutLogsInput, UserUncheckedUpdateWithoutLogsInput>
+    create: XOR<UserCreateWithoutLogsInput, UserUncheckedCreateWithoutLogsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutLogsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutLogsInput, UserUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type UserUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUncheckedUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+  }
+
+  export type DinozUpsertWithoutLogsInput = {
+    update: XOR<DinozUpdateWithoutLogsInput, DinozUncheckedUpdateWithoutLogsInput>
+    create: XOR<DinozCreateWithoutLogsInput, DinozUncheckedCreateWithoutLogsInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutLogsInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutLogsInput, DinozUncheckedUpdateWithoutLogsInput>
+  }
+
+  export type DinozUpdateWithoutLogsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    canRename?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    remaining?: IntFieldUpdateOperationsInput | number
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
+    stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemsUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillsUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillsUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionsUpdateManyWithoutDinozNestedInput
+    marketOffers?: OfferUpdateManyWithoutDinozNestedInput
+    user?: UserUpdateOneRequiredWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutLogsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    canRename?: BoolFieldUpdateOperationsInput | boolean
+    raceId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    level?: IntFieldUpdateOperationsInput | number
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    remaining?: IntFieldUpdateOperationsInput | number
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    state?: NullableEnumDinozStateFieldUpdateOperationsInput | $Enums.DinozState | null
+    stateTimer?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemsUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillsUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionsUncheckedUpdateManyWithoutDinozNestedInput
+    marketOffers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type UserUpsertWithoutActedLogsInput = {
+    update: XOR<UserUpdateWithoutActedLogsInput, UserUncheckedUpdateWithoutActedLogsInput>
+    create: XOR<UserCreateWithoutActedLogsInput, UserUncheckedCreateWithoutActedLogsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutActedLogsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutActedLogsInput, UserUncheckedUpdateWithoutActedLogsInput>
+  }
+
+  export type UserUpdateWithoutActedLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutActedLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUncheckedUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type JobRunCreateWithoutJobInput = {
@@ -61722,6 +67209,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutMarketOffersInput = {
@@ -61758,6 +67247,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutMarketOffersInput = {
@@ -61801,6 +67292,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsCreateNestedManyWithoutDinozInput
     user: UserCreateNestedOneWithoutDinozInput
+    logs?: GameLogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutMarketOffersInput = {
@@ -61840,6 +67332,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillsUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsUncheckedCreateNestedManyWithoutDinozInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutMarketOffersInput = {
@@ -61938,6 +67431,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMarketOffersInput = {
@@ -61974,6 +67469,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type DinozUpsertWithoutMarketOffersInput = {
@@ -62023,6 +67520,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUpdateManyWithoutDinozNestedInput
     user?: UserUpdateOneRequiredWithoutDinozNestedInput
+    logs?: GameLogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutMarketOffersInput = {
@@ -62062,6 +67560,7 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillsUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type OfferItemUpsertWithWhereUniqueWithoutOfferInput = {
@@ -62242,6 +67741,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutMarketBidsInput = {
@@ -62278,6 +67779,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutMarketBidsInput = {
@@ -62364,6 +67867,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMarketBidsInput = {
@@ -62400,6 +67905,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type NewsCreateWithoutPollInput = {
@@ -62843,6 +68350,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutPollVotesInput = {
@@ -62879,6 +68388,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutPollVotesInput = {
@@ -62987,6 +68498,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPollVotesInput = {
@@ -63023,6 +68536,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type NewsCreateWithoutLikedByInput = {
@@ -63091,6 +68606,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutNewsLikesInput = {
@@ -63127,6 +68644,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutNewsLikesInput = {
@@ -63217,6 +68736,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNewsLikesInput = {
@@ -63253,6 +68774,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserCreateWithoutRankingInput = {
@@ -63289,6 +68812,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutRankingInput = {
@@ -63325,6 +68850,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutRankingInput = {
@@ -63377,6 +68904,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRankingInput = {
@@ -63413,6 +68942,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserGatherCreateWithoutUserInput = {
@@ -63716,6 +69247,7 @@ export namespace Prisma {
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsCreateNestedManyWithoutDinozInput
     marketOffers?: OfferCreateNestedManyWithoutDinozInput
+    logs?: GameLogCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutUserInput = {
@@ -63755,6 +69287,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     missions?: DinozMissionsUncheckedCreateNestedManyWithoutDinozInput
     marketOffers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutUserInput = {
@@ -63922,6 +69455,82 @@ export namespace Prisma {
 
   export type MessageCreateManySenderInputEnvelope = {
     data: MessageCreateManySenderInput | MessageCreateManySenderInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GameLogCreateWithoutUserInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+    dinoz?: DinozCreateNestedOneWithoutLogsInput
+    actorUser?: UserCreateNestedOneWithoutActedLogsInput
+  }
+
+  export type GameLogUncheckedCreateWithoutUserInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    dinozId?: number | null
+    actorUserId?: string | null
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GameLogCreateOrConnectWithoutUserInput = {
+    where: GameLogWhereUniqueInput
+    create: XOR<GameLogCreateWithoutUserInput, GameLogUncheckedCreateWithoutUserInput>
+  }
+
+  export type GameLogCreateManyUserInputEnvelope = {
+    data: GameLogCreateManyUserInput | GameLogCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GameLogCreateWithoutActorUserInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+    user?: UserCreateNestedOneWithoutLogsInput
+    dinoz?: DinozCreateNestedOneWithoutLogsInput
+  }
+
+  export type GameLogUncheckedCreateWithoutActorUserInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: string | null
+    dinozId?: number | null
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GameLogCreateOrConnectWithoutActorUserInput = {
+    where: GameLogWhereUniqueInput
+    create: XOR<GameLogCreateWithoutActorUserInput, GameLogUncheckedCreateWithoutActorUserInput>
+  }
+
+  export type GameLogCreateManyActorUserInputEnvelope = {
+    data: GameLogCreateManyActorUserInput | GameLogCreateManyActorUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -64369,6 +69978,38 @@ export namespace Prisma {
     senderNameSnapshot?: StringFilter<"Message"> | string
   }
 
+  export type GameLogUpsertWithWhereUniqueWithoutUserInput = {
+    where: GameLogWhereUniqueInput
+    update: XOR<GameLogUpdateWithoutUserInput, GameLogUncheckedUpdateWithoutUserInput>
+    create: XOR<GameLogCreateWithoutUserInput, GameLogUncheckedCreateWithoutUserInput>
+  }
+
+  export type GameLogUpdateWithWhereUniqueWithoutUserInput = {
+    where: GameLogWhereUniqueInput
+    data: XOR<GameLogUpdateWithoutUserInput, GameLogUncheckedUpdateWithoutUserInput>
+  }
+
+  export type GameLogUpdateManyWithWhereWithoutUserInput = {
+    where: GameLogScalarWhereInput
+    data: XOR<GameLogUpdateManyMutationInput, GameLogUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type GameLogUpsertWithWhereUniqueWithoutActorUserInput = {
+    where: GameLogWhereUniqueInput
+    update: XOR<GameLogUpdateWithoutActorUserInput, GameLogUncheckedUpdateWithoutActorUserInput>
+    create: XOR<GameLogCreateWithoutActorUserInput, GameLogUncheckedCreateWithoutActorUserInput>
+  }
+
+  export type GameLogUpdateWithWhereUniqueWithoutActorUserInput = {
+    where: GameLogWhereUniqueInput
+    data: XOR<GameLogUpdateWithoutActorUserInput, GameLogUncheckedUpdateWithoutActorUserInput>
+  }
+
+  export type GameLogUpdateManyWithWhereWithoutActorUserInput = {
+    where: GameLogScalarWhereInput
+    data: XOR<GameLogUpdateManyMutationInput, GameLogUncheckedUpdateManyWithoutActorUserInput>
+  }
+
   export type UserCreateWithoutDinozShopInput = {
     id?: string
     name: string
@@ -64403,6 +70044,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutDinozShopInput = {
@@ -64439,6 +70082,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutDinozShopInput = {
@@ -64491,6 +70136,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDinozShopInput = {
@@ -64527,6 +70174,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserCreateWithoutGathersInput = {
@@ -64563,6 +70212,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutGathersInput = {
@@ -64599,6 +70250,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutGathersInput = {
@@ -64651,6 +70304,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGathersInput = {
@@ -64687,6 +70342,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserCreateWithoutIngredientsInput = {
@@ -64723,6 +70380,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutIngredientsInput = {
@@ -64759,6 +70418,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutIngredientsInput = {
@@ -64811,6 +70472,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutIngredientsInput = {
@@ -64847,6 +70510,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserCreateWithoutItemsInput = {
@@ -64883,6 +70548,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutItemsInput = {
@@ -64919,6 +70586,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutItemsInput = {
@@ -64971,6 +70640,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutItemsInput = {
@@ -65007,6 +70678,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserCreateWithoutProfileInput = {
@@ -65043,6 +70716,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutProfileInput = {
@@ -65079,6 +70754,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutProfileInput = {
@@ -65131,6 +70808,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfileInput = {
@@ -65167,6 +70846,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserCreateWithoutRewardsInput = {
@@ -65203,6 +70884,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutRewardsInput = {
@@ -65239,6 +70922,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutRewardsInput = {
@@ -65291,6 +70976,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRewardsInput = {
@@ -65327,6 +71014,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserCreateWithoutScenariosInput = {
@@ -65363,6 +71052,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutScenariosInput = {
@@ -65399,6 +71090,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutScenariosInput = {
@@ -65451,6 +71144,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutScenariosInput = {
@@ -65487,6 +71182,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserCreateWithoutStatsTrackingInput = {
@@ -65523,6 +71220,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutStatsTrackingInput = {
@@ -65559,6 +71258,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutStatsTrackingInput = {
@@ -65611,6 +71312,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStatsTrackingInput = {
@@ -65647,6 +71350,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserCreateWithoutWalletsInput = {
@@ -65683,6 +71388,8 @@ export namespace Prisma {
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutWalletsInput = {
@@ -65719,6 +71426,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutWalletsInput = {
@@ -65771,6 +71480,8 @@ export namespace Prisma {
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWalletsInput = {
@@ -65807,6 +71518,8 @@ export namespace Prisma {
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserCreateWithoutCreatedConversationsInput = {
@@ -65843,6 +71556,8 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutUserInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedConversationsInput = {
@@ -65879,6 +71594,8 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedConversationsInput = {
@@ -66019,6 +71736,8 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedConversationsInput = {
@@ -66055,6 +71774,8 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type MessageUpsertWithoutPinnedInInput = {
@@ -66182,6 +71903,8 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutUserInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutConversationLinksInput = {
@@ -66218,6 +71941,8 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutConversationLinksInput = {
@@ -66303,6 +72028,8 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutConversationLinksInput = {
@@ -66339,6 +72066,8 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type ConversationCreateWithoutMessagesInput = {
@@ -66402,6 +72131,8 @@ export namespace Prisma {
     pollVotes?: PollVoteCreateNestedManyWithoutUserInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
   }
 
   export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -66438,6 +72169,8 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
   }
 
   export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -66550,6 +72283,8 @@ export namespace Prisma {
     pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -66586,6 +72321,8 @@ export namespace Prisma {
     pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type ConversationUpsertWithoutPinnedMessageInput = {
@@ -66701,6 +72438,20 @@ export namespace Prisma {
     status?: $Enums.OfferStatus
   }
 
+  export type GameLogCreateManyDinozInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: string | null
+    actorUserId?: string | null
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+  }
+
   export type DinozCatchUpdateWithoutDinozInput = {
     hp?: IntFieldUpdateOperationsInput | number
     monsterId?: StringFieldUpdateOperationsInput | string
@@ -66754,6 +72505,7 @@ export namespace Prisma {
     missions?: DinozMissionsUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUpdateManyWithoutDinozNestedInput
     user?: UserUpdateOneRequiredWithoutDinozNestedInput
+    logs?: GameLogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutLeaderInput = {
@@ -66793,6 +72545,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUncheckedUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutLeaderInput = {
@@ -66951,6 +72704,48 @@ export namespace Prisma {
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+  }
+
+  export type GameLogUpdateWithoutDinozInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutLogsNestedInput
+    actorUser?: UserUpdateOneWithoutActedLogsNestedInput
+  }
+
+  export type GameLogUncheckedUpdateWithoutDinozInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    actorUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogUncheckedUpdateManyWithoutDinozInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    actorUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type JobRunCreateManyJobInput = {
@@ -67357,6 +73152,34 @@ export namespace Prisma {
     senderNameSnapshot: string
   }
 
+  export type GameLogCreateManyUserInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    dinozId?: number | null
+    actorUserId?: string | null
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+  }
+
+  export type GameLogCreateManyActorUserInput = {
+    id?: bigint | number
+    type: $Enums.GameLogType
+    retention?: $Enums.GameLogRetention
+    values?: GameLogCreatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: string | null
+    dinozId?: number | null
+    userNameSnapshot?: string | null
+    dinozNameSnapshot?: string | null
+    actorNameSnapshot?: string | null
+    createdAt?: Date | string
+  }
+
   export type UserGatherUpdateWithoutUserInput = {
     place?: IntFieldUpdateOperationsInput | number
     type?: IntFieldUpdateOperationsInput | number
@@ -67583,6 +73406,7 @@ export namespace Prisma {
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutUserInput = {
@@ -67622,6 +73446,7 @@ export namespace Prisma {
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionsUncheckedUpdateManyWithoutDinozNestedInput
     marketOffers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutUserInput = {
@@ -67799,6 +73624,90 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     senderNameSnapshot?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GameLogUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dinoz?: DinozUpdateOneWithoutLogsNestedInput
+    actorUser?: UserUpdateOneWithoutActedLogsNestedInput
+  }
+
+  export type GameLogUncheckedUpdateWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    actorUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogUncheckedUpdateManyWithoutUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    actorUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogUpdateWithoutActorUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutLogsNestedInput
+    dinoz?: DinozUpdateOneWithoutLogsNestedInput
+  }
+
+  export type GameLogUncheckedUpdateWithoutActorUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GameLogUncheckedUpdateManyWithoutActorUserInput = {
+    id?: BigIntFieldUpdateOperationsInput | bigint | number
+    type?: EnumGameLogTypeFieldUpdateOperationsInput | $Enums.GameLogType
+    retention?: EnumGameLogRetentionFieldUpdateOperationsInput | $Enums.GameLogRetention
+    values?: GameLogUpdatevaluesInput | string[]
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    userNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ParticipantCreateManyConversationInput = {

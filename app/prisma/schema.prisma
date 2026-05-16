@@ -52,6 +52,8 @@ model Dinoz {
   userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
+  logs GameLog[] @relation("GameLogDinoz")
+
   @@index([userId])
   @@index([leaderId])
 }
@@ -157,6 +159,67 @@ model ForcebrutTournamentOpponent {
 
   @@index([enabled, step])
   @@map("forcebrut_tournament_opponent")
+}
+
+model GameLog {
+  id        BigInt           @id @default(autoincrement())
+  type      GameLogType
+  retention GameLogRetention @default(TEMPORARY)
+
+  values   String[] @default([])
+  metadata Json?
+
+  userId String? @db.Uuid
+  user   User?   @relation("GameLogUser", fields: [userId], references: [id], onDelete: SetNull)
+
+  dinozId Int?
+  dinoz   Dinoz? @relation("GameLogDinoz", fields: [dinozId], references: [id], onDelete: SetNull)
+
+  actorUserId String? @db.Uuid
+  actorUser   User?   @relation("GameLogActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  userNameSnapshot  String?
+  dinozNameSnapshot String?
+  actorNameSnapshot String?
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@index([userId, dinozId, type])
+  @@index([type, createdAt])
+  @@index([retention, createdAt])
+  @@index([createdAt])
+  @@index([userId, createdAt])
+  @@index([dinozId, createdAt])
+  @@index([actorUserId, createdAt])
+  @@map("game_log")
+}
+
+model GameLogHourly {
+  id        BigInt      @id @default(autoincrement())
+  type      GameLogType
+  bucketAt  DateTime    @db.Timestamptz(3)
+  total     Int         @default(0)
+  createdAt DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime    @updatedAt @db.Timestamptz(3)
+
+  @@unique([type, bucketAt])
+  @@index([bucketAt])
+  @@index([type, bucketAt])
+  @@map("game_log_hourly")
+}
+
+model GameLogDaily {
+  id        BigInt      @id @default(autoincrement())
+  type      GameLogType
+  day       DateTime    @db.Date
+  total     Int         @default(0)
+  createdAt DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime    @updatedAt @db.Timestamptz(3)
+
+  @@unique([type, day])
+  @@index([day])
+  @@index([type, day])
+  @@map("game_log_daily")
 }
 
 model JobDefinition {
@@ -466,6 +529,9 @@ model User {
   createdConversations Conversation[] @relation("CreatedConversations")
   conversationLinks    Participant[]
   sentMessages         Message[]
+
+  logs      GameLog[] @relation("GameLogUser")
+  actedLogs GameLog[] @relation("GameLogActor")
 }
 
 model UserDinozShop {
@@ -655,17 +721,94 @@ enum DinozState {
   unfreezing
 }
 
-enum Language {
-  FR
-  EN
-  ES
-  DE
+enum GameLogRetention {
+  TEMPORARY
+  AUDIT
+}
+
+enum GameLogType {
+  PlayerCreated
+  PlayerConnected
+  PlayerReset
+  PlayerDeleted
+  PlayerBanned
+  PlayerUnbanned
+
+  CreateDinoz
+  Move
+  LevelUp
+  XPEarned
+  HPLost
+  Death
+  Revive
+
+  Fight
+  FightWon
+  FightLost
+
+  ItemUsed
+  ItemBought
+  ItemFound
+  IngredientSold
+  GoldWon
+  GoldLost
+
+  MissionFinished
+  MissionCanceled
+
+  Gather
+  GridFinished
+
+  OfferNew
+  OfferBid
+  OfferCancelled
+  OfferExpired
+  OfferWon
+
+  AdminUpdateDinoz
+  AdminAddStatus
+  AdminRemoveStatus
+  AdminAddSkill
+  AdminRemoveSkill
+  AdminAddUnlockableSkill
+  AdminRemoveUnlockableSkill
+  AdminAddMoney
+  AdminRemoveMoney
+  AdminAddReward
+  AdminRemoveReward
+  AdminAddItem
+  AdminRemoveItem
+  AdminAddIngredient
+  AdminRemoveIngredient
+  AdminUpdateMission
+  AdminUpdateScenario
+  AdminUpdateUser
+  AdminUpdateSecret
 }
 
 enum Gender {
   MALE
   FEMALE
   OTHER
+}
+
+enum JobType {
+  DAILY_AT
+  INTERVAL
+}
+
+enum JobStatus {
+  IDLE
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+enum Language {
+  FR
+  EN
+  ES
+  DE
 }
 
 enum MoneyType {
@@ -686,27 +829,15 @@ enum NewsType {
   announce
 }
 
+enum OfferStatus {
+  ONGOING
+  ENDED
+  CLAIMED
+}
+
 enum Role {
   PLAYER
   MODERATOR
   ADMIN
   SUPER_ADMIN
-}
-
-enum JobType {
-  DAILY_AT
-  INTERVAL
-}
-
-enum JobStatus {
-  IDLE
-  RUNNING
-  SUCCESS
-  FAILED
-}
-
-enum OfferStatus {
-  ONGOING
-  ENDED
-  CLAIMED
 }
