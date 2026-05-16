@@ -1,5 +1,11 @@
 import type { FastifyInstance } from 'fastify';
 
+import {
+	getAdminGameLogDailyStatsHandler,
+	getAdminGameLogHourlyStatsHandler,
+	getAdminGameLogsHandler,
+	getAdminGameLogSummaryHandler
+} from '../../Gamelog/Service/adminGamelog.service.js';
 import { getAllSecrets, getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { setSpecificSecret } from '../../jobs/controller/setSpecificSecret.js';
 import { newsIdParamsSchema } from '../../News/Schema/news.schema.js';
@@ -408,5 +414,47 @@ export async function adminRoutes(app: FastifyInstance) {
 			schema: { tags: ['Admin'], params: adminForcebrutOpponentParamsSchema }
 		},
 		deleteAdminForcebrutOpponentHandler
+	);
+	// Game logs / analytics
+	app.get(
+		'/logs',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		getAdminGameLogsHandler
+	);
+	app.get(
+		'/logs/hourly',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		getAdminGameLogHourlyStatsHandler
+	);
+	app.get(
+		'/logs/daily',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		getAdminGameLogDailyStatsHandler
+	);
+
+	app.get(
+		'/logs/summary',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		getAdminGameLogSummaryHandler
 	);
 }
