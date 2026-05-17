@@ -181,7 +181,7 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 			userNameSnapshot: user.name,
 			dinozId: dinoz.id,
 			dinozNameSnapshot: dinoz.name,
-			values: [String(currentPlace.placeId), String(finalPlace)],
+			values: [String(1)],
 			metadata: {
 				fromPlaceId: currentPlace.placeId,
 				toPlaceId: finalPlace,

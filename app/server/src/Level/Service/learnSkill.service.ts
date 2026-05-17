@@ -8,11 +8,13 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { getMaxXp } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { GameLogType } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { addMultipleUnlockableSkills } from '../../Dinoz/Controller/addMultipleSkill.controller.js';
 import { addSkillToDinoz } from '../../Dinoz/Controller/addSkillToDinoz.controller.js';
 import { getFollowingDinoz } from '../../Dinoz/Controller/getFollowingDinoz.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { updatePoints } from '../../Ranking/Controller/updatePoints.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { applySkillEffect } from '../Controller/applySkillEffect.controller.js';
@@ -134,7 +136,25 @@ export async function learnSkill(
 	}*/
 	// Update player points + logs
 	await updatePoints(dinozSkills.user.id, 1);
-	//await createLog(LogType.LevelUp, dinozSkills.user.id, dinozSkills.id, newDinozData.level.toString());
+	safeCreateGameLog(
+		{
+			type: GameLogType.LevelUp,
+			userId: dinozSkills.user.id,
+			userNameSnapshot: dinozSkills.user.name,
+			dinozId: dinozSkills.id,
+			dinozNameSnapshot: dinozSkills.name,
+			values: [String(1)],
+			metadata: {
+				source: 'skill',
+				previousLevel: dinozSkills.level,
+				newLevel: newDinozData.level,
+				tryNumber,
+				learnedSkillIds: skillIdList,
+				element: skills.element
+			}
+		},
+		req.log
+	);
 	result.newMaxExperience = getMaxXp({
 		level: newDinozData.level,
 		status: dinozSkills.status
