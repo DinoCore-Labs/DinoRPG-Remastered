@@ -23,6 +23,13 @@ function getMissionMonsterKeys(goal: MissionFightGoal | MissionFightActionGoal) 
 	return goal.fightAction.monsterKeys ?? [];
 }
 
+function getMissionAllyKeys(goal: MissionFightGoal | MissionFightActionGoal) {
+	if (goal.type === 'FIGHT') {
+		return goal.allyKeys;
+	}
+	return goal.fightAction.allyKeys ?? [];
+}
+
 function getMissionFightPlace(goal: MissionFightGoal | MissionFightActionGoal, fallbackPlace: number) {
 	if (goal.type === 'FIGHT_ACTION') {
 		return goal.fightAction.place ?? fallbackPlace;
@@ -78,6 +85,7 @@ export async function processMissionFight(input: StartMissionGoalFightInput): Pr
 	}
 	const team = user.dinoz.filter(dinoz => dinoz.life > 0 && dinoz.state === null);
 	const monsterKeys = getMissionMonsterKeys(input.goal);
+	const allyKeys = getMissionAllyKeys(input.goal);
 	const monsters = monsterKeys.map(monsterKey => {
 		const monster = monsterByKey[monsterKey];
 		if (!monster) {
@@ -85,9 +93,16 @@ export async function processMissionFight(input: StartMissionGoalFightInput): Pr
 		}
 		return monster;
 	});
+	const allies = (allyKeys ?? []).map(allyKey => {
+		const ally = monsterByKey[allyKey];
+		if (!ally) {
+			throw new ExpectedError(`Unknown mission ally key "${allyKey}".`);
+		}
+		return ally;
+	});
 
 	const place = getMissionFightPlace(input.goal, dinozData.placeId);
-	const fightResult = calculateFightVsMonsters(team, user, place, monsters);
+	const fightResult = calculateFightVsMonsters(team, user, place, allies, monsters);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, place, user, {
 		disableGoldReward: false
 	});

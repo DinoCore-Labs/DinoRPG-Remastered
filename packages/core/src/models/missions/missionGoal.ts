@@ -81,6 +81,7 @@ export type MissionRequireEffectGoal = {
 export type MissionFightGoal = {
 	type: 'FIGHT';
 	monsterKeys: MissionMonsterKey[];
+	allyKeys?: MissionMonsterKey[];
 };
 
 export type MissionFightActionGoal = {

@@ -211,6 +211,7 @@ export function calculateFightVsMonsters(
 	team: DinozToGetFighter[],
 	user: Pick<User, 'id' | 'cooker'>,
 	place: PlaceEnum,
+	allies?: MonsterFiche[],
 	monsters?: MonsterFiche[],
 	seed?: string
 ): FightProcessResult {
@@ -220,7 +221,7 @@ export function calculateFightVsMonsters(
 	const fighters = getFighters(
 		{
 			dinozList: team,
-			monsterList: []
+			monsterList: allies ?? []
 		},
 		{
 			dinozList: [],
