@@ -121,30 +121,11 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 	}
 	safeCreateGameLog(
 		{
-			type: GameLogType.Fight,
-			userId: user.id,
-			dinozId,
-			dinozNameSnapshot: dinozData.name,
-			metadata: {
-				source: 'direct',
-				result: fight.result,
-				monsterCount: fight.fighters.filter(f => f.type === FighterType.MONSTER).length,
-				monsters: fight.fighters
-					.filter(f => f.type === FighterType.MONSTER)
-					.map(monster => ({
-						id: monster.id,
-						name: monster.name
-					}))
-			}
-		},
-		req.log
-	);
-	safeCreateGameLog(
-		{
 			type: fight.result ? GameLogType.FightWon : GameLogType.FightLost,
 			userId: user.id,
 			dinozId,
 			dinozNameSnapshot: dinozData.name,
+			values: [String(1)],
 			metadata: {
 				source: 'direct',
 				monsterCount: fight.fighters.filter(f => f.type === FighterType.MONSTER).length
@@ -485,22 +466,6 @@ export async function rewardFightVsMonsters(
 				metadata: {
 					source: 'fight',
 					placeId: d.placeId
-				}
-			});
-		}
-
-		const newLevel = d.level + 1;
-		if (levelup) {
-			safeCreateGameLog({
-				type: GameLogType.LevelUp,
-				userId,
-				dinozId: d.id,
-				dinozNameSnapshot: d.name,
-				values: [String(newLevel)],
-				metadata: {
-					source: 'fight',
-					previousLevel: d.level,
-					newLevel
 				}
 			});
 		}
