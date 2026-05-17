@@ -119,6 +119,39 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 			fight.fighters.filter(f => f.type === FighterType.MONSTER).length
 		);
 	}
+	safeCreateGameLog(
+		{
+			type: GameLogType.Fight,
+			userId: user.id,
+			dinozId,
+			dinozNameSnapshot: dinozData.name,
+			metadata: {
+				source: 'direct',
+				result: fight.result,
+				monsterCount: fight.fighters.filter(f => f.type === FighterType.MONSTER).length,
+				monsters: fight.fighters
+					.filter(f => f.type === FighterType.MONSTER)
+					.map(monster => ({
+						id: monster.id,
+						name: monster.name
+					}))
+			}
+		},
+		req.log
+	);
+	safeCreateGameLog(
+		{
+			type: fight.result ? GameLogType.FightWon : GameLogType.FightLost,
+			userId: user.id,
+			dinozId,
+			dinozNameSnapshot: dinozData.name,
+			metadata: {
+				source: 'direct',
+				monsterCount: fight.fighters.filter(f => f.type === FighterType.MONSTER).length
+			}
+		},
+		req.log
+	);
 	return reply.send(fight);
 }
 
@@ -549,8 +582,24 @@ export async function rewardFightVsMonsters(
 	if (!options.disableGoldReward) {
 		if (victory) {
 			await addMoney(userId, gold);
+			safeCreateGameLog({
+				type: GameLogType.GoldWon,
+				userId,
+				values: [String(gold)],
+				metadata: {
+					source: 'fight'
+				}
+			});
 		} else if (goldLost) {
 			await removeMoney(userId, goldLost);
+			safeCreateGameLog({
+				type: GameLogType.GoldLost,
+				userId,
+				values: [String(goldLost)],
+				metadata: {
+					source: 'fight'
+				}
+			});
 		}
 	}
 
@@ -569,6 +618,16 @@ export async function rewardFightVsMonsters(
 				}
 				merguezPerPlayer[fighter.userId]++;
 			}
+			safeCreateGameLog({
+				type: GameLogType.ItemUsed,
+				userId: fighter.userId,
+				dinozId: fighter.dinozId,
+				values: [String(itemUsed)],
+				metadata: {
+					source: 'fight',
+					itemId: itemUsed
+				}
+			});
 		}
 	}
 
