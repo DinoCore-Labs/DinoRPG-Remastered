@@ -24,6 +24,7 @@ export async function getDinozForLevelUp(dinozId: number) {
 			user: {
 				select: {
 					id: true,
+					name: true,
 					//discoveredSkills: true,
 					ranking: { select: { points: true, average: true, dinozCount: true } }
 				}
