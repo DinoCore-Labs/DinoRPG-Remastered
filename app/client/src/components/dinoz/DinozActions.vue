@@ -602,6 +602,7 @@ export default defineComponent({
 							return;
 						}
 						currentDinozList[currentDinoz].state = DINOZ_STATE.frozen;
+						currentDinozList[currentDinoz].stateTimer = undefined;
 						this.dinozStore.setDinozList(currentDinozList);
 						await this.refreshDinoz();
 					} catch (e) {

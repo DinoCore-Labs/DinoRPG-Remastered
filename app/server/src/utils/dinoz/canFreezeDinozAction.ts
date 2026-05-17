@@ -14,19 +14,18 @@ export function canFreezeDinozAction(dinoz: FreezeActionDinoz): boolean {
 	if (dinoz.life <= 0) {
 		return false;
 	}
-
+	if (dinoz.state === DinozState.unfreezing) {
+		return true;
+	}
 	if (dinoz.state !== null) {
 		return false;
 	}
-
 	if (dinoz.placeId !== PlaceEnum.GORGES_PROFONDES) {
 		return false;
 	}
-
 	if (!dinoz.status.some(status => status.statusId === DinozStatusId.FSPELE)) {
 		return false;
 	}
-
 	return true;
 }
 
@@ -34,15 +33,15 @@ export function assertCanFreezeDinozAction(dinoz: FreezeActionDinoz) {
 	if (dinoz.life <= 0) {
 		throw new ExpectedError('Dead dinoz cannot be frozen');
 	}
-
+	if (dinoz.state === DinozState.unfreezing) {
+		return;
+	}
 	if (dinoz.state !== null) {
 		throw new ExpectedError('Dinoz cannot be frozen in its current state');
 	}
-
 	if (dinoz.placeId !== PlaceEnum.GORGES_PROFONDES) {
 		throw new ExpectedError('Dinoz must be in Gorges Profondes');
 	}
-
 	if (!dinoz.status.some(status => status.statusId === DinozStatusId.FSPELE)) {
 		throw new ExpectedError('Dinoz does not have the required freeze status');
 	}
@@ -52,7 +51,7 @@ export function canStartUnfreezingDinozAction(state: DinozState | null, activeDi
 	if (state !== DinozState.frozen) {
 		return false;
 	}
-	console.log(activeDinozCount, maxDinoz);
+	//console.log(activeDinozCount, maxDinoz);
 	return activeDinozCount < maxDinoz;
 }
 

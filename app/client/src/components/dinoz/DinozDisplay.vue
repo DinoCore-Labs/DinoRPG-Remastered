@@ -19,8 +19,8 @@
 					:life="dinozData.life / dinozData.maxLife"
 					flip
 					:race="dinozData.race.raceId"
-					:key="dinozData.life || dinozData.display"
-					:isFrozen="dinozData.state === 'frozen'"
+					:key="dinozAnimationKey"
+					:isFrozen="dinozData.state === 'frozen' || dinozData.state === 'unfreezing'"
 				/>
 				<template #fallback> <Loading /> </template>
 			</Suspense>
@@ -80,6 +80,18 @@ export default defineComponent({
 		},
 		nextId(): number | null {
 			return this.getDinozId(1);
+		},
+		dinozAnimationKey(): string {
+			return [
+				this.dinozData.id,
+				this.dinozData.display,
+				this.dinozData.life,
+				this.dinozData.maxLife,
+				this.dinozData.state ?? 'active'
+			].join('-');
+		},
+		isFrozen(): boolean {
+			return this.dinozData.state === DINOZ_STATE.frozen || this.dinozData.state === DINOZ_STATE.unfreezing;
 		}
 	},
 	methods: {
