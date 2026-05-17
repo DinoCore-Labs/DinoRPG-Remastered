@@ -1,3 +1,5 @@
 packages:
   - 'app/*'
   - 'packages/*'
+overrides:
+  '@fastify/jwt>fast-jwt': '6.2.4'
