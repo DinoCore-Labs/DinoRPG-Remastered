@@ -37,7 +37,7 @@
 		"@commitlint/config-conventional": "^20.5.0",
 		"@types/node": "^25.6.0",
 		"@typescript-eslint/eslint-plugin": "^8.58.0",
-		"@typescript-eslint/parser": "^8.58.0",
+		"@typescript-eslint/parser": "^8.59.3",
 		"dotenv": "^17.4.2",
 		"eslint": "^10.3.0",
 		"eslint-plugin-import": "^2.32.0",
