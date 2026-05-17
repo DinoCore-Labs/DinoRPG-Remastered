@@ -39,7 +39,7 @@
 				</a>
 			</li>
 		</ul>
-		<DZTable class="futur" :style="{ display: showFuturTable ? 'table' : 'none' }">
+		<DZTable v-show="showFuturTable" class="futur">
 			<tr>
 				<td class="futurHeader">
 					<div class="futurTitle">
@@ -260,22 +260,60 @@ export default defineComponent({
 }
 @media screen and (max-width: 560px) {
 	.roadmap {
-		max-width: 90%;
+		width: 97%;
+		max-width: 97%;
+		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
-		align-items: center;
+		align-items: stretch;
+		overflow-x: hidden;
+		h3 {
+			text-align: center;
+			padding: 0 10px;
+		}
 		.timeline {
+			width: 100%;
+			max-width: 100%;
+			box-sizing: border-box;
 			background-image: none !important;
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: space-around;
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 10px;
 			border: 1px solid #67220d;
-			padding: 0;
+			padding: 10px;
 			height: auto;
+			margin-left: 0;
+			margin-right: 0;
+			li {
+				float: none;
+				width: auto;
+				height: auto;
+				padding: 8px 4px;
+				box-sizing: border-box;
+				small {
+					width: auto;
+					height: auto;
+					margin-top: 0;
+				}
+				strong {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					gap: 5px;
+					span {
+						margin-left: 0;
+					}
+				}
+			}
 		}
 		.futur {
-			max-width: 85%;
+			display: table;
+			width: 100% !important;
+			max-width: 100% !important;
+			min-width: 0;
+			box-sizing: border-box;
 			border: 1px solid #67220d;
+			table-layout: fixed;
 			.futurHeader {
 				background-image: none !important;
 				.futurTitle {
@@ -285,14 +323,23 @@ export default defineComponent({
 			.futurDesc {
 				background-image: none !important;
 				.futurInfo {
-					& ul {
+					font-size: 14px;
+					ul {
 						display: flex;
 						flex-direction: column;
 						gap: 5px;
-						margin-left: -35px;
-						& li {
-							margin-left: 0 !important;
-							margin-right: 0 !important;
+						margin: 0;
+						padding: 10px;
+						box-sizing: border-box;
+						li {
+							margin: 0 !important;
+							display: flex;
+							align-items: flex-start;
+							gap: 6px;
+							span {
+								margin-left: 0;
+								overflow-wrap: anywhere;
+							}
 						}
 					}
 				}
