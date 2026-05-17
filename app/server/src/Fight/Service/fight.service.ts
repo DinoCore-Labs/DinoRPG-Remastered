@@ -16,12 +16,13 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { calculatePvExp, getMaxXp } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { Dinoz, DinozMissions, DinozSkills, DinozStatus, User } from '../../../../prisma/index.js';
+import { Dinoz, DinozMissions, DinozSkills, DinozStatus, GameLogType, User } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { createCatch, removeCatch, updateCatch } from '../../Dinoz/Controller/dinozCatches.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { advanceDinozMissionOnFightWon, advanceDinozMissionOnMove } from '../../Mission/Controller/mission.progress.js';
@@ -316,7 +317,7 @@ export function calculateFightBetweenPlayers(
 
 export type DinozToRewardFight = Parameters<typeof rewardFightVsMonsters>[0][number];
 export async function rewardFightVsMonsters(
-	team: (Pick<Dinoz, 'id' | 'level' | 'experience' | 'life' | 'placeId'> & {
+	team: (Pick<Dinoz, 'id' | 'name' | 'level' | 'experience' | 'life' | 'placeId'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkills, 'skillId'>[];
 		items: Pick<DinozItems, 'itemId'>[];
@@ -406,8 +407,69 @@ export async function rewardFightVsMonsters(
 				increment: victory ? xp : 0
 			}
 		});
-		//await createLog(LogType.XPEarned, playerId, d.id, victory ? xp : 0);
-		//await createLog(LogType.HPLost, playerId, d.id, attacker.hpLost);
+
+		const xpEarned = victory ? xp : 0;
+
+		if (xpEarned > 0) {
+			safeCreateGameLog({
+				type: GameLogType.XPEarned,
+				userId,
+				dinozId: d.id,
+				dinozNameSnapshot: d.name,
+				values: [String(xpEarned)],
+				metadata: {
+					source: 'fight',
+					level: d.level,
+					previousExperience: d.experience,
+					newExperience: d.experience + totalWinXP,
+					levelup
+				}
+			});
+		}
+
+		if (attacker.hpLost > 0) {
+			safeCreateGameLog({
+				type: GameLogType.HPLost,
+				userId,
+				dinozId: d.id,
+				dinozNameSnapshot: d.name,
+				values: [String(attacker.hpLost)],
+				metadata: {
+					source: 'fight',
+					previousLife: d.life,
+					newLife: Math.max(0, d.life - attacker.hpLost)
+				}
+			});
+		}
+
+		if (attacker.hpLost >= d.life) {
+			safeCreateGameLog({
+				type: GameLogType.Death,
+				userId,
+				dinozId: d.id,
+				dinozNameSnapshot: d.name,
+				metadata: {
+					source: 'fight',
+					placeId: d.placeId
+				}
+			});
+		}
+
+		const newLevel = d.level + 1;
+		if (levelup) {
+			safeCreateGameLog({
+				type: GameLogType.LevelUp,
+				userId,
+				dinozId: d.id,
+				dinozNameSnapshot: d.name,
+				values: [String(newLevel)],
+				metadata: {
+					source: 'fight',
+					previousLevel: d.level,
+					newLevel
+				}
+			});
+		}
 
 		// Log death if dinoz is dead
 		if (attacker.hpLost >= d.life) {
