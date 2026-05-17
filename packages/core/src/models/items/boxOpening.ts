@@ -12,8 +12,8 @@ export interface ItemProbability {
 }
 
 export enum BoxType {
-	COMMON = 'BOX_COMMON',
-	RARE = 'BOX_RARE',
-	EPIC = 'BOX_EPIC',
-	LEGENDARY = 'BOX_LEGENDARY'
+	COMMON = 'box_common',
+	RARE = 'box_rare',
+	EPIC = 'box_epic',
+	LEGENDARY = 'box_legendary'
 }
