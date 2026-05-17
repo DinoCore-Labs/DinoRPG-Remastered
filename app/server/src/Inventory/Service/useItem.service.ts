@@ -296,7 +296,7 @@ async function hatchEgg(item: ItemFiche, authed: Pick<User, 'id'>) {
 				...dinozCreated,
 				status: [],
 				skills: [],
-				//missions: [],
+				missions: [],
 				items: [],
 				followers: []
 				//concentration: null,
