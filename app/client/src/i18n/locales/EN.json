@@ -54,7 +54,7 @@
 			"gold": "Gold coins",
 			"treasureTicket": "Treasury Note"
 		},
-		"dinozCapacity": "Dinoz : {current}/{max}"
+		"dinozCapacity": "Dinoz: {current}/{max}"
 	},
 	"footer": {
 		"dev": "Developers:",
@@ -197,8 +197,9 @@
 		"gather": "DinoRPG [ {type}]",
 		"fight": "DinoRPG [ Fight! ]",
 		"training": "DinoRPG [ L.T.C ]",
+		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
 		"manageDinoz": "DinoRPG [ Manage my Dinoz ]",
-		"market": "DinoRPG [ Marché des Éleveurs ]",
+		"market": "DinoRPG [ Tamer Market ]",
 		"admin": "DinoRPG [ Admin Dashboard ]"
 	},
 	"adminPage": {
@@ -207,60 +208,60 @@
 		}
 	},
 	"market": {
-		"title": "Marché des Éleveurs",
+		"title": "Master's Market",
 		"disclaimer": "Welcome to the Tamer Market! Here you can buy and sell Dinoz, ingredients, and some rare items coming from all over Dinoland!",
-		"allOffers": "Toutes les offres",
-		"myTransactions": "Mes transactions",
-		"sell": "Vendre",
-		"history": "Historique",
+		"allOffers": "All offers",
+		"myTransactions": "My transactions",
+		"sell": "Sell",
+		"history": "History",
 		"dinoz": "Dinoz",
-		"items": "Objets",
-		"makeAnOffer": "Faire une offre",
-		"filter": "Filtrer",
-		"all": "Tout",
-		"seller": "Vendeur",
-		"timeLeft": "Temps restant",
-		"auctionExpired": "Enchère expirée",
-		"minimumPrice": "Prix mini",
-		"highestBid": "Enchère actuelle",
-		"by": "par",
+		"items": "Items",
+		"makeAnOffer": "Make an offer",
+		"filter": "Filter",
+		"all": "All",
+		"seller": "Seller",
+		"timeLeft": "Time left",
+		"auctionExpired": "Auction expired",
+		"minimumPrice": "Minimum price",
+		"highestBid": "Current bid",
+		"by": "by",
 		"details": "Details",
-		"time": "{days}j {hours}h {minutes}m {seconds}s",
-		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Éleveurs peuvent être obtenus de diverses façons dans Dinoland. La **Banque de Dinoland** peut vous les racheter au taux de **1** :ticket: **= 1000** :gold: mais elle n'en émet plus.",
+		"time": "{days}d {hours}h {minutes}m {seconds}s",
+		"currency": "**Treasure Coupons** needed for purchases at the Tamer Market can be obtained for the equivalent of **1** :ticket: **= 1000** :gold: from the **Dinoland Bank**.",
 		"back": "Return",
-		"bid": "Enchérir",
-		"detail": "Voir détails",
-		"yourTreasuryNotes": "Vos Bons du Trésor",
+		"bid": "Bid",
+		"detail": "See Details",
+		"yourTreasuryNotes": "Your Treasure Coupons",
 		"sellView": {
-			"disclaimer": "Ici, vous pouvez construire votre offre, elle sera soumise aux autres Maîtres Dinoz. Si vous vendez un Dinoz ou des objets, ces derniers seront indisponibles pendant la durée de l'offre.",
-			"prepareYourOffer": "Préparer votre offre",
-			"sellYourDinoz": "Vendre votre Dinoz",
-			"itemsAndIngredients": "Objets et Ingrédients",
-			"offerMinimalValue": "Valeur MINIMALE de votre offre",
-			"minimalValueDisclaimer": "Votre offre doit avoir, au MINIMUM, une valeur de **{minValue}** :gold: pour être validée.",
-			"create": "Créer l'offre",
-			"add": "Ajouter",
-			"remove": "Retirer"
+			"disclaimer": "Here you can build your offer, it will be submitted to the other Dinoz Masters. If you sell a Dinoz or items, they will be unavailable for the duration of the offer.",
+			"prepareYourOffer": "Prepare your offer",
+			"sellYourDinoz": "Sell your Dinoz",
+			"itemsAndIngredients": "Items and ingredients",
+			"offerMinimalValue": "MINIMAL value of your offer",
+			"minimalValueDisclaimer": "Your offer must have, at MINIMUM, a value of **{minValue}** :gold: to be validated.",
+			"create": "Create offer",
+			"add": "Add",
+			"remove": "Remove"
 		},
 		"transactionView": {
-			"yourOngoingOffer": "Votre offre en cours",
-			"yourWonOffer": "Vos offres gagnées",
-			"myExpiredOffers": "Vos ventes expirées",
-			"noExpiredOffer": "Vous n'avez aucune vente expirée à récupérer.",
-			"claimExpired": "Récupérer ma vente",
-			"noOnGoingOffer": "Vous n'avez aucune offre en cours.",
-			"noWonOffer": "Vous n'avez aucune offre à récupérer",
-			"claim": "Récupérer mes gains",
-			"bid": "Mise",
-			"noBidYet": "Aucune mise pour l'instant.",
-			"cancel": "Annuler",
-			"yourActiveBids": "Vos mises en cours",
-			"noActiveBid": "Vous n'avez enchéri sur aucune offre pour le moment."
+			"yourOngoingOffer": "Your ongoing offer",
+			"yourWonOffer": "Your won bids",
+			"myExpiredOffers": "Your expired offers",
+			"noExpiredOffer": "You don't have any expired sales.",
+			"claimExpired": "Recover my offer",
+			"noOnGoingOffer": "You have no ongoing offer.",
+			"noWonOffer": "You have no ongoing offer",
+			"claim": "Collect my winnings",
+			"bid": "Bids",
+			"noBidYet": "No bet yet.",
+			"cancel": "Cancel",
+			"yourActiveBids": "Your active bids",
+			"noActiveBid": "You haven't bid on any offer yet."
 		},
 		"historyView": {
-			"lastOffers": "Voici les dernières ventes qui ont été effectuées par les joueurs :",
-			"yourOwnOffers": "Vos mises",
-			"yourOwnBids": "Vos achats"
+			"lastOffers": "Here are the latest sales that were completed by players:",
+			"yourOwnOffers": "Your bids",
+			"yourOwnBids": "Your Purchases"
 		}
 	},
 	"manageDinoz": {
@@ -284,28 +285,28 @@
 			"title": "Discover the upcoming events on DinoRPG!",
 			"small": "Irma's Prediction",
 			"strong": {
-				"title1": "Alpha 0.8.0 (Soon)",
-				"title2": "Alpha 0.9.0",
-				"title3": "Alpha 0.10.0",
-				"title4": "Alpha 0.11.0"
+				"title1": "Alpha 0.9.0 (Soon)",
+				"title2": "Alpha 0.10.0",
+				"title3": "Alpha 0.11.0",
+				"title4": "Alpha 0.12.0"
 			},
 			"help": "Click on an update above to get more information!",
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
 			"futurTitle": "Dinolandian Future",
 			"futureInfo1": {
-				"text1": "Implementation of scenarios (Prisma + database)",
-				"text2": "Implementation of the tutorial scenario",
+				"text1": "Intégration d'un système de logs",
+				"text2": "Scénario du parchemin ???",
 				"text3": "Madame X et ses missions",
 				"text4": "Les compétences doubles",
-				"text5": "Madame X and her missions"
+				"text5": "Correction des bugs"
 			},
 			"futureInfo2": {
-				"text1": "Implementation of the Breeders' Market",
-				"text2": "Bug fixes",
-				"text3": "Madame X and her missions"
+				"text1": "Les clans",
+				"text2": "Le Maître élémentaire et ses missions",
+				"text3": "Correction des bugs"
 			},
 			"futureInfo3": {
-				"text1": "Coming soon",
+				"text1": "La chasse aux Monstres (event PVE)",
 				"text2": "Implementation of the tutorial scenario",
 				"text3": "Le tournoi inter dojo (event PVP)",
 				"text4": "Correction de bugs"
@@ -3401,41 +3402,41 @@
 		"strangeHippo": {
 			"name": "Strange Dinoz",
 			"dialog": {
-				"begin": "Un étrange Dinoz est apparu sur votre chemin, puis s'enfuit... Que désirez-vous faire ?",
-				"fight": "Vous avez vaincu un Dinoz rare : un Hippoclamp ! Vous obtenez le Trophée des Hippoclamps qui vous permettra désormais d'acheter ce Dinoz dans la Boutique des Dinoz !",
-				"leave": "On dirait qu'il ne revient pas... Mais de quelle espèce pouvait-il bien s'agir ?"
+				"begin": "You come across a strange Dinoz. As it spots you, it starts running away. What do you do?",
+				"fight": "You've defeated a Hippoclamp and earned the Hippoclamps Trophy. This will allow you to buy Hippoclamps in the Dinoz Shop. Congratulations!",
+				"leave": "It seems like it's not coming back... What species could it be?"
 			},
 			"choice": {
-				"fight": "Le poursuivre !",
-				"leave": "Attendre."
+				"fight": "Pursue it!",
+				"leave": "Wait."
 			}
 		},
 		"strangeRocky": {
 			"name": "Strange Stone",
 			"dialog": {
-				"begin": "Une étrange pierre se dresse au milieu du chemin, Son emplacement ne semble pas très naturel... Que désirez vous faire ?",
-				"touch": "C'est étrange... la pierre semble chaude au toucher. Il n'y a rien d'autre de spécial... Peut-être vaut-il mieux ne pas insister...",
-				"leave": "Vous avez raison, après-tout ce n'est qu'un simple caillou....",
-				"fight": "Oooops !! La pierre en question était un Rocky, un Dinoz moitié animal moitié minéral assez rare dans le Royaume de Dinoville... En l'ayant vaincu, vous obtenez le Trophée des Rockys, qui vous permettra désormais d'obtenir des Rockys dans la Boutique des Dinoz. Bravo !"
+				"begin": "A strange stone is standing in your way. It seems like a very odd location for a stone... What do you want to do?",
+				"touch": "That's strange... this stone seems to be warm but there's nothing else special about it. Maybe it would be better to leave it alone...",
+				"leave": "You're right, it's only a rock....",
+				"fight": "Oops!! It seems that this stone was in fact a Rocky, a half-animal half-mineral Dinoz rarely found in Dinoland... By defeating it, you've earned the Rockies Trophy, which will allow you to buy Rockies in the Dinoz Shop. Congratulations!"
 			},
 			"choice": {
-				"touch": "La toucher",
-				"fight": "Essayer de la faire basculer",
-				"grave": "Graver quelque chose",
-				"leave": "Continuer votre route"
+				"touch": "Touch it",
+				"fight": "Try to topple it",
+				"grave": "Engrave something",
+				"leave": "Continue on your way"
 			}
 		},
 		"papyJoe": {
 			"name": "Grandpa Joe",
 			"dialog": {
-				"begin": "Salut p'tit gars, je t'attendais..."
+				"begin": "Hello youngster, I've been waiting for you..."
 			},
 			"choice": {
-				"missions": "Consulter la liste des missions"
+				"missions": "Show Mission List"
 			}
 		},
 		"shamanMou": {
-			"name": "Shaman Mou",
+			"name": "Soft Shaman",
 			"dialog": {
 				"begin": "B'jour jeune av'turier, bienv'nue à Fosselave... la capitale du Grand T'chaud... Hésite pô à admirer nos super sculptures en basalte. Y'a aussi les bains de magma, là bas... Ca va te relaxer, tu verras c'est coooool... Si t'as faim, t'peux goûter not' spécialité : les merguez de Gobelin... Ca te ravigore, youuuhouuu, tu peux pas imaginer...",
 				"charm": "Ah ouais, c'est vrai... y parait que j'dois t'aider... Tiens, un Charme de Feu... ça aidera bien ton dinoz dans ses prochains combats.",
