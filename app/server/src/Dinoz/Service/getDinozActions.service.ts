@@ -14,7 +14,7 @@ import {
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.js';
 
-import { Dinoz, DinozMissions, DinozSkills, DinozState, DinozStatus } from '../../../../prisma/index.js';
+import { Dinoz, DinozSkills, DinozState, DinozStatus } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
@@ -200,7 +200,7 @@ export async function getAvailableActions(
 	}
 
 	if (dinoz.state === DinozState.unfreezing) {
-		return [];
+		return [actionList[Action.CONGEL]];
 	}
 
 	if (dinoz.state === DinozState.selling) {
