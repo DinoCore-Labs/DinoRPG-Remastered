@@ -15,6 +15,7 @@ import {
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/client.js';
+import { addSkillToDinoz } from '../../Dinoz/Controller/addSkillToDinoz.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { unlockDinozMission } from '../../Mission/Controller/mission.progress.js';
 import {
@@ -362,6 +363,8 @@ async function applyDialogEffect(
 			});
 			return;
 		case 'skill':
+			await addSkillToDinoz(context.dinoz.id, effect.skillid);
+			return;
 		case 'friend':
 		case 'moveRandom':
 		case 'dialect':
