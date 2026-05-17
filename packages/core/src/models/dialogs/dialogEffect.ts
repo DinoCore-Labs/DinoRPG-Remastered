@@ -5,7 +5,7 @@ export type DialogEffect =
 	| { type: 'noEffect'; effect: string }
 	| { type: 'collection'; collection: string }
 	| { type: 'removeCollection'; collection: string }
-	| { type: 'skill'; skill: string }
+	| { type: 'skill'; skillid: number }
 	| { type: 'url'; url: string }
 	| { type: 'scenario'; scenario: string; phase: number }
 	| { type: 'scenarioDelta'; scenario: string; delta: number }

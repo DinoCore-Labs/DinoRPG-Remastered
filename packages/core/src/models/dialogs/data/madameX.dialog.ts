@@ -2,7 +2,6 @@ import { PlaceEnum } from '../../enums/PlaceEnum.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { defineDialog } from '../defineDialog.js';
 
-
 export const madameXDialog = defineDialog({
 	id: 'madameX',
 	place: PlaceEnum.FORCEBRUT,
@@ -70,7 +69,8 @@ export const madameXDialog = defineDialog({
 		dolearn: {
 			id: 'dolearn',
 			text: 'npc.madameX.dialog.dolearn',
-			next: []
+			next: [],
+			effects: [{ type: 'skill', skillid: 61119 }]
 		},
 		no: {
 			id: 'no',
@@ -118,32 +118,38 @@ export const madameXDialog = defineDialog({
 		},
 		learn: {
 			id: 'learn',
-			text: 'npc.madameX.choice.learn'
+			text: 'npc.madameX.choice.learn',
+			cond: parseCondition('!skill(61119)')
 		},
 		learn1: {
 			id: 'learn1',
 			text: 'npc.madameX.choice.learn1',
-			target: 'dolearn'
+			target: 'dolearn',
+			cond: parseCondition('(skill(11308)+skill(21303))|(skill(11311)+skill(31301))')
 		},
 		learn2: {
 			id: 'learn2',
 			text: 'npc.madameX.choice.learn2',
-			target: 'dolearn'
+			target: 'dolearn',
+			cond: parseCondition('(skill(11305)+skill(41303))|(skill(11310)+skill(51306))')
 		},
 		learn3: {
 			id: 'learn3',
 			text: 'npc.madameX.choice.learn3',
-			target: 'dolearn'
+			target: 'dolearn',
+			cond: parseCondition('(skill(21309)+skill(31311))|(skill(21301)+skill(41306))')
 		},
 		learn4: {
 			id: 'learn4',
 			text: 'npc.madameX.choice.learn4',
-			target: 'dolearn'
+			target: 'dolearn',
+			cond: parseCondition('(skill(21304)+skill(51310))|(skill(31308)+skill(41301))')
 		},
 		learn5: {
 			id: 'learn5',
 			text: 'npc.madameX.choice.learn5',
-			target: 'dolearn'
+			target: 'dolearn',
+			cond: parseCondition('(skill(31304)+skill(51312))|(skill(41305)+skill(51302))')
 		},
 		no: {
 			id: 'no',
@@ -151,7 +157,8 @@ export const madameXDialog = defineDialog({
 		},
 		already: {
 			id: 'already',
-			text: 'npc.madameX.choice.already'
+			text: 'npc.madameX.choice.already',
+			cond: parseCondition('skill(61119)')
 		}
 	}
 });
