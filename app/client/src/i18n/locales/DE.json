@@ -197,6 +197,7 @@
 		"gather": "DinoRPG [ {type} ]",
 		"fight": "DinoRPG [ Kampf! ]",
 		"training": "DinoRPG [ C.E.F ]",
+		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
 		"manageDinoz": "DinoRPG [ Dinoz verwalten ]",
 		"market": "DinoRPG [ Marché des Éleveurs ]",
 		"admin": "DinoRPG [ Administrationsseite ]"
