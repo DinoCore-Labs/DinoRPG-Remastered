@@ -26,7 +26,8 @@ const GAME_LOG_SUM_VALUE_TYPES = [
 	GameLogType.HPLost,
 	GameLogType.ItemBought,
 	GameLogType.ItemUsed,
-	GameLogType.ItemUsed
+	GameLogType.ItemUsed,
+	GameLogType.IngredientSold
 ];
 
 const gameLogAggregateValueSql = Prisma.sql`
