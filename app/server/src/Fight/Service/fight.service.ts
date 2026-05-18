@@ -546,24 +546,8 @@ export async function rewardFightVsMonsters(
 	if (!options.disableGoldReward) {
 		if (victory) {
 			await addMoney(userId, gold);
-			safeCreateGameLog({
-				type: GameLogType.GoldWon,
-				userId,
-				values: [String(gold)],
-				metadata: {
-					source: 'fight'
-				}
-			});
 		} else if (goldLost) {
 			await removeMoney(userId, goldLost);
-			safeCreateGameLog({
-				type: GameLogType.GoldLost,
-				userId,
-				values: [String(goldLost)],
-				metadata: {
-					source: 'fight'
-				}
-			});
 		}
 	}
 
