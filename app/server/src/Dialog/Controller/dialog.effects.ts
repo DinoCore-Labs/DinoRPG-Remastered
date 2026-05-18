@@ -12,11 +12,13 @@ import {
 	MERGUEZ_DEFAULT_MAX_QUANTITY,
 	MERGUEZ_SHOPKEEPER_MAX_QUANTITY
 } from '@dinorpg/core/models/scenarios/data/merguezScenario.js';
+import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/client.js';
 import { addSkillToDinoz } from '../../Dinoz/Controller/addSkillToDinoz.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
+import { unlockDoubleSkills } from '../../Level/Controller/unlockDoubleSkills.controller.js';
 import { unlockDinozMission } from '../../Mission/Controller/mission.progress.js';
 import {
 	incrementUserScenarioProgression,
@@ -364,6 +366,9 @@ async function applyDialogEffect(
 			return;
 		case 'skill':
 			await addSkillToDinoz(context.dinoz.id, effect.skillid);
+			if (effect.skillid === skillList[Skill.COMPETENCE_DOUBLE].id) {
+				await unlockDoubleSkills(context.dinoz.id);
+			}
 			return;
 		case 'friend':
 		case 'moveRandom':
