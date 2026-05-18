@@ -131,6 +131,11 @@ export type MissionValidateGoal = {
 	nameKey: string;
 };
 
+export type MissionWaitGoal = {
+	type: 'WAIT';
+	duration: number;
+};
+
 export type MissionGoal =
 	| MissionAtGoal
 	| MissionTalkGoal
@@ -146,4 +151,5 @@ export type MissionGoal =
 	| MissionUseIngredientGoal
 	| MissionBranchGoal
 	| MissionDigGoal
-	| MissionValidateGoal;
+	| MissionValidateGoal
+	| MissionWaitGoal;
