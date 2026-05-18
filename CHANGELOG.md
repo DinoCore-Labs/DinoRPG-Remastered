@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.21.0
+
+### Minor Changes
+
+- ab866ae: add madame X (dialogs and missions) + double skills
+
 ## 0.20.0
 
 ### Minor Changes
@@ -472,6 +478,17 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.23.0
+
+### Minor Changes
+
+- ab866ae: add madame X (dialogs and missions) + double skills
+
+### Patch Changes
+
+- Updated dependencies [ab866ae]
+  - @dinorpg/core@0.21.0
 
 ## 0.22.0
 
@@ -1066,6 +1083,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.22.0
+
+### Minor Changes
+
+- ab866ae: add madame X (dialogs and missions) + double skills
 
 ## 0.21.0
 
