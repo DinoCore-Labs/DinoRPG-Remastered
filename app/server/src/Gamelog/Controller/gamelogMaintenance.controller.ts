@@ -4,7 +4,7 @@ import {
 	TEMPORARY_GAME_LOG_RETENTION_DAYS
 } from '@dinorpg/core/models/gamelog/constants.js';
 
-import { GameLogRetention, Prisma } from '../../../../prisma/index.js';
+import { GameLogRetention, GameLogType, Prisma } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
 function subDays(date: Date, days: number) {
@@ -19,6 +19,26 @@ function subMonths(date: Date, months: number) {
 	return next;
 }
 
+const GAME_LOG_SUM_VALUE_TYPES = [GameLogType.GoldWon, GameLogType.GoldLost, GameLogType.XPEarned, GameLogType.HPLost];
+
+const gameLogAggregateValueSql = Prisma.sql`
+	CASE
+		WHEN "type"::text IN (${Prisma.join(GAME_LOG_SUM_VALUE_TYPES)})
+		THEN COALESCE(
+			CASE
+				WHEN ("metadata" ->> 'amount') ~ '^-?[0-9]+$'
+				THEN ABS(("metadata" ->> 'amount')::int)
+			END,
+			CASE
+				WHEN COALESCE("values"[1], '') ~ '^-?[0-9]+$'
+				THEN ABS("values"[1]::int)
+			END,
+			0
+		)
+		ELSE 1
+	END
+`;
+
 export async function aggregateGameLogs(from: Date, to: Date) {
 	await prisma.$executeRaw(
 		Prisma.sql`
@@ -26,12 +46,12 @@ export async function aggregateGameLogs(from: Date, to: Date) {
 			SELECT
 				type,
 				date_trunc('hour', "createdAt") AS "bucketAt",
-				COUNT(*)::int AS total,
+				SUM(${gameLogAggregateValueSql})::int AS total,
 				now(),
 				now()
 			FROM game_log
 			WHERE "createdAt" >= ${from}
-			  AND "createdAt" < ${to}
+				AND "createdAt" < ${to}
 			GROUP BY type, date_trunc('hour', "createdAt")
 			ON CONFLICT (type, "bucketAt")
 			DO UPDATE SET
@@ -39,18 +59,19 @@ export async function aggregateGameLogs(from: Date, to: Date) {
 				"updatedAt" = now()
 		`
 	);
+
 	await prisma.$executeRaw(
 		Prisma.sql`
 			INSERT INTO game_log_daily (type, day, total, "createdAt", "updatedAt")
 			SELECT
 				type,
 				date_trunc('day', "createdAt")::date AS day,
-				COUNT(*)::int AS total,
+				SUM(${gameLogAggregateValueSql})::int AS total,
 				now(),
 				now()
 			FROM game_log
 			WHERE "createdAt" >= ${from}
-			  AND "createdAt" < ${to}
+				AND "createdAt" < ${to}
 			GROUP BY type, date_trunc('day', "createdAt")::date
 			ON CONFLICT (type, day)
 			DO UPDATE SET
