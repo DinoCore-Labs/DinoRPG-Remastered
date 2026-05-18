@@ -9,9 +9,11 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
+import { GameLogType } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { fightMonstersAtPlace } from '../../Fight/Service/fight.service.js';
 import { movementListener } from '../../Fight/Service/movementListener.service.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { processScenarioMoveFight } from '../../Scenario/Service/scenarioMoveFight.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { canGoToThisPlace, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
@@ -25,35 +27,25 @@ type Req = FastifyRequest<{ Body: MoveDinozInput }>;
 
 export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 	const { dinozId, placeId } = req.body;
-
 	const authedId = req.user.id;
-
 	const dayOfWeek = new Date().getDay();
-
 	const user = await getDinozFightDataRequest(dinozId, authedId);
 	if (!user) throw new ExpectedError('userNotFound', { params: { authedId } });
-
 	const dinoz = user.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) throw new ExpectedError('dinozNotFound', { params: { dinozId } });
-
 	if (dinoz.canRename) throw new ExpectedError(`Dinoz has to be named`);
-
 	if (dinoz.leaderId) {
 		throw new ExpectedError('notLeader', { params: { dinozId } });
 	}
-
 	let team = user.dinoz;
-
 	// Go through followers and make those that are unavailable leave the group.
 	const unavailableFollowers = team.filter(d => d.life <= 0 || d.state !== null);
-
 	if (unavailableFollowers.length > 0) {
 		for (const d of unavailableFollowers) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
 		team = team.filter(d => d.life > 0 && d.state === null);
 	}
-
 	for (const dinozData of team) {
 		//Remove temporary status
 		const tempStatus = dinozData.status.filter(r => r.statusId in TemporaryStatus);
@@ -62,33 +54,25 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 			await Promise.all(promises);
 		}
 	}
-
 	/*if (dinoz.concentration) {
 		throw new ExpectedError('concentration', { params: { dinozId } });
 	}*/
-
 	if (team.some(d => !d.fight)) {
 		throw new ExpectedError('missingIrma', { params: { dinozId } });
 	}
-
 	if (!isAlive(dinoz)) {
 		throw new ExpectedError('dead', { params: { dinozId } });
 	}
-
 	const currentPlace = actualPlace(dinoz);
 	const desiredPlace = Object.values(placeListv2).find(p => p.placeId === placeId);
-
 	if (!desiredPlace) throw new ExpectedError(`Dinoz ${dinozId} want to go in the void`);
 	if (currentPlace.placeId === desiredPlace.placeId) {
 		throw new ExpectedError(`Dinoz ${dinozId} is already at ${currentPlace.name}`);
 	}
-
 	const moveToDesiredPlace = currentPlace.moves.find(move => move.target === desiredPlace.placeId);
-
 	if (!moveToDesiredPlace) {
 		throw new ExpectedError(`${currentPlace.name} is not adjacent with ${desiredPlace.name}`);
 	}
-
 	// Check if condition to go to desired place are fulfilled for dinoz and followers
 	if (desiredPlace.condition) {
 		for (const member of team) {
@@ -96,7 +80,6 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 				id: user.id,
 				items: user.items,
 				rewards: user.rewards,
-				//quests: user.quests,
 				ranking: user.ranking,
 				dinoz: [member]
 			};
@@ -105,10 +88,8 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 			}
 		}
 	}
-
 	// If dinoz leaves the map, replace by the good place
 	const finalPlace = desiredPlace.gotoPlaceId ?? desiredPlace.placeId;
-
 	// Marais Collant - No movement days.
 	if (
 		!gameConfig.world.disableSwampMovementBlock &&
@@ -144,6 +125,41 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 			);
 		}
 	}
+	if (fight?.result) {
+		const toNullableString = (value: unknown) => {
+			return typeof value === 'string' ? value : null;
+		};
+		const toNullableNumber = (value: unknown) => {
+			return typeof value === 'number' ? value : null;
+		};
+		const encounteredMonsters = fight.fighters
+			.filter(f => f.type === FighterType.MONSTER || f.type === FighterType.BOSS)
+			.map(f => ({
+				id: f.id,
+				type: String(f.type),
+				key: toNullableString('key' in f ? f.key : null),
+				name: toNullableString('name' in f ? f.name : null),
+				level: toNullableNumber('level' in f ? f.level : null)
+			}));
+		safeCreateGameLog(
+			{
+				type: GameLogType.Fight,
+				userId: user.id,
+				userNameSnapshot: user.name,
+				dinozId: dinoz.id,
+				dinozNameSnapshot: dinoz.name,
+				metadata: {
+					fromPlaceId: currentPlace.placeId,
+					toPlaceId: finalPlace,
+					result: fight.result,
+					teamDinozIds: team.map(member => member.id),
+					monsterCount: encounteredMonsters.length,
+					monsters: encounteredMonsters
+				}
+			},
+			req.log
+		);
+	}
 	// Consume fight action
 	for (const dino of team) {
 		await updateDinoz(dino.id, {
@@ -158,6 +174,22 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 		user.id,
 		fight.fighters.filter(f => f.type === FighterType.MONSTER).length
 	);
-
+	safeCreateGameLog(
+		{
+			type: GameLogType.Move,
+			userId: user.id,
+			userNameSnapshot: user.name,
+			dinozId: dinoz.id,
+			dinozNameSnapshot: dinoz.name,
+			values: [String(1)],
+			metadata: {
+				fromPlaceId: currentPlace.placeId,
+				toPlaceId: finalPlace,
+				teamDinozIds: team.map(member => member.id),
+				fightTriggered: Boolean(fight?.result)
+			}
+		},
+		req.log
+	);
 	return fight;
 }

@@ -13,7 +13,15 @@ import { skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-import { Dinoz, DinozSkills, DinozSkillsUnlockable, DinozStatus, User, UserItems } from '../../../../prisma/index.js';
+import {
+	Dinoz,
+	DinozSkills,
+	DinozSkillsUnlockable,
+	DinozStatus,
+	GameLogType,
+	User,
+	UserItems
+} from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { addMultipleSkillToDinoz } from '../../Dinoz/Controller/addMultipleSkill.controller.js';
 import { addSkillToDinoz } from '../../Dinoz/Controller/addSkillToDinoz.controller.js';
@@ -22,6 +30,7 @@ import { removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.contro
 import { getActiveDinoz } from '../../Dinoz/Controller/getActiveDinoz.js';
 import { getDinozFicheItemRequest } from '../../Dinoz/Controller/getDinozFicheItem.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { applySkillEffect } from '../../Level/Controller/applySkillEffect.controller.js';
 import { prisma } from '../../prisma.js';
 import { updateDinozCount } from '../../Ranking/Controller/updateDinozCount.js';
@@ -106,6 +115,16 @@ export async function useItemHandler(
 			await updateDinoz(dinoz.id, resurrect(dinoz));
 			effects.push({ category: ItemEffect.RESURRECT });
 			await incrementUserStat(StatTracking.DEATHS, dinoz.user.id, 1);
+			safeCreateGameLog({
+				type: GameLogType.Revive,
+				userId: authed.id,
+				dinozId,
+				userNameSnapshot: authed.name,
+				dinozNameSnapshot: dinoz.name,
+				metadata: {
+					info: 'angel potion used'
+				}
+			});
 			break;
 		}
 		case ItemEffect.EGG: {
@@ -296,7 +315,7 @@ async function hatchEgg(item: ItemFiche, authed: Pick<User, 'id'>) {
 				...dinozCreated,
 				status: [],
 				skills: [],
-				//missions: [],
+				missions: [],
 				items: [],
 				followers: []
 				//concentration: null,

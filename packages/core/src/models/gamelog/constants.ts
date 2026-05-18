@@ -1,0 +1,9 @@
+export const GAME_LOG_MAINTENANCE_JOB_KEY = 'game-log-maintenance';
+
+export const GAME_LOG_MAINTENANCE_INTERVAL_MS = 60 * 60 * 1000;
+
+export const TEMPORARY_GAME_LOG_RETENTION_DAYS = 30;
+
+export const HOURLY_GAME_LOG_RETENTION_MONTHS = 3;
+
+export const GAME_LOG_AGGREGATION_LOOKBACK_DAYS = 32;
