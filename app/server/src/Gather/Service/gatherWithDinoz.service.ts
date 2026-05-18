@@ -6,7 +6,9 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { GameLogType } from '../../../../prisma/index.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { addIngredientToInventory } from '../../Inventory/Controller/addIngredient.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { removeItem } from '../../Inventory/Controller/removeItem.controller.js';
@@ -181,6 +183,21 @@ export async function gatherWithDinozHandler(
 			returnGrid.isGridComplete = true;
 			returnGrid.gridCompletionGoldReward = GRID_FINISHED_GOLD_REWARD;
 			await addMoney(user.id, GRID_FINISHED_GOLD_REWARD);
+			safeCreateGameLog(
+				{
+					type: GameLogType.GridFinished,
+					userId: dinozData.user.id,
+					dinozId,
+					values: [],
+					metadata: {
+						gridId: myGrid.id,
+						gatherType: myGrid.type,
+						placeId: myGrid.place,
+						reward: GRID_FINISHED_GOLD_REWARD
+					}
+				},
+				req.log
+			);
 		}
 	}
 	switch (gather.type) {

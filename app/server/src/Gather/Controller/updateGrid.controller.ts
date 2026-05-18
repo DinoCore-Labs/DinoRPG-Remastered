@@ -1,4 +1,5 @@
-import { Prisma } from '../../../../prisma/index.js';
+import { GameLogType, Prisma } from '../../../../prisma/index.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 
 export async function updateGrid(
@@ -16,8 +17,15 @@ export async function updateGrid(
 			user: { select: { id: true } }
 		}
 	});
-
-	//await createLog(LogType.Gather, userId, dinozId);
+	safeCreateGameLog({
+		type: GameLogType.Gather,
+		userId,
+		dinozId,
+		values: [],
+		metadata: {
+			gridId
+		}
+	});
 
 	return newGrid;
 }
