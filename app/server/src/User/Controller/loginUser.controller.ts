@@ -32,18 +32,5 @@ export async function loginUser(
 	reply.setCookie(ACCESS_TOKEN_COOKIE, token, {
 		...authCookieOptions
 	});
-	safeCreateGameLog(
-		{
-			type: GameLogType.PlayerConnected,
-			userId: user.id,
-			userNameSnapshot: user.name,
-			metadata: {
-				ip: req.ip,
-				userAgent: req.headers['user-agent'] ?? null,
-				deviceId: (req as FastifyRequest & { deviceId?: string }).deviceId ?? null
-			}
-		},
-		req.log
-	);
 	return reply.send({ success: true });
 }
