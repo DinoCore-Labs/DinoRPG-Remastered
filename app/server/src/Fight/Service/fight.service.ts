@@ -211,9 +211,9 @@ export function calculateFightVsMonsters(
 	team: DinozToGetFighter[],
 	user: Pick<User, 'id' | 'cooker'>,
 	place: PlaceEnum,
-	allies?: MonsterFiche[],
 	monsters?: MonsterFiche[],
-	seed?: string
+	seed?: string,
+	allies?: MonsterFiche[]
 ): FightProcessResult {
 	const rng_seed = seed ?? generateString(20);
 	const rng = createXorShift32(hashStringToInt(rng_seed));

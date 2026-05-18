@@ -102,7 +102,7 @@ export async function processMissionFight(input: StartMissionGoalFightInput): Pr
 	});
 
 	const place = getMissionFightPlace(input.goal, dinozData.placeId);
-	const fightResult = calculateFightVsMonsters(team, user, place, allies, monsters);
+	const fightResult = calculateFightVsMonsters(team, user, place, monsters, undefined, allies);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, place, user, {
 		disableGoldReward: false
 	});
