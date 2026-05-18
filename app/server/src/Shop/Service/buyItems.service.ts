@@ -103,8 +103,31 @@ export async function buyItemHandler(
 			const itemFromShop = shopListV2.FILOU.listItemsSold.find(i => i.id === itemId);
 			if (!itemFromShop) throw new ExpectedError(`The item ${itemId} is not sellable for coupons!`);
 
+			const ingredientQuantityUsed = itemFromShop.price * quantityBought;
+
 			await decreaseIngredientQuantity(userId, itemReference.itemId, itemFromShop.price * quantityBought);
 
+			safeCreateGameLog(
+				{
+					type: GameLogType.IngredientSold,
+					userId,
+					values: [String(itemReference.itemId), String(ingredientQuantityUsed), String(quantityBought)],
+					metadata: {
+						ingredientId: itemReference.itemId,
+						ingredientQuantity: ingredientQuantityUsed,
+						shopId: theShop.shopId,
+						shopType: theShop.type,
+						reason: 'FILOU_SHOP_EXCHANGE',
+						wallet: 'TREASURE_TICKET',
+						treasureTicketQuantity: quantityBought,
+						treasureTicketBefore: before,
+						treasureTicketAfter: after,
+						unitPrice: itemFromShop.price,
+						totalPrice: ingredientQuantityUsed
+					}
+				},
+				req.log
+			);
 			return reply.status(200).send({
 				wallet: 'TREASURE_TICKET',
 				quantity: quantityBought,
