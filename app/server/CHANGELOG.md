@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.23.0
+
+### Minor Changes
+
+- ab866ae: add madame X (dialogs and missions) + double skills
+
+### Patch Changes
+
+- Updated dependencies [ab866ae]
+  - @dinorpg/core@0.21.0
+
 ## 0.22.0
 
 ### Minor Changes
