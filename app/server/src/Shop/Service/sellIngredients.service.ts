@@ -4,7 +4,9 @@ import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyRequest } from 'fastify';
 
+import { GameLogType } from '../../../../prisma/index.js';
 import { getDinozFromItinerantShop } from '../../Dinoz/Controller/getDinozFromItinerantShop.controller.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { decreaseIngredientQuantity } from '../../Inventory/Controller/addIngredient.controller.js';
 import { getUserIngredientDataRequest } from '../../Inventory/Controller/getUserIngredient.controller.js';
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
@@ -81,17 +83,54 @@ export async function sellIngredient(
 
 	let gold = 0;
 
+	const soldIngredients: Array<{
+		ingredientId: number;
+		quantity: number;
+		unitPrice: number;
+		totalGold: number;
+	}> = [];
+
 	for (const ingre of mappedIngredient) {
 		if (!ingre.id || !ingre.price) throw new ExpectedError(`Undefined ingredient`);
 		if (ingre.playerQuantity - ingre.quantity < 0) {
 			throw new ExpectedError(`You cannot have less than 0 of this item.`);
 		}
 
-		gold += ingre.price * ingre.quantity;
+		const totalGold = ingre.price * ingre.quantity;
+
+		gold += totalGold;
+
+		soldIngredients.push({
+			ingredientId: ingre.id,
+			quantity: ingre.quantity,
+			unitPrice: ingre.price,
+			totalGold
+		});
 
 		await decreaseIngredientQuantity(authed.id, ingre.id, ingre.quantity);
 	}
 
 	const updated = await addMoney(authed.id, gold);
+
+	for (const sold of soldIngredients) {
+		safeCreateGameLog(
+			{
+				type: GameLogType.IngredientSold,
+				userId: authed.id,
+				dinozId,
+				values: [String(sold.quantity), String(sold.ingredientId), String(sold.totalGold)],
+				metadata: {
+					ingredientId: sold.ingredientId,
+					quantity: sold.quantity,
+					unitPrice: sold.unitPrice,
+					totalGold: sold.totalGold,
+					shopType: itinerantShop.type,
+					reason: 'ITINERANT_SHOP_SELL'
+				}
+			},
+			req.log
+		);
+	}
+
 	return { gold: updated.amount };
 }
