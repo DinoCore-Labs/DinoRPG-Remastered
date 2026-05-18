@@ -92,10 +92,6 @@ export async function processMissionFight(input: StartMissionGoalFightInput): Pr
 		disableGoldReward: false
 	});
 
-	for (const dinoz of team) {
-		await updateDinoz(dinoz.id, { fight: false });
-	}
-
 	if (input.goal.type === 'FIGHT_ACTION') {
 		return {
 			...result,
