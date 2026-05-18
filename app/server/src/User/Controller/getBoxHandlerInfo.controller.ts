@@ -19,12 +19,12 @@ export async function getBoxHandlerInformations(playerId: string) {
 			},
 			dinoz: {
 				select: {
-					level: true
-					/*_count: {
+					level: true,
+					_count: {
 						select: {
-							//missions: { where: { isFinished: true } }
+							missions: { where: { isCompleted: true } }
 						}
-					}*/
+					}
 				},
 				where: {
 					OR: [{ state: null }, { state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }]

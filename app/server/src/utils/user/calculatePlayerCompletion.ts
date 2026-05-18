@@ -15,12 +15,12 @@ export async function calculatePlayerCompletion(playerId: string) {
 	if (!boxInfo) throw new ExpectedError(`Player doesn't exist`);
 	const dinozCount = boxInfo._count.dinoz;
 	if (dinozCount <= 0) return dinozCount;
-	//const missionTotal = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a._count.missions, 0);
-	//const AVAILABLE_MISSIONS = 55;
+	const missionTotal = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a._count.missions, 0);
+	const AVAILABLE_MISSIONS = 61;
 	const dinozLevelTotal = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a.level, 0);
 	const totalRewards = boxInfo.rewards.filter(r => r.rewardId <= 24).length;
 	const AVAILABLE_REWARDS = 23;
-	/*const universalCount =
+	const universalCount =
 		(boxInfo.cooker ? 1 : 0) +
 		(boxInfo.engineer ? 1 : 0) +
 		(boxInfo.matelasseur ? 1 : 0) +
@@ -29,7 +29,7 @@ export async function calculatePlayerCompletion(playerId: string) {
 		(boxInfo.leader ? 1 : 0) +
 		(boxInfo.priest ? 1 : 0) +
 		(boxInfo.shopKeeper ? 1 : 0) +
-		(boxInfo.teacher ? 1 : 0);*/
+		(boxInfo.teacher ? 1 : 0);
 	const AVAILABLE_UNIVERSAL = 9;
 
 	const coefficients = {
@@ -41,8 +41,8 @@ export async function calculatePlayerCompletion(playerId: string) {
 	};
 	const completion =
 		(((dinozCount / gameConfig.dinoz.maxQuantity) * coefficients.dinoz +
-			//(universalCount / AVAILABLE_UNIVERSAL) * coefficients.universal +
-			//(missionTotal / (AVAILABLE_MISSIONS * gameConfig.dinoz.maxQuantity)) * coefficients.missions +
+			(universalCount / AVAILABLE_UNIVERSAL) * coefficients.universal +
+			(missionTotal / (AVAILABLE_MISSIONS * gameConfig.dinoz.maxQuantity)) * coefficients.missions +
 			(dinozLevelTotal / (gameConfig.dinoz.maxLevel * gameConfig.dinoz.maxQuantity)) * coefficients.level +
 			(totalRewards / AVAILABLE_REWARDS) * coefficients.rewards) /
 			(coefficients.dinoz +
