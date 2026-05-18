@@ -19,7 +19,15 @@ function subMonths(date: Date, months: number) {
 	return next;
 }
 
-const GAME_LOG_SUM_VALUE_TYPES = [GameLogType.GoldWon, GameLogType.GoldLost, GameLogType.XPEarned, GameLogType.HPLost];
+const GAME_LOG_SUM_VALUE_TYPES = [
+	GameLogType.GoldWon,
+	GameLogType.GoldLost,
+	GameLogType.XPEarned,
+	GameLogType.HPLost,
+	GameLogType.ItemBought,
+	GameLogType.ItemUsed,
+	GameLogType.ItemUsed
+];
 
 const gameLogAggregateValueSql = Prisma.sql`
 	CASE

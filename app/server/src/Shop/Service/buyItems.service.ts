@@ -1,13 +1,15 @@
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
-import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ShopFiche } from '@dinorpg/core/models/shop/shopFiche.js';
 import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { GameLogType } from '../../../../prisma/index.js';
 import { checkDinozPlace } from '../../Dinoz/Service/checkDinozPlace.service.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { decreaseIngredientQuantity } from '../../Inventory/Controller/addIngredient.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
@@ -84,7 +86,8 @@ export async function buyItemHandler(
 				playerItems: playerShopData.items,
 				itemReference,
 				quantityBought,
-				currentQuantity: itemReference.quantity
+				currentQuantity: itemReference.quantity,
+				log: req.log
 			});
 		}
 		// Cas filou => coupons
@@ -132,10 +135,31 @@ export async function buyItemHandler(
 
 		await incrementUserStat(StatTracking.S_BUYER, userId, quantityBought);
 
+		const totalPrice = itemReference.price * quantityBought;
+		const isMagicShop = theShop.type === ShopType.MAGICAL;
+
+		safeCreateGameLog(
+			{
+				type: GameLogType.ItemBought,
+				userId,
+				values: [String(itemReference.itemId), String(quantityBought), String(totalPrice)],
+				metadata: {
+					itemId: itemReference.itemId,
+					quantity: quantityBought,
+					shopId: theShop.shopId,
+					shopType: theShop.type,
+					unitPrice: itemReference.price,
+					totalPrice,
+					currency: isMagicShop ? 'GOLDEN_NAPODINO' : 'GOLD',
+					paymentItemId: isMagicShop ? itemList[Item.GOLDEN_NAPODINO].itemId : null
+				}
+			},
+			req.log
+		);
 		return reply.status(200).send({
 			itemId: itemReference.itemId,
 			quantity: quantityBought,
-			gold: theShop.type === ShopType.MAGICAL ? undefined : itemReference.price * quantityBought
+			gold: theShop.type === ShopType.MAGICAL ? undefined : totalPrice
 		});
 	} catch (err) {
 		if (err instanceof ExpectedError) {
