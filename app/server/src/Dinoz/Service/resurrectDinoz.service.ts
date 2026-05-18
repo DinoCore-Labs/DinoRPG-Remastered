@@ -4,6 +4,8 @@ import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { GameLogType } from '../../../../prisma/index.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 import { advanceStarScenarioOnNaturalResurrectTx } from '../../Scenario/Controller/starScenario.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
@@ -53,6 +55,16 @@ export async function resurrectDinoz(req: FastifyRequest<{ Params: Params }>, _r
 		})
 	);
 	await incrementUserStat(StatTracking.DEATHS, dinozData.user.id, 1);
+
+	safeCreateGameLog({
+		type: GameLogType.Revive,
+		userId: dinozData.user.id,
+		dinozId,
+		dinozNameSnapshot: dinozData.name,
+		metadata: {
+			info: 'no item used'
+		}
+	});
 	return progressed
 		? {
 				category: ItemEffect.QUEST,
