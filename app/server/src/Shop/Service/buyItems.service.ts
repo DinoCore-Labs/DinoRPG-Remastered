@@ -165,7 +165,7 @@ export async function buyItemHandler(
 			{
 				type: GameLogType.ItemBought,
 				userId,
-				values: [String(itemReference.itemId), String(quantityBought), String(totalPrice)],
+				values: [String(quantityBought), String(itemReference.itemId), String(totalPrice)],
 				metadata: {
 					itemId: itemReference.itemId,
 					quantity: quantityBought,
