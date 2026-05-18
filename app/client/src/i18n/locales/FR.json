@@ -3973,6 +3973,7 @@
 			"useItem": "{nameKey}",
 			"useMoney": "{nameKey}",
 			"fightAction": "{nameKey}",
+			"wait": "Attendre",
 			"validate": "Retourner voir {nameKey} pour valider la mission"
 		},
 		"validate": "Valider la mission",
