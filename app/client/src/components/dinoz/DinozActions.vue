@@ -260,6 +260,8 @@ export default defineComponent({
 					return this.$t(goal.descriptionKey).toString();
 				case 'FIGHT':
 					return this.$t('missions.actions.fight').toString();
+				case 'WAIT':
+					return this.$t('action.description.wait').toString();
 				case 'VALIDATE':
 					return this.$t('missions.goals.validate', {
 						nameKey: this.$t(goal.nameKey).toString()

@@ -1,6 +1,7 @@
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
+import { advanceDinozMissionOnWait } from '../../Mission/Controller/mission.progress.js';
 import { prisma } from '../../prisma.js';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { getDinozFicheRequest } from '../Controller/getDinozFiche.controller.js';
@@ -21,9 +22,10 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 
 	const authedId = req.user.id;
 
-	// 1) apply resting
+	// 1) apply resting and check if mission wait time is over
 	const restInfos = await prisma.$transaction(async tx => {
 		await applyUnfreezeIfNeeded(tx, dinozId);
+		await advanceDinozMissionOnWait(tx, dinozId);
 		return applyRestIfNeeded(tx, dinozId);
 	});
 
