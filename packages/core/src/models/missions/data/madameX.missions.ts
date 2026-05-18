@@ -157,8 +157,11 @@ export const madameXMissions: MissionDefinition[] = [
 				actionKey: 'wait',
 				place: PlaceEnum.COLLINES_ESCARPEES,
 				nameKey: 'missions.madameX.mmex3.wait.name',
-				descriptionKey: 'missions.madameX.mmex3.wait.text',
-				waitSeconds: 180
+				descriptionKey: 'missions.madameX.mmex3.wait.text'
+			},
+			{
+				type: 'WAIT',
+				duration: 2700
 			},
 			{
 				type: 'ACTION',
@@ -266,8 +269,11 @@ export const madameXMissions: MissionDefinition[] = [
 				actionKey: 'organize',
 				place: PlaceEnum.UNIVERSITE,
 				nameKey: 'missions.madameX.mmex4.organize.name',
-				descriptionKey: 'missions.madameX.mmex4.organize.text',
-				waitSeconds: 1800
+				descriptionKey: 'missions.madameX.mmex4.organize.text'
+			},
+			{
+				type: 'WAIT',
+				duration: 27000
 			},
 			{
 				type: 'TALK',
@@ -306,8 +312,11 @@ export const madameXMissions: MissionDefinition[] = [
 				actionKey: 'hide1',
 				place: PlaceEnum.RUINES_ASHPOUK,
 				nameKey: 'missions.madameX.mmex5.hide1.name',
-				descriptionKey: 'missions.madameX.mmex5.hide1.text',
-				waitSeconds: 600
+				descriptionKey: 'missions.madameX.mmex5.hide1.text'
+			},
+			{
+				type: 'WAIT',
+				duration: 9000
 			},
 			{
 				type: 'ACTION',
@@ -375,8 +384,11 @@ export const madameXMissions: MissionDefinition[] = [
 				actionKey: 'hide2',
 				place: PlaceEnum.RUINES_ASHPOUK,
 				nameKey: 'missions.madameX.mmex5.hide2.name',
-				descriptionKey: 'missions.madameX.mmex5.hide2.text',
-				waitSeconds: 300
+				descriptionKey: 'missions.madameX.mmex5.hide2.text'
+			},
+			{
+				type: 'WAIT',
+				duration: 4500
 			},
 			{
 				type: 'ACTION',

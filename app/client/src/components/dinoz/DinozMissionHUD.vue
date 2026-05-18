@@ -239,6 +239,8 @@ export default defineComponent({
 						left.fightAction.nameKey === right.fightAction.nameKey &&
 						(left.fightAction.actionKey ?? null) === (right.fightAction.actionKey ?? null)
 					);
+				case 'WAIT':
+					return right.type === 'WAIT' && left.duration === right.duration;
 				default:
 					return false;
 			}
@@ -289,6 +291,10 @@ export default defineComponent({
 				case 'FIGHT_ACTION':
 					return this.$t('missions.goals.fightAction', {
 						nameKey: this.$t(goal.fightAction.nameKey).toString()
+					}).toString();
+				case 'WAIT':
+					return this.$t('missions.goals.wait', {
+						duration: goal.duration
 					}).toString();
 				default:
 					return null;

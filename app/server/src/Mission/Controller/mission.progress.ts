@@ -259,6 +259,45 @@ export async function advanceDinozMissionOnFightWon(
 	});
 }
 
+export async function advanceDinozMissionOnWait(
+	tx: MissionTransaction,
+	dinozId: number
+): Promise<MissionProgressResult> {
+	const activeMission = await getActiveMissionState(tx, dinozId);
+	if (!activeMission || !activeMission.currentGoal) {
+		return null;
+	}
+	const goal = activeMission.currentGoal;
+	if (goal.type !== 'WAIT') {
+		return null;
+	}
+	const missionRecord = await tx.dinozMissions.findFirst({
+		where: {
+			dinozId,
+			missionKey: activeMission.savedMission.missionKey,
+			isCompleted: false
+		},
+		select: {
+			updatedAt: true
+		}
+	});
+	if (!missionRecord || !missionRecord.updatedAt) {
+		return null;
+	}
+	const elapsedSeconds = Math.floor((Date.now() - missionRecord.updatedAt.getTime()) / 1000);
+	if (elapsedSeconds < goal.duration) {
+		return null;
+	}
+
+	return finalizeMissionProgress(tx, {
+		dinozId,
+		missionKey: activeMission.savedMission.missionKey,
+		nextProgression: activeMission.savedMission.progression + 1,
+		nextTracking: 0,
+		definition: activeMission.definition
+	});
+}
+
 export async function unlockDinozMission(
 	tx: MissionTransaction,
 	params: {

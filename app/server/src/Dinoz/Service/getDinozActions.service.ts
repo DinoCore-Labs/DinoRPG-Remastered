@@ -434,6 +434,9 @@ export async function getAvailableActions(
 		currentGoal: resolvedMission?.currentGoal ?? null,
 		currentPlace: actualPlace(dinoz).placeId
 	});*/
+	if (resolvedMission?.currentGoal?.type === 'WAIT') {
+		return [];
+	}
 	if (resolvedMission?.currentGoal) {
 		const missionAction = getMissionActionFiche(resolvedMission.currentGoal, actualPlace(dinoz).placeId);
 		//console.log('[missions:missionAction]', missionAction);
