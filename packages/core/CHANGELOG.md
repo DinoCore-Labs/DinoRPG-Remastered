@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.21.0
+
+### Minor Changes
+
+- ab866ae: add madame X (dialogs and missions) + double skills
+
 ## 0.20.0
 
 ### Minor Changes
