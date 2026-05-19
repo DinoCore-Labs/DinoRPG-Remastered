@@ -178,7 +178,7 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       discord.js:
-        specifier: ^14.26.2
+        specifier: ^14.26.4
         version: 14.26.4
       fastify:
         specifier: ^5.8.5
@@ -212,7 +212,7 @@ importers:
   packages/bot:
     dependencies:
       discord.js:
-        specifier: ^14.26.2
+        specifier: ^14.26.4
         version: 14.26.4
 
   packages/core: {}
