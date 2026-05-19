@@ -278,12 +278,6 @@ export const initializeDinoz = (
 		return random() > 0.5 ? 1 : -1;
 	});
 
-	// SPECIALISTE
-	if (fighter.skills.some(skill => skill.id === Skill.SPECIALISTE)) {
-		// Remove the lowest element
-		elements.pop();
-	}
-
 	fighter.elements = elements.map(element => element.element);
 	fighter.element = fighter.elements[0];
 
@@ -666,14 +660,6 @@ export const initializeMonster = (
 
 	// Skills only after the elements have been handled
 	handleSkills(random, team, fighter, place);
-
-	// SPECIALISTE
-	if (fighter.skills.some(skill => skill.id === Skill.SPECIALISTE)) {
-		// Remove the lowest element
-		if (fighter.elements.length > 1) {
-			elements.pop();
-		}
-	}
 
 	fighter.element = fighter.elements[0];
 
