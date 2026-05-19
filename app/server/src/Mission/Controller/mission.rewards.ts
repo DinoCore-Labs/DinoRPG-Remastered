@@ -9,8 +9,9 @@ import type {
 import { rewardIdByKey, statTrackingByCollectionKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { MoneyType, type Prisma } from '../../../../prisma/client.js';
+import { GameLogType, MoneyType, type Prisma } from '../../../../prisma/client.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 
 type MissionTransaction = Prisma.TransactionClient;
@@ -145,18 +146,70 @@ export async function applyMissionRewards(
 	if (!dinoz) {
 		throw new ExpectedError(`Unknown dinoz "${params.dinozId}"`);
 	}
+	const rewardSummary = {
+		userId: dinoz.userId,
+		xp: 0,
+		gold: 0,
+		items: [] as { itemKey: string; itemId: number; quantity: number }[],
+		collections: [] as { collectionKey: string; rewardId: number; created: boolean }[],
+		effects: [] as { effectKey: string; statusId: number; action: 'add' | 'remove' }[]
+	};
 	for (const reward of params.definition.rewards) {
 		switch (reward.type) {
 			case 'XP': {
 				await applyMissionXpReward(tx, params.dinozId, reward.value);
+				rewardSummary.xp += reward.value;
+				await safeCreateGameLog({
+					type: GameLogType.XPEarned,
+					userId: dinoz.userId,
+					dinozId: params.dinozId,
+					values: [String(reward.value)],
+					metadata: {
+						source: 'mission',
+						missionKey: params.definition.key,
+						amount: reward.value
+					}
+				});
 				break;
 			}
 			case 'GOLD': {
 				await applyMissionGoldReward(tx, dinoz.userId, reward.value);
+				rewardSummary.gold += reward.value;
+				await safeCreateGameLog({
+					type: GameLogType.GoldWon,
+					userId: dinoz.userId,
+					dinozId: params.dinozId,
+					values: [String(reward.value)],
+					metadata: {
+						source: 'mission',
+						missionKey: params.definition.key,
+						amount: reward.value,
+						wallet: MoneyType.GOLD
+					}
+				});
 				break;
 			}
 			case 'ITEM': {
+				const itemId = resolveItemIdFromKey(reward.itemKey);
 				await applyMissionItemReward(tx, dinoz.userId, reward.itemKey, reward.quantity);
+				rewardSummary.items.push({
+					itemKey: reward.itemKey,
+					itemId,
+					quantity: reward.quantity
+				});
+				await safeCreateGameLog({
+					type: GameLogType.ItemFound,
+					userId: dinoz.userId,
+					dinozId: params.dinozId,
+					values: [String(itemId), String(reward.quantity)],
+					metadata: {
+						source: 'mission',
+						missionKey: params.definition.key,
+						itemKey: reward.itemKey,
+						itemId,
+						quantity: reward.quantity
+					}
+				});
 				break;
 			}
 			case 'COLLECTION': {
@@ -167,14 +220,31 @@ export async function applyMissionRewards(
 						await incrementUserStat(statTracking, dinoz.userId, 1);
 					}
 				}
+				rewardSummary.collections.push({
+					collectionKey: reward.collectionKey,
+					rewardId: result.rewardId,
+					created: result.created
+				});
 				break;
 			}
 			case 'EFFECT': {
-				await addStatusToDinoz(params.dinozId, resolveStatusIdFromEffectKey(reward.effectKey));
+				const statusId = resolveStatusIdFromEffectKey(reward.effectKey);
+				await addStatusToDinoz(params.dinozId, statusId);
+				rewardSummary.effects.push({
+					effectKey: reward.effectKey,
+					statusId,
+					action: 'add'
+				});
 				break;
 			}
 			case 'REMOVE_EFFECT': {
-				await removeStatusFromDinoz(params.dinozId, resolveStatusIdFromEffectKey(reward.effectKey));
+				const statusId = resolveStatusIdFromEffectKey(reward.effectKey);
+				await removeStatusFromDinoz(params.dinozId, statusId);
+				rewardSummary.effects.push({
+					effectKey: reward.effectKey,
+					statusId,
+					action: 'remove'
+				});
 				break;
 			}
 			default: {
@@ -182,9 +252,16 @@ export async function applyMissionRewards(
 			}
 		}
 	}
-	console.log('[missions] rewards', {
-		missionKey: params.definition.key,
+	await safeCreateGameLog({
+		type: GameLogType.MissionFinished,
+		userId: dinoz.userId,
 		dinozId: params.dinozId,
-		rewards: params.definition.rewards
+		values: [],
+		metadata: {
+			missionKey: params.definition.key,
+			group: params.definition.group,
+			rewards: rewardSummary
+		}
 	});
+	return rewardSummary;
 }
