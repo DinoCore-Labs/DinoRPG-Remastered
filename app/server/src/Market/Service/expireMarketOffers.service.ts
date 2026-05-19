@@ -1,6 +1,7 @@
 import { MARKET_EXPIRATION_JOB_KEY } from '@dinorpg/core/models/market/constants.js';
 
-import { MoneyType, OfferStatus } from '../../../../prisma/index.js';
+import { GameLogType, MoneyType, OfferStatus } from '../../../../prisma/index.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 
 const BATCH_SIZE = 50;
@@ -82,6 +83,7 @@ export async function expireMarketOffer(offerId: number) {
 		});
 
 		if (winnerBid?.userId && offer.sellerId) {
+			const sellerGold = winnerBid.value * 1000;
 			await tx.userWallet.update({
 				where: {
 					userId_type: {
@@ -90,13 +92,52 @@ export async function expireMarketOffer(offerId: number) {
 					}
 				},
 				data: {
-					amount: {
-						increment: winnerBid.value * 1000
-					}
+					amount: { increment: sellerGold }
+				}
+			});
+
+			await safeCreateGameLog({
+				type: GameLogType.GoldWon,
+				userId: offer.sellerId,
+				dinozId: offer.dinoz?.id ?? null,
+				values: [String(sellerGold)],
+				metadata: {
+					source: 'market',
+					offerId: offer.id,
+					winnerId: winnerBid.userId,
+					bidValue: winnerBid.value,
+					amount: sellerGold,
+					wallet: MoneyType.GOLD
+				}
+			});
+
+			await safeCreateGameLog({
+				type: GameLogType.OfferWon,
+				userId: winnerBid.userId,
+				dinozId: offer.dinoz?.id ?? null,
+				values: [String(winnerBid.value)],
+				metadata: {
+					offerId: offer.id,
+					sellerId: offer.sellerId,
+					winnerId: winnerBid.userId,
+					value: winnerBid.value,
+					currency: MoneyType.TREASURE_TICKET,
+					dinozId: offer.dinoz?.id ?? null
+				}
+			});
+		} else {
+			await safeCreateGameLog({
+				type: GameLogType.OfferExpired,
+				userId: offer.sellerId,
+				dinozId: offer.dinoz?.id ?? null,
+				metadata: {
+					offerId: offer.id,
+					sellerId: offer.sellerId,
+					dinozId: offer.dinoz?.id ?? null,
+					reason: 'no_bid'
 				}
 			});
 		}
-
 		return true;
 	});
 }
