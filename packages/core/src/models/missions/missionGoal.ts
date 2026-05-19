@@ -91,6 +91,7 @@ export type MissionFightActionGoal = {
 
 export type MissionUseItemGoal = {
 	type: 'USE_ITEM';
+	place: PlaceEnum;
 	itemKey: MissionItemKey;
 	quantity: number;
 	nameKey: string;
@@ -98,6 +99,7 @@ export type MissionUseItemGoal = {
 
 export type MissionUseMoneyGoal = {
 	type: 'USE_MONEY';
+	place: PlaceEnum;
 	moneyType: 'GOLD' | 'TREASURE_TICKET';
 	quantity: number;
 	nameKey: string;
