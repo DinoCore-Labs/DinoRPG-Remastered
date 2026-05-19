@@ -107,6 +107,7 @@ export type MissionUseMoneyGoal = {
 
 export type MissionLockGoal = {
 	type: 'LOCK';
+	nameKey?: string;
 };
 
 export type MissionUseIngredientGoal = {

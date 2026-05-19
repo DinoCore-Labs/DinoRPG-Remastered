@@ -241,6 +241,8 @@ export default defineComponent({
 					);
 				case 'WAIT':
 					return right.type === 'WAIT' && left.duration === right.duration;
+				case 'LOCK':
+					return right.type === 'LOCK' && left.nameKey === right.nameKey;
 				default:
 					return false;
 			}
@@ -261,6 +263,10 @@ export default defineComponent({
 				case 'TALK':
 					return this.$t('missions.goals.talk', {
 						nameKey: this.$t(goal.nameKey).toString()
+					}).toString();
+				case 'LOCK':
+					return this.$t('missions.goals.lock', {
+						nameKey: this.$t(goal.nameKey ?? '').toString()
 					}).toString();
 				case 'ACTION':
 					return this.$t('missions.goals.action', {

@@ -464,7 +464,7 @@ export const skullyMissions: MissionDefinition[] = [
 				nameKey: 'npc.merguez.name',
 				textKey: 'missions.skully.skuend.merguezSeller'
 			},
-			{ type: 'LOCK' },
+			{ type: 'LOCK', nameKey: 'missions.skully.skuend.lock' },
 			skullyValidateGoal()
 		],
 		rewards: [{ type: 'XP', value: 10 }],
