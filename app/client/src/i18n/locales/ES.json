@@ -43,9 +43,9 @@
 			"faq": "FAQ",
 			"guide": "Guía del Juego",
 			"disconnect": "Desconectarse",
-			"system": "Réglages",
-			"skipLevelAnimation": "Passer l'animation des level up",
-			"skipFightAnimation": "Passer l'animation des combats",
+			"system": "Ajustes",
+			"skipLevelAnimation": "Saltar la animación de subida de nivel",
+			"skipFightAnimation": "Mostrar directamente el resultado del combate",
 			"goodbye": "Adiós, Maestro {name}..."
 		}
 	},
@@ -141,7 +141,7 @@
 			"assaults": "Asaltos",
 			"defenses": "Defensa",
 			"specials": "Especiales",
-			"base": "Base",
+			"base": "Básico",
 			"skill": "Habilidad",
 			"fireAssault": "Asalto de Fuego",
 			"woodAssault": "Asalto de Madera",
@@ -197,8 +197,9 @@
 		"gather": "DinoRPG [ {type} ]",
 		"fight": "DinoRPG [ ¡Combate! ]",
 		"training": "DinoRPG [ C.E.F ]",
+		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
 		"manageDinoz": "DinoRPG [ Gestión de mi Dino ]",
-		"market": "DinoRPG [ Marché des Éleveurs ]",
+		"market": "DinoRPG [ Mercado de los Maestros ]",
 		"admin": "DinoRPG [ Panel de Admin ]"
 	},
 	"adminPage": {
@@ -207,60 +208,60 @@
 		}
 	},
 	"market": {
-		"title": "Marché des Éleveurs",
-		"disclaimer": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
-		"allOffers": "Toutes les offres",
-		"myTransactions": "Mes transactions",
-		"sell": "Vendre",
-		"history": "Historique",
+		"title": "Mercado de los Maestros",
+		"disclaimer": "¡Bienvenido al Mercado de los Maestros! ¡Aquí puedes comprar y vender Dinos, ingredientes y algunos artículos raros provenientes de todo Dinoland!",
+		"allOffers": "Todas las Ofertas",
+		"myTransactions": "Mis transacciones",
+		"sell": "Vender",
+		"history": "Historial",
 		"dinoz": "Dinos",
-		"items": "Objets",
-		"makeAnOffer": "Faire une offre",
-		"filter": "Filtrer",
-		"all": "Tout",
-		"seller": "Vendeur",
-		"timeLeft": "Temps restant",
-		"auctionExpired": "Enchère expirée",
-		"minimumPrice": "Prix mini",
-		"highestBid": "Enchère actuelle",
-		"by": "par",
+		"items": "Objetos",
+		"makeAnOffer": "Hacer oferta",
+		"filter": "Filtro",
+		"all": "Todos",
+		"seller": "Vendedor",
+		"timeLeft": "Tiempo restante",
+		"auctionExpired": "Puja caducada",
+		"minimumPrice": "Precio mínimo",
+		"highestBid": "Puja actual",
+		"by": "por",
 		"details": "Detalles",
-		"time": "{days}j {hours}h {minutes}m {seconds}s",
-		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Éleveurs peuvent être obtenus de diverses façons dans Dinoland. La **Banque de Dinoland** peut vous les racheter au taux de **1** :ticket: **= 1000** :gold: mais elle n'en émet plus.",
-		"back": "Retour",
-		"bid": "Enchérir",
-		"detail": "Voir détails",
-		"yourTreasuryNotes": "Vos Bons du Trésor",
+		"time": "{days}D {hours}h {minutes}m {seconds}s",
+		"currency": "Los **Bonos del Tesoro** necesarios para compras en el Mercado de los Maestros se pueden obtener por el equivalente de **1** :ticket: **= 1000** :gold: del **Banco de Dinoland**.",
+		"back": "Volver",
+		"bid": "Pujar",
+		"detail": "Ver detalles",
+		"yourTreasuryNotes": "Tus Bonos del Tesoro",
 		"sellView": {
-			"disclaimer": "Ici, vous pouvez construire votre offre, elle sera soumise aux autres Maîtres Dinoz. Si vous vendez un Dinoz ou des objets, ces derniers seront indisponibles pendant la durée de l'offre.",
-			"prepareYourOffer": "Préparer votre offre",
-			"sellYourDinoz": "Vendre votre Dinoz",
-			"itemsAndIngredients": "Objets et Ingrédients",
-			"offerMinimalValue": "Valeur MINIMALE de votre offre",
-			"minimalValueDisclaimer": "Votre offre doit avoir, au MINIMUM, une valeur de **{minValue}** :gold: pour être validée.",
-			"create": "Créer l'offre",
-			"add": "Ajouter",
-			"remove": "Retirer"
+			"disclaimer": "Aquí puedes crear tu oferta, que se enviará a los demás Maestros de Dinos. Si vendes un Dino o artículos, no estarán disponibles mientras dure la oferta.",
+			"prepareYourOffer": "Prepara tu oferta",
+			"sellYourDinoz": "Vender Dino",
+			"itemsAndIngredients": "Objetos e ingredientes",
+			"offerMinimalValue": "Valor MÍNIMO de su oferta",
+			"minimalValueDisclaimer": "Su oferta debe tener, como MÍNIMO, un valor de **{minValue}** :gold: para ser validada.",
+			"create": "Crear oferta",
+			"add": "Añadir",
+			"remove": "Eliminar"
 		},
 		"transactionView": {
-			"yourOngoingOffer": "Votre offre en cours",
-			"yourWonOffer": "Vos offres gagnées",
-			"myExpiredOffers": "Vos ventes expirées",
+			"yourOngoingOffer": "Tu oferta en curso",
+			"yourWonOffer": "Tus ofertas ganadas",
+			"myExpiredOffers": "Tus ventas expiradas",
 			"noExpiredOffer": "Vous n'avez aucune vente expirée à récupérer.",
-			"claimExpired": "Récupérer ma vente",
-			"noOnGoingOffer": "Vous n'avez aucune offre en cours.",
-			"noWonOffer": "Vous n'avez aucune offre à récupérer",
-			"claim": "Récupérer mes gains",
-			"bid": "Mise",
-			"noBidYet": "Aucune mise pour l'instant.",
-			"cancel": "Annuler",
-			"yourActiveBids": "Vos mises en cours",
-			"noActiveBid": "Vous n'avez enchéri sur aucune offre pour le moment."
+			"claimExpired": "Recuperar mi venta",
+			"noOnGoingOffer": "No tienes ninguna oferta en curso.",
+			"noWonOffer": "No tienes ofertas para reclamar",
+			"claim": "Reclamar oferta",
+			"bid": "Puja",
+			"noBidYet": "Aún no hay pujas.",
+			"cancel": "Cancelar",
+			"yourActiveBids": "Tus pujas activas",
+			"noActiveBid": "Aún no has pujado por ninguna oferta."
 		},
 		"historyView": {
-			"lastOffers": "Voici les dernières ventes qui ont été effectuées par les joueurs :",
-			"yourOwnOffers": "Vos mises",
-			"yourOwnBids": "Vos achats"
+			"lastOffers": "Aquí están las últimas ventas que han realizado los jugadores:",
+			"yourOwnOffers": "Tus ventas",
+			"yourOwnBids": "Tus compras"
 		}
 	},
 	"manageDinoz": {
@@ -284,27 +285,31 @@
 			"title": "¡Descubre los próximos eventos de DinoRPG!",
 			"small": "Predicción de Irma",
 			"strong": {
-				"title1": "Alpha 0.7.0 (Próximamente)",
-				"title2": "Alpha 0.9.0",
-				"title3": "Alpha 0.10.0",
-				"title4": "Alpha 0.11.0"
+				"title1": "Alpha 0.9.0 (Próximamente)",
+				"title2": "Alpha 0.10.0",
+				"title3": "Alpha 0.11.0",
+				"title4": "Alpha 0.12.0"
 			},
 			"help": "¡Haz clic en una actualización de arriba para obtener más información!",
 			"disclaimer": "Las predicciones de Madame Irma no son infalibles, por lo que no hay ninguna fecha de lanzamiento disponible para estas novedades. Sin embargo, cada evento será anunciado oficialmente en el sitio cuando llegue el momento.",
 			"futurTitle": "Futuro dinolandés",
 			"futureInfo1": {
-				"text1": "Implementación de los escenarios (Prisma + base de datos)",
-				"text2": "Implementación del escenario tutorial"
+				"text1": "Intégration d'un système de logs",
+				"text2": "Scénario du parchemin ???",
+				"text3": "Madame X et ses missions",
+				"text4": "Les compétences doubles",
+				"text5": "Correction des bugs"
 			},
 			"futureInfo2": {
-				"text1": "Implementación del Mercado de Criadores",
-				"text2": "Corrección de errores",
-				"text3": "Madame X et ses missions",
-				"text4": "Implementación del escenario tutorial"
+				"text1": "Les clans",
+				"text2": "Le Maître élémentaire et ses missions",
+				"text3": "Correction des bugs"
 			},
 			"futureInfo3": {
-				"text1": "Próximamente",
-				"text2": "Implementación del escenario tutorial"
+				"text1": "La chasse aux Monstres (event PVE)",
+				"text2": "Maître Zenith et le dojo",
+				"text3": "Le tournoi inter dojo (event PVP)",
+				"text4": "Correction de bugs"
 			},
 			"futureInfo4": {
 				"text1": "Próximamente"
@@ -314,7 +319,7 @@
 	"button": {
 		"buyDinoz": "¡Comprar un Dino!",
 		"chose": "Comprar",
-		"name": "Confirmar",
+		"name": "¡Confirmar!",
 		"shop": "Ir a la tienda",
 		"search": "Buscar",
 		"loading": "Cargando...",
@@ -351,7 +356,7 @@
 	},
 	"modal": {
 		"messagerie": {
-			"system": "Système",
+			"system": "Sistema",
 			"locked": "Vous devez d'abord débloquer la messagerie.",
 			"actions": "Acciones",
 			"create": "Escribir",
@@ -390,7 +395,7 @@
 			}
 		},
 		"modif": "Modification...",
-		"valid": "Valider",
+		"valid": "Aceptar",
 		"close": "Cerrar",
 		"continue": "Continuer"
 	},
@@ -421,31 +426,32 @@
 		"action": "Has consumido {value} :irma: y puedes realizar acciones de nuevo.",
 		"resurrect": "Tu Dino ha resucitado.",
 		"egg": "Has abierto un huevo de {value}.",
-		"dinozAlreadySelling": "Votre Dinoz est déjà en vente.",
-		"noPDA": "Tu as besoin de la Pierre en Diamantite Agglomérée pour accéder à cette page.",
-		"noPMI": "Tu as besoin du Petit Missionnaire Illustré pour accéder à cette page.",
-		"noPAC": "Tu as besoin du Parchemin des Aptitudes Compilées pour accéder à cette page.",
-		"dinozListMissing": "Liste des Dinoz manquante.",
+		"dinozAlreadySelling": "Tu Dino ya está a la venta.",
+		"noPDA": "Necesitas la Piedra en Diamantito Aglomerado para acceder a esta página.",
+		"noPMI": "Necesitas el Pequeño Misionario Ilustrado para acceder a esta página.",
+		"noPAC": "Necesitas el Pergamino de Competencias Compiladas para acceder a esta página.",
+		"dinozListMissing": "Lista de Dinos que faltan.",
 		"viewFight": "Vous avez déjà visionné ce combat.",
-		"dinozDataMissing": "Données du Dinoz manquantes.",
+		"dinozDataMissing": "Faltan datos de Dino.",
 		"selectADinozAtMarketFirst": "Vous devez d'abord amener un Dinoz au marché.",
-		"unknownDinoz": "Dinoz inconnu.",
-		"noFollowers": "Le Dinoz n'est pas suivi.",
-		"leaderChanged": "Votre Dinoz est le nouveau leader du groupe",
-		"missingUser": "Utilisateur manquant.",
-		"missingData": "Données manquantes.",
-		"reincarnation": "Votre Dinoz s'est réincarné.",
+		"unknownDinoz": "Dinoz desconocido.",
+		"noFollowers": "El Dino no está siendo seguido.",
+		"leaderChanged": "Tu Dino es el nuevo líder del grupo",
+		"disband": "Vous avez dissous le groupe !!!",
+		"missingUser": "Usuario perdido.",
+		"missingData": "Datos perdidos.",
+		"reincarnation": "Tu Dino ha sido reencarnado.",
 		"loginToLike": "Connectez-vous pour aimer cette news.",
-		"shovelMine": "Vous n'allez quand même pas creuser à côté du mineur !?!",
+		"shovelMine": "¡No vas a excavar al lado del minero, ¿verdad?!",
 		"market": {
-			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
-			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",
-			"offerCreated": "Votre offre a été créée.",
-			"offerCancelled": "Votre offre a été annulée.",
-			"notEnoughItems": "Vous n'avez pas assez de cet objet.",
-			"offerClaimed": "Vos gains ont été récupérés"
+			"minimalValueError": "El valor total de su oferta no alcanza el valor mínimo.",
+			"tooManyItems": "No puedes vender más de {items} objetos diferentes a la vez.",
+			"offerCreated": "Tu oferta ha sido creada.",
+			"offerCancelled": "Su oferta ha sido cancelada.",
+			"notEnoughItems": "No tienes suficiente de este artículo.",
+			"offerClaimed": "Has obtenido lo que ganaste"
 		},
-		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
+		"isSelling": "Tu Dino está actualmente a la venta en el Mercado de los Maestros.",
 		"notEnoughQuantity": "No tienes suficientes ingredientes...",
 		"itemBought": "Has comprado {quantity} {itemName}.",
 		"ingredientSold": "Vendiste tus ingredientes por un total de {value} :gold:.",
@@ -475,22 +481,22 @@
 		"invalidId": "L'id est invalide",
 		"invalidSkillId": "L'id de la compétence est invalide",
 		"skillNotFound": "Compétence introuvable.",
-		"notLeader": "Ce Dinoz n'est pas le leader de son groupe.",
+		"notLeader": "Este Dino no es el líder del grupo.",
 		"invalidLeader": "Leader invalide.",
-		"notEnoughIrma": "Vous n'avez pas assez de potion d'Irma.",
-		"missingIrma": "Vous avez besoin de potion d'Irma pour faire cette action.",
+		"notEnoughIrma": "No tienes suficientes pociones de la Bruja Lola.",
+		"missingIrma": "Necesitas más pociones de la Bruja Lola para realizar esta acción.",
 		"dinozCannotLvlUp": "Le Dinoz ne peut pas monter de niveau.",
-		"dead": "Votre Dinoz est mort.",
-		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz {dinozId}.",
-		"OnlyLettersAndNumbers": "Nom incorrect ! Seulement entre 3 et 32 lettres et chiffres peuvent être utilisés.",
-		"tooManyActiveDinoz": "Vous avez déjà trop de Dinoz actifs.",
+		"dead": "Tu Dino está muerto.",
+		"backpackFull": "Tu Dino ya no tiene espacio suficiente en su equipamiento {dinozId}.",
+		"OnlyLettersAndNumbers": "¡Nombre incorrecto! Debes usar entre 3 y 32 caracteres, que pueden ser números o letras.",
+		"tooManyActiveDinoz": "Ya tienes demasiados Dinos activos.",
 		"notEnoughItems": "Vous n'avez pas la quantité attendue pour l'item requis.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or.",
 		"tooManyMagicItemEquiped": "Votre Dinoz ne peut pas équiper plus d'objets magiques.",
-		"maxQuantityInventory": "Vous avez déjà trop de cet objet dans votre inventaire",
-		"missingStatus": "L'un de vos Dinoz ne remplit pas les conditions pour faire cette action.",
-		"noFight": "Aujourd'hui, le marais est perdu dans la brume... Vous ne trouverez aucun monstre à combattre.",
-		"noMovement": "Aujourd'hui, le marais est complètement inondé ! Vous ne pouvez pas vous déplacer ici. Vous devez attendre demain pour sortir de ce bourbier.",
+		"maxQuantityInventory": "Ya tienes lo máximo permitido de este objeto en tu inventario",
+		"missingStatus": "Uno de tus Dinos no cumple con las condiciones necesarias para realizar esta acción.",
+		"noFight": "Hoy la marea está perdida en la bruma... Seguramente no encontrarás ningún monstruo a combatir.",
+		"noMovement": "¡Hoy el pantano está totalmente inundado! No puedes desplazarte hoy. Tendrás que esperar a mañana para poder salir de este fangoso lugar.",
 		"cannotFollowSelf": "Un Dinoz ne peut pas se suivre lui-même.",
 		"lifeCannotExceedMaxLife": "La vie ne peut pas dépasser la vie maximale.",
 		"missionProgressionMustBePositiveInteger": "La progression doit être un entier positif ou nul.",
@@ -502,7 +508,7 @@
 		"collectionNotOwnedByUser": "La collection {collectionKey} n'appartient pas au joueur {userId}.",
 		"unknown": "Une erreur est survenue.",
 		"unknownMission": "Mission inconnue : {missionKey}.",
-		"offerInProgress": "Vous ne pouvez pas annuler une enchère ayant au moins une offre.",
+		"offerInProgress": "No puedes cancelar una subasta que tenga al menos una oferta.",
 		"noDinozAtMarket": "Vous n'avez aucun Dinoz au marché.",
 		"alreadyOffer": "Vous avez déjà une vente en cours.",
 		"bidsOngoing": "Vous avez encore des enchères en cours.",
@@ -537,9 +543,9 @@
 	"ranking": {
 		"title": "Clasificación :",
 		"tabs": {
-			"players": "Joueurs",
-			"average": "Moyenne",
-			"completion": "Complétion"
+			"players": "Jugadores",
+			"average": "Promedio",
+			"completion": "Completado"
 		},
 		"th": {
 			"pos": "Pos.",
@@ -561,13 +567,13 @@
 			"next": "Página siguiente"
 		},
 		"placeholder": {
-			"searchUser": "Rechercher un joueur",
+			"searchUser": "Buscar un Maestro",
 			"searchClan": "Buscar un Clan"
 		}
 	},
 	"accountPage": {
 		"title": "Mi Cuenta",
-		"userTitle": "Joueur : {name}",
+		"userTitle": "Jugador: {name}",
 		"noDescription": "Aucune description sur ce profil...",
 		"editProfile": "Editer mon profil",
 		"changeAvatar": "Changer l'avatar",
@@ -576,28 +582,28 @@
 		"gender_male": "♂ Homme",
 		"gender_female": "♀ Femme",
 		"gender_other": "Pas de préférence",
-		"profil": "Profil DinoRPG",
-		"player": "Joueur :",
-		"dinoz": "Dinoz :",
+		"profil": "Perfil de DinoRPG",
+		"player": "Jugador:",
+		"dinoz": "Dinos:",
 		"ranking": "Clasificación :",
-		"inscription": "Inscrit le",
-		"clan": "Clan :",
-		"completion": "Complétion",
-		"rewards": "Récompenses épiques",
-		"editAccount": "Modifier le profil",
-		"edit": "Editer",
+		"inscription": "Inscrito el",
+		"clan": "Clan:",
+		"completion": "Completado",
+		"rewards": "Recompensas Épicas",
+		"editAccount": "Edite el perfil",
+		"edit": "Editar",
 		"descriptionUpdated": "Description mise à jour !",
 		"options": {
-			"title": "Options du compte",
+			"title": "Opciones de Mi Cuenta",
 			"mdp": "Modifier le MDP",
 			"todo": "à venir...",
 			"reset": "Réinitialiser le compte",
-			"retour": "Retour"
+			"retour": "Volver"
 		},
 		"goals": {
-			"title": "Statistiques DinoRPG",
-			"points": "points",
-			"linkStats": "Statistiques",
+			"title": "Estadísticas de DinoRPG",
+			"points": "Puntos",
+			"linkStats": "Estatísticas",
 			"linkGains": "Gains",
 			"help": {
 				"question": "Que signifient ces compteurs ?",
@@ -606,19 +612,20 @@
 			"achievements": {
 				"reward": "{name} x {quantity}"
 			},
-			"todo": "à venir..."
+			"todo": "Próximamente..."
 		},
 		"tabs": {
 			"dinoz": "Mes Dinoz",
 			"friends": "Mes Amis"
 		},
-		"level": "Niveau"
+		"level": "Nivel"
 	},
 	"userCard": {
 		"title": "Aller sur le profil DinoRPG de {user}"
 	},
 	"dinoz": {
 		"hud": {
+			"fight": "Ce Dinoz peut combattre.",
 			"following": "Este Dino sigue a su líder de grupo.",
 			"gather": "Este Dino puede recolectar en este lugar.",
 			"rest": "Este Dino está descansando.",
@@ -641,88 +648,88 @@
 	"fb_tournament": {
 		"title": "Tournoi",
 		"disclaimer": "Chaque combat du tournoi consomme une Potion d’Irma. En cas de victoire, votre Dinoz progresse vers l’adversaire suivant.",
-		"stage": "Palier {stage}",
-		"fight": "Combattre {opponent}",
+		"stage": "Fase {stage}",
+		"fight": "Combatir contra {opponent}",
 		"completed": "Votre Dinoz a vaincu tous les adversaires disponibles du tournoi."
 	},
 	"race": {
-		"race": "Race :",
+		"race": "Raza:",
 		"name": {
 			"winks": "Winks",
-			"winks_demon": "Winks Demon",
+			"winks_demon": "Winks Demonio",
 			"sirain": "Sirain",
 			"castivore": "Castivore",
-			"nuagoz": "Nuagoz",
-			"gorilloz": "Gorilloz",
-			"gorilloz_demon": "Gorilloz Demon",
+			"nuagoz": "Nubeis",
+			"gorilloz": "Gorilos",
+			"gorilloz_demon": "Gorilos Demonio",
 			"wanwan": "Wanwan",
-			"wanwan_demon": "Wanwan Demon",
+			"wanwan_demon": "Wanwan Demonio",
 			"pigmou": "Pigmou",
-			"pigmou_demon": "Pigmou Demon",
-			"planaille": "Planaille",
-			"planaille_demon": "Planaille Demon",
+			"pigmou_demon": "Pigmou Demonio",
+			"planaille": "Planeala",
+			"planaille_demon": "Planeala Demonio",
 			"moueffe": "Moueffe",
-			"moueffe_demon": "Moueffe Demon",
-			"rocky": "Rocky",
+			"moueffe_demon": "Moueffe Demonio",
+			"rocky": "Rokky",
 			"hippoclamp": "Hippoclamp",
-			"pteroz": "Pteroz",
+			"pteroz": "Teroz",
 			"quetzu": "Quetzu",
-			"feross": "Feross",
+			"feross": "Feros",
 			"kabuki": "Kabuki",
-			"kabuki_demon": "Kabuki Demon",
+			"kabuki_demon": "Kabuki Demonio",
 			"mahamuti": "Mahamuti",
-			"santaz": "Santaz",
+			"santaz": "Polvorón",
 			"smog": "Smog",
-			"soufflet": "Soufflet",
-			"toufufu": "Toufufu",
-			"triceragnon": "Tricéragnon"
+			"soufflet": "Visper",
+			"toufufu": "Tufufu",
+			"triceragnon": "Tricerithumps"
 		},
 		"description": {
-			"winks": "Les Winks ont d'étranges pouvoirs. Ils sont les rares Dinoz à pouvoir effectuer des mutations temporaires ou définitives. Ils ont développé avec le temps une véritable science, transmise de génération en génération.",
-			"sirain": "Les Sirains sont les maîtres des Îles Altantéinées. Ils ont un assez bon sens tactique et savent garder une vision claire du combat à tout moment et exploiter les faiblesses de leurs adversaires.",
-			"castivore": "Couverts de grandes quantités de poils, les Castivores sont de paisibles herbivores. Malgré leurs courtes pattes, leur vitesse de course est très rapide et ils sont dotés d'une grande agilité. Ce sont des fidèles compagnons des Maîtres, qui ne causent pas trop de soucis hormis côté nettoyage quand ils renouvellent leurs poils.",
-			"feross": "Le Feross est un Dinoz particulièrement rare. Son habitat naturel sont les brumes du Marais Collant, ce qui fait qu'il est très difficile d'en apercevoir et encore plus d'en capturer. Malgré sa douce humeur, sa puissante corne fait des ravages parmi ses ennemis.",
-			"gorilloz": "Les Gorilloz sont les Gardiens des grandes forêts de Dinoland, et en particulier de la Forêt de Grumhel. Ils sont forts, féroces, se montrent rarement et protègent toute altération de leurs territoires par des intrus. Les Gorilloz vivent en parfaite harmonie avec la nature, et derrière leurs visages durs sont doués d'une grande intelligence.",
-			"hippoclamp": "Les Hippoclamps sont une classe de soldats d'élite des Îles Atlantéinées. De nombreux scientifiques les ont étudiés et sont arrivés à la quasi-certitude qu’ils étaient le résultat d’expériences de mutations réussies de Kumps par les Winks.",
-			"kabuki": "Originaire des montagnes de Caushemesh, on ne trouve que très peu de Kabuki dans le Royaume de Dinoville. On raconte pourtant qu'il en existerait un petit groupe, vivant isolé sur une île au Sud... En tout cas, ce sont des combattants redoutables !",
-			"mahamuti": "Disparu depuis des centaines d'années, l'unique moyen de trouver un Mahamuti encore vivant serait de retrouver ce Dinoz congelé. En effet, la plupart des représentants de cette espèce furent pris par surprise lors de la grande glaciation datant de la formation des continents... Ils sont réputés pour tout écraser sur leur passage...",
-			"moueffe": "Les Moueffes sont de lointains descendants des Dragons, et ils en sont très fiers. Ils ont conservés d’eux une grande affinité avec le feu, une peau dure et résistante, ainsi qu’un sens du combat hors pair.",
-			"nuagoz": "La vie apparaît parfois dans d'étranges conditions. Les Nuagoz en sont le parfait exemple : constitués majoritairement d'eau, d'air et de foudre, il a fallu certainement beaucoup de chance ou bien un événement mystérieux pour qu'ils prennent vie sans s'évaporer immédiatement. En tout cas, ça marche tellement bien qu'ils sont des combattants très efficaces et très appréciés des Maîtres Dinoz.",
-			"pigmou": "Les Pigmous sont de petits animaux féroces et têtus. Ils ne comprennent qu’une seule chose : une force supérieure à la leur. Ils sont donc difficiles à dresser, mais une fois la supériorité du Maître établie, ils vont alors le défendre sans faillir.",
-			"planaille": "Les Planailles sont d’étranges Dinoz volants. Leur corps est muni d’un grand nombre de petits récepteurs et de muscles leur permettant de contrôler de façon quasi-parfaite chaque centimètre de leurs ailes. Ces dernières leurs permettent de manipuler et d’amplifier le vent et l’électricité, pour en faire des armes redoutables. Ils ne sont pas doués d'une grande intelligence et sont facilement contrôlables par un Maître.",
-			"pteroz": "Les Pteroz sont des Dinoz munis d’ailes qui planent sur les hauteurs du Grand Tout Chaud. Ils ont un grand sens du territoire et il vaut donc mieux ne pas déranger une Maman Ptéroz protégeant ses oeufs. Ils sont assez difficiles à dresser mais sont de très bons combattants.",
-			"quetzu": "Les Quetzus sont des Dinoz originaires de l'île de Nimbao, depuis la fin du règne de Grizorg, l'île étant redevenue accessible par tous les maîtres Dinoz, il est tout naturel d'en trouver de plus en plus. Leur force et leur agilité restent inégalées, on trouve cependant peu de Quetzus à un âge avancé, leur vrai potentiel est libéré à ce moment.",
-			"rocky": "Les Rockys sont parfois confondus avec de grandes pierres taillées par l’homme. Ce sont en fait des êtres vivants mi-animal mi-néral dont la composition du corps est très riche en Magnétite. Cela leur permet de produire de l’électricité quasiment à volonté en frottant leur corps.",
-			"santaz": "Le Santaz est originaire des lointaines montagnes de Caushemesh. Il est extrêmement rare et donc particulièrement recherché par les Maîtres Dinoz de Dinoville. C'est un Dinoz difficile à dresser mais il est très puissant et maîtrise à la perfection l'élément Air.",
-			"smog": "L'ADN des smogs a été découvert par le professeur Grand. En extrayant le sang d'une sangsue piégée dans la glace, il a pu recréer génétiquement cette espèce qui faisait partie autrefois des plus redoutables prédateurs de la planète.",
-			"soufflet": "Les soufflets sont des dinozs vraiment uniques, après avoir passé quelques temps sous forme de larve, c'est à l'age adulte ou ils revêtent leurs véritables formes. Un Dinoz volant capable de rivaliser avec les meilleurs Dinoz ! Originaire de Nimbao ils vivent reclus et ce n'est qu'après les troubles ayant eu lieu sur l'île qu'ils ont commencés à se montrer aux yeux de tous.",
-			"toufufu": "Les Toufufus sont des descendants de leurs lointains ancêtres les Ouistitis, il est très difficile d'en attraper, ils sont futés et rapides, il paraît que quelqu'un leur aurait appris le kung-fu...",
-			"triceragnon": "Récemment importés des terres de Thorgnole, le tricéragnon est un Dinoz extrêmement prisé par les maîtres Dinoz. Du fait de son caractère combatif, il est très difficile d'amener un Tricéragnon à bon port sans y laisser quelques planches !",
-			"wanwan": "Jadis le meilleur ami de l’Homme, les Wanwan ont muté peu à peu et sont revenus à l’état sauvage. Ce sont des Dinoz très vifs, capables de mener de nombreuses attaques rapides, et dont les longues dents pointues sont redoutées. Leur pelage est conducteur d’électricité, ce qui leur permet de stocker la foudre puis de la décharger à volonté."
+			"winks": "Los Winks tienen poderes extraños. Son los únicos Dinos capaces de efectuar mutaciones temporales o definitivas. Han desarrollado con el tiempo una verdadera ciencia, transmitida de generación en generación.",
+			"sirain": "Los Sirains son los maestros de las Islas Atlanteidas. Tienen un buen sentido táctico y saben guardar una visión clara del combate en todo momento así como explotar las debilidades de sus adversarios.",
+			"castivore": "Cubiertos por grandes cantidades de pelo, los Castivores son herbívoros tranquilos. A pesar de tener unas patas muy cortas, son muy ágiles y rápidos corriendo. Son fieles animales de compañía de los Maestros y rara vez causan problemas (excepto cuando mudan el pelaje).",
+			"feross": "Los Feros son unos Dinos difíciles de encontrar. Su hábitat natural se encuentra en las brumas del Pantano Pegajoso, lo que los ayuda a esconderse y dificulta su captura. A pesar de su humor tranquilo, su poder es capaz de destrozar a sus enemigos.",
+			"gorilloz": "Los Gorilos son los Guardianes de los grandes bosques y junglas de Dinoland y, en particular, de la Jungla de Grumhel. Son fuertes, feroces y rara vez se dejan ver. Protegen sus territorios de toda agresión intrusa. Los Gorilos viven en perfecta armonía con la naturaleza y, detrás de su aspecto duro, esconden una gran inteligencia y dulzura.",
+			"hippoclamp": "Los Hippoclamps son una clase de soldados de élite de las Islas Atlanteidas. Numerosos científicos los han estudiado y están casi convencidos de que son el resultado de experimentos de mutaciones de Kumps realizados por los Winks.",
+			"kabuki": "Originarios de las montañas de Caushemesh, los Kabukis son muy escasos en la región del Reino de Dinovilla. Se dice que hay un pequeño grupo de Kabukis que viven aislados en una isla hacia el sur. ¡Lo que sí está claro es que son unos luchadores muy temidos!",
+			"mahamuti": "El único modo de encontrar un Mahamuti consiste en encontrarlo congelado. Desaparecido desde hace cientos de años, estos Dinos fueron atrapados por la Gran Glaciación en el periodo de la formación de continentes. Son famosos por aplastar todo cuanto pasa por su camino.",
+			"moueffe": "Los Moueffes son descendientes lejanos de los Dragones. Esta raza, muy orgullosa, tiene, como sus ascendientes, una gran afinidad al fuego, una piel dura y resistente, y un gran sentido del combate.",
+			"nuagoz": "En Dinoland hay muchas cosas difíciles de explicar, como los Nubeis. Están constituidos mayoritariamente de agua, aire y electricidad. A pesar de su naturaleza inexplicable, están vivos, y son tan fuertes que los Maestros de Dinos los aprecian mucho.",
+			"pigmou": "Los Pigmous son pequeños animales feroces y testarudos. Tienen una extraordinaria fuerza, por lo que son difíciles de controlar. Una vez aprenden a respetar a su Maestro, siempre estarán ahí para defenderlo.",
+			"planaille": "Los Planealas son Dinos voladores. Su cuerpo tiene pequeños receptores y sus músculos les permiten controlar de manera casi perfecta cada centímetro de sus alas. Estas últimas les permiten manipular y amplificar el viento y la electricidad, lo que hace de ellos auténticas armas letales. No están dotados de una gran inteligencia por lo que son fácilmente controlables por su Maestro.",
+			"pteroz": "Los Teroz son Dinos con alas que les permiten planear sobre el Gran Señor-Todo-Quema. Son muy territoriales por lo que más vale no molestar a una Mamá Teroz que esté protegiendo sus huevos. Son difíciles de controlar pero son grandes luchadores.",
+			"quetzu": "Los Quetzus son Dinos oriundos de la Isla de Nimbao. Con el fin del reino de Grizorg, la isla volvió a ser accesible a los Maestros Dinos, y estas raras criaturas proliferan en el lugar. Su fuerza y agilidad son incomparables. Sin embargo, muy pocos Quetzus se encuentran en edad madura, que es cuando su verdadero potencial se libera.",
+			"rocky": "Los Rokkys son a veces confundidos con piedras talladas por el ser humano. En realidad, son seres vivos, mitad animal mitad mineral. Una gran parte de sus cuerpos está compuesta de Magnetita. Esto les permite producir electricidad casi a voluntad simplemente con la frotación.",
+			"santaz": "Los Polvorones provienen de las lejanas montañas de Caushemesh. Son muy difíciles de atrapar y por lo tanto son muy apreciados por los Maestros de Dinoland. Es un Dino difícil de controlar, pero es muy poderoso y domina perfectamente el elemento Aire.",
+			"smog": "El ADN de los Smogs ha sido descubierto por el Dr. Grand. Al extraer una muestra de sangre encapsulada en el vientre de un mosquito, pudo reconstituir genéticamente a esta criatura que fue uno de los más grandes depredadores del planeta.",
+			"soufflet": "Los Vispers son Dinos extraordinarios, después de su periodo lárvico, alcanzan su verdadera forma en la edad adulta y son capaces de volar. Oriundos de Nimbao, no fueron conocidos hasta que la isla fue descubierta. Su espíritu guerrero es temible.",
+			"toufufu": "Los Tufufus descienden del Wistiti. Son muy escurridizos y complicados de atrapar. Además, parece que alguien les ha enseñado kung-fu...",
+			"triceragnon": "Provenientes de las tierras de Thorgnole, los Tricerithumps son Dinos muy apreciados por los Maestros de Dinoland. Su naturaleza combativa los hace difíciles de controlar.",
+			"wanwan": "En el pasado fueron los mejores amigos del hombre, pero tras una lenta evolución, ahora los Wanwan han vuelto al estado salvaje. Son dinos muy vivaces, capaces de realizar ataques muy rápidos con sus afilados dientes. El pelaje de los Wanwan es conductor de electricidad, lo que les permite almacenar rayos y descargarlos a voluntad."
 		}
 	},
 	"element": {
-		"fire": "Element **Feu**",
-		"wood": "Element **Bois**",
-		"water": "Element **Eau**",
-		"lightning": "Element **Foudre**",
-		"air": "Element **Air**",
-		"neutral": "Element **Vide** && //(cet élément s'applique face aux attaques normales des montres)//",
-		"void": "Element **Vide** && //(cet élément s'applique face aux attaques normales des montres)//"
+		"fire": "Elemento **Fuego**",
+		"wood": "Elemento **Madera**",
+		"water": "Elemento **Agua**",
+		"lightning": "Elemento **Rayo**",
+		"air": "Elemento **Aire**",
+		"neutral": "Elemento **Vacío** && //(este elemento se aplica en respuesta a los ataques normales de los monstruos)//",
+		"void": "Elemento **Vacío** && //(este elemento se aplica a los ataques normales de los monstruos)//"
 	},
 	"skill": {
-		"properties": "Propriétés",
-		"energy": "Énergie : **{energy}**",
-		"probability": "Probabilité : **{probability}%**",
-		"priority": "Priorité : **{priority}**",
-		"unknown": "Inconnu",
-		"unknownDesc": "Vous n'avez pas encore découvert cette compétence.",
+		"properties": "Propiedades",
+		"energy": "Energía: **{energy}**",
+		"probability": "Probabilidad: **{probability}%**",
+		"priority": "Prioridad: **{priority}**",
+		"unknown": "Desconocido",
+		"unknownDesc": "Aún no has desbloqueado esta competencia.",
 		"name": {
-			"GriffesEnflammees": "Griffes Enflammées",
-			"Colere": "Colère",
-			"Force": "Force",
-			"Charge": "Charge",
-			"SangChaud": "Sang Chaud",
+			"GriffesEnflammees": "Garras en llamas",
+			"Colere": "Cólera",
+			"Force": "Fuerza",
+			"Charge": "Carga",
+			"SangChaud": "Sangre Caliente",
 			"Furie": "Furie",
 			"ArtsMartiaux": "Arts Martiaux",
 			"CoeurArdent": "Cœur Ardent",
@@ -1603,7 +1610,7 @@
 			"box_rare": "Boîte rare",
 			"box_epic": "Boîte épique",
 			"box_legendary": "Boîte légendaire",
-			"undefined": "Inconnu"
+			"undefined": "Desconocido"
 		},
 		"description": {
 			"gold": "{quantity} pièces d'or.",
@@ -2651,9 +2658,9 @@
 			"piglo4": "Super Piglou",
 			"piglo5": "Ultra Piglou",
 			"febrez": "Febrez",
-			"pteroz": "Pteroz",
+			"pteroz": "Teroz",
 			"hippo": "Hippoclamp",
-			"rocky": "Rocky",
+			"rocky": "Rokky",
 			"pira": "Pirhanoz",
 			"pira2": "Pirhaloz",
 			"kazka": "Kazkadine",
@@ -2681,7 +2688,14 @@
 			"baratr": "Baratribor",
 			"bamboo": "Bambooz",
 			"swampmf": "Bourbeoz",
-			"swampmf2": "Brumoz"
+			"swampmf2": "Brumoz",
+			"merch1": "Marchand Louche",
+			"merch2": "Marchand en Colère",
+			"gang1": "Jean-Hubert",
+			"gang2": "Charles-Edouard",
+			"gang3": "Louis-Stanislas",
+			"suspc": "Suspect",
+			"suspc1": "Suspect Numéro 1"
 		},
 		"status": {
 			"asleep": "endormi",
@@ -3171,7 +3185,7 @@
 				"stone": "Cette Vieille Pierre ?",
 				"stone_yes": "Bien sûr, la voilà.",
 				"stone_no": "Hé, là ! Pas touche ! Avant, j'aimerais savoir quelque chose...",
-				"back": "Retour",
+				"back": "Volver",
 				"noquestion": "Rien de tout cela",
 				"learn": "Apprendre",
 				"water": "La nage en bouée",
@@ -3769,6 +3783,41 @@
 		"baoBabe": {
 			"name": "Bao Babe"
 		},
+		"madameX": {
+			"name": "Madame X",
+			"dialog": {
+				"begin": "Alors que vous passiez par Forcebrut, vous rencontrez une femme, qui semblait justement vous attendre.",
+				"talk": "Tiens donc, voilà donc ce jeune Maître Eleveur dont j'ai tant entendu parler ? Il semble que Papy Joe dise beaucoup de bien à propos de toi, tant tu t'appliques à remplir ses missions ?",
+				"talk2": "Puisque tu sembles être quelqu'un à qui on peut faire confiance, j'aurais moi aussi aimé te confier quelques missions, libre à toi d'accepter ou non !",
+				"question": "Qui je suis ?!? Ah ah ah ! Pardonne-moi, mon jeune ami, j'avais complètement oublié de me présenter ! Je suis.... .... ....",
+				"question2": "... désolée... je m'excuse. Je viens juste de me rappeler que je ne pouvais justement pas révéler qui je suis, car cela pourrait t'attirer de gros ennuis ! Mais comme c'est tout de même très malpoli, je vais te révéler quelque chose d'intéressant...",
+				"double": "Voyons voir... Je suppose que jusqu'à présent, tu as appris que chaque compétence correspondait à un unique élément parmi les cinq élements possibles ? Par exemple, Colère correspond à l'élément Feu et Perception correspond à l'élément Eau.",
+				"double2": "Et bien... c'est faux ! Il existe des compétences spéciales, qui sont associées non pas à un seul mais à DEUX éléments ! On les appelle les compétences-doubles. Une compétence-double peut s'apprendre à partir de l'un des deux éléments qui la composent, mais demande de connaître au préalable une compétence de chacun des deux éléments.",
+				"double3": "Je comprends tout à fait ta surprise, c'est un secret bien gardé. Cependant pour pouvoir apprendre ces compétences, il est nécessaire de maîtriser Compétence-Double, une compétence secrète que seuls les Drag.... mais j'en ai déjà trop dit !",
+				"learn": "Oh c'est plutôt simple, regarde, il me suffit de faire \"ça\" et...",
+				"dolearn": "Ouah ! Ca a marché ! Tu vois que c'était facile ? Ton Dinoz maîtrise désormais Compétence-Double, félicitations !",
+				"no": "Non... ça ne marche pas... si ça te picote quand je fait \"ça`\" ou si ton Dinoz n'a pas encore appris les compétences, te permettant de maîtriser Compétence-Double, ça ne marchera pas. Reviens me voir plus tard pour que l'on réessaie !",
+				"already": "A ton avis ? .... Il me semble que tu l'as déjà appris ! Ah ah ah !"
+			},
+			"choice": {
+				"talk": "Lui parler",
+				"talk2": "...",
+				"mission": "Liste de Missions",
+				"question": "Mais qui êtes-vous ?",
+				"question2": "Vous êtes ?",
+				"double": "Ah ?",
+				"double2": "Oui !",
+				"double3": "!!!",
+				"learn": "Comment l'apprendre ?",
+				"already": "Comment l'apprendre ?",
+				"learn1": "Et ?",
+				"learn2": "Ah ??",
+				"learn3": "Hein ???",
+				"learn4": "Oh !",
+				"learn5": "Quoi...",
+				"no": "(ouille)"
+			}
+		},
 		"merguez": {
 			"name": "Vendeur de Merguez",
 			"dialog": {
@@ -3927,6 +3976,7 @@
 			"useItem": "{nameKey}",
 			"useMoney": "{nameKey}",
 			"fightAction": "{nameKey}",
+			"wait": "Attendre",
 			"validate": "Retourner voir {nameKey} pour valider la mission"
 		},
 		"validate": "Valider la mission",
@@ -4879,6 +4929,185 @@
 				"begin": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !",
 				"merguezSeller": "Ooooohh !! Il s'agit donc des fameuses crevettes au Napalm ?!? Voyons voir.... uhmm.... cela manque un peu de graisse mais c'est succulent. Nul doute que Mouldeur devrait bientôt se montrer... Mais regarde qui voilà !",
 				"end": "OOooooooh ! oh ! oh oh oh ! Mouldeur est revenu !!! Merci beaucoup !!"
+			}
+		},
+		"madameX": {
+			"mmex1": {
+				"name": "La Mallette Noire",
+				"begin": "Un bateau est arrivé la nuit dernière au Port de Prêche, il a déposé une petite malette noire pour moi. Peux-tu me la ramener ? Surtout ne l'ouvre pas !",
+				"take": {
+					"name": "Prendre la Malette Noire",
+					"text": "Vous avez obtenu la Malette Noire auprès d'un homme avec un long imperméable. Cette mission semble plutôt facile !"
+				},
+				"madameX": {
+					"name": "Madame X",
+					"text": "C'est étrange... Cette malette... ELLE A ETE PIEGEE !"
+				},
+				"trap": {
+					"name": "Piège !",
+					"begin": "Un Gluon avait été glissé dans la malette, sans doute dans le but d'attaquer Madame X !",
+					"win": "Madame X est ravie que vous ayez déminé la malette a sa place !"
+				},
+				"end": "Merci pour ta précieuse aide, voici ta récompense !"
+			},
+			"mmex2": {
+				"name": "Le Marchand Traître",
+				"begin": "Il semblerait qu'il y ait un traître à la cour du Roi. Il fait passer ses informations grâce à un marchand qui se présente de temps en temps à Dinoville. Arrête ce marchand et amène-le moi pour que je puisse l'interroger !",
+				"search1": {
+					"name": "Chercher le Marchand",
+					"text": "Vous avez trouvé un marchand particulièrement louche qui semble correspondre à la description..."
+				},
+				"attack1": {
+					"name": "A l'Attaaaaque !",
+					"begin": "Au secourrrss !!!",
+					"win": "Après vérification, ce Marchand était innocent ! Le pauvre..."
+				},
+				"search2": {
+					"name": "Chercher le Marchand",
+					"text": "Vous avez trouvé LE marchand qui correspond exactement à la description... Il ne peut pas y avoir d'erreur cette fois ! (a priori)"
+				},
+				"attack2": {
+					"name": "A l'Attaaaaque !",
+					"begin": "Aarrrgg !!!",
+					"win": "Vous avez capturé le marchand ! Il va falloir le ramener à Madame X"
+				},
+				"end": "Merci d'avoir ramené ce traître au Royaume ! Ne t'inquiete pas je sais comment je vais le faire avouer !! J'espère par contre que tu ne t'es pas trompé de personne..."
+			},
+			"mmex3": {
+				"name": "La Course-Poursuite",
+				"begin": "J'ai reçu un rapport de police comme quoi un Dinoz avait attaqué des marchands à Dinoville récemment. Pourrais-tu enquêter sur cette étrange affaire ?",
+				"portrait": {
+					"name": "Portrait-Robot",
+					"text": "Le Portrait-Robot du Dinoz accusé d'avoir attaqué les marchands ressemble étrangement à votre Dinoz. Simple coïncidence ou complot ?"
+				},
+				"investigate": {
+					"name": "Enquêter",
+					"begin": "Alors que vous cherchiez des indices, des marchands en colère trouvent et attaquent votre Dinoz !",
+					"win": "La situation va devenir complexe à expliquer... mieux vaut peut-être en informer Madame X ?"
+				},
+				"madameX": {
+					"name": "Madame X",
+					"text": ".... (vous expliquez toute l'histoire) ... Quoi ! Alors c'était vraiment ton Dinoz qu'ils recherchaient ?!? hmm... je comprends. Il va me falloir du temps pour faire enterrer cette affaire. En attendant, va te planquer aux Collines Escarpées !"
+				},
+				"wait": {
+					"name": "Attendre",
+					"text": "Vous attendez que Madame X vous contacte..."
+				},
+				"messagemx": {
+					"name": "Message MX",
+					"text": "Un message signé \"MX\" vous attend, il précise juste \"Retourne à Dinoville au plus vite\""
+				},
+				"merchant": {
+					"name": "Marchand",
+					"text": "Oh ! Alors c'est vous qui êtes le maître du fameux jumeau ?!? Ah ah ah ! C'est vrai que votre Dinoz ressemble beaucoup à celui qu'on a attrapé hier ! Mais ne vous inquiétez pas, le vrai coupable a été capturé par la Police d'Elite Royale, donc vous ne craignez plus rien !"
+				},
+				"end": "J'ai réussi à te couvrir pour cette fois, grâce à mes relations. Mais si jamais tu fais une seule fois une telle faute dans une mission, je serais obligée de te lâcher, et tu n'auras alors jamais travaillé pour moi. Capito ?"
+			},
+			"mmex4": {
+				"name": "Les Iles c'est Kool",
+				"begin": "Nous avons isolé un groupe d'individu qui cultive des herbes illégales dans le Marais Collant et les exporte ensuite vers la capitale. Nous devons envoyer un agent sur place. Il faut bien entendu que ton Dinoz soit capable de se déplacer aux Iles Atlantéinées.",
+				"investigate": {
+					"name": "Enquêter",
+					"text": "L'odeur assez forte et les sons du Djembé qu'on entend depuis très loin vous permettent de facilement localiser une bande de délinquants aux cheveux longs et gras."
+				},
+				"fight": {
+					"name": "Les Neutraliser",
+					"begin": "Aarrg !! Un Borg ! Je pense qu'il vaudrait mieux combattre ensemble pour cette fois !!",
+					"win": "Après votre victoire commune, il semblerait que les trois délinquants veuillent discuter avec vous..."
+				},
+				"jeanH1": {
+					"name": "Jean-Hubert",
+					"text": "Yo mec ! Je comprends que tu kiff trop pas ce qu'on fait ici, mais c'est trop kool, alors abuse pas mec !"
+				},
+				"charlesE": {
+					"name": "Charles-Edouard",
+					"text": "Eh mon pote ! Tu t'es battu à donf là ! Trop kool ! Mais nous dénonce pas, les keufs me gavent, et la beach c'est trop kool !"
+				},
+				"louisS1": {
+					"name": "Louis-Stanislas",
+					"text": "Mes deux associés voulaient exprimer leur gratitude à votre encontre, et vous demander humblement si un arrangement n'était pas possible pour que nous puissions éviter les affres de la prison qui nous feraient gâcher ce que tous les grand poêtes ont surnommé \"nos plus belles années\". Merci de votre compréhension."
+				},
+				"madameX1": {
+					"name": "Madame X",
+					"text": "QUOI ? Tu as sympathisé avec des hors-la-loi ? ... Je ne suis pas certain que tu fasses un très bon agent après-tout... Enfin bref : ils ont enfreint la loi, et même s'ils sont très gentils ils n'en sont pas moins coupables !"
+				},
+				"madameX2": {
+					"name": "Madame X",
+					"text": "Puisque tu insistes, je vais m'arranger pour que les circonstances atténuantes leurs soient accordées, mais ils devront quand même faire des travaux d'intêret public, comme le rangement de la bibliothèque de l'Université ! Et tu vas les aider, puisque tu les aimes bien !"
+				},
+				"louisS2": {
+					"name": "Louis-Stanislas",
+					"text": "Je vous remercie de nous avoir aidé à éviter le pire. Nous serons ravis de ranger la bibliothèque de l'Université, surtout si vous êtes avec nous pour nous soutenir le moral pendant ces longues heures de labeur !"
+				},
+				"organize": {
+					"name": "Ranger la Bibliothèque",
+					"text": "Votre Dinoz aide Jean-Hubert, Charles-Edouard et Louis-Stanislas à ranger la grande bibliothèque de l'Université..."
+				},
+				"jeanH2": {
+					"name": "Jean-Hubert",
+					"text": "Trop kool mec ! Nous on retourne aux Iles, car c'est trop kool ! Mais promis on déconnera plus ! Tchaw !!"
+				},
+				"end": "La loi est la loi, et toute infraction mérite sanction."
+			},
+			"mmex5": {
+				"name": "Le Complot Ashpouk",
+				"begin": "Un trafic de fausses reliques de la civilisation Ashpouk semble avoir lieu, et il se pourrait que des notables y soient mêlés. Nous devons envoyer un agent sur place pour enquêter. Il faut bien entendu que ton Dinoz soit capable de se déplacer jusqu'au Grand-Tout-Chaud.",
+				"informer": {
+					"name": "L'Indic",
+					"text": "Je suis le responsable de la collecte de renseignements pour Madame X dans ce quartier. On nous a signalé que des choses étranges se passaient la nuit du côté des Ruines Ashpouk..."
+				},
+				"hide1": {
+					"name": "Se Planquer",
+					"text": "Votre Dinoz prend la planque, et se prépare à prendre en filature les suspects qui viennent trafiquer dans le coin."
+				},
+				"suspects1": {
+					"name": "Suspects !",
+					"text": "Votre Dinoz a repéré des suspects, qui semblent rassembler de la terre prise dans les Ruines pour la stocker dans de grands sacs... Pour quelle raison ? Vous décidez de les suivre."
+				},
+				"stalking1": {
+					"name": "Filature",
+					"text": "Les suspects s'éloignent en direction du Nord"
+				},
+				"stalking2": {
+					"name": "Filature",
+					"text": "Apparemment les suspects se sont doutés de quelque chose car ils ont accéléré et se sont évanouis dans la nature..."
+				},
+				"suspects2": {
+					"name": "Suspects !",
+					"text": "Vous reconnaissez l'un des suspects dans une rue de Fosselave !"
+				},
+				"challenge": {
+					"name": "Lui foncer dessus !"
+				},
+				"search": {
+					"name": "Fouiller",
+					"text": "Après avoir vaincu le suspect, vous trouvez sur lui plusieurs sachets de terre en provenance des ruines ainsi qu'une carte de visite au nom de \"El Signor Don Fuego\". Il est temps de faire votre rapport a Madame X !"
+				},
+				"madameX": {
+					"name": "Madame X",
+					"text": "El Signor Don Fuego ? Tiens c'est une drôle de coïncidence... c'est l'un des marchands les plus en vue à Fosselave, et il dispose de nombreux soutiens à la Cour. Pour le faire tomber, il faudrait trouver des preuves qui l'impliquent directement !"
+				},
+				"hide2": {
+					"name": "Se Planquer",
+					"text": "\"Les planques c'est toujours la partie la moins drôle du métier...\" C'est toujours ce que vous avait raconté votre Grand Père Der'hik. Maintenant vous comprenez ce qu'il voulait dire..."
+				},
+				"suspects3": {
+					"name": "Suspects !",
+					"text": "Des hommes ressemblant étrangement aux suspects arrivent, discutent avec le vendeur de Merguez, avant de repartir..."
+				},
+				"merguezSeller": {
+					"name": "Vendeur de Merguez",
+					"text": "Ce que me voulaient ces touristes ? Ils voulaient juste pouvoir utiliser mon nouveau Four-à-Pain avec lequel je compte fabriquer prochainement mes Sandwichs de Gobelin... Apparemment, ils y ont fait cuire des poteries. Ils sont retournés à Fosselave pour les amener à leur patron."
+				},
+				"suspects4": {
+					"name": "Suspects !",
+					"text": "Vous reconnaissez les trois suspects dans une rue de Fosselave !"
+				},
+				"challenge2": {
+					"name": "Leur foncer dessus !",
+					"win": "Après avoir vaincu les suspects, ils vous avouent fabriquer des fausses reliques à l'aide de la terre des Ruines Ashpouk ! Il vaut mieux les amener à Madame X..."
+				},
+				"end": "Super, des pigeons ! Je vais m'arranger pour qu'ils témoignent contre Don Fuego. Cela tombe bien, il commencait justement à devenir beaucoup trop riche, et il était trop populaire à la Cour pour qu'on se débarrasse de lui par les moyens classiques... Merci pour le coup de main !"
 			}
 		}
 	},
