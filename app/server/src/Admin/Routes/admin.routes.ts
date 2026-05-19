@@ -342,6 +342,7 @@ export async function adminRoutes(app: FastifyInstance) {
 	app.put(
 		'/secrets/:key',
 		{
+			preHandler: [app.authenticate, app.admin],
 			schema: {
 				tags: ['Admin'],
 				params: adminSecretKeyParamsSchema,
