@@ -2,7 +2,8 @@ import { MARKET_BID_EXTENSION_MS } from '@dinorpg/core/models/market/constants.j
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { MoneyType, OfferStatus } from '../../../../prisma/index.js';
+import { GameLogType, MoneyType, OfferStatus } from '../../../../prisma/index.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 import { assertUserHasDinozAtMarket } from '../Helpers/market.helper.js';
 import { bidOfferBodySchema, offerIdParamsSchema } from '../Schema/market.schema.js';
@@ -100,12 +101,31 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 			}
 		});
 
-		await tx.offerBid.create({
+		const bid = await tx.offerBid.create({
 			data: {
 				offerId: offer.id,
 				userId,
 				userName: user.name,
 				value: body.value
+			}
+		});
+
+		await safeCreateGameLog({
+			type: GameLogType.OfferBid,
+			userId,
+			values: [],
+			metadata: {
+				offerId: offer.id,
+				bidId: bid.id,
+				value: body.value,
+				currency: MoneyType.TREASURE_TICKET,
+				sellerId: offer.sellerId,
+				previousTopBid: topBid
+					? {
+							userId: topBid.userId,
+							value: topBid.value
+						}
+					: null
 			}
 		});
 

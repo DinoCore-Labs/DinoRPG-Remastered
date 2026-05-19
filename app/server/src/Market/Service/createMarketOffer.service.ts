@@ -3,7 +3,8 @@ import { MARKET_OFFER_DURATION_MS } from '@dinorpg/core/models/market/constants.
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { DinozState, OfferStatus } from '../../../../prisma/index.js';
+import { DinozState, GameLogType, OfferStatus } from '../../../../prisma/index.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 import { assertUserHasDinozAtMarket } from '../Helpers/market.helper.js';
 import { assertUserOwnsOfferContent, removeOfferContentFromInventoryTx } from '../Helpers/marketInventory.helper.js';
@@ -131,6 +132,21 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 		}
 
 		await removeOfferContentFromInventoryTx(tx, userId, body.items, body.ingredients);
+
+		await safeCreateGameLog({
+			type: GameLogType.OfferNew,
+			userId,
+			dinozId,
+			values: [],
+			metadata: {
+				offerId: createdOffer.id,
+				total: body.total,
+				dinozId,
+				items: body.items,
+				ingredients: body.ingredients,
+				endDate: createdOffer.endDate.toISOString()
+			}
+		});
 
 		return createdOffer;
 	});

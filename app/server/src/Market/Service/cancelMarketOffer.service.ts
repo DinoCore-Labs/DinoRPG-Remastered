@@ -1,7 +1,8 @@
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { OfferStatus } from '../../../../prisma/index.js';
+import { GameLogType, OfferStatus } from '../../../../prisma/index.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 import { assertUserHasDinozAtMarket } from '../Helpers/market.helper.js';
 import { addOfferContentToInventoryTx, assertUserCanReceiveOfferContent } from '../Helpers/marketInventory.helper.js';
@@ -72,6 +73,19 @@ export async function cancelMarketOffer(req: FastifyRequest, reply: FastifyReply
 		}
 
 		await addOfferContentToInventoryTx(tx, userId, items, ingredients);
+
+		await safeCreateGameLog({
+			type: GameLogType.OfferCancelled,
+			userId,
+			dinozId: offer.dinozId,
+			metadata: {
+				offerId: offer.id,
+				total: offer.total,
+				dinozId: offer.dinozId,
+				items,
+				ingredients
+			}
+		});
 
 		await tx.offer.delete({
 			where: { id: offer.id }
