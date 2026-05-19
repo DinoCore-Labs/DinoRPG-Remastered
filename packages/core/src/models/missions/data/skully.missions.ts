@@ -33,6 +33,7 @@ export const skullyMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'USE_ITEM',
+				place: PlaceEnum.PAPY_JOE,
 				itemKey: 'goblin_merguez',
 				quantity: 3,
 				nameKey: 'missions.skully.skul1.giveMerguez'
@@ -336,6 +337,7 @@ export const skullyMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'USE_MONEY',
+				place: PlaceEnum.DOME_SOULAFLOTTE,
 				moneyType: 'TREASURE_TICKET',
 				quantity: 3,
 				nameKey: 'missions.skully.skul5.giveTreasureTickets'
@@ -373,6 +375,7 @@ export const skullyMissions: MissionDefinition[] = [
 			},
 			{
 				type: 'USE_ITEM',
+				place: PlaceEnum.FOSSELAVE,
 				itemKey: 'sos_flame',
 				quantity: 5,
 				nameKey: 'missions.skully.skul5.giveFlames'
