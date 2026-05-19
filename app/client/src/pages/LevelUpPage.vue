@@ -161,8 +161,8 @@
 							<Tippy theme="normal" tag="td" class="type">
 								{{ skill.type }}
 								<template #content>
-									<h1 v-html="formatContent($t(`details.type.name.${skill.type}`))" />
-									<p v-html="formatContent($t(`details.type.description.${skill.type}`))" />
+									<h1 v-html="formatContent($t(`dinozPage.details.type.name.${skill.type}`))" />
+									<p v-html="formatContent($t(`dinozPage.details.type.description.${skill.type}`))" />
 								</template>
 							</Tippy>
 							<td class="type">
