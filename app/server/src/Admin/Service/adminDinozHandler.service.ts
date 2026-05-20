@@ -1,7 +1,8 @@
 import { UpdateAdminDinozMissionPayload } from '@dinorpg/core/models/admin/adminDinozPayloads.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { DinozState } from '../../../../prisma/index.js';
+import { DinozState, GameLogType } from '../../../../prisma/index.js';
+import { CreateGameLogInput, safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import {
 	addAdminDinozSkill,
 	addAdminDinozStatus,
@@ -26,6 +27,27 @@ type Params = {
 	dinozId: number;
 };
 
+async function logAdminDinozAction(
+	request: FastifyRequest,
+	type: GameLogType,
+	metadata?: CreateGameLogInput['metadata'],
+	values: string[] = []
+) {
+	const params = request.params as { userId: string; dinozId: number | string };
+	const dinozId = Number(params.dinozId);
+	await safeCreateGameLog(
+		{
+			type,
+			actorUserId: request.user.id,
+			userId: params.userId,
+			dinozId,
+			values: values.length > 0 ? values : [String(dinozId)],
+			...(metadata ? { metadata } : {})
+		},
+		request.log
+	);
+}
+
 export async function getAdminDinozDetailsHandler(request: FastifyRequest<{ Params: Params }>, reply: FastifyReply) {
 	const data = await getAdminDinozDetails(request.params.userId, Number(request.params.dinozId));
 	return reply.send(data);
@@ -44,6 +66,10 @@ export async function updateAdminDinozProfileHandler(
 	reply: FastifyReply
 ) {
 	await updateAdminDinozProfile(request.params.userId, Number(request.params.dinozId), request.body);
+	await logAdminDinozAction(request, GameLogType.AdminUpdateDinoz, {
+		section: 'profile',
+		payload: request.body
+	} as CreateGameLogInput['metadata']);
 	return reply.send({ ok: true });
 }
 
@@ -71,6 +97,10 @@ export async function updateAdminDinozStatsHandler(
 	reply: FastifyReply
 ) {
 	await updateAdminDinozStats(request.params.userId, Number(request.params.dinozId), request.body);
+	await logAdminDinozAction(request, GameLogType.AdminUpdateDinoz, {
+		section: 'profile',
+		payload: request.body
+	} as CreateGameLogInput['metadata']);
 	return reply.send({ ok: true });
 }
 
@@ -85,6 +115,10 @@ export async function updateAdminDinozStateHandler(
 	reply: FastifyReply
 ) {
 	await updateAdminDinozState(request.params.userId, Number(request.params.dinozId), request.body);
+	await logAdminDinozAction(request, GameLogType.AdminUpdateDinoz, {
+		section: 'profile',
+		payload: request.body
+	} as CreateGameLogInput['metadata']);
 	return reply.send({ ok: true });
 }
 
@@ -93,6 +127,10 @@ export async function teleportAdminDinozHandler(
 	reply: FastifyReply
 ) {
 	await teleportAdminDinoz(request.params.userId, Number(request.params.dinozId), request.body.placeId);
+	await logAdminDinozAction(request, GameLogType.AdminUpdateDinoz, {
+		section: 'profile',
+		payload: request.body
+	} as CreateGameLogInput['metadata']);
 	return reply.send({ ok: true });
 }
 
@@ -101,6 +139,10 @@ export async function updateAdminDinozLeaderHandler(
 	reply: FastifyReply
 ) {
 	await updateAdminDinozLeader(request.params.userId, Number(request.params.dinozId), request.body.leaderId);
+	await logAdminDinozAction(request, GameLogType.AdminUpdateDinoz, {
+		section: 'profile',
+		payload: request.body
+	} as CreateGameLogInput['metadata']);
 	return reply.send({ ok: true });
 }
 
@@ -109,6 +151,14 @@ export async function addAdminDinozStatusHandler(
 	reply: FastifyReply
 ) {
 	await addAdminDinozStatus(request.params.userId, Number(request.params.dinozId), request.body.statusId);
+	await logAdminDinozAction(
+		request,
+		GameLogType.AdminAddStatus,
+		{
+			statusId: request.body.statusId
+		},
+		[String(request.params.dinozId), String(request.body.statusId)]
+	);
 	return reply.send({ ok: true });
 }
 
@@ -117,6 +167,14 @@ export async function removeAdminDinozStatusHandler(
 	reply: FastifyReply
 ) {
 	await removeAdminDinozStatus(request.params.userId, Number(request.params.dinozId), request.body.statusId);
+	await logAdminDinozAction(
+		request,
+		GameLogType.AdminRemoveStatus,
+		{
+			statusId: request.body.statusId
+		},
+		[String(request.params.dinozId), String(request.body.statusId)]
+	);
 	return reply.send({ ok: true });
 }
 
@@ -125,6 +183,14 @@ export async function addAdminDinozSkillHandler(
 	reply: FastifyReply
 ) {
 	await addAdminDinozSkill(request.params.userId, Number(request.params.dinozId), request.body);
+	await logAdminDinozAction(
+		request,
+		GameLogType.AdminAddSkill,
+		{
+			skillId: request.body.skillId
+		},
+		[String(request.params.dinozId), String(request.body.skillId)]
+	);
 	return reply.send({ ok: true });
 }
 
@@ -141,6 +207,14 @@ export async function removeAdminDinozSkillHandler(
 	reply: FastifyReply
 ) {
 	await removeAdminDinozSkill(request.params.userId, Number(request.params.dinozId), request.body.skillId);
+	await logAdminDinozAction(
+		request,
+		GameLogType.AdminRemoveSkill,
+		{
+			skillId: request.body.skillId
+		},
+		[String(request.params.dinozId), String(request.body.skillId)]
+	);
 	return reply.send({ ok: true });
 }
 
@@ -149,7 +223,14 @@ export async function addAdminDinozUnlockableSkillController(
 	reply: FastifyReply
 ) {
 	await addAdminDinozUnlockableSkill(request.params.userId, Number(request.params.dinozId), request.body.skillId);
-
+	await logAdminDinozAction(
+		request,
+		GameLogType.AdminAddUnlockableSkill,
+		{
+			skillId: request.body.skillId
+		},
+		[String(request.params.dinozId), String(request.body.skillId)]
+	);
 	return reply.send({ ok: true });
 }
 
@@ -158,7 +239,14 @@ export async function removeAdminDinozUnlockableSkillController(
 	reply: FastifyReply
 ) {
 	await removeAdminDinozUnlockableSkill(request.params.userId, Number(request.params.dinozId), request.body.skillId);
-
+	await logAdminDinozAction(
+		request,
+		GameLogType.AdminRemoveUnlockableSkill,
+		{
+			skillId: request.body.skillId
+		},
+		[String(request.params.dinozId), String(request.body.skillId)]
+	);
 	return reply.send({ ok: true });
 }
 
@@ -186,7 +274,15 @@ export async function updateAdminDinozMissionHandler(
 		request.params.missionKey,
 		request.body
 	);
-
+	await logAdminDinozAction(
+		request,
+		GameLogType.AdminUpdateMission,
+		{
+			missionKey: request.params.missionKey,
+			payload: request.body
+		} as unknown as CreateGameLogInput['metadata'],
+		[String(request.params.dinozId), request.params.missionKey]
+	);
 	return reply.send({ ok: true });
 }
 
@@ -199,6 +295,14 @@ export async function makeAdminDinozMissionReplayableHandler(
 		Number(request.params.dinozId),
 		request.params.missionKey
 	);
-
+	await logAdminDinozAction(
+		request,
+		GameLogType.AdminUpdateMission,
+		{
+			action: 'makeReplayable',
+			missionKey: request.params.missionKey
+		},
+		[String(request.params.dinozId), request.params.missionKey]
+	);
 	return reply.send({ ok: true });
 }
