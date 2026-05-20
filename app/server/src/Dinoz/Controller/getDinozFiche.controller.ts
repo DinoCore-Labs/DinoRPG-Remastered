@@ -13,7 +13,8 @@ export async function getDinozFicheRequest(dinozId: number, userId: string) {
 			items: {
 				select: { itemId: true, quantity: true }
 			},
-			//quests: { select: { questId: true, progression: true } },
+			leader: true,
+			messie: true,
 			rewards: { select: { rewardId: true } },
 			ranking: { select: { dinozCount: true, points: true } },
 			ingredients: { select: { ingredientId: true, quantity: true } },
