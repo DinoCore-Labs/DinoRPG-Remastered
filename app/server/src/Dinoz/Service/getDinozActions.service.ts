@@ -14,7 +14,7 @@ import {
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.js';
 
-import { Dinoz, DinozSkills, DinozState, DinozStatus } from '../../../../prisma/index.js';
+import { Dinoz, DinozSkills, DinozState, DinozStatus, User } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
@@ -207,17 +207,17 @@ export async function getAvailableActions(
 		return [actionList[Action.MARKET]];
 	}
 
-	const hasLeader = user.leader ?? user.dinoz.some(dinoz => dinoz.skills.some(skill => skill.skillId === Skill.LEADER));
-	const hasMessie = user.messie ?? user.dinoz.some(dinoz => dinoz.skills.some(skill => skill.skillId === Skill.MESSIE));
-
 	const maxDinoz = getUserMaxDinoz({
-		leader: hasLeader,
-		messie: hasMessie
+		leader: user.leader,
+		messie: user.messie
 	});
+	//console.log('maxDinoz', maxDinoz);
 
 	// Unfreeze action
 	if (dinoz.state === DinozState.frozen) {
 		const activeDinozCount = preloadedContext.activeDinozCount ?? (await getActiveDinozCount(user.id));
+		//console.log("dinoz actifs:", activeDinozCount);
+		//console.log("maxDinoz:", maxDinoz);
 		if (canStartUnfreezingDinozAction(dinoz.state, activeDinozCount, maxDinoz)) {
 			return [actionList[Action.STOP_CONGEL]];
 		}
