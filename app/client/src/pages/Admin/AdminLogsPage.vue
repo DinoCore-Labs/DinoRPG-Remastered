@@ -98,6 +98,37 @@
 			<span>Page {{ page + 1 }}</span>
 			<DZButton class="bSmall" :disabled="loading || !hasNextPage" @click="loadLogs(page + 1)"> Suivant </DZButton>
 		</div>
+		<section class="charts">
+			<h3>Graphique des logs</h3>
+			<form class="chartFilters" @submit.prevent="loadChart">
+				<label>
+					Log
+					<DZSelect id="admin-log-chart-type" v-model="chartLogType" :options="chartTypeOptions" />
+				</label>
+				<label>
+					Affichage
+					<DZSelect id="admin-log-chart-display" v-model="chartDisplayType" :options="chartDisplayOptions" />
+				</label>
+				<label>
+					Du
+					<DZInput v-model="chartFromFilter" type="date" />
+				</label>
+				<label>
+					Au
+					<DZInput v-model="chartToFilter" type="date" />
+				</label>
+				<DZButton type="submit" size="small" :disabled="chartLoading">
+					{{ chartLoading ? 'Chargement…' : 'Afficher' }}
+				</DZButton>
+			</form>
+			<p v-if="chartError" class="error">{{ chartError }}</p>
+			<p v-else-if="chartLoading">Chargement du graphique...</p>
+			<AdminLogsChart v-else :title="chartTitle" :labels="chartLabels" :values="chartValues" :type="chartDisplayType" />
+			<p class="chartMode">
+				Affichage :
+				<strong>{{ chartGranularity === 'hourly' ? 'par heure' : 'par jour' }}</strong>
+			</p>
+		</section>
 	</div>
 </template>
 
@@ -112,6 +143,7 @@ import DZInput from '../../components/utils/DZInput.vue';
 import DZSelect from '../../components/utils/DZSelect.vue';
 import DZTable from '../../components/utils/DZTable.vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
+import AdminLogsChart from '../../components/admin/AdminLogsChart.vue';
 import { AdminGameLogsService } from '../../services/adminGamelog.service';
 
 const PAGE_SIZE = 50;
@@ -144,6 +176,111 @@ const retentionOptions: SelectOption<GameLogRetention | ''>[] = [
 	{ value: 'TEMPORARY', label: 'TEMPORARY' }
 ];
 
+// Chart state
+type ChartRow = {
+	label: string;
+	total: number;
+};
+
+const chartRows = ref<ChartRow[]>([]);
+const chartLoading = ref(false);
+const chartError = ref('');
+
+const chartLogType = ref<GameLogType>('GoldWon');
+const chartDisplayType = ref<'bar' | 'line'>('bar');
+
+const chartFromFilter = ref(getDateInputValue(addDays(new Date(), -7)));
+const chartToFilter = ref(getDateInputValue(new Date()));
+
+const chartGranularity = computed<'hourly' | 'daily'>(() => {
+	return chartFromFilter.value === chartToFilter.value ? 'hourly' : 'daily';
+});
+
+const chartTitle = computed(() => {
+	return `${chartLogType.value} - ${chartGranularity.value === 'hourly' ? 'par heure' : 'par jour'}`;
+});
+
+const chartLabels = computed(() => chartRows.value.map(row => row.label));
+const chartValues = computed(() => chartRows.value.map(row => row.total));
+
+const chartTypeOptions: SelectOption<GameLogType>[] = [
+	{ value: 'GoldWon', label: 'Or gagné' },
+	{ value: 'GoldLost', label: 'Or perdu' },
+	{ value: 'XPEarned', label: 'XP gagnée' },
+	{ value: 'HPLost', label: 'PV perdus' },
+	{ value: 'FightWon', label: 'Combats gagnés' },
+	{ value: 'FightLost', label: 'Combats perdus' },
+	{ value: 'MissionFinished', label: 'Missions terminées' },
+	{ value: 'MissionCanceled', label: 'Missions annulées' },
+	{ value: 'ItemFound', label: 'Objets trouvés' }
+];
+
+const chartDisplayOptions: SelectOption<'bar' | 'line'>[] = [
+	{ value: 'bar', label: 'Barres' },
+	{ value: 'line', label: 'Courbe' }
+];
+
+async function loadChart() {
+	chartLoading.value = true;
+	chartError.value = '';
+	try {
+		if (!chartFromFilter.value || !chartToFilter.value) {
+			chartRows.value = [];
+			return;
+		}
+		if (chartFromFilter.value > chartToFilter.value) {
+			chartError.value = 'La date de début ne peut pas être après la date de fin.';
+			chartRows.value = [];
+			return;
+		}
+		if (chartGranularity.value === 'hourly') {
+			const rows = await AdminGameLogsService.hourly({
+				type: chartLogType.value,
+				date: chartFromFilter.value
+			});
+			chartRows.value = rows.map(row => ({
+				label: `${String(row.hour).padStart(2, '0')}h`,
+				total: row.total
+			}));
+			return;
+		}
+		const rows = await AdminGameLogsService.daily({
+			type: chartLogType.value,
+			from: chartFromFilter.value,
+			to: chartToFilter.value
+		});
+		chartRows.value = rows.map(row => ({
+			label: formatChartDay(row.day),
+			total: row.total
+		}));
+	} catch (err) {
+		chartError.value = err instanceof Error ? err.message : String(err);
+		chartRows.value = [];
+	} finally {
+		chartLoading.value = false;
+	}
+}
+
+function formatChartDay(value: string) {
+	const date = new Date(`${value}T00:00:00`);
+	return Number.isNaN(date.getTime())
+		? value
+		: date.toLocaleDateString('fr-FR', {
+				day: '2-digit',
+				month: '2-digit'
+			});
+}
+
+function addDays(date: Date, days: number) {
+	const next = new Date(date);
+	next.setDate(next.getDate() + days);
+	return next;
+}
+
+function getDateInputValue(date: Date) {
+	return date.toISOString().slice(0, 10);
+}
+
 const hasNextPage = computed(() => (page.value + 1) * PAGE_SIZE < total.value);
 
 function toIsoDateTime(value: string): string | undefined {
@@ -172,11 +309,11 @@ async function loadLogs(nextPage = page.value) {
 	page.value = nextPage;
 	loading.value = true;
 	error.value = '';
-
 	try {
 		const result = await AdminGameLogsService.list(buildQuery());
 		logs.value = result.logs;
 		total.value = result.total;
+		await loadChart();
 	} catch (err) {
 		error.value = err instanceof Error ? err.message : String(err);
 	} finally {
@@ -206,6 +343,7 @@ function formatMetadata(value: unknown) {
 
 onMounted(() => {
 	void loadLogs(0);
+	void loadChart();
 });
 </script>
 
@@ -267,5 +405,27 @@ onMounted(() => {
 .pagination {
 	margin-top: 12px;
 	justify-content: center;
+}
+.charts {
+	margin: 12px 0;
+	padding: 10px;
+	border: 1px solid #d39a65;
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.25);
+}
+.chartFilters {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	gap: 10px;
+	align-items: end;
+	margin-bottom: 12px;
+	label {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		font-size: 9pt;
+		font-weight: bold;
+		color: #710;
+	}
 }
 </style>
