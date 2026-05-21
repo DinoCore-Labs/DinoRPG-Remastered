@@ -89,6 +89,8 @@ export const monsterIdByKey: Readonly<Record<MonsterKey, MonsterLikeId>> = {
 	baratr: Monster.BARATRIBOR,
 	vol1: Monster.MERGUEZ_THIEF,
 	elhelp: Monster.ELEMENTAL_DISCIPLE,
+	korven: Monster.AVENGER_KORGON,
+	darkg2: Monster.DARK_SMASHROOM2,
 	minimo: Monster.MINIMOUK,
 	minim2: Monster.MINIMOUK_2,
 	mosqui: Monster.MOUKTIZ,
@@ -112,6 +114,10 @@ export const monsterIdByKey: Readonly<Record<MonsterKey, MonsterLikeId>> = {
 	hippoclamp: Boss.HIPPOCLAMP,
 	rocky: Boss.ROCKY,
 	megawolf: Boss.MEGA_WOLF,
+	pign1: Boss.FIODOR_PIGNIGHT,
+	pign2: Boss.DIMITRI_PIGNIGHT,
+	kvenbs: Boss.MASKED_KORGON,
+	megoup: Boss.DARK_MEGASHROOM,
 
 	any: Monster.ANY
 };

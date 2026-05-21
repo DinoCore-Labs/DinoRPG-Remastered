@@ -47,7 +47,9 @@ export enum Boss {
 	SOFIA = 'SOFIA',
 	MEGA_WOLF = 'MEGA_WOLF',
 	SWAMP_MONSTER_FLOODED = 'SWAMP_MONSTER_FLOODED',
-	SWAMP_MONSTER_FOG = 'SWAMP_MONSTER_FOG'
+	SWAMP_MONSTER_FOG = 'SWAMP_MONSTER_FOG',
+	FIODOR_PIGNIGHT = 'FIODOR_PIGNIGHT',
+	DIMITRI_PIGNIGHT = 'DIMITRI_PIGNIGHT'
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -591,7 +593,10 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 100,
 		skills: [Skill.M_CONTAMINATION],
 		zones: [],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'gropi',
+		size: 200,
+		dark: true
 	},
 	[Boss.DARK_MEGASHROOM_2]: {
 		id: Boss.DARK_MEGASHROOM_2,
@@ -632,7 +637,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		resilience: 40,
 		hp: 60,
 		odds: 100,
-		skills: [Skill.M_CURSED_WAND, Skill.LANCEUR_DE_GLAND],
+		skills: [Skill.M_CURSED_WAND, Skill.LANCEUR_DE_GLAND, Skill.LANCEUR_DE_GLAND],
 		zones: [],
 		canBeCaptured: false,
 		display: 'kmask'
@@ -1151,5 +1156,47 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		canBeCaptured: false,
 		display: 'feufol',
 		entrance: EntranceEffect.GROW
+	},
+	[Boss.FIODOR_PIGNIGHT]: {
+		id: Boss.FIODOR_PIGNIGHT,
+		boss: true,
+		name: 'pign1',
+		hp: 50,
+		level: 15,
+		elements: {
+			fire: 10,
+			wood: 1,
+			water: 1,
+			lightning: 1,
+			air: 0
+		},
+		resilience: 40,
+		odds: 100,
+		skills: [Skill.BRASERO],
+		zones: [],
+		canBeCaptured: false,
+		display: '19yZFtcIipAwiq00',
+		size: 150
+	},
+	[Boss.DIMITRI_PIGNIGHT]: {
+		id: Boss.DIMITRI_PIGNIGHT,
+		boss: true,
+		name: 'pign2',
+		hp: 50,
+		level: 15,
+		elements: {
+			fire: 10,
+			wood: 1,
+			water: 1,
+			lightning: 1,
+			air: 0
+		},
+		resilience: 40,
+		odds: 100,
+		skills: [Skill.DETONATION],
+		zones: [],
+		canBeCaptured: false,
+		display: '19DVYpUf3pkF3M00',
+		size: 150
 	}
 };
