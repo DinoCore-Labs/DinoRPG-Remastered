@@ -233,6 +233,13 @@ export default defineComponent({
 						left.quantity === right.quantity &&
 						left.nameKey === right.nameKey
 					);
+				case 'USE_INGREDIENT':
+					return (
+						right.type === 'USE_INGREDIENT' &&
+						left.ingredientKey === right.ingredientKey &&
+						left.quantity === right.quantity &&
+						left.nameKey === right.nameKey
+					);
 				case 'FIGHT_ACTION':
 					return (
 						right.type === 'FIGHT_ACTION' &&
@@ -292,6 +299,10 @@ export default defineComponent({
 					}).toString();
 				case 'USE_MONEY':
 					return this.$t('missions.goals.useMoney', {
+						nameKey: this.$t(goal.nameKey).toString()
+					}).toString();
+				case 'USE_INGREDIENT':
+					return this.$t('missions.goals.useIngredient', {
 						nameKey: this.$t(goal.nameKey).toString()
 					}).toString();
 				case 'FIGHT_ACTION':

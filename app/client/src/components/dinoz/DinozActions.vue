@@ -286,7 +286,11 @@ export default defineComponent({
 						await this.$refreshTreasureTicket();
 						return;
 					}
-					if (result.goalType === 'USE_ITEM' || result.goalType === 'USE_MONEY') {
+					if (
+						result.goalType === 'USE_ITEM' ||
+						result.goalType === 'USE_MONEY' ||
+						result.goalType === 'USE_INGREDIENT'
+					) {
 						const completion = await MissionService.completeAction(this.dinozId);
 						await this.refreshDinoz();
 						await this.$refreshGold();
