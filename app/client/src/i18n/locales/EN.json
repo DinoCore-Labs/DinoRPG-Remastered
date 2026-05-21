@@ -618,7 +618,18 @@
 			"dinoz": "My Dinoz",
 			"friends": "My Friends"
 		},
-		"level": "Level"
+		"level": "Level",
+		"dinozFilters": {
+			"race": "Race:",
+			"level": "Niveau :",
+			"state": "État :",
+			"allRaces": "Toutes les races",
+			"allLevels": "Tous les niveaux",
+			"allStates": "Tous les états",
+			"active": "Actifs",
+			"frozen": "Congelés",
+			"empty": "Aucun Dinoz ne correspond aux filtres."
+		}
 	},
 	"userCard": {
 		"title": "Go to {user}'s DinoRPG profile"
