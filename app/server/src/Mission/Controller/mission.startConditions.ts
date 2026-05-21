@@ -19,7 +19,8 @@ type OwnedDinozForMissionStart = {
 type ParsedMissionStartCondition =
 	| { type: 'MISSION_COMPLETED'; missionKey: string }
 	| { type: 'CAN_FIGHT'; monsterKey: MonsterKey; requiredLevel?: number }
-	| { type: 'HAS_EFFECT'; effectKey: string };
+	| { type: 'HAS_EFFECT'; effectKey: string }
+	| { type: 'LEVEL'; level: number };
 
 type ParsedMissionStartConditionPart = {
 	negated: boolean;
@@ -86,6 +87,20 @@ function parseMissionStartConditionPart(part: string): ParsedMissionStartConditi
 				condition: { type: 'HAS_EFFECT', effectKey }
 			};
 		}
+		case 'level': {
+			const [rawLevel] = args;
+			const level = Number(rawLevel);
+			if (!rawLevel || args.length !== 1) {
+				throw new Error(`Invalid level condition "${part}"`);
+			}
+			return {
+				negated,
+				condition: {
+					type: 'LEVEL',
+					level
+				}
+			};
+		}
 		default:
 			throw new Error(`Unsupported mission condition type "${type}"`);
 	}
@@ -143,6 +158,10 @@ function checkEffectCondition(dinoz: OwnedDinozForMissionStart, effectKey: strin
 	return dinoz.status.some(status => status.statusId === statusId);
 }
 
+function checkLevelCondition(dinoz: OwnedDinozForMissionStart, level: number): boolean {
+	return dinoz.level >= level;
+}
+
 async function checkSingleMissionStartCondition(
 	tx: MissionTransaction,
 	params: {
@@ -157,6 +176,8 @@ async function checkSingleMissionStartCondition(
 			return checkCanFightCondition(params.dinoz, params.condition.monsterKey, params.condition.requiredLevel);
 		case 'HAS_EFFECT':
 			return checkEffectCondition(params.dinoz, params.condition.effectKey);
+		case 'LEVEL':
+			return checkLevelCondition(params.dinoz, params.condition.level);
 	}
 }
 
