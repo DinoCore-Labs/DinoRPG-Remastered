@@ -112,8 +112,10 @@ export type MissionLockGoal = {
 
 export type MissionUseIngredientGoal = {
 	type: 'USE_INGREDIENT';
+	place: PlaceEnum;
 	ingredientKey: MissionIngredientKey;
 	quantity: number;
+	nameKey: string;
 };
 
 export type MissionBranchGoal = {

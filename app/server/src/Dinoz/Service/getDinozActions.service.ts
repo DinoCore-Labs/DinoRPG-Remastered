@@ -130,6 +130,12 @@ function getMissionActionFiche(goal: MissionGoal, currentPlace: PlaceEnum): Acti
 				prop: 'mission',
 				label: goal.nameKey
 			};
+		case 'USE_INGREDIENT':
+			return {
+				...actionList[Action.MISSION],
+				prop: 'mission',
+				label: goal.nameKey
+			};
 		case 'ACTION':
 			if (goal.place != null && goal.place !== currentPlace) {
 				return null;

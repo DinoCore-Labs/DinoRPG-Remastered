@@ -1,8 +1,10 @@
+import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { missionList } from '@dinorpg/core/models/missions/data/index.js';
 import type { MissionDefinition } from '@dinorpg/core/models/missions/mission.js';
 import type {
 	MissionGoal,
+	MissionUseIngredientGoal,
 	MissionUseItemGoal,
 	MissionUseMoneyGoal,
 	MissionValidateGoal
@@ -79,6 +81,63 @@ async function consumeMissionItemGoal(userId: string, goal: MissionUseItemGoal) 
 		where: {
 			itemId_userId: {
 				itemId,
+				userId
+			}
+		},
+		data: {
+			quantity: {
+				decrement: goal.quantity
+			}
+		}
+	});
+}
+
+function resolveIngredientIdFromKey(ingredientKey: string): number {
+	const ingredient = Object.values(ingredientList).find(entry => entry.name === ingredientKey);
+	if (!ingredient) {
+		throw new ExpectedError(`Unknown mission ingredient key "${ingredientKey}".`);
+	}
+	return ingredient.ingredientId;
+}
+
+async function consumeMissionIngredientGoal(userId: string, goal: MissionUseIngredientGoal) {
+	const ingredientId = resolveIngredientIdFromKey(goal.ingredientKey);
+	const userIngredient = await prisma.userIngredients.findUnique({
+		where: {
+			ingredientId_userId: {
+				ingredientId,
+				userId
+			}
+		},
+		select: {
+			quantity: true
+		}
+	});
+	const currentQuantity = userIngredient?.quantity ?? 0;
+	if (currentQuantity < goal.quantity) {
+		throw new ExpectedError('notEnoughItems', {
+			params: {
+				ingredientKey: goal.ingredientKey,
+				required: goal.quantity,
+				current: currentQuantity
+			}
+		});
+	}
+	if (currentQuantity === goal.quantity) {
+		await prisma.userIngredients.delete({
+			where: {
+				ingredientId_userId: {
+					ingredientId,
+					userId
+				}
+			}
+		});
+		return;
+	}
+	await prisma.userIngredients.update({
+		where: {
+			ingredientId_userId: {
+				ingredientId,
 				userId
 			}
 		},
@@ -279,6 +338,13 @@ export async function startMissionInteraction(
 				goalType: 'USE_MONEY',
 				nameKey: 'goal.nameKey'
 			};
+		case 'USE_INGREDIENT':
+			return {
+				mode: 'modal',
+				goalType: 'USE_INGREDIENT',
+				nameKey: 'goal.nameKey',
+				textKey: `missions.ingredients.${goal.ingredientKey}`
+			};
 		case 'FIGHT_ACTION': {
 			const fight = await processMissionFight({
 				userId,
@@ -315,7 +381,8 @@ export async function completeMissionInteraction(
 				goal.type !== 'ACTION' &&
 				goal.type !== 'VALIDATE' &&
 				goal.type !== 'USE_ITEM' &&
-				goal.type !== 'USE_MONEY'
+				goal.type !== 'USE_MONEY' &&
+				goal.type !== 'USE_INGREDIENT'
 			) {
 				throw new ExpectedError(`Mission goal "${goal.type}" cannot be completed manually.`);
 			}
@@ -327,6 +394,9 @@ export async function completeMissionInteraction(
 			}
 			if (goal.type === 'USE_MONEY') {
 				await consumeMissionMoneyGoal(input.userId, goal);
+			}
+			if (goal.type === 'USE_INGREDIENT') {
+				await consumeMissionIngredientGoal(input.userId, goal);
 			}
 			break;
 		case 'fight_victory':
