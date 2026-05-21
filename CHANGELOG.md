@@ -2,6 +2,30 @@
 
 ## 🔹 Core
 
+## 0.22.0
+
+### Minor Changes
+
+- 0a3de64: Add complete game log tracking, admin log management, and log analytics charts.
+
+  ### Backend
+  - Added missing logs for gameplay events, missions, market actions, and admin actions.
+  - Added audit logs for sensitive actions performed from the admin panel.
+  - Added dedicated admin logs for updates on users, Dinoz, missions, scenarios, inventories, currencies, rewards, statuses, and skills.
+  - Added support for hourly and daily log aggregations.
+  - Added aggregated values for logs such as gold won/lost, XP earned, and HP lost.
+
+  ### Frontend
+  - Added a dedicated Admin logs page.
+  - Added filters by type, retention, user, Dinoz, admin actor, and period.
+  - Added detailed metadata display for logs.
+  - Added charts to visualize logs by day or by hour depending on the selected period.
+  - Added min/max value highlighting in log charts.
+  - Reused existing UI components: `DZTable`, `DZInput`, `DZButton`, and `DZSelect`.
+
+  ### Core
+  - Added shared types required to read and display admin logs on the client.
+
 ## 0.21.0
 
 ### Minor Changes
@@ -478,6 +502,35 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.24.0
+
+### Minor Changes
+
+- 0a3de64: Add complete game log tracking, admin log management, and log analytics charts.
+
+  ### Backend
+  - Added missing logs for gameplay events, missions, market actions, and admin actions.
+  - Added audit logs for sensitive actions performed from the admin panel.
+  - Added dedicated admin logs for updates on users, Dinoz, missions, scenarios, inventories, currencies, rewards, statuses, and skills.
+  - Added support for hourly and daily log aggregations.
+  - Added aggregated values for logs such as gold won/lost, XP earned, and HP lost.
+
+  ### Frontend
+  - Added a dedicated Admin logs page.
+  - Added filters by type, retention, user, Dinoz, admin actor, and period.
+  - Added detailed metadata display for logs.
+  - Added charts to visualize logs by day or by hour depending on the selected period.
+  - Added min/max value highlighting in log charts.
+  - Reused existing UI components: `DZTable`, `DZInput`, `DZButton`, and `DZSelect`.
+
+  ### Core
+  - Added shared types required to read and display admin logs on the client.
+
+### Patch Changes
+
+- Updated dependencies [0a3de64]
+  - @dinorpg/core@0.22.0
 
 ## 0.23.0
 
@@ -1083,6 +1136,30 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.23.0
+
+### Minor Changes
+
+- 0a3de64: Add complete game log tracking, admin log management, and log analytics charts.
+
+  ### Backend
+  - Added missing logs for gameplay events, missions, market actions, and admin actions.
+  - Added audit logs for sensitive actions performed from the admin panel.
+  - Added dedicated admin logs for updates on users, Dinoz, missions, scenarios, inventories, currencies, rewards, statuses, and skills.
+  - Added support for hourly and daily log aggregations.
+  - Added aggregated values for logs such as gold won/lost, XP earned, and HP lost.
+
+  ### Frontend
+  - Added a dedicated Admin logs page.
+  - Added filters by type, retention, user, Dinoz, admin actor, and period.
+  - Added detailed metadata display for logs.
+  - Added charts to visualize logs by day or by hour depending on the selected period.
+  - Added min/max value highlighting in log charts.
+  - Reused existing UI components: `DZTable`, `DZInput`, `DZButton`, and `DZSelect`.
+
+  ### Core
+  - Added shared types required to read and display admin logs on the client.
 
 ## 0.22.0
 
