@@ -5,7 +5,7 @@ import type {
 	AdminGameLogListResponse,
 	AdminGameLogSummaryEntry,
 	GameLogType
-} from '@dinorpg/core/models/admin/adminGameLog.js';
+} from '@dinorpg/core/models/admin/adminGamelog.js';
 
 import { api } from '../utils/http';
 
