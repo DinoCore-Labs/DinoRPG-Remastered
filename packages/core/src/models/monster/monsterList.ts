@@ -81,6 +81,8 @@ export enum Monster {
 	BARATRIBOR = 'BARATRIBOR',
 	MERGUEZ_THIEF = 'MERGUEZ_THIEF',
 	ELEMENTAL_DISCIPLE = 'ELEMENTAL_DISCIPLE',
+	AVENGER_KORGON = 'AVENGER_KORGON',
+	DARK_SMASHROOM2 = 'DARK_SMASHROOM2',
 	MINIMOUK = 'MINIMOUK',
 	MINIMOUK_2 = 'MINIMOUK_2',
 	MOUKTIZ = 'MOUKTIZ',
@@ -1192,7 +1194,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	[Monster.PIRHANOS_2]: {
 		id: Monster.PIRHANOS_2,
 		name: 'pirao2',
-		zones: [MapZone.DARKWORLD],
+		zones: [MapZone.DARKWORLD, MapZone.ILES],
 		level: 15,
 		elements: {
 			fire: 0,
@@ -1207,7 +1209,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		hp: 10,
 		skills: [Skill.M_FLIGHT],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'piraos'
 	},
 	[Monster.WEREZORE]: {
 		id: Monster.WEREZORE,
@@ -1795,7 +1798,53 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		skills: [Skill.M_ELEMENTAL_DISCIPLE],
 		zones: [],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'D9cBoAXpDPOOdu00'
+	},
+	[Monster.AVENGER_KORGON]: {
+		id: Monster.AVENGER_KORGON,
+		name: 'korven',
+		level: 8,
+		elements: {
+			fire: 3,
+			wood: 6,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 20,
+		odds: 100,
+		skills: [Skill.LANCEUR_DE_GLAND, Skill.LANCEUR_DE_GLAND, Skill.LANCEUR_DE_GLAND],
+		zones: [],
+		canBeCaptured: true,
+		display: 'kmask',
+		size: 50
+	},
+	[Monster.DARK_SMASHROOM2]: {
+		id: Monster.DARK_SMASHROOM2,
+		name: 'darkg2',
+		level: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 80,
+		bonus_defense: 50,
+		resilience: 40,
+		hp: 30,
+		odds: 100,
+		skills: [],
+		zones: [],
+		canBeCaptured: true,
+		display: 'goupi',
+		size: 200,
+		dark: true
 	},
 	[Monster.MINIMOUK]: {
 		id: Monster.MINIMOUK,
