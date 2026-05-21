@@ -16,3 +16,9 @@ export function requireOwnedDinozByParam(paramName: 'id' | 'dinozId') {
 		return true;
 	};
 }
+
+const MOBILE_BREAKPOINT = 875;
+
+export function isMobileViewport() {
+	return window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
+}

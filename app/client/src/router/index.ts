@@ -37,7 +37,7 @@ import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
 import { clearClientSession, isLogoutSessionInProgress } from '../utils/clearSession';
 import { is_granted } from '../utils/permission';
-import { requireOwnedDinozByParam } from './helper';
+import { isMobileViewport, requireOwnedDinozByParam } from './helper';
 
 const routes: RouteRecord[] = [
 	{
@@ -286,10 +286,17 @@ const routes: RouteRecord[] = [
 const router = createRouter({
 	history: createWebHistory(),
 	// @ts-ignore
-	routes
-	/*scrollBehavior(to, from, savedPosition) {
-		return { top: 0 };
-	}*/
+	routes,
+	scrollBehavior(_to, _from, savedPosition) {
+		if (!isMobileViewport()) {
+			return savedPosition ?? false;
+		}
+		return {
+			top: 0,
+			left: 0,
+			behavior: 'auto'
+		};
+	}
 });
 
 let sessionHydrated = false;
