@@ -140,8 +140,8 @@
 </template>
 
 <script setup lang="ts">
-import type { AdminGameLog, GameLogRetention, GameLogType } from '@dinorpg/core/models/admin/adminGameLog.js';
-import { gameLogTypes } from '@dinorpg/core/models/admin/adminGameLog.js';
+import type { AdminGameLog, GameLogRetention, GameLogType } from '@dinorpg/core/models/admin/adminGamelog.js';
+import { gameLogTypes } from '@dinorpg/core/models/admin/adminGamelog.js';
 import type { SelectOption } from '../../components/utils/DZSelect.vue';
 import { computed, onMounted, ref } from 'vue';
 
