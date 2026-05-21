@@ -1,6 +1,7 @@
 import type { MissionDefinition } from '../mission.js';
 import { baoBobMissions } from './baoBob.missions.js';
 import { dianKorgseyMissions } from './dianKorgsey.missions.js';
+import { elementalMasterMissions } from './elementalMaster.missions.js';
 import { forestGuardianMissions } from './forestGuardian.missions.js';
 import { hulotMissions } from './hulot.missions.js';
 import { madameXMissions } from './madameX.missions.js';
@@ -18,5 +19,6 @@ export const missionList: MissionDefinition[] = [
 	...hulotMissions,
 	...forestGuardianMissions,
 	...skullyMissions,
-	...madameXMissions
+	...madameXMissions,
+	...elementalMasterMissions
 ];
