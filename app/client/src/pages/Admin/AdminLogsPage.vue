@@ -123,7 +123,14 @@
 			</form>
 			<p v-if="chartError" class="error">{{ chartError }}</p>
 			<p v-else-if="chartLoading">Chargement du graphique...</p>
-			<AdminLogsChart v-else :title="chartTitle" :labels="chartLabels" :values="chartValues" :type="chartDisplayType" />
+			<AdminLogsChart
+				v-else
+				:title="chartTitle"
+				:labels="chartLabels"
+				:values="chartValues"
+				:type="chartDisplayType"
+				highlight-extremes
+			/>
 			<p class="chartMode">
 				Affichage :
 				<strong>{{ chartGranularity === 'hourly' ? 'par heure' : 'par jour' }}</strong>
@@ -196,23 +203,45 @@ const chartGranularity = computed<'hourly' | 'daily'>(() => {
 	return chartFromFilter.value === chartToFilter.value ? 'hourly' : 'daily';
 });
 
+const selectedChartOption = computed(() => {
+	return chartTypeOptions.find(option => option.value === chartLogType.value);
+});
+
 const chartTitle = computed(() => {
-	return `${chartLogType.value} - ${chartGranularity.value === 'hourly' ? 'par heure' : 'par jour'}`;
+	const label = selectedChartOption.value?.label ?? chartLogType.value;
+	const period = chartGranularity.value === 'hourly' ? 'par heure' : 'par jour';
+	return `${label} - ${period}`;
 });
 
 const chartLabels = computed(() => chartRows.value.map(row => row.label));
 const chartValues = computed(() => chartRows.value.map(row => row.total));
 
 const chartTypeOptions: SelectOption<GameLogType>[] = [
-	{ value: 'GoldWon', label: 'Or gagné' },
-	{ value: 'GoldLost', label: 'Or perdu' },
-	{ value: 'XPEarned', label: 'XP gagnée' },
-	{ value: 'HPLost', label: 'PV perdus' },
+	// Joueurs
+	{ value: 'PlayerCreated', label: 'Joueurs créés' },
+	{ value: 'PlayerConnected', label: 'Connexions joueurs' },
+	{ value: 'PlayerReset', label: 'Joueurs reset' },
+	{ value: 'PlayerDeleted', label: 'Joueurs supprimés' },
+	{ value: 'PlayerBanned', label: 'Joueurs bannis' },
+	{ value: 'PlayerUnbanned', label: 'Joueurs débannis' },
+	// Dinoz / gameplay
+	{ value: 'CreateDinoz', label: 'Dinoz créés' },
 	{ value: 'FightWon', label: 'Combats gagnés' },
 	{ value: 'FightLost', label: 'Combats perdus' },
 	{ value: 'MissionFinished', label: 'Missions terminées' },
 	{ value: 'MissionCanceled', label: 'Missions annulées' },
-	{ value: 'ItemFound', label: 'Objets trouvés' }
+	{ value: 'ItemFound', label: 'Objets trouvés' },
+	// Valeurs
+	{ value: 'GoldWon', label: 'Or gagné' },
+	{ value: 'GoldLost', label: 'Or perdu' },
+	{ value: 'XPEarned', label: 'XP gagnée' },
+	{ value: 'HPLost', label: 'PV perdus' },
+	// Marché
+	{ value: 'OfferNew', label: 'Offres créées' },
+	{ value: 'OfferBid', label: 'Enchères placées' },
+	{ value: 'OfferCancelled', label: 'Offres annulées' },
+	{ value: 'OfferExpired', label: 'Offres expirées' },
+	{ value: 'OfferWon', label: 'Offres remportées' }
 ];
 
 const chartDisplayOptions: SelectOption<'bar' | 'line'>[] = [
