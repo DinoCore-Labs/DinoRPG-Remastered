@@ -1176,8 +1176,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false,
 		display: 'dinoz:19yZFtcIipAwiq00',
-		size: 150,
-		isDinoz: true
+		size: 150
 	},
 	[Boss.DIMITRI_PIGNIGHT]: {
 		id: Boss.DIMITRI_PIGNIGHT,
@@ -1198,7 +1197,6 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false,
 		display: 'dinoz:19DVYpUf3pkF3M00',
-		size: 150,
-		isDinoz: true
+		size: 150
 	}
 };
