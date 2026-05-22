@@ -379,9 +379,9 @@ export async function rewardFightVsMonsters(
 		let gfact = 1.0;
 		if (d.experience >= getMaxXp(d) && d.level <= 5) gfact = 0.1;
 		/** Dinoz with malediction not generating gold **/
-		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
-			gfact = 0.0;
-		}
+		//if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
+		//	gfact = 0.0;
+		//}
 
 		for (const f of monsters) {
 			const factor = f.level >= d.level ? 1 : 4 / (4 + (d.level - f.level));
