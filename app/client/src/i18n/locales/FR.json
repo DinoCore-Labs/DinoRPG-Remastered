@@ -4031,6 +4031,7 @@
 			"useItem": "{nameKey}",
 			"useMoney": "{nameKey}",
 			"fightAction": "{nameKey}",
+			"useIngredient": "{nameKey}",
 			"wait": "Attendre",
 			"lock": "{nameKey}",
 			"validate": "Retourner voir {nameKey} pour valider la mission"
@@ -5302,7 +5303,7 @@
 				"elmaTalk8": "Mais revenons à notre leçon sur l'élement Air.... Nous perdons du temps, avec toutes ces histoires ! Qu'il me ramène donc 2 Energies d'Air au plus vite !",
 				"giveAirEnergy1": "Donner 2 énergie air",
 				"elmaTalk9": "Quoi ? C'est tout ? Je lui avais pourtant bien dit d'aller me chercher 5 Energies d'Air ! Aller, encore trois !!",
-				"giveAirEnergy2": "Donner 3 énergie air",
+				"giveAirEnergy2": "Donner 3 énergie air et Valider la Mission",
 				"end": "Bien bien bien, il y arrive quand il veut, mais c'est dommage qu'il faille tout le temps répéter !"
 			},
 			"elmawater": {
