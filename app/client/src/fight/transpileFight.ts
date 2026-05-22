@@ -28,6 +28,8 @@ import {
 
 import type { TFunction } from './translateFightStep';
 
+const DINOZ_PREFIX = 'dinoz:';
+
 export function resolveFightingPlace(placeId: number, background?: string) {
 	const place = Object.values(placeListv2).find(p => p.placeId === placeId);
 	if (!place) return;
@@ -107,19 +109,34 @@ export function resolveFighterSize(fighter: FighterRecap) {
 	}
 }
 
-export function resolveFighterDisplay(fighter: FighterRecap) {
-	if (fighter.costume) {
-		return fighter.costume.display ?? fighter.costume.name;
-	} else {
-		return fighter.display ?? fighter.name;
+function hasDinozIndicator(fighter: FighterRecap): boolean {
+	const displayValue = fighter.display ?? fighter.name;
+	return typeof displayValue === 'string' && displayValue.startsWith(DINOZ_PREFIX);
+}
+
+function cleanDinozDisplay(displayValue: string): string {
+	if (displayValue.startsWith(DINOZ_PREFIX)) {
+		return displayValue.substring(DINOZ_PREFIX.length);
 	}
+	return displayValue;
+}
+
+export function resolveFighterDisplay(fighter: FighterRecap): string {
+	let rawDisplay: string;
+
+	if (fighter.costume) {
+		rawDisplay = fighter.costume.display ?? fighter.costume.name;
+	} else {
+		rawDisplay = fighter.display ?? fighter.name;
+	}
+	return cleanDinozDisplay(rawDisplay);
 }
 
 export function isFighterADinoz(fighter: FighterRecap) {
 	if (fighter.costume) {
 		return false;
 	} else {
-		return fighter.type === FighterType.DINOZ || fighter.type === FighterType.CLONE;
+		return fighter.type === FighterType.DINOZ || fighter.type === FighterType.CLONE || hasDinozIndicator(fighter);
 	}
 }
 
