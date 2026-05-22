@@ -45,6 +45,7 @@ export type MonsterFiche = {
 	// Specifies an entrance effet for the monster.
 	entrance?: EntranceEffect;
 	condition?: Condition;
+	isDinoz?: boolean;
 };
 
 export type groupMonster = {

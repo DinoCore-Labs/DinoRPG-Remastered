@@ -1175,8 +1175,9 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.BRASERO],
 		zones: [],
 		canBeCaptured: false,
-		display: '19yZFtcIipAwiq00',
-		size: 150
+		display: 'dinoz:19yZFtcIipAwiq00',
+		size: 150,
+		isDinoz: true
 	},
 	[Boss.DIMITRI_PIGNIGHT]: {
 		id: Boss.DIMITRI_PIGNIGHT,
@@ -1196,7 +1197,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.DETONATION],
 		zones: [],
 		canBeCaptured: false,
-		display: '19DVYpUf3pkF3M00',
-		size: 150
+		display: 'dinoz:19DVYpUf3pkF3M00',
+		size: 150,
+		isDinoz: true
 	}
 };
