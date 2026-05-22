@@ -126,6 +126,11 @@ export const merguezSellerDialog = defineDialog({
 				{
 					type: 'collection',
 					collection: MERGUEZ_CARD_REWARD_KEY
+				},
+				{
+					type: 'giveItem',
+					itemId: Item.GOLDEN_NAPODINO,
+					count: 1
 				}
 			]
 		}
