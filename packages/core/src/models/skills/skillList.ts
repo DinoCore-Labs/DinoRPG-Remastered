@@ -5140,7 +5140,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 100
+		probability: 100,
+		visualEffect: SkillVisualEffect.LIGHTNING
 	},
 	[Skill.M_CURSED_WAND]: {
 		id: Skill.M_CURSED_WAND,
