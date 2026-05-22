@@ -1799,7 +1799,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.M_ELEMENTAL_DISCIPLE],
 		zones: [],
 		canBeCaptured: true,
-		display: 'D9cBoAXpDPOOdu00'
+		display: 'dinoz:D9cBoAXpDPOOdu00'
 	},
 	[Monster.AVENGER_KORGON]: {
 		id: Monster.AVENGER_KORGON,
