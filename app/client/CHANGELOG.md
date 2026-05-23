@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.24.0
+
+### Minor Changes
+
+- 91b2e99: add elmaster dialog and missions
+
 ## 0.23.0
 
 ### Minor Changes

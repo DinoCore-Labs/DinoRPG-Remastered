@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.25.0
+
+### Minor Changes
+
+- 91b2e99: add elmaster dialog and missions
+
+### Patch Changes
+
+- Updated dependencies [91b2e99]
+  - @dinorpg/core@0.23.0
+
 ## 0.24.0
 
 ### Minor Changes
