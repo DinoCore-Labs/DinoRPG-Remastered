@@ -1206,7 +1206,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		bonus_attack: 50,
 		bonus_defense: 30,
 		resilience: 40,
-		odds: 100,
+		odds: 0,
 		hp: 10,
 		skills: [Skill.M_FLIGHT],
 		canBeCaptured: true,
