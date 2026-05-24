@@ -664,7 +664,7 @@ export const elementalMasterMissions: MissionDefinition[] = [
 		],
 		rewards: [
 			{ type: 'XP', value: 20 },
-			{ type: 'EFFECT', effectKey: 'sphere' }
+			{ type: 'EFFECT', effectKey: 'sphere', hiden: true }
 		],
 		labels: {}
 	}
