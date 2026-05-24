@@ -31,6 +31,7 @@ export type MissionCollectionReward = {
 export type MissionEffectReward = {
 	type: 'EFFECT';
 	effectKey: MissionEffectKey;
+	hiden?: boolean;
 };
 
 export type MissionUserVarReward = {
