@@ -7,57 +7,59 @@
 				</div>
 				<p v-html="formatContent($t(textKey).toString())" />
 				<ul>
-					<li v-for="(reward, index) in rewards" :key="`${reward.type}-${index}`">
-						<template v-if="reward.type === 'XP'">
-							<img :src="getImgURL('icons', 'small_xp')" alt="xp" />
-							{{ reward.value }}
-						</template>
-						<template v-else-if="reward.type === 'GOLD'">
-							<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
-							{{ reward.value }}
-						</template>
-						<template v-else-if="reward.type === 'ITEM'">
-							<img
-								class="item"
-								:src="getImgURL('item', `item_${getItemImageKey(reward.itemKey)}`)"
-								:alt="getItemLabel(reward.itemKey)"
-							/>
-							{{ getItemLabel(reward.itemKey) }} x {{ reward.quantity }}
-						</template>
-						<template v-else-if="reward.type === 'COLLECTION'">
-							<img
-								class="item"
-								:src="getImgURL('epicRewards', `collec_${getCollectionImageKey(reward.collectionKey)}`)"
-								:alt="getCollectionLabel(reward.collectionKey)"
-							/>
-							{{ getCollectionLabel(reward.collectionKey) }}
-						</template>
-						<template v-else-if="reward.type === 'INGREDIENT'">
-							{{ getIngredientLabel(reward.ingredientKey) }} x {{ reward.quantity }}
-						</template>
-						<template v-else-if="reward.type === 'EFFECT'">
-							<img
-								class="item"
-								:src="getImgURL('status', `fx_${getStatusImageKey(reward.effectKey)}`)"
-								:alt="getStatusLabel(reward.effectKey)"
-							/>
-							{{ getStatusLabel(reward.effectKey) }}
-						</template>
-						<template v-else-if="reward.type === 'REMOVE_EFFECT'">
-							<img
-								class="item"
-								:src="getImgURL('status', `status_${getStatusImageKey(reward.effectKey)}`)"
-								:alt="getStatusLabel(reward.effectKey)"
-							/>
-							{{ getStatusLabel(reward.effectKey) }}
-						</template>
-						<template v-else-if="reward.type === 'USER_VAR'">
-							{{ reward.userVarKey }}
-						</template>
-						<template v-else-if="reward.type === 'GAME_VAR'">
-							{{ reward.gameVarKey }}
-						</template>
-					</li>
+					<template v-for="(reward, index) in rewards" :key="`${reward.type}-${index}`">
+						<li v-if="!(reward.type === 'EFFECT' && reward.hiden)">
+							<template v-if="reward.type === 'XP'">
+								<img :src="getImgURL('icons', 'small_xp')" alt="xp" />
+								{{ reward.value }}
+							</template>
+							<template v-else-if="reward.type === 'GOLD'">
+								<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
+								{{ reward.value }}
+							</template>
+							<template v-else-if="reward.type === 'ITEM'">
+								<img
+									class="item"
+									:src="getImgURL('item', `item_${getItemImageKey(reward.itemKey)}`)"
+									:alt="getItemLabel(reward.itemKey)"
+								/>
+								{{ getItemLabel(reward.itemKey) }} x {{ reward.quantity }}
+							</template>
+							<template v-else-if="reward.type === 'COLLECTION'">
+								<img
+									class="item"
+									:src="getImgURL('epicRewards', `collec_${getCollectionImageKey(reward.collectionKey)}`)"
+									:alt="getCollectionLabel(reward.collectionKey)"
+								/>
+								{{ getCollectionLabel(reward.collectionKey) }}
+							</template>
+							<template v-else-if="reward.type === 'INGREDIENT'">
+								{{ getIngredientLabel(reward.ingredientKey) }} x {{ reward.quantity }}
+							</template>
+							<template v-else-if="reward.type === 'EFFECT'">
+								<img
+									class="item"
+									:src="getImgURL('status', `fx_${getStatusImageKey(reward.effectKey)}`)"
+									:alt="getStatusLabel(reward.effectKey)"
+								/>
+								{{ getStatusLabel(reward.effectKey) }}
+							</template>
+							<template v-else-if="reward.type === 'REMOVE_EFFECT'">
+								<img
+									class="item"
+									:src="getImgURL('status', `status_${getStatusImageKey(reward.effectKey)}`)"
+									:alt="getStatusLabel(reward.effectKey)"
+								/>
+								{{ getStatusLabel(reward.effectKey) }}
+							</template>
+							<template v-else-if="reward.type === 'USER_VAR'">
+								{{ reward.userVarKey }}
+							</template>
+							<template v-else-if="reward.type === 'GAME_VAR'">
+								{{ reward.gameVarKey }}
+							</template>
+						</li>
+					</template>
 				</ul>
 				<div class="option">
 					<DZButton class="continue" @click="$emit('close')">
