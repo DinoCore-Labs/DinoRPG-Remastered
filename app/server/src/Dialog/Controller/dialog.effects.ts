@@ -7,10 +7,10 @@ import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { rewardIdByKey, statTrackingByCollectionKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import {
-	MERGUEZ_CARD_MAX_QUANTITY,
 	MERGUEZ_CARD_REWARD_KEY,
 	MERGUEZ_DEFAULT_MAX_QUANTITY,
-	MERGUEZ_SHOPKEEPER_MAX_QUANTITY
+	MERGUEZ_SHOPKEEPER_MAX_QUANTITY,
+	SHOPKEEPER_MAX_QUANTITY
 } from '@dinorpg/core/models/scenarios/data/merguezScenario.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
@@ -78,10 +78,16 @@ function getDialogItemMaxQuantity(context: DialogContext, itemId: number) {
 	if (!item) {
 		throw new ExpectedError(`Item ${itemId} does not exist`);
 	}
+
 	if (item.itemId === Item.GOBLIN_MERGUEZ) {
 		const userHasMerguezCard = context.user.collections.has(MERGUEZ_CARD_REWARD_KEY);
-		const maxQuantity = userHasMerguezCard ? MERGUEZ_CARD_MAX_QUANTITY : MERGUEZ_DEFAULT_MAX_QUANTITY;
-		return context.user.shopKeeper ? Math.max(MERGUEZ_SHOPKEEPER_MAX_QUANTITY, maxQuantity) : maxQuantity;
+		if (context.user.shopKeeper && userHasMerguezCard) {
+			return MERGUEZ_SHOPKEEPER_MAX_QUANTITY; // 150
+		}
+		if (context.user.shopKeeper) {
+			return SHOPKEEPER_MAX_QUANTITY; // 30
+		}
+		return MERGUEZ_DEFAULT_MAX_QUANTITY; // 20
 	}
 	if (context.user.shopKeeper && item.itemType !== ItemType.MAGICAL) {
 		return Math.round(item.maxQuantity * 1.5);
