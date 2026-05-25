@@ -836,6 +836,11 @@ export default defineComponent({
 			flex-wrap: wrap;
 			.action {
 				width: 46%;
+				overflow: hidden;
+				p {
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
 			}
 			.follow {
 				width: 100%;
