@@ -3499,27 +3499,27 @@
 					"talk": "What? You can see me? .... Argh! ....",
 					"yes": "The guy who sold me this cape assured me that it would make me invisible! Can you take a look at the indicator on my back, is something written on it?",
 					"read": "What? \\\"LOW BAT-RICE\\\" ? Umm... the seller told me to recharge something... so I have to use... rice? But where can I find rice?",
-					"talk2": "Vite ! J'ai BESOIN de ce Riz !"
+					"talk2": "Hurry! I NEED the rice to recharge my cape. Quick! Hurry!!"
 				},
 				"tech": {
-					"begin": "Ma cape est à nouveau en panne... je commence à en avoir un peu marre...",
-					"qual": "QUOI ?!? Comment oses-tu parler ainsi de la grande technologie Caushemeshenne ! Sais-tu simplement combien d'années recherches il a fallu à nos scientifiques pour maîtriser l'Ether ?!?",
-					"qual2": "Au lieu de dire des conneries, tu ferrais mieux d'essayer de remplir ta mission...",
-					"caush": "Oui ! Tout à fait, la grande civilisation des Montagnes de Caushemesh, bien au delà des Steppes Magnétiques. Nous sommes bien plus développés que les barbares de Dinoville...",
-					"ether": "Aprés des centaines d'années de recherche, les Caushemeshens ont maîtrisés la puissance de l'Ether, un savant mélange des éléments Air et Vide. Celà nous donne une puissance technologique hors du commun, et les ingénieurs de Caushemesh sont les meilleurs de tout Dinoland !",
-					"next": "Vos Dinoz sont bien faibles comparés à ceux de Caushemesh, ils ne font pas le poids ahahahah ah ! Entraîne bien tes Dinoz, jeune maître, car un jour viendra où tu devras affronter des dangers bien plus grands !",
-					"more": "Mais j'en ai déjà trop dit... Pour te convaincre de la technologie de Caushemesh, que dirais-tu d'une petite mission ?"
+					"begin": "My cape ran out of rice again ... I'm starting to get sick of this...",
+					"qual": "What!? How dare you talk like that about Caushemesh technology! Do you know how many years of research it took our scientists to master the Ether?",
+					"qual2": "Instead of saying stupid things, maybe you should try and complete your mission...",
+					"caush": "Yes! It's the great civilization of the Caushemesh Mountains, far beyond the Magnetic Steppes. We're way more developed than these barbarians from Dinotown...",
+					"ether": "After centuries of research, the Caushemeshians have mastered the power of Ether, a complex mix of the Air and Void elements. It's an extraordinary technological advancement, all thanks to Caushemesh engineers, the best in Dinoland!",
+					"next": "Your Dinoz are too weak. They're no match for ours, hahahaha! Make sure you train your Dinoz well, as the day will come when you are called upon to fight more powerful enemies!",
+					"more": "Enough of me talking... what would you say about a little mission to convince you of the strength of our technology?"
 				},
 				"reward": {
-					"begin": "Pour ton information, les Dinoz Sombres que tu as rencontré jusqu'à présent n'étaient que des débutants que nous venons faire entraîner dans cette partie de Dinoland... La puissance des Dinoz de Caushemesh va bien au delà, et même votre Vénérable ne ferait pas le poids contre nos meilleurs maîtres Dinoz !",
-					"next2": "Enfin bon, je tiens ma promesse. Voici une récompense pour te convaincre de la supériorité de la  technologie de Caushemesh. Je n'en ai qu'un exemplaire, alors fais-en bon usage... Il s'agit d'un Bracelet en Tik, que tu pourras équiper sur le Dinoz de ton choix..."
+					"begin": "I thought I should let you know that all the Dark Dinoz you have met up until now were only newbies that we train in this region of Dinoland... the Dinoz of Caushemesh are far stronger. Even your Venerable will be no match for our strongest Dinoz masters!",
+					"next2": "I'm a man of my word. Here's a reward to convince you of the superiority of Caushemesh technology. I only have one, so use it well... it's a bracelet made of Tik, you can equip it on the Dinoz of your choice..."
 				},
 				"afterSpy": {
 					"begin": "Maintenant libéré de sa mission d'espionnage, le rôdeur s'est installé tranquillement non loin de dinoplaza. Les doigts de pied en éventail, il se détend au soleil... Mieux vaut le voir ici qu'en train de manigancer quelque chose de louche..."
 				}
 			},
 			"choice": {
-				"go": "Ce personnage a l'air dangereux... s'éloigner !",
+				"go": "This guy seems dangerous... it's probably a good idea to move away from him.",
 				"talk": "Talk to the strange man",
 				"talk2": "Talk to the strange man",
 				"yes": "Euh... Oui",
