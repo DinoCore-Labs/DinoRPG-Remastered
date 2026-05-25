@@ -788,7 +788,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
-		activatable: false,
+		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.PROPULSION_DIVINE],
 		raceId: [RaceEnum.QUETZU],
