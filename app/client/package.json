@@ -21,7 +21,7 @@
 		"vue": "^3.5.32",
 		"vue-echarts": "^8.0.1",
 		"vue-i18n": "^11.4.2",
-		"vue-router": "^5.0.6",
+		"vue-router": "^5.0.7",
 		"vue-tippy": "^6.7.1",
 		"vue-toast-notification": "^3.1.3"
 	},
