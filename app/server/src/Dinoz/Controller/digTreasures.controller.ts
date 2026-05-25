@@ -23,7 +23,7 @@ export const digTreasures: DigTreasure[] = [
 	{
 		id: 'swamp_mud',
 		place: PlaceEnum.MARAIS_COLLANT,
-		cond: c('!fx(swmud)+!fx(gant)'),
+		cond: c('!fx(marais)+!fx(gant)'),
 		rewards: [{ type: 'status', statusId: DinozStatusId.SWAMP_MUD }]
 	},
 	{
