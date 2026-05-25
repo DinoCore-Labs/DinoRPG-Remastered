@@ -181,6 +181,7 @@ export const elementalMasterMissions: MissionDefinition[] = [
 			{
 				type: 'KILL',
 				kill: {
+					place: PlaceEnum.FOSSELAVE,
 					monsterKeys: ['flam'],
 					count: 20,
 					force: true,
