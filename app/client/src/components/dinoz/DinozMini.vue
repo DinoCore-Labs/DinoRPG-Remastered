@@ -11,7 +11,7 @@ export default defineComponent({
 	props: {
 		display: { type: String, required: true },
 		width: { type: Number, default: 55 },
-		height: { type: Number, default: 65 },
+		height: { type: Number, default: 55 },
 		flip: { type: Boolean, default: false }
 	},
 	data() {
@@ -33,13 +33,11 @@ export default defineComponent({
 	mounted() {
 		const dinoAnimDiv = this.$refs.dino as HTMLDivElement | null;
 		if (!dinoAnimDiv) return;
-
 		const anim = new sdino({
 			data: this.display,
 			flip: this.flip ? 0 : 1,
 			pflag: true
 		});
-
 		anim.toAnimation(
 			(div: HTMLElement) => {
 				div.querySelectorAll('img').forEach((img: HTMLImageElement) => {
@@ -77,6 +75,7 @@ export default defineComponent({
 		animation-duration: v-bind('styleVars.animationLength');
 		animation-timing-function: steps(v-bind('imageCount'));
 		animation-iteration-count: infinite;
+		margin-top: 5px;
 	}
 }
 </style>

@@ -66,7 +66,6 @@ export default defineComponent({
 				this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 				return;
 			}
-
 			// Display the list of dinoz available to follow
 			this.dinozAvailableToFollow = getFollowableDinoz(this.dinozStore.getDinozList, currentDinoz);
 			this.display = true;
@@ -74,23 +73,19 @@ export default defineComponent({
 		async followDinoz(targetId: number) {
 			try {
 				await DinozService.follow(this.dinoz, targetId);
-
 				// Reset the list of dinoz available to follow
 				this.dinozAvailableToFollow = [];
-
 				// Refresh followed and following status
 				const currentDinozList = this.dinozStore.getDinozList;
 				if (!currentDinozList) {
 					this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 					return;
 				}
-
 				const targetDinoz = currentDinozList.find(dinoz => dinoz.id === targetId);
 				if (!targetDinoz) {
 					this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
 					return;
 				}
-
 				this.dinozStore.setDinozList(
 					orderDinozList(
 						currentDinozList.map(dinoz => {
@@ -140,6 +135,7 @@ export default defineComponent({
 	display: flex;
 	gap: 2px;
 	flex-wrap: wrap;
+	margin-top: 5px;
 	justify-content: space-around;
 	.follower {
 		background-color: #cd8956;
