@@ -128,18 +128,12 @@ export default defineComponent({
 	border-radius: 7px;
 	font-size: 11pt;
 	font-variant: small-caps;
-	line-height: 10.5pt;
+	line-height: 2.5pt;
 	font-weight: 700;
 	width: 100%;
-	& img {
-		margin-left: 5px;
-	}
 	&:hover {
 		background-color: #9a4029;
 		cursor: pointer;
-		img {
-			outline: 1px solid white;
-		}
 	}
 }
 .followList {

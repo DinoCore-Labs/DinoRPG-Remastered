@@ -780,35 +780,10 @@ export default defineComponent({
 	border-style: hidden solid solid solid;
 	border-width: 0 1px 1px 1px;
 	border-color: #9f5841;
-	min-height: 90px;
 	max-width: 221px;
 	color: white;
 	display: flex;
 	flex-direction: column;
-	gap: 0.2rem;
-	.action {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		gap: 0.5rem;
-		margin-right: 5px;
-		border-radius: 7px;
-		font-size: 11pt;
-		font-variant: small-caps;
-		line-height: 10.5pt;
-		font-weight: 700;
-		width: 100%;
-		& img {
-			margin-left: 5px;
-		}
-		&:hover {
-			background-color: #9a4029;
-			cursor: pointer;
-			img {
-				outline: 1px solid white;
-			}
-		}
-	}
 	.actions_top {
 		width: 185px;
 		height: 28px;
@@ -827,10 +802,27 @@ export default defineComponent({
 		margin-bottom: 5px;
 		display: flex;
 		flex-direction: column;
-		align-items: baseline;
+		align-items: stretch;
+		padding: 0 5px 5px;
 		gap: 2px;
-		padding-left: 5px;
-		padding-right: 5px;
+		overflow: hidden;
+		.action {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 0.5rem;
+			margin-right: 5px;
+			border-radius: 7px;
+			font-size: 11pt;
+			font-variant: small-caps;
+			line-height: 2.5pt;
+			font-weight: 700;
+			width: 100%;
+			&:hover {
+				background-color: #9a4029;
+				cursor: pointer;
+			}
+		}
 	}
 }
 @media (max-width: 539px) {
@@ -842,7 +834,6 @@ export default defineComponent({
 			flex-direction: row;
 			justify-content: space-between;
 			flex-wrap: wrap;
-			gap: 0.2rem;
 			.action {
 				width: 46%;
 			}
