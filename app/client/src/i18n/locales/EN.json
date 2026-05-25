@@ -621,13 +621,13 @@
 		"level": "Level",
 		"dinozFilters": {
 			"race": "Race:",
-			"level": "Niveau :",
-			"state": "État :",
-			"allRaces": "Toutes les races",
-			"allLevels": "Tous les niveaux",
-			"allStates": "Tous les états",
-			"active": "Actifs",
-			"frozen": "Congelés",
+			"level": "Level:",
+			"state": "State:",
+			"allRaces": "All races",
+			"allLevels": "All levels",
+			"allStates": "All states",
+			"active": "Active",
+			"frozen": "Frozen",
 			"empty": "Aucun Dinoz ne correspond aux filtres."
 		}
 	},
@@ -1045,7 +1045,7 @@
 			"Renforts": "Reinforcements",
 			"Resistance": "Resistance",
 			"ElementalDisciple": "Disciple élémentaire",
-			"CursedWand": "Baguette Maudite"
+			"CursedWand": "Cursed Wand"
 		},
 		"description": {
 			"GriffesEnflammees": "Increase the strength of all Fire **assaults** by 7",
@@ -2704,7 +2704,7 @@
 			"swampmf2": "Foggoz",
 			"merch1": "Merchant Louch",
 			"merch2": "Angry Merchant",
-			"gang1": "John Hubert",
+			"gang1": "Jean-Hubert",
 			"gang2": "Charles Edward",
 			"gang3": "Louis Stanislas",
 			"suspc": "Suspect",
@@ -3408,7 +3408,7 @@
 				"ok": "Enfin, tout cela pour te dire que cette glace est géniale. Tiens, en voilà un petit bout, garde le avec toi pour te rafraîchir quand il fait chaud !"
 			},
 			"choice": {
-				"talk": "Glaglaglagla...",
+				"talk": "Glaglagla...",
 				"next": "Mazotte ?",
 				"prof": "Effectivement...",
 				"theo": "Oulala...",
@@ -3466,39 +3466,39 @@
 		"shamanMou": {
 			"name": "Soft Shaman",
 			"dialog": {
-				"begin": "B'jour jeune av'turier, bienv'nue à Fosselave... la capitale du Grand T'chaud... Hésite pô à admirer nos super sculptures en basalte. Y'a aussi les bains de magma, là bas... Ca va te relaxer, tu verras c'est coooool... Si t'as faim, t'peux goûter not' spécialité : les merguez de Gobelin... Ca te ravigore, youuuhouuu, tu peux pas imaginer...",
-				"charm": "Ah ouais, c'est vrai... y parait que j'dois t'aider... Tiens, un Charme de Feu... ça aidera bien ton dinoz dans ses prochains combats.",
-				"boost": "Bouge pas, j'vais t'enchanter de la magie des Shamans... Oyééé, oyééé ! ZZZZzzzzzz... ... C'est bon, tu peux y'aller, t'es un balaise maintenant.",
-				"nothing": "Hey, essaye pas d'me rouler, ton dinoz a déjà un charme... Reviens me voir plus tard.",
-				"vener": "Uhmm... ? Le V'nérable ?... Quel bourrin celui là... hier il a failli me bouffer... tout ça parce qu'il me trouve trop agité, et que ça l'empêche de dormir... Tu veux vraiment y aller ? Boah... c'est toi qui voit... Tourne à droite aux Forges, et c'est tout droit.",
-				"force": "Fort ? le gros dorogon Vener' là ?... bah ouais un peu... C'est la première cause de mortalité chez les touristes, juste devant les crises cardiaques causées par nos merguez... Ha la la, qué p'tites natures ces touristes...",
-				"merci": "Tchao mon pote... à la prochaine...",
-				"souvenir": "Des souv'nirs ?... Bah... j'ai bien ma pile de feuilles d'incantations en retard là, mais je sais pas si ça t'interesse... J'peux te filer un autographe aussi, signé de mon vrai nom, Baston Labaf... non ? Ok tant pis... Sinon y'a des trucs de combats aux Forges... des équipements de combat, et tout ça là... Y'aura p'têt un truc cool pour toi.",
-				"more": "Uhmm.... Si ton Dinoz accepte de remplir quelques missions pour moi, j'lui confierai mon Guide de Stratégie. C'est super pratique...",
-				"accept": "Marché conclu...",
-				"missions": "(Bientôt disponible)"
+				"begin": "Hey there young master! Welcome to the Lavapit... capital of the Big All-Hot... Don't hesitate to admire our magnificent basalt sculptures. There are magma baths here too. Relax, chill out. If you're hungry why don't you try our local specialty: Goblin Merguez... It'll give you a little boost, give it a try... You'll see.",
+				"charm": "Oh yeah, that's right. Take this, it's a Fire Charm ... it'll help your Dinoz in the upcoming battles.",
+				"boost": "Stay here, I will enchant your Dinoz with Shaman magic ... Oyeee, oyeee! ZZZZzzzzzz... ... It's done, you can go, your Dinoz is stronger now.",
+				"nothing": "Hey, don't try to scam me, your Dinoz already has a charm ... Come back later.",
+				"vener": "Uhmm ... ? The Venerable? ... He's a real grouch... he nearly ate me yesterday just because he said I was being annoying and disturbing his sleep. WHAT?! You really want to visit the Venerable? Bah ... do what you want ... take the path on your right at the Forges, and it's straight ahead.",
+				"force": "Strong? Who? The Venerable? Yeah he's strong. He's listed as the most common cause of death for tourists, just ahead of heart attacks caused by our Goblin Merguez ... Ha ha, these tourists are so delicate!",
+				"merci": "See y'a, buddy... next one...",
+				"souvenir": "Some souvenirs? ... Bah ... I've got a pile of incantation pages here, but I don't know if you're interested in them ... I can also give you an autograph if you want, I'll sign it using my real name, Bomer Boof... Interested? No? I didn't think you would be, not many people are. If you're really looking for some souvenirs you should go to the Forges ... there's a lot of combat gear there... maybe you'll find something interesting.",
+				"more": "Uhmm.... If your Dinoz agrees to fulfill a few missions for me, I'll entrust him with my Strategy Guide. It's very useful...",
+				"accept": "Deal...",
+				"missions": "(coming soon)"
 			},
 			"choice": {
-				"vener": "Le Vénérable...",
-				"souvenir": "On peut acheter des souvenirs dans le coin ?",
-				"missions": "Consulter la liste des Missions",
-				"charm": "On m'a parlé d'un charme...",
-				"acceptCharm": "Accepter le Charme",
-				"force": "Ah ? Et il est fort ?",
-				"merci": "Merci, je tiendrai compte de vos conseils !",
-				"more": "Et c'est tout ?",
-				"accept": "Accepter"
+				"vener": "The Venerable...",
+				"souvenir": "Can I buy souvenirs in the area?",
+				"missions": "Show Mission List",
+				"charm": "I have been told of a charm...",
+				"acceptCharm": "Accept the Charm",
+				"force": "Oh? And is he strong?",
+				"merci": "Thanks, I'll take your advice into account!",
+				"more": "And that's it?",
+				"accept": "Accept"
 			}
 		},
 		"rodeur": {
-			"name": "Rôdeur Etrange",
+			"name": "Strange Prowler",
 			"dialog": {
 				"intro": {
 					"begin": ".........",
-					"go": "Ouf ! Il vaut mieux faire attention en rencontrant des étrangers...",
-					"talk": "Uh ?!??? Quoi ?? Vous pouvez me VOIR ?!? ..... Grrrrr....",
-					"yes": "Uhm... bien... je vois... on m'avait pourtant certifié que cette cape rendait invisible ! Est-ce que tu peux regarder l'indicateur dans le dos, il y a marqué quelque chose ?",
-					"read": "Quoi ?!? \"L'EAU BATTE-RIZ\" ? Uhm... le vendeur parlait effectivement de recharger quelque chose... il va donc falloir que j'utilise du... riz !?! Mais où vais-je pouvoir trouver cela ?!?",
+					"go": "Pheeww! It's better to be careful when around strangers, you never know what's going to happen...",
+					"talk": "What? You can see me? .... Argh! ....",
+					"yes": "The guy who sold me this cape assured me that it would make me invisible! Can you take a look at the indicator on my back, is something written on it?",
+					"read": "What? \\\"LOW BAT-RICE\\\" ? Umm... the seller told me to recharge something... so I have to use... rice? But where can I find rice?",
 					"talk2": "Vite ! J'ai BESOIN de ce Riz !"
 				},
 				"tech": {
@@ -3679,7 +3679,7 @@
 				"tame": "Personne n'en a jamais dressé ?",
 				"interest": "Tout ça est vraiment passionnant !",
 				"service": "Oui, avec plaisir !",
-				"missions": "Consulter la liste des Missions"
+				"missions": "Show Mission List"
 			}
 		},
 		"nicolasHulot": {
@@ -3705,7 +3705,7 @@
 				"talk": "Talk to the strange man",
 				"who": "Mais... Vous êtes qui ?",
 				"better": "Vous avez l'air d'aller bien mieux...",
-				"missions": "Consulter la liste des Missions",
+				"missions": "Show Mission List",
 				"role": "Ça n'est pas un peu dangereux pour un journaliste ici ?",
 				"myst": "Quels genres de mystères existent ici ?",
 				"fauna": "Parlez-moi des animaux de la Jungle...",
@@ -3726,7 +3726,7 @@
 				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à votre grande surprise, vous constatez qu'il y a quelque chose d'écrit sur ce parchemin !"
 			},
 			"choice": {
-				"missions": "Consulter la liste des Missions",
+				"missions": "Show Mission List",
 				"shake": "Secouer un peu cet arbre",
 				"item": "Aie ! Qu'est-ce que c'est ?"
 			}
@@ -3864,7 +3864,7 @@
 			"choice": {
 				"talk": "Parler au Maître Elémentaire",
 				"ask": "J'aimerais progresser !",
-				"ask2": "Et c'est tout ?",
+				"ask2": "And that's it?",
 				"mission": "Liste des Missions",
 				"maudit": "Malédiction ?",
 				"sphere": "Récompense...",
@@ -5077,7 +5077,7 @@
 					"win": "Après votre victoire commune, il semblerait que les trois délinquants veuillent discuter avec vous..."
 				},
 				"jeanH1": {
-					"name": "John Hubert",
+					"name": "Jean-Hubert",
 					"text": "Yo mec ! Je comprends que tu kiff trop pas ce qu'on fait ici, mais c'est trop kool, alors abuse pas mec !"
 				},
 				"charlesE": {
@@ -5105,7 +5105,7 @@
 					"text": "Votre Dinoz aide Jean-Hubert, Charles-Edouard et Louis-Stanislas à ranger la grande bibliothèque de l'Université..."
 				},
 				"jeanH2": {
-					"name": "John Hubert",
+					"name": "Jean-Hubert",
 					"text": "Trop kool mec ! Nous on retourne aux Iles, car c'est trop kool ! Mais promis on déconnera plus ! Tchaw !!"
 				},
 				"end": "La loi est la loi, et toute infraction mérite sanction."
