@@ -10,4 +10,5 @@ export interface UserData {
 	dinoz: DinozFiche[];
 	maxDinoz: number;
 	rewards: number[];
+	discoveredSkills: number[];
 }
