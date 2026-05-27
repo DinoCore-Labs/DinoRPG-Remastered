@@ -18,7 +18,7 @@
 			<div class="shortCutMenu">
 				<div class="shortCuts">
 					<RouterLink class="link" :to="`/shop/dinoz`">
-						<img :src="getImgURL('act', 'act_boutique')" alt="enclosure" />
+						<img :src="getImgURL('act', 'act_enclos')" alt="enclosure" />
 						<span>{{ $t('topBar.leftUserMenu.enclosure') }}</span>
 					</RouterLink>
 					<RouterLink class="link" :to="`/shop/flying`">
