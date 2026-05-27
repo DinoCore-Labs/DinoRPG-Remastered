@@ -20,7 +20,8 @@
 			"shop": "Shop",
 			"dojo": "Dojo",
 			"order": "Order",
-			"enclosure": "Enclosure"
+			"enclosure": "Enclosure",
+			"skills": "...Skills :"
 		},
 		"authMenu": {
 			"name": "Username:",
@@ -200,6 +201,7 @@
 		"fb_tournament": "DinoRPG [ BrutForce Tournament ]",
 		"manageDinoz": "DinoRPG [ Manage my Dinoz ]",
 		"market": "DinoRPG [ Tamer Market ]",
+		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
 		"admin": "DinoRPG [ Admin Dashboard ]"
 	},
 	"adminPage": {
@@ -324,7 +326,8 @@
 		"search": "Search",
 		"loading": "Loading...",
 		"noResults": "No result",
-		"sortDinoz": "Manage my Dinoz"
+		"sortDinoz": "Manage my Dinoz",
+		"skills": "...Skills :"
 	},
 	"popup": {
 		"confirm": "Confirm this action?",
@@ -3167,6 +3170,12 @@
 			"notEnoughGold": "You don't have enough gold to choose this program."
 		}
 	},
+	"skillTrees": {
+		"title": "Arbres de compétences",
+		"description": "Retrouve ici toutes les compétences découvertes par tes Dinoz.",
+		"empty": "Aucune compétence découverte pour le moment.",
+		"level": "Niveau {level}"
+	},
 	"npc": {
 		"description": "You can talk to this person.",
 		"leave": "Stop chatting",
@@ -5338,7 +5347,10 @@
 			}
 		},
 		"merguez": {
-			"name": "Le Mystère de la Merguez"
+			"name": "L'overdose de Merguez"
+		},
+		"pac": {
+			"name": "Le Parchemin des Aptitudes"
 		}
 	}
 }
