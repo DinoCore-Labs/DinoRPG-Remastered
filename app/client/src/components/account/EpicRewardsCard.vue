@@ -6,7 +6,7 @@
 			<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 		</h3>
 		<div class="rewards">
-			<template v-for="(reward, index) in epicRewards" :key="index">
+			<template v-for="reward in sortedEpicRewards" :key="rewardList[reward].id">
 				<Tippy theme="normal" v-if="rewardList[reward].displayed">
 					<img
 						class="epicRewards"
@@ -36,11 +36,17 @@ export default defineComponent({
 	},
 	props: {
 		epicRewards: {
-			type: Array as PropType<Reward[]>
+			type: Array as PropType<Reward[]>,
+			default: () => []
 		},
 		isOwner: {
 			type: Boolean,
 			required: true
+		}
+	},
+	computed: {
+		sortedEpicRewards(): Reward[] {
+			return [...(this.epicRewards ?? [])].sort((a: Reward, b: Reward) => rewardList[a].id - rewardList[b].id);
 		}
 	}
 });
@@ -75,7 +81,6 @@ export default defineComponent({
 		}
 	}
 	.rewards {
-		padding-top: 10px;
 		padding-left: 5px;
 		padding-bottom: 7px;
 		.epicRewards {
