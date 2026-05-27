@@ -1,4 +1,6 @@
 export * from './adminDinoz.service.js';
+export * from './adminForcebrut.service.js';
+export * from './adminGamelog.service.js';
 export * from './adminJobs.service.js';
 export * from './adminNews.service.js';
 export * from './adminSecrets.service.js';
@@ -6,6 +8,7 @@ export * from './adminUsers.service.js';
 export * from './dialog.service.js';
 export * from './dinoz.service.js';
 export * from './fight.service.js';
+export * from './forcebrutTournament.service.js';
 export * from './gather.service.js';
 export * from './inventory.service.js';
 export * from './level.service.js';
