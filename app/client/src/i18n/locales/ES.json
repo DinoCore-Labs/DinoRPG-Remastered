@@ -357,6 +357,23 @@
 			"list2": "no perderá ningún punto de experiencia"
 		}
 	},
+	"reincarnate": {
+		"choice1": {
+			"name": "Choix 1 : <br/>Conserver la destinée ({price}{goldIcon})",
+			"action": "Conserver la destinée",
+			"explanation": "Vous pouvez réincarner votre Dinoz en conservant sa destinée :",
+			"list1": "Il retournera au niveau 1",
+			"list2": "Il prendra les mêmes éléments, dans le même ordre que lors de sa première vie"
+		},
+		"choice2": {
+			"name": "Choix 2 : <br/>Nouvelle destinée",
+			"action": "Changer de destinée",
+			"explanation": "Vous pouvez réincarner votre Dinoz en changeant sa destinée :",
+			"list1": "Il retournera au niveau 1",
+			"list2": "Tous ses niveaux seront à nouveau aléatoires"
+		},
+		"finalWarning": "Voulez-vous vraiment réincarner ce Dinoz ? \nAttention, un Dinoz ne peut être réincarné qu'une seule fois !"
+	},
 	"modal": {
 		"messagerie": {
 			"system": "Sistema",
