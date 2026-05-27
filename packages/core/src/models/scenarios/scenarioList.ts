@@ -1,9 +1,11 @@
 import { merguezScenario } from './data/merguezScenario.js';
+import { pacScenario } from './data/pacScenario.js';
 import { starScenario } from './data/starScenario.js';
 
 export const scenarioList = {
 	star: starScenario,
-	merguez: merguezScenario
+	merguez: merguezScenario,
+	pac: pacScenario
 } as const;
 
 export type ScenarioKey = keyof typeof scenarioList;
