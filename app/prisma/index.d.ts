@@ -36501,8 +36501,18 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    discoveredSkills: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    discoveredSkills: number[]
   }
 
   export type UserMinAggregateOutputType = {
@@ -36560,9 +36570,18 @@ export namespace Prisma {
     teacher: number
     matelasseur: number
     messie: number
+    discoveredSkills: number
     _all: number
   }
 
+
+  export type UserAvgAggregateInputType = {
+    discoveredSkills?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    discoveredSkills?: true
+  }
 
   export type UserMinAggregateInputType = {
     id?: true
@@ -36619,6 +36638,7 @@ export namespace Prisma {
     teacher?: true
     matelasseur?: true
     messie?: true
+    discoveredSkills?: true
     _all?: true
   }
 
@@ -36660,6 +36680,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -36690,6 +36722,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -36711,7 +36745,10 @@ export namespace Prisma {
     teacher: boolean
     matelasseur: boolean
     messie: boolean
+    discoveredSkills: number[]
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -36747,6 +36784,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: boolean
     gathers?: boolean | User$gathersArgs<ExtArgs>
     ingredients?: boolean | User$ingredientsArgs<ExtArgs>
     items?: boolean | User$itemsArgs<ExtArgs>
@@ -36787,6 +36825,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -36806,6 +36845,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -36825,9 +36865,10 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "role" | "createdDate" | "updatedAt" | "lastLogin" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "matelasseur" | "messie", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "role" | "createdDate" | "updatedAt" | "lastLogin" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "matelasseur" | "messie" | "discoveredSkills", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     gathers?: boolean | User$gathersArgs<ExtArgs>
     ingredients?: boolean | User$ingredientsArgs<ExtArgs>
@@ -36895,6 +36936,7 @@ export namespace Prisma {
       teacher: boolean
       matelasseur: boolean
       messie: boolean
+      discoveredSkills: number[]
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -37354,6 +37396,7 @@ export namespace Prisma {
     readonly teacher: FieldRef<"User", 'Boolean'>
     readonly matelasseur: FieldRef<"User", 'Boolean'>
     readonly messie: FieldRef<"User", 'Boolean'>
+    readonly discoveredSkills: FieldRef<"User", 'Int[]'>
   }
     
 
@@ -52328,7 +52371,8 @@ export namespace Prisma {
     priest: 'priest',
     teacher: 'teacher',
     matelasseur: 'matelasseur',
-    messie: 'messie'
+    messie: 'messie',
+    discoveredSkills: 'discoveredSkills'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -54767,6 +54811,7 @@ export namespace Prisma {
     teacher?: BoolFilter<"User"> | boolean
     matelasseur?: BoolFilter<"User"> | boolean
     messie?: BoolFilter<"User"> | boolean
+    discoveredSkills?: IntNullableListFilter<"User">
     gathers?: UserGatherListRelationFilter
     ingredients?: UserIngredientsListRelationFilter
     items?: UserItemsListRelationFilter
@@ -54806,6 +54851,7 @@ export namespace Prisma {
     teacher?: SortOrder
     matelasseur?: SortOrder
     messie?: SortOrder
+    discoveredSkills?: SortOrder
     gathers?: UserGatherOrderByRelationAggregateInput
     ingredients?: UserIngredientsOrderByRelationAggregateInput
     items?: UserItemsOrderByRelationAggregateInput
@@ -54848,6 +54894,7 @@ export namespace Prisma {
     teacher?: BoolFilter<"User"> | boolean
     matelasseur?: BoolFilter<"User"> | boolean
     messie?: BoolFilter<"User"> | boolean
+    discoveredSkills?: IntNullableListFilter<"User">
     gathers?: UserGatherListRelationFilter
     ingredients?: UserIngredientsListRelationFilter
     items?: UserItemsListRelationFilter
@@ -54887,9 +54934,12 @@ export namespace Prisma {
     teacher?: SortOrder
     matelasseur?: SortOrder
     messie?: SortOrder
+    discoveredSkills?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -54912,6 +54962,7 @@ export namespace Prisma {
     teacher?: BoolWithAggregatesFilter<"User"> | boolean
     matelasseur?: BoolWithAggregatesFilter<"User"> | boolean
     messie?: BoolWithAggregatesFilter<"User"> | boolean
+    discoveredSkills?: IntNullableListFilter<"User">
   }
 
   export type UserDinozShopWhereInput = {
@@ -57674,6 +57725,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -57713,6 +57765,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -57752,6 +57805,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -57791,6 +57845,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -57830,6 +57885,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
   }
 
   export type UserUpdateManyMutationInput = {
@@ -57849,6 +57905,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -57868,6 +57925,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
   }
 
   export type UserDinozShopCreateInput = {
@@ -60695,6 +60753,11 @@ export namespace Prisma {
     teacher?: SortOrder
     matelasseur?: SortOrder
     messie?: SortOrder
+    discoveredSkills?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    discoveredSkills?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -60733,6 +60796,10 @@ export namespace Prisma {
     teacher?: SortOrder
     matelasseur?: SortOrder
     messie?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    discoveredSkills?: SortOrder
   }
 
   export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -62587,6 +62654,10 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRankingInput, UserUpdateWithoutRankingInput>, UserUncheckedUpdateWithoutRankingInput>
   }
 
+  export type UserCreatediscoveredSkillsInput = {
+    set: number[]
+  }
+
   export type UserGatherCreateNestedManyWithoutUserInput = {
     create?: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput> | UserGatherCreateWithoutUserInput[] | UserGatherUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserGatherCreateOrConnectWithoutUserInput | UserGatherCreateOrConnectWithoutUserInput[]
@@ -62865,6 +62936,11 @@ export namespace Prisma {
 
   export type EnumRoleFieldUpdateOperationsInput = {
     set?: $Enums.Role
+  }
+
+  export type UserUpdatediscoveredSkillsInput = {
+    set?: number[]
+    push?: number | number[]
   }
 
   export type UserGatherUpdateManyWithoutUserNestedInput = {
@@ -64683,6 +64759,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -64721,6 +64798,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -65143,6 +65221,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -65181,6 +65260,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -66297,6 +66377,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -66335,6 +66416,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -66462,6 +66544,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -66500,6 +66583,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -66554,6 +66638,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -66592,6 +66677,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -66731,6 +66817,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -66769,6 +66856,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -67192,6 +67280,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -67230,6 +67319,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -67414,6 +67504,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -67452,6 +67543,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -67724,6 +67816,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -67762,6 +67855,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -67850,6 +67944,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -67888,6 +67983,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -68333,6 +68429,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -68371,6 +68468,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -68481,6 +68579,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -68519,6 +68618,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -68589,6 +68689,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -68627,6 +68728,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -68719,6 +68821,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -68757,6 +68860,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -68795,6 +68899,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -68833,6 +68938,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -68887,6 +68993,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -68925,6 +69032,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -70027,6 +70135,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -70065,6 +70174,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -70119,6 +70229,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -70157,6 +70268,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -70195,6 +70307,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -70233,6 +70346,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -70287,6 +70401,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -70325,6 +70440,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -70363,6 +70479,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -70401,6 +70518,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -70455,6 +70573,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -70493,6 +70612,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -70531,6 +70651,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -70569,6 +70690,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -70623,6 +70745,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -70661,6 +70784,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -70699,6 +70823,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -70737,6 +70862,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -70791,6 +70917,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -70829,6 +70956,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -70867,6 +70995,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -70905,6 +71034,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -70959,6 +71089,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -70997,6 +71128,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -71035,6 +71167,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -71073,6 +71206,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -71127,6 +71261,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -71165,6 +71300,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -71203,6 +71339,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -71241,6 +71378,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -71295,6 +71433,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -71333,6 +71472,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -71371,6 +71511,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -71409,6 +71550,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -71463,6 +71605,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -71501,6 +71644,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -71539,6 +71683,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -71577,6 +71722,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -71719,6 +71865,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -71757,6 +71904,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -71886,6 +72034,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -71924,6 +72073,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -72011,6 +72161,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -72049,6 +72200,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -72114,6 +72266,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -72152,6 +72305,7 @@ export namespace Prisma {
     teacher?: boolean
     matelasseur?: boolean
     messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -72266,6 +72420,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -72304,6 +72459,7 @@ export namespace Prisma {
     teacher?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
