@@ -20,7 +20,8 @@
 			"shop": "Boutique",
 			"dojo": "Dojo",
 			"order": "Ordonner",
-			"enclosure": "Enclos"
+			"enclosure": "Enclos",
+			"skills": "Compétences"
 		},
 		"authMenu": {
 			"name": "Pseudo :",
@@ -324,7 +325,8 @@
 		"search": "Rechercher",
 		"loading": "Chargement...",
 		"noResults": "Aucun résultat",
-		"sortDinoz": "Gérer mes Dinoz"
+		"sortDinoz": "Gérer mes Dinoz",
+		"skills": "Compétences"
 	},
 	"popup": {
 		"confirm": "Confirmer cette action ?",
@@ -3166,6 +3168,12 @@
 			"needMemberCard": "Votre Dinoz doit posséder une Carte de Membre pour accéder au Centre d'Entraînement.",
 			"notEnoughGold": "Vous n'avez pas assez d'or pour choisir ce programme."
 		}
+	},
+	"skillTrees": {
+		"title": "Compétences",
+		"description": "Retrouve ici toutes les compétences découvertes par tes Dinoz.",
+		"empty": "Aucune compétence découverte pour le moment.",
+		"level": "Niveau {level}"
 	},
 	"npc": {
 		"description": "Vous pouvez discuter avec cette personne.",

@@ -1,3 +1,4 @@
+import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import type { RouteRecord } from '@dinorpg/core/models/router/router.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -32,6 +33,7 @@ import RankingPage from '../pages/RankingPage.vue';
 import ShopDinoz from '../pages/ShopDinoz.vue';
 import ShopItems from '../pages/ShopItems.vue';
 import ShopItinerant from '../pages/ShopItinerant.vue';
+import SkillTreesPage from '../pages/SkillTreesPage.vue';
 import TrainingCenterPage from '../pages/TrainingCenterPage.vue';
 import { UserService } from '../services/user.service.js';
 import { dinozStore } from '../store/dinozStore';
@@ -98,8 +100,6 @@ const routes: RouteRecord[] = [
 				component: LevelUpPage,
 				props: route => ({
 					id: route.params.id
-					//event: route.query.event,
-					//eventId: route.query.eventId
 				})
 			},
 			{
@@ -187,6 +187,18 @@ const routes: RouteRecord[] = [
 						meta: { public: true, showLeftPanel: false }
 					}
 				]
+			},
+			{
+				path: '/skills',
+				name: 'SkillTreesPage',
+				component: SkillTreesPage,
+				meta: { auth: true },
+				beforeEnter: () => {
+					const user = userStore();
+					if (!user.rewards.includes(Reward.PAC)) {
+						return { name: 'NewsPage' };
+					}
+				}
 			},
 			{
 				path: 'shop/dinoz',

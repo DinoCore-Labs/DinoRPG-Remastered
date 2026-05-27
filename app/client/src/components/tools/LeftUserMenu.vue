@@ -17,6 +17,10 @@
 			</div>
 			<div class="shortCutMenu">
 				<div class="shortCuts">
+					<RouterLink class="link" :to="`/shop/dinoz`">
+						<img :src="getImgURL('act', 'act_boutique')" alt="enclosure" />
+						<span>{{ $t('topBar.leftUserMenu.enclosure') }}</span>
+					</RouterLink>
 					<RouterLink class="link" :to="`/shop/flying`">
 						<img :src="getImgURL('act', 'act_boutique')" alt="shop" />
 						<span>{{ $t('topBar.leftUserMenu.shop') }}</span>
@@ -29,19 +33,15 @@
 						<img :src="getImgURL('act', 'act_pda')" alt="pda" />
 						<span>{{ $t('topBar.leftUserMenu.order') }}</span>
 					</RouterLink>
-					<!--
-					<RouterLink class="link" :to="`/skill-trees`" v-if="playerStore.playerOptions.hasPAC">
-						<img :src="getImgURL('icons', 'act_pac')" />
-						<span>{{ $t('button.skills') }}</span>
+					<RouterLink class="link" :to="{ name: 'SkillTreesPage' }" v-if="userStore.canAccessSkillsPage">
+						<img :src="getImgURL('act', 'act_pac')" />
+						<span>{{ $t('topBar.leftUserMenu.skills') }}</span>
 					</RouterLink>
+					<!--
 					<RouterLink class="link" :to="`/missions`" v-if="playerStore.playerOptions.hasPMI">
 						<img :src="getImgURL('icons', 'act_pmi')" alt="pmi" />
 						<span>{{ $t('topBar.leftMenu.missions') }}</span>
 					</RouterLink>-->
-					<RouterLink class="link" :to="`/shop/dinoz`">
-						<img :src="getImgURL('act', 'act_boutique')" alt="enclosure" />
-						<span>{{ $t('topBar.leftUserMenu.enclosure') }}</span>
-					</RouterLink>
 				</div>
 			</div>
 			<div class="dinozCapacity" :class="{ full: activeDinozCount >= userStore.maxDinoz }">
