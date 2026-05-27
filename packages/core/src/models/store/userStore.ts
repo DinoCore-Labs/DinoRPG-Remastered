@@ -11,5 +11,6 @@ export interface UserStore {
 	sortOption: string;
 	maxDinoz: number;
 	rewards: number[];
+	discoveredSkills: number[];
 	// clanId
 }
