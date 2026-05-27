@@ -1,6 +1,7 @@
 <template>
 	<div class="actions">
 		<Resurrect :enabled="resurrect" @close="resurrect = false" />
+		<Reincarnate :enabled="reincarnate" :dinoz="dinoz" @close="reincarnate = false" />
 		<MissionTalkModal
 			v-if="missionTalkTextKey && missionTalkNameKey"
 			:textKey="missionTalkTextKey"
@@ -110,6 +111,7 @@ import { defineComponent, type PropType } from 'vue';
 import DZFollow from '../utils/DZFollow.vue';
 import DinozMissionHUD from './DinozMissionHUD.vue';
 import Resurrect from '../modal/ResurrectModal.vue';
+import Reincarnate from '../modal/ReincarnateModal.vue';
 import { FightService } from '../../services';
 import { DinozService } from '../../services';
 import { dinozStore } from '../../store/dinozStore';
@@ -150,7 +152,8 @@ export default defineComponent({
 			DINOZ_STATE,
 			missionTalkTextKey: null as string | null,
 			missionTalkNameKey: null as string | null,
-			missionReward: null as MissionInteractionRewardModal | null
+			missionReward: null as MissionInteractionRewardModal | null,
+			reincarnate: false as boolean
 		};
 	},
 	components: {
@@ -159,7 +162,8 @@ export default defineComponent({
 		MissionTalkModal,
 		MissionRewardModal,
 		DZDisclaimer,
-		DZFollow
+		DZFollow,
+		Reincarnate
 	},
 	props: {
 		dinoz: {
@@ -641,16 +645,7 @@ export default defineComponent({
 					}
 					break;
 				case Action.REINCARNATION:
-					try {
-						await DinozService.reincarnate(this.dinozId);
-						await this.refreshDinoz();
-						this.$toast.open({
-							message: this.$t('toast.reincarnation'),
-							type: 'info'
-						});
-					} catch (e) {
-						errorHandler.handle(e, this.$toast);
-					}
+					this.reincarnate = true;
 					break;
 				case Action.CEF:
 					this.$router.push({

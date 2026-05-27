@@ -6,6 +6,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { computeUSkillsForUser } from '../../Level/Controller/applySkillEffect.controller.js';
 import { updatePoints } from '../../Ranking/Controller/updatePoints.js';
+import { removeMoney } from '../../User/Controller/money.controller.js';
 import { reincarnateDinoz } from '../../utils/dinoz/level.mapper.js';
 import {
 	removeAllSkillFromDinoz,
@@ -20,9 +21,14 @@ type Params = {
 	id: string;
 };
 
-export async function reincarnate(req: FastifyRequest<{ Params: Params }>, _reply: FastifyReply) {
+export async function reincarnate(
+	req: FastifyRequest<{ Params: Params; Body: { keepSeed?: boolean } }>,
+	_reply: FastifyReply
+) {
 	const dinozId = +req.params.id;
 	const authed = req.user;
+
+	const keepSeed = req.body?.keepSeed ?? false;
 
 	const dinoz = await getDinozToReincarnate(dinozId);
 
@@ -46,7 +52,11 @@ export async function reincarnate(req: FastifyRequest<{ Params: Params }>, _repl
 
 	const race = getRace(dinoz.raceId);
 
-	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display));
+	if (keepSeed) {
+		await removeMoney(authed.id, Math.round(race.price * dinoz.level ** 0.5));
+	}
+
+	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, keepSeed, dinoz.seed));
 
 	// Note: remove all skills *before*  going through the promises because the removal may conflict with adding back the race native skills.
 	await removeAllSkillFromDinoz(dinoz.id);
