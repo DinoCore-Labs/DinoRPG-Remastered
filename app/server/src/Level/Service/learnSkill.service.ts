@@ -1,4 +1,3 @@
-import { levelList } from '@dinorpg/core/models/dinoz/dinozLevel.js';
 import { raceList } from '@dinorpg/core/models/dinoz/raceList.js';
 import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
@@ -15,7 +14,9 @@ import { addSkillToDinoz } from '../../Dinoz/Controller/addSkillToDinoz.controll
 import { getFollowingDinoz } from '../../Dinoz/Controller/getFollowingDinoz.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
+import { prisma } from '../../prisma.js';
 import { updatePoints } from '../../Ranking/Controller/updatePoints.js';
+import { discoverUserSkillsTx } from '../../Skill/Controller/discoveredUserSkills.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { applySkillEffect } from '../Controller/applySkillEffect.controller.js';
 import { getDinozForLevelUp } from '../Controller/getDinozForLevelUp.controller.js';
@@ -40,21 +41,14 @@ type LearnSkillReq = FastifyRequest<{
  *
  * @returns LearnSkillData
  */
-export async function learnSkill(
-	req: LearnSkillReq,
-	_reply: FastifyReply
-	//event?: GameDinozUsage
-): Promise<LearnSkillData> {
+export async function learnSkill(req: LearnSkillReq, _reply: FastifyReply): Promise<LearnSkillData> {
 	const authed = req.user;
 	const dinozId = Number(req.params.id);
 	const skillIdList = req.body.skillIdList ?? [];
 	const tryNumber = Number(req.body.tryNumber);
-	const result: LearnSkillData = {
-		newMaxExperience: 0
-		//discoveredSkill: 0
-	};
+	const result: LearnSkillData = { newMaxExperience: 0 };
 	// --- Fetch dinoz for level up ---
-	let dinozSkills = /*event ? await getEventDinozForLevelUp(dinozId) : */ await getDinozForLevelUp(dinozId);
+	let dinozSkills = await getDinozForLevelUp(dinozId);
 	if (!dinozSkills) {
 		throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
 	}
@@ -64,17 +58,11 @@ export async function learnSkill(
 	}
 	// --- Tournament / canLevelUp ---
 	let canLevelUp = false;
-	/*if (event) {
-		const dinoz = await tournamentDinoz(dinozId);
-		if (!dinoz.FBTournament) {
-			throw new Error(`No FBTournament found`);
-		}
-		canLevelUp = dinoz.level < dinoz.FBTournament.levelLimit;
-	} else {
+	/*
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 	const dinozTournament = await isDinozInTournament(dinozId);
 	canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
-	}*/
+	*/
 	canLevelUp = dinozSkills.level < gameConfig.dinoz.maxLevel; /*+ 1 <= tournament.levelLimit*/
 	if (!canLevelUp) {
 		throw new ExpectedError('dinozCannotLvlUp', { params: { id: dinozId } });
@@ -90,14 +78,7 @@ export async function learnSkill(
 		throw new ExpectedError(`Dinoz race ${dinozRaceId} doesn't exist.`, { statusCode: 500 });
 	}
 	// --- compute learnables/unlockables for this tryNumber ---
-	const skills = getDinozLearnableSkills(
-		req,
-		dinozSkills,
-		dinozRace,
-		dinozId,
-		tryNumber
-		// event
-	);
+	const skills = getDinozLearnableSkills(req, dinozSkills, dinozRace, dinozId, tryNumber);
 	const isLearnableSkills =
 		skillIdList.length === 1 && skillIdList.every(skillId => skills.learnableSkills.some(s => s.skillId === skillId));
 	const isUnlockableSkills =
@@ -108,7 +89,7 @@ export async function learnSkill(
 	}
 	// --- Apply learn ---
 	if (isUnlockableSkills) {
-		await removeUnlockableSkillsFromDinoz(dinozId, skillIdList /*event*/);
+		await removeUnlockableSkillsFromDinoz(dinozId, skillIdList);
 	} else {
 		const wantedSkillId = skillIdList[0];
 		const skill = Object.values(skillList).find(s => s.id === wantedSkillId);
@@ -122,14 +103,17 @@ export async function learnSkill(
 			state: true,
 			computeUnlockables: true
 		});
+		const discovery = await prisma.$transaction(tx =>
+			discoverUserSkillsTx(tx, {
+				userId: authed.id,
+				skillIds: [wantedSkillId]
+			})
+		);
+		result.discoveredSkill = discovery.discoveredSkills[0];
+		result.rewardUnlocked = discovery.rewardUnlocked;
 	}
 	// --- Update dinoz data (level up resolution) ---
 	const newDinozData = getNewDinozDataFromLevelUp(dinozId, tryNumber, dinozSkills, dinozRace);
-	/*if (event) {
-		await updateEventDinoz(newDinozData.id, newDinozData);
-		result.newMaxExperience = 1;
-		return result;
-	}*/
 	await updateDinoz(newDinozData.id, newDinozData);
 	/*if (newDinozData.level % 10 === 0) {
 		checkAnnounce(PantheonMotif.race, newDinozData.id.toString(), newDinozData.display);
@@ -180,7 +164,6 @@ export async function learnSkill(
 		default:
 			break;
 	}
-	//await checkFBCreation(dinozSkills.level + 1);
 	return result;
 }
 
