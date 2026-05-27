@@ -32,15 +32,14 @@
 			<img :src="getImgURL('icons', 'small_edit')" alt="edit" />
 			<span>{{ $t('button.sortDinoz') }}</span>
 		</a>
-		<!--<a v-if="hasPMI" class="overviewButton" @click="goToPage('DinozMissions')">
-			<img :src="getImgURL('icons', `small_right`)" alt="missions" />
-			<span>{{ $t('button.dinozMissions') }}</span>
-		</a>
-		<a v-if="hasPAC" class="overviewButton" @click="goToPage('SkillTrees')">
+		<a v-if="user.canAccessSkillsPage" class="overviewButton" @click="goToPage('SkillTreesPage')">
 			<img :src="getImgURL('icons', `clipboard`)" alt="skills" />
 			<span>{{ $t('button.skills') }}</span>
 		</a>
-		-->
+		<!--<a v-if="hasPMI" class="overviewButton" @click="goToPage('DinozMissions')">
+			<img :src="getImgURL('icons', `small_right`)" alt="missions" />
+			<span>{{ $t('button.dinozMissions') }}</span>
+		</a>-->
 		<DZButton @click="goToPage('ShopDinoz')">
 			{{ $t('button.buyDinoz') }}
 		</DZButton>
