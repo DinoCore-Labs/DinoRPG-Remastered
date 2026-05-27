@@ -142,7 +142,12 @@ export const getDinozUpChance = (
 	};
 };
 
-export const reincarnateDinoz = (race: DinozRace, display: string): Prisma.DinozUpdateInput => {
+export const reincarnateDinoz = (
+	race: DinozRace,
+	display: string,
+	keepSeed: boolean,
+	seed: string
+): Prisma.DinozUpdateInput => {
 	const fullDisplay = [...display];
 	fullDisplay[1] = '0';
 
@@ -173,26 +178,47 @@ export const reincarnateDinoz = (race: DinozRace, display: string): Prisma.Dinoz
 				break;
 		}
 	}
-	// New destiny
-	let seed = randomUUID();
+	// Keep destiny
+	if (keepSeed) {
+		return {
+			experience: 0,
+			level: 1,
+			nextUpElementId: getRandomUpElement(race.upChance, seed + GLOBAL.config.salt),
+			nextUpAltElementId: getRandomUpElement(race.upChance, seed + GLOBAL.config.salt + 'pdc'),
+			nbrUpFire: race.nbrFire + fire,
+			nbrUpWood: race.nbrWood + wood,
+			nbrUpWater: race.nbrWater + water,
+			nbrUpLightning: race.nbrLightning + lightning,
+			nbrUpAir: race.nbrAir + air,
+			display: fullDisplay.toString().replaceAll(',', ''),
+			maxLife: 100,
+			placeId: PlaceEnum.DINOVILLE,
+			life: 1,
+			seed: seed,
+			FBTournamentStep: 0
+		};
+	} else {
+		//New destiny
+		let newSeed = randomUUID();
 
-	return {
-		experience: 0,
-		level: 1,
-		nextUpElementId: getRandomUpElement(race.upChance, seed),
-		nextUpAltElementId: getRandomUpElement(race.upChance, seed),
-		nbrUpFire: race.nbrFire + fire,
-		nbrUpWood: race.nbrWood + wood,
-		nbrUpWater: race.nbrWater + water,
-		nbrUpLightning: race.nbrLightning + lightning,
-		nbrUpAir: race.nbrAir + air,
-		display: fullDisplay.toString().replaceAll(',', ''),
-		maxLife: 100,
-		placeId: PlaceEnum.DINOVILLE,
-		life: 1,
-		seed: seed,
-		FBTournamentStep: 0
-	};
+		return {
+			experience: 0,
+			level: 1,
+			nextUpElementId: getRandomUpElement(race.upChance, newSeed + GLOBAL.config.salt),
+			nextUpAltElementId: getRandomUpElement(race.upChance, newSeed + GLOBAL.config.salt + 'pdc'),
+			nbrUpFire: race.nbrFire + fire,
+			nbrUpWood: race.nbrWood + wood,
+			nbrUpWater: race.nbrWater + water,
+			nbrUpLightning: race.nbrLightning + lightning,
+			nbrUpAir: race.nbrAir + air,
+			display: fullDisplay.toString().replaceAll(',', ''),
+			maxLife: 100,
+			placeId: PlaceEnum.DINOVILLE,
+			life: 1,
+			seed: newSeed,
+			FBTournamentStep: 0
+		};
+	}
 };
 
 export const useRice = async (

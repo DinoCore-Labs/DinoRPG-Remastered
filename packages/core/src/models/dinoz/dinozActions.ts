@@ -168,8 +168,7 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.REINCARNATION]: {
 		name: Action.REINCARNATION,
-		imgName: 'act_resurrect',
-		confirm: true
+		imgName: 'act_resurrect'
 	},
 	[Action.FB_TOURNAMENT]: {
 		name: Action.FB_TOURNAMENT,

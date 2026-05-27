@@ -143,7 +143,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		},
 		resurrectDinoz
 	);
-	app.post(
+	app.put(
 		'/reincarnate/:id',
 		{
 			preHandler: app.authenticate,
