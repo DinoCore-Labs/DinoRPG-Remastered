@@ -168,7 +168,13 @@ export default defineComponent({
 		},
 		async claimOffer(offerId: number) {
 			try {
-				await MarketService.claimOffer(offerId);
+				const data = await MarketService.claimOffer(offerId);
+				if (data.discoveredSkills?.length) {
+					this.userStore.addDiscoveredSkills(data.discoveredSkills);
+				}
+				if (data.rewardUnlocked) {
+					this.userStore.unlockReward(data.rewardUnlocked);
+				}
 				await this.fetchOffers();
 				await refreshGold();
 				await refreshTreasureTicket();

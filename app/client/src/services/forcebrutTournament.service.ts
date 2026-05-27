@@ -7,7 +7,6 @@ export const ForcebrutService = {
 	getOpponent(dinozId: number): Promise<ForcebrutOpponent> {
 		return api.get<ForcebrutOpponent>(`/forcebrut/opponent/${dinozId}`);
 	},
-
 	fight(dinozId: number): Promise<ForcebrutFightResponse> {
 		return api.post<ForcebrutFightResponse>(`/forcebrut/fight/${dinozId}`);
 	}
