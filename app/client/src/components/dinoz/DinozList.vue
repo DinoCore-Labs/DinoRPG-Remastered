@@ -125,7 +125,7 @@ export default defineComponent({
 			const activeDinoz = (this.dinozStore.getDinozList as Array<DinozFiche>).filter(
 				dinoz => dinoz.state !== DINOZ_STATE.frozen
 			);
-			return orderDinozList(activeDinoz);
+			return orderDinozList(activeDinoz, { keepFollowersAfterLeader: true });
 		},
 		pageId(): number {
 			return parseInt(this.$route.params.id as string);

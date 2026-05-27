@@ -207,24 +207,35 @@ const sortByOrderAndName = <T extends OrderableDinoz>(dinozList: T[]): T[] => {
 
 const keepFollowersAfterLeader = <T extends OrderableDinoz>(dinozList: T[]): T[] => {
 	const sortedByOrderAndName = sortByOrderAndName(dinozList);
+
 	for (const leader of sortedByOrderAndName.filter(dinoz => (dinoz.followers?.length ?? 0) > 0)) {
 		const followers = sortedByOrderAndName.filter(dinoz => dinoz.leaderId === leader.id);
+
 		for (const follower of followers) {
 			const followerIndex = sortedByOrderAndName.findIndex(dinoz => dinoz.id === follower.id);
 			if (followerIndex !== -1) {
 				sortedByOrderAndName.splice(followerIndex, 1);
 			}
 		}
+
 		const leaderIndex = sortedByOrderAndName.findIndex(dinoz => dinoz.id === leader.id);
 		if (leaderIndex !== -1) {
 			sortedByOrderAndName.splice(leaderIndex + 1, 0, ...followers);
 		}
 	}
+
 	return sortedByOrderAndName;
 };
 
-export const orderDinozList = <T extends OrderableDinoz>(dinozList: T[]): T[] => {
+type OrderDinozListOptions = {
+	keepFollowersAfterLeader?: boolean;
+};
+
+export const orderDinozList = <T extends OrderableDinoz>(dinozList: T[], options: OrderDinozListOptions = {}): T[] => {
 	const activeDinoz = dinozList.filter(dinoz => !isFrozenDinoz(dinoz));
 	const frozenDinoz = dinozList.filter(isFrozenDinoz);
-	return [...keepFollowersAfterLeader(activeDinoz), ...keepFollowersAfterLeader(frozenDinoz)];
+
+	const order = options.keepFollowersAfterLeader ? keepFollowersAfterLeader : sortByOrderAndName;
+
+	return [...order(activeDinoz), ...order(frozenDinoz)];
 };
