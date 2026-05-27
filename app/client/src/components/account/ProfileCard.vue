@@ -169,7 +169,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .profile-card {
 	padding: 4 8px;
-	width: 97%;
+	width: 95%;
 	margin: auto;
 	display: flex;
 	flex-direction: column;
