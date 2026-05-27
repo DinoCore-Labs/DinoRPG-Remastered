@@ -2,6 +2,18 @@
 
 ## 🔹 Core
 
+## 0.24.0
+
+### Minor Changes
+
+- c6e5d18: Add discovered skills progression and PAC epic reward unlock.
+
+  Players now progressively discover skills when a Dinoz learns a new skill during level up, or when they claim a market Dinoz that already owns skills. The discovered skills are stored on the user profile and exposed through the user session payload.
+
+  The PAC epic reward and scenario are now unlocked automatically when the first skill is discovered. PAC grants access to the new skills page, where discovered skills are displayed as elemental skill trees with unknown skills hidden until discovered.
+
+  Also sync discovered skills and PAC reward state on the client after level up and market claim actions.
+
 ## 0.23.0
 
 ### Minor Changes
@@ -508,6 +520,23 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.26.0
+
+### Minor Changes
+
+- c6e5d18: Add discovered skills progression and PAC epic reward unlock.
+
+  Players now progressively discover skills when a Dinoz learns a new skill during level up, or when they claim a market Dinoz that already owns skills. The discovered skills are stored on the user profile and exposed through the user session payload.
+
+  The PAC epic reward and scenario are now unlocked automatically when the first skill is discovered. PAC grants access to the new skills page, where discovered skills are displayed as elemental skill trees with unknown skills hidden until discovered.
+
+  Also sync discovered skills and PAC reward state on the client after level up and market claim actions.
+
+### Patch Changes
+
+- Updated dependencies [c6e5d18]
+  - @dinorpg/core@0.24.0
 
 ## 0.25.0
 
@@ -1153,6 +1182,18 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.25.0
+
+### Minor Changes
+
+- c6e5d18: Add discovered skills progression and PAC epic reward unlock.
+
+  Players now progressively discover skills when a Dinoz learns a new skill during level up, or when they claim a market Dinoz that already owns skills. The discovered skills are stored on the user profile and exposed through the user session payload.
+
+  The PAC epic reward and scenario are now unlocked automatically when the first skill is discovered. PAC grants access to the new skills page, where discovered skills are displayed as elemental skill trees with unknown skills hidden until discovered.
+
+  Also sync discovered skills and PAC reward state on the client after level up and market claim actions.
 
 ## 0.24.0
 
