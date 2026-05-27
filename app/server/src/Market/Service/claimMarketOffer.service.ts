@@ -3,6 +3,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { OfferStatus } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
+import { discoverUserSkillsTx } from '../../Skill/Controller/discoveredUserSkills.controller.js';
 import { assertUserHasDinozAtMarket } from '../Helpers/market.helper.js';
 import { addOfferContentToInventoryTx, assertUserCanReceiveOfferContent } from '../Helpers/marketInventory.helper.js';
 import { transferDinozRankingTx } from '../Helpers/marketRanking.helper.js';
@@ -26,7 +27,12 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 				select: {
 					id: true,
 					userId: true,
-					level: true
+					level: true,
+					skills: {
+						select: {
+							skillId: true
+						}
+					}
 				}
 			},
 			bids: {
@@ -81,15 +87,13 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 		originalOwnerId: offer.dinoz?.userId ?? null
 	});
 
+	let discoveredSkills: number[] = [];
+	let rewardUnlocked: number | undefined;
+
 	await prisma.$transaction(async tx => {
 		const claimed = await tx.offer.updateMany({
-			where: {
-				id: offer.id,
-				status: OfferStatus.ENDED
-			},
-			data: {
-				status: OfferStatus.CLAIMED
-			}
+			where: { id: offer.id, status: OfferStatus.ENDED },
+			data: { status: OfferStatus.CLAIMED }
 		});
 
 		if (claimed.count !== 1) {
@@ -99,15 +103,17 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 		if (offer.dinozId && offer.dinoz) {
 			if (hasWinner) {
 				await tx.dinoz.update({
-					where: {
-						id: offer.dinozId
-					},
-					data: {
-						userId: targetUserId,
-						state: null,
-						leaderId: null
-					}
+					where: { id: offer.dinozId },
+					data: { userId: targetUserId, state: null, leaderId: null }
 				});
+
+				const discovery = await discoverUserSkillsTx(tx, {
+					userId: targetUserId,
+					skillIds: offer.dinoz.skills.map(skill => skill.skillId)
+				});
+
+				discoveredSkills = discovery.discoveredSkills;
+				rewardUnlocked = discovery.rewardUnlocked;
 
 				if (sellerId) {
 					await transferDinozRankingTx(tx, {
@@ -118,12 +124,8 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 				}
 			} else {
 				await tx.dinoz.update({
-					where: {
-						id: offer.dinozId
-					},
-					data: {
-						state: null
-					}
+					where: { id: offer.dinozId },
+					data: { state: null }
 				});
 			}
 		}
@@ -131,5 +133,9 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 		await addOfferContentToInventoryTx(tx, targetUserId, items, ingredients);
 	});
 
-	return reply.send({ ok: true });
+	return reply.send({
+		ok: true,
+		discoveredSkills,
+		rewardUnlocked
+	});
 }
