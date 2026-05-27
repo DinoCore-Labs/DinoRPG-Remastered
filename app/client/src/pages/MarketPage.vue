@@ -101,7 +101,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .tabPanel {
 	position: relative;
-	width: 100%;
+	width: 98%;
 	top: 6px;
 	color: white;
 	.tabs {

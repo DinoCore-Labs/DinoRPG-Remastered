@@ -305,7 +305,7 @@ table {
 			border-radius: 8px;
 			padding: 4px 8px;
 			text-align: center;
-			width: 230px;
+			width: 150px;
 			&.empty {
 				background-color: transparent;
 			}
