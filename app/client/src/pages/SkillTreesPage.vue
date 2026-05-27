@@ -17,9 +17,7 @@ const hasDiscoveredSkills = computed(() => uStore.discoveredSkills.length > 0);
 
 <template>
 	<main class="skill-trees-page">
-		<TitleHeader>
-			{{ $t('skillTrees.title') }}
-		</TitleHeader>
+		<TitleHeader :title="$t('pageTitle.skillTrees')" :header="$t('skillTrees.title')" />
 		<p class="intro">
 			{{ $t('skillTrees.description') }}
 		</p>

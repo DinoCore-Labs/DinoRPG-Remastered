@@ -3170,7 +3170,7 @@
 		}
 	},
 	"skillTrees": {
-		"title": "Compétences",
+		"title": "Arbres de compétences",
 		"description": "Retrouve ici toutes les compétences découvertes par tes Dinoz.",
 		"empty": "Aucune compétence découverte pour le moment.",
 		"level": "Niveau {level}"
