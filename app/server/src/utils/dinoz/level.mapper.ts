@@ -234,21 +234,21 @@ export const useRice = async (
 		canRename: true
 	};
 
-	if (dinoz.level === 1) {
-		const dinozRace = Object.values(raceList).find(race => race.raceId === dinoz.raceId);
+	// if (dinoz.level === 1) {
+	// 	const dinozRace = Object.values(raceList).find(race => race.raceId === dinoz.raceId);
 
-		if (!dinozRace) {
-			throw new ExpectedError(`Dinoz race ${dinoz.raceId} doesn't exist.`);
-		}
+	// 	if (!dinozRace) {
+	// 		throw new ExpectedError(`Dinoz race ${dinoz.raceId} doesn't exist.`);
+	// 	}
 
-		const learnableSkills = getLearnableSkills(dinoz);
-		const unlockableSkills = getUnlockableSkills(dinoz);
-		const upChance = getDinozUpChance(learnableSkills, unlockableSkills, dinozRace);
+	// 	const learnableSkills = getLearnableSkills(dinoz);
+	// 	const unlockableSkills = getUnlockableSkills(dinoz);
+	// 	const upChance = getDinozUpChance(learnableSkills, unlockableSkills, dinozRace);
 
-		newDinozData.seed = randomUUID();
-		newDinozData.nextUpElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt);
-		newDinozData.nextUpAltElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt + 'pdc');
-	}
+	// 	newDinozData.seed = randomUUID();
+	// 	newDinozData.nextUpElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt);
+	// 	newDinozData.nextUpAltElementId = getRandomUpElement(upChance, newDinozData.seed + GLOBAL.config.salt + 'pdc');
+	// }
 	await updateDinoz(dinoz.id, newDinozData);
 };
 
