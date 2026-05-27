@@ -29,15 +29,12 @@ export const AdminGameLogsService = {
 	list(query: AdminGameLogListQuery = {}): Promise<AdminGameLogListResponse> {
 		return api.get('/admin/logs', { params: query });
 	},
-
 	hourly(query: AdminGameLogHourlyQuery): Promise<AdminGameLogHourlyEntry[]> {
 		return api.get('/admin/logs/hourly', { params: query });
 	},
-
 	daily(query: AdminGameLogDailyQuery): Promise<AdminGameLogDailyEntry[]> {
 		return api.get('/admin/logs/daily', { params: query });
 	},
-
 	summary(query: AdminGameLogSummaryQuery): Promise<AdminGameLogSummaryEntry[]> {
 		return api.get('/admin/logs/summary', { params: query });
 	}

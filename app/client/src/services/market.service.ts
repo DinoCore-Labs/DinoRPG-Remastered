@@ -1,3 +1,4 @@
+import type { ClaimMarketOfferData } from '@dinorpg/core/models/market/claimMarketOfferData.js';
 import type { MarketFilter, MarketListResponse } from '@dinorpg/core/models/market/market.js';
 
 import { http } from '../utils/http';
@@ -13,7 +14,6 @@ export const MarketService = {
 		silent = false
 	): Promise<MarketListResponse> {
 		const apiFilter = filter === 'bids' ? 'all' : filter;
-
 		return http()
 			.get<MarketListResponse>(`/market/list/${apiFilter}`, {
 				silent,
@@ -47,7 +47,7 @@ export const MarketService = {
 			.delete(`/market/${offerId}`)
 			.then(res => res.data);
 	},
-	claimOffer(offerId: number) {
+	claimOffer(offerId: number): Promise<ClaimMarketOfferData & { ok: boolean }> {
 		return http()
 			.post(`/market/${offerId}/claim`)
 			.then(res => res.data);
