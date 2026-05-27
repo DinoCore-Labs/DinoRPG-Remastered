@@ -20,7 +20,8 @@
 			"shop": "Tienda",
 			"dojo": "Dojo",
 			"order": "Ordenar",
-			"enclosure": "Tienda de Dinos"
+			"enclosure": "Tienda de Dinos",
+			"skills": "Compétences"
 		},
 		"authMenu": {
 			"name": "Nombre de usuario:",
@@ -200,6 +201,7 @@
 		"fb_tournament": "DinoRPG [ Torneo de Fuerzabruta ]",
 		"manageDinoz": "DinoRPG [ Gestión de mi Dino ]",
 		"market": "DinoRPG [ Mercado de los Maestros ]",
+		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
 		"admin": "DinoRPG [ Panel de Admin ]"
 	},
 	"adminPage": {
@@ -324,7 +326,8 @@
 		"search": "Buscar",
 		"loading": "Cargando...",
 		"noResults": "No hay resultados",
-		"sortDinoz": "Administrar mis Dinos"
+		"sortDinoz": "Administrar mis Dinos",
+		"skills": "Compétences"
 	},
 	"popup": {
 		"confirm": "¿Confirmas esta acción?",
@@ -3167,6 +3170,12 @@
 			"notEnoughGold": "Vous n'avez pas assez d'or pour choisir ce programme."
 		}
 	},
+	"skillTrees": {
+		"title": "Arbres de compétences",
+		"description": "Retrouve ici toutes les compétences découvertes par tes Dinoz.",
+		"empty": "Aucune compétence découverte pour le moment.",
+		"level": "Niveau {level}"
+	},
 	"npc": {
 		"description": "Vous pouvez discuter avec cette personne.",
 		"leave": "Arrêter la discussion",
@@ -5338,7 +5347,10 @@
 			}
 		},
 		"merguez": {
-			"name": "Le Mystère de la Merguez"
+			"name": "L'overdose de Merguez"
+		},
+		"pac": {
+			"name": "Le Parchemin des Aptitudes"
 		}
 	}
 }
