@@ -1,3 +1,4 @@
+import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 
 import { Prisma } from '../../../../prisma/index.js';
@@ -22,6 +23,25 @@ export async function unlockPacRewardTx(tx: SkillDiscoveryTx, userId: string) {
 		data: {
 			userId,
 			rewardId: Reward.PAC
+		}
+	});
+
+	await tx.userTracking.upsert({
+		where: {
+			stat_userId: {
+				stat: StatTracking.PAC,
+				userId
+			}
+		},
+		update: {
+			quantity: {
+				increment: 1
+			}
+		},
+		create: {
+			stat: StatTracking.PAC,
+			quantity: 1,
+			userId
 		}
 	});
 
