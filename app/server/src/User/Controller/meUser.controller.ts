@@ -133,7 +133,8 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 					where: { type: { in: ['GOLD', 'TREASURE_TICKET'] } },
 					select: { type: true, amount: true }
 				},
-				rewards: true
+				rewards: true,
+				discoveredSkills: true
 			}
 		});
 		if (!user) {
@@ -176,7 +177,8 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 					maxExperience: getMaxXp(dinoz)
 				}))
 			),
-			rewards: user.rewards.map(reward => reward.rewardId)
+			rewards: user.rewards.map(reward => reward.rewardId),
+			discoveredSkills: user.discoveredSkills
 		});
 	} catch (err) {
 		req.log.error(err);
