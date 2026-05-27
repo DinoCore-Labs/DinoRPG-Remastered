@@ -20,7 +20,8 @@
 			"shop": "Shop",
 			"dojo": "Dojo",
 			"order": "Order",
-			"enclosure": "Enclosure"
+			"enclosure": "Enclosure",
+			"skills": "...Skills :"
 		},
 		"authMenu": {
 			"name": "Username:",
@@ -200,6 +201,7 @@
 		"fb_tournament": "DinoRPG [ BrutForce Tournament ]",
 		"manageDinoz": "DinoRPG [ Manage my Dinoz ]",
 		"market": "DinoRPG [ Tamer Market ]",
+		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
 		"admin": "DinoRPG [ Admin Dashboard ]"
 	},
 	"adminPage": {
@@ -296,7 +298,7 @@
 			"futureInfo1": {
 				"text1": "Integration of a logging system",
 				"text2": "Scroll selection???",
-				"text3": "Madame X et ses missions",
+				"text3": "Madame X and her missions",
 				"text4": "Double skills",
 				"text5": "Bug fixes"
 			},
@@ -324,7 +326,8 @@
 		"search": "Search",
 		"loading": "Loading...",
 		"noResults": "No result",
-		"sortDinoz": "Manage my Dinoz"
+		"sortDinoz": "Manage my Dinoz",
+		"skills": "...Skills :"
 	},
 	"popup": {
 		"confirm": "Confirm this action?",
@@ -618,7 +621,18 @@
 			"dinoz": "My Dinoz",
 			"friends": "My Friends"
 		},
-		"level": "Level"
+		"level": "Level",
+		"dinozFilters": {
+			"race": "Race:",
+			"level": "Level:",
+			"state": "State:",
+			"allRaces": "All races",
+			"allLevels": "All levels",
+			"allStates": "All states",
+			"active": "Active",
+			"frozen": "Frozen",
+			"empty": "Aucun Dinoz ne correspond aux filtres."
+		}
 	},
 	"userCard": {
 		"title": "Go to {user}'s DinoRPG profile"
@@ -1032,7 +1046,9 @@
 			"Capture": "Catch",
 			"Venerable": "Venerable",
 			"Renforts": "Reinforcements",
-			"Resistance": "Resistance"
+			"Resistance": "Resistance",
+			"ElementalDisciple": "Disciple élémentaire",
+			"CursedWand": "Cursed Wand"
 		},
 		"description": {
 			"GriffesEnflammees": "Increase the strength of all Fire **assaults** by 7",
@@ -2691,11 +2707,19 @@
 			"swampmf2": "Foggoz",
 			"merch1": "Merchant Louch",
 			"merch2": "Angry Merchant",
-			"gang1": "John Hubert",
+			"gang1": "Jean-Hubert",
 			"gang2": "Charles Edward",
 			"gang3": "Louis Stanislas",
 			"suspc": "Suspect",
-			"suspc1": "Suspected Number 1"
+			"suspc1": "Suspected Number 1",
+			"elhelp": "Elève-Elémentaire",
+			"pign1": "Fiodor Pignight",
+			"pign2": "Dmitri Pignight",
+			"korven": "Revenge Korgon",
+			"kvenbs": "Masked Korgon",
+			"megoup": "Mégapignon Sombre",
+			"darkg2": "Goupignon Sombre",
+			"pirao2": "Pirhan-os"
 		},
 		"status": {
 			"asleep": "Asleep",
@@ -3146,6 +3170,12 @@
 			"notEnoughGold": "You don't have enough gold to choose this program."
 		}
 	},
+	"skillTrees": {
+		"title": "Arbres de compétences",
+		"description": "Retrouve ici toutes les compétences découvertes par tes Dinoz.",
+		"empty": "Aucune compétence découverte pour le moment.",
+		"level": "Niveau {level}"
+	},
 	"npc": {
 		"description": "You can talk to this person.",
 		"leave": "Stop chatting",
@@ -3387,7 +3417,7 @@
 				"ok": "Enfin, tout cela pour te dire que cette glace est géniale. Tiens, en voilà un petit bout, garde le avec toi pour te rafraîchir quand il fait chaud !"
 			},
 			"choice": {
-				"talk": "Glaglaglagla...",
+				"talk": "Glaglagla...",
 				"next": "Mazotte ?",
 				"prof": "Effectivement...",
 				"theo": "Oulala...",
@@ -3445,98 +3475,98 @@
 		"shamanMou": {
 			"name": "Soft Shaman",
 			"dialog": {
-				"begin": "B'jour jeune av'turier, bienv'nue à Fosselave... la capitale du Grand T'chaud... Hésite pô à admirer nos super sculptures en basalte. Y'a aussi les bains de magma, là bas... Ca va te relaxer, tu verras c'est coooool... Si t'as faim, t'peux goûter not' spécialité : les merguez de Gobelin... Ca te ravigore, youuuhouuu, tu peux pas imaginer...",
-				"charm": "Ah ouais, c'est vrai... y parait que j'dois t'aider... Tiens, un Charme de Feu... ça aidera bien ton dinoz dans ses prochains combats.",
-				"boost": "Bouge pas, j'vais t'enchanter de la magie des Shamans... Oyééé, oyééé ! ZZZZzzzzzz... ... C'est bon, tu peux y'aller, t'es un balaise maintenant.",
-				"nothing": "Hey, essaye pas d'me rouler, ton dinoz a déjà un charme... Reviens me voir plus tard.",
-				"vener": "Uhmm... ? Le V'nérable ?... Quel bourrin celui là... hier il a failli me bouffer... tout ça parce qu'il me trouve trop agité, et que ça l'empêche de dormir... Tu veux vraiment y aller ? Boah... c'est toi qui voit... Tourne à droite aux Forges, et c'est tout droit.",
-				"force": "Fort ? le gros dorogon Vener' là ?... bah ouais un peu... C'est la première cause de mortalité chez les touristes, juste devant les crises cardiaques causées par nos merguez... Ha la la, qué p'tites natures ces touristes...",
-				"merci": "Tchao mon pote... à la prochaine...",
-				"souvenir": "Des souv'nirs ?... Bah... j'ai bien ma pile de feuilles d'incantations en retard là, mais je sais pas si ça t'interesse... J'peux te filer un autographe aussi, signé de mon vrai nom, Baston Labaf... non ? Ok tant pis... Sinon y'a des trucs de combats aux Forges... des équipements de combat, et tout ça là... Y'aura p'têt un truc cool pour toi.",
-				"more": "Uhmm.... Si ton Dinoz accepte de remplir quelques missions pour moi, j'lui confierai mon Guide de Stratégie. C'est super pratique...",
-				"accept": "Marché conclu...",
-				"missions": "(Bientôt disponible)"
+				"begin": "Hey there young master! Welcome to the Lavapit... capital of the Big All-Hot... Don't hesitate to admire our magnificent basalt sculptures. There are magma baths here too. Relax, chill out. If you're hungry why don't you try our local specialty: Goblin Merguez... It'll give you a little boost, give it a try... You'll see.",
+				"charm": "Oh yeah, that's right. Take this, it's a Fire Charm ... it'll help your Dinoz in the upcoming battles.",
+				"boost": "Stay here, I will enchant your Dinoz with Shaman magic ... Oyeee, oyeee! ZZZZzzzzzz... ... It's done, you can go, your Dinoz is stronger now.",
+				"nothing": "Hey, don't try to scam me, your Dinoz already has a charm ... Come back later.",
+				"vener": "Uhmm ... ? The Venerable? ... He's a real grouch... he nearly ate me yesterday just because he said I was being annoying and disturbing his sleep. WHAT?! You really want to visit the Venerable? Bah ... do what you want ... take the path on your right at the Forges, and it's straight ahead.",
+				"force": "Strong? Who? The Venerable? Yeah he's strong. He's listed as the most common cause of death for tourists, just ahead of heart attacks caused by our Goblin Merguez ... Ha ha, these tourists are so delicate!",
+				"merci": "See y'a, buddy... next one...",
+				"souvenir": "Some souvenirs? ... Bah ... I've got a pile of incantation pages here, but I don't know if you're interested in them ... I can also give you an autograph if you want, I'll sign it using my real name, Bomer Boof... Interested? No? I didn't think you would be, not many people are. If you're really looking for some souvenirs you should go to the Forges ... there's a lot of combat gear there... maybe you'll find something interesting.",
+				"more": "Uhmm.... If your Dinoz agrees to fulfill a few missions for me, I'll entrust him with my Strategy Guide. It's very useful...",
+				"accept": "Deal...",
+				"missions": "(coming soon)"
 			},
 			"choice": {
-				"vener": "Le Vénérable...",
-				"souvenir": "On peut acheter des souvenirs dans le coin ?",
-				"missions": "Consulter la liste des Missions",
-				"charm": "On m'a parlé d'un charme...",
-				"acceptCharm": "Accepter le Charme",
-				"force": "Ah ? Et il est fort ?",
-				"merci": "Merci, je tiendrai compte de vos conseils !",
-				"more": "Et c'est tout ?",
-				"accept": "Accepter"
+				"vener": "The Venerable...",
+				"souvenir": "Can I buy souvenirs in the area?",
+				"missions": "Show Mission List",
+				"charm": "I have been told of a charm...",
+				"acceptCharm": "Accept the Charm",
+				"force": "Oh? And is he strong?",
+				"merci": "Thanks, I'll take your advice into account!",
+				"more": "And that's it?",
+				"accept": "Accept"
 			}
 		},
 		"rodeur": {
-			"name": "Rôdeur Etrange",
+			"name": "Strange Prowler",
 			"dialog": {
 				"intro": {
 					"begin": ".........",
-					"go": "Ouf ! Il vaut mieux faire attention en rencontrant des étrangers...",
-					"talk": "Uh ?!??? Quoi ?? Vous pouvez me VOIR ?!? ..... Grrrrr....",
-					"yes": "Uhm... bien... je vois... on m'avait pourtant certifié que cette cape rendait invisible ! Est-ce que tu peux regarder l'indicateur dans le dos, il y a marqué quelque chose ?",
-					"read": "Quoi ?!? \"L'EAU BATTE-RIZ\" ? Uhm... le vendeur parlait effectivement de recharger quelque chose... il va donc falloir que j'utilise du... riz !?! Mais où vais-je pouvoir trouver cela ?!?",
-					"talk2": "Vite ! J'ai BESOIN de ce Riz !"
+					"go": "Pheeww! It's better to be careful when around strangers, you never know what's going to happen...",
+					"talk": "What? You can see me? .... Argh! ....",
+					"yes": "The guy who sold me this cape assured me that it would make me invisible! Can you take a look at the indicator on my back, is something written on it?",
+					"read": "What? \\\"LOW BAT-RICE\\\" ? Umm... the seller told me to recharge something... so I have to use... rice? But where can I find rice?",
+					"talk2": "Hurry! I NEED the rice to recharge my cape. Quick! Hurry!!"
 				},
 				"tech": {
-					"begin": "Ma cape est à nouveau en panne... je commence à en avoir un peu marre...",
-					"qual": "QUOI ?!? Comment oses-tu parler ainsi de la grande technologie Caushemeshenne ! Sais-tu simplement combien d'années recherches il a fallu à nos scientifiques pour maîtriser l'Ether ?!?",
-					"qual2": "Au lieu de dire des conneries, tu ferrais mieux d'essayer de remplir ta mission...",
-					"caush": "Oui ! Tout à fait, la grande civilisation des Montagnes de Caushemesh, bien au delà des Steppes Magnétiques. Nous sommes bien plus développés que les barbares de Dinoville...",
-					"ether": "Aprés des centaines d'années de recherche, les Caushemeshens ont maîtrisés la puissance de l'Ether, un savant mélange des éléments Air et Vide. Celà nous donne une puissance technologique hors du commun, et les ingénieurs de Caushemesh sont les meilleurs de tout Dinoland !",
-					"next": "Vos Dinoz sont bien faibles comparés à ceux de Caushemesh, ils ne font pas le poids ahahahah ah ! Entraîne bien tes Dinoz, jeune maître, car un jour viendra où tu devras affronter des dangers bien plus grands !",
-					"more": "Mais j'en ai déjà trop dit... Pour te convaincre de la technologie de Caushemesh, que dirais-tu d'une petite mission ?"
+					"begin": "My cape ran out of rice again ... I'm starting to get sick of this...",
+					"qual": "What!? How dare you talk like that about Caushemesh technology! Do you know how many years of research it took our scientists to master the Ether?",
+					"qual2": "Instead of saying stupid things, maybe you should try and complete your mission...",
+					"caush": "Yes! It's the great civilization of the Caushemesh Mountains, far beyond the Magnetic Steppes. We're way more developed than these barbarians from Dinotown...",
+					"ether": "After centuries of research, the Caushemeshians have mastered the power of Ether, a complex mix of the Air and Void elements. It's an extraordinary technological advancement, all thanks to Caushemesh engineers, the best in Dinoland!",
+					"next": "Your Dinoz are too weak. They're no match for ours, hahahaha! Make sure you train your Dinoz well, as the day will come when you are called upon to fight more powerful enemies!",
+					"more": "Enough of me talking... what would you say about a little mission to convince you of the strength of our technology?"
 				},
 				"reward": {
-					"begin": "Pour ton information, les Dinoz Sombres que tu as rencontré jusqu'à présent n'étaient que des débutants que nous venons faire entraîner dans cette partie de Dinoland... La puissance des Dinoz de Caushemesh va bien au delà, et même votre Vénérable ne ferait pas le poids contre nos meilleurs maîtres Dinoz !",
-					"next2": "Enfin bon, je tiens ma promesse. Voici une récompense pour te convaincre de la supériorité de la  technologie de Caushemesh. Je n'en ai qu'un exemplaire, alors fais-en bon usage... Il s'agit d'un Bracelet en Tik, que tu pourras équiper sur le Dinoz de ton choix..."
+					"begin": "I thought I should let you know that all the Dark Dinoz you have met up until now were only newbies that we train in this region of Dinoland... the Dinoz of Caushemesh are far stronger. Even your Venerable will be no match for our strongest Dinoz masters!",
+					"next2": "I'm a man of my word. Here's a reward to convince you of the superiority of Caushemesh technology. I only have one, so use it well... it's a bracelet made of Tik, you can equip it on the Dinoz of your choice..."
 				},
 				"afterSpy": {
 					"begin": "Maintenant libéré de sa mission d'espionnage, le rôdeur s'est installé tranquillement non loin de dinoplaza. Les doigts de pied en éventail, il se détend au soleil... Mieux vaut le voir ici qu'en train de manigancer quelque chose de louche..."
 				}
 			},
 			"choice": {
-				"go": "Ce personnage a l'air dangereux... s'éloigner !",
+				"go": "This guy seems dangerous... it's probably a good idea to move away from him.",
 				"talk": "Talk to the strange man",
 				"talk2": "Talk to the strange man",
-				"yes": "Euh... Oui",
-				"read": "Lire l'indicateur",
-				"help": "Aider le Rôdeur",
-				"qual": "Sûrement de la mauvaise qualité...",
-				"qual2": "Sûrement de la mauvaise qualité...",
-				"caush": "Caushemesh ?",
-				"ether": "L'Ether ?",
-				"next": "Et...",
+				"yes": "Umm... Yes",
+				"read": "Check the indicator",
+				"help": "Help the Prowler",
+				"qual": "It's probably a bad quality cape...",
+				"qual2": "It's probably a bad quality cape...",
+				"caush": "Caushemesh?",
+				"ether": "Ether?",
+				"next": "And...",
 				"next2": "(...)",
 				"more": "...",
-				"mission": "Accepter une mission"
+				"mission": "Accept the mission"
 			}
 		},
 		"venerable": {
 			"name": "The Venerable",
 			"intro": {
 				"dialog": {
-					"begin": "GWWWWWWWWAAAAAAARGGGGGGGHHHHHH !!!! Qui oooose venir me dérangerrr pendannt ma siiiessteee ?????",
-					"bye": "Vous avez raison, il y a des fois dans la vie ou il vaut mieux prendre son courage à deux mains et effectuer une retraite stratégique en vitesse, et si possible sans se faire voir...",
-					"moi": "UUUHMMMM ?? Et que me veux-tu au juste ??? Tu as intérêt à avoir une bonne raison, sinon je vais faire GRILLER ton Dinoz pour mon PETIT DEJEUNER !!!",
-					"korgon": "UHHMM ??? un KORGON, dis-tu ??? Où ça, Où ça ? Tu m'as donné faim !!",
-					"next1": "OOhhh ! Quel DOOMMMAAGGE !! Ca doit être ENERVANT alors ! Je comprends je comprends ! Dans ma jeunesse, j'ai souvent laissé échapper quelques petits déjeuners comme ça. Maintenant je les GRILLE directement, comme ça ils n'ont pas le temps de s'enfuir !",
-					"fight": "GROOOOAAARRH !!! Tu as GAGNE pour cette FOIS ! MAIS nous nous REVERRONS !",
-					"moi2": "UHMMMM ? Oui, bon, je me rappelle de ton Dinoz. Qu'est-ce que tu me veux encore ?",
-					"question": "Alors, mangeur de Korgon, est-ce que je peux GRILLER quelque chose pour toi ? Ou autre chose ? N'en demande pas trop, car sinon je te DECOUPE en petits morceaux croustillants qui seront parfaits pour mon PETIT DEJEUNER !!!",
-					"force": "UHHMM ??? Plus FORT tu dis ? BON... alors suis mon conseil : va voir le SHAMAN de Fosselave, il t'aidera à GRILLER tes ennemis !",
-					"fight2": "UHMM... J'ai une petite FAIM... que dirais-tu de remettre cela à plus tard ???"
+					"begin": "GWWWWWWWWAAAAAAARGGGGGGGHHHHHH!!!! Whoooooo dares to waaaake me up from my naaaap?????",
+					"bye": "You're right, there are times in life when it's better to leave quickly and quietly rather than being brave...",
+					"moi": "UUUHMMMM?? What do you want!? I hope you have a good reason for being here, or else I'll COOK your Dinoz and have it for BREAKFAST!!!",
+					"korgon": "UHHMM??? A KORGON, you say??? Where? I'm hungry, bring it to me!!",
+					"next1": "Oohhh! It got away? That's so IRRITATING! Don't worry, I can sympathize. In my youth, I often let breakfast escape from me like that. Now I GRILL them immediately, so they don't have time to escape!",
+					"fight": "GROOOOAAARRH!!! You may have won THIS time! BUT we WILL meet again!",
+					"moi2": "UHMMMM? I remember your Dinoz. What else do you want from me?",
+					"question": "So, Korgon eater, can I GRILL something for you? Or maybe I can do you another favor? Don't ask for too much, or else I'll CUT you into small crispy pieces. That would be perfect for my BREAKFAST!!!",
+					"force": "UHHMM??? Stronger you say? Well then, you should follow my advice. Go talk to the SHAMAN at Lavapit, he'll help you GRILL your enemies!",
+					"fight2": "UHMM... I'm starving at the moment, would you mind if I did it later???"
 				},
 				"choice": {
-					"moi": "Euh... C'est moi !",
-					"moi2": "Euh... C'est moi ?",
-					"bye": "Partir discrètement",
-					"perdu": "Je me suis perdu en venant ici et...",
-					"chasse": "Je suis un Grand Chasseur de Dorogon, et je viens vous défier !",
-					"deal": "J'ai une affaire EN OR a vous proposer !",
-					"korgon": "Je courrais après un Korgon et...",
+					"moi": "Uh... It's me!",
+					"moi2": "Uh... It's me?",
+					"bye": "Leave quietly",
+					"perdu": "I got lost coming here and...",
+					"chasse": "I'm a Great Dorogon Hunter. I've come here to challenge you!",
+					"deal": "I have a GOLDEN business opportunity for you!",
+					"korgon": "I was running after a Korgon and...",
 					"auto": "Pourrais-je avoir un autographe ?",
 					"next0": "Je l'ai attrapé",
 					"next1": "Il m'a échappé",
@@ -3552,7 +3582,7 @@
 					"begin": "GRRrrrr....Grouph...Bouarkkk.....J'attends toujours ton aide. Je compte sur toi.",
 					"ok": "Vous partez, bien décidé à sauver le vénérable.",
 					"ko": "Très bien, prépare toi !",
-					"force2": "UHHMM ??? Plus FORT tu dis ? BON... alors suis mon conseil : va voir le SHAMAN de Fosselave, il t'aidera à GRILLER tes ennemis !",
+					"force2": "UHHMM??? Stronger you say? Well then, you should follow my advice. Go talk to the SHAMAN at Lavapit, he'll help you GRILL your enemies!",
 					"comb": "Bien joué, tu es prêt à aller défier les Dorogons de Nimbao.",
 					"ko2": "Tu es déjà prêt à aller défier les Dorogons de Nimbao. Bon courage !"
 				},
@@ -3588,37 +3618,37 @@
 				"question": "Une question ? Mmmmmm.... Que dirais-tu plutôt d'une petite Mission pour ton Dinoz ? Avec des amis, on organise des rallyes tout autour de Dinoland !",
 				"nothing": "Ah bon ? Alors parfait... Bon voyage !",
 				"quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel. <br> Je pourrais alors répondre à ton voeu le plus cher.",
-				"quest3": "Une question ? Mmmmm... Je vois que tu as obtenu les palmes des Korgons. <br> Cela veut-dire que tu devrais être capable de survivre... là-bas... peut-être...",
-				"where": "Mmmm.... Pour y aller, tu devras rassembler sept Dinoz. Pas forcément les tiens non, ils peuvent aussi être des Dinoz des membres de ton Clan. Et aprés je vous y enverrai... là-bas...",
-				"where2": "Mmm.... Il s'agit d'un lieu... Je ne peux pas t'en dire plus. Mais sâche que tu y trouvera une clé, oui, LA clé. Pour la porte de Sylvenoire. Elle te permettra de la continuer, ton aventure. Enfin, si tu survis bien entendu.",
-				"how": "Comment ? Mmm... Ecoute moi. Tu dois rassembler sept Dinoz ici. Les tiens ou ceux de membres de ton Clan. <br> Chaque Dinoz doit se concentrer. Quand vous serez sept, alors, à ce moment, vous pourrez aller là-bas.",
-				"danger": "Dangereux ? Mmm... pour faire simple, je dirais que tu n'as surement que peu de chance de survivre là-bas... <br> Mais qui ne tente rien n'a rien, n'est-ce pas ?",
-				"concen": "Mmm... Bien... je vais hypnotiser ton Dinoz. Il pourra mieux se concentrer de cette façon... <br> Ne t'inquiete pas, tu pourras à tout moment arrêter cela, si tu le désires.",
-				"quest4": "Une question ? Mmmmm... Il va te falloir des ingrédients pour que je t'aide. <br> Enfin, si je devine bien quelle question tu voulais me poser...",
-				"noingr": "Tsss tsss tsss.... Le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane. <br> Il me semble qu'il te manque quelquechose, mon cher.",
-				"ingr": "Poum poum palalam poum poum pam poum poum palalam pam ! Et voila, une magnifique Potion Anti Sedh pour toi...",
-				"potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !"
+				"quest3": "A question? Mmmmm... I see that you got the Korgons fins. <br> That means you should be able to survive... over there... maybe...",
+				"where": "Mmmm.... To go there, you will have to gather seven Dinoz. Not necessarily yours, no, they can also be Dinoz of your Clan members. Once there are enough Dinoz, I can send you there...",
+				"where2": "Mmm.... It is a place... I can't tell you more about. But know that you'll find a key, yes, THE key for the Blacksilva door. It will allow you to continue your adventure. That is, if you survive.",
+				"how": "How? Mmm... Listen to me. You need to gather seven Dinoz here. Not necessarily yours, no, they can also be Dinoz of your Clan members. <br> Every Dinoz must concentrate. When you will be seven, then you will be able to go there.",
+				"danger": "Dangerous? Mmm... to make it simple, I would say that you probably have little chance of surviving there... <br> But like they say: \\\"Nothing ventured, nothing gained.\\\"\"",
+				"concen": "Mmm... Good... I will hypnotize your Dinoz. It'll be able to concentrate better that way... <br> Don't worry, you can stop this at any time, if you wish.",
+				"quest4": "Any questions? Mmmmm... You're going to need some ingredients if you want me to help you. <br> Well, if I guess correctly what question you wanted to ask me...",
+				"noingr": "Well well well.... The Coral that never breaks, the Ice that never melts, and the Branch that never fades. <br> Looks like you're missing something, my friend.",
+				"ingr": "Poom poom palalam poom poom pam poom poom palalam PAM! And here you go, a magnificent Anti-SEDH Potion for you...",
+				"potion": "Mmmm... goodbye my friend, come back to see me sometime!"
 			},
 			"choice": {
-				"question": "J'ai une question à vous poser...",
-				"nothing": "Rien du tout",
-				"mission": "Oui je veux bien",
-				"no": "Non merci",
-				"questQuestion": "Et ma question ?",
-				"bye": "Je dois partir",
-				"where": "Là-bas ?",
-				"where2": "Mais où exactement ?",
-				"how": "Comment dois-je faire ?",
-				"danger": "Et c'est dangereux ?",
-				"concen": "Je veux faire concentrer mon Dinoz !",
-				"ok": "D'accord",
-				"ingr": "Voilà les ingrédients !",
-				"noingr": "Voilà les ingrédients !",
-				"potion": "Vous êtes donc un Singe Antique !!!"
+				"question": "I have a question for you...",
+				"nothing": "Nothing at all",
+				"mission": "Yes I want",
+				"no": "No, thanks",
+				"questQuestion": "What about my question?",
+				"bye": "I gotta go",
+				"where": "Over where?",
+				"where2": "But where exactly?",
+				"how": "How should I do it?",
+				"danger": "And is it dangerous?",
+				"concen": "I want my Dinoz to concentrate!",
+				"ok": "Okay",
+				"ingr": "Here are the ingredients!",
+				"noingr": "Here are the ingredients!",
+				"potion": "So you are an Ancient Monkey!!!"
 			}
 		},
 		"baoFan": {
-			"name": "Fan de Bao",
+			"name": "Bao Fan",
 			"dialog": {
 				"begin": "Bonjour monsieur ! Vous avez parlé à Monsieur Bao ? Il est vraiment génniaaaaaalll non ???",
 				"ok": "Hein, que c'est vrai !! Il est trop cool ! J'ai même traversé la Forêt de Grumhel exprès pour qu'il me raconte plein d'histoires super ! Vous savez quoi, il a déjà assommé un Gorilloz démon, un jour ! Si si ! Et puis il était entouré de plein d'animaux méchants ! Et tu sais quoi ? Et ben il les a tous battus !",
@@ -3633,7 +3663,7 @@
 				"ok": "Euh... oui",
 				"wah": "Waaahh !!",
 				"yes": "Ok !",
-				"no": "Non merci",
+				"no": "No, thanks",
 				"spirit": "\"Spirituel\" tu veux dire ?",
 				"thanks": "Bon, je dois partir... merci beaucoup pour le Charme Bao !"
 			}
@@ -3658,7 +3688,7 @@
 				"tame": "Personne n'en a jamais dressé ?",
 				"interest": "Tout ça est vraiment passionnant !",
 				"service": "Oui, avec plaisir !",
-				"missions": "Consulter la liste des Missions"
+				"missions": "Show Mission List"
 			}
 		},
 		"nicolasHulot": {
@@ -3684,7 +3714,7 @@
 				"talk": "Talk to the strange man",
 				"who": "Mais... Vous êtes qui ?",
 				"better": "Vous avez l'air d'aller bien mieux...",
-				"missions": "Consulter la liste des Missions",
+				"missions": "Show Mission List",
 				"role": "Ça n'est pas un peu dangereux pour un journaliste ici ?",
 				"myst": "Quels genres de mystères existent ici ?",
 				"fauna": "Parlez-moi des animaux de la Jungle...",
@@ -3705,7 +3735,7 @@
 				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à votre grande surprise, vous constatez qu'il y a quelque chose d'écrit sur ce parchemin !"
 			},
 			"choice": {
-				"missions": "Consulter la liste des Missions",
+				"missions": "Show Mission List",
 				"shake": "Secouer un peu cet arbre",
 				"item": "Aie ! Qu'est-ce que c'est ?"
 			}
@@ -3816,6 +3846,43 @@
 				"learn4": "Oh !",
 				"learn5": "Quoi...",
 				"no": "(ouille)"
+			}
+		},
+		"elMaster": {
+			"name": "Maître Elémentaire",
+			"dialog": {
+				"begin": "Vous avez entendu parler du Maître Elémentaire lors de vos études de Maître Dinoz. Il s'agit d'un Maître très respecté, expert dans la compréhension et la manipulation des éléments. De nombreux jeunes Maîtres Dinoz recherchent ses conseils pour pouvoir progresser, mais il est connu pour être plutôt sec et ne se laisse pas facilement approcher...",
+				"talk": "Uh ? Tiens, voilà encore un emmmm...aître qui vient me faire ch...auffer pour que je l'aide. Je commence en a avoir ras-le-c...ortex de ces histoires... Enfin bref... qu'est-ce qu'il veut ?",
+				"ask": "Ben voyons.... Ca veut progresser, mais sans pour autant travailler. Ca veut faire des miracles, sans lever le petit doigt. S'il veut mon conseil, le voilà : bouge-toi-le-c...iboulot !!!",
+				"ask2": ".... et en plus ça insiste... Voyons voir... S'il veut vraiment apprendre quelque chose, il va falloir qu'il rende bien service d'abord. Ensuite on verra s'il est digne de nos conseils !",
+				"talk2": "Bon, alors, il avance comment dans son apprentissage de la vie ? J'ai bien peur qu'on ne puisse pas faire grand chose de lui...",
+				"talk3": "La formation est terminée... Je ne suis pas du genre à faire des compliments, mais la plupart des Dinoz n'arrivent pas au bout, donc... c'est pas mal.",
+				"maudit": "Quoi ? Une malédiction ? Ne me dit pas qu'il a encore été se frotter à ma Baguette de Bois-Maudit ???? Je lui avais pourtant dit de ne surtout pas y toucher !!",
+				"maudit2": "Et bien entendu, maintenant qu'il a fait sa con.... bétise, il veut que je l'aide ! Comme si je n'avais que ça à faire ! Enfin bon... ce qui est fait est fait... Pour lever la malédiction, il faut utiliser un Onguent du Démon. Le seul problème, c'est que la dernière boutique qui en vendait a fait faillite...",
+				"maudit3": "Cependant, j'ai entendu dire qu'une boutique cachée existait, et qu'elle vendait des objets quasi-introuvables ailleurs. Le prix s'en ressent, mais vu les circonstances je ne pense pas qu'il ait le choix...",
+				"maudit4": "D'après les dernières rumeurs, la boutique apparaîtrait aux Ruines Ashpouk à ceux qui sont maudits...",
+				"sphere": "Alors comme ça il veut sa récompense ?!? ..... C'est vrai qu'il a fait preuve d'une certaine persévérance dans sa formation aux cinq éléments... une persévérance proche de la stupidité, mais bon pourquoi pas...",
+				"sphere2": "En tant que professeur, j'espère au moins qu'il aura appris quelque chose pendant ce temps, et qu'il sera reconnaissant envers les gens qui ont gaspillé leur temps en essayant de lui faire rentrer des évidences dans le crâne, et tout particulièrement envers moi !",
+				"sphere3": "Ah ! Au moins, il est poli ! C'est une qualité qui se perd ces temps-ci... Pour la peine, je vais lui offrir une belle récompense. Sait-il au moins ce qu'est une Sphère Elémentaire ?",
+				"sphere4": ".... C'est malheureusement bien ce que je pensais.... Je me demande parfois pourquoi je dois tout le temps expliquer la même chose.... Enfin bref, une Sphère Elémentaire est un objet magique chargé de la puissance d'un élément.",
+				"sphere5": "Il existe donc cinq types de sphères, une pour chaque élément. Quand un Dinoz en absorbe une, il apprend directement une nouvelle compétence liée à cet élément... C'est donc un objet assez puissant...",
+				"sphere6": "Mais ce n'est pas tout ! En cumulant plusieurs Sphères du même élément, le Dinoz peut apprendre des compétences encore plus puissantes ! Il y a ainsi trois niveaux sphériques par élément, soit en tout quinze compétences sphériques... A-t-il bien tout compris ce que je viens de lui dire ?",
+				"sphere7": "Bien ! S'il a tout compris, je lui confie une de mes Sphères ! Attention, comme mon coffre-à-sphères n'est pas très bien rangé, je ne sais jamais sur laquelle je vais tomber...",
+				"end": "Qu'il réfléchisse bien avant d'utiliser sa Sphère, car elle est très précieuse. De nombreux Maîtres-Dinoz seraient d'ailleurs prêts à donner une petite fortune pour en obtenir une, ce qui fait qu'on en trouve parfois en vente à la Place du Marché !"
+			},
+			"choice": {
+				"talk": "Parler au Maître Elémentaire",
+				"ask": "J'aimerais progresser !",
+				"ask2": "And that's it?",
+				"mission": "Liste des Missions",
+				"maudit": "Malédiction ?",
+				"sphere": "Récompense...",
+				"dot": "...",
+				"sphere3": "Merci",
+				"sphere4": "Une quoi ?",
+				"again": "Répéter",
+				"understand": "J'ai bien compris",
+				"end": "That's great news!"
 			}
 		},
 		"merguez": {
@@ -3976,7 +4043,9 @@
 			"useItem": "{nameKey}",
 			"useMoney": "{nameKey}",
 			"fightAction": "{nameKey}",
+			"useIngredient": "{nameKey}",
 			"wait": "Attendre",
+			"lock": "{nameKey}",
 			"validate": "Retourner voir {nameKey} pour valider la mission"
 		},
 		"validate": "Valider la mission",
@@ -4928,6 +4997,7 @@
 				"name": "Les retrouvaillages",
 				"begin": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !",
 				"merguezSeller": "Ooooohh !! Il s'agit donc des fameuses crevettes au Napalm ?!? Voyons voir.... uhmm.... cela manque un peu de graisse mais c'est succulent. Nul doute que Mouldeur devrait bientôt se montrer... Mais regarde qui voilà !",
+				"lock": "Discuter avec Mouldeur",
 				"end": "OOooooooh ! oh ! oh oh oh ! Mouldeur est revenu !!! Merci beaucoup !!"
 			}
 		},
@@ -5016,7 +5086,7 @@
 					"win": "Après votre victoire commune, il semblerait que les trois délinquants veuillent discuter avec vous..."
 				},
 				"jeanH1": {
-					"name": "John Hubert",
+					"name": "Jean-Hubert",
 					"text": "Yo mec ! Je comprends que tu kiff trop pas ce qu'on fait ici, mais c'est trop kool, alors abuse pas mec !"
 				},
 				"charlesE": {
@@ -5044,7 +5114,7 @@
 					"text": "Votre Dinoz aide Jean-Hubert, Charles-Edouard et Louis-Stanislas à ranger la grande bibliothèque de l'Université..."
 				},
 				"jeanH2": {
-					"name": "John Hubert",
+					"name": "Jean-Hubert",
 					"text": "Trop kool mec ! Nous on retourne aux Iles, car c'est trop kool ! Mais promis on déconnera plus ! Tchaw !!"
 				},
 				"end": "La loi est la loi, et toute infraction mérite sanction."
@@ -5109,6 +5179,160 @@
 				},
 				"end": "Super, des pigeons ! Je vais m'arranger pour qu'ils témoignent contre Don Fuego. Cela tombe bien, il commencait justement à devenir beaucoup trop riche, et il était trop populaire à la Cour pour qu'on se débarrasse de lui par les moyens classiques... Merci pour le coup de main !"
 			}
+		},
+		"elMaster": {
+			"elma": {
+				"name": "Les Courses du Maître",
+				"begin": "Il n'a qu'à commencer par aller me faire mes courses déjà, ça lui fera les pieds... Il me faut de l'eau, des braises, du poisson, du pain et des champignons frais !",
+				"water": {
+					"name": "Puiser de l'Eau",
+					"text": "Vous avez obtenu de l'eau pour le Maître Elémentaire"
+				},
+				"ember": {
+					"name": "Ramasser les Braises Chaudes",
+					"text": "Vous avez obtenu des braises encore chaudes pour le Maître Elémentaire"
+				},
+				"fish": {
+					"name": "Acheter un Poisson",
+					"text": "Vous avez obtenu un poisson plutôt frais pour le Maître Elémentaire. Il ne manque plus que le pain et les champignons..."
+				},
+				"bread": {
+					"name": "Acheter du Pain",
+					"text": "Vous avez obtenu du bon pain chaud pour le Maître Elémentaire"
+				},
+				"kill": "Goupignons",
+				"smashroom": {
+					"name": "Ramasser les Morceaux",
+					"text": "Vous avez ramassé les morceaux des Goupignons que vous avez vaincu, miam ! La liste des courses du Maître Elémentaire est enfin complète..."
+				},
+				"end": "Il a bien tout rapporté, c'est déjà ça..."
+			},
+			"elmalightning": {
+				"name": "Leçon 1 - la Foudre",
+				"begin": "Vu qu'il persévère, nous allons essayer de lui enseigner la compréhension de l'élément le plus simple à capter : la Foudre. Mais vu son niveau, il va falloir qu'il retourne étudier les bases à l'Université d'abord...",
+				"study": {
+					"name": "Etudier la Foudre",
+					"text": "La Foudre est l'élément le plus simple à capter, mais il est assez complexe à conserver. Seuls les Dinoz formés à la compétence Paratonnerre peuvent y parvenir..."
+				},
+				"study2": {
+					"text": "La plupart des livres sur le sujet ont été écrits par le Maître Elémentaire ! Pour comprendre la Foudre, son conseil aux étudiants semble être de se rendre au sommet du Grand Tout-Chaud un jour d'orage, de l'expérimenter directement... et d'y survivre..."
+				},
+				"experiment": {
+					"name": "Expérimenter la Foudre",
+					"win": "Vous avez survécu à la Foudre. D'après le livre du Maître Elémentaire, vous comprenez un peu plus comment elle marche..."
+				},
+				"elmaTalk": "Seconde partie : il va aller tuer 3 Anguilloz du Marais pour étudier la façon dont leur peau génère de l'électricité !",
+				"eeloz": {
+					"name": "Etudier les Peaux d'Anguilloz",
+					"text": "Le Maître avait raison ! En observant bien les peaux d'Anguilloz, vous y trouvez des centaines de « Minilec » : ces petits insectes produisent de la Foudre naturellement ! Vos connaissances de cet élément sont désormais meilleures..."
+				},
+				"end": "Tiens le revoilà ! Bon, c'est pas du travail très propre, mais on va peut-être arriver à faire quelque chose de lui..."
+			},
+			"elmafire": {
+				"name": "Leçon 2 - le Feu",
+				"begin": "Le Feu... un élément qui a toujours fasciné les hommes ! Alors que finalement, c'est l'un des plus simples, pas très complexe à comprendre...",
+				"elmaTalk1": "Nous sommes au parfait endroit pour apprendre le Feu. Déjà il va commencer par aller tuer le Vénérable, on discutera de l'élément ensuite...",
+				"venerable": {
+					"name": "Tuer le Venerable",
+					"text": "Alors que vous vous apprètiez à attaquer, certain d'y laisser la peau de votre Dinoz, vous recevez un message du Maître Elémentaire vous demandant de rentrer."
+				},
+				"elmaTalk2": "Alors si on lui disait d'aller sauter d'une falaise, il le ferait ? Quelle stupidité ! Il aura au moins appris à ne pas jouer avec le Feu ! En parlant de cela... Je pense qu'un bon entrainement consisterait à préparer une compote de Flammèches...",
+				"killflam": "Flammèches",
+				"elmaTalk3": "Les Flammèches sont la personnification de l'élément Feu. Paradoxalement, elles se nourissent d'Air et ont la capacité de se diviser en plusieurs Flammèches indépendantes. Quand on ne le connait pas, le Feu peut faire de gros dégats en combat. Mais si l'on apprend à le manier, il devient inoffensif. Comme les Flammèches...",
+				"elmaTalk4": "Bon, il ne faut pas qu'il se fasse d'illusion : les Flammèches n'étaient qu'un petit échauffement. Il va maintenant commencer les vrais exercices... Je ne pense pas qu'il puisse faire des étincelles, mais bon, puisqu'il cherche la mort à tout prix...",
+				"elmaTalk5": "Pour la suite, il faut qu'il aille voir les Frères Pignuit des Ruines Ashpouk. Il y a quelques années, ils m'ont emprunté mon Super-Poivron-d'Invincibilité, et refusent toujours de me le rendre... Qu'il les écrase donc et me ramène au plus vite mon Poivron !",
+				"pignfight": {
+					"name": "Combattre les Frères Pignuit",
+					"begin": "Les Frères Pignuit sont des jumeaux Pigmous, particulièrement doués dans leur maîtrise du Feu...",
+					"win": "Vous avez vaincu les Frères Pignuit ! Leur caverne vous est grande-ouverte..."
+				},
+				"search": {
+					"name": "Fouiller la Caverne",
+					"text": "Après quelques recherches, vous trouvez un étrange Poivron, comme vous n'en avez jamais vu... Il brille dans le noir et semble posséder un étrange pouvoir magique..."
+				},
+				"end": "Ah ! Il a rapporté mon cher Super-Poivron-d'Invincibilité ! Je vais enfin pouvoir préparer ma Super-Piperade !"
+			},
+			"elmawood": {
+				"name": "Leçon 3 - le Bois",
+				"begin": "L'élément Bois. Sûrement l'un des éléments les plus sous-estimés, et pourtant quelle puissance...",
+				"elmaTalk1": "Tiens, le Bois me rappelle quelque chose... Il y a bien longtemps, je me suis rendu sur l'Ile Secrète des Monstres. D'étranges créatures nommées les Végétox y pullulent. Ils sont mi-insectes, mi-végétaux, et maîtrisent particulièrement bien le Bois ! Peut-être qu'un jour il pourra lui aussi s'y rendre... Mais j'en oubliais mes instructions !",
+				"elmaTalk2": "Bref ! Pour apprendre le Bois, il faudrait qu'il se rende dans la Forêt de Grumhel, mais c'est un peu loin donc il va faire avec ce qu'on a sous la main...",
+				"elmaTalk3": "J'ai entendu dire justement qu'un mystérieux groupe se faisant appeler les Korgons Vengeurs ont réussi à s'introduire au Grand-Tout-Chaud en passant par le Tunnel sous la Branche. Il devrait aller voir là-bas ce qu'il se passe et me tenir informé, car je n'ai vraiment aucune envie d'y aller moi-même...",
+				"find": {
+					"name": "Se Renseigner",
+					"text": "Un groupe de cinq Korgons Vengeurs a été vu sortant du Tunnel. Ils se sont dirigés vers Fosselave."
+				},
+				"elmaTalk4": "Qu'est-ce qu'il dit ?? Bien entendu que je sais qu'ils sont passés ici ! Ces saletés de Korgons m'ont volé ma Baguette de Bois-Maudit. Je ne sais pas ce qu'ils comptent en faire, mais il faut à tout prix que je la récupère au plus vite ! Qu'il s'occupe d'eux, ils se sont enfuis vers le Sud !",
+				"fight1": {
+					"name": "Combattre les Korgons Vengeurs",
+					"begin": "Alors que vous vous approchez, les cinq Korgons vengeurs se séparent en deux groupes : deux s'enfuient et trois restent sur place pour combattre...",
+					"win": "Où a bien pu s'enfuir le reste du Groupe..."
+				},
+				"korven": {
+					"name": "Korgons Vengeurs",
+					"text": "Un habitant de l'Ile vous assure avoir aperçu les deux Korgons Vengeurs restants. Ils semblaient fuir à toute vitesse en direction de l'Ouest, et transportaient une étrange Baguette de bois..."
+				},
+				"fight2": {
+					"name": "Combattre les Korgons Vengeurs",
+					"begin": "Vous avez enfin rattrapé le chef des Korgons-Vengeurs : le Korgon Masqué !",
+					"win": "Vous avez vaincu les Korgons-Vengeurs !!!"
+				},
+				"wand": {
+					"name": "Ramasser la Baguette Magique",
+					"text": "Cette étrange Baguette semble resceller des pouvoirs qui dépassent le commun des mortels... Il vaudrait mieux la ramener au plus vite à son propriétaire avant qu'elle ne fasse plus de victimes !"
+				},
+				"end": "Ah ! Ma Baguette ! Il a bien travaillé ! Saleté de Korgons ! S'il a des problèmes d'effets secondaires, qu'il vienne donc me voir plus tard..."
+			},
+			"elmaair": {
+				"name": "Leçon 4 - l'Air",
+				"begin": "Quand quelque chose disparaît, l'Air prend sa place. Avec cet élément, tout est une question de densité !",
+				"elmaTalk1": "L'élément Air est plutôt mal connu à Dinoville, car la proximité du Grand Tout-Chaud et des Iles Atlantéinées favorise l'étude des éléments Feu et Eau. Il a fallu que j'aille jusqu'à Caushemesh où ils l'ont parfaitement maîtrisé pour pouvoir compléter mes études sur le sujet...",
+				"elmaTalk2": "Mais plutôt que de lui demander d'aller si loin, ce qu'il serait certainement incapable de faire, je préfère lui demander un petit service... qu'il aille donc me ramener ces parchemins qui ont été trouvés dans les récents travaux d'aménagement de Dinoplaza, j'aimerais les étudier de façon plus précise...",
+				"scrolls": {
+					"name": "Récupérer les Parchemins",
+					"text": "On vous explique que ces parchemins ont été trouvés lors de récentes fouilles, mais seul un maître serait capable de les décrypter..."
+				},
+				"fight1": {
+					"name": "Donner les Parchemins",
+					"begin": "Alors que vous alliez apporter les parchemins chez le Maître Elémentaire, vous tombez dans une embuscade !",
+					"win": "Il semblerait que dans la confusion du combat, quelqu'un en ait profité pour vous voler les précieux parchemins !"
+				},
+				"elmaTalk3": "Quoi ?!? Il s'est fait voler ce que je lui avais demandé de ramener ?!? Quelle incompétence !! Il ne sait même pas à quel point ces parchemins sont précieux ! Qu'il me les rapporte au plus vite ! Les voleurs n'ont pas pu aller bien loin...",
+				"fight2": {
+					"name": "Voleurs de Parchemins",
+					"begin": "Vous trouvez un des complices des voleurs des Parchemins...",
+					"win": "Vous avez récupéré une page des Parchemins... Où peuvent bien se trouver les autres ?!?"
+				},
+				"fight3": {
+					"name": "Voleurs de Parchemins",
+					"begin": "Vous trouvez le cerveau des voleurs des Parchemins...",
+					"win": "Ce voleur possédait deux pages des Parchemins. Vous avez trois pages sur quatre, et la dernière a disparu, peut-être cela sera-t-il suffisant pour le Maître ?"
+				},
+				"elmaTalk4": "Qu'il me laisse quelques instants pour étudier ces parchemins...",
+				"elmaTalk5": "........ Bien, j'ai terminé. C'est une incroyable découverte : ces documents parlent de l'Ile du Dragon. D'après les légendes de plusieurs pays, ce serait une île munie de grandes ailes et qui serait capable de se déplacer !",
+				"elmaTalk6": "Si ces parchemins sont authentiques, cela voudrait dire que l'Ile du Dragon existerait vraiment... Mais c'est étrange, les explications sur la façon d'y accéder s'arrêtent brusquement, comme s'il manquait une page...",
+				"elmaTalk7": "Nous n'en saurons sans doûte pas plus tant que de nouvelles preuves n'auront pas été découvertes.... C'est bien dommage, j'aurais beaucoup aimé explorer cette nouvelle île !",
+				"elmaTalk8": "Mais revenons à notre leçon sur l'élement Air.... Nous perdons du temps, avec toutes ces histoires ! Qu'il me ramène donc 2 Energies d'Air au plus vite !",
+				"giveAirEnergy1": "Donner 2 énergie air",
+				"elmaTalk9": "Quoi ? C'est tout ? Je lui avais pourtant bien dit d'aller me chercher 5 Energies d'Air ! Aller, encore trois !!",
+				"giveAirEnergy2": "Donner 3 énergie air et Valider la Mission",
+				"end": "Bien bien bien, il y arrive quand il veut, mais c'est dommage qu'il faille tout le temps répéter !"
+			},
+			"elmawater": {
+				"name": "Leçon 5 - l'Eau",
+				"begin": "Notre dernière Leçon va s'appliquer à l'élément Eau...",
+				"elmaTalk1": "Je garde toujours l'élément Eau pour la fin... En fait, je ne l'aime pas du tout : c'est froid et mouillé ! C'est pour cette raison d'ailleurs que je me suis installé au Grand-Tout-Chaud...",
+				"elmaTalk2": "Bien que je maîtrise parfaitement l'élément Eau, je n'ai donc aucune envie de le lui enseigner. Qu'il aille donc voir Bao de ma part pour faire son apprentissage !",
+				"baoTalk1": "Mmmm.... voilà donc l'éleve dont le Maître Elémentaire m'a parlé ? Tu tombes plutôt bien, j'ai récemment eu quelques problèmes de fuites avec le Portail dont j'ai la garde, et des monstres qui ne devraient pas se trouver dans ce monde se sont dispersés dans les Iles... Pourrais-tu faire le ménage ?",
+				"killpirao2": "Pirhan-os",
+				"baoTalk2": "Merci pour ton aide, je peux difficilement me déplacer quand le Portail est faible, et il vaut mieux de toute façon que je reste ici au cas où une créature bien plus puissante essaierait de venir dans ce monde...",
+				"baoTalk3": "Mais j'en ai peut-être déjà trop dit... Mmmmm... Si nous parlions plutôt de l'élément Eau ?",
+				"baoTalk4": "L'Eau est particulièrement présente dans les Iles Atlantéeinées, et c'est un élément trés puissant contre la Foudre. Savais-tu d'ailleurs qu'au delà de la Forêt de Grumhel s'étendent les Steppes Magnétiques où la Foudre est l'élément principal ?",
+				"baoTalk5": "Mmm.... L'Eau possède bien des pouvoirs. L'un des plus recherché permet d'immobiliser presque totalement un adversaire. On ne peut apprendre cette compétence de façon normale, mais peut-être un jour un de tes Dinoz pourra la maîtriser ?",
+				"baoTalk6": "Mmm.... C'est à peu près tout ce que j'avais à te dire sur l'Eau. Je vais faire savoir au Maître Elémentaire que tu as fini ta formation...",
+				"elmaTalk3": "Alors, comment va ce vieux Bao ? Je n'ai eu que peu d'occasions de le voir depuis qu'il a été assigné à la garde du Portail par Mandragore... Mais bon, apparemment, la formation est terminée...",
+				"end": "La dernière leçon se termine, qu'il vienne donc me parler pour sa récompense finale..."
+			}
 		}
 	},
 	"scenarios": {
@@ -5123,7 +5347,10 @@
 			}
 		},
 		"merguez": {
-			"name": "Le Mystère de la Merguez"
+			"name": "L'overdose de Merguez"
+		},
+		"pac": {
+			"name": "Le Parchemin des Aptitudes"
 		}
 	}
 }

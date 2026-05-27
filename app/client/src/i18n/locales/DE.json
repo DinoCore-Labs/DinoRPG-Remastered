@@ -20,7 +20,8 @@
 			"shop": "Boutique",
 			"dojo": "Dojo",
 			"order": "Anordnen",
-			"enclosure": "Gehege"
+			"enclosure": "Gehege",
+			"skills": "Compétences"
 		},
 		"authMenu": {
 			"name": "Benutzername:",
@@ -200,6 +201,7 @@
 		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
 		"manageDinoz": "DinoRPG [ Dinoz verwalten ]",
 		"market": "DinoRPG [ Marché des Éleveurs ]",
+		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
 		"admin": "DinoRPG [ Administrationsseite ]"
 	},
 	"adminPage": {
@@ -324,7 +326,8 @@
 		"search": "Suche",
 		"loading": "Wird geladen...",
 		"noResults": "Keine Ergebnisse",
-		"sortDinoz": "Meine Dinoz verwalten"
+		"sortDinoz": "Meine Dinoz verwalten",
+		"skills": "Compétences"
 	},
 	"popup": {
 		"confirm": "Diese Aktion bestätigen?",
@@ -618,7 +621,18 @@
 			"dinoz": "Mes Dinoz",
 			"friends": "Mes Amis"
 		},
-		"level": "Niveau"
+		"level": "Niveau",
+		"dinozFilters": {
+			"race": "Race :",
+			"level": "Niveau :",
+			"state": "État :",
+			"allRaces": "Toutes les races",
+			"allLevels": "Tous les niveaux",
+			"allStates": "Tous les états",
+			"active": "Actifs",
+			"frozen": "Congelés",
+			"empty": "Aucun Dinoz ne correspond aux filtres."
+		}
 	},
 	"userCard": {
 		"title": "Aller sur le profil DinoRPG de {user}"
@@ -1032,7 +1046,9 @@
 			"Capture": "Capture",
 			"Venerable": "Vénérable",
 			"Renforts": "Renforts",
-			"Resistance": "Résistance"
+			"Resistance": "Résistance",
+			"ElementalDisciple": "Disciple élémentaire",
+			"CursedWand": "Baguette Maudite"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les **assauts** de Feu de 7",
@@ -2695,7 +2711,15 @@
 			"gang2": "Charles-Edouard",
 			"gang3": "Louis-Stanislas",
 			"suspc": "Suspect",
-			"suspc1": "Suspect Numéro 1"
+			"suspc1": "Suspect Numéro 1",
+			"elhelp": "Elève-Elémentaire",
+			"pign1": "Fiodor Pignight",
+			"pign2": "Dimitri Pignight",
+			"korven": "Korgon Vengeur",
+			"kvenbs": "Korgon Masqué",
+			"megoup": "Mégapignon Sombre",
+			"darkg2": "Goupignon Sombre",
+			"pirao2": "Pirhan-os"
 		},
 		"status": {
 			"asleep": "endormi",
@@ -3145,6 +3169,12 @@
 			"needMemberCard": "Votre Dinoz doit posséder une Carte de Membre pour accéder au Centre d'Entraînement.",
 			"notEnoughGold": "Vous n'avez pas assez d'or pour choisir ce programme."
 		}
+	},
+	"skillTrees": {
+		"title": "Arbres de compétences",
+		"description": "Retrouve ici toutes les compétences découvertes par tes Dinoz.",
+		"empty": "Aucune compétence découverte pour le moment.",
+		"level": "Niveau {level}"
 	},
 	"npc": {
 		"description": "Vous pouvez discuter avec cette personne.",
@@ -3818,6 +3848,43 @@
 				"no": "(ouille)"
 			}
 		},
+		"elMaster": {
+			"name": "Maître Elémentaire",
+			"dialog": {
+				"begin": "Vous avez entendu parler du Maître Elémentaire lors de vos études de Maître Dinoz. Il s'agit d'un Maître très respecté, expert dans la compréhension et la manipulation des éléments. De nombreux jeunes Maîtres Dinoz recherchent ses conseils pour pouvoir progresser, mais il est connu pour être plutôt sec et ne se laisse pas facilement approcher...",
+				"talk": "Uh ? Tiens, voilà encore un emmmm...aître qui vient me faire ch...auffer pour que je l'aide. Je commence en a avoir ras-le-c...ortex de ces histoires... Enfin bref... qu'est-ce qu'il veut ?",
+				"ask": "Ben voyons.... Ca veut progresser, mais sans pour autant travailler. Ca veut faire des miracles, sans lever le petit doigt. S'il veut mon conseil, le voilà : bouge-toi-le-c...iboulot !!!",
+				"ask2": ".... et en plus ça insiste... Voyons voir... S'il veut vraiment apprendre quelque chose, il va falloir qu'il rende bien service d'abord. Ensuite on verra s'il est digne de nos conseils !",
+				"talk2": "Bon, alors, il avance comment dans son apprentissage de la vie ? J'ai bien peur qu'on ne puisse pas faire grand chose de lui...",
+				"talk3": "La formation est terminée... Je ne suis pas du genre à faire des compliments, mais la plupart des Dinoz n'arrivent pas au bout, donc... c'est pas mal.",
+				"maudit": "Quoi ? Une malédiction ? Ne me dit pas qu'il a encore été se frotter à ma Baguette de Bois-Maudit ???? Je lui avais pourtant dit de ne surtout pas y toucher !!",
+				"maudit2": "Et bien entendu, maintenant qu'il a fait sa con.... bétise, il veut que je l'aide ! Comme si je n'avais que ça à faire ! Enfin bon... ce qui est fait est fait... Pour lever la malédiction, il faut utiliser un Onguent du Démon. Le seul problème, c'est que la dernière boutique qui en vendait a fait faillite...",
+				"maudit3": "Cependant, j'ai entendu dire qu'une boutique cachée existait, et qu'elle vendait des objets quasi-introuvables ailleurs. Le prix s'en ressent, mais vu les circonstances je ne pense pas qu'il ait le choix...",
+				"maudit4": "D'après les dernières rumeurs, la boutique apparaîtrait aux Ruines Ashpouk à ceux qui sont maudits...",
+				"sphere": "Alors comme ça il veut sa récompense ?!? ..... C'est vrai qu'il a fait preuve d'une certaine persévérance dans sa formation aux cinq éléments... une persévérance proche de la stupidité, mais bon pourquoi pas...",
+				"sphere2": "En tant que professeur, j'espère au moins qu'il aura appris quelque chose pendant ce temps, et qu'il sera reconnaissant envers les gens qui ont gaspillé leur temps en essayant de lui faire rentrer des évidences dans le crâne, et tout particulièrement envers moi !",
+				"sphere3": "Ah ! Au moins, il est poli ! C'est une qualité qui se perd ces temps-ci... Pour la peine, je vais lui offrir une belle récompense. Sait-il au moins ce qu'est une Sphère Elémentaire ?",
+				"sphere4": ".... C'est malheureusement bien ce que je pensais.... Je me demande parfois pourquoi je dois tout le temps expliquer la même chose.... Enfin bref, une Sphère Elémentaire est un objet magique chargé de la puissance d'un élément.",
+				"sphere5": "Il existe donc cinq types de sphères, une pour chaque élément. Quand un Dinoz en absorbe une, il apprend directement une nouvelle compétence liée à cet élément... C'est donc un objet assez puissant...",
+				"sphere6": "Mais ce n'est pas tout ! En cumulant plusieurs Sphères du même élément, le Dinoz peut apprendre des compétences encore plus puissantes ! Il y a ainsi trois niveaux sphériques par élément, soit en tout quinze compétences sphériques... A-t-il bien tout compris ce que je viens de lui dire ?",
+				"sphere7": "Bien ! S'il a tout compris, je lui confie une de mes Sphères ! Attention, comme mon coffre-à-sphères n'est pas très bien rangé, je ne sais jamais sur laquelle je vais tomber...",
+				"end": "Qu'il réfléchisse bien avant d'utiliser sa Sphère, car elle est très précieuse. De nombreux Maîtres-Dinoz seraient d'ailleurs prêts à donner une petite fortune pour en obtenir une, ce qui fait qu'on en trouve parfois en vente à la Place du Marché !"
+			},
+			"choice": {
+				"talk": "Parler au Maître Elémentaire",
+				"ask": "J'aimerais progresser !",
+				"ask2": "Et c'est tout ?",
+				"mission": "Liste des Missions",
+				"maudit": "Malédiction ?",
+				"sphere": "Récompense...",
+				"dot": "...",
+				"sphere3": "Merci",
+				"sphere4": "Une quoi ?",
+				"again": "Répéter",
+				"understand": "J'ai bien compris",
+				"end": "Super !"
+			}
+		},
 		"merguez": {
 			"name": "Vendeur de Merguez",
 			"dialog": {
@@ -3976,7 +4043,9 @@
 			"useItem": "{nameKey}",
 			"useMoney": "{nameKey}",
 			"fightAction": "{nameKey}",
+			"useIngredient": "{nameKey}",
 			"wait": "Attendre",
+			"lock": "{nameKey}",
 			"validate": "Retourner voir {nameKey} pour valider la mission"
 		},
 		"validate": "Valider la mission",
@@ -4928,6 +4997,7 @@
 				"name": "Les retrouvaillages",
 				"begin": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !",
 				"merguezSeller": "Ooooohh !! Il s'agit donc des fameuses crevettes au Napalm ?!? Voyons voir.... uhmm.... cela manque un peu de graisse mais c'est succulent. Nul doute que Mouldeur devrait bientôt se montrer... Mais regarde qui voilà !",
+				"lock": "Discuter avec Mouldeur",
 				"end": "OOooooooh ! oh ! oh oh oh ! Mouldeur est revenu !!! Merci beaucoup !!"
 			}
 		},
@@ -5109,6 +5179,160 @@
 				},
 				"end": "Super, des pigeons ! Je vais m'arranger pour qu'ils témoignent contre Don Fuego. Cela tombe bien, il commencait justement à devenir beaucoup trop riche, et il était trop populaire à la Cour pour qu'on se débarrasse de lui par les moyens classiques... Merci pour le coup de main !"
 			}
+		},
+		"elMaster": {
+			"elma": {
+				"name": "Les Courses du Maître",
+				"begin": "Il n'a qu'à commencer par aller me faire mes courses déjà, ça lui fera les pieds... Il me faut de l'eau, des braises, du poisson, du pain et des champignons frais !",
+				"water": {
+					"name": "Puiser de l'Eau",
+					"text": "Vous avez obtenu de l'eau pour le Maître Elémentaire"
+				},
+				"ember": {
+					"name": "Ramasser les Braises Chaudes",
+					"text": "Vous avez obtenu des braises encore chaudes pour le Maître Elémentaire"
+				},
+				"fish": {
+					"name": "Acheter un Poisson",
+					"text": "Vous avez obtenu un poisson plutôt frais pour le Maître Elémentaire. Il ne manque plus que le pain et les champignons..."
+				},
+				"bread": {
+					"name": "Acheter du Pain",
+					"text": "Vous avez obtenu du bon pain chaud pour le Maître Elémentaire"
+				},
+				"kill": "Goupignons",
+				"smashroom": {
+					"name": "Ramasser les Morceaux",
+					"text": "Vous avez ramassé les morceaux des Goupignons que vous avez vaincu, miam ! La liste des courses du Maître Elémentaire est enfin complète..."
+				},
+				"end": "Il a bien tout rapporté, c'est déjà ça..."
+			},
+			"elmalightning": {
+				"name": "Leçon 1 - la Foudre",
+				"begin": "Vu qu'il persévère, nous allons essayer de lui enseigner la compréhension de l'élément le plus simple à capter : la Foudre. Mais vu son niveau, il va falloir qu'il retourne étudier les bases à l'Université d'abord...",
+				"study": {
+					"name": "Etudier la Foudre",
+					"text": "La Foudre est l'élément le plus simple à capter, mais il est assez complexe à conserver. Seuls les Dinoz formés à la compétence Paratonnerre peuvent y parvenir..."
+				},
+				"study2": {
+					"text": "La plupart des livres sur le sujet ont été écrits par le Maître Elémentaire ! Pour comprendre la Foudre, son conseil aux étudiants semble être de se rendre au sommet du Grand Tout-Chaud un jour d'orage, de l'expérimenter directement... et d'y survivre..."
+				},
+				"experiment": {
+					"name": "Expérimenter la Foudre",
+					"win": "Vous avez survécu à la Foudre. D'après le livre du Maître Elémentaire, vous comprenez un peu plus comment elle marche..."
+				},
+				"elmaTalk": "Seconde partie : il va aller tuer 3 Anguilloz du Marais pour étudier la façon dont leur peau génère de l'électricité !",
+				"eeloz": {
+					"name": "Etudier les Peaux d'Anguilloz",
+					"text": "Le Maître avait raison ! En observant bien les peaux d'Anguilloz, vous y trouvez des centaines de « Minilec » : ces petits insectes produisent de la Foudre naturellement ! Vos connaissances de cet élément sont désormais meilleures..."
+				},
+				"end": "Tiens le revoilà ! Bon, c'est pas du travail très propre, mais on va peut-être arriver à faire quelque chose de lui..."
+			},
+			"elmafire": {
+				"name": "Leçon 2 - le Feu",
+				"begin": "Le Feu... un élément qui a toujours fasciné les hommes ! Alors que finalement, c'est l'un des plus simples, pas très complexe à comprendre...",
+				"elmaTalk1": "Nous sommes au parfait endroit pour apprendre le Feu. Déjà il va commencer par aller tuer le Vénérable, on discutera de l'élément ensuite...",
+				"venerable": {
+					"name": "Tuer le Venerable",
+					"text": "Alors que vous vous apprètiez à attaquer, certain d'y laisser la peau de votre Dinoz, vous recevez un message du Maître Elémentaire vous demandant de rentrer."
+				},
+				"elmaTalk2": "Alors si on lui disait d'aller sauter d'une falaise, il le ferait ? Quelle stupidité ! Il aura au moins appris à ne pas jouer avec le Feu ! En parlant de cela... Je pense qu'un bon entrainement consisterait à préparer une compote de Flammèches...",
+				"killflam": "Flammèches",
+				"elmaTalk3": "Les Flammèches sont la personnification de l'élément Feu. Paradoxalement, elles se nourissent d'Air et ont la capacité de se diviser en plusieurs Flammèches indépendantes. Quand on ne le connait pas, le Feu peut faire de gros dégats en combat. Mais si l'on apprend à le manier, il devient inoffensif. Comme les Flammèches...",
+				"elmaTalk4": "Bon, il ne faut pas qu'il se fasse d'illusion : les Flammèches n'étaient qu'un petit échauffement. Il va maintenant commencer les vrais exercices... Je ne pense pas qu'il puisse faire des étincelles, mais bon, puisqu'il cherche la mort à tout prix...",
+				"elmaTalk5": "Pour la suite, il faut qu'il aille voir les Frères Pignuit des Ruines Ashpouk. Il y a quelques années, ils m'ont emprunté mon Super-Poivron-d'Invincibilité, et refusent toujours de me le rendre... Qu'il les écrase donc et me ramène au plus vite mon Poivron !",
+				"pignfight": {
+					"name": "Combattre les Frères Pignuit",
+					"begin": "Les Frères Pignuit sont des jumeaux Pigmous, particulièrement doués dans leur maîtrise du Feu...",
+					"win": "Vous avez vaincu les Frères Pignuit ! Leur caverne vous est grande-ouverte..."
+				},
+				"search": {
+					"name": "Fouiller la Caverne",
+					"text": "Après quelques recherches, vous trouvez un étrange Poivron, comme vous n'en avez jamais vu... Il brille dans le noir et semble posséder un étrange pouvoir magique..."
+				},
+				"end": "Ah ! Il a rapporté mon cher Super-Poivron-d'Invincibilité ! Je vais enfin pouvoir préparer ma Super-Piperade !"
+			},
+			"elmawood": {
+				"name": "Leçon 3 - le Bois",
+				"begin": "L'élément Bois. Sûrement l'un des éléments les plus sous-estimés, et pourtant quelle puissance...",
+				"elmaTalk1": "Tiens, le Bois me rappelle quelque chose... Il y a bien longtemps, je me suis rendu sur l'Ile Secrète des Monstres. D'étranges créatures nommées les Végétox y pullulent. Ils sont mi-insectes, mi-végétaux, et maîtrisent particulièrement bien le Bois ! Peut-être qu'un jour il pourra lui aussi s'y rendre... Mais j'en oubliais mes instructions !",
+				"elmaTalk2": "Bref ! Pour apprendre le Bois, il faudrait qu'il se rende dans la Forêt de Grumhel, mais c'est un peu loin donc il va faire avec ce qu'on a sous la main...",
+				"elmaTalk3": "J'ai entendu dire justement qu'un mystérieux groupe se faisant appeler les Korgons Vengeurs ont réussi à s'introduire au Grand-Tout-Chaud en passant par le Tunnel sous la Branche. Il devrait aller voir là-bas ce qu'il se passe et me tenir informé, car je n'ai vraiment aucune envie d'y aller moi-même...",
+				"find": {
+					"name": "Se Renseigner",
+					"text": "Un groupe de cinq Korgons Vengeurs a été vu sortant du Tunnel. Ils se sont dirigés vers Fosselave."
+				},
+				"elmaTalk4": "Qu'est-ce qu'il dit ?? Bien entendu que je sais qu'ils sont passés ici ! Ces saletés de Korgons m'ont volé ma Baguette de Bois-Maudit. Je ne sais pas ce qu'ils comptent en faire, mais il faut à tout prix que je la récupère au plus vite ! Qu'il s'occupe d'eux, ils se sont enfuis vers le Sud !",
+				"fight1": {
+					"name": "Combattre les Korgons Vengeurs",
+					"begin": "Alors que vous vous approchez, les cinq Korgons vengeurs se séparent en deux groupes : deux s'enfuient et trois restent sur place pour combattre...",
+					"win": "Où a bien pu s'enfuir le reste du Groupe..."
+				},
+				"korven": {
+					"name": "Korgons Vengeurs",
+					"text": "Un habitant de l'Ile vous assure avoir aperçu les deux Korgons Vengeurs restants. Ils semblaient fuir à toute vitesse en direction de l'Ouest, et transportaient une étrange Baguette de bois..."
+				},
+				"fight2": {
+					"name": "Combattre les Korgons Vengeurs",
+					"begin": "Vous avez enfin rattrapé le chef des Korgons-Vengeurs : le Korgon Masqué !",
+					"win": "Vous avez vaincu les Korgons-Vengeurs !!!"
+				},
+				"wand": {
+					"name": "Ramasser la Baguette Magique",
+					"text": "Cette étrange Baguette semble resceller des pouvoirs qui dépassent le commun des mortels... Il vaudrait mieux la ramener au plus vite à son propriétaire avant qu'elle ne fasse plus de victimes !"
+				},
+				"end": "Ah ! Ma Baguette ! Il a bien travaillé ! Saleté de Korgons ! S'il a des problèmes d'effets secondaires, qu'il vienne donc me voir plus tard..."
+			},
+			"elmaair": {
+				"name": "Leçon 4 - l'Air",
+				"begin": "Quand quelque chose disparaît, l'Air prend sa place. Avec cet élément, tout est une question de densité !",
+				"elmaTalk1": "L'élément Air est plutôt mal connu à Dinoville, car la proximité du Grand Tout-Chaud et des Iles Atlantéinées favorise l'étude des éléments Feu et Eau. Il a fallu que j'aille jusqu'à Caushemesh où ils l'ont parfaitement maîtrisé pour pouvoir compléter mes études sur le sujet...",
+				"elmaTalk2": "Mais plutôt que de lui demander d'aller si loin, ce qu'il serait certainement incapable de faire, je préfère lui demander un petit service... qu'il aille donc me ramener ces parchemins qui ont été trouvés dans les récents travaux d'aménagement de Dinoplaza, j'aimerais les étudier de façon plus précise...",
+				"scrolls": {
+					"name": "Récupérer les Parchemins",
+					"text": "On vous explique que ces parchemins ont été trouvés lors de récentes fouilles, mais seul un maître serait capable de les décrypter..."
+				},
+				"fight1": {
+					"name": "Donner les Parchemins",
+					"begin": "Alors que vous alliez apporter les parchemins chez le Maître Elémentaire, vous tombez dans une embuscade !",
+					"win": "Il semblerait que dans la confusion du combat, quelqu'un en ait profité pour vous voler les précieux parchemins !"
+				},
+				"elmaTalk3": "Quoi ?!? Il s'est fait voler ce que je lui avais demandé de ramener ?!? Quelle incompétence !! Il ne sait même pas à quel point ces parchemins sont précieux ! Qu'il me les rapporte au plus vite ! Les voleurs n'ont pas pu aller bien loin...",
+				"fight2": {
+					"name": "Voleurs de Parchemins",
+					"begin": "Vous trouvez un des complices des voleurs des Parchemins...",
+					"win": "Vous avez récupéré une page des Parchemins... Où peuvent bien se trouver les autres ?!?"
+				},
+				"fight3": {
+					"name": "Voleurs de Parchemins",
+					"begin": "Vous trouvez le cerveau des voleurs des Parchemins...",
+					"win": "Ce voleur possédait deux pages des Parchemins. Vous avez trois pages sur quatre, et la dernière a disparu, peut-être cela sera-t-il suffisant pour le Maître ?"
+				},
+				"elmaTalk4": "Qu'il me laisse quelques instants pour étudier ces parchemins...",
+				"elmaTalk5": "........ Bien, j'ai terminé. C'est une incroyable découverte : ces documents parlent de l'Ile du Dragon. D'après les légendes de plusieurs pays, ce serait une île munie de grandes ailes et qui serait capable de se déplacer !",
+				"elmaTalk6": "Si ces parchemins sont authentiques, cela voudrait dire que l'Ile du Dragon existerait vraiment... Mais c'est étrange, les explications sur la façon d'y accéder s'arrêtent brusquement, comme s'il manquait une page...",
+				"elmaTalk7": "Nous n'en saurons sans doûte pas plus tant que de nouvelles preuves n'auront pas été découvertes.... C'est bien dommage, j'aurais beaucoup aimé explorer cette nouvelle île !",
+				"elmaTalk8": "Mais revenons à notre leçon sur l'élement Air.... Nous perdons du temps, avec toutes ces histoires ! Qu'il me ramène donc 2 Energies d'Air au plus vite !",
+				"giveAirEnergy1": "Donner 2 énergie air",
+				"elmaTalk9": "Quoi ? C'est tout ? Je lui avais pourtant bien dit d'aller me chercher 5 Energies d'Air ! Aller, encore trois !!",
+				"giveAirEnergy2": "Donner 3 énergie air et Valider la Mission",
+				"end": "Bien bien bien, il y arrive quand il veut, mais c'est dommage qu'il faille tout le temps répéter !"
+			},
+			"elmawater": {
+				"name": "Leçon 5 - l'Eau",
+				"begin": "Notre dernière Leçon va s'appliquer à l'élément Eau...",
+				"elmaTalk1": "Je garde toujours l'élément Eau pour la fin... En fait, je ne l'aime pas du tout : c'est froid et mouillé ! C'est pour cette raison d'ailleurs que je me suis installé au Grand-Tout-Chaud...",
+				"elmaTalk2": "Bien que je maîtrise parfaitement l'élément Eau, je n'ai donc aucune envie de le lui enseigner. Qu'il aille donc voir Bao de ma part pour faire son apprentissage !",
+				"baoTalk1": "Mmmm.... voilà donc l'éleve dont le Maître Elémentaire m'a parlé ? Tu tombes plutôt bien, j'ai récemment eu quelques problèmes de fuites avec le Portail dont j'ai la garde, et des monstres qui ne devraient pas se trouver dans ce monde se sont dispersés dans les Iles... Pourrais-tu faire le ménage ?",
+				"killpirao2": "Pirhan-os",
+				"baoTalk2": "Merci pour ton aide, je peux difficilement me déplacer quand le Portail est faible, et il vaut mieux de toute façon que je reste ici au cas où une créature bien plus puissante essaierait de venir dans ce monde...",
+				"baoTalk3": "Mais j'en ai peut-être déjà trop dit... Mmmmm... Si nous parlions plutôt de l'élément Eau ?",
+				"baoTalk4": "L'Eau est particulièrement présente dans les Iles Atlantéeinées, et c'est un élément trés puissant contre la Foudre. Savais-tu d'ailleurs qu'au delà de la Forêt de Grumhel s'étendent les Steppes Magnétiques où la Foudre est l'élément principal ?",
+				"baoTalk5": "Mmm.... L'Eau possède bien des pouvoirs. L'un des plus recherché permet d'immobiliser presque totalement un adversaire. On ne peut apprendre cette compétence de façon normale, mais peut-être un jour un de tes Dinoz pourra la maîtriser ?",
+				"baoTalk6": "Mmm.... C'est à peu près tout ce que j'avais à te dire sur l'Eau. Je vais faire savoir au Maître Elémentaire que tu as fini ta formation...",
+				"elmaTalk3": "Alors, comment va ce vieux Bao ? Je n'ai eu que peu d'occasions de le voir depuis qu'il a été assigné à la garde du Portail par Mandragore... Mais bon, apparemment, la formation est terminée...",
+				"end": "La dernière leçon se termine, qu'il vienne donc me parler pour sa récompense finale..."
+			}
 		}
 	},
 	"scenarios": {
@@ -5123,7 +5347,10 @@
 			}
 		},
 		"merguez": {
-			"name": "Le Mystère de la Merguez"
+			"name": "L'overdose de Merguez"
+		},
+		"pac": {
+			"name": "Le Parchemin des Aptitudes"
 		}
 	}
 }
