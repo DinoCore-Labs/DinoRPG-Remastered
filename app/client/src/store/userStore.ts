@@ -15,7 +15,8 @@ export const userStore = defineStore('userStore', {
 		shopKeeper: false,
 		sortOption: 'default',
 		maxDinoz: 0,
-		rewards: []
+		rewards: [],
+		discoveredSkills: []
 	}),
 	getters: {
 		isLogged: state => !!state.id,
@@ -37,7 +38,9 @@ export const userStore = defineStore('userStore', {
 		},
 		canEditProfileDescription(): boolean {
 			return this.hasReward(Reward.PLUME);
-		}
+		},
+		hasDiscoveredSkill: state => (skillId: number) => state.discoveredSkills.includes(skillId),
+		canAccessSkillsPage: state => state.rewards.includes(Reward.PAC)
 	},
 	actions: {
 		setUser(data: UserData) {
@@ -48,6 +51,7 @@ export const userStore = defineStore('userStore', {
 			this.treasureTicket = data.treasureTicket;
 			this.maxDinoz = data.maxDinoz;
 			this.rewards = data.rewards ?? [];
+			this.discoveredSkills = data.discoveredSkills ?? [];
 		},
 		setGold(gold: number) {
 			this.gold = gold;
@@ -83,6 +87,7 @@ export const userStore = defineStore('userStore', {
 			this.sortOption = 'default';
 			this.maxDinoz = 0;
 			this.rewards = [];
+			this.discoveredSkills = [];
 		}
 	},
 	persist: {
