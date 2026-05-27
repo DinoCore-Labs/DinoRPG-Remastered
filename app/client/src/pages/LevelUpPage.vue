@@ -213,12 +213,7 @@
 					</tbody>
 				</table>
 			</div>
-			<!--<SkillTree
-				v-if="userStore.playerOptions.hasPAC"
-				:type="availableSkills.element"
-				:dinoz="dinoz"
-				:buildSkills="dinoz?.build?.skills"
-			/>-->
+			<SkillTree v-if="userStore.canAccessSkillsPage" :type="availableSkills.element" :dinoz="dinoz" />
 		</div>
 	</div>
 </template>
@@ -239,7 +234,7 @@ import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { SkillType } from '@dinorpg/core/models/enums/SkillType.js';
 import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
 import DZButton from '../components/utils/DZButton.vue';
-//import SkillTree from '../components/dinoz/SkillTree.vue';
+import SkillTree from '../components/dinoz/SkillTree.vue';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { localStore } from '../store/localStore.js';
 
@@ -251,8 +246,8 @@ export default defineComponent({
 		TitleHeader,
 		Elements,
 		DinozAnimation: defineAsyncComponent(() => import('../components/dinoz/DinozAnimation.vue')),
-		DZButton
-		//SkillTree
+		DZButton,
+		SkillTree
 	},
 	data() {
 		return {
@@ -356,11 +351,7 @@ export default defineComponent({
 		},
 		async getLearnableSkills(dinozId: number, tryNumber: number): Promise<void> {
 			try {
-				/*if (this.event) {
-					this.availableSkills = await FBService.levelUp(dinozId, tryNumber, this.event);
-				} else {*/
 				this.availableSkills = await LevelService.levelUp(dinozId, tryNumber.toString());
-				//}
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
