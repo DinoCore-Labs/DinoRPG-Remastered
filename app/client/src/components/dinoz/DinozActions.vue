@@ -810,9 +810,10 @@ export default defineComponent({
 			border-radius: 7px;
 			font-size: 11pt;
 			font-variant: small-caps;
-			line-height: 2.5pt;
+			line-height: 1.1;
 			font-weight: 700;
 			width: 100%;
+			height: 35px;
 			&:hover {
 				background-color: #9a4029;
 				cursor: pointer;
@@ -830,11 +831,12 @@ export default defineComponent({
 			justify-content: space-between;
 			flex-wrap: wrap;
 			.action {
-				width: 46%;
+				width: 48%;
 				overflow: hidden;
 				p {
 					text-overflow: ellipsis;
 					white-space: nowrap;
+					overflow: hidden;
 				}
 			}
 			.follow {
