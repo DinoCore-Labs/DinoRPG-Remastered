@@ -426,7 +426,8 @@ exports.Prisma.UserScalarFieldEnum = {
   priest: 'priest',
   teacher: 'teacher',
   matelasseur: 'matelasseur',
-  messie: 'messie'
+  messie: 'messie',
+  discoveredSkills: 'discoveredSkills'
 };
 
 exports.Prisma.UserDinozShopScalarFieldEnum = {

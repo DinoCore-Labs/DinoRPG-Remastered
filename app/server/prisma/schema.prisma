@@ -532,6 +532,8 @@ model User {
 
   logs            GameLog[] @relation("GameLogUser")
   actedLogs       GameLog[] @relation("GameLogActor")
+
+  discoveredSkills Int[] @default([])
 }
 
 model UserDinozShop {
