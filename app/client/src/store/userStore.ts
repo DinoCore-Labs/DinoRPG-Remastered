@@ -76,6 +76,14 @@ export const userStore = defineStore('userStore', {
 				this.rewards.push(rewardId);
 			}
 		},
+		addDiscoveredSkills(skillIds: number[]) {
+			this.discoveredSkills = [...new Set([...this.discoveredSkills, ...skillIds])];
+		},
+		unlockReward(rewardId: Reward) {
+			if (!this.rewards.includes(rewardId)) {
+				this.rewards.push(rewardId);
+			}
+		},
 		clearUser() {
 			this.id = null;
 			this.name = null;

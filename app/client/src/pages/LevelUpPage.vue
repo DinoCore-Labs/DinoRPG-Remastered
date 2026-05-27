@@ -337,25 +337,12 @@ export default defineComponent({
 		},
 		async learnSkillAndSetStore(skillIdList: Array<number>): Promise<void> {
 			const dinozId: number = +this.id;
-
 			try {
-				//if (!this.event) {
-				/*const { discoveredSkill } = */ await LevelService.learnSkill(dinozId, skillIdList, this.tryNumber);
-
-				/*if (discoveredSkill) {
-						this.userStore.setDiscoveredSkills(this.userStore.getDiscoveredSkills.concat(discoveredSkill));
-					}*/
-
+				const level = await LevelService.learnSkill(dinozId, skillIdList, this.tryNumber);
+				if (level.discoveredSkill) {
+					this.userStore.addDiscoveredSkills([level.discoveredSkill]);
+				}
 				this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
-				/*} else {
-					const { discoveredSkill } = await FBService.learnSkill(dinozId, skillIdList, this.tryNumber, this.event);
-
-					if (discoveredSkill) {
-						this.userStore.setDiscoveredSkills(this.userStore.getDiscoveredSkills.concat(discoveredSkill));
-					}
-
-					this.$router.push({ name: 'FBTournament', query: { id: this.eventId } });
-				}*/
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
