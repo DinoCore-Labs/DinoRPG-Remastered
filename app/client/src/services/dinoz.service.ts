@@ -38,8 +38,8 @@ export const DinozService = {
 	resurrectDinoz(dinozId: number): Promise<void | ItemFeedBack> {
 		return api.put<void | ItemFeedBack>(`/dinoz/resurrect/${dinozId}`);
 	},
-	reincarnate(dinozId: number): Promise<void> {
-		return api.post<void>(`/dinoz/reincarnate/${dinozId}`);
+	reincarnate(dinozId: number, keepSeed: boolean = false): Promise<void> {
+		return api.put<void>(`/dinoz/reincarnate/${dinozId}`, { keepSeed });
 	},
 	follow(dinozId: number, targetId: number): Promise<void> {
 		return api.post<void>(`/dinoz/${dinozId}/follow/${targetId}`);
