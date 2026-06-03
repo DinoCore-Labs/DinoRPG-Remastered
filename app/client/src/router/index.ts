@@ -13,6 +13,7 @@ import AdminNewsPage from '../pages/Admin/AdminNewsPage.vue';
 import AdminPage from '../pages/Admin/AdminPage.vue';
 import AdminSecretsPage from '../pages/Admin/AdminSecretsPage.vue';
 import AdminUserPage from '../pages/Admin/AdminUserPage.vue';
+import BankPage from '../pages/BankPage.vue';
 import DialogPage from '../pages/DialogPage.vue';
 import DinozPage from '../pages/DinozPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
@@ -216,6 +217,12 @@ const routes: RouteRecord[] = [
 				path: '/itinerantshop/:itinerantId',
 				name: 'ItinerantShopPage',
 				component: ShopItinerant,
+				meta: { auth: true }
+			},
+			{
+				path: '/bank',
+				name: 'BankOfDinoland',
+				component: BankPage,
 				meta: { auth: true }
 			},
 			{

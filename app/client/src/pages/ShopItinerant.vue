@@ -3,9 +3,9 @@
 	<div class="shop">
 		<div class="dz-box shopDesc">
 			<h3 class="shopName">
-				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+				<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 				{{ $t(`shop.item.merchant.name`) }}
-				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+				<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 			</h3>
 			<img class="art" :src="getImgURL('shop', 'shop_itinerant')" :alt="formatContent($t(`shop.item.merchant.name`))" />
 			<p class="shopText" v-html="formatContent($t(`shop.item.merchant.description`))" />
