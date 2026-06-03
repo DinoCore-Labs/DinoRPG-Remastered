@@ -18,6 +18,7 @@
 		"menu": "Menu",
 		"leftUserMenu": {
 			"shop": "Shop",
+			"bank": "Banque",
 			"dojo": "Dojo",
 			"order": "Order",
 			"enclosure": "Enclosure",
@@ -202,6 +203,7 @@
 		"manageDinoz": "DinoRPG [ Manage my Dinoz ]",
 		"market": "DinoRPG [ Tamer Market ]",
 		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
+		"bank": "DinoRPG [ Banque de Dinoland ]",
 		"admin": "DinoRPG [ Admin Dashboard ]"
 	},
 	"adminPage": {
@@ -319,11 +321,13 @@
 		"chose": "Buy",
 		"name": "Confirm !",
 		"shop": "Shop",
+		"bank": "Banque",
 		"search": "Search",
 		"loading": "Loading...",
 		"noResults": "No result",
 		"sortDinoz": "Manage my Dinoz",
-		"skills": "...Skills :"
+		"skills": "...Skills :",
+		"unavailable": "Indisponible"
 	},
 	"popup": {
 		"confirm": "Confirm this action?",
@@ -466,6 +470,12 @@
 			"offerCancelled": "Your offer has been cancelled.",
 			"notEnoughItems": "You don't have enough of this item.",
 			"offerClaimed": "Your earnings have been collected"
+		},
+		"bank": {
+			"exchange": {
+				"success": "Vous avez converti {quantity} :ticket: contre {gold} :gold:.",
+				"rateError": "Impossible de récupérer le taux de change de la banque."
+			}
 		},
 		"isSelling": "Your Dinoz is currently on sale at the Tamer Market.",
 		"notEnoughQuantity": "You don't have enough ingredients...",
@@ -3188,6 +3198,25 @@
 		"description": "Retrouve ici toutes les compétences découvertes par tes Dinoz.",
 		"empty": "Aucune compétence découverte pour le moment.",
 		"level": "Niveau {level}"
+	},
+	"bank": {
+		"title": "Banque de Dinoland",
+		"rotshil": "Rotshil",
+		"description": "Bienvenue à la Banque de Dinoland, je suis Rotshil, le banquier. && && Chaque jour, je vous offre la possibilité d'échanger vos bons du trésor contre de l'or. Bien sûr, le taux de change va fluctuer chaque jour, alors n'hésitez pas à revenir régulièrement pour profiter des meilleurs taux ! && && En plus de cela, je peux aussi vous proposer d'autres services financiers très intéressants, mais ils ne sont pas encore disponibles, alors un peu de patience !",
+		"tabs": {
+			"conversion": "Conversion",
+			"todo": "Coming soon"
+		},
+		"exchange": {
+			"title": "Conversion des Bons du Trésor",
+			"dailyRate": "Taux de change du jour",
+			"rateValue": "1 :ticket: = **{gold}** :gold: (taux x{rate})",
+			"yourTickets": "Your Treasure Coupons",
+			"quantity": "Quantité à convertir",
+			"max": "Max",
+			"youWillReceive": "Vous recevrez **{gold}** :gold:",
+			"convert": "Convertir"
+		}
 	},
 	"npc": {
 		"description": "You can talk to this person.",
