@@ -8,6 +8,9 @@
 		</div>
 		<DZSelect id="wallet-select" class="moneySelect" v-model="selectedWallet" :options="walletOptions" />
 		<div class="iconMenu">
+			<RouterLink to="/bank" class="link">
+				<img :src="getImgURL('act', 'act_shop')" alt="shop" />
+			</RouterLink>
 			<RouterLink to="/shop/flying" class="link">
 				<img :src="getImgURL('act', 'act_boutique')" alt="shop" />
 			</RouterLink>

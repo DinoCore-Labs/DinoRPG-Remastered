@@ -18,6 +18,7 @@
 		"menu": "Menu",
 		"leftUserMenu": {
 			"shop": "Boutique",
+			"bank": "Banque",
 			"dojo": "Dojo",
 			"order": "Ordonner",
 			"enclosure": "Enclos",
@@ -3199,7 +3200,7 @@
 	"bank": {
 		"title": "Banque de Dinoland",
 		"rotshil": "Rotshil",
-		"description": "Bienvenue à la Banque de Dinoland, je suis Rotshil, le banquier.",
+		"description": "Bienvenue à la Banque de Dinoland, je suis Rotshil, le banquier. && && Chaque jour, je vous offre la possibilité d'échanger vos bons du trésor contre de l'or. Bien sûr, le taux de change va fluctuer chaque jour, alors n'hésitez pas à revenir régulièrement pour profiter des meilleurs taux ! && && En plus de cela, je peux aussi vous proposer d'autres services financiers très intéressants, mais ils ne sont pas encore disponibles, alors un peu de patience !",
 		"tabs": {
 			"conversion": "Conversion",
 			"todo": "À venir"
