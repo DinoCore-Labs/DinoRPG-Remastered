@@ -8,18 +8,26 @@
 		</div>
 		<DZSelect id="wallet-select" class="moneySelect" v-model="selectedWallet" :options="walletOptions" />
 		<div class="iconMenu">
-			<RouterLink to="/bank" class="link">
+			<RouterLink to="/bank" class="link" :title="$t('button.bank')">
 				<img :src="getImgURL('act', 'act_shop')" alt="shop" />
 			</RouterLink>
-			<RouterLink to="/shop/flying" class="link">
+			<RouterLink to="/shop/flying" class="link" :title="$t('button.shop')">
 				<img :src="getImgURL('act', 'act_boutique')" alt="shop" />
 			</RouterLink>
+			<span class="link linkDisabled" :title="$t('button.unavailable')" aria-disabled="true">
+				<img :src="getImgURL('act', 'act_castle')" alt="clan" />
+			</span>
+			<span class="link linkDisabled" :title="$t('button.unavailable')" aria-disabled="true">
+				<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
+			</span>
+			<!--
 			<RouterLink :to="`/clan/`" class="link">
-				<img :src="getImgURL('act', 'act_castle')" alt="dojo" />
+				<img :src="getImgURL('act', 'act_castle')" alt="clan" />
 			</RouterLink>
 			<RouterLink class="link" :to="`/dojo`">
 				<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 			</RouterLink>
+			-->
 		</div>
 		<div class="place" v-if="place" @click="goToDinozPage()">
 			<div class="img-wrapper">
@@ -204,6 +212,14 @@ export default defineComponent({
 	cursor: pointer;
 	&:hover {
 		filter: brightness(130%);
+	}
+	&.linkDisabled {
+		cursor: not-allowed;
+		opacity: 0.65;
+		filter: grayscale(1);
+		&:hover {
+			filter: grayscale(1);
+		}
 	}
 }
 .overviewButton {
