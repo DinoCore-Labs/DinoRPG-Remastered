@@ -19,6 +19,7 @@ import {
 } from 'fastify-type-provider-zod';
 
 import { adminRoutes } from './Admin/Routes/admin.routes.js';
+import { bankRoutes } from './Bank/Routes/bank.routes.js';
 import { loadConfig } from './config/config.js';
 import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
 import { loadDialogs } from './Dialog/Controller/dialog.registry.js';
@@ -172,6 +173,7 @@ async function buildServer() {
 			tags: [
 				{ name: 'Users', description: 'User account and profile' },
 				{ name: 'Inventory', description: 'Player inventory management' },
+				{ name: 'Bank', description: 'Dinoland bank' },
 				{ name: 'Dinoz', description: 'Dinoz actions and management' },
 				{ name: 'Level', description: 'Level progression and skill learning' },
 				{ name: 'Fight', description: 'Fight system' },
@@ -223,6 +225,7 @@ async function buildServer() {
 	server.register(rankingRoutes, { prefix: 'api/ranking' });
 	server.register(inventoryRoutes, { prefix: 'api/inventory' });
 	server.register(shopRoutes, { prefix: 'api/shop' });
+	server.register(bankRoutes, { prefix: 'api/bank' });
 	server.register(dinozRoutes, { prefix: 'api/dinoz' });
 	server.register(fightRoutes, { prefix: 'api/fight' });
 	server.register(levelRoutes, { prefix: 'api/level' });
