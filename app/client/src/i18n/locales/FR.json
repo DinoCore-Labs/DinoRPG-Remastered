@@ -321,11 +321,13 @@
 		"chose": "Choisir",
 		"name": "Nommer !",
 		"shop": "Boutique",
+		"bank": "Banque",
 		"search": "Rechercher",
 		"loading": "Chargement...",
 		"noResults": "Aucun résultat",
 		"sortDinoz": "Gérer mes Dinoz",
-		"skills": "Compétences"
+		"skills": "Compétences",
+		"unavailable": "Indisponible"
 	},
 	"popup": {
 		"confirm": "Confirmer cette action ?",
