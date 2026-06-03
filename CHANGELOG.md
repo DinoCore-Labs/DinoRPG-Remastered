@@ -2,6 +2,16 @@
 
 ## 🔹 Core
 
+## 0.25.0
+
+### Minor Changes
+
+- f176621: Add the Dinoland Bank treasury ticket exchange feature.
+
+  The bank now exposes a daily exchange rate for converting treasury tickets into gold. The exchange rate is randomly generated between 0.9 and 1.2, stored server-side, and refreshed daily through the scheduler.
+
+  Players can access the Bank of Dinoland from the side menus, view the current exchange rate, choose how many treasury tickets to convert, preview the gold reward, and complete the conversion. The player wallet is updated immediately after a successful exchange.
+
 ## 0.24.0
 
 ### Minor Changes
@@ -520,6 +530,21 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.27.0
+
+### Minor Changes
+
+- f176621: Add the Dinoland Bank treasury ticket exchange feature.
+
+  The bank now exposes a daily exchange rate for converting treasury tickets into gold. The exchange rate is randomly generated between 0.9 and 1.2, stored server-side, and refreshed daily through the scheduler.
+
+  Players can access the Bank of Dinoland from the side menus, view the current exchange rate, choose how many treasury tickets to convert, preview the gold reward, and complete the conversion. The player wallet is updated immediately after a successful exchange.
+
+### Patch Changes
+
+- Updated dependencies [f176621]
+  - @dinorpg/core@0.25.0
 
 ## 0.26.0
 
@@ -1182,6 +1207,16 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.26.0
+
+### Minor Changes
+
+- f176621: Add the Dinoland Bank treasury ticket exchange feature.
+
+  The bank now exposes a daily exchange rate for converting treasury tickets into gold. The exchange rate is randomly generated between 0.9 and 1.2, stored server-side, and refreshed daily through the scheduler.
+
+  Players can access the Bank of Dinoland from the side menus, view the current exchange rate, choose how many treasury tickets to convert, preview the gold reward, and complete the conversion. The player wallet is updated immediately after a successful exchange.
 
 ## 0.25.0
 
