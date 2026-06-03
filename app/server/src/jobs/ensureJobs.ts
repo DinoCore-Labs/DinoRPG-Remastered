@@ -1,3 +1,4 @@
+import { BANK_EXCHANGE_RATE_JOB_KEY } from '@dinorpg/core/models/bank/constants.js';
 import {
 	GAME_LOG_MAINTENANCE_INTERVAL_MS,
 	GAME_LOG_MAINTENANCE_JOB_KEY
@@ -15,6 +16,23 @@ export async function ensureJobsExist() {
 		create: {
 			key: 'reset-dinoz-shop',
 			name: 'Reset Dinoz Shop',
+			type: 'DAILY_AT',
+			timezone: 'UTC',
+			dailyHour: 0,
+			dailyMinute: 0,
+			nextRunAt: nextDailyAtUtc(0, 0),
+			enabled: true
+		},
+		update: {}
+	});
+	// Bank
+	await prisma.jobDefinition.upsert({
+		where: {
+			key: BANK_EXCHANGE_RATE_JOB_KEY
+		},
+		create: {
+			key: BANK_EXCHANGE_RATE_JOB_KEY,
+			name: 'Refresh Dinoland Bank exchange rate',
 			type: 'DAILY_AT',
 			timezone: 'UTC',
 			dailyHour: 0,
