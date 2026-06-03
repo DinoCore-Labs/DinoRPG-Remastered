@@ -25,6 +25,10 @@
 						<img :src="getImgURL('act', 'act_boutique')" alt="shop" />
 						<span>{{ $t('topBar.leftUserMenu.shop') }}</span>
 					</RouterLink>
+					<RouterLink class="link" :to="`/bank`">
+						<img :src="getImgURL('act', 'act_shop')" alt="bank" />
+						<span>{{ $t('topBar.leftUserMenu.bank') }}</span>
+					</RouterLink>
 					<RouterLink class="link" :to="`/dojo`">
 						<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 						<span>{{ $t('topBar.leftUserMenu.dojo') }}</span>
@@ -339,9 +343,7 @@ export default defineComponent({
 			cursor: pointer;
 			span {
 				margin: 0px;
-				font-family: arial, sans-serif;
-				font-weight: 400;
-				font-size: 1rem;
+				font-size: 0.7rem;
 				line-height: 1.66;
 				text-align: center;
 			}
