@@ -18,6 +18,7 @@
 		"menu": "Menú",
 		"leftUserMenu": {
 			"shop": "Tienda",
+			"bank": "Banque",
 			"dojo": "Dojo",
 			"order": "Ordenar",
 			"enclosure": "Tienda de Dinos",
@@ -202,6 +203,7 @@
 		"manageDinoz": "DinoRPG [ Gestión de mi Dino ]",
 		"market": "DinoRPG [ Mercado de los Maestros ]",
 		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
+		"bank": "DinoRPG [ Banque de Dinoland ]",
 		"admin": "DinoRPG [ Panel de Admin ]"
 	},
 	"adminPage": {
@@ -319,11 +321,13 @@
 		"chose": "Comprar",
 		"name": "¡Confirmar!",
 		"shop": "Ir a la tienda",
+		"bank": "Banque",
 		"search": "Buscar",
 		"loading": "Cargando...",
 		"noResults": "No hay resultados",
 		"sortDinoz": "Administrar mis Dinos",
-		"skills": "Compétences"
+		"skills": "Compétences",
+		"unavailable": "Indisponible"
 	},
 	"popup": {
 		"confirm": "¿Confirmas esta acción?",
@@ -466,6 +470,12 @@
 			"offerCancelled": "Su oferta ha sido cancelada.",
 			"notEnoughItems": "No tienes suficiente de este artículo.",
 			"offerClaimed": "Has obtenido lo que ganaste"
+		},
+		"bank": {
+			"exchange": {
+				"success": "Vous avez converti {quantity} :ticket: contre {gold} :gold:.",
+				"rateError": "Impossible de récupérer le taux de change de la banque."
+			}
 		},
 		"isSelling": "Tu Dino está actualmente a la venta en el Mercado de los Maestros.",
 		"notEnoughQuantity": "No tienes suficientes ingredientes...",
@@ -3188,6 +3198,25 @@
 		"description": "Retrouve ici toutes les compétences découvertes par tes Dinoz.",
 		"empty": "Aucune compétence découverte pour le moment.",
 		"level": "Niveau {level}"
+	},
+	"bank": {
+		"title": "Banque de Dinoland",
+		"rotshil": "Rotshil",
+		"description": "Bienvenue à la Banque de Dinoland, je suis Rotshil, le banquier. && && Chaque jour, je vous offre la possibilité d'échanger vos bons du trésor contre de l'or. Bien sûr, le taux de change va fluctuer chaque jour, alors n'hésitez pas à revenir régulièrement pour profiter des meilleurs taux ! && && En plus de cela, je peux aussi vous proposer d'autres services financiers très intéressants, mais ils ne sont pas encore disponibles, alors un peu de patience !",
+		"tabs": {
+			"conversion": "Conversion",
+			"todo": "Próximamente"
+		},
+		"exchange": {
+			"title": "Conversion des Bons du Trésor",
+			"dailyRate": "Taux de change du jour",
+			"rateValue": "1 :ticket: = **{gold}** :gold: (taux x{rate})",
+			"yourTickets": "Tus Bonos del Tesoro",
+			"quantity": "Quantité à convertir",
+			"max": "Max",
+			"youWillReceive": "Vous recevrez **{gold}** :gold:",
+			"convert": "Convertir"
+		}
 	},
 	"npc": {
 		"description": "Vous pouvez discuter avec cette personne.",
