@@ -16,16 +16,18 @@
 			<li :class="tabSelected === 1 ? 'active' : ''">
 				<a @click="sStore.setTabAccount(1)">{{ $t('bank.tabs.conversion') }}</a>
 			</li>
-			<li :class="tabSelected === 2 ? 'active' : ''">
+			<li :class="tabSelected === 2 ? 'active disabled' : 'disabled'">
 				<a @click="sStore.setTabAccount(2)">{{ $t('bank.tabs.todo') }}</a>
 			</li>
 		</ul>
+		<BankTreasureTicketExchange v-if="tabSelected === 1" />
 	</div>
 </template>
 
 <script lang="ts" scoped>
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
+import BankTreasureTicketExchange from '../components/bank/BankTreasureTicketExchange.vue';
 import { sessionStore } from '../store/sessionStore.ts';
 
 export default defineComponent({
@@ -35,7 +37,8 @@ export default defineComponent({
 		return { sStore };
 	},
 	components: {
-		TitleHeader
+		TitleHeader,
+		BankTreasureTicketExchange
 	},
 	data() {
 		return {};
