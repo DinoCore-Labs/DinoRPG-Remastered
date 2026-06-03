@@ -287,27 +287,27 @@
 			"title": "Discover the upcoming events on DinoRPG!",
 			"small": "Irma's Prediction",
 			"strong": {
-				"title1": "Alpha 0.9.0 (Soon)",
-				"title2": "Alpha 0.10.0",
-				"title3": "Alpha 0.11.0",
-				"title4": "Alpha 0.12.0"
+				"title1": "Alpha 0.10.0 (Soon)",
+				"title2": "Alpha 0.11.0",
+				"title3": "Alpha 0.12.0",
+				"title4": "Alpha 0.13.0"
 			},
 			"help": "Click on an update above to get more information!",
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
 			"futurTitle": "Dinolandian Future",
 			"futureInfo1": {
-				"text1": "Integration of a logging system",
-				"text2": "Scroll selection???",
-				"text3": "Madame X and her missions"
+				"text1": "Les clans",
+				"text2": "La Banque de Dinoland",
+				"text3": "Correction des bugs"
 			},
 			"futureInfo2": {
-				"text1": "Clans",
-				"text2": "The Elementary Master and Missions",
-				"text3": "Bug fixes"
+				"text1": "Maître Zenith et le dojo",
+				"text2": "Le tournoi inter dojo (event PVP)",
+				"text3": "Correction de bugs"
 			},
 			"futureInfo3": {
 				"text1": "Monster Hunt (PVE)",
-				"text2": "Implementation of the tutorial scenario"
+				"text2": "Correction de bugs"
 			},
 			"futureInfo4": {
 				"text1": "Coming soon"
