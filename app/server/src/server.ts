@@ -1,3 +1,4 @@
+import { BANK_EXCHANGE_RATE_JOB_KEY } from '@dinorpg/core/models/bank/constants.js';
 import { GAME_LOG_MAINTENANCE_JOB_KEY } from '@dinorpg/core/models/gamelog/constants.js';
 import { MARKET_EXPIRATION_JOB_KEY } from '@dinorpg/core/models/market/constants.js';
 import { UserRole } from '@dinorpg/core/models/user/userRole.js';
@@ -35,6 +36,7 @@ import { expireDueMarketOffersJob } from './jobs/handlers/expireMarketOffers.js'
 import { gameLogMaintenanceJob } from './jobs/handlers/gameLogMaintenance.js';
 import { healFountainPearlDinozJob } from './jobs/handlers/healFountainPearlDinoz.js';
 import { itinerantMerchantMoveJob } from './jobs/handlers/itinerantMerchantMove.js';
+import { refreshBankExchangeRateJob } from './jobs/handlers/refreshBankExchangeRate.js';
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
 import { startScheduler } from './jobs/scheduler.js';
 import { levelRoutes } from './Level/Routes/level.routes.js';
@@ -255,7 +257,8 @@ async function buildServer() {
 				server.log.info({ healedCount: result.healedCount }, '[jobs] heal-fountain-pearl-dinoz processed');
 			},
 			[MARKET_EXPIRATION_JOB_KEY]: () => expireDueMarketOffersJob(server.log),
-			[GAME_LOG_MAINTENANCE_JOB_KEY]: () => gameLogMaintenanceJob(server.log)
+			[GAME_LOG_MAINTENANCE_JOB_KEY]: () => gameLogMaintenanceJob(server.log),
+			[BANK_EXCHANGE_RATE_JOB_KEY]: () => refreshBankExchangeRateJob(server.log)
 		},
 		server.log
 	);
