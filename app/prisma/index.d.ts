@@ -14,6 +14,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
+ * Model BankSaving
+ * 
+ */
+export type BankSaving = $Result.DefaultSelection<Prisma.$BankSavingPayload>
+/**
  * Model Dinoz
  * 
  */
@@ -441,8 +446,8 @@ export const Role: typeof $Enums.Role
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Dinozs
- * const dinozs = await prisma.dinoz.findMany()
+ * // Fetch zero or more BankSavings
+ * const bankSavings = await prisma.bankSaving.findMany()
  * ```
  *
  *
@@ -464,8 +469,8 @@ export class PrismaClient<
    * const prisma = new PrismaClient({
    *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
    * })
-   * // Fetch zero or more Dinozs
-   * const dinozs = await prisma.dinoz.findMany()
+   * // Fetch zero or more BankSavings
+   * const bankSavings = await prisma.bankSaving.findMany()
    * ```
    *
    *
@@ -554,6 +559,16 @@ export class PrismaClient<
   }>>
 
       /**
+   * `prisma.bankSaving`: Exposes CRUD operations for the **BankSaving** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BankSavings
+    * const bankSavings = await prisma.bankSaving.findMany()
+    * ```
+    */
+  get bankSaving(): Prisma.BankSavingDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.dinoz`: Exposes CRUD operations for the **Dinoz** model.
     * Example usage:
     * ```ts
@@ -1386,6 +1401,7 @@ export namespace Prisma {
 
 
   export const ModelName: {
+    BankSaving: 'BankSaving',
     Dinoz: 'Dinoz',
     DinozCatch: 'DinozCatch',
     DinozItems: 'DinozItems',
@@ -1441,10 +1457,84 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "dinoz" | "dinozCatch" | "dinozItems" | "dinozMissions" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "forcebrutTournamentOpponent" | "gameLog" | "gameLogHourly" | "gameLogDaily" | "jobDefinition" | "jobRun" | "news" | "newsTranslation" | "offer" | "offerItem" | "offerBid" | "poll" | "pollOption" | "pollOptionTranslation" | "pollVote" | "newsLike" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userScenario" | "userTracking" | "userWallet" | "conversation" | "participant" | "message"
+      modelProps: "bankSaving" | "dinoz" | "dinozCatch" | "dinozItems" | "dinozMissions" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "forcebrutTournamentOpponent" | "gameLog" | "gameLogHourly" | "gameLogDaily" | "jobDefinition" | "jobRun" | "news" | "newsTranslation" | "offer" | "offerItem" | "offerBid" | "poll" | "pollOption" | "pollOptionTranslation" | "pollVote" | "newsLike" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userScenario" | "userTracking" | "userWallet" | "conversation" | "participant" | "message"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
+      BankSaving: {
+        payload: Prisma.$BankSavingPayload<ExtArgs>
+        fields: Prisma.BankSavingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BankSavingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankSavingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BankSavingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankSavingPayload>
+          }
+          findFirst: {
+            args: Prisma.BankSavingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankSavingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BankSavingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankSavingPayload>
+          }
+          findMany: {
+            args: Prisma.BankSavingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankSavingPayload>[]
+          }
+          create: {
+            args: Prisma.BankSavingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankSavingPayload>
+          }
+          createMany: {
+            args: Prisma.BankSavingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BankSavingCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankSavingPayload>[]
+          }
+          delete: {
+            args: Prisma.BankSavingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankSavingPayload>
+          }
+          update: {
+            args: Prisma.BankSavingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankSavingPayload>
+          }
+          deleteMany: {
+            args: Prisma.BankSavingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BankSavingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BankSavingUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankSavingPayload>[]
+          }
+          upsert: {
+            args: Prisma.BankSavingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankSavingPayload>
+          }
+          aggregate: {
+            args: Prisma.BankSavingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBankSaving>
+          }
+          groupBy: {
+            args: Prisma.BankSavingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BankSavingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BankSavingCountArgs<ExtArgs>
+            result: $Utils.Optional<BankSavingCountAggregateOutputType> | number
+          }
+        }
+      }
       Dinoz: {
         payload: Prisma.$DinozPayload<ExtArgs>
         fields: Prisma.DinozFieldRefs
@@ -4513,6 +4603,7 @@ export namespace Prisma {
     comments?: runtime.SqlCommenterPlugin[]
   }
   export type GlobalOmitConfig = {
+    bankSaving?: BankSavingOmit
     dinoz?: DinozOmit
     dinozCatch?: DinozCatchOmit
     dinozItems?: DinozItemsOmit
@@ -4945,6 +5036,7 @@ export namespace Prisma {
     sentMessages: number
     logs: number
     actedLogs: number
+    bankSavings: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4966,6 +5058,7 @@ export namespace Prisma {
     sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
     logs?: boolean | UserCountOutputTypeCountLogsArgs
     actedLogs?: boolean | UserCountOutputTypeCountActedLogsArgs
+    bankSavings?: boolean | UserCountOutputTypeCountBankSavingsArgs
   }
 
   // Custom InputTypes
@@ -5105,6 +5198,13 @@ export namespace Prisma {
     where?: GameLogWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountBankSavingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BankSavingWhereInput
+  }
+
 
   /**
    * Count Type ConversationCountOutputType
@@ -5149,6 +5249,1172 @@ export namespace Prisma {
   /**
    * Models
    */
+
+  /**
+   * Model BankSaving
+   */
+
+  export type AggregateBankSaving = {
+    _count: BankSavingCountAggregateOutputType | null
+    _avg: BankSavingAvgAggregateOutputType | null
+    _sum: BankSavingSumAggregateOutputType | null
+    _min: BankSavingMinAggregateOutputType | null
+    _max: BankSavingMaxAggregateOutputType | null
+  }
+
+  export type BankSavingAvgAggregateOutputType = {
+    amount: number | null
+    durationDays: number | null
+    interestRateBps: number | null
+  }
+
+  export type BankSavingSumAggregateOutputType = {
+    amount: number | null
+    durationDays: number | null
+    interestRateBps: number | null
+  }
+
+  export type BankSavingMinAggregateOutputType = {
+    id: string | null
+    amount: number | null
+    durationDays: number | null
+    interestRateBps: number | null
+    unlockAt: Date | null
+    claimedAt: Date | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BankSavingMaxAggregateOutputType = {
+    id: string | null
+    amount: number | null
+    durationDays: number | null
+    interestRateBps: number | null
+    unlockAt: Date | null
+    claimedAt: Date | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type BankSavingCountAggregateOutputType = {
+    id: number
+    amount: number
+    durationDays: number
+    interestRateBps: number
+    unlockAt: number
+    claimedAt: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type BankSavingAvgAggregateInputType = {
+    amount?: true
+    durationDays?: true
+    interestRateBps?: true
+  }
+
+  export type BankSavingSumAggregateInputType = {
+    amount?: true
+    durationDays?: true
+    interestRateBps?: true
+  }
+
+  export type BankSavingMinAggregateInputType = {
+    id?: true
+    amount?: true
+    durationDays?: true
+    interestRateBps?: true
+    unlockAt?: true
+    claimedAt?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BankSavingMaxAggregateInputType = {
+    id?: true
+    amount?: true
+    durationDays?: true
+    interestRateBps?: true
+    unlockAt?: true
+    claimedAt?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type BankSavingCountAggregateInputType = {
+    id?: true
+    amount?: true
+    durationDays?: true
+    interestRateBps?: true
+    unlockAt?: true
+    claimedAt?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type BankSavingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BankSaving to aggregate.
+     */
+    where?: BankSavingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankSavings to fetch.
+     */
+    orderBy?: BankSavingOrderByWithRelationInput | BankSavingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BankSavingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankSavings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankSavings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BankSavings
+    **/
+    _count?: true | BankSavingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: BankSavingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BankSavingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BankSavingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BankSavingMaxAggregateInputType
+  }
+
+  export type GetBankSavingAggregateType<T extends BankSavingAggregateArgs> = {
+        [P in keyof T & keyof AggregateBankSaving]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBankSaving[P]>
+      : GetScalarType<T[P], AggregateBankSaving[P]>
+  }
+
+
+
+
+  export type BankSavingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BankSavingWhereInput
+    orderBy?: BankSavingOrderByWithAggregationInput | BankSavingOrderByWithAggregationInput[]
+    by: BankSavingScalarFieldEnum[] | BankSavingScalarFieldEnum
+    having?: BankSavingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BankSavingCountAggregateInputType | true
+    _avg?: BankSavingAvgAggregateInputType
+    _sum?: BankSavingSumAggregateInputType
+    _min?: BankSavingMinAggregateInputType
+    _max?: BankSavingMaxAggregateInputType
+  }
+
+  export type BankSavingGroupByOutputType = {
+    id: string
+    amount: number
+    durationDays: number
+    interestRateBps: number
+    unlockAt: Date
+    claimedAt: Date | null
+    userId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: BankSavingCountAggregateOutputType | null
+    _avg: BankSavingAvgAggregateOutputType | null
+    _sum: BankSavingSumAggregateOutputType | null
+    _min: BankSavingMinAggregateOutputType | null
+    _max: BankSavingMaxAggregateOutputType | null
+  }
+
+  type GetBankSavingGroupByPayload<T extends BankSavingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BankSavingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BankSavingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BankSavingGroupByOutputType[P]>
+            : GetScalarType<T[P], BankSavingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BankSavingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    amount?: boolean
+    durationDays?: boolean
+    interestRateBps?: boolean
+    unlockAt?: boolean
+    claimedAt?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bankSaving"]>
+
+  export type BankSavingSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    amount?: boolean
+    durationDays?: boolean
+    interestRateBps?: boolean
+    unlockAt?: boolean
+    claimedAt?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bankSaving"]>
+
+  export type BankSavingSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    amount?: boolean
+    durationDays?: boolean
+    interestRateBps?: boolean
+    unlockAt?: boolean
+    claimedAt?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["bankSaving"]>
+
+  export type BankSavingSelectScalar = {
+    id?: boolean
+    amount?: boolean
+    durationDays?: boolean
+    interestRateBps?: boolean
+    unlockAt?: boolean
+    claimedAt?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type BankSavingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "durationDays" | "interestRateBps" | "unlockAt" | "claimedAt" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["bankSaving"]>
+  export type BankSavingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BankSavingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type BankSavingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $BankSavingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BankSaving"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      amount: number
+      durationDays: number
+      interestRateBps: number
+      unlockAt: Date
+      claimedAt: Date | null
+      userId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["bankSaving"]>
+    composites: {}
+  }
+
+  type BankSavingGetPayload<S extends boolean | null | undefined | BankSavingDefaultArgs> = $Result.GetResult<Prisma.$BankSavingPayload, S>
+
+  type BankSavingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BankSavingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: BankSavingCountAggregateInputType | true
+    }
+
+  export interface BankSavingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BankSaving'], meta: { name: 'BankSaving' } }
+    /**
+     * Find zero or one BankSaving that matches the filter.
+     * @param {BankSavingFindUniqueArgs} args - Arguments to find a BankSaving
+     * @example
+     * // Get one BankSaving
+     * const bankSaving = await prisma.bankSaving.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BankSavingFindUniqueArgs>(args: SelectSubset<T, BankSavingFindUniqueArgs<ExtArgs>>): Prisma__BankSavingClient<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BankSaving that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BankSavingFindUniqueOrThrowArgs} args - Arguments to find a BankSaving
+     * @example
+     * // Get one BankSaving
+     * const bankSaving = await prisma.bankSaving.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BankSavingFindUniqueOrThrowArgs>(args: SelectSubset<T, BankSavingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BankSavingClient<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BankSaving that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankSavingFindFirstArgs} args - Arguments to find a BankSaving
+     * @example
+     * // Get one BankSaving
+     * const bankSaving = await prisma.bankSaving.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BankSavingFindFirstArgs>(args?: SelectSubset<T, BankSavingFindFirstArgs<ExtArgs>>): Prisma__BankSavingClient<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BankSaving that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankSavingFindFirstOrThrowArgs} args - Arguments to find a BankSaving
+     * @example
+     * // Get one BankSaving
+     * const bankSaving = await prisma.bankSaving.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BankSavingFindFirstOrThrowArgs>(args?: SelectSubset<T, BankSavingFindFirstOrThrowArgs<ExtArgs>>): Prisma__BankSavingClient<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BankSavings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankSavingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BankSavings
+     * const bankSavings = await prisma.bankSaving.findMany()
+     * 
+     * // Get first 10 BankSavings
+     * const bankSavings = await prisma.bankSaving.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const bankSavingWithIdOnly = await prisma.bankSaving.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BankSavingFindManyArgs>(args?: SelectSubset<T, BankSavingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BankSaving.
+     * @param {BankSavingCreateArgs} args - Arguments to create a BankSaving.
+     * @example
+     * // Create one BankSaving
+     * const BankSaving = await prisma.bankSaving.create({
+     *   data: {
+     *     // ... data to create a BankSaving
+     *   }
+     * })
+     * 
+     */
+    create<T extends BankSavingCreateArgs>(args: SelectSubset<T, BankSavingCreateArgs<ExtArgs>>): Prisma__BankSavingClient<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BankSavings.
+     * @param {BankSavingCreateManyArgs} args - Arguments to create many BankSavings.
+     * @example
+     * // Create many BankSavings
+     * const bankSaving = await prisma.bankSaving.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BankSavingCreateManyArgs>(args?: SelectSubset<T, BankSavingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BankSavings and returns the data saved in the database.
+     * @param {BankSavingCreateManyAndReturnArgs} args - Arguments to create many BankSavings.
+     * @example
+     * // Create many BankSavings
+     * const bankSaving = await prisma.bankSaving.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BankSavings and only return the `id`
+     * const bankSavingWithIdOnly = await prisma.bankSaving.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BankSavingCreateManyAndReturnArgs>(args?: SelectSubset<T, BankSavingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BankSaving.
+     * @param {BankSavingDeleteArgs} args - Arguments to delete one BankSaving.
+     * @example
+     * // Delete one BankSaving
+     * const BankSaving = await prisma.bankSaving.delete({
+     *   where: {
+     *     // ... filter to delete one BankSaving
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BankSavingDeleteArgs>(args: SelectSubset<T, BankSavingDeleteArgs<ExtArgs>>): Prisma__BankSavingClient<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BankSaving.
+     * @param {BankSavingUpdateArgs} args - Arguments to update one BankSaving.
+     * @example
+     * // Update one BankSaving
+     * const bankSaving = await prisma.bankSaving.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BankSavingUpdateArgs>(args: SelectSubset<T, BankSavingUpdateArgs<ExtArgs>>): Prisma__BankSavingClient<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BankSavings.
+     * @param {BankSavingDeleteManyArgs} args - Arguments to filter BankSavings to delete.
+     * @example
+     * // Delete a few BankSavings
+     * const { count } = await prisma.bankSaving.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BankSavingDeleteManyArgs>(args?: SelectSubset<T, BankSavingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BankSavings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankSavingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BankSavings
+     * const bankSaving = await prisma.bankSaving.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BankSavingUpdateManyArgs>(args: SelectSubset<T, BankSavingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BankSavings and returns the data updated in the database.
+     * @param {BankSavingUpdateManyAndReturnArgs} args - Arguments to update many BankSavings.
+     * @example
+     * // Update many BankSavings
+     * const bankSaving = await prisma.bankSaving.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BankSavings and only return the `id`
+     * const bankSavingWithIdOnly = await prisma.bankSaving.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BankSavingUpdateManyAndReturnArgs>(args: SelectSubset<T, BankSavingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BankSaving.
+     * @param {BankSavingUpsertArgs} args - Arguments to update or create a BankSaving.
+     * @example
+     * // Update or create a BankSaving
+     * const bankSaving = await prisma.bankSaving.upsert({
+     *   create: {
+     *     // ... data to create a BankSaving
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BankSaving we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BankSavingUpsertArgs>(args: SelectSubset<T, BankSavingUpsertArgs<ExtArgs>>): Prisma__BankSavingClient<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BankSavings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankSavingCountArgs} args - Arguments to filter BankSavings to count.
+     * @example
+     * // Count the number of BankSavings
+     * const count = await prisma.bankSaving.count({
+     *   where: {
+     *     // ... the filter for the BankSavings we want to count
+     *   }
+     * })
+    **/
+    count<T extends BankSavingCountArgs>(
+      args?: Subset<T, BankSavingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BankSavingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BankSaving.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankSavingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BankSavingAggregateArgs>(args: Subset<T, BankSavingAggregateArgs>): Prisma.PrismaPromise<GetBankSavingAggregateType<T>>
+
+    /**
+     * Group by BankSaving.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankSavingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BankSavingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BankSavingGroupByArgs['orderBy'] }
+        : { orderBy?: BankSavingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BankSavingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBankSavingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BankSaving model
+   */
+  readonly fields: BankSavingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BankSaving.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BankSavingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BankSaving model
+   */
+  interface BankSavingFieldRefs {
+    readonly id: FieldRef<"BankSaving", 'String'>
+    readonly amount: FieldRef<"BankSaving", 'Int'>
+    readonly durationDays: FieldRef<"BankSaving", 'Int'>
+    readonly interestRateBps: FieldRef<"BankSaving", 'Int'>
+    readonly unlockAt: FieldRef<"BankSaving", 'DateTime'>
+    readonly claimedAt: FieldRef<"BankSaving", 'DateTime'>
+    readonly userId: FieldRef<"BankSaving", 'String'>
+    readonly createdAt: FieldRef<"BankSaving", 'DateTime'>
+    readonly updatedAt: FieldRef<"BankSaving", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BankSaving findUnique
+   */
+  export type BankSavingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingInclude<ExtArgs> | null
+    /**
+     * Filter, which BankSaving to fetch.
+     */
+    where: BankSavingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * BankSaving findUniqueOrThrow
+   */
+  export type BankSavingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingInclude<ExtArgs> | null
+    /**
+     * Filter, which BankSaving to fetch.
+     */
+    where: BankSavingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * BankSaving findFirst
+   */
+  export type BankSavingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingInclude<ExtArgs> | null
+    /**
+     * Filter, which BankSaving to fetch.
+     */
+    where?: BankSavingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankSavings to fetch.
+     */
+    orderBy?: BankSavingOrderByWithRelationInput | BankSavingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BankSavings.
+     */
+    cursor?: BankSavingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankSavings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankSavings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BankSavings.
+     */
+    distinct?: BankSavingScalarFieldEnum | BankSavingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * BankSaving findFirstOrThrow
+   */
+  export type BankSavingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingInclude<ExtArgs> | null
+    /**
+     * Filter, which BankSaving to fetch.
+     */
+    where?: BankSavingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankSavings to fetch.
+     */
+    orderBy?: BankSavingOrderByWithRelationInput | BankSavingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BankSavings.
+     */
+    cursor?: BankSavingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankSavings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankSavings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BankSavings.
+     */
+    distinct?: BankSavingScalarFieldEnum | BankSavingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * BankSaving findMany
+   */
+  export type BankSavingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingInclude<ExtArgs> | null
+    /**
+     * Filter, which BankSavings to fetch.
+     */
+    where?: BankSavingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankSavings to fetch.
+     */
+    orderBy?: BankSavingOrderByWithRelationInput | BankSavingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BankSavings.
+     */
+    cursor?: BankSavingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankSavings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankSavings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BankSavings.
+     */
+    distinct?: BankSavingScalarFieldEnum | BankSavingScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * BankSaving create
+   */
+  export type BankSavingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BankSaving.
+     */
+    data: XOR<BankSavingCreateInput, BankSavingUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * BankSaving createMany
+   */
+  export type BankSavingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BankSavings.
+     */
+    data: BankSavingCreateManyInput | BankSavingCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BankSaving createManyAndReturn
+   */
+  export type BankSavingCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * The data used to create many BankSavings.
+     */
+    data: BankSavingCreateManyInput | BankSavingCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BankSaving update
+   */
+  export type BankSavingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BankSaving.
+     */
+    data: XOR<BankSavingUpdateInput, BankSavingUncheckedUpdateInput>
+    /**
+     * Choose, which BankSaving to update.
+     */
+    where: BankSavingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * BankSaving updateMany
+   */
+  export type BankSavingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BankSavings.
+     */
+    data: XOR<BankSavingUpdateManyMutationInput, BankSavingUncheckedUpdateManyInput>
+    /**
+     * Filter which BankSavings to update
+     */
+    where?: BankSavingWhereInput
+    /**
+     * Limit how many BankSavings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BankSaving updateManyAndReturn
+   */
+  export type BankSavingUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * The data used to update BankSavings.
+     */
+    data: XOR<BankSavingUpdateManyMutationInput, BankSavingUncheckedUpdateManyInput>
+    /**
+     * Filter which BankSavings to update
+     */
+    where?: BankSavingWhereInput
+    /**
+     * Limit how many BankSavings to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BankSaving upsert
+   */
+  export type BankSavingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BankSaving to update in case it exists.
+     */
+    where: BankSavingWhereUniqueInput
+    /**
+     * In case the BankSaving found by the `where` argument doesn't exist, create a new BankSaving with this data.
+     */
+    create: XOR<BankSavingCreateInput, BankSavingUncheckedCreateInput>
+    /**
+     * In case the BankSaving was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BankSavingUpdateInput, BankSavingUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * BankSaving delete
+   */
+  export type BankSavingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingInclude<ExtArgs> | null
+    /**
+     * Filter which BankSaving to delete.
+     */
+    where: BankSavingWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * BankSaving deleteMany
+   */
+  export type BankSavingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BankSavings to delete
+     */
+    where?: BankSavingWhereInput
+    /**
+     * Limit how many BankSavings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BankSaving without action
+   */
+  export type BankSavingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingInclude<ExtArgs> | null
+  }
+
 
   /**
    * Model Dinoz
@@ -36805,6 +38071,7 @@ export namespace Prisma {
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     logs?: boolean | User$logsArgs<ExtArgs>
     actedLogs?: boolean | User$actedLogsArgs<ExtArgs>
+    bankSavings?: boolean | User$bankSavingsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -36890,6 +38157,7 @@ export namespace Prisma {
     sentMessages?: boolean | User$sentMessagesArgs<ExtArgs>
     logs?: boolean | User$logsArgs<ExtArgs>
     actedLogs?: boolean | User$actedLogsArgs<ExtArgs>
+    bankSavings?: boolean | User$bankSavingsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -36918,6 +38186,7 @@ export namespace Prisma {
       sentMessages: Prisma.$MessagePayload<ExtArgs>[]
       logs: Prisma.$GameLogPayload<ExtArgs>[]
       actedLogs: Prisma.$GameLogPayload<ExtArgs>[]
+      bankSavings: Prisma.$BankSavingPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -37351,6 +38620,7 @@ export namespace Prisma {
     sentMessages<T extends User$sentMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     logs<T extends User$logsArgs<ExtArgs> = {}>(args?: Subset<T, User$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     actedLogs<T extends User$actedLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$actedLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    bankSavings<T extends User$bankSavingsArgs<ExtArgs> = {}>(args?: Subset<T, User$bankSavingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BankSavingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -38266,6 +39536,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: GameLogScalarFieldEnum | GameLogScalarFieldEnum[]
+  }
+
+  /**
+   * User.bankSavings
+   */
+  export type User$bankSavingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankSaving
+     */
+    select?: BankSavingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankSaving
+     */
+    omit?: BankSavingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankSavingInclude<ExtArgs> | null
+    where?: BankSavingWhereInput
+    orderBy?: BankSavingOrderByWithRelationInput | BankSavingOrderByWithRelationInput[]
+    cursor?: BankSavingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BankSavingScalarFieldEnum | BankSavingScalarFieldEnum[]
   }
 
   /**
@@ -51981,6 +53275,29 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+  export const BankSavingScalarFieldEnum: {
+    id: 'id',
+    amount: 'amount',
+    durationDays: 'durationDays',
+    interestRateBps: 'interestRateBps',
+    unlockAt: 'unlockAt',
+    claimedAt: 'claimedAt',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type BankSavingScalarFieldEnum = (typeof BankSavingScalarFieldEnum)[keyof typeof BankSavingScalarFieldEnum]
+
+
+  export const RelationLoadStrategy: {
+    query: 'query',
+    join: 'join'
+  };
+
+  export type RelationLoadStrategy = (typeof RelationLoadStrategy)[keyof typeof RelationLoadStrategy]
+
+
   export const DinozScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -52014,14 +53331,6 @@ export namespace Prisma {
   };
 
   export type DinozScalarFieldEnum = (typeof DinozScalarFieldEnum)[keyof typeof DinozScalarFieldEnum]
-
-
-  export const RelationLoadStrategy: {
-    query: 'query',
-    join: 'join'
-  };
-
-  export type RelationLoadStrategy = (typeof RelationLoadStrategy)[keyof typeof RelationLoadStrategy]
 
 
   export const DinozCatchScalarFieldEnum: {
@@ -52567,20 +53876,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -52595,9 +53890,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
+   * Reference to a field of type 'Int'
    */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -52612,6 +53914,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -52841,6 +54150,83 @@ export namespace Prisma {
    * Deep Input Types
    */
 
+
+  export type BankSavingWhereInput = {
+    AND?: BankSavingWhereInput | BankSavingWhereInput[]
+    OR?: BankSavingWhereInput[]
+    NOT?: BankSavingWhereInput | BankSavingWhereInput[]
+    id?: UuidFilter<"BankSaving"> | string
+    amount?: IntFilter<"BankSaving"> | number
+    durationDays?: IntFilter<"BankSaving"> | number
+    interestRateBps?: IntFilter<"BankSaving"> | number
+    unlockAt?: DateTimeFilter<"BankSaving"> | Date | string
+    claimedAt?: DateTimeNullableFilter<"BankSaving"> | Date | string | null
+    userId?: UuidFilter<"BankSaving"> | string
+    createdAt?: DateTimeFilter<"BankSaving"> | Date | string
+    updatedAt?: DateTimeFilter<"BankSaving"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type BankSavingOrderByWithRelationInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    durationDays?: SortOrder
+    interestRateBps?: SortOrder
+    unlockAt?: SortOrder
+    claimedAt?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type BankSavingWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BankSavingWhereInput | BankSavingWhereInput[]
+    OR?: BankSavingWhereInput[]
+    NOT?: BankSavingWhereInput | BankSavingWhereInput[]
+    amount?: IntFilter<"BankSaving"> | number
+    durationDays?: IntFilter<"BankSaving"> | number
+    interestRateBps?: IntFilter<"BankSaving"> | number
+    unlockAt?: DateTimeFilter<"BankSaving"> | Date | string
+    claimedAt?: DateTimeNullableFilter<"BankSaving"> | Date | string | null
+    userId?: UuidFilter<"BankSaving"> | string
+    createdAt?: DateTimeFilter<"BankSaving"> | Date | string
+    updatedAt?: DateTimeFilter<"BankSaving"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type BankSavingOrderByWithAggregationInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    durationDays?: SortOrder
+    interestRateBps?: SortOrder
+    unlockAt?: SortOrder
+    claimedAt?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: BankSavingCountOrderByAggregateInput
+    _avg?: BankSavingAvgOrderByAggregateInput
+    _max?: BankSavingMaxOrderByAggregateInput
+    _min?: BankSavingMinOrderByAggregateInput
+    _sum?: BankSavingSumOrderByAggregateInput
+  }
+
+  export type BankSavingScalarWhereWithAggregatesInput = {
+    AND?: BankSavingScalarWhereWithAggregatesInput | BankSavingScalarWhereWithAggregatesInput[]
+    OR?: BankSavingScalarWhereWithAggregatesInput[]
+    NOT?: BankSavingScalarWhereWithAggregatesInput | BankSavingScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"BankSaving"> | string
+    amount?: IntWithAggregatesFilter<"BankSaving"> | number
+    durationDays?: IntWithAggregatesFilter<"BankSaving"> | number
+    interestRateBps?: IntWithAggregatesFilter<"BankSaving"> | number
+    unlockAt?: DateTimeWithAggregatesFilter<"BankSaving"> | Date | string
+    claimedAt?: DateTimeNullableWithAggregatesFilter<"BankSaving"> | Date | string | null
+    userId?: UuidWithAggregatesFilter<"BankSaving"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"BankSaving"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"BankSaving"> | Date | string
+  }
 
   export type DinozWhereInput = {
     AND?: DinozWhereInput | DinozWhereInput[]
@@ -54832,6 +56218,7 @@ export namespace Prisma {
     sentMessages?: MessageListRelationFilter
     logs?: GameLogListRelationFilter
     actedLogs?: GameLogListRelationFilter
+    bankSavings?: BankSavingListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -54872,6 +56259,7 @@ export namespace Prisma {
     sentMessages?: MessageOrderByRelationAggregateInput
     logs?: GameLogOrderByRelationAggregateInput
     actedLogs?: GameLogOrderByRelationAggregateInput
+    bankSavings?: BankSavingOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -54915,6 +56303,7 @@ export namespace Prisma {
     sentMessages?: MessageListRelationFilter
     logs?: GameLogListRelationFilter
     actedLogs?: GameLogListRelationFilter
+    bankSavings?: BankSavingListRelationFilter
   }, "id" | "name">
 
   export type UserOrderByWithAggregationInput = {
@@ -55722,6 +57111,89 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
     deletedAt?: DateTimeNullableWithAggregatesFilter<"Message"> | Date | string | null
     senderNameSnapshot?: StringWithAggregatesFilter<"Message"> | string
+  }
+
+  export type BankSavingCreateInput = {
+    id?: string
+    amount: number
+    durationDays: number
+    interestRateBps: number
+    unlockAt: Date | string
+    claimedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutBankSavingsInput
+  }
+
+  export type BankSavingUncheckedCreateInput = {
+    id?: string
+    amount: number
+    durationDays: number
+    interestRateBps: number
+    unlockAt: Date | string
+    claimedAt?: Date | string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BankSavingUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    durationDays?: IntFieldUpdateOperationsInput | number
+    interestRateBps?: IntFieldUpdateOperationsInput | number
+    unlockAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutBankSavingsNestedInput
+  }
+
+  export type BankSavingUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    durationDays?: IntFieldUpdateOperationsInput | number
+    interestRateBps?: IntFieldUpdateOperationsInput | number
+    unlockAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BankSavingCreateManyInput = {
+    id?: string
+    amount: number
+    durationDays: number
+    interestRateBps: number
+    unlockAt: Date | string
+    claimedAt?: Date | string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BankSavingUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    durationDays?: IntFieldUpdateOperationsInput | number
+    interestRateBps?: IntFieldUpdateOperationsInput | number
+    unlockAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BankSavingUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    durationDays?: IntFieldUpdateOperationsInput | number
+    interestRateBps?: IntFieldUpdateOperationsInput | number
+    unlockAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DinozCreateInput = {
@@ -57746,6 +59218,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -57786,6 +59259,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -57826,6 +59300,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -57866,6 +59341,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -58646,6 +60122,18 @@ export namespace Prisma {
     senderNameSnapshot?: StringFieldUpdateOperationsInput | string
   }
 
+  export type UuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -58655,6 +60143,145 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type BankSavingCountOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    durationDays?: SortOrder
+    interestRateBps?: SortOrder
+    unlockAt?: SortOrder
+    claimedAt?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BankSavingAvgOrderByAggregateInput = {
+    amount?: SortOrder
+    durationDays?: SortOrder
+    interestRateBps?: SortOrder
+  }
+
+  export type BankSavingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    durationDays?: SortOrder
+    interestRateBps?: SortOrder
+    unlockAt?: SortOrder
+    claimedAt?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BankSavingMinOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    durationDays?: SortOrder
+    interestRateBps?: SortOrder
+    unlockAt?: SortOrder
+    claimedAt?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type BankSavingSumOrderByAggregateInput = {
+    amount?: SortOrder
+    durationDays?: SortOrder
+    interestRateBps?: SortOrder
+  }
+
+  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -58688,45 +60315,11 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type UuidFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidFilter<$PrismaModel> | string
-  }
-
   export type EnumDinozStateNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.DinozState | EnumDinozStateFieldRefInput<$PrismaModel> | null
     in?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
     notIn?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
     not?: NestedEnumDinozStateNullableFilter<$PrismaModel> | $Enums.DinozState | null
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type DinozCatchListRelationFilter = {
@@ -58782,20 +60375,10 @@ export namespace Prisma {
     none?: OfferWhereInput
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
   export type GameLogListRelationFilter = {
     every?: GameLogWhereInput
     some?: GameLogWhereInput
     none?: GameLogWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type DinozCatchOrderByRelationAggregateInput = {
@@ -58972,22 +60555,6 @@ export namespace Prisma {
     FBTournamentStep?: SortOrder
   }
 
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -59030,35 +60597,6 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
   export type EnumDinozStateNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.DinozState | EnumDinozStateFieldRefInput<$PrismaModel> | null
     in?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
@@ -59067,20 +60605,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumDinozStateNullableFilter<$PrismaModel>
     _max?: NestedEnumDinozStateNullableFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type DinozScalarRelationFilter = {
@@ -60692,6 +62216,12 @@ export namespace Prisma {
     none?: MessageWhereInput
   }
 
+  export type BankSavingListRelationFilter = {
+    every?: BankSavingWhereInput
+    some?: BankSavingWhereInput
+    none?: BankSavingWhereInput
+  }
+
   export type UserGatherOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -60733,6 +62263,10 @@ export namespace Prisma {
   }
 
   export type MessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type BankSavingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -61364,6 +62898,40 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type UserCreateNestedOneWithoutBankSavingsInput = {
+    create?: XOR<UserCreateWithoutBankSavingsInput, UserUncheckedCreateWithoutBankSavingsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBankSavingsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type UserUpdateOneRequiredWithoutBankSavingsNestedInput = {
+    create?: XOR<UserCreateWithoutBankSavingsInput, UserUncheckedCreateWithoutBankSavingsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBankSavingsInput
+    upsert?: UserUpsertWithoutBankSavingsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBankSavingsInput, UserUpdateWithoutBankSavingsInput>, UserUncheckedUpdateWithoutBankSavingsInput>
+  }
+
   export type DinozCatchCreateNestedManyWithoutDinozInput = {
     create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
@@ -61502,20 +63070,8 @@ export namespace Prisma {
     connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
   }
 
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -61526,16 +63082,8 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
   export type NullableEnumDinozStateFieldUpdateOperationsInput = {
     set?: $Enums.DinozState | null
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type DinozCatchUpdateManyWithoutDinozNestedInput = {
@@ -62796,6 +64344,13 @@ export namespace Prisma {
     connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
   }
 
+  export type BankSavingCreateNestedManyWithoutUserInput = {
+    create?: XOR<BankSavingCreateWithoutUserInput, BankSavingUncheckedCreateWithoutUserInput> | BankSavingCreateWithoutUserInput[] | BankSavingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BankSavingCreateOrConnectWithoutUserInput | BankSavingCreateOrConnectWithoutUserInput[]
+    createMany?: BankSavingCreateManyUserInputEnvelope
+    connect?: BankSavingWhereUniqueInput | BankSavingWhereUniqueInput[]
+  }
+
   export type UserGatherUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput> | UserGatherCreateWithoutUserInput[] | UserGatherUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserGatherCreateOrConnectWithoutUserInput | UserGatherCreateOrConnectWithoutUserInput[]
@@ -62932,6 +64487,13 @@ export namespace Prisma {
     connectOrCreate?: GameLogCreateOrConnectWithoutActorUserInput | GameLogCreateOrConnectWithoutActorUserInput[]
     createMany?: GameLogCreateManyActorUserInputEnvelope
     connect?: GameLogWhereUniqueInput | GameLogWhereUniqueInput[]
+  }
+
+  export type BankSavingUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<BankSavingCreateWithoutUserInput, BankSavingUncheckedCreateWithoutUserInput> | BankSavingCreateWithoutUserInput[] | BankSavingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BankSavingCreateOrConnectWithoutUserInput | BankSavingCreateOrConnectWithoutUserInput[]
+    createMany?: BankSavingCreateManyUserInputEnvelope
+    connect?: BankSavingWhereUniqueInput | BankSavingWhereUniqueInput[]
   }
 
   export type EnumRoleFieldUpdateOperationsInput = {
@@ -63215,6 +64777,20 @@ export namespace Prisma {
     deleteMany?: GameLogScalarWhereInput | GameLogScalarWhereInput[]
   }
 
+  export type BankSavingUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BankSavingCreateWithoutUserInput, BankSavingUncheckedCreateWithoutUserInput> | BankSavingCreateWithoutUserInput[] | BankSavingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BankSavingCreateOrConnectWithoutUserInput | BankSavingCreateOrConnectWithoutUserInput[]
+    upsert?: BankSavingUpsertWithWhereUniqueWithoutUserInput | BankSavingUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BankSavingCreateManyUserInputEnvelope
+    set?: BankSavingWhereUniqueInput | BankSavingWhereUniqueInput[]
+    disconnect?: BankSavingWhereUniqueInput | BankSavingWhereUniqueInput[]
+    delete?: BankSavingWhereUniqueInput | BankSavingWhereUniqueInput[]
+    connect?: BankSavingWhereUniqueInput | BankSavingWhereUniqueInput[]
+    update?: BankSavingUpdateWithWhereUniqueWithoutUserInput | BankSavingUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BankSavingUpdateManyWithWhereWithoutUserInput | BankSavingUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BankSavingScalarWhereInput | BankSavingScalarWhereInput[]
+  }
+
   export type UserGatherUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput> | UserGatherCreateWithoutUserInput[] | UserGatherUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserGatherCreateOrConnectWithoutUserInput | UserGatherCreateOrConnectWithoutUserInput[]
@@ -63485,6 +65061,20 @@ export namespace Prisma {
     update?: GameLogUpdateWithWhereUniqueWithoutActorUserInput | GameLogUpdateWithWhereUniqueWithoutActorUserInput[]
     updateMany?: GameLogUpdateManyWithWhereWithoutActorUserInput | GameLogUpdateManyWithWhereWithoutActorUserInput[]
     deleteMany?: GameLogScalarWhereInput | GameLogScalarWhereInput[]
+  }
+
+  export type BankSavingUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BankSavingCreateWithoutUserInput, BankSavingUncheckedCreateWithoutUserInput> | BankSavingCreateWithoutUserInput[] | BankSavingUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BankSavingCreateOrConnectWithoutUserInput | BankSavingCreateOrConnectWithoutUserInput[]
+    upsert?: BankSavingUpsertWithWhereUniqueWithoutUserInput | BankSavingUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BankSavingCreateManyUserInputEnvelope
+    set?: BankSavingWhereUniqueInput | BankSavingWhereUniqueInput[]
+    disconnect?: BankSavingWhereUniqueInput | BankSavingWhereUniqueInput[]
+    delete?: BankSavingWhereUniqueInput | BankSavingWhereUniqueInput[]
+    connect?: BankSavingWhereUniqueInput | BankSavingWhereUniqueInput[]
+    update?: BankSavingUpdateWithWhereUniqueWithoutUserInput | BankSavingUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BankSavingUpdateManyWithWhereWithoutUserInput | BankSavingUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BankSavingScalarWhereInput | BankSavingScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutDinozShopInput = {
@@ -63852,6 +65442,17 @@ export namespace Prisma {
     update?: XOR<XOR<ConversationUpdateToOneWithWhereWithoutPinnedMessageInput, ConversationUpdateWithoutPinnedMessageInput>, ConversationUncheckedUpdateWithoutPinnedMessageInput>
   }
 
+  export type NestedUuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -63861,6 +65462,42 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -63875,62 +65512,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type NestedUuidFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidFilter<$PrismaModel> | string
-  }
-
-  export type NestedEnumDinozStateNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.DinozState | EnumDinozStateFieldRefInput<$PrismaModel> | null
-    in?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumDinozStateNullableFilter<$PrismaModel> | $Enums.DinozState | null
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -63958,6 +65539,57 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedEnumDinozStateNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.DinozState | EnumDinozStateFieldRefInput<$PrismaModel> | null
+    in?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumDinozStateNullableFilter<$PrismaModel> | $Enums.DinozState | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -64012,34 +65644,6 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
   export type NestedEnumDinozStateNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.DinozState | EnumDinozStateFieldRefInput<$PrismaModel> | null
     in?: $Enums.DinozState[] | ListEnumDinozStateFieldRefInput<$PrismaModel> | null
@@ -64048,20 +65652,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumDinozStateNullableFilter<$PrismaModel>
     _max?: NestedEnumDinozStateNullableFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
   export type NestedJsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -64402,6 +65992,182 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumConversationTypeFilter<$PrismaModel>
     _max?: NestedEnumConversationTypeFilter<$PrismaModel>
+  }
+
+  export type UserCreateWithoutBankSavingsInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    marketOffers?: OfferCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBankSavingsInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    marketOffers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeUncheckedCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBankSavingsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBankSavingsInput, UserUncheckedCreateWithoutBankSavingsInput>
+  }
+
+  export type UserUpsertWithoutBankSavingsInput = {
+    update: XOR<UserUpdateWithoutBankSavingsInput, UserUncheckedUpdateWithoutBankSavingsInput>
+    create: XOR<UserCreateWithoutBankSavingsInput, UserUncheckedCreateWithoutBankSavingsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBankSavingsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBankSavingsInput, UserUncheckedUpdateWithoutBankSavingsInput>
+  }
+
+  export type UserUpdateWithoutBankSavingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBankSavingsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUncheckedUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
   }
 
   export type DinozCatchCreateWithoutDinozInput = {
@@ -64779,6 +66545,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDinozInput = {
@@ -64818,6 +66585,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDinozInput = {
@@ -65241,6 +67009,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDinozInput = {
@@ -65280,6 +67049,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type GameLogUpsertWithWhereUniqueWithoutDinozInput = {
@@ -66397,6 +68167,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutLogsInput = {
@@ -66436,6 +68207,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutLogsInput = {
@@ -66564,6 +68336,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActedLogsInput = {
@@ -66603,6 +68376,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActedLogsInput = {
@@ -66658,6 +68432,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutLogsInput = {
@@ -66697,6 +68472,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DinozUpsertWithoutLogsInput = {
@@ -66837,6 +68613,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActedLogsInput = {
@@ -66876,6 +68653,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type JobRunCreateWithoutJobInput = {
@@ -67300,6 +69078,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMarketOffersInput = {
@@ -67339,6 +69118,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMarketOffersInput = {
@@ -67524,6 +69304,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMarketOffersInput = {
@@ -67563,6 +69344,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type DinozUpsertWithoutMarketOffersInput = {
@@ -67836,6 +69618,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMarketBidsInput = {
@@ -67875,6 +69658,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMarketBidsInput = {
@@ -67964,6 +69748,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMarketBidsInput = {
@@ -68003,6 +69788,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type NewsCreateWithoutPollInput = {
@@ -68449,6 +70235,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPollVotesInput = {
@@ -68488,6 +70275,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPollVotesInput = {
@@ -68599,6 +70387,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPollVotesInput = {
@@ -68638,6 +70427,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type NewsCreateWithoutLikedByInput = {
@@ -68709,6 +70499,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNewsLikesInput = {
@@ -68748,6 +70539,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNewsLikesInput = {
@@ -68841,6 +70633,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNewsLikesInput = {
@@ -68880,6 +70673,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutRankingInput = {
@@ -68919,6 +70713,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRankingInput = {
@@ -68958,6 +70753,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRankingInput = {
@@ -69013,6 +70809,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRankingInput = {
@@ -69052,6 +70849,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserGatherCreateWithoutUserInput = {
@@ -69642,6 +71440,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type BankSavingCreateWithoutUserInput = {
+    id?: string
+    amount: number
+    durationDays: number
+    interestRateBps: number
+    unlockAt: Date | string
+    claimedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BankSavingUncheckedCreateWithoutUserInput = {
+    id?: string
+    amount: number
+    durationDays: number
+    interestRateBps: number
+    unlockAt: Date | string
+    claimedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type BankSavingCreateOrConnectWithoutUserInput = {
+    where: BankSavingWhereUniqueInput
+    create: XOR<BankSavingCreateWithoutUserInput, BankSavingUncheckedCreateWithoutUserInput>
+  }
+
+  export type BankSavingCreateManyUserInputEnvelope = {
+    data: BankSavingCreateManyUserInput | BankSavingCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserGatherUpsertWithWhereUniqueWithoutUserInput = {
     where: UserGatherWhereUniqueInput
     update: XOR<UserGatherUpdateWithoutUserInput, UserGatherUncheckedUpdateWithoutUserInput>
@@ -70118,6 +71948,37 @@ export namespace Prisma {
     data: XOR<GameLogUpdateManyMutationInput, GameLogUncheckedUpdateManyWithoutActorUserInput>
   }
 
+  export type BankSavingUpsertWithWhereUniqueWithoutUserInput = {
+    where: BankSavingWhereUniqueInput
+    update: XOR<BankSavingUpdateWithoutUserInput, BankSavingUncheckedUpdateWithoutUserInput>
+    create: XOR<BankSavingCreateWithoutUserInput, BankSavingUncheckedCreateWithoutUserInput>
+  }
+
+  export type BankSavingUpdateWithWhereUniqueWithoutUserInput = {
+    where: BankSavingWhereUniqueInput
+    data: XOR<BankSavingUpdateWithoutUserInput, BankSavingUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BankSavingUpdateManyWithWhereWithoutUserInput = {
+    where: BankSavingScalarWhereInput
+    data: XOR<BankSavingUpdateManyMutationInput, BankSavingUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type BankSavingScalarWhereInput = {
+    AND?: BankSavingScalarWhereInput | BankSavingScalarWhereInput[]
+    OR?: BankSavingScalarWhereInput[]
+    NOT?: BankSavingScalarWhereInput | BankSavingScalarWhereInput[]
+    id?: UuidFilter<"BankSaving"> | string
+    amount?: IntFilter<"BankSaving"> | number
+    durationDays?: IntFilter<"BankSaving"> | number
+    interestRateBps?: IntFilter<"BankSaving"> | number
+    unlockAt?: DateTimeFilter<"BankSaving"> | Date | string
+    claimedAt?: DateTimeNullableFilter<"BankSaving"> | Date | string | null
+    userId?: UuidFilter<"BankSaving"> | string
+    createdAt?: DateTimeFilter<"BankSaving"> | Date | string
+    updatedAt?: DateTimeFilter<"BankSaving"> | Date | string
+  }
+
   export type UserCreateWithoutDinozShopInput = {
     id?: string
     name: string
@@ -70155,6 +72016,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutDinozShopInput = {
@@ -70194,6 +72056,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutDinozShopInput = {
@@ -70249,6 +72112,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDinozShopInput = {
@@ -70288,6 +72152,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutGathersInput = {
@@ -70327,6 +72192,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutGathersInput = {
@@ -70366,6 +72232,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutGathersInput = {
@@ -70421,6 +72288,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutGathersInput = {
@@ -70460,6 +72328,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutIngredientsInput = {
@@ -70499,6 +72368,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutIngredientsInput = {
@@ -70538,6 +72408,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutIngredientsInput = {
@@ -70593,6 +72464,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutIngredientsInput = {
@@ -70632,6 +72504,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutItemsInput = {
@@ -70671,6 +72544,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutItemsInput = {
@@ -70710,6 +72584,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutItemsInput = {
@@ -70765,6 +72640,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutItemsInput = {
@@ -70804,6 +72680,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutProfileInput = {
@@ -70843,6 +72720,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProfileInput = {
@@ -70882,6 +72760,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProfileInput = {
@@ -70937,6 +72816,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfileInput = {
@@ -70976,6 +72856,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutRewardsInput = {
@@ -71015,6 +72896,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRewardsInput = {
@@ -71054,6 +72936,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRewardsInput = {
@@ -71109,6 +72992,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRewardsInput = {
@@ -71148,6 +73032,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutScenariosInput = {
@@ -71187,6 +73072,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutScenariosInput = {
@@ -71226,6 +73112,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutScenariosInput = {
@@ -71281,6 +73168,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutScenariosInput = {
@@ -71320,6 +73208,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutStatsTrackingInput = {
@@ -71359,6 +73248,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStatsTrackingInput = {
@@ -71398,6 +73288,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStatsTrackingInput = {
@@ -71453,6 +73344,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStatsTrackingInput = {
@@ -71492,6 +73384,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutWalletsInput = {
@@ -71531,6 +73424,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWalletsInput = {
@@ -71570,6 +73464,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWalletsInput = {
@@ -71625,6 +73520,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWalletsInput = {
@@ -71664,6 +73560,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCreatedConversationsInput = {
@@ -71703,6 +73600,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedConversationsInput = {
@@ -71742,6 +73640,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedConversationsInput = {
@@ -71885,6 +73784,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedConversationsInput = {
@@ -71924,6 +73824,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MessageUpsertWithoutPinnedInInput = {
@@ -72054,6 +73955,7 @@ export namespace Prisma {
     sentMessages?: MessageCreateNestedManyWithoutSenderInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutConversationLinksInput = {
@@ -72093,6 +73995,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutConversationLinksInput = {
@@ -72181,6 +74084,7 @@ export namespace Prisma {
     sentMessages?: MessageUpdateManyWithoutSenderNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutConversationLinksInput = {
@@ -72220,6 +74124,7 @@ export namespace Prisma {
     sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ConversationCreateWithoutMessagesInput = {
@@ -72286,6 +74191,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
     logs?: GameLogCreateNestedManyWithoutUserInput
     actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -72325,6 +74231,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
     logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
     actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -72440,6 +74347,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
     logs?: GameLogUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -72479,6 +74387,7 @@ export namespace Prisma {
     conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ConversationUpsertWithoutPinnedMessageInput = {
@@ -73336,6 +75245,17 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type BankSavingCreateManyUserInput = {
+    id?: string
+    amount: number
+    durationDays: number
+    interestRateBps: number
+    unlockAt: Date | string
+    claimedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type UserGatherUpdateWithoutUserInput = {
     place?: IntFieldUpdateOperationsInput | number
     type?: IntFieldUpdateOperationsInput | number
@@ -73864,6 +75784,39 @@ export namespace Prisma {
     dinozNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
     actorNameSnapshot?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BankSavingUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    durationDays?: IntFieldUpdateOperationsInput | number
+    interestRateBps?: IntFieldUpdateOperationsInput | number
+    unlockAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BankSavingUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    durationDays?: IntFieldUpdateOperationsInput | number
+    interestRateBps?: IntFieldUpdateOperationsInput | number
+    unlockAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BankSavingUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    durationDays?: IntFieldUpdateOperationsInput | number
+    interestRateBps?: IntFieldUpdateOperationsInput | number
+    unlockAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    claimedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ParticipantCreateManyConversationInput = {

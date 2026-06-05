@@ -120,6 +120,23 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.BankSavingScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  durationDays: 'durationDays',
+  interestRateBps: 'interestRateBps',
+  unlockAt: 'unlockAt',
+  claimedAt: 'claimedAt',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RelationLoadStrategy = {
+  query: 'query',
+  join: 'join'
+};
+
 exports.Prisma.DinozScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -150,11 +167,6 @@ exports.Prisma.DinozScalarFieldEnum = {
   leaderId: 'leaderId',
   FBTournamentStep: 'FBTournamentStep',
   userId: 'userId'
-};
-
-exports.Prisma.RelationLoadStrategy = {
-  query: 'query',
-  join: 'join'
 };
 
 exports.Prisma.DinozCatchScalarFieldEnum = {
@@ -691,6 +703,7 @@ exports.ConversationType = exports.$Enums.ConversationType = {
 };
 
 exports.Prisma.ModelName = {
+  BankSaving: 'BankSaving',
   Dinoz: 'Dinoz',
   DinozCatch: 'DinozCatch',
   DinozItems: 'DinozItems',
