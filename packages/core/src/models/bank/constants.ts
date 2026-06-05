@@ -21,3 +21,40 @@ export function getBankExchangeRateFromBps(rateBps: number) {
 export function getTreasureTicketGoldValue(quantity: number, rateBps: number) {
 	return Math.round((quantity * BANK_TREASURE_TICKET_GOLD_VALUE * rateBps) / BANK_EXCHANGE_RATE_SCALE);
 }
+
+export const BANK_SAVING_RATE_SCALE = 10000;
+
+export const BANK_SAVING_PLANS = [
+	{
+		durationDays: 7,
+		interestRateBps: 5000
+	},
+	{
+		durationDays: 14,
+		interestRateBps: 8000
+	},
+	{
+		durationDays: 21,
+		interestRateBps: 12000
+	},
+	{
+		durationDays: 30,
+		interestRateBps: 20000
+	}
+] as const;
+
+export function getBankSavingPlan(durationDays: number) {
+	return BANK_SAVING_PLANS.find(plan => plan.durationDays === durationDays);
+}
+
+export function getBankSavingInterestRateFromBps(interestRateBps: number) {
+	return interestRateBps / BANK_SAVING_RATE_SCALE;
+}
+
+export function getBankSavingInterestGold(amount: number, interestRateBps: number) {
+	return Math.round((amount * interestRateBps) / BANK_SAVING_RATE_SCALE);
+}
+
+export function getBankSavingTotalGold(amount: number, interestRateBps: number) {
+	return amount + getBankSavingInterestGold(amount, interestRateBps);
+}
