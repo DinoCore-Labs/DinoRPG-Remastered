@@ -9,6 +9,27 @@ datasource db {
   provider = "postgresql"
 }
 
+model BankSaving {
+  id String @id @default(uuid()) @db.Uuid
+
+  amount          Int
+  durationDays    Int
+  interestRateBps Int
+  unlockAt        DateTime  @db.Timestamptz(3)
+  claimedAt       DateTime? @db.Timestamptz(3)
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([userId])
+  @@index([userId, claimedAt])
+  @@index([unlockAt])
+  @@map("bank_saving")
+}
+
 model Dinoz {
   id                 Int         @id @default(autoincrement())
   name               String      @db.VarChar(32)
@@ -534,6 +555,8 @@ model User {
   actedLogs GameLog[] @relation("GameLogActor")
 
   discoveredSkills Int[] @default([])
+
+  bankSavings BankSaving[]
 }
 
 model UserDinozShop {
