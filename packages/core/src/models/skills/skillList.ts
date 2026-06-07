@@ -3868,7 +3868,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.2 }
+			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 0.8 }
 		}
 	},
 	[Skill.PAUME_EJECTABLE]: {
