@@ -2,13 +2,13 @@
 	<div class="dinoz">
 		<TitleHeader :title="$t('pageTitle.dinoz', { dinoz: dinozData.name })" />
 		<div class="navigation">
-			<router-link v-if="getDinozId(-1)" :to="{ name: 'DinozPage', params: { id: prevId } }" class="see-button">
+			<router-link v-if="prevId" :to="{ name: 'DinozPage', params: { id: prevId } }" class="see-button">
 				<img :src="getImgURL('background', 'left')" />
 			</router-link>
 			<div class="title">
 				<span class="dinozName">{{ dinozData.name }}</span>
 			</div>
-			<router-link v-if="getDinozId(1)" :to="{ name: 'DinozPage', params: { id: nextId } }" class="see-button">
+			<router-link v-if="nextId" :to="{ name: 'DinozPage', params: { id: nextId } }" class="see-button">
 				<img :src="getImgURL('background', 'right')" />
 			</router-link>
 		</div>
@@ -51,6 +51,7 @@ import DinozStatus from './DinozStatus.vue';
 import TitleHeader from '../utils/TitleHeader.vue';
 import type DinozAnimation from './DinozAnimation.vue';
 import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
+import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -92,6 +93,12 @@ export default defineComponent({
 		},
 		isFrozen(): boolean {
 			return this.dinozData.state === DINOZ_STATE.frozen || this.dinozData.state === DINOZ_STATE.unfreezing;
+		},
+		orderedDinozList(): DinozFiche[] {
+			const activeDinoz = (this.dinozStore.getDinozList as DinozFiche[]).filter(
+				dinoz => dinoz.state !== DINOZ_STATE.frozen
+			);
+			return orderDinozList(activeDinoz, { keepFollowersAfterLeader: true });
 		}
 	},
 	methods: {
@@ -114,9 +121,9 @@ export default defineComponent({
 			return 'top: -15px;';
 		},
 		getDinozId(shift: number): number | null {
-			const list = this.dinozStore.getDinozList ?? [];
+			const list = this.orderedDinozList;
 			if (list.length === 0) return null;
-			const currentIndex = list.findIndex(d => d.id === this.dinozData.id);
+			const currentIndex = list.findIndex(dinoz => dinoz.id === this.dinozData.id);
 			if (currentIndex === -1) return null;
 			const newIndex = currentIndex + shift;
 			if (newIndex < 0) return list[list.length - 1]!.id;
