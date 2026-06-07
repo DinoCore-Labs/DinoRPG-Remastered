@@ -18,7 +18,7 @@
 		"menu": "Menu",
 		"leftUserMenu": {
 			"shop": "Shop",
-			"bank": "Banque",
+			"bank": "Bank",
 			"dojo": "Dojo",
 			"order": "Order",
 			"enclosure": "Enclosure",
@@ -202,8 +202,8 @@
 		"fb_tournament": "DinoRPG [ BrutForce Tournament ]",
 		"manageDinoz": "DinoRPG [ Manage my Dinoz ]",
 		"market": "DinoRPG [ Tamer Market ]",
-		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
-		"bank": "DinoRPG [ Banque de Dinoland ]",
+		"skillTrees": "DinoRPG [ Skill Trees ]",
+		"bank": "DinoRPG [ Bank of Dinoland ]",
 		"admin": "DinoRPG [ Admin Dashboard ]"
 	},
 	"adminPage": {
@@ -298,18 +298,18 @@
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
 			"futurTitle": "Dinolandian Future",
 			"futureInfo1": {
-				"text1": "Les clans",
-				"text2": "La Banque de Dinoland",
-				"text3": "Correction des bugs"
+				"text1": "The Clans",
+				"text2": "The Bank of Dinoland",
+				"text3": "Bug fixes"
 			},
 			"futureInfo2": {
-				"text1": "Maître Zenith et le dojo",
-				"text2": "Le tournoi inter dojo (event PVP)",
-				"text3": "Correction de bugs"
+				"text1": "Mayor Zenith and the Dojo",
+				"text2": "The Inter-Dojo Tournament (PVP)",
+				"text3": "Bug fixes"
 			},
 			"futureInfo3": {
 				"text1": "Monster Hunt (PVE)",
-				"text2": "Correction de bugs"
+				"text2": "Bug fixes"
 			},
 			"futureInfo4": {
 				"text1": "Coming soon"
@@ -321,13 +321,13 @@
 		"chose": "Buy",
 		"name": "Confirm !",
 		"shop": "Shop",
-		"bank": "Banque",
+		"bank": "Bank",
 		"search": "Search",
 		"loading": "Loading...",
 		"noResults": "No result",
 		"sortDinoz": "Manage my Dinoz",
 		"skills": "...Skills :",
-		"unavailable": "Indisponible"
+		"unavailable": "Unavailable"
 	},
 	"popup": {
 		"confirm": "Confirm this action?",
@@ -516,7 +516,7 @@
 		"backpackFull": "There aren't any free space in the backpack of this dinoz.",
 		"OnlyLettersAndNumbers": "Incorrect name ! You can only use between 3 and 16 letters or numbers.",
 		"tooManyActiveDinoz": "You have too many active Dinoz.",
-		"notEnoughIngredients": "Vous n'avez pas assez d'ingrédients.",
+		"notEnoughIngredients": "You don't have enough ingredients.",
 		"notEnoughItems": "You don't have enough of this item.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or",
 		"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
@@ -655,7 +655,7 @@
 			"allStates": "All states",
 			"active": "Active",
 			"frozen": "Frozen",
-			"empty": "Aucun Dinoz ne correspond aux filtres."
+			"empty": "No Dinoz matches the filters."
 		}
 	},
 	"userCard": {
@@ -3195,7 +3195,7 @@
 		}
 	},
 	"skillTrees": {
-		"title": "Arbres de compétences",
+		"title": "Skill Trees",
 		"description": "Retrouve ici toutes les compétences découvertes par tes Dinoz.",
 		"empty": "Aucune compétence découverte pour le moment.",
 		"level": "Niveau {level}"
