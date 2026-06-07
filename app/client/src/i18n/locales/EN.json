@@ -1235,13 +1235,13 @@
 			"Mistral": "Attack all opponents with an Air power of 3",
 			"TaiChi": "Increase strength of Air **assault** by 15. Decreases speed of Air attacks by 20%.",
 			"Tornade": "Attack all enemies with Air at a strength of 10 and make the flying ones fall to the ground",
-			"Eveil": "Decrease speed of Air attacks by 20%",
+			"Eveil": "Increase speed of Air attacks by 20%",
 			"PaumeEjectable": "Attack one enemy with double power, then decreases initiative by 15",
 			"VentVif": "Gain accelerated status (increases speed by 50%) for a short duration",
 			"FormeVaporeuse": "The Dinoz has 6% chance to become immaterial for a short duration right before being targeted by an attack.",
 			"Professeur": "Increase the experience gained by all Dinoz by 5% (non-cumulative)",
-			"MeditationSolitaire": "Increase Air defense by 3. Decrease the speed of Air attacks by 50%.",
-			"MeditationTranscendantale": "Increase Air defense by 6. Decrease the speed of Air attacks by 50%.",
+			"MeditationSolitaire": "Increase Air defense by 3",
+			"MeditationTranscendantale": "Increase Air defense by 6. Decrease the speed of Air attacks by 25%.",
 			"SouffleDeVie": "Protect Dinoz against poisons and curses",
 			"FormeEtherale": "The Dinoz start the fight in immaterial state for an infinite duration",
 			"Brasero": "Attack all opponents with a Fire power of 3",
@@ -3198,12 +3198,12 @@
 	},
 	"skillTrees": {
 		"title": "Skill Trees",
-		"description": "Retrouve ici toutes les compétences découvertes par tes Dinoz.",
+		"description": "Here you will find all the competencies discovered by your Dinoz.",
 		"empty": "Aucune compétence découverte pour le moment.",
-		"level": "Niveau {level}"
+		"level": "Level {level}"
 	},
 	"bank": {
-		"title": "Banque de Dinoland",
+		"title": "The Bank of Dinoland",
 		"rotshil": "Rotshil",
 		"description": "Bienvenue à la Banque de Dinoland, je suis Rotshil, le banquier. && && Chaque jour, je vous offre la possibilité d'échanger vos bons du trésor contre de l'or. Bien sûr, le taux de change va fluctuer chaque jour, alors n'hésitez pas à revenir régulièrement pour profiter des meilleurs taux ! && && En plus de cela, je peux aussi vous proposer d'autres services financiers très intéressants, mais ils ne sont pas encore disponibles, alors un peu de patience !",
 		"tabs": {
