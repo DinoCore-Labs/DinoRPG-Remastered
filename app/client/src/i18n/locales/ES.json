@@ -516,6 +516,7 @@
 		"backpackFull": "Tu Dino ya no tiene espacio suficiente en su equipamiento {dinozId}.",
 		"OnlyLettersAndNumbers": "¡Nombre incorrecto! Debes usar entre 3 y 32 caracteres, que pueden ser números o letras.",
 		"tooManyActiveDinoz": "Ya tienes demasiados Dinos activos.",
+		"notEnoughIngredients": "Vous n'avez pas assez d'ingrédients.",
 		"notEnoughItems": "No tienes suficiente cantidad de este objeto.",
 		"notEnoughMoney": "No tienes suficiente oro.",
 		"tooManyMagicItemEquiped": "Tu Dino no puede equiparse con más objetos mágicos.",
