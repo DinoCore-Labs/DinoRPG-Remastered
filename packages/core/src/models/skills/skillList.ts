@@ -4006,9 +4006,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.EVEIL],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		effects: {
-			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.5 }
-		},
 		globalEffects: {
 			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: 3 }
 		}
@@ -4090,7 +4087,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.5 }
+			[Stat.AIR_SPEED]: { operator: MathOperator.MULTIPLY, value: 1.25 }
 		},
 		globalEffects: {
 			[Stat.AIR_DEFENSE]: { operator: MathOperator.ADD, value: 6 }
