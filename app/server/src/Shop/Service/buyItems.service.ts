@@ -92,20 +92,30 @@ export async function buyItemHandler(
 		}
 		// Cas filou => coupons
 		else if (theShop.type === ShopType.FILOU) {
-			const ticketWallet = playerShopData.wallets.find(w => w.type === 'TREASURE_TICKET');
-			const before = ticketWallet?.amount ?? 0;
-			const after = before + quantityBought;
-
-			await addTreasureTicket(userId, quantityBought);
-
-			await incrementUserStat(StatTracking.S_BUYER, userId, quantityBought);
-
 			const itemFromShop = shopListV2.FILOU.listItemsSold.find(i => i.id === itemId);
 			if (!itemFromShop) throw new ExpectedError(`The item ${itemId} is not sellable for coupons!`);
 
 			const ingredientQuantityUsed = itemFromShop.price * quantityBought;
 
-			await decreaseIngredientQuantity(userId, itemReference.itemId, itemFromShop.price * quantityBought);
+			const playerIngredient = playerShopData.ingredients.find(
+				ingredient => ingredient.ingredientId === itemReference.itemId
+			);
+
+			const currentIngredientQuantity = playerIngredient?.quantity ?? 0;
+
+			if (currentIngredientQuantity < ingredientQuantityUsed) {
+				throw new ExpectedError('notEnoughIngredients');
+			}
+
+			const ticketWallet = playerShopData.wallets.find(w => w.type === 'TREASURE_TICKET');
+			const before = ticketWallet?.amount ?? 0;
+			const after = before + quantityBought;
+
+			await decreaseIngredientQuantity(userId, itemReference.itemId, ingredientQuantityUsed);
+
+			await addTreasureTicket(userId, quantityBought);
+
+			await incrementUserStat(StatTracking.S_BUYER, userId, quantityBought);
 
 			safeCreateGameLog(
 				{
@@ -128,6 +138,7 @@ export async function buyItemHandler(
 				},
 				req.log
 			);
+
 			return reply.status(200).send({
 				wallet: 'TREASURE_TICKET',
 				quantity: quantityBought,
