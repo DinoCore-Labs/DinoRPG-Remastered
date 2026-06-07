@@ -181,31 +181,24 @@ watch(() => [uStore.discoveredSkills, props.type, props.treeType, props.dinozSki
 	margin: 8px;
 	padding: 10px;
 	padding-top: 0;
-
 	&.element-1 {
 		background-color: #d83a2f;
 	}
-
 	&.element-2 {
 		background-color: #af7d5d;
 	}
-
 	&.element-3 {
 		background-color: #4ea0e2;
-
 		.element {
 			color: white;
 		}
 	}
-
 	&.element-4 {
 		background-color: #faf24e;
 	}
-
 	&.element-5 {
 		background-color: #a9d7e8;
 	}
-
 	.element {
 		display: flex;
 		align-items: center;
@@ -215,22 +208,18 @@ watch(() => [uStore.discoveredSkills, props.type, props.treeType, props.dinozSki
 		font-size: 8pt;
 		font-variant: small-caps;
 		font-weight: bold;
-
 		img {
 			width: 16px;
 		}
 	}
-
 	table {
 		width: 100%;
 		border-collapse: collapse;
 		background-color: #e0b785;
 		border: 3px solid #793f1f;
-
 		tr {
 			background-color: #e0b785;
 		}
-
 		th {
 			border: 3px solid #793f1f;
 			background-color: #793f1f;
@@ -242,7 +231,6 @@ watch(() => [uStore.discoveredSkills, props.type, props.treeType, props.dinozSki
 			padding: 2px;
 			white-space: nowrap;
 		}
-
 		td {
 			border: 3px solid #793f1f;
 			text-align: center;
@@ -252,18 +240,14 @@ watch(() => [uStore.discoveredSkills, props.type, props.treeType, props.dinozSki
 			font-size: 8pt;
 			padding: 2px;
 			min-width: 90px;
-
 			&.learned {
 				background-color: #d39f63;
 			}
-
 			&.unknown {
 				color: rgba(121, 63, 31, 0.65);
 			}
-
 			&:not(.base) {
 				position: relative;
-
 				&::before {
 					content: '';
 					position: absolute;
@@ -274,6 +258,19 @@ watch(() => [uStore.discoveredSkills, props.type, props.treeType, props.dinozSki
 					border-top: 3px solid #793f1f;
 				}
 			}
+		}
+	}
+}
+@media (max-width: 530px) {
+	.skill-tree-wrapper {
+		width: 96%;
+		max-width: 100%;
+		margin: 8px 0;
+		padding: 8px;
+		box-sizing: border-box;
+		table {
+			width: max-content;
+			min-width: 100%;
 		}
 	}
 }
