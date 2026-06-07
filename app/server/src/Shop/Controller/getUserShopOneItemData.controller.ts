@@ -26,6 +26,7 @@ export async function getUserShopOneItemDataRequest(userId: string, itemId: numb
 					itemId: { in: [itemId, itemList[Item.GOLDEN_NAPODINO].itemId] }
 				}
 			},
+			ingredients: true,
 			dinoz: {
 				select: {
 					placeId: true,
