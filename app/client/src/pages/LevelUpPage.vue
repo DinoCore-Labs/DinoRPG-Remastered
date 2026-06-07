@@ -665,4 +665,25 @@ export default defineComponent({
 		}
 	}
 }
+
+@media (max-width: 530px) {
+	.wrapper {
+		width: 100%;
+		flex-direction: column;
+		gap: 15px;
+	}
+	.slide-bottom {
+		width: 100%;
+	}
+	.select {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		table {
+			width: 95%;
+		}
+	}
+}
 </style>
