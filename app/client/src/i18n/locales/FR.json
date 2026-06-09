@@ -475,6 +475,18 @@
 			"exchange": {
 				"success": "Vous avez converti {quantity} :ticket: contre {gold} :gold:.",
 				"rateError": "Impossible de récupérer le taux de change de la banque."
+			},
+			"savings": {
+				"success": "Vous avez placé {gold} pièces d'or en épargne pendant {days} jours. Vous récupérerez {total} pièces d'or.",
+				"claimSuccess": "Vous avez récupéré votre épargne : {gold} pièces d'or.",
+				"loadError": "Impossible de récupérer vos épargnes.",
+				"error": "L'opération d'épargne a échoué.",
+				"wrongQuantity": "Le montant demandé est invalide.",
+				"wrongDuration": "La durée d'épargne demandée est invalide.",
+				"notEnoughGold": "Vous n'avez pas assez de pièces d'or.",
+				"notReady": "Cette épargne n'est pas encore disponible.",
+				"alreadyClaimed": "Cette épargne a déjà été récupérée.",
+				"notFound": "Cette épargne est introuvable."
 			}
 		},
 		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
@@ -3217,6 +3229,22 @@
 			"max": "Max",
 			"youWillReceive": "Vous recevrez **{gold}** :gold:",
 			"convert": "Convertir"
+		},
+		"savings": {
+			"title": "Épargne",
+			"amount": "Montant à épargner",
+			"duration": "Durée de l'épargne",
+			"durationOption": "{days} jours (+{percent}%)",
+			"save": "Épargner",
+			"activeTitle": "Vos épargnes",
+			"empty": "Vous n'avez aucune épargne en cours.",
+			"previewEmpty": "Choisissez un montant à épargner.",
+			"preview": "Vous épargnez **{gold}** :gold: et recevrez **{interest}** :gold: d'intérêts, soit **{total}** :gold: au total.",
+			"itemDuration": "Durée : {days} jours",
+			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
+			"unlockAt": "Disponible le {date}",
+			"claim": "Récupérer",
+			"claimed": "Récupéré"
 		}
 	},
 	"npc": {
