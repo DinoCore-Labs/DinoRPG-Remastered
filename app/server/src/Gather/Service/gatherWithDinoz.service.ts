@@ -100,7 +100,7 @@ export async function gatherWithDinozHandler(
 	if (boxToOpen.length > getNumberOfGatheringTries(dinozData, gather)) {
 		throw new ExpectedError(`You have selected too many square`);
 	}
-	const returnGrid = discoverBox(myGrid, gather, ...boxToOpen);
+	const returnGrid = discoverBox(myGrid, gather, conditionContext, ...boxToOpen);
 	const nextGridState = saveGrid(myGrid, ...boxToOpen);
 	await updateGrid(user.id, dinozId, myGrid.id, nextGridState);
 	for (const [index, rewardedItem] of returnGrid.rewards.item.entries()) {
