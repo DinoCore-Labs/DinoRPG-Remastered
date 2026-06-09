@@ -531,6 +531,12 @@
 
 ## 🔹 Server
 
+## 0.27.1
+
+### Patch Changes
+
+- 1e344e4: bug fixes and seo
+
 ## 0.27.0
 
 ### Minor Changes
@@ -1207,6 +1213,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.26.1
+
+### Patch Changes
+
+- 1e344e4: bug fixes and seo
 
 ## 0.26.0
 
