@@ -18,6 +18,7 @@ import { addMoney } from '../../User/Controller/money.controller.js';
 import { buildConditionContext } from '../../utils/conditions/buildConditionContext.js';
 import { checkCondition } from '../../utils/conditions/checkCondition.js';
 import { getNumberOfGatheringTries } from '../../utils/dinoz/getNumberOfGatheringTries.js';
+import { OPENED_GATHER_CELL } from '../../utils/gather/gather.codec.js';
 import { getCompiledGather } from '../../utils/gather/gather.compiler.js';
 import { discoverBox, getGridSize, saveGrid } from '../../utils/gather/gather.mapper.js';
 import { selectBox } from '../../utils/gather/selectBox.js';
@@ -35,6 +36,37 @@ type GatherWithDinozBody = {
 };
 
 const getIngredientRewardQuantity = (quantity?: number) => Math.max(1, quantity ?? 1);
+
+const sanitizeBoxesToOpen = (boxes: number[][], grid: number[], size: number): [number, number][] => {
+	if (!Array.isArray(boxes) || boxes.length === 0) {
+		throw new ExpectedError(`No square selected`);
+	}
+	const seen = new Set<string>();
+	const sanitizedBoxes: [number, number][] = [];
+	for (const element of boxes) {
+		if (!Array.isArray(element) || element.length !== 2) {
+			throw new ExpectedError(`This coordinate is not correct : ${JSON.stringify(element)}`);
+		}
+		if (!element.every(coord => Number.isInteger(coord) && Number.isFinite(coord))) {
+			throw new ExpectedError(`This coordinate is not correct : ${JSON.stringify(element)}`);
+		}
+		const [x, y] = element as [number, number];
+		if (x >= size || y >= size || x < 0 || y < 0) {
+			throw new ExpectedError(`This coordinate is out of the grid : ${JSON.stringify(element)}`);
+		}
+		const key = `${x}:${y}`;
+		if (seen.has(key)) {
+			throw new ExpectedError(`You cannot select the same square multiple times`);
+		}
+		seen.add(key);
+		const index = x * size + y;
+		if (grid[index] === OPENED_GATHER_CELL) {
+			throw new ExpectedError(`This square is already opened`);
+		}
+		sanitizedBoxes.push([x, y]);
+	}
+	return sanitizedBoxes;
+};
 
 export async function gatherWithDinozHandler(
 	req: FastifyRequest<{ Params: GatherWithDinozParams; Body: GatherWithDinozBody }>,
@@ -83,20 +115,8 @@ export async function gatherWithDinozHandler(
 		await removeItem(user.id, gatherCost.itemId, 1);
 		await incrementUserStat(StatTracking.ITEM_USED, user.id, 1);
 	}
-	const boxToSanitize: number[][] = req.body.box;
 	const size = getGridSize(myGrid);
-	for (const element of boxToSanitize) {
-		if (!Array.isArray(element) || element.length !== 2) {
-			throw new ExpectedError(`This coordinate is not correct : ${JSON.stringify(element)}`);
-		}
-		if (!element.every(coord => typeof coord === 'number' && Number.isFinite(coord))) {
-			throw new ExpectedError(`This coordinate is not correct : ${JSON.stringify(element)}`);
-		}
-		if (element.some(coord => coord >= size || coord < 0)) {
-			throw new ExpectedError(`This coordinate is out of the grid : ${JSON.stringify(element)}`);
-		}
-	}
-	const boxToOpen = boxToSanitize as [number, number][];
+	const boxToOpen = sanitizeBoxesToOpen(req.body.box, myGrid.grid, size);
 	if (boxToOpen.length > getNumberOfGatheringTries(dinozData, gather)) {
 		throw new ExpectedError(`You have selected too many square`);
 	}
