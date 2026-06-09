@@ -477,16 +477,9 @@
 				"rateError": "Impossible de récupérer le taux de change de la banque."
 			},
 			"savings": {
-				"success": "Vous avez placé {gold} pièces d'or en épargne pendant {days} jours. Vous récupérerez {total} pièces d'or.",
-				"claimSuccess": "Vous avez récupéré votre épargne : {gold} pièces d'or.",
-				"loadError": "Impossible de récupérer vos épargnes.",
-				"error": "L'opération d'épargne a échoué.",
-				"wrongQuantity": "Le montant demandé est invalide.",
-				"wrongDuration": "La durée d'épargne demandée est invalide.",
-				"notEnoughGold": "Vous n'avez pas assez de pièces d'or.",
-				"notReady": "Cette épargne n'est pas encore disponible.",
-				"alreadyClaimed": "Cette épargne a déjà été récupérée.",
-				"notFound": "Cette épargne est introuvable."
+				"success": "Vous avez placé {gold} :gold: en épargne pendant {days} jours. Vous récupérerez {total} :gold:.",
+				"claimSuccess": "Vous avez récupéré votre épargne : {gold} :gold:.",
+				"loadError": "Impossible de récupérer vos épargnes."
 			}
 		},
 		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
@@ -558,7 +551,13 @@
 			"notRegistered": "Ce Dinoz n’est pas inscrit au Tournoi de Forcebrut.",
 			"wrongPlace": "Votre Dinoz doit être à Forcebrut pour participer au tournoi.",
 			"noOpponent": "Aucun adversaire n’est encore disponible pour ce palier."
-		}
+		},
+		"notEnoughGold": "Vous n'avez pas assez d'or.",
+		"wrongQuantity": "La quantité demandée est invalide.",
+		"wrongBankSavingDuration": "La durée d'épargne demandée est invalide.",
+		"bankSavingNotReady": "Cette épargne n'est pas encore disponible.",
+		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
+		"bankSavingNotFound": "Cette épargne est introuvable."
 	},
 	"tooltip": {
 		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
