@@ -1,6 +1,11 @@
 import { FastifyInstance } from 'fastify';
 
-import { itinerantDinozIdParamsSchema, shopDinozIdParamsSchema, shopIdParamsSchema } from '../Schema/shop.schema.js';
+import {
+	itinerantDinozIdParamsSchema,
+	sellIngredientsBodySchema,
+	shopDinozIdParamsSchema,
+	shopIdParamsSchema
+} from '../Schema/shop.schema.js';
 import { buyDinoz } from '../Service/buyDinoz.service.js';
 import { buyItemHandler } from '../Service/buyItems.service.js';
 import { getDinozFromDinozShop } from '../Service/getDinozFromDinozShop.service.js';
@@ -63,7 +68,8 @@ export async function shopRoutes(app: FastifyInstance) {
 			preHandler: app.authenticate,
 			schema: {
 				tags: ['Shop'],
-				params: itinerantDinozIdParamsSchema
+				params: itinerantDinozIdParamsSchema,
+				body: sellIngredientsBodySchema
 			}
 		},
 		sellIngredient
