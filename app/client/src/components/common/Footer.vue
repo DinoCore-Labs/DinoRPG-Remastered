@@ -7,7 +7,7 @@
 					<li v-for="dev in developers" :key="dev">{{ dev }}</li>
 				</ul>
 			</div>
-			<div class="box description" id="eternaltwin">
+			<div class="box description">
 				<div>
 					<img class="logo" :src="getImgURL('background', '4dinoz')" alt="4 Dinoz" />
 				</div>
@@ -207,7 +207,7 @@ footer {
 		flex: 1 1 40%;
 	}
 	& ul {
-		font-size: 1rem;
+		font-size: 0.8rem;
 	}
 }
 .box.description {
