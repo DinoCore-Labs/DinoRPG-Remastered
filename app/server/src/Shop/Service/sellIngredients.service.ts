@@ -4,13 +4,12 @@ import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyRequest } from 'fastify';
 
-import { GameLogType, MoneyType } from '../../../../prisma/index.js';
+import { GameLogType } from '../../../../prisma/index.js';
 import { getDinozFromItinerantShop } from '../../Dinoz/Controller/getDinozFromItinerantShop.controller.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { decreaseIngredientQuantity } from '../../Inventory/Controller/addIngredient.controller.js';
 import { getUserIngredientDataRequest } from '../../Inventory/Controller/getUserIngredient.controller.js';
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
-import { prisma } from '../../prisma.js';
 import { addMoney } from '../../User/Controller/money.controller.js';
 import { buildConditionContext } from '../../utils/conditions/buildConditionContext.js';
 import { checkCondition } from '../../utils/conditions/checkCondition.js';

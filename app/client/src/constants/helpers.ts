@@ -1,1 +1,1 @@
-export const helpers = [''];
+export const helpers = ['La team Eternaltwin'];
