@@ -1,3 +1,4 @@
+import { Condition } from '@dinorpg/core/models/conditions/conditions.js';
 import { ConditionsContext } from '@dinorpg/core/models/conditions/conditionsContext.js';
 import { GatherType } from '@dinorpg/core/models/enums/GatherType.js';
 import { GatherResult } from '@dinorpg/core/models/gather/gatherResult.js';
@@ -21,10 +22,31 @@ function pickRandom<T>(values: T[]): T {
 	return values[Math.floor(Math.random() * values.length)]!;
 }
 
+function evalGatherGenerationCondition(context: ConditionsContext, condition: Condition): boolean {
+	switch (condition.type) {
+		case 'skill':
+			return true;
+		case 'and':
+			return (
+				evalGatherGenerationCondition(context, condition.left) &&
+				evalGatherGenerationCondition(context, condition.right)
+			);
+		case 'or':
+			return (
+				evalGatherGenerationCondition(context, condition.left) ||
+				evalGatherGenerationCondition(context, condition.right)
+			);
+		case 'not':
+			return !evalGatherGenerationCondition(context, condition.condition);
+		default:
+			return evalCondition(context, condition);
+	}
+}
+
 function buildRewardPool(gather: CompiledGatherData, context: ConditionsContext): number[] {
 	const pool: number[] = [];
 	for (const entry of gather.found) {
-		if (!evalCondition(context, entry.condition)) {
+		if (!evalGatherGenerationCondition(context, entry.condition)) {
 			continue;
 		}
 		for (let index = 0; index < entry.count; index += 1) {
@@ -91,9 +113,55 @@ export const getPublicGrid = (grid: Pick<UserGather, 'grid'>) => {
 	return grid.grid.map(value => (value >= 0 ? 0 : -1));
 };
 
+function canClaimRewardCondition(context: ConditionsContext, condition: Condition): boolean {
+	switch (condition.type) {
+		case 'skill':
+			return evalCondition(context, condition);
+		case 'and':
+			return canClaimRewardCondition(context, condition.left) && canClaimRewardCondition(context, condition.right);
+		case 'or':
+			return canClaimRewardCondition(context, condition.left) || canClaimRewardCondition(context, condition.right);
+		case 'not':
+			if (condition.condition.type === 'skill') {
+				return !evalCondition(context, condition.condition);
+			}
+			return true;
+		default:
+			return true;
+	}
+}
+
+function rewardMatchesEntry(
+	reward: ReturnType<typeof decodeGatherReward>,
+	entry: CompiledGatherData['found'][number]
+): boolean {
+	if (!reward) {
+		return false;
+	}
+	switch (reward.kind) {
+		case 'ingredient':
+			return entry.reward.kind === 'ingredient' && entry.reward.ids.includes(reward.ingredientId);
+		case 'item':
+			return entry.reward.kind === 'item' && entry.reward.ids.includes(reward.itemId);
+		case 'gold':
+			return entry.reward.kind === 'gold' && entry.reward.amount === reward.amount;
+	}
+}
+
+function canClaimGatherReward(
+	context: ConditionsContext,
+	gather: CompiledGatherData,
+	reward: ReturnType<typeof decodeGatherReward>
+): boolean {
+	return gather.found.some(entry => {
+		return rewardMatchesEntry(reward, entry) && canClaimRewardCondition(context, entry.condition);
+	});
+}
+
 export const discoverBox = (
 	grid: Pick<UserGather, 'grid'>,
 	gather: CompiledGatherData,
+	context: ConditionsContext,
 	...box: [number, number][]
 ): GatherResult => {
 	const flatReturnGrid = getPublicGrid(grid);
@@ -109,6 +177,9 @@ export const discoverBox = (
 		flatReturnGrid[index] = OPENED_GATHER_CELL;
 		const reward = decodeGatherReward(cellValue);
 		if (!reward) continue;
+		if (!canClaimGatherReward(context, gather, reward)) {
+			continue;
+		}
 		switch (reward.kind) {
 			case 'gold':
 				rewards.gold += reward.amount;
