@@ -80,7 +80,6 @@ import type { BankSavingPlanResponse, BankSavingResponse } from '@dinorpg/core/m
 import { getBankSavingInterestGold, getBankSavingTotalGold } from '@dinorpg/core/models/bank/constants.js';
 import { defineComponent } from 'vue';
 
-import eventBus from '../../events';
 import { BankService } from '../../services/bank.service';
 import { userStore } from '../../store/userStore';
 import { beautifulNumber } from '../../utils/beautifulNumber';
@@ -89,14 +88,7 @@ import { getImgURL } from '../../utils/getImgURL';
 import DZButton from '../utils/DZButton.vue';
 import DZInput from '../utils/DZInput.vue';
 import DZSelect from '../utils/DZSelect.vue';
-
-type ApiError = {
-	response?: {
-		data?: {
-			error?: string;
-		};
-	};
-};
+import { errorHandler } from '../../utils/errorHandler.ts';
 
 export default defineComponent({
 	name: 'BankSavings',
@@ -174,7 +166,10 @@ export default defineComponent({
 					this.selectedDurationDays = this.plans[0]?.durationDays ?? 7;
 				}
 			} catch {
-				this.showToast('error', 'bank.savings.loadError');
+				this.$toast.open({
+					message: this.$t('toast.bank.savings.loadError'),
+					type: 'error'
+				});
 			} finally {
 				this.dataLoaded = true;
 			}
@@ -209,14 +204,19 @@ export default defineComponent({
 				const result = await BankService.createSaving(this.normalizedAmount, Number(this.selectedDurationDays));
 				this.uStore.setGold(result.wallets.gold);
 				this.savings = [result.saving, ...this.savings];
-				this.showToast('success', 'bank.savings.success', {
-					gold: beautifulNumber(result.saving.amount),
-					days: result.saving.durationDays,
-					total: beautifulNumber(result.saving.totalGold)
+				this.$toast.open({
+					message: formatText(
+						this.$t('toast.bank.savings.success', {
+							gold: beautifulNumber(result.saving.amount),
+							days: result.saving.durationDays,
+							total: beautifulNumber(result.saving.totalGold)
+						})
+					),
+					type: 'success'
 				});
 				this.amount = result.wallets.gold > 0 ? 1 : 0;
 			} catch (err) {
-				this.handleSavingError(err);
+				errorHandler.handle(err, this.$toast);
 			} finally {
 				this.saving = false;
 			}
@@ -227,40 +227,19 @@ export default defineComponent({
 				const result = await BankService.claimSaving(id);
 				this.uStore.setGold(result.wallets.gold);
 				this.savings = this.savings.map(saving => (saving.id === id ? result.saving : saving));
-				this.showToast('success', 'bank.savings.claimSuccess', {
-					gold: beautifulNumber(result.saving.totalGold)
+				this.$toast.open({
+					message: formatText(
+						this.$t('toast.bank.savings.claimSuccess', {
+							gold: beautifulNumber(result.saving.totalGold)
+						})
+					),
+					type: 'success'
 				});
 			} catch (err) {
-				this.handleSavingError(err);
+				errorHandler.handle(err, this.$toast);
 			} finally {
 				this.claimingId = null;
 			}
-		},
-		handleSavingError(err: unknown) {
-			const error = (err as ApiError).response?.data?.error;
-			this.showToast(
-				'error',
-				error === 'notEnoughGold'
-					? 'bank.savings.notEnoughGold'
-					: error === 'wrongQuantity'
-						? 'bank.savings.wrongQuantity'
-						: error === 'wrongBankSavingDuration'
-							? 'bank.savings.wrongDuration'
-							: error === 'bankSavingNotReady'
-								? 'bank.savings.notReady'
-								: error === 'bankSavingAlreadyClaimed'
-									? 'bank.savings.alreadyClaimed'
-									: error === 'bankSavingNotFound'
-										? 'bank.savings.notFound'
-										: 'bank.savings.error'
-			);
-		},
-		showToast(type: 'success' | 'error', message: string, params: Record<string, unknown> = {}) {
-			eventBus.emit('toast', {
-				type,
-				message,
-				params
-			});
 		},
 		savingDateLabel(date: string) {
 			return this.$t('bank.savings.unlockAt', {
