@@ -1,4 +1,5 @@
 import {
+	BANK_SAVING_MAX_DEPOSIT,
 	BANK_SAVING_PLANS,
 	getBankSavingInterestGold,
 	getBankSavingInterestRateFromBps,
@@ -71,6 +72,9 @@ export async function getBankSavings(userId: string) {
 export async function createBankSaving(userId: string, amount: number, durationDays: number) {
 	if (!Number.isInteger(amount) || amount <= 0) {
 		throw new ExpectedError('wrongQuantity');
+	}
+	if (amount > BANK_SAVING_MAX_DEPOSIT) {
+		throw new ExpectedError('bankSavingMaxDepositExceeded');
 	}
 	const plan = getBankSavingPlan(durationDays);
 	if (!plan) {

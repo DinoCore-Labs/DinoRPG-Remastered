@@ -17,8 +17,8 @@
 					v-model="amount"
 					type="number"
 					min="1"
-					:max="uStore.gold"
-					:disabled="saving || uStore.gold <= 0"
+					:max="maxSavingAmount"
+					:disabled="saving || maxSavingAmount <= 0"
 					@input="normalizeAmount"
 				/>
 				<label for="bankSavingDuration">{{ $t('bank.savings.duration') }}</label>
@@ -77,7 +77,11 @@
 
 <script lang="ts">
 import type { BankSavingPlanResponse, BankSavingResponse } from '@dinorpg/core/models/bank/bank.js';
-import { getBankSavingInterestGold, getBankSavingTotalGold } from '@dinorpg/core/models/bank/constants.js';
+import {
+	BANK_SAVING_MAX_DEPOSIT,
+	getBankSavingInterestGold,
+	getBankSavingTotalGold
+} from '@dinorpg/core/models/bank/constants.js';
 import { defineComponent } from 'vue';
 
 import { BankService } from '../../services/bank.service';
@@ -136,7 +140,10 @@ export default defineComponent({
 		},
 		canSave(): boolean {
 			return (
-				!!this.selectedPlan && !this.saving && this.normalizedAmount > 0 && this.normalizedAmount <= this.uStore.gold
+				!!this.selectedPlan &&
+				!this.saving &&
+				this.normalizedAmount > 0 &&
+				this.normalizedAmount <= this.maxSavingAmount
 			);
 		},
 		previewLabel(): string {
@@ -150,6 +157,9 @@ export default defineComponent({
 				interest: beautifulNumber(interestGold),
 				total: beautifulNumber(totalGold)
 			});
+		},
+		maxSavingAmount(): number {
+			return Math.min(this.uStore.gold, BANK_SAVING_MAX_DEPOSIT);
 		}
 	},
 	methods: {
@@ -180,7 +190,7 @@ export default defineComponent({
 				amount = 1;
 			}
 			amount = Math.floor(amount);
-			if (this.uStore.gold <= 0) {
+			if (this.maxSavingAmount <= 0) {
 				this.amount = 0;
 				return;
 			}

@@ -24,6 +24,8 @@ export function getTreasureTicketGoldValue(quantity: number, rateBps: number) {
 
 export const BANK_SAVING_RATE_SCALE = 10000;
 
+export const BANK_SAVING_MAX_DEPOSIT = 1_000_000;
+
 export const BANK_SAVING_PLANS = [
 	{
 		durationDays: 7,
