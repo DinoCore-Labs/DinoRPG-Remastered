@@ -27,19 +27,19 @@ export const BANK_SAVING_RATE_SCALE = 10000;
 export const BANK_SAVING_PLANS = [
 	{
 		durationDays: 7,
-		interestRateBps: 5000
+		interestRateBps: 2500
 	},
 	{
 		durationDays: 14,
-		interestRateBps: 8000
+		interestRateBps: 4000
 	},
 	{
 		durationDays: 21,
-		interestRateBps: 12000
+		interestRateBps: 5000
 	},
 	{
 		durationDays: 30,
-		interestRateBps: 20000
+		interestRateBps: 8000
 	}
 ] as const;
 
