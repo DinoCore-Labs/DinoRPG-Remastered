@@ -557,7 +557,8 @@
 		"wrongBankSavingDuration": "La durée d'épargne demandée est invalide.",
 		"bankSavingNotReady": "Cette épargne n'est pas encore disponible.",
 		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
-		"bankSavingNotFound": "Cette épargne est introuvable."
+		"bankSavingNotFound": "Cette épargne est introuvable.",
+		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois."
 	},
 	"tooltip": {
 		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
