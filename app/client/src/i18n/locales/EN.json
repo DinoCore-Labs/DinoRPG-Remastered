@@ -477,6 +477,11 @@
 			"exchange": {
 				"success": "Vous avez converti {quantity} :ticket: contre {gold} :gold:.",
 				"rateError": "Impossible de récupérer le taux de change de la banque."
+			},
+			"savings": {
+				"success": "Vous avez placé {gold} :gold: en épargne pendant {days} jours. Vous récupérerez {total} :gold:.",
+				"claimSuccess": "Vous avez récupéré votre épargne : {gold} :gold:.",
+				"loadError": "Impossible de récupérer vos épargnes."
 			}
 		},
 		"isSelling": "Your Dinoz is currently on sale at the Tamer Market.",
@@ -548,7 +553,14 @@
 			"notRegistered": "This Dinoz is not registered for the BrutForce Tournament.",
 			"wrongPlace": "Your Dinoz must be in BrutForce to participate in the tournament.",
 			"noOpponent": "No opponents are available for this level yet."
-		}
+		},
+		"notEnoughGold": "Vous n'avez pas assez d'or",
+		"wrongQuantity": "La quantité demandée est invalide.",
+		"wrongBankSavingDuration": "La durée d'épargne demandée est invalide.",
+		"bankSavingNotReady": "Cette épargne n'est pas encore disponible.",
+		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
+		"bankSavingNotFound": "Cette épargne est introuvable.",
+		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -3208,7 +3220,7 @@
 		"description": "Bienvenue à la Banque de Dinoland, je suis Rotshil, le banquier. && && Chaque jour, je vous offre la possibilité d'échanger vos bons du trésor contre de l'or. Bien sûr, le taux de change va fluctuer chaque jour, alors n'hésitez pas à revenir régulièrement pour profiter des meilleurs taux ! && && En plus de cela, je peux aussi vous proposer d'autres services financiers très intéressants, mais ils ne sont pas encore disponibles, alors un peu de patience !",
 		"tabs": {
 			"conversion": "Conversion",
-			"todo": "Coming soon"
+			"savings": "Epargner"
 		},
 		"exchange": {
 			"title": "Conversion des Bons du Trésor",
@@ -3219,6 +3231,22 @@
 			"max": "Max",
 			"youWillReceive": "Vous recevrez **{gold}** :gold:",
 			"convert": "Convertir"
+		},
+		"savings": {
+			"title": "Épargne",
+			"amount": "Montant à épargner",
+			"duration": "Durée de l'épargne",
+			"durationOption": "{days} jours (+{percent}%)",
+			"save": "Épargner",
+			"activeTitle": "Vos épargnes",
+			"empty": "Vous n'avez aucune épargne en cours.",
+			"previewEmpty": "Choisissez un montant à épargner.",
+			"preview": "Vous épargnez **{gold}** :gold: et recevrez **{interest}** :gold: d'intérêts, soit **{total}** :gold: au total.",
+			"itemDuration": "Durée : {days} jours",
+			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
+			"unlockAt": "Disponible le {date}",
+			"claim": "Récupérer",
+			"claimed": "Récupéré"
 		}
 	},
 	"npc": {
