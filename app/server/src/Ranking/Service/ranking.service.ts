@@ -1,6 +1,8 @@
 import { FastifyRequest } from 'fastify';
 
 import { getAverageRanking } from '../Controller/getAverageRanking.controller.js';
+import { getClanScoreRanking } from '../Controller/getClanScoreRanking.controller.js';
+import { getClanTreasureRanking } from '../Controller/getClanTreasureRanking.controller.js';
 import { getClassicRanking } from '../Controller/getClassicRanking.controller.js';
 import { getCompletionRanking } from '../Controller/getCompletionRanking.controller.js';
 import { RankingListParams } from '../Schema/ranking.schema.js';
@@ -20,6 +22,12 @@ export async function getRanking(params: RankingListParams) {
 			break;
 		case 'completion':
 			ranking = await getCompletionRanking(pageNum);
+			break;
+		case 'clanScore':
+			ranking = await getClanScoreRanking(pageNum);
+			break;
+		case 'clanTreasure':
+			ranking = await getClanTreasureRanking(pageNum);
 			break;
 		default:
 			ranking = await getClassicRanking(pageNum);
