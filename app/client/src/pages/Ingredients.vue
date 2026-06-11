@@ -6,13 +6,13 @@
 			<th class="thIcon"></th>
 			<th class="thName">{{ $t('ingredients.tname') }}</th>
 			<th class="thStock">{{ $t('ingredients.tstock') }}</th>
-			<!--<th v-if="isClan" class="clan"></th>-->
+			<th v-if="isClan" class="clan"></th>
 		</tr>
 
 		<Tippy
 			theme="normal"
 			tag="tr"
-			v-for="(ingredient, index) in ingredientList"
+			v-for="(ingredient, index) in filteredIngredientList"
 			:key="ingredient.ingredientId"
 			:class="{
 				full: (ingredient.quantity ?? 0) >= ingredient.maxQuantity,
@@ -24,17 +24,17 @@
 			</td>
 			<td class="tdName">{{ $t(`ingredients.name.${ingredient.name}`) }}</td>
 			<td class="tdStock" v-if="ingredient.quantity !== 0">{{ ingredient.quantity }}/{{ ingredient.maxQuantity }}</td>
-			<!--<td v-if="isClan" class="stock">
-					<DZInput type="number" v-model="giveAway[index].quantity" :max="ingredient.quantity" min="0" />
-				</td>
-				<td class="stock" v-else>--</td>-->
+			<td v-if="isClan" class="stock">
+				<DZInput type="number" v-model="giveAwayMap[ingredient.ingredientId]" :max="ingredient.quantity" min="0" />
+			</td>
+			<td class="stock" v-else>--</td>
 			<template #content>
 				<h1 v-html="formatContent($t(`ingredients.name.${ingredient.name}`))" />
 				<p v-html="formatContent($t(`ingredients.description.${ingredient.name}`))" />
 			</template>
 		</Tippy>
 	</DZTable>
-	<!--<DZButton v-if="isClan" @click="giveToClan()">{{ $t(`clan.ingredients.giveAway`) }}</DZButton>-->
+	<DZButton v-if="isClan" @click="giveToClan()">{{ $t(`clan.ingredients.giveAway`) }}</DZButton>
 </template>
 
 <script lang="ts">
@@ -44,7 +44,8 @@ import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.
 import { InventoryService } from '../services/inventory.service.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { errorHandler } from '../utils/errorHandler.js';
-//import { userStore } from '../store/userStore.js';
+import { userStore } from '../store/userStore.js';
+import { ClanService } from '../services/clan.service.ts';
 import DZInput from '../components/utils/DZInput.vue';
 import DZButton from '../components/utils/DZButton.vue';
 import DZTable from '../components/utils/DZTable.vue';
@@ -61,10 +62,10 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			ingredientList: [] as Array<IngredientFiche>
-			//playerStore: userStore(),
+			ingredientList: [] as Array<IngredientFiche>,
+			userStore: userStore(),
 			//bidValue: 0,
-			//giveAway: [] as Array<IngredientFiche>
+			giveAwayMap: {} as Record<number, number>
 		};
 	},
 	async mounted(): Promise<void> {
@@ -95,59 +96,61 @@ export default defineComponent({
 						maxQuantity: row.maxQuantity
 					} as IngredientFiche;
 				});
+				this.giveAwayMap = Object.fromEntries(this.ingredientList.map(ing => [ing.ingredientId, 0]));
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
+		},
+		async giveToClan() {
+			const itemsToGive = Object.entries(this.giveAwayMap)
+				.filter(([, quantity]) => quantity > 0)
+				.map(([ingredientId, quantity]) => ({
+					itemId: Number(ingredientId),
+					quantity
+				}));
+
+			const gold = itemsToGive.reduce((acc, { itemId, quantity }) => {
+				const price = Object.values(ingredientList).find(a => a.ingredientId === itemId)?.price ?? 0;
+				return acc + price * quantity;
+			}, 0);
+
+			const res = await this.$confirm({
+				message: this.$t(`clan.ingredients.confirm`, { gold: gold }),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-trash'
+			});
+
+			if (!res) return;
+
+			if (!this.userStore.getClanId) {
+				this.$toast.error(this.$t('toast.missingData'));
+				return;
+			}
+
+			try {
+				await ClanService.giveIngredient(this.userStore.getClanId, itemsToGive);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
+
+			await this.load();
 		}
-		/*async giveToClan() {
-      const gold = this.giveAway
-        .filter(a => (a.quantity ?? 0) > 0)
-        .reduce(
-          (acc, cur) =>
-            acc +
-            (Object.values(ingredientList).find(a => a.ingredientId === cur.ingredientId)?.price ?? 0) *
-              (cur.quantity ?? 0),
-          0
-        );
-      const res = await this.$confirm({
-        message: this.$t(`ingredients.giveAway.confirm`, { gold: gold }),
-        header: this.$t('popup.attention'),
-        acceptLabel: this.$t('popup.accept'),
-        rejectLabel: this.$t('popup.reject'),
-        icon: 'pi pi-trash'
-      });
-      if (res) {
-        if (!this.playerStore.getClanId) {
-          this.$toast.error(this.$t('toast.missingData'));
-          return;
-        }
-        try {
-          await ClanService.giveIngredient(
-            this.playerStore.getClanId,
-            this.giveAway
-              .filter(a => a.quantity && a.quantity > 0)
-              .map(i => {
-                return { itemId: i.ingredientId, quantity: i.quantity ?? 0 };
-              })
-          );
-        } catch (err) {
-          errorHandler.handle(err, this.$toast);
-          return;
-        }
-        await this.load();
-      }
-    }
-  },
-  computed: {
-    isClan(): boolean {
-      if (this.playerStore.getClanId) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  }*/
+	},
+	computed: {
+		isClan(): boolean {
+			if (this.userStore.getClanId) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+		filteredIngredientList(): IngredientFiche[] {
+			return this.ingredientList.filter(i => (i.quantity ?? 0) > 0);
+		}
 	}
 });
 </script>
