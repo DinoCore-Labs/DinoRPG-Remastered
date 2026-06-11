@@ -8,6 +8,12 @@ export async function getOwnProfileService(userId: string) {
 	const user = await prisma.user.findUnique({
 		where: { id: userId },
 		include: {
+			clan: {
+				select: {
+					id: true,
+					name: true
+				}
+			},
 			dinoz: {
 				select: {
 					id: true,
@@ -49,6 +55,7 @@ export async function getOwnProfileService(userId: string) {
 		id: user.id,
 		name: user.name,
 		createdAt: user.createdDate,
+		clan: user.clan ? { id: user.clan.id, name: user.clan.name } : null,
 		description: user.profile.description,
 		customText: user.profile.customText,
 		language: user.profile.language,
@@ -70,6 +77,12 @@ export async function getUserProfileService(id: string) {
 	const user = await prisma.user.findUnique({
 		where: { id },
 		include: {
+			clan: {
+				select: {
+					id: true,
+					name: true
+				}
+			},
 			dinoz: {
 				select: {
 					id: true,
@@ -111,6 +124,7 @@ export async function getUserProfileService(id: string) {
 		id: user.id,
 		name: user.name,
 		createdAt: user.createdDate,
+		clan: user.clan ? { id: user.clan.id, name: user.clan.name } : null,
 		description: user.profile.description,
 		customText: user.profile.customText,
 		language: user.profile.language,
