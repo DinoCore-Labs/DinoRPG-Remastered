@@ -72,9 +72,6 @@ export default defineComponent({
 				const { history, count } = await ClanService.getClanHistory(Number(this.$route.params.id), this.page);
 				this.history = history;
 				this.maxPage = Math.floor((count + 19) / 20);
-				this.history.forEach((hist: any) => {
-					console.log(`Membre: ${hist.author.name} | Leader de quel clan ID ? :`, hist.author?.leaderOf?.id);
-				});
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
