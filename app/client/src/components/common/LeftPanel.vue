@@ -14,16 +14,16 @@
 			<RouterLink to="/shop/flying" class="link" :title="$t('button.shop')">
 				<img :src="getImgURL('act', 'act_boutique')" alt="shop" />
 			</RouterLink>
-			<span class="link linkDisabled" :title="$t('button.unavailable')" aria-disabled="true">
+			<RouterLink :to="`/clan/${user.clanId}`" class="link" :title="$t('button.clan')" v-if="user.clanId">
 				<img :src="getImgURL('act', 'act_castle')" alt="clan" />
-			</span>
+			</RouterLink>
+			<RouterLink :to="`/clans`" class="link" :title="$t('button.clan')" v-if="!user.clanId">
+				<img :src="getImgURL('act', 'act_castle')" alt="clan" />
+			</RouterLink>
 			<span class="link linkDisabled" :title="$t('button.unavailable')" aria-disabled="true">
 				<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 			</span>
 			<!--
-			<RouterLink :to="`/clan/`" class="link">
-				<img :src="getImgURL('act', 'act_castle')" alt="clan" />
-			</RouterLink>
 			<RouterLink class="link" :to="`/dojo`">
 				<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 			</RouterLink>
