@@ -41,6 +41,7 @@
 import type { EntitySearch } from '@dinorpg/core/models/utils/entitySearch.js';
 import { defineComponent } from 'vue';
 import { UserService } from '../../services/index.js';
+import { ClanService } from '../../services/clan.service.js';
 
 export default defineComponent({
 	name: 'DZSearch',
@@ -63,9 +64,9 @@ export default defineComponent({
 			if (this.searchValue && this.searchValue.length >= 3) {
 				if (this.entityType === 'user') {
 					this.entityList = await UserService.search(this.searchValue);
-				} /* else if (this.entityType === 'clan') {
-					this.entityList = await ClanService.searchClans(this.searchValue);
-				} */
+				} else if (this.entityType === 'clan') {
+					this.entityList = await ClanService.searchClansByName(this.searchValue, 1);
+				}
 			} else {
 				this.entityList = [];
 			}
