@@ -11,4 +11,5 @@ export interface UserData {
 	maxDinoz: number;
 	rewards: number[];
 	discoveredSkills: number[];
+	clanId: number | null;
 }

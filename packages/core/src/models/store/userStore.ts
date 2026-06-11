@@ -12,5 +12,5 @@ export interface UserStore {
 	maxDinoz: number;
 	rewards: number[];
 	discoveredSkills: number[];
-	// clanId
+	clanId: number | null;
 }
