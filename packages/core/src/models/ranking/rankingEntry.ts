@@ -1,3 +1,4 @@
+import { Clan } from '../clan/clan.js';
 import type { UserData } from '../user/userData.js';
 
 export interface RankingEntry {
@@ -13,3 +14,8 @@ export type RankingPositionResponse = {
 	points: number | null;
 	dinozCount: number | null;
 };
+
+export interface ClanRankingEntry {
+	totalPoints: number;
+	clan: Pick<Clan, 'id' | 'name' | 'languages' | 'treasureValue'>;
+}
