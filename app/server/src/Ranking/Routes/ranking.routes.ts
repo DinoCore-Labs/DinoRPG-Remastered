@@ -21,6 +21,19 @@ export async function rankingRoutes(app: FastifyInstance) {
 		}
 	);
 	typedApp.get(
+		'/clan/:sort/:page',
+		{
+			schema: {
+				tags: ['Ranking'],
+				params: rankingListParamsSchema
+			}
+		},
+		async (req, reply) => {
+			const res = await getRanking(req.params);
+			reply.send(res);
+		}
+	);
+	typedApp.get(
 		'/position/:userId',
 		{
 			schema: {
