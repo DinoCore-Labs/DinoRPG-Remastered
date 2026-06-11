@@ -16,7 +16,8 @@ export const userStore = defineStore('userStore', {
 		sortOption: 'default',
 		maxDinoz: 0,
 		rewards: [],
-		discoveredSkills: []
+		discoveredSkills: [],
+		clanId: null
 	}),
 	getters: {
 		isLogged: state => !!state.id,
@@ -27,6 +28,7 @@ export const userStore = defineStore('userStore', {
 		isShopkeeper: (state: UserStore) => state.shopKeeper,
 		getSortOption: (state: UserStore) => state.sortOption,
 		getRewards: (state: UserStore) => state.rewards,
+		getClanId: state => state.clanId,
 		hasReward: (state: UserStore) => {
 			return (rewardId: number) => state.rewards.includes(rewardId);
 		},
@@ -52,6 +54,7 @@ export const userStore = defineStore('userStore', {
 			this.maxDinoz = data.maxDinoz;
 			this.rewards = data.rewards ?? [];
 			this.discoveredSkills = data.discoveredSkills ?? [];
+			this.clanId = data.clanId ?? null;
 		},
 		setGold(gold: number) {
 			this.gold = gold;
@@ -70,6 +73,9 @@ export const userStore = defineStore('userStore', {
 		},
 		setRewards(rewards: number[]) {
 			this.rewards = [...new Set(rewards)];
+		},
+		setClanId(clanId: number | null) {
+			this.clanId = clanId;
 		},
 		addReward(rewardId: number) {
 			if (!this.rewards.includes(rewardId)) {
@@ -96,6 +102,7 @@ export const userStore = defineStore('userStore', {
 			this.maxDinoz = 0;
 			this.rewards = [];
 			this.discoveredSkills = [];
+			this.clanId = null;
 		}
 	},
 	persist: {
