@@ -1,3 +1,4 @@
+import { Clan } from '../clan/clan.js';
 import { Language } from '../config/language.js';
 import { DinozPublicFiche } from '../dinoz/dinozFiche.js';
 import { Reward } from '../rewards/rewardList.js';
@@ -8,6 +9,7 @@ export interface UserProfile {
 	id: string;
 	name: string;
 	createdAt: Date;
+	clan: Pick<Clan, 'id' | 'name'>;
 	avatar: string | null; // Base64 depuis le backend
 	avatarType: string | null; // ex: "image/webp"
 	description: string | null;
