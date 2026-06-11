@@ -39,13 +39,12 @@
 				<dd>
 					{{ formatDate(profile.createdAt) }}
 				</dd>
-				<!--
-				<dt v-if="accountData.clan">
+				<dt v-if="profile.clan">
 					{{ $t(`accountPage.clan`) }}
 				</dt>
-				<dd v-if="accountData.clan">
-					<a @click="goToClan(accountData.clan.id)">{{ accountData.clan.name }}</a>
-				</dd>-->
+				<dd v-if="profile.clan">
+					<a @click="goToClan(profile.clan.id)">{{ profile.clan.name }}</a>
+				</dd>
 				<dt>
 					{{ $t(`accountPage.completion`) }}
 				</dt>
@@ -233,7 +232,7 @@ export default defineComponent({
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 			}
-		}
+		},
 		/*,
 		hasPMI(): boolean {
 			return this.accountData.epicRewards.includes(Reward.PMI);
@@ -260,11 +259,10 @@ export default defineComponent({
 				}
 			}
 			EventBus.emit('isLoading', true);
-		},
+		},*/
 		goToClan(id: number) {
 			this.$router.push({ name: 'Clan', params: { id } });
-		},
-	}*/
+		}
 	},
 	computed: {
 		canEditProfileDescription(): boolean {
