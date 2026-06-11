@@ -21,6 +21,7 @@ import {
 
 import { adminRoutes } from './Admin/Routes/admin.routes.js';
 import { bankRoutes } from './Bank/Routes/bank.routes.js';
+import { clanRoutes } from './Clan/Routes/clan.routes.js';
 import { loadConfig } from './config/config.js';
 import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
 import { loadDialogs } from './Dialog/Controller/dialog.registry.js';
@@ -240,6 +241,7 @@ async function buildServer() {
 	server.register(trainingCenterRoutes, { prefix: 'api/cef' });
 	server.register(marketRoutes, { prefix: 'api/market' });
 	server.register(forcebrutRoutes, { prefix: 'api/forcebrut' });
+	server.register(clanRoutes, { prefix: 'api/clan' });
 	server.register(versionRoutes, { prefix: 'api' });
 
 	//------------------------------------------------------
