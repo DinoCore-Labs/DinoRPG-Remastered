@@ -12,7 +12,7 @@
 			<img v-if="!leader" :src="getImgURL('icons', 'small_member')" :alt="user.name" />
 			<img
 				v-else
-				:src="getImgURL('icons', 'crown')"
+				:src="getImgURL('icons', 'small_leader')"
 				alt="rank"
 				v-tippy="{
 					content: formatContent($t('clan.icons.crown')),
