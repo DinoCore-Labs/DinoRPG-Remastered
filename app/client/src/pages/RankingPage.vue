@@ -1,38 +1,53 @@
 <template>
-	<TitleHeader
-		:title="`${$t('pageTitle.ranking')}`"
-		:header="$t('ranking.title')"
-		:sub-header="$t(subHeader)"
-	></TitleHeader>
-	<ul class="onglets">
+	<TitleHeader :title="`${$t('pageTitle.ranking')}`" :header="$t('ranking.title')" :sub-header="$t(subHeader)" />
+
+	<ul class="onglets main-tabs">
+		<li :class="{ active: isPlayerTab }">
+			<RouterLink :to="{ name: 'RankingPlayers', params: { pageLoaded: 1 } }">
+				<img :src="getImgURL('icons', 'small_member')" alt="member" /> {{ $t('ranking.tabs.players') }}
+			</RouterLink>
+		</li>
+		<li :class="{ active: isClanTab }">
+			<RouterLink :to="{ name: 'RankingClans', params: { pageLoaded: 1 } }">
+				{{ $t('ranking.tabs.clans') }}
+			</RouterLink>
+		</li>
+	</ul>
+
+	<ul class="onglets sub-tabs" v-if="isPlayerTab">
 		<li :class="{ active: $route.name === 'RankingPlayers' }">
-			<RouterLink
-				:to="{
-					name: 'RankingPlayers',
-					params: { pageLoaded: 1 }
-				}"
-				><img :src="getImgURL('icons', 'small_member')" alt="member" /> {{ $t('ranking.tabs.players') }}</RouterLink
-			>
+			<RouterLink :to="{ name: 'RankingPlayers', params: { pageLoaded: 1 } }">
+				{{ $t('ranking.tabs.players') }}
+			</RouterLink>
 		</li>
 		<li :class="{ active: $route.name === 'RankingAverage' }">
-			<RouterLink
-				:to="{
-					name: 'RankingAverage',
-					params: { pageLoaded: 1 }
-				}"
-				>{{ $t('ranking.tabs.average') }}</RouterLink
-			>
+			<RouterLink :to="{ name: 'RankingAverage', params: { pageLoaded: 1 } }">
+				{{ $t('ranking.tabs.average') }}
+			</RouterLink>
 		</li>
 		<li :class="{ active: $route.name === 'RankingCompletion' }">
-			<RouterLink
-				:to="{
-					name: 'RankingCompletion',
-					params: { pageLoaded: 1 }
-				}"
-				>{{ $t('ranking.tabs.completion') }}</RouterLink
-			>
+			<RouterLink :to="{ name: 'RankingCompletion', params: { pageLoaded: 1 } }">
+				{{ $t('ranking.tabs.completion') }}
+			</RouterLink>
 		</li>
-		<!--<li>
+	</ul>
+
+	<ul class="onglets sub-tabs" v-if="isClanTab">
+		<li :class="{ active: $route.name === 'RankingClans' }">
+			<RouterLink :to="{ name: 'RankingClans', params: { pageLoaded: 1 } }">
+				{{ $t('ranking.tabs.clans') }}
+			</RouterLink>
+		</li>
+		<li :class="{ active: $route.name === 'RankingTreasure' }">
+			<RouterLink :to="{ name: 'RankingTreasure', params: { pageLoaded: 1 } }">
+				{{ $t('ranking.tabs.treasure') }}
+			</RouterLink>
+		</li>
+	</ul>
+
+	<RouterView />
+</template>
+<!--<li>
 			<RouterLink
 				:to="{
 					name: 'RankingClans',
@@ -57,9 +72,6 @@
 				>{{ $t('tabs.stats') }}</RouterLink
 			>
 		</li>-->
-	</ul>
-	<RouterView />
-</template>
 
 <script lang="ts">
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
@@ -78,6 +90,12 @@ export default defineComponent({
 	setup() {
 		const route = useRoute();
 
+		const isPlayerTab = computed(() =>
+			['RankingPlayers', 'RankingAverage', 'RankingCompletion'].includes(route.name as string)
+		);
+
+		const isClanTab = computed(() => ['RankingClans', 'RankingTreasure'].includes(route.name as string));
+
 		const subHeader = computed(() => {
 			switch (route.name) {
 				case 'RankingPlayers':
@@ -86,23 +104,22 @@ export default defineComponent({
 					return 'ranking.tabs.average';
 				case 'RankingCompletion':
 					return 'ranking.tabs.completion';
+				case 'RankingClans':
+					return 'ranking.tabs.clans';
+				case 'RankingTreasure':
+					return 'ranking.tabs.treasure';
 				default:
 					return 'ranking.tabs.players';
 			}
 		});
 
-		return {
-			subHeader
-		};
+		return { subHeader, isPlayerTab, isClanTab };
 	},
 	methods: {
 		getImgURL,
 		goToAccount(u: Pick<UserData, 'id' | 'name'>): void {
 			this.$router.push({ name: 'MyAccount', params: { id: u.id } });
-		} /*,
-		goToClan(c: Pick<Clan, 'id' | 'name'>): void {
-			this.$router.push({ name: 'Clan', params: { id: c.id } });
-		}*/
+		}
 	}
 });
 </script>
@@ -113,6 +130,22 @@ export default defineComponent({
 }
 a {
 	cursor: pointer;
+}
+.main-tabs {
+	margin-bottom: 0;
+	padding-bottom: 0;
+	li a {
+		font-size: 11pt;
+		font-weight: bold;
+		background-color: #8b3e1e; // plus sombre pour les onglets principaux
+	}
+	li.active a {
+		background-color: #bc683c;
+	}
+}
+
+.sub-tabs {
+	margin-top: 1px;
 }
 .onglets {
 	list-style: none;
