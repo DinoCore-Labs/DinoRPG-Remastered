@@ -14,6 +14,8 @@ import AdminPage from '../pages/Admin/AdminPage.vue';
 import AdminSecretsPage from '../pages/Admin/AdminSecretsPage.vue';
 import AdminUserPage from '../pages/Admin/AdminUserPage.vue';
 import BankPage from '../pages/BankPage.vue';
+import ClanList from '../pages/Clan/ClanList.vue';
+import createClan from '../pages/Clan/CreateClan.vue';
 import DialogPage from '../pages/DialogPage.vue';
 import DinozPage from '../pages/DinozPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
@@ -186,6 +188,24 @@ const routes: RouteRecord[] = [
 							pageLoaded: Number(route.params.pageLoaded)
 						}),
 						meta: { public: true, showLeftPanel: false }
+					},
+					{
+						path: 'clans/:pageLoaded',
+						name: 'RankingClans',
+						component: () => import('../components/rankings/ClanRanking.vue'),
+						props: route => ({
+							pageLoaded: Number(route.params.pageLoaded)
+						}),
+						meta: { public: true, showLeftPanel: false }
+					},
+					{
+						path: 'treasure/:pageLoaded',
+						name: 'RankingTreasure',
+						component: () => import('../components/rankings/ClanTreasureRanking.vue'),
+						props: route => ({
+							pageLoaded: Number(route.params.pageLoaded)
+						}),
+						meta: { public: true, showLeftPanel: false }
 					}
 				]
 			},
@@ -229,6 +249,94 @@ const routes: RouteRecord[] = [
 				path: '/market/:tab?',
 				name: 'MarketPage',
 				component: MarketPage,
+				meta: { auth: true }
+			},
+			{
+				path: '/clan/:id',
+				name: 'clan',
+				component: () => import('../pages/Clan/Clan.vue'),
+				meta: { auth: true },
+				children: [
+					{
+						path: '',
+						name: 'Clan',
+						component: () => import('../components/clan/ClanPages.vue'),
+						meta: { auth: true }
+					},
+					{
+						path: 'page',
+						name: 'ClanPages',
+						component: () => import('../components/clan/ClanPages.vue'),
+						meta: { auth: true },
+						children: [
+							{
+								path: '',
+								name: 'ClanHomePage',
+								component: () => import('../components/clan/ClanPage.vue'),
+								meta: { auth: true }
+							},
+							{
+								path: ':pageId',
+								name: 'ClanPage',
+								component: () => import('../components/clan/ClanPage.vue'),
+								meta: { auth: true }
+							}
+						]
+					},
+					{
+						path: 'createPage',
+						name: 'ClanCreatePage',
+						component: () => import('../components/clan/ClanCreatePage.vue'),
+						meta: { auth: true }
+					},
+					{
+						path: 'editPage/:pageId',
+						name: 'ClanEditPage',
+						component: () => import('../components/clan/ClanCreatePage.vue'),
+						meta: { auth: true }
+					},
+					{
+						path: 'members',
+						name: 'ClanMembers',
+						component: () => import('../components/clan/ClanMembers.vue'),
+						meta: { auth: true }
+					},
+					{
+						path: 'member/:memberId',
+						name: 'ClanMemberEdit',
+						component: () => import('../components/clan/ClanMemberEdit.vue'),
+						meta: { auth: true }
+					},
+					{
+						path: 'treasure',
+						name: 'ClanTreasure',
+						component: () => import('../components/clan/ClanTreasure.vue'),
+						meta: { auth: true }
+					},
+					{
+						path: 'history',
+						name: 'ClanHistory',
+						component: () => import('../components/clan/ClanHistory.vue'),
+						meta: { auth: true }
+					},
+					{
+						path: 'parameters',
+						name: 'ClanParameters',
+						component: () => import('../components/clan/ClanParameters.vue'),
+						meta: { auth: true }
+					}
+				]
+			},
+			{
+				path: '/createclan',
+				name: 'CreateClan',
+				component: createClan,
+				meta: { auth: true }
+			},
+			{
+				path: '/clans',
+				name: 'clansList',
+				component: ClanList,
 				meta: { auth: true }
 			},
 			{
