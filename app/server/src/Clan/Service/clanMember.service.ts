@@ -1,4 +1,4 @@
-import { ClanHistoryType } from '@dinorpg/core/models/enums/clanHistoryType.js';
+import { ClanHistoryType } from '@dinorpg/core/models/enums/ClanHistoryType.js';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
