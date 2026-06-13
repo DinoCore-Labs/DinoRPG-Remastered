@@ -1,5 +1,5 @@
 import type { ClanLite, treasureIngredient } from '@dinorpg/core/models/clan/clan.js';
-import type { ClanHistory } from '@dinorpg/core/models/Clan/clanHistory.js';
+import type { ClanHistory } from '@dinorpg/core/models/clan/clanHistory.js';
 import type { JoinClanResponse, JoinRequestListResponse } from '@dinorpg/core/models/clan/clanJoinRequest.js';
 import type {
 	ClanMember,

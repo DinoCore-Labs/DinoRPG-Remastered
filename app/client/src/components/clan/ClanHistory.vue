@@ -126,7 +126,6 @@ export default defineComponent({
 		}
 	}
 }
-
 .switch-page-container {
 	width: 100%;
 	display: flex;
@@ -134,11 +133,9 @@ export default defineComponent({
 	justify-content: center;
 	align-items: center;
 	gap: 16px;
-
 	.arrow-button {
 		width: 20px;
 		height: 20px;
-
 		&:hover {
 			filter: brightness(120%);
 			cursor: pointer;
