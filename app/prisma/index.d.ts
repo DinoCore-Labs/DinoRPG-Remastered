@@ -218,6 +218,41 @@ export type Participant = $Result.DefaultSelection<Prisma.$ParticipantPayload>
  * 
  */
 export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
+/**
+ * Model Clan
+ * 
+ */
+export type Clan = $Result.DefaultSelection<Prisma.$ClanPayload>
+/**
+ * Model ClanJoinRequest
+ * 
+ */
+export type ClanJoinRequest = $Result.DefaultSelection<Prisma.$ClanJoinRequestPayload>
+/**
+ * Model ClanIngredient
+ * 
+ */
+export type ClanIngredient = $Result.DefaultSelection<Prisma.$ClanIngredientPayload>
+/**
+ * Model ClanMessage
+ * 
+ */
+export type ClanMessage = $Result.DefaultSelection<Prisma.$ClanMessagePayload>
+/**
+ * Model ClanHistory
+ * 
+ */
+export type ClanHistory = $Result.DefaultSelection<Prisma.$ClanHistoryPayload>
+/**
+ * Model ClanMember
+ * 
+ */
+export type ClanMember = $Result.DefaultSelection<Prisma.$ClanMemberPayload>
+/**
+ * Model ClanPage
+ * 
+ */
+export type ClanPage = $Result.DefaultSelection<Prisma.$ClanPagePayload>
 
 /**
  * Enums
@@ -967,6 +1002,76 @@ export class PrismaClient<
     * ```
     */
   get message(): Prisma.MessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clan`: Exposes CRUD operations for the **Clan** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Clans
+    * const clans = await prisma.clan.findMany()
+    * ```
+    */
+  get clan(): Prisma.ClanDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clanJoinRequest`: Exposes CRUD operations for the **ClanJoinRequest** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClanJoinRequests
+    * const clanJoinRequests = await prisma.clanJoinRequest.findMany()
+    * ```
+    */
+  get clanJoinRequest(): Prisma.ClanJoinRequestDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clanIngredient`: Exposes CRUD operations for the **ClanIngredient** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClanIngredients
+    * const clanIngredients = await prisma.clanIngredient.findMany()
+    * ```
+    */
+  get clanIngredient(): Prisma.ClanIngredientDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clanMessage`: Exposes CRUD operations for the **ClanMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClanMessages
+    * const clanMessages = await prisma.clanMessage.findMany()
+    * ```
+    */
+  get clanMessage(): Prisma.ClanMessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clanHistory`: Exposes CRUD operations for the **ClanHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClanHistories
+    * const clanHistories = await prisma.clanHistory.findMany()
+    * ```
+    */
+  get clanHistory(): Prisma.ClanHistoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clanMember`: Exposes CRUD operations for the **ClanMember** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClanMembers
+    * const clanMembers = await prisma.clanMember.findMany()
+    * ```
+    */
+  get clanMember(): Prisma.ClanMemberDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clanPage`: Exposes CRUD operations for the **ClanPage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ClanPages
+    * const clanPages = await prisma.clanPage.findMany()
+    * ```
+    */
+  get clanPage(): Prisma.ClanPageDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1441,7 +1546,14 @@ export namespace Prisma {
     UserWallet: 'UserWallet',
     Conversation: 'Conversation',
     Participant: 'Participant',
-    Message: 'Message'
+    Message: 'Message',
+    Clan: 'Clan',
+    ClanJoinRequest: 'ClanJoinRequest',
+    ClanIngredient: 'ClanIngredient',
+    ClanMessage: 'ClanMessage',
+    ClanHistory: 'ClanHistory',
+    ClanMember: 'ClanMember',
+    ClanPage: 'ClanPage'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1457,7 +1569,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "bankSaving" | "dinoz" | "dinozCatch" | "dinozItems" | "dinozMissions" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "forcebrutTournamentOpponent" | "gameLog" | "gameLogHourly" | "gameLogDaily" | "jobDefinition" | "jobRun" | "news" | "newsTranslation" | "offer" | "offerItem" | "offerBid" | "poll" | "pollOption" | "pollOptionTranslation" | "pollVote" | "newsLike" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userScenario" | "userTracking" | "userWallet" | "conversation" | "participant" | "message"
+      modelProps: "bankSaving" | "dinoz" | "dinozCatch" | "dinozItems" | "dinozMissions" | "dinozSkills" | "dinozSkillsUnlockable" | "dinozStatus" | "forcebrutTournamentOpponent" | "gameLog" | "gameLogHourly" | "gameLogDaily" | "jobDefinition" | "jobRun" | "news" | "newsTranslation" | "offer" | "offerItem" | "offerBid" | "poll" | "pollOption" | "pollOptionTranslation" | "pollVote" | "newsLike" | "ranking" | "secret" | "signupDeviceMonthCounter" | "signupIpMonthCounter" | "user" | "userDinozShop" | "userGather" | "userIngredients" | "userItems" | "userProfile" | "userRewards" | "userScenario" | "userTracking" | "userWallet" | "conversation" | "participant" | "message" | "clan" | "clanJoinRequest" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4495,6 +4607,524 @@ export namespace Prisma {
           }
         }
       }
+      Clan: {
+        payload: Prisma.$ClanPayload<ExtArgs>
+        fields: Prisma.ClanFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClanFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClanFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPayload>
+          }
+          findFirst: {
+            args: Prisma.ClanFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClanFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPayload>
+          }
+          findMany: {
+            args: Prisma.ClanFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPayload>[]
+          }
+          create: {
+            args: Prisma.ClanCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPayload>
+          }
+          createMany: {
+            args: Prisma.ClanCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClanCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPayload>[]
+          }
+          delete: {
+            args: Prisma.ClanDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPayload>
+          }
+          update: {
+            args: Prisma.ClanUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClanDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClanUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClanUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClanUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPayload>
+          }
+          aggregate: {
+            args: Prisma.ClanAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClan>
+          }
+          groupBy: {
+            args: Prisma.ClanGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClanGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClanCountArgs<ExtArgs>
+            result: $Utils.Optional<ClanCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClanJoinRequest: {
+        payload: Prisma.$ClanJoinRequestPayload<ExtArgs>
+        fields: Prisma.ClanJoinRequestFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClanJoinRequestFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanJoinRequestPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClanJoinRequestFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanJoinRequestPayload>
+          }
+          findFirst: {
+            args: Prisma.ClanJoinRequestFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanJoinRequestPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClanJoinRequestFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanJoinRequestPayload>
+          }
+          findMany: {
+            args: Prisma.ClanJoinRequestFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanJoinRequestPayload>[]
+          }
+          create: {
+            args: Prisma.ClanJoinRequestCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanJoinRequestPayload>
+          }
+          createMany: {
+            args: Prisma.ClanJoinRequestCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClanJoinRequestCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanJoinRequestPayload>[]
+          }
+          delete: {
+            args: Prisma.ClanJoinRequestDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanJoinRequestPayload>
+          }
+          update: {
+            args: Prisma.ClanJoinRequestUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanJoinRequestPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClanJoinRequestDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClanJoinRequestUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClanJoinRequestUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanJoinRequestPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClanJoinRequestUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanJoinRequestPayload>
+          }
+          aggregate: {
+            args: Prisma.ClanJoinRequestAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClanJoinRequest>
+          }
+          groupBy: {
+            args: Prisma.ClanJoinRequestGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClanJoinRequestGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClanJoinRequestCountArgs<ExtArgs>
+            result: $Utils.Optional<ClanJoinRequestCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClanIngredient: {
+        payload: Prisma.$ClanIngredientPayload<ExtArgs>
+        fields: Prisma.ClanIngredientFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClanIngredientFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanIngredientPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClanIngredientFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanIngredientPayload>
+          }
+          findFirst: {
+            args: Prisma.ClanIngredientFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanIngredientPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClanIngredientFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanIngredientPayload>
+          }
+          findMany: {
+            args: Prisma.ClanIngredientFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanIngredientPayload>[]
+          }
+          create: {
+            args: Prisma.ClanIngredientCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanIngredientPayload>
+          }
+          createMany: {
+            args: Prisma.ClanIngredientCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClanIngredientCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanIngredientPayload>[]
+          }
+          delete: {
+            args: Prisma.ClanIngredientDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanIngredientPayload>
+          }
+          update: {
+            args: Prisma.ClanIngredientUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanIngredientPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClanIngredientDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClanIngredientUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClanIngredientUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanIngredientPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClanIngredientUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanIngredientPayload>
+          }
+          aggregate: {
+            args: Prisma.ClanIngredientAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClanIngredient>
+          }
+          groupBy: {
+            args: Prisma.ClanIngredientGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClanIngredientGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClanIngredientCountArgs<ExtArgs>
+            result: $Utils.Optional<ClanIngredientCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClanMessage: {
+        payload: Prisma.$ClanMessagePayload<ExtArgs>
+        fields: Prisma.ClanMessageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClanMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMessagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClanMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMessagePayload>
+          }
+          findFirst: {
+            args: Prisma.ClanMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMessagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClanMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMessagePayload>
+          }
+          findMany: {
+            args: Prisma.ClanMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMessagePayload>[]
+          }
+          create: {
+            args: Prisma.ClanMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMessagePayload>
+          }
+          createMany: {
+            args: Prisma.ClanMessageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClanMessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMessagePayload>[]
+          }
+          delete: {
+            args: Prisma.ClanMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMessagePayload>
+          }
+          update: {
+            args: Prisma.ClanMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMessagePayload>
+          }
+          deleteMany: {
+            args: Prisma.ClanMessageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClanMessageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClanMessageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMessagePayload>[]
+          }
+          upsert: {
+            args: Prisma.ClanMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMessagePayload>
+          }
+          aggregate: {
+            args: Prisma.ClanMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClanMessage>
+          }
+          groupBy: {
+            args: Prisma.ClanMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClanMessageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClanMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<ClanMessageCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClanHistory: {
+        payload: Prisma.$ClanHistoryPayload<ExtArgs>
+        fields: Prisma.ClanHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClanHistoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClanHistoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.ClanHistoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClanHistoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.ClanHistoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.ClanHistoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.ClanHistoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClanHistoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanHistoryPayload>[]
+          }
+          delete: {
+            args: Prisma.ClanHistoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanHistoryPayload>
+          }
+          update: {
+            args: Prisma.ClanHistoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClanHistoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClanHistoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClanHistoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanHistoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClanHistoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.ClanHistoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClanHistory>
+          }
+          groupBy: {
+            args: Prisma.ClanHistoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClanHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClanHistoryCountArgs<ExtArgs>
+            result: $Utils.Optional<ClanHistoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClanMember: {
+        payload: Prisma.$ClanMemberPayload<ExtArgs>
+        fields: Prisma.ClanMemberFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClanMemberFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMemberPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClanMemberFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMemberPayload>
+          }
+          findFirst: {
+            args: Prisma.ClanMemberFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMemberPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClanMemberFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMemberPayload>
+          }
+          findMany: {
+            args: Prisma.ClanMemberFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMemberPayload>[]
+          }
+          create: {
+            args: Prisma.ClanMemberCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMemberPayload>
+          }
+          createMany: {
+            args: Prisma.ClanMemberCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClanMemberCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMemberPayload>[]
+          }
+          delete: {
+            args: Prisma.ClanMemberDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMemberPayload>
+          }
+          update: {
+            args: Prisma.ClanMemberUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMemberPayload>
+          }
+          deleteMany: {
+            args: Prisma.ClanMemberDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClanMemberUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClanMemberUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMemberPayload>[]
+          }
+          upsert: {
+            args: Prisma.ClanMemberUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanMemberPayload>
+          }
+          aggregate: {
+            args: Prisma.ClanMemberAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClanMember>
+          }
+          groupBy: {
+            args: Prisma.ClanMemberGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClanMemberGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClanMemberCountArgs<ExtArgs>
+            result: $Utils.Optional<ClanMemberCountAggregateOutputType> | number
+          }
+        }
+      }
+      ClanPage: {
+        payload: Prisma.$ClanPagePayload<ExtArgs>
+        fields: Prisma.ClanPageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClanPageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClanPageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPagePayload>
+          }
+          findFirst: {
+            args: Prisma.ClanPageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClanPageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPagePayload>
+          }
+          findMany: {
+            args: Prisma.ClanPageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPagePayload>[]
+          }
+          create: {
+            args: Prisma.ClanPageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPagePayload>
+          }
+          createMany: {
+            args: Prisma.ClanPageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClanPageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPagePayload>[]
+          }
+          delete: {
+            args: Prisma.ClanPageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPagePayload>
+          }
+          update: {
+            args: Prisma.ClanPageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPagePayload>
+          }
+          deleteMany: {
+            args: Prisma.ClanPageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClanPageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClanPageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPagePayload>[]
+          }
+          upsert: {
+            args: Prisma.ClanPageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ClanPagePayload>
+          }
+          aggregate: {
+            args: Prisma.ClanPageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClanPage>
+          }
+          groupBy: {
+            args: Prisma.ClanPageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClanPageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClanPageCountArgs<ExtArgs>
+            result: $Utils.Optional<ClanPageCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4644,6 +5274,13 @@ export namespace Prisma {
     conversation?: ConversationOmit
     participant?: ParticipantOmit
     message?: MessageOmit
+    clan?: ClanOmit
+    clanJoinRequest?: ClanJoinRequestOmit
+    clanIngredient?: ClanIngredientOmit
+    clanMessage?: ClanMessageOmit
+    clanHistory?: ClanHistoryOmit
+    clanMember?: ClanMemberOmit
+    clanPage?: ClanPageOmit
   }
 
   /* Types for Logging */
@@ -5018,6 +5655,8 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
+    ClanHistory: number
+    ClanMessage: number
     gathers: number
     ingredients: number
     items: number
@@ -5040,6 +5679,8 @@ export namespace Prisma {
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    ClanHistory?: boolean | UserCountOutputTypeCountClanHistoryArgs
+    ClanMessage?: boolean | UserCountOutputTypeCountClanMessageArgs
     gathers?: boolean | UserCountOutputTypeCountGathersArgs
     ingredients?: boolean | UserCountOutputTypeCountIngredientsArgs
     items?: boolean | UserCountOutputTypeCountItemsArgs
@@ -5070,6 +5711,20 @@ export namespace Prisma {
      * Select specific fields to fetch from the UserCountOutputType
      */
     select?: UserCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountClanHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanHistoryWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountClanMessageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanMessageWhereInput
   }
 
   /**
@@ -5243,6 +5898,91 @@ export namespace Prisma {
    */
   export type ConversationCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MessageWhereInput
+  }
+
+
+  /**
+   * Count Type ClanCountOutputType
+   */
+
+  export type ClanCountOutputType = {
+    history: number
+    joinRequests: number
+    members: number
+    pages: number
+    ingredients: number
+    discussion: number
+    users: number
+  }
+
+  export type ClanCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    history?: boolean | ClanCountOutputTypeCountHistoryArgs
+    joinRequests?: boolean | ClanCountOutputTypeCountJoinRequestsArgs
+    members?: boolean | ClanCountOutputTypeCountMembersArgs
+    pages?: boolean | ClanCountOutputTypeCountPagesArgs
+    ingredients?: boolean | ClanCountOutputTypeCountIngredientsArgs
+    discussion?: boolean | ClanCountOutputTypeCountDiscussionArgs
+    users?: boolean | ClanCountOutputTypeCountUsersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanCountOutputType
+     */
+    select?: ClanCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeCountHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanHistoryWhereInput
+  }
+
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeCountJoinRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanJoinRequestWhereInput
+  }
+
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeCountMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanMemberWhereInput
+  }
+
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeCountPagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanPageWhereInput
+  }
+
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeCountIngredientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanIngredientWhereInput
+  }
+
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeCountDiscussionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanMessageWhereInput
+  }
+
+  /**
+   * ClanCountOutputType without action
+   */
+  export type ClanCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
   }
 
 
@@ -37774,10 +38514,12 @@ export namespace Prisma {
   }
 
   export type UserAvgAggregateOutputType = {
+    clanId: number | null
     discoveredSkills: number | null
   }
 
   export type UserSumAggregateOutputType = {
+    clanId: number | null
     discoveredSkills: number[]
   }
 
@@ -37789,6 +38531,7 @@ export namespace Prisma {
     createdDate: Date | null
     updatedAt: Date | null
     lastLogin: Date | null
+    clanId: number | null
     leader: boolean | null
     engineer: boolean | null
     cooker: boolean | null
@@ -37808,6 +38551,7 @@ export namespace Prisma {
     createdDate: Date | null
     updatedAt: Date | null
     lastLogin: Date | null
+    clanId: number | null
     leader: boolean | null
     engineer: boolean | null
     cooker: boolean | null
@@ -37827,6 +38571,7 @@ export namespace Prisma {
     createdDate: number
     updatedAt: number
     lastLogin: number
+    clanId: number
     leader: number
     engineer: number
     cooker: number
@@ -37842,10 +38587,12 @@ export namespace Prisma {
 
 
   export type UserAvgAggregateInputType = {
+    clanId?: true
     discoveredSkills?: true
   }
 
   export type UserSumAggregateInputType = {
+    clanId?: true
     discoveredSkills?: true
   }
 
@@ -37857,6 +38604,7 @@ export namespace Prisma {
     createdDate?: true
     updatedAt?: true
     lastLogin?: true
+    clanId?: true
     leader?: true
     engineer?: true
     cooker?: true
@@ -37876,6 +38624,7 @@ export namespace Prisma {
     createdDate?: true
     updatedAt?: true
     lastLogin?: true
+    clanId?: true
     leader?: true
     engineer?: true
     cooker?: true
@@ -37895,6 +38644,7 @@ export namespace Prisma {
     createdDate?: true
     updatedAt?: true
     lastLogin?: true
+    clanId?: true
     leader?: true
     engineer?: true
     cooker?: true
@@ -38002,6 +38752,7 @@ export namespace Prisma {
     createdDate: Date
     updatedAt: Date | null
     lastLogin: Date
+    clanId: number | null
     leader: boolean
     engineer: boolean
     cooker: boolean
@@ -38041,6 +38792,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedAt?: boolean
     lastLogin?: boolean
+    clanId?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -38051,6 +38803,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: boolean
+    clan?: boolean | User$clanArgs<ExtArgs>
+    leaderOf?: boolean | User$leaderOfArgs<ExtArgs>
+    ClanHistory?: boolean | User$ClanHistoryArgs<ExtArgs>
+    ClanJoinRequest?: boolean | User$ClanJoinRequestArgs<ExtArgs>
+    ClanMember?: boolean | User$ClanMemberArgs<ExtArgs>
+    ClanMessage?: boolean | User$ClanMessageArgs<ExtArgs>
     gathers?: boolean | User$gathersArgs<ExtArgs>
     ingredients?: boolean | User$ingredientsArgs<ExtArgs>
     items?: boolean | User$itemsArgs<ExtArgs>
@@ -38083,6 +38841,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedAt?: boolean
     lastLogin?: boolean
+    clanId?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -38093,6 +38852,7 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: boolean
+    clan?: boolean | User$clanArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -38103,6 +38863,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedAt?: boolean
     lastLogin?: boolean
+    clanId?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -38113,6 +38874,7 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: boolean
+    clan?: boolean | User$clanArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -38123,6 +38885,7 @@ export namespace Prisma {
     createdDate?: boolean
     updatedAt?: boolean
     lastLogin?: boolean
+    clanId?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -38135,8 +38898,14 @@ export namespace Prisma {
     discoveredSkills?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "role" | "createdDate" | "updatedAt" | "lastLogin" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "matelasseur" | "messie" | "discoveredSkills", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "password" | "role" | "createdDate" | "updatedAt" | "lastLogin" | "clanId" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "matelasseur" | "messie" | "discoveredSkills", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | User$clanArgs<ExtArgs>
+    leaderOf?: boolean | User$leaderOfArgs<ExtArgs>
+    ClanHistory?: boolean | User$ClanHistoryArgs<ExtArgs>
+    ClanJoinRequest?: boolean | User$ClanJoinRequestArgs<ExtArgs>
+    ClanMember?: boolean | User$ClanMemberArgs<ExtArgs>
+    ClanMessage?: boolean | User$ClanMessageArgs<ExtArgs>
     gathers?: boolean | User$gathersArgs<ExtArgs>
     ingredients?: boolean | User$ingredientsArgs<ExtArgs>
     items?: boolean | User$itemsArgs<ExtArgs>
@@ -38160,12 +38929,22 @@ export namespace Prisma {
     bankSavings?: boolean | User$bankSavingsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | User$clanArgs<ExtArgs>
+  }
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | User$clanArgs<ExtArgs>
+  }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
+      clan: Prisma.$ClanPayload<ExtArgs> | null
+      leaderOf: Prisma.$ClanPayload<ExtArgs> | null
+      ClanHistory: Prisma.$ClanHistoryPayload<ExtArgs>[]
+      ClanJoinRequest: Prisma.$ClanJoinRequestPayload<ExtArgs> | null
+      ClanMember: Prisma.$ClanMemberPayload<ExtArgs> | null
+      ClanMessage: Prisma.$ClanMessagePayload<ExtArgs>[]
       gathers: Prisma.$UserGatherPayload<ExtArgs>[]
       ingredients: Prisma.$UserIngredientsPayload<ExtArgs>[]
       items: Prisma.$UserItemsPayload<ExtArgs>[]
@@ -38196,6 +38975,7 @@ export namespace Prisma {
       createdDate: Date
       updatedAt: Date | null
       lastLogin: Date
+      clanId: number | null
       leader: boolean
       engineer: boolean
       cooker: boolean
@@ -38600,6 +39380,12 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    clan<T extends User$clanArgs<ExtArgs> = {}>(args?: Subset<T, User$clanArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    leaderOf<T extends User$leaderOfArgs<ExtArgs> = {}>(args?: Subset<T, User$leaderOfArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    ClanHistory<T extends User$ClanHistoryArgs<ExtArgs> = {}>(args?: Subset<T, User$ClanHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ClanJoinRequest<T extends User$ClanJoinRequestArgs<ExtArgs> = {}>(args?: Subset<T, User$ClanJoinRequestArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    ClanMember<T extends User$ClanMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$ClanMemberArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    ClanMessage<T extends User$ClanMessageArgs<ExtArgs> = {}>(args?: Subset<T, User$ClanMessageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     gathers<T extends User$gathersArgs<ExtArgs> = {}>(args?: Subset<T, User$gathersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserGatherPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     ingredients<T extends User$ingredientsArgs<ExtArgs> = {}>(args?: Subset<T, User$ingredientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserIngredientsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     items<T extends User$itemsArgs<ExtArgs> = {}>(args?: Subset<T, User$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserItemsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -38657,6 +39443,7 @@ export namespace Prisma {
     readonly createdDate: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly lastLogin: FieldRef<"User", 'DateTime'>
+    readonly clanId: FieldRef<"User", 'Int'>
     readonly leader: FieldRef<"User", 'Boolean'>
     readonly engineer: FieldRef<"User", 'Boolean'>
     readonly cooker: FieldRef<"User", 'Boolean'>
@@ -38927,6 +39714,10 @@ export namespace Prisma {
      */
     data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -38998,6 +39789,10 @@ export namespace Prisma {
      * Limit how many Users to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -39066,6 +39861,130 @@ export namespace Prisma {
      * Limit how many Users to delete.
      */
     limit?: number
+  }
+
+  /**
+   * User.clan
+   */
+  export type User$clanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+    where?: ClanWhereInput
+  }
+
+  /**
+   * User.leaderOf
+   */
+  export type User$leaderOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+    where?: ClanWhereInput
+  }
+
+  /**
+   * User.ClanHistory
+   */
+  export type User$ClanHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+    where?: ClanHistoryWhereInput
+    orderBy?: ClanHistoryOrderByWithRelationInput | ClanHistoryOrderByWithRelationInput[]
+    cursor?: ClanHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanHistoryScalarFieldEnum | ClanHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * User.ClanJoinRequest
+   */
+  export type User$ClanJoinRequestArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+    where?: ClanJoinRequestWhereInput
+  }
+
+  /**
+   * User.ClanMember
+   */
+  export type User$ClanMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+    where?: ClanMemberWhereInput
+  }
+
+  /**
+   * User.ClanMessage
+   */
+  export type User$ClanMessageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+    where?: ClanMessageWhereInput
+    orderBy?: ClanMessageOrderByWithRelationInput | ClanMessageOrderByWithRelationInput[]
+    cursor?: ClanMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanMessageScalarFieldEnum | ClanMessageScalarFieldEnum[]
   }
 
   /**
@@ -53262,6 +54181,8113 @@ export namespace Prisma {
 
 
   /**
+   * Model Clan
+   */
+
+  export type AggregateClan = {
+    _count: ClanCountAggregateOutputType | null
+    _avg: ClanAvgAggregateOutputType | null
+    _sum: ClanSumAggregateOutputType | null
+    _min: ClanMinAggregateOutputType | null
+    _max: ClanMaxAggregateOutputType | null
+  }
+
+  export type ClanAvgAggregateOutputType = {
+    id: number | null
+    treasureValue: number | null
+  }
+
+  export type ClanSumAggregateOutputType = {
+    id: number | null
+    treasureValue: number | null
+  }
+
+  export type ClanMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    treasureValue: number | null
+    creationDate: Date | null
+    banner: Bytes | null
+    leaderId: string | null
+  }
+
+  export type ClanMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    treasureValue: number | null
+    creationDate: Date | null
+    banner: Bytes | null
+    leaderId: string | null
+  }
+
+  export type ClanCountAggregateOutputType = {
+    id: number
+    name: number
+    treasureValue: number
+    creationDate: number
+    banner: number
+    leaderId: number
+    langs: number
+    _all: number
+  }
+
+
+  export type ClanAvgAggregateInputType = {
+    id?: true
+    treasureValue?: true
+  }
+
+  export type ClanSumAggregateInputType = {
+    id?: true
+    treasureValue?: true
+  }
+
+  export type ClanMinAggregateInputType = {
+    id?: true
+    name?: true
+    treasureValue?: true
+    creationDate?: true
+    banner?: true
+    leaderId?: true
+  }
+
+  export type ClanMaxAggregateInputType = {
+    id?: true
+    name?: true
+    treasureValue?: true
+    creationDate?: true
+    banner?: true
+    leaderId?: true
+  }
+
+  export type ClanCountAggregateInputType = {
+    id?: true
+    name?: true
+    treasureValue?: true
+    creationDate?: true
+    banner?: true
+    leaderId?: true
+    langs?: true
+    _all?: true
+  }
+
+  export type ClanAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Clan to aggregate.
+     */
+    where?: ClanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clans to fetch.
+     */
+    orderBy?: ClanOrderByWithRelationInput | ClanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Clans
+    **/
+    _count?: true | ClanCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClanAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClanSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClanMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClanMaxAggregateInputType
+  }
+
+  export type GetClanAggregateType<T extends ClanAggregateArgs> = {
+        [P in keyof T & keyof AggregateClan]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClan[P]>
+      : GetScalarType<T[P], AggregateClan[P]>
+  }
+
+
+
+
+  export type ClanGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanWhereInput
+    orderBy?: ClanOrderByWithAggregationInput | ClanOrderByWithAggregationInput[]
+    by: ClanScalarFieldEnum[] | ClanScalarFieldEnum
+    having?: ClanScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClanCountAggregateInputType | true
+    _avg?: ClanAvgAggregateInputType
+    _sum?: ClanSumAggregateInputType
+    _min?: ClanMinAggregateInputType
+    _max?: ClanMaxAggregateInputType
+  }
+
+  export type ClanGroupByOutputType = {
+    id: number
+    name: string
+    treasureValue: number
+    creationDate: Date
+    banner: Bytes | null
+    leaderId: string
+    langs: $Enums.Language[]
+    _count: ClanCountAggregateOutputType | null
+    _avg: ClanAvgAggregateOutputType | null
+    _sum: ClanSumAggregateOutputType | null
+    _min: ClanMinAggregateOutputType | null
+    _max: ClanMaxAggregateOutputType | null
+  }
+
+  type GetClanGroupByPayload<T extends ClanGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClanGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClanGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClanGroupByOutputType[P]>
+            : GetScalarType<T[P], ClanGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClanSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    treasureValue?: boolean
+    creationDate?: boolean
+    banner?: boolean
+    leaderId?: boolean
+    langs?: boolean
+    leader?: boolean | UserDefaultArgs<ExtArgs>
+    history?: boolean | Clan$historyArgs<ExtArgs>
+    joinRequests?: boolean | Clan$joinRequestsArgs<ExtArgs>
+    members?: boolean | Clan$membersArgs<ExtArgs>
+    pages?: boolean | Clan$pagesArgs<ExtArgs>
+    ingredients?: boolean | Clan$ingredientsArgs<ExtArgs>
+    discussion?: boolean | Clan$discussionArgs<ExtArgs>
+    users?: boolean | Clan$usersArgs<ExtArgs>
+    _count?: boolean | ClanCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clan"]>
+
+  export type ClanSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    treasureValue?: boolean
+    creationDate?: boolean
+    banner?: boolean
+    leaderId?: boolean
+    langs?: boolean
+    leader?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clan"]>
+
+  export type ClanSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    treasureValue?: boolean
+    creationDate?: boolean
+    banner?: boolean
+    leaderId?: boolean
+    langs?: boolean
+    leader?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clan"]>
+
+  export type ClanSelectScalar = {
+    id?: boolean
+    name?: boolean
+    treasureValue?: boolean
+    creationDate?: boolean
+    banner?: boolean
+    leaderId?: boolean
+    langs?: boolean
+  }
+
+  export type ClanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "treasureValue" | "creationDate" | "banner" | "leaderId" | "langs", ExtArgs["result"]["clan"]>
+  export type ClanInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    leader?: boolean | UserDefaultArgs<ExtArgs>
+    history?: boolean | Clan$historyArgs<ExtArgs>
+    joinRequests?: boolean | Clan$joinRequestsArgs<ExtArgs>
+    members?: boolean | Clan$membersArgs<ExtArgs>
+    pages?: boolean | Clan$pagesArgs<ExtArgs>
+    ingredients?: boolean | Clan$ingredientsArgs<ExtArgs>
+    discussion?: boolean | Clan$discussionArgs<ExtArgs>
+    users?: boolean | Clan$usersArgs<ExtArgs>
+    _count?: boolean | ClanCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ClanIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    leader?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ClanIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    leader?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ClanPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Clan"
+    objects: {
+      leader: Prisma.$UserPayload<ExtArgs>
+      history: Prisma.$ClanHistoryPayload<ExtArgs>[]
+      joinRequests: Prisma.$ClanJoinRequestPayload<ExtArgs>[]
+      members: Prisma.$ClanMemberPayload<ExtArgs>[]
+      pages: Prisma.$ClanPagePayload<ExtArgs>[]
+      ingredients: Prisma.$ClanIngredientPayload<ExtArgs>[]
+      discussion: Prisma.$ClanMessagePayload<ExtArgs>[]
+      users: Prisma.$UserPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      treasureValue: number
+      creationDate: Date
+      banner: Prisma.Bytes | null
+      leaderId: string
+      langs: $Enums.Language[]
+    }, ExtArgs["result"]["clan"]>
+    composites: {}
+  }
+
+  type ClanGetPayload<S extends boolean | null | undefined | ClanDefaultArgs> = $Result.GetResult<Prisma.$ClanPayload, S>
+
+  type ClanCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClanFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ClanCountAggregateInputType | true
+    }
+
+  export interface ClanDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Clan'], meta: { name: 'Clan' } }
+    /**
+     * Find zero or one Clan that matches the filter.
+     * @param {ClanFindUniqueArgs} args - Arguments to find a Clan
+     * @example
+     * // Get one Clan
+     * const clan = await prisma.clan.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClanFindUniqueArgs>(args: SelectSubset<T, ClanFindUniqueArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Clan that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClanFindUniqueOrThrowArgs} args - Arguments to find a Clan
+     * @example
+     * // Get one Clan
+     * const clan = await prisma.clan.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClanFindUniqueOrThrowArgs>(args: SelectSubset<T, ClanFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Clan that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanFindFirstArgs} args - Arguments to find a Clan
+     * @example
+     * // Get one Clan
+     * const clan = await prisma.clan.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClanFindFirstArgs>(args?: SelectSubset<T, ClanFindFirstArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Clan that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanFindFirstOrThrowArgs} args - Arguments to find a Clan
+     * @example
+     * // Get one Clan
+     * const clan = await prisma.clan.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClanFindFirstOrThrowArgs>(args?: SelectSubset<T, ClanFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Clans that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Clans
+     * const clans = await prisma.clan.findMany()
+     * 
+     * // Get first 10 Clans
+     * const clans = await prisma.clan.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clanWithIdOnly = await prisma.clan.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClanFindManyArgs>(args?: SelectSubset<T, ClanFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Clan.
+     * @param {ClanCreateArgs} args - Arguments to create a Clan.
+     * @example
+     * // Create one Clan
+     * const Clan = await prisma.clan.create({
+     *   data: {
+     *     // ... data to create a Clan
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClanCreateArgs>(args: SelectSubset<T, ClanCreateArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Clans.
+     * @param {ClanCreateManyArgs} args - Arguments to create many Clans.
+     * @example
+     * // Create many Clans
+     * const clan = await prisma.clan.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClanCreateManyArgs>(args?: SelectSubset<T, ClanCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Clans and returns the data saved in the database.
+     * @param {ClanCreateManyAndReturnArgs} args - Arguments to create many Clans.
+     * @example
+     * // Create many Clans
+     * const clan = await prisma.clan.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Clans and only return the `id`
+     * const clanWithIdOnly = await prisma.clan.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClanCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Clan.
+     * @param {ClanDeleteArgs} args - Arguments to delete one Clan.
+     * @example
+     * // Delete one Clan
+     * const Clan = await prisma.clan.delete({
+     *   where: {
+     *     // ... filter to delete one Clan
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClanDeleteArgs>(args: SelectSubset<T, ClanDeleteArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Clan.
+     * @param {ClanUpdateArgs} args - Arguments to update one Clan.
+     * @example
+     * // Update one Clan
+     * const clan = await prisma.clan.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClanUpdateArgs>(args: SelectSubset<T, ClanUpdateArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Clans.
+     * @param {ClanDeleteManyArgs} args - Arguments to filter Clans to delete.
+     * @example
+     * // Delete a few Clans
+     * const { count } = await prisma.clan.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClanDeleteManyArgs>(args?: SelectSubset<T, ClanDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Clans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Clans
+     * const clan = await prisma.clan.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClanUpdateManyArgs>(args: SelectSubset<T, ClanUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Clans and returns the data updated in the database.
+     * @param {ClanUpdateManyAndReturnArgs} args - Arguments to update many Clans.
+     * @example
+     * // Update many Clans
+     * const clan = await prisma.clan.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Clans and only return the `id`
+     * const clanWithIdOnly = await prisma.clan.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClanUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Clan.
+     * @param {ClanUpsertArgs} args - Arguments to update or create a Clan.
+     * @example
+     * // Update or create a Clan
+     * const clan = await prisma.clan.upsert({
+     *   create: {
+     *     // ... data to create a Clan
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Clan we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClanUpsertArgs>(args: SelectSubset<T, ClanUpsertArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Clans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanCountArgs} args - Arguments to filter Clans to count.
+     * @example
+     * // Count the number of Clans
+     * const count = await prisma.clan.count({
+     *   where: {
+     *     // ... the filter for the Clans we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClanCountArgs>(
+      args?: Subset<T, ClanCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClanCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Clan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClanAggregateArgs>(args: Subset<T, ClanAggregateArgs>): Prisma.PrismaPromise<GetClanAggregateType<T>>
+
+    /**
+     * Group by Clan.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClanGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClanGroupByArgs['orderBy'] }
+        : { orderBy?: ClanGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClanGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClanGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Clan model
+   */
+  readonly fields: ClanFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Clan.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClanClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    leader<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    history<T extends Clan$historyArgs<ExtArgs> = {}>(args?: Subset<T, Clan$historyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    joinRequests<T extends Clan$joinRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Clan$joinRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    members<T extends Clan$membersArgs<ExtArgs> = {}>(args?: Subset<T, Clan$membersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pages<T extends Clan$pagesArgs<ExtArgs> = {}>(args?: Subset<T, Clan$pagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ingredients<T extends Clan$ingredientsArgs<ExtArgs> = {}>(args?: Subset<T, Clan$ingredientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    discussion<T extends Clan$discussionArgs<ExtArgs> = {}>(args?: Subset<T, Clan$discussionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    users<T extends Clan$usersArgs<ExtArgs> = {}>(args?: Subset<T, Clan$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Clan model
+   */
+  interface ClanFieldRefs {
+    readonly id: FieldRef<"Clan", 'Int'>
+    readonly name: FieldRef<"Clan", 'String'>
+    readonly treasureValue: FieldRef<"Clan", 'Int'>
+    readonly creationDate: FieldRef<"Clan", 'DateTime'>
+    readonly banner: FieldRef<"Clan", 'Bytes'>
+    readonly leaderId: FieldRef<"Clan", 'String'>
+    readonly langs: FieldRef<"Clan", 'Language[]'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Clan findUnique
+   */
+  export type ClanFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+    /**
+     * Filter, which Clan to fetch.
+     */
+    where: ClanWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Clan findUniqueOrThrow
+   */
+  export type ClanFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+    /**
+     * Filter, which Clan to fetch.
+     */
+    where: ClanWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Clan findFirst
+   */
+  export type ClanFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+    /**
+     * Filter, which Clan to fetch.
+     */
+    where?: ClanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clans to fetch.
+     */
+    orderBy?: ClanOrderByWithRelationInput | ClanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Clans.
+     */
+    cursor?: ClanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Clans.
+     */
+    distinct?: ClanScalarFieldEnum | ClanScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Clan findFirstOrThrow
+   */
+  export type ClanFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+    /**
+     * Filter, which Clan to fetch.
+     */
+    where?: ClanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clans to fetch.
+     */
+    orderBy?: ClanOrderByWithRelationInput | ClanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Clans.
+     */
+    cursor?: ClanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Clans.
+     */
+    distinct?: ClanScalarFieldEnum | ClanScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Clan findMany
+   */
+  export type ClanFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+    /**
+     * Filter, which Clans to fetch.
+     */
+    where?: ClanWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clans to fetch.
+     */
+    orderBy?: ClanOrderByWithRelationInput | ClanOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Clans.
+     */
+    cursor?: ClanWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Clans.
+     */
+    distinct?: ClanScalarFieldEnum | ClanScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Clan create
+   */
+  export type ClanCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Clan.
+     */
+    data: XOR<ClanCreateInput, ClanUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Clan createMany
+   */
+  export type ClanCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Clans.
+     */
+    data: ClanCreateManyInput | ClanCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Clan createManyAndReturn
+   */
+  export type ClanCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * The data used to create many Clans.
+     */
+    data: ClanCreateManyInput | ClanCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Clan update
+   */
+  export type ClanUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Clan.
+     */
+    data: XOR<ClanUpdateInput, ClanUncheckedUpdateInput>
+    /**
+     * Choose, which Clan to update.
+     */
+    where: ClanWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Clan updateMany
+   */
+  export type ClanUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Clans.
+     */
+    data: XOR<ClanUpdateManyMutationInput, ClanUncheckedUpdateManyInput>
+    /**
+     * Filter which Clans to update
+     */
+    where?: ClanWhereInput
+    /**
+     * Limit how many Clans to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Clan updateManyAndReturn
+   */
+  export type ClanUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * The data used to update Clans.
+     */
+    data: XOR<ClanUpdateManyMutationInput, ClanUncheckedUpdateManyInput>
+    /**
+     * Filter which Clans to update
+     */
+    where?: ClanWhereInput
+    /**
+     * Limit how many Clans to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Clan upsert
+   */
+  export type ClanUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Clan to update in case it exists.
+     */
+    where: ClanWhereUniqueInput
+    /**
+     * In case the Clan found by the `where` argument doesn't exist, create a new Clan with this data.
+     */
+    create: XOR<ClanCreateInput, ClanUncheckedCreateInput>
+    /**
+     * In case the Clan was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClanUpdateInput, ClanUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Clan delete
+   */
+  export type ClanDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+    /**
+     * Filter which Clan to delete.
+     */
+    where: ClanWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Clan deleteMany
+   */
+  export type ClanDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Clans to delete
+     */
+    where?: ClanWhereInput
+    /**
+     * Limit how many Clans to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Clan.history
+   */
+  export type Clan$historyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+    where?: ClanHistoryWhereInput
+    orderBy?: ClanHistoryOrderByWithRelationInput | ClanHistoryOrderByWithRelationInput[]
+    cursor?: ClanHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanHistoryScalarFieldEnum | ClanHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * Clan.joinRequests
+   */
+  export type Clan$joinRequestsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+    where?: ClanJoinRequestWhereInput
+    orderBy?: ClanJoinRequestOrderByWithRelationInput | ClanJoinRequestOrderByWithRelationInput[]
+    cursor?: ClanJoinRequestWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanJoinRequestScalarFieldEnum | ClanJoinRequestScalarFieldEnum[]
+  }
+
+  /**
+   * Clan.members
+   */
+  export type Clan$membersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+    where?: ClanMemberWhereInput
+    orderBy?: ClanMemberOrderByWithRelationInput | ClanMemberOrderByWithRelationInput[]
+    cursor?: ClanMemberWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanMemberScalarFieldEnum | ClanMemberScalarFieldEnum[]
+  }
+
+  /**
+   * Clan.pages
+   */
+  export type Clan$pagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageInclude<ExtArgs> | null
+    where?: ClanPageWhereInput
+    orderBy?: ClanPageOrderByWithRelationInput | ClanPageOrderByWithRelationInput[]
+    cursor?: ClanPageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanPageScalarFieldEnum | ClanPageScalarFieldEnum[]
+  }
+
+  /**
+   * Clan.ingredients
+   */
+  export type Clan$ingredientsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientInclude<ExtArgs> | null
+    where?: ClanIngredientWhereInput
+    orderBy?: ClanIngredientOrderByWithRelationInput | ClanIngredientOrderByWithRelationInput[]
+    cursor?: ClanIngredientWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanIngredientScalarFieldEnum | ClanIngredientScalarFieldEnum[]
+  }
+
+  /**
+   * Clan.discussion
+   */
+  export type Clan$discussionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+    where?: ClanMessageWhereInput
+    orderBy?: ClanMessageOrderByWithRelationInput | ClanMessageOrderByWithRelationInput[]
+    cursor?: ClanMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ClanMessageScalarFieldEnum | ClanMessageScalarFieldEnum[]
+  }
+
+  /**
+   * Clan.users
+   */
+  export type Clan$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * Clan without action
+   */
+  export type ClanDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clan
+     */
+    select?: ClanSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clan
+     */
+    omit?: ClanOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClanJoinRequest
+   */
+
+  export type AggregateClanJoinRequest = {
+    _count: ClanJoinRequestCountAggregateOutputType | null
+    _avg: ClanJoinRequestAvgAggregateOutputType | null
+    _sum: ClanJoinRequestSumAggregateOutputType | null
+    _min: ClanJoinRequestMinAggregateOutputType | null
+    _max: ClanJoinRequestMaxAggregateOutputType | null
+  }
+
+  export type ClanJoinRequestAvgAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+  }
+
+  export type ClanJoinRequestSumAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+  }
+
+  export type ClanJoinRequestMinAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+    date: Date | null
+    userId: string | null
+  }
+
+  export type ClanJoinRequestMaxAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+    date: Date | null
+    userId: string | null
+  }
+
+  export type ClanJoinRequestCountAggregateOutputType = {
+    id: number
+    clanId: number
+    date: number
+    userId: number
+    _all: number
+  }
+
+
+  export type ClanJoinRequestAvgAggregateInputType = {
+    id?: true
+    clanId?: true
+  }
+
+  export type ClanJoinRequestSumAggregateInputType = {
+    id?: true
+    clanId?: true
+  }
+
+  export type ClanJoinRequestMinAggregateInputType = {
+    id?: true
+    clanId?: true
+    date?: true
+    userId?: true
+  }
+
+  export type ClanJoinRequestMaxAggregateInputType = {
+    id?: true
+    clanId?: true
+    date?: true
+    userId?: true
+  }
+
+  export type ClanJoinRequestCountAggregateInputType = {
+    id?: true
+    clanId?: true
+    date?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type ClanJoinRequestAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanJoinRequest to aggregate.
+     */
+    where?: ClanJoinRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanJoinRequests to fetch.
+     */
+    orderBy?: ClanJoinRequestOrderByWithRelationInput | ClanJoinRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClanJoinRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanJoinRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanJoinRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClanJoinRequests
+    **/
+    _count?: true | ClanJoinRequestCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClanJoinRequestAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClanJoinRequestSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClanJoinRequestMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClanJoinRequestMaxAggregateInputType
+  }
+
+  export type GetClanJoinRequestAggregateType<T extends ClanJoinRequestAggregateArgs> = {
+        [P in keyof T & keyof AggregateClanJoinRequest]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClanJoinRequest[P]>
+      : GetScalarType<T[P], AggregateClanJoinRequest[P]>
+  }
+
+
+
+
+  export type ClanJoinRequestGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanJoinRequestWhereInput
+    orderBy?: ClanJoinRequestOrderByWithAggregationInput | ClanJoinRequestOrderByWithAggregationInput[]
+    by: ClanJoinRequestScalarFieldEnum[] | ClanJoinRequestScalarFieldEnum
+    having?: ClanJoinRequestScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClanJoinRequestCountAggregateInputType | true
+    _avg?: ClanJoinRequestAvgAggregateInputType
+    _sum?: ClanJoinRequestSumAggregateInputType
+    _min?: ClanJoinRequestMinAggregateInputType
+    _max?: ClanJoinRequestMaxAggregateInputType
+  }
+
+  export type ClanJoinRequestGroupByOutputType = {
+    id: number
+    clanId: number
+    date: Date
+    userId: string
+    _count: ClanJoinRequestCountAggregateOutputType | null
+    _avg: ClanJoinRequestAvgAggregateOutputType | null
+    _sum: ClanJoinRequestSumAggregateOutputType | null
+    _min: ClanJoinRequestMinAggregateOutputType | null
+    _max: ClanJoinRequestMaxAggregateOutputType | null
+  }
+
+  type GetClanJoinRequestGroupByPayload<T extends ClanJoinRequestGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClanJoinRequestGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClanJoinRequestGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClanJoinRequestGroupByOutputType[P]>
+            : GetScalarType<T[P], ClanJoinRequestGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClanJoinRequestSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    userId?: boolean
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanJoinRequest"]>
+
+  export type ClanJoinRequestSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    userId?: boolean
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanJoinRequest"]>
+
+  export type ClanJoinRequestSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    userId?: boolean
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanJoinRequest"]>
+
+  export type ClanJoinRequestSelectScalar = {
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    userId?: boolean
+  }
+
+  export type ClanJoinRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clanId" | "date" | "userId", ExtArgs["result"]["clanJoinRequest"]>
+  export type ClanJoinRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ClanJoinRequestIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ClanJoinRequestIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ClanJoinRequestPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClanJoinRequest"
+    objects: {
+      clan: Prisma.$ClanPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      clanId: number
+      date: Date
+      userId: string
+    }, ExtArgs["result"]["clanJoinRequest"]>
+    composites: {}
+  }
+
+  type ClanJoinRequestGetPayload<S extends boolean | null | undefined | ClanJoinRequestDefaultArgs> = $Result.GetResult<Prisma.$ClanJoinRequestPayload, S>
+
+  type ClanJoinRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClanJoinRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ClanJoinRequestCountAggregateInputType | true
+    }
+
+  export interface ClanJoinRequestDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClanJoinRequest'], meta: { name: 'ClanJoinRequest' } }
+    /**
+     * Find zero or one ClanJoinRequest that matches the filter.
+     * @param {ClanJoinRequestFindUniqueArgs} args - Arguments to find a ClanJoinRequest
+     * @example
+     * // Get one ClanJoinRequest
+     * const clanJoinRequest = await prisma.clanJoinRequest.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClanJoinRequestFindUniqueArgs>(args: SelectSubset<T, ClanJoinRequestFindUniqueArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClanJoinRequest that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClanJoinRequestFindUniqueOrThrowArgs} args - Arguments to find a ClanJoinRequest
+     * @example
+     * // Get one ClanJoinRequest
+     * const clanJoinRequest = await prisma.clanJoinRequest.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClanJoinRequestFindUniqueOrThrowArgs>(args: SelectSubset<T, ClanJoinRequestFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanJoinRequest that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanJoinRequestFindFirstArgs} args - Arguments to find a ClanJoinRequest
+     * @example
+     * // Get one ClanJoinRequest
+     * const clanJoinRequest = await prisma.clanJoinRequest.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClanJoinRequestFindFirstArgs>(args?: SelectSubset<T, ClanJoinRequestFindFirstArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanJoinRequest that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanJoinRequestFindFirstOrThrowArgs} args - Arguments to find a ClanJoinRequest
+     * @example
+     * // Get one ClanJoinRequest
+     * const clanJoinRequest = await prisma.clanJoinRequest.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClanJoinRequestFindFirstOrThrowArgs>(args?: SelectSubset<T, ClanJoinRequestFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClanJoinRequests that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanJoinRequestFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClanJoinRequests
+     * const clanJoinRequests = await prisma.clanJoinRequest.findMany()
+     * 
+     * // Get first 10 ClanJoinRequests
+     * const clanJoinRequests = await prisma.clanJoinRequest.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clanJoinRequestWithIdOnly = await prisma.clanJoinRequest.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClanJoinRequestFindManyArgs>(args?: SelectSubset<T, ClanJoinRequestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClanJoinRequest.
+     * @param {ClanJoinRequestCreateArgs} args - Arguments to create a ClanJoinRequest.
+     * @example
+     * // Create one ClanJoinRequest
+     * const ClanJoinRequest = await prisma.clanJoinRequest.create({
+     *   data: {
+     *     // ... data to create a ClanJoinRequest
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClanJoinRequestCreateArgs>(args: SelectSubset<T, ClanJoinRequestCreateArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClanJoinRequests.
+     * @param {ClanJoinRequestCreateManyArgs} args - Arguments to create many ClanJoinRequests.
+     * @example
+     * // Create many ClanJoinRequests
+     * const clanJoinRequest = await prisma.clanJoinRequest.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClanJoinRequestCreateManyArgs>(args?: SelectSubset<T, ClanJoinRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClanJoinRequests and returns the data saved in the database.
+     * @param {ClanJoinRequestCreateManyAndReturnArgs} args - Arguments to create many ClanJoinRequests.
+     * @example
+     * // Create many ClanJoinRequests
+     * const clanJoinRequest = await prisma.clanJoinRequest.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClanJoinRequests and only return the `id`
+     * const clanJoinRequestWithIdOnly = await prisma.clanJoinRequest.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClanJoinRequestCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanJoinRequestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClanJoinRequest.
+     * @param {ClanJoinRequestDeleteArgs} args - Arguments to delete one ClanJoinRequest.
+     * @example
+     * // Delete one ClanJoinRequest
+     * const ClanJoinRequest = await prisma.clanJoinRequest.delete({
+     *   where: {
+     *     // ... filter to delete one ClanJoinRequest
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClanJoinRequestDeleteArgs>(args: SelectSubset<T, ClanJoinRequestDeleteArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClanJoinRequest.
+     * @param {ClanJoinRequestUpdateArgs} args - Arguments to update one ClanJoinRequest.
+     * @example
+     * // Update one ClanJoinRequest
+     * const clanJoinRequest = await prisma.clanJoinRequest.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClanJoinRequestUpdateArgs>(args: SelectSubset<T, ClanJoinRequestUpdateArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClanJoinRequests.
+     * @param {ClanJoinRequestDeleteManyArgs} args - Arguments to filter ClanJoinRequests to delete.
+     * @example
+     * // Delete a few ClanJoinRequests
+     * const { count } = await prisma.clanJoinRequest.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClanJoinRequestDeleteManyArgs>(args?: SelectSubset<T, ClanJoinRequestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanJoinRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanJoinRequestUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClanJoinRequests
+     * const clanJoinRequest = await prisma.clanJoinRequest.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClanJoinRequestUpdateManyArgs>(args: SelectSubset<T, ClanJoinRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanJoinRequests and returns the data updated in the database.
+     * @param {ClanJoinRequestUpdateManyAndReturnArgs} args - Arguments to update many ClanJoinRequests.
+     * @example
+     * // Update many ClanJoinRequests
+     * const clanJoinRequest = await prisma.clanJoinRequest.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClanJoinRequests and only return the `id`
+     * const clanJoinRequestWithIdOnly = await prisma.clanJoinRequest.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClanJoinRequestUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanJoinRequestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClanJoinRequest.
+     * @param {ClanJoinRequestUpsertArgs} args - Arguments to update or create a ClanJoinRequest.
+     * @example
+     * // Update or create a ClanJoinRequest
+     * const clanJoinRequest = await prisma.clanJoinRequest.upsert({
+     *   create: {
+     *     // ... data to create a ClanJoinRequest
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClanJoinRequest we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClanJoinRequestUpsertArgs>(args: SelectSubset<T, ClanJoinRequestUpsertArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClanJoinRequests.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanJoinRequestCountArgs} args - Arguments to filter ClanJoinRequests to count.
+     * @example
+     * // Count the number of ClanJoinRequests
+     * const count = await prisma.clanJoinRequest.count({
+     *   where: {
+     *     // ... the filter for the ClanJoinRequests we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClanJoinRequestCountArgs>(
+      args?: Subset<T, ClanJoinRequestCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClanJoinRequestCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClanJoinRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanJoinRequestAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClanJoinRequestAggregateArgs>(args: Subset<T, ClanJoinRequestAggregateArgs>): Prisma.PrismaPromise<GetClanJoinRequestAggregateType<T>>
+
+    /**
+     * Group by ClanJoinRequest.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanJoinRequestGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClanJoinRequestGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClanJoinRequestGroupByArgs['orderBy'] }
+        : { orderBy?: ClanJoinRequestGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClanJoinRequestGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClanJoinRequestGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClanJoinRequest model
+   */
+  readonly fields: ClanJoinRequestFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClanJoinRequest.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClanJoinRequestClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    clan<T extends ClanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanDefaultArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClanJoinRequest model
+   */
+  interface ClanJoinRequestFieldRefs {
+    readonly id: FieldRef<"ClanJoinRequest", 'Int'>
+    readonly clanId: FieldRef<"ClanJoinRequest", 'Int'>
+    readonly date: FieldRef<"ClanJoinRequest", 'DateTime'>
+    readonly userId: FieldRef<"ClanJoinRequest", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClanJoinRequest findUnique
+   */
+  export type ClanJoinRequestFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanJoinRequest to fetch.
+     */
+    where: ClanJoinRequestWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanJoinRequest findUniqueOrThrow
+   */
+  export type ClanJoinRequestFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanJoinRequest to fetch.
+     */
+    where: ClanJoinRequestWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanJoinRequest findFirst
+   */
+  export type ClanJoinRequestFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanJoinRequest to fetch.
+     */
+    where?: ClanJoinRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanJoinRequests to fetch.
+     */
+    orderBy?: ClanJoinRequestOrderByWithRelationInput | ClanJoinRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanJoinRequests.
+     */
+    cursor?: ClanJoinRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanJoinRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanJoinRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanJoinRequests.
+     */
+    distinct?: ClanJoinRequestScalarFieldEnum | ClanJoinRequestScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanJoinRequest findFirstOrThrow
+   */
+  export type ClanJoinRequestFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanJoinRequest to fetch.
+     */
+    where?: ClanJoinRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanJoinRequests to fetch.
+     */
+    orderBy?: ClanJoinRequestOrderByWithRelationInput | ClanJoinRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanJoinRequests.
+     */
+    cursor?: ClanJoinRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanJoinRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanJoinRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanJoinRequests.
+     */
+    distinct?: ClanJoinRequestScalarFieldEnum | ClanJoinRequestScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanJoinRequest findMany
+   */
+  export type ClanJoinRequestFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanJoinRequests to fetch.
+     */
+    where?: ClanJoinRequestWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanJoinRequests to fetch.
+     */
+    orderBy?: ClanJoinRequestOrderByWithRelationInput | ClanJoinRequestOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClanJoinRequests.
+     */
+    cursor?: ClanJoinRequestWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanJoinRequests from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanJoinRequests.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanJoinRequests.
+     */
+    distinct?: ClanJoinRequestScalarFieldEnum | ClanJoinRequestScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanJoinRequest create
+   */
+  export type ClanJoinRequestCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClanJoinRequest.
+     */
+    data: XOR<ClanJoinRequestCreateInput, ClanJoinRequestUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanJoinRequest createMany
+   */
+  export type ClanJoinRequestCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClanJoinRequests.
+     */
+    data: ClanJoinRequestCreateManyInput | ClanJoinRequestCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClanJoinRequest createManyAndReturn
+   */
+  export type ClanJoinRequestCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClanJoinRequests.
+     */
+    data: ClanJoinRequestCreateManyInput | ClanJoinRequestCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanJoinRequest update
+   */
+  export type ClanJoinRequestUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClanJoinRequest.
+     */
+    data: XOR<ClanJoinRequestUpdateInput, ClanJoinRequestUncheckedUpdateInput>
+    /**
+     * Choose, which ClanJoinRequest to update.
+     */
+    where: ClanJoinRequestWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanJoinRequest updateMany
+   */
+  export type ClanJoinRequestUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClanJoinRequests.
+     */
+    data: XOR<ClanJoinRequestUpdateManyMutationInput, ClanJoinRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanJoinRequests to update
+     */
+    where?: ClanJoinRequestWhereInput
+    /**
+     * Limit how many ClanJoinRequests to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanJoinRequest updateManyAndReturn
+   */
+  export type ClanJoinRequestUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * The data used to update ClanJoinRequests.
+     */
+    data: XOR<ClanJoinRequestUpdateManyMutationInput, ClanJoinRequestUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanJoinRequests to update
+     */
+    where?: ClanJoinRequestWhereInput
+    /**
+     * Limit how many ClanJoinRequests to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanJoinRequest upsert
+   */
+  export type ClanJoinRequestUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClanJoinRequest to update in case it exists.
+     */
+    where: ClanJoinRequestWhereUniqueInput
+    /**
+     * In case the ClanJoinRequest found by the `where` argument doesn't exist, create a new ClanJoinRequest with this data.
+     */
+    create: XOR<ClanJoinRequestCreateInput, ClanJoinRequestUncheckedCreateInput>
+    /**
+     * In case the ClanJoinRequest was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClanJoinRequestUpdateInput, ClanJoinRequestUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanJoinRequest delete
+   */
+  export type ClanJoinRequestDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+    /**
+     * Filter which ClanJoinRequest to delete.
+     */
+    where: ClanJoinRequestWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanJoinRequest deleteMany
+   */
+  export type ClanJoinRequestDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanJoinRequests to delete
+     */
+    where?: ClanJoinRequestWhereInput
+    /**
+     * Limit how many ClanJoinRequests to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanJoinRequest without action
+   */
+  export type ClanJoinRequestDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanJoinRequest
+     */
+    select?: ClanJoinRequestSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanJoinRequest
+     */
+    omit?: ClanJoinRequestOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanJoinRequestInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClanIngredient
+   */
+
+  export type AggregateClanIngredient = {
+    _count: ClanIngredientCountAggregateOutputType | null
+    _avg: ClanIngredientAvgAggregateOutputType | null
+    _sum: ClanIngredientSumAggregateOutputType | null
+    _min: ClanIngredientMinAggregateOutputType | null
+    _max: ClanIngredientMaxAggregateOutputType | null
+  }
+
+  export type ClanIngredientAvgAggregateOutputType = {
+    id: number | null
+    ingredientId: number | null
+    quantity: number | null
+    clanId: number | null
+  }
+
+  export type ClanIngredientSumAggregateOutputType = {
+    id: number | null
+    ingredientId: number | null
+    quantity: number | null
+    clanId: number | null
+  }
+
+  export type ClanIngredientMinAggregateOutputType = {
+    id: number | null
+    ingredientId: number | null
+    quantity: number | null
+    clanId: number | null
+  }
+
+  export type ClanIngredientMaxAggregateOutputType = {
+    id: number | null
+    ingredientId: number | null
+    quantity: number | null
+    clanId: number | null
+  }
+
+  export type ClanIngredientCountAggregateOutputType = {
+    id: number
+    ingredientId: number
+    quantity: number
+    clanId: number
+    _all: number
+  }
+
+
+  export type ClanIngredientAvgAggregateInputType = {
+    id?: true
+    ingredientId?: true
+    quantity?: true
+    clanId?: true
+  }
+
+  export type ClanIngredientSumAggregateInputType = {
+    id?: true
+    ingredientId?: true
+    quantity?: true
+    clanId?: true
+  }
+
+  export type ClanIngredientMinAggregateInputType = {
+    id?: true
+    ingredientId?: true
+    quantity?: true
+    clanId?: true
+  }
+
+  export type ClanIngredientMaxAggregateInputType = {
+    id?: true
+    ingredientId?: true
+    quantity?: true
+    clanId?: true
+  }
+
+  export type ClanIngredientCountAggregateInputType = {
+    id?: true
+    ingredientId?: true
+    quantity?: true
+    clanId?: true
+    _all?: true
+  }
+
+  export type ClanIngredientAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanIngredient to aggregate.
+     */
+    where?: ClanIngredientWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanIngredients to fetch.
+     */
+    orderBy?: ClanIngredientOrderByWithRelationInput | ClanIngredientOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClanIngredientWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanIngredients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanIngredients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClanIngredients
+    **/
+    _count?: true | ClanIngredientCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClanIngredientAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClanIngredientSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClanIngredientMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClanIngredientMaxAggregateInputType
+  }
+
+  export type GetClanIngredientAggregateType<T extends ClanIngredientAggregateArgs> = {
+        [P in keyof T & keyof AggregateClanIngredient]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClanIngredient[P]>
+      : GetScalarType<T[P], AggregateClanIngredient[P]>
+  }
+
+
+
+
+  export type ClanIngredientGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanIngredientWhereInput
+    orderBy?: ClanIngredientOrderByWithAggregationInput | ClanIngredientOrderByWithAggregationInput[]
+    by: ClanIngredientScalarFieldEnum[] | ClanIngredientScalarFieldEnum
+    having?: ClanIngredientScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClanIngredientCountAggregateInputType | true
+    _avg?: ClanIngredientAvgAggregateInputType
+    _sum?: ClanIngredientSumAggregateInputType
+    _min?: ClanIngredientMinAggregateInputType
+    _max?: ClanIngredientMaxAggregateInputType
+  }
+
+  export type ClanIngredientGroupByOutputType = {
+    id: number
+    ingredientId: number
+    quantity: number
+    clanId: number
+    _count: ClanIngredientCountAggregateOutputType | null
+    _avg: ClanIngredientAvgAggregateOutputType | null
+    _sum: ClanIngredientSumAggregateOutputType | null
+    _min: ClanIngredientMinAggregateOutputType | null
+    _max: ClanIngredientMaxAggregateOutputType | null
+  }
+
+  type GetClanIngredientGroupByPayload<T extends ClanIngredientGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClanIngredientGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClanIngredientGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClanIngredientGroupByOutputType[P]>
+            : GetScalarType<T[P], ClanIngredientGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClanIngredientSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ingredientId?: boolean
+    quantity?: boolean
+    clanId?: boolean
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanIngredient"]>
+
+  export type ClanIngredientSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ingredientId?: boolean
+    quantity?: boolean
+    clanId?: boolean
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanIngredient"]>
+
+  export type ClanIngredientSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ingredientId?: boolean
+    quantity?: boolean
+    clanId?: boolean
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanIngredient"]>
+
+  export type ClanIngredientSelectScalar = {
+    id?: boolean
+    ingredientId?: boolean
+    quantity?: boolean
+    clanId?: boolean
+  }
+
+  export type ClanIngredientOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ingredientId" | "quantity" | "clanId", ExtArgs["result"]["clanIngredient"]>
+  export type ClanIngredientInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanIngredientIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanIngredientIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+
+  export type $ClanIngredientPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClanIngredient"
+    objects: {
+      clan: Prisma.$ClanPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      ingredientId: number
+      quantity: number
+      clanId: number
+    }, ExtArgs["result"]["clanIngredient"]>
+    composites: {}
+  }
+
+  type ClanIngredientGetPayload<S extends boolean | null | undefined | ClanIngredientDefaultArgs> = $Result.GetResult<Prisma.$ClanIngredientPayload, S>
+
+  type ClanIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClanIngredientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ClanIngredientCountAggregateInputType | true
+    }
+
+  export interface ClanIngredientDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClanIngredient'], meta: { name: 'ClanIngredient' } }
+    /**
+     * Find zero or one ClanIngredient that matches the filter.
+     * @param {ClanIngredientFindUniqueArgs} args - Arguments to find a ClanIngredient
+     * @example
+     * // Get one ClanIngredient
+     * const clanIngredient = await prisma.clanIngredient.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClanIngredientFindUniqueArgs>(args: SelectSubset<T, ClanIngredientFindUniqueArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClanIngredient that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClanIngredientFindUniqueOrThrowArgs} args - Arguments to find a ClanIngredient
+     * @example
+     * // Get one ClanIngredient
+     * const clanIngredient = await prisma.clanIngredient.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClanIngredientFindUniqueOrThrowArgs>(args: SelectSubset<T, ClanIngredientFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanIngredient that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanIngredientFindFirstArgs} args - Arguments to find a ClanIngredient
+     * @example
+     * // Get one ClanIngredient
+     * const clanIngredient = await prisma.clanIngredient.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClanIngredientFindFirstArgs>(args?: SelectSubset<T, ClanIngredientFindFirstArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanIngredient that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanIngredientFindFirstOrThrowArgs} args - Arguments to find a ClanIngredient
+     * @example
+     * // Get one ClanIngredient
+     * const clanIngredient = await prisma.clanIngredient.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClanIngredientFindFirstOrThrowArgs>(args?: SelectSubset<T, ClanIngredientFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClanIngredients that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanIngredientFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClanIngredients
+     * const clanIngredients = await prisma.clanIngredient.findMany()
+     * 
+     * // Get first 10 ClanIngredients
+     * const clanIngredients = await prisma.clanIngredient.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clanIngredientWithIdOnly = await prisma.clanIngredient.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClanIngredientFindManyArgs>(args?: SelectSubset<T, ClanIngredientFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClanIngredient.
+     * @param {ClanIngredientCreateArgs} args - Arguments to create a ClanIngredient.
+     * @example
+     * // Create one ClanIngredient
+     * const ClanIngredient = await prisma.clanIngredient.create({
+     *   data: {
+     *     // ... data to create a ClanIngredient
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClanIngredientCreateArgs>(args: SelectSubset<T, ClanIngredientCreateArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClanIngredients.
+     * @param {ClanIngredientCreateManyArgs} args - Arguments to create many ClanIngredients.
+     * @example
+     * // Create many ClanIngredients
+     * const clanIngredient = await prisma.clanIngredient.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClanIngredientCreateManyArgs>(args?: SelectSubset<T, ClanIngredientCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClanIngredients and returns the data saved in the database.
+     * @param {ClanIngredientCreateManyAndReturnArgs} args - Arguments to create many ClanIngredients.
+     * @example
+     * // Create many ClanIngredients
+     * const clanIngredient = await prisma.clanIngredient.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClanIngredients and only return the `id`
+     * const clanIngredientWithIdOnly = await prisma.clanIngredient.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClanIngredientCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanIngredientCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClanIngredient.
+     * @param {ClanIngredientDeleteArgs} args - Arguments to delete one ClanIngredient.
+     * @example
+     * // Delete one ClanIngredient
+     * const ClanIngredient = await prisma.clanIngredient.delete({
+     *   where: {
+     *     // ... filter to delete one ClanIngredient
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClanIngredientDeleteArgs>(args: SelectSubset<T, ClanIngredientDeleteArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClanIngredient.
+     * @param {ClanIngredientUpdateArgs} args - Arguments to update one ClanIngredient.
+     * @example
+     * // Update one ClanIngredient
+     * const clanIngredient = await prisma.clanIngredient.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClanIngredientUpdateArgs>(args: SelectSubset<T, ClanIngredientUpdateArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClanIngredients.
+     * @param {ClanIngredientDeleteManyArgs} args - Arguments to filter ClanIngredients to delete.
+     * @example
+     * // Delete a few ClanIngredients
+     * const { count } = await prisma.clanIngredient.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClanIngredientDeleteManyArgs>(args?: SelectSubset<T, ClanIngredientDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanIngredients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanIngredientUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClanIngredients
+     * const clanIngredient = await prisma.clanIngredient.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClanIngredientUpdateManyArgs>(args: SelectSubset<T, ClanIngredientUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanIngredients and returns the data updated in the database.
+     * @param {ClanIngredientUpdateManyAndReturnArgs} args - Arguments to update many ClanIngredients.
+     * @example
+     * // Update many ClanIngredients
+     * const clanIngredient = await prisma.clanIngredient.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClanIngredients and only return the `id`
+     * const clanIngredientWithIdOnly = await prisma.clanIngredient.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClanIngredientUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanIngredientUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClanIngredient.
+     * @param {ClanIngredientUpsertArgs} args - Arguments to update or create a ClanIngredient.
+     * @example
+     * // Update or create a ClanIngredient
+     * const clanIngredient = await prisma.clanIngredient.upsert({
+     *   create: {
+     *     // ... data to create a ClanIngredient
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClanIngredient we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClanIngredientUpsertArgs>(args: SelectSubset<T, ClanIngredientUpsertArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClanIngredients.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanIngredientCountArgs} args - Arguments to filter ClanIngredients to count.
+     * @example
+     * // Count the number of ClanIngredients
+     * const count = await prisma.clanIngredient.count({
+     *   where: {
+     *     // ... the filter for the ClanIngredients we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClanIngredientCountArgs>(
+      args?: Subset<T, ClanIngredientCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClanIngredientCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClanIngredient.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanIngredientAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClanIngredientAggregateArgs>(args: Subset<T, ClanIngredientAggregateArgs>): Prisma.PrismaPromise<GetClanIngredientAggregateType<T>>
+
+    /**
+     * Group by ClanIngredient.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanIngredientGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClanIngredientGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClanIngredientGroupByArgs['orderBy'] }
+        : { orderBy?: ClanIngredientGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClanIngredientGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClanIngredientGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClanIngredient model
+   */
+  readonly fields: ClanIngredientFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClanIngredient.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClanIngredientClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    clan<T extends ClanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanDefaultArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClanIngredient model
+   */
+  interface ClanIngredientFieldRefs {
+    readonly id: FieldRef<"ClanIngredient", 'Int'>
+    readonly ingredientId: FieldRef<"ClanIngredient", 'Int'>
+    readonly quantity: FieldRef<"ClanIngredient", 'Int'>
+    readonly clanId: FieldRef<"ClanIngredient", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClanIngredient findUnique
+   */
+  export type ClanIngredientFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanIngredient to fetch.
+     */
+    where: ClanIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanIngredient findUniqueOrThrow
+   */
+  export type ClanIngredientFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanIngredient to fetch.
+     */
+    where: ClanIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanIngredient findFirst
+   */
+  export type ClanIngredientFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanIngredient to fetch.
+     */
+    where?: ClanIngredientWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanIngredients to fetch.
+     */
+    orderBy?: ClanIngredientOrderByWithRelationInput | ClanIngredientOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanIngredients.
+     */
+    cursor?: ClanIngredientWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanIngredients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanIngredients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanIngredients.
+     */
+    distinct?: ClanIngredientScalarFieldEnum | ClanIngredientScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanIngredient findFirstOrThrow
+   */
+  export type ClanIngredientFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanIngredient to fetch.
+     */
+    where?: ClanIngredientWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanIngredients to fetch.
+     */
+    orderBy?: ClanIngredientOrderByWithRelationInput | ClanIngredientOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanIngredients.
+     */
+    cursor?: ClanIngredientWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanIngredients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanIngredients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanIngredients.
+     */
+    distinct?: ClanIngredientScalarFieldEnum | ClanIngredientScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanIngredient findMany
+   */
+  export type ClanIngredientFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanIngredients to fetch.
+     */
+    where?: ClanIngredientWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanIngredients to fetch.
+     */
+    orderBy?: ClanIngredientOrderByWithRelationInput | ClanIngredientOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClanIngredients.
+     */
+    cursor?: ClanIngredientWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanIngredients from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanIngredients.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanIngredients.
+     */
+    distinct?: ClanIngredientScalarFieldEnum | ClanIngredientScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanIngredient create
+   */
+  export type ClanIngredientCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClanIngredient.
+     */
+    data: XOR<ClanIngredientCreateInput, ClanIngredientUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanIngredient createMany
+   */
+  export type ClanIngredientCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClanIngredients.
+     */
+    data: ClanIngredientCreateManyInput | ClanIngredientCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClanIngredient createManyAndReturn
+   */
+  export type ClanIngredientCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClanIngredients.
+     */
+    data: ClanIngredientCreateManyInput | ClanIngredientCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanIngredient update
+   */
+  export type ClanIngredientUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClanIngredient.
+     */
+    data: XOR<ClanIngredientUpdateInput, ClanIngredientUncheckedUpdateInput>
+    /**
+     * Choose, which ClanIngredient to update.
+     */
+    where: ClanIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanIngredient updateMany
+   */
+  export type ClanIngredientUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClanIngredients.
+     */
+    data: XOR<ClanIngredientUpdateManyMutationInput, ClanIngredientUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanIngredients to update
+     */
+    where?: ClanIngredientWhereInput
+    /**
+     * Limit how many ClanIngredients to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanIngredient updateManyAndReturn
+   */
+  export type ClanIngredientUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * The data used to update ClanIngredients.
+     */
+    data: XOR<ClanIngredientUpdateManyMutationInput, ClanIngredientUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanIngredients to update
+     */
+    where?: ClanIngredientWhereInput
+    /**
+     * Limit how many ClanIngredients to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanIngredient upsert
+   */
+  export type ClanIngredientUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClanIngredient to update in case it exists.
+     */
+    where: ClanIngredientWhereUniqueInput
+    /**
+     * In case the ClanIngredient found by the `where` argument doesn't exist, create a new ClanIngredient with this data.
+     */
+    create: XOR<ClanIngredientCreateInput, ClanIngredientUncheckedCreateInput>
+    /**
+     * In case the ClanIngredient was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClanIngredientUpdateInput, ClanIngredientUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanIngredient delete
+   */
+  export type ClanIngredientDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientInclude<ExtArgs> | null
+    /**
+     * Filter which ClanIngredient to delete.
+     */
+    where: ClanIngredientWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanIngredient deleteMany
+   */
+  export type ClanIngredientDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanIngredients to delete
+     */
+    where?: ClanIngredientWhereInput
+    /**
+     * Limit how many ClanIngredients to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanIngredient without action
+   */
+  export type ClanIngredientDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanIngredient
+     */
+    select?: ClanIngredientSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanIngredient
+     */
+    omit?: ClanIngredientOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanIngredientInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClanMessage
+   */
+
+  export type AggregateClanMessage = {
+    _count: ClanMessageCountAggregateOutputType | null
+    _avg: ClanMessageAvgAggregateOutputType | null
+    _sum: ClanMessageSumAggregateOutputType | null
+    _min: ClanMessageMinAggregateOutputType | null
+    _max: ClanMessageMaxAggregateOutputType | null
+  }
+
+  export type ClanMessageAvgAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+  }
+
+  export type ClanMessageSumAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+  }
+
+  export type ClanMessageMinAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+    date: Date | null
+    content: string | null
+    authorId: string | null
+    authorName: string | null
+  }
+
+  export type ClanMessageMaxAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+    date: Date | null
+    content: string | null
+    authorId: string | null
+    authorName: string | null
+  }
+
+  export type ClanMessageCountAggregateOutputType = {
+    id: number
+    clanId: number
+    date: number
+    content: number
+    authorId: number
+    authorName: number
+    _all: number
+  }
+
+
+  export type ClanMessageAvgAggregateInputType = {
+    id?: true
+    clanId?: true
+  }
+
+  export type ClanMessageSumAggregateInputType = {
+    id?: true
+    clanId?: true
+  }
+
+  export type ClanMessageMinAggregateInputType = {
+    id?: true
+    clanId?: true
+    date?: true
+    content?: true
+    authorId?: true
+    authorName?: true
+  }
+
+  export type ClanMessageMaxAggregateInputType = {
+    id?: true
+    clanId?: true
+    date?: true
+    content?: true
+    authorId?: true
+    authorName?: true
+  }
+
+  export type ClanMessageCountAggregateInputType = {
+    id?: true
+    clanId?: true
+    date?: true
+    content?: true
+    authorId?: true
+    authorName?: true
+    _all?: true
+  }
+
+  export type ClanMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanMessage to aggregate.
+     */
+    where?: ClanMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanMessages to fetch.
+     */
+    orderBy?: ClanMessageOrderByWithRelationInput | ClanMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClanMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClanMessages
+    **/
+    _count?: true | ClanMessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClanMessageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClanMessageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClanMessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClanMessageMaxAggregateInputType
+  }
+
+  export type GetClanMessageAggregateType<T extends ClanMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateClanMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClanMessage[P]>
+      : GetScalarType<T[P], AggregateClanMessage[P]>
+  }
+
+
+
+
+  export type ClanMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanMessageWhereInput
+    orderBy?: ClanMessageOrderByWithAggregationInput | ClanMessageOrderByWithAggregationInput[]
+    by: ClanMessageScalarFieldEnum[] | ClanMessageScalarFieldEnum
+    having?: ClanMessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClanMessageCountAggregateInputType | true
+    _avg?: ClanMessageAvgAggregateInputType
+    _sum?: ClanMessageSumAggregateInputType
+    _min?: ClanMessageMinAggregateInputType
+    _max?: ClanMessageMaxAggregateInputType
+  }
+
+  export type ClanMessageGroupByOutputType = {
+    id: number
+    clanId: number
+    date: Date
+    content: string
+    authorId: string | null
+    authorName: string
+    _count: ClanMessageCountAggregateOutputType | null
+    _avg: ClanMessageAvgAggregateOutputType | null
+    _sum: ClanMessageSumAggregateOutputType | null
+    _min: ClanMessageMinAggregateOutputType | null
+    _max: ClanMessageMaxAggregateOutputType | null
+  }
+
+  type GetClanMessageGroupByPayload<T extends ClanMessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClanMessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClanMessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClanMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], ClanMessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClanMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    content?: boolean
+    authorId?: boolean
+    authorName?: boolean
+    author?: boolean | ClanMessage$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanMessage"]>
+
+  export type ClanMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    content?: boolean
+    authorId?: boolean
+    authorName?: boolean
+    author?: boolean | ClanMessage$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanMessage"]>
+
+  export type ClanMessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    content?: boolean
+    authorId?: boolean
+    authorName?: boolean
+    author?: boolean | ClanMessage$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanMessage"]>
+
+  export type ClanMessageSelectScalar = {
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    content?: boolean
+    authorId?: boolean
+    authorName?: boolean
+  }
+
+  export type ClanMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clanId" | "date" | "content" | "authorId" | "authorName", ExtArgs["result"]["clanMessage"]>
+  export type ClanMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | ClanMessage$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | ClanMessage$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanMessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | ClanMessage$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+
+  export type $ClanMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClanMessage"
+    objects: {
+      author: Prisma.$UserPayload<ExtArgs> | null
+      clan: Prisma.$ClanPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      clanId: number
+      date: Date
+      content: string
+      authorId: string | null
+      authorName: string
+    }, ExtArgs["result"]["clanMessage"]>
+    composites: {}
+  }
+
+  type ClanMessageGetPayload<S extends boolean | null | undefined | ClanMessageDefaultArgs> = $Result.GetResult<Prisma.$ClanMessagePayload, S>
+
+  type ClanMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClanMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ClanMessageCountAggregateInputType | true
+    }
+
+  export interface ClanMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClanMessage'], meta: { name: 'ClanMessage' } }
+    /**
+     * Find zero or one ClanMessage that matches the filter.
+     * @param {ClanMessageFindUniqueArgs} args - Arguments to find a ClanMessage
+     * @example
+     * // Get one ClanMessage
+     * const clanMessage = await prisma.clanMessage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClanMessageFindUniqueArgs>(args: SelectSubset<T, ClanMessageFindUniqueArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClanMessage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClanMessageFindUniqueOrThrowArgs} args - Arguments to find a ClanMessage
+     * @example
+     * // Get one ClanMessage
+     * const clanMessage = await prisma.clanMessage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClanMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, ClanMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanMessage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMessageFindFirstArgs} args - Arguments to find a ClanMessage
+     * @example
+     * // Get one ClanMessage
+     * const clanMessage = await prisma.clanMessage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClanMessageFindFirstArgs>(args?: SelectSubset<T, ClanMessageFindFirstArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanMessage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMessageFindFirstOrThrowArgs} args - Arguments to find a ClanMessage
+     * @example
+     * // Get one ClanMessage
+     * const clanMessage = await prisma.clanMessage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClanMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, ClanMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClanMessages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClanMessages
+     * const clanMessages = await prisma.clanMessage.findMany()
+     * 
+     * // Get first 10 ClanMessages
+     * const clanMessages = await prisma.clanMessage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clanMessageWithIdOnly = await prisma.clanMessage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClanMessageFindManyArgs>(args?: SelectSubset<T, ClanMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClanMessage.
+     * @param {ClanMessageCreateArgs} args - Arguments to create a ClanMessage.
+     * @example
+     * // Create one ClanMessage
+     * const ClanMessage = await prisma.clanMessage.create({
+     *   data: {
+     *     // ... data to create a ClanMessage
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClanMessageCreateArgs>(args: SelectSubset<T, ClanMessageCreateArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClanMessages.
+     * @param {ClanMessageCreateManyArgs} args - Arguments to create many ClanMessages.
+     * @example
+     * // Create many ClanMessages
+     * const clanMessage = await prisma.clanMessage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClanMessageCreateManyArgs>(args?: SelectSubset<T, ClanMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClanMessages and returns the data saved in the database.
+     * @param {ClanMessageCreateManyAndReturnArgs} args - Arguments to create many ClanMessages.
+     * @example
+     * // Create many ClanMessages
+     * const clanMessage = await prisma.clanMessage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClanMessages and only return the `id`
+     * const clanMessageWithIdOnly = await prisma.clanMessage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClanMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClanMessage.
+     * @param {ClanMessageDeleteArgs} args - Arguments to delete one ClanMessage.
+     * @example
+     * // Delete one ClanMessage
+     * const ClanMessage = await prisma.clanMessage.delete({
+     *   where: {
+     *     // ... filter to delete one ClanMessage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClanMessageDeleteArgs>(args: SelectSubset<T, ClanMessageDeleteArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClanMessage.
+     * @param {ClanMessageUpdateArgs} args - Arguments to update one ClanMessage.
+     * @example
+     * // Update one ClanMessage
+     * const clanMessage = await prisma.clanMessage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClanMessageUpdateArgs>(args: SelectSubset<T, ClanMessageUpdateArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClanMessages.
+     * @param {ClanMessageDeleteManyArgs} args - Arguments to filter ClanMessages to delete.
+     * @example
+     * // Delete a few ClanMessages
+     * const { count } = await prisma.clanMessage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClanMessageDeleteManyArgs>(args?: SelectSubset<T, ClanMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClanMessages
+     * const clanMessage = await prisma.clanMessage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClanMessageUpdateManyArgs>(args: SelectSubset<T, ClanMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanMessages and returns the data updated in the database.
+     * @param {ClanMessageUpdateManyAndReturnArgs} args - Arguments to update many ClanMessages.
+     * @example
+     * // Update many ClanMessages
+     * const clanMessage = await prisma.clanMessage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClanMessages and only return the `id`
+     * const clanMessageWithIdOnly = await prisma.clanMessage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClanMessageUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanMessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClanMessage.
+     * @param {ClanMessageUpsertArgs} args - Arguments to update or create a ClanMessage.
+     * @example
+     * // Update or create a ClanMessage
+     * const clanMessage = await prisma.clanMessage.upsert({
+     *   create: {
+     *     // ... data to create a ClanMessage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClanMessage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClanMessageUpsertArgs>(args: SelectSubset<T, ClanMessageUpsertArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClanMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMessageCountArgs} args - Arguments to filter ClanMessages to count.
+     * @example
+     * // Count the number of ClanMessages
+     * const count = await prisma.clanMessage.count({
+     *   where: {
+     *     // ... the filter for the ClanMessages we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClanMessageCountArgs>(
+      args?: Subset<T, ClanMessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClanMessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClanMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClanMessageAggregateArgs>(args: Subset<T, ClanMessageAggregateArgs>): Prisma.PrismaPromise<GetClanMessageAggregateType<T>>
+
+    /**
+     * Group by ClanMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClanMessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClanMessageGroupByArgs['orderBy'] }
+        : { orderBy?: ClanMessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClanMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClanMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClanMessage model
+   */
+  readonly fields: ClanMessageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClanMessage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClanMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    author<T extends ClanMessage$authorArgs<ExtArgs> = {}>(args?: Subset<T, ClanMessage$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    clan<T extends ClanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanDefaultArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClanMessage model
+   */
+  interface ClanMessageFieldRefs {
+    readonly id: FieldRef<"ClanMessage", 'Int'>
+    readonly clanId: FieldRef<"ClanMessage", 'Int'>
+    readonly date: FieldRef<"ClanMessage", 'DateTime'>
+    readonly content: FieldRef<"ClanMessage", 'String'>
+    readonly authorId: FieldRef<"ClanMessage", 'String'>
+    readonly authorName: FieldRef<"ClanMessage", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClanMessage findUnique
+   */
+  export type ClanMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanMessage to fetch.
+     */
+    where: ClanMessageWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMessage findUniqueOrThrow
+   */
+  export type ClanMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanMessage to fetch.
+     */
+    where: ClanMessageWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMessage findFirst
+   */
+  export type ClanMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanMessage to fetch.
+     */
+    where?: ClanMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanMessages to fetch.
+     */
+    orderBy?: ClanMessageOrderByWithRelationInput | ClanMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanMessages.
+     */
+    cursor?: ClanMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanMessages.
+     */
+    distinct?: ClanMessageScalarFieldEnum | ClanMessageScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMessage findFirstOrThrow
+   */
+  export type ClanMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanMessage to fetch.
+     */
+    where?: ClanMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanMessages to fetch.
+     */
+    orderBy?: ClanMessageOrderByWithRelationInput | ClanMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanMessages.
+     */
+    cursor?: ClanMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanMessages.
+     */
+    distinct?: ClanMessageScalarFieldEnum | ClanMessageScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMessage findMany
+   */
+  export type ClanMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanMessages to fetch.
+     */
+    where?: ClanMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanMessages to fetch.
+     */
+    orderBy?: ClanMessageOrderByWithRelationInput | ClanMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClanMessages.
+     */
+    cursor?: ClanMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanMessages.
+     */
+    distinct?: ClanMessageScalarFieldEnum | ClanMessageScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMessage create
+   */
+  export type ClanMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClanMessage.
+     */
+    data: XOR<ClanMessageCreateInput, ClanMessageUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMessage createMany
+   */
+  export type ClanMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClanMessages.
+     */
+    data: ClanMessageCreateManyInput | ClanMessageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClanMessage createManyAndReturn
+   */
+  export type ClanMessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClanMessages.
+     */
+    data: ClanMessageCreateManyInput | ClanMessageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanMessage update
+   */
+  export type ClanMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClanMessage.
+     */
+    data: XOR<ClanMessageUpdateInput, ClanMessageUncheckedUpdateInput>
+    /**
+     * Choose, which ClanMessage to update.
+     */
+    where: ClanMessageWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMessage updateMany
+   */
+  export type ClanMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClanMessages.
+     */
+    data: XOR<ClanMessageUpdateManyMutationInput, ClanMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanMessages to update
+     */
+    where?: ClanMessageWhereInput
+    /**
+     * Limit how many ClanMessages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanMessage updateManyAndReturn
+   */
+  export type ClanMessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * The data used to update ClanMessages.
+     */
+    data: XOR<ClanMessageUpdateManyMutationInput, ClanMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanMessages to update
+     */
+    where?: ClanMessageWhereInput
+    /**
+     * Limit how many ClanMessages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanMessage upsert
+   */
+  export type ClanMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClanMessage to update in case it exists.
+     */
+    where: ClanMessageWhereUniqueInput
+    /**
+     * In case the ClanMessage found by the `where` argument doesn't exist, create a new ClanMessage with this data.
+     */
+    create: XOR<ClanMessageCreateInput, ClanMessageUncheckedCreateInput>
+    /**
+     * In case the ClanMessage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClanMessageUpdateInput, ClanMessageUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMessage delete
+   */
+  export type ClanMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+    /**
+     * Filter which ClanMessage to delete.
+     */
+    where: ClanMessageWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMessage deleteMany
+   */
+  export type ClanMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanMessages to delete
+     */
+    where?: ClanMessageWhereInput
+    /**
+     * Limit how many ClanMessages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanMessage.author
+   */
+  export type ClanMessage$authorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * ClanMessage without action
+   */
+  export type ClanMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMessage
+     */
+    select?: ClanMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMessage
+     */
+    omit?: ClanMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMessageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClanHistory
+   */
+
+  export type AggregateClanHistory = {
+    _count: ClanHistoryCountAggregateOutputType | null
+    _avg: ClanHistoryAvgAggregateOutputType | null
+    _sum: ClanHistorySumAggregateOutputType | null
+    _min: ClanHistoryMinAggregateOutputType | null
+    _max: ClanHistoryMaxAggregateOutputType | null
+  }
+
+  export type ClanHistoryAvgAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+  }
+
+  export type ClanHistorySumAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+  }
+
+  export type ClanHistoryMinAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+    date: Date | null
+    type: string | null
+    authorId: string | null
+    authorMessage: string | null
+  }
+
+  export type ClanHistoryMaxAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+    date: Date | null
+    type: string | null
+    authorId: string | null
+    authorMessage: string | null
+  }
+
+  export type ClanHistoryCountAggregateOutputType = {
+    id: number
+    clanId: number
+    date: number
+    type: number
+    authorId: number
+    authorMessage: number
+    _all: number
+  }
+
+
+  export type ClanHistoryAvgAggregateInputType = {
+    id?: true
+    clanId?: true
+  }
+
+  export type ClanHistorySumAggregateInputType = {
+    id?: true
+    clanId?: true
+  }
+
+  export type ClanHistoryMinAggregateInputType = {
+    id?: true
+    clanId?: true
+    date?: true
+    type?: true
+    authorId?: true
+    authorMessage?: true
+  }
+
+  export type ClanHistoryMaxAggregateInputType = {
+    id?: true
+    clanId?: true
+    date?: true
+    type?: true
+    authorId?: true
+    authorMessage?: true
+  }
+
+  export type ClanHistoryCountAggregateInputType = {
+    id?: true
+    clanId?: true
+    date?: true
+    type?: true
+    authorId?: true
+    authorMessage?: true
+    _all?: true
+  }
+
+  export type ClanHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanHistory to aggregate.
+     */
+    where?: ClanHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanHistories to fetch.
+     */
+    orderBy?: ClanHistoryOrderByWithRelationInput | ClanHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClanHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClanHistories
+    **/
+    _count?: true | ClanHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClanHistoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClanHistorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClanHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClanHistoryMaxAggregateInputType
+  }
+
+  export type GetClanHistoryAggregateType<T extends ClanHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateClanHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClanHistory[P]>
+      : GetScalarType<T[P], AggregateClanHistory[P]>
+  }
+
+
+
+
+  export type ClanHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanHistoryWhereInput
+    orderBy?: ClanHistoryOrderByWithAggregationInput | ClanHistoryOrderByWithAggregationInput[]
+    by: ClanHistoryScalarFieldEnum[] | ClanHistoryScalarFieldEnum
+    having?: ClanHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClanHistoryCountAggregateInputType | true
+    _avg?: ClanHistoryAvgAggregateInputType
+    _sum?: ClanHistorySumAggregateInputType
+    _min?: ClanHistoryMinAggregateInputType
+    _max?: ClanHistoryMaxAggregateInputType
+  }
+
+  export type ClanHistoryGroupByOutputType = {
+    id: number
+    clanId: number
+    date: Date
+    type: string
+    authorId: string | null
+    authorMessage: string
+    _count: ClanHistoryCountAggregateOutputType | null
+    _avg: ClanHistoryAvgAggregateOutputType | null
+    _sum: ClanHistorySumAggregateOutputType | null
+    _min: ClanHistoryMinAggregateOutputType | null
+    _max: ClanHistoryMaxAggregateOutputType | null
+  }
+
+  type GetClanHistoryGroupByPayload<T extends ClanHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClanHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClanHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClanHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], ClanHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClanHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    type?: boolean
+    authorId?: boolean
+    authorMessage?: boolean
+    author?: boolean | ClanHistory$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanHistory"]>
+
+  export type ClanHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    type?: boolean
+    authorId?: boolean
+    authorMessage?: boolean
+    author?: boolean | ClanHistory$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanHistory"]>
+
+  export type ClanHistorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    type?: boolean
+    authorId?: boolean
+    authorMessage?: boolean
+    author?: boolean | ClanHistory$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanHistory"]>
+
+  export type ClanHistorySelectScalar = {
+    id?: boolean
+    clanId?: boolean
+    date?: boolean
+    type?: boolean
+    authorId?: boolean
+    authorMessage?: boolean
+  }
+
+  export type ClanHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clanId" | "date" | "type" | "authorId" | "authorMessage", ExtArgs["result"]["clanHistory"]>
+  export type ClanHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | ClanHistory$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | ClanHistory$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanHistoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | ClanHistory$authorArgs<ExtArgs>
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+
+  export type $ClanHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClanHistory"
+    objects: {
+      author: Prisma.$UserPayload<ExtArgs> | null
+      clan: Prisma.$ClanPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      clanId: number
+      date: Date
+      type: string
+      authorId: string | null
+      authorMessage: string
+    }, ExtArgs["result"]["clanHistory"]>
+    composites: {}
+  }
+
+  type ClanHistoryGetPayload<S extends boolean | null | undefined | ClanHistoryDefaultArgs> = $Result.GetResult<Prisma.$ClanHistoryPayload, S>
+
+  type ClanHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClanHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ClanHistoryCountAggregateInputType | true
+    }
+
+  export interface ClanHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClanHistory'], meta: { name: 'ClanHistory' } }
+    /**
+     * Find zero or one ClanHistory that matches the filter.
+     * @param {ClanHistoryFindUniqueArgs} args - Arguments to find a ClanHistory
+     * @example
+     * // Get one ClanHistory
+     * const clanHistory = await prisma.clanHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClanHistoryFindUniqueArgs>(args: SelectSubset<T, ClanHistoryFindUniqueArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClanHistory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClanHistoryFindUniqueOrThrowArgs} args - Arguments to find a ClanHistory
+     * @example
+     * // Get one ClanHistory
+     * const clanHistory = await prisma.clanHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClanHistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, ClanHistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanHistoryFindFirstArgs} args - Arguments to find a ClanHistory
+     * @example
+     * // Get one ClanHistory
+     * const clanHistory = await prisma.clanHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClanHistoryFindFirstArgs>(args?: SelectSubset<T, ClanHistoryFindFirstArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanHistoryFindFirstOrThrowArgs} args - Arguments to find a ClanHistory
+     * @example
+     * // Get one ClanHistory
+     * const clanHistory = await prisma.clanHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClanHistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, ClanHistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClanHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanHistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClanHistories
+     * const clanHistories = await prisma.clanHistory.findMany()
+     * 
+     * // Get first 10 ClanHistories
+     * const clanHistories = await prisma.clanHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clanHistoryWithIdOnly = await prisma.clanHistory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClanHistoryFindManyArgs>(args?: SelectSubset<T, ClanHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClanHistory.
+     * @param {ClanHistoryCreateArgs} args - Arguments to create a ClanHistory.
+     * @example
+     * // Create one ClanHistory
+     * const ClanHistory = await prisma.clanHistory.create({
+     *   data: {
+     *     // ... data to create a ClanHistory
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClanHistoryCreateArgs>(args: SelectSubset<T, ClanHistoryCreateArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClanHistories.
+     * @param {ClanHistoryCreateManyArgs} args - Arguments to create many ClanHistories.
+     * @example
+     * // Create many ClanHistories
+     * const clanHistory = await prisma.clanHistory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClanHistoryCreateManyArgs>(args?: SelectSubset<T, ClanHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClanHistories and returns the data saved in the database.
+     * @param {ClanHistoryCreateManyAndReturnArgs} args - Arguments to create many ClanHistories.
+     * @example
+     * // Create many ClanHistories
+     * const clanHistory = await prisma.clanHistory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClanHistories and only return the `id`
+     * const clanHistoryWithIdOnly = await prisma.clanHistory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClanHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClanHistory.
+     * @param {ClanHistoryDeleteArgs} args - Arguments to delete one ClanHistory.
+     * @example
+     * // Delete one ClanHistory
+     * const ClanHistory = await prisma.clanHistory.delete({
+     *   where: {
+     *     // ... filter to delete one ClanHistory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClanHistoryDeleteArgs>(args: SelectSubset<T, ClanHistoryDeleteArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClanHistory.
+     * @param {ClanHistoryUpdateArgs} args - Arguments to update one ClanHistory.
+     * @example
+     * // Update one ClanHistory
+     * const clanHistory = await prisma.clanHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClanHistoryUpdateArgs>(args: SelectSubset<T, ClanHistoryUpdateArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClanHistories.
+     * @param {ClanHistoryDeleteManyArgs} args - Arguments to filter ClanHistories to delete.
+     * @example
+     * // Delete a few ClanHistories
+     * const { count } = await prisma.clanHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClanHistoryDeleteManyArgs>(args?: SelectSubset<T, ClanHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClanHistories
+     * const clanHistory = await prisma.clanHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClanHistoryUpdateManyArgs>(args: SelectSubset<T, ClanHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanHistories and returns the data updated in the database.
+     * @param {ClanHistoryUpdateManyAndReturnArgs} args - Arguments to update many ClanHistories.
+     * @example
+     * // Update many ClanHistories
+     * const clanHistory = await prisma.clanHistory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClanHistories and only return the `id`
+     * const clanHistoryWithIdOnly = await prisma.clanHistory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClanHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClanHistory.
+     * @param {ClanHistoryUpsertArgs} args - Arguments to update or create a ClanHistory.
+     * @example
+     * // Update or create a ClanHistory
+     * const clanHistory = await prisma.clanHistory.upsert({
+     *   create: {
+     *     // ... data to create a ClanHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClanHistory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClanHistoryUpsertArgs>(args: SelectSubset<T, ClanHistoryUpsertArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClanHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanHistoryCountArgs} args - Arguments to filter ClanHistories to count.
+     * @example
+     * // Count the number of ClanHistories
+     * const count = await prisma.clanHistory.count({
+     *   where: {
+     *     // ... the filter for the ClanHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClanHistoryCountArgs>(
+      args?: Subset<T, ClanHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClanHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClanHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClanHistoryAggregateArgs>(args: Subset<T, ClanHistoryAggregateArgs>): Prisma.PrismaPromise<GetClanHistoryAggregateType<T>>
+
+    /**
+     * Group by ClanHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClanHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClanHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: ClanHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClanHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClanHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClanHistory model
+   */
+  readonly fields: ClanHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClanHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClanHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    author<T extends ClanHistory$authorArgs<ExtArgs> = {}>(args?: Subset<T, ClanHistory$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    clan<T extends ClanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanDefaultArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClanHistory model
+   */
+  interface ClanHistoryFieldRefs {
+    readonly id: FieldRef<"ClanHistory", 'Int'>
+    readonly clanId: FieldRef<"ClanHistory", 'Int'>
+    readonly date: FieldRef<"ClanHistory", 'DateTime'>
+    readonly type: FieldRef<"ClanHistory", 'String'>
+    readonly authorId: FieldRef<"ClanHistory", 'String'>
+    readonly authorMessage: FieldRef<"ClanHistory", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClanHistory findUnique
+   */
+  export type ClanHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanHistory to fetch.
+     */
+    where: ClanHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanHistory findUniqueOrThrow
+   */
+  export type ClanHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanHistory to fetch.
+     */
+    where: ClanHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanHistory findFirst
+   */
+  export type ClanHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanHistory to fetch.
+     */
+    where?: ClanHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanHistories to fetch.
+     */
+    orderBy?: ClanHistoryOrderByWithRelationInput | ClanHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanHistories.
+     */
+    cursor?: ClanHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanHistories.
+     */
+    distinct?: ClanHistoryScalarFieldEnum | ClanHistoryScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanHistory findFirstOrThrow
+   */
+  export type ClanHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanHistory to fetch.
+     */
+    where?: ClanHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanHistories to fetch.
+     */
+    orderBy?: ClanHistoryOrderByWithRelationInput | ClanHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanHistories.
+     */
+    cursor?: ClanHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanHistories.
+     */
+    distinct?: ClanHistoryScalarFieldEnum | ClanHistoryScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanHistory findMany
+   */
+  export type ClanHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanHistories to fetch.
+     */
+    where?: ClanHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanHistories to fetch.
+     */
+    orderBy?: ClanHistoryOrderByWithRelationInput | ClanHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClanHistories.
+     */
+    cursor?: ClanHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanHistories.
+     */
+    distinct?: ClanHistoryScalarFieldEnum | ClanHistoryScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanHistory create
+   */
+  export type ClanHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClanHistory.
+     */
+    data: XOR<ClanHistoryCreateInput, ClanHistoryUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanHistory createMany
+   */
+  export type ClanHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClanHistories.
+     */
+    data: ClanHistoryCreateManyInput | ClanHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClanHistory createManyAndReturn
+   */
+  export type ClanHistoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClanHistories.
+     */
+    data: ClanHistoryCreateManyInput | ClanHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanHistory update
+   */
+  export type ClanHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClanHistory.
+     */
+    data: XOR<ClanHistoryUpdateInput, ClanHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which ClanHistory to update.
+     */
+    where: ClanHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanHistory updateMany
+   */
+  export type ClanHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClanHistories.
+     */
+    data: XOR<ClanHistoryUpdateManyMutationInput, ClanHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanHistories to update
+     */
+    where?: ClanHistoryWhereInput
+    /**
+     * Limit how many ClanHistories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanHistory updateManyAndReturn
+   */
+  export type ClanHistoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to update ClanHistories.
+     */
+    data: XOR<ClanHistoryUpdateManyMutationInput, ClanHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanHistories to update
+     */
+    where?: ClanHistoryWhereInput
+    /**
+     * Limit how many ClanHistories to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanHistory upsert
+   */
+  export type ClanHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClanHistory to update in case it exists.
+     */
+    where: ClanHistoryWhereUniqueInput
+    /**
+     * In case the ClanHistory found by the `where` argument doesn't exist, create a new ClanHistory with this data.
+     */
+    create: XOR<ClanHistoryCreateInput, ClanHistoryUncheckedCreateInput>
+    /**
+     * In case the ClanHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClanHistoryUpdateInput, ClanHistoryUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanHistory delete
+   */
+  export type ClanHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which ClanHistory to delete.
+     */
+    where: ClanHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanHistory deleteMany
+   */
+  export type ClanHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanHistories to delete
+     */
+    where?: ClanHistoryWhereInput
+    /**
+     * Limit how many ClanHistories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanHistory.author
+   */
+  export type ClanHistory$authorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * ClanHistory without action
+   */
+  export type ClanHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanHistory
+     */
+    select?: ClanHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanHistory
+     */
+    omit?: ClanHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanHistoryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClanMember
+   */
+
+  export type AggregateClanMember = {
+    _count: ClanMemberCountAggregateOutputType | null
+    _avg: ClanMemberAvgAggregateOutputType | null
+    _sum: ClanMemberSumAggregateOutputType | null
+    _min: ClanMemberMinAggregateOutputType | null
+    _max: ClanMemberMaxAggregateOutputType | null
+  }
+
+  export type ClanMemberAvgAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+    donation: number | null
+  }
+
+  export type ClanMemberSumAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+    donation: number | null
+  }
+
+  export type ClanMemberMinAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+    dateJoin: Date | null
+    nickname: string | null
+    donation: number | null
+    userId: string | null
+  }
+
+  export type ClanMemberMaxAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+    dateJoin: Date | null
+    nickname: string | null
+    donation: number | null
+    userId: string | null
+  }
+
+  export type ClanMemberCountAggregateOutputType = {
+    id: number
+    clanId: number
+    dateJoin: number
+    nickname: number
+    rights: number
+    donation: number
+    userId: number
+    _all: number
+  }
+
+
+  export type ClanMemberAvgAggregateInputType = {
+    id?: true
+    clanId?: true
+    donation?: true
+  }
+
+  export type ClanMemberSumAggregateInputType = {
+    id?: true
+    clanId?: true
+    donation?: true
+  }
+
+  export type ClanMemberMinAggregateInputType = {
+    id?: true
+    clanId?: true
+    dateJoin?: true
+    nickname?: true
+    donation?: true
+    userId?: true
+  }
+
+  export type ClanMemberMaxAggregateInputType = {
+    id?: true
+    clanId?: true
+    dateJoin?: true
+    nickname?: true
+    donation?: true
+    userId?: true
+  }
+
+  export type ClanMemberCountAggregateInputType = {
+    id?: true
+    clanId?: true
+    dateJoin?: true
+    nickname?: true
+    rights?: true
+    donation?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type ClanMemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanMember to aggregate.
+     */
+    where?: ClanMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanMembers to fetch.
+     */
+    orderBy?: ClanMemberOrderByWithRelationInput | ClanMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClanMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClanMembers
+    **/
+    _count?: true | ClanMemberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClanMemberAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClanMemberSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClanMemberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClanMemberMaxAggregateInputType
+  }
+
+  export type GetClanMemberAggregateType<T extends ClanMemberAggregateArgs> = {
+        [P in keyof T & keyof AggregateClanMember]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClanMember[P]>
+      : GetScalarType<T[P], AggregateClanMember[P]>
+  }
+
+
+
+
+  export type ClanMemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanMemberWhereInput
+    orderBy?: ClanMemberOrderByWithAggregationInput | ClanMemberOrderByWithAggregationInput[]
+    by: ClanMemberScalarFieldEnum[] | ClanMemberScalarFieldEnum
+    having?: ClanMemberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClanMemberCountAggregateInputType | true
+    _avg?: ClanMemberAvgAggregateInputType
+    _sum?: ClanMemberSumAggregateInputType
+    _min?: ClanMemberMinAggregateInputType
+    _max?: ClanMemberMaxAggregateInputType
+  }
+
+  export type ClanMemberGroupByOutputType = {
+    id: number
+    clanId: number
+    dateJoin: Date
+    nickname: string | null
+    rights: string[]
+    donation: number
+    userId: string
+    _count: ClanMemberCountAggregateOutputType | null
+    _avg: ClanMemberAvgAggregateOutputType | null
+    _sum: ClanMemberSumAggregateOutputType | null
+    _min: ClanMemberMinAggregateOutputType | null
+    _max: ClanMemberMaxAggregateOutputType | null
+  }
+
+  type GetClanMemberGroupByPayload<T extends ClanMemberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClanMemberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClanMemberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClanMemberGroupByOutputType[P]>
+            : GetScalarType<T[P], ClanMemberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClanMemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    dateJoin?: boolean
+    nickname?: boolean
+    rights?: boolean
+    donation?: boolean
+    userId?: boolean
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanMember"]>
+
+  export type ClanMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    dateJoin?: boolean
+    nickname?: boolean
+    rights?: boolean
+    donation?: boolean
+    userId?: boolean
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanMember"]>
+
+  export type ClanMemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    clanId?: boolean
+    dateJoin?: boolean
+    nickname?: boolean
+    rights?: boolean
+    donation?: boolean
+    userId?: boolean
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanMember"]>
+
+  export type ClanMemberSelectScalar = {
+    id?: boolean
+    clanId?: boolean
+    dateJoin?: boolean
+    nickname?: boolean
+    rights?: boolean
+    donation?: boolean
+    userId?: boolean
+  }
+
+  export type ClanMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clanId" | "dateJoin" | "nickname" | "rights" | "donation" | "userId", ExtArgs["result"]["clanMember"]>
+  export type ClanMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ClanMemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ClanMemberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    clan?: boolean | ClanDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ClanMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClanMember"
+    objects: {
+      clan: Prisma.$ClanPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      clanId: number
+      dateJoin: Date
+      nickname: string | null
+      rights: string[]
+      donation: number
+      userId: string
+    }, ExtArgs["result"]["clanMember"]>
+    composites: {}
+  }
+
+  type ClanMemberGetPayload<S extends boolean | null | undefined | ClanMemberDefaultArgs> = $Result.GetResult<Prisma.$ClanMemberPayload, S>
+
+  type ClanMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClanMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ClanMemberCountAggregateInputType | true
+    }
+
+  export interface ClanMemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClanMember'], meta: { name: 'ClanMember' } }
+    /**
+     * Find zero or one ClanMember that matches the filter.
+     * @param {ClanMemberFindUniqueArgs} args - Arguments to find a ClanMember
+     * @example
+     * // Get one ClanMember
+     * const clanMember = await prisma.clanMember.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClanMemberFindUniqueArgs>(args: SelectSubset<T, ClanMemberFindUniqueArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClanMember that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClanMemberFindUniqueOrThrowArgs} args - Arguments to find a ClanMember
+     * @example
+     * // Get one ClanMember
+     * const clanMember = await prisma.clanMember.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClanMemberFindUniqueOrThrowArgs>(args: SelectSubset<T, ClanMemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanMember that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMemberFindFirstArgs} args - Arguments to find a ClanMember
+     * @example
+     * // Get one ClanMember
+     * const clanMember = await prisma.clanMember.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClanMemberFindFirstArgs>(args?: SelectSubset<T, ClanMemberFindFirstArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanMember that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMemberFindFirstOrThrowArgs} args - Arguments to find a ClanMember
+     * @example
+     * // Get one ClanMember
+     * const clanMember = await prisma.clanMember.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClanMemberFindFirstOrThrowArgs>(args?: SelectSubset<T, ClanMemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClanMembers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMemberFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClanMembers
+     * const clanMembers = await prisma.clanMember.findMany()
+     * 
+     * // Get first 10 ClanMembers
+     * const clanMembers = await prisma.clanMember.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clanMemberWithIdOnly = await prisma.clanMember.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClanMemberFindManyArgs>(args?: SelectSubset<T, ClanMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClanMember.
+     * @param {ClanMemberCreateArgs} args - Arguments to create a ClanMember.
+     * @example
+     * // Create one ClanMember
+     * const ClanMember = await prisma.clanMember.create({
+     *   data: {
+     *     // ... data to create a ClanMember
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClanMemberCreateArgs>(args: SelectSubset<T, ClanMemberCreateArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClanMembers.
+     * @param {ClanMemberCreateManyArgs} args - Arguments to create many ClanMembers.
+     * @example
+     * // Create many ClanMembers
+     * const clanMember = await prisma.clanMember.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClanMemberCreateManyArgs>(args?: SelectSubset<T, ClanMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClanMembers and returns the data saved in the database.
+     * @param {ClanMemberCreateManyAndReturnArgs} args - Arguments to create many ClanMembers.
+     * @example
+     * // Create many ClanMembers
+     * const clanMember = await prisma.clanMember.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClanMembers and only return the `id`
+     * const clanMemberWithIdOnly = await prisma.clanMember.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClanMemberCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanMemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClanMember.
+     * @param {ClanMemberDeleteArgs} args - Arguments to delete one ClanMember.
+     * @example
+     * // Delete one ClanMember
+     * const ClanMember = await prisma.clanMember.delete({
+     *   where: {
+     *     // ... filter to delete one ClanMember
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClanMemberDeleteArgs>(args: SelectSubset<T, ClanMemberDeleteArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClanMember.
+     * @param {ClanMemberUpdateArgs} args - Arguments to update one ClanMember.
+     * @example
+     * // Update one ClanMember
+     * const clanMember = await prisma.clanMember.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClanMemberUpdateArgs>(args: SelectSubset<T, ClanMemberUpdateArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClanMembers.
+     * @param {ClanMemberDeleteManyArgs} args - Arguments to filter ClanMembers to delete.
+     * @example
+     * // Delete a few ClanMembers
+     * const { count } = await prisma.clanMember.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClanMemberDeleteManyArgs>(args?: SelectSubset<T, ClanMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMemberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClanMembers
+     * const clanMember = await prisma.clanMember.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClanMemberUpdateManyArgs>(args: SelectSubset<T, ClanMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanMembers and returns the data updated in the database.
+     * @param {ClanMemberUpdateManyAndReturnArgs} args - Arguments to update many ClanMembers.
+     * @example
+     * // Update many ClanMembers
+     * const clanMember = await prisma.clanMember.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClanMembers and only return the `id`
+     * const clanMemberWithIdOnly = await prisma.clanMember.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClanMemberUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanMemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClanMember.
+     * @param {ClanMemberUpsertArgs} args - Arguments to update or create a ClanMember.
+     * @example
+     * // Update or create a ClanMember
+     * const clanMember = await prisma.clanMember.upsert({
+     *   create: {
+     *     // ... data to create a ClanMember
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClanMember we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClanMemberUpsertArgs>(args: SelectSubset<T, ClanMemberUpsertArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClanMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMemberCountArgs} args - Arguments to filter ClanMembers to count.
+     * @example
+     * // Count the number of ClanMembers
+     * const count = await prisma.clanMember.count({
+     *   where: {
+     *     // ... the filter for the ClanMembers we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClanMemberCountArgs>(
+      args?: Subset<T, ClanMemberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClanMemberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClanMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClanMemberAggregateArgs>(args: Subset<T, ClanMemberAggregateArgs>): Prisma.PrismaPromise<GetClanMemberAggregateType<T>>
+
+    /**
+     * Group by ClanMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanMemberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClanMemberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClanMemberGroupByArgs['orderBy'] }
+        : { orderBy?: ClanMemberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClanMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClanMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClanMember model
+   */
+  readonly fields: ClanMemberFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClanMember.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClanMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    clan<T extends ClanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanDefaultArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClanMember model
+   */
+  interface ClanMemberFieldRefs {
+    readonly id: FieldRef<"ClanMember", 'Int'>
+    readonly clanId: FieldRef<"ClanMember", 'Int'>
+    readonly dateJoin: FieldRef<"ClanMember", 'DateTime'>
+    readonly nickname: FieldRef<"ClanMember", 'String'>
+    readonly rights: FieldRef<"ClanMember", 'String[]'>
+    readonly donation: FieldRef<"ClanMember", 'Int'>
+    readonly userId: FieldRef<"ClanMember", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClanMember findUnique
+   */
+  export type ClanMemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanMember to fetch.
+     */
+    where: ClanMemberWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMember findUniqueOrThrow
+   */
+  export type ClanMemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanMember to fetch.
+     */
+    where: ClanMemberWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMember findFirst
+   */
+  export type ClanMemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanMember to fetch.
+     */
+    where?: ClanMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanMembers to fetch.
+     */
+    orderBy?: ClanMemberOrderByWithRelationInput | ClanMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanMembers.
+     */
+    cursor?: ClanMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanMembers.
+     */
+    distinct?: ClanMemberScalarFieldEnum | ClanMemberScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMember findFirstOrThrow
+   */
+  export type ClanMemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanMember to fetch.
+     */
+    where?: ClanMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanMembers to fetch.
+     */
+    orderBy?: ClanMemberOrderByWithRelationInput | ClanMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanMembers.
+     */
+    cursor?: ClanMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanMembers.
+     */
+    distinct?: ClanMemberScalarFieldEnum | ClanMemberScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMember findMany
+   */
+  export type ClanMemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanMembers to fetch.
+     */
+    where?: ClanMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanMembers to fetch.
+     */
+    orderBy?: ClanMemberOrderByWithRelationInput | ClanMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClanMembers.
+     */
+    cursor?: ClanMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanMembers.
+     */
+    distinct?: ClanMemberScalarFieldEnum | ClanMemberScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMember create
+   */
+  export type ClanMemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClanMember.
+     */
+    data: XOR<ClanMemberCreateInput, ClanMemberUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMember createMany
+   */
+  export type ClanMemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClanMembers.
+     */
+    data: ClanMemberCreateManyInput | ClanMemberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClanMember createManyAndReturn
+   */
+  export type ClanMemberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClanMembers.
+     */
+    data: ClanMemberCreateManyInput | ClanMemberCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanMember update
+   */
+  export type ClanMemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClanMember.
+     */
+    data: XOR<ClanMemberUpdateInput, ClanMemberUncheckedUpdateInput>
+    /**
+     * Choose, which ClanMember to update.
+     */
+    where: ClanMemberWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMember updateMany
+   */
+  export type ClanMemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClanMembers.
+     */
+    data: XOR<ClanMemberUpdateManyMutationInput, ClanMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanMembers to update
+     */
+    where?: ClanMemberWhereInput
+    /**
+     * Limit how many ClanMembers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanMember updateManyAndReturn
+   */
+  export type ClanMemberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * The data used to update ClanMembers.
+     */
+    data: XOR<ClanMemberUpdateManyMutationInput, ClanMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanMembers to update
+     */
+    where?: ClanMemberWhereInput
+    /**
+     * Limit how many ClanMembers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanMember upsert
+   */
+  export type ClanMemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClanMember to update in case it exists.
+     */
+    where: ClanMemberWhereUniqueInput
+    /**
+     * In case the ClanMember found by the `where` argument doesn't exist, create a new ClanMember with this data.
+     */
+    create: XOR<ClanMemberCreateInput, ClanMemberUncheckedCreateInput>
+    /**
+     * In case the ClanMember was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClanMemberUpdateInput, ClanMemberUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMember delete
+   */
+  export type ClanMemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+    /**
+     * Filter which ClanMember to delete.
+     */
+    where: ClanMemberWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanMember deleteMany
+   */
+  export type ClanMemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanMembers to delete
+     */
+    where?: ClanMemberWhereInput
+    /**
+     * Limit how many ClanMembers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanMember without action
+   */
+  export type ClanMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanMember
+     */
+    select?: ClanMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanMember
+     */
+    omit?: ClanMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanMemberInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ClanPage
+   */
+
+  export type AggregateClanPage = {
+    _count: ClanPageCountAggregateOutputType | null
+    _avg: ClanPageAvgAggregateOutputType | null
+    _sum: ClanPageSumAggregateOutputType | null
+    _min: ClanPageMinAggregateOutputType | null
+    _max: ClanPageMaxAggregateOutputType | null
+  }
+
+  export type ClanPageAvgAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+  }
+
+  export type ClanPageSumAggregateOutputType = {
+    id: number | null
+    clanId: number | null
+  }
+
+  export type ClanPageMinAggregateOutputType = {
+    id: number | null
+    home: boolean | null
+    public: boolean | null
+    name: string | null
+    content: string | null
+    clanId: number | null
+  }
+
+  export type ClanPageMaxAggregateOutputType = {
+    id: number | null
+    home: boolean | null
+    public: boolean | null
+    name: string | null
+    content: string | null
+    clanId: number | null
+  }
+
+  export type ClanPageCountAggregateOutputType = {
+    id: number
+    home: number
+    public: number
+    name: number
+    content: number
+    clanId: number
+    _all: number
+  }
+
+
+  export type ClanPageAvgAggregateInputType = {
+    id?: true
+    clanId?: true
+  }
+
+  export type ClanPageSumAggregateInputType = {
+    id?: true
+    clanId?: true
+  }
+
+  export type ClanPageMinAggregateInputType = {
+    id?: true
+    home?: true
+    public?: true
+    name?: true
+    content?: true
+    clanId?: true
+  }
+
+  export type ClanPageMaxAggregateInputType = {
+    id?: true
+    home?: true
+    public?: true
+    name?: true
+    content?: true
+    clanId?: true
+  }
+
+  export type ClanPageCountAggregateInputType = {
+    id?: true
+    home?: true
+    public?: true
+    name?: true
+    content?: true
+    clanId?: true
+    _all?: true
+  }
+
+  export type ClanPageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanPage to aggregate.
+     */
+    where?: ClanPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanPages to fetch.
+     */
+    orderBy?: ClanPageOrderByWithRelationInput | ClanPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClanPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ClanPages
+    **/
+    _count?: true | ClanPageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClanPageAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClanPageSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClanPageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClanPageMaxAggregateInputType
+  }
+
+  export type GetClanPageAggregateType<T extends ClanPageAggregateArgs> = {
+        [P in keyof T & keyof AggregateClanPage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClanPage[P]>
+      : GetScalarType<T[P], AggregateClanPage[P]>
+  }
+
+
+
+
+  export type ClanPageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClanPageWhereInput
+    orderBy?: ClanPageOrderByWithAggregationInput | ClanPageOrderByWithAggregationInput[]
+    by: ClanPageScalarFieldEnum[] | ClanPageScalarFieldEnum
+    having?: ClanPageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClanPageCountAggregateInputType | true
+    _avg?: ClanPageAvgAggregateInputType
+    _sum?: ClanPageSumAggregateInputType
+    _min?: ClanPageMinAggregateInputType
+    _max?: ClanPageMaxAggregateInputType
+  }
+
+  export type ClanPageGroupByOutputType = {
+    id: number
+    home: boolean
+    public: boolean
+    name: string
+    content: string
+    clanId: number
+    _count: ClanPageCountAggregateOutputType | null
+    _avg: ClanPageAvgAggregateOutputType | null
+    _sum: ClanPageSumAggregateOutputType | null
+    _min: ClanPageMinAggregateOutputType | null
+    _max: ClanPageMaxAggregateOutputType | null
+  }
+
+  type GetClanPageGroupByPayload<T extends ClanPageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClanPageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClanPageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClanPageGroupByOutputType[P]>
+            : GetScalarType<T[P], ClanPageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClanPageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    home?: boolean
+    public?: boolean
+    name?: boolean
+    content?: boolean
+    clanId?: boolean
+    Clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanPage"]>
+
+  export type ClanPageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    home?: boolean
+    public?: boolean
+    name?: boolean
+    content?: boolean
+    clanId?: boolean
+    Clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanPage"]>
+
+  export type ClanPageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    home?: boolean
+    public?: boolean
+    name?: boolean
+    content?: boolean
+    clanId?: boolean
+    Clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["clanPage"]>
+
+  export type ClanPageSelectScalar = {
+    id?: boolean
+    home?: boolean
+    public?: boolean
+    name?: boolean
+    content?: boolean
+    clanId?: boolean
+  }
+
+  export type ClanPageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "home" | "public" | "name" | "content" | "clanId", ExtArgs["result"]["clanPage"]>
+  export type ClanPageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanPageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+  export type ClanPageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Clan?: boolean | ClanDefaultArgs<ExtArgs>
+  }
+
+  export type $ClanPagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ClanPage"
+    objects: {
+      Clan: Prisma.$ClanPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      home: boolean
+      public: boolean
+      name: string
+      content: string
+      clanId: number
+    }, ExtArgs["result"]["clanPage"]>
+    composites: {}
+  }
+
+  type ClanPageGetPayload<S extends boolean | null | undefined | ClanPageDefaultArgs> = $Result.GetResult<Prisma.$ClanPagePayload, S>
+
+  type ClanPageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClanPageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ClanPageCountAggregateInputType | true
+    }
+
+  export interface ClanPageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ClanPage'], meta: { name: 'ClanPage' } }
+    /**
+     * Find zero or one ClanPage that matches the filter.
+     * @param {ClanPageFindUniqueArgs} args - Arguments to find a ClanPage
+     * @example
+     * // Get one ClanPage
+     * const clanPage = await prisma.clanPage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClanPageFindUniqueArgs>(args: SelectSubset<T, ClanPageFindUniqueArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ClanPage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClanPageFindUniqueOrThrowArgs} args - Arguments to find a ClanPage
+     * @example
+     * // Get one ClanPage
+     * const clanPage = await prisma.clanPage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClanPageFindUniqueOrThrowArgs>(args: SelectSubset<T, ClanPageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanPage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanPageFindFirstArgs} args - Arguments to find a ClanPage
+     * @example
+     * // Get one ClanPage
+     * const clanPage = await prisma.clanPage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClanPageFindFirstArgs>(args?: SelectSubset<T, ClanPageFindFirstArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ClanPage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanPageFindFirstOrThrowArgs} args - Arguments to find a ClanPage
+     * @example
+     * // Get one ClanPage
+     * const clanPage = await prisma.clanPage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClanPageFindFirstOrThrowArgs>(args?: SelectSubset<T, ClanPageFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ClanPages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanPageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ClanPages
+     * const clanPages = await prisma.clanPage.findMany()
+     * 
+     * // Get first 10 ClanPages
+     * const clanPages = await prisma.clanPage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clanPageWithIdOnly = await prisma.clanPage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClanPageFindManyArgs>(args?: SelectSubset<T, ClanPageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ClanPage.
+     * @param {ClanPageCreateArgs} args - Arguments to create a ClanPage.
+     * @example
+     * // Create one ClanPage
+     * const ClanPage = await prisma.clanPage.create({
+     *   data: {
+     *     // ... data to create a ClanPage
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClanPageCreateArgs>(args: SelectSubset<T, ClanPageCreateArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ClanPages.
+     * @param {ClanPageCreateManyArgs} args - Arguments to create many ClanPages.
+     * @example
+     * // Create many ClanPages
+     * const clanPage = await prisma.clanPage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClanPageCreateManyArgs>(args?: SelectSubset<T, ClanPageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ClanPages and returns the data saved in the database.
+     * @param {ClanPageCreateManyAndReturnArgs} args - Arguments to create many ClanPages.
+     * @example
+     * // Create many ClanPages
+     * const clanPage = await prisma.clanPage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ClanPages and only return the `id`
+     * const clanPageWithIdOnly = await prisma.clanPage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClanPageCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanPageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ClanPage.
+     * @param {ClanPageDeleteArgs} args - Arguments to delete one ClanPage.
+     * @example
+     * // Delete one ClanPage
+     * const ClanPage = await prisma.clanPage.delete({
+     *   where: {
+     *     // ... filter to delete one ClanPage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClanPageDeleteArgs>(args: SelectSubset<T, ClanPageDeleteArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ClanPage.
+     * @param {ClanPageUpdateArgs} args - Arguments to update one ClanPage.
+     * @example
+     * // Update one ClanPage
+     * const clanPage = await prisma.clanPage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClanPageUpdateArgs>(args: SelectSubset<T, ClanPageUpdateArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ClanPages.
+     * @param {ClanPageDeleteManyArgs} args - Arguments to filter ClanPages to delete.
+     * @example
+     * // Delete a few ClanPages
+     * const { count } = await prisma.clanPage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClanPageDeleteManyArgs>(args?: SelectSubset<T, ClanPageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanPages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanPageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ClanPages
+     * const clanPage = await prisma.clanPage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClanPageUpdateManyArgs>(args: SelectSubset<T, ClanPageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ClanPages and returns the data updated in the database.
+     * @param {ClanPageUpdateManyAndReturnArgs} args - Arguments to update many ClanPages.
+     * @example
+     * // Update many ClanPages
+     * const clanPage = await prisma.clanPage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ClanPages and only return the `id`
+     * const clanPageWithIdOnly = await prisma.clanPage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClanPageUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanPageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ClanPage.
+     * @param {ClanPageUpsertArgs} args - Arguments to update or create a ClanPage.
+     * @example
+     * // Update or create a ClanPage
+     * const clanPage = await prisma.clanPage.upsert({
+     *   create: {
+     *     // ... data to create a ClanPage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ClanPage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClanPageUpsertArgs>(args: SelectSubset<T, ClanPageUpsertArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ClanPages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanPageCountArgs} args - Arguments to filter ClanPages to count.
+     * @example
+     * // Count the number of ClanPages
+     * const count = await prisma.clanPage.count({
+     *   where: {
+     *     // ... the filter for the ClanPages we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClanPageCountArgs>(
+      args?: Subset<T, ClanPageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClanPageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ClanPage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanPageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClanPageAggregateArgs>(args: Subset<T, ClanPageAggregateArgs>): Prisma.PrismaPromise<GetClanPageAggregateType<T>>
+
+    /**
+     * Group by ClanPage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClanPageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClanPageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClanPageGroupByArgs['orderBy'] }
+        : { orderBy?: ClanPageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClanPageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClanPageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ClanPage model
+   */
+  readonly fields: ClanPageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ClanPage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClanPageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    Clan<T extends ClanDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ClanDefaultArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ClanPage model
+   */
+  interface ClanPageFieldRefs {
+    readonly id: FieldRef<"ClanPage", 'Int'>
+    readonly home: FieldRef<"ClanPage", 'Boolean'>
+    readonly public: FieldRef<"ClanPage", 'Boolean'>
+    readonly name: FieldRef<"ClanPage", 'String'>
+    readonly content: FieldRef<"ClanPage", 'String'>
+    readonly clanId: FieldRef<"ClanPage", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ClanPage findUnique
+   */
+  export type ClanPageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanPage to fetch.
+     */
+    where: ClanPageWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanPage findUniqueOrThrow
+   */
+  export type ClanPageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanPage to fetch.
+     */
+    where: ClanPageWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanPage findFirst
+   */
+  export type ClanPageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanPage to fetch.
+     */
+    where?: ClanPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanPages to fetch.
+     */
+    orderBy?: ClanPageOrderByWithRelationInput | ClanPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanPages.
+     */
+    cursor?: ClanPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanPages.
+     */
+    distinct?: ClanPageScalarFieldEnum | ClanPageScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanPage findFirstOrThrow
+   */
+  export type ClanPageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanPage to fetch.
+     */
+    where?: ClanPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanPages to fetch.
+     */
+    orderBy?: ClanPageOrderByWithRelationInput | ClanPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ClanPages.
+     */
+    cursor?: ClanPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanPages.
+     */
+    distinct?: ClanPageScalarFieldEnum | ClanPageScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanPage findMany
+   */
+  export type ClanPageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageInclude<ExtArgs> | null
+    /**
+     * Filter, which ClanPages to fetch.
+     */
+    where?: ClanPageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ClanPages to fetch.
+     */
+    orderBy?: ClanPageOrderByWithRelationInput | ClanPageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ClanPages.
+     */
+    cursor?: ClanPageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ClanPages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ClanPages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ClanPages.
+     */
+    distinct?: ClanPageScalarFieldEnum | ClanPageScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanPage create
+   */
+  export type ClanPageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ClanPage.
+     */
+    data: XOR<ClanPageCreateInput, ClanPageUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanPage createMany
+   */
+  export type ClanPageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ClanPages.
+     */
+    data: ClanPageCreateManyInput | ClanPageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ClanPage createManyAndReturn
+   */
+  export type ClanPageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * The data used to create many ClanPages.
+     */
+    data: ClanPageCreateManyInput | ClanPageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanPage update
+   */
+  export type ClanPageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ClanPage.
+     */
+    data: XOR<ClanPageUpdateInput, ClanPageUncheckedUpdateInput>
+    /**
+     * Choose, which ClanPage to update.
+     */
+    where: ClanPageWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanPage updateMany
+   */
+  export type ClanPageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ClanPages.
+     */
+    data: XOR<ClanPageUpdateManyMutationInput, ClanPageUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanPages to update
+     */
+    where?: ClanPageWhereInput
+    /**
+     * Limit how many ClanPages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanPage updateManyAndReturn
+   */
+  export type ClanPageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * The data used to update ClanPages.
+     */
+    data: XOR<ClanPageUpdateManyMutationInput, ClanPageUncheckedUpdateManyInput>
+    /**
+     * Filter which ClanPages to update
+     */
+    where?: ClanPageWhereInput
+    /**
+     * Limit how many ClanPages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ClanPage upsert
+   */
+  export type ClanPageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ClanPage to update in case it exists.
+     */
+    where: ClanPageWhereUniqueInput
+    /**
+     * In case the ClanPage found by the `where` argument doesn't exist, create a new ClanPage with this data.
+     */
+    create: XOR<ClanPageCreateInput, ClanPageUncheckedCreateInput>
+    /**
+     * In case the ClanPage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClanPageUpdateInput, ClanPageUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanPage delete
+   */
+  export type ClanPageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageInclude<ExtArgs> | null
+    /**
+     * Filter which ClanPage to delete.
+     */
+    where: ClanPageWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * ClanPage deleteMany
+   */
+  export type ClanPageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ClanPages to delete
+     */
+    where?: ClanPageWhereInput
+    /**
+     * Limit how many ClanPages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ClanPage without action
+   */
+  export type ClanPageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ClanPage
+     */
+    select?: ClanPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ClanPage
+     */
+    omit?: ClanPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ClanPageInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -53672,6 +62698,7 @@ export namespace Prisma {
     createdDate: 'createdDate',
     updatedAt: 'updatedAt',
     lastLogin: 'lastLogin',
+    clanId: 'clanId',
     leader: 'leader',
     engineer: 'engineer',
     cooker: 'cooker',
@@ -53827,6 +62854,88 @@ export namespace Prisma {
   };
 
   export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+  export const ClanScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    treasureValue: 'treasureValue',
+    creationDate: 'creationDate',
+    banner: 'banner',
+    leaderId: 'leaderId',
+    langs: 'langs'
+  };
+
+  export type ClanScalarFieldEnum = (typeof ClanScalarFieldEnum)[keyof typeof ClanScalarFieldEnum]
+
+
+  export const ClanJoinRequestScalarFieldEnum: {
+    id: 'id',
+    clanId: 'clanId',
+    date: 'date',
+    userId: 'userId'
+  };
+
+  export type ClanJoinRequestScalarFieldEnum = (typeof ClanJoinRequestScalarFieldEnum)[keyof typeof ClanJoinRequestScalarFieldEnum]
+
+
+  export const ClanIngredientScalarFieldEnum: {
+    id: 'id',
+    ingredientId: 'ingredientId',
+    quantity: 'quantity',
+    clanId: 'clanId'
+  };
+
+  export type ClanIngredientScalarFieldEnum = (typeof ClanIngredientScalarFieldEnum)[keyof typeof ClanIngredientScalarFieldEnum]
+
+
+  export const ClanMessageScalarFieldEnum: {
+    id: 'id',
+    clanId: 'clanId',
+    date: 'date',
+    content: 'content',
+    authorId: 'authorId',
+    authorName: 'authorName'
+  };
+
+  export type ClanMessageScalarFieldEnum = (typeof ClanMessageScalarFieldEnum)[keyof typeof ClanMessageScalarFieldEnum]
+
+
+  export const ClanHistoryScalarFieldEnum: {
+    id: 'id',
+    clanId: 'clanId',
+    date: 'date',
+    type: 'type',
+    authorId: 'authorId',
+    authorMessage: 'authorMessage'
+  };
+
+  export type ClanHistoryScalarFieldEnum = (typeof ClanHistoryScalarFieldEnum)[keyof typeof ClanHistoryScalarFieldEnum]
+
+
+  export const ClanMemberScalarFieldEnum: {
+    id: 'id',
+    clanId: 'clanId',
+    dateJoin: 'dateJoin',
+    nickname: 'nickname',
+    rights: 'rights',
+    donation: 'donation',
+    userId: 'userId'
+  };
+
+  export type ClanMemberScalarFieldEnum = (typeof ClanMemberScalarFieldEnum)[keyof typeof ClanMemberScalarFieldEnum]
+
+
+  export const ClanPageScalarFieldEnum: {
+    id: 'id',
+    home: 'home',
+    public: 'public',
+    name: 'name',
+    content: 'content',
+    clanId: 'clanId'
+  };
+
+  export type ClanPageScalarFieldEnum = (typeof ClanPageScalarFieldEnum)[keyof typeof ClanPageScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -56188,6 +65297,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     lastLogin?: DateTimeFilter<"User"> | Date | string
+    clanId?: IntNullableFilter<"User"> | number | null
     leader?: BoolFilter<"User"> | boolean
     engineer?: BoolFilter<"User"> | boolean
     cooker?: BoolFilter<"User"> | boolean
@@ -56198,6 +65308,12 @@ export namespace Prisma {
     matelasseur?: BoolFilter<"User"> | boolean
     messie?: BoolFilter<"User"> | boolean
     discoveredSkills?: IntNullableListFilter<"User">
+    clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
+    leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
+    ClanHistory?: ClanHistoryListRelationFilter
+    ClanJoinRequest?: XOR<ClanJoinRequestNullableScalarRelationFilter, ClanJoinRequestWhereInput> | null
+    ClanMember?: XOR<ClanMemberNullableScalarRelationFilter, ClanMemberWhereInput> | null
+    ClanMessage?: ClanMessageListRelationFilter
     gathers?: UserGatherListRelationFilter
     ingredients?: UserIngredientsListRelationFilter
     items?: UserItemsListRelationFilter
@@ -56229,6 +65345,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     lastLogin?: SortOrder
+    clanId?: SortOrderInput | SortOrder
     leader?: SortOrder
     engineer?: SortOrder
     cooker?: SortOrder
@@ -56239,6 +65356,12 @@ export namespace Prisma {
     matelasseur?: SortOrder
     messie?: SortOrder
     discoveredSkills?: SortOrder
+    clan?: ClanOrderByWithRelationInput
+    leaderOf?: ClanOrderByWithRelationInput
+    ClanHistory?: ClanHistoryOrderByRelationAggregateInput
+    ClanJoinRequest?: ClanJoinRequestOrderByWithRelationInput
+    ClanMember?: ClanMemberOrderByWithRelationInput
+    ClanMessage?: ClanMessageOrderByRelationAggregateInput
     gathers?: UserGatherOrderByRelationAggregateInput
     ingredients?: UserIngredientsOrderByRelationAggregateInput
     items?: UserItemsOrderByRelationAggregateInput
@@ -56273,6 +65396,7 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
     lastLogin?: DateTimeFilter<"User"> | Date | string
+    clanId?: IntNullableFilter<"User"> | number | null
     leader?: BoolFilter<"User"> | boolean
     engineer?: BoolFilter<"User"> | boolean
     cooker?: BoolFilter<"User"> | boolean
@@ -56283,6 +65407,12 @@ export namespace Prisma {
     matelasseur?: BoolFilter<"User"> | boolean
     messie?: BoolFilter<"User"> | boolean
     discoveredSkills?: IntNullableListFilter<"User">
+    clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
+    leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
+    ClanHistory?: ClanHistoryListRelationFilter
+    ClanJoinRequest?: XOR<ClanJoinRequestNullableScalarRelationFilter, ClanJoinRequestWhereInput> | null
+    ClanMember?: XOR<ClanMemberNullableScalarRelationFilter, ClanMemberWhereInput> | null
+    ClanMessage?: ClanMessageListRelationFilter
     gathers?: UserGatherListRelationFilter
     ingredients?: UserIngredientsListRelationFilter
     items?: UserItemsListRelationFilter
@@ -56314,6 +65444,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrderInput | SortOrder
     lastLogin?: SortOrder
+    clanId?: SortOrderInput | SortOrder
     leader?: SortOrder
     engineer?: SortOrder
     cooker?: SortOrder
@@ -56342,6 +65473,7 @@ export namespace Prisma {
     createdDate?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     lastLogin?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    clanId?: IntNullableWithAggregatesFilter<"User"> | number | null
     leader?: BoolWithAggregatesFilter<"User"> | boolean
     engineer?: BoolWithAggregatesFilter<"User"> | boolean
     cooker?: BoolWithAggregatesFilter<"User"> | boolean
@@ -57111,6 +66243,465 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
     deletedAt?: DateTimeNullableWithAggregatesFilter<"Message"> | Date | string | null
     senderNameSnapshot?: StringWithAggregatesFilter<"Message"> | string
+  }
+
+  export type ClanWhereInput = {
+    AND?: ClanWhereInput | ClanWhereInput[]
+    OR?: ClanWhereInput[]
+    NOT?: ClanWhereInput | ClanWhereInput[]
+    id?: IntFilter<"Clan"> | number
+    name?: StringFilter<"Clan"> | string
+    treasureValue?: IntFilter<"Clan"> | number
+    creationDate?: DateTimeFilter<"Clan"> | Date | string
+    banner?: BytesNullableFilter<"Clan"> | Bytes | null
+    leaderId?: UuidFilter<"Clan"> | string
+    langs?: EnumLanguageNullableListFilter<"Clan">
+    leader?: XOR<UserScalarRelationFilter, UserWhereInput>
+    history?: ClanHistoryListRelationFilter
+    joinRequests?: ClanJoinRequestListRelationFilter
+    members?: ClanMemberListRelationFilter
+    pages?: ClanPageListRelationFilter
+    ingredients?: ClanIngredientListRelationFilter
+    discussion?: ClanMessageListRelationFilter
+    users?: UserListRelationFilter
+  }
+
+  export type ClanOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    treasureValue?: SortOrder
+    creationDate?: SortOrder
+    banner?: SortOrderInput | SortOrder
+    leaderId?: SortOrder
+    langs?: SortOrder
+    leader?: UserOrderByWithRelationInput
+    history?: ClanHistoryOrderByRelationAggregateInput
+    joinRequests?: ClanJoinRequestOrderByRelationAggregateInput
+    members?: ClanMemberOrderByRelationAggregateInput
+    pages?: ClanPageOrderByRelationAggregateInput
+    ingredients?: ClanIngredientOrderByRelationAggregateInput
+    discussion?: ClanMessageOrderByRelationAggregateInput
+    users?: UserOrderByRelationAggregateInput
+  }
+
+  export type ClanWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    leaderId?: string
+    AND?: ClanWhereInput | ClanWhereInput[]
+    OR?: ClanWhereInput[]
+    NOT?: ClanWhereInput | ClanWhereInput[]
+    treasureValue?: IntFilter<"Clan"> | number
+    creationDate?: DateTimeFilter<"Clan"> | Date | string
+    banner?: BytesNullableFilter<"Clan"> | Bytes | null
+    langs?: EnumLanguageNullableListFilter<"Clan">
+    leader?: XOR<UserScalarRelationFilter, UserWhereInput>
+    history?: ClanHistoryListRelationFilter
+    joinRequests?: ClanJoinRequestListRelationFilter
+    members?: ClanMemberListRelationFilter
+    pages?: ClanPageListRelationFilter
+    ingredients?: ClanIngredientListRelationFilter
+    discussion?: ClanMessageListRelationFilter
+    users?: UserListRelationFilter
+  }, "id" | "name" | "leaderId">
+
+  export type ClanOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    treasureValue?: SortOrder
+    creationDate?: SortOrder
+    banner?: SortOrderInput | SortOrder
+    leaderId?: SortOrder
+    langs?: SortOrder
+    _count?: ClanCountOrderByAggregateInput
+    _avg?: ClanAvgOrderByAggregateInput
+    _max?: ClanMaxOrderByAggregateInput
+    _min?: ClanMinOrderByAggregateInput
+    _sum?: ClanSumOrderByAggregateInput
+  }
+
+  export type ClanScalarWhereWithAggregatesInput = {
+    AND?: ClanScalarWhereWithAggregatesInput | ClanScalarWhereWithAggregatesInput[]
+    OR?: ClanScalarWhereWithAggregatesInput[]
+    NOT?: ClanScalarWhereWithAggregatesInput | ClanScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Clan"> | number
+    name?: StringWithAggregatesFilter<"Clan"> | string
+    treasureValue?: IntWithAggregatesFilter<"Clan"> | number
+    creationDate?: DateTimeWithAggregatesFilter<"Clan"> | Date | string
+    banner?: BytesNullableWithAggregatesFilter<"Clan"> | Bytes | null
+    leaderId?: UuidWithAggregatesFilter<"Clan"> | string
+    langs?: EnumLanguageNullableListFilter<"Clan">
+  }
+
+  export type ClanJoinRequestWhereInput = {
+    AND?: ClanJoinRequestWhereInput | ClanJoinRequestWhereInput[]
+    OR?: ClanJoinRequestWhereInput[]
+    NOT?: ClanJoinRequestWhereInput | ClanJoinRequestWhereInput[]
+    id?: IntFilter<"ClanJoinRequest"> | number
+    clanId?: IntFilter<"ClanJoinRequest"> | number
+    date?: DateTimeFilter<"ClanJoinRequest"> | Date | string
+    userId?: UuidFilter<"ClanJoinRequest"> | string
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ClanJoinRequestOrderByWithRelationInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    userId?: SortOrder
+    clan?: ClanOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ClanJoinRequestWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId?: string
+    AND?: ClanJoinRequestWhereInput | ClanJoinRequestWhereInput[]
+    OR?: ClanJoinRequestWhereInput[]
+    NOT?: ClanJoinRequestWhereInput | ClanJoinRequestWhereInput[]
+    clanId?: IntFilter<"ClanJoinRequest"> | number
+    date?: DateTimeFilter<"ClanJoinRequest"> | Date | string
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type ClanJoinRequestOrderByWithAggregationInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    userId?: SortOrder
+    _count?: ClanJoinRequestCountOrderByAggregateInput
+    _avg?: ClanJoinRequestAvgOrderByAggregateInput
+    _max?: ClanJoinRequestMaxOrderByAggregateInput
+    _min?: ClanJoinRequestMinOrderByAggregateInput
+    _sum?: ClanJoinRequestSumOrderByAggregateInput
+  }
+
+  export type ClanJoinRequestScalarWhereWithAggregatesInput = {
+    AND?: ClanJoinRequestScalarWhereWithAggregatesInput | ClanJoinRequestScalarWhereWithAggregatesInput[]
+    OR?: ClanJoinRequestScalarWhereWithAggregatesInput[]
+    NOT?: ClanJoinRequestScalarWhereWithAggregatesInput | ClanJoinRequestScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ClanJoinRequest"> | number
+    clanId?: IntWithAggregatesFilter<"ClanJoinRequest"> | number
+    date?: DateTimeWithAggregatesFilter<"ClanJoinRequest"> | Date | string
+    userId?: UuidWithAggregatesFilter<"ClanJoinRequest"> | string
+  }
+
+  export type ClanIngredientWhereInput = {
+    AND?: ClanIngredientWhereInput | ClanIngredientWhereInput[]
+    OR?: ClanIngredientWhereInput[]
+    NOT?: ClanIngredientWhereInput | ClanIngredientWhereInput[]
+    id?: IntFilter<"ClanIngredient"> | number
+    ingredientId?: IntFilter<"ClanIngredient"> | number
+    quantity?: IntFilter<"ClanIngredient"> | number
+    clanId?: IntFilter<"ClanIngredient"> | number
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }
+
+  export type ClanIngredientOrderByWithRelationInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    clanId?: SortOrder
+    clan?: ClanOrderByWithRelationInput
+  }
+
+  export type ClanIngredientWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    ingredientId_clanId?: ClanIngredientIngredientIdClanIdCompoundUniqueInput
+    AND?: ClanIngredientWhereInput | ClanIngredientWhereInput[]
+    OR?: ClanIngredientWhereInput[]
+    NOT?: ClanIngredientWhereInput | ClanIngredientWhereInput[]
+    ingredientId?: IntFilter<"ClanIngredient"> | number
+    quantity?: IntFilter<"ClanIngredient"> | number
+    clanId?: IntFilter<"ClanIngredient"> | number
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }, "id" | "ingredientId_clanId">
+
+  export type ClanIngredientOrderByWithAggregationInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    clanId?: SortOrder
+    _count?: ClanIngredientCountOrderByAggregateInput
+    _avg?: ClanIngredientAvgOrderByAggregateInput
+    _max?: ClanIngredientMaxOrderByAggregateInput
+    _min?: ClanIngredientMinOrderByAggregateInput
+    _sum?: ClanIngredientSumOrderByAggregateInput
+  }
+
+  export type ClanIngredientScalarWhereWithAggregatesInput = {
+    AND?: ClanIngredientScalarWhereWithAggregatesInput | ClanIngredientScalarWhereWithAggregatesInput[]
+    OR?: ClanIngredientScalarWhereWithAggregatesInput[]
+    NOT?: ClanIngredientScalarWhereWithAggregatesInput | ClanIngredientScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ClanIngredient"> | number
+    ingredientId?: IntWithAggregatesFilter<"ClanIngredient"> | number
+    quantity?: IntWithAggregatesFilter<"ClanIngredient"> | number
+    clanId?: IntWithAggregatesFilter<"ClanIngredient"> | number
+  }
+
+  export type ClanMessageWhereInput = {
+    AND?: ClanMessageWhereInput | ClanMessageWhereInput[]
+    OR?: ClanMessageWhereInput[]
+    NOT?: ClanMessageWhereInput | ClanMessageWhereInput[]
+    id?: IntFilter<"ClanMessage"> | number
+    clanId?: IntFilter<"ClanMessage"> | number
+    date?: DateTimeFilter<"ClanMessage"> | Date | string
+    content?: StringFilter<"ClanMessage"> | string
+    authorId?: UuidNullableFilter<"ClanMessage"> | string | null
+    authorName?: StringFilter<"ClanMessage"> | string
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }
+
+  export type ClanMessageOrderByWithRelationInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrderInput | SortOrder
+    authorName?: SortOrder
+    author?: UserOrderByWithRelationInput
+    clan?: ClanOrderByWithRelationInput
+  }
+
+  export type ClanMessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    id_clanId?: ClanMessageIdClanIdCompoundUniqueInput
+    AND?: ClanMessageWhereInput | ClanMessageWhereInput[]
+    OR?: ClanMessageWhereInput[]
+    NOT?: ClanMessageWhereInput | ClanMessageWhereInput[]
+    clanId?: IntFilter<"ClanMessage"> | number
+    date?: DateTimeFilter<"ClanMessage"> | Date | string
+    content?: StringFilter<"ClanMessage"> | string
+    authorId?: UuidNullableFilter<"ClanMessage"> | string | null
+    authorName?: StringFilter<"ClanMessage"> | string
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }, "id" | "id_clanId">
+
+  export type ClanMessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrderInput | SortOrder
+    authorName?: SortOrder
+    _count?: ClanMessageCountOrderByAggregateInput
+    _avg?: ClanMessageAvgOrderByAggregateInput
+    _max?: ClanMessageMaxOrderByAggregateInput
+    _min?: ClanMessageMinOrderByAggregateInput
+    _sum?: ClanMessageSumOrderByAggregateInput
+  }
+
+  export type ClanMessageScalarWhereWithAggregatesInput = {
+    AND?: ClanMessageScalarWhereWithAggregatesInput | ClanMessageScalarWhereWithAggregatesInput[]
+    OR?: ClanMessageScalarWhereWithAggregatesInput[]
+    NOT?: ClanMessageScalarWhereWithAggregatesInput | ClanMessageScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ClanMessage"> | number
+    clanId?: IntWithAggregatesFilter<"ClanMessage"> | number
+    date?: DateTimeWithAggregatesFilter<"ClanMessage"> | Date | string
+    content?: StringWithAggregatesFilter<"ClanMessage"> | string
+    authorId?: UuidNullableWithAggregatesFilter<"ClanMessage"> | string | null
+    authorName?: StringWithAggregatesFilter<"ClanMessage"> | string
+  }
+
+  export type ClanHistoryWhereInput = {
+    AND?: ClanHistoryWhereInput | ClanHistoryWhereInput[]
+    OR?: ClanHistoryWhereInput[]
+    NOT?: ClanHistoryWhereInput | ClanHistoryWhereInput[]
+    id?: IntFilter<"ClanHistory"> | number
+    clanId?: IntFilter<"ClanHistory"> | number
+    date?: DateTimeFilter<"ClanHistory"> | Date | string
+    type?: StringFilter<"ClanHistory"> | string
+    authorId?: UuidNullableFilter<"ClanHistory"> | string | null
+    authorMessage?: StringFilter<"ClanHistory"> | string
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }
+
+  export type ClanHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    authorId?: SortOrderInput | SortOrder
+    authorMessage?: SortOrder
+    author?: UserOrderByWithRelationInput
+    clan?: ClanOrderByWithRelationInput
+  }
+
+  export type ClanHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ClanHistoryWhereInput | ClanHistoryWhereInput[]
+    OR?: ClanHistoryWhereInput[]
+    NOT?: ClanHistoryWhereInput | ClanHistoryWhereInput[]
+    clanId?: IntFilter<"ClanHistory"> | number
+    date?: DateTimeFilter<"ClanHistory"> | Date | string
+    type?: StringFilter<"ClanHistory"> | string
+    authorId?: UuidNullableFilter<"ClanHistory"> | string | null
+    authorMessage?: StringFilter<"ClanHistory"> | string
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }, "id">
+
+  export type ClanHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    authorId?: SortOrderInput | SortOrder
+    authorMessage?: SortOrder
+    _count?: ClanHistoryCountOrderByAggregateInput
+    _avg?: ClanHistoryAvgOrderByAggregateInput
+    _max?: ClanHistoryMaxOrderByAggregateInput
+    _min?: ClanHistoryMinOrderByAggregateInput
+    _sum?: ClanHistorySumOrderByAggregateInput
+  }
+
+  export type ClanHistoryScalarWhereWithAggregatesInput = {
+    AND?: ClanHistoryScalarWhereWithAggregatesInput | ClanHistoryScalarWhereWithAggregatesInput[]
+    OR?: ClanHistoryScalarWhereWithAggregatesInput[]
+    NOT?: ClanHistoryScalarWhereWithAggregatesInput | ClanHistoryScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ClanHistory"> | number
+    clanId?: IntWithAggregatesFilter<"ClanHistory"> | number
+    date?: DateTimeWithAggregatesFilter<"ClanHistory"> | Date | string
+    type?: StringWithAggregatesFilter<"ClanHistory"> | string
+    authorId?: UuidNullableWithAggregatesFilter<"ClanHistory"> | string | null
+    authorMessage?: StringWithAggregatesFilter<"ClanHistory"> | string
+  }
+
+  export type ClanMemberWhereInput = {
+    AND?: ClanMemberWhereInput | ClanMemberWhereInput[]
+    OR?: ClanMemberWhereInput[]
+    NOT?: ClanMemberWhereInput | ClanMemberWhereInput[]
+    id?: IntFilter<"ClanMember"> | number
+    clanId?: IntFilter<"ClanMember"> | number
+    dateJoin?: DateTimeFilter<"ClanMember"> | Date | string
+    nickname?: StringNullableFilter<"ClanMember"> | string | null
+    rights?: StringNullableListFilter<"ClanMember">
+    donation?: IntFilter<"ClanMember"> | number
+    userId?: UuidFilter<"ClanMember"> | string
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ClanMemberOrderByWithRelationInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    dateJoin?: SortOrder
+    nickname?: SortOrderInput | SortOrder
+    rights?: SortOrder
+    donation?: SortOrder
+    userId?: SortOrder
+    clan?: ClanOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ClanMemberWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId?: string
+    AND?: ClanMemberWhereInput | ClanMemberWhereInput[]
+    OR?: ClanMemberWhereInput[]
+    NOT?: ClanMemberWhereInput | ClanMemberWhereInput[]
+    clanId?: IntFilter<"ClanMember"> | number
+    dateJoin?: DateTimeFilter<"ClanMember"> | Date | string
+    nickname?: StringNullableFilter<"ClanMember"> | string | null
+    rights?: StringNullableListFilter<"ClanMember">
+    donation?: IntFilter<"ClanMember"> | number
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type ClanMemberOrderByWithAggregationInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    dateJoin?: SortOrder
+    nickname?: SortOrderInput | SortOrder
+    rights?: SortOrder
+    donation?: SortOrder
+    userId?: SortOrder
+    _count?: ClanMemberCountOrderByAggregateInput
+    _avg?: ClanMemberAvgOrderByAggregateInput
+    _max?: ClanMemberMaxOrderByAggregateInput
+    _min?: ClanMemberMinOrderByAggregateInput
+    _sum?: ClanMemberSumOrderByAggregateInput
+  }
+
+  export type ClanMemberScalarWhereWithAggregatesInput = {
+    AND?: ClanMemberScalarWhereWithAggregatesInput | ClanMemberScalarWhereWithAggregatesInput[]
+    OR?: ClanMemberScalarWhereWithAggregatesInput[]
+    NOT?: ClanMemberScalarWhereWithAggregatesInput | ClanMemberScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ClanMember"> | number
+    clanId?: IntWithAggregatesFilter<"ClanMember"> | number
+    dateJoin?: DateTimeWithAggregatesFilter<"ClanMember"> | Date | string
+    nickname?: StringNullableWithAggregatesFilter<"ClanMember"> | string | null
+    rights?: StringNullableListFilter<"ClanMember">
+    donation?: IntWithAggregatesFilter<"ClanMember"> | number
+    userId?: UuidWithAggregatesFilter<"ClanMember"> | string
+  }
+
+  export type ClanPageWhereInput = {
+    AND?: ClanPageWhereInput | ClanPageWhereInput[]
+    OR?: ClanPageWhereInput[]
+    NOT?: ClanPageWhereInput | ClanPageWhereInput[]
+    id?: IntFilter<"ClanPage"> | number
+    home?: BoolFilter<"ClanPage"> | boolean
+    public?: BoolFilter<"ClanPage"> | boolean
+    name?: StringFilter<"ClanPage"> | string
+    content?: StringFilter<"ClanPage"> | string
+    clanId?: IntFilter<"ClanPage"> | number
+    Clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }
+
+  export type ClanPageOrderByWithRelationInput = {
+    id?: SortOrder
+    home?: SortOrder
+    public?: SortOrder
+    name?: SortOrder
+    content?: SortOrder
+    clanId?: SortOrder
+    Clan?: ClanOrderByWithRelationInput
+  }
+
+  export type ClanPageWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ClanPageWhereInput | ClanPageWhereInput[]
+    OR?: ClanPageWhereInput[]
+    NOT?: ClanPageWhereInput | ClanPageWhereInput[]
+    home?: BoolFilter<"ClanPage"> | boolean
+    public?: BoolFilter<"ClanPage"> | boolean
+    name?: StringFilter<"ClanPage"> | string
+    content?: StringFilter<"ClanPage"> | string
+    clanId?: IntFilter<"ClanPage"> | number
+    Clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+  }, "id">
+
+  export type ClanPageOrderByWithAggregationInput = {
+    id?: SortOrder
+    home?: SortOrder
+    public?: SortOrder
+    name?: SortOrder
+    content?: SortOrder
+    clanId?: SortOrder
+    _count?: ClanPageCountOrderByAggregateInput
+    _avg?: ClanPageAvgOrderByAggregateInput
+    _max?: ClanPageMaxOrderByAggregateInput
+    _min?: ClanPageMinOrderByAggregateInput
+    _sum?: ClanPageSumOrderByAggregateInput
+  }
+
+  export type ClanPageScalarWhereWithAggregatesInput = {
+    AND?: ClanPageScalarWhereWithAggregatesInput | ClanPageScalarWhereWithAggregatesInput[]
+    OR?: ClanPageScalarWhereWithAggregatesInput[]
+    NOT?: ClanPageScalarWhereWithAggregatesInput | ClanPageScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ClanPage"> | number
+    home?: BoolWithAggregatesFilter<"ClanPage"> | boolean
+    public?: BoolWithAggregatesFilter<"ClanPage"> | boolean
+    name?: StringWithAggregatesFilter<"ClanPage"> | string
+    content?: StringWithAggregatesFilter<"ClanPage"> | string
+    clanId?: IntWithAggregatesFilter<"ClanPage"> | number
   }
 
   export type BankSavingCreateInput = {
@@ -59198,6 +68789,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -59229,6 +68826,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -59239,6 +68837,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -59280,6 +68883,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -59311,6 +68920,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -59321,6 +68931,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -59352,6 +68967,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -59392,6 +69008,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -60120,6 +69737,429 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     senderNameSnapshot?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanCreateInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    leader: UserCreateNestedOneWithoutLeaderOfInput
+    history?: ClanHistoryCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
+    members?: ClanMemberCreateNestedManyWithoutClanInput
+    pages?: ClanPageCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageCreateNestedManyWithoutClanInput
+    users?: UserCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanUncheckedCreateInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
+    members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
+    pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
+    users?: UserUncheckedCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    leader?: UserUpdateOneRequiredWithoutLeaderOfNestedInput
+    history?: ClanHistoryUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUpdateManyWithoutClanNestedInput
+    users?: UserUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
+    users?: UserUncheckedUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanCreateManyInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+  }
+
+  export type ClanUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+  }
+
+  export type ClanUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+  }
+
+  export type ClanJoinRequestCreateInput = {
+    date?: Date | string
+    clan: ClanCreateNestedOneWithoutJoinRequestsInput
+    user: UserCreateNestedOneWithoutClanJoinRequestInput
+  }
+
+  export type ClanJoinRequestUncheckedCreateInput = {
+    id?: number
+    clanId: number
+    date?: Date | string
+    userId: string
+  }
+
+  export type ClanJoinRequestUpdateInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    clan?: ClanUpdateOneRequiredWithoutJoinRequestsNestedInput
+    user?: UserUpdateOneRequiredWithoutClanJoinRequestNestedInput
+  }
+
+  export type ClanJoinRequestUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanJoinRequestCreateManyInput = {
+    id?: number
+    clanId: number
+    date?: Date | string
+    userId: string
+  }
+
+  export type ClanJoinRequestUpdateManyMutationInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanJoinRequestUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanIngredientCreateInput = {
+    ingredientId: number
+    quantity: number
+    clan: ClanCreateNestedOneWithoutIngredientsInput
+  }
+
+  export type ClanIngredientUncheckedCreateInput = {
+    id?: number
+    ingredientId: number
+    quantity: number
+    clanId: number
+  }
+
+  export type ClanIngredientUpdateInput = {
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    clan?: ClanUpdateOneRequiredWithoutIngredientsNestedInput
+  }
+
+  export type ClanIngredientUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanIngredientCreateManyInput = {
+    id?: number
+    ingredientId: number
+    quantity: number
+    clanId: number
+  }
+
+  export type ClanIngredientUpdateManyMutationInput = {
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanIngredientUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanMessageCreateInput = {
+    date?: Date | string
+    content: string
+    authorName: string
+    author?: UserCreateNestedOneWithoutClanMessageInput
+    clan: ClanCreateNestedOneWithoutDiscussionInput
+  }
+
+  export type ClanMessageUncheckedCreateInput = {
+    id?: number
+    clanId: number
+    date?: Date | string
+    content: string
+    authorId?: string | null
+    authorName: string
+  }
+
+  export type ClanMessageUpdateInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+    author?: UserUpdateOneWithoutClanMessageNestedInput
+    clan?: ClanUpdateOneRequiredWithoutDiscussionNestedInput
+  }
+
+  export type ClanMessageUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: NullableStringFieldUpdateOperationsInput | string | null
+    authorName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanMessageCreateManyInput = {
+    id?: number
+    clanId: number
+    date?: Date | string
+    content: string
+    authorId?: string | null
+    authorName: string
+  }
+
+  export type ClanMessageUpdateManyMutationInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanMessageUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: NullableStringFieldUpdateOperationsInput | string | null
+    authorName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanHistoryCreateInput = {
+    date?: Date | string
+    type?: string
+    authorMessage: string
+    author?: UserCreateNestedOneWithoutClanHistoryInput
+    clan: ClanCreateNestedOneWithoutHistoryInput
+  }
+
+  export type ClanHistoryUncheckedCreateInput = {
+    id?: number
+    clanId: number
+    date?: Date | string
+    type?: string
+    authorId?: string | null
+    authorMessage: string
+  }
+
+  export type ClanHistoryUpdateInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    authorMessage?: StringFieldUpdateOperationsInput | string
+    author?: UserUpdateOneWithoutClanHistoryNestedInput
+    clan?: ClanUpdateOneRequiredWithoutHistoryNestedInput
+  }
+
+  export type ClanHistoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    authorId?: NullableStringFieldUpdateOperationsInput | string | null
+    authorMessage?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanHistoryCreateManyInput = {
+    id?: number
+    clanId: number
+    date?: Date | string
+    type?: string
+    authorId?: string | null
+    authorMessage: string
+  }
+
+  export type ClanHistoryUpdateManyMutationInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    authorMessage?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanHistoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    authorId?: NullableStringFieldUpdateOperationsInput | string | null
+    authorMessage?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanMemberCreateInput = {
+    dateJoin?: Date | string
+    nickname?: string | null
+    rights?: ClanMemberCreaterightsInput | string[]
+    donation?: number
+    clan: ClanCreateNestedOneWithoutMembersInput
+    user: UserCreateNestedOneWithoutClanMemberInput
+  }
+
+  export type ClanMemberUncheckedCreateInput = {
+    id?: number
+    clanId: number
+    dateJoin?: Date | string
+    nickname?: string | null
+    rights?: ClanMemberCreaterightsInput | string[]
+    donation?: number
+    userId: string
+  }
+
+  export type ClanMemberUpdateInput = {
+    dateJoin?: DateTimeFieldUpdateOperationsInput | Date | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    rights?: ClanMemberUpdaterightsInput | string[]
+    donation?: IntFieldUpdateOperationsInput | number
+    clan?: ClanUpdateOneRequiredWithoutMembersNestedInput
+    user?: UserUpdateOneRequiredWithoutClanMemberNestedInput
+  }
+
+  export type ClanMemberUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    dateJoin?: DateTimeFieldUpdateOperationsInput | Date | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    rights?: ClanMemberUpdaterightsInput | string[]
+    donation?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanMemberCreateManyInput = {
+    id?: number
+    clanId: number
+    dateJoin?: Date | string
+    nickname?: string | null
+    rights?: ClanMemberCreaterightsInput | string[]
+    donation?: number
+    userId: string
+  }
+
+  export type ClanMemberUpdateManyMutationInput = {
+    dateJoin?: DateTimeFieldUpdateOperationsInput | Date | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    rights?: ClanMemberUpdaterightsInput | string[]
+    donation?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanMemberUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    dateJoin?: DateTimeFieldUpdateOperationsInput | Date | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    rights?: ClanMemberUpdaterightsInput | string[]
+    donation?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanPageCreateInput = {
+    home: boolean
+    public: boolean
+    name: string
+    content?: string
+    Clan: ClanCreateNestedOneWithoutPagesInput
+  }
+
+  export type ClanPageUncheckedCreateInput = {
+    id?: number
+    home: boolean
+    public: boolean
+    name: string
+    content?: string
+    clanId: number
+  }
+
+  export type ClanPageUpdateInput = {
+    home?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    Clan?: ClanUpdateOneRequiredWithoutPagesNestedInput
+  }
+
+  export type ClanPageUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    home?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    clanId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanPageCreateManyInput = {
+    id?: number
+    home: boolean
+    public: boolean
+    name: string
+    content?: string
+    clanId: number
+  }
+
+  export type ClanPageUpdateManyMutationInput = {
+    home?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanPageUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    home?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    clanId?: IntFieldUpdateOperationsInput | number
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -62140,6 +72180,33 @@ export namespace Prisma {
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
+  export type ClanNullableScalarRelationFilter = {
+    is?: ClanWhereInput | null
+    isNot?: ClanWhereInput | null
+  }
+
+  export type ClanHistoryListRelationFilter = {
+    every?: ClanHistoryWhereInput
+    some?: ClanHistoryWhereInput
+    none?: ClanHistoryWhereInput
+  }
+
+  export type ClanJoinRequestNullableScalarRelationFilter = {
+    is?: ClanJoinRequestWhereInput | null
+    isNot?: ClanJoinRequestWhereInput | null
+  }
+
+  export type ClanMemberNullableScalarRelationFilter = {
+    is?: ClanMemberWhereInput | null
+    isNot?: ClanMemberWhereInput | null
+  }
+
+  export type ClanMessageListRelationFilter = {
+    every?: ClanMessageWhereInput
+    some?: ClanMessageWhereInput
+    none?: ClanMessageWhereInput
+  }
+
   export type UserGatherListRelationFilter = {
     every?: UserGatherWhereInput
     some?: UserGatherWhereInput
@@ -62222,6 +72289,14 @@ export namespace Prisma {
     none?: BankSavingWhereInput
   }
 
+  export type ClanHistoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ClanMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UserGatherOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -62278,6 +72353,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrder
     lastLogin?: SortOrder
+    clanId?: SortOrder
     leader?: SortOrder
     engineer?: SortOrder
     cooker?: SortOrder
@@ -62291,6 +72367,7 @@ export namespace Prisma {
   }
 
   export type UserAvgOrderByAggregateInput = {
+    clanId?: SortOrder
     discoveredSkills?: SortOrder
   }
 
@@ -62302,6 +72379,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrder
     lastLogin?: SortOrder
+    clanId?: SortOrder
     leader?: SortOrder
     engineer?: SortOrder
     cooker?: SortOrder
@@ -62321,6 +72399,7 @@ export namespace Prisma {
     createdDate?: SortOrder
     updatedAt?: SortOrder
     lastLogin?: SortOrder
+    clanId?: SortOrder
     leader?: SortOrder
     engineer?: SortOrder
     cooker?: SortOrder
@@ -62333,6 +72412,7 @@ export namespace Prisma {
   }
 
   export type UserSumOrderByAggregateInput = {
+    clanId?: SortOrder
     discoveredSkills?: SortOrder
   }
 
@@ -62896,6 +72976,334 @@ export namespace Prisma {
 
   export type MessageSumOrderByAggregateInput = {
     id?: SortOrder
+  }
+
+  export type EnumLanguageNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel> | null
+    has?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type ClanJoinRequestListRelationFilter = {
+    every?: ClanJoinRequestWhereInput
+    some?: ClanJoinRequestWhereInput
+    none?: ClanJoinRequestWhereInput
+  }
+
+  export type ClanMemberListRelationFilter = {
+    every?: ClanMemberWhereInput
+    some?: ClanMemberWhereInput
+    none?: ClanMemberWhereInput
+  }
+
+  export type ClanPageListRelationFilter = {
+    every?: ClanPageWhereInput
+    some?: ClanPageWhereInput
+    none?: ClanPageWhereInput
+  }
+
+  export type ClanIngredientListRelationFilter = {
+    every?: ClanIngredientWhereInput
+    some?: ClanIngredientWhereInput
+    none?: ClanIngredientWhereInput
+  }
+
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
+  }
+
+  export type ClanJoinRequestOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ClanMemberOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ClanPageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ClanIngredientOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ClanCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    treasureValue?: SortOrder
+    creationDate?: SortOrder
+    banner?: SortOrder
+    leaderId?: SortOrder
+    langs?: SortOrder
+  }
+
+  export type ClanAvgOrderByAggregateInput = {
+    id?: SortOrder
+    treasureValue?: SortOrder
+  }
+
+  export type ClanMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    treasureValue?: SortOrder
+    creationDate?: SortOrder
+    banner?: SortOrder
+    leaderId?: SortOrder
+  }
+
+  export type ClanMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    treasureValue?: SortOrder
+    creationDate?: SortOrder
+    banner?: SortOrder
+    leaderId?: SortOrder
+  }
+
+  export type ClanSumOrderByAggregateInput = {
+    id?: SortOrder
+    treasureValue?: SortOrder
+  }
+
+  export type ClanScalarRelationFilter = {
+    is?: ClanWhereInput
+    isNot?: ClanWhereInput
+  }
+
+  export type ClanJoinRequestCountOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ClanJoinRequestAvgOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanJoinRequestMaxOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ClanJoinRequestMinOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ClanJoinRequestSumOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanIngredientIngredientIdClanIdCompoundUniqueInput = {
+    ingredientId: number
+    clanId: number
+  }
+
+  export type ClanIngredientCountOrderByAggregateInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanIngredientAvgOrderByAggregateInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanIngredientMaxOrderByAggregateInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanIngredientMinOrderByAggregateInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanIngredientSumOrderByAggregateInput = {
+    id?: SortOrder
+    ingredientId?: SortOrder
+    quantity?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanMessageIdClanIdCompoundUniqueInput = {
+    id: number
+    clanId: number
+  }
+
+  export type ClanMessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorName?: SortOrder
+  }
+
+  export type ClanMessageAvgOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanMessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorName?: SortOrder
+  }
+
+  export type ClanMessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorName?: SortOrder
+  }
+
+  export type ClanMessageSumOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    authorId?: SortOrder
+    authorMessage?: SortOrder
+  }
+
+  export type ClanHistoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    authorId?: SortOrder
+    authorMessage?: SortOrder
+  }
+
+  export type ClanHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    date?: SortOrder
+    type?: SortOrder
+    authorId?: SortOrder
+    authorMessage?: SortOrder
+  }
+
+  export type ClanHistorySumOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanMemberCountOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    dateJoin?: SortOrder
+    nickname?: SortOrder
+    rights?: SortOrder
+    donation?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ClanMemberAvgOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    donation?: SortOrder
+  }
+
+  export type ClanMemberMaxOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    dateJoin?: SortOrder
+    nickname?: SortOrder
+    donation?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ClanMemberMinOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    dateJoin?: SortOrder
+    nickname?: SortOrder
+    donation?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type ClanMemberSumOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+    donation?: SortOrder
+  }
+
+  export type ClanPageCountOrderByAggregateInput = {
+    id?: SortOrder
+    home?: SortOrder
+    public?: SortOrder
+    name?: SortOrder
+    content?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanPageAvgOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanPageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    home?: SortOrder
+    public?: SortOrder
+    name?: SortOrder
+    content?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanPageMinOrderByAggregateInput = {
+    id?: SortOrder
+    home?: SortOrder
+    public?: SortOrder
+    name?: SortOrder
+    content?: SortOrder
+    clanId?: SortOrder
+  }
+
+  export type ClanPageSumOrderByAggregateInput = {
+    id?: SortOrder
+    clanId?: SortOrder
   }
 
   export type UserCreateNestedOneWithoutBankSavingsInput = {
@@ -64206,6 +74614,44 @@ export namespace Prisma {
     set: number[]
   }
 
+  export type ClanCreateNestedOneWithoutUsersInput = {
+    create?: XOR<ClanCreateWithoutUsersInput, ClanUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutUsersInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type ClanCreateNestedOneWithoutLeaderInput = {
+    create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type ClanHistoryCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<ClanHistoryCreateWithoutAuthorInput, ClanHistoryUncheckedCreateWithoutAuthorInput> | ClanHistoryCreateWithoutAuthorInput[] | ClanHistoryUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ClanHistoryCreateOrConnectWithoutAuthorInput | ClanHistoryCreateOrConnectWithoutAuthorInput[]
+    createMany?: ClanHistoryCreateManyAuthorInputEnvelope
+    connect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+  }
+
+  export type ClanJoinRequestCreateNestedOneWithoutUserInput = {
+    create?: XOR<ClanJoinRequestCreateWithoutUserInput, ClanJoinRequestUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClanJoinRequestCreateOrConnectWithoutUserInput
+    connect?: ClanJoinRequestWhereUniqueInput
+  }
+
+  export type ClanMemberCreateNestedOneWithoutUserInput = {
+    create?: XOR<ClanMemberCreateWithoutUserInput, ClanMemberUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClanMemberCreateOrConnectWithoutUserInput
+    connect?: ClanMemberWhereUniqueInput
+  }
+
+  export type ClanMessageCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<ClanMessageCreateWithoutAuthorInput, ClanMessageUncheckedCreateWithoutAuthorInput> | ClanMessageCreateWithoutAuthorInput[] | ClanMessageUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ClanMessageCreateOrConnectWithoutAuthorInput | ClanMessageCreateOrConnectWithoutAuthorInput[]
+    createMany?: ClanMessageCreateManyAuthorInputEnvelope
+    connect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+  }
+
   export type UserGatherCreateNestedManyWithoutUserInput = {
     create?: XOR<UserGatherCreateWithoutUserInput, UserGatherUncheckedCreateWithoutUserInput> | UserGatherCreateWithoutUserInput[] | UserGatherUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserGatherCreateOrConnectWithoutUserInput | UserGatherCreateOrConnectWithoutUserInput[]
@@ -64349,6 +74795,38 @@ export namespace Prisma {
     connectOrCreate?: BankSavingCreateOrConnectWithoutUserInput | BankSavingCreateOrConnectWithoutUserInput[]
     createMany?: BankSavingCreateManyUserInputEnvelope
     connect?: BankSavingWhereUniqueInput | BankSavingWhereUniqueInput[]
+  }
+
+  export type ClanUncheckedCreateNestedOneWithoutLeaderInput = {
+    create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<ClanHistoryCreateWithoutAuthorInput, ClanHistoryUncheckedCreateWithoutAuthorInput> | ClanHistoryCreateWithoutAuthorInput[] | ClanHistoryUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ClanHistoryCreateOrConnectWithoutAuthorInput | ClanHistoryCreateOrConnectWithoutAuthorInput[]
+    createMany?: ClanHistoryCreateManyAuthorInputEnvelope
+    connect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+  }
+
+  export type ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<ClanJoinRequestCreateWithoutUserInput, ClanJoinRequestUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClanJoinRequestCreateOrConnectWithoutUserInput
+    connect?: ClanJoinRequestWhereUniqueInput
+  }
+
+  export type ClanMemberUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<ClanMemberCreateWithoutUserInput, ClanMemberUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClanMemberCreateOrConnectWithoutUserInput
+    connect?: ClanMemberWhereUniqueInput
+  }
+
+  export type ClanMessageUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<ClanMessageCreateWithoutAuthorInput, ClanMessageUncheckedCreateWithoutAuthorInput> | ClanMessageCreateWithoutAuthorInput[] | ClanMessageUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ClanMessageCreateOrConnectWithoutAuthorInput | ClanMessageCreateOrConnectWithoutAuthorInput[]
+    createMany?: ClanMessageCreateManyAuthorInputEnvelope
+    connect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
   }
 
   export type UserGatherUncheckedCreateNestedManyWithoutUserInput = {
@@ -64503,6 +74981,74 @@ export namespace Prisma {
   export type UserUpdatediscoveredSkillsInput = {
     set?: number[]
     push?: number | number[]
+  }
+
+  export type ClanUpdateOneWithoutUsersNestedInput = {
+    create?: XOR<ClanCreateWithoutUsersInput, ClanUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutUsersInput
+    upsert?: ClanUpsertWithoutUsersInput
+    disconnect?: ClanWhereInput | boolean
+    delete?: ClanWhereInput | boolean
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutUsersInput, ClanUpdateWithoutUsersInput>, ClanUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type ClanUpdateOneWithoutLeaderNestedInput = {
+    create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
+    upsert?: ClanUpsertWithoutLeaderInput
+    disconnect?: ClanWhereInput | boolean
+    delete?: ClanWhereInput | boolean
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutLeaderInput, ClanUpdateWithoutLeaderInput>, ClanUncheckedUpdateWithoutLeaderInput>
+  }
+
+  export type ClanHistoryUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<ClanHistoryCreateWithoutAuthorInput, ClanHistoryUncheckedCreateWithoutAuthorInput> | ClanHistoryCreateWithoutAuthorInput[] | ClanHistoryUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ClanHistoryCreateOrConnectWithoutAuthorInput | ClanHistoryCreateOrConnectWithoutAuthorInput[]
+    upsert?: ClanHistoryUpsertWithWhereUniqueWithoutAuthorInput | ClanHistoryUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: ClanHistoryCreateManyAuthorInputEnvelope
+    set?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    disconnect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    delete?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    connect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    update?: ClanHistoryUpdateWithWhereUniqueWithoutAuthorInput | ClanHistoryUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: ClanHistoryUpdateManyWithWhereWithoutAuthorInput | ClanHistoryUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: ClanHistoryScalarWhereInput | ClanHistoryScalarWhereInput[]
+  }
+
+  export type ClanJoinRequestUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ClanJoinRequestCreateWithoutUserInput, ClanJoinRequestUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClanJoinRequestCreateOrConnectWithoutUserInput
+    upsert?: ClanJoinRequestUpsertWithoutUserInput
+    disconnect?: ClanJoinRequestWhereInput | boolean
+    delete?: ClanJoinRequestWhereInput | boolean
+    connect?: ClanJoinRequestWhereUniqueInput
+    update?: XOR<XOR<ClanJoinRequestUpdateToOneWithWhereWithoutUserInput, ClanJoinRequestUpdateWithoutUserInput>, ClanJoinRequestUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ClanMemberUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ClanMemberCreateWithoutUserInput, ClanMemberUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClanMemberCreateOrConnectWithoutUserInput
+    upsert?: ClanMemberUpsertWithoutUserInput
+    disconnect?: ClanMemberWhereInput | boolean
+    delete?: ClanMemberWhereInput | boolean
+    connect?: ClanMemberWhereUniqueInput
+    update?: XOR<XOR<ClanMemberUpdateToOneWithWhereWithoutUserInput, ClanMemberUpdateWithoutUserInput>, ClanMemberUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ClanMessageUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<ClanMessageCreateWithoutAuthorInput, ClanMessageUncheckedCreateWithoutAuthorInput> | ClanMessageCreateWithoutAuthorInput[] | ClanMessageUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ClanMessageCreateOrConnectWithoutAuthorInput | ClanMessageCreateOrConnectWithoutAuthorInput[]
+    upsert?: ClanMessageUpsertWithWhereUniqueWithoutAuthorInput | ClanMessageUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: ClanMessageCreateManyAuthorInputEnvelope
+    set?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    disconnect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    delete?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    connect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    update?: ClanMessageUpdateWithWhereUniqueWithoutAuthorInput | ClanMessageUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: ClanMessageUpdateManyWithWhereWithoutAuthorInput | ClanMessageUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: ClanMessageScalarWhereInput | ClanMessageScalarWhereInput[]
   }
 
   export type UserGatherUpdateManyWithoutUserNestedInput = {
@@ -64789,6 +75335,64 @@ export namespace Prisma {
     update?: BankSavingUpdateWithWhereUniqueWithoutUserInput | BankSavingUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: BankSavingUpdateManyWithWhereWithoutUserInput | BankSavingUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: BankSavingScalarWhereInput | BankSavingScalarWhereInput[]
+  }
+
+  export type ClanUncheckedUpdateOneWithoutLeaderNestedInput = {
+    create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
+    upsert?: ClanUpsertWithoutLeaderInput
+    disconnect?: ClanWhereInput | boolean
+    delete?: ClanWhereInput | boolean
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutLeaderInput, ClanUpdateWithoutLeaderInput>, ClanUncheckedUpdateWithoutLeaderInput>
+  }
+
+  export type ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<ClanHistoryCreateWithoutAuthorInput, ClanHistoryUncheckedCreateWithoutAuthorInput> | ClanHistoryCreateWithoutAuthorInput[] | ClanHistoryUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ClanHistoryCreateOrConnectWithoutAuthorInput | ClanHistoryCreateOrConnectWithoutAuthorInput[]
+    upsert?: ClanHistoryUpsertWithWhereUniqueWithoutAuthorInput | ClanHistoryUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: ClanHistoryCreateManyAuthorInputEnvelope
+    set?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    disconnect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    delete?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    connect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    update?: ClanHistoryUpdateWithWhereUniqueWithoutAuthorInput | ClanHistoryUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: ClanHistoryUpdateManyWithWhereWithoutAuthorInput | ClanHistoryUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: ClanHistoryScalarWhereInput | ClanHistoryScalarWhereInput[]
+  }
+
+  export type ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ClanJoinRequestCreateWithoutUserInput, ClanJoinRequestUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClanJoinRequestCreateOrConnectWithoutUserInput
+    upsert?: ClanJoinRequestUpsertWithoutUserInput
+    disconnect?: ClanJoinRequestWhereInput | boolean
+    delete?: ClanJoinRequestWhereInput | boolean
+    connect?: ClanJoinRequestWhereUniqueInput
+    update?: XOR<XOR<ClanJoinRequestUpdateToOneWithWhereWithoutUserInput, ClanJoinRequestUpdateWithoutUserInput>, ClanJoinRequestUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ClanMemberUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<ClanMemberCreateWithoutUserInput, ClanMemberUncheckedCreateWithoutUserInput>
+    connectOrCreate?: ClanMemberCreateOrConnectWithoutUserInput
+    upsert?: ClanMemberUpsertWithoutUserInput
+    disconnect?: ClanMemberWhereInput | boolean
+    delete?: ClanMemberWhereInput | boolean
+    connect?: ClanMemberWhereUniqueInput
+    update?: XOR<XOR<ClanMemberUpdateToOneWithWhereWithoutUserInput, ClanMemberUpdateWithoutUserInput>, ClanMemberUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<ClanMessageCreateWithoutAuthorInput, ClanMessageUncheckedCreateWithoutAuthorInput> | ClanMessageCreateWithoutAuthorInput[] | ClanMessageUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ClanMessageCreateOrConnectWithoutAuthorInput | ClanMessageCreateOrConnectWithoutAuthorInput[]
+    upsert?: ClanMessageUpsertWithWhereUniqueWithoutAuthorInput | ClanMessageUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: ClanMessageCreateManyAuthorInputEnvelope
+    set?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    disconnect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    delete?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    connect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    update?: ClanMessageUpdateWithWhereUniqueWithoutAuthorInput | ClanMessageUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: ClanMessageUpdateManyWithWhereWithoutAuthorInput | ClanMessageUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: ClanMessageScalarWhereInput | ClanMessageScalarWhereInput[]
   }
 
   export type UserGatherUncheckedUpdateManyWithoutUserNestedInput = {
@@ -65442,6 +76046,476 @@ export namespace Prisma {
     update?: XOR<XOR<ConversationUpdateToOneWithWhereWithoutPinnedMessageInput, ConversationUpdateWithoutPinnedMessageInput>, ConversationUncheckedUpdateWithoutPinnedMessageInput>
   }
 
+  export type ClanCreatelangsInput = {
+    set: $Enums.Language[]
+  }
+
+  export type UserCreateNestedOneWithoutLeaderOfInput = {
+    create?: XOR<UserCreateWithoutLeaderOfInput, UserUncheckedCreateWithoutLeaderOfInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLeaderOfInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ClanHistoryCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanHistoryCreateWithoutClanInput, ClanHistoryUncheckedCreateWithoutClanInput> | ClanHistoryCreateWithoutClanInput[] | ClanHistoryUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanHistoryCreateOrConnectWithoutClanInput | ClanHistoryCreateOrConnectWithoutClanInput[]
+    createMany?: ClanHistoryCreateManyClanInputEnvelope
+    connect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+  }
+
+  export type ClanJoinRequestCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanJoinRequestCreateWithoutClanInput, ClanJoinRequestUncheckedCreateWithoutClanInput> | ClanJoinRequestCreateWithoutClanInput[] | ClanJoinRequestUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanJoinRequestCreateOrConnectWithoutClanInput | ClanJoinRequestCreateOrConnectWithoutClanInput[]
+    createMany?: ClanJoinRequestCreateManyClanInputEnvelope
+    connect?: ClanJoinRequestWhereUniqueInput | ClanJoinRequestWhereUniqueInput[]
+  }
+
+  export type ClanMemberCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanMemberCreateWithoutClanInput, ClanMemberUncheckedCreateWithoutClanInput> | ClanMemberCreateWithoutClanInput[] | ClanMemberUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanMemberCreateOrConnectWithoutClanInput | ClanMemberCreateOrConnectWithoutClanInput[]
+    createMany?: ClanMemberCreateManyClanInputEnvelope
+    connect?: ClanMemberWhereUniqueInput | ClanMemberWhereUniqueInput[]
+  }
+
+  export type ClanPageCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanPageCreateWithoutClanInput, ClanPageUncheckedCreateWithoutClanInput> | ClanPageCreateWithoutClanInput[] | ClanPageUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanPageCreateOrConnectWithoutClanInput | ClanPageCreateOrConnectWithoutClanInput[]
+    createMany?: ClanPageCreateManyClanInputEnvelope
+    connect?: ClanPageWhereUniqueInput | ClanPageWhereUniqueInput[]
+  }
+
+  export type ClanIngredientCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanIngredientCreateWithoutClanInput, ClanIngredientUncheckedCreateWithoutClanInput> | ClanIngredientCreateWithoutClanInput[] | ClanIngredientUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanIngredientCreateOrConnectWithoutClanInput | ClanIngredientCreateOrConnectWithoutClanInput[]
+    createMany?: ClanIngredientCreateManyClanInputEnvelope
+    connect?: ClanIngredientWhereUniqueInput | ClanIngredientWhereUniqueInput[]
+  }
+
+  export type ClanMessageCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanMessageCreateWithoutClanInput, ClanMessageUncheckedCreateWithoutClanInput> | ClanMessageCreateWithoutClanInput[] | ClanMessageUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanMessageCreateOrConnectWithoutClanInput | ClanMessageCreateOrConnectWithoutClanInput[]
+    createMany?: ClanMessageCreateManyClanInputEnvelope
+    connect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedManyWithoutClanInput = {
+    create?: XOR<UserCreateWithoutClanInput, UserUncheckedCreateWithoutClanInput> | UserCreateWithoutClanInput[] | UserUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutClanInput | UserCreateOrConnectWithoutClanInput[]
+    createMany?: UserCreateManyClanInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type ClanHistoryUncheckedCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanHistoryCreateWithoutClanInput, ClanHistoryUncheckedCreateWithoutClanInput> | ClanHistoryCreateWithoutClanInput[] | ClanHistoryUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanHistoryCreateOrConnectWithoutClanInput | ClanHistoryCreateOrConnectWithoutClanInput[]
+    createMany?: ClanHistoryCreateManyClanInputEnvelope
+    connect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+  }
+
+  export type ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanJoinRequestCreateWithoutClanInput, ClanJoinRequestUncheckedCreateWithoutClanInput> | ClanJoinRequestCreateWithoutClanInput[] | ClanJoinRequestUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanJoinRequestCreateOrConnectWithoutClanInput | ClanJoinRequestCreateOrConnectWithoutClanInput[]
+    createMany?: ClanJoinRequestCreateManyClanInputEnvelope
+    connect?: ClanJoinRequestWhereUniqueInput | ClanJoinRequestWhereUniqueInput[]
+  }
+
+  export type ClanMemberUncheckedCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanMemberCreateWithoutClanInput, ClanMemberUncheckedCreateWithoutClanInput> | ClanMemberCreateWithoutClanInput[] | ClanMemberUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanMemberCreateOrConnectWithoutClanInput | ClanMemberCreateOrConnectWithoutClanInput[]
+    createMany?: ClanMemberCreateManyClanInputEnvelope
+    connect?: ClanMemberWhereUniqueInput | ClanMemberWhereUniqueInput[]
+  }
+
+  export type ClanPageUncheckedCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanPageCreateWithoutClanInput, ClanPageUncheckedCreateWithoutClanInput> | ClanPageCreateWithoutClanInput[] | ClanPageUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanPageCreateOrConnectWithoutClanInput | ClanPageCreateOrConnectWithoutClanInput[]
+    createMany?: ClanPageCreateManyClanInputEnvelope
+    connect?: ClanPageWhereUniqueInput | ClanPageWhereUniqueInput[]
+  }
+
+  export type ClanIngredientUncheckedCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanIngredientCreateWithoutClanInput, ClanIngredientUncheckedCreateWithoutClanInput> | ClanIngredientCreateWithoutClanInput[] | ClanIngredientUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanIngredientCreateOrConnectWithoutClanInput | ClanIngredientCreateOrConnectWithoutClanInput[]
+    createMany?: ClanIngredientCreateManyClanInputEnvelope
+    connect?: ClanIngredientWhereUniqueInput | ClanIngredientWhereUniqueInput[]
+  }
+
+  export type ClanMessageUncheckedCreateNestedManyWithoutClanInput = {
+    create?: XOR<ClanMessageCreateWithoutClanInput, ClanMessageUncheckedCreateWithoutClanInput> | ClanMessageCreateWithoutClanInput[] | ClanMessageUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanMessageCreateOrConnectWithoutClanInput | ClanMessageCreateOrConnectWithoutClanInput[]
+    createMany?: ClanMessageCreateManyClanInputEnvelope
+    connect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutClanInput = {
+    create?: XOR<UserCreateWithoutClanInput, UserUncheckedCreateWithoutClanInput> | UserCreateWithoutClanInput[] | UserUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutClanInput | UserCreateOrConnectWithoutClanInput[]
+    createMany?: UserCreateManyClanInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+  }
+
+  export type ClanUpdatelangsInput = {
+    set?: $Enums.Language[]
+    push?: $Enums.Language | $Enums.Language[]
+  }
+
+  export type UserUpdateOneRequiredWithoutLeaderOfNestedInput = {
+    create?: XOR<UserCreateWithoutLeaderOfInput, UserUncheckedCreateWithoutLeaderOfInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLeaderOfInput
+    upsert?: UserUpsertWithoutLeaderOfInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLeaderOfInput, UserUpdateWithoutLeaderOfInput>, UserUncheckedUpdateWithoutLeaderOfInput>
+  }
+
+  export type ClanHistoryUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanHistoryCreateWithoutClanInput, ClanHistoryUncheckedCreateWithoutClanInput> | ClanHistoryCreateWithoutClanInput[] | ClanHistoryUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanHistoryCreateOrConnectWithoutClanInput | ClanHistoryCreateOrConnectWithoutClanInput[]
+    upsert?: ClanHistoryUpsertWithWhereUniqueWithoutClanInput | ClanHistoryUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanHistoryCreateManyClanInputEnvelope
+    set?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    disconnect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    delete?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    connect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    update?: ClanHistoryUpdateWithWhereUniqueWithoutClanInput | ClanHistoryUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanHistoryUpdateManyWithWhereWithoutClanInput | ClanHistoryUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanHistoryScalarWhereInput | ClanHistoryScalarWhereInput[]
+  }
+
+  export type ClanJoinRequestUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanJoinRequestCreateWithoutClanInput, ClanJoinRequestUncheckedCreateWithoutClanInput> | ClanJoinRequestCreateWithoutClanInput[] | ClanJoinRequestUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanJoinRequestCreateOrConnectWithoutClanInput | ClanJoinRequestCreateOrConnectWithoutClanInput[]
+    upsert?: ClanJoinRequestUpsertWithWhereUniqueWithoutClanInput | ClanJoinRequestUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanJoinRequestCreateManyClanInputEnvelope
+    set?: ClanJoinRequestWhereUniqueInput | ClanJoinRequestWhereUniqueInput[]
+    disconnect?: ClanJoinRequestWhereUniqueInput | ClanJoinRequestWhereUniqueInput[]
+    delete?: ClanJoinRequestWhereUniqueInput | ClanJoinRequestWhereUniqueInput[]
+    connect?: ClanJoinRequestWhereUniqueInput | ClanJoinRequestWhereUniqueInput[]
+    update?: ClanJoinRequestUpdateWithWhereUniqueWithoutClanInput | ClanJoinRequestUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanJoinRequestUpdateManyWithWhereWithoutClanInput | ClanJoinRequestUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanJoinRequestScalarWhereInput | ClanJoinRequestScalarWhereInput[]
+  }
+
+  export type ClanMemberUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanMemberCreateWithoutClanInput, ClanMemberUncheckedCreateWithoutClanInput> | ClanMemberCreateWithoutClanInput[] | ClanMemberUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanMemberCreateOrConnectWithoutClanInput | ClanMemberCreateOrConnectWithoutClanInput[]
+    upsert?: ClanMemberUpsertWithWhereUniqueWithoutClanInput | ClanMemberUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanMemberCreateManyClanInputEnvelope
+    set?: ClanMemberWhereUniqueInput | ClanMemberWhereUniqueInput[]
+    disconnect?: ClanMemberWhereUniqueInput | ClanMemberWhereUniqueInput[]
+    delete?: ClanMemberWhereUniqueInput | ClanMemberWhereUniqueInput[]
+    connect?: ClanMemberWhereUniqueInput | ClanMemberWhereUniqueInput[]
+    update?: ClanMemberUpdateWithWhereUniqueWithoutClanInput | ClanMemberUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanMemberUpdateManyWithWhereWithoutClanInput | ClanMemberUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanMemberScalarWhereInput | ClanMemberScalarWhereInput[]
+  }
+
+  export type ClanPageUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanPageCreateWithoutClanInput, ClanPageUncheckedCreateWithoutClanInput> | ClanPageCreateWithoutClanInput[] | ClanPageUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanPageCreateOrConnectWithoutClanInput | ClanPageCreateOrConnectWithoutClanInput[]
+    upsert?: ClanPageUpsertWithWhereUniqueWithoutClanInput | ClanPageUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanPageCreateManyClanInputEnvelope
+    set?: ClanPageWhereUniqueInput | ClanPageWhereUniqueInput[]
+    disconnect?: ClanPageWhereUniqueInput | ClanPageWhereUniqueInput[]
+    delete?: ClanPageWhereUniqueInput | ClanPageWhereUniqueInput[]
+    connect?: ClanPageWhereUniqueInput | ClanPageWhereUniqueInput[]
+    update?: ClanPageUpdateWithWhereUniqueWithoutClanInput | ClanPageUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanPageUpdateManyWithWhereWithoutClanInput | ClanPageUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanPageScalarWhereInput | ClanPageScalarWhereInput[]
+  }
+
+  export type ClanIngredientUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanIngredientCreateWithoutClanInput, ClanIngredientUncheckedCreateWithoutClanInput> | ClanIngredientCreateWithoutClanInput[] | ClanIngredientUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanIngredientCreateOrConnectWithoutClanInput | ClanIngredientCreateOrConnectWithoutClanInput[]
+    upsert?: ClanIngredientUpsertWithWhereUniqueWithoutClanInput | ClanIngredientUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanIngredientCreateManyClanInputEnvelope
+    set?: ClanIngredientWhereUniqueInput | ClanIngredientWhereUniqueInput[]
+    disconnect?: ClanIngredientWhereUniqueInput | ClanIngredientWhereUniqueInput[]
+    delete?: ClanIngredientWhereUniqueInput | ClanIngredientWhereUniqueInput[]
+    connect?: ClanIngredientWhereUniqueInput | ClanIngredientWhereUniqueInput[]
+    update?: ClanIngredientUpdateWithWhereUniqueWithoutClanInput | ClanIngredientUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanIngredientUpdateManyWithWhereWithoutClanInput | ClanIngredientUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanIngredientScalarWhereInput | ClanIngredientScalarWhereInput[]
+  }
+
+  export type ClanMessageUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanMessageCreateWithoutClanInput, ClanMessageUncheckedCreateWithoutClanInput> | ClanMessageCreateWithoutClanInput[] | ClanMessageUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanMessageCreateOrConnectWithoutClanInput | ClanMessageCreateOrConnectWithoutClanInput[]
+    upsert?: ClanMessageUpsertWithWhereUniqueWithoutClanInput | ClanMessageUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanMessageCreateManyClanInputEnvelope
+    set?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    disconnect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    delete?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    connect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    update?: ClanMessageUpdateWithWhereUniqueWithoutClanInput | ClanMessageUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanMessageUpdateManyWithWhereWithoutClanInput | ClanMessageUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanMessageScalarWhereInput | ClanMessageScalarWhereInput[]
+  }
+
+  export type UserUpdateManyWithoutClanNestedInput = {
+    create?: XOR<UserCreateWithoutClanInput, UserUncheckedCreateWithoutClanInput> | UserCreateWithoutClanInput[] | UserUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutClanInput | UserCreateOrConnectWithoutClanInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutClanInput | UserUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: UserCreateManyClanInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutClanInput | UserUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutClanInput | UserUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ClanHistoryUncheckedUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanHistoryCreateWithoutClanInput, ClanHistoryUncheckedCreateWithoutClanInput> | ClanHistoryCreateWithoutClanInput[] | ClanHistoryUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanHistoryCreateOrConnectWithoutClanInput | ClanHistoryCreateOrConnectWithoutClanInput[]
+    upsert?: ClanHistoryUpsertWithWhereUniqueWithoutClanInput | ClanHistoryUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanHistoryCreateManyClanInputEnvelope
+    set?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    disconnect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    delete?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    connect?: ClanHistoryWhereUniqueInput | ClanHistoryWhereUniqueInput[]
+    update?: ClanHistoryUpdateWithWhereUniqueWithoutClanInput | ClanHistoryUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanHistoryUpdateManyWithWhereWithoutClanInput | ClanHistoryUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanHistoryScalarWhereInput | ClanHistoryScalarWhereInput[]
+  }
+
+  export type ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanJoinRequestCreateWithoutClanInput, ClanJoinRequestUncheckedCreateWithoutClanInput> | ClanJoinRequestCreateWithoutClanInput[] | ClanJoinRequestUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanJoinRequestCreateOrConnectWithoutClanInput | ClanJoinRequestCreateOrConnectWithoutClanInput[]
+    upsert?: ClanJoinRequestUpsertWithWhereUniqueWithoutClanInput | ClanJoinRequestUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanJoinRequestCreateManyClanInputEnvelope
+    set?: ClanJoinRequestWhereUniqueInput | ClanJoinRequestWhereUniqueInput[]
+    disconnect?: ClanJoinRequestWhereUniqueInput | ClanJoinRequestWhereUniqueInput[]
+    delete?: ClanJoinRequestWhereUniqueInput | ClanJoinRequestWhereUniqueInput[]
+    connect?: ClanJoinRequestWhereUniqueInput | ClanJoinRequestWhereUniqueInput[]
+    update?: ClanJoinRequestUpdateWithWhereUniqueWithoutClanInput | ClanJoinRequestUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanJoinRequestUpdateManyWithWhereWithoutClanInput | ClanJoinRequestUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanJoinRequestScalarWhereInput | ClanJoinRequestScalarWhereInput[]
+  }
+
+  export type ClanMemberUncheckedUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanMemberCreateWithoutClanInput, ClanMemberUncheckedCreateWithoutClanInput> | ClanMemberCreateWithoutClanInput[] | ClanMemberUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanMemberCreateOrConnectWithoutClanInput | ClanMemberCreateOrConnectWithoutClanInput[]
+    upsert?: ClanMemberUpsertWithWhereUniqueWithoutClanInput | ClanMemberUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanMemberCreateManyClanInputEnvelope
+    set?: ClanMemberWhereUniqueInput | ClanMemberWhereUniqueInput[]
+    disconnect?: ClanMemberWhereUniqueInput | ClanMemberWhereUniqueInput[]
+    delete?: ClanMemberWhereUniqueInput | ClanMemberWhereUniqueInput[]
+    connect?: ClanMemberWhereUniqueInput | ClanMemberWhereUniqueInput[]
+    update?: ClanMemberUpdateWithWhereUniqueWithoutClanInput | ClanMemberUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanMemberUpdateManyWithWhereWithoutClanInput | ClanMemberUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanMemberScalarWhereInput | ClanMemberScalarWhereInput[]
+  }
+
+  export type ClanPageUncheckedUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanPageCreateWithoutClanInput, ClanPageUncheckedCreateWithoutClanInput> | ClanPageCreateWithoutClanInput[] | ClanPageUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanPageCreateOrConnectWithoutClanInput | ClanPageCreateOrConnectWithoutClanInput[]
+    upsert?: ClanPageUpsertWithWhereUniqueWithoutClanInput | ClanPageUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanPageCreateManyClanInputEnvelope
+    set?: ClanPageWhereUniqueInput | ClanPageWhereUniqueInput[]
+    disconnect?: ClanPageWhereUniqueInput | ClanPageWhereUniqueInput[]
+    delete?: ClanPageWhereUniqueInput | ClanPageWhereUniqueInput[]
+    connect?: ClanPageWhereUniqueInput | ClanPageWhereUniqueInput[]
+    update?: ClanPageUpdateWithWhereUniqueWithoutClanInput | ClanPageUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanPageUpdateManyWithWhereWithoutClanInput | ClanPageUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanPageScalarWhereInput | ClanPageScalarWhereInput[]
+  }
+
+  export type ClanIngredientUncheckedUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanIngredientCreateWithoutClanInput, ClanIngredientUncheckedCreateWithoutClanInput> | ClanIngredientCreateWithoutClanInput[] | ClanIngredientUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanIngredientCreateOrConnectWithoutClanInput | ClanIngredientCreateOrConnectWithoutClanInput[]
+    upsert?: ClanIngredientUpsertWithWhereUniqueWithoutClanInput | ClanIngredientUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanIngredientCreateManyClanInputEnvelope
+    set?: ClanIngredientWhereUniqueInput | ClanIngredientWhereUniqueInput[]
+    disconnect?: ClanIngredientWhereUniqueInput | ClanIngredientWhereUniqueInput[]
+    delete?: ClanIngredientWhereUniqueInput | ClanIngredientWhereUniqueInput[]
+    connect?: ClanIngredientWhereUniqueInput | ClanIngredientWhereUniqueInput[]
+    update?: ClanIngredientUpdateWithWhereUniqueWithoutClanInput | ClanIngredientUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanIngredientUpdateManyWithWhereWithoutClanInput | ClanIngredientUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanIngredientScalarWhereInput | ClanIngredientScalarWhereInput[]
+  }
+
+  export type ClanMessageUncheckedUpdateManyWithoutClanNestedInput = {
+    create?: XOR<ClanMessageCreateWithoutClanInput, ClanMessageUncheckedCreateWithoutClanInput> | ClanMessageCreateWithoutClanInput[] | ClanMessageUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: ClanMessageCreateOrConnectWithoutClanInput | ClanMessageCreateOrConnectWithoutClanInput[]
+    upsert?: ClanMessageUpsertWithWhereUniqueWithoutClanInput | ClanMessageUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: ClanMessageCreateManyClanInputEnvelope
+    set?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    disconnect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    delete?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    connect?: ClanMessageWhereUniqueInput | ClanMessageWhereUniqueInput[]
+    update?: ClanMessageUpdateWithWhereUniqueWithoutClanInput | ClanMessageUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: ClanMessageUpdateManyWithWhereWithoutClanInput | ClanMessageUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: ClanMessageScalarWhereInput | ClanMessageScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutClanNestedInput = {
+    create?: XOR<UserCreateWithoutClanInput, UserUncheckedCreateWithoutClanInput> | UserCreateWithoutClanInput[] | UserUncheckedCreateWithoutClanInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutClanInput | UserCreateOrConnectWithoutClanInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutClanInput | UserUpsertWithWhereUniqueWithoutClanInput[]
+    createMany?: UserCreateManyClanInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutClanInput | UserUpdateWithWhereUniqueWithoutClanInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutClanInput | UserUpdateManyWithWhereWithoutClanInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
+  }
+
+  export type ClanCreateNestedOneWithoutJoinRequestsInput = {
+    create?: XOR<ClanCreateWithoutJoinRequestsInput, ClanUncheckedCreateWithoutJoinRequestsInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutJoinRequestsInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutClanJoinRequestInput = {
+    create?: XOR<UserCreateWithoutClanJoinRequestInput, UserUncheckedCreateWithoutClanJoinRequestInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClanJoinRequestInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ClanUpdateOneRequiredWithoutJoinRequestsNestedInput = {
+    create?: XOR<ClanCreateWithoutJoinRequestsInput, ClanUncheckedCreateWithoutJoinRequestsInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutJoinRequestsInput
+    upsert?: ClanUpsertWithoutJoinRequestsInput
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutJoinRequestsInput, ClanUpdateWithoutJoinRequestsInput>, ClanUncheckedUpdateWithoutJoinRequestsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutClanJoinRequestNestedInput = {
+    create?: XOR<UserCreateWithoutClanJoinRequestInput, UserUncheckedCreateWithoutClanJoinRequestInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClanJoinRequestInput
+    upsert?: UserUpsertWithoutClanJoinRequestInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutClanJoinRequestInput, UserUpdateWithoutClanJoinRequestInput>, UserUncheckedUpdateWithoutClanJoinRequestInput>
+  }
+
+  export type ClanCreateNestedOneWithoutIngredientsInput = {
+    create?: XOR<ClanCreateWithoutIngredientsInput, ClanUncheckedCreateWithoutIngredientsInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutIngredientsInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type ClanUpdateOneRequiredWithoutIngredientsNestedInput = {
+    create?: XOR<ClanCreateWithoutIngredientsInput, ClanUncheckedCreateWithoutIngredientsInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutIngredientsInput
+    upsert?: ClanUpsertWithoutIngredientsInput
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutIngredientsInput, ClanUpdateWithoutIngredientsInput>, ClanUncheckedUpdateWithoutIngredientsInput>
+  }
+
+  export type UserCreateNestedOneWithoutClanMessageInput = {
+    create?: XOR<UserCreateWithoutClanMessageInput, UserUncheckedCreateWithoutClanMessageInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClanMessageInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ClanCreateNestedOneWithoutDiscussionInput = {
+    create?: XOR<ClanCreateWithoutDiscussionInput, ClanUncheckedCreateWithoutDiscussionInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutDiscussionInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutClanMessageNestedInput = {
+    create?: XOR<UserCreateWithoutClanMessageInput, UserUncheckedCreateWithoutClanMessageInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClanMessageInput
+    upsert?: UserUpsertWithoutClanMessageInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutClanMessageInput, UserUpdateWithoutClanMessageInput>, UserUncheckedUpdateWithoutClanMessageInput>
+  }
+
+  export type ClanUpdateOneRequiredWithoutDiscussionNestedInput = {
+    create?: XOR<ClanCreateWithoutDiscussionInput, ClanUncheckedCreateWithoutDiscussionInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutDiscussionInput
+    upsert?: ClanUpsertWithoutDiscussionInput
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutDiscussionInput, ClanUpdateWithoutDiscussionInput>, ClanUncheckedUpdateWithoutDiscussionInput>
+  }
+
+  export type UserCreateNestedOneWithoutClanHistoryInput = {
+    create?: XOR<UserCreateWithoutClanHistoryInput, UserUncheckedCreateWithoutClanHistoryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClanHistoryInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ClanCreateNestedOneWithoutHistoryInput = {
+    create?: XOR<ClanCreateWithoutHistoryInput, ClanUncheckedCreateWithoutHistoryInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutHistoryInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutClanHistoryNestedInput = {
+    create?: XOR<UserCreateWithoutClanHistoryInput, UserUncheckedCreateWithoutClanHistoryInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClanHistoryInput
+    upsert?: UserUpsertWithoutClanHistoryInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutClanHistoryInput, UserUpdateWithoutClanHistoryInput>, UserUncheckedUpdateWithoutClanHistoryInput>
+  }
+
+  export type ClanUpdateOneRequiredWithoutHistoryNestedInput = {
+    create?: XOR<ClanCreateWithoutHistoryInput, ClanUncheckedCreateWithoutHistoryInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutHistoryInput
+    upsert?: ClanUpsertWithoutHistoryInput
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutHistoryInput, ClanUpdateWithoutHistoryInput>, ClanUncheckedUpdateWithoutHistoryInput>
+  }
+
+  export type ClanMemberCreaterightsInput = {
+    set: string[]
+  }
+
+  export type ClanCreateNestedOneWithoutMembersInput = {
+    create?: XOR<ClanCreateWithoutMembersInput, ClanUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutMembersInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutClanMemberInput = {
+    create?: XOR<UserCreateWithoutClanMemberInput, UserUncheckedCreateWithoutClanMemberInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClanMemberInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ClanMemberUpdaterightsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type ClanUpdateOneRequiredWithoutMembersNestedInput = {
+    create?: XOR<ClanCreateWithoutMembersInput, ClanUncheckedCreateWithoutMembersInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutMembersInput
+    upsert?: ClanUpsertWithoutMembersInput
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutMembersInput, ClanUpdateWithoutMembersInput>, ClanUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutClanMemberNestedInput = {
+    create?: XOR<UserCreateWithoutClanMemberInput, UserUncheckedCreateWithoutClanMemberInput>
+    connectOrCreate?: UserCreateOrConnectWithoutClanMemberInput
+    upsert?: UserUpsertWithoutClanMemberInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutClanMemberInput, UserUpdateWithoutClanMemberInput>, UserUncheckedUpdateWithoutClanMemberInput>
+  }
+
+  export type ClanCreateNestedOneWithoutPagesInput = {
+    create?: XOR<ClanCreateWithoutPagesInput, ClanUncheckedCreateWithoutPagesInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutPagesInput
+    connect?: ClanWhereUniqueInput
+  }
+
+  export type ClanUpdateOneRequiredWithoutPagesNestedInput = {
+    create?: XOR<ClanCreateWithoutPagesInput, ClanUncheckedCreateWithoutPagesInput>
+    connectOrCreate?: ClanCreateOrConnectWithoutPagesInput
+    upsert?: ClanUpsertWithoutPagesInput
+    connect?: ClanWhereUniqueInput
+    update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutPagesInput, ClanUpdateWithoutPagesInput>, ClanUncheckedUpdateWithoutPagesInput>
+  }
+
   export type NestedUuidFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -66012,6 +77086,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -66042,6 +77122,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -66052,6 +77133,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -66108,6 +77194,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -66138,6 +77230,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -66148,6 +77241,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -66526,6 +77624,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -66556,6 +77660,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -66566,6 +77671,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -66990,6 +78100,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -67020,6 +78136,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -67030,6 +78147,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -68148,6 +79270,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -68178,6 +79306,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -68188,6 +79317,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -68317,6 +79451,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -68347,6 +79487,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -68357,6 +79498,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -68413,6 +79559,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -68443,6 +79595,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -68453,6 +79606,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -68594,6 +79752,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -68624,6 +79788,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -68634,6 +79799,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -69059,6 +80229,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -69089,6 +80265,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -69099,6 +80276,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -69285,6 +80467,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -69315,6 +80503,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -69325,6 +80514,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -69599,6 +80793,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -69629,6 +80829,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -69639,6 +80840,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -69729,6 +80935,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -69759,6 +80971,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -69769,6 +80982,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -70216,6 +81434,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -70246,6 +81470,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -70256,6 +81481,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -70368,6 +81598,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -70398,6 +81634,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -70408,6 +81645,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -70480,6 +81722,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -70510,6 +81758,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -70520,6 +81769,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -70614,6 +81868,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -70644,6 +81904,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -70654,6 +81915,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -70694,6 +81960,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -70724,6 +81996,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -70734,6 +82007,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -70790,6 +82068,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -70820,6 +82104,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -70830,6 +82115,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -70850,6 +82140,166 @@ export namespace Prisma {
     logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
     actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
     bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ClanCreateWithoutUsersInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    leader: UserCreateNestedOneWithoutLeaderOfInput
+    history?: ClanHistoryCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
+    members?: ClanMemberCreateNestedManyWithoutClanInput
+    pages?: ClanPageCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanUncheckedCreateWithoutUsersInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
+    members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
+    pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanCreateOrConnectWithoutUsersInput = {
+    where: ClanWhereUniqueInput
+    create: XOR<ClanCreateWithoutUsersInput, ClanUncheckedCreateWithoutUsersInput>
+  }
+
+  export type ClanCreateWithoutLeaderInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    history?: ClanHistoryCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
+    members?: ClanMemberCreateNestedManyWithoutClanInput
+    pages?: ClanPageCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageCreateNestedManyWithoutClanInput
+    users?: UserCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanUncheckedCreateWithoutLeaderInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
+    members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
+    pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
+    users?: UserUncheckedCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanCreateOrConnectWithoutLeaderInput = {
+    where: ClanWhereUniqueInput
+    create: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
+  }
+
+  export type ClanHistoryCreateWithoutAuthorInput = {
+    date?: Date | string
+    type?: string
+    authorMessage: string
+    clan: ClanCreateNestedOneWithoutHistoryInput
+  }
+
+  export type ClanHistoryUncheckedCreateWithoutAuthorInput = {
+    id?: number
+    clanId: number
+    date?: Date | string
+    type?: string
+    authorMessage: string
+  }
+
+  export type ClanHistoryCreateOrConnectWithoutAuthorInput = {
+    where: ClanHistoryWhereUniqueInput
+    create: XOR<ClanHistoryCreateWithoutAuthorInput, ClanHistoryUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type ClanHistoryCreateManyAuthorInputEnvelope = {
+    data: ClanHistoryCreateManyAuthorInput | ClanHistoryCreateManyAuthorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClanJoinRequestCreateWithoutUserInput = {
+    date?: Date | string
+    clan: ClanCreateNestedOneWithoutJoinRequestsInput
+  }
+
+  export type ClanJoinRequestUncheckedCreateWithoutUserInput = {
+    id?: number
+    clanId: number
+    date?: Date | string
+  }
+
+  export type ClanJoinRequestCreateOrConnectWithoutUserInput = {
+    where: ClanJoinRequestWhereUniqueInput
+    create: XOR<ClanJoinRequestCreateWithoutUserInput, ClanJoinRequestUncheckedCreateWithoutUserInput>
+  }
+
+  export type ClanMemberCreateWithoutUserInput = {
+    dateJoin?: Date | string
+    nickname?: string | null
+    rights?: ClanMemberCreaterightsInput | string[]
+    donation?: number
+    clan: ClanCreateNestedOneWithoutMembersInput
+  }
+
+  export type ClanMemberUncheckedCreateWithoutUserInput = {
+    id?: number
+    clanId: number
+    dateJoin?: Date | string
+    nickname?: string | null
+    rights?: ClanMemberCreaterightsInput | string[]
+    donation?: number
+  }
+
+  export type ClanMemberCreateOrConnectWithoutUserInput = {
+    where: ClanMemberWhereUniqueInput
+    create: XOR<ClanMemberCreateWithoutUserInput, ClanMemberUncheckedCreateWithoutUserInput>
+  }
+
+  export type ClanMessageCreateWithoutAuthorInput = {
+    date?: Date | string
+    content: string
+    authorName: string
+    clan: ClanCreateNestedOneWithoutDiscussionInput
+  }
+
+  export type ClanMessageUncheckedCreateWithoutAuthorInput = {
+    id?: number
+    clanId: number
+    date?: Date | string
+    content: string
+    authorName: string
+  }
+
+  export type ClanMessageCreateOrConnectWithoutAuthorInput = {
+    where: ClanMessageWhereUniqueInput
+    create: XOR<ClanMessageCreateWithoutAuthorInput, ClanMessageUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type ClanMessageCreateManyAuthorInputEnvelope = {
+    data: ClanMessageCreateManyAuthorInput | ClanMessageCreateManyAuthorInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserGatherCreateWithoutUserInput = {
@@ -71472,6 +82922,196 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ClanUpsertWithoutUsersInput = {
+    update: XOR<ClanUpdateWithoutUsersInput, ClanUncheckedUpdateWithoutUsersInput>
+    create: XOR<ClanCreateWithoutUsersInput, ClanUncheckedCreateWithoutUsersInput>
+    where?: ClanWhereInput
+  }
+
+  export type ClanUpdateToOneWithWhereWithoutUsersInput = {
+    where?: ClanWhereInput
+    data: XOR<ClanUpdateWithoutUsersInput, ClanUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type ClanUpdateWithoutUsersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    leader?: UserUpdateOneRequiredWithoutLeaderOfNestedInput
+    history?: ClanHistoryUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateWithoutUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanUpsertWithoutLeaderInput = {
+    update: XOR<ClanUpdateWithoutLeaderInput, ClanUncheckedUpdateWithoutLeaderInput>
+    create: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
+    where?: ClanWhereInput
+  }
+
+  export type ClanUpdateToOneWithWhereWithoutLeaderInput = {
+    where?: ClanWhereInput
+    data: XOR<ClanUpdateWithoutLeaderInput, ClanUncheckedUpdateWithoutLeaderInput>
+  }
+
+  export type ClanUpdateWithoutLeaderInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUpdateManyWithoutClanNestedInput
+    users?: UserUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateWithoutLeaderInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
+    users?: UserUncheckedUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanHistoryUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: ClanHistoryWhereUniqueInput
+    update: XOR<ClanHistoryUpdateWithoutAuthorInput, ClanHistoryUncheckedUpdateWithoutAuthorInput>
+    create: XOR<ClanHistoryCreateWithoutAuthorInput, ClanHistoryUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type ClanHistoryUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: ClanHistoryWhereUniqueInput
+    data: XOR<ClanHistoryUpdateWithoutAuthorInput, ClanHistoryUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type ClanHistoryUpdateManyWithWhereWithoutAuthorInput = {
+    where: ClanHistoryScalarWhereInput
+    data: XOR<ClanHistoryUpdateManyMutationInput, ClanHistoryUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type ClanHistoryScalarWhereInput = {
+    AND?: ClanHistoryScalarWhereInput | ClanHistoryScalarWhereInput[]
+    OR?: ClanHistoryScalarWhereInput[]
+    NOT?: ClanHistoryScalarWhereInput | ClanHistoryScalarWhereInput[]
+    id?: IntFilter<"ClanHistory"> | number
+    clanId?: IntFilter<"ClanHistory"> | number
+    date?: DateTimeFilter<"ClanHistory"> | Date | string
+    type?: StringFilter<"ClanHistory"> | string
+    authorId?: UuidNullableFilter<"ClanHistory"> | string | null
+    authorMessage?: StringFilter<"ClanHistory"> | string
+  }
+
+  export type ClanJoinRequestUpsertWithoutUserInput = {
+    update: XOR<ClanJoinRequestUpdateWithoutUserInput, ClanJoinRequestUncheckedUpdateWithoutUserInput>
+    create: XOR<ClanJoinRequestCreateWithoutUserInput, ClanJoinRequestUncheckedCreateWithoutUserInput>
+    where?: ClanJoinRequestWhereInput
+  }
+
+  export type ClanJoinRequestUpdateToOneWithWhereWithoutUserInput = {
+    where?: ClanJoinRequestWhereInput
+    data: XOR<ClanJoinRequestUpdateWithoutUserInput, ClanJoinRequestUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ClanJoinRequestUpdateWithoutUserInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    clan?: ClanUpdateOneRequiredWithoutJoinRequestsNestedInput
+  }
+
+  export type ClanJoinRequestUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClanMemberUpsertWithoutUserInput = {
+    update: XOR<ClanMemberUpdateWithoutUserInput, ClanMemberUncheckedUpdateWithoutUserInput>
+    create: XOR<ClanMemberCreateWithoutUserInput, ClanMemberUncheckedCreateWithoutUserInput>
+    where?: ClanMemberWhereInput
+  }
+
+  export type ClanMemberUpdateToOneWithWhereWithoutUserInput = {
+    where?: ClanMemberWhereInput
+    data: XOR<ClanMemberUpdateWithoutUserInput, ClanMemberUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ClanMemberUpdateWithoutUserInput = {
+    dateJoin?: DateTimeFieldUpdateOperationsInput | Date | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    rights?: ClanMemberUpdaterightsInput | string[]
+    donation?: IntFieldUpdateOperationsInput | number
+    clan?: ClanUpdateOneRequiredWithoutMembersNestedInput
+  }
+
+  export type ClanMemberUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    dateJoin?: DateTimeFieldUpdateOperationsInput | Date | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    rights?: ClanMemberUpdaterightsInput | string[]
+    donation?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanMessageUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: ClanMessageWhereUniqueInput
+    update: XOR<ClanMessageUpdateWithoutAuthorInput, ClanMessageUncheckedUpdateWithoutAuthorInput>
+    create: XOR<ClanMessageCreateWithoutAuthorInput, ClanMessageUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type ClanMessageUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: ClanMessageWhereUniqueInput
+    data: XOR<ClanMessageUpdateWithoutAuthorInput, ClanMessageUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type ClanMessageUpdateManyWithWhereWithoutAuthorInput = {
+    where: ClanMessageScalarWhereInput
+    data: XOR<ClanMessageUpdateManyMutationInput, ClanMessageUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type ClanMessageScalarWhereInput = {
+    AND?: ClanMessageScalarWhereInput | ClanMessageScalarWhereInput[]
+    OR?: ClanMessageScalarWhereInput[]
+    NOT?: ClanMessageScalarWhereInput | ClanMessageScalarWhereInput[]
+    id?: IntFilter<"ClanMessage"> | number
+    clanId?: IntFilter<"ClanMessage"> | number
+    date?: DateTimeFilter<"ClanMessage"> | Date | string
+    content?: StringFilter<"ClanMessage"> | string
+    authorId?: UuidNullableFilter<"ClanMessage"> | string | null
+    authorName?: StringFilter<"ClanMessage"> | string
+  }
+
   export type UserGatherUpsertWithWhereUniqueWithoutUserInput = {
     where: UserGatherWhereUniqueInput
     update: XOR<UserGatherUpdateWithoutUserInput, UserGatherUncheckedUpdateWithoutUserInput>
@@ -71997,6 +83637,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -72027,6 +83673,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -72037,6 +83684,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -72093,6 +83745,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -72123,6 +83781,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -72133,6 +83792,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -72173,6 +83837,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -72203,6 +83873,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -72213,6 +83884,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -72269,6 +83945,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -72299,6 +83981,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -72309,6 +83992,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -72349,6 +84037,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -72379,6 +84073,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -72389,6 +84084,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -72445,6 +84145,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -72475,6 +84181,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -72485,6 +84192,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -72525,6 +84237,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     profile?: UserProfileCreateNestedOneWithoutUserInput
@@ -72555,6 +84273,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -72565,6 +84284,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
@@ -72621,6 +84345,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     profile?: UserProfileUpdateOneWithoutUserNestedInput
@@ -72651,6 +84381,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -72661,6 +84392,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -72701,6 +84437,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -72731,6 +84473,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -72741,6 +84484,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -72797,6 +84545,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -72827,6 +84581,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -72837,6 +84592,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -72877,6 +84637,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -72907,6 +84673,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -72917,6 +84684,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -72973,6 +84745,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -73003,6 +84781,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -73013,6 +84792,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -73053,6 +84837,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -73083,6 +84873,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -73093,6 +84884,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -73149,6 +84945,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -73179,6 +84981,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -73189,6 +84992,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -73229,6 +85037,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -73259,6 +85073,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -73269,6 +85084,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -73325,6 +85145,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -73355,6 +85181,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -73365,6 +85192,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -73405,6 +85237,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -73435,6 +85273,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -73445,6 +85284,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -73501,6 +85345,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -73531,6 +85381,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -73541,6 +85392,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -73581,6 +85437,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -73611,6 +85473,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -73621,6 +85484,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -73765,6 +85633,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -73795,6 +85669,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -73805,6 +85680,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -73936,6 +85816,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -73966,6 +85852,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -73976,6 +85863,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -74065,6 +85957,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -74095,6 +85993,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -74105,6 +86004,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -74172,6 +86076,12 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
     items?: UserItemsCreateNestedManyWithoutUserInput
@@ -74202,6 +86112,7 @@ export namespace Prisma {
     createdDate?: Date | string
     updatedAt?: Date | string | null
     lastLogin?: Date | string
+    clanId?: number | null
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -74212,6 +86123,11 @@ export namespace Prisma {
     matelasseur?: boolean
     messie?: boolean
     discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
     ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
     items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
@@ -74328,6 +86244,12 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
     items?: UserItemsUpdateManyWithoutUserNestedInput
@@ -74358,6 +86280,7 @@ export namespace Prisma {
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -74368,6 +86291,11 @@ export namespace Prisma {
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
     ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
     items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
@@ -74421,6 +86349,1901 @@ export namespace Prisma {
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
     participants?: ParticipantUncheckedUpdateManyWithoutConversationNestedInput
     messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
+  }
+
+  export type UserCreateWithoutLeaderOfInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    marketOffers?: OfferCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutLeaderOfInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    clanId?: number | null
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    marketOffers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeUncheckedCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutLeaderOfInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutLeaderOfInput, UserUncheckedCreateWithoutLeaderOfInput>
+  }
+
+  export type ClanHistoryCreateWithoutClanInput = {
+    date?: Date | string
+    type?: string
+    authorMessage: string
+    author?: UserCreateNestedOneWithoutClanHistoryInput
+  }
+
+  export type ClanHistoryUncheckedCreateWithoutClanInput = {
+    id?: number
+    date?: Date | string
+    type?: string
+    authorId?: string | null
+    authorMessage: string
+  }
+
+  export type ClanHistoryCreateOrConnectWithoutClanInput = {
+    where: ClanHistoryWhereUniqueInput
+    create: XOR<ClanHistoryCreateWithoutClanInput, ClanHistoryUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanHistoryCreateManyClanInputEnvelope = {
+    data: ClanHistoryCreateManyClanInput | ClanHistoryCreateManyClanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClanJoinRequestCreateWithoutClanInput = {
+    date?: Date | string
+    user: UserCreateNestedOneWithoutClanJoinRequestInput
+  }
+
+  export type ClanJoinRequestUncheckedCreateWithoutClanInput = {
+    id?: number
+    date?: Date | string
+    userId: string
+  }
+
+  export type ClanJoinRequestCreateOrConnectWithoutClanInput = {
+    where: ClanJoinRequestWhereUniqueInput
+    create: XOR<ClanJoinRequestCreateWithoutClanInput, ClanJoinRequestUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanJoinRequestCreateManyClanInputEnvelope = {
+    data: ClanJoinRequestCreateManyClanInput | ClanJoinRequestCreateManyClanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClanMemberCreateWithoutClanInput = {
+    dateJoin?: Date | string
+    nickname?: string | null
+    rights?: ClanMemberCreaterightsInput | string[]
+    donation?: number
+    user: UserCreateNestedOneWithoutClanMemberInput
+  }
+
+  export type ClanMemberUncheckedCreateWithoutClanInput = {
+    id?: number
+    dateJoin?: Date | string
+    nickname?: string | null
+    rights?: ClanMemberCreaterightsInput | string[]
+    donation?: number
+    userId: string
+  }
+
+  export type ClanMemberCreateOrConnectWithoutClanInput = {
+    where: ClanMemberWhereUniqueInput
+    create: XOR<ClanMemberCreateWithoutClanInput, ClanMemberUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanMemberCreateManyClanInputEnvelope = {
+    data: ClanMemberCreateManyClanInput | ClanMemberCreateManyClanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClanPageCreateWithoutClanInput = {
+    home: boolean
+    public: boolean
+    name: string
+    content?: string
+  }
+
+  export type ClanPageUncheckedCreateWithoutClanInput = {
+    id?: number
+    home: boolean
+    public: boolean
+    name: string
+    content?: string
+  }
+
+  export type ClanPageCreateOrConnectWithoutClanInput = {
+    where: ClanPageWhereUniqueInput
+    create: XOR<ClanPageCreateWithoutClanInput, ClanPageUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanPageCreateManyClanInputEnvelope = {
+    data: ClanPageCreateManyClanInput | ClanPageCreateManyClanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClanIngredientCreateWithoutClanInput = {
+    ingredientId: number
+    quantity: number
+  }
+
+  export type ClanIngredientUncheckedCreateWithoutClanInput = {
+    id?: number
+    ingredientId: number
+    quantity: number
+  }
+
+  export type ClanIngredientCreateOrConnectWithoutClanInput = {
+    where: ClanIngredientWhereUniqueInput
+    create: XOR<ClanIngredientCreateWithoutClanInput, ClanIngredientUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanIngredientCreateManyClanInputEnvelope = {
+    data: ClanIngredientCreateManyClanInput | ClanIngredientCreateManyClanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ClanMessageCreateWithoutClanInput = {
+    date?: Date | string
+    content: string
+    authorName: string
+    author?: UserCreateNestedOneWithoutClanMessageInput
+  }
+
+  export type ClanMessageUncheckedCreateWithoutClanInput = {
+    id?: number
+    date?: Date | string
+    content: string
+    authorId?: string | null
+    authorName: string
+  }
+
+  export type ClanMessageCreateOrConnectWithoutClanInput = {
+    where: ClanMessageWhereUniqueInput
+    create: XOR<ClanMessageCreateWithoutClanInput, ClanMessageUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanMessageCreateManyClanInputEnvelope = {
+    data: ClanMessageCreateManyClanInput | ClanMessageCreateManyClanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserCreateWithoutClanInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    marketOffers?: OfferCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutClanInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    marketOffers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeUncheckedCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutClanInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutClanInput, UserUncheckedCreateWithoutClanInput>
+  }
+
+  export type UserCreateManyClanInputEnvelope = {
+    data: UserCreateManyClanInput | UserCreateManyClanInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutLeaderOfInput = {
+    update: XOR<UserUpdateWithoutLeaderOfInput, UserUncheckedUpdateWithoutLeaderOfInput>
+    create: XOR<UserCreateWithoutLeaderOfInput, UserUncheckedCreateWithoutLeaderOfInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutLeaderOfInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutLeaderOfInput, UserUncheckedUpdateWithoutLeaderOfInput>
+  }
+
+  export type UserUpdateWithoutLeaderOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutLeaderOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUncheckedUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ClanHistoryUpsertWithWhereUniqueWithoutClanInput = {
+    where: ClanHistoryWhereUniqueInput
+    update: XOR<ClanHistoryUpdateWithoutClanInput, ClanHistoryUncheckedUpdateWithoutClanInput>
+    create: XOR<ClanHistoryCreateWithoutClanInput, ClanHistoryUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanHistoryUpdateWithWhereUniqueWithoutClanInput = {
+    where: ClanHistoryWhereUniqueInput
+    data: XOR<ClanHistoryUpdateWithoutClanInput, ClanHistoryUncheckedUpdateWithoutClanInput>
+  }
+
+  export type ClanHistoryUpdateManyWithWhereWithoutClanInput = {
+    where: ClanHistoryScalarWhereInput
+    data: XOR<ClanHistoryUpdateManyMutationInput, ClanHistoryUncheckedUpdateManyWithoutClanInput>
+  }
+
+  export type ClanJoinRequestUpsertWithWhereUniqueWithoutClanInput = {
+    where: ClanJoinRequestWhereUniqueInput
+    update: XOR<ClanJoinRequestUpdateWithoutClanInput, ClanJoinRequestUncheckedUpdateWithoutClanInput>
+    create: XOR<ClanJoinRequestCreateWithoutClanInput, ClanJoinRequestUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanJoinRequestUpdateWithWhereUniqueWithoutClanInput = {
+    where: ClanJoinRequestWhereUniqueInput
+    data: XOR<ClanJoinRequestUpdateWithoutClanInput, ClanJoinRequestUncheckedUpdateWithoutClanInput>
+  }
+
+  export type ClanJoinRequestUpdateManyWithWhereWithoutClanInput = {
+    where: ClanJoinRequestScalarWhereInput
+    data: XOR<ClanJoinRequestUpdateManyMutationInput, ClanJoinRequestUncheckedUpdateManyWithoutClanInput>
+  }
+
+  export type ClanJoinRequestScalarWhereInput = {
+    AND?: ClanJoinRequestScalarWhereInput | ClanJoinRequestScalarWhereInput[]
+    OR?: ClanJoinRequestScalarWhereInput[]
+    NOT?: ClanJoinRequestScalarWhereInput | ClanJoinRequestScalarWhereInput[]
+    id?: IntFilter<"ClanJoinRequest"> | number
+    clanId?: IntFilter<"ClanJoinRequest"> | number
+    date?: DateTimeFilter<"ClanJoinRequest"> | Date | string
+    userId?: UuidFilter<"ClanJoinRequest"> | string
+  }
+
+  export type ClanMemberUpsertWithWhereUniqueWithoutClanInput = {
+    where: ClanMemberWhereUniqueInput
+    update: XOR<ClanMemberUpdateWithoutClanInput, ClanMemberUncheckedUpdateWithoutClanInput>
+    create: XOR<ClanMemberCreateWithoutClanInput, ClanMemberUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanMemberUpdateWithWhereUniqueWithoutClanInput = {
+    where: ClanMemberWhereUniqueInput
+    data: XOR<ClanMemberUpdateWithoutClanInput, ClanMemberUncheckedUpdateWithoutClanInput>
+  }
+
+  export type ClanMemberUpdateManyWithWhereWithoutClanInput = {
+    where: ClanMemberScalarWhereInput
+    data: XOR<ClanMemberUpdateManyMutationInput, ClanMemberUncheckedUpdateManyWithoutClanInput>
+  }
+
+  export type ClanMemberScalarWhereInput = {
+    AND?: ClanMemberScalarWhereInput | ClanMemberScalarWhereInput[]
+    OR?: ClanMemberScalarWhereInput[]
+    NOT?: ClanMemberScalarWhereInput | ClanMemberScalarWhereInput[]
+    id?: IntFilter<"ClanMember"> | number
+    clanId?: IntFilter<"ClanMember"> | number
+    dateJoin?: DateTimeFilter<"ClanMember"> | Date | string
+    nickname?: StringNullableFilter<"ClanMember"> | string | null
+    rights?: StringNullableListFilter<"ClanMember">
+    donation?: IntFilter<"ClanMember"> | number
+    userId?: UuidFilter<"ClanMember"> | string
+  }
+
+  export type ClanPageUpsertWithWhereUniqueWithoutClanInput = {
+    where: ClanPageWhereUniqueInput
+    update: XOR<ClanPageUpdateWithoutClanInput, ClanPageUncheckedUpdateWithoutClanInput>
+    create: XOR<ClanPageCreateWithoutClanInput, ClanPageUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanPageUpdateWithWhereUniqueWithoutClanInput = {
+    where: ClanPageWhereUniqueInput
+    data: XOR<ClanPageUpdateWithoutClanInput, ClanPageUncheckedUpdateWithoutClanInput>
+  }
+
+  export type ClanPageUpdateManyWithWhereWithoutClanInput = {
+    where: ClanPageScalarWhereInput
+    data: XOR<ClanPageUpdateManyMutationInput, ClanPageUncheckedUpdateManyWithoutClanInput>
+  }
+
+  export type ClanPageScalarWhereInput = {
+    AND?: ClanPageScalarWhereInput | ClanPageScalarWhereInput[]
+    OR?: ClanPageScalarWhereInput[]
+    NOT?: ClanPageScalarWhereInput | ClanPageScalarWhereInput[]
+    id?: IntFilter<"ClanPage"> | number
+    home?: BoolFilter<"ClanPage"> | boolean
+    public?: BoolFilter<"ClanPage"> | boolean
+    name?: StringFilter<"ClanPage"> | string
+    content?: StringFilter<"ClanPage"> | string
+    clanId?: IntFilter<"ClanPage"> | number
+  }
+
+  export type ClanIngredientUpsertWithWhereUniqueWithoutClanInput = {
+    where: ClanIngredientWhereUniqueInput
+    update: XOR<ClanIngredientUpdateWithoutClanInput, ClanIngredientUncheckedUpdateWithoutClanInput>
+    create: XOR<ClanIngredientCreateWithoutClanInput, ClanIngredientUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanIngredientUpdateWithWhereUniqueWithoutClanInput = {
+    where: ClanIngredientWhereUniqueInput
+    data: XOR<ClanIngredientUpdateWithoutClanInput, ClanIngredientUncheckedUpdateWithoutClanInput>
+  }
+
+  export type ClanIngredientUpdateManyWithWhereWithoutClanInput = {
+    where: ClanIngredientScalarWhereInput
+    data: XOR<ClanIngredientUpdateManyMutationInput, ClanIngredientUncheckedUpdateManyWithoutClanInput>
+  }
+
+  export type ClanIngredientScalarWhereInput = {
+    AND?: ClanIngredientScalarWhereInput | ClanIngredientScalarWhereInput[]
+    OR?: ClanIngredientScalarWhereInput[]
+    NOT?: ClanIngredientScalarWhereInput | ClanIngredientScalarWhereInput[]
+    id?: IntFilter<"ClanIngredient"> | number
+    ingredientId?: IntFilter<"ClanIngredient"> | number
+    quantity?: IntFilter<"ClanIngredient"> | number
+    clanId?: IntFilter<"ClanIngredient"> | number
+  }
+
+  export type ClanMessageUpsertWithWhereUniqueWithoutClanInput = {
+    where: ClanMessageWhereUniqueInput
+    update: XOR<ClanMessageUpdateWithoutClanInput, ClanMessageUncheckedUpdateWithoutClanInput>
+    create: XOR<ClanMessageCreateWithoutClanInput, ClanMessageUncheckedCreateWithoutClanInput>
+  }
+
+  export type ClanMessageUpdateWithWhereUniqueWithoutClanInput = {
+    where: ClanMessageWhereUniqueInput
+    data: XOR<ClanMessageUpdateWithoutClanInput, ClanMessageUncheckedUpdateWithoutClanInput>
+  }
+
+  export type ClanMessageUpdateManyWithWhereWithoutClanInput = {
+    where: ClanMessageScalarWhereInput
+    data: XOR<ClanMessageUpdateManyMutationInput, ClanMessageUncheckedUpdateManyWithoutClanInput>
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutClanInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutClanInput, UserUncheckedUpdateWithoutClanInput>
+    create: XOR<UserCreateWithoutClanInput, UserUncheckedCreateWithoutClanInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutClanInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutClanInput, UserUncheckedUpdateWithoutClanInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutClanInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutClanInput>
+  }
+
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: UuidFilter<"User"> | string
+    name?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    createdDate?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    lastLogin?: DateTimeFilter<"User"> | Date | string
+    clanId?: IntNullableFilter<"User"> | number | null
+    leader?: BoolFilter<"User"> | boolean
+    engineer?: BoolFilter<"User"> | boolean
+    cooker?: BoolFilter<"User"> | boolean
+    shopKeeper?: BoolFilter<"User"> | boolean
+    merchant?: BoolFilter<"User"> | boolean
+    priest?: BoolFilter<"User"> | boolean
+    teacher?: BoolFilter<"User"> | boolean
+    matelasseur?: BoolFilter<"User"> | boolean
+    messie?: BoolFilter<"User"> | boolean
+    discoveredSkills?: IntNullableListFilter<"User">
+  }
+
+  export type ClanCreateWithoutJoinRequestsInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    leader: UserCreateNestedOneWithoutLeaderOfInput
+    history?: ClanHistoryCreateNestedManyWithoutClanInput
+    members?: ClanMemberCreateNestedManyWithoutClanInput
+    pages?: ClanPageCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageCreateNestedManyWithoutClanInput
+    users?: UserCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanUncheckedCreateWithoutJoinRequestsInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
+    members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
+    pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
+    users?: UserUncheckedCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanCreateOrConnectWithoutJoinRequestsInput = {
+    where: ClanWhereUniqueInput
+    create: XOR<ClanCreateWithoutJoinRequestsInput, ClanUncheckedCreateWithoutJoinRequestsInput>
+  }
+
+  export type UserCreateWithoutClanJoinRequestInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    marketOffers?: OfferCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutClanJoinRequestInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    clanId?: number | null
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    marketOffers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeUncheckedCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutClanJoinRequestInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutClanJoinRequestInput, UserUncheckedCreateWithoutClanJoinRequestInput>
+  }
+
+  export type ClanUpsertWithoutJoinRequestsInput = {
+    update: XOR<ClanUpdateWithoutJoinRequestsInput, ClanUncheckedUpdateWithoutJoinRequestsInput>
+    create: XOR<ClanCreateWithoutJoinRequestsInput, ClanUncheckedCreateWithoutJoinRequestsInput>
+    where?: ClanWhereInput
+  }
+
+  export type ClanUpdateToOneWithWhereWithoutJoinRequestsInput = {
+    where?: ClanWhereInput
+    data: XOR<ClanUpdateWithoutJoinRequestsInput, ClanUncheckedUpdateWithoutJoinRequestsInput>
+  }
+
+  export type ClanUpdateWithoutJoinRequestsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    leader?: UserUpdateOneRequiredWithoutLeaderOfNestedInput
+    history?: ClanHistoryUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUpdateManyWithoutClanNestedInput
+    users?: UserUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateWithoutJoinRequestsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
+    users?: UserUncheckedUpdateManyWithoutClanNestedInput
+  }
+
+  export type UserUpsertWithoutClanJoinRequestInput = {
+    update: XOR<UserUpdateWithoutClanJoinRequestInput, UserUncheckedUpdateWithoutClanJoinRequestInput>
+    create: XOR<UserCreateWithoutClanJoinRequestInput, UserUncheckedCreateWithoutClanJoinRequestInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutClanJoinRequestInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutClanJoinRequestInput, UserUncheckedUpdateWithoutClanJoinRequestInput>
+  }
+
+  export type UserUpdateWithoutClanJoinRequestInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutClanJoinRequestInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUncheckedUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ClanCreateWithoutIngredientsInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    leader: UserCreateNestedOneWithoutLeaderOfInput
+    history?: ClanHistoryCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
+    members?: ClanMemberCreateNestedManyWithoutClanInput
+    pages?: ClanPageCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageCreateNestedManyWithoutClanInput
+    users?: UserCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanUncheckedCreateWithoutIngredientsInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
+    members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
+    pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
+    users?: UserUncheckedCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanCreateOrConnectWithoutIngredientsInput = {
+    where: ClanWhereUniqueInput
+    create: XOR<ClanCreateWithoutIngredientsInput, ClanUncheckedCreateWithoutIngredientsInput>
+  }
+
+  export type ClanUpsertWithoutIngredientsInput = {
+    update: XOR<ClanUpdateWithoutIngredientsInput, ClanUncheckedUpdateWithoutIngredientsInput>
+    create: XOR<ClanCreateWithoutIngredientsInput, ClanUncheckedCreateWithoutIngredientsInput>
+    where?: ClanWhereInput
+  }
+
+  export type ClanUpdateToOneWithWhereWithoutIngredientsInput = {
+    where?: ClanWhereInput
+    data: XOR<ClanUpdateWithoutIngredientsInput, ClanUncheckedUpdateWithoutIngredientsInput>
+  }
+
+  export type ClanUpdateWithoutIngredientsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    leader?: UserUpdateOneRequiredWithoutLeaderOfNestedInput
+    history?: ClanHistoryUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUpdateManyWithoutClanNestedInput
+    users?: UserUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateWithoutIngredientsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
+    users?: UserUncheckedUpdateManyWithoutClanNestedInput
+  }
+
+  export type UserCreateWithoutClanMessageInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    marketOffers?: OfferCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutClanMessageInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    clanId?: number | null
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    marketOffers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeUncheckedCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutClanMessageInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutClanMessageInput, UserUncheckedCreateWithoutClanMessageInput>
+  }
+
+  export type ClanCreateWithoutDiscussionInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    leader: UserCreateNestedOneWithoutLeaderOfInput
+    history?: ClanHistoryCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
+    members?: ClanMemberCreateNestedManyWithoutClanInput
+    pages?: ClanPageCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
+    users?: UserCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanUncheckedCreateWithoutDiscussionInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
+    members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
+    pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
+    users?: UserUncheckedCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanCreateOrConnectWithoutDiscussionInput = {
+    where: ClanWhereUniqueInput
+    create: XOR<ClanCreateWithoutDiscussionInput, ClanUncheckedCreateWithoutDiscussionInput>
+  }
+
+  export type UserUpsertWithoutClanMessageInput = {
+    update: XOR<UserUpdateWithoutClanMessageInput, UserUncheckedUpdateWithoutClanMessageInput>
+    create: XOR<UserCreateWithoutClanMessageInput, UserUncheckedCreateWithoutClanMessageInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutClanMessageInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutClanMessageInput, UserUncheckedUpdateWithoutClanMessageInput>
+  }
+
+  export type UserUpdateWithoutClanMessageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutClanMessageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUncheckedUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ClanUpsertWithoutDiscussionInput = {
+    update: XOR<ClanUpdateWithoutDiscussionInput, ClanUncheckedUpdateWithoutDiscussionInput>
+    create: XOR<ClanCreateWithoutDiscussionInput, ClanUncheckedCreateWithoutDiscussionInput>
+    where?: ClanWhereInput
+  }
+
+  export type ClanUpdateToOneWithWhereWithoutDiscussionInput = {
+    where?: ClanWhereInput
+    data: XOR<ClanUpdateWithoutDiscussionInput, ClanUncheckedUpdateWithoutDiscussionInput>
+  }
+
+  export type ClanUpdateWithoutDiscussionInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    leader?: UserUpdateOneRequiredWithoutLeaderOfNestedInput
+    history?: ClanHistoryUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
+    users?: UserUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateWithoutDiscussionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
+    users?: UserUncheckedUpdateManyWithoutClanNestedInput
+  }
+
+  export type UserCreateWithoutClanHistoryInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    marketOffers?: OfferCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutClanHistoryInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    clanId?: number | null
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    marketOffers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeUncheckedCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutClanHistoryInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutClanHistoryInput, UserUncheckedCreateWithoutClanHistoryInput>
+  }
+
+  export type ClanCreateWithoutHistoryInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    leader: UserCreateNestedOneWithoutLeaderOfInput
+    joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
+    members?: ClanMemberCreateNestedManyWithoutClanInput
+    pages?: ClanPageCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageCreateNestedManyWithoutClanInput
+    users?: UserCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanUncheckedCreateWithoutHistoryInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
+    members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
+    pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
+    users?: UserUncheckedCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanCreateOrConnectWithoutHistoryInput = {
+    where: ClanWhereUniqueInput
+    create: XOR<ClanCreateWithoutHistoryInput, ClanUncheckedCreateWithoutHistoryInput>
+  }
+
+  export type UserUpsertWithoutClanHistoryInput = {
+    update: XOR<UserUpdateWithoutClanHistoryInput, UserUncheckedUpdateWithoutClanHistoryInput>
+    create: XOR<UserCreateWithoutClanHistoryInput, UserUncheckedCreateWithoutClanHistoryInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutClanHistoryInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutClanHistoryInput, UserUncheckedUpdateWithoutClanHistoryInput>
+  }
+
+  export type UserUpdateWithoutClanHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutClanHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUncheckedUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ClanUpsertWithoutHistoryInput = {
+    update: XOR<ClanUpdateWithoutHistoryInput, ClanUncheckedUpdateWithoutHistoryInput>
+    create: XOR<ClanCreateWithoutHistoryInput, ClanUncheckedCreateWithoutHistoryInput>
+    where?: ClanWhereInput
+  }
+
+  export type ClanUpdateToOneWithWhereWithoutHistoryInput = {
+    where?: ClanWhereInput
+    data: XOR<ClanUpdateWithoutHistoryInput, ClanUncheckedUpdateWithoutHistoryInput>
+  }
+
+  export type ClanUpdateWithoutHistoryInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    leader?: UserUpdateOneRequiredWithoutLeaderOfNestedInput
+    joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUpdateManyWithoutClanNestedInput
+    users?: UserUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateWithoutHistoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
+    users?: UserUncheckedUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanCreateWithoutMembersInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    leader: UserCreateNestedOneWithoutLeaderOfInput
+    history?: ClanHistoryCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
+    pages?: ClanPageCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageCreateNestedManyWithoutClanInput
+    users?: UserCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanUncheckedCreateWithoutMembersInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
+    pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
+    users?: UserUncheckedCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanCreateOrConnectWithoutMembersInput = {
+    where: ClanWhereUniqueInput
+    create: XOR<ClanCreateWithoutMembersInput, ClanUncheckedCreateWithoutMembersInput>
+  }
+
+  export type UserCreateWithoutClanMemberInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    clan?: ClanCreateNestedOneWithoutUsersInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    gathers?: UserGatherCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsCreateNestedManyWithoutUserInput
+    items?: UserItemsCreateNestedManyWithoutUserInput
+    profile?: UserProfileCreateNestedOneWithoutUserInput
+    ranking?: RankingCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingCreateNestedManyWithoutUserInput
+    wallets?: UserWalletCreateNestedManyWithoutUserInput
+    marketOffers?: OfferCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidCreateNestedManyWithoutUserInput
+    dinoz?: DinozCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantCreateNestedManyWithoutUserInput
+    sentMessages?: MessageCreateNestedManyWithoutSenderInput
+    logs?: GameLogCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutClanMemberInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    clanId?: number | null
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutUserInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    gathers?: UserGatherUncheckedCreateNestedManyWithoutUserInput
+    ingredients?: UserIngredientsUncheckedCreateNestedManyWithoutUserInput
+    items?: UserItemsUncheckedCreateNestedManyWithoutUserInput
+    profile?: UserProfileUncheckedCreateNestedOneWithoutUserInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutUserInput
+    rewards?: UserRewardsUncheckedCreateNestedManyWithoutUserInput
+    scenarios?: UserScenarioUncheckedCreateNestedManyWithoutUserInput
+    statsTracking?: UserTrackingUncheckedCreateNestedManyWithoutUserInput
+    wallets?: UserWalletUncheckedCreateNestedManyWithoutUserInput
+    marketOffers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    marketBids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutUserInput
+    dinozShop?: UserDinozShopUncheckedCreateNestedManyWithoutUserInput
+    newsLikes?: NewsLikeUncheckedCreateNestedManyWithoutUserInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutUserInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    conversationLinks?: ParticipantUncheckedCreateNestedManyWithoutUserInput
+    sentMessages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    logs?: GameLogUncheckedCreateNestedManyWithoutUserInput
+    actedLogs?: GameLogUncheckedCreateNestedManyWithoutActorUserInput
+    bankSavings?: BankSavingUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutClanMemberInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutClanMemberInput, UserUncheckedCreateWithoutClanMemberInput>
+  }
+
+  export type ClanUpsertWithoutMembersInput = {
+    update: XOR<ClanUpdateWithoutMembersInput, ClanUncheckedUpdateWithoutMembersInput>
+    create: XOR<ClanCreateWithoutMembersInput, ClanUncheckedCreateWithoutMembersInput>
+    where?: ClanWhereInput
+  }
+
+  export type ClanUpdateToOneWithWhereWithoutMembersInput = {
+    where?: ClanWhereInput
+    data: XOR<ClanUpdateWithoutMembersInput, ClanUncheckedUpdateWithoutMembersInput>
+  }
+
+  export type ClanUpdateWithoutMembersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    leader?: UserUpdateOneRequiredWithoutLeaderOfNestedInput
+    history?: ClanHistoryUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUpdateManyWithoutClanNestedInput
+    users?: UserUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateWithoutMembersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
+    pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
+    users?: UserUncheckedUpdateManyWithoutClanNestedInput
+  }
+
+  export type UserUpsertWithoutClanMemberInput = {
+    update: XOR<UserUpdateWithoutClanMemberInput, UserUncheckedUpdateWithoutClanMemberInput>
+    create: XOR<UserCreateWithoutClanMemberInput, UserUncheckedCreateWithoutClanMemberInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutClanMemberInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutClanMemberInput, UserUncheckedUpdateWithoutClanMemberInput>
+  }
+
+  export type UserUpdateWithoutClanMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    clan?: ClanUpdateOneWithoutUsersNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutClanMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanId?: NullableIntFieldUpdateOperationsInput | number | null
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUncheckedUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ClanCreateWithoutPagesInput = {
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    leader: UserCreateNestedOneWithoutLeaderOfInput
+    history?: ClanHistoryCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
+    members?: ClanMemberCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageCreateNestedManyWithoutClanInput
+    users?: UserCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanUncheckedCreateWithoutPagesInput = {
+    id?: number
+    name: string
+    treasureValue?: number
+    creationDate?: Date | string
+    banner?: Bytes | null
+    leaderId: string
+    langs?: ClanCreatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
+    joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
+    members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
+    ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
+    discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
+    users?: UserUncheckedCreateNestedManyWithoutClanInput
+  }
+
+  export type ClanCreateOrConnectWithoutPagesInput = {
+    where: ClanWhereUniqueInput
+    create: XOR<ClanCreateWithoutPagesInput, ClanUncheckedCreateWithoutPagesInput>
+  }
+
+  export type ClanUpsertWithoutPagesInput = {
+    update: XOR<ClanUpdateWithoutPagesInput, ClanUncheckedUpdateWithoutPagesInput>
+    create: XOR<ClanCreateWithoutPagesInput, ClanUncheckedCreateWithoutPagesInput>
+    where?: ClanWhereInput
+  }
+
+  export type ClanUpdateToOneWithWhereWithoutPagesInput = {
+    where?: ClanWhereInput
+    data: XOR<ClanUpdateWithoutPagesInput, ClanUncheckedUpdateWithoutPagesInput>
+  }
+
+  export type ClanUpdateWithoutPagesInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    leader?: UserUpdateOneRequiredWithoutLeaderOfNestedInput
+    history?: ClanHistoryUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUpdateManyWithoutClanNestedInput
+    users?: UserUpdateManyWithoutClanNestedInput
+  }
+
+  export type ClanUncheckedUpdateWithoutPagesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    treasureValue?: IntFieldUpdateOperationsInput | number
+    creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    banner?: NullableBytesFieldUpdateOperationsInput | Bytes | null
+    leaderId?: StringFieldUpdateOperationsInput | string
+    langs?: ClanUpdatelangsInput | $Enums.Language[]
+    history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
+    joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
+    members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
+    ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
+    discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
+    users?: UserUncheckedUpdateManyWithoutClanNestedInput
   }
 
   export type DinozCatchCreateManyDinozInput = {
@@ -75074,6 +88897,22 @@ export namespace Prisma {
     votedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ClanHistoryCreateManyAuthorInput = {
+    id?: number
+    clanId: number
+    date?: Date | string
+    type?: string
+    authorMessage: string
+  }
+
+  export type ClanMessageCreateManyAuthorInput = {
+    id?: number
+    clanId: number
+    date?: Date | string
+    content: string
+    authorName: string
+  }
+
   export type UserGatherCreateManyUserInput = {
     id?: number
     place: number
@@ -75254,6 +89093,52 @@ export namespace Prisma {
     claimedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type ClanHistoryUpdateWithoutAuthorInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    authorMessage?: StringFieldUpdateOperationsInput | string
+    clan?: ClanUpdateOneRequiredWithoutHistoryNestedInput
+  }
+
+  export type ClanHistoryUncheckedUpdateWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    authorMessage?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanHistoryUncheckedUpdateManyWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    authorMessage?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanMessageUpdateWithoutAuthorInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+    clan?: ClanUpdateOneRequiredWithoutDiscussionNestedInput
+  }
+
+  export type ClanMessageUncheckedUpdateWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanMessageUncheckedUpdateManyWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    clanId?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserGatherUpdateWithoutUserInput = {
@@ -75901,6 +89786,312 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     senderNameSnapshot?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanHistoryCreateManyClanInput = {
+    id?: number
+    date?: Date | string
+    type?: string
+    authorId?: string | null
+    authorMessage: string
+  }
+
+  export type ClanJoinRequestCreateManyClanInput = {
+    id?: number
+    date?: Date | string
+    userId: string
+  }
+
+  export type ClanMemberCreateManyClanInput = {
+    id?: number
+    dateJoin?: Date | string
+    nickname?: string | null
+    rights?: ClanMemberCreaterightsInput | string[]
+    donation?: number
+    userId: string
+  }
+
+  export type ClanPageCreateManyClanInput = {
+    id?: number
+    home: boolean
+    public: boolean
+    name: string
+    content?: string
+  }
+
+  export type ClanIngredientCreateManyClanInput = {
+    id?: number
+    ingredientId: number
+    quantity: number
+  }
+
+  export type ClanMessageCreateManyClanInput = {
+    id?: number
+    date?: Date | string
+    content: string
+    authorId?: string | null
+    authorName: string
+  }
+
+  export type UserCreateManyClanInput = {
+    id?: string
+    name: string
+    password: string
+    role?: $Enums.Role
+    createdDate?: Date | string
+    updatedAt?: Date | string | null
+    lastLogin?: Date | string
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    matelasseur?: boolean
+    messie?: boolean
+    discoveredSkills?: UserCreatediscoveredSkillsInput | number[]
+  }
+
+  export type ClanHistoryUpdateWithoutClanInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    authorMessage?: StringFieldUpdateOperationsInput | string
+    author?: UserUpdateOneWithoutClanHistoryNestedInput
+  }
+
+  export type ClanHistoryUncheckedUpdateWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    authorId?: NullableStringFieldUpdateOperationsInput | string | null
+    authorMessage?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanHistoryUncheckedUpdateManyWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    type?: StringFieldUpdateOperationsInput | string
+    authorId?: NullableStringFieldUpdateOperationsInput | string | null
+    authorMessage?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanJoinRequestUpdateWithoutClanInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutClanJoinRequestNestedInput
+  }
+
+  export type ClanJoinRequestUncheckedUpdateWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanJoinRequestUncheckedUpdateManyWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanMemberUpdateWithoutClanInput = {
+    dateJoin?: DateTimeFieldUpdateOperationsInput | Date | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    rights?: ClanMemberUpdaterightsInput | string[]
+    donation?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutClanMemberNestedInput
+  }
+
+  export type ClanMemberUncheckedUpdateWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateJoin?: DateTimeFieldUpdateOperationsInput | Date | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    rights?: ClanMemberUpdaterightsInput | string[]
+    donation?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanMemberUncheckedUpdateManyWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    dateJoin?: DateTimeFieldUpdateOperationsInput | Date | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    rights?: ClanMemberUpdaterightsInput | string[]
+    donation?: IntFieldUpdateOperationsInput | number
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanPageUpdateWithoutClanInput = {
+    home?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanPageUncheckedUpdateWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    home?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanPageUncheckedUpdateManyWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    home?: BoolFieldUpdateOperationsInput | boolean
+    public?: BoolFieldUpdateOperationsInput | boolean
+    name?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanIngredientUpdateWithoutClanInput = {
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanIngredientUncheckedUpdateWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanIngredientUncheckedUpdateManyWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    ingredientId?: IntFieldUpdateOperationsInput | number
+    quantity?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ClanMessageUpdateWithoutClanInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorName?: StringFieldUpdateOperationsInput | string
+    author?: UserUpdateOneWithoutClanMessageNestedInput
+  }
+
+  export type ClanMessageUncheckedUpdateWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: NullableStringFieldUpdateOperationsInput | string | null
+    authorName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ClanMessageUncheckedUpdateManyWithoutClanInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: NullableStringFieldUpdateOperationsInput | string | null
+    authorName?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUpdateWithoutClanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    gathers?: UserGatherUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUpdateManyWithoutUserNestedInput
+    items?: UserItemsUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUpdateOneWithoutUserNestedInput
+    ranking?: RankingUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutClanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutUserNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutUserNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    gathers?: UserGatherUncheckedUpdateManyWithoutUserNestedInput
+    ingredients?: UserIngredientsUncheckedUpdateManyWithoutUserNestedInput
+    items?: UserItemsUncheckedUpdateManyWithoutUserNestedInput
+    profile?: UserProfileUncheckedUpdateOneWithoutUserNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutUserNestedInput
+    rewards?: UserRewardsUncheckedUpdateManyWithoutUserNestedInput
+    scenarios?: UserScenarioUncheckedUpdateManyWithoutUserNestedInput
+    statsTracking?: UserTrackingUncheckedUpdateManyWithoutUserNestedInput
+    wallets?: UserWalletUncheckedUpdateManyWithoutUserNestedInput
+    marketOffers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    marketBids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutUserNestedInput
+    dinozShop?: UserDinozShopUncheckedUpdateManyWithoutUserNestedInput
+    newsLikes?: NewsLikeUncheckedUpdateManyWithoutUserNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutUserNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    conversationLinks?: ParticipantUncheckedUpdateManyWithoutUserNestedInput
+    sentMessages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    logs?: GameLogUncheckedUpdateManyWithoutUserNestedInput
+    actedLogs?: GameLogUncheckedUpdateManyWithoutActorUserNestedInput
+    bankSavings?: BankSavingUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateManyWithoutClanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: UserUpdatediscoveredSkillsInput | number[]
   }
 
 
