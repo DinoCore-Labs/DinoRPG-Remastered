@@ -1,5 +1,18 @@
 # @dinorpg/server
 
+## 0.29.0
+
+### Minor Changes
+
+- d7322ee: Add the clan system to the project.
+
+  This introduces the first version of clans, including shared clan models, server-side clan management, and client pages for creating, editing and displaying clan content. The feature also adds clan page management, public/private page handling, improved clan creation UI, and the related translations.
+
+### Patch Changes
+
+- Updated dependencies [d7322ee]
+  - @dinorpg/core@0.27.0
+
 ## 0.28.0
 
 ### Minor Changes
