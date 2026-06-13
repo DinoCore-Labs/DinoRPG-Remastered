@@ -166,18 +166,11 @@ export default defineComponent({
 	padding-bottom: 5px;
 }
 .filler {
-	height: 180px;
 	width: 100%;
 }
-
-.topspace {
-	margin-top: 25px;
-}
-
 .tabs-list {
 	margin-left: 10px;
 	display: flex;
-	padding-top: 5px;
 	font-size: 14px;
 	.tab {
 		padding: 0 2px;
@@ -197,14 +190,15 @@ export default defineComponent({
 		}
 	}
 }
-
 .pages {
 	width: 95%;
 	align-self: center;
 	height: auto;
 	max-height: none;
-	//overflow: hidden;
 	margin-bottom: 10px;
+	h3 {
+		margin-top: 0;
+	}
 	.clan-page {
 		background-color: #fce3bb;
 		margin: 3px;

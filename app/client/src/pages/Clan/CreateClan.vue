@@ -6,15 +6,12 @@
 			<div class="grid">
 				<p>{{ $t('createClan.clan_name') }}</p>
 				<DZInput type="text" v-model="clanName" />
-
 				<p>{{ $t('createClan.clan_langs') }}</p>
 				<LangSelector v-model="langs" class="lang-selector" />
-
 				<p>{{ $t('createClan.clan_description') }}</p>
 				<textarea class="description" type="text" v-model="description"></textarea>
 			</div>
 		</div>
-
 		<div class="end-content">
 			<div class="buttons">
 				<a class="button" @click="goToClanList()">{{ $t('createClan.go_back_button') }}</a>
@@ -102,21 +99,23 @@ export default defineComponent({
 	display: inline-grid;
 	column-gap: 5px;
 	row-gap: 5px;
+	align-items: center;
 	p {
 		grid-column: 1;
+		margin: 0;
+		width: 187px;
+		height: 100%;
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		font-variant: normal;
 		font-weight: bold;
 		font-size: 8pt;
 		color: #ffee92;
-		width: 150px;
 		text-align: center;
 		background-color: #e4aa69;
 		border-radius: 10px;
-		-webkit-border-radius: 10px;
-	}
-	select {
-		color: #ffee92;
-		background-color: #bc683c;
 	}
 	textarea {
 		grid-column: 2;
@@ -131,10 +130,12 @@ export default defineComponent({
 		background-color: #bc683c;
 		resize: vertical;
 	}
-
 	.lang-selector {
+		grid-column: 2;
 		display: flex;
+		align-items: center;
 		width: 184px;
+		height: 20px;
 		flex-wrap: wrap;
 		justify-content: space-around;
 	}

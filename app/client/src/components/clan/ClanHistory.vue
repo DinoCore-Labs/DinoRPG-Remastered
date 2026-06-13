@@ -11,7 +11,6 @@
 				<div v-else class="author">{{ evt.author.name }}</div>
 				<div class="date">{{ DateToString(evt.date) }}</div>
 			</div>
-
 			<div class="message">
 				<p>{{ GetHistoryMessageFromType(evt.type, { msg: evt.authorMessage }) }}</p>
 			</div>
@@ -20,9 +19,7 @@
 			<div class="arrow-button">
 				<img :src="getImgURL('icons', 'left')" alt="left" @click="changePage(-1)" v-if="page > 1" />
 			</div>
-
 			<p>{{ $t('clan.history.page') }} {{ page }} / {{ maxPage }}</p>
-
 			<div class="arrow-button">
 				<img :src="getImgURL('icons', 'right')" alt="right" @click="changePage(1)" v-if="history.length >= 20" />
 			</div>

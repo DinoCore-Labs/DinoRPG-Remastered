@@ -148,6 +148,9 @@ export default defineComponent({
 		gap: 8px;
 		color: #fce3bb;
 		padding: 0 8px 8px 8px;
+		h3 {
+			margin-top: 0;
+		}
 		.action {
 			display: flex;
 			justify-content: space-between;
@@ -166,6 +169,9 @@ export default defineComponent({
 		flex-direction: column;
 		gap: 8px;
 		padding: 0 8px 8px 8px;
+		h3 {
+			margin-top: 0;
+		}
 	}
 }
 </style>
