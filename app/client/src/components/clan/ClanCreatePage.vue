@@ -6,12 +6,10 @@
 				<div class="grid">
 					<p>{{ $t('clan.clanPages.creation.title') }}</p>
 					<DZInput v-model="page.name" />
-
 					<p>{{ $t('clan.clanPages.creation.content') }}</p>
 					<textarea class="dz-golden-box no-shadow" type="text" v-model="page.content"></textarea>
-
 					<p>{{ $t('clan.clanPages.creation.public') }}</p>
-					<input class="public" type="checkbox" v-model="page.public" :disabled="page.home" />
+					<DZCheckbox id="clan-page-public" class="public" v-model="page.public" :disabled="page.home" />
 				</div>
 			</div>
 		</div>
@@ -29,11 +27,13 @@ import { ClanService } from '../../services/clan.service.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import type { ClanPage } from '@dinorpg/core/models/clan/clanPage.js';
 import DZInput from '../utils/DZInput.vue';
+import DZCheckbox from '../utils/DZCheckbox.vue';
 
 export default defineComponent({
 	name: 'ClanCreatePage',
 	components: {
-		DZInput
+		DZInput,
+		DZCheckbox
 	},
 	data() {
 		return {
@@ -102,21 +102,25 @@ export default defineComponent({
 <style lang="scss" scoped>
 .page {
 	padding: 10px;
-
 	h3 {
 		font-variant-caps: small-caps;
 		font-weight: 400;
 		color: #e4aa69;
 		margin-bottom: 8px;
 	}
-
 	.grid {
 		display: grid;
 		grid-template-columns: 150px 1fr;
 		gap: 8px;
 		align-items: stretch;
-
 		p {
+			grid-column: 1;
+			margin: 0;
+			height: 100%;
+			box-sizing: border-box;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			font-variant: normal;
 			font-weight: bold;
 			font-size: 8pt;
@@ -126,7 +130,6 @@ export default defineComponent({
 			border-radius: 10px;
 			-webkit-border-radius: 10px;
 		}
-
 		textarea {
 			padding: 4px 8px;
 			color: #ffee92;
@@ -136,7 +139,6 @@ export default defineComponent({
 			resize: vertical;
 		}
 	}
-
 	.df {
 		margin-top: 8px;
 		gap: 4px;
