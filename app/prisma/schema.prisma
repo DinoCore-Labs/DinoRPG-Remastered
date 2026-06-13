@@ -518,6 +518,14 @@ model User {
   updatedAt   DateTime? @updatedAt @db.Timestamptz(3)
   lastLogin   DateTime  @default(now()) @db.Timestamptz(3)
 
+  clanId          Int?
+  clan            Clan?            @relation(fields: [clanId], references: [id], onDelete: SetNull)
+  leaderOf        Clan?            @relation("leader")
+  ClanHistory     ClanHistory[]
+  ClanJoinRequest ClanJoinRequest? @relation("clanRequest")
+  ClanMember      ClanMember?
+  ClanMessage     ClanMessage[]
+
   gathers       UserGather[]
   ingredients   UserIngredients[]
   items         UserItems[]
@@ -735,6 +743,96 @@ model Message {
   @@index([conversationId, createdAt])
   @@index([senderId])
   @@map("message")
+}
+
+model Clan {
+  id            Int               @id @default(autoincrement())
+  name          String            @unique
+  treasureValue Int               @default(0)
+  creationDate  DateTime          @default(now()) @db.Timestamp(6)
+  banner        Bytes?
+  leaderId      String            @unique @db.Uuid
+  langs         Language[]
+  leader        User              @relation("leader", fields: [leaderId], references: [id])
+  history       ClanHistory[]
+  joinRequests  ClanJoinRequest[]
+  members       ClanMember[]      @relation("member")
+  pages         ClanPage[]
+  ingredients   ClanIngredient[]
+  discussion    ClanMessage[]
+  users         User[]
+}
+
+model ClanJoinRequest {
+  id     Int      @id @default(autoincrement())
+  clanId Int
+  date   DateTime @default(now()) @db.Timestamp(6)
+  userId String   @unique @db.Uuid
+  clan   Clan     @relation(fields: [clanId], references: [id])
+  user   User     @relation("clanRequest", fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ClanIngredient {
+  id           Int  @id @default(autoincrement())
+  ingredientId Int
+  quantity     Int
+  clanId       Int
+  clan         Clan @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([ingredientId, clanId])
+  @@map("clan_ingredient")
+}
+
+model ClanMessage {
+  id         Int      @id @default(autoincrement())
+  clanId     Int
+  date       DateTime @default(now()) @db.Timestamp(6)
+  content    String
+  authorId   String?  @db.Uuid
+  authorName String
+  author     User?    @relation(fields: [authorId], references: [id])
+  clan       Clan     @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([id, clanId])
+  @@index([clanId])
+  @@map("clan_messages")
+}
+
+model ClanHistory {
+  id            Int      @id @default(autoincrement())
+  clanId        Int
+  date          DateTime @default(now()) @db.Timestamp(6)
+  type          String   @default("CLAN_CREATED")
+  authorId      String?  @db.Uuid
+  authorMessage String
+  author        User?    @relation(fields: [authorId], references: [id])
+  clan          Clan     @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model ClanMember {
+  id       Int      @id @default(autoincrement())
+  clanId   Int
+  dateJoin DateTime @default(now()) @db.Timestamp(6)
+  nickname String?
+  rights   String[] @default([])
+  donation Int      @default(0)
+  userId   String   @unique @db.Uuid
+  clan     Clan     @relation("member", fields: [clanId], references: [id])
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([clanId])
+}
+
+model ClanPage {
+  id      Int     @id @default(autoincrement())
+  home    Boolean
+  public  Boolean
+  name    String
+  content String  @default("")
+  clanId  Int
+  Clan    Clan    @relation(fields: [clanId], references: [id])
+
+  @@index([clanId])
 }
 
 enum DinozState {

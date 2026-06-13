@@ -5,7 +5,6 @@
 			{{ $t('clan.header.infos') }}
 			<img :src="getImgURL('button', 'info_button')" alt="info_button" style="margin-left: 10px" />
 		</h3>
-
 		<div class="top-info">
 			<div class="top-info-element">
 				<img
@@ -29,7 +28,6 @@
 				/>
 				{{ moneyLint(clanStore.getClan?.treasureValue ?? 0) }}
 			</div>
-
 			<div class="top-info-element">
 				<Flag v-for="lang in clanStore.getClan?.languages" :key="lang" :lang="lang.toLocaleLowerCase()" />
 			</div>
@@ -117,8 +115,10 @@ export default defineComponent({
 	flex-direction: column;
 	align-items: center;
 	gap: 2px;
+	h3 {
+		margin-top: 0;
+	}
 }
-
 .banner {
 	max-width: 95%;
 	height: 100px;
@@ -128,10 +128,8 @@ export default defineComponent({
 		height: 100%;
 	}
 }
-
 .top-info {
 	display: flex;
-	padding-top: 5px;
 	padding-bottom: 1px;
 	font-size: 14px;
 	width: 95%;
@@ -140,7 +138,6 @@ export default defineComponent({
 	align-items: center;
 	flex-wrap: wrap;
 	justify-content: center;
-
 	.top-info-element {
 		background-color: #bc683c;
 		color: white;
@@ -151,16 +148,13 @@ export default defineComponent({
 		align-items: center;
 		white-space: nowrap;
 		flex-shrink: 0;
-
 		img {
 			max-width: 12px;
 			max-height: 12px;
 		}
 	}
 }
-
 .bottom-info {
-	//margin: 0 65px;
 	width: 100%;
 	display: flex;
 	justify-content: space-around;
@@ -192,4 +186,3 @@ export default defineComponent({
 	}
 }
 </style>
--->

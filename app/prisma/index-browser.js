@@ -430,6 +430,7 @@ exports.Prisma.UserScalarFieldEnum = {
   createdDate: 'createdDate',
   updatedAt: 'updatedAt',
   lastLogin: 'lastLogin',
+  clanId: 'clanId',
   leader: 'leader',
   engineer: 'engineer',
   cooker: 'cooker',
@@ -546,6 +547,67 @@ exports.Prisma.MessageScalarFieldEnum = {
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt',
   senderNameSnapshot: 'senderNameSnapshot'
+};
+
+exports.Prisma.ClanScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  treasureValue: 'treasureValue',
+  creationDate: 'creationDate',
+  banner: 'banner',
+  leaderId: 'leaderId',
+  langs: 'langs'
+};
+
+exports.Prisma.ClanJoinRequestScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  date: 'date',
+  userId: 'userId'
+};
+
+exports.Prisma.ClanIngredientScalarFieldEnum = {
+  id: 'id',
+  ingredientId: 'ingredientId',
+  quantity: 'quantity',
+  clanId: 'clanId'
+};
+
+exports.Prisma.ClanMessageScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  date: 'date',
+  content: 'content',
+  authorId: 'authorId',
+  authorName: 'authorName'
+};
+
+exports.Prisma.ClanHistoryScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  date: 'date',
+  type: 'type',
+  authorId: 'authorId',
+  authorMessage: 'authorMessage'
+};
+
+exports.Prisma.ClanMemberScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  dateJoin: 'dateJoin',
+  nickname: 'nickname',
+  rights: 'rights',
+  donation: 'donation',
+  userId: 'userId'
+};
+
+exports.Prisma.ClanPageScalarFieldEnum = {
+  id: 'id',
+  home: 'home',
+  public: 'public',
+  name: 'name',
+  content: 'content',
+  clanId: 'clanId'
 };
 
 exports.Prisma.SortOrder = {
@@ -743,7 +805,14 @@ exports.Prisma.ModelName = {
   UserWallet: 'UserWallet',
   Conversation: 'Conversation',
   Participant: 'Participant',
-  Message: 'Message'
+  Message: 'Message',
+  Clan: 'Clan',
+  ClanJoinRequest: 'ClanJoinRequest',
+  ClanIngredient: 'ClanIngredient',
+  ClanMessage: 'ClanMessage',
+  ClanHistory: 'ClanHistory',
+  ClanMember: 'ClanMember',
+  ClanPage: 'ClanPage'
 };
 
 /**
