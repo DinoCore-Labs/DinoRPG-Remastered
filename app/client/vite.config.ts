@@ -14,6 +14,11 @@ export default defineConfig(({ mode }) => {
 			host: '0.0.0.0',
 			strictPort: true
 		},
+		optimizeDeps: {
+			// Workaround Vite/Rolldown: vue-i18n can generate
+			// "init_runtime_dom_esm_bundler is not defined" when pre-bundled.
+			exclude: ['vue-i18n']
+		},
 		define: {
 			['import.meta.env.VITE_APP_VERSION']: JSON.stringify(require('../../package.json').version),
 			['import.meta.env.VITE_API_RELEASE_COMMIT']: JSON.stringify(env.VITE_API_RELEASE_COMMIT),
