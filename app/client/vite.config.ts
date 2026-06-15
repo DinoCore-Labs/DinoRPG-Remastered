@@ -14,6 +14,9 @@ export default defineConfig(({ mode }) => {
 			host: '0.0.0.0',
 			strictPort: true
 		},
+		build: {
+			assetsInlineLimit: 0
+		},
 		optimizeDeps: {
 			// Workaround Vite/Rolldown: vue-i18n can generate
 			// "init_runtime_dom_esm_bundler is not defined" when pre-bundled.
