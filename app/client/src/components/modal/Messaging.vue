@@ -72,7 +72,9 @@
 					rightShow: threadSelected
 				}"
 			>
-				<DZButton class="mobile" back @click="unselect()">Retour</DZButton>
+				<div class="mobile">
+					<DZButton back @click="unselect()">Retour</DZButton>
+				</div>
 				<DZDisclaimer help v-if="!threadSelected" content="modal.messagerie.disclaimer" />
 				<div class="creationMode" v-if="creationMode">
 					<div class="title">
@@ -507,7 +509,6 @@ dialog {
 					font-weight: 400;
 					font-size: 16px;
 					outline-offset: 2px;
-					width: 100%;
 					min-height: 140px;
 					border: none;
 					padding-left: 4px;
@@ -540,11 +541,12 @@ dialog {
 		filter: brightness(120%);
 	}
 }
-@media (max-width: 539px) {
+@media (max-width: 850px) {
 	.mobile {
-		display: inherit;
-		width: 80%;
-		align-self: center;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		margin-right: 25px;
 	}
 	label {
 		width: 40%;
