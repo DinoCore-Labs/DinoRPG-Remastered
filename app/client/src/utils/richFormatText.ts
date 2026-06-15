@@ -8,7 +8,7 @@ import { EmotesTwinoidV1Icons } from '../components/richTextEditor/emotes/Emotes
 import { EmotesTwinoidV2Icons } from '../components/richTextEditor/emotes/EmotesTwinoidV2Icons';
 import { EmotesTwinoidV3Icons } from '../components/richTextEditor/emotes/EmotesTwinoidV3Icons';
 
-const emoteIconEnums = {
+const emoteIconEnums: Record<string, string> = {
 	...EmotesTwinoidV1Icons,
 	...EmotesTwinoidV2Icons,
 	...EmotesTwinoidV3Icons,
