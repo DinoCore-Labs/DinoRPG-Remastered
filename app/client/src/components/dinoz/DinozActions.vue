@@ -100,6 +100,12 @@
 			<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
 		</div>
 	</div>
+	<GatherRewardModal
+		v-if="fastGatherOver && fastGatherResult"
+		:rewards="fastGatherResult.rewards"
+		:ingredientsAtMaxQuantity="fastGatherResult.ingredientsAtMaxQuantity"
+		@close="closeFastGatherModal"
+	/>
 </template>
 
 <script lang="ts">
@@ -132,6 +138,10 @@ import type {
 	MissionInteractionStartResponse
 } from '@dinorpg/core/models/missions/missionInteraction.js';
 import MissionRewardModal from '../modal/MissionRewardModal.vue';
+import { GatherService } from '../../services/gather.service.js';
+import { localStore } from '../../store/localStore.js';
+import GatherRewardModal from '../modal/GatherRewardModal.vue';
+import type { GatherResult } from '@dinorpg/core/models/gather/gatherResult.js';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -153,7 +163,9 @@ export default defineComponent({
 			missionTalkTextKey: null as string | null,
 			missionTalkNameKey: null as string | null,
 			missionReward: null as MissionInteractionRewardModal | null,
-			reincarnate: false as boolean
+			reincarnate: false as boolean,
+			fastGatherOver: false,
+			fastGatherResult: null as GatherResult | null
 		};
 	},
 	components: {
@@ -163,7 +175,8 @@ export default defineComponent({
 		MissionRewardModal,
 		DZDisclaimer,
 		DZFollow,
-		Reincarnate
+		Reincarnate,
+		GatherRewardModal
 	},
 	props: {
 		dinoz: {
@@ -490,13 +503,22 @@ export default defineComponent({
 				case GatherType.ANNIV:
 				case GatherType.PARTY:
 				case Action.DAILY:
-					this.$router.push({
-						name: 'Gather',
-						params: {
-							dinozId: action.forDinoz ? action.forDinoz.toString() : this.dinozId.toString(),
-							type: action.name
+					{
+						const dId = action.forDinoz ? Number(action.forDinoz) : Number(this.dinozId);
+						const gType = String(action.name);
+
+						if (localStore().getBypassGatheringGrid) {
+							await this.handleDirectGathering(dId, gType);
+						} else {
+							this.$router.push({
+								name: 'Gather',
+								params: {
+									dinozId: dId.toString(),
+									type: gType
+								}
+							});
 						}
-					});
+					}
 					break;
 				case Action.CONCENTRATE:
 					//await DinozService.cancelConcentration(parseInt(this.$route.params.id.toString()));
@@ -665,6 +687,66 @@ export default defineComponent({
 					console.log(action.name);
 					break;
 			}
+		},
+		async handleDirectGathering(dinozId: number, gatherType: string): Promise<void> {
+			try {
+				const gridContext = await GatherService.getGatherGrid(dinozId, gatherType);
+
+				if (!gridContext || !gridContext.grid || gridContext.gatherTurn <= 0) {
+					this.$toast.open({
+						message: this.$t('toast.gatherAlertError'),
+						type: 'error'
+					});
+					return;
+				}
+
+				const clickedBox: number[][] = [];
+				let availableTurns = gridContext.gatherTurn;
+
+				for (let rowNum = 0; rowNum < gridContext.grid.length; rowNum++) {
+					const row = gridContext.grid[rowNum];
+					for (let colNum = 0; colNum < row.length; colNum++) {
+						if (row[colNum] === 0) {
+							clickedBox.push([rowNum, colNum]);
+							availableTurns--;
+
+							if (availableTurns === 0) {
+								break;
+							}
+						}
+					}
+					if (availableTurns === 0) {
+						break;
+					}
+				}
+
+				const result = await GatherService.gatherWithDinoz(dinozId, gatherType, clickedBox);
+				if (result && result.rewards) {
+					this.fastGatherResult = result;
+					this.fastGatherOver = true;
+
+					await this.$refreshGold();
+				}
+
+				if (result?.isGridComplete) {
+					if (result.gridCompletionGoldReward > 0) {
+						this.$toast.success(formatText(this.$t('toast.finishGrid')));
+					} else {
+						this.$toast.info(formatText(this.$t('toast.dailyGridRewardsFinished')));
+					}
+				}
+
+				await this.refreshDinoz();
+			} catch (e) {
+				this.$toast.open({
+					message: this.$t('toast.gatherAlertError'),
+					type: 'error'
+				});
+			}
+		},
+		closeFastGatherModal() {
+			this.fastGatherOver = false;
+			this.fastGatherResult = null;
 		},
 		isSelling() {
 			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);

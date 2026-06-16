@@ -6,12 +6,14 @@ export const localStore = defineStore('localStore', {
 	state: (): StateLocalStore => ({
 		langue: undefined,
 		skipLevelAnimation: false,
-		skipFightAnimation: true
+		skipFightAnimation: true,
+		bypassGatheringGrid: false
 	}),
 	getters: {
 		getLanguage: (state: StateLocalStore) => state.langue,
 		getSkipLevelAnimation: (state: StateLocalStore) => state.skipLevelAnimation,
-		getSkipFightAnimation: (state: StateLocalStore) => state.skipFightAnimation
+		getSkipFightAnimation: (state: StateLocalStore) => state.skipFightAnimation,
+		getBypassGatheringGrid: (state: StateLocalStore) => state.bypassGatheringGrid
 	},
 	actions: {
 		setLanguage(langue: Language): void {
@@ -22,6 +24,9 @@ export const localStore = defineStore('localStore', {
 		},
 		setSkipFightAnimation(skipFightAnimation: boolean): void {
 			this.skipFightAnimation = skipFightAnimation;
+		},
+		setBypassGatheringGrid(bypassGatheringGrid: boolean): void {
+			this.bypassGatheringGrid = bypassGatheringGrid;
 		}
 	},
 	persist: {
