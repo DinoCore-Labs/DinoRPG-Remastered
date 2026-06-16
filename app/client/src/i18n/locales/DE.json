@@ -48,6 +48,7 @@
 			"system": "Réglages",
 			"skipLevelAnimation": "Passer l'animation des level up",
 			"skipFightAnimation": "Passer l'animation des combats",
+			"bypassGatheringGrid": "Sammelraster überspringen",
 			"goodbye": "Auf Wiedersehen, Meister {name}..."
 		}
 	},
@@ -463,6 +464,7 @@
 		"reincarnation": "Dein Dinoz wurde reinkarniert.",
 		"loginToLike": "Connectez-vous pour aimer cette news.",
 		"shovelMine": "Vous n'allez quand même pas creuser à côté du mineur !?!",
+		"gatherAlertError": "Fehler beim automatischen Sammeln.",
 		"market": {
 			"minimalValueError": "Der Gesamtpreis deines Angebots liegt unter dem Minimalwert.",
 			"tooManyItems": "Du kannst nicht mehr als {items} verschiedene Gegenstände am Stück anbieten.",
