@@ -48,6 +48,7 @@
 			"system": "Ajustes",
 			"skipLevelAnimation": "Saltar la animación de subida de nivel",
 			"skipFightAnimation": "Mostrar directamente el resultado del combate",
+			"bypassGatheringGrid": "Saltarse la cuadrícula de recolección",
 			"goodbye": "Adiós, Maestro {name}..."
 		}
 	},
@@ -463,6 +464,7 @@
 		"reincarnation": "Tu Dino ha sido reencarnado.",
 		"loginToLike": "Connectez-vous pour aimer cette news.",
 		"shovelMine": "¡No vas a excavar al lado del minero, ¿verdad?!",
+		"gatherAlertError": "Error durante la recolección automática.",
 		"market": {
 			"minimalValueError": "El valor total de su oferta no alcanza el valor mínimo.",
 			"tooManyItems": "No puedes vender más de {items} objetos diferentes a la vez.",
