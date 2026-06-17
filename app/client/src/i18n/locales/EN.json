@@ -49,7 +49,7 @@
 			"system": "Settings",
 			"skipLevelAnimation": "Skip level up animation",
 			"skipFightAnimation": "Skip battle animation",
-			"bypassGatheringGrid": "Bypass gathering grid",
+			"bypassGatheringGrid": "Passer la grille de collecte",
 			"goodbye": "Goodbye, Master {name}..."
 		}
 	},
@@ -603,7 +603,7 @@
 		"reincarnation": "Your Dinoz has been reincarnated.",
 		"loginToLike": "Sign in to like this news.",
 		"shovelMine": "You aren't going to dig right next to the miner !?!",
-		"gatherAlertError": "Error during automated gathering.",
+		"gatherAlertError": "Erreur lors de la collecte automatique.",
 		"market": {
 			"minimalValueError": "Your offer's total value doesn't reach the minimal value.",
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
