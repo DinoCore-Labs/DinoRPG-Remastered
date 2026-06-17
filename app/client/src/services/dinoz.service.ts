@@ -29,10 +29,11 @@ export const DinozService = {
 	useIrma(dinozId: number): Promise<ItemFeedBack> {
 		return api.post<ItemFeedBack>(`/dinoz/${dinozId}/irma`);
 	},
-	move(dinozId: number, placeId: number): Promise<FightResult> {
+	move(dinozId: number, placeId: number, autoReequip?: boolean): Promise<FightResult> {
 		return api.put<FightResult>('/dinoz/move', {
 			placeId,
-			dinozId
+			dinozId,
+			autoReequip
 		});
 	},
 	resurrectDinoz(dinozId: number): Promise<void | ItemFeedBack> {

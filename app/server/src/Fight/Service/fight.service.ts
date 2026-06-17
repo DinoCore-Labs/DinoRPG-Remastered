@@ -24,6 +24,8 @@ import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.c
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
+import { addItemToDinoz } from '../../Inventory/Controller/addItemToDinoz.controller.js';
+import { removeItem } from '../../Inventory/Controller/removeItem.controller.js';
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { advanceDinozMissionOnFightWon, advanceDinozMissionOnMove } from '../../Mission/Controller/mission.progress.js';
 import { resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
@@ -54,6 +56,7 @@ import { movementListener } from './movementListener.service.js';
  */
 export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput }>, reply: FastifyReply) {
 	const dinozId = req.body.dinozId;
+	const autoReequip = req.body.autoReequip ?? false;
 	const dayOfWeek = new Date().getDay();
 	const authed = req.user;
 	// Get Dinoz info
@@ -100,10 +103,10 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 		throw new ExpectedError(`dead`);
 	}
 	// Look for a special action that happens on the fight.
-	let fight = await movementListener(user, team, dinozData.placeId, dinozId);
+	let fight = await movementListener(user, team, dinozData.placeId, dinozId, { autoReequip });
 	// If no fight happened, trigger a regular fight.
 	if (!fight) {
-		fight = await fightMonstersAtPlace(team, dinozData.placeId, user);
+		fight = await fightMonstersAtPlace(team, dinozData.placeId, user, { autoReequip });
 	}
 	// Consume fight action
 	for (const dino of team) {
@@ -158,7 +161,7 @@ type FightMonstersAtPlaceOptions = FightRewardOptions & {
 export async function fightMonstersAtPlace(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum,
-	user: Pick<User, 'id' | 'teacher' | 'cooker'>,
+	user: Pick<User, 'id' | 'teacher' | 'cooker'> & { items: { itemId: number; quantity: number }[] },
 	options: FightMonstersAtPlaceOptions = {}
 ) {
 	const dayOfWeek = new Date().getDay();
@@ -340,7 +343,7 @@ export async function rewardFightVsMonsters(
 	monsters: MonsterFiche[],
 	fightResult: FightProcessResult,
 	place: PlaceEnum,
-	user: Pick<User, 'id' | 'teacher'>,
+	user: Pick<User, 'id' | 'teacher'> & { items: { itemId: number; quantity: number }[] },
 	options: FightRewardOptions = {}
 ) {
 	if (!team.length) {
@@ -554,12 +557,25 @@ export async function rewardFightVsMonsters(
 
 	// Items used
 	const merguezPerPlayer: Record<string, number> = {};
+	const autoReequippedItems: Record<number, number> = {};
+	const missingReequipItems: Record<number, number> = {};
 	for (const fighter of [...fightResult.attackers, ...fightResult.defenders]) {
 		for (const itemUsed of fighter.itemsUsed) {
 			const itemRef = itemList[itemUsed];
 			// Remove only classic items
 			if (itemRef.itemType === ItemType.CLASSIC) {
 				await removeItemFromDinoz(fighter.dinozId, itemUsed);
+				if (options.autoReequip && fighter.userId === user.id) {
+					const inventoryItem = user.items.find(i => i.itemId === itemUsed);
+					if (inventoryItem && inventoryItem.quantity > 0) {
+						inventoryItem.quantity--;
+						await removeItem(user.id, itemUsed, 1);
+						await addItemToDinoz(fighter.dinozId, itemUsed);
+						autoReequippedItems[itemUsed] = (autoReequippedItems[itemUsed] || 0) + 1;
+					} else {
+						missingReequipItems[itemUsed] = (missingReequipItems[itemUsed] || 0) + 1;
+					}
+				}
 			}
 			if (fighter.userId && itemUsed === Item.GOBLIN_MERGUEZ) {
 				if (!merguezPerPlayer[fighter.userId]) {
@@ -647,7 +663,9 @@ export async function rewardFightVsMonsters(
 			itemsUsed: a.itemsUsed
 		})),
 		place: place,
-		itemWon: itemWon
+		itemWon: itemWon,
+		autoReequipped: Object.entries(autoReequippedItems).map(([id, count]) => ({ itemId: Number(id), count })),
+		missingReequip: Object.entries(missingReequipItems).map(([id, count]) => ({ itemId: Number(id), count }))
 	};
 }
 

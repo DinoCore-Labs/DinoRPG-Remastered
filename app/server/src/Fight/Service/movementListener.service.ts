@@ -67,10 +67,12 @@ function sameTriggeredFight(a: TriggeredMissionFight, b: TriggeredMissionFight):
 }
 
 export async function movementListener(
-	user: Pick<User, 'id' | 'teacher' | 'cooker'> & UserForConditionCheck,
+	user: Pick<User, 'id' | 'teacher' | 'cooker'> &
+		UserForConditionCheck & { items: { itemId: number; quantity: number }[] },
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	finalPlace: PlaceEnum,
-	activeDinoz: number
+	activeDinoz: number,
+	options: { autoReequip?: boolean } = {}
 ): Promise<FightResult | false> {
 	const orderedTeam = [
 		...team.filter(member => member.id === activeDinoz),
@@ -91,7 +93,9 @@ export async function movementListener(
 		return monster;
 	});
 	const fightResult = calculateFightVsMonsters(team, user, finalPlace, monsters);
-	const result = await rewardFightVsMonsters(team, monsters, fightResult, finalPlace, user);
+	const result = await rewardFightVsMonsters(team, monsters, fightResult, finalPlace, user, {
+		autoReequip: options.autoReequip
+	});
 	const winner = fightResult.outcome === FightOutcome.AttackerWin;
 	if (winner) {
 		const teamIds = team.map(dinoz => dinoz.id);

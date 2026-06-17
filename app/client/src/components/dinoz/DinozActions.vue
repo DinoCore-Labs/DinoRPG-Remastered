@@ -131,6 +131,7 @@ import eventBus from '../../events';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { itinerantShopNameList, shopNameList } from '../../constants/shop';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import { itemNameList } from '@dinorpg/core/models/items/itemNameList.js';
 import MissionTalkModal from '../modal/MissionTalkModal.vue';
 import { MissionService } from '../../services/mission.service';
 import type {
@@ -153,6 +154,7 @@ export default defineComponent({
 			resurrect: false as boolean,
 			sessionStore: sessionStore(),
 			dinozStore: dinozStore(),
+			localStore: localStore(),
 			Action,
 			itinerantName: '' as string,
 			uStore: userStore(),
@@ -414,8 +416,23 @@ export default defineComponent({
 					break;
 				case Action.FIGHT: {
 					try {
-						const fight = await FightService.processFight(this.dinozId);
+						const fight = await FightService.processFight(this.dinozId, this.localStore.getAutoReequipItems);
 						this.sessionStore.setFightResult(fight);
+						if (fight.autoReequipped && fight.autoReequipped.length > 0) {
+							const itemsStr = fight.autoReequipped
+								.map(item => `${item.count}x ${this.$t(`items.name.${itemNameList[item.itemId]}`)}`)
+								.join(', ');
+							this.$toast.success(formatText(this.$t('toast.autoReequipSuccess', { items: itemsStr })));
+						}
+						if (fight.missingReequip && fight.missingReequip.length > 0) {
+							const itemsStr = fight.missingReequip
+								.map(item => `${item.count}x ${this.$t(`items.name.${itemNameList[item.itemId]}`)}`)
+								.join(', ');
+							this.$toast.open({
+								message: formatText(this.$t('toast.autoReequipMissing', { items: itemsStr })),
+								type: 'warning'
+							});
+						}
 						this.$router.push({
 							name: 'FightPage',
 							params: { dinozId: this.dinozId.toString() }
