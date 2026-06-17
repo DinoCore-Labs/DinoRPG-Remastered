@@ -20,6 +20,7 @@
 			"shop": "Tienda",
 			"bank": "Banque",
 			"dojo": "Dojo",
+			"clan": "Clan",
 			"order": "Ordenar",
 			"enclosure": "Tienda de Dinos",
 			"skills": "Competencias"
@@ -205,7 +206,10 @@
 		"market": "DinoRPG [ Mercado de los Maestros ]",
 		"skillTrees": "DinoRPG [ Árbol de Competencias ]",
 		"bank": "DinoRPG [ Banque de Dinoland ]",
-		"admin": "DinoRPG [ Panel de Admin ]"
+		"admin": "DinoRPG [ Panel de Admin ]",
+		"clan": "DinoRPG [ Clan : {clan} ]",
+		"createClan": "DinoRPG [ Créer un Clan ]",
+		"clansList": "DinoRPG [ Clans ]"
 	},
 	"adminPage": {
 		"news": {
@@ -269,6 +273,140 @@
 			"yourOwnBids": "Tus compras"
 		}
 	},
+	"clan": {
+		"icons": {
+			"members": "Nombre de membres",
+			"gold": "Valeur du trésor",
+			"crown": "Chef du Clan"
+		},
+		"header": {
+			"title": "Clan: {name}",
+			"infos": "Informations sur le clan",
+			"creation_date": "Créé le {date}"
+		},
+		"tabs": {
+			"pages": "Pages du clan",
+			"members": "Membres du clan",
+			"treasure": "Tesoro del Clan",
+			"history": "Historique du clan",
+			"parameters": "Paramètres"
+		},
+		"clanPages": {
+			"button": {
+				"create": "Créer une page",
+				"edit": "Modifier la page",
+				"delete": "Supprimer la page",
+				"join_clan": "Rejoindre le Clan"
+			},
+			"creation": {
+				"edit": "Modifier la page de clan",
+				"new": "Créer une page de clan",
+				"title": "Titre",
+				"content": "Contenu",
+				"public": "Page publique ?",
+				"action": {
+					"create": "Créer",
+					"edit": "Modifier",
+					"cancel": "Cancelar"
+				}
+			}
+		},
+		"members": {
+			"th": {
+				"name": "Nom",
+				"donation": "Dons",
+				"stats": "Stats",
+				"actions": "Acciones",
+				"event": "Score d'événement"
+			},
+			"edit": {
+				"disclaimer": "Cette page vous permet de modifier les droits du joueur <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> dans le Clan.",
+				"right": {
+					"MEMBER_EDIT": "Peut changer les droits et surnoms des membres",
+					"PAGE_MANAGE": "Peut gérer les pages du Clan",
+					"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Peut accepter et refuser de nouveaux membres",
+					"MEMBER_EXCLUDE": "Peut renvoyer des membres",
+					"DISCUSSION_DELETE_MESSAGE": "Peut supprimer des messages du fil de discussion",
+					"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan",
+					"CLAN_EDIT_LANG": "Peut changer la langue du Clan",
+					"WAR_OFFICER": "Peut déclarer des guerres",
+					"CLAN_BUILD_CASTLE": "Peut construire le château"
+				},
+				"nickname": "Surnom du joueur",
+				"save": "Enregistrer",
+				"saved": "Modifications enregistrées avec succès !"
+			},
+			"request": {
+				"title": "Adhésions en attente",
+				"accept": "Accepter",
+				"deny": "Refuser",
+				"maximum": "Le clan est plein, vous ne pouvez pas accepter de nouvelles demandes."
+			},
+			"action": {
+				"edit": "Éditer",
+				"exclude": "Exclure",
+				"leave": "Quitter le clan"
+			},
+			"stat": {
+				"last_login": "Dernière connexion le {date}."
+			}
+		},
+		"ingredients": {
+			"help": "Votre trésor d'une valeur de {value}:gold: est protégé par le château. Vous pouvez donner des ingrédients pour qu'ils soient ajoutés au trésor du Clan.",
+			"price": "{price}:gold:",
+			"giveAway": "Donner au clan",
+			"confirm": "Voulez vous vraiment donner au clan ces ingrédients d'une valeur de {gold} Or"
+		},
+		"history": {
+			"page": "Page",
+			"type": {
+				"CLAN_CREATED": "Création du clan",
+				"PLAYER_JOIN": "Un joueur a rejoint le clan",
+				"PLAYER_LEAVE": "Un joueur a quitté le clan",
+				"PLAYER_EXCLUSION": "Le joueur {msg} a été exclu du clan"
+			}
+		},
+		"settings": {
+			"banner": {
+				"title": "Changer l'URL de la bannière du clan :",
+				"info": "La bannière a un ratio de 448px de large sur 100px de long."
+			},
+			"langs": {
+				"title": "Langues"
+			},
+			"action": {
+				"delete": "Supprimer le clan"
+			}
+		}
+	},
+	"clansList": {
+		"title": "Clanes",
+		"disclaimer": {
+			"text": "Les Clans sont des groupes de joueurs qui combattent ensemble dans l'univers de Dinoland."
+		},
+		"button": {
+			"create": "Créer un Clan"
+		},
+		"th": {
+			"name": "Clan",
+			"leader": "Chef",
+			"members": "Membres",
+			"date": "Date de création"
+		},
+		"request": {
+			"info": "Vous avez envoyé une demande pour rejoindre le clan ",
+			"cancel": "Annuler la demande."
+		}
+	},
+	"createClan": {
+		"title": "Créer un clan",
+		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
+		"clan_name": "Nom",
+		"clan_langs": "Langues",
+		"clan_description": "Description",
+		"go_back_button": "Cancelar",
+		"create_button": "Créer"
+	},
 	"manageDinoz": {
 		"title": "Gestión de mis Dinos",
 		"disclaimer": "Este módulo de gestión es accesible gracias a su **Piedra Diamante Aglomerada**: ¡un verdadero concentrado de tecnología!",
@@ -328,7 +466,8 @@
 		"noResults": "No hay resultados",
 		"sortDinoz": "Administrar mis Dinos",
 		"skills": "Competencias",
-		"unavailable": "Indisponible"
+		"unavailable": "Indisponible",
+		"clan": "Clan"
 	},
 	"popup": {
 		"confirm": "¿Confirmas esta acción?",
@@ -586,7 +725,9 @@
 		"tabs": {
 			"players": "Jugadores",
 			"average": "Promedio",
-			"completion": "Completado"
+			"completion": "Completado",
+			"clans": "Clanes",
+			"treasure": "Valeur du trésor"
 		},
 		"th": {
 			"pos": "Pos.",
@@ -601,7 +742,9 @@
 		"disclaimer": {
 			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
 			"average": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
-			"completion": "Las clasificaciones de jugadores se actualizan a medianoche y se calculan utilizando la fórmula de finalización basada en los Dinos activos y el progreso en la historia del juego."
+			"completion": "Las clasificaciones de jugadores se actualizan a medianoche y se calculan utilizando la fórmula de finalización basada en los Dinos activos y el progreso en la historia del juego.",
+			"clan": "Le classement des clans est mis à jour en temps réel et est calculé à partir de la somme des points des membres d'un clan",
+			"treasure": "Le classement des clans est mis à jour en temps réel et est calculé à partir de la valeur du trésor du clan"
 		},
 		"page": {
 			"previous": "Página anterior",
