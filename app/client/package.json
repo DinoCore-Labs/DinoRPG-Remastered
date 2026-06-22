@@ -12,7 +12,7 @@
 		"@eternaltwin/dinorpg_animations": "^1.0.8",
 		"axios": "^1.17.0",
 		"echarts": "^6.1.0",
-		"markdown-it": "^14.1.1",
+		"markdown-it": "^14.2.0",
 		"mitt": "^3.0.1",
 		"pinia": "^3.0.4",
 		"pinia-plugin-persistedstate": "^4.7.1",
