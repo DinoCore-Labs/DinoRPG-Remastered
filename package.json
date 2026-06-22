@@ -3,6 +3,12 @@
 	"version": "0.9.6",
 	"description": "Re-développement du jeu DinoRPG de Motion Twin",
 	"private": "true",
+	"author": "DinoRPG Remastered Contributors",
+	"license": "AGPL-3.0-or-later",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/DinoCore-Labs/DinoRPG-Remastered.git"
+	},
 	"type": "module",
 	"engines": {
 		"node": ">=22"
@@ -28,8 +34,6 @@
 		]
 	},
 	"keywords": [],
-	"author": "Matthieu83600",
-	"license": "ISC",
 	"packageManager": "pnpm@10.12.1",
 	"devDependencies": {
 		"@changesets/cli": "^2.30.0",
