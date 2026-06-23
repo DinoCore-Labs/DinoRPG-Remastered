@@ -4,6 +4,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { prisma } from '../../prisma.js';
+import { isLeader } from '../Controller/isLeader.controller.js';
 import { isMember } from '../Controller/isMember.controller.js';
 import { memberHasRight } from '../Controller/memberHasRight.controller.js';
 import { clanIdParamSchema, updateClanMemberRequestBodySchema } from '../Schema/clan.schema.js';
@@ -187,4 +188,43 @@ export async function getClanMembersList(req: FastifyRequest, reply: FastifyRepl
 	});
 
 	return reply.send(membersList);
+}
+
+export async function updateClanLeader(req: FastifyRequest, reply: FastifyReply) {
+	const { clanId, id } = req.params as { clanId: number; id: string };
+	const userId = id;
+
+	if (!(await isLeader(req.user.id, clanId))) {
+		throw new ExpectedError('Permission denied');
+	}
+
+	const newLeader = await prisma.$transaction(async tx => {
+		await tx.clan.update({
+			where: {
+				id: clanId
+			},
+			data: {
+				leaderId: userId
+			}
+		});
+
+		await tx.clanMember.update({
+			where: {
+				userId: userId
+			},
+			data: {
+				rights: Object.values(ClanMemberRight)
+			}
+		});
+
+		await tx.clanHistory.create({
+			data: {
+				clanId: clanId,
+				authorId: userId,
+				type: ClanHistoryType.NEW_LEADER,
+				authorMessage: req.user.name
+			}
+		});
+	});
+	return reply.send(newLeader);
 }
