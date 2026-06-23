@@ -47,6 +47,9 @@ export const ClanService = {
 	async updateClanMember(clanId: number, clanMember: UpdateClanMemberRequestBody['clanMember']): Promise<void> {
 		return api.put<void>(`/clan/${clanId}/member`, { clanMember: clanMember });
 	},
+	async updateClanLeader(clanId: number, userId: string): Promise<void> {
+		return api.put<void>(`/clan/${clanId}/leader/${userId}`);
+	},
 	async getClanMembersList(clanId: number): Promise<Array<ClanMember>> {
 		return api.get<Array<ClanMember>>(`/clan/${clanId}/members`);
 	},
