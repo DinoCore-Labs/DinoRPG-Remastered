@@ -50,7 +50,7 @@ export async function createClan(req: FastifyRequest, reply: FastifyReply) {
 			data: {
 				clanId: clan.id,
 				userId: userId,
-				rights: ['all']
+				rights: Object.values(ClanMemberRight)
 			}
 		});
 
