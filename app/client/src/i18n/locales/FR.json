@@ -333,7 +333,8 @@
 				},
 				"nickname": "Surnom du joueur",
 				"save": "Enregistrer",
-				"saved": "Modifications enregistrées avec succès !"
+				"saved": "Modifications enregistrées avec succès !",
+				"leader": "Nommer Chef du clan"
 			},
 			"request": {
 				"title": "Adhésions en attente",
@@ -359,10 +360,11 @@
 		"history": {
 			"page": "Page",
 			"type": {
-				"CLAN_CREATED": "Création du clan",
-				"PLAYER_JOIN": "Un joueur a rejoint le clan",
-				"PLAYER_LEAVE": "Un joueur a quitté le clan",
-				"PLAYER_EXCLUSION": "Le joueur {msg} a été exclu du clan"
+				"CLAN_CREATED": "Création du clan.",
+				"PLAYER_JOIN": "Un joueur a rejoint le clan.",
+				"PLAYER_LEAVE": "Un joueur a quitté le clan.",
+				"PLAYER_EXCLUSION": "Le joueur {msg} a été exclu du clan.",
+				"NEW_LEADER": "Le chef du clan a changé."
 			}
 		},
 		"settings": {
