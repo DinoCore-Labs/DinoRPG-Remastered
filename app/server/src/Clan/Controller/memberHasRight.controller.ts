@@ -19,11 +19,7 @@ export async function memberHasRight(userId: string, clanId: number, right: Clan
 	});
 	if (!member || member.clanId !== clanId) return false;
 
-	if (
-		member.clan.leaderId === userId ||
-		(member.rights as string[]).includes('all') ||
-		(member.rights as string[]).includes(right)
-	) {
+	if (member.clan.leaderId === userId || (member.rights as string[]).includes(right)) {
 		return true;
 	}
 	return false;
