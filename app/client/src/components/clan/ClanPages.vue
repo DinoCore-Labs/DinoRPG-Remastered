@@ -81,7 +81,7 @@ export default defineComponent({
 			hasPageManageRight: false as boolean,
 			homePageId: undefined as number | undefined,
 			clanStore: clanStore(),
-			joinClanTip: formatText(this.$t('clan.clanPages.join_clan', { money: formatNumber(CLAN_JOIN_MONEY, '.') }))
+			joinClanTip: formatText(this.$t('clan.clanPages.button.join_clan', { money: formatNumber(CLAN_JOIN_MONEY, '.') }))
 		};
 	},
 	methods: {
