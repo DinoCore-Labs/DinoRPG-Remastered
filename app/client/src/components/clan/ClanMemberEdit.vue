@@ -17,6 +17,7 @@
 			/>
 		</div>
 		<a class="button" @click="updateClanMember()">{{ $t('clan.members.edit.save') }}</a>
+		<a class="button" v-if="isLeader" @click="updateClanLeader()">{{ $t('clan.members.edit.leader') }}</a>
 	</div>
 </template>
 
@@ -29,6 +30,8 @@ import { errorHandler } from '../../utils/errorHandler.js';
 import DZInput from '../../components/utils/DZInput.vue';
 import DZDisclaimer from '../utils/DZDisclaimer.vue';
 import DZCheckbox from '../utils/DZCheckbox.vue';
+import { userStore } from '../../store/userStore.ts';
+import { clanStore } from '../../store/clanStore.ts';
 
 export default defineComponent({
 	name: 'ClanMemberEdit',
@@ -40,8 +43,15 @@ export default defineComponent({
 	data() {
 		return {
 			clanMember: null as GetClanMemberResponse,
-			rights: [] as { name: ClanMemberRight; selected: boolean }[]
+			rights: [] as { name: ClanMemberRight; selected: boolean }[],
+			userStore: userStore(),
+			clanStore: clanStore()
 		};
+	},
+	computed: {
+		isLeader(): boolean {
+			return this.clanStore.getClan?.leader.id === this.userStore.id;
+		}
 	},
 	methods: {
 		async getClanMember(): Promise<void> {
@@ -66,6 +76,24 @@ export default defineComponent({
 					message: this.$t('clan.members.edit.saved'),
 					type: 'success'
 				});
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
+		},
+		async updateClanLeader(): Promise<void> {
+			if (!this.clanMember) return;
+
+			try {
+				this.clanMember.rights = this.rights.filter(r => r.selected).map(r => r.name.toString());
+				await ClanService.updateClanLeader(Number(this.$route.params.id), this.clanMember.user.id);
+
+				this.$toast.open({
+					message: this.$t('clan.members.edit.newLeader'),
+					type: 'success'
+				});
+
+				this.$router.push(`/clan/${Number(this.$route.params.id)}`);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
