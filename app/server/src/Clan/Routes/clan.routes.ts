@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 
+import { userIdParamSchema } from '../../User/Schema/user.schema.js';
 import {
 	clanHistoryPageSchema,
 	clanIdParamSchema,
@@ -41,6 +42,7 @@ import {
 	getClanMembersList,
 	getMemberHasRight,
 	leaveClanSelf,
+	updateClanLeader,
 	updateClanMember
 } from '../Service/clanMember.service.js';
 import {
@@ -189,6 +191,17 @@ export async function clanRoutes(app: FastifyInstance) {
 			}
 		},
 		updateClanMember
+	);
+	app.put(
+		'/:clanId/leader/:id',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Clan'],
+				params: clanIdParamSchema.merge(userIdParamSchema)
+			}
+		},
+		updateClanLeader
 	);
 	app.delete(
 		'/:clanId/member/:memberId',
