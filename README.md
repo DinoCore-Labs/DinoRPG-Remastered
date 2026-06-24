@@ -211,15 +211,15 @@ Certaines parties de son code source, de ses modèles, de ses données et de sa 
 
 https://github.com/motion-twin/WebGamesArchives/tree/main/DinoRPG
 
-Ainsi que du projet Open Source d'**EternalTwin DinoRPG** :
+Ainsi que du projet Open Source d'**Eternaltwin DinoRPG** :
 
 https://gitlab.com/eternaltwin/dinorpg/dinorpg
 
-Les éléments provenant d’EternalTwin DinoRPG ont été intégrés et modifiés à différentes étapes du développement de DinoRPG Remastered.
+Les éléments provenant d’Eternaltwin DinoRPG ont été intégrés et modifiés à différentes étapes du développement de DinoRPG Remastered.
 
 DinoRPG Remastered a depuis été largement restructuré et développé avec une architecture distincte, notamment un frontend Vue, un backend Fastify et Prisma, ainsi qu’une organisation en monorepo pnpm.
 
-Le travail original reste attribué aux contributeurs respectifs du projet EternalTwin DinoRPG, à savoir :
+Le travail original reste attribué aux contributeurs respectifs du projet Eternaltwin DinoRPG, à savoir :
 
 - Jérémy "Biosha" Guilbert
 - Sylvain "Jahaa" Hunault
