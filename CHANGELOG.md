@@ -551,6 +551,12 @@
 
 ## 🔹 Server
 
+## 0.29.1
+
+### Patch Changes
+
+- 4668a25: Stop tracking the generated Prisma client and generate it automatically before building the server.
+
 ## 0.29.0
 
 ### Minor Changes
