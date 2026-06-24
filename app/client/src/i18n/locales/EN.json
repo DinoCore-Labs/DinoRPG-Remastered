@@ -23,7 +23,7 @@
 			"clan": "Clan",
 			"order": "Order",
 			"enclosure": "Enclosure",
-			"skills": "...Skills :"
+			"skills": "Skills"
 		},
 		"authMenu": {
 			"name": "Username:",
@@ -465,7 +465,7 @@
 		"loading": "Loading...",
 		"noResults": "No result",
 		"sortDinoz": "Manage my Dinoz",
-		"skills": "...Skills :",
+		"skills": "Skills",
 		"unavailable": "Unavailable",
 		"clan": "Clan"
 	},
@@ -1928,7 +1928,7 @@
 			"candle_card": "This Anniversary card gives you access to the sandcastle game at the Frish Port",
 			"christmas_ticket": "Use to play in the Snowplough Game and earn 1,000 gold coins, 5,000 or a Santaz.",
 			"tictac_ticket": "These Tac Tickets will allow you to dig in Grandpa Joe's garden, in search of treasures hidden by his great-grandfather.",
-			"anniversary_ticket": "This Anniversary card gives you access to the sandcastle game at the Frish Port",
+			"anniversary_ticket": "This Anniversary card gives you access to the sandcastle game at the Frish Port!",
 			"easter_egg": "An Urma's egg can be used to obtain an item among all those that exist in Dinoland. Will it be a rare or common item you'll get?",
 			"fire_cracker": "With this firecracker, you can set off fireworks in Dinotown to earn treasures!",
 			"special_potion_irma": "Madam Irma's famous potion allows the Dinoz who drinks it to *play a new action immediately* without having to wait for the next day. But you can only carry 3.",
