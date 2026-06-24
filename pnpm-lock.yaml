@@ -145,12 +145,6 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3(typescript@6.0.3)
 
-  app/prisma:
-    dependencies:
-      '@prisma/client-runtime-utils':
-        specifier: 7.8.0
-        version: 7.8.0
-
   app/server:
     dependencies:
       '@dinorpg/core':
