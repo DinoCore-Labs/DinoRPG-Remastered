@@ -29,15 +29,15 @@ export const BANK_SAVING_MAX_DEPOSIT = 1_000_000;
 export const BANK_SAVING_PLANS = [
 	{
 		durationDays: 7,
-		interestRateBps: 2500
+		interestRateBps: 1000
 	},
 	{
 		durationDays: 14,
-		interestRateBps: 4000
+		interestRateBps: 2500
 	},
 	{
 		durationDays: 21,
-		interestRateBps: 5000
+		interestRateBps: 4000
 	},
 	{
 		durationDays: 30,
