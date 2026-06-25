@@ -49,6 +49,7 @@
 			"system": "Einstellungen",
 			"skipLevelAnimation": "Animation beim Stufenaufstieg überspringen",
 			"skipFightAnimation": "Kampfergebnis sofort anzeigen",
+			"autoReequipItems": "Rééquiper automatiquement les objets consommés",
 			"bypassGatheringGrid": "Passer la grille de collecte",
 			"goodbye": "Auf Wiedersehen, Meister {name}..."
 		}
@@ -580,8 +581,8 @@
 		"buttonValidateAdvEditor": "Valider et envoyer le message"
 	},
 	"toast": {
-		"autoReequipSuccess": "Gegenstand/Gegenstände automatisch wieder ausgerüstet: {items}",
-		"autoReequipMissing": "Fehlende Gegenstände zum Wiederaufrüsten: {items}",
+		"autoReequipSuccess": "Objet(s) rééquipé(s) automatiquement : {items}",
+		"autoReequipMissing": "Objet(s) manquant(s) pour le rééquipement : {items}",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
 		"sphere": "Dein Dinoz hat die Fähigkeit „{value}“ erlernt.",
