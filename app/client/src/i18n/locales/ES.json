@@ -49,6 +49,7 @@
 			"system": "Ajustes",
 			"skipLevelAnimation": "Saltar la animación de subida de nivel",
 			"skipFightAnimation": "Mostrar directamente el resultado del combate",
+			"autoReequipItems": "Rééquiper automatiquement les objets consommés",
 			"bypassGatheringGrid": "Passer la grille de collecte",
 			"goodbye": "Adiós, Maestro {name}..."
 		}
@@ -580,8 +581,8 @@
 		"buttonValidateAdvEditor": "Valider et envoyer le message"
 	},
 	"toast": {
-		"autoReequipSuccess": "Objeto(s) reequipado(s) automáticamente: {items}",
-		"autoReequipMissing": "Falta(n) objeto(s) para reequipar: {items}",
+		"autoReequipSuccess": "Objet(s) rééquipé(s) automatiquement : {items}",
+		"autoReequipMissing": "Objet(s) manquant(s) pour le rééquipement : {items}",
 		"heal": "Tu Dino ha recuperado {value} :hp:.",
 		"gold": "Recibiste {value} :gold:.",
 		"sphere": "Tu Dino ha aprendido la competencia {value}.",
