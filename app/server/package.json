@@ -1,12 +1,13 @@
 {
 	"name": "@dinorpg/server",
-	"version": "0.29.0",
+	"version": "0.29.1",
 	"description": "",
 	"private": "true",
 	"type": "module",
 	"main": "main.js",
 	"scripts": {
-		"build": "tsc --build ./tsconfig.json",
+		"prisma:generate": "prisma generate",
+		"build": "pnpm prisma:generate &&tsc --build ./tsconfig.json",
 		"start": "node dist/main.js",
 		"dev": "tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\"",
 		"db:sync:dev": "prisma migrate dev && prisma generate && prisma db seed",
@@ -29,7 +30,7 @@
 		"fastify": "^5.8.5",
 		"fastify-type-provider-zod": "^6.1.0",
 		"pg": "^8.21.0",
-		"sharp": "^0.35.1",
+		"sharp": "^0.35.2",
 		"zod": "^4.4.3"
 	},
 	"devDependencies": {

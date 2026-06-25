@@ -20,9 +20,10 @@
 			"shop": "Shop",
 			"bank": "Bank",
 			"dojo": "Dojo",
+			"clan": "Clan",
 			"order": "Order",
 			"enclosure": "Enclosure",
-			"skills": "...Skills :"
+			"skills": "Skills"
 		},
 		"authMenu": {
 			"name": "Username:",
@@ -48,8 +49,7 @@
 			"system": "Settings",
 			"skipLevelAnimation": "Skip level up animation",
 			"skipFightAnimation": "Skip battle animation",
-			"autoReequipItems": "Auto re-equip items after fight",
-			"bypassGatheringGrid": "Bypass gathering grid",
+			"bypassGatheringGrid": "Passer la grille de collecte",
 			"goodbye": "Goodbye, Master {name}..."
 		}
 	},
@@ -206,7 +206,10 @@
 		"market": "DinoRPG [ Tamer Market ]",
 		"skillTrees": "DinoRPG [ Skill Trees ]",
 		"bank": "DinoRPG [ Bank of Dinoland ]",
-		"admin": "DinoRPG [ Admin Dashboard ]"
+		"admin": "DinoRPG [ Admin Dashboard ]",
+		"clan": "DinoRPG [ Clan : {clan} ]",
+		"createClan": "DinoRPG [ Créer un Clan ]",
+		"clansList": "DinoRPG [ Clans ]"
 	},
 	"adminPage": {
 		"news": {
@@ -270,6 +273,140 @@
 			"yourOwnBids": "Your Purchases"
 		}
 	},
+	"clan": {
+		"icons": {
+			"members": "Nombre de membres",
+			"gold": "Valeur du trésor",
+			"crown": "Chef du Clan"
+		},
+		"header": {
+			"title": "Clan: {name}",
+			"infos": "Informations sur le clan",
+			"creation_date": "Créé le {date}"
+		},
+		"tabs": {
+			"pages": "Pages du clan",
+			"members": "Membres du clan",
+			"treasure": "Clan Treasure",
+			"history": "Historique du clan",
+			"parameters": "Paramètres"
+		},
+		"clanPages": {
+			"button": {
+				"create": "Créer une page",
+				"edit": "Modifier la page",
+				"delete": "Supprimer la page",
+				"join_clan": "Rejoindre le Clan"
+			},
+			"creation": {
+				"edit": "Modifier la page de clan",
+				"new": "Créer une page de clan",
+				"title": "Title",
+				"content": "Contenu",
+				"public": "Page publique ?",
+				"action": {
+					"create": "Créer",
+					"edit": "Modifier",
+					"cancel": "Cancel"
+				}
+			}
+		},
+		"members": {
+			"th": {
+				"name": "Name",
+				"donation": "Dons",
+				"stats": "Stats",
+				"actions": "Actions",
+				"event": "Score d'événement"
+			},
+			"edit": {
+				"disclaimer": "Cette page vous permet de modifier les droits du joueur <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> dans le Clan.",
+				"right": {
+					"MEMBER_EDIT": "Peut changer les droits et surnoms des membres",
+					"PAGE_MANAGE": "Peut gérer les pages du Clan",
+					"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Peut accepter et refuser de nouveaux membres",
+					"MEMBER_EXCLUDE": "Peut renvoyer des membres",
+					"DISCUSSION_DELETE_MESSAGE": "Peut supprimer des messages du fil de discussion",
+					"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan",
+					"CLAN_EDIT_LANG": "Peut changer la langue du Clan",
+					"WAR_OFFICER": "Peut déclarer des guerres",
+					"CLAN_BUILD_CASTLE": "Peut construire le château"
+				},
+				"nickname": "Surnom du joueur",
+				"save": "Enregistrer",
+				"saved": "Modifications enregistrées avec succès !"
+			},
+			"request": {
+				"title": "Adhésions en attente",
+				"accept": "Accept",
+				"deny": "Refuser",
+				"maximum": "Le clan est plein, vous ne pouvez pas accepter de nouvelles demandes."
+			},
+			"action": {
+				"edit": "Éditer",
+				"exclude": "Exclure",
+				"leave": "Quitter le clan"
+			},
+			"stat": {
+				"last_login": "Dernière connexion le {date}."
+			}
+		},
+		"ingredients": {
+			"help": "Votre trésor d'une valeur de {value}:gold: est protégé par le château. Vous pouvez donner des ingrédients pour qu'ils soient ajoutés au trésor du Clan.",
+			"price": "{price}:gold:",
+			"giveAway": "Donner au clan",
+			"confirm": "Voulez vous vraiment donner au clan ces ingrédients d'une valeur de {gold} Or"
+		},
+		"history": {
+			"page": "Page",
+			"type": {
+				"CLAN_CREATED": "Création du clan",
+				"PLAYER_JOIN": "Un joueur a rejoint le clan",
+				"PLAYER_LEAVE": "Un joueur a quitté le clan",
+				"PLAYER_EXCLUSION": "Le joueur {msg} a été exclu du clan"
+			}
+		},
+		"settings": {
+			"banner": {
+				"title": "Changer l'URL de la bannière du clan :",
+				"info": "La bannière a un ratio de 448px de large sur 100px de long."
+			},
+			"langs": {
+				"title": "Langues"
+			},
+			"action": {
+				"delete": "Supprimer le clan"
+			}
+		}
+	},
+	"clansList": {
+		"title": "Clans",
+		"disclaimer": {
+			"text": "Les Clans sont des groupes de joueurs qui combattent ensemble dans l'univers de Dinoland."
+		},
+		"button": {
+			"create": "Créer un Clan"
+		},
+		"th": {
+			"name": "Clan",
+			"leader": "Chef",
+			"members": "Membres",
+			"date": "Date de création"
+		},
+		"request": {
+			"info": "Vous avez envoyé une demande pour rejoindre le clan ",
+			"cancel": "Annuler la demande."
+		}
+	},
+	"createClan": {
+		"title": "Créer un clan",
+		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
+		"clan_name": "Name",
+		"clan_langs": "Langues",
+		"clan_description": "Description",
+		"go_back_button": "Cancel",
+		"create_button": "Créer"
+	},
 	"manageDinoz": {
 		"title": "My Dinoz management",
 		"disclaimer": "This management module is accessible thanks to your **Diamantite Pebble**: a real concentrate of technology!",
@@ -328,8 +465,9 @@
 		"loading": "Loading...",
 		"noResults": "No result",
 		"sortDinoz": "Manage my Dinoz",
-		"skills": "...Skills :",
-		"unavailable": "Unavailable"
+		"skills": "Skills",
+		"unavailable": "Unavailable",
+		"clan": "Clan"
 	},
 	"popup": {
 		"confirm": "Confirm this action?",
@@ -467,7 +605,7 @@
 		"reincarnation": "Your Dinoz has been reincarnated.",
 		"loginToLike": "Sign in to like this news.",
 		"shovelMine": "You aren't going to dig right next to the miner !?!",
-		"gatherAlertError": "Error during automated gathering.",
+		"gatherAlertError": "Erreur lors de la collecte automatique.",
 		"market": {
 			"minimalValueError": "Your offer's total value doesn't reach the minimal value.",
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
@@ -480,6 +618,11 @@
 			"exchange": {
 				"success": "Vous avez converti {quantity} :ticket: contre {gold} :gold:.",
 				"rateError": "Impossible de récupérer le taux de change de la banque."
+			},
+			"savings": {
+				"success": "Vous avez placé {gold} :gold: en épargne pendant {days} jours. Vous récupérerez {total} :gold:.",
+				"claimSuccess": "Vous avez récupéré votre épargne : {gold} :gold:.",
+				"loadError": "Impossible de récupérer vos épargnes."
 			}
 		},
 		"isSelling": "Your Dinoz is currently on sale at the Tamer Market.",
@@ -551,7 +694,14 @@
 			"notRegistered": "This Dinoz is not registered for the BrutForce Tournament.",
 			"wrongPlace": "Your Dinoz must be in BrutForce to participate in the tournament.",
 			"noOpponent": "No opponents are available for this level yet."
-		}
+		},
+		"notEnoughGold": "Vous n'avez pas assez d'or",
+		"wrongQuantity": "La quantité demandée est invalide.",
+		"wrongBankSavingDuration": "La durée d'épargne demandée est invalide.",
+		"bankSavingNotReady": "Cette épargne n'est pas encore disponible.",
+		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
+		"bankSavingNotFound": "Cette épargne est introuvable.",
+		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -577,7 +727,9 @@
 		"tabs": {
 			"players": "Players",
 			"average": "Average",
-			"completion": "Completion"
+			"completion": "Completion",
+			"clans": "Clans",
+			"treasure": "Valeur du trésor"
 		},
 		"th": {
 			"pos": "Pos.",
@@ -592,7 +744,9 @@
 		"disclaimer": {
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
 			"average": "The Player Ranking is updated in real time and is calculated from the average level of all the player's Dinoz.",
-			"completion": "The ranking of players is updated at midnight and base on the completion formula. This formula is based on the active Dinoz of the player and its progress in the story."
+			"completion": "The ranking of players is updated at midnight and base on the completion formula. This formula is based on the active Dinoz of the player and its progress in the story.",
+			"clan": "Le classement des clans est mis à jour en temps réel et est calculé à partir de la somme des points des membres d'un clan",
+			"treasure": "Le classement des clans est mis à jour en temps réel et est calculé à partir de la valeur du trésor du clan"
 		},
 		"page": {
 			"previous": "Previous page",
@@ -1238,13 +1392,13 @@
 			"Mistral": "Attack all opponents with an Air power of 3",
 			"TaiChi": "Increase strength of Air **assault** by 15. Decreases speed of Air attacks by 20%.",
 			"Tornade": "Attack all enemies with Air at a strength of 10 and make the flying ones fall to the ground",
-			"Eveil": "Decrease speed of Air attacks by 20%",
+			"Eveil": "Increase speed of Air attacks by 20%",
 			"PaumeEjectable": "Attack one enemy with double power, then decreases initiative by 15",
 			"VentVif": "Gain accelerated status (increases speed by 50%) for a short duration",
 			"FormeVaporeuse": "The Dinoz has 6% chance to become immaterial for a short duration right before being targeted by an attack.",
 			"Professeur": "Increase the experience gained by all Dinoz by 5% (non-cumulative)",
-			"MeditationSolitaire": "Increase Air defense by 3. Decrease the speed of Air attacks by 50%.",
-			"MeditationTranscendantale": "Increase Air defense by 6. Decrease the speed of Air attacks by 50%.",
+			"MeditationSolitaire": "Increase Air defense by 3",
+			"MeditationTranscendantale": "Increase Air defense by 6. Decrease the speed of Air attacks by 25%.",
 			"SouffleDeVie": "Protect Dinoz against poisons and curses",
 			"FormeEtherale": "The Dinoz start the fight in immaterial state for an infinite duration",
 			"Brasero": "Attack all opponents with a Fire power of 3",
@@ -1776,7 +1930,7 @@
 			"candle_card": "This Anniversary card gives you access to the sandcastle game at the Frish Port",
 			"christmas_ticket": "Use to play in the Snowplough Game and earn 1,000 gold coins, 5,000 or a Santaz.",
 			"tictac_ticket": "These Tac Tickets will allow you to dig in Grandpa Joe's garden, in search of treasures hidden by his great-grandfather.",
-			"anniversary_ticket": "This Anniversary card gives you access to the sandcastle game at the Frish Port",
+			"anniversary_ticket": "This Anniversary card gives you access to the sandcastle game at the Frish Port!",
 			"easter_egg": "An Urma's egg can be used to obtain an item among all those that exist in Dinoland. Will it be a rare or common item you'll get?",
 			"fire_cracker": "With this firecracker, you can set off fireworks in Dinotown to earn treasures!",
 			"special_potion_irma": "Madam Irma's famous potion allows the Dinoz who drinks it to *play a new action immediately* without having to wait for the next day. But you can only carry 3.",
@@ -3201,17 +3355,17 @@
 	},
 	"skillTrees": {
 		"title": "Skill Trees",
-		"description": "Retrouve ici toutes les compétences découvertes par tes Dinoz.",
+		"description": "Here you will find all the competencies discovered by your Dinoz.",
 		"empty": "Aucune compétence découverte pour le moment.",
-		"level": "Niveau {level}"
+		"level": "Level {level}"
 	},
 	"bank": {
-		"title": "Banque de Dinoland",
+		"title": "The Bank of Dinoland",
 		"rotshil": "Rotshil",
 		"description": "Bienvenue à la Banque de Dinoland, je suis Rotshil, le banquier. && && Chaque jour, je vous offre la possibilité d'échanger vos bons du trésor contre de l'or. Bien sûr, le taux de change va fluctuer chaque jour, alors n'hésitez pas à revenir régulièrement pour profiter des meilleurs taux ! && && En plus de cela, je peux aussi vous proposer d'autres services financiers très intéressants, mais ils ne sont pas encore disponibles, alors un peu de patience !",
 		"tabs": {
 			"conversion": "Conversion",
-			"todo": "Coming soon"
+			"savings": "Epargner"
 		},
 		"exchange": {
 			"title": "Conversion des Bons du Trésor",
@@ -3222,6 +3376,22 @@
 			"max": "Max",
 			"youWillReceive": "Vous recevrez **{gold}** :gold:",
 			"convert": "Convertir"
+		},
+		"savings": {
+			"title": "Épargne",
+			"amount": "Montant à épargner",
+			"duration": "Durée de l'épargne",
+			"durationOption": "{days} jours (+{percent}%)",
+			"save": "Épargner",
+			"activeTitle": "Vos épargnes",
+			"empty": "Vous n'avez aucune épargne en cours.",
+			"previewEmpty": "Choisissez un montant à épargner.",
+			"preview": "Vous épargnez **{gold}** :gold: et recevrez **{interest}** :gold: d'intérêts, soit **{total}** :gold: au total.",
+			"itemDuration": "Durée : {days} jours",
+			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
+			"unlockAt": "Disponible le {date}",
+			"claim": "Récupérer",
+			"claimed": "Récupéré"
 		}
 	},
 	"npc": {

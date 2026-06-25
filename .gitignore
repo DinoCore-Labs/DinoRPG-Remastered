@@ -12,6 +12,7 @@ build/
 **/build/
 .tmp/
 **/.tmp/
+/app/prisma/
 
 # Vite / Vue cache
 .vite/
