@@ -580,6 +580,8 @@
 		"buttonValidateAdvEditor": "Valider et envoyer le message"
 	},
 	"toast": {
+		"autoReequipSuccess": "Objeto(s) reequipado(s) automáticamente: {items}",
+		"autoReequipMissing": "Falta(n) objeto(s) para reequipar: {items}",
 		"heal": "Tu Dino ha recuperado {value} :hp:.",
 		"gold": "Recibiste {value} :gold:.",
 		"sphere": "Tu Dino ha aprendido la competencia {value}.",

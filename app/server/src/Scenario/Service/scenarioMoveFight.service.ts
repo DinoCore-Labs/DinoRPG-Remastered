@@ -20,11 +20,13 @@ type ScenarioMoveFightInput = {
 		id: string;
 		cooker: boolean;
 		teacher: boolean;
+		items: { itemId: number; quantity: number }[];
 	};
 	team: (DinozToGetFighter & DinozToRewardFight)[];
 	dinozId: number;
 	fromPlace: PlaceEnum;
 	toPlace: PlaceEnum;
+	autoReequip?: boolean;
 };
 
 type ScenarioTransaction = Prisma.TransactionClient;
@@ -73,7 +75,9 @@ export async function processScenarioMoveFight(input: ScenarioMoveFightInput): P
 	}
 	const monsters = [monsterByKey[STAR_MEGAWOLF_KEY]];
 	const fightResult = calculateFightVsMonsters(input.team, input.user, input.toPlace, monsters);
-	const result = await rewardFightVsMonsters(input.team, monsters, fightResult, input.toPlace, input.user);
+	const result = await rewardFightVsMonsters(input.team, monsters, fightResult, input.toPlace, input.user, {
+		autoReequip: input.autoReequip
+	});
 	const winner = fightResult.outcome === FightOutcome.AttackerWin;
 	if (winner) {
 		await prisma.$transaction(async tx => {

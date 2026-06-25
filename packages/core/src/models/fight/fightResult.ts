@@ -51,6 +51,8 @@ export interface FightResult {
 	trainingProgram?: TrainingCenterProgramKey;
 	missionCompletion?: MissionInteractionCompleteResponse | null;
 	scenario?: FightScenarioReturn;
+	autoReequipped?: { itemId: number; count: number }[];
+	missingReequip?: { itemId: number; count: number }[];
 }
 
 export interface FighterRecap {
