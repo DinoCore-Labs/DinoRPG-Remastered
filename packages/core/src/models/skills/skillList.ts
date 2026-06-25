@@ -930,7 +930,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ELEMENT]: { operator: MathOperator.ADD, value: 2 },
+			[Stat.WATER_ELEMENT]: { operator: MathOperator.ADD, value: 2 },
 			[Stat.FIRE_ELEMENT]: { operator: MathOperator.ADD, value: 2 }
 		}
 	},
