@@ -580,6 +580,8 @@
 		"buttonValidateAdvEditor": "Validate and send the message"
 	},
 	"toast": {
+		"autoReequipSuccess": "Item(s) auto re-equipped: {items}",
+		"autoReequipMissing": "Missing item(s) to re-equip: {items}",
 		"heal": "Your Dinoz has been healed for {value} :hp:.",
 		"gold": "You received {value} :gold:.",
 		"sphere": "Your Dinoz has learned the {value} skill.",

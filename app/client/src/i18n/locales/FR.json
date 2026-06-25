@@ -49,6 +49,7 @@
 			"system": "Réglages",
 			"skipLevelAnimation": "Passer l'animation des level up",
 			"skipFightAnimation": "Passer l'animation des combats",
+			"autoReequipItems": "Rééquiper automatiquement les objets consommés",
 			"bypassGatheringGrid": "Passer la grille de collecte",
 			"goodbye": "Au revoir Maître {name}..."
 		}
@@ -580,6 +581,8 @@
 		"buttonValidateAdvEditor": "Valider et envoyer le message"
 	},
 	"toast": {
+		"autoReequipSuccess": "Objet(s) rééquipé(s) automatiquement : {items}",
+		"autoReequipMissing": "Objet(s) manquant(s) pour le rééquipement : {items}",
 		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
 		"gold": "Vous avez obtenu {value} :gold:.",
 		"sphere": "Votre Dinoz a appris la compétence {value}.",

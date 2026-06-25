@@ -85,6 +85,8 @@ import type { PlaceDisplayed } from '@dinorpg/core/models/place/placeDisplayed.j
 import type { svgLines } from '@dinorpg/core/models/place/svgLines.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import { sessionStore } from '../../store/sessionStore.js';
+import { localStore } from '../../store/localStore.js';
+import { itemNameList } from '@dinorpg/core/models/items/itemNameList.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 import { formatText } from '../../utils/formatText.js';
@@ -103,6 +105,7 @@ export default defineComponent({
 		return {
 			sessionStore: sessionStore(),
 			dinozStore: dinozStore(),
+			localStore: localStore(),
 			placeMap: [] as Array<PlaceDisplayed>,
 			translation: {
 				x: 0,
@@ -226,8 +229,23 @@ export default defineComponent({
 			}
 
 			try {
-				const moveTry = await DinozService.move(this.dinozData.id, placeId);
+				const moveTry = await DinozService.move(this.dinozData.id, placeId, this.localStore.getAutoReequipItems);
 				this.sessionStore.setFightResult(moveTry);
+				if (moveTry.autoReequipped && moveTry.autoReequipped.length > 0) {
+					const itemsStr = moveTry.autoReequipped
+						.map(item => `${item.count}x ${this.$t(`items.name.${itemNameList[item.itemId]}`)}`)
+						.join(', ');
+					this.$toast.success(formatText(this.$t('toast.autoReequipSuccess', { items: itemsStr })));
+				}
+				if (moveTry.missingReequip && moveTry.missingReequip.length > 0) {
+					const itemsStr = moveTry.missingReequip
+						.map(item => `${item.count}x ${this.$t(`items.name.${itemNameList[item.itemId]}`)}`)
+						.join(', ');
+					this.$toast.open({
+						message: formatText(this.$t('toast.autoReequipMissing', { items: itemsStr })),
+						type: 'warning'
+					});
+				}
 				// Update Dinoz Place in the store if fight is win
 				const dinozId = this.dinozData.id;
 				const dinozList = this.dinozStore.getDinozList;

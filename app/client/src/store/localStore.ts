@@ -7,12 +7,14 @@ export const localStore = defineStore('localStore', {
 		langue: undefined,
 		skipLevelAnimation: false,
 		skipFightAnimation: true,
+		autoReequipItems: false,
 		bypassGatheringGrid: false
 	}),
 	getters: {
 		getLanguage: (state: StateLocalStore) => state.langue,
 		getSkipLevelAnimation: (state: StateLocalStore) => state.skipLevelAnimation,
 		getSkipFightAnimation: (state: StateLocalStore) => state.skipFightAnimation,
+		getAutoReequipItems: (state: StateLocalStore) => state.autoReequipItems,
 		getBypassGatheringGrid: (state: StateLocalStore) => state.bypassGatheringGrid
 	},
 	actions: {
@@ -24,6 +26,9 @@ export const localStore = defineStore('localStore', {
 		},
 		setSkipFightAnimation(skipFightAnimation: boolean): void {
 			this.skipFightAnimation = skipFightAnimation;
+		},
+		setAutoReequipItems(autoReequipItems: boolean): void {
+			this.autoReequipItems = autoReequipItems;
 		},
 		setBypassGatheringGrid(bypassGatheringGrid: boolean): void {
 			this.bypassGatheringGrid = bypassGatheringGrid;
