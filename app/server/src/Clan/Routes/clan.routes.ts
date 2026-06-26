@@ -6,6 +6,7 @@ import {
 	clanIdParamSchema,
 	clanMemberIdSchema,
 	clanMessagesQuerySchema,
+	clanNameSchema,
 	clanRightParamSchema,
 	createClanMessageSchema,
 	createClanPageSchema,
@@ -29,7 +30,8 @@ import {
 	getClansList,
 	searchClansByName,
 	updateClanBanner,
-	updateClanLangs
+	updateClanLangs,
+	updateClanName
 } from '../Service/clan.service.js';
 import {
 	createClanMessage,
@@ -132,6 +134,18 @@ export async function clanRoutes(app: FastifyInstance) {
 			}
 		},
 		updateClanBanner
+	);
+	app.put(
+		'/:clanId/edit/name',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Clan'],
+				params: clanIdParamSchema,
+				body: clanNameSchema
+			}
+		},
+		updateClanName
 	);
 	app.get(
 		'/all/:page',
