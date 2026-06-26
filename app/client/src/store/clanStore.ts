@@ -40,6 +40,10 @@ export const clanStore = defineStore('clanStore', {
 			if (!this.clan) return;
 			this.clan.banner = banner;
 		},
+		updateName(name: string): void {
+			if (!this.clan) return;
+			this.clan.name = name;
+		},
 		setClanEvent(clanEvent: { id: string; endDate: Date } | undefined): void {
 			this.clanEvent = clanEvent;
 		}
