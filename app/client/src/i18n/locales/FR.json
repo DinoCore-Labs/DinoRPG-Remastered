@@ -287,6 +287,7 @@
 			"pages": "Pages du clan",
 			"members": "Membres du clan",
 			"treasure": "Trésor du Clan",
+			"discussion": "Forum du Clan",
 			"history": "Historique du clan",
 			"parameters": "Paramètres"
 		},
@@ -356,6 +357,17 @@
 			"price": "{price}:gold:",
 			"giveAway": "Donner au clan",
 			"confirm": "Voulez vous vraiment donner au clan ces ingrédients d'une valeur de {gold} Or"
+		},
+		"discussion": {
+			"action": {
+				"create": "Nouveau message",
+				"send": "Envoyer"
+			},
+			"delete": "Supprimer le message",
+			"pagination": {
+				"page": "Page",
+				"go_to": "Aller à la page"
+			}
 		},
 		"history": {
 			"page": "Page",
