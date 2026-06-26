@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
 export const processFightSchema = z.object({
-	dinozId: z.number().int().min(1)
+	dinozId: z.number().int().min(1),
+	autoReequip: z.boolean().optional()
 });
 
 export type ProcessFightInput = z.infer<typeof processFightSchema>;

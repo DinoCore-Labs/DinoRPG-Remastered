@@ -26,7 +26,7 @@ import type { MoveDinozInput } from '../Schema/dinoz.schema.js';
 type Req = FastifyRequest<{ Body: MoveDinozInput }>;
 
 export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
-	const { dinozId, placeId } = req.body;
+	const { dinozId, placeId, autoReequip } = req.body;
 	const authedId = req.user.id;
 	const dayOfWeek = new Date().getDay();
 	const user = await getDinozFightDataRequest(dinozId, authedId);
@@ -106,15 +106,17 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 		team,
 		dinozId,
 		fromPlace: currentPlace.placeId,
-		toPlace: finalPlace
+		toPlace: finalPlace,
+		autoReequip
 	});
 	if (!fight) {
-		fight = await movementListener(user, team, finalPlace, dinozId);
+		fight = await movementListener(user, team, finalPlace, dinozId, { autoReequip });
 	}
 	if (!fight) {
 		fight = await fightMonstersAtPlace(team, finalPlace, user, {
 			missionMoveDinozIds: team.map(member => member.id),
-			missionKillDinozIds: [dinozId]
+			missionKillDinozIds: [dinozId],
+			autoReequip
 		});
 		if (fight.result) {
 			await updateMultipleDinoz(

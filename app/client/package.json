@@ -1,7 +1,7 @@
 {
 	"name": "@dinorpg/client",
 	"private": true,
-	"version": "0.27.0",
+	"version": "0.28.0",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
@@ -10,9 +10,9 @@
 	},
 	"dependencies": {
 		"@eternaltwin/dinorpg_animations": "^1.0.8",
-		"axios": "^1.17.0",
+		"axios": "^1.18.0",
 		"echarts": "^6.1.0",
-		"markdown-it": "^14.1.1",
+		"markdown-it": "^14.2.0",
 		"mitt": "^3.0.1",
 		"pinia": "^3.0.4",
 		"pinia-plugin-persistedstate": "^4.7.1",
@@ -32,8 +32,8 @@
 		"@vitejs/plugin-vue": "^6.0.5",
 		"@vue/tsconfig": "^0.9.1",
 		"sass": "^1.99.0",
-		"vite": "^8.0.11",
+		"vite": "^8.0.16",
 		"vite-plugin-vue-devtools": "^8.1.2",
-		"vue-tsc": "^3.3.3"
+		"vue-tsc": "^3.3.5"
 	}
 }

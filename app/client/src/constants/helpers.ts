@@ -1,1 +1,1 @@
-export const helpers = ['La team Eternaltwin'];
+export const helpers = ['Eternaltwin DinoRPG contributors', 'DinoRPG WebGamesArchives Motion Twin'];

@@ -2,6 +2,14 @@
 
 ## 🔹 Core
 
+## 0.27.0
+
+### Minor Changes
+
+- d7322ee: Add the clan system to the project.
+
+  This introduces the first version of clans, including shared clan models, server-side clan management, and client pages for creating, editing and displaying clan content. The feature also adds clan page management, public/private page handling, improved clan creation UI, and the related translations.
+
 ## 0.26.0
 
 ### Minor Changes
@@ -542,6 +550,25 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.29.1
+
+### Patch Changes
+
+- 4668a25: Stop tracking the generated Prisma client and generate it automatically before building the server.
+
+## 0.29.0
+
+### Minor Changes
+
+- d7322ee: Add the clan system to the project.
+
+  This introduces the first version of clans, including shared clan models, server-side clan management, and client pages for creating, editing and displaying clan content. The feature also adds clan page management, public/private page handling, improved clan creation UI, and the related translations.
+
+### Patch Changes
+
+- Updated dependencies [d7322ee]
+  - @dinorpg/core@0.27.0
 
 ## 0.28.0
 
@@ -1242,6 +1269,14 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.28.0
+
+### Minor Changes
+
+- d7322ee: Add the clan system to the project.
+
+  This introduces the first version of clans, including shared clan models, server-side clan management, and client pages for creating, editing and displaying clan content. The feature also adds clan page management, public/private page handling, improved clan creation UI, and the related translations.
 
 ## 0.27.0
 

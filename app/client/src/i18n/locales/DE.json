@@ -20,9 +20,10 @@
 			"shop": "Boutique",
 			"bank": "Banque",
 			"dojo": "Dojo",
+			"clan": "Clan",
 			"order": "Anordnen",
 			"enclosure": "Gehege",
-			"skills": "Compétences"
+			"skills": "Fähigkeiten"
 		},
 		"authMenu": {
 			"name": "Benutzername:",
@@ -45,9 +46,10 @@
 			"faq": "FAQ",
 			"guide": "Spielhandbuch",
 			"disconnect": "Ausloggen",
-			"system": "Réglages",
-			"skipLevelAnimation": "Passer l'animation des level up",
-			"skipFightAnimation": "Passer l'animation des combats",
+			"system": "Einstellungen",
+			"skipLevelAnimation": "Animation beim Stufenaufstieg überspringen",
+			"skipFightAnimation": "Kampfergebnis sofort anzeigen",
+			"bypassGatheringGrid": "Passer la grille de collecte",
 			"goodbye": "Auf Wiedersehen, Meister {name}..."
 		}
 	},
@@ -88,7 +90,7 @@
 			"actions": "Aktionen",
 			"full": "Vorrat gefüllt",
 			"sortBy": "Sortieren nach",
-			"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
+			"confirmUse": "Möchtest du wirklich {name} auf deinen Dinoz anwenden?",
 			"sort": {
 				"default": "Standard",
 				"nameAsc": "Name (A → Z)",
@@ -199,12 +201,15 @@
 		"gather": "DinoRPG [ {type} ]",
 		"fight": "DinoRPG [ Kampf! ]",
 		"training": "DinoRPG [ C.E.F ]",
-		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
+		"fb_tournament": "DinoRPG [ Rohkraft-Turnier ]",
 		"manageDinoz": "DinoRPG [ Dinoz verwalten ]",
-		"market": "DinoRPG [ Marché des Éleveurs ]",
-		"skillTrees": "DinoRPG [ Arbres de Compétences ]",
+		"market": "DinoRPG [ Züchtermarkt ]",
+		"skillTrees": "DinoRPG [ Baum der Fähigkeiten ]",
 		"bank": "DinoRPG [ Banque de Dinoland ]",
-		"admin": "DinoRPG [ Administrationsseite ]"
+		"admin": "DinoRPG [ Administrationsseite ]",
+		"clan": "DinoRPG [ Clan : {clan} ]",
+		"createClan": "DinoRPG [ Créer un Clan ]",
+		"clansList": "DinoRPG [ Clans ]"
 	},
 	"adminPage": {
 		"news": {
@@ -212,61 +217,195 @@
 		}
 	},
 	"market": {
-		"title": "Marché des Éleveurs",
-		"disclaimer": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
-		"allOffers": "Toutes les offres",
-		"myTransactions": "Mes transactions",
-		"sell": "Vendre",
-		"history": "Historique",
+		"title": "Züchtermarkt",
+		"disclaimer": "Willkommen beim Züchtermarkt! Hier können Dinoz gekauft und verkauft werden, sowie Zutaten und einige seltene Gegenstände aus ganz Dinoland!",
+		"allOffers": "Alle Angebote",
+		"myTransactions": "Meine Transaktionen",
+		"sell": "Verkaufen",
+		"history": "Verlauf",
 		"dinoz": "Dinoz",
-		"items": "Objets",
-		"makeAnOffer": "Faire une offre",
-		"filter": "Filtrer",
-		"all": "Tout",
-		"seller": "Vendeur",
-		"timeLeft": "Temps restant",
-		"auctionExpired": "Enchère expirée",
-		"minimumPrice": "Prix mini",
-		"highestBid": "Enchère actuelle",
-		"by": "par",
+		"items": "Gegenstände",
+		"makeAnOffer": "Angebot erstellen",
+		"filter": "Filtern",
+		"all": "Alle",
+		"seller": "Verkäufer",
+		"timeLeft": "Restzeit",
+		"auctionExpired": "Auktion beendet",
+		"minimumPrice": "Mindestpreis",
+		"highestBid": "Aktuelles Gebot",
+		"by": "von",
 		"details": "Details",
-		"time": "{days}j {hours}h {minutes}m {seconds}s",
-		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Éleveurs peuvent être obtenus de diverses façons dans Dinoland. La **Banque de Dinoland** peut vous les racheter au taux de **1** :ticket: **= 1000** :gold: mais elle n'en émet plus.",
-		"back": "Retour",
-		"bid": "Enchérir",
-		"detail": "Voir détails",
-		"yourTreasuryNotes": "Vos Bons du Trésor",
+		"time": "{days}T {hours}Std. {minutes}Min. {seconds}Sek",
+		"currency": "Die **Schatzbriefe**, die zum Handeln auf dem Züchtermarkt benötigt werden, können bei der **Dinoländischen Bank** in einem Verhältnis von **1** :ticket: **= 1000** :gold: erworben werden.",
+		"back": "Zurück",
+		"bid": "Bieten",
+		"detail": "Details zeigen",
+		"yourTreasuryNotes": "Deine Schatzbriefe",
 		"sellView": {
-			"disclaimer": "Ici, vous pouvez construire votre offre, elle sera soumise aux autres Maîtres Dinoz. Si vous vendez un Dinoz ou des objets, ces derniers seront indisponibles pendant la durée de l'offre.",
-			"prepareYourOffer": "Préparer votre offre",
-			"sellYourDinoz": "Vendre votre Dinoz",
-			"itemsAndIngredients": "Objets et Ingrédients",
-			"offerMinimalValue": "Valeur MINIMALE de votre offre",
-			"minimalValueDisclaimer": "Votre offre doit avoir, au MINIMUM, une valeur de **{minValue}** :gold: pour être validée.",
-			"create": "Créer l'offre",
-			"add": "Ajouter",
-			"remove": "Retirer"
+			"disclaimer": "Hier kannst du dein Angebot erstellen, das anderen Dinoz-Meistern unterbreitet wird. Falls du Dinoz oder Gegenstände anbietest, werden diese für die Dauer des Angebots nicht verfügbar sein.",
+			"prepareYourOffer": "Bereite dein Angebot vor",
+			"sellYourDinoz": "Verkaufe deinen Dinoz",
+			"itemsAndIngredients": "Gegenstände und Zutaten",
+			"offerMinimalValue": "MINDESTWERT deines Angebots",
+			"minimalValueDisclaimer": "Dein Angebot muss einen Wert von MINDESTENS **{minValue}** :gold: haben, um gültig zu sein.",
+			"create": "Angebot erstellen",
+			"add": "Hinzufügen",
+			"remove": "Entfernen"
 		},
 		"transactionView": {
-			"yourOngoingOffer": "Votre offre en cours",
-			"yourWonOffer": "Vos offres gagnées",
-			"myExpiredOffers": "Vos ventes expirées",
-			"noExpiredOffer": "Vous n'avez aucune vente expirée à récupérer.",
-			"claimExpired": "Récupérer ma vente",
-			"noOnGoingOffer": "Vous n'avez aucune offre en cours.",
-			"noWonOffer": "Vous n'avez aucune offre à récupérer",
-			"claim": "Récupérer mes gains",
-			"bid": "Mise",
-			"noBidYet": "Aucune mise pour l'instant.",
-			"cancel": "Annuler",
-			"yourActiveBids": "Vos mises en cours",
-			"noActiveBid": "Vous n'avez enchéri sur aucune offre pour le moment."
+			"yourOngoingOffer": "Meine aktiven Angebote",
+			"yourWonOffer": "Gewonnene Auktionen",
+			"myExpiredOffers": "Abgelaufene Angebote",
+			"noExpiredOffer": "Artikel einsammeln.",
+			"claimExpired": "Artikel einsammeln",
+			"noOnGoingOffer": "Du hast keine laufenden Angebote.",
+			"noWonOffer": "Du hast keine Angebote zum Abholen",
+			"claim": "Gewinn einsammeln",
+			"bid": "Angebot",
+			"noBidYet": "Noch keine Gebote erhalten.",
+			"cancel": "Abbrechen",
+			"yourActiveBids": "Meine aktiven Gebote",
+			"noActiveBid": "Du hast noch auf nichts geboten."
 		},
 		"historyView": {
-			"lastOffers": "Voici les dernières ventes qui ont été effectuées par les joueurs :",
-			"yourOwnOffers": "Vos mises",
-			"yourOwnBids": "Vos achats"
+			"lastOffers": "Hier sind letzten Verkäufe, die von Spielern abgeschlossen wurden:",
+			"yourOwnOffers": "Deine Gebote",
+			"yourOwnBids": "Deine Käufe"
 		}
+	},
+	"clan": {
+		"icons": {
+			"members": "Nombre de membres",
+			"gold": "Valeur du trésor",
+			"crown": "Chef du Clan"
+		},
+		"header": {
+			"title": "Clan: {name}",
+			"infos": "Informations sur le clan",
+			"creation_date": "Créé le {date}"
+		},
+		"tabs": {
+			"pages": "Pages du clan",
+			"members": "Membres du clan",
+			"treasure": "Schatzkammer des Klans",
+			"history": "Historique du clan",
+			"parameters": "Paramètres"
+		},
+		"clanPages": {
+			"button": {
+				"create": "Créer une page",
+				"edit": "Modifier la page",
+				"delete": "Supprimer la page",
+				"join_clan": "Rejoindre le Clan"
+			},
+			"creation": {
+				"edit": "Modifier la page de clan",
+				"new": "Créer une page de clan",
+				"title": "Titre",
+				"content": "Contenu",
+				"public": "Page publique ?",
+				"action": {
+					"create": "Créer",
+					"edit": "Modifier",
+					"cancel": "Abbrechen"
+				}
+			}
+		},
+		"members": {
+			"th": {
+				"name": "Nom",
+				"donation": "Dons",
+				"stats": "Stats",
+				"actions": "Aktionen",
+				"event": "Score d'événement"
+			},
+			"edit": {
+				"disclaimer": "Cette page vous permet de modifier les droits du joueur <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> dans le Clan.",
+				"right": {
+					"MEMBER_EDIT": "Peut changer les droits et surnoms des membres",
+					"PAGE_MANAGE": "Peut gérer les pages du Clan",
+					"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Peut accepter et refuser de nouveaux membres",
+					"MEMBER_EXCLUDE": "Peut renvoyer des membres",
+					"DISCUSSION_DELETE_MESSAGE": "Peut supprimer des messages du fil de discussion",
+					"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan",
+					"CLAN_EDIT_LANG": "Peut changer la langue du Clan",
+					"WAR_OFFICER": "Peut déclarer des guerres",
+					"CLAN_BUILD_CASTLE": "Peut construire le château"
+				},
+				"nickname": "Surnom du joueur",
+				"save": "Enregistrer",
+				"saved": "Modifications enregistrées avec succès !"
+			},
+			"request": {
+				"title": "Adhésions en attente",
+				"accept": "Accepter",
+				"deny": "Refuser",
+				"maximum": "Le clan est plein, vous ne pouvez pas accepter de nouvelles demandes."
+			},
+			"action": {
+				"edit": "Éditer",
+				"exclude": "Exclure",
+				"leave": "Quitter le clan"
+			},
+			"stat": {
+				"last_login": "Dernière connexion le {date}."
+			}
+		},
+		"ingredients": {
+			"help": "Votre trésor d'une valeur de {value}:gold: est protégé par le château. Vous pouvez donner des ingrédients pour qu'ils soient ajoutés au trésor du Clan.",
+			"price": "{price}:gold:",
+			"giveAway": "Donner au clan",
+			"confirm": "Voulez vous vraiment donner au clan ces ingrédients d'une valeur de {gold} Or"
+		},
+		"history": {
+			"page": "Page",
+			"type": {
+				"CLAN_CREATED": "Création du clan",
+				"PLAYER_JOIN": "Un joueur a rejoint le clan",
+				"PLAYER_LEAVE": "Un joueur a quitté le clan",
+				"PLAYER_EXCLUSION": "Le joueur {msg} a été exclu du clan"
+			}
+		},
+		"settings": {
+			"banner": {
+				"title": "Changer l'URL de la bannière du clan :",
+				"info": "La bannière a un ratio de 448px de large sur 100px de long."
+			},
+			"langs": {
+				"title": "Langues"
+			},
+			"action": {
+				"delete": "Supprimer le clan"
+			}
+		}
+	},
+	"clansList": {
+		"title": "Klane",
+		"disclaimer": {
+			"text": "Les Clans sont des groupes de joueurs qui combattent ensemble dans l'univers de Dinoland."
+		},
+		"button": {
+			"create": "Créer un Clan"
+		},
+		"th": {
+			"name": "Clan",
+			"leader": "Chef",
+			"members": "Membres",
+			"date": "Date de création"
+		},
+		"request": {
+			"info": "Vous avez envoyé une demande pour rejoindre le clan ",
+			"cancel": "Annuler la demande."
+		}
+	},
+	"createClan": {
+		"title": "Créer un clan",
+		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
+		"clan_name": "Nom",
+		"clan_langs": "Langues",
+		"clan_description": "Description",
+		"go_back_button": "Abbrechen",
+		"create_button": "Créer"
 	},
 	"manageDinoz": {
 		"title": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
@@ -289,7 +428,7 @@
 			"title": "Entdecke die kommenden Ereignisse auf DinoRPG!",
 			"small": "Irmas Vorhersage",
 			"strong": {
-				"title1": "Alpha 0.10.0 (Bientôt)",
+				"title1": "Alpha 0.10.0 (Bald)",
 				"title2": "Alpha 0.11.0",
 				"title3": "Alpha 0.12.0",
 				"title4": "Alpha 0.13.0"
@@ -326,8 +465,9 @@
 		"loading": "Wird geladen...",
 		"noResults": "Keine Ergebnisse",
 		"sortDinoz": "Meine Dinoz verwalten",
-		"skills": "Compétences",
-		"unavailable": "Indisponible"
+		"skills": "Fähigkeiten",
+		"unavailable": "Indisponible",
+		"clan": "Clan"
 	},
 	"popup": {
 		"confirm": "Diese Aktion bestätigen?",
@@ -440,6 +580,8 @@
 		"buttonValidateAdvEditor": "Valider et envoyer le message"
 	},
 	"toast": {
+		"autoReequipSuccess": "Gegenstand/Gegenstände automatisch wieder ausgerüstet: {items}",
+		"autoReequipMissing": "Fehlende Gegenstände zum Wiederaufrüsten: {items}",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
 		"sphere": "Dein Dinoz hat die Fähigkeit „{value}“ erlernt.",
@@ -463,6 +605,7 @@
 		"reincarnation": "Dein Dinoz wurde reinkarniert.",
 		"loginToLike": "Connectez-vous pour aimer cette news.",
 		"shovelMine": "Vous n'allez quand même pas creuser à côté du mineur !?!",
+		"gatherAlertError": "Erreur lors de la collecte automatique.",
 		"market": {
 			"minimalValueError": "Der Gesamtpreis deines Angebots liegt unter dem Minimalwert.",
 			"tooManyItems": "Du kannst nicht mehr als {items} verschiedene Gegenstände am Stück anbieten.",
@@ -475,6 +618,11 @@
 			"exchange": {
 				"success": "Vous avez converti {quantity} :ticket: contre {gold} :gold:.",
 				"rateError": "Impossible de récupérer le taux de change de la banque."
+			},
+			"savings": {
+				"success": "Vous avez placé {gold} :gold: en épargne pendant {days} jours. Vous récupérerez {total} :gold:.",
+				"claimSuccess": "Vous avez récupéré votre épargne : {gold} :gold:.",
+				"loadError": "Impossible de récupérer vos épargnes."
 			}
 		},
 		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
@@ -546,7 +694,14 @@
 			"notRegistered": "Ce Dinoz n’est pas inscrit au Tournoi de Forcebrut.",
 			"wrongPlace": "Votre Dinoz doit être à Forcebrut pour participer au tournoi.",
 			"noOpponent": "Aucun adversaire n’est encore disponible pour ce palier."
-		}
+		},
+		"notEnoughGold": "Vous n'avez pas assez d'or.",
+		"wrongQuantity": "La quantité demandée est invalide.",
+		"wrongBankSavingDuration": "La durée d'épargne demandée est invalide.",
+		"bankSavingNotReady": "Cette épargne n'est pas encore disponible.",
+		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
+		"bankSavingNotFound": "Cette épargne est introuvable.",
+		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois."
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
@@ -572,7 +727,9 @@
 		"tabs": {
 			"players": "Joueurs",
 			"average": "Moyenne",
-			"completion": "Complétion"
+			"completion": "Complétion",
+			"clans": "Klane",
+			"treasure": "Valeur du trésor"
 		},
 		"th": {
 			"pos": "Platz",
@@ -587,7 +744,9 @@
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
 			"average": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus dem Durchschnitt der Stufe aller Dinoz errechnet.",
-			"completion": "Die Spielerplatzierung wird täglich um Mitternacht aktualisiert und wird anhand einer Formel errechnet, die sowohl auf dem Fortschritt aller aktiven Dinoz, als auch auf dem Spielverlauf basiert."
+			"completion": "Die Spielerplatzierung wird täglich um Mitternacht aktualisiert und wird anhand einer Formel errechnet, die sowohl auf dem Fortschritt aller aktiven Dinoz, als auch auf dem Spielverlauf basiert.",
+			"clan": "Le classement des clans est mis à jour en temps réel et est calculé à partir de la somme des points des membres d'un clan",
+			"treasure": "Le classement des clans est mis à jour en temps réel et est calculé à partir de la valeur du trésor du clan"
 		},
 		"page": {
 			"previous": "Vorherige Seite",
@@ -612,7 +771,7 @@
 		"profil": "Profil DinoRPG",
 		"player": "Joueur :",
 		"dinoz": "Dinoz :",
-		"ranking": "Rangliste :",
+		"ranking": "Rangliste:",
 		"inscription": "Inscrit le",
 		"clan": "Clan :",
 		"completion": "Complétion",
@@ -3206,17 +3365,33 @@
 		"description": "Bienvenue à la Banque de Dinoland, je suis Rotshil, le banquier. && && Chaque jour, je vous offre la possibilité d'échanger vos bons du trésor contre de l'or. Bien sûr, le taux de change va fluctuer chaque jour, alors n'hésitez pas à revenir régulièrement pour profiter des meilleurs taux ! && && En plus de cela, je peux aussi vous proposer d'autres services financiers très intéressants, mais ils ne sont pas encore disponibles, alors un peu de patience !",
 		"tabs": {
 			"conversion": "Conversion",
-			"todo": "Demnächst"
+			"savings": "Epargner"
 		},
 		"exchange": {
 			"title": "Conversion des Bons du Trésor",
 			"dailyRate": "Taux de change du jour",
 			"rateValue": "1 :ticket: = **{gold}** :gold: (taux x{rate})",
-			"yourTickets": "Vos Bons du Trésor",
+			"yourTickets": "Deine Schatzbriefe",
 			"quantity": "Quantité à convertir",
 			"max": "Max",
 			"youWillReceive": "Vous recevrez **{gold}** :gold:",
 			"convert": "Convertir"
+		},
+		"savings": {
+			"title": "Épargne",
+			"amount": "Montant à épargner",
+			"duration": "Durée de l'épargne",
+			"durationOption": "{days} jours (+{percent}%)",
+			"save": "Épargner",
+			"activeTitle": "Vos épargnes",
+			"empty": "Vous n'avez aucune épargne en cours.",
+			"previewEmpty": "Choisissez un montant à épargner.",
+			"preview": "Vous épargnez **{gold}** :gold: et recevrez **{interest}** :gold: d'intérêts, soit **{total}** :gold: au total.",
+			"itemDuration": "Durée : {days} jours",
+			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
+			"unlockAt": "Disponible le {date}",
+			"claim": "Récupérer",
+			"claimed": "Récupéré"
 		}
 	},
 	"npc": {

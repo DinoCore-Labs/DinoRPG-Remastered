@@ -49,6 +49,8 @@
 			"system": "Réglages",
 			"skipLevelAnimation": "Passer l'animation des level up",
 			"skipFightAnimation": "Passer l'animation des combats",
+			"autoReequipItems": "Rééquiper automatiquement les objets consommés",
+			"bypassGatheringGrid": "Passer la grille de collecte",
 			"goodbye": "Au revoir Maître {name}..."
 		}
 	},
@@ -598,6 +600,8 @@
 		"buttonValidateAdvEditor": "Valider et envoyer le message"
 	},
 	"toast": {
+		"autoReequipSuccess": "Objet(s) rééquipé(s) automatiquement : {items}",
+		"autoReequipMissing": "Objet(s) manquant(s) pour le rééquipement : {items}",
 		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
 		"gold": "Vous avez obtenu {value} :gold:.",
 		"sphere": "Votre Dinoz a appris la compétence {value}.",
@@ -621,6 +625,7 @@
 		"reincarnation": "Votre Dinoz s'est réincarné.",
 		"loginToLike": "Connectez-vous pour aimer cette news.",
 		"shovelMine": "Vous n'allez quand même pas creuser à côté du mineur !?!",
+		"gatherAlertError": "Erreur lors de la collecte automatique.",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
 			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",

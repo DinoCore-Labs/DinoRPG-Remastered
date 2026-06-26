@@ -4,4 +4,6 @@ export interface StateLocalStore {
 	langue?: Language;
 	skipLevelAnimation: boolean;
 	skipFightAnimation: boolean;
+	autoReequipItems: boolean;
+	bypassGatheringGrid: boolean;
 }

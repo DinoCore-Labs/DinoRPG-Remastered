@@ -62,7 +62,6 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		// --- nouveau ---
 		async getHasNameEditRight() {
 			try {
 				this.hasNameEditRight = await ClanService.getPlayerHasRight(

@@ -107,7 +107,7 @@ export const EmotesAchievementsIcons: { [index: string]: string } = {
 	[EmotesAchievementsEnum.ACHIEVEMENT_BELIUS]: getImgURL('achievements', 'belius'),
 	[EmotesAchievementsEnum.ACHIEVEMENT_BGUM]: getImgURL('achievements', 'bgum'),
 	[EmotesAchievementsEnum.ACHIEVEMENT_BRKPEL]: getImgURL('achievements', 'brkpel'),
-	[EmotesAchievementsEnum.ACHIEVEMENT_CARD]: getImgURL('achievements', 'card'),
+	[EmotesAchievementsEnum.ACHIEVEMENT_CARD]: getImgURL('achievements', 'merguez_card'),
 	[EmotesAchievementsEnum.ACHIEVEMENT_CAUSH]: getImgURL('achievements', 'caush'),
 	[EmotesAchievementsEnum.ACHIEVEMENT_CHASSE]: getImgURL('achievements', 'chasse'),
 	[EmotesAchievementsEnum.ACHIEVEMENT_CLANS]: getImgURL('achievements', 'clans'),

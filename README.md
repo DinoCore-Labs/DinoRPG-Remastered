@@ -2,11 +2,11 @@
 
 DinoRPG Remastered is an open-source recreation and modernization of the classic browser game **DinoRPG** originally created by **Motion Twin**.
 
-> This project is an independent fan project and is not affiliated with Motion Twin.
+> This project is an independent fan project and is not affiliated with Motion Twin and Eternaltwin.
 
 DinoRPG Remastered est une recréation open-source et une modernisation du jeu navigateur **DinoRPG** créé à l’origine par **Motion Twin**.
 
-> Ce projet est un projet de fans indépendant et n’est pas affilié à Motion Twin.
+> Ce projet est un projet de fans indépendant et n’est affilié ni à Motion Twin ni à Eternaltwin.
 
 🌍 Original game: [Motion Twin](https://motiontwin.com/)  
 🦖 Project repository: https://github.com/DinoCore-Labs/DinoRPG-Remastered
@@ -20,6 +20,7 @@ DinoRPG Remastered est une recréation open-source et une modernisation du jeu n
 - [Project Structure / Structure du projet](#project-structure--structure-du-projet)
 - [Local installation](#local-installation)
 - [Installation locale](#installation-locale)
+- [Origine et attribution](#origine-et-attribution)
 - [License / Licence](#license--licence)
 
 ## About the project
@@ -201,6 +202,33 @@ pnpm dev
 ```
 
 L’application sera alors disponible en local : http://localhost:8080
+
+## Origine et attribution
+
+DinoRPG Remastered est un projet indépendant dans son organisation, son architecture et son historique Git.
+
+Certaines parties de son code source, de ses modèles, de ses données et de sa logique de jeu sont toutefois dérivées ou adaptées des WebGamesArchives de **Motion Twin** :
+
+https://github.com/motion-twin/WebGamesArchives/tree/main/DinoRPG
+
+Ainsi que du projet Open Source d'**Eternaltwin DinoRPG** :
+
+https://gitlab.com/eternaltwin/dinorpg/dinorpg
+
+Les éléments provenant d’Eternaltwin DinoRPG ont été intégrés et modifiés à différentes étapes du développement de DinoRPG Remastered.
+
+DinoRPG Remastered a depuis été largement restructuré et développé avec une architecture distincte, notamment un frontend Vue, un backend Fastify et Prisma, ainsi qu’une organisation en monorepo pnpm.
+
+Le travail original reste attribué aux contributeurs respectifs du projet Eternaltwin DinoRPG, à savoir :
+
+- Jérémy "Biosha" Guilbert
+- Sylvain "Jahaa" Hunault
+  - Franck "Zen" Demoute
+- Lucas "Jolu" Lesven
+- Thibault "Gerardufoin" Duval
+- et toutes les personnes ayant contribuées au projet.
+
+Les modifications et contributions ultérieures restent attribuées aux contributeurs respectifs de DinoRPG Remastered.
 
 ## License / Licence
 

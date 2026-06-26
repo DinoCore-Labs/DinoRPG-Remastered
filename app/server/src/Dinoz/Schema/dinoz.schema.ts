@@ -2,7 +2,8 @@ import { z } from 'zod';
 
 export const moveDinozSchema = z.object({
 	dinozId: z.coerce.number().int().positive(),
-	placeId: z.coerce.number().int().positive()
+	placeId: z.coerce.number().int().positive(),
+	autoReequip: z.boolean().optional()
 });
 
 export type MoveDinozInput = z.infer<typeof moveDinozSchema>;
