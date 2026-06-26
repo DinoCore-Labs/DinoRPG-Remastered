@@ -71,6 +71,7 @@ export function richFormatText(text: string | null): string {
 	formattedText = formattedText.replaceAll(/==(.+?)==/g, '<mark>$1</mark>');
 	formattedText = formattedText.replaceAll(/\|\|(.+?)\|\|/g, '<span class="spoiler">$1</span>');
 	formattedText = formattedText.replace(/(?<!http:|https:)\/\//g, '<br>');
+	formattedText = formattedText.replace(/\n/g, '<br>');
 
 	return formattedText;
 }
