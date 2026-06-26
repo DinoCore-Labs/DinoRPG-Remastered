@@ -1,14 +1,18 @@
-// import { UserToolTip } from "../user/userToolTip.js";
-// import { Clan } from "./clan.js";
+import { Clan } from './clan.js';
 
-// export interface ClanMessage {
-//     id: number;
-//     clanId: number;
-//     date: Date;
-//     content: string;
-//     authorId: string | null;
-//     authorName: string;
+export interface ClanMessageAuthor {
+	id: string;
+	name: string;
+	avatarUrl?: string | null;
+}
 
-//     author?: UserToolTip;
-//     clan?: Pick<Clan, 'leaderId'>;
-// }
+export interface ClanMessage {
+	id: number;
+	clanId: number;
+	date: Date | string;
+	content: string;
+	authorId: string | null;
+	authorName: string;
+	author?: ClanMessageAuthor | null;
+	clan?: Pick<Clan, 'leaderId'> | null;
+}
