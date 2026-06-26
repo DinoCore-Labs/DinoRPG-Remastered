@@ -48,16 +48,17 @@
 			>
 				<img :src="getImgURL('act', 'act_treasure')" alt="Trésor de clan" />
 			</RouterLink>
-			<!-- <RouterLink
+			<RouterLink
+				v-if="isClanMember"
 				class="tab"
-				:to="{ name: 'ClanBuilds' }"
+				:to="{ name: 'ClanDiscussion' }"
 				v-tippy="{
-					content: formatContent($t('clan.tabs.builds')),
+					content: formatContent($t('clan.tabs.discussion')),
 					theme: 'small'
 				}"
 			>
-				<img :src="getImgURL('icons', 'act_pac')" :alt="$t('clan.tabs.builds')" />
-			</RouterLink> -->
+				<img :src="getImgURL('act', 'act_talk')" alt="Forum du clan" />
+			</RouterLink>
 			<RouterLink
 				v-if="isClanMember"
 				class="tab"
