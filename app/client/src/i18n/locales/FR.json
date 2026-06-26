@@ -376,7 +376,8 @@
 				"PLAYER_JOIN": "Un joueur a rejoint le clan.",
 				"PLAYER_LEAVE": "Un joueur a quitté le clan.",
 				"PLAYER_EXCLUSION": "Le joueur {msg} a été exclu du clan.",
-				"NEW_LEADER": "Le chef du clan a changé."
+				"NEW_LEADER": "Le chef du clan a changé.",
+				"NEW_NAME": "Le nom du clan {msg} a changé."
 			}
 		},
 		"settings": {
@@ -386,6 +387,10 @@
 			},
 			"langs": {
 				"title": "Langues"
+			},
+			"name": {
+				"title": "Changer le nom du clan",
+				"save": "Changer le nom"
 			},
 			"action": {
 				"delete": "Supprimer le clan"
