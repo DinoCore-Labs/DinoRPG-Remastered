@@ -130,3 +130,13 @@ export const giveIngredientBodySchema = z.object({
 		})
 	)
 });
+
+export const createClanMessageSchema = z.object({
+	content: z.string().min(1).max(5000)
+});
+export const messageIdParamSchema = z.object({
+	messageId: z.coerce.number().int().positive()
+});
+export const clanMessagesQuerySchema = z.object({
+	page: z.coerce.number().int().positive().optional()
+});
