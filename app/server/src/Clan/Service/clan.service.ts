@@ -10,6 +10,7 @@ import { removeMoney } from '../../User/Controller/money.controller.js';
 import { memberHasRight } from '../Controller/memberHasRight.controller.js';
 import {
 	clanIdParamSchema,
+	clanNameSchema,
 	createClanSchema,
 	pageParamSchema,
 	searchClansSchema,
@@ -337,4 +338,42 @@ export async function searchClansByName(req: FastifyRequest, reply: FastifyReply
 			banner: c.banner ? `data:image/webp;base64,${Buffer.from(c.banner).toString('base64')}` : undefined
 		}))
 	);
+}
+
+export async function updateClanName(req: FastifyRequest, reply: FastifyReply) {
+	const { clanId } = clanIdParamSchema.parse(req.params);
+	const userId = req.user.id;
+	const body = clanNameSchema.parse(req.body);
+
+	if (!(await memberHasRight(userId, clanId, ClanMemberRight.CLAN_EDIT_NAME))) {
+		throw new ExpectedError('Permission denied');
+	}
+
+	const updatedClan = await prisma.$transaction(async tx => {
+		const oldClan = await tx.clan.findUniqueOrThrow({
+			where: { id: clanId },
+			select: { name: true }
+		});
+
+		const clan = await tx.clan.update({
+			where: {
+				id: clanId
+			},
+			data: {
+				name: body.name
+			}
+		});
+
+		await tx.clanHistory.create({
+			data: {
+				clanId: clanId,
+				authorId: req.user.id,
+				type: ClanHistoryType.NEW_NAME,
+				authorMessage: oldClan.name
+			}
+		});
+
+		return clan;
+	});
+	return reply.send(updatedClan);
 }
