@@ -18,10 +18,10 @@ import { defineComponent } from 'vue';
 import { ClanService } from '../../services/clan.service.ts';
 import { userStore } from '../../store/userStore.ts';
 import { errorHandler } from '../../utils/errorHandler.ts';
+import type { IngredientFiche } from '@dinorpg/core/models/ingredients/IngredientFiche.js';
 import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { beautifulNumber } from '../../utils/beautifulNumber.js';
 import DZDisclaimer from '../utils/DZDisclaimer.vue';
-import type { IngredientFiche } from '@dinorpg/core/models/ingredients/ingredientFiche.js';
 
 export default defineComponent({
 	name: 'ClanTreasure',

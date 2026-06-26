@@ -16,7 +16,6 @@
 				{{ $t('clan.settings.banner.info') }}
 			</div>
 		</div>
-
 		<div v-if="hasLangEditRight" class="language-panel dz-box">
 			<h3>{{ $t('clan.settings.langs.title') }}</h3>
 			<LangSelector v-model="langs" @change="saveLangs" class="df" />
