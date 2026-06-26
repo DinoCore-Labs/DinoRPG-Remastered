@@ -88,7 +88,7 @@
 							<img
 								:src="getImgURL('icons', 'edit')"
 								alt="edit"
-								v-if="hasEditRight && !member.user?.leaderOf?.id"
+								v-if="hasEditRight && !member.user?.leaderOf?.id && member.user.id !== userStore.id"
 								@click="goToMemberEdit(member.id)"
 								v-tippy="{
 									content: $t('clan.members.action.edit'),
@@ -98,7 +98,7 @@
 							<img
 								:src="getImgURL('icons', 'small_delete')"
 								alt="exclude"
-								v-if="hasExcludeRight && !member.user?.leaderOf?.id"
+								v-if="hasExcludeRight && !member.user?.leaderOf?.id && member.user.id !== userStore.id"
 								@click="excludeMember(member.id)"
 								v-tippy="{
 									content: $t('clan.members.action.exclude'),
