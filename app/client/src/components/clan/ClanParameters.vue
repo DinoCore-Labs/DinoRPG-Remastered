@@ -16,12 +16,21 @@
 				{{ $t('clan.settings.banner.info') }}
 			</div>
 		</div>
+
 		<div v-if="hasLangEditRight" class="language-panel dz-box">
 			<h3>{{ $t('clan.settings.langs.title') }}</h3>
 			<LangSelector v-model="langs" @change="saveLangs" class="df" />
 		</div>
+
+		<div v-if="hasNameEditRight" class="name-panel dz-box">
+			<h3>{{ $t('clan.settings.name.title') }}</h3>
+			<div class="action">
+				<DZInput v-model="clanName" type="text" />
+				<a class="button" @click="saveName">{{ $t('clan.settings.name.save') }}</a>
+			</div>
+		</div>
+
 		<a class="button" @click="deleteClan()">{{ $t('clan.settings.action.delete') }}</a>
-		<!-- <input type="file" @change="onFileChanged($event)" accept="image/*" capture /> -->
 	</div>
 </template>
 
@@ -32,12 +41,13 @@ import { errorHandler } from '../../utils/errorHandler.ts';
 import { userStore } from '../../store/userStore.ts';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
 import LangSelector from './LangSelector.vue';
+import DZInput from '../../components/utils/DZInput.vue';
 import { Language } from '@dinorpg/core/models/config/language.js';
 import { clanStore } from '../../store/clanStore';
 
 export default defineComponent({
 	name: 'ClanParameters',
-	components: { LangSelector },
+	components: { LangSelector, DZInput },
 	data() {
 		return {
 			userStore: userStore(),
@@ -45,18 +55,41 @@ export default defineComponent({
 			banner_url: '' as string,
 			hasBannerEditRight: false as boolean,
 			hasLangEditRight: false as boolean,
+			hasNameEditRight: false as boolean, // nouveau
 			filePreviewUrl: '',
 			clanStore: clanStore(),
-			langs: [] as Language[]
+			langs: [] as Language[],
+			clanName: '' as string // nouveau
 		};
 	},
 	methods: {
+		// --- nouveau ---
+		async getHasNameEditRight() {
+			try {
+				this.hasNameEditRight = await ClanService.getPlayerHasRight(
+					this.clanStore.getClanId,
+					ClanMemberRight.CLAN_EDIT_NAME
+				);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
+		},
+		async saveName(): Promise<void> {
+			const trimmed = (this.clanName as string).trim();
+			if (!trimmed) return;
+			try {
+				await ClanService.updateClanName(this.clanStore.getClanId, trimmed);
+				this.clanStore.updateName(trimmed);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
+		},
+
 		async saveLangs(): Promise<void> {
 			try {
 				await this.clanStore.updateLang(this.clanStore.getClanId, this.langs);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
-				return;
 			}
 		},
 		async deleteClan(): Promise<void> {
@@ -75,7 +108,6 @@ export default defineComponent({
 					this.$router.push({ name: 'clansList' });
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
-					return;
 				}
 			}
 		},
@@ -87,7 +119,6 @@ export default defineComponent({
 				);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
-				return;
 			}
 		},
 		async getHasLangEditRight() {
@@ -98,7 +129,6 @@ export default defineComponent({
 				);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
-				return;
 			}
 		},
 		async onFileChanged() {
@@ -123,11 +153,12 @@ export default defineComponent({
 		if (!this.hasAccess) {
 			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
 		}
-		await Promise.all([this.getHasBannerEditRight(), this.getHasLangEditRight()]);
-		if (!this.hasBannerEditRight && !this.hasLangEditRight) {
+		await Promise.all([this.getHasBannerEditRight(), this.getHasLangEditRight(), this.getHasNameEditRight()]);
+		if (!this.hasBannerEditRight && !this.hasLangEditRight && !this.hasNameEditRight) {
 			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
 		}
 		this.langs = (this.clanStore.getClan?.languages as Language[]) ?? [];
+		this.clanName = this.clanStore.getClan?.name ?? '';
 	}
 });
 </script>
@@ -153,6 +184,8 @@ export default defineComponent({
 		}
 		.action {
 			display: flex;
+			gap: 8px;
+			align-items: center;
 			justify-content: space-between;
 			align-items: center;
 			input {
