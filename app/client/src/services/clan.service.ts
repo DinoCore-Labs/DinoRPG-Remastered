@@ -6,6 +6,7 @@ import type {
 	GetClanMemberResponse,
 	UpdateClanMemberRequestBody
 } from '@dinorpg/core/models/clan/clanMember.js';
+import type { ClanMessage } from '@dinorpg/core/models/clan/clanMessage.js';
 import type { ClanPage } from '@dinorpg/core/models/clan/clanPage.js';
 import { Language } from '@dinorpg/core/models/config/language.js';
 import type { ShopDTO } from '@dinorpg/core/models/shop/shopFiche.js';
@@ -113,5 +114,19 @@ export const ClanService = {
 	},
 	async searchClansByName(name: string, page: number): Promise<ClanLite[]> {
 		return api.get<ClanLite[]>(`/clan/search/${name}/${page}`);
+	},
+
+	// Clan Discussion
+	async getClanMessages(clanId: number, page: number): Promise<ClanMessage[]> {
+		return api.get<ClanMessage[]>(`/clan/${clanId}/messages?page=${page}`);
+	},
+	async getClanMessagesCount(clanId: number): Promise<{ count: number }> {
+		return api.get<{ count: number }>(`/clan/${clanId}/messages/count`);
+	},
+	async createClanMessage(clanId: number, content: string): Promise<ClanMessage> {
+		return api.post<ClanMessage>(`/clan/${clanId}/messages`, { content });
+	},
+	async deleteClanMessage(clanId: number, messageId: number): Promise<void> {
+		return api.delete<void>(`/clan/${clanId}/messages/${messageId}`);
 	}
 };
