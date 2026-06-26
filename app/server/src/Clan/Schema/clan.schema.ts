@@ -12,6 +12,14 @@ export const createClanSchema = z.object({
 	description: z.string().max(500).optional()
 });
 
+export const clanNameSchema = z.object({
+	name: z
+		.string()
+		.min(3)
+		.max(25)
+		.regex(/^[a-zA-Z0-9 _-]+$/)
+});
+
 export const clanIdParamSchema = z.object({
 	clanId: z.coerce.number().int().positive()
 });
