@@ -5,11 +5,14 @@ import {
 	clanHistoryPageSchema,
 	clanIdParamSchema,
 	clanMemberIdSchema,
+	clanMessagesQuerySchema,
 	clanRightParamSchema,
+	createClanMessageSchema,
 	createClanPageSchema,
 	createClanSchema,
 	giveIngredientBodySchema,
 	joinRequestIdParamSchema,
+	messageIdParamSchema,
 	pageIdParamSchema,
 	pageParamSchema,
 	searchClansSchema,
@@ -28,6 +31,12 @@ import {
 	updateClanBanner,
 	updateClanLangs
 } from '../Service/clan.service.js';
+import {
+	createClanMessage,
+	deleteClanMessage,
+	getClanMessages,
+	getClanMessagesCount
+} from '../Service/clanDiscussion.service.js';
 import { getClanHistory } from '../Service/clanHistory.service.js';
 import {
 	acceptJoinClanRequest,
@@ -371,5 +380,52 @@ export async function clanRoutes(app: FastifyInstance) {
 			}
 		},
 		giveIngredient
+	);
+	// discussion forum routes
+	app.get(
+		'/:clanId/messages',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Clan'],
+				params: clanIdParamSchema,
+				querystring: clanMessagesQuerySchema
+			}
+		},
+		getClanMessages
+	);
+	app.get(
+		'/:clanId/messages/count',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Clan'],
+				params: clanIdParamSchema
+			}
+		},
+		getClanMessagesCount
+	);
+	app.post(
+		'/:clanId/messages',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Clan'],
+				params: clanIdParamSchema,
+				body: createClanMessageSchema
+			}
+		},
+		createClanMessage
+	);
+	app.delete(
+		'/:clanId/messages/:messageId',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Clan'],
+				params: clanIdParamSchema.merge(messageIdParamSchema)
+			}
+		},
+		deleteClanMessage
 	);
 }
