@@ -35,6 +35,9 @@ export const ClanService = {
 	async updateClanBanner(id: number, data: FormData): Promise<void> {
 		return api.put<void>(`/clan/` + id + `/edit/banner`, data);
 	},
+	async updateClanName(clanId: number, name: string): Promise<void> {
+		return api.put<void>(`/clan/${clanId}/edit/name`, { name });
+	},
 
 	//Clan History
 	async getClanHistory(id: number, page: number): Promise<{ history: ClanHistory[]; count: number }> {
