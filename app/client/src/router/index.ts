@@ -314,6 +314,12 @@ const routes: RouteRecord[] = [
 						meta: { auth: true }
 					},
 					{
+						path: 'discussion',
+						name: 'ClanDiscussion',
+						component: () => import('../components/clan/ClanDiscussion.vue'),
+						meta: { auth: true }
+					},
+					{
 						path: 'history',
 						name: 'ClanHistory',
 						component: () => import('../components/clan/ClanHistory.vue'),
