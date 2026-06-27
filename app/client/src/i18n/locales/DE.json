@@ -289,6 +289,7 @@
 			"pages": "Pages du clan",
 			"members": "Membres du clan",
 			"treasure": "Schatzkammer des Klans",
+			"discussion": "Forum du Clan",
 			"history": "Historique du clan",
 			"parameters": "Paramètres"
 		},
@@ -335,7 +336,8 @@
 				},
 				"nickname": "Surnom du joueur",
 				"save": "Enregistrer",
-				"saved": "Modifications enregistrées avec succès !"
+				"saved": "Modifications enregistrées avec succès !",
+				"leader": "Nommer Chef du clan"
 			},
 			"request": {
 				"title": "Adhésions en attente",
@@ -358,13 +360,26 @@
 			"giveAway": "Donner au clan",
 			"confirm": "Voulez vous vraiment donner au clan ces ingrédients d'une valeur de {gold} Or"
 		},
+		"discussion": {
+			"action": {
+				"create": "Neue Nachricht",
+				"send": "Envoyer"
+			},
+			"delete": "Supprimer le message",
+			"pagination": {
+				"page": "Page",
+				"go_to": "Aller à la page"
+			}
+		},
 		"history": {
 			"page": "Page",
 			"type": {
-				"CLAN_CREATED": "Création du clan",
-				"PLAYER_JOIN": "Un joueur a rejoint le clan",
-				"PLAYER_LEAVE": "Un joueur a quitté le clan",
-				"PLAYER_EXCLUSION": "Le joueur {msg} a été exclu du clan"
+				"CLAN_CREATED": "Création du clan.",
+				"PLAYER_JOIN": "Un joueur a rejoint le clan.",
+				"PLAYER_LEAVE": "Un joueur a quitté le clan.",
+				"PLAYER_EXCLUSION": "Le joueur {msg} a été exclu du clan.",
+				"NEW_LEADER": "Le chef du clan a changé.",
+				"NEW_NAME": "Le nom du clan {msg} a changé."
 			}
 		},
 		"settings": {
@@ -374,6 +389,10 @@
 			},
 			"langs": {
 				"title": "Langues"
+			},
+			"name": {
+				"title": "Changer le nom du clan",
+				"save": "Changer le nom"
 			},
 			"action": {
 				"delete": "Supprimer le clan"
