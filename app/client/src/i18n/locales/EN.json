@@ -276,39 +276,39 @@
 	},
 	"clan": {
 		"icons": {
-			"members": "Nombre de membres",
+			"members": "Number of members",
 			"gold": "Treasure value",
-			"crown": "Chef du Clan"
+			"crown": "Clan leader"
 		},
 		"header": {
 			"title": "Clan: {name}",
-			"infos": "Informations sur le clan",
-			"creation_date": "Créé le {date}"
+			"infos": "Clan information",
+			"creation_date": "Created the {date}"
 		},
 		"tabs": {
-			"pages": "Pages du clan",
-			"members": "Membres du clan",
+			"pages": "Clan pages",
+			"members": "Members list",
 			"treasure": "Clan Treasure",
-			"discussion": "Forum du Clan",
-			"history": "Historique du clan",
-			"parameters": "Paramètres"
+			"discussion": "Discussion thread",
+			"history": "Clan history",
+			"parameters": "Settings"
 		},
 		"clanPages": {
 			"button": {
-				"create": "Créer une page",
-				"edit": "Modifier la page",
-				"delete": "Supprimer la page",
-				"join_clan": "Rejoindre le Clan"
+				"create": "Create new page",
+				"edit": "Edit page",
+				"delete": "Delete page",
+				"join_clan": "Join clan"
 			},
 			"creation": {
-				"edit": "Modifier la page de clan",
-				"new": "Créer une page de clan",
+				"edit": "Edition of clan page",
+				"new": "New clan page",
 				"title": "Title",
-				"content": "Contenu",
-				"public": "Page publique ?",
+				"content": "Content",
+				"public": "Public page?",
 				"action": {
-					"create": "Créer",
-					"edit": "Modifier",
+					"create": "Create",
+					"edit": "Edit",
 					"cancel": "Cancel"
 				}
 			}
@@ -316,116 +316,116 @@
 		"members": {
 			"th": {
 				"name": "Name",
-				"donation": "Dons",
+				"donation": "Donations",
 				"stats": "Stats",
 				"actions": "Actions",
-				"event": "Score d'événement"
+				"event": "Event Score"
 			},
 			"edit": {
-				"disclaimer": "Cette page vous permet de modifier les droits du joueur <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> dans le Clan.",
+				"disclaimer": "This page allows you to edit the rights of clan member <a style=\"color: #ffee92; cursor: pointer;\">{name}</a>.",
 				"right": {
-					"MEMBER_EDIT": "Peut changer les droits et surnoms des membres",
-					"PAGE_MANAGE": "Peut gérer les pages du Clan",
-					"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Peut accepter et refuser de nouveaux membres",
-					"MEMBER_EXCLUDE": "Peut renvoyer des membres",
-					"DISCUSSION_DELETE_MESSAGE": "Peut supprimer des messages du fil de discussion",
-					"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan",
-					"CLAN_EDIT_LANG": "Peut changer la langue du Clan",
-					"WAR_OFFICER": "Peut déclarer des guerres",
-					"CLAN_BUILD_CASTLE": "Peut construire le château"
+					"MEMBER_EDIT": "Can edit rights and surname of other members",
+					"PAGE_MANAGE": "Can manage Clan pages",
+					"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Can accept or deny joining requests",
+					"MEMBER_EXCLUDE": "Can exclude members",
+					"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
+					"CLAN_EDIT_BANNER": "Can change the Clan banner",
+					"CLAN_EDIT_LANG": "Can change the language of the Clan",
+					"WAR_OFFICER": "Can declare war",
+					"CLAN_BUILD_CASTLE": "Can build the castle"
 				},
-				"nickname": "Surnom du joueur",
-				"save": "Enregistrer",
-				"saved": "Modifications enregistrées avec succès !",
+				"nickname": "Player's nickname",
+				"save": "Save",
+				"saved": "Modifications saved successfully!",
 				"leader": "Nommer Chef du clan"
 			},
 			"request": {
-				"title": "Adhésions en attente",
+				"title": "Waiting requests",
 				"accept": "Accept",
-				"deny": "Refuser",
-				"maximum": "Le clan est plein, vous ne pouvez pas accepter de nouvelles demandes."
+				"deny": "Deny",
+				"maximum": "Clan is full, you cannot accept more requests."
 			},
 			"action": {
-				"edit": "Éditer",
-				"exclude": "Exclure",
-				"leave": "Quitter le clan"
+				"edit": "Edit",
+				"exclude": "Exclude",
+				"leave": "Leave the clan"
 			},
 			"stat": {
-				"last_login": "Dernière connexion le {date}."
+				"last_login": "Last connection the {date}."
 			}
 		},
 		"ingredients": {
-			"help": "Votre trésor d'une valeur de {value}:gold: est protégé par le château. Vous pouvez donner des ingrédients pour qu'ils soient ajoutés au trésor du Clan.",
-			"price": "{price}:gold:",
-			"giveAway": "Donner au clan",
+			"help": "Your treasure worth **{value}** :gold: is protected by the castle. You can donate ingredients to be added to the Clan's treasure.",
+			"price": "{price} :gold:",
+			"giveAway": "Donate to the clan",
 			"confirm": "Voulez vous vraiment donner au clan ces ingrédients d'une valeur de {gold} Or"
 		},
 		"discussion": {
 			"action": {
 				"create": "New Message",
-				"send": "Envoyer"
+				"send": "Send"
 			},
-			"delete": "Supprimer le message",
+			"delete": "Delete message",
 			"pagination": {
 				"page": "Page",
-				"go_to": "Aller à la page"
+				"go_to": "Go to page"
 			}
 		},
 		"history": {
 			"page": "Page",
 			"type": {
-				"CLAN_CREATED": "Création du clan.",
-				"PLAYER_JOIN": "Un joueur a rejoint le clan.",
-				"PLAYER_LEAVE": "Un joueur a quitté le clan.",
-				"PLAYER_EXCLUSION": "Le joueur {msg} a été exclu du clan.",
-				"NEW_LEADER": "Le chef du clan a changé.",
-				"NEW_NAME": "Le nom du clan {msg} a changé."
+				"CLAN_CREATED": "The Clan has been created.",
+				"PLAYER_JOIN": "A player has joined the clan.",
+				"PLAYER_LEAVE": "This player decided to leave the clan.",
+				"PLAYER_EXCLUSION": "Player {msg} has been excluded from the clan.",
+				"NEW_LEADER": "The Clan Leader has changed.",
+				"NEW_NAME": "Clan name {msg} has changed."
 			}
 		},
 		"settings": {
 			"banner": {
-				"title": "Changer l'URL de la bannière du clan :",
-				"info": "La bannière a un ratio de 448px de large sur 100px de long."
+				"title": "Edit clan banner URL:",
+				"info": "Clan banner has a ratio of 448px large by 100px long."
 			},
 			"langs": {
-				"title": "Langues"
+				"title": "Languages"
 			},
 			"name": {
-				"title": "Changer le nom du clan",
-				"save": "Changer le nom"
+				"title": "Edit clan na",
+				"save": "Rename it"
 			},
 			"action": {
-				"delete": "Supprimer le clan"
+				"delete": "Delete clan"
 			}
 		}
 	},
 	"clansList": {
 		"title": "Clans",
 		"disclaimer": {
-			"text": "Les Clans sont des groupes de joueurs qui combattent ensemble dans l'univers de Dinoland."
+			"text": "Clans are groups of players who fight together in the Dinoland universe."
 		},
 		"button": {
-			"create": "Créer un Clan"
+			"create": "Create clan"
 		},
 		"th": {
 			"name": "Clan",
-			"leader": "Chef",
-			"members": "Membres",
-			"date": "Date de création"
+			"leader": "Creator",
+			"members": "Members",
+			"date": "Creation date"
 		},
 		"request": {
 			"info": "Vous avez envoyé une demande pour rejoindre le clan ",
-			"cancel": "Annuler la demande."
+			"cancel": "Cancel the request."
 		}
 	},
 	"createClan": {
-		"title": "Créer un clan",
-		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
+		"title": "Create a clan",
+		"information": "Please fill out the information below to create your Clan. Creating a Clan will cost you **{cost}** :gold:",
 		"clan_name": "Name",
-		"clan_langs": "Langues",
+		"clan_langs": "Languages",
 		"clan_description": "Description",
 		"go_back_button": "Cancel",
-		"create_button": "Créer"
+		"create_button": "Create"
 	},
 	"manageDinoz": {
 		"title": "My Dinoz management",
@@ -519,17 +519,17 @@
 	},
 	"reincarnate": {
 		"choice1": {
-			"name": "Choix 1 : <br/>Conserver la destinée ({price}{goldIcon})",
+			"name": "Choice 1: <br/>Keep Destiny ({price}{goldIcon})",
 			"action": "Conserver la destinée",
 			"explanation": "Vous pouvez réincarner votre Dinoz en conservant sa destinée :",
-			"list1": "Il retournera au niveau 1",
+			"list1": "Will return to level 1",
 			"list2": "Il prendra les mêmes éléments, dans le même ordre que lors de sa première vie"
 		},
 		"choice2": {
-			"name": "Choix 2 : <br/>Nouvelle destinée",
+			"name": "Choice 2: <br/>New Destiny",
 			"action": "Changer de destinée",
 			"explanation": "Vous pouvez réincarner votre Dinoz en changeant sa destinée :",
-			"list1": "Il retournera au niveau 1",
+			"list1": "Will return to level 1",
 			"list2": "Tous ses niveaux seront à nouveau aléatoires"
 		},
 		"finalWarning": "Voulez-vous vraiment réincarner ce Dinoz ? \nAttention, un Dinoz ne peut être réincarné qu'une seule fois !"
@@ -766,7 +766,7 @@
 			"average": "The Player Ranking is updated in real time and is calculated from the average level of all the player's Dinoz.",
 			"completion": "The ranking of players is updated at midnight and base on the completion formula. This formula is based on the active Dinoz of the player and its progress in the story.",
 			"clan": "Le classement des clans est mis à jour en temps réel et est calculé à partir de la somme des points des membres d'un clan",
-			"treasure": "Le classement des clans est mis à jour en temps réel et est calculé à partir de la valeur du trésor du clan"
+			"treasure": "The clan ranking is updated in real time and based on the treasure value of the clan."
 		},
 		"page": {
 			"previous": "Previous page",
@@ -1250,7 +1250,7 @@
 			"Venerable": "Venerable",
 			"Renforts": "Reinforcements",
 			"Resistance": "Resistance",
-			"ElementalDisciple": "Disciple élémentaire",
+			"ElementalDisciple": "Elemental Disciple",
 			"CursedWand": "Cursed Wand"
 		},
 		"description": {
@@ -3394,16 +3394,16 @@
 			"yourTickets": "Your Treasure Coupons",
 			"quantity": "Quantité à convertir",
 			"max": "Max",
-			"youWillReceive": "Vous recevrez **{gold}** :gold:",
-			"convert": "Convertir"
+			"youWillReceive": "You will receive **{gold}** :gold:",
+			"convert": "Convert"
 		},
 		"savings": {
-			"title": "Épargne",
+			"title": "Savings",
 			"amount": "Montant à épargner",
 			"duration": "Durée de l'épargne",
 			"durationOption": "{days} jours (+{percent}%)",
-			"save": "Épargner",
-			"activeTitle": "Vos épargnes",
+			"save": "Saving",
+			"activeTitle": "Your savings",
 			"empty": "Vous n'avez aucune épargne en cours.",
 			"previewEmpty": "Choisissez un montant à épargner.",
 			"preview": "Vous épargnez **{gold}** :gold: et recevrez **{interest}** :gold: d'intérêts, soit **{total}** :gold: au total.",
@@ -3805,14 +3805,14 @@
 					"chasse": "I'm a Great Dorogon Hunter. I've come here to challenge you!",
 					"deal": "I have a GOLDEN business opportunity for you!",
 					"korgon": "I was running after a Korgon and...",
-					"auto": "Pourrais-je avoir un autographe ?",
-					"next0": "Je l'ai attrapé",
-					"next1": "Il m'a échappé",
-					"next2": "C'est efficace...",
-					"question": "Euh...",
-					"force": "J'aimerais que mon Dinoz soit plus fort !",
-					"fight": "Je vais vous ECRASER !",
-					"fight2": "Je vais vous ECRASER !"
+					"auto": "Can I have an autograph?",
+					"next0": "I caught it",
+					"next1": "It escaped",
+					"next2": "That's a good idea...",
+					"question": "Uh...",
+					"force": "I'd like my Dinoz to be stronger!",
+					"fight": "I'm going to CRUSH you!",
+					"fight2": "I'm going to CRUSH you!"
 				}
 			},
 			"hurt": {
@@ -3828,7 +3828,7 @@
 					"ok": "Vous pouvez compter sur moi !",
 					"ko": "J'ai besoin de m'entraîner !",
 					"ko2": "J'ai besoin de m'entraîner.",
-					"force2": "J'aimerais que mon Dinoz soit plus fort !",
+					"force2": "I'd like my Dinoz to be stronger!",
 					"comb": "En avant !"
 				}
 			}
@@ -3850,12 +3850,12 @@
 			}
 		},
 		"baoBob": {
-			"name": "M. Bao Bob",
+			"name": "Mr. Bao Bob",
 			"dialog": {
-				"begin": "Bonjour, bonjour, bonjour, que me veux-tu, Maître Eleveur ?",
-				"question": "Une question ? Mmmmmm.... Que dirais-tu plutôt d'une petite Mission pour ton Dinoz ? Avec des amis, on organise des rallyes tout autour de Dinoland !",
-				"nothing": "Ah bon ? Alors parfait... Bon voyage !",
-				"quest2": "Reviens me voir quand tu auras obtenu les palmes des Korgons de la Forêt de Grumhel. <br> Je pourrais alors répondre à ton voeu le plus cher.",
+				"begin": "Hello, hello, what do you want from me, Master Tamer?",
+				"question": "Any questions? Mmmmmmm.... How about a little mission for your Dinoz instead? Some friends and I organize rallies all around Dinoland! You could take part, if you're interested.",
+				"nothing": "Really? Well then... Have a good trip!",
+				"quest2": "Come back when you have obtained the Korgon fins from Grumhel Forest. <br> Then I'm able to fulfill your dearest wish.",
 				"quest3": "A question? Mmmmm... I see that you got the Korgons fins. <br> That means you should be able to survive... over there... maybe...",
 				"where": "Mmmm.... To go there, you will have to gather seven Dinoz. Not necessarily yours, no, they can also be Dinoz of your Clan members. Once there are enough Dinoz, I can send you there...",
 				"where2": "Mmm.... It is a place... I can't tell you more about. But know that you'll find a key, yes, THE key for the Blacksilva door. It will allow you to continue your adventure. That is, if you survive.",
@@ -3888,151 +3888,151 @@
 		"baoFan": {
 			"name": "Bao Fan",
 			"dialog": {
-				"begin": "Bonjour monsieur ! Vous avez parlé à Monsieur Bao ? Il est vraiment génniaaaaaalll non ???",
-				"ok": "Hein, que c'est vrai !! Il est trop cool ! J'ai même traversé la Forêt de Grumhel exprès pour qu'il me raconte plein d'histoires super ! Vous savez quoi, il a déjà assommé un Gorilloz démon, un jour ! Si si ! Et puis il était entouré de plein d'animaux méchants ! Et tu sais quoi ? Et ben il les a tous battus !",
-				"wah": "Oui ! Et M. Bao a bien voulu m'apprendre quelques trucs ! Il a dit que je suis très doué pour mon âge ! C'est bien, hein ? Attends regarde... je vais envoûter un truc, tu veux que je te montre ?",
-				"yes": ".............. Voilà, j'ai fini ! Tu le veux ? Tiens... C'est un Charme Bao ! Alors prends-en soin, hein ! Ça devrait aider ton Dinoz pendant quelques combats. Quand tout le fluide spitruel sera épuisé, tu pourras revenir me voir pour que je le recharge !",
-				"spirit": "Heu... oui c'est ça ! Spitri... péritel... spriti... ! Ho ils sont trop compliqués vos mots technologiques !",
-				"thanks": "Hooo tu t'en vas déjà... Tu reviendras, hein ? À bientôt alors !",
-				"nothing": "Ah... mais ton Dinoz a déjà un Charme Bao ! Regarde, y'a encore de l'énergie... tu vois ? Quand il ne marchera plus, je pourrai te le recharger.",
-				"no": "Ah bon ? Bon, ben tant pis pour toi alors... *boude*."
+				"begin": "Hi ! You spoke to Mr Bao? He's really aaaaaawesome, isn't he???",
+				"ok": "Hey, it's true!! He's so cool! I even crossed the Forest of Grumhel on purpose so that he would tell me lots of great stories! You know what, he knocked out a demon gorilloz once! Yes ! And he was surrounded by all kinds of angry animals! And you know what? Well, he beat them all!",
+				"wah": "Yeah! He even agreed to teach me a few things! He said that I'm really gifted for my age! That's good, isn't it? Wait, look, I can enchant something for you. Wanna see?",
+				"yes": ".............. Here, I finished it. Do you want it? Take it... it's a Bao Charm! Be careful with it, OK? It should help your Dinoz during battles. Once all the spiritual fluid has run out, you can come back here and I'll recharge it for you!",
+				"spirit": "Yeah, sorry, that's right. \\\"Spiritual\\\" Ah, these technological words are so difficult to pronounce!",
+				"thanks": "Oh no! You're leaving already, that's a shame. You have to come back again, hopefully I'll see you soon.",
+				"nothing": "It seems your Dinoz already has a Bao Charm! Look, it still has some energy left. When it runs out I can recharge it for you.",
+				"no": "Oh really? Well it's your loss. *sulk*."
 			},
 			"choice": {
-				"ok": "Euh... oui",
-				"wah": "Waaahh !!",
-				"yes": "Ok !",
+				"ok": "Uh...yes, I suppose",
+				"wah": "Wow, that is impressive!",
+				"yes": "Ok!",
 				"no": "No, thanks",
-				"spirit": "\"Spirituel\" tu veux dire ?",
-				"thanks": "Bon, je dois partir... merci beaucoup pour le Charme Bao !"
+				"spirit": "Did you mean \\\"spiritual\\\"?",
+				"thanks": "Well, I have to go now. Thanks a lot for the Bao Charm, it was really kind of you!"
 			}
 		},
 		"dian": {
 			"name": "Dian Korgsey",
 			"dialog": {
-				"begin": "Salut, éleveur... Ne fais pas un bruit, il ne faut surtout pas déranger les Korgons !",
-				"korgons": "Oui, ce sont les petites créatures qui se sont installées ici. De vraies petites teignes si on n'y prête pas gare ! Déjà, ne les regarde surtout pas dans les yeux... Et si l'un d'eux s'approche trop, tu peux toujours essayer de lui donner un bout de bois à grignoter.",
-				"why": "Ils pourraient prendre ça pour un défi ! Et là, je vous laisse imaginer ce qui se passerait si tous les Korgons du campement se mettaient dans la tête que vous étiez un ennemi... Les derniers à avoir essayé ont été servis en souper le soir même.",
-				"wood": "Ils adorent ça ! C'est d'ailleurs la raison pour laquelle ils se sont installés dans la Jungle de Grumhel. Fascinant n'est-ce pas ? Mais malheureusement pour nous, ils sont capables de manger tout et n'importe quoi, y compris les voyageurs imprudents.",
-				"tame": "Il y a bien longtemps, je pense que les Korgons étaient domestiqués. Probablement bien avant la chute de l'île de Jazz... Mais aujourd'hui, ils sont revenus totalement à l'état sauvage ! Pas moyen de les approcher sans risquer d'y perdre un bras. Quelques éleveurs s'y sont aussi frottés, mais personne n'a obtenu mieux de leur part qu'un grand coup de dents.",
-				"interest": "N'est-ce pas ! Je suis heureuse de voir que ces adorables Korgons vous plaisent autant ! Si cela vous intéresse, vous pourriez me rendre quelques petits services au Camp ?",
-				"service": "Parfait ! Voilà ce dont j'ai besoin...",
-				"nothing": "D'accord, bon voyage !"
+				"begin": "Hello Tamer... Don't make a sound, you mustn't disturb the Korgons!",
+				"korgons": "Yes, they are these little creatures that live here. Be careful around them! Make sure to never look them directly in the eyes... And if one of them gets too close, you can always try to give him a piece of wood to nibble on, that should calm them down.",
+				"why": "They might take that for a challenge! You can imagine what would happen if all the Korgons from the camp think you have offended them.... The last person who made that mistake ended up as Korgon dinner!",
+				"wood": "They love it! This is also the reason why they settled in the Grumhel Forest. Fascinating, isn't it? But unfortunately for us, they are capable of eating everything and anything, clueless travelers included.",
+				"tame": "A long time ago, I think the Korgons were domesticated. Probably long before Jazz Island collapsed... But today, they have reverted to their wild state! There is no way to approach them without the risk of losing an arm. A few Tamers have tried, but no one has gotten more than a big bite.",
+				"interest": "Isn't it?! I'm glad to see you like these adorable Korgons so much! If that interests you, you could do a few little tasks for me at the Camp?",
+				"service": "Perfect! This is what you can do...",
+				"nothing": "Alright, have a nice trip!"
 			},
 			"choice": {
-				"korgons": "Les Korgons ?",
-				"nothing": "Oh pardon, je m'en vais...",
-				"why": "Il ne faut pas les regarder ?",
-				"wood": "Ils mangent du bois ?",
-				"tame": "Personne n'en a jamais dressé ?",
-				"interest": "Tout ça est vraiment passionnant !",
-				"service": "Oui, avec plaisir !",
+				"korgons": "The Korgons?",
+				"nothing": "Oh sorry, I'm leaving...",
+				"why": "We should not look at them?",
+				"wood": "They eat wood?",
+				"tame": "Nobody ever tame it?",
+				"interest": "It's all really exciting!",
+				"service": "Yes, with pleasure!",
 				"missions": "Show Mission List"
 			}
 		},
 		"nicolasHulot": {
 			"name": "Nicolas Mulot",
 			"dialog": {
-				"begin": "Un homme en tenue de safari se tient debout à l'Orée de la Jungle de Grumhel. Il a l'air d'attendre quelque chose...",
-				"welcome": "La Jungle de Grumhel ! Cet espace sauvage et encore vierge, protégé de toute agression extérieure par sa faune dangereuse, reste aujourd'hui une terre de mystère et de contraste qui séduit chaque année de nombreux explorateurs. Séquence frisson. \"À la découverte d'un Monde Sauvage\", c'est aujourd'hui, en ma compagnie !",
-				"who": "Nicolas Mulot, journaliste pour le magazine Ouïaïa et amoureux de Dinoland !",
-				"role": "Pas pour un journaliste de l'extrême comme moi. Il y a tout ce que je recherche ici : un monde inexploré, une faune et une flore riches, tant de choses fabuleuses à découvrir à chaque pas !",
-				"myst": "Je l'ignore encore... Mais... Mais je suis convaincu qu'il y a des choses fabuleuses qui se cachent dans cette jungle ! Il faut juste oser y entrer... Séquence peur bleue.",
-				"flora": "Ces arbres millénaires cachent aux yeux des hommes leurs plus beaux atours ! Mais pour qui sait regarder, c'est un ravissement pour les sens. Senteurs exotiques, fleurs multicolores, végétation luxuriante... La Jungle de Grumhel, \"Une Aventure au pays de Mère Nature\", séquence Exploration !",
-				"whynot": "Disons qu'il existe quelques plantes peu engageantes aussi... Comme la \"Toxicae Virulente Noire\" ou la \"Sauvagine Géante Dévoreuse de Foie\"...",
-				"fauna": "Entre les roncivores, les korgons et les fauve-souris, la Jungle de Grumhel recèle de dangers qui dépassent l'imagination ! À la fois Terre hostile et Terre Promise, cette partie de Dinoland ne se laissera pas si facilement apprivoiser...",
-				"fear": "Euh, comment dire... C'est... Disons un contretemps technique. Il serait plus prudent, je pense, de planifier d'abord une mission de reconnaissance. Avant de plonger corps et âme dans l'aventure, cela va de soi !",
-				"explore": "Ça serait une excellente idée ! Il faut dire qu'il n'y a pas beaucoup de passage par ici... Un petit coup de main serait le bienvenu... Séquence action.",
-				"other": "Oserez-vous plonger dans les mystères insondables de la Jungle de Grumhel ?",
-				"sick": "Alors que Nicolas Mulot se retourne pour vous répondre, vous constatez avec horreur qu'il a le visage tout boursouflé et couvert de verrues et autres boutons !",
-				"problem": "Euh... Bien le bonVour. Ne le prenez pas trop mal, mais Ve crois que les plantes que vous m'avez amené étaient comme dirait... eux toxViques... Ve crois bien que mon allervie aux plantes a pris une Fertaine ampleur... Vous pourriez peut-être m'aider à Drouver un remède ? ...",
-				"sickstatus": "Alors, vous avez trouvé un rebède ?",
-				"better": "Le remède que vous m'avez amené a été très efficace !"
+				"begin": "A man dressed in safari clothing is standing at the Edge of the Grumhel Jungle. He seems to be waiting for something...",
+				"welcome": "Grumhel Jungle! This wild yet tranquil place is protected from aggressors by its dangerous wildlife. Today the Jungle has a mysterious aura that charms hundreds of explorers every year! Thrill sequence. \\\"Discovering a Wild World\\\", it's today, in my company!",
+				"who": "Nicolas Mulot! Journalist for Ouïaïa magazine and lover of Dinoland!",
+				"role": "Not for an extreme journalist like me. I'm here to discover all things wild!  An undiscovered world, beautiful wildlife, wondrous plants in all their glory, there are so many fabulous things to discover at every turn!",
+				"myst": "I don't know for the moment... But... I am sure that there are a lot of fabulous things hidden in this jungle! You just have to be daring enough to enter...",
+				"flora": "The beauty of these millennium trees is hidden to most, but for those who know where to look, they're a sensual delight. Exotic scents, multicolored flowers, luxurious vegetation, Grumhel Jungle really is a wonder of Mother Nature!",
+				"whynot": "Let's just say that there are some pretty dangerous plants in the jungle... like the \\\"Black Virulent Toxicae\\\" or the \\\"Giant Liver-Eating Lily\\\"...",
+				"fauna": "Between Bramble Eaters, Korgons and Tawny-Bats. The Grumhel Jungle contains many hidden dangers beyond your wildest dreams! Much like Hostile Land and Promised Land, this part of Dinoland cannot be so easily travelled....",
+				"fear": "I think it would be a good idea to first plan a reconnaissance mission before choosing to delve into depths of Grumhel Jungle!",
+				"explore": "That would be an excellent idea! The jungle is difficult to explore single-handedly, a helping hand would be very welcome indeed. Thanks young man!",
+				"other": "Are you sure you want to enter the mysterious Grumhel Jungle?",
+				"sick": "While Nicolas Mulot is talking you notice, with horror, that his face is puffing up and is beginning to become covered with warts and spots!!",
+				"problem": "Ehmm ... Hellow. I don't meen two bwe roode, but I fink that the plwaants you have bwought were a bit... ehmm tofic ... I fink fhat my plwaant allergies are plwaying up ... Can you maybe felp me to fwind a rwemedy? ...",
+				"sickstatus": "So, have you fwound a rebedy?",
+				"better": "The remedy you gave me worked perfectly!"
 			},
 			"choice": {
 				"talk": "Talk to the strange man",
-				"who": "Mais... Vous êtes qui ?",
-				"better": "Vous avez l'air d'aller bien mieux...",
+				"who": "But ... who are you?",
+				"better": "You seem to be much better...",
 				"missions": "Show Mission List",
-				"role": "Ça n'est pas un peu dangereux pour un journaliste ici ?",
-				"myst": "Quels genres de mystères existent ici ?",
-				"fauna": "Parlez-moi des animaux de la Jungle...",
-				"flora": "Il y a de belles plantes par ici ?",
-				"fear": "Ah... Vous voulez dire que vous n'osez pas voir ça par vous-même ?",
-				"whynot": "Pourquoi n'entrez-vous pas dans la jungle alors ?",
-				"explore": "Je peux vous aider si vous le voulez ?",
-				"other": "J'ai d'autres questions...",
-				"problem": "Ouh la ! Qu'est-ce qui vous arrive ?",
-				"curesearch": "Voyons voir ça..."
+				"role": "Isn't it a bit dangerous for a journalist to be here?",
+				"myst": "What kind of mysteries exist here?",
+				"fauna": "Tell me about the Jungle wildlife...",
+				"flora": "Are there nice plants around here?",
+				"fear": "Ah ... you're scared? Is it that you don't want to enter the jungle alone?",
+				"whynot": "Why haven't you entered the jungle then?",
+				"explore": "I can help you if you want?",
+				"other": "I have another question...",
+				"problem": "Oh, my! What happened to you?",
+				"curesearch": "Let's see..."
 			}
 		},
 		"forestGuardian": {
-			"name": "Gardien de la Forêt",
+			"name": "Forest Warden",
 			"dialog": {
-				"begin": "Un immense arbre vous fait face... De toute évidence, il est particulièrement âgé et semble empreint d'une grande sagesse. Lentement, très lentement, ses feuilles s'abaissent dans votre direction et bruissent doucement.",
-				"shake": "Tandis que vous le secouez, si tant est qu'on puisse secouer un arbre si grand, vous percevez un étrange et long grognement venant de l'intérieur même de l'écorce ! Quelque chose tombe brusquement du feuillage sur votre tête : poc !",
-				"item": "C'est une sorte de grosse noisette enveloppée dans un parchemin. Et à votre grande surprise, vous constatez qu'il y a quelque chose d'écrit sur ce parchemin !"
+				"begin": "You're standing in front of an enormous tree. It's ancient but very wise. Slowly but surely, the trees' leaves start to rustle and move in your direction.",
+				"shake": "While shaking the tree (if it is at possible to shake such a big tree), you hear a strange growl coming from inside the bark! Something falls suddenly from the leaves and hits you on the head... Plunk!",
+				"item": "It's a big hazelnut wrapped inside a scroll. To your surprise, you find that something written on the scroll!"
 			},
 			"choice": {
 				"missions": "Show Mission List",
-				"shake": "Secouer un peu cet arbre",
-				"item": "Aie ! Qu'est-ce que c'est ?"
+				"shake": "Shake the tree",
+				"item": "Ow! What's that now?"
 			}
 		},
 		"skully": {
 			"name": "Skully",
 			"dialog": {
-				"begin": "Oh oh oh oh oh oh oh ! Ton Dinoz m'a l'air très mal en point !!",
-				"arg": "Un FANTOMEE ?!!??? Aaaahh !! Où ça !! où ça ??",
-				"arg2": "QUOI ?? Moi ??? Mais mais mais mais mais... Un peu de respect voyons ! Sinon vous ne ferez pas de vieux os ici, croyez-moi !&&Je suis une S.Q.U.E.L.E.T.T.E ! Une squelette oui ! Peut-être un peu décoiffée, mais pas un fantôme !!!",
-				"diff": "Tout d'abord, un fantôme est mort, et moi je suis juste... un peu fatiguée, je dois avoir des cernes, voilà tout...&&Et un fantôme, ça hante toujours quelque chose ou quelqu'un, alors que moi, je suis libre !!!&&... enfin presque.",
-				"free": "C'est un peu... uhmmm... compliqué... Disons que j'ai deux petits pépins techniques à régler.&&D'une part, seuls les Dinoz au bord de la mort et leurs maîtres peuvent me voir, d'autre part je ne peux pas quitter cet endroit lugubre...",
-				"haunt": "Hanter cet endroit ?!? Non mais vous RIGOLEZ ?!? Oh oh oh oh oh oh oh ! Rien que d'y penser j'en ai la chair de poule ! J'ai bien mieux à faire MOI oh oh !",
-				"do": "Uhm... C'est... INDISCRET ! Oh oh oh oh ! ..... Mais je vais quand même te raconter, une fois de plus si ça se trouve ! oh oh..... J'ai, vois-tu... un AMOUREUX ! On ne dirait pas comme ça, mais quand j'étais plus jeune j'avais de superbes tibias !",
-				"uhm": "Je te raconte tout ça ! oh oh oh ! Mais ça n'a aucune importance, car de toute façon j'ai une bonnédiction qui te fera rapidement tout oublier de moi !",
-				"bonne": "Oui, oh ! oh oh oh ! C'est comme une malédiction mais en mieux ! Je suis protégée par une bonnédiction pour éviter que les gens fassent des cauchemars et pour éloigner les scientifiques. Ils seraient trop ravis d'examiner la façon dont je me nourris, oh oh oh ! Je ne fais même plus attention à mon cholestérol. Bref, peu après m'avoir vue, les gens m'oublient aussitôt !",
-				"next": "N'est-ce pas !!! Du coup, comme je ne peux pas m'éloigner d'ici, comment veux-tu que je le retrouve ! Mon Mouldeur CHERI !!!",
-				"nohelp": "Tu ne peux m'aider de toute façon... oh oh oh ! Laisse-moi seule maintenant, je vais penser à lui, et n'oublie pas de m'oublier...",
-				"forgot": "Il vous a semblé un instant que vous parliez avec quelqu'un, mais vous n'arrivez pas à vous en rappeler les détails...",
-				"help": "VRAIIMMMEENTTT ?? OH OH OH OH OH !! Tu ferais ça pour moooaa ?!! Mais ça va être difficile pour toi, et à chacune de nos rencontres tu ne te souviendras de rien ou presque ! Es-tu vraiment certain de vouloir m'aider ???",
-				"accept": "OH OH OH OH OH !! Alors, s'il te plaît Monsieur le Maître Dinoz ! Aide-moi à retrouver Moulder et je te récompenserai comme il se doit !!",
-				"unlocked": "oh oh Oh Oh OH !! La bonnédiction est levée ! Tu vas maintenant pouvoir m'aider à trouver Mouldeur !",
-				"endBegin": "Merci pour ce que tu as fait pour nous ! Mouldeur et moi vivons désormais notre amour dans ce magnifique cadre avec vue sur la mer ! Quel bonheur de le savoir à mes côtés chaque jour !",
-				"dinoz": "Oh mais si ! Tu as fait beaucoup ! Reviens me voir quand tu auras plus de Dinoz, et je te donnerai un cadeau qui t'aidera dans ta quête !",
-				"pda": "Oh mais si ! Tu as fait beaucoup ! Tiens voilà pour toi... je t'offre ce magnifique Planificateur qui t'aidera dans ta quête à gérer tes différents Dinoz. Il sera rajouté à tes objets de collection, alors prends-en bien soin !",
-				"bye": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison."
+				"begin": "Oh oh oh oh oh oh oh! Your Dinoz seems to be in a bad state!!",
+				"arg": "A ghost? Aaaah! Where?",
+				"arg2": "What? Me? Excuse me! A bit of respect please! You won't last long here if you keep saying silly things like that! I'm a SKELETON thank you very much! A skeleton yes! I may look a bit dishevelled, but I'm no ghost!!!",
+				"diff": "First of all, a ghost is dead, and me, I'm just... a bit tired, I must have rings under my eyes, that's all... a ghost haunts people. Me? I'm free to do what I please!... well almost...",
+				"free": "It's a bit ... mmmm ... complicated ... I have a few technical problems to resolve. Firstly, only Dinoz close to death and their masters can see me, secondly I can't leave this shady place...",
+				"haunt": "Haunt this place?!? You must be joking! Ooooooooo! Just imagining it gives me the creeps! I have much more important things to do!",
+				"do": "Erm... That's... INSTRUSIVE! Oh oh oh oh!... But I'll tell you anyway (maybe one more time) ! Oh oh..... You see... I have a LOVER! It may seem weird to think that but when I was much younger, I had wonderful shins!",
+				"uhm": "I promise! It doesn't matter anyway, I've got a skeleturse that will make you forget everything about me!",
+				"bonne": "Yes, oh oh oh oh! It's like a curse but better! I'm protected by this skeleturse. It helps to prevent nightmares and to keep scientists away. They'd be all too happy to see how I feed, oh oh oh! I don't even care about my cholesterol anymore. Anyway, people forget about me as soon as they look away from me!",
+				"next": "Exactly! I can't leave this place, so I have no way of finding him, my LOVELY Moulder!",
+				"nohelp": "You can't help me anyway! Leave me alone. I'm going to sit here and think about him, don't forget to forget me!",
+				"forgot": "You are certain that you were just talking to someone, but you can't remember who or what you were talking about. Very strange, you feel like you've just seen a ghost! No, that's not possible.",
+				"help": "REAAAALLYYYY!? OH OH OH OH OH!! You would do that for meeeee? It's not going to be easy, and every time you see me you'll forget our meeting instantly! Are you sure you want to help me???",
+				"accept": "OH OH OH OH OH!! Then please, Dinoz Master! Help me find Moulder and I'll handsomely reward you!",
+				"unlocked": "Oh oh Oh Oh OH! The skeleturse has been lifted! Now you can help me find Moulder!",
+				"endBegin": "Thanks for all your help! Moulder and I now live happily in this magnificent location with a glorious sea view! We're so happy together! We can't thank you enough!",
+				"dinoz": "Don't be so modest! We wouldn't be back together if it wasn't for you and all your help. Come back to me when you have more Dinoz. I'll give you a gift that will help you in your future quests!",
+				"pda": "Don't be so modest! We wouldn't be back together if it wasn't for you and all your help! Here this is for you ... take this Planner. It'll help you handle many Dinoz. It will be added to your collection of items. Make sure you take care of it!",
+				"bye": "The scary skeleton looks at you, disappointed. You could turn back and see that she is close to tears, but you continue to run away as far as possible."
 			},
 			"choice": {
-				"arg": "Ahhhh ! Un fanntôoommme !!!",
-				"bye": "S'enfuir en courant",
+				"arg": "Argh! A ghost!",
+				"bye": "Run away",
 				"shortcut": "(admin)",
-				"arg2": "Ici !!! Vous !!!",
-				"diff": "Et quelle différence ça fait ?",
-				"free": "Presque libre ? C'est-à-dire ?",
-				"haunt": "Vous hantez cet endroit alors !",
-				"do": "Ah ? Et quoi donc par exemple !",
+				"arg2": "You!",
+				"diff": "What's the difference?",
+				"free": "Almost free? What does that mean?",
+				"haunt": "So you do haunt this place?!",
+				"do": "Like what?!",
 				"uhm": "Uhm....",
-				"bonne": "Une... bonnédiction ?!?",
-				"reset": "Je ne vous crois pas...",
-				"next": "C'est peu pratique...",
-				"nohelp": "Qui est Mouldeur ?",
-				"help": "Je pourrais vous aider...",
+				"bonne": "A skeleturse?",
+				"reset": "I don't believe you...",
+				"next": "It's not very helpful, is it?",
+				"nohelp": "Who's Moulder?",
+				"help": "Maybe I can help you...",
 				"forgot": "...",
-				"question": "Je ne vais rien oublier !",
-				"accept": "Oui ! Sans aucun doute !",
-				"maybe": "Il faut que j'y réfléchisse...",
-				"missions": "Que dois-je faire maintenant ?",
-				"nothing": "Ce n'était vraiment rien"
+				"question": "I won't forget anything!",
+				"accept": "Yes! Definitely!",
+				"maybe": "Let me think about it...",
+				"missions": "What should I do now?",
+				"nothing": "It was really nothing"
 			}
 		},
 		"mouldeur": {
-			"name": "Mouldeur",
+			"name": "Moulder",
 			"dialog": {
-				"begin": "Uhmm.... Quelle délicieuse odeur ces Crevettes au Napalm ! Elles me rappellent la cuisine de ma pauvre femme !",
-				"you": "C'est exact, enchanté ! Saviez-vous que dans ces ruines on peut trouver d'étranges cercles brûlés ? J'étudie ces phénomènes depuis longtemps, et je suis arrivé à la conclusion qu'il existe deux explications quant à ces étranges marques...",
-				"explain": "Tout laisse à penser qu'il pourrait s'agir de créatures étranges venues de l'espace et qui, en venant étudier les humains, se posent dans des endroits discrets... Comme elles crachent le feu, elles laisseraient ces étranges cercles de brûlé en repartant vers leur planète natale ! Et bien entendu, le Roi cache ces informations car il conspire avec elles ! Extraordinaire non ?",
-				"other": "Ah ? ... uhm... L'autre explication me semble beaucoup moins plausible, mais d'après le vendeur de merguez, il s'agirait des traces de feu de camp laissées par les touristes visitant les ruines...",
-				"ok": "Uhm ! Succulentes ces Crevettes au Napalm ! Et dire que je ne reverrai jamais ma charmante femme ! Oh combien nous nous aimions... les petits cris qu'elle poussait quand je revenais d'un apéro bien arrosé avec mes collègues me manquent... Et dire qu'elle est certainement morte...",
-				"ok2": "Quoi ? Nous mais vous rigolez j'espère. Je suis encore dans ma prime jeunesse ! Regardez comme mes os sont lisses : pas une ride ! Ah ah ah ah ah !",
+				"begin": "Mmmm.... These Napalm Shrimp smell delicious! They remind me of my wife's cooking!",
+				"you": "Yes I am! Pleased to meet you! Did you know that there are strange burned circles in the ruins? I've studied these phenomenons for a long time and have come to a conclusion: there are two explanations for these strange marks...",
+				"explain": "They may have been made by strange creatures from outer space who landed in remote places to study the human kind. It could be that they create these strange burned circles when they return to their own planet! The King may be hiding this information because he is plotting with them! Amazing, isn't it?",
+				"other": "Mmmmm, the other explanation seems to be far less plausible, but according to the Merguez Seller, the strange burned circles may be caused by tourists who set campfires when they visit the ruins. I know! Crazy idea, isn't it?",
+				"ok": "Mmmm....these Napalm Shrimp are delicious! And to think that I will never see my lovely wife again! We were so in love... I miss the little cries she would make when I came back from a boozy happy hour with my colleagues... And to think that she's probably dead...",
+				"ok2": "What? I hope you're joking. I'm still in my youth! Look how smooth my bones are: no wrinkles! Ah ah ah ah ah!",
 				"skully": "Quoi ? Vous connaissez Skully ?!?",
 				"exp": "............. Merci ! Cela veut dire que mon intuition ne me trompait pas et que j'ai bien fait de ne jamais chercher une autre femme pour la remplacer ! Oooohh ! Merci ! Mille fois merci de nous avoir aidés !",
 				"end": "Si ! C'est un véritable exploit !!! Accompagnez-moi jusqu'à ma femme je vous en prie, il me tarde tellement de pouvoir la contempler yeux-dans-les-yeux !!"
