@@ -50,7 +50,7 @@
 			"skipLevelAnimation": "Skip level up animation",
 			"skipFightAnimation": "Skip battle animation",
 			"autoReequipItems": "Rééquiper automatiquement les objets consommés",
-			"bypassGatheringGrid": "Passer la grille de collecte",
+			"bypassGatheringGrid": "Skip gathering grid",
 			"goodbye": "Goodbye, Master {name}..."
 		}
 	},
@@ -208,9 +208,9 @@
 		"skillTrees": "DinoRPG [ Skill Trees ]",
 		"bank": "DinoRPG [ Bank of Dinoland ]",
 		"admin": "DinoRPG [ Admin Dashboard ]",
-		"clan": "DinoRPG [ Clan : {clan} ]",
-		"createClan": "DinoRPG [ Créer un Clan ]",
-		"clansList": "DinoRPG [ Clans ]"
+		"clan": "DinoRPG [ Clan: {clan}]",
+		"createClan": "DinoRPG [ Create a Clan ]",
+		"clansList": "DinoRPG [ Clan: ]"
 	},
 	"adminPage": {
 		"news": {
@@ -277,7 +277,7 @@
 	"clan": {
 		"icons": {
 			"members": "Nombre de membres",
-			"gold": "Valeur du trésor",
+			"gold": "Treasure value",
 			"crown": "Chef du Clan"
 		},
 		"header": {
@@ -749,7 +749,7 @@
 			"average": "Average",
 			"completion": "Completion",
 			"clans": "Clans",
-			"treasure": "Valeur du trésor"
+			"treasure": "Treasure value"
 		},
 		"th": {
 			"pos": "Pos.",
