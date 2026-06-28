@@ -49,6 +49,7 @@
 			"system": "Einstellungen",
 			"skipLevelAnimation": "Animation beim Stufenaufstieg überspringen",
 			"skipFightAnimation": "Kampfergebnis sofort anzeigen",
+			"autoReequipItems": "Rééquiper automatiquement les objets consommés",
 			"bypassGatheringGrid": "Passer la grille de collecte",
 			"goodbye": "Auf Wiedersehen, Meister {name}..."
 		}
@@ -288,6 +289,7 @@
 			"pages": "Pages du clan",
 			"members": "Membres du clan",
 			"treasure": "Schatzkammer des Klans",
+			"discussion": "Forum du Clan",
 			"history": "Historique du clan",
 			"parameters": "Paramètres"
 		},
@@ -334,7 +336,8 @@
 				},
 				"nickname": "Surnom du joueur",
 				"save": "Enregistrer",
-				"saved": "Modifications enregistrées avec succès !"
+				"saved": "Modifications enregistrées avec succès !",
+				"leader": "Nommer Chef du clan"
 			},
 			"request": {
 				"title": "Adhésions en attente",
@@ -357,13 +360,26 @@
 			"giveAway": "Donner au clan",
 			"confirm": "Voulez vous vraiment donner au clan ces ingrédients d'une valeur de {gold} Or"
 		},
+		"discussion": {
+			"action": {
+				"create": "Neue Nachricht",
+				"send": "Envoyer"
+			},
+			"delete": "Supprimer le message",
+			"pagination": {
+				"page": "Page",
+				"go_to": "Aller à la page"
+			}
+		},
 		"history": {
 			"page": "Page",
 			"type": {
-				"CLAN_CREATED": "Création du clan",
-				"PLAYER_JOIN": "Un joueur a rejoint le clan",
-				"PLAYER_LEAVE": "Un joueur a quitté le clan",
-				"PLAYER_EXCLUSION": "Le joueur {msg} a été exclu du clan"
+				"CLAN_CREATED": "Création du clan.",
+				"PLAYER_JOIN": "Un joueur a rejoint le clan.",
+				"PLAYER_LEAVE": "Un joueur a quitté le clan.",
+				"PLAYER_EXCLUSION": "Le joueur {msg} a été exclu du clan.",
+				"NEW_LEADER": "Le chef du clan a changé.",
+				"NEW_NAME": "Le nom du clan {msg} a changé."
 			}
 		},
 		"settings": {
@@ -373,6 +389,10 @@
 			},
 			"langs": {
 				"title": "Langues"
+			},
+			"name": {
+				"title": "Changer le nom du clan",
+				"save": "Changer le nom"
 			},
 			"action": {
 				"delete": "Supprimer le clan"
@@ -580,8 +600,8 @@
 		"buttonValidateAdvEditor": "Valider et envoyer le message"
 	},
 	"toast": {
-		"autoReequipSuccess": "Gegenstand/Gegenstände automatisch wieder ausgerüstet: {items}",
-		"autoReequipMissing": "Fehlende Gegenstände zum Wiederaufrüsten: {items}",
+		"autoReequipSuccess": "Objet(s) rééquipé(s) automatiquement : {items}",
+		"autoReequipMissing": "Objet(s) manquant(s) pour le rééquipement : {items}",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
 		"gold": "Du hast {value} :gold: erhalten.",
 		"sphere": "Dein Dinoz hat die Fähigkeit „{value}“ erlernt.",
@@ -843,7 +863,7 @@
 		}
 	},
 	"fb_tournament": {
-		"title": "Tournoi",
+		"title": "Rohkraft-Turnier",
 		"disclaimer": "Chaque combat du tournoi consomme une Potion d’Irma. En cas de victoire, votre Dinoz progresse vers l’adversaire suivant.",
 		"stage": "Palier {stage}",
 		"fight": "Combattre {opponent}",
@@ -2824,7 +2844,7 @@
 			"itinerant_shop": "Marchand Ambulant",
 			"reincarnation": "Réincarnation",
 			"change_leader": "Devenir Leader",
-			"fb_tournament": "Tournoi",
+			"fb_tournament": "Rohkraft-Turnier",
 			"CEF": "Centre d'Entraînement de Fosselave"
 		}
 	},
