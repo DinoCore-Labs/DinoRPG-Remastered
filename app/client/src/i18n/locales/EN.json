@@ -3485,7 +3485,7 @@
 				"repair": "Yes",
 				"nothing2": "Yes",
 				"repair2": "Yes",
-				"give": "Génial !",
+				"give": "Awesome!",
 				"no": "No",
 				"thanks": "Thank you!",
 				"next": "Really?",
@@ -4033,61 +4033,61 @@
 				"other": "Mmmmm, the other explanation seems to be far less plausible, but according to the Merguez Seller, the strange burned circles may be caused by tourists who set campfires when they visit the ruins. I know! Crazy idea, isn't it?",
 				"ok": "Mmmm....these Napalm Shrimp are delicious! And to think that I will never see my lovely wife again! We were so in love... I miss the little cries she would make when I came back from a boozy happy hour with my colleagues... And to think that she's probably dead...",
 				"ok2": "What? I hope you're joking. I'm still in my youth! Look how smooth my bones are: no wrinkles! Ah ah ah ah ah!",
-				"skully": "Quoi ? Vous connaissez Skully ?!?",
-				"exp": "............. Merci ! Cela veut dire que mon intuition ne me trompait pas et que j'ai bien fait de ne jamais chercher une autre femme pour la remplacer ! Oooohh ! Merci ! Mille fois merci de nous avoir aidés !",
-				"end": "Si ! C'est un véritable exploit !!! Accompagnez-moi jusqu'à ma femme je vous en prie, il me tarde tellement de pouvoir la contempler yeux-dans-les-yeux !!"
+				"skully": "What? You know Skully!?!",
+				"exp": "............. Thanks! That means I was right all along and I did well not to look for another wife to take her place! I can't thank you enough, you have no idea what this means to me!",
+				"end": "Don't be stupid! This would never have happened if it wasn't for you! Guide me to my wife. I'm longing to see her again, I can't wait to look into her beautiful eyes!!"
 			},
 			"choice": {
-				"you": "Vous êtes Mouldeur ?",
-				"explain": "Ah... Et ?",
-				"other": "Et l'autre explication ?",
+				"you": "Are you Moulder?",
+				"explain": "So?",
+				"other": "And the other explanation?",
 				"ok": "...",
-				"ok2": "Mais... vous aussi !",
-				"skully": "Skully vous cherche aussi...",
-				"exp": "(Expliquer toute l'histoire)",
-				"end": "Ce n'est vraiment rien..."
+				"ok2": "What, you too!",
+				"skully": "Skully is searching everywhere for you...",
+				"exp": "(You explain the full story)",
+				"end": "Don't mention it, you're welcome..."
 			}
 		},
 		"baoBabe": {
 			"name": "Bao Babe"
 		},
 		"madameX": {
-			"name": "Madame X",
+			"name": "Miss X",
 			"dialog": {
-				"begin": "Alors que vous passiez par Forcebrut, vous rencontrez une femme, qui semblait justement vous attendre.",
-				"talk": "Tiens donc, voilà donc ce jeune Maître Eleveur dont j'ai tant entendu parler ? Il semble que Papy Joe dise beaucoup de bien à propos de toi, tant tu t'appliques à remplir ses missions ?",
-				"talk2": "Puisque tu sembles être quelqu'un à qui on peut faire confiance, j'aurais moi aussi aimé te confier quelques missions, libre à toi d'accepter ou non !",
-				"question": "Qui je suis ?!? Ah ah ah ! Pardonne-moi, mon jeune ami, j'avais complètement oublié de me présenter ! Je suis.... .... ....",
-				"question2": "... désolée... je m'excuse. Je viens juste de me rappeler que je ne pouvais justement pas révéler qui je suis, car cela pourrait t'attirer de gros ennuis ! Mais comme c'est tout de même très malpoli, je vais te révéler quelque chose d'intéressant...",
-				"double": "Voyons voir... Je suppose que jusqu'à présent, tu as appris que chaque compétence correspondait à un unique élément parmi les cinq élements possibles ? Par exemple, Colère correspond à l'élément Feu et Perception correspond à l'élément Eau.",
-				"double2": "Et bien... c'est faux ! Il existe des compétences spéciales, qui sont associées non pas à un seul mais à DEUX éléments ! On les appelle les compétences-doubles. Une compétence-double peut s'apprendre à partir de l'un des deux éléments qui la composent, mais demande de connaître au préalable une compétence de chacun des deux éléments.",
-				"double3": "Je comprends tout à fait ta surprise, c'est un secret bien gardé. Cependant pour pouvoir apprendre ces compétences, il est nécessaire de maîtriser Compétence-Double, une compétence secrète que seuls les Drag.... mais j'en ai déjà trop dit !",
-				"learn": "Oh c'est plutôt simple, regarde, il me suffit de faire \"ça\" et...",
-				"dolearn": "Ouah ! Ca a marché ! Tu vois que c'était facile ? Ton Dinoz maîtrise désormais Compétence-Double, félicitations !",
-				"no": "Non... ça ne marche pas... si ça te picote quand je fait \"ça`\" ou si ton Dinoz n'a pas encore appris les compétences, te permettant de maîtriser Compétence-Double, ça ne marchera pas. Reviens me voir plus tard pour que l'on réessaie !",
-				"already": "A ton avis ? .... Il me semble que tu l'as déjà appris ! Ah ah ah !"
+				"begin": "While passing through BrutForce, you meet a woman, who just seems to be waiting for you.",
+				"talk": "Well, if it isn't the young Dinoz Master I've been hearing so much about. Grandpa Joe speaks very highly of you, did you handle his missions that well?",
+				"talk2": "Since you seem to be someone who can be trusted, I'd also like to entrust you with a few missions, it's up to you whether you accept or not!",
+				"question": "Who I am?!? Ah ah ah! Forgive me, my young friend, I completely forgot to introduce myself! I am.... .... ....",
+				"question2": "... sorry... I apologize. I just remembered that I can't reveal who I am, because that might get you in big trouble! But I want to assure you that you can trust me, therefore I'm going to tell you something interesting...",
+				"double": "Let's see... I assume that so far you have learned that each skill corresponds to a single element among the five possible elements? For example, Wrath corresponds to the Fire element and Perception corresponds to the Water element.",
+				"double2": "Well... that's not completely true ! There are special skills, which are associated with not just one but TWO elements! A double skill can be learned from either of the two elements that make it up, but requires prior knowledge of a specific skill from each of the two elements.",
+				"double3": "I completely understand your surprise, it's a well-kept secret. However, to be able to learn these skills, it is necessary to master Double-Skill, a secret skill that only Drag.... but I have already said too much!",
+				"learn": "Oh, it's pretty simple, look, I just have to do 'this' and...",
+				"dolearn": "Wow! It worked! You see how easy it is? Your Dinoz has now mastered Double Skills, congratulations!",
+				"no": "No... it doesn’t work... if it tingles when I do 'that' or if your Dinoz hasn't yet learned the skills allowing you to master Double-Skill, it won't work. Come back to me later to try again!",
+				"already": "What do you think? .... It seems to me that you've already learned! Ha ha ha!"
 			},
 			"choice": {
 				"talk": "Talk to the strange man",
 				"talk2": "...",
-				"mission": "Liste de Missions",
-				"question": "Mais qui êtes-vous ?",
-				"question2": "Vous êtes ?",
-				"double": "Ah ?",
-				"double2": "Oui !",
+				"mission": "Missions List",
+				"question": "But who are you?",
+				"question2": "You are?",
+				"double": "Oh?",
+				"double2": "Yes!",
 				"double3": "!!!",
-				"learn": "Comment l'apprendre ?",
-				"already": "Comment l'apprendre ?",
-				"learn1": "Et ?",
-				"learn2": "Ah ??",
-				"learn3": "Hein ???",
-				"learn4": "Oh !",
-				"learn5": "Quoi...",
-				"no": "(ouille)"
+				"learn": "How do I learn it?",
+				"already": "How do I learn it?",
+				"learn1": "And?",
+				"learn2": "Ah??",
+				"learn3": "Eh???",
+				"learn4": "Oh!",
+				"learn5": "What...",
+				"no": "(ouch)"
 			}
 		},
 		"elMaster": {
-			"name": "Maître Elémentaire",
+			"name": "Elemental Master",
 			"dialog": {
 				"begin": "Vous avez entendu parler du Maître Elémentaire lors de vos études de Maître Dinoz. Il s'agit d'un Maître très respecté, expert dans la compréhension et la manipulation des éléments. De nombreux jeunes Maîtres Dinoz recherchent ses conseils pour pouvoir progresser, mais il est connu pour être plutôt sec et ne se laisse pas facilement approcher...",
 				"talk": "Uh ? Tiens, voilà encore un emmmm...aître qui vient me faire ch...auffer pour que je l'aide. Je commence en a avoir ras-le-c...ortex de ces histoires... Enfin bref... qu'est-ce qu'il veut ?",
@@ -4116,7 +4116,7 @@
 				"maudit": "Malédiction ?",
 				"sphere": "Récompense...",
 				"dot": "...",
-				"sphere3": "Merci",
+				"sphere3": "Thank you",
 				"sphere4": "Une quoi ?",
 				"again": "Répéter",
 				"understand": "J'ai bien compris",
@@ -4124,12 +4124,12 @@
 			}
 		},
 		"merguez": {
-			"name": "Vendeur de Merguez",
+			"name": "Merguez Seller",
 			"dialog": {
-				"begin": "Ola ola ola ! Elles sont bien graisseuses, mes merguez ! ....... Comment ? Quelle idée de venir vendre des merguez dans un endroit aussi lugubre ? Mais ces Ruines sont magnifiques !! Je suis certain qu'un jour ce sont des millions de touristes qui viendront les visiter !",
-				"ah": "Oui, tout à fait ! C'est un peu comme l'acre-aux-pôles : mon cousin y a fait une fortune en vendant des porte-clés en forme de temple. Alors ici, c'est décidé, je serai le premier ! Même si je dois attendre plusieurs années que le commerce se lance, pas question de laisser passer cette opportunité en or !",
-				"ok": "Tiens, ton Dinoz m'a l'air bien maigre... Prends ces merguez ! C'est gratuit à condition que tu ailles parler des Superbes Ruines Ashpouk à tes amis. Ok, tu n'oublieras pas alors ?",
-				"thanks": "De rien, de rien, c'est bon pour le business !",
+				"begin": "Oh la la! My merguez are extremely fatty! It was quite an odd idea to come and start selling merguez in such a dark and gloomy place? But those Ruins are absolutely magnificent! I'm certain that one day, millions of tourists will come and visit!",
+				"ah": "Yes, that's right! It's a bit like the Acre-o-Poles: my cousin makes a fortune there selling temple-shaped key rings. So I decided I would be the first merchant to set up shop at these magnificent ruins, even though it may take many years for my business to take off, I'm not going to let this golden opportunity pass by!",
+				"ok": "Take these Merguez. Your Dinoz is far too skinny! This one's on the house, as long as you do me a favor: promise me you'll tell your friends about the Ashpouk Ruins. Tell them all that I sell the best Merguez around. Promise me you won't forget?",
+				"thanks": "You're welcome, don't forget to tell all your friends!",
 				"ok_card": "Ah, un fidèle client ! Avec ta carte merguez, je peux directement t'en donner 100. Régale-toi !",
 				"thanks_card": "Avec ça, tu as de quoi transformer le champ de bataille en barbecue en géant.",
 				"begin_merguez": "Je te lance un défi : utilise mes merguez en combat. Si tu prouves ta fidélité, tu auras une carte très spéciale.",
@@ -4139,10 +4139,10 @@
 				"merguez_step_4": "Incroyable ! Tu as prouvé ta fidélité à la merguez. Voici ta carte de fidélité : avec elle, je pourrai t'en donner 100 d'un coup !"
 			},
 			"choice": {
-				"ah": "Ah....",
-				"ok": "Effectivement...",
-				"thanks": "Merci",
-				"thanks_card": "Parfait !",
+				"ah": "Oh....",
+				"ok": "Indeed...",
+				"thanks": "Thank you",
+				"thanks_card": "Perfect!",
 				"begin_merguez": "Commencer le défi merguez",
 				"merguez_step_1": "Le défi merguez ?",
 				"merguez_step_2": "J'ai utilisé des merguez !",
@@ -4151,101 +4151,101 @@
 			}
 		},
 		"strangeBeing": {
-			"name": "Être Étrange",
+			"name": "Strange Creature",
 			"choice": {
-				"yes": "Euh... oui ?",
+				"yes": "Um... yes?",
 				"no": "No way",
-				"nothing": "De rien...",
-				"dom": "Effectivement, quel dommage !",
-				"star": "Des étoiles ?",
-				"how": "Et comment trouver ces étoiles ?",
-				"ah": "\"Ah\" ?",
-				"et": "Et ?",
-				"listen": "Écouter",
+				"nothing": "Please, don't mention it...",
+				"dom": "That's so sad!",
+				"star": "Stars?",
+				"how": "And how do I find these stars?",
+				"ah": "\\\"Ah\\\"?",
+				"et": "And?",
+				"listen": "Listen",
 				"end": "...",
-				"giveStars": "Donner les 7 Étoiles",
+				"giveStars": "Hand over the 7 stars",
 				"ok": "..."
 			},
 			"dialog": {
 				"intro": {
-					"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
-					"no": "Effectivement, il vaut mieux éviter de s'attirer des problèmes avec des gens bizarres !",
-					"yes": ". . . . . Thank you . . . . very . . . Bziiiiiiiiiiiiiiiiiiit ! Ah ! Voilà ! Mon traducteur simultané est réparé !",
-					"nothing": "C'est tout à votre honneur du poil ! Comme j'essayais de vous le dire à l'instant, j'ai un petit problème technicologique.",
-					"dom": "Voilà, j'aurais donc besoin de votre gentille aide pour pouvoir retrouver pour moi des crystaux de (TcEtCiNo)...",
-					"star": "Oui, tout à fait ! Si vous m'en ramenez exactement sept d'entre elles, je pourrais reprendre ma traversée.",
-					"how": "C'est relativement simple. Il va falloir vous résoudre un certain nombre de spectaculaires divinations.",
-					"ah": "Oui, donc, voilà ! Je vais chercher le Guide du Touriste, ne quittez pas je reviens dans un instant..."
+					"begin": ". . . . . me . . . lost . . . . . without power . . stars . . . . never . . . . be able to go .... home . . . . help me?",
+					"no": "It's better not to get involved with people who look like that!",
+					"yes": ". . . . . Thanks  . . . . a lot . . . Bziiiiiiiiiiiiiiiiiiit! Ah! Finally! My simultaneous translator is fixed! Luckily I had some spare strawberry batteries! Thanks for offering your help my friend!",
+					"nothing": "But it's all thanks to you! As I just told you, I have a little technicological problem. My (SiAvUaEs) is broken like a nut, and I can't go back to my home, on (PuOsEniLa)!",
+					"dom": "I need your nice help to recover some (TcEtCiNo) crystals for me... Let me think... How can I describe them in your language? They look like shining stars and seem really savory!",
+					"star": "Yes! If you bring me exactly seven stars, I'll be able to finish my journey. I'll even reward you with a (CiLoJuAeDa) from my planet!",
+					"how": "It's relatively easy. All you'll have to do is solve spectacular visions which are listed in the Hitchhiker's Guide to the Eclectic. I'll read you one passage of the book at a time, then you'll have to manifest the rest on your own! Ha!",
+					"ah": "Hmmmm... well! I'm going to get the Hitchhiker's Guide. Wait here, I'll be back in a minute..."
 				},
 				"megawolfHint": {
-					"begin": "Le Guide a dit : \"Un mégaloup t'attends dans la capitale !\"",
-					"et": "Et ? C'est tout ! Il va falloir vous débroussailler tout seul maintenant, désolé d'être aussi éclectique !"
+					"begin": "The Guide says: \\\"A megawolf is waiting for you at the capital!\\\"",
+					"et": "And? That's all! You'll have to manifest on your own now. Sorry for being so eclectic!"
 				},
 				"progressHint": {
-					"begin": "Ah ! Je vois que tu avances dans ta quête ! Voyons voir ce que le Guide du Touriste nous raconte ensuite...",
-					"star2": "Je lis dans le Guide : \"le graisseux enthousiaste appréciera un nuage transporté\"... ça te dit quelque chose ?",
-					"star3": "Guide du Touriste, page 879 alinéa b : \"quand on est englué jusqu'au cou, rien ne vaut un bon gâteau\". C'est clair, non ?",
-					"star4": "Je cite : \"L'appel au trou sombre te servira\" ... tu as une idée ??",
-					"star5": "Les vieux os apprécient parait-il la vue d'un ... capsicum.",
-					"star6": "Annexe B du Guide du Touriste : \"Visite l'homme-dieu quand il sera midi à Pek-1\".",
-					"star7": "C'est la dernière étoile qui manque ! Le Guide raconte \"au pays de Saru tu reviendras de parmi les morts sans artifice\".",
-					"end": "Votre langage local est tout de même bizarre... en tout cas, moi, je n'y comprends rien !"
+					"begin": "Ah! I see that you're progressing with your quest! Let's see what the Hitchhiker's Guide says next...",
+					"star2": "The Guide says: \\\"The enthusiastic greasy man would appreciate a transported cloud\\\"... does that mean anything to you?",
+					"star3": "Hitchhiker's Guide, page 879 indent B: \\\"When you get stuck up to the neck, nothing is better than a nice cake\\\". Pretty clear, right?",
+					"star4": "I quote: \\\"The shady hole call will serve you\\\"... Do you have any ideas??",
+					"star5": "The next one is written in small text. It says : \\\"The old bones seem to like the view of a... capsicum\\\", yup... that's what it says... (I think)",
+					"star6": "Erm... Appendix B of the Hitchhiker's Guide : \\\"Visit the god-man when it will be noon at Pek-1\\\". Mmmmmmm...",
+					"star7": "The last missing star! The Guide says: \\\"In the country of Saru, you will return from the dead without any artifice\\\". Sounds dangerous!",
+					"end": "Your language is a bit strange... I can't make sense of it!"
 				},
 				"final": {
-					"begin": ".... Ouiiiiii !!! Merci ! merci ! merci ! Grâce à toi je vais enfin pouvoir retourner sur (PuOsEniLa) !",
-					"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvé dans ton monde !",
-					"give": "L'Être Étrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait..."
+					"begin": ".... Yeaaaahh!!! Thanks a lot! I'll finally be able to return to (PuOsEniLa)! I have to hurry while the stars are still aligned with Rochechouart...",
+					"ok": "Can you give me the stars? I'll give you a (CiLoJuAeDa) in exchange, plus a trinket I found in Dinoland!",
+					"give": "The Strange Being runs to some kind of small house, then a big lightning strikes before the house disappears. All that remains are burned traces on the ground and a column of smoke rising far up into the sky... He left you one \\\"Gold Napodino\\\" and a strange collectible item..."
 				}
 			}
 		},
 		"merguezSellerQuest": {
-			"name": "Vendeur de Merguez (quête)",
+			"name": "Merguez Seller (quest)",
 			"choice": {
 				"ok": "...",
-				"star": "Ah ?"
+				"star": "Oh?"
 			},
 			"dialog": {
-				"begin": "Ohhh je vois que ton Dinoz transporte un nuage burger ! Savais-tu que cela était très mauvais pour la santé ? A moins que tu ne veuilles que ton Dinoz ne devienne aussi gros qu'un Sumo ?!?",
-				"ok": "Enlève-moi ce vilain Burger et viens plutôt goûter mes merguez à la place ! Tiens, je te donne en cadeau de fidélité ce truc que j'ai trouvé par terre !",
-				"star": "Chouette ! Le vendeur de merguez vous a confié l'une des sept étoiles magiques !"
+				"begin": "Oh, I see that your Dinoz is carrying a cloud burger! Did you know that they're bad for your health? Unless you want your Dinoz to become a Sumo?!?",
+				"ok": "Throw away your nasty Burger and taste my merguez instead! Take this item as a sign of loyalty. I found it on the ground!",
+				"star": "Great! The merguez seller has given you one of the seven magic stars!"
 			}
 		},
 		"skullyQuest": {
-			"name": "Skully (quête)",
+			"name": "Skully (quest)",
 			"choice": {
 				"ok": "...",
-				"star": "Ah ?"
+				"star": "Oh?"
 			},
 			"dialog": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Mais que vois-je là !!! N'est-ce pas un magnifique exemplaire de \"Capsicum annuum\" ! Quelle couleur, quelle odeur, c'est ma-gni-fi-que !",
-				"ok": "Je te remercie vraiment ! oh oh oh ! En échange pour m'avoir offert cette vision splendide, je vais te donner un truc que j'ai trouvé en cherchant un os que j'avais perdu ! Tiens !",
-				"star": "Félicitations ! Grâce à Skully, vous avez récupéré la 5ème étoile magique ! Plus que deux !"
+				"begin": "Oh oh!! What do we have here!!! It's a magnificent \\\"Capsicum annuum\\\"! What colors, what odors, it's absolutely beau-ti-ful!",
+				"ok": "Thank you so much! In exchange, I'm going to give you this item. I found it while searching for a lost bone! Take it!",
+				"star": "Congratulations! Thanks to Skully, you've found the 5th magic star! You only have two more to find!"
 			}
 		},
 		"baobobQuest": {
-			"name": "Bao Bob (quête)",
+			"name": "Bao Bob (quest)",
 			"choice": {
-				"ok": "Je cherche...",
+				"ok": "I'm looking for something...",
 				"star": "???"
 			},
 			"dialog": {
-				"begin": "Que viens-tu faire à cette heure si matinale chez moi ?",
-				"ok": "Ah ! Oui, je suis encore dans les vappes, je n'avais pas réalisé. Tiens, je l'avais gardé pour toi, j'espère en tout cas qu'elle ne t'attirera pas trop d'ennuis...",
-				"star": "Sur ces mots étranges, Bao Bob vous confie la 6ème étoile magique ! Plus qu'une dernière !!!"
+				"begin": "What are you doing in my house at this time in the early morning?",
+				"ok": "Sorry, I'm not fully awake yet. I had no idea. Here, take this, I've been keeping it for you. I hope it won't cause you any problems...",
+				"star": "Bao Bob has entrusted you with the 6th magic star! Only one left!!!"
 			}
 		},
 		"forcebrutOrganizer": {
-			"name": "Organisateur du Tournoi",
+			"name": "Tournament Organizer",
 			"dialog": {
-				"begin": "Bonjour, ô Grand Maître Dinoz ! Le Grand Tournoi de Forcebrut est ouvert à tous ceux qui désirent mesurer leurs Dinoz à ceux des autres joueurs. Je vous y inscris ?",
-				"yes": "Malheureusement, comme le précise le règlement intérieur, paragraphe 15.48 alinéa H, l'accès au Tournoi est ouvert uniquement aux Dinoz ayant en leur possession une relique d'une civilisation ancienne. C'est l'unique condition pour participer... N'hésitez pas à revenir quand votre Dinoz en aura trouvé une. Bonne journée et bon séjour à Forcebrut !",
-				"ok": "Oh ! Je vois que votre Dinoz possède un Totem Ashpouk ! Très bien, je l'inscris donc sur la liste des participants au Tournoi, il pourra donc désormais y accéder directement. Bonne journée monsieur le Maître Dinoz !",
-				"no": "Très bien, vous n'êtes nullement obligé de vous inscrire, surtout si vos Dinoz ne sont pas prêts à se mesurer à de puissants adversaires. C'est vrai que le Tournoi peut être très dangereux pour les Dinoz inexpérimentés. Bonne journée et bon séjour à Forcebrut !"
+				"begin": "Hello Grand Dinoz Master! The Great Tournament of BrutForce is open to all those who want to test their Dinoz against other players. Would you like to register?",
+				"yes": "Unfortunately, it is specified in the official rules, paragraph 15.48 indent H: Only Dinoz who possess an ancient relic can access to the tournament. It is the only condition of participation ... don't hesitate to come back once your Dinoz has found one. Have a good day and a nice stay in BrutForce!",
+				"ok": "Oh! I see that your Dinoz has an Ashpouk Totem! Very well, I'll register it and it will be included on the Tournament fighter list. Have a good day Dinoz Master!",
+				"no": "Very well. No one is forcing you to register - especially if your Dinoz aren't ready to fight against stronger opponents. The Tournament can be very dangerous for ill-prepared Dinoz. Have a good day and enjoy your stay in BrutForce!"
 			},
 			"choice": {
-				"yes": "Ho, bonne idée !",
-				"ok": "Oui, merci !",
-				"no": "Heu, non merci... Mes Dinoz ont encore besoin d'entrainement"
+				"yes": "Yes, definitely!",
+				"ok": "Yes, thanks!",
+				"no": "Hmmm, no thanks... I need to train my Dinoz"
 			}
 		},
 		"dialog": {
@@ -5180,7 +5180,7 @@
 				"name": "Les touristes génants",
 				"begin": "\"Rejoins moi là où je t'ai déclaré ma flamme\" Oh oh oh oh ! Mon Mouldeur a vraiment un coeur en oooor ! Je n'oublierai jamais ce lieu délicieux où il nous avait emmenés, alors que nos os étaient encore tous jeunes... Et ce moment où il m'a tendu une merguez bien grillée et m'a demandé de l'épouser !",
 				"merguezSeller": {
-					"name": "Vendeur de Merguez",
+					"name": "Merguez Seller",
 					"text": "Un client bizarre ? Oui, j'ai bien vu un type maigrichon qui est venu manger en lançant de grands soupirs... Il est parti se promener dans les ruines. Faites attention, on a des touristes d'un genre un peu particulier en ce moment...",
 					"text2": "Vous avez sauvé Jean-Claude ? Ah !! Merci beaucoup. Ces bandits des steppes génaient vraiment l'émergence du tourisme de masse dans ces ruines. Je ne sais pas comment vous remercier ! .... Mouldeur ? Il a promis de revenir si je lui préparais des crevettes au Napalm, mais je ne connais pas la recette..."
 				},
@@ -5248,7 +5248,7 @@
 					"text": "Vous avez obtenu la Malette Noire auprès d'un homme avec un long imperméable. Cette mission semble plutôt facile !"
 				},
 				"madameX": {
-					"name": "Madame X",
+					"name": "Miss X",
 					"text": "C'est étrange... Cette malette... ELLE A ETE PIEGEE !"
 				},
 				"trap": {
@@ -5294,7 +5294,7 @@
 					"win": "La situation va devenir complexe à expliquer... mieux vaut peut-être en informer Madame X ?"
 				},
 				"madameX": {
-					"name": "Madame X",
+					"name": "Miss X",
 					"text": ".... (vous expliquez toute l'histoire) ... Quoi ! Alors c'était vraiment ton Dinoz qu'ils recherchaient ?!? hmm... je comprends. Il va me falloir du temps pour faire enterrer cette affaire. En attendant, va te planquer aux Collines Escarpées !"
 				},
 				"wait": {
@@ -5336,11 +5336,11 @@
 					"text": "Mes deux associés voulaient exprimer leur gratitude à votre encontre, et vous demander humblement si un arrangement n'était pas possible pour que nous puissions éviter les affres de la prison qui nous feraient gâcher ce que tous les grand poêtes ont surnommé \"nos plus belles années\". Merci de votre compréhension."
 				},
 				"madameX1": {
-					"name": "Madame X",
+					"name": "Miss X",
 					"text": "QUOI ? Tu as sympathisé avec des hors-la-loi ? ... Je ne suis pas certain que tu fasses un très bon agent après-tout... Enfin bref : ils ont enfreint la loi, et même s'ils sont très gentils ils n'en sont pas moins coupables !"
 				},
 				"madameX2": {
-					"name": "Madame X",
+					"name": "Miss X",
 					"text": "Puisque tu insistes, je vais m'arranger pour que les circonstances atténuantes leurs soient accordées, mais ils devront quand même faire des travaux d'intêret public, comme le rangement de la bibliothèque de l'Université ! Et tu vas les aider, puisque tu les aimes bien !"
 				},
 				"louisS2": {
@@ -5392,7 +5392,7 @@
 					"text": "Après avoir vaincu le suspect, vous trouvez sur lui plusieurs sachets de terre en provenance des ruines ainsi qu'une carte de visite au nom de \"El Signor Don Fuego\". Il est temps de faire votre rapport a Madame X !"
 				},
 				"madameX": {
-					"name": "Madame X",
+					"name": "Miss X",
 					"text": "El Signor Don Fuego ? Tiens c'est une drôle de coïncidence... c'est l'un des marchands les plus en vue à Fosselave, et il dispose de nombreux soutiens à la Cour. Pour le faire tomber, il faudrait trouver des preuves qui l'impliquent directement !"
 				},
 				"hide2": {
@@ -5404,7 +5404,7 @@
 					"text": "Des hommes ressemblant étrangement aux suspects arrivent, discutent avec le vendeur de Merguez, avant de repartir..."
 				},
 				"merguezSeller": {
-					"name": "Vendeur de Merguez",
+					"name": "Merguez Seller",
 					"text": "Ce que me voulaient ces touristes ? Ils voulaient juste pouvoir utiliser mon nouveau Four-à-Pain avec lequel je compte fabriquer prochainement mes Sandwichs de Gobelin... Apparemment, ils y ont fait cuire des poteries. Ils sont retournés à Fosselave pour les amener à leur patron."
 				},
 				"suspects4": {
