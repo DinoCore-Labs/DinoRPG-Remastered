@@ -38,12 +38,12 @@
 						{{ dateToString(clan.creationDate) }}
 					</td>
 				</tr>
+				<tr class="select" @click="changePage(1)" :class="{ hidden: clansList.length < 20 }">
+					<td class="pos" colspan="5" style="text-align: center">
+						{{ $t('ranking.page.next') }}
+					</td>
+				</tr>
 			</tbody>
-			<tr class="select" @click="changePage(1)" :class="{ hidden: clansList.length < 20 }">
-				<td class="pos" colspan="5" style="text-align: center">
-					{{ $t('ranking.page.next') }}
-				</td>
-			</tr>
 		</table>
 		<div class="bottom-elements">
 			<DZSearch background entityType="clan" placeHolder="ranking.placeholder.searchClan" @entity="goToSearchedClan" />
