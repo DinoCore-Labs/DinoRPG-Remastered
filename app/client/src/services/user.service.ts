@@ -9,10 +9,11 @@ import type { AxiosRequestConfig } from 'axios';
 import { api } from '../utils/http';
 
 export const UserService = {
-	register(name: string, password: string): Promise<UserData> {
-		return api.post<UserData>('/users/register', {
+	register(name: string, password: string, gameRulesVersion: string): Promise<{ id: string; name: string }> {
+		return api.post<{ id: string; name: string }>('/users/register', {
 			name,
-			password
+			password,
+			gameRulesVersion
 		});
 	},
 	login(name: string, password: string): Promise<UserData> {
