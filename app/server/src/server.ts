@@ -55,6 +55,12 @@ import { versionRoutes } from './Version/Routes/version.routes.js';
 
 const cfg = loadConfig();
 
+type AuthenticatedUser = FastifyJWT['user'] & {
+	gameRulesAcceptedVersion?: string | null;
+};
+
+const GAME_RULES_EXEMPT_PATHS = new Set(['/api/users/me', '/api/users/me/rules/accept']);
+
 async function buildServer() {
 	const server = Fastify({
 		logger: true,
