@@ -30,7 +30,15 @@
 			</div>
 		</div>
 
-		<a class="button" @click="deleteClan()">{{ $t('clan.settings.action.delete') }}</a>
+		<div v-if="isLeader" class="leader-panel dz-box">
+			<h3>{{ $t('clan.settings.leader.title') }}</h3>
+			<div class="action">
+				<DZSelect id="clanLeaderSelect" v-model="selectedLeaderDataStr" :options="leaderOptions" />
+				<a class="button" @click="changeLeader()">{{ $t('clan.settings.leader.save') }}</a>
+			</div>
+		</div>
+
+		<a v-if="isLeader" class="button" @click="deleteClan()">{{ $t('clan.settings.action.delete') }}</a>
 	</div>
 </template>
 
@@ -42,12 +50,15 @@ import { userStore } from '../../store/userStore.ts';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
 import LangSelector from './LangSelector.vue';
 import DZInput from '../../components/utils/DZInput.vue';
+import DZSelect from '../../components/utils/DZSelect.vue';
+import type { SelectOption } from '../../components/utils/DZSelect.vue';
+import type { ClanMember } from '@dinorpg/core/models/clan/clanMember.js';
 import { Language } from '@dinorpg/core/models/config/language.js';
 import { clanStore } from '../../store/clanStore';
 
 export default defineComponent({
 	name: 'ClanParameters',
-	components: { LangSelector, DZInput },
+	components: { LangSelector, DZInput, DZSelect },
 	data() {
 		return {
 			userStore: userStore(),
@@ -55,15 +66,29 @@ export default defineComponent({
 			banner_url: '' as string,
 			hasBannerEditRight: false as boolean,
 			hasLangEditRight: false as boolean,
-			hasNameEditRight: false as boolean, // nouveau
+			hasNameEditRight: false as boolean,
 			filePreviewUrl: '',
 			clanStore: clanStore(),
 			langs: [] as Language[],
-			clanName: '' as string // nouveau
+			clanName: '' as string,
+			clanMembers: [] as ClanMember[],
+			selectedLeaderDataStr: '' as string
 		};
 	},
+	computed: {
+		isLeader(): boolean {
+			return this.clanStore.getClan?.leader.id === this.userStore.id;
+		},
+		leaderOptions(): SelectOption<string>[] {
+			return this.clanMembers
+				.filter(member => member.user && member.user.id !== this.clanStore.getClan?.leader.id)
+				.map(member => ({
+					value: JSON.stringify({ id: member.user.id, name: member.user.name }),
+					label: member.user.name
+				}));
+		}
+	},
 	methods: {
-		// --- nouveau ---
 		async getHasNameEditRight() {
 			try {
 				this.hasNameEditRight = await ClanService.getPlayerHasRight(
@@ -131,6 +156,42 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 			}
 		},
+		async getClanMembers() {
+			try {
+				this.clanMembers = await ClanService.getClanMembersList(this.clanStore.getClanId);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
+		},
+		async changeLeader(): Promise<void> {
+			if (!this.selectedLeaderDataStr) return;
+
+			const confirm = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popup.reject'),
+				icon: 'pi pi-exclamation-triangle'
+			});
+
+			if (!confirm) return;
+
+			try {
+				const { id, name } = JSON.parse(this.selectedLeaderDataStr);
+
+				await ClanService.updateClanLeader(this.clanStore.getClanId, id);
+				this.clanStore.updateLeader(name, id);
+
+				this.$toast.open({
+					message: this.$t('clan.settings.leader.newLeader'),
+					type: 'success'
+				});
+
+				this.$router.push(`/clan/${this.clanStore.getClanId}`);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
+		},
 		async onFileChanged() {
 			const form = new FormData();
 			const image = this.$refs.fileInput as HTMLInputElement;
@@ -154,11 +215,14 @@ export default defineComponent({
 			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
 		}
 		await Promise.all([this.getHasBannerEditRight(), this.getHasLangEditRight(), this.getHasNameEditRight()]);
-		if (!this.hasBannerEditRight && !this.hasLangEditRight && !this.hasNameEditRight) {
+		if (!this.hasBannerEditRight && !this.hasLangEditRight && !this.hasNameEditRight && !this.isLeader) {
 			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
 		}
 		this.langs = (this.clanStore.getClan?.languages as Language[]) ?? [];
 		this.clanName = this.clanStore.getClan?.name ?? '';
+		if (this.isLeader) {
+			await this.getClanMembers();
+		}
 	}
 });
 </script>
@@ -204,6 +268,22 @@ export default defineComponent({
 		padding: 0 8px 8px 8px;
 		h3 {
 			margin-top: 0;
+		}
+	}
+	.name-panel,
+	.leader-panel {
+		margin: 8px 0;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding: 0 8px 8px 8px;
+		h3 {
+			margin-top: 0;
+		}
+		.action {
+			display: flex;
+			gap: 8px;
+			align-items: center;
 		}
 	}
 }
