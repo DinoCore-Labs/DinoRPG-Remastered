@@ -44,6 +44,11 @@ export const clanStore = defineStore('clanStore', {
 			if (!this.clan) return;
 			this.clan.name = name;
 		},
+		updateLeader(leaderName: string, leaderId: string): void {
+			if (!this.clan) return;
+			this.clan.leader.name = leaderName;
+			this.clan.leader.id = leaderId;
+		},
 		setClanEvent(clanEvent: { id: string; endDate: Date } | undefined): void {
 			this.clanEvent = clanEvent;
 		}
