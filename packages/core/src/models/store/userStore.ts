@@ -1,3 +1,4 @@
+import { GameRulesAcceptance } from '../game/gameRules.js';
 import { type UserRole } from '../user/userRole.js';
 
 export interface UserStore {
@@ -13,4 +14,5 @@ export interface UserStore {
 	rewards: number[];
 	discoveredSkills: number[];
 	clanId: number | null;
+	gameRules: GameRulesAcceptance | null;
 }
