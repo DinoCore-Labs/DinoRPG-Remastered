@@ -476,14 +476,32 @@ router.beforeEach(async to => {
 
 		return true;
 	};
+	const getRulesRedirect = () => {
+		if (!user.mustAcceptGameRules || to.meta.rulesExempt) {
+			return null;
+		}
+		return {
+			name: 'RulesPage',
+			query: {
+				redirect: to.fullPath
+			}
+		};
+	};
 	// ✅ Pages publiques
 	if (to.meta.public) {
 		// si on arrive sur la home publique (ou toute page publique) et que la session est valide,
 		// on redirige vers le jeu.
 		const ok = await tryHydrate();
-		if (ok && to.name === 'HomePage') {
-			return { name: 'NewsPage' };
+		if (ok) {
+			const rulesRedirect = getRulesRedirect();
+			if (rulesRedirect) {
+				return rulesRedirect;
+			}
+			if (to.name === 'HomePage') {
+				return { name: 'NewsPage' };
+			}
 		}
+
 		return true;
 	}
 	// ✅ Pages protégées
@@ -495,6 +513,10 @@ router.beforeEach(async to => {
 				name: 'HomePage',
 				query: { returnUrl: to.fullPath }
 			};
+		}
+		const rulesRedirect = getRulesRedirect();
+		if (rulesRedirect) {
+			return rulesRedirect;
 		}
 	}
 	// ✅ Roles
