@@ -33,6 +33,7 @@ import MarketPage from '../pages/MarketPage.vue';
 import MissionsPage from '../pages/MissionsPage.vue';
 import NewsPage from '../pages/NewsPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
+import RulesPage from '../pages/RulesPage.vue';
 import ShopDinoz from '../pages/ShopDinoz.vue';
 import ShopItems from '../pages/ShopItems.vue';
 import ShopItinerant from '../pages/ShopItinerant.vue';
@@ -63,6 +64,16 @@ const routes: RouteRecord[] = [
 				name: 'NewsPage',
 				component: NewsPage,
 				meta: { public: true, showLeftPanel: false }
+			},
+			{
+				path: '/rules',
+				name: 'RulesPage',
+				component: RulesPage,
+				meta: {
+					public: true,
+					showLeftPanel: false,
+					rulesExempt: true
+				}
 			},
 			// ⭐️ PAGE COMPTE (mon compte)
 			{
