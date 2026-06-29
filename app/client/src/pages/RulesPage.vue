@@ -702,11 +702,11 @@ export default defineComponent({
 			margin-top: 15px;
 			scroll-margin-top: 15px;
 			.titleSection {
-				background-color: rgb(142, 62, 38);
-				border-radius: 2px;
+				background-image: url('../assets/design/title/title_h2.webp');
+				background-position: left bottom;
+				background-repeat: no-repeat;
 				color: #fff1ad;
-				margin-bottom: 10px;
-				padding: 2px 5px;
+				padding-left: 5px;
 			}
 			.textContent {
 				display: flex;
@@ -742,11 +742,6 @@ export default defineComponent({
 						margin-right: 8px;
 					}
 				}
-			}
-		}
-		.activeSection {
-			.titleSection {
-				box-shadow: 0 0 0 2px rgba(113, 183, 3, 0.35);
 			}
 		}
 		.navigationButtons {
