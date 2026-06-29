@@ -18,7 +18,7 @@ export async function createUser(
 	}>,
 	reply: FastifyReply
 ) {
-	const { password, name } = req.body;
+	const { password, name, gameRulesVersion } = req.body;
 	// 1) Anti multi-signup protection
 	try {
 		await enforceSignupLimits(req);
@@ -47,6 +47,8 @@ export async function createUser(
 			data: {
 				password: hash,
 				name,
+				gameRulesAcceptedVersion: gameRulesVersion,
+				gameRulesAcceptedAt: new Date(),
 				wallets: {
 					create: [
 						{
