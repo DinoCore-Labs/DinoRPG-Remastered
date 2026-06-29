@@ -1,4 +1,5 @@
 import { BANK_EXCHANGE_RATE_JOB_KEY } from '@dinorpg/core/models/bank/constants.js';
+import { GAME_RULES_ACCEPTANCE_REQUIRED_CODE, GAME_RULES_VERSION } from '@dinorpg/core/models/game/gameRules.js';
 import { GAME_LOG_MAINTENANCE_JOB_KEY } from '@dinorpg/core/models/gamelog/constants.js';
 import { MARKET_EXPIRATION_JOB_KEY } from '@dinorpg/core/models/market/constants.js';
 import { UserRole } from '@dinorpg/core/models/user/userRole.js';
@@ -134,8 +135,17 @@ async function buildServer() {
 			return reply.status(401).send({ message: 'Authentication required' });
 		}
 		try {
-			const decoded = req.jwt.verify<FastifyJWT['user']>(token);
+			const decoded = req.jwt.verify<AuthenticatedUser>(token);
 			req.user = decoded;
+			const requestPath = req.url.split('?')[0];
+			const isGameRulesExempt = GAME_RULES_EXEMPT_PATHS.has(requestPath);
+
+			if (!isGameRulesExempt && decoded.gameRulesAcceptedVersion !== GAME_RULES_VERSION) {
+				return reply.status(403).send({
+					code: GAME_RULES_ACCEPTANCE_REQUIRED_CODE,
+					currentVersion: GAME_RULES_VERSION
+				});
+			}
 		} catch (error) {
 			return reply.status(401).send({ message: 'Invalid token' });
 		}
