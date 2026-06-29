@@ -3470,7 +3470,7 @@
 			"reporting": {
 				"title": "8. Signalement des problèmes",
 				"intro": "Un comportement interdit, un bug ou une faille peut être signalé à :",
-				"email": "contact@dinorpg.fr",
+				"email": "contact{'@'}dinorpg.fr",
 				"detailsIntro": "Le signalement doit contenir autant que possible :",
 				"details": {
 					"username": "le pseudonyme concerné ;",
@@ -3526,7 +3526,7 @@
 			"appeal": {
 				"title": "11. Contestation",
 				"intro": "Une sanction peut être contestée à l’adresse :",
-				"email": "contact@dinorpg.fr",
+				"email": "contact{'@'}dinorpg.fr",
 				"detailsIntro": "La demande doit préciser :",
 				"details": {
 					"username": "le pseudonyme du compte ;",
