@@ -1,3 +1,4 @@
+import type { GameRulesAcceptance } from '@dinorpg/core/models/game/gameRules.js';
 import type { CheckNameResponse } from '@dinorpg/core/models/user/checkNameResponse.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import type { UserProfile } from '@dinorpg/core/models/user/userProfile.js';
@@ -64,6 +65,11 @@ export const UserService = {
 			oldPassword,
 			newPassword,
 			confirmPassword
+		});
+	},
+	acceptGameRules(version: string): Promise<GameRulesAcceptance> {
+		return api.post<GameRulesAcceptance>('/users/me/rules/accept', {
+			version
 		});
 	}
 };

@@ -1,3 +1,4 @@
+import type { GameRulesAcceptance } from '@dinorpg/core/models/game/gameRules.js';
 import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import type { UserStore } from '@dinorpg/core/models/store/userStore.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
@@ -17,7 +18,8 @@ export const userStore = defineStore('userStore', {
 		maxDinoz: 0,
 		rewards: [],
 		discoveredSkills: [],
-		clanId: null
+		clanId: null,
+		gameRules: null
 	}),
 	getters: {
 		isLogged: state => !!state.id,
@@ -42,7 +44,8 @@ export const userStore = defineStore('userStore', {
 			return this.hasReward(Reward.PLUME);
 		},
 		hasDiscoveredSkill: state => (skillId: number) => state.discoveredSkills.includes(skillId),
-		canAccessSkillsPage: state => state.rewards.includes(Reward.PAC)
+		canAccessSkillsPage: state => state.rewards.includes(Reward.PAC),
+		mustAcceptGameRules: state => state.gameRules?.required === true
 	},
 	actions: {
 		setUser(data: UserData) {
@@ -55,6 +58,7 @@ export const userStore = defineStore('userStore', {
 			this.rewards = data.rewards ?? [];
 			this.discoveredSkills = data.discoveredSkills ?? [];
 			this.clanId = data.clanId ?? null;
+			this.gameRules = data.gameRules;
 		},
 		setGold(gold: number) {
 			this.gold = gold;
@@ -90,6 +94,9 @@ export const userStore = defineStore('userStore', {
 				this.rewards.push(rewardId);
 			}
 		},
+		setGameRules(gameRules: GameRulesAcceptance) {
+			this.gameRules = gameRules;
+		},
 		clearUser() {
 			this.id = null;
 			this.name = null;
@@ -103,6 +110,7 @@ export const userStore = defineStore('userStore', {
 			this.rewards = [];
 			this.discoveredSkills = [];
 			this.clanId = null;
+			this.gameRules = null;
 		}
 	},
 	persist: {
