@@ -87,19 +87,18 @@
 						</p>
 					</li>
 				</ul>
-				<label class="acceptanceCheckbox">
-					<input v-model="rulesAccepted" type="checkbox" />
-					<span>
+				<div class="acceptanceActions">
+					<DZCheckbox id="game-rules-acceptance" v-model="rulesAccepted" :disabled="isSubmitting">
 						{{
 							$t('gameRules.acceptance.checkbox', {
 								version: gameRulesVersion
 							})
 						}}
-					</span>
-				</label>
-				<button type="button" class="acceptButton" :disabled="!rulesAccepted || isSubmitting" @click="acceptRules">
-					{{ isSubmitting ? $t('gameRules.acceptance.submitting') : $t('gameRules.acceptance.button') }}
-				</button>
+					</DZCheckbox>
+					<DZButton :disabled="!rulesAccepted || isSubmitting" @click="acceptRules">
+						{{ isSubmitting ? $t('gameRules.acceptance.submitting') : $t('gameRules.acceptance.button') }}
+					</DZButton>
+				</div>
 			</section>
 		</div>
 	</div>
@@ -109,6 +108,8 @@
 import { defineComponent } from 'vue';
 
 import TitleHeader from '../components/utils/TitleHeader.vue';
+import DZButton from '../components/utils/DZButton.vue';
+import DZCheckbox from '../components/utils/DZCheckbox.vue';
 import { UserService } from '../services/user.service';
 import { userStore } from '../store/userStore';
 import { GAME_RULES_UPDATED_AT, GAME_RULES_VERSION } from '@dinorpg/core/models/game/gameRules.js';
@@ -143,7 +144,9 @@ type RulesPageItem = {
 export default defineComponent({
 	name: 'RulesPage',
 	components: {
-		TitleHeader
+		TitleHeader,
+		DZButton,
+		DZCheckbox
 	},
 	data() {
 		return {
@@ -630,12 +633,10 @@ export default defineComponent({
 	margin-left: 10px;
 	max-width: 95%;
 	align-self: baseline;
-
 	.menu {
 		background-color: #e09b6244;
 		border-radius: 5px;
 		width: 220px;
-
 		.list {
 			color: rgb(142, 62, 38);
 			cursor: pointer;
@@ -644,76 +645,62 @@ export default defineComponent({
 			list-style: none;
 			margin-top: 6px;
 			margin-left: -25px;
-
 			li {
 				display: flex;
 				align-items: center;
 				gap: 5px;
 				padding: 1px 3px;
 			}
-
 			li:hover,
 			li.selected {
 				color: #fce3bc;
 				background-color: rgb(142, 62, 38);
 			}
-
 			img {
 				flex-shrink: 0;
 			}
 		}
 	}
-
 	.image {
 		margin-top: auto;
-
 		img {
 			max-width: 95%;
 			height: auto;
 		}
 	}
 }
-
 .showContent {
 	max-width: 95%;
 	align-self: center;
-
 	.content {
 		margin-top: 10px;
-
 		.titleContent {
 			height: fit-content;
 			background-image: url('../assets/design/title/title_h1.webp');
 			background-position: left bottom;
 			background-repeat: no-repeat;
 			padding-bottom: 22px;
-
 			h3 {
 				margin-left: 5px;
 				color: #71b703;
 				font-variant: small-caps;
 			}
 		}
-
 		:deep(strong) {
 			color: rgb(142, 62, 38);
 		}
-
 		:deep(i) {
 			color: rgb(142, 62, 38);
 		}
-
 		.rulesMetadata {
 			display: flex;
 			flex-direction: column;
 			gap: 3px;
 			margin: 10px 5px 20px;
 		}
-
 		.sectionContent {
 			margin-top: 15px;
 			scroll-margin-top: 15px;
-
 			.titleSection {
 				background-color: rgb(142, 62, 38);
 				border-radius: 2px;
@@ -721,41 +708,34 @@ export default defineComponent({
 				margin-bottom: 10px;
 				padding: 2px 5px;
 			}
-
 			.textContent {
 				display: flex;
 				flex-direction: column;
 				gap: 10px;
 				list-style: none;
 				margin-left: -35px;
-
 				p {
 					margin: 0;
 				}
-
 				a {
 					color: rgb(142, 62, 38);
 					font-weight: bold;
 					text-decoration: underline;
 					text-underline-offset: 2px;
-
 					&:hover {
 						color: #71b703;
 					}
 				}
 			}
-
 			.listItemsContent {
 				list-style: none;
 				margin-top: 12px;
 				margin-bottom: 15px;
-
 				li {
 					display: flex;
 					align-items: flex-start;
 					margin-top: 10px;
 					margin-left: 10px;
-
 					img {
 						flex-shrink: 0;
 						margin-top: 2px;
@@ -764,57 +744,19 @@ export default defineComponent({
 				}
 			}
 		}
-
 		.activeSection {
 			.titleSection {
 				box-shadow: 0 0 0 2px rgba(113, 183, 3, 0.35);
 			}
 		}
-
 		.navigationButtons {
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
 			margin-top: 10px;
 		}
-
-		.next,
-		.acceptButton {
-			background-image: url('../assets/button/button.webp');
-			border: none;
-			color: #fff1ad;
-			font-variant: small-caps;
-			font-weight: bold;
-			text-align: center;
-			height: 28px;
-			width: 145px !important;
-			background-repeat: no-repeat;
-			background-position: center;
-			background-size: 100% 100%;
-			font-size: 7pt;
-			margin-left: 10px;
-			margin-right: 10px;
-			margin-top: 20px;
-			cursor: pointer;
-
-			&:hover:not(:disabled) {
-				color: white;
-				background-image: url('../assets/button/button_hover.webp');
-			}
-
-			&:disabled {
-				opacity: 0.5;
-				cursor: not-allowed;
-			}
-		}
-
-		.acceptButton {
-			width: 210px !important;
-			margin-left: 0;
-		}
 	}
 }
-
 .acceptanceBox {
 	margin-top: 30px !important;
 	padding: 10px;
@@ -822,88 +764,36 @@ export default defineComponent({
 	border: 1px solid rgba(142, 62, 38, 0.25);
 	border-radius: 4px;
 }
-
-.acceptanceCheckbox {
+.acceptanceActions {
 	display: flex;
+	flex-direction: column;
 	align-items: flex-start;
-	gap: 10px;
-	margin: 15px 0 5px;
-	color: rgb(142, 62, 38);
-	font-weight: bold;
-	cursor: pointer;
-
-	input[type='checkbox'] {
-		appearance: none;
-		flex: 0 0 auto;
-		display: grid;
-		place-content: center;
-		width: 20px;
-		height: 20px;
-		margin: 0;
-		padding: 0;
-		border: 1px solid rgb(142, 62, 38);
-		border-radius: 4px;
-		background-color: #fff1ad;
-		cursor: pointer;
-		transition:
-			border-color 0.2s ease,
-			background-color 0.2s ease,
-			box-shadow 0.2s ease;
-
-		&::before {
-			width: 10px;
-			height: 6px;
-			border-bottom: 2px solid white;
-			border-left: 2px solid white;
-			content: '';
-			transform: rotate(-45deg) scale(0);
-			transition: transform 0.15s ease;
-		}
-
-		&:hover {
-			border-color: #71b703;
-		}
-
-		&:focus-visible {
-			outline: none;
-			box-shadow: 0 0 0 3px rgba(113, 183, 3, 0.25);
-		}
-
-		&:checked {
-			border-color: #71b703;
-			background-color: #71b703;
-
-			&::before {
-				transform: translateY(-1px) rotate(-45deg) scale(1);
-			}
-		}
+	gap: 15px;
+	margin-top: 15px;
+	:deep(.dz-checkbox .text) {
+		color: rgb(142, 62, 38);
+		line-height: 1.4;
 	}
 }
-
 @media only screen and (max-width: 600px) {
 	.intro {
 		flex-direction: column;
 		margin-left: 0;
 		align-self: center;
 		width: 95%;
-
 		.menu {
 			width: 100%;
 		}
-
 		.image {
 			display: none;
 		}
 	}
-
 	.showContent {
 		width: 95%;
 	}
-
 	.navigationButtons {
 		gap: 5px;
 	}
-
 	.showContent .content .next {
 		margin-left: 2px;
 		margin-right: 2px;
