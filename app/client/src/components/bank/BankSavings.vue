@@ -1,9 +1,9 @@
 <template>
 	<div class="dz-box bankSavings">
 		<h3 class="bankSavingsTitle">
-			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+			<img :src="getImgURL('button', 'info_button')" alt="info_button" />
 			{{ $t('bank.savings.title') }}
-			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+			<img :src="getImgURL('button', 'info_button')" alt="info_button" />
 		</h3>
 		<div v-if="dataLoaded" class="savingsContent">
 			<div class="walletBox">
