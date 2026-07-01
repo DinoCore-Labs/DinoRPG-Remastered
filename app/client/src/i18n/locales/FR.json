@@ -3414,8 +3414,7 @@
 			"itemDuration": "Durée : {days} jours",
 			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
 			"unlockAt": "Disponible le {date}",
-			"claim": "Récupérer",
-			"claimed": "Récupéré"
+			"claim": "Récupérer"
 		}
 	},
 	"npc": {
