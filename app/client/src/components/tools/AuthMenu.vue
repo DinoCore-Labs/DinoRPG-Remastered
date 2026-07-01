@@ -31,6 +31,21 @@
 						id="password"
 						:placeholder="$t('topBar.authMenu.passwordPlaceholder')"
 					/>
+					<div v-if="mode === 'register'" class="rulesAcceptance">
+						<label class="rulesAcceptanceLabel">
+							<input v-model="rulesAccepted" type="checkbox" />
+							<i18n-t keypath="gameRules.registration.label" tag="span" scope="global">
+								<template #rules>
+									<RouterLink :to="{ name: 'RulesPage' }" target="_blank" @click.stop>
+										{{ $t('gameRules.registration.link') }}
+									</RouterLink>
+								</template>
+								<template #version>
+									<strong>{{ gameRulesVersion }}</strong>
+								</template>
+							</i18n-t>
+						</label>
+					</div>
 					<button type="submit" :disabled="!canSubmit">
 						{{ mode === 'register' ? $t('topBar.createAccount') : $t('topBar.login') }}
 					</button>
@@ -44,6 +59,7 @@
 import { defineComponent } from 'vue';
 import eventBus from '../../events';
 import { UserService } from '../../services';
+import { GAME_RULES_VERSION } from '@dinorpg/core/models/game/gameRules.js';
 
 export default defineComponent({
 	name: 'AuthMenu',
@@ -54,14 +70,18 @@ export default defineComponent({
 			name: '',
 			password: '',
 			nameStatus: null as null | { available: boolean; reason: string },
-			debounceTimer: null as any
+			debounceTimer: null as any,
+			rulesAccepted: false,
+			gameRulesVersion: GAME_RULES_VERSION
 		};
 	},
 	computed: {
 		canSubmit(): boolean {
 			if (this.mode === 'login') return true;
 			// mode register → pseudo dispo + password ok
-			return this.name.length >= 3 && this.password.length >= 6 && this.nameStatus?.available === true;
+			return (
+				this.name.length >= 3 && this.password.length >= 6 && this.nameStatus?.available === true && this.rulesAccepted
+			);
 		}
 	},
 	methods: {
@@ -71,7 +91,7 @@ export default defineComponent({
 		async submitAccount() {
 			try {
 				if (this.mode === 'register') {
-					await UserService.register(this.name, this.password);
+					await UserService.register(this.name, this.password, GAME_RULES_VERSION);
 					this.$toast.success(this.$t('topBar.authMenu.accountCreatedWithSuccess'));
 					this.close();
 				} else {
@@ -94,6 +114,7 @@ export default defineComponent({
 				this.name = '';
 				this.password = '';
 				this.nameStatus = null;
+				this.rulesAccepted = false;
 				clearTimeout(this.debounceTimer);
 			}
 		});
@@ -124,6 +145,7 @@ export default defineComponent({
 		},
 		mode() {
 			this.nameStatus = null;
+			this.rulesAccepted = false;
 			clearTimeout(this.debounceTimer);
 		}
 	}
@@ -238,7 +260,7 @@ form {
 label {
 	font-size: 14px;
 	font-weight: 600;
-	color: rgb(254, 181, 0); // ton jaune de header
+	color: rgb(254, 181, 0);
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
 }
@@ -294,6 +316,91 @@ button[type='submit'] {
 	color: #ff5252;
 	font-size: 12px;
 	margin-top: -10px;
+}
+.rulesAcceptance {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-top: 4px;
+}
+
+.rulesAcceptanceLabel {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	color: rgb(183, 185, 198);
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.4;
+	letter-spacing: normal;
+	text-transform: none;
+	cursor: pointer;
+
+	input[type='checkbox'] {
+		appearance: none;
+		flex: 0 0 auto;
+		display: grid;
+		place-content: center;
+		width: 20px;
+		height: 20px;
+		margin: 0;
+		margin-top: 1px;
+		padding: 0;
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		border-radius: 6px;
+		background-color: rgba(255, 255, 255, 0.05);
+		cursor: pointer;
+		transition:
+			border-color 0.2s ease,
+			background-color 0.2s ease,
+			box-shadow 0.2s ease;
+
+		&::before {
+			width: 10px;
+			height: 6px;
+			border-bottom: 2px solid white;
+			border-left: 2px solid white;
+			content: '';
+			transform: rotate(-45deg) scale(0);
+			transition: transform 0.15s ease;
+		}
+
+		&:hover {
+			border-color: rgba(254, 181, 0, 0.65);
+			background-color: rgba(255, 255, 255, 0.1);
+		}
+
+		&:focus-visible {
+			outline: none;
+			border-color: rgb(254, 181, 0);
+			box-shadow: 0 0 0 3px rgba(254, 181, 0, 0.15);
+		}
+
+		&:checked {
+			border-color: rgb(254, 125, 0);
+			background-color: rgb(254, 125, 0);
+
+			&::before {
+				transform: translateY(-1px) rotate(-45deg) scale(1);
+			}
+		}
+
+		&:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+	}
+
+	a {
+		color: rgb(254, 181, 0);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+
+		&:hover {
+			color: rgb(255, 150, 40);
+		}
+	}
 }
 .slide-enter-active,
 .slide-leave-active {
