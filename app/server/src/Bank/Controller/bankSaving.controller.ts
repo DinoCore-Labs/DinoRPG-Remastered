@@ -83,6 +83,19 @@ export async function createBankSaving(userId: string, amount: number, durationD
 	const now = new Date();
 	const unlockAt = addDays(now, plan.durationDays);
 	return prisma.$transaction(async tx => {
+		const activeSaving = await tx.bankSaving.findFirst({
+			where: {
+				userId,
+				durationDays: plan.durationDays,
+				claimedAt: null
+			},
+			select: {
+				id: true
+			}
+		});
+		if (activeSaving) {
+			throw new ExpectedError('bankSavingPlanAlreadyActive');
+		}
 		const removedGold = await tx.userWallet.updateMany({
 			where: {
 				userId,
