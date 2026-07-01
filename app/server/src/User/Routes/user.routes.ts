@@ -1,6 +1,5 @@
 import { FastifyInstance } from 'fastify';
 
-import { acceptGameRules } from '../Controller/acceptGameRules.controller.js';
 import { checkNameUser } from '../Controller/checkNameUser.controller.js';
 import { createUser } from '../Controller/createUser.controller.js';
 import { loginUser } from '../Controller/loginUser.controller.js';
@@ -15,7 +14,6 @@ import {
 	uploadAvatarController
 } from '../Controller/userProfile.controller.js';
 import {
-	acceptGameRulesSchema,
 	changeUserPasswordSchema,
 	createUserResponseSchema,
 	createUserSchema,
@@ -40,17 +38,6 @@ export async function userRoutes(app: FastifyInstance) {
 			}
 		},
 		meUser
-	);
-	app.post(
-		'/me/rules/accept',
-		{
-			preHandler: [app.authenticate],
-			schema: {
-				tags: ['Users'],
-				body: acceptGameRulesSchema
-			}
-		},
-		acceptGameRules
 	);
 	// Me profile
 	app.get(

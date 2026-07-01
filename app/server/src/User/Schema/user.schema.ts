@@ -1,22 +1,14 @@
 import { Language } from '@dinorpg/core/models/config/language.js';
-import { GAME_RULES_VERSION } from '@dinorpg/core/models/game/gameRules.js';
 import { Gender } from '@dinorpg/core/models/user/userGender.js';
 import { z } from 'zod';
 
 // Data needed to register a user
 export const createUserSchema = z.object({
 	name: z.string().min(3).max(20),
-	password: z.string().min(6),
-	gameRulesVersion: z.literal(GAME_RULES_VERSION)
+	password: z.string().min(6)
 });
 
 export type CreateUserInput = z.infer<typeof createUserSchema>;
-
-export const acceptGameRulesSchema = z.object({
-	version: z.literal(GAME_RULES_VERSION)
-});
-
-export type AcceptGameRulesInput = z.infer<typeof acceptGameRulesSchema>;
 
 // Response schema for registering a user
 export const createUserResponseSchema = z.object({

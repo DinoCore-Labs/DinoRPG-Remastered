@@ -1,4 +1,3 @@
-import { GAME_RULES_ACCEPTANCE_REQUIRED_CODE } from '@dinorpg/core/models/game/gameRules.js';
 import axios, {
 	type AxiosError,
 	type AxiosInstance,
@@ -13,12 +12,6 @@ declare module 'axios' {
 	export interface AxiosRequestConfig {
 		silent?: boolean;
 	}
-}
-
-interface ApiErrorResponse {
-	code?: string;
-	currentVersion?: string;
-	message?: string;
 }
 
 const API_SERVER = String(import.meta.env.VITE_API_URL ?? '');
@@ -69,15 +62,8 @@ apiClient.interceptors.response.use(
 		stopLoader(response.config);
 		return response;
 	},
-	(error: AxiosError<ApiErrorResponse>): Promise<never> => {
+	(error: AxiosError): Promise<never> => {
 		stopLoader(error.config as InternalAxiosRequestConfig | undefined);
-		const errorCode = error.response?.data?.code;
-		const mustAcceptGameRules = error.response?.status === 403 && errorCode === GAME_RULES_ACCEPTANCE_REQUIRED_CODE;
-		const isAlreadyOnRulesPage = window.location.pathname === '/rules';
-		if (mustAcceptGameRules && !isAlreadyOnRulesPage) {
-			const redirect = window.location.pathname + window.location.search + window.location.hash;
-			window.location.assign(`/rules?redirect=${encodeURIComponent(redirect)}`);
-		}
 		return Promise.reject(error);
 	}
 );

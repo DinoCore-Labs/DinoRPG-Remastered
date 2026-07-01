@@ -1,5 +1,4 @@
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
-import { GAME_RULES_VERSION } from '@dinorpg/core/models/game/gameRules.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { getMaxXp, orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
@@ -136,9 +135,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 					select: { type: true, amount: true }
 				},
 				rewards: true,
-				discoveredSkills: true,
-				gameRulesAcceptedVersion: true,
-				gameRulesAcceptedAt: true
+				discoveredSkills: true
 			}
 		});
 		if (!user) {
@@ -183,13 +180,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				}))
 			),
 			rewards: user.rewards.map(reward => reward.rewardId),
-			discoveredSkills: user.discoveredSkills,
-			gameRules: {
-				currentVersion: GAME_RULES_VERSION,
-				acceptedVersion: user.gameRulesAcceptedVersion,
-				acceptedAt: user.gameRulesAcceptedAt?.toISOString() ?? null,
-				required: user.gameRulesAcceptedVersion !== GAME_RULES_VERSION
-			}
+			discoveredSkills: user.discoveredSkills
 		});
 	} catch (err) {
 		req.log.error(err);

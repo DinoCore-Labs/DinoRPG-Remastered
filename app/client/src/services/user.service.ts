@@ -1,4 +1,3 @@
-import type { GameRulesAcceptance } from '@dinorpg/core/models/game/gameRules.js';
 import type { CheckNameResponse } from '@dinorpg/core/models/user/checkNameResponse.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import type { UserProfile } from '@dinorpg/core/models/user/userProfile.js';
@@ -9,11 +8,10 @@ import type { AxiosRequestConfig } from 'axios';
 import { api } from '../utils/http';
 
 export const UserService = {
-	register(name: string, password: string, gameRulesVersion: string): Promise<{ id: string; name: string }> {
-		return api.post<{ id: string; name: string }>('/users/register', {
+	register(name: string, password: string): Promise<UserData> {
+		return api.post<UserData>('/users/register', {
 			name,
-			password,
-			gameRulesVersion
+			password
 		});
 	},
 	login(name: string, password: string): Promise<UserData> {
@@ -66,11 +64,6 @@ export const UserService = {
 			oldPassword,
 			newPassword,
 			confirmPassword
-		});
-	},
-	acceptGameRules(version: string): Promise<GameRulesAcceptance> {
-		return api.post<GameRulesAcceptance>('/users/me/rules/accept', {
-			version
 		});
 	}
 };

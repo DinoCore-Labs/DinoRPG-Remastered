@@ -14,12 +14,13 @@ export interface RouteRecord {
 export interface RouteMeta {
 	/** Page publique (accessible sans être connecté) */
 	public?: boolean;
+
 	/** Page nécessitant d’être connecté */
 	auth?: boolean;
+
 	/** Rôles autorisés */
 	roles?: UserRole[];
+
 	/** Afficher le panneau gauche **/
 	showLeftPanel?: boolean;
-	/** Règles **/
-	rulesExempt?: boolean;
 }

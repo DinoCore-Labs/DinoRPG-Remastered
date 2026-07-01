@@ -2,6 +2,22 @@
 
 ## 🔹 Core
 
+## 0.29.0
+
+### Minor Changes
+
+- 54f5cd6: Add the game rules system and mandatory acceptance flow.
+
+  - Add a dedicated page displaying the full game rules with section-based navigation.
+  - Add the complete game rules content to the i18n translation files.
+  - Add a link to the game rules in the footer.
+  - Require players to accept the game rules when creating an account.
+  - Store the accepted rules version and acceptance date in the database.
+  - Require players to accept the rules again when a new version is published.
+  - Restrict access to game features until the current rules version has been accepted.
+  - Add an API endpoint for accepting the current game rules version.
+  - Add the shared types and constants required to manage game rules versions.
+
 ## 0.28.0
 
 ### Minor Changes
@@ -562,6 +578,27 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.31.0
+
+### Minor Changes
+
+- 54f5cd6: Add the game rules system and mandatory acceptance flow.
+
+  - Add a dedicated page displaying the full game rules with section-based navigation.
+  - Add the complete game rules content to the i18n translation files.
+  - Add a link to the game rules in the footer.
+  - Require players to accept the game rules when creating an account.
+  - Store the accepted rules version and acceptance date in the database.
+  - Require players to accept the rules again when a new version is published.
+  - Restrict access to game features until the current rules version has been accepted.
+  - Add an API endpoint for accepting the current game rules version.
+  - Add the shared types and constants required to manage game rules versions.
+
+### Patch Changes
+
+- Updated dependencies [54f5cd6]
+  - @dinorpg/core@0.29.0
 
 ## 0.30.0
 
@@ -1298,6 +1335,22 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.30.0
+
+### Minor Changes
+
+- 54f5cd6: Add the game rules system and mandatory acceptance flow.
+
+  - Add a dedicated page displaying the full game rules with section-based navigation.
+  - Add the complete game rules content to the i18n translation files.
+  - Add a link to the game rules in the footer.
+  - Require players to accept the game rules when creating an account.
+  - Store the accepted rules version and acceptance date in the database.
+  - Require players to accept the rules again when a new version is published.
+  - Restrict access to game features until the current rules version has been accepted.
+  - Add an API endpoint for accepting the current game rules version.
+  - Add the shared types and constants required to manage game rules versions.
 
 ## 0.29.0
 

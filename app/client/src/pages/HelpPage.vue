@@ -625,11 +625,10 @@ export default defineComponent({
 		.sectionContent {
 			margin-top: 15px;
 			.titleSection {
-				background-image: url('../assets/design/title/title_h2.webp');
-				background-position: left bottom;
-				background-repeat: no-repeat;
+				background-color: rgb(142, 62, 38);
+				border-radius: 2px;
 				color: #fff1ad;
-				padding-left: 5px;
+				margin-bottom: 10px;
 			}
 			.textContent {
 				display: flex;

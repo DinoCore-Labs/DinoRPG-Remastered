@@ -1,5 +1,4 @@
 import { DinozFiche } from '../dinoz/dinozFiche.js';
-import { GameRulesAcceptance } from '../game/gameRules.js';
 import { UserRole } from './userRole.js';
 
 export interface UserData {
@@ -13,5 +12,4 @@ export interface UserData {
 	rewards: number[];
 	discoveredSkills: number[];
 	clanId: number | null;
-	gameRules: GameRulesAcceptance;
 }
