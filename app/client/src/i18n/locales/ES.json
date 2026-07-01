@@ -331,13 +331,11 @@
 					"DISCUSSION_DELETE_MESSAGE": "Peut supprimer des messages du fil de discussion",
 					"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan",
 					"CLAN_EDIT_LANG": "Peut changer la langue du Clan",
-					"WAR_OFFICER": "Peut déclarer des guerres",
-					"CLAN_BUILD_CASTLE": "Peut construire le château"
+					"CLAN_EDIT_NAME": "Peut changer le nom du Clan"
 				},
 				"nickname": "Surnom du joueur",
 				"save": "Enregistrer",
-				"saved": "Modifications enregistrées avec succès !",
-				"leader": "Nommer Chef du clan"
+				"saved": "Modifications enregistrées avec succès !"
 			},
 			"request": {
 				"title": "Adhésions en attente",
@@ -393,6 +391,11 @@
 			"name": {
 				"title": "Changer le nom du clan",
 				"save": "Changer le nom"
+			},
+			"leader": {
+				"title": "Changer le chef du clan",
+				"save": "Nommer chef",
+				"newLeader": "Chef de Clan modifié avec succès !"
 			},
 			"action": {
 				"delete": "Supprimer le clan"
