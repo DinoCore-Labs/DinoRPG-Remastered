@@ -451,18 +451,20 @@
 			"title": "Découvrez les prochains événements sur DinoRPG !",
 			"small": "Prédiction d'Irma",
 			"strong": {
-				"title1": "Alpha 0.10.0 (Bientôt)",
-				"title2": "Alpha 0.11.0",
-				"title3": "Alpha 0.12.0",
-				"title4": "Alpha 0.13.0"
+				"title1": "Alpha 0.11.0 (Bientôt)",
+				"title2": "Alpha 0.12.0",
+				"title3": "Alpha 0.13.0",
+				"title4": "Alpha 0.14.0"
 			},
 			"help": "Cliquez sur une mise à jour ci-dessus pour obtenir d'avantage d'informations !",
 			"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
 			"futurTitle": "Avenir Dinolandien",
 			"futureInfo1": {
-				"text1": "Les clans",
-				"text2": "La Banque de Dinoland",
-				"text3": "Correction des bugs"
+				"text1": "Mise en place du règlement du jeu",
+				"text2": "Mise en place des mentions légales",
+				"text3": "Mise en place de la politique de confidentialité",
+				"text4": "Mise en place de la modération",
+				"text5": "Correction des bugs"
 			},
 			"futureInfo2": {
 				"text1": "Maître Zenith et le dojo",
