@@ -462,7 +462,9 @@
 			"futureInfo1": {
 				"text1": "The Clans",
 				"text2": "The Bank of Dinoland",
-				"text3": "Bug fixes"
+				"text3": "Bug fixes",
+				"text4": "Mise en place de la modération",
+				"text5": "Correction des bugs"
 			},
 			"futureInfo2": {
 				"text1": "Mayor Zenith and the Dojo",
@@ -724,7 +726,8 @@
 		"bankSavingNotReady": "Cette épargne n'est pas encore disponible.",
 		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
 		"bankSavingNotFound": "Cette épargne est introuvable.",
-		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois."
+		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois.",
+		"bankSavingPlanAlreadyActive": "Vous avez déjà une épargne de cette durée en attente de récupération."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -3413,8 +3416,7 @@
 			"itemDuration": "Durée : {days} jours",
 			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
 			"unlockAt": "Disponible le {date}",
-			"claim": "Récupérer",
-			"claimed": "Récupéré"
+			"claim": "Récupérer"
 		}
 	},
 	"npc": {
