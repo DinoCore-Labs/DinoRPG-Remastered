@@ -2,6 +2,18 @@
 
 ## 🔹 Core
 
+## 0.28.0
+
+### Minor Changes
+
+- e064715: Add new clan management and forum features.
+
+  - Add clan forum pages, routes, services, validation, and shared types.
+  - Allow clan leaders to rename their clan and transfer leadership from the clan settings page.
+  - Improve clan permission management and prevent members from modifying their own rights.
+  - Add the required clan translations and improve clan list pagination.
+  - Fix line breaks in private messages.
+
 ## 0.27.0
 
 ### Minor Changes
@@ -550,6 +562,23 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.30.0
+
+### Minor Changes
+
+- e064715: Add new clan management and forum features.
+
+  - Add clan forum pages, routes, services, validation, and shared types.
+  - Allow clan leaders to rename their clan and transfer leadership from the clan settings page.
+  - Improve clan permission management and prevent members from modifying their own rights.
+  - Add the required clan translations and improve clan list pagination.
+  - Fix line breaks in private messages.
+
+### Patch Changes
+
+- Updated dependencies [e064715]
+  - @dinorpg/core@0.28.0
 
 ## 0.29.1
 
@@ -1269,6 +1298,18 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.29.0
+
+### Minor Changes
+
+- e064715: Add new clan management and forum features.
+
+  - Add clan forum pages, routes, services, validation, and shared types.
+  - Allow clan leaders to rename their clan and transfer leadership from the clan settings page.
+  - Improve clan permission management and prevent members from modifying their own rights.
+  - Add the required clan translations and improve clan list pagination.
+  - Fix line breaks in private messages.
 
 ## 0.28.0
 
