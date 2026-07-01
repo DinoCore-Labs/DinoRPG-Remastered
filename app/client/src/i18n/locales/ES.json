@@ -460,9 +460,11 @@
 			"disclaimer": "Las predicciones de Madame Irma no son infalibles, por lo que no hay ninguna fecha de lanzamiento disponible para estas novedades. Sin embargo, cada evento será anunciado oficialmente en el sitio cuando llegue el momento.",
 			"futurTitle": "Futuro dinolandés",
 			"futureInfo1": {
-				"text1": "Les clans",
-				"text2": "La Banque de Dinoland",
-				"text3": "Correction des bugs"
+				"text1": "Mise en place du règlement du jeu",
+				"text2": "Mise en place des mentions légales",
+				"text3": "Mise en place de la politique de confidentialité",
+				"text4": "Mise en place de la modération",
+				"text5": "Correction des bugs"
 			},
 			"futureInfo2": {
 				"text1": "Maître Zenith et le dojo",
@@ -724,7 +726,8 @@
 		"bankSavingNotReady": "Cette épargne n'est pas encore disponible.",
 		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
 		"bankSavingNotFound": "Cette épargne est introuvable.",
-		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois."
+		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois.",
+		"bankSavingPlanAlreadyActive": "Vous avez déjà une épargne de cette durée en attente de récupération."
 	},
 	"tooltip": {
 		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
@@ -3413,8 +3416,7 @@
 			"itemDuration": "Durée : {days} jours",
 			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
 			"unlockAt": "Disponible le {date}",
-			"claim": "Récupérer",
-			"claimed": "Récupéré"
+			"claim": "Récupérer"
 		}
 	},
 	"npc": {
