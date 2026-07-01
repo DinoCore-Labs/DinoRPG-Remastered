@@ -331,13 +331,11 @@
 					"DISCUSSION_DELETE_MESSAGE": "Peut supprimer des messages du fil de discussion",
 					"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan",
 					"CLAN_EDIT_LANG": "Peut changer la langue du Clan",
-					"WAR_OFFICER": "Peut déclarer des guerres",
-					"CLAN_BUILD_CASTLE": "Peut construire le château"
+					"CLAN_EDIT_NAME": "Peut changer le nom du Clan"
 				},
 				"nickname": "Surnom du joueur",
 				"save": "Enregistrer",
-				"saved": "Modifications enregistrées avec succès !",
-				"leader": "Nommer Chef du clan"
+				"saved": "Modifications enregistrées avec succès !"
 			},
 			"request": {
 				"title": "Adhésions en attente",
@@ -393,6 +391,11 @@
 			"name": {
 				"title": "Changer le nom du clan",
 				"save": "Changer le nom"
+			},
+			"leader": {
+				"title": "Changer le chef du clan",
+				"save": "Nommer chef",
+				"newLeader": "Chef de Clan modifié avec succès !"
 			},
 			"action": {
 				"delete": "Supprimer le clan"
@@ -457,9 +460,11 @@
 			"disclaimer": "Las predicciones de Madame Irma no son infalibles, por lo que no hay ninguna fecha de lanzamiento disponible para estas novedades. Sin embargo, cada evento será anunciado oficialmente en el sitio cuando llegue el momento.",
 			"futurTitle": "Futuro dinolandés",
 			"futureInfo1": {
-				"text1": "Les clans",
-				"text2": "La Banque de Dinoland",
-				"text3": "Correction des bugs"
+				"text1": "Mise en place du règlement du jeu",
+				"text2": "Mise en place des mentions légales",
+				"text3": "Mise en place de la politique de confidentialité",
+				"text4": "Mise en place de la modération",
+				"text5": "Correction des bugs"
 			},
 			"futureInfo2": {
 				"text1": "Maître Zenith et le dojo",
@@ -721,7 +726,8 @@
 		"bankSavingNotReady": "Cette épargne n'est pas encore disponible.",
 		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
 		"bankSavingNotFound": "Cette épargne est introuvable.",
-		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois."
+		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois.",
+		"bankSavingPlanAlreadyActive": "Vous avez déjà une épargne de cette durée en attente de récupération."
 	},
 	"tooltip": {
 		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
@@ -3342,6 +3348,212 @@
 			"security-1": "**Peu importe qui vous le demande**... && && Ne communiquez jamais vos identifiants et mots de passe !"
 		}
 	},
+	"gameRules": {
+		"pageTitle": "Règlement du jeu",
+		"title": "Règlement de DinoRPG Remastered",
+		"version": "Version : {version}",
+		"updatedAt": "Dernière mise à jour : {date}",
+		"footer": {
+			"title": "Règles et sécurité",
+			"link": "Règlement du jeu"
+		},
+		"registration": {
+			"label": "J’ai lu et j’accepte le {rules} dans sa version {version}.",
+			"link": "règlement du jeu"
+		},
+		"acceptance": {
+			"title": "Acceptation du règlement requise",
+			"description": "Le règlement du jeu a été ajouté ou mis à jour. Vous devez le lire et l’accepter avant de continuer à jouer.",
+			"checkbox": "J’ai lu et j’accepte le règlement du jeu dans sa version {version}.",
+			"button": "Accepter le règlement",
+			"submitting": "Enregistrement...",
+			"success": "Le règlement du jeu a bien été accepté.",
+			"error": "L’acceptation du règlement n’a pas pu être enregistrée."
+		},
+		"sections": {
+			"general": {
+				"title": "1. Principes généraux",
+				"intro": "DinoRPG Remastered doit être utilisé de manière loyale et respectueuse.",
+				"commitmentIntro": "Chaque joueur s’engage à :",
+				"commitments": {
+					"respect": "respecter les autres utilisateurs ;",
+					"features": "utiliser les fonctionnalités conformément à leur objectif ;",
+					"advantage": "ne pas chercher à obtenir un avantage par un moyen anormal ;",
+					"security": "ne pas compromettre la sécurité ou le fonctionnement du service."
+				},
+				"outro": "Un comportement manifestement abusif peut être sanctionné même s’il n’est pas expressément mentionné dans le présent règlement."
+			},
+			"communication": {
+				"title": "2. Respect et communication",
+				"intro": "Les pseudonymes, profils, messages et contenus publiés doivent rester appropriés.",
+				"forbiddenIntro": "Sont notamment interdits :",
+				"forbidden": {
+					"harassment": "les insultes, menaces et comportements de harcèlement ;",
+					"hate": "les propos haineux ou discriminatoires ;",
+					"illegal": "les contenus sexuellement explicites ou manifestement illicites ;",
+					"spam": "le spam et la publicité répétée ou non autorisée ;",
+					"impersonation": "l’usurpation de l’identité d’un joueur, d’un administrateur ou d’un modérateur ;",
+					"personalData": "la divulgation des informations personnelles d’un tiers ;",
+					"links": "les liens dangereux, frauduleux ou trompeurs."
+				},
+				"outro": "Les désaccords entre joueurs doivent rester respectueux."
+			},
+			"accounts": {
+				"title": "3. Comptes",
+				"intro": "Un compte est personnel. Il est interdit de :",
+				"forbidden": {
+					"share": "partager ou prêter son compte ;",
+					"trade": "vendre, donner ou échanger un compte ;",
+					"useOther": "utiliser le compte d’une autre personne ;",
+					"password": "demander ou communiquer un mot de passe ;",
+					"sanction": "créer un compte pour contourner une sanction."
+				},
+				"singleAccount": "Une même personne ne peut normalement utiliser qu’un seul compte joueur.",
+				"household": "Plusieurs personnes d’un même foyer peuvent chacune disposer de leur propre compte, à condition que ces comptes ne soient pas utilisés pour obtenir un avantage artificiel ou contourner une limitation."
+			},
+			"automation": {
+				"title": "4. Triche et automatisation",
+				"intro": "Il est interdit d’utiliser :",
+				"forbidden": {
+					"bot": "un robot ;",
+					"script": "un script de jeu ;",
+					"autoClick": "un système de clic automatique ;",
+					"macro": "une macro automatisant des actions ;",
+					"requests": "un programme envoyant automatiquement des requêtes ;",
+					"tool": "un outil jouant à la place de l’utilisateur ;",
+					"clientModification": "une modification du client destinée à contourner les règles du jeu."
+				},
+				"accessibility": "Les outils d’accessibilité ne procurant aucun avantage peuvent être examinés au cas par cas."
+			},
+			"bugs": {
+				"title": "5. Exploitation de bugs",
+				"intro": "L’exploitation volontaire d’un bug ou d’un comportement anormal est interdite.",
+				"examplesIntro": "Un joueur constatant qu’une action permet notamment :",
+				"examples": {
+					"reward": "d’obtenir plusieurs fois une récompense ;",
+					"duplicate": "de dupliquer un objet, une ressource ou une monnaie ;",
+					"condition": "de contourner une condition ;",
+					"unavailable": "d’accéder à une fonctionnalité normalement indisponible ;",
+					"repeat": "de répéter anormalement une action limitée ;"
+				},
+				"report": "doit cesser de reproduire le problème et le signaler.",
+				"outro": "Continuer à utiliser une anomalie après l’avoir constatée peut être considéré comme une exploitation volontaire."
+			},
+			"security": {
+				"title": "6. Sécurité et requêtes interdites",
+				"intro": "Il est interdit de tenter :",
+				"forbidden": {
+					"account": "d’accéder au compte ou aux données d’un autre utilisateur ;",
+					"authorization": "de contourner une autorisation ;",
+					"request": "de falsifier une requête envoyée au serveur ;",
+					"values": "de modifier artificiellement une quantité, un identifiant ou un résultat ;",
+					"restricted": "d’accéder à une page ou une API réservée ;",
+					"disruption": "de perturber ou de saturer le service ;",
+					"credentials": "de voler un cookie, un jeton de connexion ou un mot de passe."
+				},
+				"devTools": "L’utilisation des outils de développement du navigateur n’est pas interdite en elle-même. Elle devient interdite lorsqu’elle sert à tricher, à contourner une règle ou à compromettre le service."
+			},
+			"market": {
+				"title": "7. Marché et échanges",
+				"intro": "Les fonctionnalités de marché et d’échange doivent être utilisées loyalement.",
+				"forbiddenIntro": "Il est notamment interdit de :",
+				"forbidden": {
+					"prices": "manipuler artificiellement les prix ou les offres ;",
+					"ownBid": "enchérir sur sa propre offre au moyen d’un autre compte ;",
+					"transfer": "transférer artificiellement des ressources entre plusieurs comptes ;",
+					"error": "exploiter une erreur de prix ou de quantité ;",
+					"limit": "contourner une limite d’achat, de vente ou de possession ;",
+					"duplicate": "utiliser une faille afin de dupliquer une ressource."
+				},
+				"outro": "Une transaction obtenue par fraude, manipulation ou exploitation d’une anomalie peut être annulée ou corrigée."
+			},
+			"reporting": {
+				"title": "8. Signalement des problèmes",
+				"intro": "Un comportement interdit, un bug ou une faille peut être signalé à :",
+				"email": "contact{'@'}dinorpg.fr",
+				"detailsIntro": "Le signalement doit contenir autant que possible :",
+				"details": {
+					"username": "le pseudonyme concerné ;",
+					"date": "la date approximative ;",
+					"feature": "la fonctionnalité concernée ;",
+					"description": "une description précise ;",
+					"steps": "les étapes de reproduction d’un bug ;",
+					"proof": "les preuves ou captures disponibles."
+				},
+				"disclosure": "Il est interdit de publier une faille non corrigée, d’en poursuivre l’exploitation ou de l’utiliser pour accéder aux données d’un autre utilisateur.",
+				"goodFaith": "Un signalement effectué de bonne foi ne sera pas considéré comme une tentative de triche."
+			},
+			"sanctions": {
+				"title": "9. Sanctions",
+				"intro": "Selon la gravité des faits, l’administration peut appliquer :",
+				"list": {
+					"reminder": "un rappel à la règle ;",
+					"warning": "un avertissement ;",
+					"content": "la suppression ou la modification d’un contenu ;",
+					"transaction": "l’annulation d’une action ou d’une transaction ;",
+					"advantage": "le retrait d’un avantage obtenu irrégulièrement ;",
+					"restriction": "la restriction temporaire d’une fonctionnalité ;",
+					"suspension": "la suspension temporaire du compte ;",
+					"closure": "la fermeture définitive du compte."
+				},
+				"order": "Les sanctions ne suivent pas obligatoirement cet ordre.",
+				"serious": "Une infraction grave peut entraîner directement une suspension ou une fermeture définitive.",
+				"criteriaIntro": "La décision peut tenir compte :",
+				"criteria": {
+					"severity": "de la gravité des faits ;",
+					"repetition": "de leur répétition ;",
+					"intent": "du caractère volontaire ou accidentel ;",
+					"advantage": "de l’avantage obtenu ;",
+					"damage": "des dommages causés ;",
+					"cooperation": "de la coopération du joueur ;",
+					"history": "des éventuels antécédents."
+				}
+			},
+			"circumvention": {
+				"title": "10. Contournement des sanctions",
+				"intro": "Il est interdit de contourner une sanction au moyen :",
+				"methods": {
+					"newAccount": "d’un nouveau compte ;",
+					"relative": "du compte d’un proche ;",
+					"device": "d’un appareil différent ;",
+					"vpn": "d’un VPN ou d’un relais technique ;",
+					"username": "d’un changement de pseudonyme ;",
+					"otherPlayer": "de l’intervention d’un autre joueur."
+				},
+				"participants": "Les comptes participant volontairement au contournement peuvent également être sanctionnés.",
+				"household": "Les autres membres d’un même foyer ne sont pas automatiquement sanctionnés s’ils ne participent pas au contournement."
+			},
+			"appeal": {
+				"title": "11. Contestation",
+				"intro": "Une sanction peut être contestée à l’adresse :",
+				"email": "contact{'@'}dinorpg.fr",
+				"detailsIntro": "La demande doit préciser :",
+				"details": {
+					"username": "le pseudonyme du compte ;",
+					"date": "la date approximative de la sanction ;",
+					"decision": "la décision contestée ;",
+					"reasons": "les raisons de la contestation ;",
+					"information": "tout élément utile au réexamen."
+				},
+				"respect": "La contestation doit rester respectueuse et factuelle.",
+				"suspension": "Elle ne suspend pas automatiquement la sanction.",
+				"repeated": "Les demandes répétées ne contenant aucun élément nouveau peuvent ne plus recevoir de réponse."
+			},
+			"changes": {
+				"title": "12. Modification du règlement",
+				"intro": "Le présent règlement peut être modifié afin de tenir compte :",
+				"reasons": {
+					"game": "d’une évolution du jeu ;",
+					"feature": "d’une nouvelle fonctionnalité ;",
+					"abuse": "d’une nouvelle forme d’abus ;",
+					"security": "d’un incident de sécurité ;",
+					"legal": "d’une évolution légale."
+				},
+				"version": "La version et la date de dernière mise à jour sont indiquées en haut du document.",
+				"acceptance": "Une nouvelle acceptation peut être demandée lorsqu’une modification importante est apportée."
+			}
+		}
+	},
 	"trainingCenter": {
 		"title": "Centre d'Entraînement de Fosselave",
 		"subtitle": "Cher client, bienvenue au C.E.F. Notre Centre est autorisé par l’I.R.A.D (Institut de recherche et d’apprentissage de Dinoz) et vous permet de développer la force musculaire et la performance de votre Dinoz avec l'aide de notre programme de combat sur mesure. ",
@@ -3410,8 +3622,7 @@
 			"itemDuration": "Durée : {days} jours",
 			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
 			"unlockAt": "Disponible le {date}",
-			"claim": "Récupérer",
-			"claimed": "Récupéré"
+			"claim": "Récupérer"
 		}
 	},
 	"npc": {
