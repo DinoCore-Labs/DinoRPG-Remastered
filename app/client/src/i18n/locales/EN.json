@@ -331,13 +331,11 @@
 					"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
 					"CLAN_EDIT_BANNER": "Can change the Clan banner",
 					"CLAN_EDIT_LANG": "Can change the language of the Clan",
-					"WAR_OFFICER": "Can declare war",
-					"CLAN_BUILD_CASTLE": "Can build the castle"
+					"CLAN_EDIT_NAME": "Peut changer le nom du Clan"
 				},
 				"nickname": "Player's nickname",
 				"save": "Save",
-				"saved": "Modifications saved successfully!",
-				"leader": "Nommer Chef du clan"
+				"saved": "Modifications saved successfully!"
 			},
 			"request": {
 				"title": "Waiting requests",
@@ -393,6 +391,11 @@
 			"name": {
 				"title": "Edit clan na",
 				"save": "Rename it"
+			},
+			"leader": {
+				"title": "Changer le chef du clan",
+				"save": "Nommer chef",
+				"newLeader": "Chef de Clan modifié avec succès !"
 			},
 			"action": {
 				"delete": "Delete clan"
