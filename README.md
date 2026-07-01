@@ -20,7 +20,7 @@ DinoRPG Remastered est une recréation open-source et une modernisation du jeu n
 - [Project Structure / Structure du projet](#project-structure--structure-du-projet)
 - [Local installation](#local-installation)
 - [Installation locale](#installation-locale)
-- [Origine et attribution](#origine-et-attribution)
+- [Origin and Attribution / Origine et attribution](#origin-and-attribution--origine-et-attribution)
 - [License / Licence](#license--licence)
 
 ## About the project
@@ -203,7 +203,34 @@ pnpm dev
 
 L’application sera alors disponible en local : http://localhost:8080
 
-## Origine et attribution
+## Origin and Attribution / Origine et attribution
+
+DinoRPG Remastered is an independent project in terms of its organization, architecture, and Git history.
+
+However, certain parts of its source code, models, data, and game logic are derived from or adapted from **Motion Twin’s WebGamesArchives**:
+
+https://github.com/motion-twin/WebGamesArchives/tree/main/DinoRPG
+
+As well as from the open-source **Eternaltwin DinoRPG** project:
+
+https://gitlab.com/eternaltwin/dinorpg/dinorpg
+
+Elements originating from Eternaltwin DinoRPG were integrated and modified at various stages during the development of DinoRPG Remastered.
+
+DinoRPG Remastered has since been extensively restructured and further developed using a distinct architecture, including a Vue frontend, a Fastify and Prisma backend, and a pnpm monorepo structure.
+
+The original work remains attributed to the respective contributors of the Eternaltwin DinoRPG project, including:
+
+- Jérémy “Biosha” Guilbert
+- Sylvain “Jahaa” Hunault
+- Franck “Zen” Demoute
+- Lucas “Jolu” Lesven
+- Thibault “Gerardufoin” Duval
+- And everyone who contributed to the project.
+
+Subsequent modifications and contributions remain attributed to the respective contributors of DinoRPG Remastered.
+
+---
 
 DinoRPG Remastered est un projet indépendant dans son organisation, son architecture et son historique Git.
 
@@ -223,7 +250,7 @@ Le travail original reste attribué aux contributeurs respectifs du projet Etern
 
 - Jérémy "Biosha" Guilbert
 - Sylvain "Jahaa" Hunault
-  - Franck "Zen" Demoute
+- Franck "Zen" Demoute
 - Lucas "Jolu" Lesven
 - Thibault "Gerardufoin" Duval
 - et toutes les personnes ayant contribuées au projet.
