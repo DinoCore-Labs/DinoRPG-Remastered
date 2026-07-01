@@ -38,7 +38,7 @@
 				<p v-if="savings.length === 0" class="empty">
 					{{ $t('bank.savings.empty') }}
 				</p>
-				<div v-for="savingItem in savings" :key="savingItem.id" class="savingItem">
+				<div v-for="savingItem in activeSavings" :key="savingItem.id" class="savingItem">
 					<div class="savingInfo">
 						<strong v-html="formatContent(`${beautifulNumber(savingItem.amount)} :gold:`)" />
 						<span>
@@ -66,9 +66,6 @@
 					>
 						{{ $t('bank.savings.claim') }}
 					</DZButton>
-					<span v-else class="claimed">
-						{{ $t('bank.savings.claimed') }}
-					</span>
 				</div>
 			</div>
 		</div>
@@ -160,6 +157,9 @@ export default defineComponent({
 		},
 		maxSavingAmount(): number {
 			return Math.min(this.uStore.gold, BANK_SAVING_MAX_DEPOSIT);
+		},
+		activeSavings(): BankSavingResponse[] {
+			return this.savings.filter(saving => !saving.claimedAt);
 		}
 	},
 	methods: {
@@ -327,10 +327,6 @@ export default defineComponent({
 		display: flex;
 		flex-direction: column;
 		gap: 3px;
-	}
-	.claimed {
-		color: #b8ff8c;
-		font-weight: bold;
 	}
 }
 @media (max-width: 540px) {
