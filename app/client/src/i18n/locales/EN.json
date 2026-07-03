@@ -3351,7 +3351,7 @@
 	"gameRules": {
 		"pageTitle": "Règlement du jeu",
 		"title": "Règlement de DinoRPG Remastered",
-		"version": "Version : {version}",
+		"version": "Version: {version}",
 		"updatedAt": "Dernière mise à jour : {date}",
 		"footer": {
 			"title": "Règles et sécurité",
@@ -4460,8 +4460,8 @@
 			}
 		},
 		"dialog": {
-			"exit": "À bientôt.",
-			"leave": "Quitter"
+			"exit": "See you soon.",
+			"leave": "Quit"
 		}
 	},
 	"missions": {
@@ -4471,79 +4471,79 @@
 			"status": "Status"
 		},
 		"status": {
-			"available": "Disponible",
-			"unavailable": "Indisponible",
-			"ongoing": "En cours",
-			"finished": "Terminée"
+			"available": "Available",
+			"unavailable": "Unavailable",
+			"ongoing": "In progress",
+			"finished": "Completed"
 		},
 		"unavailable": {
-			"title": "Mission Bloquée",
-			"description": "Cette Mission ne vous est pas accessible pour l'instant, il vous faudra revenir plus tard."
+			"title": "Mission Blocked",
+			"description": "This mission is not accessible to you at the moment, you will have to come back later."
 		},
 		"accept": "Accept the Mission",
 		"giveUp": "Give up",
 		"lastDialog": "Dernière étape validée",
 		"goals": {
-			"atPlace": "Se rendre à {place}",
-			"atHidden": "Trouver le bon lieu",
-			"talk": "Parler à {nameKey}",
+			"atPlace": "Go to {place}",
+			"atHidden": "Find the right place",
+			"talk": "Talk to {nameKey}",
 			"action": "{nameKey}",
-			"kill": "Tuer {current}/{count} {nameKey}",
+			"kill": "Kill {current}/{count} {nameKey}",
 			"useItem": "{nameKey}",
 			"useMoney": "{nameKey}",
 			"fightAction": "{nameKey}",
 			"useIngredient": "{nameKey}",
-			"wait": "Attendre",
+			"wait": "Wait",
 			"lock": "{nameKey}",
-			"validate": "Retourner voir {nameKey} pour valider la mission"
+			"validate": "Return to {nameKey} to validate the mission"
 		},
-		"validate": "Valider la mission",
+		"validate": "Validate the mission",
 		"papy": {
 			"fish": {
-				"name": "Du poisson frais",
-				"begin": "Madame Seyche, habitante de Dinoville, recherche du poisson frais pour organiser un dîner avec ses amis. Peux-tu aller lui chercher du poisson chez le Marchand au Port de Prêche au sud ? Il a été prévenu et il t'attend.",
-				"end": "Madame Seyche est très contente de toi, voilà ta récompense !",
+				"name": "Fresh fish",
+				"begin": "Madam Squyd, a resident of Dinotown, is looking for fresh fish to organize a dinner with her friends. Can you get her some fish from the Merchant in Frish Port in the south? He has been warned and he is waiting for you.",
+				"end": "Madam Squyd is really pleased with you, here's your reward!",
 				"fishMerchant": {
-					"name": "Marchand de Poisson",
-					"text": "Salut mon ptit, tu viens chercher du poisson c'est ça ? Tiens, prends-le et apporte-le à Dinoville au plus vite."
+					"name": "The Fish Merchant",
+					"text": "Hello little one, are you here for the fish? Here you go! Take them to Dinotown before Madam Squyd's party is ruined."
 				},
 				"madameSeyche": {
-					"name": "Madame Seyche",
-					"text": "Ooooohhhh merci mon petit, ce dîner va être très réussi grâce à toi ! Retourne vite voir Papy Joe pour obtenir ta récompense..."
+					"name": "Madam Squyd",
+					"text": "Ooooohhhh, thank you! This meal is going to be a success thanks to you! Make sure you return to Grandpa Joe to receive your reward!"
 				},
 				"validation": {
 					"name": "Grandpa Joe",
-					"text": "Retourner voir Papy Joe pour valider la mission."
+					"text": "Return to Grandpa Joe to validate the mission."
 				}
 			},
 			"dog": {
-				"name": "Le chien perdu",
-				"begin": "La Vieille Ducraft a perdu son caniche alors qu'elle visitait son fils dans les Collines Escarpées, sauras-tu le retrouver ?",
-				"end": "Uhmm... Elle ne perd rien pour attendre cette vieille peau ! Enfin, voilà pour toi",
+				"name": "The lost dog",
+				"begin": "The old lady Ducraft lost her poodle while visiting her son in the Precipitous Hills, can you find him?",
+				"end": "Argh... That old hag, her time will come! Anyway, this is for you.",
 				"jacquelineDucraft": {
-					"name": "Jacqueline Ducraft",
-					"text": "Bonjour jeune homme ! Nioufniouf, mon petit amour de caniche, a disparu ! Je l'avais puni car il avait fait une bêtise...ohh... comme je regreettte ! Vite, retrouve-le s'il te plaît. Je suis certaine qu'il n'a pas pu grimper ces montagnes avec ses petites pattes, il doit donc être parti vers le Sud.",
-					"text2": "Mon NioufNiouf chéri !!! Pardonne-moi, ta moooman a été très méchante avec le gentil chienchien ! Merci jeune homme, retournez au plus vite chez ce vieux schnock pour obtenir votre récompense !"
+					"name": "Jessica Ducraft",
+					"text": "Hello young man! Nioof-Nioof, my lovely little poodle has disappeared! I punished him for an accident and now I can't find him! Please help me find him, I miss him so much! I'm sure he couldn't climb these mountains with his tiny legs, he probably went to the South.",
+					"text2": "My dear Nioof-Nioof!!! Please forgive me, I'm sorry for being mean! Thank you so much, young man. Return to that old fuddy-duddy Grandpa Joe to claim your reward!"
 				},
 				"findNioufniouf": {
-					"name": "NioufNiouf",
-					"description": "Vous avez retrouvé NioufNiouf ! Ramenez-le vite à sa propriétaire !"
+					"name": "Nioof-Nioof",
+					"description": "You've found Nioof-Nioof! Take him back to Lady Ducraft!"
 				}
 			},
 			"kilgou": {
-				"name": "Les Goupignons des Collines",
+				"name": "Smashrooms of the Hills",
 				"begin": "De nombreux Loups et Goupignons sévissent dans les Collines Escarpées au nord de Dinoville, le chef d'un village voisin cherche quelqu'un pour en tuer quelques-uns et ainsi leur faire peur pour qu'ils se calment, sauras-tu te montrer suffisamment fort ?",
 				"end": "Bravo, grâce à toi les Collines ont retrouvé un certain calme, félicitations !",
 				"kill": "Loups et Goupignons"
 			},
 			"kilwlf": {
-				"name": "La chasse aux loups",
+				"name": "The Wolf Hunt",
 				"begin": "Récemment, les paysans ont beaucoup de problèmes avec des groupes de Loups qui attaquent leurs chèvres. Peux-tu faire un tour ici-et-là et en tuer quelques-uns histoire de les éloigner ?",
 				"end": "Bravo, c'est bien joué, avec ça ils ne devraient plus trop s'approcher des chèvres pendant quelque temps !",
 				"kill": "Loups"
 			},
 			"fflow": {
-				"name": "Le rosier en danger",
+				"name": "The Stamps",
 				"begin": "Le rosier préféré de Madame Seyche est en sale état à cause de la canicule. Pourrais-tu aller chercher de l'Eau Pure à la Fontaine et lui en apporter ?",
 				"end": "Cette charmante Madame Seyche m'a félicité pour ton travail, tu as bien mérité ta récompense !",
 				"pureWater": {
@@ -4551,12 +4551,12 @@
 					"description": "Vous obtenez de l'Eau Pure qui est particulièrement conseillée pour arroser les fleurs..."
 				},
 				"madameSeyche": {
-					"name": "Madame Seyche",
+					"name": "Madam Squyd",
 					"text": "Ooohhh merci mon petit, grâce à toi mon rosier va pouvoir retrouver de belles couleurs ! Retourne vite voir Papy Joe, il te donnera ta récompense..."
 				}
 			},
 			"kbook": {
-				"name": "Le livre de recettes",
+				"name": "The Recipe Book",
 				"begin": "J'ai à nouveau reçu une demande de la ravissante Madame Seyche. Elle voudrait consulter un livre de recettes qui se trouve à l'Université, peux-tu aller lui chercher ?",
 				"end": "Bravo, grâce à toi Madame Seyche m'a remercié en m'envoyant un bout de Korgon grillé. Un vrai délice !",
 				"recipeBook": {
@@ -4564,12 +4564,12 @@
 					"description": "Vous obtenez \"100 Façons de cuire un Korgon\", écrit et illustré par Gorak le borgne"
 				},
 				"madameSeyche": {
-					"name": "Madame Seyche",
+					"name": "Madam Squyd",
 					"text": "OOOooooooh merci mon petit ! Je vais pouvoir expérimenter différentes recettes de Korgons, n'hésite pas à venir y goûter un peu de temps en temps !"
 				}
 			},
 			"msg": {
-				"name": "Les Timbres",
+				"name": "The Stamps",
 				"begin": "J'ai très envie d'écrire une lettre à une certaine personne qui me tient à coeur. Mais il se trouve que mes Timbres ont été volés par des Goupignons Chapardeurs qui se regroupent habituellement à la Fontaine de Jouvence. Si tu les tues, je te laisserai utiliser mes Timbres, ça te va ?",
 				"end": "Merci, génial, je vais pouvoir écrire ma lettre ! Tiens, tu as bien mérité tes timbres...",
 				"kill": "Goupignons Chapardeurs",
@@ -4579,28 +4579,28 @@
 				}
 			},
 			"lettre": {
-				"name": "La lettre confidentielle",
+				"name": "The secret letter",
 				"begin": "Uhm... Cette fois-ci c'est pour moi, Papy Joe, que tu vas travailler... J'aurais besoin de toi pour que tu apporte d'URGENCE cette lettre à une certaine personne à Dinoville. Il faut faire très vite surtout !",
 				"end": "Uhm ! Ehm... Une réponse ?! Déjà ?!? GENIAL ! Elle accepte mon invitation à dîner. C'est dans la poche : malgré mon grand âge, la nuit va être chaude !",
 				"madameSeyche": {
-					"name": "Madame Seyche",
+					"name": "Madam Squyd",
 					"text": "Oohhhh mon petit, que m'apportes-tu cette fois ? Quoi ? Une lettre de papy ? .... ..... Apporte-lui vite cette réponse !"
 				}
 			},
 			"kilglu": {
-				"name": "Un étrange monstre",
+				"name": "A strange monster",
 				"begin": "Un étrange monstre est apparu ces derniers temps dans le Royaume de Dinoville. Il est assez coriace et peut suivant les cas faire beaucoup de dégâts lors d'un combat. Pourrais-tu en tuer un et me le ramener pour que je puisse l'étudier ?",
 				"end": "Merci, c'est un beau spécimen. Voilà pour ta récompense !",
 				"kill": "Gluon"
 			},
 			"kilgnt": {
-				"name": "Les Géants",
+				"name": "The Giants",
 				"begin": "Je ne sais pas si tu t'en es aperçu, mais le Royaume de Dinoville est envahi par d'immenses Géants Verts qui ne semblent pas se nourrir que de légumes ! Peux-tu aller en exterminer une douzaine au plus vite ? Il s'agit d'un ordre du Roi, alors il faut faire vite !",
 				"end": "Ouf ! C'était juste ! Merci tu m'as bien aidé, je vais pouvoir parler de cet exploit au Roi demain pendant que nous jouerons au golf.",
 				"kill": "Géants Verts"
 			},
 			"kilcoq": {
-				"name": "L'exploit du mois",
+				"name": "Achievement of the month",
 				"begin": "Uhm... J'ai encore un Golf de prévu avec le Roi le mois prochain, et figure toi qu'il veut encore entendre parler de tes exploits... Que dirais-tu d'aller tuer quelques Coqdur rapidement ? Tu seras bien récompensé !",
 				"end": "Ah ! Super ! Je vais maintenant réfléchir à rajouter un peu d'épique pour relever tout cela ! Le Roi devrait être ravi !",
 				"kill": "Coqs"
@@ -4608,7 +4608,7 @@
 		},
 		"shaman": {
 			"init1": {
-				"name": "La mise à l'épreuve",
+				"name": "The Trial",
 				"begin": "Yo... Alors, pour le Guide de stratégie, y faut aller l'traduire... aux ruines Ashpouk. Tu devrais en être capable.",
 				"inspect": {
 					"name": "Examiner les inscriptions",
@@ -4626,7 +4626,7 @@
 				"end": "Mmmm... On dirait une recette... celle des légendaires Merguez d'Archelion. Cool... J'vais m'en préparer tout de suite, ça me donnera p't'être la pêche... En tout cas, t'as réussi à traduire ce truc... T'es vachement doué."
 			},
 			"init2": {
-				"name": "L'épouvantarchelion",
+				"name": "The Archelionscarer",
 				"begin": "Ha, ces merguez d'Archelion m'ont donné la pêche ! Bon, je vois que tu es quelqu'un de capable ! Rends-moi un dernier petit service et je te laisserai mon Guide de Stratégie. La région du Grand Tout-Chaud est un habitat idéal pour les Archelions de toutes tailles... Sauvage, pas humide pour un sou et en perpetuelle éruption ! Mais il faut les tenir éloignés de nous si on ne veut pas leur servir de déjeuner... Je veux que tu me fabriques une sorte d'épouvantail à Archelions ! Il me faut donc des Griffes Taillées.",
 				"kill": {
 					"barche": "Baby Archelion",
@@ -4648,7 +4648,7 @@
 				"end": "Ah ? Je ne savais pas pour les griffes ! Ben... Au temps pour moi... J'espère que le Garde des Forges ne vous a pas trop fait d'histoires. Merci pour la pommade, j'imagine que ça fera bien l'affaire ! Tenez voilà le Guide de Stratégie que j'ai en ma possession pour vous remercier."
 			},
 			"burn": {
-				"name": "Au feu !",
+				"name": "Fire !",
 				"begin": "Comme tu as dû le remarquer, la région est peuplée d'un nombre invraisemblable de Flammèches... Même si leur présence est nécessaire au grand équilibre cosmique, leur nombre progresse bien trop vite et doit être contrôlé ! Il faut réagir vite, rends-toi au Tunnel sous la Branche en longeant le cratère, leur présence là-bas est devenue critique !",
 				"kill": {
 					"flam": "Flamelet"
@@ -4672,7 +4672,7 @@
 				"end": "Tes actions ont partiellement rétabli l'équilibre dans la région, c'est un bon début ! Mais il va falloir faire quelque chose pour cette histoire de Barbecue... En attendant, voilà de quoi te récompenser."
 			},
 			"barbec": {
-				"name": "Le barbecue déjanté",
+				"name": "The crazy barbecue",
 				"begin": "Ce vendeur de Merguez aux ruines Ashpouk utilise un combustible spécial qui provoque l'apparition de nombreuses flammèches dans la région... Il faut faire quelque chose ! Toutefois, pas question d'empêcher ce pauvre vendeur de faire son travail, on va trouver une solution plus subtile. Commence par me récupérer quelques ingrédients: une branche séchée, une écaille de Dorogon et un morceau de basalte jaune. Broie et mélange bien le tout, et jette ça dans le barbecue !",
 				"branch": {
 					"name": "Ramasser une branche",
@@ -4705,7 +4705,7 @@
 				"end": "Bien joué ! Le mélange devrait réduire l'effet du combustible magique utilisé dans ce barbecue sans pour autant trop altérer le goût des délicieuses Merguez ! Tiens voilà une petite Flammèche apprivoisée pour te remercier."
 			},
 			"joke": {
-				"name": "Querelles",
+				"name": "Quarrel",
 				"begin": "Le professeur Eugène de l'Université et moi-même entretenons depuis des années une vieille querelle... Nous n'arrivons jamais à tomber d'accord sur quelque sujet que ce soit ! Aide-moi à lui jouer un petit tour, à ce vieux grincheux. Il faut tout d'abord trouver des choses qui sentent suffisamment fort ! Le Port de Prêche est idéal pour ça...",
 				"fish": {
 					"name": "Prendre des restes de poisson",
@@ -4718,7 +4718,7 @@
 				"end": "Ah ah ! C'est parfait ! Jamais je n'aurais imaginé que tu irais jusqu'à lui cacher un poisson Fétide dans son bureau... C'est machiavélique !"
 			},
 			"defend": {
-				"name": "La défense des Forges !",
+				"name": "Defense of the Forges!",
 				"begin": "J'ai aperçu ce matin des cohortes de créatures avancer dans les montagnes en contrebas... Je parierais mon grigri qu'ils se dirigeaient tout droit vers les Forges du Grand Tout Chaud ! Porte-leur assistance sans plus tarder !",
 				"forgeGuard": {
 					"name": "Garde des Forges",
@@ -4738,7 +4738,7 @@
 				"end": "La lettre est élogieuse à ton sujet. Tu as bien mérité ta récompense pour cet acte de bravoure ! Et puisque tu as trouvé la Bannière de Guerre des monstres, je t'ajoute un petit quelque chose en bonus."
 			},
 			"shipmt": {
-				"name": "Le colis disparu",
+				"name": "The missing package",
 				"begin": "Il y a quelques temps, j'ai commandé à Papy Joe une nouvelle réserve de poudres pour mes rituels, mais mon colis n'est toujours pas arrivé ! Peut être qu'avec l'attaque récente des Forges, il a été perdu quelque part ? Peux-tu me le retrouver ? C'est très urgent !",
 				"courier": {
 					"name": "Convoyeur de Dinoville",
@@ -4763,7 +4763,7 @@
 				"end": "Mon livreur vient juste de m'apporter ma commande. Il m'a expliqué toute l'aide précieuse que tu avais pu lui apporter et je t'en remercie ! Tiens voilà une potion et un petit pourboire en gage de ma gratitude !"
 			},
 			"sales": {
-				"name": "Commerce (peu) équitable",
+				"name": "(not) fair trade",
 				"begin": "Pour me permettre de manger à ma faim, je vends de temps à autre des petites babioles sur le Marché de Dinoville. Comme je suis très pris en ce moment, pourrais-tu y aller à ma place ? Je te donnerai un généreux pourcentage des ventes ! Tu verras, ça se vend bien.",
 				"collect": {
 					"name": "Ramasser des babioles",
@@ -4776,7 +4776,7 @@
 				"end": "Merci bien, voilà ta part des ventes !"
 			},
 			"ritual": {
-				"name": "Rituel ridicule",
+				"name": "Ridiculous ritual",
 				"begin": "La congrégation shamanique au sein de laquelle j'ai fait mes études me réclame chaque année un rituel en gage de cette formation. Evidemment, j'ai autre chose à faire que m'occuper de ces âneries ! Pourrais-tu t'en charger à ma place ? Les instructions sont arrivées dans ma boîte aux lettres, fais comme chez toi.",
 				"instructions": {
 					"name": "Prendre les instructions",
@@ -4806,7 +4806,7 @@
 				"end": "A en juger par ta mine dépitée, tu dois maintenant comprendre pourquoi je n'avais aucune envie de m'occuper de ce rituel idiot... Enfin, merci pour le service, voilà de quoi couvrir le dérangement."
 			},
 			"hiero": {
-				"name": "Hiéroglyphes",
+				"name": "Hieroglyphs",
 				"begin": "J'ai entendu dire qu'il y avait dans les cavernes à l'ouest, celles qui mènent dans la Jungle de Grumhel, des hiéroglyphes de la plus haute importance pour mes recherches mystiques ! Vas-y et recopie-les pour moi. Attention, pour pénétrer dans ces cavernes, il te faudra un moyen de retrouver ton chemin dans l'obscurité !",
 				"copy": {
 					"name": "Copier les hiéroglyphes",
@@ -4815,7 +4815,7 @@
 				"end": "Hmmm... Très très intéressant... Hmmm... Voilà qui pourrait bien clouer le bec à ce vieux guignol de l'Université ! Merci en tous cas pour le petit service !"
 			},
 			"pigeon": {
-				"name": "Pigeon voyageur",
+				"name": "Homing pigeon",
 				"begin": "Les découvertes récentes dans les cavernes sont une occasion inespérée de prouver mes théories à ce vieux farfelu de l'Université, le professeur Eugène ! Imaginez ça, des écritures anciennes qui parlent de notre époque ACTUELLE !! Il ne faut pas perdre un instant ! Apporte lui cette lettre !",
 				"eugene": {
 					"name": "Eugène (donner la lettre)",
@@ -4838,7 +4838,7 @@
 		},
 		"rodeur": {
 			"rodriz": {
-				"name": "Le Riz Amnésique",
+				"name": "The Amnesiac Rice",
 				"begin": "J'ai besoin de Riz pour recharger ma cape magique. On en trouve paraît-il dans le Marais Collant des Iles Atlantéinées. Peux-tu m'en rapporter suffisamment pour que je puisse à nouveau devenir invisible ? Vite, c'est urgent !",
 				"search": {
 					"name": "Chercher du Riz",
@@ -4852,14 +4852,14 @@
 				"end": "Ah ! Uhm euh... En fait, j'avais mal compris. Un petit peu d'énergie foudre était seulement nécessaire pour recharger ma cape... Tiens, voilà pour toi, et tu peux garder le riz, je n'en ai pas besoin."
 			},
 			"rodlif": {
-				"name": "Les Dinoz Sombres",
+				"name": "The Dark Dinoz",
 				"begin": "Trois Dinoz Sombres de Caushemesh t'attendent aux Chutes Mutantes. Va les vaincre et reviens me voir pour obtenir ta récompense... Je te conseille de ne pas tenter de les battre tout seul, car tu pourrais y laisser la vie de ton Dinoz !",
 				"end": "Pas mal pour un Dinoz faible de Dinoville... Tiens, voilà pour toi !"
 			}
 		},
 		"baoBob": {
 			"kilpir": {
-				"name": "Le cadeau d'anniversaire",
+				"name": "The Birthday Present",
 				"begin": "C'est bientôt l'anniversaire de la petite Sophie de l'Ile Waikiki. Son plat préféré est le Pirhanoz du Marais Collant. Peux-tu lui en apporter quelques-uns de ma part ?",
 				"kill": "Piranhos",
 				"sophie": {
@@ -4869,7 +4869,7 @@
 				"end": "J'aime bien faire des cadeaux... Tiens, voici ta récompense."
 			},
 			"troc": {
-				"name": "Le Troc des Iles Atlantéinées",
+				"name": "The Barter of the Atlanteid Islands",
 				"begin": "Il y a un grand marché dans les Iles où on peut échanger ce que l'on veut. J'aimerais obtenir un porte-manteau contre cette banane, est-ce que tu peux t'en occuper ?",
 				"merchant": {
 					"name": "Un Marchand",
@@ -4898,13 +4898,13 @@
 				"end": "Tu as trouvé mon porte-manteau ? J'espère que ce petit voyage t'auras appris que les plus grandes richesses sont éphémères !"
 			},
 			"kilksk": {
-				"name": "La chasse à la Kazkadine",
+				"name": "The Kazkadine Hunt",
 				"begin": "J'ai reçu un appel urgent du Dome Soulaflotte. Les Atalantes s'inquiètent d'un grand nombre de Kazkadines des Profondeurs qui ont enhavi les lieux. Pourrais-tu emmener ton Dinoz faire un petit peu de nettoyage ? Attention à ne pas te faire électrocuter.",
 				"kill": "Kazkadine",
 				"end": "Bravo, c'était une mission branchée n'est-ce pas ?"
 			},
 			"kilang": {
-				"name": "Les anguilloz au vinaigre",
+				"name": "Eeloz with vinegar",
 				"begin": "Connais-tu le plat traditionnel des Anguilloz au Vinaigre ? C'est vraiment délicieux ! Peux-tu te procurer des Anguilloz fraîches et du vinaigre, puis apporter le tout à mon ami au Port de Prêche ? C'est pour un cadeau !",
 				"kill": "Eeloz",
 				"wineMerchant": {
@@ -4916,7 +4916,7 @@
 					"text": "Tu cherches l'ami de M. Bao ? Il me semble qu'il était parti rendre visite à Madame Seyche a Dinoville."
 				},
 				"madameSeyche": {
-					"name": "Madame Seyche",
+					"name": "Madam Squyd",
 					"text": "Ooooh le mignonn toupiti Dinoz !!! Quoi ? Vous cherchez l'ami de M. Bao ? Il est parti voir ce bon vieux Papy Joe, ils avaient des histoires d'hommes a discuter paraît-il !"
 				},
 				"adamNature": {
@@ -4926,13 +4926,13 @@
 				"end": "Alors comme ça on se balade un peu partout pendant une Mission ? Adam m'as tout raconté, voilà pour toi."
 			},
 			"bigpch": {
-				"name": "La Grande Chasse",
+				"name": "The Great Hunt",
 				"begin": "Je suis un petit peu embêté. J'ai promis à l'Archisage du Dome Soulaflotte que j'exterminerai 150 monstres des Iles Atlantéinées en à peine dix jours, mais je me suis cassé le bras et je ne peux pas trop me déplacer. Peux-tu t'occuper d'en tuer une trentaine pour moi ? Pour le reste, je me débrouillerai !",
 				"kill": "monstres",
 				"end": "Super ! Finalement, j'ai exterminé le reste moi-même, en me servant uniquement de mes pieds, mais je te remercie tout de même pour ton aide."
 			},
 			"rally1": {
-				"name": "Le Rallye des Sardines",
+				"name": "The Sardine Rally",
 				"begin": "Participe au Rallye des Sardines ! Rejoins le Port de Prêche le plus rapidement possible !",
 				"step": {
 					"name": "Etape du Rallye",
@@ -4941,7 +4941,7 @@
 				"end": "Félicitations pour ce Rallye, voilà ton prix."
 			},
 			"rally2": {
-				"name": "Le Rallye des Poissons",
+				"name": "The Fish Rally",
 				"begin": "Participe au Rallye des Poissons ! Rejoins le Port de Prêche le plus rapidement possible !",
 				"step": {
 					"name": "Etape du Rallye",
@@ -4951,7 +4951,7 @@
 				"end": "Félicitations pour ce Rallye, voilà ton prix."
 			},
 			"rally3": {
-				"name": "Le Rallye des Requins",
+				"name": "The Shark Rally",
 				"begin": "Participe au Rallye des Requins ! Rejoins les Mines de Corail le plus rapidement possible !",
 				"step": {
 					"name": "Etape du Rallye",
@@ -4962,7 +4962,7 @@
 				"end": "Félicitations pour ce Rallye, voilà ton prix."
 			},
 			"rally4": {
-				"name": "Le Rallye des Baleines",
+				"name": "The Whale Rally",
 				"begin": "Participe au Rallye des Baleines ! Rejoins Fosselave puis reviens ici le plus rapidement possible !",
 				"step": {
 					"name": "Etape du Rallye",
@@ -4971,7 +4971,7 @@
 				"end": "Félicitations pour ce Rallye, voilà ton prix."
 			},
 			"tour": {
-				"name": "Le Tour de Dinoland",
+				"name": "The Dinoland Tour",
 				"begin": "Le Tour de Dinoland est la plus célebre des courses ! Faites le tour de Dinoland en moins de dix jours ! La première étape se situe sur l'Ile Waïkiki.",
 				"step": {
 					"name": "Etape du Tour",
@@ -4987,7 +4987,7 @@
 		},
 		"dian": {
 			"kswim": {
-				"name": "Comme un Korgon dans l'eau",
+				"name": "Like a Korgon in Water",
 				"begin": "La Jungle de Grumhel est un endroit fascinant ! Tenez, prenez les Korgons par exemple. Ils se sont adaptés à merveille à leur environnement ! Saviez-vous qu'ils fabriquaient leurs propres palmes afin de pouvoir traverser sans encombre le Fleuve Jumin ? Non ? Tenez, je veux bien vous en offrir une paire si vous me ramenez quelques fournitures de première nécessité...",
 				"end": "Voilà tout ce qu'il me fallait ! C'est parfait. Voici les Palmes des Korgons, comme convenu !",
 				"supplies": {
@@ -5008,7 +5008,7 @@
 				}
 			},
 			"rivals": {
-				"name": "Korgons du nord, Korgons du sud",
+				"name": "Korgons of the North, Korgons of the South",
 				"begin": "Si les Korgons de cette partie de la Jungle de Grumhel sont quasiment sociables, il en existe au Sud, sur les bords du Chemin Glauque, qui sont autrement moins gentils. Je pense que si tu m'apportais une preuve de victoire sur ceux du Sud, les Korgons d'ici nous apprécieraient beaucoup plus !",
 				"end": "Ah, bonne idée les griffes ! Les Korgons ici ont l'air d'apprécier... Tiens, voilà pour ta peine.",
 				"kill": "Korgons du sud",
@@ -5018,7 +5018,7 @@
 				}
 			},
 			"kfood": {
-				"name": "Steak de bois",
+				"name": "Wood Steak",
 				"begin": "Il existe quelque part dans Grumhel une espèce rare d'arbre que les Korgons adorent : le Fikoïa Cendré ! J'ignore où on peut en trouver, mais je te paierai bien si tu m'en apportes !",
 				"end": "Ils vont se régaler avec ça, merci bien !",
 				"tree": {
@@ -5032,7 +5032,7 @@
 				}
 			},
 			"poison": {
-				"name": "Rivalités korgons",
+				"name": "Korgon Rivalries",
 				"begin": "Le Fikoïa Cendré que vous avez découvert va rapidement devenir un point stratégique pour les Korgons du sud... Il faut réagir vite ! Nous allons « piéger » quelques branches de cet arbre pour les dissuader de le manger... Évidemment, nous, nous saurons quelles branches ne pas toucher... Hi hi hi.",
 				"end": "C'est bien triste pour ce spécimen de Fikoïa, ils sont si rares ! Merci pour toute votre aide, on ne vous oubliera pas...",
 				"sap": {
@@ -5070,7 +5070,7 @@
 		},
 		"hulot": {
 			"seqact": {
-				"name": "La route du grand péril",
+				"name": "Sinister Path",
 				"begin": "Pour pénétrer dans la jungle, il faut d'abord franchir un endroit qu'on appelle le Chemin Glauque... C'est une route dangereuse qui part au nord ! Pourriez-vous y faire un peu de ménage pour moi ?",
 				"end": "On n'entend plus rien grogner par là-bas... C'est bon signe non ?",
 				"kill": "Monstres du Chemin Glauque"
@@ -5093,7 +5093,7 @@
 				}
 			},
 			"map": {
-				"name": "Cartographie",
+				"name": "Cartography",
 				"begin": "Une bonne carte, ça aide toujours, il paraît. Seulement voilà, il n'en existe aucune pour la Jungle de Grumhel ! Pourriez-vous partir vers le nord et prendre quelques notes pour moi ? Il y a des collines à l'Est, ça pourrait être un bon endroit pour avoir une vue d'ensemble !",
 				"end": "Ça m'a l'air pas mal du tout ! Je vais étudier un peu tout cela pour bien préparer mon expédition de l'extrême.",
 				"kill": "Fauve-Souris espiègle",
@@ -5132,7 +5132,7 @@
 				}
 			},
 			"hucure": {
-				"name": "Remède",
+				"name": "Remedy",
 				"begin": "F'est bien aimable de votre part... Ve pense que les Boines de l'île des Futes mutantes pourraient m'aider... Prenez les blantes que vous m'avez amenées et allez les voir de ma bart... Snirf...",
 				"end": "Glou glou ! Merfi bien... Efpérons que fa fasse effet... Fa devenait limite là... Tenez prenez fette pofion en gave de gratitude.",
 				"plants": {
@@ -5175,7 +5175,7 @@
 				}
 			},
 			"bckpck": {
-				"name": "Kit de l'aventurier",
+				"name": "Survival Kit",
 				"begin": "Avant d'envisager mon voyage incroyable en terre inconnue, il me manque une chose primordiale ! Un bon sac à dos. J'ai perdu le mien en contournant les Chutes Mutantes... Pourriez-vous me le retrouver ?",
 				"end": "Euh vous allez rire... Figurez-vous que j'ai reçu justement un Sac à dos de rechange ! Je l'avais commandé en prévision de mon expédition... Bon écoutez, voilà ce qu'on va faire : je récupère mon vieux sac et je vous donne le nouveau ! Ça marche ?",
 				"extremeFisher": {
@@ -5218,7 +5218,7 @@
 		},
 		"forestGuardian": {
 			"unmute": {
-				"name": "Le Gardien de la Forêt",
+				"name": "The Forest Warden",
 				"begin": "Le parchemin qui vous est tombé dessus comporte ce message :&&« Trouvez 1 mesure d'eau filante, puis 1 mesure d'eau croupie, puis 1 mesure d'eau pure et enfin 1 mesure d'eau Bouillonnante. »&&À peine avez-vous fini de lire ce message qu'une petite gourde vide tombe à son tour du feuillage sur votre tête ! Poc !",
 				"end": "Le vieil arbre se penche vers vous dans un bruissement... Il secoue alors lentement son feuillage, faisant tomber quelques beaux fruits à vos pieds.",
 				"juminWater": {
@@ -5243,7 +5243,7 @@
 				}
 			},
 			"orchid": {
-				"name": "La main verte",
+				"name": "Greens Thumb",
 				"begin": "Un parchemin pendouille à une branche. Vous pouvez y lire :&&« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle ».&&Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
 				"end": "Vous déposez la gourde vide au pied de l'arbre. Un gros fruit se décroche des branches supérieures et tombe à côté de vous avec un bruit mat.",
 				"takeWater": {
@@ -5260,13 +5260,13 @@
 				}
 			},
 			"licens": {
-				"name": "Permis de couper",
+				"name": "Permission to cut",
 				"begin": "Un parchemin, que vous n'aviez pas remarqué jusque-là, est ficelé à une racine. Vous pouvez y lire :&&« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisés dans la Jungle de Grumhel. Allez réguler leur travail. »",
 				"end": "Quelques fruits tombent de l'arbre autour de vous...",
 				"kill": "Roncivores ou Korgons"
 			},
 			"king": {
-				"name": "Le roi de la Jungle",
+				"name": "The King of the Jungle",
 				"begin": "Un message est inscrit sur un bout de tissu accroché à une branche :&&« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
 				"end": "Un fruit tombe à côté de vous. Tandis que vous vous penchez pour le ramasser, une grosse bourse pleine d'or tombée de nulle part s'écrase droit sur votre tête ! SCHLING !",
 				"cry": {
@@ -5287,7 +5287,7 @@
 				}
 			},
 			"wishes": {
-				"name": "Faites vos voeux",
+				"name": "Make your wishes",
 				"begin": "Vous pouvez lire, gravé sur une branche :&&« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »&&Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
 				"end": "Quelques fruits tombent de l'arbre autour de vous...",
 				"throwCoin": {
@@ -5297,7 +5297,7 @@
 				"kill": "Roncivores ou Korgons"
 			},
 			"newplt": {
-				"name": "Un cric pour la forêt",
+				"name": "A Jack For The Forest",
 				"begin": "Une longue bande de tissu est enroulée autour du vieil arbre :&&« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »&&Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
 				"end": "Deux gros fruits se décrochent et tombent dans un buisson près de vous...",
 				"volunteer": {
@@ -5314,7 +5314,7 @@
 				}
 			},
 			"gshop": {
-				"name": "Monnaie de singe",
+				"name": "Monkey Money",
 				"begin": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :&&« Déposez de l'or dans le seau pour votre ration quotidienne. »",
 				"end": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »",
 				"examineBucket": {
@@ -5325,7 +5325,7 @@
 		},
 		"skully": {
 			"skul1": {
-				"name": "Informations Préliminaires",
+				"name": "Prologue",
 				"begin": "Mouldeur a été touché par ma bonnédiction, alors que l'on faisait de vieux os ensemble, il m'a tout à coup oubliée et s'en est allé loin d'ici, le ruffian ! Il a sûrement dû donner des nouvelles à son neveu le ptit'Joe... Va le voir et tiens moi au courant !",
 				"papyJoe": {
 					"name": "Papy 'Ptit' Joe",
@@ -5340,7 +5340,7 @@
 				"end": "Merci, ce sont de précieuses informations que tu m'as rapporté là ! Mon Mouldeur chéri ne doit pas être très loin, nous serons bientôt réunis !"
 			},
 			"skul2": {
-				"name": "Sur les trâces de Mouldeur",
+				"name": "On Moulder's Trail",
 				"begin": "\"Je t'attendrai sur le lieu de notre rencontre\" Oh oh oh oh ! Comme c'est roooomantique mon Mouldeur chéri ! J'espère en tout cas qu'il m'attend encore là-bas ! Vite, rends toi dans ce magnifique lieu aux douces odeurs de nénuphars où nous nous sommes rencontrés, et ramène-moi mon amour !",
 				"stuckTourist": {
 					"name": "Un Touriste Enlisé",
@@ -5368,14 +5368,14 @@
 				"end": "Ooohh oh oh oh oh ! Mouldeur chéri ! Je te sens plus proche de moi que jamais !"
 			},
 			"skul3": {
-				"name": "Mademoiselle Bao",
+				"name": "Miss Bao",
 				"begin": "Oh oh oh ! J'ai pensé à quelque chose de... problématique. Même si je retrouve Mouldeur, il va oublier à nouveau nos retrouvailles et repartir m'attendre quelque part. Il faut absolument que tu trouves une solution à ce problème avant d'aller voir Mouldeur. Va trouver cette chère Mademoiselle Bao, elle aura certainement une solution !",
 				"baoBob": {
 					"name": "Mademoiselle Bao ???",
 					"text": "Quoi ??? Mademoiselle Bao ?? Non mais... tu me prends pour qui au juste ? .......... Si tu cherches ma soeur, et bien elle se trouve en ce moment auprès du petit fils de l'ArchiDorogon : \"le Vénérable\" comme il aime se faire appeller maintenant... D'ailleurs si un jour son père l'apprend, il va passer un sale quart-d'heure..."
 				},
 				"baoBabe": {
-					"name": "Mademoiselle Bao",
+					"name": "Miss Bao",
 					"text": "Quoi ??? Mademoiselle Bao ?? Mais voyons.... celà fait une éternité que l'on ne m'a pas appellée comme celà. Je t'en prie, jeune homme, utilise mon prénom, appelle-moi Babe..."
 				},
 				"baoBabe2": {
@@ -5509,7 +5509,7 @@
 					"text": ".... (vous expliquez toute l'histoire) ... Quoi ! Alors c'était vraiment ton Dinoz qu'ils recherchaient ?!? hmm... je comprends. Il va me falloir du temps pour faire enterrer cette affaire. En attendant, va te planquer aux Collines Escarpées !"
 				},
 				"wait": {
-					"name": "Attendre",
+					"name": "Wait",
 					"text": "Vous attendez que Madame X vous contacte..."
 				},
 				"messagemx": {
