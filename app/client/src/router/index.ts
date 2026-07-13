@@ -26,6 +26,7 @@ import HelpPage from '../pages/HelpPage.vue';
 import HomePage from '../pages/HomePage.vue';
 import Ingredients from '../pages/Ingredients.vue';
 import Inventory from '../pages/Inventory.vue';
+import LegalNoticePage from '../pages/LegalNoticePage.vue';
 import LevelUpPage from '../pages/LevelUpPage.vue';
 import MainPage from '../pages/MainPage.vue';
 import ManageDinoz from '../pages/ManageDinoz.vue';
@@ -69,6 +70,16 @@ const routes: RouteRecord[] = [
 				path: '/rules',
 				name: 'RulesPage',
 				component: RulesPage,
+				meta: {
+					public: true,
+					showLeftPanel: false,
+					rulesExempt: true
+				}
+			},
+			{
+				path: '/legal-notices',
+				name: 'LegalNoticesPage',
+				component: LegalNoticePage,
 				meta: {
 					public: true,
 					showLeftPanel: false,
