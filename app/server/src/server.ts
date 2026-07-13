@@ -8,6 +8,7 @@ import fCookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import fjwt, { FastifyJWT } from '@fastify/jwt';
 import multipart from '@fastify/multipart';
+import rateLimit from '@fastify/rate-limit';
 import swagger from '@fastify/swagger';
 import swaggerUI from '@fastify/swagger-ui';
 import { randomUUID } from 'crypto';
@@ -82,6 +83,15 @@ async function buildServer() {
 		credentials: true,
 		methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 		allowedHeaders: ['Content-Type', 'Authorization']
+	});
+
+	//-------------------------------------------------------
+	// Rate limiting
+	//-------------------------------------------------------
+	await server.register(rateLimit, {
+		global: true,
+		max: 50,
+		timeWindow: '1 minute'
 	});
 
 	//------------------------------------------------------
