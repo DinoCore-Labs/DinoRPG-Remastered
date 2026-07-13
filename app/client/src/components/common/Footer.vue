@@ -125,10 +125,16 @@
 				</div>
 			</div>
 			<div class="box">
-				<ul>
+				<ul class="footerLinks">
 					<li>
 						<RouterLink :to="{ name: 'RulesPage' }">
 							{{ $t('gameRules.footer.link') }}
+						</RouterLink>
+					</li>
+					<li>|</li>
+					<li>
+						<RouterLink :to="{ name: 'LegalNoticesPage' }">
+							{{ $t('legalNotices.footer.link') }}
 						</RouterLink>
 					</li>
 				</ul>
@@ -233,6 +239,13 @@ footer {
 .box.description {
 	order: 0;
 	padding-top: 2.2em;
+}
+.footerLinks {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 1.5em;
 }
 .logo {
 	position: absolute;
