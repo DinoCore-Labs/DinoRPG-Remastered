@@ -331,13 +331,11 @@
 					"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
 					"CLAN_EDIT_BANNER": "Can change the Clan banner",
 					"CLAN_EDIT_LANG": "Can change the language of the Clan",
-					"WAR_OFFICER": "Can declare war",
-					"CLAN_BUILD_CASTLE": "Can build the castle"
+					"CLAN_EDIT_NAME": "Peut changer le nom du Clan"
 				},
 				"nickname": "Player's nickname",
 				"save": "Save",
-				"saved": "Modifications saved successfully!",
-				"leader": "Nommer Chef du clan"
+				"saved": "Modifications saved successfully!"
 			},
 			"request": {
 				"title": "Waiting requests",
@@ -394,6 +392,11 @@
 				"title": "Edit clan na",
 				"save": "Rename it"
 			},
+			"leader": {
+				"title": "Changer le chef du clan",
+				"save": "Nommer chef",
+				"newLeader": "Chef de Clan modifié avec succès !"
+			},
 			"action": {
 				"delete": "Delete clan"
 			}
@@ -448,18 +451,20 @@
 			"title": "Discover the upcoming events on DinoRPG!",
 			"small": "Irma's Prediction",
 			"strong": {
-				"title1": "Alpha 0.10.0 (Soon)",
-				"title2": "Alpha 0.11.0",
-				"title3": "Alpha 0.12.0",
-				"title4": "Alpha 0.13.0"
+				"title1": "Alpha 0.11.0 (Soon)",
+				"title2": "Alpha 0.12.0",
+				"title3": "Alpha 0.13.0",
+				"title4": "Alpha 0.14.0"
 			},
 			"help": "Click on an update above to get more information!",
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
 			"futurTitle": "Dinolandian Future",
 			"futureInfo1": {
-				"text1": "The Clans",
-				"text2": "The Bank of Dinoland",
-				"text3": "Bug fixes"
+				"text1": "Mise en place du règlement du jeu",
+				"text2": "Mise en place des mentions légales",
+				"text3": "Mise en place de la politique de confidentialité",
+				"text4": "Mise en place de la modération",
+				"text5": "Correction des bugs"
 			},
 			"futureInfo2": {
 				"text1": "Mayor Zenith and the Dojo",
@@ -721,7 +726,8 @@
 		"bankSavingNotReady": "Cette épargne n'est pas encore disponible.",
 		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
 		"bankSavingNotFound": "Cette épargne est introuvable.",
-		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois."
+		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois.",
+		"bankSavingPlanAlreadyActive": "Vous avez déjà une épargne de cette durée en attente de récupération."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -3342,6 +3348,212 @@
 			"security-1": "**No matter who asks for it**... && && **Never** disclose your login credentials and passwords !"
 		}
 	},
+	"gameRules": {
+		"pageTitle": "Règlement du jeu",
+		"title": "Règlement de DinoRPG Remastered",
+		"version": "Version: {version}",
+		"updatedAt": "Dernière mise à jour : {date}",
+		"footer": {
+			"title": "Règles et sécurité",
+			"link": "Règlement du jeu"
+		},
+		"registration": {
+			"label": "J’ai lu et j’accepte le {rules} dans sa version {version}.",
+			"link": "règlement du jeu"
+		},
+		"acceptance": {
+			"title": "Acceptation du règlement requise",
+			"description": "Le règlement du jeu a été ajouté ou mis à jour. Vous devez le lire et l’accepter avant de continuer à jouer.",
+			"checkbox": "J’ai lu et j’accepte le règlement du jeu dans sa version {version}.",
+			"button": "Accepter le règlement",
+			"submitting": "Saving….",
+			"success": "Le règlement du jeu a bien été accepté.",
+			"error": "L’acceptation du règlement n’a pas pu être enregistrée."
+		},
+		"sections": {
+			"general": {
+				"title": "1. Principes généraux",
+				"intro": "DinoRPG Remastered doit être utilisé de manière loyale et respectueuse.",
+				"commitmentIntro": "Chaque joueur s’engage à :",
+				"commitments": {
+					"respect": "respecter les autres utilisateurs ;",
+					"features": "utiliser les fonctionnalités conformément à leur objectif ;",
+					"advantage": "ne pas chercher à obtenir un avantage par un moyen anormal ;",
+					"security": "ne pas compromettre la sécurité ou le fonctionnement du service."
+				},
+				"outro": "Un comportement manifestement abusif peut être sanctionné même s’il n’est pas expressément mentionné dans le présent règlement."
+			},
+			"communication": {
+				"title": "2. Respect et communication",
+				"intro": "Les pseudonymes, profils, messages et contenus publiés doivent rester appropriés.",
+				"forbiddenIntro": "Sont notamment interdits :",
+				"forbidden": {
+					"harassment": "les insultes, menaces et comportements de harcèlement ;",
+					"hate": "les propos haineux ou discriminatoires ;",
+					"illegal": "les contenus sexuellement explicites ou manifestement illicites ;",
+					"spam": "le spam et la publicité répétée ou non autorisée ;",
+					"impersonation": "l’usurpation de l’identité d’un joueur, d’un administrateur ou d’un modérateur ;",
+					"personalData": "la divulgation des informations personnelles d’un tiers ;",
+					"links": "les liens dangereux, frauduleux ou trompeurs."
+				},
+				"outro": "Les désaccords entre joueurs doivent rester respectueux."
+			},
+			"accounts": {
+				"title": "3. Comptes",
+				"intro": "Un compte est personnel. Il est interdit de :",
+				"forbidden": {
+					"share": "partager ou prêter son compte ;",
+					"trade": "vendre, donner ou échanger un compte ;",
+					"useOther": "utiliser le compte d’une autre personne ;",
+					"password": "demander ou communiquer un mot de passe ;",
+					"sanction": "créer un compte pour contourner une sanction."
+				},
+				"singleAccount": "Une même personne ne peut normalement utiliser qu’un seul compte joueur.",
+				"household": "Plusieurs personnes d’un même foyer peuvent chacune disposer de leur propre compte, à condition que ces comptes ne soient pas utilisés pour obtenir un avantage artificiel ou contourner une limitation."
+			},
+			"automation": {
+				"title": "4. Triche et automatisation",
+				"intro": "Il est interdit d’utiliser :",
+				"forbidden": {
+					"bot": "un robot ;",
+					"script": "un script de jeu ;",
+					"autoClick": "un système de clic automatique ;",
+					"macro": "une macro automatisant des actions ;",
+					"requests": "un programme envoyant automatiquement des requêtes ;",
+					"tool": "un outil jouant à la place de l’utilisateur ;",
+					"clientModification": "une modification du client destinée à contourner les règles du jeu."
+				},
+				"accessibility": "Les outils d’accessibilité ne procurant aucun avantage peuvent être examinés au cas par cas."
+			},
+			"bugs": {
+				"title": "5. Exploitation de bugs",
+				"intro": "L’exploitation volontaire d’un bug ou d’un comportement anormal est interdite.",
+				"examplesIntro": "Un joueur constatant qu’une action permet notamment :",
+				"examples": {
+					"reward": "d’obtenir plusieurs fois une récompense ;",
+					"duplicate": "de dupliquer un objet, une ressource ou une monnaie ;",
+					"condition": "de contourner une condition ;",
+					"unavailable": "d’accéder à une fonctionnalité normalement indisponible ;",
+					"repeat": "de répéter anormalement une action limitée ;"
+				},
+				"report": "doit cesser de reproduire le problème et le signaler.",
+				"outro": "Continuer à utiliser une anomalie après l’avoir constatée peut être considéré comme une exploitation volontaire."
+			},
+			"security": {
+				"title": "6. Sécurité et requêtes interdites",
+				"intro": "Il est interdit de tenter :",
+				"forbidden": {
+					"account": "d’accéder au compte ou aux données d’un autre utilisateur ;",
+					"authorization": "de contourner une autorisation ;",
+					"request": "de falsifier une requête envoyée au serveur ;",
+					"values": "de modifier artificiellement une quantité, un identifiant ou un résultat ;",
+					"restricted": "d’accéder à une page ou une API réservée ;",
+					"disruption": "de perturber ou de saturer le service ;",
+					"credentials": "de voler un cookie, un jeton de connexion ou un mot de passe."
+				},
+				"devTools": "L’utilisation des outils de développement du navigateur n’est pas interdite en elle-même. Elle devient interdite lorsqu’elle sert à tricher, à contourner une règle ou à compromettre le service."
+			},
+			"market": {
+				"title": "7. Marché et échanges",
+				"intro": "Les fonctionnalités de marché et d’échange doivent être utilisées loyalement.",
+				"forbiddenIntro": "Il est notamment interdit de :",
+				"forbidden": {
+					"prices": "manipuler artificiellement les prix ou les offres ;",
+					"ownBid": "enchérir sur sa propre offre au moyen d’un autre compte ;",
+					"transfer": "transférer artificiellement des ressources entre plusieurs comptes ;",
+					"error": "exploiter une erreur de prix ou de quantité ;",
+					"limit": "contourner une limite d’achat, de vente ou de possession ;",
+					"duplicate": "utiliser une faille afin de dupliquer une ressource."
+				},
+				"outro": "Une transaction obtenue par fraude, manipulation ou exploitation d’une anomalie peut être annulée ou corrigée."
+			},
+			"reporting": {
+				"title": "8. Signalement des problèmes",
+				"intro": "Un comportement interdit, un bug ou une faille peut être signalé à :",
+				"email": "contact{'@'}dinorpg.fr",
+				"detailsIntro": "Le signalement doit contenir autant que possible :",
+				"details": {
+					"username": "le pseudonyme concerné ;",
+					"date": "la date approximative ;",
+					"feature": "la fonctionnalité concernée ;",
+					"description": "une description précise ;",
+					"steps": "les étapes de reproduction d’un bug ;",
+					"proof": "les preuves ou captures disponibles."
+				},
+				"disclosure": "Il est interdit de publier une faille non corrigée, d’en poursuivre l’exploitation ou de l’utiliser pour accéder aux données d’un autre utilisateur.",
+				"goodFaith": "Un signalement effectué de bonne foi ne sera pas considéré comme une tentative de triche."
+			},
+			"sanctions": {
+				"title": "9. Sanctions",
+				"intro": "Selon la gravité des faits, l’administration peut appliquer :",
+				"list": {
+					"reminder": "un rappel à la règle ;",
+					"warning": "un avertissement ;",
+					"content": "la suppression ou la modification d’un contenu ;",
+					"transaction": "l’annulation d’une action ou d’une transaction ;",
+					"advantage": "le retrait d’un avantage obtenu irrégulièrement ;",
+					"restriction": "la restriction temporaire d’une fonctionnalité ;",
+					"suspension": "la suspension temporaire du compte ;",
+					"closure": "la fermeture définitive du compte."
+				},
+				"order": "Les sanctions ne suivent pas obligatoirement cet ordre.",
+				"serious": "Une infraction grave peut entraîner directement une suspension ou une fermeture définitive.",
+				"criteriaIntro": "La décision peut tenir compte :",
+				"criteria": {
+					"severity": "de la gravité des faits ;",
+					"repetition": "de leur répétition ;",
+					"intent": "du caractère volontaire ou accidentel ;",
+					"advantage": "de l’avantage obtenu ;",
+					"damage": "des dommages causés ;",
+					"cooperation": "de la coopération du joueur ;",
+					"history": "des éventuels antécédents."
+				}
+			},
+			"circumvention": {
+				"title": "10. Contournement des sanctions",
+				"intro": "Il est interdit de contourner une sanction au moyen :",
+				"methods": {
+					"newAccount": "d’un nouveau compte ;",
+					"relative": "du compte d’un proche ;",
+					"device": "d’un appareil différent ;",
+					"vpn": "d’un VPN ou d’un relais technique ;",
+					"username": "d’un changement de pseudonyme ;",
+					"otherPlayer": "de l’intervention d’un autre joueur."
+				},
+				"participants": "Les comptes participant volontairement au contournement peuvent également être sanctionnés.",
+				"household": "Les autres membres d’un même foyer ne sont pas automatiquement sanctionnés s’ils ne participent pas au contournement."
+			},
+			"appeal": {
+				"title": "11. Contestation",
+				"intro": "Une sanction peut être contestée à l’adresse :",
+				"email": "contact{'@'}dinorpg.fr",
+				"detailsIntro": "La demande doit préciser :",
+				"details": {
+					"username": "le pseudonyme du compte ;",
+					"date": "la date approximative de la sanction ;",
+					"decision": "la décision contestée ;",
+					"reasons": "les raisons de la contestation ;",
+					"information": "tout élément utile au réexamen."
+				},
+				"respect": "La contestation doit rester respectueuse et factuelle.",
+				"suspension": "Elle ne suspend pas automatiquement la sanction.",
+				"repeated": "Les demandes répétées ne contenant aucun élément nouveau peuvent ne plus recevoir de réponse."
+			},
+			"changes": {
+				"title": "12. Modification du règlement",
+				"intro": "Le présent règlement peut être modifié afin de tenir compte :",
+				"reasons": {
+					"game": "d’une évolution du jeu ;",
+					"feature": "d’une nouvelle fonctionnalité ;",
+					"abuse": "d’une nouvelle forme d’abus ;",
+					"security": "d’un incident de sécurité ;",
+					"legal": "d’une évolution légale."
+				},
+				"version": "La version et la date de dernière mise à jour sont indiquées en haut du document.",
+				"acceptance": "Une nouvelle acceptation peut être demandée lorsqu’une modification importante est apportée."
+			}
+		}
+	},
 	"trainingCenter": {
 		"title": "Lavapit Training Center",
 		"subtitle": "Dear customer, welcome to the L.T.C. Our Center is authorized by the I.D.R.L (Institute of Dinoz Research & Learning) and allows you to develop the muscular strength and performance of your Dinoz with our Combat-on-Measure program's help.",
@@ -3384,8 +3596,8 @@
 		"rotshil": "Rotshil",
 		"description": "Bienvenue à la Banque de Dinoland, je suis Rotshil, le banquier. && && Chaque jour, je vous offre la possibilité d'échanger vos bons du trésor contre de l'or. Bien sûr, le taux de change va fluctuer chaque jour, alors n'hésitez pas à revenir régulièrement pour profiter des meilleurs taux ! && && En plus de cela, je peux aussi vous proposer d'autres services financiers très intéressants, mais ils ne sont pas encore disponibles, alors un peu de patience !",
 		"tabs": {
-			"conversion": "Conversion",
-			"savings": "Epargner"
+			"conversion": "Converting",
+			"savings": "Saving"
 		},
 		"exchange": {
 			"title": "Conversion des Bons du Trésor",
@@ -3401,7 +3613,7 @@
 			"title": "Savings",
 			"amount": "Montant à épargner",
 			"duration": "Durée de l'épargne",
-			"durationOption": "{days} jours (+{percent}%)",
+			"durationOption": "{days} days (+{percent}%)",
 			"save": "Saving",
 			"activeTitle": "Your savings",
 			"empty": "Vous n'avez aucune épargne en cours.",
@@ -3410,8 +3622,7 @@
 			"itemDuration": "Durée : {days} jours",
 			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
 			"unlockAt": "Disponible le {date}",
-			"claim": "Récupérer",
-			"claimed": "Récupéré"
+			"claim": "Récupérer"
 		}
 	},
 	"npc": {
@@ -4249,8 +4460,8 @@
 			}
 		},
 		"dialog": {
-			"exit": "À bientôt.",
-			"leave": "Quitter"
+			"exit": "See you soon.",
+			"leave": "Quit"
 		}
 	},
 	"missions": {
@@ -4260,152 +4471,152 @@
 			"status": "Status"
 		},
 		"status": {
-			"available": "Disponible",
-			"unavailable": "Indisponible",
-			"ongoing": "En cours",
-			"finished": "Terminée"
+			"available": "Available",
+			"unavailable": "Unavailable",
+			"ongoing": "In progress",
+			"finished": "Completed"
 		},
 		"unavailable": {
-			"title": "Mission Bloquée",
-			"description": "Cette Mission ne vous est pas accessible pour l'instant, il vous faudra revenir plus tard."
+			"title": "Mission Blocked",
+			"description": "This mission is not accessible to you at the moment, you will have to come back later."
 		},
 		"accept": "Accept the Mission",
 		"giveUp": "Give up",
 		"lastDialog": "Dernière étape validée",
 		"goals": {
-			"atPlace": "Se rendre à {place}",
-			"atHidden": "Trouver le bon lieu",
-			"talk": "Parler à {nameKey}",
+			"atPlace": "Go to {place}",
+			"atHidden": "Find the right place",
+			"talk": "Talk to {nameKey}",
 			"action": "{nameKey}",
-			"kill": "Tuer {current}/{count} {nameKey}",
+			"kill": "Kill {current}/{count} {nameKey}",
 			"useItem": "{nameKey}",
 			"useMoney": "{nameKey}",
 			"fightAction": "{nameKey}",
 			"useIngredient": "{nameKey}",
-			"wait": "Attendre",
+			"wait": "Wait",
 			"lock": "{nameKey}",
-			"validate": "Retourner voir {nameKey} pour valider la mission"
+			"validate": "Return to {nameKey} to validate the mission"
 		},
-		"validate": "Valider la mission",
+		"validate": "Validate the mission",
 		"papy": {
 			"fish": {
-				"name": "Du poisson frais",
-				"begin": "Madame Seyche, habitante de Dinoville, recherche du poisson frais pour organiser un dîner avec ses amis. Peux-tu aller lui chercher du poisson chez le Marchand au Port de Prêche au sud ? Il a été prévenu et il t'attend.",
-				"end": "Madame Seyche est très contente de toi, voilà ta récompense !",
+				"name": "Fresh fish",
+				"begin": "Madam Squyd, a resident of Dinotown, is looking for fresh fish to organize a dinner with her friends. Can you get her some fish from the Merchant in Frish Port in the south? He has been warned and he is waiting for you.",
+				"end": "Madam Squyd is really pleased with you, here's your reward!",
 				"fishMerchant": {
-					"name": "Marchand de Poisson",
-					"text": "Salut mon ptit, tu viens chercher du poisson c'est ça ? Tiens, prends-le et apporte-le à Dinoville au plus vite."
+					"name": "The Fish Merchant",
+					"text": "Hello little one, are you here for the fish? Here you go! Take them to Dinotown before Madam Squyd's party is ruined."
 				},
 				"madameSeyche": {
-					"name": "Madame Seyche",
-					"text": "Ooooohhhh merci mon petit, ce dîner va être très réussi grâce à toi ! Retourne vite voir Papy Joe pour obtenir ta récompense..."
+					"name": "Madam Squyd",
+					"text": "Ooooohhhh, thank you! This meal is going to be a success thanks to you! Make sure you return to Grandpa Joe to receive your reward!"
 				},
 				"validation": {
 					"name": "Grandpa Joe",
-					"text": "Retourner voir Papy Joe pour valider la mission."
+					"text": "Return to Grandpa Joe to validate the mission."
 				}
 			},
 			"dog": {
-				"name": "Le chien perdu",
-				"begin": "La Vieille Ducraft a perdu son caniche alors qu'elle visitait son fils dans les Collines Escarpées, sauras-tu le retrouver ?",
-				"end": "Uhmm... Elle ne perd rien pour attendre cette vieille peau ! Enfin, voilà pour toi",
+				"name": "The lost dog",
+				"begin": "The old lady Ducraft lost her poodle while visiting her son in the Precipitous Hills, can you find him?",
+				"end": "Argh... That old hag, her time will come! Anyway, this is for you.",
 				"jacquelineDucraft": {
-					"name": "Jacqueline Ducraft",
-					"text": "Bonjour jeune homme ! Nioufniouf, mon petit amour de caniche, a disparu ! Je l'avais puni car il avait fait une bêtise...ohh... comme je regreettte ! Vite, retrouve-le s'il te plaît. Je suis certaine qu'il n'a pas pu grimper ces montagnes avec ses petites pattes, il doit donc être parti vers le Sud.",
-					"text2": "Mon NioufNiouf chéri !!! Pardonne-moi, ta moooman a été très méchante avec le gentil chienchien ! Merci jeune homme, retournez au plus vite chez ce vieux schnock pour obtenir votre récompense !"
+					"name": "Jessica Ducraft",
+					"text": "Hello young man! Nioof-Nioof, my lovely little poodle has disappeared! I punished him for an accident and now I can't find him! Please help me find him, I miss him so much! I'm sure he couldn't climb these mountains with his tiny legs, he probably went to the South.",
+					"text2": "My dear Nioof-Nioof!!! Please forgive me, I'm sorry for being mean! Thank you so much, young man. Return to that old fuddy-duddy Grandpa Joe to claim your reward!"
 				},
 				"findNioufniouf": {
-					"name": "NioufNiouf",
-					"description": "Vous avez retrouvé NioufNiouf ! Ramenez-le vite à sa propriétaire !"
+					"name": "Nioof-Nioof",
+					"description": "You've found Nioof-Nioof! Take him back to Lady Ducraft!"
 				}
 			},
 			"kilgou": {
-				"name": "Les Goupignons des Collines",
-				"begin": "De nombreux Loups et Goupignons sévissent dans les Collines Escarpées au nord de Dinoville, le chef d'un village voisin cherche quelqu'un pour en tuer quelques-uns et ainsi leur faire peur pour qu'ils se calment, sauras-tu te montrer suffisamment fort ?",
-				"end": "Bravo, grâce à toi les Collines ont retrouvé un certain calme, félicitations !",
-				"kill": "Loups et Goupignons"
+				"name": "Smashrooms of the Hills",
+				"begin": "Wolves and Smashrooms are invading the Precipitous Hills, north of Dinotown. The chief of a neighboring village is looking for someone to kill a few of them in order to scare them off and restore natural order. Do you think you are strong enough to accept this mission?",
+				"end": "Well done, thanks to you the Hills are somewhat peaceful once again!",
+				"kill": "Wolves and Smashrooms"
 			},
 			"kilwlf": {
-				"name": "La chasse aux loups",
-				"begin": "Récemment, les paysans ont beaucoup de problèmes avec des groupes de Loups qui attaquent leurs chèvres. Peux-tu faire un tour ici-et-là et en tuer quelques-uns histoire de les éloigner ?",
-				"end": "Bravo, c'est bien joué, avec ça ils ne devraient plus trop s'approcher des chèvres pendant quelque temps !",
-				"kill": "Loups"
+				"name": "The Wolf Hunt",
+				"begin": "Recently, farmers have had a lot of problems with groups of wolves attacking their goats. Can you stroll here and there and kill some of them to scare them away?",
+				"end": "Well done, with that they shouldn't harm the goats for a while!",
+				"kill": "Wolves"
 			},
 			"fflow": {
-				"name": "Le rosier en danger",
-				"begin": "Le rosier préféré de Madame Seyche est en sale état à cause de la canicule. Pourrais-tu aller chercher de l'Eau Pure à la Fontaine et lui en apporter ?",
-				"end": "Cette charmante Madame Seyche m'a félicité pour ton travail, tu as bien mérité ta récompense !",
+				"name": "The Stamps",
+				"begin": "Madam Squyd's favorite rose bush is in a bad state following the heat wave. Can you go to the Fountain and get some Pure Water to bring to her?",
+				"end": "The charming Madam Squyd sends her appreciation for your work. You deserve your reward!",
 				"pureWater": {
 					"name": "Pure Water",
-					"description": "Vous obtenez de l'Eau Pure qui est particulièrement conseillée pour arroser les fleurs..."
+					"description": "You get some Pure Water to water the rose bush..."
 				},
 				"madameSeyche": {
-					"name": "Madame Seyche",
-					"text": "Ooohhh merci mon petit, grâce à toi mon rosier va pouvoir retrouver de belles couleurs ! Retourne vite voir Papy Joe, il te donnera ta récompense..."
+					"name": "Madam Squyd",
+					"text": "Ooh thanks little one! My rose bush will now regain its beautiful colors! Return to Grandpa Joe, he'll give you your reward..."
 				}
 			},
 			"kbook": {
-				"name": "Le livre de recettes",
-				"begin": "J'ai à nouveau reçu une demande de la ravissante Madame Seyche. Elle voudrait consulter un livre de recettes qui se trouve à l'Université, peux-tu aller lui chercher ?",
-				"end": "Bravo, grâce à toi Madame Seyche m'a remercié en m'envoyant un bout de Korgon grillé. Un vrai délice !",
+				"name": "The Recipe Book",
+				"begin": "I've received another request from the pretty Madam Squyd. She wants to check a recipe in a book from the University. Can you take it to her?",
+				"end": "Well done! Madam Squyd sent me a piece of grilled Korgon to thank me. It's delicious!",
 				"recipeBook": {
-					"name": "Livre de recettes",
-					"description": "Vous obtenez \"100 Façons de cuire un Korgon\", écrit et illustré par Gorak le borgne"
+					"name": "Recipe Book",
+					"description": "You find the recipe book, \\\"100 Ways To Cook a Korgon\\\", written and illustrated by One-Eyed Gorak"
 				},
 				"madameSeyche": {
-					"name": "Madame Seyche",
-					"text": "OOOooooooh merci mon petit ! Je vais pouvoir expérimenter différentes recettes de Korgons, n'hésite pas à venir y goûter un peu de temps en temps !"
+					"name": "Madam Squyd",
+					"text": "Thank you so much little one! I'll be experimenting with different Korgon recipes, don't hesitate to come by from time to time and try them!"
 				}
 			},
 			"msg": {
-				"name": "Les Timbres",
-				"begin": "J'ai très envie d'écrire une lettre à une certaine personne qui me tient à coeur. Mais il se trouve que mes Timbres ont été volés par des Goupignons Chapardeurs qui se regroupent habituellement à la Fontaine de Jouvence. Si tu les tues, je te laisserai utiliser mes Timbres, ça te va ?",
-				"end": "Merci, génial, je vais pouvoir écrire ma lettre ! Tiens, tu as bien mérité tes timbres...",
-				"kill": "Goupignons Chapardeurs",
+				"name": "The Stamps",
+				"begin": "I want to write a letter to someone who is close to my heart, but my stamps have been stolen by some thieving Smashrooms at the Fountain of Youth. If you kill them, I'll let you use my stamps, have we got a deal?",
+				"end": "Fantastic! I can send my letter now! Here you go, take these stamps, you really deserve them...",
+				"kill": "Smashroom Pilferers",
 				"collectStamps": {
-					"name": "Ramasser les Timbres",
-					"description": "Bravo, vous récupérez les Timbres, ramenez-les vite à Papy Joe !"
+					"name": "Pick up the Stamps",
+					"description": "Well done! You've found the stamps, return them to Grandpa Joe as soon as possible!"
 				}
 			},
 			"lettre": {
-				"name": "La lettre confidentielle",
-				"begin": "Uhm... Cette fois-ci c'est pour moi, Papy Joe, que tu vas travailler... J'aurais besoin de toi pour que tu apporte d'URGENCE cette lettre à une certaine personne à Dinoville. Il faut faire très vite surtout !",
-				"end": "Uhm ! Ehm... Une réponse ?! Déjà ?!? GENIAL ! Elle accepte mon invitation à dîner. C'est dans la poche : malgré mon grand âge, la nuit va être chaude !",
+				"name": "The secret letter",
+				"begin": "Uhm, this time it's for me, Grandpa Joe, that you will work for... I need your help to deliver an URGENT letter to someone special in Dinotown. It's urgent, it must be delivered as soon as possible!",
+				"end": "What's this?! A reply?! Already! GREAT! She has accepted my invitation to dinner. I'm not too old to show her what a real man is made of!",
 				"madameSeyche": {
-					"name": "Madame Seyche",
-					"text": "Oohhhh mon petit, que m'apportes-tu cette fois ? Quoi ? Une lettre de papy ? .... ..... Apporte-lui vite cette réponse !"
+					"name": "Madam Squyd",
+					"text": "Hello young Dinoz master, what have you brought me this time? What's that you've got there? A letter from Grandpa Joe? .... Bring him this in response quick!"
 				}
 			},
 			"kilglu": {
-				"name": "Un étrange monstre",
-				"begin": "Un étrange monstre est apparu ces derniers temps dans le Royaume de Dinoville. Il est assez coriace et peut suivant les cas faire beaucoup de dégâts lors d'un combat. Pourrais-tu en tuer un et me le ramener pour que je puisse l'étudier ?",
-				"end": "Merci, c'est un beau spécimen. Voilà pour ta récompense !",
+				"name": "A strange monster",
+				"begin": "A Strange monster has recently appeared in the Dinotown Kingdom. Apparently it's very tough and can take a lot of damage during a battle. Can you kill one and bring it back to me so I can study it?",
+				"end": "Thanks, it's a fantastic specimen. Here's your reward!",
 				"kill": "Gluon"
 			},
 			"kilgnt": {
-				"name": "Les Géants",
-				"begin": "Je ne sais pas si tu t'en es aperçu, mais le Royaume de Dinoville est envahi par d'immenses Géants Verts qui ne semblent pas se nourrir que de légumes ! Peux-tu aller en exterminer une douzaine au plus vite ? Il s'agit d'un ordre du Roi, alors il faut faire vite !",
-				"end": "Ouf ! C'était juste ! Merci tu m'as bien aidé, je vais pouvoir parler de cet exploit au Roi demain pendant que nous jouerons au golf.",
-				"kill": "Géants Verts"
+				"name": "The Giants",
+				"begin": "I'm not sure if you've noticed but the Dinotown Kingdom has recently been invaded by huge Green Giants, and they don't just eat vegetables if you catch my drift! I need you to exterminate a dozen of them as quickly as possible! The order has come straight from the King, so we have to hurry!",
+				"end": "Ooooooh! That was close! Thanks, you've really helped me out. I'll make sure to tell the King about your services while we play golf tomorrow.",
+				"kill": "Green Giants"
 			},
 			"kilcoq": {
-				"name": "L'exploit du mois",
-				"begin": "Uhm... J'ai encore un Golf de prévu avec le Roi le mois prochain, et figure toi qu'il veut encore entendre parler de tes exploits... Que dirais-tu d'aller tuer quelques Coqdur rapidement ? Tu seras bien récompensé !",
-				"end": "Ah ! Super ! Je vais maintenant réfléchir à rajouter un peu d'épique pour relever tout cela ! Le Roi devrait être ravi !",
+				"name": "Achievement of the month",
+				"begin": "I've planned another Golf party with the King next month, and he wants to hear more about your exploits .... what do you think about killing some Giant Chickens for me this time? As per usual, you will be richly rewarded!",
+				"end": "Ah! Fantastic! I'll embellish the story a bit to make it truly epic! This will surely please the King!",
 				"kill": "Coqs"
 			}
 		},
 		"shaman": {
 			"init1": {
-				"name": "La mise à l'épreuve",
-				"begin": "Yo... Alors, pour le Guide de stratégie, y faut aller l'traduire... aux ruines Ashpouk. Tu devrais en être capable.",
+				"name": "The Trial",
+				"begin": "Yo... So, for the Strategy Guide, you have to translate it... in the Ashpouk ruins. You should be able to do it.",
 				"inspect": {
-					"name": "Examiner les inscriptions",
+					"name": "Inspect the guide",
 					"text": "Heu... t'y comprends quelque chose toi ? Moi j'pige que dalle... Si on avait un dictionnaire, on y arrivera sûrement..."
 				},
 				"dictionary": {
-					"title": "Trouver le dictionnaire",
-					"name": "Dictionnaire Ashpoukien",
+					"title": "Find the dictionary",
+					"name": "Ashpoukian Dictionary",
 					"text": "Vous trouvez un vieux dictionnaire verdi de moisissure dans les rayons de la bibliothèque. Il porte le titre \"Ashpouk-Dinozien, des Editions Petit Lamousse\"."
 				},
 				"decipher": {
@@ -4415,8 +4626,8 @@
 				"end": "Mmmm... On dirait une recette... celle des légendaires Merguez d'Archelion. Cool... J'vais m'en préparer tout de suite, ça me donnera p't'être la pêche... En tout cas, t'as réussi à traduire ce truc... T'es vachement doué."
 			},
 			"init2": {
-				"name": "L'épouvantarchelion",
-				"begin": "Ha, ces merguez d'Archelion m'ont donné la pêche ! Bon, je vois que tu es quelqu'un de capable ! Rends-moi un dernier petit service et je te laisserai mon Guide de Stratégie. La région du Grand Tout-Chaud est un habitat idéal pour les Archelions de toutes tailles... Sauvage, pas humide pour un sou et en perpetuelle éruption ! Mais il faut les tenir éloignés de nous si on ne veut pas leur servir de déjeuner... Je veux que tu me fabriques une sorte d'épouvantail à Archelions ! Il me faut donc des Griffes Taillées.",
+				"name": "The Archelionscarer",
+				"begin": "Hmmm, these Archelion merguez really pack a punch! Well now that I know you're competent, if you do me one more favor I'll give you my Strategy Guide. The Big All-Hot is an ideal environment for Archelions of all sizes. Wild, very dry and constantly erupting! But we have to stay away from them as long as we want to live, otherwise they'll eat us for supper. I want you to make me an Archelion scarecrow! It needs some Sharpened Claws.",
 				"kill": {
 					"barche": "Baby Archelion",
 					"wave": "monstres"
@@ -4437,8 +4648,8 @@
 				"end": "Ah ? Je ne savais pas pour les griffes ! Ben... Au temps pour moi... J'espère que le Garde des Forges ne vous a pas trop fait d'histoires. Merci pour la pommade, j'imagine que ça fera bien l'affaire ! Tenez voilà le Guide de Stratégie que j'ai en ma possession pour vous remercier."
 			},
 			"burn": {
-				"name": "Au feu !",
-				"begin": "Comme tu as dû le remarquer, la région est peuplée d'un nombre invraisemblable de Flammèches... Même si leur présence est nécessaire au grand équilibre cosmique, leur nombre progresse bien trop vite et doit être contrôlé ! Il faut réagir vite, rends-toi au Tunnel sous la Branche en longeant le cratère, leur présence là-bas est devenue critique !",
+				"name": "Fire !",
+				"begin": "As you have probably noticed, this region is swarming with Flamelets. Even if their presence is necessary to complete the cosmic equilibrium, they have now over populated Dinoland and some need to be culled! We must hurry. Go to the Tunnel under the Branch passing alongside the crater. The place is swarming with them!",
 				"kill": {
 					"flam": "Flamelet"
 				},
@@ -4461,8 +4672,8 @@
 				"end": "Tes actions ont partiellement rétabli l'équilibre dans la région, c'est un bon début ! Mais il va falloir faire quelque chose pour cette histoire de Barbecue... En attendant, voilà de quoi te récompenser."
 			},
 			"barbec": {
-				"name": "Le barbecue déjanté",
-				"begin": "Ce vendeur de Merguez aux ruines Ashpouk utilise un combustible spécial qui provoque l'apparition de nombreuses flammèches dans la région... Il faut faire quelque chose ! Toutefois, pas question d'empêcher ce pauvre vendeur de faire son travail, on va trouver une solution plus subtile. Commence par me récupérer quelques ingrédients: une branche séchée, une écaille de Dorogon et un morceau de basalte jaune. Broie et mélange bien le tout, et jette ça dans le barbecue !",
+				"name": "The crazy barbecue",
+				"begin": "It seems a certain merguez seller in the Ashpouk Ruins uses a special combustible which caused the influx of flamelets. Something must be done! However, we can't stop this poor merchant from doing his job, we will need to find a more subtle solution. Start by collecting some ingredients: a dry branch, a Dorogon scale and a piece of yellow basalt. Mix these ingredients up and grind them into a powder, then throw it onto the barbecue!",
 				"branch": {
 					"name": "Ramasser une branche",
 					"text": "Vous trouvez le premier ingrédient par terre: une branche d'arbre séchée (voire calcinée)."
@@ -4494,8 +4705,8 @@
 				"end": "Bien joué ! Le mélange devrait réduire l'effet du combustible magique utilisé dans ce barbecue sans pour autant trop altérer le goût des délicieuses Merguez ! Tiens voilà une petite Flammèche apprivoisée pour te remercier."
 			},
 			"joke": {
-				"name": "Querelles",
-				"begin": "Le professeur Eugène de l'Université et moi-même entretenons depuis des années une vieille querelle... Nous n'arrivons jamais à tomber d'accord sur quelque sujet que ce soit ! Aide-moi à lui jouer un petit tour, à ce vieux grincheux. Il faut tout d'abord trouver des choses qui sentent suffisamment fort ! Le Port de Prêche est idéal pour ça...",
+				"name": "Quarrel",
+				"begin": "For many years, University Professor Eugene and I have had an on-going quarrel. In fact, we never agree on a subject, no matter what the subject is! Help me play a trick on this old curmydgeon. First of all I want you to find something with a pungent smell. I think Frish Port will be a good place to look...",
 				"fish": {
 					"name": "Prendre des restes de poisson",
 					"text": "Vous récupérez les pires morceaux de poisson parmi les invendus, notamment un terrifiant Poisson-Fétide !"
@@ -4507,8 +4718,8 @@
 				"end": "Ah ah ! C'est parfait ! Jamais je n'aurais imaginé que tu irais jusqu'à lui cacher un poisson Fétide dans son bureau... C'est machiavélique !"
 			},
 			"defend": {
-				"name": "La défense des Forges !",
-				"begin": "J'ai aperçu ce matin des cohortes de créatures avancer dans les montagnes en contrebas... Je parierais mon grigri qu'ils se dirigeaient tout droit vers les Forges du Grand Tout Chaud ! Porte-leur assistance sans plus tarder !",
+				"name": "Defense of the Forges!",
+				"begin": "I saw swarms of monsters moving towards the mountains this morning. It looked like they were heading for the forges of the Big All-Hot. Go and protect them!",
 				"forgeGuard": {
 					"name": "Garde des Forges",
 					"text": "Au rapport soldat ! Va falloir tenir le choc ! Tenez vos positions !! Là-bas, voilà des monstres !",
@@ -4527,8 +4738,8 @@
 				"end": "La lettre est élogieuse à ton sujet. Tu as bien mérité ta récompense pour cet acte de bravoure ! Et puisque tu as trouvé la Bannière de Guerre des monstres, je t'ajoute un petit quelque chose en bonus."
 			},
 			"shipmt": {
-				"name": "Le colis disparu",
-				"begin": "Il y a quelques temps, j'ai commandé à Papy Joe une nouvelle réserve de poudres pour mes rituels, mais mon colis n'est toujours pas arrivé ! Peut être qu'avec l'attaque récente des Forges, il a été perdu quelque part ? Peux-tu me le retrouver ? C'est très urgent !",
+				"name": "The missing package",
+				"begin": "Some time ago, I ordered a new powder reserve for my rituals from Grandpa Joe, but my package never arrived! Maybe this is because of the recent attack on the Forges, it must be lost somewhere. The package is extremely important, can you find it for me? It's very urgent!",
 				"courier": {
 					"name": "Convoyeur de Dinoville",
 					"text": "Au secours !! Je devais livrer un important colis en haut de ce volcan, mais un groupe de Gobelins hargneux m'est tombé dessus ! Ils m'ont volé mon paquet et depuis je ne sais plus quoi faire... Bouhouhou ! On va me renvoyer si je ne trouve pas une solution...",
@@ -4552,8 +4763,8 @@
 				"end": "Mon livreur vient juste de m'apporter ma commande. Il m'a expliqué toute l'aide précieuse que tu avais pu lui apporter et je t'en remercie ! Tiens voilà une potion et un petit pourboire en gage de ma gratitude !"
 			},
 			"sales": {
-				"name": "Commerce (peu) équitable",
-				"begin": "Pour me permettre de manger à ma faim, je vends de temps à autre des petites babioles sur le Marché de Dinoville. Comme je suis très pris en ce moment, pourrais-tu y aller à ma place ? Je te donnerai un généreux pourcentage des ventes ! Tu verras, ça se vend bien.",
+				"name": "(not) fair trade",
+				"begin": "I sell little trinkets from time to time at the Dinotown market to make a little money. Unfortunately I'm really busy at the moment, do you think that you could go there for me and sell some souvenirs? I'll give you a nice percentage of the profits! You'll see, my souvenirs sell very well.",
 				"collect": {
 					"name": "Ramasser des babioles",
 					"text": "Vous récupérez quelques objets \"typiques\" (des pièges à touristes) traînant dans les ruines pour les revendre au Marché de Dinoville."
@@ -4565,8 +4776,8 @@
 				"end": "Merci bien, voilà ta part des ventes !"
 			},
 			"ritual": {
-				"name": "Rituel ridicule",
-				"begin": "La congrégation shamanique au sein de laquelle j'ai fait mes études me réclame chaque année un rituel en gage de cette formation. Evidemment, j'ai autre chose à faire que m'occuper de ces âneries ! Pourrais-tu t'en charger à ma place ? Les instructions sont arrivées dans ma boîte aux lettres, fais comme chez toi.",
+				"name": "Ridiculous ritual",
+				"begin": "The Shamanic Congregation, where I learned my trade, wants me to perform a ritual each year as a way of paying them back for all my training. Of course, I have better things to do than this stupid ritual! Can you take care of this for me? The instructions are in my mailbox.",
 				"instructions": {
 					"name": "Prendre les instructions",
 					"text": "Vous récupérez la lettre de la Congrégation. Les instructions indiquent qu'il faut commencer par vaincre un Gobelin en combat singulier..."
@@ -4595,8 +4806,8 @@
 				"end": "A en juger par ta mine dépitée, tu dois maintenant comprendre pourquoi je n'avais aucune envie de m'occuper de ce rituel idiot... Enfin, merci pour le service, voilà de quoi couvrir le dérangement."
 			},
 			"hiero": {
-				"name": "Hiéroglyphes",
-				"begin": "J'ai entendu dire qu'il y avait dans les cavernes à l'ouest, celles qui mènent dans la Jungle de Grumhel, des hiéroglyphes de la plus haute importance pour mes recherches mystiques ! Vas-y et recopie-les pour moi. Attention, pour pénétrer dans ces cavernes, il te faudra un moyen de retrouver ton chemin dans l'obscurité !",
+				"name": "Hieroglyphs",
+				"begin": "I've heard that there are some hieroglyphics in the caverns to the west, en route to Grumhel Jungle. These hieroglyphics are very important for my mystical research! Go and copy them out for me. Be careful! To enter the caverns you will need to find something that will help you find your way back in the darkness!",
 				"copy": {
 					"name": "Copier les hiéroglyphes",
 					"text": "Vous recopiez tant bien que mal les hiéroglyphes sur le parchemin donné par le Shaman."
@@ -4604,8 +4815,8 @@
 				"end": "Hmmm... Très très intéressant... Hmmm... Voilà qui pourrait bien clouer le bec à ce vieux guignol de l'Université ! Merci en tous cas pour le petit service !"
 			},
 			"pigeon": {
-				"name": "Pigeon voyageur",
-				"begin": "Les découvertes récentes dans les cavernes sont une occasion inespérée de prouver mes théories à ce vieux farfelu de l'Université, le professeur Eugène ! Imaginez ça, des écritures anciennes qui parlent de notre époque ACTUELLE !! Il ne faut pas perdre un instant ! Apporte lui cette lettre !",
+				"name": "Homing pigeon",
+				"begin": "The recent discoveries in the caverns have provided me with an unexpected occasion to prove my theories to Professor Eugene! Imagine that, some ancient handwriting that talks of current events! We can't waste any time! Take this letter to him!",
 				"eugene": {
 					"name": "Eugène (donner la lettre)",
 					"text": "Je vois que ce magicien de pacotille a encore trouvé quelque chose à me coller sous la moustache. Hmm... Hmm... OH ! Ca par exemple ! Il faut que j'en ai le coeur net... Montrez cette lettre à ma bonne amie le docteur Yolande de l'île de Waïkiki !"
@@ -4627,8 +4838,8 @@
 		},
 		"rodeur": {
 			"rodriz": {
-				"name": "Le Riz Amnésique",
-				"begin": "J'ai besoin de Riz pour recharger ma cape magique. On en trouve paraît-il dans le Marais Collant des Iles Atlantéinées. Peux-tu m'en rapporter suffisamment pour que je puisse à nouveau devenir invisible ? Vite, c'est urgent !",
+				"name": "The Amnesiac Rice",
+				"begin": "I need some Amnesiac Rice to recharge my magic cape. I've been told that it grows in the Sticky Swamp of the Atlanteid Islands. Can you bring me enough Rice to recharge my cape so I can become invisible again? Hurry up, it's really important!",
 				"search": {
 					"name": "Chercher du Riz",
 					"text": "Aprés quelques recherches, vous trouvez un coin du Marais où pousse du Riz Amnésique, une variété trés rare de Riz aux propriétés étonnantes. Le seul problème c'est que des dizaines de Pirhanoz protègent l'accés. Il va falloir d'abord nettoyer le chemin !"
@@ -4641,15 +4852,15 @@
 				"end": "Ah ! Uhm euh... En fait, j'avais mal compris. Un petit peu d'énergie foudre était seulement nécessaire pour recharger ma cape... Tiens, voilà pour toi, et tu peux garder le riz, je n'en ai pas besoin."
 			},
 			"rodlif": {
-				"name": "Les Dinoz Sombres",
-				"begin": "Trois Dinoz Sombres de Caushemesh t'attendent aux Chutes Mutantes. Va les vaincre et reviens me voir pour obtenir ta récompense... Je te conseille de ne pas tenter de les battre tout seul, car tu pourrais y laisser la vie de ton Dinoz !",
+				"name": "The Dark Dinoz",
+				"begin": "Three Dark Dinoz from Caushemesh are waiting for you at the Mutant Falls. Go and defeat them and then return to receive your reward ... take my advice, don't try to defeat them alone, your Dinoz could die!",
 				"end": "Pas mal pour un Dinoz faible de Dinoville... Tiens, voilà pour toi !"
 			}
 		},
 		"baoBob": {
 			"kilpir": {
-				"name": "Le cadeau d'anniversaire",
-				"begin": "C'est bientôt l'anniversaire de la petite Sophie de l'Ile Waikiki. Son plat préféré est le Pirhanoz du Marais Collant. Peux-tu lui en apporter quelques-uns de ma part ?",
+				"name": "The Birthday Present",
+				"begin": "It's Sophie from Waikiki Island's birthday soon. Her favorite meal is made from Pirhanoz found in the Sticky Swamp. Can you bring her a few Pirhanoz for me?",
 				"kill": "Piranhos",
 				"sophie": {
 					"name": "La petite Sophie",
@@ -4658,8 +4869,8 @@
 				"end": "J'aime bien faire des cadeaux... Tiens, voici ta récompense."
 			},
 			"troc": {
-				"name": "Le Troc des Iles Atlantéinées",
-				"begin": "Il y a un grand marché dans les Iles où on peut échanger ce que l'on veut. J'aimerais obtenir un porte-manteau contre cette banane, est-ce que tu peux t'en occuper ?",
+				"name": "The Barter of the Atlanteid Islands",
+				"begin": "Bartering is common in the Islands. You can exchange goods for an item you desire. I'd like to exchange a banana for a coat rack. Do you think you can do that for me?",
 				"merchant": {
 					"name": "Un Marchand",
 					"text": "Cette banane a l'air délicieuse, je te l'échange contre ce cerf-volant !"
@@ -4687,13 +4898,13 @@
 				"end": "Tu as trouvé mon porte-manteau ? J'espère que ce petit voyage t'auras appris que les plus grandes richesses sont éphémères !"
 			},
 			"kilksk": {
-				"name": "La chasse à la Kazkadine",
+				"name": "The Kazkadine Hunt",
 				"begin": "J'ai reçu un appel urgent du Dome Soulaflotte. Les Atalantes s'inquiètent d'un grand nombre de Kazkadines des Profondeurs qui ont enhavi les lieux. Pourrais-tu emmener ton Dinoz faire un petit peu de nettoyage ? Attention à ne pas te faire électrocuter.",
 				"kill": "Kazkadine",
 				"end": "Bravo, c'était une mission branchée n'est-ce pas ?"
 			},
 			"kilang": {
-				"name": "Les anguilloz au vinaigre",
+				"name": "Eeloz with vinegar",
 				"begin": "Connais-tu le plat traditionnel des Anguilloz au Vinaigre ? C'est vraiment délicieux ! Peux-tu te procurer des Anguilloz fraîches et du vinaigre, puis apporter le tout à mon ami au Port de Prêche ? C'est pour un cadeau !",
 				"kill": "Eeloz",
 				"wineMerchant": {
@@ -4705,7 +4916,7 @@
 					"text": "Tu cherches l'ami de M. Bao ? Il me semble qu'il était parti rendre visite à Madame Seyche a Dinoville."
 				},
 				"madameSeyche": {
-					"name": "Madame Seyche",
+					"name": "Madam Squyd",
 					"text": "Ooooh le mignonn toupiti Dinoz !!! Quoi ? Vous cherchez l'ami de M. Bao ? Il est parti voir ce bon vieux Papy Joe, ils avaient des histoires d'hommes a discuter paraît-il !"
 				},
 				"adamNature": {
@@ -4715,13 +4926,13 @@
 				"end": "Alors comme ça on se balade un peu partout pendant une Mission ? Adam m'as tout raconté, voilà pour toi."
 			},
 			"bigpch": {
-				"name": "La Grande Chasse",
+				"name": "The Great Hunt",
 				"begin": "Je suis un petit peu embêté. J'ai promis à l'Archisage du Dome Soulaflotte que j'exterminerai 150 monstres des Iles Atlantéinées en à peine dix jours, mais je me suis cassé le bras et je ne peux pas trop me déplacer. Peux-tu t'occuper d'en tuer une trentaine pour moi ? Pour le reste, je me débrouillerai !",
 				"kill": "monstres",
 				"end": "Super ! Finalement, j'ai exterminé le reste moi-même, en me servant uniquement de mes pieds, mais je te remercie tout de même pour ton aide."
 			},
 			"rally1": {
-				"name": "Le Rallye des Sardines",
+				"name": "The Sardine Rally",
 				"begin": "Participe au Rallye des Sardines ! Rejoins le Port de Prêche le plus rapidement possible !",
 				"step": {
 					"name": "Etape du Rallye",
@@ -4730,7 +4941,7 @@
 				"end": "Félicitations pour ce Rallye, voilà ton prix."
 			},
 			"rally2": {
-				"name": "Le Rallye des Poissons",
+				"name": "The Fish Rally",
 				"begin": "Participe au Rallye des Poissons ! Rejoins le Port de Prêche le plus rapidement possible !",
 				"step": {
 					"name": "Etape du Rallye",
@@ -4740,7 +4951,7 @@
 				"end": "Félicitations pour ce Rallye, voilà ton prix."
 			},
 			"rally3": {
-				"name": "Le Rallye des Requins",
+				"name": "The Shark Rally",
 				"begin": "Participe au Rallye des Requins ! Rejoins les Mines de Corail le plus rapidement possible !",
 				"step": {
 					"name": "Etape du Rallye",
@@ -4751,7 +4962,7 @@
 				"end": "Félicitations pour ce Rallye, voilà ton prix."
 			},
 			"rally4": {
-				"name": "Le Rallye des Baleines",
+				"name": "The Whale Rally",
 				"begin": "Participe au Rallye des Baleines ! Rejoins Fosselave puis reviens ici le plus rapidement possible !",
 				"step": {
 					"name": "Etape du Rallye",
@@ -4760,7 +4971,7 @@
 				"end": "Félicitations pour ce Rallye, voilà ton prix."
 			},
 			"tour": {
-				"name": "Le Tour de Dinoland",
+				"name": "The Dinoland Tour",
 				"begin": "Le Tour de Dinoland est la plus célebre des courses ! Faites le tour de Dinoland en moins de dix jours ! La première étape se situe sur l'Ile Waïkiki.",
 				"step": {
 					"name": "Etape du Tour",
@@ -4776,7 +4987,7 @@
 		},
 		"dian": {
 			"kswim": {
-				"name": "Comme un Korgon dans l'eau",
+				"name": "Like a Korgon in Water",
 				"begin": "La Jungle de Grumhel est un endroit fascinant ! Tenez, prenez les Korgons par exemple. Ils se sont adaptés à merveille à leur environnement ! Saviez-vous qu'ils fabriquaient leurs propres palmes afin de pouvoir traverser sans encombre le Fleuve Jumin ? Non ? Tenez, je veux bien vous en offrir une paire si vous me ramenez quelques fournitures de première nécessité...",
 				"end": "Voilà tout ce qu'il me fallait ! C'est parfait. Voici les Palmes des Korgons, comme convenu !",
 				"supplies": {
@@ -4797,7 +5008,7 @@
 				}
 			},
 			"rivals": {
-				"name": "Korgons du nord, Korgons du sud",
+				"name": "Korgons of the North, Korgons of the South",
 				"begin": "Si les Korgons de cette partie de la Jungle de Grumhel sont quasiment sociables, il en existe au Sud, sur les bords du Chemin Glauque, qui sont autrement moins gentils. Je pense que si tu m'apportais une preuve de victoire sur ceux du Sud, les Korgons d'ici nous apprécieraient beaucoup plus !",
 				"end": "Ah, bonne idée les griffes ! Les Korgons ici ont l'air d'apprécier... Tiens, voilà pour ta peine.",
 				"kill": "Korgons du sud",
@@ -4807,7 +5018,7 @@
 				}
 			},
 			"kfood": {
-				"name": "Steak de bois",
+				"name": "Wood Steak",
 				"begin": "Il existe quelque part dans Grumhel une espèce rare d'arbre que les Korgons adorent : le Fikoïa Cendré ! J'ignore où on peut en trouver, mais je te paierai bien si tu m'en apportes !",
 				"end": "Ils vont se régaler avec ça, merci bien !",
 				"tree": {
@@ -4821,7 +5032,7 @@
 				}
 			},
 			"poison": {
-				"name": "Rivalités korgons",
+				"name": "Korgon Rivalries",
 				"begin": "Le Fikoïa Cendré que vous avez découvert va rapidement devenir un point stratégique pour les Korgons du sud... Il faut réagir vite ! Nous allons « piéger » quelques branches de cet arbre pour les dissuader de le manger... Évidemment, nous, nous saurons quelles branches ne pas toucher... Hi hi hi.",
 				"end": "C'est bien triste pour ce spécimen de Fikoïa, ils sont si rares ! Merci pour toute votre aide, on ne vous oubliera pas...",
 				"sap": {
@@ -4859,7 +5070,7 @@
 		},
 		"hulot": {
 			"seqact": {
-				"name": "La route du grand péril",
+				"name": "Sinister Path",
 				"begin": "Pour pénétrer dans la jungle, il faut d'abord franchir un endroit qu'on appelle le Chemin Glauque... C'est une route dangereuse qui part au nord ! Pourriez-vous y faire un peu de ménage pour moi ?",
 				"end": "On n'entend plus rien grogner par là-bas... C'est bon signe non ?",
 				"kill": "Monstres du Chemin Glauque"
@@ -4882,7 +5093,7 @@
 				}
 			},
 			"map": {
-				"name": "Cartographie",
+				"name": "Cartography",
 				"begin": "Une bonne carte, ça aide toujours, il paraît. Seulement voilà, il n'en existe aucune pour la Jungle de Grumhel ! Pourriez-vous partir vers le nord et prendre quelques notes pour moi ? Il y a des collines à l'Est, ça pourrait être un bon endroit pour avoir une vue d'ensemble !",
 				"end": "Ça m'a l'air pas mal du tout ! Je vais étudier un peu tout cela pour bien préparer mon expédition de l'extrême.",
 				"kill": "Fauve-Souris espiègle",
@@ -4921,7 +5132,7 @@
 				}
 			},
 			"hucure": {
-				"name": "Remède",
+				"name": "Remedy",
 				"begin": "F'est bien aimable de votre part... Ve pense que les Boines de l'île des Futes mutantes pourraient m'aider... Prenez les blantes que vous m'avez amenées et allez les voir de ma bart... Snirf...",
 				"end": "Glou glou ! Merfi bien... Efpérons que fa fasse effet... Fa devenait limite là... Tenez prenez fette pofion en gave de gratitude.",
 				"plants": {
@@ -4964,7 +5175,7 @@
 				}
 			},
 			"bckpck": {
-				"name": "Kit de l'aventurier",
+				"name": "Survival Kit",
 				"begin": "Avant d'envisager mon voyage incroyable en terre inconnue, il me manque une chose primordiale ! Un bon sac à dos. J'ai perdu le mien en contournant les Chutes Mutantes... Pourriez-vous me le retrouver ?",
 				"end": "Euh vous allez rire... Figurez-vous que j'ai reçu justement un Sac à dos de rechange ! Je l'avais commandé en prévision de mon expédition... Bon écoutez, voilà ce qu'on va faire : je récupère mon vieux sac et je vous donne le nouveau ! Ça marche ?",
 				"extremeFisher": {
@@ -5007,7 +5218,7 @@
 		},
 		"forestGuardian": {
 			"unmute": {
-				"name": "Le Gardien de la Forêt",
+				"name": "The Forest Warden",
 				"begin": "Le parchemin qui vous est tombé dessus comporte ce message :&&« Trouvez 1 mesure d'eau filante, puis 1 mesure d'eau croupie, puis 1 mesure d'eau pure et enfin 1 mesure d'eau Bouillonnante. »&&À peine avez-vous fini de lire ce message qu'une petite gourde vide tombe à son tour du feuillage sur votre tête ! Poc !",
 				"end": "Le vieil arbre se penche vers vous dans un bruissement... Il secoue alors lentement son feuillage, faisant tomber quelques beaux fruits à vos pieds.",
 				"juminWater": {
@@ -5032,7 +5243,7 @@
 				}
 			},
 			"orchid": {
-				"name": "La main verte",
+				"name": "Greens Thumb",
 				"begin": "Un parchemin pendouille à une branche. Vous pouvez y lire :&&« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle ».&&Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
 				"end": "Vous déposez la gourde vide au pied de l'arbre. Un gros fruit se décroche des branches supérieures et tombe à côté de vous avec un bruit mat.",
 				"takeWater": {
@@ -5049,13 +5260,13 @@
 				}
 			},
 			"licens": {
-				"name": "Permis de couper",
+				"name": "Permission to cut",
 				"begin": "Un parchemin, que vous n'aviez pas remarqué jusque-là, est ficelé à une racine. Vous pouvez y lire :&&« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisés dans la Jungle de Grumhel. Allez réguler leur travail. »",
 				"end": "Quelques fruits tombent de l'arbre autour de vous...",
 				"kill": "Roncivores ou Korgons"
 			},
 			"king": {
-				"name": "Le roi de la Jungle",
+				"name": "The King of the Jungle",
 				"begin": "Un message est inscrit sur un bout de tissu accroché à une branche :&&« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
 				"end": "Un fruit tombe à côté de vous. Tandis que vous vous penchez pour le ramasser, une grosse bourse pleine d'or tombée de nulle part s'écrase droit sur votre tête ! SCHLING !",
 				"cry": {
@@ -5076,7 +5287,7 @@
 				}
 			},
 			"wishes": {
-				"name": "Faites vos voeux",
+				"name": "Make your wishes",
 				"begin": "Vous pouvez lire, gravé sur une branche :&&« On raconte que les Chutes au sud auraient des propriétés magiques... Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. »&&Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
 				"end": "Quelques fruits tombent de l'arbre autour de vous...",
 				"throwCoin": {
@@ -5086,7 +5297,7 @@
 				"kill": "Roncivores ou Korgons"
 			},
 			"newplt": {
-				"name": "Un cric pour la forêt",
+				"name": "A Jack For The Forest",
 				"begin": "Une longue bande de tissu est enroulée autour du vieil arbre :&&« Nos efforts pour développer les forêts autour du Grand Tout-Chaud ont récemment été compromis par un important éboulement près des Ruines Ashpouk. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »&&Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
 				"end": "Deux gros fruits se décrochent et tombent dans un buisson près de vous...",
 				"volunteer": {
@@ -5103,7 +5314,7 @@
 				}
 			},
 			"gshop": {
-				"name": "Monnaie de singe",
+				"name": "Monkey Money",
 				"begin": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :&&« Déposez de l'or dans le seau pour votre ration quotidienne. »",
 				"end": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »",
 				"examineBucket": {
@@ -5114,7 +5325,7 @@
 		},
 		"skully": {
 			"skul1": {
-				"name": "Informations Préliminaires",
+				"name": "Prologue",
 				"begin": "Mouldeur a été touché par ma bonnédiction, alors que l'on faisait de vieux os ensemble, il m'a tout à coup oubliée et s'en est allé loin d'ici, le ruffian ! Il a sûrement dû donner des nouvelles à son neveu le ptit'Joe... Va le voir et tiens moi au courant !",
 				"papyJoe": {
 					"name": "Papy 'Ptit' Joe",
@@ -5129,7 +5340,7 @@
 				"end": "Merci, ce sont de précieuses informations que tu m'as rapporté là ! Mon Mouldeur chéri ne doit pas être très loin, nous serons bientôt réunis !"
 			},
 			"skul2": {
-				"name": "Sur les trâces de Mouldeur",
+				"name": "On Moulder's Trail",
 				"begin": "\"Je t'attendrai sur le lieu de notre rencontre\" Oh oh oh oh ! Comme c'est roooomantique mon Mouldeur chéri ! J'espère en tout cas qu'il m'attend encore là-bas ! Vite, rends toi dans ce magnifique lieu aux douces odeurs de nénuphars où nous nous sommes rencontrés, et ramène-moi mon amour !",
 				"stuckTourist": {
 					"name": "Un Touriste Enlisé",
@@ -5157,14 +5368,14 @@
 				"end": "Ooohh oh oh oh oh ! Mouldeur chéri ! Je te sens plus proche de moi que jamais !"
 			},
 			"skul3": {
-				"name": "Mademoiselle Bao",
+				"name": "Miss Bao",
 				"begin": "Oh oh oh ! J'ai pensé à quelque chose de... problématique. Même si je retrouve Mouldeur, il va oublier à nouveau nos retrouvailles et repartir m'attendre quelque part. Il faut absolument que tu trouves une solution à ce problème avant d'aller voir Mouldeur. Va trouver cette chère Mademoiselle Bao, elle aura certainement une solution !",
 				"baoBob": {
 					"name": "Mademoiselle Bao ???",
 					"text": "Quoi ??? Mademoiselle Bao ?? Non mais... tu me prends pour qui au juste ? .......... Si tu cherches ma soeur, et bien elle se trouve en ce moment auprès du petit fils de l'ArchiDorogon : \"le Vénérable\" comme il aime se faire appeller maintenant... D'ailleurs si un jour son père l'apprend, il va passer un sale quart-d'heure..."
 				},
 				"baoBabe": {
-					"name": "Mademoiselle Bao",
+					"name": "Miss Bao",
 					"text": "Quoi ??? Mademoiselle Bao ?? Mais voyons.... celà fait une éternité que l'on ne m'a pas appellée comme celà. Je t'en prie, jeune homme, utilise mon prénom, appelle-moi Babe..."
 				},
 				"baoBabe2": {
@@ -5177,7 +5388,7 @@
 				"end": "Oh oh oh oh oh ! En voilà une bonne solution pour ma bonnédiction ! Tiens, prends ça, de cette façon tu n'oublieras plus ni le chemin du Cimetière, ni ta chère Skully oh oh oh !"
 			},
 			"skul4": {
-				"name": "Les touristes génants",
+				"name": "The Annoying Tourists",
 				"begin": "\"Rejoins moi là où je t'ai déclaré ma flamme\" Oh oh oh oh ! Mon Mouldeur a vraiment un coeur en oooor ! Je n'oublierai jamais ce lieu délicieux où il nous avait emmenés, alors que nos os étaient encore tous jeunes... Et ce moment où il m'a tendu une merguez bien grillée et m'a demandé de l'épouser !",
 				"merguezSeller": {
 					"name": "Merguez Seller",
@@ -5205,7 +5416,7 @@
 				"end": "Oh oh oh ! Mouldeur n'est pas très loin, merci beaucoup de ton aide mon jeune ami !"
 			},
 			"skul5": {
-				"name": "Des crevettes au Napalm",
+				"name": "Napalm Shrimp",
 				"begin": "Des \"Crevettes au Napalm\" ? Oh oh oh oh ! Quel doux souvenir que ce plat délicieux ! Bien, il va falloir que tu me rapportes un certain nombre d'ingrédients pour que je puisse préparer tout celà...",
 				"skully": {
 					"text": "Bien, tout d'abord, il me faut bien entendu de bonnes crevettes. Tu pourras en trouver au Marché du Dôme Soulaflotte ! Fais-vite !",
@@ -5232,7 +5443,7 @@
 				"end": "Merci pour ton aide ! oh oh oh ! Bientôt mes retrouvailles avec mon tendre Mouldeur !"
 			},
 			"skuend": {
-				"name": "Les retrouvaillages",
+				"name": "The Reunion",
 				"begin": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !",
 				"merguezSeller": "Ooooohh !! Il s'agit donc des fameuses crevettes au Napalm ?!? Voyons voir.... uhmm.... cela manque un peu de graisse mais c'est succulent. Nul doute que Mouldeur devrait bientôt se montrer... Mais regarde qui voilà !",
 				"lock": "Discuter avec Mouldeur",
@@ -5298,7 +5509,7 @@
 					"text": ".... (vous expliquez toute l'histoire) ... Quoi ! Alors c'était vraiment ton Dinoz qu'ils recherchaient ?!? hmm... je comprends. Il va me falloir du temps pour faire enterrer cette affaire. En attendant, va te planquer aux Collines Escarpées !"
 				},
 				"wait": {
-					"name": "Attendre",
+					"name": "Wait",
 					"text": "Vous attendez que Madame X vous contacte..."
 				},
 				"messagemx": {
