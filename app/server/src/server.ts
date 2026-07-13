@@ -103,7 +103,7 @@ async function buildServer() {
 			return new ExpectedError(code, {
 				statusCode: context.statusCode,
 				params: {
-					seconds
+					seconds: seconds
 				}
 			});
 		}
