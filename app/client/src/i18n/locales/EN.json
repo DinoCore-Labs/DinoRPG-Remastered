@@ -4533,76 +4533,76 @@
 			"kilgou": {
 				"name": "Smashrooms of the Hills",
 				"begin": "Wolves and Smashrooms are invading the Precipitous Hills, north of Dinotown. The chief of a neighboring village is looking for someone to kill a few of them in order to scare them off and restore natural order. Do you think you are strong enough to accept this mission?",
-				"end": "Bravo, grâce à toi les Collines ont retrouvé un certain calme, félicitations !",
-				"kill": "Loups et Goupignons"
+				"end": "Well done, thanks to you the Hills are somewhat peaceful once again!",
+				"kill": "Wolves and Smashrooms"
 			},
 			"kilwlf": {
 				"name": "The Wolf Hunt",
 				"begin": "Recently, farmers have had a lot of problems with groups of wolves attacking their goats. Can you stroll here and there and kill some of them to scare them away?",
-				"end": "Bravo, c'est bien joué, avec ça ils ne devraient plus trop s'approcher des chèvres pendant quelque temps !",
-				"kill": "Loups"
+				"end": "Well done, with that they shouldn't harm the goats for a while!",
+				"kill": "Wolves"
 			},
 			"fflow": {
 				"name": "The Stamps",
 				"begin": "Madam Squyd's favorite rose bush is in a bad state following the heat wave. Can you go to the Fountain and get some Pure Water to bring to her?",
-				"end": "Cette charmante Madame Seyche m'a félicité pour ton travail, tu as bien mérité ta récompense !",
+				"end": "The charming Madam Squyd sends her appreciation for your work. You deserve your reward!",
 				"pureWater": {
 					"name": "Pure Water",
-					"description": "Vous obtenez de l'Eau Pure qui est particulièrement conseillée pour arroser les fleurs..."
+					"description": "You get some Pure Water to water the rose bush..."
 				},
 				"madameSeyche": {
 					"name": "Madam Squyd",
-					"text": "Ooohhh merci mon petit, grâce à toi mon rosier va pouvoir retrouver de belles couleurs ! Retourne vite voir Papy Joe, il te donnera ta récompense..."
+					"text": "Ooh thanks little one! My rose bush will now regain its beautiful colors! Return to Grandpa Joe, he'll give you your reward..."
 				}
 			},
 			"kbook": {
 				"name": "The Recipe Book",
 				"begin": "I've received another request from the pretty Madam Squyd. She wants to check a recipe in a book from the University. Can you take it to her?",
-				"end": "Bravo, grâce à toi Madame Seyche m'a remercié en m'envoyant un bout de Korgon grillé. Un vrai délice !",
+				"end": "Well done! Madam Squyd sent me a piece of grilled Korgon to thank me. It's delicious!",
 				"recipeBook": {
-					"name": "Livre de recettes",
-					"description": "Vous obtenez \"100 Façons de cuire un Korgon\", écrit et illustré par Gorak le borgne"
+					"name": "Recipe Book",
+					"description": "You find the recipe book, \\\"100 Ways To Cook a Korgon\\\", written and illustrated by One-Eyed Gorak"
 				},
 				"madameSeyche": {
 					"name": "Madam Squyd",
-					"text": "OOOooooooh merci mon petit ! Je vais pouvoir expérimenter différentes recettes de Korgons, n'hésite pas à venir y goûter un peu de temps en temps !"
+					"text": "Thank you so much little one! I'll be experimenting with different Korgon recipes, don't hesitate to come by from time to time and try them!"
 				}
 			},
 			"msg": {
 				"name": "The Stamps",
 				"begin": "I want to write a letter to someone who is close to my heart, but my stamps have been stolen by some thieving Smashrooms at the Fountain of Youth. If you kill them, I'll let you use my stamps, have we got a deal?",
-				"end": "Merci, génial, je vais pouvoir écrire ma lettre ! Tiens, tu as bien mérité tes timbres...",
-				"kill": "Goupignons Chapardeurs",
+				"end": "Fantastic! I can send my letter now! Here you go, take these stamps, you really deserve them...",
+				"kill": "Smashroom Pilferers",
 				"collectStamps": {
-					"name": "Ramasser les Timbres",
-					"description": "Bravo, vous récupérez les Timbres, ramenez-les vite à Papy Joe !"
+					"name": "Pick up the Stamps",
+					"description": "Well done! You've found the stamps, return them to Grandpa Joe as soon as possible!"
 				}
 			},
 			"lettre": {
 				"name": "The secret letter",
 				"begin": "Uhm, this time it's for me, Grandpa Joe, that you will work for... I need your help to deliver an URGENT letter to someone special in Dinotown. It's urgent, it must be delivered as soon as possible!",
-				"end": "Uhm ! Ehm... Une réponse ?! Déjà ?!? GENIAL ! Elle accepte mon invitation à dîner. C'est dans la poche : malgré mon grand âge, la nuit va être chaude !",
+				"end": "What's this?! A reply?! Already! GREAT! She has accepted my invitation to dinner. I'm not too old to show her what a real man is made of!",
 				"madameSeyche": {
 					"name": "Madam Squyd",
-					"text": "Oohhhh mon petit, que m'apportes-tu cette fois ? Quoi ? Une lettre de papy ? .... ..... Apporte-lui vite cette réponse !"
+					"text": "Hello young Dinoz master, what have you brought me this time? What's that you've got there? A letter from Grandpa Joe? .... Bring him this in response quick!"
 				}
 			},
 			"kilglu": {
 				"name": "A strange monster",
 				"begin": "A Strange monster has recently appeared in the Dinotown Kingdom. Apparently it's very tough and can take a lot of damage during a battle. Can you kill one and bring it back to me so I can study it?",
-				"end": "Merci, c'est un beau spécimen. Voilà pour ta récompense !",
+				"end": "Thanks, it's a fantastic specimen. Here's your reward!",
 				"kill": "Gluon"
 			},
 			"kilgnt": {
 				"name": "The Giants",
 				"begin": "I'm not sure if you've noticed but the Dinotown Kingdom has recently been invaded by huge Green Giants, and they don't just eat vegetables if you catch my drift! I need you to exterminate a dozen of them as quickly as possible! The order has come straight from the King, so we have to hurry!",
-				"end": "Ouf ! C'était juste ! Merci tu m'as bien aidé, je vais pouvoir parler de cet exploit au Roi demain pendant que nous jouerons au golf.",
-				"kill": "Géants Verts"
+				"end": "Ooooooh! That was close! Thanks, you've really helped me out. I'll make sure to tell the King about your services while we play golf tomorrow.",
+				"kill": "Green Giants"
 			},
 			"kilcoq": {
 				"name": "Achievement of the month",
 				"begin": "I've planned another Golf party with the King next month, and he wants to hear more about your exploits .... what do you think about killing some Giant Chickens for me this time? As per usual, you will be richly rewarded!",
-				"end": "Ah ! Super ! Je vais maintenant réfléchir à rajouter un peu d'épique pour relever tout cela ! Le Roi devrait être ravi !",
+				"end": "Ah! Fantastic! I'll embellish the story a bit to make it truly epic! This will surely please the King!",
 				"kill": "Coqs"
 			}
 		},
@@ -4611,12 +4611,12 @@
 				"name": "The Trial",
 				"begin": "Yo... So, for the Strategy Guide, you have to translate it... in the Ashpouk ruins. You should be able to do it.",
 				"inspect": {
-					"name": "Examiner les inscriptions",
+					"name": "Inspect the guide",
 					"text": "Heu... t'y comprends quelque chose toi ? Moi j'pige que dalle... Si on avait un dictionnaire, on y arrivera sûrement..."
 				},
 				"dictionary": {
-					"title": "Trouver le dictionnaire",
-					"name": "Dictionnaire Ashpoukien",
+					"title": "Find the dictionary",
+					"name": "Ashpoukian Dictionary",
 					"text": "Vous trouvez un vieux dictionnaire verdi de moisissure dans les rayons de la bibliothèque. Il porte le titre \"Ashpouk-Dinozien, des Editions Petit Lamousse\"."
 				},
 				"decipher": {
