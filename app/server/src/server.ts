@@ -90,8 +90,23 @@ async function buildServer() {
 	//-------------------------------------------------------
 	await server.register(rateLimit, {
 		global: true,
-		max: 50,
-		timeWindow: '1 minute'
+		max: 100,
+		timeWindow: '1 minute',
+		errorResponseBuilder: (request, context) => {
+			const seconds = Math.max(1, Math.ceil(context.ttl / 1000));
+			let code = 'Rate_limit_exceeded';
+			if (request.url.startsWith('/api/users/login')) {
+				code = 'Too_many_login_attempts';
+			} else if (request.url.startsWith('/api/users/register')) {
+				code = 'Too_many_registration_attempts';
+			}
+			return new ExpectedError(code, {
+				statusCode: context.statusCode,
+				params: {
+					seconds
+				}
+			});
+		}
 	});
 
 	//------------------------------------------------------
