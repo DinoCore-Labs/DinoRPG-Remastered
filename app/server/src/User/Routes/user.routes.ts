@@ -120,6 +120,12 @@ export async function userRoutes(app: FastifyInstance) {
 	app.post(
 		'/register',
 		{
+			config: {
+				rateLimit: {
+					max: 5,
+					timeWindow: '1 minute'
+				}
+			},
 			schema: {
 				tags: ['Users'],
 				body: createUserSchema,
@@ -133,6 +139,12 @@ export async function userRoutes(app: FastifyInstance) {
 	app.post(
 		'/login',
 		{
+			config: {
+				rateLimit: {
+					max: 5,
+					timeWindow: '1 minute'
+				}
+			},
 			schema: {
 				tags: ['Users'],
 				body: loginSchema,
