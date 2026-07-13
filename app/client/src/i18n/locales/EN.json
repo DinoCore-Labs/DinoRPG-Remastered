@@ -3613,7 +3613,7 @@
 			"title": "Savings",
 			"amount": "Montant à épargner",
 			"duration": "Durée de l'épargne",
-			"durationOption": "{days} jours (+{percent}%)",
+			"durationOption": "{days} days (+{percent}%)",
 			"save": "Saving",
 			"activeTitle": "Your savings",
 			"empty": "Vous n'avez aucune épargne en cours.",
