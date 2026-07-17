@@ -5,7 +5,6 @@
 				<DZButton class="button" @click="showEditor = !showEditor">{{ t('clan.discussion.action.create') }}</DZButton>
 			</div>
 		</template>
-
 		<template v-if="showEditor">
 			<div>
 				<RichTextEditor ref="editorRef" v-model="newMessage" />
@@ -15,7 +14,6 @@
 			</div>
 		</template>
 	</div>
-
 	<div class="page-content" v-if="hasAccess">
 		<div class="discussion" v-if="messages">
 			<ClanMessageItem
@@ -30,14 +28,11 @@
 				@delete="deleteMessage(msg)"
 			/>
 		</div>
-
 		<div class="switch-page-container" v-if="maxPage > 1">
 			<div class="arrow-button">
 				<img src="/src/assets/icons/left.webp" alt="left" @click="changePage(-1)" v-if="page > 1" />
 			</div>
-
 			<p>{{ t('clan.discussion.pagination.page') }} {{ page }} / {{ maxPage }}</p>
-
 			<div class="arrow-button">
 				<img
 					src="/src/assets/icons/right.webp"

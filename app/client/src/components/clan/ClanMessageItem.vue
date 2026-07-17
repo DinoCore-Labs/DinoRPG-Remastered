@@ -79,7 +79,6 @@ export default defineComponent({
 	border-radius: 9px 9px 2px 2px;
 	display: grid;
 	margin-bottom: 20px;
-
 	.message-header {
 		display: flex;
 		align-items: center;
@@ -94,13 +93,11 @@ export default defineComponent({
 		padding-right: 8px;
 		-webkit-box-shadow: 1px 5px 3px -4px #171717;
 		box-shadow: 1px 5px 3px -4px #171717;
-
 		.author-info {
 			display: flex;
 			align-items: center;
 			gap: 6px;
 			flex-wrap: wrap;
-
 			.avatar {
 				width: 56px;
 				height: 56px;
@@ -108,7 +105,6 @@ export default defineComponent({
 				object-fit: cover;
 				border: 1px solid #bc683c;
 			}
-
 			.top-item {
 				font-size: 11px;
 				color: #7a4a20;
@@ -117,13 +113,11 @@ export default defineComponent({
 				border-radius: 10px;
 			}
 		}
-
 		.message-actions {
 			display: flex;
 			align-items: center;
 			gap: 8px;
 			flex-shrink: 0;
-
 			.date {
 				background-color: #bc683c;
 				padding: 2px 8px;
@@ -132,7 +126,6 @@ export default defineComponent({
 				font-size: 11px;
 				white-space: nowrap;
 			}
-
 			.delete-btn {
 				width: 16px;
 				height: 16px;
@@ -146,7 +139,6 @@ export default defineComponent({
 			}
 		}
 	}
-
 	.message-body {
 		-webkit-box-shadow: 1px 5px 3px -4px #949494;
 		box-shadow: 1px 5px 3px -4px #949494;
@@ -162,9 +154,43 @@ export default defineComponent({
 			margin: 0.5em 0;
 			list-style: revert;
 		}
-
 		:deep(li) {
 			display: list-item;
+		}
+		:deep(.spoiler) {
+			background-color: #444;
+			color: transparent;
+			border-radius: 4px;
+			transition:
+				color 0.2s ease,
+				background-color 0.2s ease;
+			cursor: pointer;
+		}
+		:deep(.spoiler:hover),
+		:deep(.spoiler:active) {
+			color: inherit;
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+		:deep(code) {
+			background-color: rgba(0, 0, 0, 0.1);
+			color: #222;
+			font-family: 'Cascadia Code', monospace;
+			font-size: 1.2rem;
+			padding: 2px 4px;
+			border-radius: 4px;
+		}
+		:deep(pre) {
+			background-color: #1e1e1e;
+			color: #f8f8f2;
+			padding: 8px;
+			border-radius: 6px;
+			overflow-x: auto;
+			font-family: monospace;
+		}
+		:deep(pre code) {
+			background: none;
+			color: inherit;
+			padding: 0;
 		}
 	}
 }
