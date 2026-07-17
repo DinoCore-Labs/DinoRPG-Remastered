@@ -102,7 +102,7 @@ Package partagé contenant les **types, modèles et logique du jeu** utilisés p
 
 ### Requirements
 
-- Node.js >= 20
+- Node.js >= 22
 - pnpm
 - PostgreSQL
 
