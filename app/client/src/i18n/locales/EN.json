@@ -3708,10 +3708,10 @@
 			"empty": "Vous n'avez aucune épargne en cours.",
 			"previewEmpty": "Choisissez un montant à épargner.",
 			"preview": "Vous épargnez **{gold}** :gold: et recevrez **{interest}** :gold: d'intérêts, soit **{total}** :gold: au total.",
-			"itemDuration": "Durée : {days} jours",
-			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
-			"unlockAt": "Disponible le {date}",
-			"claim": "Récupérer"
+			"itemDuration": "Duration: {days} days",
+			"itemGain": "Win: **{gold}** :gold: — Total: **{total}** :gold:",
+			"unlockAt": "Available on {date}",
+			"claim": "Recover"
 		}
 	},
 	"npc": {
@@ -3777,7 +3777,7 @@
 				"next3": "Hello? You're not going to ask me who my idol is?",
 				"qui": "Why, the one-and-only Sylverter Staline of course. He's the three-time winner of the Coral Awards in the Ultimate Muscles and Retorts That Kill categories. He's so cool, and he always kills the bad guys!",
 				"ok": "Yes, he's the strongest! Ahh, the good old days. I could talk about them for hours... but, it's time to leave. I have work to do! See you later! Pink! Pink! Pink!",
-				"give": "Ah ! Je vois que toi aussi tu aime bien ce Corail dûr comme la pierre ! Tiens, j'te donne cet enchantillon, je l'ai cassé tout à l'heure !"
+				"give": "Ah! I see you like the Coral too! Here, take this, I'll give you a sample, I broke this little piece off earlier!"
 			},
 			"choice": {
 				"yes": "Yes",
@@ -3947,19 +3947,19 @@
 		},
 		"speleleologue_ice": {
 			"dialog": {
-				"begin": "Ah ! Tiens salut ! Il fait frais ici tu ne trouve pas ?",
-				"talk": "Je viens de passer quelques temps à explorer la Grotte du Zéro Relatif... savais tu que la glace qui la compose est extraordinaire ??? Elle est composée de 3% de Mazotte Solide, un ingrédient rarissime qui conserve une température stable...",
-				"next": "Cela permet à la glace de ne pas dégeler, même pendant l'été quand les flux de magma ralentissent le cycle de refroidissement de la grotte. Bien entendu, le Mazotte Solide est entièrement contraire à toutes les lois connues de la thermodynamique, mais malgré cela il continue d'exister... C'est d'ailleurs un grand casse-tête pour les professeurs de l'Université.",
-				"prof": "Oui ! Certains tels le fameux professeur Eugène ont même mis en place une théorie qui explique l'existence du Mazotte Solide. C'est un peu compliqué car cela nécessite de considérer que l'Univers est composé de 4,24 dimensions : trois dimensions pour le monde normal et 1,24 dimension utilisée uniquement par le Mazotte Solide.",
-				"theo": "Oui, mais cette théorie a de très intéressantes applications, comme le fait de pouvoir prévoir la température d'ébulition d'un Archélion. Son principal défaut est qu'elle prévoit aussi l'existence d'un Monde Sombre parallèle à Dinoland... La communauté scientifique pense donc que le professeur Eugène se trompe, car un tel endroit ne peut pas exister... Tout du moins pas d'après la théorie du professeur Stinstanstein.",
-				"ok": "Enfin, tout cela pour te dire que cette glace est géniale. Tiens, en voilà un petit bout, garde le avec toi pour te rafraîchir quand il fait chaud !"
+				"begin": "Ah! Hello, It's you! It's very cold isn't it?",
+				"talk": "I just spent some time in the Relative Zero Cave ... did you know how complex the ice inside is? It's composed of 3% of Solid Nitrogenious, a rare ingredient which keeps the temperature stable....",
+				"next": "This means that the ice doesn't defrost, even during the summer when magma flows slowly down the cave. Solid Nitrogenious goes against all the rules of thermodynamics, this is why it's so confusing for the University professors.",
+				"prof": "Yup! Some intellectuals, such as the famous Professor Eugene have put forward a theory explaining the existence of Solid Nitrogenious. It's extremely complicated as it requires one to consider that the Universe is composed of 4,24 dimensions: 3 dimensions for the normal world and 1,24 dimensions used only by the Solid Nitrogenious.",
+				"theo": "Crazy right? But this theory is very useful. It can be used to predict the boiling temperature of an Archelion. It's main flaw is that it predicts the existence of a Parallel Dark World to Dinoland ... the scientific community believes that Professor Eugene is wrong as it's simply not possible for a place such as this to exist. Well, at least according to Professor Stinstanstein's theory.",
+				"ok": "In any case, the ice here is awesome! Here, take this small piece, keep it with you to refresh yourself when you're hot!"
 			},
 			"choice": {
 				"talk": "Glaglagla...",
-				"next": "Mazotte ?",
-				"prof": "Effectivement...",
-				"theo": "Oulala...",
-				"ok": "... effectivement...."
+				"next": "Nitrogenious?",
+				"prof": "Indeed...",
+				"theo": "Woaaww...",
+				"ok": "... indeed...."
 			}
 		},
 		"strangePteroz": {
