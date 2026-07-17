@@ -2,7 +2,7 @@
 	"name": "dinorpg",
 	"version": "0.10.2",
 	"description": "Re-développement du jeu DinoRPG de Motion Twin",
-	"private": "true",
+	"private": true,
 	"author": "DinoRPG Remastered Contributors",
 	"license": "AGPL-3.0-or-later",
 	"repository": {
