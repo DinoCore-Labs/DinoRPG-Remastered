@@ -161,12 +161,25 @@ export async function claimBankSaving(userId: string, savingId: string) {
 			throw new ExpectedError('bankSavingNotReady');
 		}
 		const totalGold = getBankSavingTotalGold(saving.amount, saving.interestRateBps);
-		const claimed = await tx.bankSaving.update({
+		const claimedSaving = await tx.bankSaving.updateMany({
 			where: {
-				id: saving.id
+				id: saving.id,
+				userId,
+				claimedAt: null,
+				unlockAt: {
+					lte: now
+				}
 			},
 			data: {
 				claimedAt: now
+			}
+		});
+		if (claimedSaving.count !== 1) {
+			throw new ExpectedError('bankSavingAlreadyClaimed');
+		}
+		const claimed = await tx.bankSaving.findUniqueOrThrow({
+			where: {
+				id: saving.id
 			}
 		});
 		const goldWallet = await tx.userWallet.upsert({
