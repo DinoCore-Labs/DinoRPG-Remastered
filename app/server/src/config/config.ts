@@ -22,6 +22,8 @@ export interface Config {
 	readonly discord: DiscordConfig;
 }
 
+const MIN_SECRET_LENGTH = 32;
+
 /* -----------------------------------------------------
  * Helpers
  * ---------------------------------------------------*/
@@ -50,6 +52,23 @@ export function readBoolean(envValue: string | undefined): boolean {
 	}
 }
 
+export function requireSecret(
+	name: string,
+	value: string | undefined,
+	isProduction: boolean,
+	developmentFallback: string
+): string {
+	if (!isProduction) {
+		return value ?? developmentFallback;
+	}
+	if (!value || value.trim().length < MIN_SECRET_LENGTH) {
+		throw new Error(
+			`[config] ${name} manquant ou trop court en production ` + `(minimum ${MIN_SECRET_LENGTH} caractères)`
+		);
+	}
+	return value;
+}
+
 /* -----------------------------------------------------
  * Main config builder
  * ---------------------------------------------------*/
@@ -66,12 +85,18 @@ export function config(env: Record<string, string | undefined>): Config {
 	const selfUrl = readUrl(env.SELF_URL, 'http://localhost:8080/');
 
 	const databaseUrl = env.DATABASE_URL ?? '';
+
 	// Internal keys
-	const salt = env.SALT ?? 'dev_salt';
+	const salt = requireSecret('SALT', env.SALT, isProduction, 'dev_salt');
 
 	const secrets: Secrets = {
-		jwt: env.DINORPG_SECRET_KEY_JWT ?? 'dev_jwt_secret',
-		cookie: env.DINORPG_SECRET_KEY_COOKIE ?? 'dev_cookie_secret',
+		jwt: requireSecret('DINORPG_SECRET_KEY_JWT', env.DINORPG_SECRET_KEY_JWT, isProduction, 'dev_jwt_secret'),
+		cookie: requireSecret(
+			'DINORPG_SECRET_KEY_COOKIE',
+			env.DINORPG_SECRET_KEY_COOKIE,
+			isProduction,
+			'dev_cookie_secret'
+		),
 		deviceCookie: env.DEVICE_COOKIE ?? 'dz_device_cookie'
 	};
 
