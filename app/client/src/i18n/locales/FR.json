@@ -689,7 +689,7 @@
 		"missingIrma": "Vous avez besoin de potion d'Irma pour faire cette action.",
 		"dinozCannotLvlUp": "Le Dinoz ne peut pas monter de niveau.",
 		"dead": "Votre Dinoz est mort.",
-		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz {dinozId}.",
+		"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz.",
 		"OnlyLettersAndNumbers": "Nom incorrect ! Seulement entre 3 et 32 lettres et chiffres peuvent être utilisés.",
 		"tooManyActiveDinoz": "Vous avez déjà trop de Dinoz actifs.",
 		"notEnoughIngredients": "Vous n'avez pas assez d'ingrédients.",
