@@ -90,7 +90,7 @@ async function buildServer() {
 	//-------------------------------------------------------
 	await server.register(rateLimit, {
 		global: true,
-		max: 100,
+		max: 700,
 		timeWindow: '1 minute',
 		errorResponseBuilder: (request, context) => {
 			const seconds = Math.max(1, Math.ceil(context.ttl / 1000));

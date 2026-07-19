@@ -123,7 +123,7 @@ export async function userRoutes(app: FastifyInstance) {
 			config: {
 				rateLimit: {
 					max: 5,
-					timeWindow: '1 minute'
+					timeWindow: '1 hour'
 				}
 			},
 			schema: {
@@ -142,7 +142,7 @@ export async function userRoutes(app: FastifyInstance) {
 			config: {
 				rateLimit: {
 					max: 5,
-					timeWindow: '1 minute'
+					timeWindow: '5 minutes'
 				}
 			},
 			schema: {
