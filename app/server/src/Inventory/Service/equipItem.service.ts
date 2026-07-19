@@ -69,7 +69,7 @@ export async function equipItem(
 	}
 	// Sac plein
 	if (equip && backpackSlot(dinoz.user.engineer, dinoz) <= dinoz.items.length) {
-		throw new ExpectedError('backpackFull', { params: { dinozId } });
+		throw new ExpectedError('backpackFull');
 	}
 	const dinozItem = dinoz.items.find(i => i.itemId === itemId);
 	if (!dinozItem && !equip) {
