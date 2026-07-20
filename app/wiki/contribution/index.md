@@ -140,6 +140,1027 @@ Cette section est destinée aux développeurs et aux contributeurs techniques :
 - déploiement ;
 - conventions du projet.
 
+## Comprendre le Markdown
+
+Les pages du wiki de **DinoRPG Remastered** sont principalement écrites en
+Markdown.
+
+Le Markdown est un langage de mise en forme simple permettant de créer des
+titres, des paragraphes, des listes, des liens, des images, des tableaux ou des
+blocs de code sans avoir à écrire directement du HTML.
+
+Les fichiers Markdown utilisent l’extension `.md`.
+
+Par exemple :
+
+```text
+app/wiki/encyclopedie/objets/popo-ange.md
+```
+
+::: tip Aperçu automatique
+Lorsque le wiki est lancé avec `pnpm wiki:dev`, les modifications apportées à
+un fichier Markdown sont généralement visibles immédiatement dans le
+navigateur.
+:::
+
+### Écrire un paragraphe
+
+Un paragraphe s’écrit simplement sous forme de texte :
+
+```md
+Le Popo d’Ange est un objet utilisable par un Dinoz.
+```
+
+Pour créer un nouveau paragraphe, ajoutez une ligne vide entre les deux blocs
+de texte :
+
+```md
+Le Popo d’Ange est un objet utilisable par un Dinoz.
+
+Il peut être obtenu dans certaines conditions.
+```
+
+Sans ligne vide, les deux lignes peuvent être affichées dans le même
+paragraphe.
+
+### Créer des titres
+
+Les titres utilisent le caractère `#`.
+
+```md
+# Titre principal
+
+## Grande section
+
+### Sous-section
+
+#### Section détaillée
+```
+
+Exemple :
+
+```md
+# Popo d’Ange
+
+## Description
+
+## Effet
+
+### Effet sur les points de vie
+
+## Obtention
+```
+
+Chaque page doit normalement contenir un seul titre principal de niveau 1 :
+
+```md
+# Titre de la page
+```
+
+Les niveaux suivants doivent respecter une progression logique.
+
+Exemple à éviter :
+
+```md
+## Obtention
+
+#### Boutique
+```
+
+Exemple recommandé :
+
+```md
+## Obtention
+
+### Boutique
+```
+
+### Mettre du texte en gras
+
+Entourez le texte avec deux astérisques :
+
+```md
+**Texte important**
+```
+
+Résultat :
+
+**Texte important**
+
+Le gras doit être utilisé pour mettre en valeur une information importante,
+sans surcharger la page.
+
+### Mettre du texte en italique
+
+Entourez le texte avec un astérisque :
+
+```md
+_Texte en italique_
+```
+
+Résultat :
+
+_Texte en italique_
+
+### Utiliser le gras et l’italique
+
+Entourez le texte avec trois astérisques :
+
+```md
+**_Texte important en italique_**
+```
+
+Résultat :
+
+**_Texte important en italique_**
+
+### Barrer du texte
+
+Entourez le texte avec deux caractères `~` :
+
+```md
+~~Ancienne information~~
+```
+
+Résultat :
+
+~~Ancienne information~~
+
+Le texte barré ne doit normalement pas être utilisé pour conserver une
+information obsolète. Il est préférable de corriger directement la page.
+
+### Créer une liste simple
+
+Utilisez un tiret devant chaque élément :
+
+```md
+- premier élément ;
+- deuxième élément ;
+- troisième élément.
+```
+
+Résultat :
+
+- premier élément ;
+- deuxième élément ;
+- troisième élément.
+
+Il est également possible de créer des sous-listes en ajoutant une indentation :
+
+```md
+- Objets
+  - objets utilisables ;
+  - équipements ;
+  - objets de mission.
+- Ingrédients
+  - végétaux ;
+  - poissons ;
+  - minerais.
+```
+
+Résultat :
+
+- Objets
+  - objets utilisables ;
+  - équipements ;
+  - objets de mission.
+- Ingrédients
+  - végétaux ;
+  - poissons ;
+  - minerais.
+
+### Créer une liste numérotée
+
+Utilisez des nombres suivis d’un point :
+
+```md
+1. sélectionnez votre Dinoz ;
+2. ouvrez son inventaire ;
+3. choisissez l’objet ;
+4. confirmez son utilisation.
+```
+
+Résultat :
+
+1. sélectionnez votre Dinoz ;
+2. ouvrez son inventaire ;
+3. choisissez l’objet ;
+4. confirmez son utilisation.
+
+Les listes numérotées sont recommandées pour présenter des étapes dans un
+ordre précis.
+
+### Créer une liste de tâches
+
+Une liste de tâches utilise des cases à cocher :
+
+```md
+- [x] Ajouter la page.
+- [x] Ajouter l’image.
+- [ ] Vérifier les informations.
+- [ ] Ajouter la page dans la navigation.
+```
+
+Résultat :
+
+- [x] Ajouter la page.
+- [x] Ajouter l’image.
+- [ ] Vérifier les informations.
+- [ ] Ajouter la page dans la navigation.
+
+Cette syntaxe est particulièrement utile dans les descriptions de pull
+requests.
+
+### Créer un lien interne
+
+Pour créer un lien vers une autre page du wiki :
+
+```md
+[Texte du lien](/chemin/de/la/page)
+```
+
+Exemple :
+
+```md
+[Consulter la liste des objets](/encyclopedie/objets/)
+```
+
+Pour créer un lien vers une fiche précise :
+
+```md
+[Popo d’Ange](/encyclopedie/objets/popo-ange)
+```
+
+N’ajoutez pas l’extension `.md` ou `.html` à la fin des liens internes.
+
+Exemple à éviter :
+
+```md
+[Popo d’Ange](/encyclopedie/objets/popo-ange.md)
+```
+
+Exemple recommandé :
+
+```md
+[Popo d’Ange](/encyclopedie/objets/popo-ange)
+```
+
+### Créer un lien vers une section
+
+VitePress crée automatiquement une ancre pour chaque titre.
+
+Pour ce titre :
+
+```md
+## Moyens d’obtention
+```
+
+vous pouvez utiliser un lien vers la section :
+
+```md
+[Voir les moyens d’obtention](#moyens-dobtention)
+```
+
+Pour cibler une section située sur une autre page :
+
+```md
+[Voir les moyens d’obtention](/encyclopedie/objets/popo-ange#moyens-dobtention)
+```
+
+Les accents, apostrophes et autres caractères spéciaux peuvent être transformés
+dans l’adresse générée. Vérifiez toujours le lien dans le navigateur.
+
+### Créer un lien vers un site externe
+
+La syntaxe est identique à celle d’un lien interne, mais l’adresse complète
+doit être utilisée :
+
+```md
+[Consulter le dépôt GitHub](https://github.com/DinoCore-Labs/DinoRPG-Remastered)
+```
+
+Pour des raisons de lisibilité, évitez d’afficher directement une adresse
+internet très longue dans le texte.
+
+Exemple à éviter :
+
+```md
+https://github.com/DinoCore-Labs/DinoRPG-Remastered
+```
+
+Exemple recommandé :
+
+```md
+[Consulter le dépôt GitHub](https://github.com/DinoCore-Labs/DinoRPG-Remastered)
+```
+
+### Ajouter une image
+
+Une image utilise une syntaxe proche de celle d’un lien :
+
+```md
+![Description de l’image](/images/dossier/image.png)
+```
+
+Exemple :
+
+```md
+![Illustration du Popo d’Ange](/images/items/popo-ange.png)
+```
+
+Le texte placé entre les crochets correspond à la description de l’image. Il
+est important pour l’accessibilité et doit décrire correctement son contenu.
+
+Exemple à éviter :
+
+```md
+![](/images/items/popo-ange.png)
+```
+
+Exemple recommandé :
+
+```md
+![Illustration du Popo d’Ange](/images/items/popo-ange.png)
+```
+
+Les images utilisées par le wiki sont placées dans :
+
+```text
+app/wiki/public/images/
+```
+
+Le préfixe `public` ne doit pas apparaître dans le chemin Markdown.
+
+Pour ce fichier :
+
+```text
+app/wiki/public/images/items/popo-ange.png
+```
+
+utilisez :
+
+```md
+![Popo d’Ange](/images/items/popo-ange.png)
+```
+
+et non :
+
+```md
+![Popo d’Ange](/public/images/items/popo-ange.png)
+```
+
+### Ajouter une infobulle à une image
+
+Une description supplémentaire peut être ajoutée après le chemin de l’image :
+
+```md
+![Popo d’Ange](/images/items/popo-ange.png 'Popo d’Ange')
+```
+
+Le texte placé entre guillemets peut apparaître lorsque le pointeur survole
+l’image.
+
+### Créer une citation
+
+Utilisez le caractère `>` :
+
+```md
+> Cette information provient de la version actuelle de DinoRPG Remastered.
+```
+
+Résultat :
+
+> Cette information provient de la version actuelle de DinoRPG Remastered.
+
+Pour une citation sur plusieurs paragraphes :
+
+```md
+> Premier paragraphe de la citation.
+>
+> Deuxième paragraphe de la citation.
+```
+
+### Afficher du code dans une phrase
+
+Utilisez un accent grave autour du contenu :
+
+```md
+La commande `pnpm wiki:dev` lance le wiki localement.
+```
+
+Résultat :
+
+La commande `pnpm wiki:dev` lance le wiki localement.
+
+Cette syntaxe peut également être utilisée pour les éléments suivants :
+
+- les noms de fichiers ;
+- les noms de dossiers ;
+- les commandes ;
+- les propriétés ;
+- les identifiants internes ;
+- les noms de variables.
+
+Exemple :
+
+```md
+La page se trouve dans `app/wiki/encyclopedie/objets/`.
+```
+
+### Créer un bloc de code
+
+Utilisez trois accents graves avant et après le contenu :
+
+````md
+```text
+app/wiki/encyclopedie/objets/popo-ange.md
+```
+````
+
+Il est recommandé de préciser le langage utilisé après les trois accents
+graves.
+
+Exemple avec TypeScript :
+
+````md
+```ts
+const itemName = 'Popo d’Ange';
+```
+````
+
+Exemple avec Vue :
+
+````md
+```vue
+<GameItemCard name="Popo d’Ange" image="/images/items/popo-ange.png" />
+```
+````
+
+Exemple avec Bash :
+
+````md
+```bash
+pnpm wiki:dev
+```
+````
+
+Exemple avec JSON :
+
+````md
+```json
+{
+	"name": "Popo d’Ange",
+	"type": "item"
+}
+```
+````
+
+Le nom du langage permet d’activer la coloration syntaxique.
+
+### Créer un tableau
+
+Les tableaux utilisent des barres verticales :
+
+```md
+| Propriété                  | Valeur           |
+| -------------------------- | ---------------- |
+| Type                       | Objet utilisable |
+| Cible                      | Un Dinoz         |
+| Consommé après utilisation | Oui              |
+```
+
+Résultat :
+
+| Propriété                  | Valeur           |
+| -------------------------- | ---------------- |
+| Type                       | Objet utilisable |
+| Cible                      | Un Dinoz         |
+| Consommé après utilisation | Oui              |
+
+La deuxième ligne indique que la première ligne contient les en-têtes.
+
+### Aligner le contenu d’un tableau
+
+Utilisez les caractères `:` dans la ligne de séparation :
+
+```md
+| Nom         | Quantité | Prix |
+| :---------- | :------: | ---: |
+| Popo d’Ange |    1     |  500 |
+| Potion      |    3     |  150 |
+```
+
+Signification :
+
+- `:---` aligne le contenu à gauche ;
+- `:---:` centre le contenu ;
+- `---:` aligne le contenu à droite.
+
+Évitez les tableaux contenant trop de colonnes, car ils deviennent difficiles à
+consulter sur mobile.
+
+### Créer une ligne de séparation
+
+Utilisez trois tirets sur une ligne :
+
+```md
+---
+```
+
+Cette syntaxe crée une séparation horizontale lorsqu’elle est utilisée dans le
+contenu de la page.
+
+Attention : lorsqu’elle est utilisée au tout début d’un fichier, cette syntaxe
+peut également délimiter le `frontmatter`.
+
+### Comprendre le frontmatter
+
+Le `frontmatter` est un bloc de métadonnées placé au tout début d’une page.
+
+```yaml
+---
+title: Popo d’Ange
+description: Informations sur le Popo d’Ange dans DinoRPG Remastered.
+---
+```
+
+Il est délimité par deux lignes contenant trois tirets.
+
+Il doit être placé avant tout autre contenu :
+
+```md
+---
+title: Popo d’Ange
+description: Informations sur le Popo d’Ange dans DinoRPG Remastered.
+---
+
+# Popo d’Ange
+```
+
+Exemple incorrect :
+
+```md
+# Popo d’Ange
+
+---
+
+title: Popo d’Ange
+description: Informations sur le Popo d’Ange.
+
+---
+```
+
+Les propriétés courantes sont :
+
+```yaml
+---
+title: Titre de la page
+description: Description courte utilisée par le wiki et les moteurs de recherche.
+---
+```
+
+Certaines pages peuvent également définir des métadonnées spécifiques :
+
+```yaml
+---
+title: Nom de la mission
+description: Informations sur cette mission.
+spoiler: true
+status: stable
+---
+```
+
+### Utiliser les encadrés VitePress
+
+VitePress permet d’ajouter des encadrés afin de mettre certaines informations
+en valeur.
+
+#### Information
+
+```md
+:::
+Cette page présente une mécanique du jeu.
+:::
+```
+
+#### Conseil
+
+```md
+:::
+Pensez à vérifier la version actuelle du jeu.
+:::
+```
+
+#### Avertissement
+
+```md
+:::
+Cette information peut encore évoluer.
+:::
+```
+
+#### Danger
+
+```md
+:::
+Cette action peut entraîner une perte définitive.
+:::
+```
+
+#### Détails repliables
+
+```md
+:::
+Contenu masqué par défaut.
+:::
+```
+
+Les blocs repliables sont particulièrement utiles pour les spoilers :
+
+```md
+:::
+
+1. Rendez-vous à Dinoville.
+2. Parlez au personnage concerné.
+3. Terminez le combat.
+   :::
+```
+
+### Modifier le titre d’un encadré
+
+Le texte placé après le type de bloc devient son titre :
+
+```md
+:::
+Cette section révèle les étapes complètes du scénario.
+:::
+```
+
+### Échapper un caractère Markdown
+
+Certains caractères possèdent une signification particulière en Markdown :
+
+```text
+*
+_
+#
+`
+[
+]
+```
+
+Pour afficher un caractère sans appliquer sa mise en forme, placez une barre
+oblique inversée devant celui-ci :
+
+```md
+\*Ce texte ne sera pas en italique\*
+```
+
+Résultat :
+
+\*Ce texte ne sera pas en italique\*
+
+### Ajouter un retour à la ligne
+
+En Markdown, un simple retour à la ligne dans le fichier ne crée pas toujours
+un retour à la ligne visible.
+
+Exemple :
+
+```md
+Première ligne
+Deuxième ligne
+```
+
+Ces deux lignes peuvent être affichées dans le même paragraphe.
+
+Dans la majorité des cas, créez plutôt deux paragraphes :
+
+```md
+Premier paragraphe.
+
+Deuxième paragraphe.
+```
+
+Un retour à la ligne forcé peut être créé avec deux espaces à la fin de la
+ligne, mais cette méthode doit rester exceptionnelle.
+
+### Utiliser du HTML
+
+VitePress permet d’utiliser du HTML directement dans un fichier Markdown :
+
+```html
+<div class="custom-block">Contenu personnalisé</div>
+```
+
+L’utilisation directe de HTML doit toutefois rester limitée.
+
+Privilégiez :
+
+- la syntaxe Markdown ;
+- les composants Vue réutilisables ;
+- les encadrés VitePress.
+
+Cela facilite la maintenance et garantit une présentation cohérente.
+
+### Utiliser un composant Vue
+
+Une page Markdown peut importer et utiliser un composant Vue.
+
+Exemple :
+
+```md
+<script setup lang="ts">
+import GameItemCard from '../../.vitepress/theme/components/GameItemCard.vue';
+</script>
+
+# Popo d’Ange
+
+<GameItemCard
+  name="Popo d’Ange"
+  image="/images/items/popo-ange.png"
+  type="Objet utilisable"
+  description="Restaure les points de vie d’un Dinoz."
+/>
+```
+
+Le chemin d’import dépend de l’emplacement du fichier Markdown.
+
+Pour une page située dans :
+
+```text
+app/wiki/encyclopedie/objets/popo-ange.md
+```
+
+l’import suivant remonte jusqu’à la racine du wiki :
+
+```ts
+import GameItemCard from '../../.vitepress/theme/components/GameItemCard.vue';
+```
+
+Vérifiez que :
+
+- le fichier du composant existe ;
+- le chemin relatif est correct ;
+- les propriétés obligatoires sont fournies ;
+- les noms des propriétés correspondent au composant.
+
+### Utiliser des propriétés Vue dynamiques
+
+Une propriété Vue classique reçoit une chaîne de caractères :
+
+```vue
+<GameItemCard name="Popo d’Ange" />
+```
+
+Pour transmettre une valeur JavaScript, ajoutez `:` devant la propriété :
+
+```vue
+<GameItemCard :quantity="3" />
+```
+
+Cette syntaxe est également utile lorsqu’une chaîne contient des guillemets :
+
+```vue
+<GameItemCard :description="'Objet appelé « Popo d’Ange » dans le jeu.'" />
+```
+
+### Ajouter un commentaire invisible
+
+Les commentaires HTML ne sont pas affichés dans la page :
+
+```md
+<!-- Cette information doit encore être vérifiée. -->
+```
+
+Ils peuvent être utilisés pour laisser une indication aux autres
+contributeurs.
+
+Exemple :
+
+```md
+<!-- TODO: ajouter les autres moyens d’obtention. -->
+```
+
+Les commentaires ne doivent cependant pas remplacer les issues ou les tâches
+importantes du projet.
+
+### Exemple complet d’une page Markdown
+
+```md
+---
+title: Popo d’Ange
+description: Informations sur le Popo d’Ange dans DinoRPG Remastered.
+---
+
+<script setup lang="ts">
+import GameItemCard from '../../.vitepress/theme/components/GameItemCard.vue';
+</script>
+
+# Popo d’Ange
+
+<GameItemCard
+  name="Popo d’Ange"
+  image="/images/items/popo-ange.png"
+  type="Objet utilisable"
+  description="Objet permettant de restaurer la santé d’un Dinoz."
+/>
+
+## Description
+
+Le **Popo d’Ange** est un objet consommable pouvant être utilisé sur un Dinoz.
+
+:::
+La valeur exacte de restauration doit être confirmée dans la version actuelle
+du jeu.
+:::
+
+## Caractéristiques
+
+| Propriété   | Valeur           |
+| ----------- | ---------------- |
+| Type        | Objet utilisable |
+| Cible       | Un Dinoz         |
+| Consommable | Oui              |
+
+## Obtention
+
+Le Popo d’Ange peut être obtenu :
+
+- dans certaines boutiques ;
+- comme récompense ;
+- pendant certains événements.
+
+## Utilisation
+
+1. ouvrez l’inventaire ;
+2. sélectionnez le Popo d’Ange ;
+3. choisissez le Dinoz ciblé ;
+4. confirmez son utilisation.
+
+## Voir également
+
+- [Liste des objets](/encyclopedie/objets/)
+- [Points de vie](/encyclopedie/combats/points-de-vie)
+```
+
+### Erreurs fréquentes
+
+#### Oublier de fermer un bloc de code
+
+Exemple incorrect :
+
+````md
+```ts
+const item = 'Popo d’Ange';
+```
+````
+
+Exemple correct :
+
+````md
+```ts
+const item = 'Popo d’Ange';
+```
+````
+
+#### Oublier de fermer un encadré
+
+Exemple incorrect :
+
+```md
+::: warning
+Information importante.
+```
+
+Exemple correct :
+
+```md
+::: warning
+Information importante.
+:::
+```
+
+#### Utiliser un mauvais chemin d’image
+
+Exemple incorrect :
+
+```md
+![Popo d’Ange](app/wiki/public/images/items/popo-ange.png)
+```
+
+Exemple correct :
+
+```md
+![Popo d’Ange](/images/items/popo-ange.png)
+```
+
+#### Ajouter l’extension `.md` dans un lien
+
+Exemple incorrect :
+
+```md
+[Popo d’Ange](/encyclopedie/objets/popo-ange.md)
+```
+
+Exemple correct :
+
+```md
+[Popo d’Ange](/encyclopedie/objets/popo-ange)
+```
+
+#### Utiliser plusieurs titres principaux
+
+Exemple à éviter :
+
+```md
+# Popo d’Ange
+
+# Obtention
+```
+
+Exemple recommandé :
+
+```md
+# Popo d’Ange
+
+## Obtention
+```
+
+#### Oublier une ligne vide après un titre
+
+Exemple à éviter :
+
+```md
+## Description
+
+Le Popo d’Ange est un objet.
+```
+
+Exemple recommandé :
+
+```md
+## Description
+
+Le Popo d’Ange est un objet.
+```
+
+#### Utiliser un chemin d’import incorrect
+
+Pour une page située dans :
+
+```text
+app/wiki/encyclopedie/objets/popo-ange.md
+```
+
+exemple incorrect :
+
+```ts
+import GameItemCard from '../.vitepress/theme/components/GameItemCard.vue';
+```
+
+Exemple correct :
+
+```ts
+import GameItemCard from '../../.vitepress/theme/components/GameItemCard.vue';
+```
+
+### Vérifier le résultat
+
+Après avoir modifié une page, lancez le wiki :
+
+```bash
+pnpm wiki:dev
+```
+
+Vérifiez dans le navigateur :
+
+- la mise en forme des titres ;
+- les liens internes ;
+- les liens externes ;
+- les images ;
+- les tableaux ;
+- les encadrés ;
+- les composants Vue ;
+- l’affichage sur mobile.
+
+Lancez ensuite le build complet :
+
+```bash
+pnpm wiki:build
+```
+
+La commande de build permet notamment de détecter :
+
+- les erreurs d’import ;
+- les composants Vue manquants ;
+- les erreurs de syntaxe ;
+- les problèmes de configuration VitePress ;
+- certains liens incorrects.
+
+Une page correctement affichée en développement peut malgré tout contenir une
+erreur détectée uniquement pendant le build.
+
 ## Conventions de rédaction
 
 Pour garantir une présentation cohérente, quelques conventions doivent être
