@@ -1,4 +1,3 @@
-import { levelList } from '../models/dinoz/dinozLevel.js';
 import { DINOZ_STATE, DinozState } from '../models/dinoz/dinozState.js';
 import { DinozForMaxXp } from '../models/dinoz/dinozXP.js';
 import { raceList } from '../models/dinoz/raceList.js';
@@ -36,15 +35,21 @@ export const isDinozBlockedByLevelLimit = (dinoz: DinozForMaxXp): boolean => {
 	return !dinoz.status.some(status => status.statusId === requiredStatusId);
 };
 
-export const getMaxXp = (dinoz: DinozForMaxXp): number => {
-	const level = levelList.find(l => l.id === dinoz.level);
-	if (!level) {
-		throw new Error(`Level ${dinoz.level} doesn't exist.`);
+const BASE_LEVEL_XP = 100;
+const LEVEL_XP_MULTIPLIER = 1.075;
+
+export const getLevelXp = (level: number): number => {
+	if (!Number.isInteger(level) || level < 1) {
+		throw new Error(`Level ${level} doesn't exist.`);
 	}
+	return Math.trunc(BASE_LEVEL_XP * Math.pow(LEVEL_XP_MULTIPLIER, level - 1));
+};
+
+export const getMaxXp = (dinoz: DinozForMaxXp): number => {
 	if (isDinozBlockedByLevelLimit(dinoz)) {
 		return 0;
 	}
-	return level.experience;
+	return getLevelXp(dinoz.level);
 };
 
 export type HasPlaceId = { placeId: number };
