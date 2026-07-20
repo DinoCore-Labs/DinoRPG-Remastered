@@ -2,32 +2,23 @@ import { defineConfig } from 'vitepress';
 
 export default defineConfig({
 	lang: 'fr-FR',
-
 	title: 'Wiki DinoRPG Remastered',
-
 	description: 'Encyclopédie, guides et documentation du projet DinoRPG Remastered.',
-
 	cleanUrls: true,
 	lastUpdated: true,
-
 	// Utiliser "/" avec un domaine personnalisé comme wiki.example.fr.
 	// Utiliser "/DinoRPG-Remastered/" avec les GitHub Pages du dépôt.
 	base: process.env.WIKI_BASE ?? '/',
-
 	head: [
 		['meta', { name: 'theme-color', content: '#5d8239' }],
 		['link', { rel: 'icon', href: '/images/logo/favicon.png' }]
 	],
-
 	themeConfig: {
-		logo: '/images/logo/wiki-logo.png',
-
+		logo: '/images/logo.png',
 		siteTitle: 'DinoRPG Remastered',
-
 		search: {
 			provider: 'local'
 		},
-
 		nav: [
 			{
 				text: 'Accueil',
@@ -50,7 +41,6 @@ export default defineConfig({
 				link: '/contribution/'
 			}
 		],
-
 		sidebar: {
 			'/encyclopedie/': [
 				{
@@ -91,7 +81,6 @@ export default defineConfig({
 					]
 				}
 			],
-
 			'/guides/': [
 				{
 					text: 'Guides du jeu',
@@ -111,7 +100,6 @@ export default defineConfig({
 					]
 				}
 			],
-
 			'/technique/': [
 				{
 					text: 'Documentation technique',
@@ -140,33 +128,27 @@ export default defineConfig({
 				}
 			]
 		},
-
 		socialLinks: [
 			{
 				icon: 'github',
 				link: 'https://github.com/DinoCore-Labs/DinoRPG-Remastered'
 			}
 		],
-
 		editLink: {
 			pattern: 'https://github.com/DinoCore-Labs/DinoRPG-Remastered/edit/main/app/wiki/:path',
 			text: 'Modifier cette page sur GitHub'
 		},
-
 		footer: {
 			message: 'Projet communautaire indépendant. DinoRPG a été créé par Motion Twin.',
 			copyright: 'DinoRPG Remastered'
 		},
-
 		docFooter: {
 			prev: 'Page précédente',
 			next: 'Page suivante'
 		},
-
 		lastUpdated: {
 			text: 'Dernière mise à jour'
 		},
-
 		outline: {
 			label: 'Sur cette page',
 			level: [2, 3]
