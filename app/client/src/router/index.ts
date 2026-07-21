@@ -469,6 +469,20 @@ const router = createRouter({
 });
 
 let sessionHydrated = false;
+let maintenanceStatusCache: boolean | null = null;
+let maintenanceStatusFetchedAt = 0;
+
+async function isMaintenanceEnabled() {
+	const now = Date.now();
+	if (maintenanceStatusCache !== null && now - maintenanceStatusFetchedAt < 10_000) {
+		return maintenanceStatusCache;
+	}
+	const { MaintenanceService } = await import('../services/maintenance.service.js');
+	const status = await MaintenanceService.getStatus().catch(() => ({ enabled: false }));
+	maintenanceStatusCache = status.enabled;
+	maintenanceStatusFetchedAt = now;
+	return status.enabled;
+}
 
 router.beforeEach(async to => {
 	const user = userStore();
@@ -505,6 +519,19 @@ router.beforeEach(async to => {
 			}
 		};
 	};
+	const isMaintenancePage = to.name === 'MaintenancePage';
+	const isHomePage = to.name === 'HomePage';
+
+	if (!isMaintenancePage) {
+		const maintenanceEnabled = await isMaintenanceEnabled();
+		if (maintenanceEnabled) {
+			const ok = await tryHydrate();
+			const canBypassMaintenance = ok && (user.role === 'ADMIN' || user.role === 'SUPER_ADMIN');
+			if (!canBypassMaintenance && !isHomePage) {
+				return { name: 'MaintenancePage' };
+			}
+		}
+	}
 	// ✅ Pages publiques
 	if (to.meta.public) {
 		// si on arrive sur la home publique (ou toute page publique) et que la session est valide,
