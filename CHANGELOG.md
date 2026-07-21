@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.30.0
+
+### Minor Changes
+
+- 81d6967: Add a maintenance mode with a Vue maintenance page, admin toggle, API blocking, and Caddy fallback support during deployments.
+
 ## 0.29.0
 
 ### Minor Changes
@@ -578,6 +584,17 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.32.0
+
+### Minor Changes
+
+- 81d6967: Add a maintenance mode with a Vue maintenance page, admin toggle, API blocking, and Caddy fallback support during deployments.
+
+### Patch Changes
+
+- Updated dependencies [81d6967]
+  - @dinorpg/core@0.30.0
 
 ## 0.31.0
 
@@ -1335,6 +1352,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.31.0
+
+### Minor Changes
+
+- 81d6967: Add a maintenance mode with a Vue maintenance page, admin toggle, API blocking, and Caddy fallback support during deployments.
 
 ## 0.30.1
 
