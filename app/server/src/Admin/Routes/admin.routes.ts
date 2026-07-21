@@ -1,4 +1,5 @@
 import type { FastifyInstance } from 'fastify';
+import z from 'zod';
 
 import {
 	getAdminGameLogDailyStatsHandler,
@@ -8,6 +9,7 @@ import {
 } from '../../Gamelog/Service/adminGamelog.service.js';
 import { getAllSecrets, getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { setSpecificSecret } from '../../jobs/controller/setSpecificSecret.js';
+import { getMaintenanceMode, setMaintenanceMode } from '../../Maintenance/Controller/maintenance.controller.js';
 import { newsIdParamsSchema } from '../../News/Schema/news.schema.js';
 import { prisma } from '../../prisma.js';
 import {
@@ -19,8 +21,10 @@ import {
 	adminSecretKeyParamsSchema,
 	adminSecretListSchema,
 	adminSecretSchema,
+	maintenanceStatusSchema,
 	notFoundErrorSchema,
-	updateAdminSecretBodySchema
+	updateAdminSecretBodySchema,
+	updateMaintenanceBodySchema
 } from '../Schema/admin.schema.js';
 import {
 	addAdminDinozSkillHandler,
@@ -447,7 +451,6 @@ export async function adminRoutes(app: FastifyInstance) {
 		},
 		getAdminGameLogDailyStatsHandler
 	);
-
 	app.get(
 		'/logs/summary',
 		{
@@ -457,5 +460,34 @@ export async function adminRoutes(app: FastifyInstance) {
 			}
 		},
 		getAdminGameLogSummaryHandler
+	);
+	// Maintenance
+	app.get(
+		'/maintenance',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				response: {
+					200: maintenanceStatusSchema
+				}
+			}
+		},
+		getMaintenanceMode
+	);
+	app.patch(
+		'/maintenance',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				body: updateMaintenanceBodySchema,
+				response: {
+					200: maintenanceStatusSchema
+				}
+			}
+		},
+		async req => {
+			const body = req.body as z.infer<typeof updateMaintenanceBodySchema>;
+			return setMaintenanceMode(body.enabled);
+		}
 	);
 }
