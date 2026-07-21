@@ -16,6 +16,9 @@
 		<li :class="{ active: $route.path.startsWith('/admin/logs') }">
 			<RouterLink to="/admin/logs">Logs</RouterLink>
 		</li>
+		<li :class="{ active: $route.path.startsWith('/admin/maintenance') }">
+			<RouterLink to="/admin/logs">Maintenance</RouterLink>
+		</li>
 		<li :class="{ active: $route.path.startsWith('/admin/secrets') }">
 			<RouterLink to="/admin/secrets">Secrets</RouterLink>
 		</li>
