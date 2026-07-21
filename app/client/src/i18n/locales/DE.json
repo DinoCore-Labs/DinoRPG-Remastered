@@ -12,6 +12,10 @@
 			"message5": "Hey du! Bist du bereit, dich dem Abenteuer anzuschließen?"
 		}
 	},
+	"maintenancepage": {
+		"title": "Maintenance",
+		"description": "Le site est actuellement en maintenance. Toute l'équipe des administrateurs travaille à mettre à jour le site qui devrait à nouveau être accessible dès que possible. Merci de votre patience et de votre compréhension."
+	},
 	"topBar": {
 		"createAccount": "Ein Konto erstellen",
 		"login": "Einloggen",
