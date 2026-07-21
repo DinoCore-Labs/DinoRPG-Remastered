@@ -183,3 +183,11 @@ export const adminForcebrutOpponentBodySchema = z.object({
 
 export type AdminForcebrutOpponentParams = z.infer<typeof adminForcebrutOpponentParamsSchema>;
 export type AdminForcebrutOpponentBody = z.infer<typeof adminForcebrutOpponentBodySchema>;
+
+export const maintenanceStatusSchema = z.object({
+	enabled: z.boolean()
+});
+
+export const updateMaintenanceBodySchema = z.object({
+	enabled: z.boolean()
+});
