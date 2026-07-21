@@ -5,9 +5,6 @@
 			<p>
 				{{ $t('maintenancepage.description') }}
 			</p>
-			<router-link :to="{ name: 'HomePage', query: { admin: '1' } }" class="login-link">
-				{{ $t('maintenancepage.login') }}
-			</router-link>
 		</section>
 	</main>
 </template>
@@ -19,7 +16,6 @@
 	justify-content: center;
 	min-height: 100vh;
 	padding: 20px;
-	background: #5b351f;
 }
 .maintenance-card {
 	max-width: 560px;
