@@ -8,6 +8,7 @@ import AdminDinozPage from '../pages/Admin/AdminDinozPage.vue';
 import AdminForcebrutPage from '../pages/Admin/AdminForcebrutPage.vue';
 import AdminJobsPage from '../pages/Admin/AdminJobsPage.vue';
 import AdminLogsPage from '../pages/Admin/AdminLogsPage.vue';
+import AdminMaintenancePage from '../pages/Admin/AdminMaintenancePage.vue';
 import AdminNewsEditPage from '../pages/Admin/AdminNewsEditPage.vue';
 import AdminNewsPage from '../pages/Admin/AdminNewsPage.vue';
 import AdminPage from '../pages/Admin/AdminPage.vue';
@@ -438,6 +439,12 @@ const routes: RouteRecord[] = [
 						path: '/admin/logs',
 						name: 'AdminLogs',
 						component: AdminLogsPage,
+						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
+					},
+					{
+						path: '/admin/maintenance',
+						name: 'AdminMaintenance',
+						component: AdminMaintenancePage,
 						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
 					},
 					{
