@@ -44,6 +44,7 @@ import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
 import { startScheduler } from './jobs/scheduler.js';
 import { levelRoutes } from './Level/Routes/level.routes.js';
 import { appDiscordClient } from './logger/appDiscordClient.js';
+import { maintenanceRoutes } from './Maintenance/Routes/maintenance.routes.js';
 import { marketRoutes } from './Market/Routes/market.routes.js';
 import { messagingRoutes } from './Messaging/Routes/messaging.routes.js';
 import { missionsRoutes } from './Mission/Routes/mission.routes.js';
@@ -283,6 +284,7 @@ async function buildServer() {
 	server.register(marketRoutes, { prefix: 'api/market' });
 	server.register(forcebrutRoutes, { prefix: 'api/forcebrut' });
 	server.register(clanRoutes, { prefix: 'api/clan' });
+	server.register(maintenanceRoutes, { prefix: 'api/maintenance' });
 	server.register(versionRoutes, { prefix: 'api' });
 
 	//------------------------------------------------------
