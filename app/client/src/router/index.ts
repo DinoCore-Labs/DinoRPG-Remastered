@@ -29,6 +29,7 @@ import Inventory from '../pages/Inventory.vue';
 import LegalNoticePage from '../pages/LegalNoticePage.vue';
 import LevelUpPage from '../pages/LevelUpPage.vue';
 import MainPage from '../pages/MainPage.vue';
+import MaintenancePage from '../pages/MaintenancePage.vue';
 import ManageDinoz from '../pages/ManageDinoz.vue';
 import MarketPage from '../pages/MarketPage.vue';
 import MissionsPage from '../pages/MissionsPage.vue';
@@ -64,6 +65,12 @@ const routes: RouteRecord[] = [
 				path: '/news',
 				name: 'NewsPage',
 				component: NewsPage,
+				meta: { public: true, showLeftPanel: false }
+			},
+			{
+				path: '/maintenance',
+				name: 'MaintenancePage',
+				component: MaintenancePage,
 				meta: { public: true, showLeftPanel: false }
 			},
 			{
