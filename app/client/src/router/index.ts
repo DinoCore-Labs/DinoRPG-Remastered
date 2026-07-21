@@ -72,7 +72,7 @@ const routes: RouteRecord[] = [
 				path: '/maintenance',
 				name: 'MaintenancePage',
 				component: MaintenancePage,
-				meta: { public: true, showLeftPanel: false }
+				meta: { public: true, showLeftPanel: false, rulesExempt: true }
 			},
 			{
 				path: '/rules',
@@ -528,14 +528,17 @@ router.beforeEach(async to => {
 	};
 	const isMaintenancePage = to.name === 'MaintenancePage';
 	const isHomePage = to.name === 'HomePage';
+	const isAdminLoginBypass = isHomePage && to.query.admin === '1';
 
-	if (!isMaintenancePage) {
+	if (!isMaintenancePage && !isAdminLoginBypass) {
 		const maintenanceEnabled = await isMaintenanceEnabled();
 		if (maintenanceEnabled) {
 			const ok = await tryHydrate();
 			const canBypassMaintenance = ok && (user.role === 'ADMIN' || user.role === 'SUPER_ADMIN');
-			if (!canBypassMaintenance && !isHomePage) {
-				return { name: 'MaintenancePage' };
+			if (!canBypassMaintenance) {
+				return {
+					name: 'MaintenancePage'
+				};
 			}
 		}
 	}
