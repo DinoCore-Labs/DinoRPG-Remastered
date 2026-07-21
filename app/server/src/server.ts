@@ -21,6 +21,7 @@ import {
 	type ZodTypeProvider
 } from 'fastify-type-provider-zod';
 
+import { Role } from '../../prisma/index.js';
 import { adminRoutes } from './Admin/Routes/admin.routes.js';
 import { bankRoutes } from './Bank/Routes/bank.routes.js';
 import { clanRoutes } from './Clan/Routes/clan.routes.js';
@@ -44,6 +45,7 @@ import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
 import { startScheduler } from './jobs/scheduler.js';
 import { levelRoutes } from './Level/Routes/level.routes.js';
 import { appDiscordClient } from './logger/appDiscordClient.js';
+import { getMaintenanceMode } from './Maintenance/Controller/maintenance.controller.js';
 import { maintenanceRoutes } from './Maintenance/Routes/maintenance.routes.js';
 import { marketRoutes } from './Market/Routes/market.routes.js';
 import { messagingRoutes } from './Messaging/Routes/messaging.routes.js';
@@ -59,6 +61,7 @@ import { versionRoutes } from './Version/Routes/version.routes.js';
 const cfg = loadConfig();
 
 type AuthenticatedUser = FastifyJWT['user'] & {
+	role?: UserRole;
 	gameRulesAcceptedVersion?: string | null;
 };
 
@@ -194,7 +197,54 @@ async function buildServer() {
 			return reply.code(403).send({ message: 'Forbidden' });
 		}
 	});
-
+	//------------------------------------------------------
+	// 5.bis Maintenance mode
+	//------------------------------------------------------
+	function isMaintenanceAllowedPath(pathname: string) {
+		return (
+			pathname === '/api/maintenance' ||
+			pathname.startsWith('/api/maintenance/') ||
+			pathname === '/api/users/login' ||
+			pathname === '/api/users/logout' ||
+			pathname === '/api/users/me' ||
+			pathname === '/api/users/me/rules/accept' ||
+			pathname.startsWith('/api/version') ||
+			pathname.startsWith('/docs') ||
+			pathname === '/healthcheck'
+		);
+	}
+	async function isAdminMaintenanceBypass(req: FastifyRequest) {
+		const token = req.cookies.access_token;
+		if (!token) {
+			return false;
+		}
+		try {
+			const decoded = req.jwt.verify<AuthenticatedUser>(token);
+			return decoded.role === Role.ADMIN || decoded.role === Role.SUPER_ADMIN;
+		} catch {
+			return false;
+		}
+	}
+	server.addHook('preHandler', async (req, reply) => {
+		const pathname = req.url.split('?')[0];
+		if (!pathname.startsWith('/api/')) {
+			return;
+		}
+		if (isMaintenanceAllowedPath(pathname)) {
+			return;
+		}
+		const maintenance = await getMaintenanceMode();
+		if (!maintenance.enabled) {
+			return;
+		}
+		if (await isAdminMaintenanceBypass(req)) {
+			return;
+		}
+		return reply.code(503).send({
+			code: 'maintenance.enabled',
+			message: 'Maintenance'
+		});
+	});
 	//------------------------------------------------------
 	// EXTRA : Multipart pour les uploads
 	//------------------------------------------------------
