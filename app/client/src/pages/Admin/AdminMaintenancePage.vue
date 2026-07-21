@@ -1,6 +1,6 @@
 <template>
 	<div class="admin-maintenance">
-		<h2>Maintenance</h2>
+		<TitleHeader title="Admin - Maintenance" header="Maintenance" />
 		<p>
 			Active ce mode pour bloquer l'accès au jeu aux joueurs. Les administrateurs pourront toujours accéder aux pages
 			d'administration.
@@ -9,9 +9,9 @@
 			<input v-model="enabled" type="checkbox" :disabled="loading || saving" />
 			<span>Mode maintenance actif</span>
 		</label>
-		<button type="button" :disabled="loading || saving" @click="saveMaintenance">
+		<DZButton type="button" :disabled="loading || saving" @click="saveMaintenance">
 			{{ saving ? 'Enregistrement...' : 'Enregistrer' }}
-		</button>
+		</DZButton>
 	</div>
 </template>
 
@@ -19,6 +19,8 @@
 import { onMounted, ref } from 'vue';
 
 import { MaintenanceService } from '../../services/maintenance.service';
+import DZButton from '../../components/utils/DZButton.vue';
+import TitleHeader from '../../components/utils/TitleHeader.vue';
 
 const enabled = ref(false);
 const loading = ref(false);
