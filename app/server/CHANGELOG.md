@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.32.0
+
+### Minor Changes
+
+- 81d6967: Add a maintenance mode with a Vue maintenance page, admin toggle, API blocking, and Caddy fallback support during deployments.
+
+### Patch Changes
+
+- Updated dependencies [81d6967]
+  - @dinorpg/core@0.30.0
+
 ## 0.31.0
 
 ### Minor Changes
