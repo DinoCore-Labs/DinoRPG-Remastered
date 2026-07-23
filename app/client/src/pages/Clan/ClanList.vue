@@ -287,7 +287,7 @@ input {
 	font-size: 9pt;
 	font-weight: bold;
 	border: none;
-	background-image: url('../../assets/design/form_field.webp');
+	background-image: url('../../assets/background/form_field.webp');
 	background-repeat: no-repeat;
 	background-color: transparent;
 }
