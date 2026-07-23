@@ -194,7 +194,7 @@ importers:
         specifier: ^8.21.0
         version: 8.22.0
       sharp:
-        specifier: ^0.35.2
+        specifier: ^0.35.3
         version: 0.35.3(@types/node@25.9.5)
       zod:
         specifier: ^4.4.3
