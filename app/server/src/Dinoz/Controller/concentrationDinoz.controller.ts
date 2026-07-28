@@ -29,7 +29,7 @@ function buildScopeKey(user: { id: string; clanId: number | null }): string {
  * Le verrou est automatiquement libéré à la fin de la transaction.
  */
 async function lockConcentrationScope(tx: Transaction, scopeKey: string): Promise<void> {
-	await tx.$queryRaw`
+	await tx.$executeRaw`
 		SELECT pg_advisory_xact_lock(hashtext(${scopeKey}))
 	`;
 }
