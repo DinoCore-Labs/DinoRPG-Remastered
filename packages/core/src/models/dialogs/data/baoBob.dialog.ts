@@ -75,7 +75,7 @@ export const baoBobDialog = defineDialog({
 		},
 		ok: {
 			id: 'ok',
-			text: '',
+			text: 'npc.baoBob.dialog.ok',
 			next: [],
 			effects: [
 				{
