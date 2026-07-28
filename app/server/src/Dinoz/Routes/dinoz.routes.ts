@@ -9,6 +9,7 @@ import {
 	updateDinozOrdersBodySchema
 } from '../Schema/dinoz.schema.js';
 import { changeLeaderDinozGroup } from '../Service/changeLeaderDinozGroup.service.js';
+import { enterDarkPortalHandler, stopDinozConcentrationHandler } from '../Service/concentrationDinoz.service.js';
 import { digWithDinozHandler } from '../Service/dig.service.js';
 import { disband } from '../Service/disbandDinozTeam.service.js';
 import { followDinoz } from '../Service/followDinoz.service.js';
@@ -252,5 +253,27 @@ export async function dinozRoutes(app: FastifyInstance) {
 			}
 		},
 		unfreezeDinoz
+	);
+	app.post(
+		'/:id/stop-concentration',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Dinoz'],
+				params: dinozIdParamsSchema
+			}
+		},
+		stopDinozConcentrationHandler
+	);
+	app.post(
+		'/:id/enter-portal',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Dinoz'],
+				params: dinozIdParamsSchema
+			}
+		},
+		enterDarkPortalHandler
 	);
 }
