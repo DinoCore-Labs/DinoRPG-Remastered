@@ -1189,7 +1189,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 2, odds: 1 }
 		],
 		skills: [Skill.M_FLIGHT],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'piraos'
 	},
 	[Monster.PIRHANOS_2]: {
 		id: Monster.PIRHANOS_2,
@@ -1229,7 +1230,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		resilience: 40,
 		odds: 100,
 		hp: 30,
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'garouz'
 	},
 	[Monster.AMENCIAO]: {
 		id: Monster.AMENCIAO,
@@ -1256,7 +1258,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 30,
 		xpBonus: 5,
 		canBeCaptured: false,
-		entrance: EntranceEffect.GROUND
+		entrance: EntranceEffect.GROUND,
+		display: 'amanpe'
 	},
 	[Monster.AMENPENNE]: {
 		id: Monster.AMENPENNE,
@@ -1282,6 +1285,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 30,
 		xpBonus: 5,
 		canBeCaptured: false,
+		display: 'amanpe',
 		entrance: EntranceEffect.GROUND
 	},
 	[Monster.WILL_O]: {
@@ -1308,7 +1312,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		hp: 80,
 		xpBonus: 10,
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'feufol'
 	},
 	[Monster.DARK_SMASHROOM]: {
 		id: Monster.DARK_SMASHROOM,
