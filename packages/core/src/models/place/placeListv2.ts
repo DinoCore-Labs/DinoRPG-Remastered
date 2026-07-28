@@ -768,7 +768,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.JUNGLE,
 		moves: [],
 		gotoPlaceId: PlaceEnum.PORTE_DE_SYLVENOIRE,
-		background: 'garde'
+		background: 's_garde'
 	},
 
 	[PlaceEnum.FRONTIERE_CREPITANTE]: {
@@ -781,7 +781,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.GO_TO_SYLVENOIRE_DOOR }
 		],
 		gathers: [GatherType.CUEILLE1],
-		background: 'st_enter'
+		background: 's_desertEnt'
 	},
 
 	[PlaceEnum.CROISEE_DES_NOMADES]: {
@@ -793,7 +793,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.CITADELLE_DU_ROI, difficulty: 2 },
 			{ target: PlaceEnum.SENTIER_DE_TOUTEMBA, difficulty: 2 }
 		],
-		background: 'st_cross'
+		background: 'desert1'
 	},
 
 	[PlaceEnum.AVANT_POSTE_ROCKY]: {
@@ -802,7 +802,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.STEPPE,
 		moves: [{ target: PlaceEnum.FRONTIERE_CREPITANTE }, { target: PlaceEnum.CITADELLE_DU_ROI }],
 		gathers: [GatherType.HUNT],
-		background: 'st_todo'
+		background: 'desert5'
 	},
 
 	[PlaceEnum.CITADELLE_DU_ROI]: {
@@ -816,7 +816,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.PYLONES_DE_MAGNETITES }
 		],
 		gathers: [GatherType.SEEK],
-		background: 'st_king'
+		background: 's_king'
 	},
 
 	[PlaceEnum.PYLONES_DE_MAGNETITES]: {
@@ -829,7 +829,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.DEVOREUSE_DU_NORD }
 		],
 		gathers: [GatherType.ENERGY1],
-		background: 'st_pylon'
+		background: 's_pylon'
 	},
 
 	[PlaceEnum.SYPHON_SIFFLEUR]: {
@@ -845,7 +845,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.APPROCHER_SYPHON2, condition: 'collec(magnet)' }
 		],
 		gathers: [GatherType.FISH],
-		background: 'st_syphon'
+		background: 's_syphon'
 	},
 
 	[PlaceEnum.SENTIER_DE_TOUTEMBA]: {
@@ -854,7 +854,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.STEPPE,
 		moves: [{ target: PlaceEnum.CROISEE_DES_NOMADES, difficulty: 2 }, { target: PlaceEnum.SYPHON_SIFFLEUR }],
 		gathers: [GatherType.ENERGY1],
-		background: 'st_canyon'
+		background: 's_campRogues'
 	},
 
 	[PlaceEnum.DEVOREUSE_DE_L_EST]: {
@@ -862,7 +862,7 @@ export const placeListv2 = definePlaces({
 		name: 'stowr1',
 		map: MapZone.STEPPE,
 		moves: [{ target: PlaceEnum.CITADELLE_DU_ROI }],
-		background: 'st_devor'
+		background: 's_devor'
 	},
 
 	[PlaceEnum.DEVOREUSE_DU_NORD]: {
@@ -870,7 +870,7 @@ export const placeListv2 = definePlaces({
 		name: 'stowr2',
 		map: MapZone.STEPPE,
 		moves: [{ target: PlaceEnum.PYLONES_DE_MAGNETITES }],
-		background: 'st_devor'
+		background: 's_devor'
 	},
 
 	[PlaceEnum.DEVOREUSE_DE_L_OUEST]: {
@@ -878,7 +878,7 @@ export const placeListv2 = definePlaces({
 		name: 'stowr3',
 		map: MapZone.STEPPE,
 		moves: [{ target: PlaceEnum.SYPHON_SIFFLEUR }],
-		background: 'st_devor'
+		background: 's_devor'
 	},
 
 	[PlaceEnum.TAUDIS_DES_ZAXA]: {
@@ -890,7 +890,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.CAMP_DES_EMMEMMA },
 			{ target: PlaceEnum.CAMPEMENT_DES_MATTMUT, difficulty: 3 }
 		],
-		background: 'st_camp'
+		background: 's_campRogues'
 	},
 
 	[PlaceEnum.CAMP_DES_EMMEMMA]: {
@@ -902,7 +902,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.TAUDIS_DES_ZAXA },
 			{ target: PlaceEnum.PORTES_DE_CAUSHEMESH, condition: 'active(caush)+scenario(caush,6+)+clanact(pompe)' }
 		],
-		background: 'st_camp'
+		background: 's_campRogues'
 	},
 
 	[PlaceEnum.CAMPEMENT_DES_MATTMUT]: {
@@ -914,7 +914,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.CAMP_DES_EMMEMMA },
 			{ target: PlaceEnum.REPAIRE_DE_LA_TEAM_W, condition: 'scenario(magnet,5+)' }
 		],
-		background: 'st_camp'
+		background: 's_campRogues'
 	},
 
 	[PlaceEnum.REPAIRE_DE_LA_TEAM_W]: {
@@ -923,7 +923,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.STEPPE,
 		moves: [{ target: PlaceEnum.CAMPEMENT_DES_MATTMUT }],
 		gathers: [GatherType.SEEK],
-		background: 'st_campw'
+		background: 's_campWanwans'
 	},
 
 	[PlaceEnum.APPROCHER_SYPHON]: {
@@ -932,7 +932,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.STEPPE,
 		moves: [],
 		gotoPlaceId: PlaceEnum.SYPHON_SIFFLEUR,
-		background: 'st_syphon'
+		background: 's_syphon'
 	},
 
 	[PlaceEnum.APPROCHER_SYPHON2]: {
@@ -941,7 +941,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.STEPPE,
 		moves: [],
 		gotoPlaceId: PlaceEnum.CONFINS_DES_STEPPES,
-		background: 'st_syphon'
+		background: 's_syphon'
 	},
 
 	[PlaceEnum.CONFINS_DES_STEPPES]: {
@@ -953,7 +953,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.PORTES_DE_CAUSHEMESH, condition: 'active(caush)+scenario(caush,6+)+clanact(pompe)' }
 		],
 		gathers: [GatherType.CUEILLE1],
-		background: 'st_caush'
+		background: 's_caushEnt'
 	},
 
 	[PlaceEnum.PORTES_DE_CAUSHEMESH]: {
@@ -967,7 +967,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.CONFINS_DES_STEPPES }
 		],
 		gathers: [GatherType.SEEK],
-		background: 'sporte'
+		background: 's_caushDoor'
 	},
 
 	[PlaceEnum.GOTOCA]: {
