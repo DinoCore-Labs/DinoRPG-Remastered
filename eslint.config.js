@@ -8,6 +8,8 @@ import vuePlugin from 'eslint-plugin-vue';
 import globals from 'globals';
 import vueParser from 'vue-eslint-parser';
 
+import prettierConfig from './prettier.config.js';
+
 export default defineConfig([
 	/* -------------------------------------------------------------------------- */
 	/*                           IGNORE BUILD + NODE                              */
@@ -52,7 +54,7 @@ export default defineConfig([
 			'import/named': 'off',
 			'import/newline-after-import': 'error',
 			'import/no-duplicates': 'error',
-			'prettier/prettier': 'error'
+			'prettier/prettier': ['error', prettierConfig]
 		}
 	},
 	/* -------------------------------------------------------------------------- */
@@ -80,7 +82,7 @@ export default defineConfig([
 		},
 		rules: {
 			'import/named': 'off',
-			'prettier/prettier': 'error'
+			'prettier/prettier': ['error', prettierConfig]
 		}
 	}
 ]);
