@@ -648,7 +648,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.GOUFFRE },
 			{ target: PlaceEnum.DARK_FAKE_2, condition: 'curmission(roid)|mission(roid)' }
 		],
-		background: 'dk_baobob'
+		background: 's_dkBaobob'
 	},
 	[PlaceEnum.GOUFFRE]: {
 		placeId: PlaceEnum.GOUFFRE,
@@ -657,10 +657,10 @@ export const placeListv2 = definePlaces({
 		moves: [
 			{ target: PlaceEnum.PORTAIL },
 			{ target: PlaceEnum.TOUR_SOMBRE },
-			{ target: PlaceEnum.RETOUR_SURFACE, condition: 'active(gulom)' },
+			{ target: PlaceEnum.RETOUR_SURFACE /*, condition: 'active(gulom)'*/ },
 			{ target: PlaceEnum.DARK_FAKE, condition: 'curmission(ouestu)|curmission(lumi)|curmission(truci2)|fx(morsso)' }
 		],
-		background: 'dk_chutes'
+		background: 's_dkChutes'
 	},
 	[PlaceEnum.TOUR_SOMBRE]: {
 		placeId: PlaceEnum.TOUR_SOMBRE,
@@ -674,7 +674,7 @@ export const placeListv2 = definePlaces({
 				condition: 'curmission(monte)|curmission(roif)|scenario(smog,15)|scenario(smog,16)'
 			}
 		],
-		background: 'dk_tower'
+		background: 's_dkSwamp'
 	},
 	[PlaceEnum.TOUR_SOMBRE_1]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_1,
@@ -682,7 +682,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.DARKWORLD,
 		moves: [{ target: PlaceEnum.TOUR_SOMBRE }, { target: PlaceEnum.TOUR_SOMBRE_2 }],
 		hide: true,
-		background: 'dk_toweret'
+		background: 's_dkTower'
 	},
 	[PlaceEnum.TOUR_SOMBRE_2]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_2,
@@ -690,7 +690,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.DARKWORLD,
 		moves: [{ target: PlaceEnum.TOUR_SOMBRE_1 }, { target: PlaceEnum.TOUR_SOMBRE_DONJON_1 }],
 		hide: true,
-		background: 'dk_toweret'
+		background: 's_dkTower'
 	},
 	[PlaceEnum.TOUR_SOMBRE_DONJON_1]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_1,
@@ -702,7 +702,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.TOUR_SOMBRE_DONJON_3 }
 		],
 		hide: true,
-		background: 'dk_towerIn'
+		background: 's_dkTower'
 	},
 	[PlaceEnum.TOUR_SOMBRE_DONJON_2]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_2,
@@ -710,7 +710,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.DARKWORLD,
 		moves: [{ target: PlaceEnum.TOUR_SOMBRE_DONJON_1 }, { target: PlaceEnum.TOUR_SOMBRE_DONJON_LAST }],
 		hide: true,
-		background: 'dk_towerIn'
+		background: 's_dkTower'
 	},
 	[PlaceEnum.TOUR_SOMBRE_DONJON_3]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_3,
@@ -718,7 +718,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.DARKWORLD,
 		moves: [{ target: PlaceEnum.TOUR_SOMBRE_DONJON_1 }, { target: PlaceEnum.TOUR_SOMBRE_DONJON_LAST }],
 		hide: true,
-		background: 'dk_towerIn'
+		background: 's_dkTower'
 	},
 	[PlaceEnum.TOUR_SOMBRE_DONJON_LAST]: {
 		placeId: PlaceEnum.TOUR_SOMBRE_DONJON_LAST,
@@ -726,7 +726,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.DARKWORLD,
 		moves: [{ target: PlaceEnum.TOUR_SOMBRE_DONJON_2 }, { target: PlaceEnum.TOUR_SOMBRE_DONJON_3 }],
 		hide: true,
-		background: 'dk_towerIn'
+		background: 's_dkTower'
 	},
 	[PlaceEnum.DARK_FAKE]: {
 		placeId: PlaceEnum.DARK_FAKE,
@@ -748,7 +748,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.DARKWORLD,
 		moves: [],
 		gotoPlaceId: PlaceEnum.TOUR_SOMBRE,
-		background: 'dk_towerIn'
+		background: 'cave2'
 	},
 	[PlaceEnum.RETOUR_SURFACE]: {
 		placeId: PlaceEnum.RETOUR_SURFACE,
