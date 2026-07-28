@@ -57,6 +57,7 @@ model Dinoz {
   stateTimer         DateTime?              @db.Timestamptz(3)
 
   catches            DinozCatch[]
+  concentration      DinozConcentration?
   fight              Boolean                @default(true)
   gather             Boolean                @default(true)
   leaderId           Int?                   @map("following")
@@ -95,6 +96,34 @@ model DinozItems {
 
   @@index([dinozId])
   @@map("dinoz_item")
+}
+
+model DinozConcentration {
+  dinozId   Int      @id
+  sessionId Int
+
+  startedAt DateTime @default(now()) @db.Timestamptz(3)
+
+  dinoz   Dinoz                     @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+  session DinozConcentrationSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@map("dinoz_concentration")
+}
+
+model DinozConcentrationSession {
+  id        Int                     @id @default(autoincrement())
+  scopeKey  String                  @unique @db.VarChar(64)
+  state     DinozConcentrationState @default(GATHERING)
+
+  createdAt DateTime                @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime                @updatedAt @db.Timestamptz(3)
+  openedAt  DateTime?               @db.Timestamptz(3)
+
+  participants DinozConcentration[]
+
+  @@index([state])
+  @@map("dinoz_concentration_session")
 }
 
 model DinozMissions {
@@ -836,6 +865,11 @@ model ClanPage {
   Clan    Clan    @relation(fields: [clanId], references: [id])
 
   @@index([clanId])
+}
+
+enum DinozConcentrationState {
+  GATHERING
+  OPEN
 }
 
 enum DinozState {
