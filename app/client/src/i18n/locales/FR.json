@@ -734,7 +734,22 @@
 		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
 		"bankSavingNotFound": "Cette épargne est introuvable.",
 		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois.",
-		"bankSavingPlanAlreadyActive": "Vous avez déjà une épargne de cette durée en attente de récupération."
+		"bankSavingPlanAlreadyActive": "Vous avez déjà une épargne de cette durée en attente de récupération.",
+		"concentrationStopped": "Votre Dinoz a arrêté de se concentrer.",
+		"darkPortalEntered": "Votre Dinoz a franchi le portail vers le Monde sombre.",
+		"dinozAlreadyConcentrating": "Ce Dinoz se concentre déjà.",
+		"dinozNotConcentrating": "Ce Dinoz ne se concentre pas.",
+		"dinozConcentrating": "Ce Dinoz se concentre actuellement et ne peut effectuer aucune autre action.",
+		"concentrationInvalidPlace": "Le Dinoz doit se trouver auprès de Mr Bao.",
+		"concentrationDeadDinoz": "Un Dinoz mort ne peut pas se concentrer.",
+		"concentrationUnavailableDinoz": "Ce Dinoz est actuellement indisponible.",
+		"concentrationDinozInGroup": "Le Dinoz doit quitter son groupe avant de commencer à se concentrer.",
+		"concentrationMissingFlippers": "Le Dinoz doit posséder les Palmes pour commencer cette concentration.",
+		"concentrationSylvenoireKey": "Un Dinoz possédant déjà la Clé de Sylvenoire ne peut pas participer.",
+		"concentrationAlreadyOpen": "Le portail est déjà ouvert pour les sept Dinoz ayant terminé leur concentration.",
+		"concentrationFull": "Les sept places de cette concentration sont déjà occupées.",
+		"concentrationCannotStopAfterOpening": "La concentration est terminée : le Dinoz doit maintenant entrer dans le portail.",
+		"concentrationNotCompleted": "Sept Dinoz doivent terminer leur concentration avant que le portail puisse être franchi."
 	},
 	"tooltip": {
 		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
@@ -2824,7 +2839,9 @@
 			"reincarnation": "Votre Dinoz peut se réincarner ! Il conservera la même destinée des éléments.",
 			"change_leader": "Votre Dinoz peut devenir le nouveau leader du groupe.",
 			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
-			"CEF": "Cher client, bienvenue au Centre d'Entraînement de Fosselave !"
+			"CEF": "Cher client, bienvenue au Centre d'Entraînement de Fosselave !",
+			"stop_concen": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
+			"enter_portal": "Le portail vers le Monde sombre est ouvert. Votre Dinoz peut désormais le franchir."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -2858,7 +2875,9 @@
 			"reincarnation": "Réincarnation",
 			"change_leader": "Devenir Leader",
 			"fb_tournament": "Tournoi de Forcebrut",
-			"CEF": "Centre d'Entraînement de Fosselave"
+			"CEF": "Centre d'Entraînement de Fosselave",
+			"stop_concen": "Arrêter de se concentrer",
+			"enter_portal": "Entrer dans le Portail"
 		}
 	},
 	"fight": {
@@ -4171,7 +4190,8 @@
 				"quest4": "Une question ? Mmmmm... Il va te falloir des ingrédients pour que je t'aide. <br> Enfin, si je devine bien quelle question tu voulais me poser...",
 				"noingr": "Tsss tsss tsss.... Le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane. <br> Il me semble qu'il te manque quelquechose, mon cher.",
 				"ingr": "Poum poum palalam poum poum pam poum poum palalam pam ! Et voila, une magnifique Potion Anti Sedh pour toi...",
-				"potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !"
+				"potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !",
+				"ok": "Très bien. Votre Dinoz ferme les yeux et commence à se concentrer profondément..."
 			},
 			"choice": {
 				"question": "J'ai une question à vous poser...",
