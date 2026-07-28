@@ -17,6 +17,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/client.js';
 import { addSkillToDinoz } from '../../Dinoz/Controller/addSkillToDinoz.controller.js';
+import { startDinozConcentration } from '../../Dinoz/Controller/concentrationDinoz.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { unlockDoubleSkills } from '../../Level/Controller/unlockDoubleSkills.controller.js';
 import { unlockDinozMission } from '../../Mission/Controller/mission.progress.js';
@@ -375,6 +376,9 @@ async function applyDialogEffect(
 			if (effect.skillid === skillList[Skill.COMPETENCE_DOUBLE].id) {
 				await unlockDoubleSkills(context.dinoz.id);
 			}
+			return;
+		case 'startConcentration':
+			await startDinozConcentration(tx, context.user.id, context.dinoz.id);
 			return;
 		case 'friend':
 		case 'moveRandom':

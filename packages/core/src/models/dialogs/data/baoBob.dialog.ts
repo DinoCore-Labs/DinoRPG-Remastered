@@ -77,9 +77,11 @@ export const baoBobDialog = defineDialog({
 			id: 'ok',
 			text: '',
 			next: [],
-			actions: {
-				url: '/dino/::did::/act/concentrate'
-			}
+			effects: [
+				{
+					type: 'startConcentration'
+				}
+			]
 		},
 		quest4: {
 			id: 'quest4',
