@@ -8,6 +8,7 @@ import { removeItem } from '../../Inventory/Controller/removeItem.controller.js'
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { ownsDinoz } from '../../User/Controller/ownsDinoz.controller.js';
+import { assertDinozNotConcentrating } from '../Controller/concentrationDinoz.controller.js';
 import { updateDinoz } from '../Controller/updateDinoz.controller.js';
 
 type UseIrmaParams = {
@@ -49,6 +50,10 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 	}
 
 	const team = [dinoz, ...(dinoz.followers ?? [])];
+
+	for (const teamDinoz of team) {
+		await assertDinozNotConcentrating(teamDinoz.id);
+	}
 
 	const irmaItemId = itemList[Item.POTION_IRMA].itemId;
 	const irmaQuantity = dinoz.user.items?.find(i => i.itemId === irmaItemId);

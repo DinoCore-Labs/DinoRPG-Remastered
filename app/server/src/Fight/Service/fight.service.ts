@@ -18,6 +18,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { Dinoz, DinozMissions, DinozSkills, DinozStatus, GameLogType, User } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
+import { assertDinozNotConcentrating } from '../../Dinoz/Controller/concentrationDinoz.controller.js';
 import { createCatch, removeCatch, updateCatch } from '../../Dinoz/Controller/dinozCatches.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
@@ -64,6 +65,7 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 	if (!user) throw new ExpectedError('userNotFound', { params: { id: authed.id } });
 	const dinozData = user.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
+	await assertDinozNotConcentrating(dinozId);
 	// Marais Collant - No fight days
 	if (
 		gameConfig.world.disableSwampFightRules &&
@@ -93,9 +95,6 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 			dinozId
 		);
 	}
-	/*if (dinozData.concentration) {
-		throw new ExpectedError(translate(`concentration`, authed));
-	}*/
 	if (team.some(d => !d.fight)) {
 		throw new ExpectedError(`missingIrma`);
 	}

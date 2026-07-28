@@ -5,6 +5,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { ownsDinoz } from '../../User/Controller/ownsDinoz.controller.js';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
+import { assertDinozNotConcentrating } from '../Controller/concentrationDinoz.controller.js';
 import { getDinozFicheRequest } from '../Controller/getDinozFiche.controller.js';
 import { updateDinoz } from '../Controller/updateDinoz.controller.js';
 
@@ -58,6 +59,9 @@ export async function followDinoz(req: FastifyRequest<{ Params: Params }>, _repl
 	if (!(await ownsDinoz(authed.id, dinozId, dinozToFollowId))) {
 		throw new ExpectedError('Player does not own this dinoz');
 	}
+
+	await assertDinozNotConcentrating(dinozId);
+	await assertDinozNotConcentrating(dinozToFollowId);
 
 	if (dinoz.placeId !== leader.placeId) {
 		throw new ExpectedError('Dinoz should be at the same place.');
