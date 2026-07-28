@@ -1280,7 +1280,10 @@
 			"Resistance": "Résistance",
 			"ElementalDisciple": "Disciple élémentaire",
 			"CursedWand": "Baguette Maudite",
-			"elemental": "Élémentaire"
+			"elemental": "Élémentaire",
+			"Steal": "Vol",
+			"Stinger": "Dard",
+			"PoisonedPicks": "Pics empoisonnées"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les **assauts** de Feu de 7",
@@ -2965,7 +2968,14 @@
 			"amanpe": "Amenpenne",
 			"amanp2": "Amenpenne",
 			"feufol": "Feu-Folle",
-			"towgrd": "Gardien de la Tour"
+			"towgrd": "Gardien de la Tour",
+			"worm2": "Chtiver",
+			"worm": "Longbrik",
+			"scorp": "Scorpwink",
+			"cactus": "Kaktuz",
+			"brig1": "Brigand Zaxa",
+			"brig2": "Brigand Emema",
+			"brig3": "Brigand Mattmût"
 		},
 		"status": {
 			"asleep": "endormi",
