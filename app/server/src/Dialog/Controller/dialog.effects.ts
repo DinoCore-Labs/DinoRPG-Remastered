@@ -15,7 +15,7 @@ import {
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { Prisma } from '../../../../prisma/client.js';
+import { Prisma } from '../../../../prisma/index.js';
 import { addSkillToDinoz } from '../../Dinoz/Controller/addSkillToDinoz.controller.js';
 import { startDinozConcentration } from '../../Dinoz/Controller/concentrationDinoz.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';

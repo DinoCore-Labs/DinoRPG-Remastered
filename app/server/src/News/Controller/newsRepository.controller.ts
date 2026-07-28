@@ -1,4 +1,4 @@
-import { Prisma } from '../../../../prisma/client.js';
+import { Prisma } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
 export const adminNewsDetailsInclude = {

@@ -9,7 +9,7 @@ import type {
 import { rewardIdByKey, statTrackingByCollectionKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { GameLogType, MoneyType, type Prisma } from '../../../../prisma/client.js';
+import { GameLogType, MoneyType, type Prisma } from '../../../../prisma/index.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';

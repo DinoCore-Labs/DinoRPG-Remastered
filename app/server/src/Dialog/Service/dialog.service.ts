@@ -2,7 +2,7 @@ import { DialogPhaseResponse, DialogResponseLink } from '@dinorpg/core/models/di
 import { RuntimeDialog, RuntimeDialogLink, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 
-import { Prisma } from '../../../../prisma/client.js';
+import { Prisma } from '../../../../prisma/index.js';
 import { advanceDinozMissionOnTalk } from '../../Mission/Controller/mission.progress.js';
 import { prisma } from '../../prisma.js';
 import { checkDialogCondition } from '../../utils/conditions/checkDialogCondition.js';

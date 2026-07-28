@@ -1,7 +1,7 @@
 import type { StopDinozMissionResponse } from '@dinorpg/core/models/missions/missionResponse.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { GameLogType, type Prisma } from '../../../../prisma/client.js';
+import { GameLogType, type Prisma } from '../../../../prisma/index.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { assertOwnedDinoz } from './mission.access.js';
 

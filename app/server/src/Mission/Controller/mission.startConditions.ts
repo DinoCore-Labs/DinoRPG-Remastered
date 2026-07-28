@@ -4,7 +4,7 @@ import type { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
 import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import type { Prisma } from '../../../../prisma/client.js';
+import type { Prisma } from '../../../../prisma/index.js';
 
 type MissionTransaction = Prisma.TransactionClient;
 
