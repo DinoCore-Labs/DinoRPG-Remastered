@@ -2807,6 +2807,10 @@
 	},
 	"action": {
 		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
+		"confirm": {
+			"stop_concen": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
+			"enter_portal": "Préparez-vous bien, personne ne sait quels dangers vous guettent de l'autre côté !"
+		},
 		"description": {
 			"fight": "Recherchez un monstre à combattre à cet endroit.",
 			"follow": "Votre Dinoz peut **suivre** un autre de vos Dinoz si vous le voulez, ils se déplaceront alors ensemble et s'aideront pendant les combats.",
