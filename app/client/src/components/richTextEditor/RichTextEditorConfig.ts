@@ -7,14 +7,7 @@ import { EmotesTwinoidV2Enum, EmotesTwinoidV2Icons } from './emotes/EmotesTwinoi
 import { EmotesTwinoidV3Enum, EmotesTwinoidV3Icons } from './emotes/EmotesTwinoidV3Icons';
 
 export type FormattingType =
-	| 'bold'
-	| 'italic'
-	| 'bolditalic'
-	| 'strike'
-	| 'highlight'
-	| 'blockquote'
-	| 'spoiler'
-	| 'code';
+	'bold' | 'italic' | 'bolditalic' | 'strike' | 'highlight' | 'blockquote' | 'spoiler' | 'code';
 export type RichTextEditorButtonType = FormattingType;
 
 export interface RichTextEditorFormattingButtonConfig {
