@@ -5009,16 +5009,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_WORM_2]: {
 		id: Skill.M_WORM_2,
 		name: 'Sand',
-		type: SkillType.A,
-		energy: Energy.E20,
+		type: SkillType.S,
+		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: false,
-		priority: 1,
-		probability: 100,
-		visualEffect: SkillVisualEffect.PROJECTILE
+		isSphereSkill: false
 	},
 	[Skill.M_POISONED_PICKS]: {
 		id: Skill.M_POISONED_PICKS,

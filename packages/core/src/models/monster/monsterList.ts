@@ -608,6 +608,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
 		skills: [Skill.M_WORM_2],
+		display: 'worm2',
 		entrance: EntranceEffect.FALL
 	},
 	[Monster.WORM]: {
@@ -628,6 +629,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		skills: [Skill.M_WORM],
 		noMove: true,
+		display: 'worm',
 		entrance: EntranceEffect.FALL
 	},
 	[Monster.SCORP]: {
@@ -646,6 +648,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 30,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
+		display: 'scorp',
 		skills: [Skill.M_STINGER]
 	},
 	[Monster.CACTUS]: {
@@ -667,6 +670,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 12,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
+		display: 'cactus',
 		skills: [Skill.M_POISONED_PICKS]
 	},
 	[Monster.BRIG1_ALL]: {
@@ -691,6 +695,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 1, odds: 1 }
 		],
 		canBeCaptured: true,
+		display: 'brig1',
 		skills: [Skill.M_STEAL]
 	},
 	[Monster.BRIG1_HOME]: {
@@ -716,6 +721,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 1, odds: 1 }
 		],
 		canBeCaptured: true,
+		display: 'brig1',
 		skills: [Skill.M_STEAL]
 	},
 	[Monster.BRIG2_ALL]: {
@@ -743,6 +749,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 3, odds: 1 }
 		],
 		canBeCaptured: true,
+		display: 'brig2',
 		skills: [Skill.M_STEAL]
 	},
 	[Monster.BRIG2_HOME]: {
@@ -771,6 +778,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 3, odds: 1 }
 		],
 		canBeCaptured: true,
+		display: 'brig2',
 		skills: [Skill.M_STEAL]
 	},
 	[Monster.BRIG3_ALL]: {
@@ -797,6 +805,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 2, odds: 1 }
 		],
 		canBeCaptured: true,
+		display: 'brig3',
 		skills: [Skill.M_STEAL]
 	},
 	[Monster.BRIG3_HOME]: {
@@ -824,6 +833,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 2, odds: 1 }
 		],
 		canBeCaptured: true,
+		display: 'brig3',
 		skills: [Skill.M_STEAL]
 	},
 	/* -------------------------------------------------
