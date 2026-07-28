@@ -77,5 +77,11 @@ export const DinozService = {
 		return api.patch<ManageDinozPageData>('/dinoz/orders', {
 			dinozIds
 		});
+	},
+	stopConcentration(dinozId: number): Promise<void> {
+		return api.post<void>(`/dinoz/${dinozId}/stop-concentration`);
+	},
+	enterPortal(dinozId: number): Promise<void> {
+		return api.post<void>(`/dinoz/${dinozId}/enter-portal`);
 	}
 };
