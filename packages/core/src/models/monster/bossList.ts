@@ -72,6 +72,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false,
 		skills: [Skill.M_ELEMENTAL],
+		display: 'towgrd',
 		entrance: EntranceEffect.FALL
 	},
 	[Boss.SUMMIT_GUARDIAN]: {

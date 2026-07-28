@@ -116,7 +116,10 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 		autoReequip
 	});
 	if (!fight) {
-		fight = await movementListener(user, team, finalPlace, dinozId, { autoReequip });
+		fight = await movementListener(user, team, finalPlace, dinozId, {
+			autoReequip,
+			triggerPlace: desiredPlace.placeId
+		});
 	}
 	if (!fight) {
 		fight = await fightMonstersAtPlace(team, finalPlace, user, {

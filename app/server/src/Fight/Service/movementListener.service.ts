@@ -1,7 +1,10 @@
+import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { FightOutcome, FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import type { MissionFightGoal } from '@dinorpg/core/models/missions/missionGoal.js';
+import { Boss, bossList } from '@dinorpg/core/models/monster/bossList.js';
 import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
+import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { DinozMissions, User } from '../../../../prisma/index.js';
@@ -17,6 +20,25 @@ type DinozToCheckMissionFight = {
 	id: number;
 	placeId: PlaceEnum | null;
 	missions: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
+};
+
+type MovementListenerUser = Pick<User, 'id' | 'teacher' | 'cooker'> &
+	UserForConditionCheck & {
+		items: {
+			itemId: number;
+			quantity: number;
+		}[];
+	};
+
+type MovementListenerDinoz = DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight;
+
+type MovementListenerOptions = {
+	autoReequip?: boolean;
+	/**
+	 * Lieu réellement sélectionné par le joueur avant l'application
+	 * éventuelle de gotoPlaceId.
+	 */
+	triggerPlace?: PlaceEnum;
 };
 
 type TriggeredMissionFight = {
@@ -66,14 +88,102 @@ function sameTriggeredFight(a: TriggeredMissionFight, b: TriggeredMissionFight):
 	return true;
 }
 
+async function processTowerGuardianFight(
+	user: MovementListenerUser,
+	team: MovementListenerDinoz[],
+	finalPlace: PlaceEnum,
+	options: MovementListenerOptions
+): Promise<FightResult | false> {
+	/*
+	 * TOUR_SOMBRE_ENTREE est un lieu virtuel qui redirige vers
+	 * TOUR_SOMBRE grâce à gotoPlaceId.
+	 *
+	 * Nous testons les deux valeurs afin que le combat ne puisse être
+	 * déclenché que par le déplacement "Entrer dans la Tour Sombre".
+	 */
+	if (options.triggerPlace !== PlaceEnum.TOUR_SOMBRE_ENTREE || finalPlace !== PlaceEnum.TOUR_SOMBRE) {
+		return false;
+	}
+	const monsters = [bossList[Boss.TOWER_GUARDIAN]];
+	const fightResult = calculateFightVsMonsters(team, user, finalPlace, monsters);
+	const result = await rewardFightVsMonsters(team, monsters, fightResult, finalPlace, user, {
+		autoReequip: options.autoReequip
+	});
+	const winner = fightResult.outcome === FightOutcome.AttackerWin;
+	if (!winner) {
+		/*
+		 * En cas de défaite, les Dinoz restent devant la Tour Sombre.
+		 * Les pertes de vie et les objets utilisés ont déjà été traités
+		 * par rewardFightVsMonsters().
+		 */
+		return {
+			...result,
+			background: placeListv2[PlaceEnum.TOUR_SOMBRE_ENTREE].background
+		};
+	}
+	const teamIds = team.map(dinoz => dinoz.id);
+	/*
+	 * En cas de victoire :
+	 *
+	 * - chaque Dinoz ayant participé reçoit la Clé de Sylvenoire ;
+	 * - tout le groupe est téléporté au Marais Collant.
+	 *
+	 * Le statut et le déplacement sont appliqués dans une seule
+	 * transaction afin d'éviter un état partiellement enregistré.
+	 */
+	await prisma.$transaction(async tx => {
+		for (const dinozId of teamIds) {
+			await tx.dinozStatus.upsert({
+				where: {
+					statusId_dinozId: {
+						dinozId,
+						statusId: DinozStatusId.SYLVENOIRE_KEY
+					}
+				},
+				update: {},
+				create: {
+					dinozId,
+					statusId: DinozStatusId.SYLVENOIRE_KEY
+				}
+			});
+		}
+		await tx.dinoz.updateMany({
+			where: {
+				id: {
+					in: teamIds
+				}
+			},
+			data: {
+				placeId: PlaceEnum.MARAIS_COLLANT
+			}
+		});
+	});
+	return {
+		...result,
+		/*
+		 * Cette propriété permet au résumé du combat d'afficher :
+		 * "Vous avez reçu : Clé de Sylvenoire".
+		 */
+		statusReward: DinozStatusId.SYLVENOIRE_KEY,
+		/*
+		 * Le combat se déroule visuellement devant l'entrée de la Tour,
+		 * même si finalPlace vaut TOUR_SOMBRE.
+		 */
+		background: placeListv2[PlaceEnum.TOUR_SOMBRE_ENTREE].background
+	};
+}
+
 export async function movementListener(
-	user: Pick<User, 'id' | 'teacher' | 'cooker'> &
-		UserForConditionCheck & { items: { itemId: number; quantity: number }[] },
-	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
+	user: MovementListenerUser,
+	team: MovementListenerDinoz[],
 	finalPlace: PlaceEnum,
 	activeDinoz: number,
-	options: { autoReequip?: boolean } = {}
+	options: MovementListenerOptions = {}
 ): Promise<FightResult | false> {
+	const towerGuardianFight = await processTowerGuardianFight(user, team, finalPlace, options);
+	if (towerGuardianFight) {
+		return towerGuardianFight;
+	}
 	const orderedTeam = [
 		...team.filter(member => member.id === activeDinoz),
 		...team.filter(member => member.id !== activeDinoz)
