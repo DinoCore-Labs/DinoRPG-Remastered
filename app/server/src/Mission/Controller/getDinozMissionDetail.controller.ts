@@ -1,6 +1,6 @@
 import type { DinozMissionDetailResponse, DinozMissionStatus } from '@dinorpg/core/models/missions/missionResponse.js';
 
-import type { Prisma } from '../../../../prisma/client.js';
+import type { Prisma } from '../../../../prisma/index.js';
 import { resolveDisplayedMissionGoal } from '../Service/missionCurrent.service.js';
 import { assertOwnedDinoz } from './mission.access.js';
 import { getMissionDefinitionByKey } from './mission.registry.js';

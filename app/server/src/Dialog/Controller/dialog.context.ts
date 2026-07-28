@@ -2,7 +2,7 @@ import { RuntimeDialog } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
 import { rewardKeyById } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { Prisma, Role } from '../../../../prisma/client.js';
+import { Prisma, Role } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 
 type DialogTransaction = Prisma.TransactionClient;
