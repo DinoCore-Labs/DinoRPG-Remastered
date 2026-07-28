@@ -1279,7 +1279,8 @@
 			"Renforts": "Renforts",
 			"Resistance": "Résistance",
 			"ElementalDisciple": "Disciple élémentaire",
-			"CursedWand": "Baguette Maudite"
+			"CursedWand": "Baguette Maudite",
+			"elemental": "Élémentaire"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les **assauts** de Feu de 7",
@@ -2963,7 +2964,8 @@
 			"piraos": "Pirhan-os",
 			"amanpe": "Amenpenne",
 			"amanp2": "Amenpenne",
-			"feufol": "Feu-Folle"
+			"feufol": "Feu-Folle",
+			"towgrd": "Gardien de la Tour"
 		},
 		"status": {
 			"asleep": "endormi",
