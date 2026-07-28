@@ -2,6 +2,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { prisma } from '../../prisma.js';
+import { assertDinozNotConcentrating } from '../Controller/concentrationDinoz.controller.js';
 import { startRest } from '../Controller/getRestDinoz.controller.js';
 
 type Params = { id: string };
@@ -25,7 +26,7 @@ export async function startResting(req: FastifyRequest<{ Params: Params }>, repl
 
 		if (!d) throw new ExpectedError('Unknown dinoz');
 		if (d.userId !== userId) throw new ExpectedError('Player does not own this dinoz');
-
+		await assertDinozNotConcentrating(dinozId);
 		if (d.state) throw new ExpectedError('Dinoz is unavailable');
 		if (!d.fight) throw new ExpectedError('Dinoz cannot rest right now');
 

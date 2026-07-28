@@ -54,9 +54,15 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 			await Promise.all(promises);
 		}
 	}
-	/*if (dinoz.concentration) {
-		throw new ExpectedError('concentration', { params: { dinozId } });
-	}*/
+	// Concentration
+	const concentratingMember = team.find(member => member.concentration !== null);
+	if (concentratingMember) {
+		throw new ExpectedError('dinozConcentrating', {
+			params: {
+				dinozId: concentratingMember.id
+			}
+		});
+	}
 	if (team.some(d => !d.fight)) {
 		throw new ExpectedError('missingIrma', { params: { dinozId } });
 	}

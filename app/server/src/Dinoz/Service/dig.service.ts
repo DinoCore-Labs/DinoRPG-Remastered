@@ -14,6 +14,7 @@ import { incrementUserStat } from '../../Stats/stats.service.js';
 import { addMoney } from '../../User/Controller/money.controller.js';
 import { buildConditionContext } from '../../utils/conditions/buildConditionContext.js';
 import { checkCondition } from '../../utils/conditions/checkCondition.js';
+import { assertDinozNotConcentrating } from '../Controller/concentrationDinoz.controller.js';
 import { digTreasures } from '../Controller/digTreasures.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../Controller/dinozStatus.controller.js';
 
@@ -136,6 +137,7 @@ export async function digWithDinoz(userId: string, dinozId: number) {
 	if (!activeDinoz) {
 		throw new ExpectedError(`Dinoz ${dinozId} not found`);
 	}
+	await assertDinozNotConcentrating(dinozId);
 	const statusIds = new Set(activeDinoz.status.map(status => status.statusId));
 	if (!hasStatus(statusIds, DinozStatusId.SHOVEL) && !hasStatus(statusIds, DinozStatusId.ENHANCED_SHOVEL)) {
 		throw new ExpectedError(`Dinoz ${dinozId} cannot dig`);
