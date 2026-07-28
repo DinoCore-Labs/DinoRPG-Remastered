@@ -734,7 +734,22 @@
 		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
 		"bankSavingNotFound": "Cette épargne est introuvable.",
 		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois.",
-		"bankSavingPlanAlreadyActive": "Vous avez déjà une épargne de cette durée en attente de récupération."
+		"bankSavingPlanAlreadyActive": "Vous avez déjà une épargne de cette durée en attente de récupération.",
+		"concentrationStopped": "Votre Dinoz a arrêté de se concentrer.",
+		"darkPortalEntered": "Votre Dinoz a franchi le portail vers le Monde sombre.",
+		"dinozAlreadyConcentrating": "Ce Dinoz se concentre déjà.",
+		"dinozNotConcentrating": "Ce Dinoz ne se concentre pas.",
+		"dinozConcentrating": "Ce Dinoz se concentre actuellement et ne peut effectuer aucune autre action.",
+		"concentrationInvalidPlace": "Le Dinoz doit se trouver auprès de Mr Bao.",
+		"concentrationDeadDinoz": "Un Dinoz mort ne peut pas se concentrer.",
+		"concentrationUnavailableDinoz": "Ce Dinoz est actuellement indisponible.",
+		"concentrationDinozInGroup": "Le Dinoz doit quitter son groupe avant de commencer à se concentrer.",
+		"concentrationMissingFlippers": "Le Dinoz doit posséder les Palmes pour commencer cette concentration.",
+		"concentrationSylvenoireKey": "Un Dinoz possédant déjà la Clé de Sylvenoire ne peut pas participer.",
+		"concentrationAlreadyOpen": "Le portail est déjà ouvert pour les sept Dinoz ayant terminé leur concentration.",
+		"concentrationFull": "Les sept places de cette concentration sont déjà occupées.",
+		"concentrationCannotStopAfterOpening": "La concentration est terminée : le Dinoz doit maintenant entrer dans le portail.",
+		"concentrationNotCompleted": "Sept Dinoz doivent terminer leur concentration avant que le portail puisse être franchi."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -1264,7 +1279,11 @@
 			"Renforts": "Reinforcements",
 			"Resistance": "Resistance",
 			"ElementalDisciple": "Elemental Disciple",
-			"CursedWand": "Cursed Wand"
+			"CursedWand": "Cursed Wand",
+			"elemental": "Élémentaire",
+			"Steal": "Vol",
+			"Stinger": "Dard",
+			"PoisonedPicks": "Pics empoisonnées"
 		},
 		"description": {
 			"GriffesEnflammees": "Increase the strength of all Fire **assaults** by 7",
@@ -2792,6 +2811,10 @@
 	},
 	"action": {
 		"popupConfirm": "Do you confirm the action {action} for your Dinoz?",
+		"confirm": {
+			"stop_concen": "Your Dinoz may try to stop concentrating at any time.",
+			"enter_portal": "Préparez-vous bien, personne ne sait quels dangers vous guettent de l'autre côté !"
+		},
 		"description": {
 			"fight": "Search for a monster to fight at this location.",
 			"follow": "Your Dinoz can **follow** another Dinoz if you would like it to, they will then move together and help each other during battles.",
@@ -2824,7 +2847,9 @@
 			"reincarnation": "Your Dinoz can be reincarnated! It will keep the same destiny of the elements.",
 			"change_leader": "Your Dinoz can become the new leader of the group.",
 			"fb_tournament": "Access the BrutForce Tournament.",
-			"CEF": "Dear customer, welcome to the Lavapit Training Center!"
+			"CEF": "Dear customer, welcome to the Lavapit Training Center!",
+			"stop_concen": "Your Dinoz may try to stop concentrating at any time.",
+			"enter_portal": "Le portail vers le Monde sombre est ouvert. Votre Dinoz peut désormais le franchir."
 		},
 		"name": {
 			"fight": "Fight",
@@ -2858,7 +2883,9 @@
 			"reincarnation": "Reincarnate",
 			"change_leader": "Become Leader",
 			"fb_tournament": "Tournament",
-			"CEF": "Lavapit Training Center"
+			"CEF": "Lavapit Training Center",
+			"stop_concen": "Stop concentrating",
+			"enter_portal": "Entrer dans le Portail"
 		}
 	},
 	"fight": {
@@ -2935,7 +2962,20 @@
 			"kvenbs": "Masked Korgon",
 			"megoup": "Mégapignon Sombre",
 			"darkg2": "Goupignon Sombre",
-			"pirao2": "Pirhan-os"
+			"pirao2": "Pirhan-os",
+			"garouz": "Garouzore",
+			"piraos": "Pirhan-os",
+			"amanpe": "Amenpenne",
+			"amanp2": "Amenpenne",
+			"feufol": "Feu-Folle",
+			"towgrd": "Gardien de la Tour",
+			"worm2": "Chtiver",
+			"worm": "Longbrik",
+			"scorp": "Scorpwink",
+			"cactus": "Kaktuz",
+			"brig1": "Brigand Zaxa",
+			"brig2": "Brigand Emema",
+			"brig3": "Brigand Mattmût"
 		},
 		"status": {
 			"asleep": "Asleep",
@@ -4172,7 +4212,8 @@
 				"quest4": "Any questions? Mmmmm... You're going to need some ingredients if you want me to help you. <br> Well, if I guess correctly what question you wanted to ask me...",
 				"noingr": "Well well well.... The Coral that never breaks, the Ice that never melts, and the Branch that never fades. <br> Looks like you're missing something, my friend.",
 				"ingr": "Poom poom palalam poom poom pam poom poom palalam PAM! And here you go, a magnificent Anti-SEDH Potion for you...",
-				"potion": "Mmmm... goodbye my friend, come back to see me sometime!"
+				"potion": "Mmmm... goodbye my friend, come back to see me sometime!",
+				"ok": "Très bien. Votre Dinoz ferme les yeux et commence à se concentrer profondément..."
 			},
 			"choice": {
 				"question": "I have a question for you...",
