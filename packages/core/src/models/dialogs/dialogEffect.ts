@@ -20,4 +20,5 @@ export type DialogEffect =
 	| { type: 'removeTag'; name: string }
 	| { type: 'gameVar'; variable: string; qty: number }
 	| { type: 'userVar'; variable: string; qty: number }
-	| { type: 'giveIngredient'; ingredientId: number; count: number };
+	| { type: 'giveIngredient'; ingredientId: number; count: number }
+	| { type: 'startConcentration' };
