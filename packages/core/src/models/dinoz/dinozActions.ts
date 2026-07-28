@@ -14,6 +14,8 @@ export enum Action {
 	MISSION = 'mission',
 	DIG = 'dig',
 	CONCENTRATE = 'concentrate',
+	STOP_CONCEN = 'stop_concen',
+	ENTER_PORTAL = 'enter_portal',
 	MARKET = 'market',
 	FISH = 'fish',
 	CUEILLE = 'cueille',
@@ -39,6 +41,7 @@ export interface ActionFiche {
 	name: Action | GatherType;
 	imgName: string;
 	confirm?: boolean;
+	confirmMessageKey?: string;
 	prop?: number | string;
 	label?: string;
 	special?: boolean;
@@ -99,6 +102,18 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	[Action.CONCENTRATE]: {
 		name: Action.CONCENTRATE,
 		imgName: 'act_default'
+	},
+	[Action.STOP_CONCEN]: {
+		name: Action.STOP_CONCEN,
+		imgName: 'act_default',
+		confirm: true,
+		confirmMessageKey: 'action.confirm.stop_concen'
+	},
+	[Action.ENTER_PORTAL]: {
+		name: Action.ENTER_PORTAL,
+		imgName: 'act_default',
+		confirm: true,
+		confirmMessageKey: 'action.confirm.enter_portal'
 	},
 	[Action.MARKET]: {
 		name: Action.MARKET,
