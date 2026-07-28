@@ -4,15 +4,14 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { DinozState } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 import { assertCanFreezeDinozAction } from '../../utils/dinoz/canFreezeDinozAction.js';
+import { assertDinozNotConcentrating } from '../Controller/concentrationDinoz.controller.js';
 
 export async function freezeDinoz(req: FastifyRequest<{ Params: { id: string } }>, reply: FastifyReply) {
 	const userId = req.user.id;
 	const dinozId = Number(req.params.id);
-
 	if (!Number.isInteger(dinozId) || dinozId <= 0) {
 		throw new ExpectedError('Invalid dinoz id');
 	}
-
 	const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },
 		select: {
@@ -35,17 +34,14 @@ export async function freezeDinoz(req: FastifyRequest<{ Params: { id: string } }
 			}
 		}
 	});
-
 	if (!dinoz) {
 		throw new ExpectedError('No dinoz found');
 	}
-
 	if (dinoz.userId !== userId) {
 		throw new ExpectedError('Player does not own this dinoz');
 	}
-
+	await assertDinozNotConcentrating(dinozId);
 	assertCanFreezeDinozAction(dinoz);
-
 	await prisma.$transaction(async tx => {
 		if (dinoz.leaderId) {
 			await tx.dinoz.update({
@@ -55,7 +51,6 @@ export async function freezeDinoz(req: FastifyRequest<{ Params: { id: string } }
 				}
 			});
 		}
-
 		if (dinoz.followers.length > 0) {
 			await tx.dinoz.updateMany({
 				where: {
@@ -66,7 +61,6 @@ export async function freezeDinoz(req: FastifyRequest<{ Params: { id: string } }
 				}
 			});
 		}
-
 		await tx.dinoz.update({
 			where: { id: dinoz.id },
 			data: {
@@ -75,7 +69,6 @@ export async function freezeDinoz(req: FastifyRequest<{ Params: { id: string } }
 			}
 		});
 	});
-
 	return reply.send({
 		success: true
 	});
