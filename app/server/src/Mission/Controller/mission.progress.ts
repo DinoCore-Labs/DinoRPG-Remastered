@@ -2,7 +2,7 @@ import type { MissionDefinition } from '@dinorpg/core/models/missions/mission.js
 import type { MissionGoal, MissionKillGoal } from '@dinorpg/core/models/missions/missionGoal.js';
 import type { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
 
-import type { Prisma } from '../../../../prisma/client.js';
+import type { Prisma } from '../../../../prisma/index.js';
 import { getMissionDefinitionByKey } from './mission.registry.js';
 import { applyMissionRewards } from './mission.rewards.js';
 

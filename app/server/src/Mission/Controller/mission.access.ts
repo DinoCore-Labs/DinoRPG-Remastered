@@ -1,6 +1,6 @@
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import type { Prisma } from '../../../../prisma/client.js';
+import type { Prisma } from '../../../../prisma/index.js';
 
 type MissionTransaction = Prisma.TransactionClient;
 

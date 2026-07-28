@@ -14,7 +14,7 @@ import {
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.js';
 
-import { Dinoz, DinozSkills, DinozState, DinozStatus, User } from '../../../../prisma/index.js';
+import { Dinoz, DinozConcentrationState, DinozSkills, DinozState, DinozStatus } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
@@ -61,7 +61,6 @@ function pushUniqueAction(actions: ActionFiche[], action: ActionFiche) {
 			existing.prop === action.prop &&
 			existing.forDinoz === action.forDinoz
 	);
-
 	if (!exists) {
 		actions.push(action);
 	}
@@ -69,11 +68,9 @@ function pushUniqueAction(actions: ActionFiche[], action: ActionFiche) {
 
 function getGatherActionFiche(gather: GatherEntry): ActionFiche {
 	const fiche = actionList[gather.action];
-
 	if (fiche) {
 		return fiche;
 	}
-
 	return {
 		name: gather.action,
 		imgName: 'act_gather'
@@ -189,6 +186,25 @@ export async function getAvailableActions(
 	preloadedContext: AvailableActionsPreloadedContext = {}
 ) {
 	const availableActions: ActionFiche[] = [];
+
+	const concentration = await prisma.dinozConcentration.findUnique({
+		where: {
+			dinozId: dinoz.id
+		},
+		select: {
+			session: {
+				select: {
+					state: true
+				}
+			}
+		}
+	});
+	if (concentration) {
+		if (concentration.session.state === DinozConcentrationState.OPEN) {
+			return [actionList[Action.ENTER_PORTAL]];
+		}
+		return [actionList[Action.STOP_CONCEN]];
+	}
 
 	const dinozPlace = actualPlace(dinoz);
 	const placeGatherEntries = getPlaceGatherEntries(dinozPlace);

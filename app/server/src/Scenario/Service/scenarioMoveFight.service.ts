@@ -4,7 +4,7 @@ import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
 import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 
-import { Prisma } from '../../../../prisma/client.js';
+import { Prisma } from '../../../../prisma/index.js';
 import { updateMultipleDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import {
 	calculateFightVsMonsters,

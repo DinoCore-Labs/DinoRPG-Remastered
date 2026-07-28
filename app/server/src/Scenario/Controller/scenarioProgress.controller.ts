@@ -1,4 +1,4 @@
-import { Prisma } from '../../../../prisma/client.js';
+import { Prisma } from '../../../../prisma/index.js';
 
 type ScenarioTransaction = Prisma.TransactionClient;
 

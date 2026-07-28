@@ -4,7 +4,7 @@ import {
 	MERGUEZ_SCENARIO_THRESHOLDS
 } from '@dinorpg/core/models/scenarios/data/merguezScenario.js';
 
-import { Prisma } from '../../../../prisma/client.js';
+import { Prisma } from '../../../../prisma/index.js';
 import { getUserScenarioProgression, setUserScenarioProgression } from './scenarioProgress.controller.js';
 
 type ScenarioTransaction = Prisma.TransactionClient;

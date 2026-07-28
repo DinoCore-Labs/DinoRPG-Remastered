@@ -1,7 +1,7 @@
 import type { StartDinozMissionResponse } from '@dinorpg/core/models/missions/missionResponse.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import type { Prisma } from '../../../../prisma/client.js';
+import type { Prisma } from '../../../../prisma/index.js';
 import { assertOwnedDinoz } from './mission.access.js';
 import { getMissionDefinitionByKey } from './mission.registry.js';
 import { assertMissionStartCondition } from './mission.startConditions.js';

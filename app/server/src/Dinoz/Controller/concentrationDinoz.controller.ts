@@ -2,7 +2,7 @@ import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { DinozConcentrationState, Prisma } from '../../../../prisma/client.js';
+import { DinozConcentrationState, Prisma } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
 const REQUIRED_DINOZ_COUNT = 7;
