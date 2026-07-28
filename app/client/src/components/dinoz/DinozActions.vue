@@ -356,12 +356,17 @@ export default defineComponent({
 		},
 		async launch(action: ActionFiche) {
 			if (action.confirm) {
+				const message = action.confirmMessageKey
+					? this.$t(action.confirmMessageKey)
+					: this.$t('action.popupConfirm', {
+							action: this.$t(`action.name.${action.name}`)
+						});
 				const res = await this.$confirm({
-					message: this.$t(`action.popupConfirm`, { action: this.$t(`action.name.${action.name}`) }),
+					message,
 					header: this.$t('popup.attention'),
 					acceptLabel: this.$t('popup.accept'),
 					rejectLabel: this.$t('popup.reject'),
-					icon: 'pi pi-trash'
+					icon: 'pi pi-exclamation-triangle'
 				});
 				if (!res) return;
 			}
@@ -537,9 +542,29 @@ export default defineComponent({
 						}
 					}
 					break;
-				case Action.CONCENTRATE:
-					//await DinozService.cancelConcentration(parseInt(this.$route.params.id.toString()));
-					await this.refreshDinoz();
+				case Action.STOP_CONCEN:
+					try {
+						await DinozService.stopConcentration(this.dinozId);
+						this.$toast.open({
+							message: formatText(this.$t('toast.concentrationStopped')),
+							type: 'success'
+						});
+						await this.refreshDinoz();
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
+					break;
+				case Action.ENTER_PORTAL:
+					try {
+						await DinozService.enterPortal(this.dinozId);
+						this.$toast.open({
+							message: formatText(this.$t('toast.darkPortalEntered')),
+							type: 'success'
+						});
+						await this.refreshDinoz();
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
 					break;
 				case Action.MARKET:
 					this.$router.push({
