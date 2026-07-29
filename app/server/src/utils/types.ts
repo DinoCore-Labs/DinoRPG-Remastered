@@ -8,6 +8,7 @@ declare module 'fastify' {
 		authenticate: any;
 		noAuth: any;
 		admin: any;
+		moderator: any;
 	}
 }
 

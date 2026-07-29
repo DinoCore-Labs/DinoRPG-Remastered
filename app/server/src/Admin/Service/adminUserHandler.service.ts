@@ -10,6 +10,7 @@ import {
 	updateAdminUserPassword,
 	updateAdminUserProfile,
 	updateAdminUserRewards,
+	updateAdminUserSanction,
 	updateAdminUserScenario,
 	updateAdminUserUniqueSkills,
 	updateAdminUserWallet
@@ -21,6 +22,7 @@ import {
 	updateAdminUserPasswordSchema,
 	updateAdminUserProfileSchema,
 	updateAdminUserRewardsSchema,
+	updateAdminUserSanctionSchema,
 	updateAdminUserScenarioSchema,
 	updateAdminUserUniqueSkillsSchema,
 	updateAdminUserWalletSchema
@@ -210,6 +212,21 @@ export async function updateAdminUserScenarioHandler(request: FastifyRequest, re
 			payload: parsedBody.data
 		}),
 		[parsedParams.data.id, parsedBody.data.scenarioKey]
+	);
+	return reply.status(204).send();
+}
+
+export async function updateAdminUserSanctionHandler(request: FastifyRequest, reply: FastifyReply) {
+	const parsedParams = adminUserParamsSchema.safeParse(request.params);
+	const parsedBody = updateAdminUserSanctionSchema.safeParse(request.body);
+	if (!parsedParams.success || !parsedBody.success) {
+		return reply.status(400).send({ message: 'Invalid request payload' });
+	}
+	await updateAdminUserSanction(parsedParams.data.id, parsedBody.data);
+	await logAdminUserAction(
+		request,
+		GameLogType.AdminUpdateUser,
+		asLogMetadata({ section: 'sanction', payload: parsedBody.data })
 	);
 	return reply.status(204).send();
 }

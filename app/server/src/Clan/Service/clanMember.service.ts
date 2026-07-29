@@ -210,6 +210,15 @@ export async function updateClanLeader(req: FastifyRequest, reply: FastifyReply)
 
 		await tx.clanMember.update({
 			where: {
+				userId: req.user.id
+			},
+			data: {
+				rights: []
+			}
+		});
+
+		await tx.clanMember.update({
+			where: {
 				userId: userId
 			},
 			data: {
