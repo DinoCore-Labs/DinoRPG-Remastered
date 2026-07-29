@@ -11,6 +11,10 @@ overrides:
 importers:
 
   .:
+    dependencies:
+      '@prisma/client-runtime-utils':
+        specifier: 7.9.0
+        version: 7.9.0
     devDependencies:
       '@changesets/cli':
         specifier: ^2.31.1
