@@ -50,7 +50,12 @@ export const AdminUserService = {
 	},
 	updateUserSanction(
 		userId: string,
-		payload: { bannedUntil?: string | null; mutedUntil?: string | null }
+		payload: {
+			bannedUntil?: string | null;
+			mutedUntil?: string | null;
+			banReason?: string | null;
+			muteReason?: string | null;
+		}
 	): Promise<void> {
 		return api.patch<void>(`${getAdminUserPath(userId)}/sanction`, payload);
 	}
