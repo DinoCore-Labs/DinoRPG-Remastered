@@ -71,7 +71,10 @@ export interface AdminUserDetails {
 	ingredients: AdminUserIngredient[];
 	uniqueSkills: AdminUserUniqueSkills;
 	scenarios: AdminUserScenario[];
-	//banCase: AdminBanCase | null;
+	bannedUntil: Date | null;
+	mutedUntil: Date | null;
+	banReason: string | null;
+	muteReason: string | null;
 }
 
 export interface AdminDinozSummary {

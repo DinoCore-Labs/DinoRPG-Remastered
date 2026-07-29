@@ -101,8 +101,10 @@ export default defineComponent({
 					this.$router.push('/news');
 				}
 			} catch (e: any) {
-				const msg = e.response?.data?.message ?? 'unknown';
-				this.$toast.error(this.$t(`toast.${msg}`, { name: this.name }));
+				const data = e.response?.data;
+				const msg = data?.message ?? 'unknown';
+				const params = data?.params ?? {};
+				this.$toast.error(this.$t(`toast.${msg}`, { ...params, name: this.name }));
 			}
 		}
 	},

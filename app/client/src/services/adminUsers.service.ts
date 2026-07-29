@@ -47,5 +47,11 @@ export const AdminUserService = {
 	},
 	updateUserScenario(userId: string, payload: UpdateAdminUserScenarioPayload): Promise<void> {
 		return api.patch<void>(`${getAdminUserPath(userId)}/scenarios`, payload);
+	},
+	updateUserSanction(
+		userId: string,
+		payload: { bannedUntil?: string | null; mutedUntil?: string | null }
+	): Promise<void> {
+		return api.patch<void>(`${getAdminUserPath(userId)}/sanction`, payload);
 	}
 };

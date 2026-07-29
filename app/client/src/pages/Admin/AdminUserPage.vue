@@ -12,6 +12,7 @@
 		<template v-else-if="user">
 			<AdminUserSummaryCard :user="user" />
 			<AdminUserProfileForm :user="user" @updated="reloadUser" />
+			<AdminUserSanctionForm :user="user" @updated="reloadUser" />
 			<AdminUserWalletForm :user="user" @updated="reloadUser" />
 			<AdminUserUniqueSkillsForm :user="user" @updated="reloadUser" />
 			<AdminUserInventoryForm :user="user" type="items" @updated="reloadUser" />
@@ -32,6 +33,7 @@ import type { AdminDinozSummary, AdminUserDetails } from '@dinorpg/core/models/a
 import AdminUserSearch from '../../components/admin/user/AdminUserSearch.vue';
 import AdminUserSummaryCard from '../../components/admin/user/AdminUserSummaryCard.vue';
 import AdminUserProfileForm from '../../components/admin/user/AdminUserProfileForm.vue';
+import AdminUserSanctionForm from '../../components/admin/user/AdminUserSanctionForm.vue';
 import AdminUserWalletForm from '../../components/admin/user/AdminUserWalletForm.vue';
 import AdminUserUniqueSkillsForm from '../../components/admin/user/AdminUserUniqueSkillsForm.vue';
 import AdminUserInventoryForm from '../../components/admin/user/AdminUserInventoryForm.vue';
@@ -80,7 +82,6 @@ async function handleSelectUser(userId: string) {
 	selectedUserId.value = userId;
 
 	await router.replace({
-		path: '/admin/user',
 		query: { userId }
 	});
 

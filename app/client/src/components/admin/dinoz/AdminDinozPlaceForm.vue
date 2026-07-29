@@ -51,6 +51,7 @@ async function submit() {
 <style scoped lang="scss">
 .card {
 	width: 100%;
+	box-sizing: border-box;
 	margin-top: 20px;
 	margin-bottom: 10px;
 	background-color: #ecbd84;
@@ -58,6 +59,7 @@ async function submit() {
 	&-container {
 		border: 2px solid #bc683c;
 		padding: 20px;
+		box-sizing: border-box;
 	}
 }
 .field {

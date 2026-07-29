@@ -16,15 +16,22 @@
 			</a>
 			-->
 		</div>
-		<!--
-		<div class="report">
-			<p @click="report()">{{ $t('playerMenu.report.signal') }}</p>
-			<p>{{ $t('playerMenu.report.block') }}</p>
+		<div class="report" v-if="loadedUser.id !== userStore.id">
+			<p @click="showReportModal = true">{{ $t('reportModal.reportUser') }}</p>
 		</div>
 		<span class="dashed"></span>
-		<div class="profil">
-			<div class="profil-info" v-if="loadedPlayer.customText">
-				<div class="player-desc" v-html="loadedPlayer.customText"></div>
+		<ReportModal
+			v-if="showReportModal"
+			:show="showReportModal"
+			:reportedUserId="loadedUser?.id"
+			:reportedUserName="loadedUser?.name"
+			@close="showReportModal = false"
+			@sent="showReportModal = false"
+		/>
+		<!--
+		<div class="profil">			
+			<div class="profil-info" v-if="loadedPlayer?.customText">
+				<div class="player-desc" v-html="loadedPlayer?.customText"></div>
 			</div>
 			<p class="contact">{{ $t('playerMenu.contact') }}</p>
 		</div>
@@ -35,15 +42,19 @@
 import { defineComponent } from 'vue';
 import { UserService } from '../../services/user.service.js';
 import { errorHandler } from '../../utils/errorHandler.js';
+import ReportModal from './ReportModal.vue';
 import { userStore } from '../../store/userStore.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
 //import eventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'UserCard',
+	components: { ReportModal },
 	data() {
 		return {
-			loadedUser: undefined as undefined | Pick<UserData, 'id' | 'name'>
+			loadedUser: undefined as undefined | Pick<UserData, 'id' | 'name'>,
+			showReportModal: false,
+			userStore: userStore()
 		};
 	},
 	props: {

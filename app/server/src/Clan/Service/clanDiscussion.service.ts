@@ -103,6 +103,8 @@ export async function createClanMessage(req: FastifyRequest, reply: FastifyReply
 		select: {
 			id: true,
 			name: true,
+			mutedUntil: true,
+			muteReason: true,
 			profile: {
 				select: {
 					avatar: true,
@@ -114,6 +116,17 @@ export async function createClanMessage(req: FastifyRequest, reply: FastifyReply
 
 	if (!author) {
 		throw new ExpectedError('User not found');
+	}
+
+	if (author.mutedUntil && author.mutedUntil > new Date()) {
+		throw new ExpectedError('Account_muted_until', {
+			statusCode: 403,
+			params: {
+				date: author.mutedUntil.toLocaleDateString('fr-FR'),
+				time: author.mutedUntil.toLocaleTimeString('fr-FR'),
+				reason: author.muteReason || 'Non spécifiée'
+			}
+		});
 	}
 
 	const created = await prisma.clanMessage.create({
