@@ -80,8 +80,9 @@ async function reloadDinoz() {
 
 function goToOwner() {
 	if (!userId.value) return;
+	const isModeration = route.path.startsWith('/moderation');
 	router.push({
-		path: '/admin/user',
+		path: isModeration ? '/moderation/user' : '/admin/user',
 		query: {
 			userId: userId.value
 		}

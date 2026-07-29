@@ -141,6 +141,7 @@ async function submit() {
 <style scoped lang="scss">
 .card {
 	width: 100%;
+	box-sizing: border-box;
 	margin-top: 20px;
 	margin-bottom: 10px;
 	background-color: #ecbd84;
@@ -148,6 +149,7 @@ async function submit() {
 	&-container {
 		border: 2px solid #bc683c;
 		padding: 20px;
+		box-sizing: border-box;
 	}
 }
 .field {
@@ -165,6 +167,7 @@ async function submit() {
 textarea {
 	border: none;
 	width: 100%;
+	box-sizing: border-box;
 	background-color: #ae6139;
 	color: #ffee92;
 }
@@ -177,6 +180,7 @@ textarea:focus {
 input {
 	border: none;
 	width: 100%;
+	box-sizing: border-box;
 	background-color: #ae6139;
 	color: #ffee92;
 	padding: 6px;

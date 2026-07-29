@@ -30,6 +30,10 @@ export async function getAdminUserDetails(userId: string): Promise<AdminUserDeta
 			teacher: true,
 			matelasseur: true,
 			messie: true,
+			bannedUntil: true,
+			mutedUntil: true,
+			banReason: true,
+			muteReason: true,
 			profile: {
 				select: {
 					avatar: true,
@@ -135,14 +139,11 @@ export async function getAdminUserDetails(userId: string): Promise<AdminUserDeta
 				tracking: userScenario?.tracking ?? 0,
 				state: userScenario?.state ?? null
 			};
-		})
-		/*banCase: user.banCase
-			? {
-					...user.banCase,
-					banDate: user.banCase.banDate ? user.banCase.banDate.toISOString() : null,
-					banEndDate: user.banCase.banEndDate ? user.banCase.banEndDate.toISOString() : null
-				}
-			: null,*/
+		}),
+		bannedUntil: user.bannedUntil,
+		mutedUntil: user.mutedUntil,
+		banReason: user.banReason,
+		muteReason: user.muteReason
 	};
 }
 
@@ -390,6 +391,34 @@ export async function updateAdminUserScenario(userId: string, payload: UpdateAdm
 		update: {
 			progression: payload.progression,
 			tracking: payload.tracking
+		}
+	});
+}
+
+export async function updateAdminUserSanction(
+	userId: string,
+	payload: {
+		bannedUntil?: string | null;
+		mutedUntil?: string | null;
+		banReason?: string | null;
+		muteReason?: string | null;
+	}
+): Promise<void> {
+	await prisma.user.update({
+		where: { id: userId },
+		data: {
+			...(payload.bannedUntil !== undefined
+				? {
+						bannedUntil: payload.bannedUntil ? new Date(payload.bannedUntil) : null,
+						banReason: payload.bannedUntil ? payload.banReason || '[Admin/Moderator]' : null
+					}
+				: {}),
+			...(payload.mutedUntil !== undefined
+				? {
+						mutedUntil: payload.mutedUntil ? new Date(payload.mutedUntil) : null,
+						muteReason: payload.mutedUntil ? payload.muteReason || '[Admin/Moderator]' : null
+					}
+				: {})
 		}
 	});
 }

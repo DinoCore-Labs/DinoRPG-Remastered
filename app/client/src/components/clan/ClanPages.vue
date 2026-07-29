@@ -41,13 +41,22 @@
 			</a>
 		</div>
 		<ClanJoinRequest :joinRequest="joinRequest" @cancel="cancelRequest" />
-		<!-- <div
-			class="report-container"
-			@click="reportClan"
+
+		<div
 			v-if="clanStore.getClan && userStore.getClanId !== clanStore.getClanId"
+			style="display: inline-block; margin-left: 5px"
 		>
-			<a class="button">{{ $t('report.clan') }}</a>
-		</div> -->
+			<a class="button" @click="showReportModal = true">{{ $t('reportModal.reportClan') }}</a>
+		</div>
+
+		<ReportModal
+			v-if="showReportModal"
+			:show="showReportModal"
+			:reportedClanId="clanStore.getClan?.id"
+			:reportedClanName="clanStore.getClan?.name"
+			@close="showReportModal = false"
+			@sent="showReportModal = false"
+		/>
 	</div>
 </template>
 
@@ -65,12 +74,13 @@ import type { JoinClanResponse } from '@dinorpg/core/models/clan/clanJoinRequest
 import axios from 'axios';
 import ClanJoinRequest from '../../pages/Clan/ClanJoinRequest.vue';
 import { clanStore } from '../../store/clanStore';
-//import EventBus from '../../events/index.js';
+import ReportModal from '../modal/ReportModal.vue';
 
 export default defineComponent({
 	name: 'ClanPages',
 	components: {
-		ClanJoinRequest
+		ClanJoinRequest,
+		ReportModal
 	},
 	data() {
 		return {
@@ -81,7 +91,10 @@ export default defineComponent({
 			hasPageManageRight: false as boolean,
 			homePageId: undefined as number | undefined,
 			clanStore: clanStore(),
-			joinClanTip: formatText(this.$t('clan.clanPages.button.join_clan', { money: formatNumber(CLAN_JOIN_MONEY, '.') }))
+			joinClanTip: formatText(
+				this.$t('clan.clanPages.button.join_clan', { money: formatNumber(CLAN_JOIN_MONEY, '.') })
+			),
+			showReportModal: false
 		};
 	},
 	methods: {
@@ -240,6 +253,13 @@ export default defineComponent({
 }
 .bottom-buttons {
 	padding: 8px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+	> div {
+		display: flex;
+		gap: 5px;
+	}
 }
 
 .report-container {

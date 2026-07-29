@@ -4,6 +4,7 @@ import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import AccountPage from '../pages/AccountPage.vue';
+import AdminClanPage from '../pages/Admin/AdminClanPage.vue';
 import AdminDinozPage from '../pages/Admin/AdminDinozPage.vue';
 import AdminForcebrutPage from '../pages/Admin/AdminForcebrutPage.vue';
 import AdminJobsPage from '../pages/Admin/AdminJobsPage.vue';
@@ -12,6 +13,7 @@ import AdminMaintenancePage from '../pages/Admin/AdminMaintenancePage.vue';
 import AdminNewsEditPage from '../pages/Admin/AdminNewsEditPage.vue';
 import AdminNewsPage from '../pages/Admin/AdminNewsPage.vue';
 import AdminPage from '../pages/Admin/AdminPage.vue';
+import AdminReportsPage from '../pages/Admin/AdminReportsPage.vue';
 import AdminSecretsPage from '../pages/Admin/AdminSecretsPage.vue';
 import AdminUserPage from '../pages/Admin/AdminUserPage.vue';
 import BankPage from '../pages/BankPage.vue';
@@ -34,6 +36,7 @@ import MaintenancePage from '../pages/MaintenancePage.vue';
 import ManageDinoz from '../pages/ManageDinoz.vue';
 import MarketPage from '../pages/MarketPage.vue';
 import MissionsPage from '../pages/MissionsPage.vue';
+import ModerationPage from '../pages/Moderation/ModerationPage.vue';
 import NewsPage from '../pages/NewsPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
 import RulesPage from '../pages/RulesPage.vue';
@@ -452,6 +455,44 @@ const routes: RouteRecord[] = [
 						name: 'AdminSecrets',
 						component: AdminSecretsPage,
 						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
+					},
+					{
+						path: '/admin/clan',
+						name: 'AdminClan',
+						component: AdminClanPage,
+						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
+					}
+				]
+			},
+			{
+				path: '/moderation',
+				name: 'Moderation',
+				component: ModerationPage,
+				meta: { auth: true, roles: ['MODERATOR', 'ADMIN', 'SUPER_ADMIN'] },
+				children: [
+					{
+						path: '/moderation/user',
+						name: 'ModerationUser',
+						component: AdminUserPage,
+						meta: { auth: true, roles: ['MODERATOR', 'ADMIN', 'SUPER_ADMIN'] }
+					},
+					{
+						path: '/moderation/clan',
+						name: 'ModerationClan',
+						component: AdminClanPage,
+						meta: { auth: true, roles: ['MODERATOR', 'ADMIN', 'SUPER_ADMIN'] }
+					},
+					{
+						path: '/moderation/reports',
+						name: 'ModerationReports',
+						component: AdminReportsPage,
+						meta: { auth: true, roles: ['MODERATOR', 'ADMIN', 'SUPER_ADMIN'] }
+					},
+					{
+						path: '/moderation/dinoz',
+						name: 'ModerationDinoz',
+						component: AdminDinozPage,
+						meta: { auth: true, roles: ['MODERATOR', 'ADMIN', 'SUPER_ADMIN'] }
 					}
 				]
 			}

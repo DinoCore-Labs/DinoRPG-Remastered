@@ -82,7 +82,7 @@
 				<img :src="getImgURL('act', 'act_default')" alt="Paramètres du clan" />
 			</RouterLink>
 		</div>
-		<div class="clan-page">
+		<div class="clan-page" v-if="clanStore.getClan">
 			<Router-view></Router-view>
 		</div>
 	</div>

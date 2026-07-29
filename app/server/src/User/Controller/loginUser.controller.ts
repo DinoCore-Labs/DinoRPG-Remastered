@@ -21,6 +21,16 @@ export async function loginUser(
 	if (!user || !isMatch) {
 		throw new ExpectedError('Invalid_email_or_password', { statusCode: 401 });
 	}
+	if (user.bannedUntil && user.bannedUntil > new Date()) {
+		throw new ExpectedError('Account_banned_until', {
+			statusCode: 403,
+			params: {
+				date: user.bannedUntil.toLocaleDateString('fr-FR'),
+				time: user.bannedUntil.toLocaleTimeString('fr-FR'),
+				reason: user.banReason || 'Non spécifiée'
+			}
+		});
+	}
 	const payload = {
 		id: user.id,
 		name: user.name,
