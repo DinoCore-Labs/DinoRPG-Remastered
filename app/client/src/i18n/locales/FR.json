@@ -1283,7 +1283,8 @@
 			"elemental": "Élémentaire",
 			"Steal": "Vol",
 			"Stinger": "Dard",
-			"PoisonedPicks": "Pics empoisonnées"
+			"PoisonedPicks": "Pics empoisonnées",
+			"Contamination": "Contamination"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les **assauts** de Feu de 7",
