@@ -568,6 +568,14 @@ model User {
   discoveredSkills Int[] @default([])
 
   bankSavings BankSaving[]
+
+  bannedUntil DateTime? @db.Timestamptz(3)
+  mutedUntil  DateTime? @db.Timestamptz(3)
+  banReason   String?
+  muteReason  String?
+
+  reportsMade Report[] @relation("ReportReporter")
+  reports     Report[] @relation("ReportReportedUser")
 }
 
 model UserDinozShop {
@@ -801,6 +809,29 @@ model ClanMessage {
   @@map("clan_messages")
 }
 
+enum ReportStatus {
+  PENDING
+  RESOLVED
+  REJECTED
+}
+
+model Report {
+  id              Int          @id @default(autoincrement())
+  reporterId      String       @db.Uuid
+  reporter        User         @relation("ReportReporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  reportedUserId  String?      @db.Uuid
+  reportedUser    User?        @relation("ReportReportedUser", fields: [reportedUserId], references: [id], onDelete: Cascade)
+  reportedDinozId Int?
+  reportedDinoz   Dinoz?       @relation("ReportReportedDinoz", fields: [reportedDinozId], references: [id], onDelete: Cascade)
+  reportedClanId  Int?
+  reportedClan    Clan?        @relation("ReportReportedClan", fields: [reportedClanId], references: [id], onDelete: Cascade)
+  reason          String
+  comment         String?
+  status          ReportStatus @default(PENDING)
+  createdAt       DateTime     @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime     @updatedAt @db.Timestamptz(3)
+}
+
 model ClanHistory {
   id            Int      @id @default(autoincrement())
   clanId        Int
@@ -910,6 +941,7 @@ enum GameLogType {
   AdminUpdateScenario
   AdminUpdateUser
   AdminUpdateSecret
+  AdminUpdateClan
 }
 
 enum Gender {

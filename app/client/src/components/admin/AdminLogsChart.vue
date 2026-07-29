@@ -99,11 +99,13 @@ const option = computed(() => ({
 <style scoped lang="scss">
 .chart {
 	width: 100%;
+	box-sizing: border-box;
 	height: 350px;
 	margin-top: 12px;
 }
 .chart__canvas {
 	width: 100%;
+	box-sizing: border-box;
 	height: 320px;
 }
 .legend {

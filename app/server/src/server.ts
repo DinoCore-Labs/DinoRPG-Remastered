@@ -47,7 +47,9 @@ import { marketRoutes } from './Market/Routes/market.routes.js';
 import { messagingRoutes } from './Messaging/Routes/messaging.routes.js';
 import { missionsRoutes } from './Mission/Routes/mission.routes.js';
 import { newsRoutes } from './News/Routes/news.routes.js';
+import { prisma } from './prisma.js';
 import { rankingRoutes } from './Ranking/Routes/ranking.routes.js';
+import { reportRoutes } from './Report/Routes/report.routes.js';
 import { shopRoutes } from './Shop/Routes/shop.routes.js';
 import { trainingCenterRoutes } from './TrainingCenter/Routes/trainingCenter.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
@@ -140,6 +142,14 @@ async function buildServer() {
 			const requestPath = req.url.split('?')[0];
 			const isGameRulesExempt = GAME_RULES_EXEMPT_PATHS.has(requestPath);
 
+			const dbUser = await prisma.user.findUnique({
+				where: { id: decoded.id },
+				select: { bannedUntil: true }
+			});
+			if (dbUser?.bannedUntil && dbUser.bannedUntil > new Date()) {
+				return reply.status(403).send({ message: 'Account is banned' });
+			}
+
 			if (!isGameRulesExempt && decoded.gameRulesAcceptedVersion !== GAME_RULES_VERSION) {
 				return reply.status(403).send({
 					code: GAME_RULES_ACCEPTANCE_REQUIRED_CODE,
@@ -165,6 +175,13 @@ async function buildServer() {
 	server.decorate('admin', async (req: FastifyRequest, reply: FastifyReply) => {
 		const role = (req.user as any)?.role as UserRole;
 		if (role !== 'ADMIN' && role !== 'SUPER_ADMIN') {
+			return reply.code(403).send({ message: 'Forbidden' });
+		}
+	});
+
+	server.decorate('moderator', async (req: FastifyRequest, reply: FastifyReply) => {
+		const role = (req.user as any)?.role as UserRole;
+		if (role !== 'MODERATOR' && role !== 'ADMIN' && role !== 'SUPER_ADMIN') {
 			return reply.code(403).send({ message: 'Forbidden' });
 		}
 	});
@@ -254,6 +271,7 @@ async function buildServer() {
 	server.register(adminRoutes, { prefix: 'api/admin' });
 	server.register(missionsRoutes, { prefix: 'api/missions' });
 	server.register(messagingRoutes, { prefix: 'api/messaging' });
+	server.register(reportRoutes, { prefix: 'api/reports' });
 	server.register(trainingCenterRoutes, { prefix: 'api/cef' });
 	server.register(marketRoutes, { prefix: 'api/market' });
 	server.register(forcebrutRoutes, { prefix: 'api/forcebrut' });

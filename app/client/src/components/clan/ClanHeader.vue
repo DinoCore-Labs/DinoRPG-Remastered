@@ -43,6 +43,14 @@
 				<DZUser :user="clanStore.getClan!.leader" leader />
 			</div>
 		</div>
+		<ReportModal
+			v-if="showReportModal"
+			:show="showReportModal"
+			:reportedClanId="clanStore.getClan?.id"
+			:reportedClanName="clanStore.getClan?.name"
+			@close="showReportModal = false"
+			@sent="showReportModal = false"
+		/>
 	</div>
 </template>
 
@@ -52,8 +60,10 @@ import { CLAN_MAX_MEMBERS_AMOUNT } from '@dinorpg/core/models/clan/constants.js'
 import { API_BASE } from '../../utils/http.ts';
 import { beautifulNumber } from '../../utils/beautifulNumber.js';
 import { clanStore } from '../../store/clanStore';
+import { userStore } from '../../store/userStore';
 import DZUser from '../utils/DZUser.vue';
 import Flag from '../utils/Flag.vue';
+import ReportModal from '../modal/ReportModal.vue';
 
 export default defineComponent({
 	name: 'ClanHeader',
@@ -62,10 +72,12 @@ export default defineComponent({
 			API_BASE,
 			maxMembers: CLAN_MAX_MEMBERS_AMOUNT,
 			clanStore: clanStore(),
-			bannerDataUrl: null as string | null
+			uStore: userStore(),
+			bannerDataUrl: null as string | null,
+			showReportModal: false
 		};
 	},
-	components: { Flag, DZUser },
+	components: { Flag, DZUser, ReportModal },
 	methods: {
 		moneyLint(quantity: number): string {
 			return beautifulNumber(quantity);
@@ -183,6 +195,15 @@ export default defineComponent({
 				cursor: pointer;
 			}
 		}
+	}
+}
+.report-btn {
+	cursor: pointer;
+	color: #c9b49b;
+	font-size: 10px;
+	text-decoration: underline;
+	&:hover {
+		color: #ff9200;
 	}
 }
 </style>

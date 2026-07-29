@@ -236,6 +236,7 @@ const previewImage = computed(() => {
 
 		:deep(img) {
 			max-width: 100%;
+			box-sizing: border-box;
 			height: auto;
 			border-radius: 10px;
 			margin: 15px 0;
@@ -305,6 +306,7 @@ const previewImage = computed(() => {
 				overflow: hidden;
 				img {
 					width: 100%;
+					box-sizing: border-box;
 					height: 100%;
 					object-fit: cover;
 				}
@@ -376,6 +378,7 @@ const previewImage = computed(() => {
 			font-weight: bold;
 			img {
 				max-width: 100%;
+				box-sizing: border-box;
 				display: block;
 				margin-left: auto;
 				margin-right: auto;

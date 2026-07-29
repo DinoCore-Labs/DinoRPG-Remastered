@@ -31,6 +31,9 @@
 				{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}
 				{{ $t(`accountPage.level`) }} {{ dinoz.level }}
 			</div>
+			<div class="report-btn" v-if="!isOwner" @click.stop="openReportModal(dinoz)">
+				{{ $t('reportModal.reportDinoz') }}
+			</div>
 			<template v-if="dinoz.status && dinoz.status.length > 0" #content>
 				<template v-for="(status, index) in dinoz.status" :key="index">
 					<img
@@ -45,6 +48,14 @@
 	<div class="emptyDinozList" v-else>
 		{{ $t('accountPage.dinozFilters.empty') }}
 	</div>
+	<ReportModal
+		v-if="showReportModal"
+		:show="showReportModal"
+		:reportedDinozId="reportedDinoz?.id"
+		:reportedDinozName="reportedDinoz?.name"
+		@close="showReportModal = false"
+		@sent="showReportModal = false"
+	/>
 </template>
 
 <script lang="ts">
@@ -61,6 +72,7 @@ import type { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 
 import DZSelect from '../utils/DZSelect.vue';
+import ReportModal from '../modal/ReportModal.vue';
 
 type StatutId = DinozStatusId;
 
@@ -87,7 +99,8 @@ export default defineComponent({
 	name: 'MyDinoz',
 	components: {
 		DZSelect,
-		DinozAnimation: defineAsyncComponent(() => import('../dinoz/DinozAnimation.vue'))
+		DinozAnimation: defineAsyncComponent(() => import('../dinoz/DinozAnimation.vue')),
+		ReportModal
 	},
 	props: {
 		profile: {
@@ -104,7 +117,9 @@ export default defineComponent({
 			sortedDinozList: [] as DinozPublicFiche[],
 			selectedRaceId: 0,
 			selectedLevelRange: 'all' as DinozLevelRange,
-			selectedDinozState: 'all' as DinozStateFilter
+			selectedDinozState: 'all' as DinozStateFilter,
+			showReportModal: false,
+			reportedDinoz: null as DinozPublicFiche | null
 		};
 	},
 	computed: {
@@ -168,6 +183,10 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		openReportModal(dinoz: DinozPublicFiche) {
+			this.reportedDinoz = dinoz;
+			this.showReportModal = true;
+		},
 		style(dinoz: DinozPublicFiche): string {
 			const race = Object.entries(raceList).find(([k]) => Number(k) === dinoz.race.raceId)?.[1];
 			const first = dinoz.display.charAt(0);
@@ -270,5 +289,16 @@ export default defineComponent({
 	font-size: 9pt;
 	font-weight: bold;
 	color: #bc683c;
+}
+.report-btn {
+	cursor: pointer;
+	color: #c9b49b;
+	font-size: 9pt;
+	text-align: center;
+	text-decoration: underline;
+	margin-bottom: 5px;
+	&:hover {
+		color: #ff9200;
+	}
 }
 </style>

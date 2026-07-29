@@ -25,6 +25,13 @@ export const updateAdminUserProfileSchema = z.object({
 	removeAvatar: z.boolean().default(false)
 });
 
+export const updateAdminUserSanctionSchema = z.object({
+	bannedUntil: z.string().datetime().nullable().optional(),
+	mutedUntil: z.string().datetime().nullable().optional(),
+	banReason: z.string().max(255).nullable().optional(),
+	muteReason: z.string().max(255).nullable().optional()
+});
+
 export const updateAdminUserWalletSchema = z.object({
 	type: z.nativeEnum(MoneyType),
 	amount: z.number().int().positive(),
