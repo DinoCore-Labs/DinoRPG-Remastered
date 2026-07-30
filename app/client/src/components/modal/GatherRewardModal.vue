@@ -195,6 +195,7 @@ export default defineComponent({
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	min-height: auto;
 	img {
 		margin-top: 15px;
 	}
