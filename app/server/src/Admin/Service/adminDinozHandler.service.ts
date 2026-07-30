@@ -3,6 +3,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { DinozState, GameLogType } from '../../../../prisma/index.js';
 import { CreateGameLogInput, safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
+import { prisma } from '../../prisma.js';
 import {
 	addAdminDinozSkill,
 	addAdminDinozStatus,
@@ -65,6 +66,15 @@ export async function updateAdminDinozProfileHandler(
 	}>,
 	reply: FastifyReply
 ) {
+	if ((request.user as any).role === 'MODERATOR') {
+		const targetDinoz = await prisma.dinoz.findUnique({ where: { id: Number(request.params.dinozId) } });
+		if (
+			targetDinoz &&
+			(targetDinoz.raceId !== request.body.raceId || targetDinoz.canRename !== request.body.canRename)
+		) {
+			return reply.status(403).send({ message: 'Moderators can only modify names and appearances.' });
+		}
+	}
 	await updateAdminDinozProfile(request.params.userId, Number(request.params.dinozId), request.body);
 	await logAdminDinozAction(request, GameLogType.AdminUpdateDinoz, {
 		section: 'profile',

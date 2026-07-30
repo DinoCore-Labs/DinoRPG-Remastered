@@ -29,3 +29,8 @@ export const updateClanIngredientSchema = z.object({
 	ingredientId: z.number().int().positive(),
 	amountToAddOrRemove: z.number().int() // positive to add, negative to remove
 });
+
+export const adminClanPageParamsSchema = z.object({
+	id: z.coerce.number().int().positive(),
+	pageId: z.coerce.number().int().positive()
+});
