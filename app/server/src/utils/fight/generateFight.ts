@@ -11,7 +11,14 @@ import { LifeEffect, NotificationList } from '@dinorpg/core/models/fight/transpi
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
-import { CYCLE, FIGHT_INFINITE, OVERTIME_THRESHOLD, TIME_FACTOR } from '@dinorpg/core/utils/fightConstants.js';
+import {
+	CYCLE,
+	FIGHT_INFINITE,
+	MAX_FIGHT_TURNS,
+	OVERTIME_INITIAL_DAMAGE,
+	OVERTIME_START_TURN,
+	TIME_FACTOR
+} from '@dinorpg/core/utils/fightConstants.js';
 
 import { SeededRandom } from '../prng.js';
 import { DinozToGetFighter, FightConfiguration, FightRules } from './fight.mapper.js';
@@ -25,7 +32,6 @@ import {
 	hasSkill,
 	hasStatus,
 	heal,
-	OVERTIME_ID,
 	playFighterTurn,
 	stepFighter,
 	updateStat
@@ -40,6 +46,7 @@ export type DetailedFight = {
 	outcome: FightOutcome | null;
 	steps: FightStep[];
 	timeout?: number;
+	overtimeDamage: number;
 	initialDinozList: DinozToGetFighter[];
 	fighters: DetailedFighter[];
 	protectedFighters: number[];
@@ -107,6 +114,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		outcome: null,
 		steps: [] as FightStep[],
 		timeout: timeout,
+		overtimeDamage: OVERTIME_INITIAL_DAMAGE,
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
 		deads: [] as number[],
@@ -287,60 +295,105 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 	}
 
 	let turn = 0;
-	let overtimePoisonDamage = 10;
+	let overtimeStarted = false;
 
 	// Fight loop
 	while (fightData.outcome === null) {
-		// Order fighters by initiative (random if equal)
 		orderFighters(fightData);
 
-		// If fight is getting too long, poison all fighters with an overtime poison.
-		if (fightData.time > OVERTIME_THRESHOLD) {
-			fightData.fighters.forEach(fighter => {
-				if (!hasStatus(fighter, FightStatus.OVERTIME_POISON)) {
-					// Custom addition of the poisoned status to all fighters to override some error checks
-
-					fighter.poisonedBy = {
-						id: OVERTIME_ID,
-						skill: 0 as Skill,
-						damage: overtimePoisonDamage
-					};
-
-					// Add status
-					const status_props = createStatus(FightStatus.OVERTIME_POISON, FightStatusLength.SUPER_SHORT);
-
-					// Update the next trigger of status accordingly
-					if (status_props.cycle && fightData.nextStatusTrigger > CYCLE) {
-						fightData.nextStatusTrigger = CYCLE;
-					} else if (status_props.time < fightData.nextStatusTrigger) {
-						fightData.nextStatusTrigger = status_props.time;
-					}
-
-					fighter.status.push(status_props);
-
-					// Add status step
-					fightData.steps.push({
-						action: 'addStatus',
-						fighter: stepFighter(fighter),
-						status: FightStatus.OVERTIME_POISON
-					});
-				}
+		/*
+		 * Absolute safety guard.
+		 *
+		 * The loop must never be exited without assigning an outcome.
+		 */
+		if (turn >= MAX_FIGHT_TURNS) {
+			console.error('Fight reached maximum turn count', {
+				seed: config.seed,
+				place,
+				turn,
+				time: fightData.time,
+				overtimeDamage: fightData.overtimeDamage,
+				fighters: fightData.fighters.map(fighter => ({
+					id: fighter.id,
+					name: fighter.name,
+					type: fighter.type,
+					attacker: fighter.attacker,
+					hp: fighter.hp,
+					maxHp: fighter.maxHp,
+					energy: fighter.energy,
+					maxEnergy: fighter.maxEnergy,
+					element: fighter.element,
+					time: fighter.time,
+					escaped: fighter.escaped,
+					statuses: fighter.status.map(status => ({
+						type: status.type,
+						time: status.time,
+						timeSinceLastCycle: status.timeSinceLastCycle
+					})),
+					skills: fighter.skills.map(skill => skill.id),
+					items: fighter.items.map(item => item.itemId)
+				}))
 			});
 
-			// Increase overtime damage by 1 for each turn elapsed since overtime started.
-			overtimePoisonDamage += 1;
-		}
+			fightData.outcome = FightOutcome.Timeout;
 
-		if (turn > 1200) {
-			// Too many turns
-			console.warn('Too many turns, this should never happen');
+			fightData.steps.push({
+				action: 'timeOut',
+				delta: 0
+			});
+
 			break;
 		}
 
-		// Play fighter turn
-		playFighterTurn(fightData);
+		/*
+		 * Apply unavoidable overtime poison before the safety limit.
+		 */
+		if (turn >= OVERTIME_START_TURN) {
+			fightData.overtimeDamage = OVERTIME_INITIAL_DAMAGE + Math.floor((turn - OVERTIME_START_TURN) / 25);
 
-		// Check deaths
+			if (!overtimeStarted) {
+				console.warn('Fight overtime started', {
+					seed: config.seed,
+					place,
+					turn,
+					time: fightData.time,
+					fighters: fightData.fighters.map(fighter => ({
+						id: fighter.id,
+						name: fighter.name,
+						type: fighter.type,
+						attacker: fighter.attacker,
+						hp: fighter.hp,
+						skills: fighter.skills.map(skill => skill.id)
+					}))
+				});
+
+				overtimeStarted = true;
+			}
+
+			fightData.fighters.forEach(fighter => {
+				if (fighter.hp <= 0 || fighter.escaped || hasStatus(fighter, FightStatus.OVERTIME_POISON)) {
+					return;
+				}
+
+				const status = createStatus(FightStatus.OVERTIME_POISON, FightStatusLength.SUPER_SHORT);
+
+				if (status.cycle && fightData.nextStatusTrigger > CYCLE) {
+					fightData.nextStatusTrigger = CYCLE;
+				} else if (status.time < fightData.nextStatusTrigger) {
+					fightData.nextStatusTrigger = status.time;
+				}
+
+				fighter.status.push(status);
+
+				fightData.steps.push({
+					action: 'addStatus',
+					fighter: stepFighter(fighter),
+					status: FightStatus.OVERTIME_POISON
+				});
+			});
+		}
+
+		playFighterTurn(fightData);
 		checkDeaths(fightData);
 
 		turn += 1;

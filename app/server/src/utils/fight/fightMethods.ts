@@ -67,8 +67,6 @@ import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBet
 import { checkSkillCondition } from './skillFightConditionParser.js';
 import weightedRandom from './weightedRandom.js';
 
-export const OVERTIME_ID = -9999;
-
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
 
@@ -4543,33 +4541,27 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 				// Execute the status if a cycle has elapsed
 				if (status.timeSinceLastCycle >= CYCLE) {
 					switch (status.type) {
-						case FightStatus.OVERTIME_POISON:
+						case FightStatus.OVERTIME_POISON: {
+							/*
+							 * Overtime has no real caster.
+							 *
+							 * It must not use or overwrite fighter.poisonedBy because that property
+							 * belongs to regular poison effects.
+							 */
+							loseHp(fightData, fighter, fightData.overtimeDamage, LifeEffect.Poison);
+							break;
+						}
 						case FightStatus.POISONED: {
 							const poisonedBy = fighter.poisonedBy;
-
 							if (!poisonedBy) {
-								throw new Error('Missing poisonedBy data');
+								throw new Error(`Missing poisonedBy data for fighter ${fighter.id}`);
 							}
-
-							// Get poisoner
 							const poisoner = fightData.fighters.find(f => f.id === poisonedBy.id);
-
 							if (!poisoner) {
-								throw new Error('Poisoner not found');
+								throw new Error(`Poisoner ${poisonedBy.id} not found for fighter ${fighter.id}`);
 							}
-
-							// Register the hp lost from poison
-							const hp_lost = loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
-
-							if (poisoner) {
-								// Update stat for regular poisons
-								updateStat(fightData, poisoner, 'poison_damage', hp_lost);
-							} else if (poisonedBy.id !== OVERTIME_ID) {
-								// For non global poisons, throw an error
-								throw new Error('Poisoner not found');
-							}
-							// Else it's the overtime poison, nothing to do.
-
+							const hpLost = loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
+							updateStat(fightData, poisoner, 'poison_damage', hpLost);
 							break;
 						}
 						case FightStatus.BURNED: {

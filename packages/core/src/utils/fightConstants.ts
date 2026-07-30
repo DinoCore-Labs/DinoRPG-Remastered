@@ -1,7 +1,11 @@
 export const TIME_BASE = 10;
 export const TIME_FACTOR = 10;
-// Overtime set to 5000 times the base time increment.
-export const OVERTIME_THRESHOLD = 5000 * TIME_BASE * TIME_FACTOR;
+// Start forced overtime before reaching the safety limit.
+export const OVERTIME_START_TURN = 1200;
+// Absolute safety limit for a fight.
+export const MAX_FIGHT_TURNS = 2000;
+// Initial unavoidable overtime damage.
+export const OVERTIME_INITIAL_DAMAGE = 10;
 // Duration of a cycle
 export const CYCLE = 6 * TIME_FACTOR;
 // Environement timeout
