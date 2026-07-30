@@ -15,6 +15,14 @@ export interface AdminClanIngredient {
 	clanId: number;
 }
 
+export interface AdminClanPage {
+	id: number;
+	name: string;
+	home: boolean;
+	public: boolean;
+	content: string;
+}
+
 export interface AdminClan {
 	id: number;
 	name: string;
@@ -23,6 +31,7 @@ export interface AdminClan {
 	leader: { id: string; name: string };
 	members: AdminClanMember[];
 	ingredients: AdminClanIngredient[];
+	pages: AdminClanPage[];
 	creationDate: string;
 }
 
@@ -57,5 +66,9 @@ export class AdminClanService {
 
 	static async updateIngredient(id: number, ingredientId: number, amountToAddOrRemove: number): Promise<void> {
 		await api.patch(`/admin/clan/${id}/ingredients`, { ingredientId, amountToAddOrRemove });
+	}
+
+	static async clearPage(id: number, pageId: number): Promise<void> {
+		await api.patch(`/admin/clan/${id}/pages/${pageId}/clear`);
 	}
 }

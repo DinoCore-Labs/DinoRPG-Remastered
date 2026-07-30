@@ -3,7 +3,7 @@
 		<div class="card-container">
 			<form class="card-container" @submit.prevent="submit">
 				<h3>Profil</h3>
-				<div class="field">
+				<div class="field" v-if="uStore.isAdmin">
 					<label for="role">Rôle</label>
 					<DZSelect id="role" v-model="form.role" :options="roleOptions" />
 				</div>
@@ -18,7 +18,7 @@
 					{{ submitting ? 'Enregistrement...' : 'Mettre à jour' }}
 				</DZButton>
 			</form>
-			<form class="card-container password-form" @submit.prevent="submitPassword">
+			<form class="card-container password-form" @submit.prevent="submitPassword" v-if="uStore.isAdmin">
 				<h3>Mot de passe</h3>
 				<div class="field">
 					<label for="newPassword">Nouveau mot de passe</label>
@@ -50,10 +50,13 @@ import type {
 	UpdateAdminUserProfilePayload
 } from '@dinorpg/core/models/admin/adminUserPayloads.js';
 import { AdminUserService } from '../../../services/adminUsers.service';
+import { userStore } from '../../../store/userStore';
 import { UserRoles, type UserRole } from '@dinorpg/core/models/user/userRole.js';
 import DZSelect, { type SelectOption } from '../../utils/DZSelect.vue';
 import DZCheckbox from '../../utils/DZCheckbox.vue';
 import DZButton from '../../utils/DZButton.vue';
+
+const uStore = userStore();
 
 const props = defineProps<{
 	user: AdminUserDetails;

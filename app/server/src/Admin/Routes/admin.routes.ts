@@ -27,6 +27,7 @@ import {
 	updateMaintenanceBodySchema
 } from '../Schema/admin.schema.js';
 import {
+	clearAdminClanPageHandler,
 	deleteAdminClanHandler,
 	getAdminClanHandler,
 	kickAdminClanMemberHandler,
@@ -102,33 +103,33 @@ export async function adminRoutes(app: FastifyInstance) {
 	);
 	app.post(
 		'/user/:id/wallets/update',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminUserWalletHandler
 	);
 	app.patch(
 		'/user/:id/unique-skills',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminUserUniqueSkillsHandler
 	);
 	app.patch(
 		'/user/:id/items',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminUserItemsHandler
 	);
 	app.patch(
 		'/user/:id/ingredients',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminUserIngredientsHandler
 	);
 	app.patch(
 		'/user/:id/rewards',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminUserRewardsHandler
 	);
 	app.patch(
 		'/user/:id/password',
 		{
-			preHandler: [app.authenticate, app.moderator],
+			preHandler: [app.authenticate, app.admin],
 			schema: {
 				tags: ['Admin']
 			}
@@ -138,7 +139,7 @@ export async function adminRoutes(app: FastifyInstance) {
 	app.patch(
 		'/user/:id/scenarios',
 		{
-			preHandler: [app.authenticate, app.moderator],
+			preHandler: [app.authenticate, app.admin],
 			schema: {
 				tags: ['Admin']
 			}
@@ -168,72 +169,72 @@ export async function adminRoutes(app: FastifyInstance) {
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/stats',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminDinozStatsHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/state',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminDinozStateHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/place',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		teleportAdminDinozHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/leader',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminDinozLeaderHandler
 	);
 	app.post(
 		'/user/:userId/dinoz/:dinozId/status',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		addAdminDinozStatusHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/status/remove',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		removeAdminDinozStatusHandler
 	);
 	app.post(
 		'/user/:userId/dinoz/:dinozId/skills',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		addAdminDinozSkillHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/skills/state',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminDinozSkillStateHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/skills/remove',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		removeAdminDinozSkillHandler
 	);
 	app.post(
 		'/user/:userId/dinoz/:dinozId/unlockable-skills',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		addAdminDinozUnlockableSkillController
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/unlockable-skills/remove',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		removeAdminDinozUnlockableSkillController
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/items',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminDinozItemsHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/missions/:missionKey',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminDinozMissionHandler
 	);
 	app.delete(
 		'/user/:userId/dinoz/:dinozId/missions/:missionKey/replayable',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		makeAdminDinozMissionReplayableHandler
 	);
 	// Clan
@@ -269,13 +270,18 @@ export async function adminRoutes(app: FastifyInstance) {
 	);
 	app.patch(
 		'/clan/:id/treasure',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminClanTreasureHandler
 	);
 	app.patch(
 		'/clan/:id/ingredients',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
 		updateAdminClanIngredientHandler
+	);
+	app.patch(
+		'/clan/:id/pages/:pageId/clear',
+		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		clearAdminClanPageHandler
 	);
 	// News
 	app.get(

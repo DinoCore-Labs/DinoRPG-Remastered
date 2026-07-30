@@ -6,6 +6,7 @@ import { GameLogType } from '../../../../prisma/index.js';
 import { CreateGameLogInput, safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 import {
+	adminClanPageParamsSchema,
 	adminClanParamsSchema,
 	kickClanMemberSchema,
 	searchClanQuerySchema,
@@ -62,7 +63,8 @@ export async function getAdminClanHandler(request: FastifyRequest, reply: Fastif
 		include: {
 			leader: { select: { id: true, name: true } },
 			members: { include: { user: { select: { id: true, name: true } } } },
-			ingredients: true
+			ingredients: true,
+			pages: { select: { id: true, name: true, home: true, public: true, content: true } }
 		}
 	});
 
@@ -261,4 +263,25 @@ export async function updateAdminClanIngredientHandler(request: FastifyRequest, 
 	});
 
 	return reply.send({ message: 'Ingredient updated' });
+}
+
+export async function clearAdminClanPageHandler(request: FastifyRequest, reply: FastifyReply) {
+	const params = adminClanPageParamsSchema.safeParse(request.params);
+	if (!params.success) return reply.status(400).send({ message: 'Invalid payload' });
+
+	const page = await prisma.clanPage.findUnique({ where: { id: params.data.pageId } });
+	if (!page || page.clanId !== params.data.id) return reply.status(404).send({ message: 'Page not found' });
+
+	if (page.home) {
+		await prisma.clanPage.update({
+			where: { id: params.data.pageId },
+			data: { content: '[Contenu supprimé par la Modération]' }
+		});
+		await logAdminClanAction(request, params.data.id, { action: 'CLEAR_PAGE', pageId: params.data.pageId });
+		return reply.send({ message: 'Page cleared' });
+	} else {
+		await prisma.clanPage.delete({ where: { id: params.data.pageId } });
+		await logAdminClanAction(request, params.data.id, { action: 'DELETE_PAGE', pageId: params.data.pageId });
+		return reply.send({ message: 'Page deleted' });
+	}
 }

@@ -13,12 +13,12 @@
 			<AdminUserSummaryCard :user="user" />
 			<AdminUserProfileForm :user="user" @updated="reloadUser" />
 			<AdminUserSanctionForm :user="user" @updated="reloadUser" />
-			<AdminUserWalletForm :user="user" @updated="reloadUser" />
-			<AdminUserUniqueSkillsForm :user="user" @updated="reloadUser" />
-			<AdminUserInventoryForm :user="user" type="items" @updated="reloadUser" />
-			<AdminUserInventoryForm :user="user" type="ingredients" @updated="reloadUser" />
-			<AdminUserRewardsForm :user="user" @updated="reloadUser" />
-			<AdminUserScenariosForm v-if="user" :user="user" @updated="reloadUser" />
+			<AdminUserWalletForm v-if="uStore.isAdmin" :user="user" @updated="reloadUser" />
+			<AdminUserUniqueSkillsForm v-if="uStore.isAdmin" :user="user" @updated="reloadUser" />
+			<AdminUserInventoryForm v-if="uStore.isAdmin" :user="user" type="items" @updated="reloadUser" />
+			<AdminUserInventoryForm v-if="uStore.isAdmin" :user="user" type="ingredients" @updated="reloadUser" />
+			<AdminUserRewardsForm v-if="uStore.isAdmin" :user="user" @updated="reloadUser" />
+			<AdminUserScenariosForm v-if="user && uStore.isAdmin" :user="user" @updated="reloadUser" />
 			<AdminUserDinozList :user-id="user.id" :dinoz-list="dinozList" />
 		</template>
 	</div>
@@ -41,11 +41,13 @@ import AdminUserRewardsForm from '../../components/admin/user/AdminUserRewardsFo
 import AdminUserDinozList from '../../components/admin/user/AdminUserDinozList.vue';
 import AdminUserScenariosForm from '../../components/admin/user/AdminUserScenariosForm.vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
+import { userStore } from '../../store/userStore';
 
 import { AdminUserService } from '../../services/adminUsers.service';
 
 const route = useRoute();
 const router = useRouter();
+const uStore = userStore();
 
 const selectedUserId = ref('');
 const loading = ref(false);
