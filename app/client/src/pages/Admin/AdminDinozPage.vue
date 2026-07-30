@@ -9,15 +9,15 @@
 		<template v-else-if="dinoz && userId">
 			<AdminDinozSummaryCard :user-id="userId" :dinoz="dinoz" />
 			<AdminDinozProfileForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozStatsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozStateForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozPlaceForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozLeaderForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozStatusForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozSkillsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozUnlockableSkillsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozItemsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozMissionsForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozStatsForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozStateForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozPlaceForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozLeaderForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozStatusForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozSkillsForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozUnlockableSkillsForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozItemsForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozMissionsForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
 		</template>
 	</div>
 </template>
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { userStore } from '../../store/userStore';
 
 import type { AdminDinozDetails } from '@dinorpg/core/models/admin/adminDinoz.js';
 
@@ -45,6 +46,7 @@ import AdminDinozMissionsForm from '../../components/admin/dinoz/AdminDinozMissi
 
 const route = useRoute();
 const router = useRouter();
+const uStore = userStore();
 
 const loading = ref(false);
 const error = ref('');

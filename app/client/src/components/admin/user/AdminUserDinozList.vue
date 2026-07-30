@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 import type { AdminDinozSummary } from '@dinorpg/core/models/admin/adminUser.js';
 
@@ -32,6 +32,7 @@ const props = defineProps<{
 }>();
 
 const router = useRouter();
+const route = useRoute();
 const selectedDinozId = ref<number | undefined>(undefined);
 
 const dinozOptions = computed<SelectOption<number>[]>(() =>
@@ -51,8 +52,9 @@ watch(
 
 function editSelectedDinoz() {
 	if (selectedDinozId.value === undefined) return;
+	const isModeration = route.path.startsWith('/moderation');
 	router.push({
-		path: '/admin/dinoz',
+		path: isModeration ? '/moderation/dinoz' : '/admin/dinoz',
 		query: {
 			playerId: props.userId,
 			dinozId: String(selectedDinozId.value)

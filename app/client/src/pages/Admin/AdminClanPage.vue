@@ -37,7 +37,7 @@
 				</div>
 			</div>
 
-			<div class="card">
+			<div class="card" v-if="uStore.isAdmin">
 				<div class="card-container">
 					<h3>Trésorerie</h3>
 					<div class="field-group">
@@ -65,6 +65,37 @@
 						<input type="number" v-model="ingredientAmount" placeholder="Quantité (+ ou -)" />
 						<DZButton size="small" @click="updateIngredient">Appliquer</DZButton>
 					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-container">
+					<h3>Pages du Clan</h3>
+					<div v-if="clan.pages && clan.pages.length > 0" class="table-responsive">
+						<table class="members-table">
+							<thead>
+								<tr>
+									<th>Nom</th>
+									<th>Type</th>
+									<th>Contenu</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="page in clan.pages" :key="page.id">
+									<td>{{ page.name }}</td>
+									<td>{{ page.home ? 'Accueil' : page.public ? 'Publique' : 'Privée' }}</td>
+									<td>{{ page.content.substring(0, 50) }}...</td>
+									<td>
+										<DZButton size="small" @click="clearPage(page)">{{
+											page.home ? 'Vider le contenu' : 'Supprimer'
+										}}</DZButton>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p v-else>Aucune page.</p>
 				</div>
 			</div>
 
@@ -102,6 +133,7 @@
 <script setup lang="ts">
 import { ref, onMounted, getCurrentInstance } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { userStore } from '../../store/userStore';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import AdminClanSearch from '../../components/admin/clan/AdminClanSearch.vue';
 import DZButton from '../../components/utils/DZButton.vue';
@@ -110,6 +142,7 @@ import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.
 
 const route = useRoute();
 const router = useRouter();
+const uStore = userStore();
 
 const instance = getCurrentInstance();
 
@@ -237,6 +270,25 @@ async function deleteClan() {
 	}
 }
 
+async function clearPage(page: any) {
+	if (!clan.value) return;
+	const actionText = page.home
+		? "vider le contenu de cette page d'accueil ? (Remplacement par message de modération)"
+		: 'supprimer définitivement cette page ?';
+	const confirmed = await instance?.proxy?.$confirm({
+		header: 'Confirmation',
+		message: `Voulez-vous vraiment ${actionText}`
+	});
+	if (!confirmed) return;
+	try {
+		await AdminClanService.clearPage(clan.value.id, page.id);
+		await loadClan(clan.value.id);
+		instance?.proxy?.$toast?.success(page.home ? 'Contenu vidé avec succès' : 'Page supprimée avec succès');
+	} catch (e: any) {
+		instance?.proxy?.$toast?.error(e.response?.data?.message || 'Erreur');
+	}
+}
+
 function getIngredientName(id: number) {
 	// @ts-ignore
 	const fiche = ingredientList[id];
@@ -341,5 +393,10 @@ onMounted(() => {
 }
 .btn-danger {
 	background-color: #dc2626 !important;
+}
+.table-responsive {
+	overflow-x: auto;
+	width: 100%;
+	box-sizing: border-box;
 }
 </style>

@@ -2,6 +2,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { GameLogType } from '../../../../prisma/index.js';
 import { CreateGameLogInput, safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
+import { prisma } from '../../prisma.js';
 import {
 	getAdminUserDetails,
 	getAdminUserDinoz,
@@ -81,6 +82,10 @@ export async function updateAdminUserProfileHandler(request: FastifyRequest, rep
 	const parsedBody = updateAdminUserProfileSchema.safeParse(request.body);
 	if (!parsedParams.success || !parsedBody.success) {
 		return reply.status(400).send({ message: 'Invalid request payload' });
+	}
+	const targetUser = await prisma.user.findUnique({ where: { id: parsedParams.data.id } });
+	if ((request.user as any).role === 'MODERATOR' && targetUser && targetUser.role !== parsedBody.data.role) {
+		return reply.status(403).send({ message: 'Only administrators can modify roles.' });
 	}
 	await updateAdminUserProfile(parsedParams.data.id, parsedBody.data);
 	await logAdminUserAction(request, GameLogType.AdminUpdateUser, {
