@@ -2,6 +2,20 @@
 
 ## 🔹 Core
 
+## 0.32.0
+
+### Minor Changes
+
+- 4024eb2: Add a complete moderation system for players, Dinoz, and clans.
+
+  - Allow players to report users, Dinoz, and clans.
+  - Add a moderation dashboard for reviewing and resolving reports.
+  - Add temporary and permanent user sanctions with ban and mute reasons.
+  - Prevent muted users from sending private messages.
+  - Add clan moderation tools for editing clans, removing members, and deleting clans.
+  - Separate moderator privileges from administrator-only tools.
+  - Add audit logs for moderation and clan management actions.
+
 ## 0.31.0
 
 ### Minor Changes
@@ -596,6 +610,25 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.34.0
+
+### Minor Changes
+
+- 4024eb2: Add a complete moderation system for players, Dinoz, and clans.
+
+  - Allow players to report users, Dinoz, and clans.
+  - Add a moderation dashboard for reviewing and resolving reports.
+  - Add temporary and permanent user sanctions with ban and mute reasons.
+  - Prevent muted users from sending private messages.
+  - Add clan moderation tools for editing clans, removing members, and deleting clans.
+  - Separate moderator privileges from administrator-only tools.
+  - Add audit logs for moderation and clan management actions.
+
+### Patch Changes
+
+- Updated dependencies [4024eb2]
+  - @dinorpg/core@0.32.0
 
 ## 0.33.0
 
@@ -1381,6 +1414,20 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.33.0
+
+### Minor Changes
+
+- 4024eb2: Add a complete moderation system for players, Dinoz, and clans.
+
+  - Allow players to report users, Dinoz, and clans.
+  - Add a moderation dashboard for reviewing and resolving reports.
+  - Add temporary and permanent user sanctions with ban and mute reasons.
+  - Prevent muted users from sending private messages.
+  - Add clan moderation tools for editing clans, removing members, and deleting clans.
+  - Separate moderator privileges from administrator-only tools.
+  - Add audit logs for moderation and clan management actions.
 
 ## 0.32.0
 
