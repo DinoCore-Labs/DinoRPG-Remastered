@@ -42,7 +42,7 @@ export async function changeLeaderDinozGroup(
 	// Check if the new leader can have this many followers
 	const maxFollowers = getMaxFollowers(newLeader);
 	if (currentLeader.followers.length > maxFollowers) {
-		throw new ExpectedError('maxFollowers');
+		throw new ExpectedError('maxFollowers', { params: { maxFollowers } });
 	}
 
 	// Update leader/follower relationships
