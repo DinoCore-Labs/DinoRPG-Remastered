@@ -6,8 +6,7 @@ import type {
 	MissionGoal,
 	MissionUseIngredientGoal,
 	MissionUseItemGoal,
-	MissionUseMoneyGoal,
-	MissionValidateGoal
+	MissionUseMoneyGoal
 } from '@dinorpg/core/models/missions/missionGoal.js';
 import type {
 	CompleteMissionInteractionInput,
@@ -207,9 +206,18 @@ async function getActiveMissionState(userId: string, dinozId: number): Promise<A
 	};
 }
 
-function assertValidateGoalCanBeUsed(goal: MissionValidateGoal, placeId: number) {
-	if (goal.place !== null && goal.place !== placeId) {
-		throw new ExpectedError(`Mission validation is not available at place "${placeId}".`);
+function assertMissionGoalCanBeUsedAtPlace(goal: MissionGoal, placeId: number) {
+	switch (goal.type) {
+		case 'TALK':
+		case 'ACTION':
+		case 'VALIDATE':
+		case 'USE_ITEM':
+		case 'USE_MONEY':
+		case 'USE_INGREDIENT':
+			if (goal.place != null && goal.place !== placeId) {
+				throw new ExpectedError(`Mission action is not available at place "${placeId}".`);
+			}
+			break;
 	}
 }
 
@@ -268,6 +276,7 @@ export async function startMissionInteraction(
 		throw new ExpectedError('No active mission for this dinoz.');
 	}
 	const goal = currentMission.goal;
+	assertMissionGoalCanBeUsedAtPlace(goal, currentMission.state.dinozPlaceId);
 	switch (goal.type) {
 		case 'TALK': {
 			if (goal.display === 'dialog') {
@@ -301,7 +310,6 @@ export async function startMissionInteraction(
 				textKey: goal.descriptionKey
 			};
 		case 'VALIDATE': {
-			assertValidateGoalCanBeUsed(goal, currentMission.state.dinozPlaceId);
 			return {
 				mode: 'modal',
 				goalType: 'VALIDATE',
@@ -374,6 +382,7 @@ export async function completeMissionInteraction(
 		throw new ExpectedError('No active mission for this dinoz.');
 	}
 	const goal = currentMission.goal;
+	assertMissionGoalCanBeUsedAtPlace(goal, currentMission.state.dinozPlaceId);
 	switch (input.trigger) {
 		case 'manual':
 			if (
@@ -385,9 +394,6 @@ export async function completeMissionInteraction(
 				goal.type !== 'USE_INGREDIENT'
 			) {
 				throw new ExpectedError(`Mission goal "${goal.type}" cannot be completed manually.`);
-			}
-			if (goal.type === 'VALIDATE') {
-				assertValidateGoalCanBeUsed(goal, currentMission.state.dinozPlaceId);
 			}
 			if (goal.type === 'USE_ITEM') {
 				await consumeMissionItemGoal(input.userId, goal);

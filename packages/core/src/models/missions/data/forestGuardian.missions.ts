@@ -2,10 +2,11 @@
 
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
 import type { MissionDefinition } from '../mission.js';
+import { MissionValidateGoal } from '../missionGoal.js';
 
 const FOREST_GUARDIAN_GROUP = 'arbre';
 
-const guardianValidateGoal = () =>
+const guardianValidateGoal = (): MissionValidateGoal =>
 	({
 		type: 'VALIDATE' as const,
 		npcKey: 'forest_guardian',

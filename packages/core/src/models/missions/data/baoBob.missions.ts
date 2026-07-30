@@ -1,9 +1,10 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
 import type { MissionDefinition } from '../mission.js';
+import { MissionValidateGoal } from '../missionGoal.js';
 
 const BAO_BOB_GROUP = 'bob';
 
-const baoBobValidateGoal = () =>
+const baoBobValidateGoal = (): MissionValidateGoal =>
 	({
 		type: 'VALIDATE' as const,
 		npcKey: 'bao_bob',

@@ -1,9 +1,10 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
 import type { MissionDefinition } from '../mission.js';
+import { MissionValidateGoal } from '../missionGoal.js';
 
 const RODEUR_GROUP = 'rodeur';
 
-const rodeurValidateGoal = () => ({
+const rodeurValidateGoal = (): MissionValidateGoal => ({
 	type: 'VALIDATE' as const,
 	npcKey: 'rodeur',
 	place: PlaceEnum.FORGES_DU_GTC,

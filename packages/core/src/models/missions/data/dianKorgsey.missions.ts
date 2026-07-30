@@ -1,11 +1,10 @@
-// packages/core/src/models/missions/data/dianKorgsey.missions.ts
-
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
 import type { MissionDefinition } from '../mission.js';
+import { MissionValidateGoal } from '../missionGoal.js';
 
 const DIAN_KORGSEY_GROUP = 'dian';
 
-const dianKorgseyValidateGoal = () =>
+const dianKorgseyValidateGoal = (): MissionValidateGoal =>
 	({
 		type: 'VALIDATE' as const,
 		npcKey: 'dian_korgsey',
