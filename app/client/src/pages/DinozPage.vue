@@ -11,7 +11,7 @@
 	></Suspense>
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions v-show="isReady" :dinoz="dinozData" :refreshDinoz="refreshDinoz" />
-		<TabPanels v-if="isReady" :dinozData="dinozData" />
+		<TabPanels v-if="isReady" :key="dinozData.id" :dinozData="dinozData" />
 		<div class="footer" />
 	</div>
 </template>
