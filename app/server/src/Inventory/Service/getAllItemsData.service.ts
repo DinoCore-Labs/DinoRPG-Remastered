@@ -11,11 +11,15 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { getUserInventoryDataRequest } from '../Controller/getUserInventory.controller.js';
 
-export const getItemMaxQuantity = (
-	userInventory: NonNullable<Awaited<ReturnType<typeof getUserInventoryDataRequest>>>,
-	item: ItemFiche
-) => {
-	const hasMerguezCard = userInventory.rewards.some(r => r.rewardId === Reward.MERGUEZ_CARD);
+type ItemMaxQuantityUser = {
+	shopKeeper: boolean;
+	rewards: Array<{
+		rewardId: number;
+	}>;
+};
+
+export const getItemMaxQuantity = (userInventory: ItemMaxQuantityUser, item: ItemFiche): number => {
+	const hasMerguezCard = userInventory.rewards.some(reward => reward.rewardId === Reward.MERGUEZ_CARD);
 	if (item.itemId === Item.GOBLIN_MERGUEZ && hasMerguezCard) {
 		return userInventory.shopKeeper ? MERGUEZ_SHOPKEEPER_MAX_QUANTITY : MERGUEZ_CARD_MAX_QUANTITY;
 	}

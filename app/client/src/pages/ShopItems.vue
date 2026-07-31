@@ -283,7 +283,6 @@
 </template>
 
 <script lang="ts" scoped>
-import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
 import type { IngredientFiche } from '@dinorpg/core/models/ingredients/ingredientFiche.js';
 import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
@@ -459,10 +458,7 @@ export default defineComponent({
 				...realItem,
 				price: item.price,
 				quantity: item.quantity ?? 0,
-				maxQuantity:
-					this.userStore.isShopkeeper && realItem?.itemType !== ItemType.MAGICAL
-						? Math.round((realItem?.maxQuantity ?? 1) * 1.5)
-						: realItem?.maxQuantity
+				maxQuantity: item.maxQuantity ?? realItem.maxQuantity
 			};
 		},
 		resolveIngredient(item: ItemShopFiche): IngredientFiche {

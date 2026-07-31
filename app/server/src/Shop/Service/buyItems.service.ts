@@ -12,6 +12,7 @@ import { checkDinozPlace } from '../../Dinoz/Service/checkDinozPlace.service.js'
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { decreaseIngredientQuantity } from '../../Inventory/Controller/addIngredient.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
+import { getItemMaxQuantity } from '../../Inventory/Service/getAllItemsData.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { addTreasureTicket, removeMoney } from '../../User/Controller/money.controller.js';
 import { getUserShopOneItemDataRequest } from '../Controller/getUserShopOneItemData.controller.js';
@@ -74,10 +75,7 @@ export async function buyItemHandler(
 		itemReference.quantity = playerItemData ? playerItemData.quantity : 0;
 
 		// ShopKeeper : +50% hors MAGICAL
-		itemReference.maxQuantity =
-			playerShopData.shopKeeper && itemReference.itemType !== ItemType.MAGICAL
-				? Math.floor(itemReference.maxQuantity * 1.5)
-				: itemReference.maxQuantity;
+		itemReference.maxQuantity = getItemMaxQuantity(playerShopData, itemReference);
 
 		// Cas boutique magique
 		if (theShop.type === ShopType.MAGICAL) {
