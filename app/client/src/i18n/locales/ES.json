@@ -465,15 +465,13 @@
 			"disclaimer": "Las predicciones de Madame Irma no son infalibles, por lo que no hay ninguna fecha de lanzamiento disponible para estas novedades. Sin embargo, cada evento será anunciado oficialmente en el sitio cuando llegue el momento.",
 			"futurTitle": "Futuro dinolandés",
 			"futureInfo1": {
-				"text1": "Mise en place du règlement du jeu",
-				"text2": "Mise en place des mentions légales",
-				"text3": "Mise en place de la politique de confidentialité",
-				"text4": "Mise en place de la modération",
-				"text5": "Correction des bugs"
-			},
-			"futureInfo2": {
 				"text1": "Maître Zenith et le dojo",
 				"text2": "Le tournoi inter dojo (event PVP)",
+				"text3": "Correction de bugs"
+			},
+			"futureInfo2": {
+				"text1": "Le scénario des steppes",
+				"text2": "De nouveaux PNJ et de nouvelles missions",
 				"text3": "Correction de bugs"
 			},
 			"futureInfo3": {
