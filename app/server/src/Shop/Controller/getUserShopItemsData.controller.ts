@@ -14,6 +14,11 @@ export async function getUserShopItemsDataRequest(userId: string) {
 			},
 			merchant: true,
 			shopKeeper: true,
+			rewards: {
+				select: {
+					rewardId: true
+				}
+			},
 			items: {
 				select: {
 					itemId: true,

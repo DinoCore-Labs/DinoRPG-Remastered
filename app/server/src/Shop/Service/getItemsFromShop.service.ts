@@ -1,9 +1,11 @@
+import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ItemShopFiche, ItemShopType } from '@dinorpg/core/models/shop/shopFiche.js';
 import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { checkDinozPlace } from '../../Dinoz/Service/checkDinozPlace.service.js';
+import { getItemMaxQuantity } from '../../Inventory/Service/getAllItemsData.service.js';
 import { getUserShopItemsDataRequest } from '../Controller/getUserShopItemsData.controller.js';
 
 type GetItemsFromShopParams = {
@@ -45,18 +47,29 @@ export async function getItemsFromShopHandler(
 				itemSold.type === ItemShopType.ITEM
 					? playerShopData.items.find(playerItem => playerItem.itemId === itemSold.id)
 					: playerShopData.ingredients.find(playerItem => playerItem.ingredientId === itemSold.id);
-
+			if (itemSold.type === ItemShopType.INGREDIENT) {
+				return {
+					id: itemSold.id,
+					price: itemSold.price,
+					quantity: itemPlayer?.quantity ?? 0,
+					type: itemSold.type
+				};
+			}
+			const itemReference = Object.values(itemList).find(item => item.itemId === itemSold.id);
+			if (!itemReference) {
+				throw new ExpectedError(`Item ${itemSold.id} does not exist`);
+			}
 			return {
 				id: itemSold.id,
 				price:
 					playerShopData.merchant && tempShop.shopId === shopListV2.FLYING_SHOP.shopId
 						? Math.round(itemSold.price * 0.9)
 						: itemSold.price,
-				quantity: itemPlayer ? itemPlayer.quantity : 0,
+				quantity: itemPlayer?.quantity ?? 0,
+				maxQuantity: getItemMaxQuantity(playerShopData, itemReference),
 				type: itemSold.type
 			};
 		});
-
 		return reply.status(200).send(dto);
 	} catch (err) {
 		if (err instanceof ExpectedError) {

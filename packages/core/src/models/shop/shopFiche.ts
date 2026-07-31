@@ -17,6 +17,7 @@ export type ItemShopFiche =
 			price: number;
 			type: ItemShopType.INGREDIENT;
 			quantity?: number;
+			maxQuantity?: number;
 			condition?: Condition;
 	  }
 	| {
@@ -24,6 +25,7 @@ export type ItemShopFiche =
 			price: number;
 			type: ItemShopType.ITEM;
 			quantity?: number;
+			maxQuantity?: number;
 			itemType?: ItemType;
 			condition?: Condition;
 	  };
