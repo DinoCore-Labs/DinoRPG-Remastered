@@ -114,7 +114,7 @@ model DinozConcentration {
 
 model DinozConcentrationSession {
   id        Int                     @id @default(autoincrement())
-  scopeKey  String                  @unique @db.VarChar(64)
+  scopeKey  String                  @db.VarChar(64)
   state     DinozConcentrationState @default(GATHERING)
 
   createdAt DateTime                @default(now()) @db.Timestamptz(3)
