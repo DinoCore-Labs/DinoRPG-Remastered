@@ -158,9 +158,19 @@ export async function startDinozConcentration(
 		});
 	}
 	if (dinoz.leaderId !== null || dinoz.followers.length > 0) {
-		throw new ExpectedError('concentrationDinozInGroup', {
-			params: {
-				dinozId
+		await tx.dinoz.updateMany({
+			where: {
+				OR: [
+					{
+						id: dinozId
+					},
+					{
+						leaderId: dinozId
+					}
+				]
+			},
+			data: {
+				leaderId: null
 			}
 		});
 	}
