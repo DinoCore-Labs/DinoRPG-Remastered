@@ -99,9 +99,7 @@ export default defineComponent({
 					this.futurInfoList = [
 						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo1.text1') },
 						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo1.text2') },
-						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo1.text3') },
-						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo1.text4') },
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo1.text5') }
+						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo1.text3') }
 					];
 					break;
 				case 2:
