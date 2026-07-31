@@ -199,9 +199,13 @@ export async function startDinozConcentration(
 			}
 		});
 	}
-	let session = await tx.dinozConcentrationSession.findUnique({
+	let session = await tx.dinozConcentrationSession.findFirst({
 		where: {
-			scopeKey
+			scopeKey,
+			state: DinozConcentrationState.GATHERING
+		},
+		orderBy: {
+			createdAt: 'desc'
 		},
 		select: {
 			id: true,
@@ -216,17 +220,6 @@ export async function startDinozConcentration(
 			select: {
 				id: true,
 				state: true
-			}
-		});
-	}
-	/*
-	 * Une session ouverte n'accepte plus de nouveaux participants.
-	 * Seuls les sept Dinoz déjà enregistrés peuvent entrer.
-	 */
-	if (session.state === DinozConcentrationState.OPEN) {
-		throw new ExpectedError('concentrationAlreadyOpen', {
-			params: {
-				dinozId
 			}
 		});
 	}
