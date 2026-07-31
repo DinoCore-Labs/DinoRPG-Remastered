@@ -465,11 +465,9 @@
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
 			"futurTitle": "Dinolandian Future",
 			"futureInfo1": {
-				"text1": "Mise en place du règlement du jeu",
-				"text2": "Mise en place des mentions légales",
-				"text3": "Mise en place de la politique de confidentialité",
-				"text4": "Mise en place de la modération",
-				"text5": "Correction des bugs"
+				"text1": "Maître Zenith et le dojo",
+				"text2": "Le tournoi inter dojo (event PVP)",
+				"text3": "Bug fixes"
 			},
 			"futureInfo2": {
 				"text1": "Mayor Zenith and the Dojo",
