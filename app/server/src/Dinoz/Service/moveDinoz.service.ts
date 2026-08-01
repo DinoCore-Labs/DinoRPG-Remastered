@@ -80,7 +80,7 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 		throw new ExpectedError(`${currentPlace.name} is not adjacent with ${desiredPlace.name}`);
 	}
 	// Check if condition to go to desired place are fulfilled for dinoz and followers
-	if (desiredPlace.condition) {
+	if (moveToDesiredPlace.condition) {
 		for (const member of team) {
 			const memberToTest: UserForConditionCheck = {
 				id: user.id,
@@ -89,7 +89,8 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 				ranking: user.ranking,
 				dinoz: [member]
 			};
-			if (moveToDesiredPlace.condition && !canGoToThisPlace(memberToTest, moveToDesiredPlace.condition, member.id)) {
+
+			if (!canGoToThisPlace(memberToTest, moveToDesiredPlace.condition, member.id)) {
 				throw new ExpectedError('missingStatus');
 			}
 		}
@@ -112,6 +113,7 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 		team,
 		dinozId,
 		fromPlace: currentPlace.placeId,
+		triggerPlace: desiredPlace.placeId,
 		toPlace: finalPlace,
 		autoReequip
 	});
