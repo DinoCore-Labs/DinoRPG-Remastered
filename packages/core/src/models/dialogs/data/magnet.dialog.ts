@@ -64,71 +64,59 @@ export const rockyKingMagnetiteIntroDialog = defineDialog({
 			next: ['enter'],
 			fast: true
 		},
-
 		enter: {
 			id: 'enter',
 			text: 'npc.rockyKing.dialog.magnet1.enter',
 			next: ['events']
 		},
-
 		events: {
 			id: 'events',
 			text: 'npc.rockyKing.dialog.magnet1.events',
 			next: ['magnet']
 		},
-
 		magnet: {
 			id: 'magnet',
 			text: 'npc.rockyKing.dialog.magnet1.magnet',
 			next: ['magnet2']
 		},
-
 		magnet2: {
 			id: 'magnet2',
 			text: 'npc.rockyKing.dialog.magnet1.magnet2',
 			next: ['events2']
 		},
-
 		events2: {
 			id: 'events2',
 			text: 'npc.rockyKing.dialog.magnet1.events2',
 			next: ['again', 'me']
 		},
-
 		me: {
 			id: 'me',
 			text: 'npc.rockyKing.dialog.magnet1.me',
 			next: ['team']
 		},
-
 		team: {
 			id: 'team',
 			text: 'npc.rockyKing.dialog.magnet1.team',
 			next: ['team2']
 		},
-
 		team2: {
 			id: 'team2',
 			text: 'npc.rockyKing.dialog.magnet1.team2',
 			next: ['again2', 'accept', 'refuse']
 		},
-
 		refuse: {
 			id: 'refuse',
 			text: 'npc.rockyKing.dialog.magnet1.refuse'
 		},
-
 		accept: {
 			id: 'accept',
 			text: 'npc.rockyKing.dialog.magnet1.accept',
 			next: ['leave']
 		},
-
 		leave: {
 			id: 'leave',
 			text: 'npc.rockyKing.dialog.magnet1.leave',
 			fast: true,
-
 			/**
 			 * La progression ne change qu'après
 			 * avoir accepté puis terminé l'audience.
@@ -142,33 +130,27 @@ export const rockyKingMagnetiteIntroDialog = defineDialog({
 			]
 		}
 	},
-
 	links: {
 		enter: {
 			id: 'enter',
 			text: 'npc.rockyKing.choice.magnet1.enter'
 		},
-
 		events: {
 			id: 'events',
 			text: 'npc.rockyKing.choice.magnet1.events'
 		},
-
 		magnet: {
 			id: 'magnet',
 			text: 'npc.rockyKing.choice.magnet1.magnet'
 		},
-
 		magnet2: {
 			id: 'magnet2',
 			text: 'npc.rockyKing.choice.magnet1.magnet2'
 		},
-
 		events2: {
 			id: 'events2',
 			text: 'npc.rockyKing.choice.magnet1.events2'
 		},
-
 		/**
 		 * Retour vers la phase events.
 		 */
@@ -177,22 +159,18 @@ export const rockyKingMagnetiteIntroDialog = defineDialog({
 			text: 'npc.rockyKing.choice.magnet1.again',
 			target: 'events'
 		},
-
 		me: {
 			id: 'me',
 			text: 'npc.rockyKing.choice.magnet1.me'
 		},
-
 		team: {
 			id: 'team',
 			text: 'npc.rockyKing.choice.magnet1.team'
 		},
-
 		team2: {
 			id: 'team2',
 			text: 'npc.rockyKing.choice.magnet1.team2'
 		},
-
 		/**
 		 * Recommence l'explication à partir
 		 * du rapport avec le joueur.
@@ -202,17 +180,14 @@ export const rockyKingMagnetiteIntroDialog = defineDialog({
 			text: 'npc.rockyKing.choice.magnet1.again2',
 			target: 'me'
 		},
-
 		accept: {
 			id: 'accept',
 			text: 'npc.rockyKing.choice.magnet1.accept'
 		},
-
 		refuse: {
 			id: 'refuse',
 			text: 'npc.rockyKing.choice.magnet1.refuse'
 		},
-
 		leave: {
 			id: 'leave',
 			text: 'npc.rockyKing.choice.magnet1.leave'
@@ -245,28 +220,14 @@ export const magnetiteStrangeRangerDialog = defineDialog({
 	phases: {
 		begin: {
 			id: 'begin',
-
 			text: 'npc.rodeur.dialog.magnet2.begin',
-
 			next: ['view']
 		},
-
 		view: {
 			id: 'view',
-
 			text: 'npc.rodeur.dialog.magnet2.view',
-
 			next: [],
-
-			/**
-			 * Équivalent du fast="1" original.
-			 */
 			fast: true,
-
-			/**
-			 * Équivalent exact de :
-			 * effect="rodtmp"
-			 */
 			effects: [
 				{
 					type: 'effect',
@@ -275,12 +236,176 @@ export const magnetiteStrangeRangerDialog = defineDialog({
 			]
 		}
 	},
-
 	links: {
 		view: {
 			id: 'view',
-
 			text: 'npc.rodeur.choice.magnet2View'
 		}
 	}
+});
+
+export const magnetiteTeamWCaptainDialog = defineDialog({
+	id: 'magnetite_team_w_captain',
+	place: PlaceEnum.REPAIRE_DE_LA_TEAM_W,
+	name: 'npc.teamWCaptain.name',
+	cond: condition('scenario(magnet,6)'),
+	first: 'begin',
+	pnj: {
+		image: false,
+		gfx: 'wteamc',
+		frame: 'speak',
+		background: '1'
+	},
+	phases: {
+		begin: {
+			id: 'begin',
+			text: 'npc.teamWCaptain.dialog.magnet6.begin',
+			next: ['who']
+		},
+		who: {
+			id: 'who',
+			text: 'npc.teamWCaptain.dialog.magnet6.who',
+			next: ['dont', 'tell']
+		},
+		dont: {
+			id: 'dont',
+			text: 'npc.teamWCaptain.dialog.magnet6.dont',
+			next: ['dont2', 'tell']
+		},
+		dont2: {
+			id: 'dont2',
+			text: 'npc.teamWCaptain.dialog.magnet6.dont2',
+			next: []
+		},
+		tell: {
+			id: 'tell',
+			text: 'npc.teamWCaptain.dialog.magnet6.tell',
+			next: ['hist1'],
+			fast: true
+		},
+		hist1: {
+			id: 'hist1',
+			text: 'npc.teamWCaptain.dialog.magnet6.hist1',
+			next: ['hist2']
+		},
+		hist2: {
+			id: 'hist2',
+			text: 'npc.teamWCaptain.dialog.magnet6.hist2',
+			next: ['hist3']
+		},
+		hist3: {
+			id: 'hist3',
+			text: 'npc.teamWCaptain.dialog.magnet6.hist3',
+			next: ['hist4']
+		},
+		hist4: {
+			id: 'hist4',
+			text: 'npc.teamWCaptain.dialog.magnet6.hist4',
+			next: ['hist5']
+		},
+		hist5: {
+			id: 'hist5',
+			text: 'npc.teamWCaptain.dialog.magnet6.hist5',
+			next: ['ask', 'again']
+		},
+		ask: {
+			id: 'ask',
+			text: 'npc.teamWCaptain.dialog.magnet6.ask',
+			next: ['yes', 'no']
+		},
+		no: {
+			id: 'no',
+			text: 'npc.teamWCaptain.dialog.magnet6.no',
+			next: []
+		},
+		yes: {
+			id: 'yes',
+			text: 'npc.teamWCaptain.dialog.magnet6.yes',
+			next: [],
+			effects: [
+				{
+					type: 'scenario',
+					scenario: 'magnet',
+					phase: 7
+				}
+			]
+		}
+	},
+	links: {
+		who: {
+			id: 'who',
+			text: 'npc.teamWCaptain.choice.magnet6.who'
+		},
+		dont: {
+			id: 'dont',
+			text: 'npc.teamWCaptain.choice.magnet6.dont'
+		},
+		tell: {
+			id: 'tell',
+			text: 'npc.teamWCaptain.choice.magnet6.tell'
+		},
+		dont2: {
+			id: 'dont2',
+			text: 'npc.teamWCaptain.choice.magnet6.dont2'
+		},
+		hist1: {
+			id: 'hist1',
+			text: 'npc.teamWCaptain.choice.continue'
+		},
+		hist2: {
+			id: 'hist2',
+			text: 'npc.teamWCaptain.choice.continue'
+		},
+		hist3: {
+			id: 'hist3',
+			text: 'npc.teamWCaptain.choice.continue'
+		},
+		hist4: {
+			id: 'hist4',
+			text: 'npc.teamWCaptain.choice.continue'
+		},
+		hist5: {
+			id: 'hist5',
+			text: 'npc.teamWCaptain.choice.continue'
+		},
+		ask: {
+			id: 'ask',
+			text: 'npc.teamWCaptain.choice.magnet6.ask'
+		},
+		again: {
+			id: 'again',
+			text: 'npc.teamWCaptain.choice.magnet6.again',
+			target: 'hist1'
+		},
+		yes: {
+			id: 'yes',
+			text: 'npc.teamWCaptain.choice.magnet6.yes'
+		},
+		no: {
+			id: 'no',
+			text: 'npc.teamWCaptain.choice.magnet6.no'
+		}
+	}
+});
+
+export const magnetiteTeamWCaptainWaitingDialog = defineDialog({
+	id: 'magnetite_team_w_captain_waiting',
+	place: PlaceEnum.REPAIRE_DE_LA_TEAM_W,
+	name: 'npc.teamWCaptain.name',
+	cond: condition('scenario(magnet,7)'),
+	first: 'begin',
+	pnj: {
+		image: false,
+		gfx: 'wteamc',
+		frame: 'speak',
+		background: '1'
+	},
+	phases: {
+		begin: {
+			id: 'begin',
+			text: 'npc.teamWCaptain.dialog.magnet7.begin',
+			next: []
+		}
+	},
+	links: {}
 });
