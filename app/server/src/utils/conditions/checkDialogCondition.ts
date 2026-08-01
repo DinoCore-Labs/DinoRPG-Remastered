@@ -5,7 +5,6 @@ import { resolveItemIdFromKey } from '@dinorpg/core/models/items/itemIdByKey.js'
 import { UserRole } from '@dinorpg/core/models/user/userRole.js';
 
 import { Role } from '../../../../prisma/index.js';
-import gameConfig from '../../config/game.config.js';
 import {
 	DialogContext,
 	getScenarioProgress,
@@ -53,7 +52,7 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'or':
 			return checkDialogCondition(condition.left, context) || checkDialogCondition(condition.right, context);
 		case 'scenario':
-			return compareNumber(getScenarioProgress(context, condition.key), condition.phase, condition.compare);
+			return compareNumber(getScenarioProgress(context, condition.key), condition.progression, condition.compare);
 		case 'uvar':
 			return compareNumber(context.user.userVars.get(condition.key) ?? 0, condition.value, condition.compare);
 		case 'life':

@@ -22,99 +22,83 @@ export const nicolasHulotDialog = defineDialog({
 			fast: true,
 			next: ['welcome', 'sick', 'sickstatus']
 		},
-
 		welcome: {
 			id: 'welcome',
 			text: 'npc.nicolasHulot.dialog.welcome',
 			next: ['who', 'better', 'missions']
 		},
-
 		who: {
 			id: 'who',
 			text: 'npc.nicolasHulot.dialog.who',
 			next: ['role']
 		},
-
 		role: {
 			id: 'role',
 			text: 'npc.nicolasHulot.dialog.role',
 			next: ['flora', 'fauna', 'myst', 'missions']
 		},
-
 		myst: {
 			id: 'myst',
 			text: 'npc.nicolasHulot.dialog.myst',
 			next: ['fear', 'flora', 'fauna', 'missions']
 		},
-
 		flora: {
 			id: 'flora',
 			text: 'npc.nicolasHulot.dialog.flora',
 			next: ['whynot', 'fauna', 'myst', 'missions']
 		},
-
 		whynot: {
 			id: 'whynot',
 			text: 'npc.nicolasHulot.dialog.whynot',
 			next: ['fear', 'other', 'missions']
 		},
-
 		fauna: {
 			id: 'fauna',
 			text: 'npc.nicolasHulot.dialog.fauna',
 			next: ['flora', 'myst', 'missions']
 		},
-
 		fear: {
 			id: 'fear',
 			text: 'npc.nicolasHulot.dialog.fear',
 			next: ['explore', 'other']
 		},
-
 		explore: {
 			id: 'explore',
 			text: 'npc.nicolasHulot.dialog.explore',
 			next: ['missions'],
 			effects: [{ type: 'effect', effect: 'humiss' }]
 		},
-
 		other: {
 			id: 'other',
 			text: 'npc.nicolasHulot.dialog.other',
 			next: ['flora', 'fauna', 'myst', 'missions']
 		},
-
 		sick: {
 			id: 'sick',
 			text: 'npc.nicolasHulot.dialog.sick',
 			fast: true,
 			next: ['problem']
 		},
-
 		problem: {
 			id: 'problem',
 			text: 'npc.nicolasHulot.dialog.problem',
 			next: ['curesearch']
 		},
-
 		curesearch: {
 			id: 'curesearch',
 			text: '',
 			special: [{ type: 'missions', group: 'hulot' }]
 		},
-
 		sickstatus: {
 			id: 'sickstatus',
 			text: 'npc.nicolasHulot.dialog.sickstatus',
 			next: ['curesearch']
 		},
-
 		better: {
 			id: 'better',
 			text: 'npc.nicolasHulot.dialog.better',
 			next: ['flora', 'fauna', 'myst', 'missions']
 		},
-
 		missions: {
 			id: 'missions',
 			text: '',

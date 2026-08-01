@@ -83,10 +83,7 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 	if (moveToDesiredPlace.condition) {
 		for (const member of team) {
 			const memberToTest: UserForConditionCheck = {
-				id: user.id,
-				items: user.items,
-				rewards: user.rewards,
-				ranking: user.ranking,
+				...user,
 				dinoz: [member]
 			};
 

@@ -12,6 +12,7 @@ export async function getDinozFightDataRequest(dinozId: number, userId: string) 
 			},
 			items: { select: { itemId: true, quantity: true } },
 			rewards: { select: { rewardId: true } },
+			scenarios: { select: { scenarioKey: true, progression: true, tracking: true, updatedAt: true } },
 			ranking: { select: { dinozCount: true, points: true } },
 			ingredients: { select: { ingredientId: true, quantity: true } },
 			teacher: true,
