@@ -3,6 +3,7 @@ import { Item } from '../items/itemList.js';
 import { Boss } from '../monster/bossList.js';
 import { Monster } from '../monster/monsterList.js';
 import { Skill } from '../skills/skillList.js';
+import { FightText } from './fightDialog.js';
 import { FighterType } from './fighterType.js';
 import { FightStatus } from './fightStatus.js';
 import { EntranceEffect, LifeEffect, NotificationList } from './transpiler.js';
@@ -298,6 +299,11 @@ export interface LoseCostumeStep {
 	currentHp: number;
 }
 
+export interface FightTextStep {
+	action: 'fightText';
+	text: FightText;
+}
+
 export type FightStep =
 	| TimeLimitStep
 	| TimeoutStep
@@ -340,4 +346,5 @@ export type FightStep =
 	| FlipStep
 	| AnimationStep
 	| AttachStep
-	| LoseCostumeStep;
+	| LoseCostumeStep
+	| FightTextStep;
