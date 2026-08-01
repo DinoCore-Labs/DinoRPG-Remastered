@@ -53,6 +53,7 @@ export interface FightResult {
 	scenario?: FightScenarioReturn;
 	autoReequipped?: { itemId: number; count: number }[];
 	missingReequip?: { itemId: number; count: number }[];
+	monsterKillCount?: number;
 }
 
 export interface FighterRecap {

@@ -114,12 +114,11 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 		});
 	}
 	// Update player stats
+	const monsterKillCount =
+		fight.monsterKillCount ??
+		fight.fighters.filter(fighter => fighter.type === FighterType.MONSTER || fighter.type === FighterType.BOSS).length;
 	if (fight.result) {
-		await incrementUserStat(
-			StatTracking.KILL_M,
-			user.id,
-			fight.fighters.filter(f => f.type === FighterType.MONSTER).length
-		);
+		await incrementUserStat(StatTracking.KILL_M, user.id, monsterKillCount);
 	}
 	safeCreateGameLog(
 		{
@@ -130,7 +129,7 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 			values: [String(1)],
 			metadata: {
 				source: 'direct',
-				monsterCount: fight.fighters.filter(f => f.type === FighterType.MONSTER).length
+				monsterCount: monsterKillCount
 			}
 		},
 		req.log
