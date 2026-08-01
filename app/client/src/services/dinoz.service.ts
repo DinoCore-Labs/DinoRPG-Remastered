@@ -83,5 +83,11 @@ export const DinozService = {
 	},
 	enterPortal(dinozId: number): Promise<void> {
 		return api.post<void>(`/dinoz/${dinozId}/enter-portal`);
+	},
+	devoreuseAttack(dinozId: number): Promise<{ success: boolean; fight: FightResult | null; victory: boolean }> {
+		return api.post(`/dinoz/${dinozId}/devoreuse/attack`);
+	},
+	devoreuseDefendStop(dinozId: number): Promise<{ success: boolean }> {
+		return api.post(`/dinoz/${dinozId}/devoreuse/stop`);
 	}
 };
