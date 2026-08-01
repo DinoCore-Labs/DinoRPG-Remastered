@@ -293,25 +293,6 @@ export function transpileFight(
 						action: DinoAction.MAXENERGY,
 						fighters: [{ fid: myFighter.id, energy: myFighter.maxEnergy }]
 					});
-					/*if (myFighter.type === 'monster') {
-						const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
-						if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
-							history.push({
-								action: DinoAction.TALK,
-								fid: myFighter.id,
-								message: t(`quest.${resolvedMonster.text.entrance}`)
-							});
-						}
-					} else if (myFighter.type === 'boss') {
-						const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
-						if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
-							history.push({
-								action: DinoAction.TALK,
-								fid: myFighter.id,
-								message: t(`quest.${resolvedBoss.text.entrance}`)
-							});
-						}
-					}*/
 
 					// Add status visual effect prior to revealing the fight scene
 					d.statusList.forEach(s => {
@@ -441,25 +422,7 @@ export function transpileFight(
 					action: DinoAction.MAXENERGY,
 					fighters: [{ fid: myFighter.id, energy: myFighter.maxEnergy }]
 				});
-				/*if (myFighter.type === 'monster') {
-					const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
-					if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
-						history.push({
-							action: DinoAction.TALK,
-							fid: myFighter.id,
-							message: t(`quest.${resolvedMonster.text.entrance}`)
-						});
-					}
-				} else if (myFighter.type === 'boss') {
-					const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
-					/*if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
-						history.push({
-							action: DinoAction.TALK,
-							fid: myFighter.id,
-							message: t(`quest.${resolvedBoss.text.entrance}`)
-						});
-					}
-				}*/
+
 				myFighter = undefined;
 				break;
 			case 'activateEnvironment':
@@ -490,25 +453,7 @@ export function transpileFight(
 				break;
 			case 'death':
 				myFighter = activeFighters.find(f => f.id === step.fighter.id);
-				/*if (myFighter && myFighter.type === 'monster') {
-					const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
-					if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.death) {
-						history.push({
-							action: DinoAction.TALK,
-							fid: myFighter.id,
-							message: t(`quest.${resolvedMonster.text.death}`)
-						});
-					}
-				} else if (myFighter && myFighter.type === 'boss') {
-					const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
-					if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.death) {
-						history.push({
-							action: DinoAction.TALK,
-							fid: myFighter.id,
-							message: t(`quest.${resolvedBoss.text.death}`)
-						});
-					}
-				}*/
+
 				history.push({
 					action: DinoAction.DEAD,
 					fid: step.fighter.id
@@ -531,6 +476,9 @@ export function transpileFight(
 				});
 				break;
 			case 'expireEnvironment':
+				break;
+			case 'fightText':
+				pushFightText(history, step.text, t);
 				break;
 			case 'gainEnergy':
 				myFighter = activeFighters.find(f => f.id === step.fighter.id);
