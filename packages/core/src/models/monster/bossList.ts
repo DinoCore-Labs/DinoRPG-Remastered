@@ -379,7 +379,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		id: Boss.TW_DESTROYER,
 		boss: true,
 		name: 'wteam1',
-		display: 'B9OyiKpiwfXdML00',
+		display: 'dinoz:B9OyiKpiwfXdML00',
 		level: 20,
 		hp: 120,
 		xp: 40,
@@ -402,7 +402,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		id: Boss.TW_NIGHTMARE,
 		boss: true,
 		name: 'wteam2',
-		display: 'B9ZfndPKdEVihM00',
+		display: 'dinoz:B9ZfndPKdEVihM00',
 		level: 25,
 		hp: 150,
 		xp: 40,
@@ -433,7 +433,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		id: Boss.TW_THUNDER,
 		boss: true,
 		name: 'wteam3',
-		display: 'B9ceIUF05YYDcC00',
+		display: 'dinoz:B9ceIUF05YYDcC00',
 		level: 30,
 		hp: 200,
 		xp: 40,
@@ -478,6 +478,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	[Boss.TW_BIGBEASTLY_1]: {
 		id: Boss.TW_BIGBEASTLY_1,
 		name: 'wbour1',
+		display: 'dinoz:Baq5OVIyhYmJ7U00',
 		level: 35,
 		elements: {
 			fire: 0,
@@ -499,7 +500,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 	[Boss.TW_BIGBEASTLY_2]: {
 		id: Boss.TW_BIGBEASTLY_2,
 		name: 'wbour2',
-		display: 'Baq5OVIyhYmJ7U00',
+		display: 'dinoz:Baq5OVIyhYmJ7U00',
 		level: 35,
 		hp: 300,
 		xp: 50,

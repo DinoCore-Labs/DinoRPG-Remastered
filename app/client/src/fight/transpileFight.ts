@@ -349,25 +349,6 @@ export function transpileFight(
 						action: DinoAction.MAXENERGY,
 						fighters: [{ fid: myFighter.id, energy: myFighter.maxEnergy }]
 					});
-					/*if (myFighter.type === 'monster') {
-						const resolvedMonster = Object.values(monsterList).find(m => m.name === myFighter?.name);
-						if (resolvedMonster && resolvedMonster.text && resolvedMonster.text.entrance) {
-							history.push({
-								action: DinoAction.TALK,
-								fid: myFighter.id,
-								message: t(`quest.${resolvedMonster.text.entrance}`)
-							});
-						}
-					} else if (myFighter.type === 'boss') {
-						const resolvedBoss = Object.values(bossList).find(b => b.name === myFighter?.name);
-						if (resolvedBoss && resolvedBoss.text && resolvedBoss.text.entrance) {
-							history.push({
-								action: DinoAction.TALK,
-								fid: myFighter.id,
-								message: t(`quest.${resolvedBoss.text.entrance}`)
-							});
-						}
-					}*/
 					// Add status visual effect
 					m.statusList.forEach(s => {
 						const status = resolveStatus(s);
@@ -409,7 +390,7 @@ export function transpileFight(
 									? myFighter.size / 100
 									: 1,
 						fid: myFighter.id,
-						gfx: myFighter.display,
+						gfx: resolveFighterDisplay(myFighter),
 						entrance: EntranceEffect.JUMP // Actual default is stand, but it's way less classy
 					}
 				});
@@ -687,6 +668,14 @@ export function transpileFight(
 			case 'resist':
 				break;
 			case 'revive':
+				history.push({
+					action: DinoAction.REGEN,
+					fid: step.fighter.id,
+					amount: 0,
+					lifeFx: {
+						fx: LifeEffect.Normal
+					}
+				});
 				break;
 			case 'setCostume':
 				break;

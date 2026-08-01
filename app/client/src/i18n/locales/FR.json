@@ -2986,7 +2986,14 @@
 			"cactus": "Kaktuz",
 			"brig1": "Brigand Zaxa",
 			"brig2": "Brigand Emema",
-			"brig3": "Brigand Mattmût"
+			"brig3": "Brigand Mattmût",
+			"wteam1": "[TW]Destructeur",
+			"wteam2": "[TW]Nightmare",
+			"wteam3": "[TW]Tonnerre",
+			"wteamc": "[TW]Capitaine",
+			"wbour1": "[TW]Grobourin",
+			"wbour2": "[TW]Grobourin",
+			"darkgp": "Goupignon Sombre"
 		},
 		"status": {
 			"asleep": "endormi",
@@ -5962,7 +5969,8 @@
 			"name": "La Magnétite",
 			"texts": {
 				"initialAmbush": "Alors que vous approchez du Syphon Siffleur, trois membres de la Team W surgissent et attaquent votre groupe !",
-				"initialAmbushRescue": "Le Capitaine de la Team W intervient soudainement. Il soigne vos Dinoz tandis que les trois assaillants prennent la fuite !"
+				"initialAmbushRescue": "Ça suffit ! Cette bataille est terminée.",
+				"initialAmbushRegeneration": "Le Capitaine soigne vos Dinoz."
 			}
 		}
 	},
