@@ -36,6 +36,7 @@ import { gatherRoutes } from './Gather/Routes/gather.routes.js';
 import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
 import { ensureJobsExist } from './jobs/ensureJobs.js';
 import { ensureSecretsExist } from './jobs/ensureSecrets.js';
+import { devoreuseMidnightResetJob } from './jobs/handlers/devoreuseMidnightReset.js';
 import { expireDueMarketOffersJob } from './jobs/handlers/expireMarketOffers.js';
 import { gameLogMaintenanceJob } from './jobs/handlers/gameLogMaintenance.js';
 import { healFountainPearlDinozJob } from './jobs/handlers/healFountainPearlDinoz.js';
@@ -365,6 +366,7 @@ async function buildServer() {
 	const stopScheduler = startScheduler(
 		{
 			'reset-dinoz-shop': resetDinozShopAtMidnight,
+			'devoreuse-midnight-reset': devoreuseMidnightResetJob,
 			'itinerant-merchant-move': () => itinerantMerchantMoveJob(server.log),
 			'heal-fountain-pearl-dinoz': async () => {
 				const result = await healFountainPearlDinozJob();
