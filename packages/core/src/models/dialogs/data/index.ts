@@ -16,6 +16,7 @@ import {
 	magnetiteTeamWCaptainDialog,
 	magnetiteTeamWCaptainWaitingDialog,
 	rockyKingMagnetiteIntroDialog,
+	rockyKingMagnetiteSehdDialog,
 	sGardeMagnetFirstDialog
 } from './magnet.dialog.js';
 import { merguezSellerDialog } from './merguezSeller.dialog.js';
@@ -97,5 +98,6 @@ export const dialogDefinitions = [
 	rockyKingMagnetiteIntroDialog,
 	magnetiteStrangeRangerDialog,
 	magnetiteTeamWCaptainDialog,
-	magnetiteTeamWCaptainWaitingDialog
+	magnetiteTeamWCaptainWaitingDialog,
+	rockyKingMagnetiteSehdDialog
 ];

@@ -409,3 +409,157 @@ export const magnetiteTeamWCaptainWaitingDialog = defineDialog({
 	},
 	links: {}
 });
+
+/**
+ * Seconde audience auprès du Roi des Rockys.
+ *
+ * Le dialogue devient disponible après que le joueur
+ * a accepté de défendre la cause de la Team-W :
+ * - magnet = 7 ;
+ * - il reste rejouable à magnet = 8.
+ *
+ * À la fin de l'audience, le Roi demande au joueur de :
+ * - réunir les trois ingrédients perpétuels ;
+ * - trouver le Sage Antique ;
+ * - obtenir la Potion Anti Sehd.
+ *
+ * La phase bye passe la progression à magnet = 8.
+ */
+export const rockyKingMagnetiteSehdDialog = defineDialog({
+	id: 'rocky_king_magnet7',
+	place: PlaceEnum.CITADELLE_DU_ROI,
+	name: 'npc.rockyKing.name',
+	cond: condition('scenario(magnet,7)|scenario(magnet,8)'),
+	first: 'begin',
+	pnj: {
+		image: false,
+		gfx: 'rocking',
+		frame: 'speak',
+		background: '1'
+	},
+	phases: {
+		begin: {
+			id: 'begin',
+			text: 'npc.rockyKing.dialog.magnet7.begin',
+			next: ['next']
+		},
+		next: {
+			id: 'next',
+			text: 'npc.rockyKing.dialog.magnet7.next',
+			next: ['talk']
+		},
+		talk: {
+			id: 'talk',
+			text: 'npc.rockyKing.dialog.magnet7.talk',
+			next: ['cont'],
+			fast: true
+		},
+		cont: {
+			id: 'cont',
+			text: 'npc.rockyKing.dialog.magnet7.cont',
+			next: ['serv']
+		},
+		serv: {
+			id: 'serv',
+			text: 'npc.rockyKing.dialog.magnet7.serv',
+			next: ['sehd']
+		},
+		sehd: {
+			id: 'sehd',
+			text: 'npc.rockyKing.dialog.magnet7.sehd',
+			next: ['control']
+		},
+		control: {
+			id: 'control',
+			text: 'npc.rockyKing.dialog.magnet7.control',
+			next: ['serv2']
+		},
+		serv2: {
+			id: 'serv2',
+			text: 'npc.rockyKing.dialog.magnet7.serv2',
+			next: ['ingr']
+		},
+		ingr: {
+			id: 'ingr',
+			text: 'npc.rockyKing.dialog.magnet7.ingr',
+			next: ['sage']
+		},
+		sage: {
+			id: 'sage',
+			text: 'npc.rockyKing.dialog.magnet7.sage',
+			next: ['face']
+		},
+		face: {
+			id: 'face',
+			text: 'npc.rockyKing.dialog.magnet7.face',
+			next: ['end']
+		},
+		end: {
+			id: 'end',
+			text: 'npc.rockyKing.dialog.magnet7.end',
+			next: ['bye']
+		},
+		bye: {
+			id: 'bye',
+			text: 'npc.rockyKing.dialog.magnet7.bye',
+			fast: true,
+			effects: [
+				{
+					type: 'scenario',
+					scenario: 'magnet',
+					phase: 8
+				}
+			]
+		}
+	},
+	links: {
+		next: {
+			id: 'next',
+			text: 'npc.rockyKing.choice.magnet7.next'
+		},
+		talk: {
+			id: 'talk',
+			text: 'npc.rockyKing.choice.magnet7.talk'
+		},
+		cont: {
+			id: 'cont',
+			text: 'npc.rockyKing.choice.magnet7.cont'
+		},
+		serv: {
+			id: 'serv',
+			text: 'npc.rockyKing.choice.magnet7.serv'
+		},
+		sehd: {
+			id: 'sehd',
+			text: 'npc.rockyKing.choice.magnet7.sehd'
+		},
+		control: {
+			id: 'control',
+			text: 'npc.rockyKing.choice.magnet7.control'
+		},
+		serv2: {
+			id: 'serv2',
+			text: 'npc.rockyKing.choice.magnet7.serv2'
+		},
+		ingr: {
+			id: 'ingr',
+			text: 'npc.rockyKing.choice.magnet7.ingr'
+		},
+		sage: {
+			id: 'sage',
+			text: 'npc.rockyKing.choice.magnet7.sage'
+		},
+		face: {
+			id: 'face',
+			text: 'npc.rockyKing.choice.magnet7.face'
+		},
+		end: {
+			id: 'end',
+			text: 'npc.rockyKing.choice.magnet7.end'
+		},
+		bye: {
+			id: 'bye',
+			text: 'npc.rockyKing.choice.magnet7.bye'
+		}
+	}
+});
