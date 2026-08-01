@@ -13,6 +13,8 @@ import { jovebozeDialog } from './joveboze.dialog.js';
 import { madameXDialog } from './madameX.dialog.js';
 import {
 	magnetiteStrangeRangerDialog,
+	magnetiteTeamWCaptainDialog,
+	magnetiteTeamWCaptainWaitingDialog,
 	rockyKingMagnetiteIntroDialog,
 	sGardeMagnetFirstDialog
 } from './magnet.dialog.js';
@@ -93,5 +95,7 @@ export const dialogDefinitions = [
 	// Steppes
 	sGardeMagnetFirstDialog,
 	rockyKingMagnetiteIntroDialog,
-	magnetiteStrangeRangerDialog
+	magnetiteStrangeRangerDialog,
+	magnetiteTeamWCaptainDialog,
+	magnetiteTeamWCaptainWaitingDialog
 ];
