@@ -4614,6 +4614,14 @@
 				"no": "Heu, non merci... Mes Dinoz ont encore besoin d'entrainement"
 			}
 		},
+		"sGarde": {
+			"name": "Garde de la Citadelle",
+			"dialog": {
+				"magnet0": {
+					"begin": "Bonjour étranger... Le Roi est bien trop occupé actuellement avec cette tentative de vol de la Magnétite, il ne pourra pas te recevoir pour l'instant !"
+				}
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
@@ -5969,8 +5977,8 @@
 			"name": "La Magnétite",
 			"texts": {
 				"initialAmbush": "Alors que vous approchez du Syphon Siffleur, trois membres de la Team W surgissent et attaquent votre groupe !",
-				"initialAmbushRescue": "Ça suffit ! Cette bataille est terminée.",
-				"initialAmbushRegeneration": "Le Capitaine soigne vos Dinoz.",
+				"initialAmbushRescue": "Attendez ! Ce Dinoz est bien trop faible pour faire partie des troupes d'élite du Roi Rocky... Nous avons dû faire une erreur sur notre adversaire, excusez nous !",
+				"initialAmbushRegeneration": "Electrosoins",
 				"fightWTeamStart": "Alors que vous approchez, un Dinoz de la Team-W apparaît... vous l'attaquez !",
 				"fightWTeamLost": "Vous ne passerez pas !",
 				"fightWTeamWon1": "Pourquoi vous attaquez-nous ? Nous saurons nous venger !",
