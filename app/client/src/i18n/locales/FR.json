@@ -4622,6 +4622,42 @@
 				}
 			}
 		},
+		"rockyKing": {
+			"name": "Roi des Rockys",
+			"dialog": {
+				"magnet1": {
+					"begin": "Vous racontez que vous avez été attaqué par de féroces Wanwans... Après vous avoir questionné, les gardes vous accordent finalement une audience avec le Roi des Rockys, Monseigneur Rocky IV.",
+					"enter": "Bienvenue à notre cher Maître Dinoz... nous voyons que vous n'êtes pas natif des Steppes Magnétiques, vous avez du faire long voyage, pardonnez-nous de ne pas pouvoir vous recevoir avec l'hospitalité habituelle de notre peuple, mais les événements récents nous ont épuisé...",
+					"events": "Voyez-vous, cela n'est pas un secret, la Famille Royale dont nous sommes l'héritier contrôle tous les Rockys de la région. Ce pouvoir nous a été confié il y a maintenant de nombreuses générations par le Grand-Lourd-Acéré, le dompteur de la Magnétite...",
+					"magnet": "La Magnétite est une pierre que l'on ne trouve que dans les Steppes, qui d'ailleurs lui doivent leur nom... C'est une pierre qui, sous l'action des frottements du vent et du sable, produit de l'énergie électrique !",
+					"magnet2": "A l'état naturel, la Magnétite est très instable et donc difficilement contrôlable, mais le Grand-Lourd-Acéré a dans sa jeunesse découvert une pierre d'une pureté parfaite, la Pierre d'Ange. Les héritiers de la Famille Royale doivent en assurer la protection, pour éviter qu'elle ne tombe dans de mauvaises mains.",
+					"events2": "Et, récemment... quelqu'un a tenté de voler la Pierre d'Ange !!! C'est une lourde responsabilité, mais il faut que nous la protégions à tout prix ! Il en va de l'honneur de la Famille Royale... Avez-vous bien tout compris ?",
+					"me": "Nous y venons... Voyez-vous, de nombreux brigands sévissent à l'extrême-occident des Steppes Magnétiques. On a vu certains d'eux roder à plusieurs reprises aux alentours du château et ce sont sûrement eux qui vous ont attaqué prés du Syphon. Ils se font appeler la Team-W...",
+					"team": "Oui... La Team-W est un groupe de nomades à l'allure étrange contrôlant des Wanwans. Nous les soupçonnons d'être ceux qui cherchent à voler notre Pierre d'Ange. Nous avons envoyé nos soldats d'élite à leur recherche, et nous avons blessé leur leader, mais nous ne savons pas où ils se cachent...",
+					"team2": "Nous avons dû rappeler nos soldats pour qu'ils protègent la Pierre d'Ange, car nous ne savons pas ni quand ni où l'ennemi frappera la prochaine fois... Pourrions-nous vous charger de trouver et de détruire la Team-W ? Vous en serrez royalement récompensé !",
+					"refuse": "Bien bien... nous comprenons, et nous ne voulons pas vous impliquer dans une histoire qui n'est pas la votre. Nous vous souhaitons un bon voyage dans les Steppes Magnétiques, revenez nous voir si malgré tout vous changez d'avis...",
+					"accept": "Vraiment ? Vous nous êtes d'une aide précieuse, cher Maître Dinoz ! Nos conseillers vont vous enseigner les chemins secrets qui vous permettront d'accéder à l'extrême-occident, le repaire des brigands des Steppes... Notre majesté vous souhaite bonne chance, et nous espérons rapidement de positives nouvelles de votre part !",
+					"leave": "Un conseiller du Roi vous explique le chemin qui permet d'accéder aux camps des brigands de l'extrême-occident à partir du Syphon. Il vous met aussi en garde contre les dangers qui vous attendent. Préparez-vous bien !"
+				}
+			},
+			"choice": {
+				"magnet1": {
+					"enter": "Entrer dans le Palais",
+					"events": "Que s'est-il passé ?",
+					"magnet": "La Magnétite ?",
+					"magnet2": "...",
+					"events2": "Et ?",
+					"again": "Pouvez-vous répéter ?",
+					"me": "Quel rapport avec moi ?",
+					"team": "La Team-W ?",
+					"team2": "Uhm...",
+					"again2": "Pouvez-vous répéter ?",
+					"accept": "J'accepte !",
+					"refuse": "Je ne peux pas accepter pour l'instant",
+					"leave": "Remercier le Roi"
+				}
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"

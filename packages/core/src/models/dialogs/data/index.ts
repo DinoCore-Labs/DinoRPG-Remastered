@@ -11,7 +11,7 @@ import { nicolasHulotDialog } from './hulot.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
 import { jovebozeDialog } from './joveboze.dialog.js';
 import { madameXDialog } from './madameX.dialog.js';
-import { sGardeMagnetFirstDialog } from './magnet.dialog.js';
+import { rockyKingMagnetiteIntroDialog, sGardeMagnetFirstDialog } from './magnet.dialog.js';
 import { merguezSellerDialog } from './merguezSeller.dialog.js';
 import { padamoineDialog } from './padamoine.dialog.js';
 import { papyJoeDialog } from './papy.dialog.js';
@@ -87,5 +87,6 @@ export const dialogDefinitions = [
 	nicolasHulotDialog,
 	forestGuardianDialog,
 	// Steppes
-	sGardeMagnetFirstDialog
+	sGardeMagnetFirstDialog,
+	rockyKingMagnetiteIntroDialog
 ];
