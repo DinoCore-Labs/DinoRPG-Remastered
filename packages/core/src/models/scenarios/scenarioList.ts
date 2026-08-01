@@ -1,3 +1,4 @@
+import { magnetiteScenario } from './data/magnetiteScenario.js';
 import { merguezScenario } from './data/merguezScenario.js';
 import { pacScenario } from './data/pacScenario.js';
 import { starScenario } from './data/starScenario.js';
@@ -5,7 +6,8 @@ import { starScenario } from './data/starScenario.js';
 export const scenarioList = {
 	star: starScenario,
 	merguez: merguezScenario,
-	pac: pacScenario
+	pac: pacScenario,
+	magnet: magnetiteScenario
 } as const;
 
 export type ScenarioKey = keyof typeof scenarioList;
