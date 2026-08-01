@@ -148,8 +148,8 @@ export function evalCondition(context: ConditionsContext, condition: Condition):
 			return context.user.isAdmin;
 		case 'scenario': {
 			const state = context.user.scenarios[condition.key];
-			const step = state?.step ?? 0;
-			return compare(step, condition.phase, condition.compare);
+			const step = state?.progression ?? 0;
+			return compare(step, condition.progression, condition.compare);
 		}
 		case 'uvar': {
 			const value = context.user.uvars[condition.key] ?? 0;

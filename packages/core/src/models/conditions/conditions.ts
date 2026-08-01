@@ -28,7 +28,7 @@ export type Condition =
 	| { type: 'hasingredient'; key: string; qty: number; compare: CompareMode }
 	| { type: 'random'; max: number; target: number; seeded: boolean; basis?: RandomBasis; compare: CompareMode }
 	| { type: 'admin' }
-	| { type: 'scenario'; key: string; phase: number; compare: CompareMode }
+	| { type: 'scenario'; key: string; progression: number; compare: CompareMode }
 	| { type: 'uvar'; key: string; value: number; compare: CompareMode }
 	| { type: 'gvar'; key: string; value: number; compare: CompareMode }
 	| { type: 'life'; value: number; compare: CompareMode }

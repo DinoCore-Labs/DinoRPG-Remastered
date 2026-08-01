@@ -101,7 +101,7 @@ export function buildConditionContext(
 		(player.scenarios ?? []).map(scenario => [
 			scenario.scenarioKey,
 			{
-				step: scenario.progression,
+				progression: scenario.progression,
 				tracking: scenario.tracking,
 				updatedAt: scenario.updatedAt ?? null
 			}

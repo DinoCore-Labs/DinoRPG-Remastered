@@ -215,10 +215,10 @@ function parseCommand(command: string, state: ParserState): Condition {
 		case 'scenario': {
 			const key = parseIdent(state);
 			expect(state, ',');
-			const phase = parseIntValue(state);
+			const progression = parseIntValue(state);
 			const compare = parseCompareMode(state);
 			expect(state, ')');
-			return { type: 'scenario', key, phase, compare };
+			return { type: 'scenario', key, progression, compare };
 		}
 		case 'uvar': {
 			const key = parseIdent(state);
