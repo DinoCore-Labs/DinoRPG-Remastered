@@ -25,6 +25,7 @@ type ScenarioMoveFightInput = {
 	team: (DinozToGetFighter & DinozToRewardFight)[];
 	dinozId: number;
 	fromPlace: PlaceEnum;
+	triggerPlace: PlaceEnum;
 	toPlace: PlaceEnum;
 	autoReequip?: boolean;
 };
