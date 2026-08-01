@@ -73,7 +73,8 @@ export const dinozStatusIdByKey: Partial<Record<string, DinozStatusId>> = {
 	wswmps: DinozStatusId.WEIRD_SWAMP_SEEN,
 	swmk: DinozStatusId.SWAMP_MONSTERS_KNOWN,
 	swbuoy: DinozStatusId.SWAMP_BUOY,
-	swlant: DinozStatusId.SWAMP_LANTERN
+	swlant: DinozStatusId.SWAMP_LANTERN,
+	rodtmp: DinozStatusId.MAGNETITE_RANGER_SEEN
 };
 
 export const dinozStatusKeyById = Object.fromEntries(

@@ -219,3 +219,68 @@ export const rockyKingMagnetiteIntroDialog = defineDialog({
 		}
 	}
 });
+
+/**
+ * Apparition du Rôdeur étrange pendant le scénario Magnétite.
+ *
+ * Conditions originales :
+ * - scénario magnet à la progression 2 ;
+ * - le Dinoz actif ne possède pas encore rodtmp.
+ *
+ * Après l'interaction, rodtmp est ajouté au Dinoz actif.
+ * La progression du scénario reste à 2.
+ */
+export const magnetiteStrangeRangerDialog = defineDialog({
+	id: 'magnetite_strange_ranger',
+	place: PlaceEnum.SYPHON_SIFFLEUR,
+	name: 'npc.rodeur.name',
+	cond: condition('scenario(magnet,2)+!fx(rodtmp)'),
+	first: 'begin',
+	pnj: {
+		image: false,
+		gfx: 'rodeur2',
+		frame: 'speak',
+		background: '1'
+	},
+	phases: {
+		begin: {
+			id: 'begin',
+
+			text: 'npc.rodeur.dialog.magnet2.begin',
+
+			next: ['view']
+		},
+
+		view: {
+			id: 'view',
+
+			text: 'npc.rodeur.dialog.magnet2.view',
+
+			next: [],
+
+			/**
+			 * Équivalent du fast="1" original.
+			 */
+			fast: true,
+
+			/**
+			 * Équivalent exact de :
+			 * effect="rodtmp"
+			 */
+			effects: [
+				{
+					type: 'effect',
+					effect: 'rodtmp'
+				}
+			]
+		}
+	},
+
+	links: {
+		view: {
+			id: 'view',
+
+			text: 'npc.rodeur.choice.magnet2View'
+		}
+	}
+});
