@@ -4288,11 +4288,6 @@ const checkDefensiveEffects = (
 		}
 	}
 
-	// M_DISABLE
-	if (damage && hasSkill(target, Skill.M_DISABLE)) {
-		damage = 1;
-	}
-
 	// M_WORM: absorb all water damage
 	target.absorbed = 0;
 
