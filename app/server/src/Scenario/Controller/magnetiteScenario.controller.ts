@@ -26,20 +26,64 @@ const INITIAL_TEAM_W_MONSTERS = [monsterByKey.wteam1, monsterByKey.wteam2, monst
 
 const INITIAL_TEAM_W_NAMES = new Set(INITIAL_TEAM_W_MONSTERS.map(monster => monster.name));
 
+type MagnetiteProgressionValue = (typeof MagnetiteProgression)[keyof typeof MagnetiteProgression];
+
+type TeamWEncounter = {
+	triggerPlace: PlaceEnum;
+	progression: MagnetiteProgressionValue;
+	nextProgression: MagnetiteProgressionValue;
+	monsterKey: 'wteam1' | 'wteam2' | 'wteam3';
+	fightKey: string;
+	/**
+	 * Texte affiché à la fin lorsque le joueur gagne.
+	 */
+	winTextKey: string;
+};
+
+const TEAM_W_START_TEXT_KEY = 'scenarios.magnet.texts.fightWTeamStart';
+
+const TEAM_W_LOST_TEXT_KEY = 'scenarios.magnet.texts.fightWTeamLost';
+
+/**
+ * Combats individuels contre les trois membres de la Team W.
+ */
+const TEAM_W_ENCOUNTERS: readonly TeamWEncounter[] = [
+	{
+		triggerPlace: PlaceEnum.TAUDIS_DES_ZAXA,
+		progression: MagnetiteProgression.HUNT_DESTROYER,
+		nextProgression: MagnetiteProgression.HUNT_NIGHTMARE,
+		monsterKey: 'wteam1',
+		fightKey: 'magnet_wteam_1',
+		winTextKey: 'scenarios.magnet.texts.fightWTeamWon1'
+	},
+	{
+		triggerPlace: PlaceEnum.CAMP_DES_EMMEMMA,
+		progression: MagnetiteProgression.HUNT_NIGHTMARE,
+		nextProgression: MagnetiteProgression.HUNT_THUNDER,
+		monsterKey: 'wteam2',
+		fightKey: 'magnet_wteam_2',
+		winTextKey: 'scenarios.magnet.texts.fightWTeamWon2'
+	},
+	{
+		triggerPlace: PlaceEnum.CAMPEMENT_DES_MATTMUT,
+		progression: MagnetiteProgression.HUNT_THUNDER,
+		nextProgression: MagnetiteProgression.ENTER_TEAM_W_CAMP,
+		monsterKey: 'wteam3',
+		fightKey: 'magnet_wteam_3',
+		winTextKey: 'scenarios.magnet.texts.fightWTeamWon3'
+	}
+];
+
 type CaptainRescueState = {
 	dinozId: number;
-
 	/**
 	 * Quantité de PV rendue au Dinoz par le Capitaine.
 	 */
 	healedHp: number;
-
 	/**
 	 * Indique que le Dinoz était à 0 PV à la fin
 	 * de la simulation du combat.
-	 *
 	 * Dans ce cas, l'animation doit exécuter :
-	 *
 	 * death -> revive -> heal
 	 */
 	wasDead: boolean;
@@ -53,12 +97,33 @@ async function shouldStartInitialAmbush(input: ScenarioMoveFightInput): Promise<
 	if (input.toPlace !== INITIAL_AMBUSH_PLACE) {
 		return false;
 	}
-
 	const scenario = await prisma.$transaction(tx =>
 		getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY)
 	);
-
 	return scenario.progression === MagnetiteProgression.INITIAL_AMBUSH;
+}
+
+/**
+ * Cherche un combat individuel Team W correspondant :
+ * - au passage réellement sélectionné ;
+ * - à la progression actuelle du scénario.
+ */
+async function findTeamWEncounter(input: ScenarioMoveFightInput): Promise<TeamWEncounter | undefined> {
+	/**
+	 * On vérifie d'abord le lieu afin d'éviter une requête
+	 * en base sur tous les déplacements ordinaires.
+	 */
+	const encounterByPlace = TEAM_W_ENCOUNTERS.find(encounter => encounter.triggerPlace === input.triggerPlace);
+	if (!encounterByPlace) {
+		return undefined;
+	}
+	const scenario = await prisma.$transaction(tx =>
+		getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY)
+	);
+	if (scenario.progression !== encounterByPlace.progression) {
+		return undefined;
+	}
+	return encounterByPlace;
 }
 
 /**
@@ -70,7 +135,6 @@ async function shouldStartInitialAmbush(input: ScenarioMoveFightInput): Promise<
  */
 function getNextScenarioFighterId(fighters: FighterRecap[]): number {
 	const lowestId = Math.min(0, ...fighters.map(fighter => fighter.id));
-
 	return lowestId - 1;
 }
 
@@ -98,30 +162,22 @@ function toStepFighter(fighter: FighterRecap): StepFighter {
  */
 function createCaptainRecap(fightProcess: FightProcessResult): FighterRecap {
 	const captain = monsterByKey.wteamc;
-
 	return {
 		id: getNextScenarioFighterId(fightProcess.fighters),
-
 		type: FighterType.REINFORCEMENT,
-
 		name: captain.name,
 		display: captain.display,
-
 		/**
 		 * Le Capitaine apparaît du côté de la Team W.
 		 */
 		attacker: false,
-
 		maxHp: captain.hp,
 		startingHp: captain.hp,
-
 		energy: 0,
 		maxEnergy: 0,
 		energyRecovery: 0,
-
 		dark: captain.dark,
 		size: captain.size,
-
 		entrance: captain.entrance ?? EntranceEffect.RUN
 	};
 }
@@ -149,43 +205,32 @@ function getInitialTeamWFighters(fightProcess: FightProcessResult): FighterRecap
  */
 function applyCaptainRescue(input: ScenarioMoveFightInput, fightProcess: FightProcessResult): CaptainRescueState[] {
 	const rescueStates: CaptainRescueState[] = [];
-
 	for (const dinoz of input.team) {
 		const attacker = fightProcess.attackers.find(fighter => fighter.dinozId === dinoz.id);
-
 		if (!attacker) {
 			continue;
 		}
-
 		const rawHpLost = attacker.hpLost;
-
 		const lifeAfterFight = Math.max(0, dinoz.life - rawHpLost);
-
 		const finalLife = Math.min(dinoz.maxLife, lifeAfterFight + CAPTAIN_HEAL_AMOUNT);
-
 		const finalHpLost = Math.max(0, dinoz.life - finalLife);
-
 		const healedHp = Math.max(0, finalLife - lifeAfterFight);
-
 		rescueStates.push({
 			dinozId: dinoz.id,
 			healedHp,
 			wasDead: lifeAfterFight === 0 && finalLife > 0
 		});
-
 		/**
 		 * Valeur utilisée par rewardFightVsMonsters
 		 * pour persister les PV du Dinoz.
 		 */
 		attacker.hpLost = finalHpLost;
 	}
-
 	/**
 	 * L'intervention du Capitaine force la victoire
 	 * scénaristique.
 	 */
 	fightProcess.outcome = FightOutcome.AttackerWin;
-
 	return rescueStates;
 }
 
@@ -202,12 +247,10 @@ function applyCaptainRescue(input: ScenarioMoveFightInput, fightProcess: FightPr
  */
 function removeTeamWDeathSteps(fightProcess: FightProcessResult): void {
 	const teamWFighterIds = new Set(getInitialTeamWFighters(fightProcess).map(fighter => fighter.id));
-
 	fightProcess.steps = fightProcess.steps.filter(step => {
 		if (step.action !== 'death') {
 			return true;
 		}
-
 		return !teamWFighterIds.has(step.fighter.id);
 	});
 }
@@ -229,7 +272,6 @@ function buildCaptainPostlude(
 	rescueStates: CaptainRescueState[]
 ): FightStep[] {
 	const steps: FightStep[] = [];
-
 	/**
 	 * Le Capitaine entre sur le terrain.
 	 */
@@ -237,7 +279,6 @@ function buildCaptainPostlude(
 		action: 'arrive',
 		fid: captain.id
 	});
-
 	/**
 	 * Premier dialogue.
 	 */
@@ -249,7 +290,6 @@ function buildCaptainPostlude(
 			text: 'scenarios.magnet.texts.initialAmbushRescue'
 		}
 	});
-
 	/**
 	 * Annonce du soin.
 	 */
@@ -261,16 +301,12 @@ function buildCaptainPostlude(
 			text: 'scenarios.magnet.texts.initialAmbushRegeneration'
 		}
 	});
-
 	for (const rescue of rescueStates) {
 		const fighter = fightProcess.fighters.find(entry => entry.id === rescue.dinozId);
-
 		if (!fighter) {
 			continue;
 		}
-
 		const stepFighter = toStepFighter(fighter);
-
 		/**
 		 * Le Dinoz doit être relevé avant de recevoir
 		 * son animation de soin.
@@ -284,7 +320,6 @@ function buildCaptainPostlude(
 				fighter: stepFighter
 			});
 		}
-
 		/**
 		 * Le soin est joué après la résurrection.
 		 */
@@ -297,7 +332,6 @@ function buildCaptainPostlude(
 			});
 		}
 	}
-
 	/**
 	 * Les trois membres de la Team W s'enfuient.
 	 */
@@ -307,7 +341,6 @@ function buildCaptainPostlude(
 			fighter: toStepFighter(fighter)
 		});
 	}
-
 	/**
 	 * Le Capitaine quitte également le terrain.
 	 */
@@ -315,8 +348,18 @@ function buildCaptainPostlude(
 		action: 'leave',
 		fighter: toStepFighter(captain)
 	});
-
 	return steps;
+}
+
+/**
+ * Le membre de la Team W ne meurt pas réellement.
+ * Il quitte le terrain après avoir prononcé son texte de fin.
+ */
+function buildTeamWMemberEscapeStep(teamWMember: FighterRecap): FightStep {
+	return {
+		action: 'leave',
+		fighter: toStepFighter(teamWMember)
+	};
 }
 
 /**
@@ -328,7 +371,6 @@ async function processInitialAmbush(input: ScenarioMoveFightInput): Promise<Figh
 	 * Nightmare et Tonnerre.
 	 */
 	const fightProcess = calculateFightVsMonsters(input.team, input.user, input.toPlace, INITIAL_TEAM_W_MONSTERS);
-
 	/**
 	 * 2. Application fonctionnelle du sauvetage :
 	 *    - calcul du soin ;
@@ -336,7 +378,6 @@ async function processInitialAmbush(input: ScenarioMoveFightInput): Promise<Figh
 	 *    - recalcul des pertes de PV persistées.
 	 */
 	const rescueStates = applyCaptainRescue(input, fightProcess);
-
 	/**
 	 * 3. Les membres de la Team W doivent pouvoir
 	 * s'enfuir, même si le calcul les avait tués.
@@ -344,22 +385,18 @@ async function processInitialAmbush(input: ScenarioMoveFightInput): Promise<Figh
 	 * Les morts des Dinoz restent dans l'historique.
 	 */
 	removeTeamWDeathSteps(fightProcess);
-
 	/**
 	 * 4. Ajout du Capitaine uniquement dans
 	 * la représentation visuelle.
 	 */
 	const captain = createCaptainRecap(fightProcess);
-
 	fightProcess.fighters.push(captain);
-
 	/**
 	 * 5. Ajout de la scène :
 	 *
 	 * arrive -> talk -> revive -> heal -> leave
 	 */
 	fightProcess.steps.push(...buildCaptainPostlude(fightProcess, captain, rescueStates));
-
 	/**
 	 * 6. Application des conséquences.
 	 *
@@ -380,11 +417,9 @@ async function processInitialAmbush(input: ScenarioMoveFightInput): Promise<Figh
 	 */
 	const progressed = await prisma.$transaction(async tx => {
 		const currentScenario = await getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY);
-
 		if (currentScenario.progression !== MagnetiteProgression.INITIAL_AMBUSH) {
 			return false;
 		}
-
 		await tx.dinoz.updateMany({
 			where: {
 				id: {
@@ -395,36 +430,135 @@ async function processInitialAmbush(input: ScenarioMoveFightInput): Promise<Figh
 				placeId: input.toPlace
 			}
 		});
-
 		await setUserScenarioProgression(tx, {
 			userId: input.user.id,
 			scenarioKey: MAGNETITE_SCENARIO_KEY,
 			progression: MagnetiteProgression.TALK_TO_KING
 		});
-
 		return true;
 	});
-
 	return {
 		...result,
-
 		/**
 		 * Aucun membre de la Team W n'est tué.
 		 */
 		monsterKillCount: 0,
-
 		source: 'scenario',
-
 		scenario: {
 			key: MAGNETITE_SCENARIO_KEY,
 			fightKey: 'magnet_initial_ambush',
 			progressed,
 			progression: progressed ? MagnetiteProgression.TALK_TO_KING : MagnetiteProgression.INITIAL_AMBUSH
 		},
-
 		startText: {
 			type: 'message',
 			text: 'scenarios.magnet.texts.initialAmbush'
+		}
+	};
+}
+
+/**
+ * Traite un combat individuel contre un membre de la Team W.
+ */
+/**
+ * Traite l'un des trois combats individuels
+ * contre un membre de la Team W.
+ */
+async function processTeamWEncounter(input: ScenarioMoveFightInput, encounter: TeamWEncounter): Promise<FightResult> {
+	const monster = monsterByKey[encounter.monsterKey];
+	const fightProcess = calculateFightVsMonsters(input.team, input.user, input.toPlace, [monster]);
+	/**
+	 * Contrairement à l'embuscade initiale,
+	 * la victoire n'est jamais forcée.
+	 */
+	const won = fightProcess.outcome === FightOutcome.AttackerWin;
+	if (won) {
+		const [teamWMember] = getInitialTeamWFighters(fightProcess);
+		if (!teamWMember) {
+			throw new Error(`Unable to find Team W fighter "${encounter.monsterKey}".`);
+		}
+		/**
+		 * Le membre Team W a été vaincu, mais ne meurt pas.
+		 *
+		 * On retire son animation DEAD afin qu'il puisse
+		 * ensuite jouer son animation ESCAPE.
+		 */
+		removeTeamWDeathSteps(fightProcess);
+		fightProcess.steps.push(buildTeamWMemberEscapeStep(teamWMember));
+	}
+	/**
+	 * Aucun membre Team W ne donne :
+	 * - d'XP ;
+	 * - d'or ;
+	 * - de récompense ;
+	 * - de kill.
+	 *
+	 * Les dégâts, statuts et objets consommés sont
+	 * néanmoins appliqués normalement.
+	 */
+	const result = await rewardFightVsMonsters(input.team, [], fightProcess, input.toPlace, input.user, {
+		autoReequip: input.autoReequip,
+		disableGoldReward: true
+	});
+	let progressed = false;
+	/**
+	 * La progression du scénario et le déplacement
+	 * ne sont validés qu'en cas de victoire.
+	 */
+	if (won) {
+		progressed = await prisma.$transaction(async tx => {
+			const currentScenario = await getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY);
+			if (currentScenario.progression !== encounter.progression) {
+				return false;
+			}
+			await tx.dinoz.updateMany({
+				where: {
+					id: {
+						in: input.team.map(dinoz => dinoz.id)
+					}
+				},
+				data: {
+					placeId: input.toPlace
+				}
+			});
+			await setUserScenarioProgression(tx, {
+				userId: input.user.id,
+				scenarioKey: MAGNETITE_SCENARIO_KEY,
+				progression: encounter.nextProgression
+			});
+			return true;
+		});
+	}
+	return {
+		...result,
+		/**
+		 * Le membre Team W s'enfuit en cas de victoire.
+		 * Il n'est jamais comptabilisé comme tué.
+		 */
+		monsterKillCount: 0,
+		source: 'scenario',
+		scenario: {
+			key: MAGNETITE_SCENARIO_KEY,
+			fightKey: encounter.fightKey,
+			progressed,
+			progression: progressed ? encounter.nextProgression : encounter.progression
+		},
+		/**
+		 * Même texte au début des trois combats.
+		 */
+		startText: {
+			type: 'message',
+			text: TEAM_W_START_TEXT_KEY
+		},
+		/**
+		 * Texte de fin différent selon le résultat :
+		 *
+		 * - victoire : won1, won2 ou won3 ;
+		 * - défaite : lost.
+		 */
+		endText: {
+			type: 'message',
+			text: won ? encounter.winTextKey : TEAM_W_LOST_TEXT_KEY
 		}
 	};
 }
@@ -437,6 +571,9 @@ export async function processMagnetiteScenarioMoveFight(input: ScenarioMoveFight
 	if (await shouldStartInitialAmbush(input)) {
 		return processInitialAmbush(input);
 	}
-
+	const teamWEncounter = await findTeamWEncounter(input);
+	if (teamWEncounter) {
+		return processTeamWEncounter(input, teamWEncounter);
+	}
 	return false;
 }
