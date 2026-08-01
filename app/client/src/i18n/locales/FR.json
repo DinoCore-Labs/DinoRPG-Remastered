@@ -4643,6 +4643,21 @@
 					"refuse": "Bien bien... nous comprenons, et nous ne voulons pas vous impliquer dans une histoire qui n'est pas la votre. Nous vous souhaitons un bon voyage dans les Steppes Magnétiques, revenez nous voir si malgré tout vous changez d'avis...",
 					"accept": "Vraiment ? Vous nous êtes d'une aide précieuse, cher Maître Dinoz ! Nos conseillers vont vous enseigner les chemins secrets qui vous permettront d'accéder à l'extrême-occident, le repaire des brigands des Steppes... Notre majesté vous souhaite bonne chance, et nous espérons rapidement de positives nouvelles de votre part !",
 					"leave": "Un conseiller du Roi vous explique le chemin qui permet d'accéder aux camps des brigands de l'extrême-occident à partir du Syphon. Il vous met aussi en garde contre les dangers qui vous attendent. Préparez-vous bien !"
+				},
+				"magnet7": {
+					"begin": "Notre cher Maître Dinoz est déjà de retour ? Nous espérons de tout coeur qu'il nous apporte de bonnes nouvelles...",
+					"next": "Bien ! Nous sommes très heureux, racontez-nous vos exploits, mon cher......",
+					"talk": "Vous racontez au Roi des Rockys votre rencontre avec le Capitaine de la Team-W, sa version de l'histoire concernant l'empoisonnement de Grobourin, et son innocence quand à la tentative de vol de la Magnétite. Le Roi vous écoute avec un silence... royal...",
+					"cont": "Bien bien... Vous comprendrez que nous ne pouvons pas faire confiance à ces étranges personnes immédiatement. Il va falloir que nous diligentions une enquête préalable à tout pour parler avec ces habitants des basses-steppes... Pendant ce temps, nous aimerions que vous nous rendiez un autre service, si cela n'est pas abuser de votre precieux temps.",
+					"serv": "Oui tout a fait, c'est cela : un service... Ces ouï-dire concernant un étrange empoisonnement nous inquiètent. Le cas échéant, nous devrions nous préparer au pire. Si nos informations sont exactes, il pourrait s'agir de Sehd Actif.",
+					"sehd": "Le Sehd est un poison très puissant que l'on ne trouve que dans les steppes magnétiques. Il est obtenu en concentrant du poison de Scorpiowink auquel il faut rajouter un ingrédient secret qui permet d'activer ses pouvoirs cachés. Notre armée à depuis longtemps été interdite de fabrication de Sehd car une fois activé il permet de prendre le contrôle total de l'homme ou du Dinoz empoisonné...",
+					"control": "Oui, tout a fait. Qui est sous le contrôle du Sehd Actif ne peut plus raisonner normalement et il lui est même possible de trahir les siens... Le Sedh a été banni du royaume depuis longtemps par nos ancêtres. S'il s'agit vraiment de ce poison, nous devons arrêter son auteur au plus vite...",
+					"serv2": "Nous aimerions que vous alliez chercher certains ingrédients. Une fois ces ingredients rassemblés, cela vous permettra de constituer une Potion Anti Sedh qui permet de guérir les effets du poison.",
+					"ingr": "Oui. D'après nos légendes il faut rassembler les trois ingrédients perpétuels : le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane. Une fois ces trois ingrédients rassemblés, il faut trouver un Singe Antique...",
+					"sage": "Ah... euh... c'était peut-être un Sage Antique, nous ne nous rappellons plus bien. En tout cas, il s'agit d'êtres aux grands pouvoirs et qui paraît-il peuvent vivre pendant plusieurs siècles ! On les reconnais à leur troisième oeil, qui peut voir l'autre face de Dinoland...",
+					"face": "Oui... nos légendes racontent que Dinoland possède une autre face, une face Sombre. On appelle cet endroit le Monde Sombre. Personne n'en est jamais revenu bien entendu... mais les Sages (ou singes ?) Antiques peuvent librement voyager dans le Monde Sombre... Mais nous doutons que ces informations puissent vous servir à trouver cet être au troisième oeil...",
+					"end": "En tout cas, notre majesté comptons sur vos efforts pour rassembler les trois ingrédients, trouver le Singe Antique, et nous ramener au plus vite la Potion Anti Sedh qui nous permettra de nous protéger contre ce poison... En ce qui concerne ces nomades, nous allons enquêter sur eux pour vérifier leurs dires... L'audience est levée, au revoir...",
+					"bye": "Vous voilà reparti pour de nouvelles aventures..."
 				}
 			},
 			"choice": {
@@ -4660,6 +4675,20 @@
 					"accept": "J'accepte !",
 					"refuse": "Je ne peux pas accepter pour l'instant",
 					"leave": "Remercier le Roi"
+				},
+				"magnet7": {
+					"next": "Ah euh... oui...",
+					"talk": "Raconter",
+					"cont": "Continuer",
+					"serv": "Un service ?",
+					"sehd": "De... quoi ?",
+					"control": "Prendre le contrôle ?",
+					"serv2": "Vous parliez d'un service...",
+					"ingr": "Des ingrédients ?",
+					"sage": "Un Singe Antique ?",
+					"face": "L'autre face ?",
+					"end": "......",
+					"bye": "Partir"
 				}
 			}
 		},
