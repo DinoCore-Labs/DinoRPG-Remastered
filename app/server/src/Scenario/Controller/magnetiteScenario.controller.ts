@@ -44,6 +44,12 @@ const TEAM_W_START_TEXT_KEY = 'scenarios.magnet.texts.fightWTeamStart';
 
 const TEAM_W_LOST_TEXT_KEY = 'scenarios.magnet.texts.fightWTeamLost';
 
+const FIRST_GROUBOURIN_PLACE = PlaceEnum.REPAIRE_DE_LA_TEAM_W;
+
+const FIRST_GROUBOURIN_MONSTER = monsterByKey.wbour1;
+
+const TEAM_W_END_TEXT_KEY = 'scenarios.magnet.texts.fightWTeamEnd';
+
 /**
  * Combats individuels contre les trois membres de la Team W.
  */
@@ -124,6 +130,23 @@ async function findTeamWEncounter(input: ScenarioMoveFightInput): Promise<TeamWE
 		return undefined;
 	}
 	return encounterByPlace;
+}
+
+/**
+ * Vérifie si l'entrée dans le Repaire de la Team W
+ * doit déclencher le premier combat contre Groubourin.
+ */
+async function shouldStartFirstGroubourinEncounter(input: ScenarioMoveFightInput): Promise<boolean> {
+	/**
+	 * On vérifie le lieu réellement sélectionné..
+	 */
+	if (input.triggerPlace !== FIRST_GROUBOURIN_PLACE) {
+		return false;
+	}
+	const scenario = await prisma.$transaction(tx =>
+		getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY)
+	);
+	return scenario.progression === MagnetiteProgression.ENTER_TEAM_W_CAMP;
 }
 
 /**
@@ -256,6 +279,21 @@ function removeTeamWDeathSteps(fightProcess: FightProcessResult): void {
 }
 
 /**
+ * Retire l'étape de mort d'un combattant précis.
+ *
+ * Groubourin ne meurt pas pendant cette rencontre :
+ * le combat est interrompu avant sa conclusion narrative.
+ */
+function removeFighterDeathStep(fightProcess: FightProcessResult, fighterId: number): void {
+	fightProcess.steps = fightProcess.steps.filter(step => {
+		if (step.action !== 'death') {
+			return true;
+		}
+		return step.fighter.id !== fighterId;
+	});
+}
+
+/**
  * Construit la scène jouée après le combat :
  *
  * 1. arrivée du Capitaine ;
@@ -360,6 +398,18 @@ function buildTeamWMemberEscapeStep(teamWMember: FighterRecap): FightStep {
 		action: 'leave',
 		fighter: toStepFighter(teamWMember)
 	};
+}
+
+/**
+ * Retrouve Groubourin dans les combattants générés
+ * par le moteur.
+ */
+function getFirstGroubourinFighter(fightProcess: FightProcessResult): FighterRecap {
+	const fighter = fightProcess.fighters.find(entry => !entry.attacker && entry.name === FIRST_GROUBOURIN_MONSTER.name);
+	if (!fighter) {
+		throw new Error('Unable to find wbour1 in the first Team W lair encounter.');
+	}
+	return fighter;
 }
 
 /**
@@ -564,16 +614,148 @@ async function processTeamWEncounter(input: ScenarioMoveFightInput, encounter: T
 }
 
 /**
+ * Traite la première rencontre contre Groubourin
+ * dans le Repaire de la Team W.
+ *
+ * Ce combat est narrativement interrompu :
+ * - Groubourin ne meurt pas ;
+ * - aucune récompense n'est accordée ;
+ * - aucun kill n'est compté ;
+ * - le résultat est considéré comme positif pour le scénario ;
+ * - la progression passe de 5 à 6.
+ */
+async function processFirstGroubourinEncounter(input: ScenarioMoveFightInput): Promise<FightResult> {
+	/**
+	 * 1. Calcul du combat avec Groubourin.
+	 */
+	const fightProcess = calculateFightVsMonsters(input.team, input.user, input.toPlace, [FIRST_GROUBOURIN_MONSTER]);
+	/**
+	 * 2. Récupération de sa représentation dans
+	 * le résultat du moteur.
+	 */
+	const groubourin = getFirstGroubourinFighter(fightProcess);
+	/**
+	 * 3. Groubourin n'est pas tué.
+	 *
+	 * Même si la simulation normale avait produit une
+	 * étape death pour lui, celle-ci est retirée.
+	 */
+	removeFighterDeathStep(fightProcess, groubourin.id);
+	/**
+	 * 4. L'affrontement est narrativement validé.
+	 *
+	 * Il ne s'agit pas d'une véritable victoire sur Groubourin :
+	 * cette issue sert à indiquer au reste du système que
+	 * l'événement scénarisé est terminé avec succès.
+	 */
+	fightProcess.outcome = FightOutcome.AttackerWin;
+	/**
+	 * 5. Application des conséquences du combat.
+	 *
+	 * Le tableau des monstres récompensés est vide :
+	 * - aucune XP ;
+	 * - aucun or ;
+	 * - aucun drop ;
+	 * - aucune récompense liée à Groubourin.
+	 *
+	 * Les dégâts subis, objets consommés et statuts sont
+	 * toutefois traités par rewardFightVsMonsters.
+	 */
+	const result = await rewardFightVsMonsters(input.team, [], fightProcess, input.toPlace, input.user, {
+		autoReequip: input.autoReequip,
+		disableGoldReward: true
+	});
+	/**
+	 * 6. Installation dans le Repaire et progression
+	 * du scénario.
+	 */
+	const progressed = await prisma.$transaction(async tx => {
+		const currentScenario = await getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY);
+		/**
+		 * Protection contre une double résolution.
+		 */
+		if (currentScenario.progression !== MagnetiteProgression.ENTER_TEAM_W_CAMP) {
+			return false;
+		}
+		/**
+		 * Le groupe entre dans le Repaire.
+		 */
+		await tx.dinoz.updateMany({
+			where: {
+				id: {
+					in: input.team.map(dinoz => dinoz.id)
+				}
+			},
+			data: {
+				placeId: input.toPlace
+			}
+		});
+		/**
+		 * Étape suivante :
+		 * discussion avec la Team W.
+		 */
+		await setUserScenarioProgression(tx, {
+			userId: input.user.id,
+			scenarioKey: MAGNETITE_SCENARIO_KEY,
+			progression: MagnetiteProgression.TALK_TO_CAPTAIN
+		});
+		return true;
+	});
+	return {
+		...result,
+		/**
+		 * Groubourin est toujours vivant.
+		 */
+		monsterKillCount: 0,
+		source: 'scenario',
+		scenario: {
+			key: MAGNETITE_SCENARIO_KEY,
+			fightKey: 'magnet_first_bigbeastly',
+			progressed,
+			progression: progressed ? MagnetiteProgression.TALK_TO_CAPTAIN : MagnetiteProgression.ENTER_TEAM_W_CAMP
+		},
+		/**
+		 * Texte original commun aux combats Team W.
+		 */
+		startText: {
+			type: 'message',
+			text: TEAM_W_START_TEXT_KEY
+		},
+		/**
+		 * Texte original de l'interruption.
+		 */
+		endText: {
+			type: 'message',
+			text: TEAM_W_END_TEXT_KEY
+		}
+	};
+}
+
+/**
  * Point d'entrée des combats déclenchés
  * par les déplacements de la Magnétite.
  */
 export async function processMagnetiteScenarioMoveFight(input: ScenarioMoveFightInput): Promise<FightResult | false> {
+	/**
+	 * Étape 0 : embuscade initiale.
+	 */
 	if (await shouldStartInitialAmbush(input)) {
 		return processInitialAmbush(input);
 	}
+	/**
+	 * Étapes 2, 3 et 4 :
+	 * Destructeur, Nightmare et Tonnerre.
+	 */
 	const teamWEncounter = await findTeamWEncounter(input);
 	if (teamWEncounter) {
 		return processTeamWEncounter(input, teamWEncounter);
+	}
+	/**
+	 * Étape 5 :
+	 * premier combat contre Groubourin dans le Repaire.
+	 */
+	if (await shouldStartFirstGroubourinEncounter(input)) {
+		return processFirstGroubourinEncounter(input);
 	}
 	return false;
 }
