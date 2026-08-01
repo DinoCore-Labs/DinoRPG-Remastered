@@ -1,6 +1,5 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
 import { bossList } from '../../monster/bossList.js';
-import { monsterList } from '../../monster/monsterList.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { defineDialog } from '../defineDialog.js';
 
