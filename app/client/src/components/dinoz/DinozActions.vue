@@ -566,6 +566,58 @@ export default defineComponent({
 						errorHandler.handle(e, this.$toast);
 					}
 					break;
+				case Action.TOWER_ATTACK:
+					try {
+						const res = await DinozService.devoreuseAttack(this.dinozId);
+						if (res.fight) {
+							this.sessionStore.setFightResult(res.fight);
+							this.$router.push({
+								name: 'FightPage',
+								params: { dinozId: this.dinozId.toString() }
+							});
+						} else {
+							this.$toast.open({
+								message: formatText(this.$t('scenarios.devoreuse.texts.tower_won')),
+								type: 'success'
+							});
+							await this.refreshDinoz();
+						}
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
+					break;
+				case Action.TOWER_DEFEND:
+					try {
+						const res = await DinozService.devoreuseAttack(this.dinozId);
+						if (res.fight) {
+							this.sessionStore.setFightResult(res.fight);
+							this.$router.push({
+								name: 'FightPage',
+								params: { dinozId: this.dinozId.toString() }
+							});
+						} else {
+							this.$toast.open({
+								message: formatText(this.$t('scenarios.devoreuse.texts.tower_won')),
+								type: 'success'
+							});
+							await this.refreshDinoz();
+						}
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
+					break;
+				case Action.STOP_DEFEND_TOWER:
+					try {
+						await DinozService.devoreuseDefendStop(this.dinozId);
+						this.$toast.open({
+							message: formatText(this.$t('scenarios.devoreuse.texts.stop_defend_tower')),
+							type: 'success'
+						});
+						await this.refreshDinoz();
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
+					break;
 				case Action.MARKET:
 					this.$router.push({
 						name: 'MarketPage',

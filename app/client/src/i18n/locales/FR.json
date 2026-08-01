@@ -2815,7 +2815,9 @@
 		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
 		"confirm": {
 			"stop_concen": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
-			"enter_portal": "Préparez-vous bien, personne ne sait quels dangers vous guettent de l'autre côté !"
+			"enter_portal": "Préparez-vous bien, personne ne sait quels dangers vous guettent de l'autre côté !",
+			"tower_attack": "Prendre le contrôle de la Dévoreuse nécessite de combattre ses défenseurs actuels. Voulez-vous continuer ?",
+			"stop_defend_tower": "Vos dinoz vont cesser de défendre la Dévoreuse. Quelqu'un d'autre pourrait en prendre le contrôle ! Etes-vous sûr de vouloir continuer ?"
 		},
 		"description": {
 			"fight": "Recherchez un monstre à combattre à cet endroit.",
@@ -2851,7 +2853,10 @@
 			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
 			"CEF": "Cher client, bienvenue au Centre d'Entraînement de Fosselave !",
 			"stop_concen": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
-			"enter_portal": "Le portail vers le Monde sombre est ouvert. Votre Dinoz peut désormais le franchir."
+			"enter_portal": "Le portail vers le Monde sombre est ouvert. Votre Dinoz peut désormais le franchir.",
+			"tower_attack": "Un autre joueur contrôle actuellement la Dévoreuse. Vous devrez combattre pour pouvoir en prendre le contrôle et récolter ses précieuses graînes.",
+			"tower_defend": "Personne n'a actuellement le contrôle de la dévoreuse. Profitez-en pour en prendre le contrôle !",
+			"stop_defend_tower": "Si vous relachez votre contrôle sur la Dévoreuse, il vous faudra à nouveau combattre pour le regagner. Et d'autres joueurs attendent sûrement cette occasion pour s'en emparer à leur tour !"
 		},
 		"name": {
 			"fight": "Combattre",
@@ -2887,7 +2892,10 @@
 			"fb_tournament": "Tournoi de Forcebrut",
 			"CEF": "Centre d'Entraînement de Fosselave",
 			"stop_concen": "Arrêter de se concentrer",
-			"enter_portal": "Entrer dans le Portail"
+			"enter_portal": "Entrer dans le Portail",
+			"tower_attack": "Contrôler la Dévoreuse",
+			"tower_defend": "Défendre la Dévoreuse",
+			"stop_defend_tower": "Relacher le Contrôle"
 		}
 	},
 	"fight": {
@@ -3608,7 +3616,9 @@
 		"title": "Mentions légales",
 		"updatedAt": "Dernière mise à jour : {date}",
 		"contactEmail": "contact{'@'}dinorpg.fr",
-		"footer": { "link": "Mentions légales" },
+		"footer": {
+			"link": "Mentions légales"
+		},
 		"sections": {
 			"publisher": {
 				"title": "1. Édition du site",
@@ -3677,7 +3687,6 @@
 				"use": "L'utilisateur reste responsable de son équipement, de sa connexion à Internet et de l'usage qu'il fait du service. Le service est fourni gratuitement et en l'état, dans les limites autorisées par la loi applicable.",
 				"externalLinks": "Le site peut contenir des liens vers des services externes. L'éditeur ne contrôle pas leur contenu, leur disponibilité ni leurs éventuelles modifications."
 			},
-
 			"contact": {
 				"title": "7. Contact et signalement",
 				"description": "Toute question juridique, demande relative à un droit, réclamation ou signalement concernant un contenu peut être adressé à l'éditeur.",
@@ -5938,6 +5947,14 @@
 		},
 		"pac": {
 			"name": "Le Parchemin des Aptitudes"
+		},
+		"devoreuse": {
+			"name": "La Dévoreuse",
+			"texts": {
+				"tower_won": "Vous avez remporté le contrôle de la Dévoreuse ! Gardez-le jusqu'à minuit pour obtenir ses précieuses graînes !",
+				"grains_credited": "Félicitations ! Votre contrôle des Dévoreuses vous rapporte <b>::count::</b> graîne(s) qui ont été rajoutées à vos Ingrédients.",
+				"stop_defend_tower": "Vous avez relaché le contrôle de la Dévoreuse."
+			}
 		}
 	},
 	"reportModal": {

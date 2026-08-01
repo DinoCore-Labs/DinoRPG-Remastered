@@ -10,6 +10,7 @@ import {
 } from '../Schema/dinoz.schema.js';
 import { changeLeaderDinozGroup } from '../Service/changeLeaderDinozGroup.service.js';
 import { enterDarkPortalHandler, stopDinozConcentrationHandler } from '../Service/concentrationDinoz.service.js';
+import { devoreuseAttackHandler, devoreuseDefendStopHandler } from '../Service/devoreuse.service.js';
 import { digWithDinozHandler } from '../Service/dig.service.js';
 import { disband } from '../Service/disbandDinozTeam.service.js';
 import { followDinoz } from '../Service/followDinoz.service.js';
@@ -198,6 +199,28 @@ export async function dinozRoutes(app: FastifyInstance) {
 			}
 		},
 		changeLeaderDinozGroup
+	);
+	app.post(
+		'/:id/devoreuse/attack',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Dinoz'],
+				params: dinozIdParamsSchema
+			}
+		},
+		devoreuseAttackHandler
+	);
+	app.post(
+		'/:id/devoreuse/stop',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Dinoz'],
+				params: dinozIdParamsSchema
+			}
+		},
+		devoreuseDefendStopHandler
 	);
 	app.post(
 		'/:id/rest',
