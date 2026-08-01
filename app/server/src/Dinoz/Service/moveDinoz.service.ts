@@ -182,11 +182,12 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 	// Increment move stat
 	await incrementUserStat(StatTracking.MOVES, authedId, 1);
 	// Increment kill stat if monsters were killed
-	await incrementUserStat(
-		StatTracking.KILL_M,
-		user.id,
-		fight.fighters.filter(f => f.type === FighterType.MONSTER).length
-	);
+	const monsterKillCount =
+		fight.monsterKillCount ??
+		fight.fighters.filter(fighter => fighter.type === FighterType.MONSTER || fighter.type === FighterType.BOSS).length;
+	if (fight.result && monsterKillCount > 0) {
+		await incrementUserStat(StatTracking.KILL_M, user.id, monsterKillCount);
+	}
 	safeCreateGameLog(
 		{
 			type: GameLogType.Move,
