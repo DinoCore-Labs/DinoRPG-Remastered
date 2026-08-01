@@ -72,7 +72,6 @@ export const monsterIdByKey: Readonly<Record<MonsterKey, MonsterLikeId>> = {
 	wormom: Monster.EARTHWORM_MATRIARCH,
 	wormy: Monster.EARTHWORM_BABY,
 	groule: Monster.GROULEM,
-	wbour1: Monster.TW_BIGBEASTLY_1,
 	pikouz: Monster.STINGOZ,
 	thief: Monster.SCORPWINK_THIEF,
 	thief2: Monster.SCORPWINK_THIEF_2,
@@ -118,6 +117,13 @@ export const monsterIdByKey: Readonly<Record<MonsterKey, MonsterLikeId>> = {
 	pign2: Boss.DIMITRI_PIGNIGHT,
 	kvenbs: Boss.MASKED_KORGON,
 	megoup: Boss.DARK_MEGASHROOM,
+	wbour1: Boss.TW_BIGBEASTLY_1,
+	wbour2: Boss.TW_BIGBEASTLY_2,
+	wteam1: Boss.TW_DESTROYER,
+	wteam2: Boss.TW_NIGHTMARE,
+	wteam3: Boss.TW_THUNDER,
+	wteamc: Boss.TW_CAPTAIN,
+	darkgp_magnet: Boss.MAGNETITE_DARK_SMASHROOM,
 
 	any: Monster.ANY
 };

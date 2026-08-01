@@ -64,7 +64,6 @@ export enum Monster {
 	EARTHWORM_MATRIARCH = 'EARTHWORM_MATRIARCH',
 	EARTHWORM_BABY = 'EARTHWORM_BABY',
 	GROULEM = 'GROULEM',
-	TW_BIGBEASTLY_1 = 'TW_BIGBEASTLY_1',
 	STINGOZ = 'STINGOZ',
 	SCORPWINK_THIEF = 'SCORPWINK_THIEF',
 	SCORPWINK_THIEF_2 = 'SCORPWINK_THIEF_2',
@@ -1466,27 +1465,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false,
 		entrance: EntranceEffect.GROUND
-	},
-	[Monster.TW_BIGBEASTLY_1]: {
-		id: Monster.TW_BIGBEASTLY_1,
-		name: 'wbour1',
-		level: 35,
-		elements: {
-			fire: 0,
-			wood: 0,
-			water: 0,
-			lightning: 0,
-			air: 0
-		},
-		bonus_attack: 0,
-		bonus_defense: 0,
-		resilience: 0,
-		hp: 300,
-		odds: 100,
-		xp: 0,
-		skills: [Skill.M_DISABLE],
-		zones: [],
-		canBeCaptured: false
 	},
 	[Monster.STINGOZ]: {
 		id: Monster.STINGOZ,
