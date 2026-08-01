@@ -4663,6 +4663,42 @@
 				}
 			}
 		},
+		"teamWCaptain": {
+			"name": "Capitaine",
+			"dialog": {
+				"magnet6": {
+					"begin": "..... Pourquoi nous as-tu attaqué ? Est-ce pour te venger de notre attaque précédente ? Je pensais pourtant m'être excusé...",
+					"who": "Oui, je ne me suis pas présenté, je suis Mulder, le capitaine de la Team-W... Qui t'envoie et pourquoi nous as-tu attaqué ?",
+					"dont": "Je vois... tu ne veux pas parler... Tu dois donc être un de SES espions ! Je te le demande une dernière fois : qui t'envoie ? Et pourquoi sommes-nous pris pour cible par le Roi ?",
+					"dont2": "Bien... je vois... Puisque tu n'as rien à me dire pour excuser tes actions, va-t'en ! Sache qu'ici nous pouvons tenir des mois face aux attaques du Roi, et que rien ne nous fera abandonner notre mission !",
+					"tell": "Pendant l'heure qui suit, vous racontez au Capitaine tout ce qui vous est arrivé depuis votre entrée dans les Steppes Magnétiques : l'attaque de sa Team-W, puis l'entretien avec le Roi et, bien entendu, le complot pour s'emparer de la Magnétite...",
+					"hist1": "...... Je comprends maintenant... Il y a quelques jours, notre Wanwan le plus puissant — Grobourin — que tu as tenté de combattre dehors, a été empoisonné par une étrange substance...",
+					"hist2": "Nous avons bien entendu enquêté pour savoir qui avait pu commettre un tel acte, et une piste nous a menés jusqu'à la Citadelle du Roi des Rockys. C'est pour cette raison que nous l'observions de près : nous cherchions un moyen de guérir Grobourin...",
+					"hist3": "... mais je peux te jurer qu'à aucun moment nous n'avons eu pour projet de nous emparer de la Magnétite. Cette pierre n'a aucune signification pour nous, les nomades, car nous trouvons déjà dans les steppes tout ce qui suffit à nous rendre heureux...",
+					"hist4": "On nous traite souvent de voleurs, mais c'est parce qu'on nous confond avec ces Brigands de l'extrême-occident ! Nous les combattons régulièrement lorsque nous les trouvons... Ils nous détestent, mais les habitants nous aident, car le Roi n'envoie jamais aucun soldat ici... Ils ont bien trop peur du Grand Ver... Les nomades ont été abandonnés par le Roi...",
+					"hist5": "Voilà... je t'ai tout raconté. Souhaites-tu que je répète ?",
+					"ask": "... je suis désolé de ce qu'il s'est passé... mais tu dois comprendre : nous devons absolument soigner Grobourin. Il faiblit de jour en jour et nous craignons le pire... Tu es en contact avec le Roi : pourrais-tu nous aider en plaidant notre cause ? Il s'agit d'un malentendu, et il est possible qu'il puisse nous aider à trouver la cause de l'empoisonnement...",
+					"no": "Je comprends... Après tout, nous sommes des inconnus et tu n'es pas obligé de nous croire... Reviens me voir si tu changes d'avis.",
+					"yes": "... vraiment ? Tu feras cela pour nous, alors que nous t'avons attaqué ? Que le Grand Ver veille sur toi ! Fais attention aux Brigands sur ta route... Nous attendons avec impatience de tes nouvelles !"
+				},
+				"magnet7": {
+					"begin": "Tu as vu le Roi ? Tu sais comment soigner Grobourin ? Nous comptons tous sur toi, reviens nous voir avec de bonnes nouvelles !"
+				}
+			},
+			"choice": {
+				"continue": "Continuer",
+				"magnet6": {
+					"who": "Qui êtes-vous ?",
+					"dont": "Ne rien raconter",
+					"tell": "Raconter que le Roi des Rockys vous envoie",
+					"dont2": "Se taire",
+					"ask": "Non merci, j'ai tout compris !",
+					"again": "Je n'ai pas tout suivi...",
+					"yes": "Oui",
+					"no": "Non"
+				}
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
