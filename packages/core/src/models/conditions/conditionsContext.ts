@@ -1,5 +1,5 @@
 export type ScenarioState = {
-	step: number;
+	progression: number;
 	updatedAt?: Date | null;
 };
 
