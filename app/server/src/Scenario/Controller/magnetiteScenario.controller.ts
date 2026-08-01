@@ -285,15 +285,6 @@ function buildCaptainPostlude(
 			});
 		}
 
-		if (rescue.healedHp > 0) {
-			steps.push({
-				action: 'heal',
-				fighter: stepFighter,
-				hp: rescue.healedHp,
-				fx: LifeEffect.Heal
-			});
-		}
-
 		/**
 		 * Le soin est joué après la résurrection.
 		 */
