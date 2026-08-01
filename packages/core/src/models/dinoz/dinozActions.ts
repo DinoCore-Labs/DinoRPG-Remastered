@@ -34,7 +34,10 @@ export enum Action {
 	STOP_REST = 'stop_rest',
 	REINCARNATION = 'reincarnation',
 	FB_TOURNAMENT = 'fb_tournament',
-	CEF = 'CEF'
+	CEF = 'CEF',
+	TOWER_ATTACK = 'tower_attack',
+	TOWER_DEFEND = 'tower_defend',
+	STOP_DEFEND_TOWER = 'stop_defend_tower'
 }
 
 export interface ActionFiche {
@@ -192,5 +195,21 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	[Action.CEF]: {
 		name: Action.CEF,
 		imgName: 'act_train'
+	},
+	[Action.TOWER_ATTACK]: {
+		name: Action.TOWER_ATTACK,
+		imgName: 'act_defi',
+		confirm: true,
+		confirmMessageKey: 'action.confirm.tower_attack'
+	},
+	[Action.TOWER_DEFEND]: {
+		name: Action.TOWER_DEFEND,
+		imgName: 'act_castle'
+	},
+	[Action.STOP_DEFEND_TOWER]: {
+		name: Action.STOP_DEFEND_TOWER,
+		imgName: 'act_default',
+		confirm: true,
+		confirmMessageKey: 'action.confirm.stop_defend_tower'
 	}
 };

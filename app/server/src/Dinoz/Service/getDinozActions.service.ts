@@ -466,5 +466,36 @@ export async function getAvailableActions(
 	if (canUseTrainingCenter) {
 		pushUniqueAction(availableActions, actionList[Action.CEF]);
 	}
+
+	// Devoreuse control actions
+	const devoreusePlaces = [PlaceEnum.DEVOREUSE_DE_L_EST, PlaceEnum.DEVOREUSE_DU_NORD, PlaceEnum.DEVOREUSE_DE_L_OUEST];
+	if (devoreusePlaces.includes(dinoz.placeId)) {
+		// Only solo dinoz or group leader can initiate control actions
+		if (!dinoz.leaderId && dinoz.fight) {
+			const control = await prisma.devoreuseControl.findUnique({ where: { placeId: dinoz.placeId } });
+			if (control) {
+				if (control.userId === user.id) {
+					pushUniqueAction(availableActions, actionList[Action.STOP_DEFEND_TOWER]);
+				} else {
+					const fullUser = await prisma.user.findUnique({
+						where: { id: user.id },
+						select: { devoreuseAttacksLeft: true }
+					});
+					if (fullUser && fullUser.devoreuseAttacksLeft > 0) {
+						pushUniqueAction(availableActions, actionList[Action.TOWER_ATTACK]);
+					}
+				}
+			} else {
+				const fullUser = await prisma.user.findUnique({
+					where: { id: user.id },
+					select: { devoreuseAttacksLeft: true }
+				});
+				if (fullUser && fullUser.devoreuseAttacksLeft > 0) {
+					pushUniqueAction(availableActions, actionList[Action.TOWER_DEFEND]);
+				}
+			}
+		}
+	}
+
 	return availableActions;
 }
