@@ -114,10 +114,6 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		monster.stats.speed.global *= 1.5;
 		monster.stats.base[ElementType.WOOD] = 15;
 	},
-	[Monster.TW_BIGBEASTLY_1]: monster => {
-		monster.time += 100000 * TIME_FACTOR;
-		monster.status.push(createStatus(FightStatus.ASLEEP));
-	},
 	[Monster.SCORP]: monster => {
 		stinger(monster);
 	},
@@ -218,7 +214,11 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		monster.stats.special.counter *= 1.1;
 		monster.stats.speed.global *= 0.5;
 	},
-	[Boss.TW_BIGBEASTLY]: monster => {
+	[Boss.TW_BIGBEASTLY_1]: monster => {
+		monster.time += 100000 * TIME_FACTOR;
+		monster.status.push(createStatus(FightStatus.ASLEEP));
+	},
+	[Boss.TW_BIGBEASTLY_2]: monster => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},
 	[Boss.PR_IGOR]: monster => {
