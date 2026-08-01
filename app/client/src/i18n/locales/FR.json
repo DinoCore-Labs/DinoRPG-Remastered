@@ -5957,6 +5957,13 @@
 				"grains_credited": "Félicitations ! Votre contrôle des Dévoreuses vous rapporte <b>::count::</b> graîne(s) qui ont été rajoutées à vos Ingrédients.",
 				"stop_defend_tower": "Vous avez relaché le contrôle de la Dévoreuse."
 			}
+		},
+		"magnet": {
+			"name": "La Magnétite",
+			"texts": {
+				"initialAmbush": "Alors que vous approchez du Syphon Siffleur, trois membres de la Team W surgissent et attaquent votre groupe !",
+				"initialAmbushRescue": "Le Capitaine de la Team W intervient soudainement. Il soigne vos Dinoz tandis que les trois assaillants prennent la fuite !"
+			}
 		}
 	},
 	"reportModal": {
