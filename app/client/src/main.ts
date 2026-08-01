@@ -10,6 +10,7 @@ import Loading from './components/utils/Loading.vue';
 import { initI18n } from './i18n';
 import { mixins } from './mixins/mixins';
 import router from './router';
+import { clickOutside } from './utils/clickOutside';
 import ConfirmPlugin from './utils/confirmPlugin';
 import { createToastPlugin } from './utils/toast';
 import { startVersionChecker } from './utils/versionChecker';
@@ -43,6 +44,7 @@ app.use(
 );
 app.use(VueTippy, vueTippyProps);
 app.mixin(mixins);
+app.directive('click-outside', clickOutside);
 app.component('Loading', Loading);
 
 app.mount('#app');
