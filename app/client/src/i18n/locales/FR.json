@@ -4126,6 +4126,10 @@
 					"begin": "Pour ton information, les Dinoz Sombres que tu as rencontré jusqu'à présent n'étaient que des débutants que nous venons faire entraîner dans cette partie de Dinoland... La puissance des Dinoz de Caushemesh va bien au delà, et même votre Vénérable ne ferait pas le poids contre nos meilleurs maîtres Dinoz !",
 					"next2": "Enfin bon, je tiens ma promesse. Voici une récompense pour te convaincre de la supériorité de la  technologie de Caushemesh. Je n'en ai qu'un exemplaire, alors fais-en bon usage... Il s'agit d'un Bracelet en Tik, que tu pourras équiper sur le Dinoz de ton choix..."
 				},
+				"magnet2": {
+					"begin": "......... uhmm, aurais-je été repéré ??? .....",
+					"view": "Avant que vous ayez pu vous approcher, le Rôdeur a mystérieusement disparu. Que peut-il bien manigancer ici..."
+				},
 				"afterSpy": {
 					"begin": "Maintenant libéré de sa mission d'espionnage, le rôdeur s'est installé tranquillement non loin de dinoplaza. Les doigts de pied en éventail, il se détend au soleil... Mieux vaut le voir ici qu'en train de manigancer quelque chose de louche..."
 				}
@@ -4144,7 +4148,8 @@
 				"next": "Et...",
 				"next2": "(...)",
 				"more": "...",
-				"mission": "Accepter une mission"
+				"mission": "Accepter une mission",
+				"magnet2View": "Surveiller le Rôdeur"
 			}
 		},
 		"venerable": {
