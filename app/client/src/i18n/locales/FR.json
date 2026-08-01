@@ -5970,7 +5970,12 @@
 			"texts": {
 				"initialAmbush": "Alors que vous approchez du Syphon Siffleur, trois membres de la Team W surgissent et attaquent votre groupe !",
 				"initialAmbushRescue": "Ça suffit ! Cette bataille est terminée.",
-				"initialAmbushRegeneration": "Le Capitaine soigne vos Dinoz."
+				"initialAmbushRegeneration": "Le Capitaine soigne vos Dinoz.",
+				"fightWTeamStart": "Alors que vous approchez, un Dinoz de la Team-W apparaît... vous l'attaquez !",
+				"fightWTeamLost": "Vous ne passerez pas !",
+				"fightWTeamWon1": "Pourquoi vous attaquez-nous ? Nous saurons nous venger !",
+				"fightWTeamWon2": "Vous êtes surement des espions du Roi Rocky ! Vous ne perdez rien pour attendre !",
+				"fightWTeamWon3": "Vous voulez nous exterminer ?!? Vite ! Refugions-nous au camp du sud !"
 			}
 		}
 	},
