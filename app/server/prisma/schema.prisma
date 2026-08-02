@@ -74,8 +74,8 @@ model Dinoz {
   userId             String                 @db.Uuid
   user               User                   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)  
 
-  devoreuseDefendedId Int?
-  devoreuseDefended   DevoreuseControl?       @relation("DevoreuseDinoz", fields: [devoreuseDefendedId], references: [id], onDelete: SetNull)
+  devourerDefendedId Int?
+  devourerDefended   DevourerControl?       @relation("DevourerDinoz", fields: [devourerDefendedId], references: [id], onDelete: SetNull)
 
   logs              GameLog[]               @relation("GameLogDinoz")
   reports           Report[]                @relation("ReportReportedDinoz")
@@ -562,8 +562,8 @@ model User {
   ClanMember             ClanMember?
   ClanMessage            ClanMessage[]
 
-  devoreuseAttacksLeft  Int                @default(3)
-  devoreuseControls      DevoreuseControl[]
+  devourerAttacksLeft  Int                @default(3)
+  devourerControls      DevourerControl[]
 
   gathers       UserGather[]
   ingredients   UserIngredients[]
@@ -1048,12 +1048,12 @@ enum Role {
   ADMIN
   SUPER_ADMIN
 }
-model DevoreuseControl {
+model DevourerControl {
   id        Int      @id @default(autoincrement())
   placeId   Int      @unique
   userId    String   @db.Uuid
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  dinozs    Dinoz[]  @relation("DevoreuseDinoz")
+  dinozs    Dinoz[]  @relation("DevourerDinoz")
   createdAt DateTime @default(now()) @db.Timestamptz(3)
 
   @@index([userId])

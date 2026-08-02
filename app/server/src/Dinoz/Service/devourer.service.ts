@@ -8,13 +8,13 @@ import { prisma } from '../../prisma.js';
 import { isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { STANDARD_PVP_RULES } from '../../utils/fight/fight.mapper.js';
 
-type DevoreuseParams = {
+type DevourerParams = {
 	id: string;
 };
 
-const DEVOREUSE_PLACES = [PlaceEnum.DEVOREUSE_DE_L_EST, PlaceEnum.DEVOREUSE_DU_NORD, PlaceEnum.DEVOREUSE_DE_L_OUEST];
+const DEVOURER_PLACES = [PlaceEnum.DEVOREUSE_DE_L_EST, PlaceEnum.DEVOREUSE_DU_NORD, PlaceEnum.DEVOREUSE_DE_L_OUEST];
 
-export async function devoreuseAttackHandler(req: FastifyRequest<{ Params: DevoreuseParams }>, reply: FastifyReply) {
+export async function devourerAttackHandler(req: FastifyRequest<{ Params: DevourerParams }>, reply: FastifyReply) {
 	const dinozId = Number(req.params.id);
 	const userId = req.user.id;
 
@@ -31,7 +31,7 @@ export async function devoreuseAttackHandler(req: FastifyRequest<{ Params: Devor
 	const leader = team.find(d => d.id === dinozId);
 	if (!leader) throw new ExpectedError('Dinoz not found');
 	if (leader.leaderId) throw new ExpectedError('Only leaders can attack');
-	if (!DEVOREUSE_PLACES.includes(leader.placeId)) throw new ExpectedError('Not on a Devoreuse place');
+	if (!DEVOURER_PLACES.includes(leader.placeId)) throw new ExpectedError('Not on a Devourer place');
 
 	// Verify everyone is alive and available
 	for (const d of team) {
@@ -48,17 +48,17 @@ export async function devoreuseAttackHandler(req: FastifyRequest<{ Params: Devor
 	}
 
 	// Fetch current control
-	const currentControl = await prisma.devoreuseControl.findUnique({
+	const currentControl = await prisma.devourerControl.findUnique({
 		where: { placeId },
 		include: { dinozs: { include: { items: true, skills: true, status: true, catches: true, user: true } } }
 	});
 
 	if (currentControl && currentControl.dinozs.length > 0) {
-		if (user.devoreuseAttacksLeft <= 0) {
+		if (user.devourerAttacksLeft <= 0) {
 			throw new ExpectedError('No more attacks left');
 		}
 		// Remove an attack point
-		await prisma.user.update({ where: { id: userId }, data: { devoreuseAttacksLeft: { decrement: 1 } } });
+		await prisma.user.update({ where: { id: userId }, data: { devourerAttacksLeft: { decrement: 1 } } });
 	}
 
 	// Consume fight action
@@ -72,9 +72,9 @@ export async function devoreuseAttackHandler(req: FastifyRequest<{ Params: Devor
 	if (!currentControl || currentControl.dinozs.length === 0) {
 		// Take control directly
 		if (currentControl) {
-			await prisma.devoreuseControl.delete({ where: { placeId } });
+			await prisma.devourerControl.delete({ where: { placeId } });
 		}
-		await prisma.devoreuseControl.create({
+		await prisma.devourerControl.create({
 			data: {
 				placeId,
 				userId,
@@ -122,8 +122,8 @@ export async function devoreuseAttackHandler(req: FastifyRequest<{ Params: Devor
 
 		if (victory) {
 			// Attacker wins, take control
-			await tx.devoreuseControl.delete({ where: { placeId } });
-			await tx.devoreuseControl.create({
+			await tx.devourerControl.delete({ where: { placeId } });
+			await tx.devourerControl.create({
 				data: {
 					placeId,
 					userId,
@@ -144,16 +144,13 @@ export async function devoreuseAttackHandler(req: FastifyRequest<{ Params: Devor
 		hpLost: fightResult.attackers.map(f => ({ id: f.dinozId, hpLost: f.hpLost })),
 		itemsUsed: fightResult.attackers.map(f => ({ id: f.dinozId, itemsUsed: f.itemsUsed })),
 		place: placeId,
-		endText: victory ? { type: 'message', text: 'scenarios.devoreuse.texts.tower_won' } : undefined
+		endText: victory ? { type: 'message', text: 'scenarios.devourer.texts.tower_won' } : undefined
 	};
 
 	return reply.send({ success: true, fight: clientFightResult, victory });
 }
 
-export async function devoreuseDefendStopHandler(
-	req: FastifyRequest<{ Params: DevoreuseParams }>,
-	reply: FastifyReply
-) {
+export async function devourerDefendStopHandler(req: FastifyRequest<{ Params: DevourerParams }>, reply: FastifyReply) {
 	const dinozId = Number(req.params.id);
 	const userId = req.user.id;
 
@@ -162,26 +159,26 @@ export async function devoreuseDefendStopHandler(
 	if (dinoz.leaderId) throw new ExpectedError('Only leaders can stop defend');
 
 	const placeId = dinoz.placeId;
-	if (!DEVOREUSE_PLACES.includes(placeId)) throw new ExpectedError('Not on a Devoreuse place');
+	if (!DEVOURER_PLACES.includes(placeId)) throw new ExpectedError('Not on a Devourer place');
 
-	const currentControl = await prisma.devoreuseControl.findUnique({ where: { placeId } });
+	const currentControl = await prisma.devourerControl.findUnique({ where: { placeId } });
 	if (!currentControl || currentControl.userId !== userId) {
-		throw new ExpectedError('You do not control this devoreuse');
+		throw new ExpectedError('You do not control this devourer');
 	}
 
-	await prisma.devoreuseControl.delete({ where: { placeId } });
+	await prisma.devourerControl.delete({ where: { placeId } });
 
 	return reply.send({ success: true });
 }
 
-export async function devoreuseGetDefendersHandler(
+export async function devourerGetDefendersHandler(
 	req: FastifyRequest<{ Params: { placeId: string } }>,
 	reply: FastifyReply
 ) {
 	const placeId = Number(req.params.placeId);
-	if (!DEVOREUSE_PLACES.includes(placeId)) throw new ExpectedError('Not on a Devoreuse place');
+	if (!DEVOURER_PLACES.includes(placeId)) throw new ExpectedError('Not on a Devourer place');
 
-	const currentControl = await prisma.devoreuseControl.findUnique({
+	const currentControl = await prisma.devourerControl.findUnique({
 		where: { placeId },
 		include: {
 			user: {
@@ -201,10 +198,10 @@ export async function devoreuseGetDefendersHandler(
 
 	const user = await prisma.user.findUnique({
 		where: { id: req.user.id },
-		select: { devoreuseAttacksLeft: true }
+		select: { devourerAttacksLeft: true }
 	});
 
-	if (!currentControl) return reply.send({ defenders: null, attacksLeft: user?.devoreuseAttacksLeft || 0 });
+	if (!currentControl) return reply.send({ defenders: null, attacksLeft: user?.devourerAttacksLeft || 0 });
 
 	return reply.send({
 		defenders: {
@@ -219,6 +216,6 @@ export async function devoreuseGetDefendersHandler(
 				apparence: d.display
 			}))
 		},
-		attacksLeft: user?.devoreuseAttacksLeft || 0
+		attacksLeft: user?.devourerAttacksLeft || 0
 	});
 }
