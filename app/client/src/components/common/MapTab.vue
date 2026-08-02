@@ -5,24 +5,97 @@
 			{{ $t(`place.name.${getPlaceName(dinozData.placeId)}`) }}
 		</p>
 	</div>
+	<div class="defenders-box" v-if="isDevoreuse && defendersData">
+		<div class="defenders-title">
+			Contrôlée par :
+			<DZUser
+				class="inline-user"
+				:user="{ id: defendersData.userId, name: defendersData.username }"
+				:me="userStore().id === defendersData.userId"
+				:friend="false"
+			/>
+		</div>
+		<div class="defenders-list">
+			<div v-for="dinoz in defendersData.dinozs" :key="dinoz.id" class="defender-dinoz">
+				<DinozAnimation :display="dinoz.apparence" :life="100" />
+				<div class="defender-tooltip">Niveau {{ dinoz.level }}</div>
+			</div>
+		</div>
+		<div class="defenders-attacks">Tentatives restantes : {{ attacksLeft }}</div>
+	</div>
 	<p class="placeDesc" v-if="dinozData">
 		{{ $t(`place.description.${getPlaceName(dinozData.placeId)}`) }}
 	</p>
 </template>
 
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue';
+import { defineComponent, type PropType, defineAsyncComponent } from 'vue';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { placeList } from '../../constants/place';
+import DevoreuseService, { type DevoreuseDefendersResponse } from '../../services/devoreuse.service';
 import WorldMap from './WorldMap.vue';
+import DinozAnimation from '../dinoz/DinozAnimation.vue';
+import { userStore } from '../../store/userStore';
+import eventBus from '../../events';
+
+const DZUser = defineAsyncComponent(() => import('../utils/DZUser.vue'));
 
 export default defineComponent({
 	name: 'MapTab',
 	props: { dinozData: { type: Object as PropType<DinozFiche>, required: true } },
 	components: {
-		WorldMap
+		WorldMap,
+		DinozAnimation,
+		DZUser
+	},
+	setup() {
+		return { userStore };
+	},
+	data() {
+		return {
+			defendersData: null as DevoreuseDefendersResponse['defenders'] | null,
+			attacksLeft: 0
+		};
+	},
+	computed: {
+		isDevoreuse(): boolean {
+			const pId = this.dinozData?.placeId;
+			return (
+				pId === PlaceEnum.DEVOREUSE_DE_L_EST ||
+				pId === PlaceEnum.DEVOREUSE_DE_L_OUEST ||
+				pId === PlaceEnum.DEVOREUSE_DU_NORD
+			);
+		}
+	},
+	watch: {
+		'dinozData.placeId': {
+			immediate: true,
+			async handler() {
+				await this.fetchDefenders();
+			}
+		}
+	},
+	mounted() {
+		eventBus.on('refreshDevoreuseDefenders', this.fetchDefenders);
+	},
+	beforeUnmount() {
+		eventBus.off('refreshDevoreuseDefenders', this.fetchDefenders);
 	},
 	methods: {
+		async fetchDefenders() {
+			if (this.isDevoreuse) {
+				try {
+					const res = await DevoreuseService.getDefenders(this.dinozData.placeId);
+					this.defendersData = res.defenders;
+					this.attacksLeft = res.attacksLeft;
+				} catch (e) {
+					console.error('Failed to load devoreuse defenders', e);
+				}
+			} else {
+				this.defendersData = null;
+			}
+		},
 		changeTimezone(date: Date, ianatz: string) {
 			const invdate = new Date(
 				date.toLocaleString('en-US', {
@@ -61,7 +134,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .placeDesc {
-	padding: 0px;
 	padding: 5px;
 	font-size: 9pt;
 	line-height: 10.5pt;
@@ -94,5 +166,87 @@ export default defineComponent({
 	background-color: #bc683c;
 	border-radius: 0px;
 	text-align: justify;
+}
+
+.defenders-box {
+	margin-top: 10px;
+	padding: 5px;
+	border: 1px solid #874b2e;
+	background-color: #cd8956;
+	border-radius: 5px;
+	color: #fdf1c4;
+	width: 95%;
+}
+
+.defenders-title {
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 5px;
+	font-size: 10pt;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+}
+
+.inline-user {
+	display: inline-flex;
+	align-items: center;
+}
+
+.defenders-list {
+	display: flex;
+	justify-content: center;
+	gap: 5px;
+	flex-wrap: wrap;
+	flex-direction: row;
+	margin-bottom: 5px;
+}
+
+.defenders-attacks {
+	font-size: 0.8em;
+	color: #666;
+	text-align: center;
+	font-style: italic;
+}
+
+.defender-dinoz {
+	position: relative;
+	cursor: help;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 50px;
+	height: 50px;
+}
+
+.defender-dinoz :deep(img) {
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+}
+
+.defender-tooltip {
+	visibility: hidden;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: #fff;
+	text-align: center;
+	padding: 5px;
+	border-radius: 6px;
+	position: absolute;
+	z-index: 1;
+	bottom: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	white-space: nowrap;
+	font-size: 12px;
+	opacity: 0;
+	transition: opacity 0.3s;
+	pointer-events: none;
+}
+
+.defender-dinoz:hover .defender-tooltip {
+	visibility: visible;
+	opacity: 1;
 }
 </style>

@@ -53,12 +53,16 @@
 				:content="$t('dinoz.hud.restEnd')"
 				help
 			/>
+			<DZDisclaimer
+				v-if="dinoz.actions?.some(a => a.name === Action.DEFENDING_DEVOREUSE)"
+				:content="$t('dinoz.hud.defendingDevoreuse')"
+			/>
 			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :dinoz="dinozId"></DZFollow>
 			<Tippy
 				tag="div"
 				theme="normal"
 				class="action"
-				v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW)"
+				v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW && a.name !== Action.DEFENDING_DEVOREUSE)"
 				:key="action"
 				:id="action.imgName"
 				@click="launch(action)"
@@ -580,6 +584,7 @@ export default defineComponent({
 								message: formatText(this.$t('scenarios.devoreuse.texts.tower_won')),
 								type: 'success'
 							});
+							eventBus.emit('refreshDevoreuseDefenders');
 							await this.refreshDinoz();
 						}
 					} catch (e) {
@@ -600,6 +605,7 @@ export default defineComponent({
 								message: formatText(this.$t('scenarios.devoreuse.texts.tower_won')),
 								type: 'success'
 							});
+							eventBus.emit('refreshDevoreuseDefenders');
 							await this.refreshDinoz();
 						}
 					} catch (e) {
@@ -613,6 +619,7 @@ export default defineComponent({
 							message: formatText(this.$t('scenarios.devoreuse.texts.stop_defend_tower')),
 							type: 'success'
 						});
+						eventBus.emit('refreshDevoreuseDefenders');
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
@@ -1010,9 +1017,8 @@ export default defineComponent({
 				width: 48%;
 				overflow: hidden;
 				p {
-					text-overflow: ellipsis;
-					white-space: nowrap;
-					overflow: hidden;
+					white-space: normal;
+					word-break: break-word;
 				}
 			}
 			.follow {
