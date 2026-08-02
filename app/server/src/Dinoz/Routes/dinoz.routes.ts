@@ -10,7 +10,7 @@ import {
 } from '../Schema/dinoz.schema.js';
 import { changeLeaderDinozGroup } from '../Service/changeLeaderDinozGroup.service.js';
 import { enterDarkPortalHandler, stopDinozConcentrationHandler } from '../Service/concentrationDinoz.service.js';
-import { devoreuseAttackHandler, devoreuseDefendStopHandler } from '../Service/devoreuse.service.js';
+import { devourerAttackHandler, devourerDefendStopHandler } from '../Service/devourer.service.js';
 import { digWithDinozHandler } from '../Service/dig.service.js';
 import { disband } from '../Service/disbandDinozTeam.service.js';
 import { followDinoz } from '../Service/followDinoz.service.js';
@@ -201,7 +201,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 		changeLeaderDinozGroup
 	);
 	app.post(
-		'/:id/devoreuse/attack',
+		'/:id/devourer/attack',
 		{
 			preHandler: app.authenticate,
 			schema: {
@@ -209,10 +209,10 @@ export async function dinozRoutes(app: FastifyInstance) {
 				params: dinozIdParamsSchema
 			}
 		},
-		devoreuseAttackHandler
+		devourerAttackHandler
 	);
 	app.post(
-		'/:id/devoreuse/stop',
+		'/:id/devourer/stop',
 		{
 			preHandler: app.authenticate,
 			schema: {
@@ -220,7 +220,7 @@ export async function dinozRoutes(app: FastifyInstance) {
 				params: dinozIdParamsSchema
 			}
 		},
-		devoreuseDefendStopHandler
+		devourerDefendStopHandler
 	);
 	app.post(
 		'/:id/rest',

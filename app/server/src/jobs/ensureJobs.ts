@@ -25,12 +25,12 @@ export async function ensureJobsExist() {
 		},
 		update: {}
 	});
-	// Devoreuse Midnight Reset
+	// Devourer Midnight Reset
 	await prisma.jobDefinition.upsert({
-		where: { key: 'devoreuse-midnight-reset' },
+		where: { key: 'devourer-midnight-reset' },
 		create: {
-			key: 'devoreuse-midnight-reset',
-			name: 'Reset Devoreuse attacks and reward controllers',
+			key: 'devourer-midnight-reset',
+			name: 'Reset Devourer attacks and reward controllers',
 			type: 'DAILY_AT',
 			timezone: 'UTC',
 			dailyHour: 0,

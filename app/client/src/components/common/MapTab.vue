@@ -5,7 +5,7 @@
 			{{ $t(`place.name.${getPlaceName(dinozData.placeId)}`) }}
 		</p>
 	</div>
-	<div class="defenders-box" v-if="isDevoreuse && defendersData">
+	<div class="defenders-box" v-if="isDevourer && defendersData">
 		<div class="defenders-title">
 			Contrôlée par :
 			<DZUser
@@ -33,7 +33,7 @@ import { defineComponent, type PropType, defineAsyncComponent } from 'vue';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { placeList } from '../../constants/place';
-import DevoreuseService, { type DevoreuseDefendersResponse } from '../../services/devoreuse.service';
+import DevourerService, { type DevourerDefendersResponse } from '../../services/devourer.service';
 import WorldMap from './WorldMap.vue';
 import DinozAnimation from '../dinoz/DinozAnimation.vue';
 import { userStore } from '../../store/userStore';
@@ -54,12 +54,12 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			defendersData: null as DevoreuseDefendersResponse['defenders'] | null,
+			defendersData: null as DevourerDefendersResponse['defenders'] | null,
 			attacksLeft: 0
 		};
 	},
 	computed: {
-		isDevoreuse(): boolean {
+		isDevourer(): boolean {
 			const pId = this.dinozData?.placeId;
 			return (
 				pId === PlaceEnum.DEVOREUSE_DE_L_EST ||
@@ -77,20 +77,20 @@ export default defineComponent({
 		}
 	},
 	mounted() {
-		eventBus.on('refreshDevoreuseDefenders', this.fetchDefenders);
+		eventBus.on('refreshDevourerDefenders', this.fetchDefenders);
 	},
 	beforeUnmount() {
-		eventBus.off('refreshDevoreuseDefenders', this.fetchDefenders);
+		eventBus.off('refreshDevourerDefenders', this.fetchDefenders);
 	},
 	methods: {
 		async fetchDefenders() {
-			if (this.isDevoreuse) {
+			if (this.isDevourer) {
 				try {
-					const res = await DevoreuseService.getDefenders(this.dinozData.placeId);
+					const res = await DevourerService.getDefenders(this.dinozData.placeId);
 					this.defendersData = res.defenders;
 					this.attacksLeft = res.attacksLeft;
 				} catch (e) {
-					console.error('Failed to load devoreuse defenders', e);
+					console.error('Failed to load devourer defenders', e);
 				}
 			} else {
 				this.defendersData = null;

@@ -54,15 +54,15 @@
 				help
 			/>
 			<DZDisclaimer
-				v-if="dinoz.actions?.some(a => a.name === Action.DEFENDING_DEVOREUSE)"
-				:content="$t('dinoz.hud.defendingDevoreuse')"
+				v-if="dinoz.actions?.some(a => a.name === Action.DEFENDING_DEVOURER)"
+				:content="$t('dinoz.hud.defendingDevourer')"
 			/>
 			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :dinoz="dinozId"></DZFollow>
 			<Tippy
 				tag="div"
 				theme="normal"
 				class="action"
-				v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW && a.name !== Action.DEFENDING_DEVOREUSE)"
+				v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW && a.name !== Action.DEFENDING_DEVOURER)"
 				:key="action"
 				:id="action.imgName"
 				@click="launch(action)"
@@ -572,7 +572,7 @@ export default defineComponent({
 					break;
 				case Action.TOWER_ATTACK:
 					try {
-						const res = await DinozService.devoreuseAttack(this.dinozId);
+						const res = await DinozService.devourerAttack(this.dinozId);
 						if (res.fight) {
 							this.sessionStore.setFightResult(res.fight);
 							this.$router.push({
@@ -581,10 +581,10 @@ export default defineComponent({
 							});
 						} else {
 							this.$toast.open({
-								message: formatText(this.$t('scenarios.devoreuse.texts.tower_won')),
+								message: formatText(this.$t('scenarios.devourer.texts.tower_won')),
 								type: 'success'
 							});
-							eventBus.emit('refreshDevoreuseDefenders');
+							eventBus.emit('refreshDevourerDefenders');
 							await this.refreshDinoz();
 						}
 					} catch (e) {
@@ -593,7 +593,7 @@ export default defineComponent({
 					break;
 				case Action.TOWER_DEFEND:
 					try {
-						const res = await DinozService.devoreuseAttack(this.dinozId);
+						const res = await DinozService.devourerAttack(this.dinozId);
 						if (res.fight) {
 							this.sessionStore.setFightResult(res.fight);
 							this.$router.push({
@@ -602,10 +602,10 @@ export default defineComponent({
 							});
 						} else {
 							this.$toast.open({
-								message: formatText(this.$t('scenarios.devoreuse.texts.tower_won')),
+								message: formatText(this.$t('scenarios.devourer.texts.tower_won')),
 								type: 'success'
 							});
-							eventBus.emit('refreshDevoreuseDefenders');
+							eventBus.emit('refreshDevourerDefenders');
 							await this.refreshDinoz();
 						}
 					} catch (e) {
@@ -614,12 +614,12 @@ export default defineComponent({
 					break;
 				case Action.STOP_DEFEND_TOWER:
 					try {
-						await DinozService.devoreuseDefendStop(this.dinozId);
+						await DinozService.devourerDefendStop(this.dinozId);
 						this.$toast.open({
-							message: formatText(this.$t('scenarios.devoreuse.texts.stop_defend_tower')),
+							message: formatText(this.$t('scenarios.devourer.texts.stop_defend_tower')),
 							type: 'success'
 						});
-						eventBus.emit('refreshDevoreuseDefenders');
+						eventBus.emit('refreshDevourerDefenders');
 						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);

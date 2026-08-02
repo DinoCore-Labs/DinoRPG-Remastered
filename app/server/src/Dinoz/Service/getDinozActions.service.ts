@@ -199,12 +199,12 @@ export async function getAvailableActions(
 		return [actionList[Action.STOP_CONCEN]];
 	}
 
-	const isDefendingControl = await prisma.devoreuseControl.findFirst({
+	const isDefendingControl = await prisma.devourerControl.findFirst({
 		where: { dinozs: { some: { id: dinoz.id } } },
 		include: { dinozs: true }
 	});
 	if (isDefendingControl) {
-		const actions: ActionFiche[] = [actionList[Action.DEFENDING_DEVOREUSE]];
+		const actions: ActionFiche[] = [actionList[Action.DEFENDING_DEVOURER]];
 		if (!dinoz.leaderId && isDefendingControl.userId === user.id) {
 			actions.push(actionList[Action.STOP_DEFEND_TOWER]);
 		}
@@ -479,19 +479,19 @@ export async function getAvailableActions(
 		pushUniqueAction(availableActions, actionList[Action.CEF]);
 	}
 
-	// Devoreuse control actions
-	const devoreusePlaces = [PlaceEnum.DEVOREUSE_DE_L_EST, PlaceEnum.DEVOREUSE_DU_NORD, PlaceEnum.DEVOREUSE_DE_L_OUEST];
-	if (devoreusePlaces.includes(dinoz.placeId)) {
+	// Devourer control actions
+	const devourerPlaces = [PlaceEnum.DEVOREUSE_DE_L_EST, PlaceEnum.DEVOREUSE_DU_NORD, PlaceEnum.DEVOREUSE_DE_L_OUEST];
+	if (devourerPlaces.includes(dinoz.placeId)) {
 		// Only solo dinoz or group leader can initiate control actions
 		if (!dinoz.leaderId && dinoz.fight) {
-			const control = await prisma.devoreuseControl.findUnique({ where: { placeId: dinoz.placeId } });
+			const control = await prisma.devourerControl.findUnique({ where: { placeId: dinoz.placeId } });
 			if (control) {
 				if (control.userId !== user.id) {
 					const fullUser = await prisma.user.findUnique({
 						where: { id: user.id },
-						select: { devoreuseAttacksLeft: true }
+						select: { devourerAttacksLeft: true }
 					});
-					if (fullUser && fullUser.devoreuseAttacksLeft > 0) {
+					if (fullUser && fullUser.devourerAttacksLeft > 0) {
 						pushUniqueAction(availableActions, actionList[Action.TOWER_ATTACK]);
 					}
 				}

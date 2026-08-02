@@ -24,7 +24,7 @@ type Events = {
 	unEquipItem: number;
 	message: boolean;
 	messageToPlayer: { name: string; id: string };
-	refreshDevoreuseDefenders: void;
+	refreshDevourerDefenders: void;
 };
 
 const eventBus = mitt<Events>();

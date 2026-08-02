@@ -27,7 +27,7 @@ import { bankRoutes } from './Bank/Routes/bank.routes.js';
 import { clanRoutes } from './Clan/Routes/clan.routes.js';
 import { loadConfig } from './config/config.js';
 import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
-import { devoreuseRoutes } from './Devoreuse/Routes/devoreuse.routes.js';
+import { devourerRoutes } from './Devourer/Routes/devourer.routes.js';
 import { loadDialogs } from './Dialog/Controller/dialog.registry.js';
 import { dialogRoutes } from './Dialog/Routes/dialog.routes.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
@@ -37,7 +37,7 @@ import { gatherRoutes } from './Gather/Routes/gather.routes.js';
 import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
 import { ensureJobsExist } from './jobs/ensureJobs.js';
 import { ensureSecretsExist } from './jobs/ensureSecrets.js';
-import { devoreuseMidnightResetJob } from './jobs/handlers/devoreuseMidnightReset.js';
+import { devourerMidnightResetJob } from './jobs/handlers/devourerMidnightReset.js';
 import { expireDueMarketOffersJob } from './jobs/handlers/expireMarketOffers.js';
 import { gameLogMaintenanceJob } from './jobs/handlers/gameLogMaintenance.js';
 import { healFountainPearlDinozJob } from './jobs/handlers/healFountainPearlDinoz.js';
@@ -355,7 +355,7 @@ async function buildServer() {
 	server.register(marketRoutes, { prefix: 'api/market' });
 	server.register(forcebrutRoutes, { prefix: 'api/forcebrut' });
 	server.register(clanRoutes, { prefix: 'api/clan' });
-	server.register(devoreuseRoutes, { prefix: 'api/devoreuse' });
+	server.register(devourerRoutes, { prefix: 'api/devourer' });
 	server.register(maintenanceRoutes, { prefix: 'api/maintenance' });
 	server.register(versionRoutes, { prefix: 'api' });
 
@@ -368,7 +368,7 @@ async function buildServer() {
 	const stopScheduler = startScheduler(
 		{
 			'reset-dinoz-shop': resetDinozShopAtMidnight,
-			'devoreuse-midnight-reset': devoreuseMidnightResetJob,
+			'devourer-midnight-reset': devourerMidnightResetJob,
 			'itinerant-merchant-move': () => itinerantMerchantMoveJob(server.log),
 			'heal-fountain-pearl-dinoz': async () => {
 				const result = await healFountainPearlDinozJob();

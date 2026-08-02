@@ -882,7 +882,7 @@
 			"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 			"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
 			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}",
-			"defendingDevoreuse": "Votre Dinoz est occupé à défendre la Dévoreuse."
+			"defendingDevourer": "Votre Dinoz est occupé à défendre la Dévoreuse."
 		},
 		"stateReason": {
 			"frozen": "Votre Dinoz est congelé",
@@ -5949,7 +5949,7 @@
 		"pac": {
 			"name": "Le Parchemin des Aptitudes"
 		},
-		"devoreuse": {
+		"devourer": {
 			"name": "La Dévoreuse",
 			"texts": {
 				"tower_won": "Vous avez remporté le contrôle de la Dévoreuse ! Gardez-le jusqu'à minuit pour obtenir ses précieuses graînes !",
