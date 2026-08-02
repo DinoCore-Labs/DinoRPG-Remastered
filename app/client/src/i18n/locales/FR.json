@@ -881,7 +881,8 @@
 			"followed": "Ce Dinoz est chef de groupe.",
 			"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 			"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}"
+			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}",
+			"defendingDevoreuse": "Votre Dinoz est occupé à défendre la Dévoreuse."
 		},
 		"stateReason": {
 			"frozen": "Votre Dinoz est congelé",
@@ -2854,7 +2855,7 @@
 			"CEF": "Cher client, bienvenue au Centre d'Entraînement de Fosselave !",
 			"stop_concen": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
 			"enter_portal": "Le portail vers le Monde sombre est ouvert. Votre Dinoz peut désormais le franchir.",
-			"tower_attack": "Un autre joueur contrôle actuellement la Dévoreuse. Vous devrez combattre pour pouvoir en prendre le contrôle et récolter ses précieuses graînes.",
+			"tower_attack": "Un autre joueur contrôle déjà la Dévoreuse. Vous devrez combattre pour pouvoir en prendre le contrôle et récolter ses précieuses graînes.",
 			"tower_defend": "Personne n'a actuellement le contrôle de la dévoreuse. Profitez-en pour en prendre le contrôle !",
 			"stop_defend_tower": "Si vous relachez votre contrôle sur la Dévoreuse, il vous faudra à nouveau combattre pour le regagner. Et d'autres joueurs attendent sûrement cette occasion pour s'en emparer à leur tour !"
 		},

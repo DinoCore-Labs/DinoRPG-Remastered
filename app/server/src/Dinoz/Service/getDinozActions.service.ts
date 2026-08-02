@@ -199,6 +199,18 @@ export async function getAvailableActions(
 		return [actionList[Action.STOP_CONCEN]];
 	}
 
+	const isDefendingControl = await prisma.devoreuseControl.findFirst({
+		where: { dinozs: { some: { id: dinoz.id } } },
+		include: { dinozs: true }
+	});
+	if (isDefendingControl) {
+		const actions: ActionFiche[] = [actionList[Action.DEFENDING_DEVOREUSE]];
+		if (!dinoz.leaderId && isDefendingControl.userId === user.id) {
+			actions.push(actionList[Action.STOP_DEFEND_TOWER]);
+		}
+		return actions;
+	}
+
 	const dinozPlace = actualPlace(dinoz);
 	const placeGatherEntries = getPlaceGatherEntries(dinozPlace);
 	const normalGatherEntries = placeGatherEntries.filter(gather => !gather.cost);
@@ -474,9 +486,7 @@ export async function getAvailableActions(
 		if (!dinoz.leaderId && dinoz.fight) {
 			const control = await prisma.devoreuseControl.findUnique({ where: { placeId: dinoz.placeId } });
 			if (control) {
-				if (control.userId === user.id) {
-					pushUniqueAction(availableActions, actionList[Action.STOP_DEFEND_TOWER]);
-				} else {
+				if (control.userId !== user.id) {
 					const fullUser = await prisma.user.findUnique({
 						where: { id: user.id },
 						select: { devoreuseAttacksLeft: true }
@@ -486,13 +496,7 @@ export async function getAvailableActions(
 					}
 				}
 			} else {
-				const fullUser = await prisma.user.findUnique({
-					where: { id: user.id },
-					select: { devoreuseAttacksLeft: true }
-				});
-				if (fullUser && fullUser.devoreuseAttacksLeft > 0) {
-					pushUniqueAction(availableActions, actionList[Action.TOWER_DEFEND]);
-				}
+				pushUniqueAction(availableActions, actionList[Action.TOWER_DEFEND]);
 			}
 		}
 	}
