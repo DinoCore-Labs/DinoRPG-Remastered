@@ -37,7 +37,8 @@ export enum Action {
 	CEF = 'CEF',
 	TOWER_ATTACK = 'tower_attack',
 	TOWER_DEFEND = 'tower_defend',
-	STOP_DEFEND_TOWER = 'stop_defend_tower'
+	STOP_DEFEND_TOWER = 'stop_defend_tower',
+	DEFENDING_DEVOREUSE = 'defending_devoreuse'
 }
 
 export interface ActionFiche {
@@ -211,5 +212,9 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 		imgName: 'act_default',
 		confirm: true,
 		confirmMessageKey: 'action.confirm.stop_defend_tower'
+	},
+	[Action.DEFENDING_DEVOREUSE]: {
+		name: Action.DEFENDING_DEVOREUSE,
+		imgName: 'act_default'
 	}
 };

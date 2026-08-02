@@ -1,5 +1,5 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
-import { FightOutcome } from '@dinorpg/core/models/fight/fightResult.js';
+import { FightOutcome, type FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -19,8 +19,8 @@ export async function devoreuseAttackHandler(req: FastifyRequest<{ Params: Devor
 	const userId = req.user.id;
 
 	const user = await prisma.user.findUnique({ where: { id: userId } });
-	if (!user || user.devoreuseAttacksLeft <= 0) {
-		throw new ExpectedError('No more attacks left');
+	if (!user) {
+		throw new ExpectedError('User not found');
 	}
 
 	const team = await prisma.dinoz.findMany({
@@ -47,8 +47,19 @@ export async function devoreuseAttackHandler(req: FastifyRequest<{ Params: Devor
 		if (!d.fight) throw new ExpectedError('Dinoz does not have an action available');
 	}
 
-	// Remove an attack point
-	await prisma.user.update({ where: { id: userId }, data: { devoreuseAttacksLeft: { decrement: 1 } } });
+	// Fetch current control
+	const currentControl = await prisma.devoreuseControl.findUnique({
+		where: { placeId },
+		include: { dinozs: { include: { items: true, skills: true, status: true, catches: true, user: true } } }
+	});
+
+	if (currentControl && currentControl.dinozs.length > 0) {
+		if (user.devoreuseAttacksLeft <= 0) {
+			throw new ExpectedError('No more attacks left');
+		}
+		// Remove an attack point
+		await prisma.user.update({ where: { id: userId }, data: { devoreuseAttacksLeft: { decrement: 1 } } });
+	}
 
 	// Consume fight action
 	for (const d of team) {
@@ -57,12 +68,6 @@ export async function devoreuseAttackHandler(req: FastifyRequest<{ Params: Devor
 			data: { fight: false }
 		});
 	}
-
-	// Fetch current control
-	const currentControl = await prisma.devoreuseControl.findUnique({
-		where: { placeId },
-		include: { dinozs: { include: { items: true, skills: true, status: true, catches: true, user: true } } }
-	});
 
 	if (!currentControl || currentControl.dinozs.length === 0) {
 		// Take control directly
@@ -128,7 +133,21 @@ export async function devoreuseAttackHandler(req: FastifyRequest<{ Params: Devor
 		}
 	});
 
-	return reply.send({ success: true, fight: fightResult, victory });
+	const clientFightResult: FightResult = {
+		fighters: fightResult.fighters,
+		goldEarned: 0,
+		xpEarned: 0,
+		levelUp: false,
+		totalHpLost: fightResult.attackers.reduce((acc, f) => acc + f.hpLost, 0),
+		result: victory,
+		history: fightResult.steps,
+		hpLost: fightResult.attackers.map(f => ({ id: f.dinozId, hpLost: f.hpLost })),
+		itemsUsed: fightResult.attackers.map(f => ({ id: f.dinozId, itemsUsed: f.itemsUsed })),
+		place: placeId,
+		endText: victory ? { type: 'message', text: 'scenarios.devoreuse.texts.tower_won' } : undefined
+	};
+
+	return reply.send({ success: true, fight: clientFightResult, victory });
 }
 
 export async function devoreuseDefendStopHandler(
@@ -153,4 +172,53 @@ export async function devoreuseDefendStopHandler(
 	await prisma.devoreuseControl.delete({ where: { placeId } });
 
 	return reply.send({ success: true });
+}
+
+export async function devoreuseGetDefendersHandler(
+	req: FastifyRequest<{ Params: { placeId: string } }>,
+	reply: FastifyReply
+) {
+	const placeId = Number(req.params.placeId);
+	if (!DEVOREUSE_PLACES.includes(placeId)) throw new ExpectedError('Not on a Devoreuse place');
+
+	const currentControl = await prisma.devoreuseControl.findUnique({
+		where: { placeId },
+		include: {
+			user: {
+				select: { id: true, name: true, clan: { select: { name: true } } }
+			},
+			dinozs: {
+				select: {
+					id: true,
+					name: true,
+					level: true,
+					raceId: true,
+					display: true
+				}
+			}
+		}
+	});
+
+	const user = await prisma.user.findUnique({
+		where: { id: req.user.id },
+		select: { devoreuseAttacksLeft: true }
+	});
+
+	if (!currentControl) return reply.send({ defenders: null, attacksLeft: user?.devoreuseAttacksLeft || 0 });
+
+	return reply.send({
+		defenders: {
+			userId: currentControl.user.id,
+			username: currentControl.user.name,
+			clanName: currentControl.user.clan?.name || null,
+			dinozs: currentControl.dinozs.map(d => ({
+				id: d.id,
+				name: d.name,
+				level: d.level,
+				type: d.raceId,
+				apparence: d.display
+			}))
+		},
+		attacksLeft: user?.devoreuseAttacksLeft || 0
+	});
 }
