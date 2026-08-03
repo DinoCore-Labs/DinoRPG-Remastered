@@ -86,7 +86,18 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 
 	// Opponent exists, trigger Hardcore PvP fight!
 	const attackers = team;
-	const defenders = currentControl.dinozs;
+	const defenders = currentControl.dinozs.filter(d => d.life > 0);
+
+	if (defenders.length === 0) {
+		await prisma.$transaction([
+			prisma.devourerControl.update({
+				where: { placeId },
+				data: { userId, dinozs: { set: team.map(d => ({ id: d.id })) } }
+			}),
+			prisma.user.update({ where: { id: user.id }, data: { devourerAttacksLeft: { decrement: 1 } } })
+		]);
+		return reply.send({ success: true, fight: null, victory: true });
+	}
 
 	const fightResult = calculateFightBetweenPlayers(
 		STANDARD_PVP_RULES,
@@ -190,7 +201,8 @@ export async function devourerGetDefendersHandler(
 					name: true,
 					level: true,
 					raceId: true,
-					display: true
+					display: true,
+					life: true
 				}
 			}
 		}
@@ -208,13 +220,15 @@ export async function devourerGetDefendersHandler(
 			userId: currentControl.user.id,
 			username: currentControl.user.name,
 			clanName: currentControl.user.clan?.name || null,
-			dinozs: currentControl.dinozs.map(d => ({
-				id: d.id,
-				name: d.name,
-				level: d.level,
-				type: d.raceId,
-				apparence: d.display
-			}))
+			dinozs: currentControl.dinozs
+				.filter(d => d.life > 0)
+				.map(d => ({
+					id: d.id,
+					name: d.name,
+					level: d.level,
+					type: d.raceId,
+					apparence: d.display
+				}))
 		},
 		attacksLeft: user?.devourerAttacksLeft || 0
 	});
