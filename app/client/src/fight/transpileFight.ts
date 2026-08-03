@@ -562,12 +562,17 @@ export function transpileFight(
 					item: resolveItemImagePath(step.itemId)
 				});
 				break;
-			case 'leave':
+			case 'leave': {
 				history.push({
 					action: DinoAction.ESCAPE,
 					fid: step.fighter.id
 				});
+				const fighterIndex = activeFighters.findIndex(fighter => fighter.id === step.fighter.id);
+				if (fighterIndex !== -1) {
+					activeFighters.splice(fighterIndex, 1);
+				}
 				break;
+			}
 			case 'looseHp':
 				history.push({
 					action: DinoAction.LOST,
