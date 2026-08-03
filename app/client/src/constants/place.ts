@@ -787,7 +787,7 @@ export const placeList: Array<PlaceDisplayed> = [
 		map: MapZone.STEPPE,
 		hidden: false,
 		xFactor: 5,
-		yFactor: 10
+		yFactor: 3
 	},
 	{
 		placeId: 70,
