@@ -1341,6 +1341,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 0,
 		level: 30,
 		zones: [MapZone.ALL],
+		skills: [Skill.M_RENFORTS, Skill.M_RENFORTS],
+		display: 'goupi',
 		canBeCaptured: true
 	},
 	[Monster.DARK_LEECH]: {

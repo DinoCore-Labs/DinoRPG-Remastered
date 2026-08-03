@@ -88,6 +88,9 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.DARK_SMASHROOM]: monster => {
 		multiplySkillProbability(monster, Skill.M_RENFORTS, 2);
 	},
+	[Boss.MAGNETITE_DARK_SMASHROOM]: monster => {
+		multiplySkillProbability(monster, Skill.M_RENFORTS, 2);
+	},
 	[Monster.WORM]: monster => {
 		worm(monster);
 	},
