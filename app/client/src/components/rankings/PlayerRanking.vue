@@ -102,7 +102,7 @@ export default defineComponent({
 			this.seeUser = false;
 		},
 		goToAccount(user: { id: string; name: string }) {
-			this.$router.push({ name: 'MyAccount', params: { id: user.id } });
+			this.$router.push({ name: 'UserAccount', params: { id: user.id } });
 		},
 		async getRanking(): Promise<void> {
 			try {
