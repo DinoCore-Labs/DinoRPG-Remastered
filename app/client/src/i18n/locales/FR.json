@@ -4010,7 +4010,7 @@
 				"thanks": "Oui, merci beaucoup !"
 			}
 		},
-		"speleleologue_ice": {
+		"speleleologueIce": {
 			"dialog": {
 				"begin": "Ah ! Tiens salut ! Il fait frais ici tu ne trouve pas ?",
 				"talk": "Je viens de passer quelques temps à explorer la Grotte du Zéro Relatif... savais tu que la glace qui la compose est extraordinaire ??? Elle est composée de 3% de Mazotte Solide, un ingrédient rarissime qui conserve une température stable...",
