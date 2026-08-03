@@ -65,6 +65,25 @@ const DARK_GOUPIGNON_START_TEXT_KEY = 'scenarios.magnet.texts.fightDarkDinoz';
 const DARK_GOUPIGNON_STOLEN_TEXT_KEY = 'scenarios.magnet.texts.fightPotionStolen';
 
 /**
+ * Dernier combat du scénario Magnétite.
+ */
+const FINAL_ASSAULT_GROUBOURIN = monsterByKey.wbour2;
+
+const FINAL_ASSAULT_TEAM_W_MONSTERS = [monsterByKey.wteam1, monsterByKey.wteam2, monsterByKey.wteam3];
+
+const FINAL_ASSAULT_TEAM_W_NAMES = new Set(FINAL_ASSAULT_TEAM_W_MONSTERS.map(monster => monster.name));
+
+const FINAL_ASSAULT_HEAL_AMOUNT = 100;
+
+const FINAL_ASSAULT_START_TEXT_KEY = 'scenarios.magnet.texts.fightSkingStart';
+
+const FINAL_ASSAULT_CAPTAIN_HELP_TEXT_KEY = 'scenarios.magnet.texts.fightCaptainHelp';
+
+const FINAL_ASSAULT_END_TEXT_1_KEY = 'scenarios.magnet.texts.fightSkingEnd1';
+
+const FINAL_ASSAULT_END_TEXT_2_KEY = 'scenarios.magnet.texts.fightSkingEnd2';
+
+/**
  * Combats individuels contre les trois membres de la Team W.
  */
 const TEAM_W_ENCOUNTERS: readonly TeamWEncounter[] = [
@@ -981,6 +1000,395 @@ async function processDarkGoupignonAmbush(input: ScenarioMoveFightInput): Promis
 			type: 'message',
 			text: DARK_GOUPIGNON_START_TEXT_KEY
 		}
+	};
+}
+
+/**
+ * Retrouve Grobourin dans le combat final.
+ */
+function getFinalAssaultGroubourin(fightProcess: FightProcessResult): FighterRecap {
+	const fighter = fightProcess.fighters.find(entry => !entry.attacker && entry.name === FINAL_ASSAULT_GROUBOURIN.name);
+	if (!fighter) {
+		throw new Error('Unable to find wbour2 in the Magnetite final assault.');
+	}
+	return fighter;
+}
+
+/**
+ * Retrouve les trois membres de la Team-W,
+ * présents du côté attaquant pendant le combat final.
+ */
+function getFinalAssaultTeamWFighters(fightProcess: FightProcessResult): FighterRecap[] {
+	return fightProcess.fighters.filter(fighter => fighter.attacker && FINAL_ASSAULT_TEAM_W_NAMES.has(fighter.name));
+}
+
+/**
+ * Crée la représentation visuelle du Capitaine.
+ *
+ * Contrairement à la première embuscade, le Capitaine
+ * apparaît ici du côté du joueur.
+ */
+function createFinalAssaultCaptainRecap(fightProcess: FightProcessResult): FighterRecap {
+	const captain = monsterByKey.wteamc;
+	return {
+		id: getNextScenarioFighterId(fightProcess.fighters),
+		type: FighterType.REINFORCEMENT,
+		name: captain.name,
+		display: captain.display,
+		attacker: true,
+		maxHp: captain.hp,
+		startingHp: captain.hp,
+		energy: 0,
+		maxEnergy: 0,
+		energyRecovery: 0,
+		dark: captain.dark,
+		size: captain.size,
+		entrance: captain.entrance ?? EntranceEffect.RUN
+	};
+}
+
+/**
+ * Applique les 100 PV rendus par l'intervention
+ * du Capitaine.
+ *
+ * rewardFightVsMonsters persiste les dégâts à partir
+ * de attacker.hpLost : on réduit donc la perte finale.
+ */
+function applyFinalAssaultHealing(
+	input: ScenarioMoveFightInput,
+	fightProcess: FightProcessResult
+): CaptainRescueState[] {
+	const healingStates: CaptainRescueState[] = [];
+	for (const dinoz of input.team) {
+		const attacker = fightProcess.attackers.find(fighter => fighter.dinozId === dinoz.id);
+		if (!attacker) {
+			continue;
+		}
+		const rawHpLost = attacker.hpLost;
+		const lifeAfterFight = Math.max(0, dinoz.life - rawHpLost);
+		const finalLife = Math.min(dinoz.maxLife, lifeAfterFight + FINAL_ASSAULT_HEAL_AMOUNT);
+		const finalHpLost = Math.max(0, dinoz.life - finalLife);
+		const healedHp = Math.max(0, finalLife - lifeAfterFight);
+		healingStates.push({
+			dinozId: dinoz.id,
+			healedHp,
+			wasDead: lifeAfterFight === 0 && finalLife > 0
+		});
+		/**
+		 * Valeur qui sera persistée par
+		 * rewardFightVsMonsters.
+		 */
+		attacker.hpLost = finalHpLost;
+	}
+	return healingStates;
+}
+
+/**
+ * Les membres de la Team-W participent au calcul
+ * dès le début, mais ne doivent pas être affichés
+ * dans la préparation initiale du combat.
+ *
+ * Ils apparaîtront grâce aux étapes arrive ajoutées
+ * plus bas.
+ */
+function hideFinalAssaultReinforcementsFromPrepare(
+	fightProcess: FightProcessResult,
+	teamWFighters: FighterRecap[]
+): void {
+	const fighterIds = new Set(teamWFighters.map(fighter => fighter.id));
+	for (const step of fightProcess.steps) {
+		if (step.action !== 'prepare') {
+			continue;
+		}
+		step.dinozList = step.dinozList.filter(fighter => !fighterIds.has(fighter.fid));
+		step.monsterList = step.monsterList.filter(fighter => !fighterIds.has(fighter.fid));
+	}
+}
+
+const FIGHTER_REFERENCE_KEYS = new Set(['id', 'fid', 'tid', 'speakerFid']);
+
+/**
+ * Détermine récursivement si une étape utilise
+ * l'un des combattants donnés.
+ */
+function referencesScenarioFighter(value: unknown, fighterIds: Set<number>): boolean {
+	if (Array.isArray(value)) {
+		return value.some(entry => referencesScenarioFighter(entry, fighterIds));
+	}
+	if (value === null || typeof value !== 'object') {
+		return false;
+	}
+	for (const [key, nestedValue] of Object.entries(value)) {
+		if (FIGHTER_REFERENCE_KEYS.has(key) && typeof nestedValue === 'number' && fighterIds.has(nestedValue)) {
+			return true;
+		}
+		if (
+			key === 'fids' &&
+			Array.isArray(nestedValue) &&
+			nestedValue.some(entry => typeof entry === 'number' && fighterIds.has(entry))
+		) {
+			return true;
+		}
+		if (referencesScenarioFighter(nestedValue, fighterIds)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Cherche l'emplacement où insérer l'arrivée
+ * des renforts.
+ *
+ * L'intervention arrive :
+ * - au temps cumulé 50 ;
+ * - ou juste avant la première action impliquant
+ *   la Team-W si elle intervient plus tôt dans
+ *   le résultat pré-calculé.
+ */
+function findFinalAssaultReinforcementIndex(fightProcess: FightProcessResult, teamWFighters: FighterRecap[]): number {
+	const fighterIds = new Set(teamWFighters.map(fighter => fighter.id));
+	let elapsedTime = 0;
+	for (let index = 0; index < fightProcess.steps.length; index++) {
+		const step = fightProcess.steps[index];
+		if (!step || step.action === 'prepare') {
+			continue;
+		}
+		if (step.action === 'newTurn' || step.action === 'statusTurn') {
+			elapsedTime += step.delta;
+		}
+		if (elapsedTime >= 50 || referencesScenarioFighter(step, fighterIds)) {
+			return index;
+		}
+	}
+	const prepareIndex = fightProcess.steps.findIndex(step => step.action === 'prepare');
+	return prepareIndex >= 0 ? prepareIndex + 1 : 0;
+}
+
+/**
+ * Construit l'intervention du Capitaine :
+ *
+ * 1. arrivée du Capitaine ;
+ * 2. message d'aide ;
+ * 3. résurrection éventuelle ;
+ * 4. soin de 100 PV ;
+ * 5. arrivée des trois membres de la Team-W ;
+ * 6. départ du Capitaine.
+ */
+function buildFinalAssaultReinforcementSteps(
+	fightProcess: FightProcessResult,
+	captain: FighterRecap,
+	teamWFighters: FighterRecap[],
+	healingStates: CaptainRescueState[]
+): FightStep[] {
+	const steps: FightStep[] = [
+		{
+			action: 'arrive',
+			fid: captain.id
+		},
+		{
+			action: 'fightText',
+			text: {
+				type: 'talk',
+				speakerFid: captain.id,
+				text: FINAL_ASSAULT_CAPTAIN_HELP_TEXT_KEY
+			}
+		}
+	];
+	for (const healingState of healingStates) {
+		const fighter = fightProcess.fighters.find(entry => entry.id === healingState.dinozId);
+		if (!fighter) {
+			continue;
+		}
+		const stepFighter = toStepFighter(fighter);
+		if (healingState.wasDead) {
+			steps.push({
+				action: 'revive',
+				fighter: stepFighter
+			});
+		}
+		if (healingState.healedHp > 0) {
+			steps.push({
+				action: 'heal',
+				fighter: stepFighter,
+				hp: healingState.healedHp,
+				fx: LifeEffect.Heal
+			});
+		}
+	}
+	for (const teamWFighter of teamWFighters) {
+		steps.push({
+			action: 'arrive',
+			fid: teamWFighter.id
+		});
+	}
+	steps.push({
+		action: 'leave',
+		fighter: toStepFighter(captain)
+	});
+	return steps;
+}
+
+/**
+ * Traite le combat final de la Citadelle.
+ *
+ * Composition originale :
+ * - un Goupignon sombre initial ;
+ * - Grobourin contrôlé ;
+ * - un Goupignon supplémentaire par Dinoz ;
+ * - Destructeur, Nightmare et Tonnerre en renfort.
+ */
+export async function processMagnetiteFinalAssault(input: ScenarioMoveFightInput): Promise<FightResult> {
+	/**
+	 * Le code original ajoute :
+	 * - un premier darkgp ;
+	 * - puis un darkgp par Dinoz.
+	 */
+	const additionalDarkGoupignons = Array.from(
+		{
+			length: input.team.length
+		},
+		() => monsterByKey.darkgp_magnet
+	);
+
+	const darkGoupignons = [monsterByKey.darkgp_magnet, ...additionalDarkGoupignons];
+
+	const enemies = [monsterByKey.darkgp_magnet, FINAL_ASSAULT_GROUBOURIN, ...additionalDarkGoupignons];
+
+	/**
+	 * Les trois membres de la Team-W sont placés
+	 * dans l'équipe attaquante grâce au paramètre allies.
+	 */
+	const fightProcess = calculateFightVsMonsters(
+		input.team,
+		input.user,
+		input.toPlace,
+		enemies,
+		undefined,
+		FINAL_ASSAULT_TEAM_W_MONSTERS
+	);
+
+	/**
+	 * Aucun personnage de ce combat ne doit être
+	 * récupéré comme capture.
+	 */
+	fightProcess.catches = [];
+
+	const groubourin = getFinalAssaultGroubourin(fightProcess);
+
+	const teamWFighters = getFinalAssaultTeamWFighters(fightProcess);
+
+	if (teamWFighters.length !== FINAL_ASSAULT_TEAM_W_MONSTERS.length) {
+		throw new Error('Unable to find every Team-W reinforcement in the Magnetite final assault.');
+	}
+
+	/**
+	 * Les renforts ne doivent pas être affichés
+	 * pendant la préparation initiale.
+	 */
+	hideFinalAssaultReinforcementsFromPrepare(fightProcess, teamWFighters);
+
+	/**
+	 * Les membres de la Team-W ne meurent jamais
+	 * réellement pendant cet événement.
+	 */
+	for (const teamWFighter of teamWFighters) {
+		removeFighterDeathStep(fightProcess, teamWFighter.id);
+	}
+
+	/**
+	 * Intervention du Capitaine et récupération
+	 * de 100 PV par Dinoz.
+	 */
+	const healingStates = applyFinalAssaultHealing(input, fightProcess);
+
+	const captain = createFinalAssaultCaptainRecap(fightProcess);
+
+	fightProcess.fighters.push(captain);
+
+	const reinforcementIndex = findFinalAssaultReinforcementIndex(fightProcess, teamWFighters);
+
+	fightProcess.steps.splice(
+		reinforcementIndex,
+		0,
+		...buildFinalAssaultReinforcementSteps(fightProcess, captain, teamWFighters, healingStates)
+	);
+
+	const won = fightProcess.outcome === FightOutcome.AttackerWin;
+
+	if (won) {
+		/**
+		 * Grobourin est libéré du contrôle des
+		 * Goupignons : il n'est pas réellement tué.
+		 */
+		removeFighterDeathStep(fightProcess, groubourin.id);
+
+		/**
+		 * Premier texte du dénouement.
+		 *
+		 * Le second sera placé dans endText afin
+		 * d'être affiché après l'historique.
+		 */
+		fightProcess.steps.push({
+			action: 'fightText',
+			text: {
+				type: 'message',
+				text: FINAL_ASSAULT_END_TEXT_1_KEY
+			}
+		});
+	}
+
+	/**
+	 * Seuls les Goupignons donnent des récompenses.
+	 *
+	 * Grobourin et les renforts Team-W ne sont pas
+	 * transmis à rewardFightVsMonsters.
+	 */
+	const result = await rewardFightVsMonsters(input.team, darkGoupignons, fightProcess, input.toPlace, input.user, {
+		autoReequip: input.autoReequip
+	});
+	let progressed = false;
+	if (won) {
+		progressed = await prisma.$transaction(async tx => {
+			const currentScenario = await getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY);
+			/**
+			 * Protection contre une double résolution.
+			 */
+			if (currentScenario.progression !== MagnetiteProgression.FINAL_ASSAULT) {
+				return false;
+			}
+			await setUserScenarioProgression(tx, {
+				userId: input.user.id,
+				scenarioKey: MAGNETITE_SCENARIO_KEY,
+				progression: MagnetiteProgression.FINAL_ASSAULT_WON
+			});
+			return true;
+		});
+	}
+	return {
+		...result,
+		/**
+		 * Seuls les Goupignons sont considérés
+		 * comme des monstres réellement vaincus.
+		 */
+		monsterKillCount: won ? darkGoupignons.length : 0,
+		source: 'scenario',
+		scenario: {
+			key: MAGNETITE_SCENARIO_KEY,
+			fightKey: 'magnet_final_assault',
+			progressed,
+			progression: progressed ? MagnetiteProgression.FINAL_ASSAULT_WON : MagnetiteProgression.FINAL_ASSAULT
+		},
+		startText: {
+			type: 'message',
+			text: FINAL_ASSAULT_START_TEXT_KEY
+		},
+		endText: won
+			? {
+					type: 'message',
+					text: FINAL_ASSAULT_END_TEXT_2_KEY
+				}
+			: undefined
 	};
 }
 
