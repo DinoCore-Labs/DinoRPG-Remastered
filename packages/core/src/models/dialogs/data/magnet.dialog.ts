@@ -1,4 +1,5 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
+import { Item } from '../../items/itemList.js';
 import { monsterByKey } from '../../monster/monsterKeyMap.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { defineDialog } from '../defineDialog.js';
@@ -709,6 +710,172 @@ export const magnetiteTeamWCaptainDebriefDialog = defineDialog({
 		thanks2: {
 			id: 'thanks2',
 			text: 'npc.teamWCaptain.choice.magnet11.thanks2'
+		}
+	}
+});
+
+/**
+ * Récompense finale remise par le Roi des Rockys.
+ *
+ * Conditions originales :
+ * - le scénario Magnétite est à la progression 12 ;
+ * - le joueur ne possède pas encore la collection magnet.
+ *
+ * La récompense n'achève pas immédiatement le scénario :
+ * la progression reste à 12 jusqu'à la rencontre finale
+ * avec le Rôdeur aux Portes de Caushemesh.
+ */
+export const rockyKingMagnetiteRewardDialog = defineDialog({
+	id: 'rocky_king_magnet12',
+	place: PlaceEnum.CITADELLE_DU_ROI,
+	name: 'npc.rockyKing.name',
+	cond: condition('scenario(magnet,12)+!collec(magnet)'),
+	first: 'begin',
+	pnj: {
+		image: false,
+		gfx: 'rocking',
+		frame: 'speak',
+		background: '1'
+	},
+	phases: {
+		begin: {
+			id: 'begin',
+			text: 'npc.rockyKing.dialog.magnet12.begin',
+			next: ['not']
+		},
+		not: {
+			id: 'not',
+			text: 'npc.rockyKing.dialog.magnet12.not',
+			next: ['not2']
+		},
+		not2: {
+			id: 'not2',
+			text: 'npc.rockyKing.dialog.magnet12.not2',
+			next: ['plan']
+		},
+		plan: {
+			id: 'plan',
+			text: 'npc.rockyKing.dialog.magnet12.plan',
+			next: ['ok']
+		},
+		ok: {
+			id: 'ok',
+			text: 'npc.rockyKing.dialog.magnet12.ok',
+			next: ['accept']
+		},
+		accept: {
+			id: 'accept',
+			text: 'npc.rockyKing.dialog.magnet12.accept',
+			next: ['thanks']
+		},
+		thanks: {
+			id: 'thanks',
+			text: 'npc.rockyKing.dialog.magnet12.thanks',
+			fast: true,
+			needCheck: false,
+			effects: [
+				{
+					type: 'collection',
+					collection: 'magnet'
+				},
+				{
+					type: 'giveItem',
+					itemId: Item.GOLDEN_NAPODINO,
+					count: 1
+				}
+			]
+		}
+	},
+	links: {
+		not: {
+			id: 'not',
+			text: 'npc.rockyKing.choice.magnet12.not'
+		},
+		not2: {
+			id: 'not2',
+			text: 'npc.rockyKing.choice.magnet12.not2'
+		},
+		plan: {
+			id: 'plan',
+			text: 'npc.rockyKing.choice.magnet12.plan'
+		},
+		ok: {
+			id: 'ok',
+			text: 'npc.rockyKing.choice.magnet12.ok'
+		},
+		accept: {
+			id: 'accept',
+			text: 'npc.rockyKing.choice.magnet12.accept'
+		},
+		thanks: {
+			id: 'thanks',
+			text: 'npc.rockyKing.choice.magnet12.thanks'
+		}
+	}
+});
+
+/**
+ * Épilogue du scénario Magnétite.
+ *
+ * Le Rôdeur apparaît aux Portes de Caushemesh
+ * lorsque le scénario est à la progression 12.
+ *
+ * La dernière phase termine définitivement
+ * le scénario en passant magnet de 12 à 13.
+ */
+export const magnetiteStrangeRangerEpilogueDialog = defineDialog({
+	id: 'magnetite_strange_ranger_epilogue',
+	place: PlaceEnum.PORTES_DE_CAUSHEMESH,
+	name: 'npc.rodeur.name',
+	cond: condition('scenario(magnet,12)'),
+	first: 'begin',
+	pnj: {
+		image: false,
+		gfx: 'rodeur2',
+		frame: 'speak',
+		background: '1'
+	},
+	phases: {
+		begin: {
+			id: 'begin',
+			text: 'npc.rodeur.dialog.magnet12.begin',
+			next: ['ask']
+		},
+		ask: {
+			id: 'ask',
+			text: 'npc.rodeur.dialog.magnet12.ask',
+			next: ['euh']
+		},
+		euh: {
+			id: 'euh',
+			text: 'npc.rodeur.dialog.magnet12.euh',
+			next: ['end']
+		},
+		end: {
+			id: 'end',
+			text: 'npc.rodeur.dialog.magnet12.end',
+			fast: true,
+			effects: [
+				{
+					type: 'scenario',
+					scenario: 'magnet',
+					phase: 13
+				}
+			]
+		}
+	},
+	links: {
+		ask: {
+			id: 'ask',
+			text: 'npc.rodeur.choice.magnet12.ask'
+		},
+		euh: {
+			id: 'euh',
+			text: 'npc.rodeur.choice.magnet12.euh'
+		},
+		end: {
+			id: 'end',
+			text: 'npc.rodeur.choice.magnet12.end'
 		}
 	}
 });
