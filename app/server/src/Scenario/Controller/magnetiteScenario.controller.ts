@@ -1,3 +1,4 @@
+import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import {
@@ -50,6 +51,19 @@ const FIRST_GROUBOURIN_MONSTER = monsterByKey.wbour1;
 
 const TEAM_W_END_TEXT_KEY = 'scenarios.magnet.texts.fightWTeamEnd';
 
+const DARK_GOUPIGNON_AMBUSH_PLACE = PlaceEnum.GO_TO_STEPPES;
+
+const DARK_GOUPIGNON_AMBUSH_MONSTERS = [
+	monsterByKey.darkgp_magnet,
+	monsterByKey.darkgp_magnet,
+	monsterByKey.darkgp_magnet,
+	monsterByKey.darkgp_magnet
+];
+
+const DARK_GOUPIGNON_START_TEXT_KEY = 'scenarios.magnet.texts.fightDarkDinoz';
+
+const DARK_GOUPIGNON_STOLEN_TEXT_KEY = 'scenarios.magnet.texts.fightPotionStolen';
+
 /**
  * Combats individuels contre les trois membres de la Team W.
  */
@@ -91,6 +105,15 @@ type CaptainRescueState = {
 	 * de la simulation du combat.
 	 * Dans ce cas, l'animation doit exécuter :
 	 * death -> revive -> heal
+	 */
+	wasDead: boolean;
+};
+
+type DarkGoupignonReviveState = {
+	dinozId: number;
+	/**
+	 * Indique que le Dinoz a terminé la simulation
+	 * du combat avec 0 PV.
 	 */
 	wasDead: boolean;
 };
@@ -147,6 +170,28 @@ async function shouldStartFirstGroubourinEncounter(input: ScenarioMoveFightInput
 		getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY)
 	);
 	return scenario.progression === MagnetiteProgression.ENTER_TEAM_W_CAMP;
+}
+
+/**
+ * Vérifie si le passage vers les Steppes doit déclencher
+ * l'embuscade des Goupignons sombres.
+ *
+ * Conditions originales :
+ * - passage par GO_TO_STEPPES ;
+ * - progression magnet = 9 ;
+ * - au moins un Dinoz du groupe possède la Potion Anti-Sehd.
+ */
+async function shouldStartDarkGoupignonAmbush(input: ScenarioMoveFightInput): Promise<boolean> {
+	if (input.triggerPlace !== DARK_GOUPIGNON_AMBUSH_PLACE) {
+		return false;
+	}
+	const scenario = await prisma.$transaction(tx =>
+		getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY)
+	);
+	if (scenario.progression !== MagnetiteProgression.POTION_READY) {
+		return false;
+	}
+	return input.team.some(dinoz => dinoz.status.some(status => status.statusId === DinozStatusId.ANTI_SEDH_POTION));
 }
 
 /**
@@ -732,6 +777,214 @@ async function processFirstGroubourinEncounter(input: ScenarioMoveFightInput): P
 }
 
 /**
+ * Applique le dénouement scénarisé de l'embuscade :
+ * - le combat est considéré comme terminé avec succès ;
+ * - les Dinoz morts reviennent à 1 PV ;
+ * - aucune capture n'est conservée.
+ */
+function applyDarkGoupignonAmbushOutcome(
+	input: ScenarioMoveFightInput,
+	fightProcess: FightProcessResult
+): DarkGoupignonReviveState[] {
+	const reviveStates: DarkGoupignonReviveState[] = [];
+	for (const dinoz of input.team) {
+		const attacker = fightProcess.attackers.find(fighter => fighter.dinozId === dinoz.id);
+		if (!attacker) {
+			continue;
+		}
+		const lifeAfterFight = Math.max(0, dinoz.life - attacker.hpLost);
+		const wasDead = lifeAfterFight === 0;
+		reviveStates.push({
+			dinozId: dinoz.id,
+			wasDead
+		});
+		/**
+		 * Le callback original relève les Dinoz morts à 1 PV.
+		 *
+		 * rewardFightVsMonsters persiste la vie à partir
+		 * de hpLost : on ajuste donc la perte finale.
+		 */
+		if (wasDead) {
+			attacker.hpLost = Math.max(0, dinoz.life - 1);
+		}
+	}
+	/**
+	 * Le résultat réel du calcul n'a pas d'importance :
+	 * l'événement est toujours validé.
+	 */
+	fightProcess.outcome = FightOutcome.AttackerWin;
+	/**
+	 * Les Goupignons doivent s'enfuir avec la potion,
+	 * pas devenir des captures.
+	 */
+	fightProcess.catches = [];
+	return reviveStates;
+}
+
+/**
+ * Récupère les quatre Goupignons sombres de l'embuscade.
+ */
+function getDarkGoupignonFighters(fightProcess: FightProcessResult): FighterRecap[] {
+	return fightProcess.fighters.filter(fighter => !fighter.attacker && fighter.name === monsterByKey.darkgp.name);
+}
+
+/**
+ * Construit la scène de fin :
+ * - annonce du vol de la Potion Anti-Sehd ;
+ * - résurrection à 1 PV des Dinoz morts ;
+ * - fuite des quatre Goupignons.
+ */
+function buildDarkGoupignonPostlude(
+	fightProcess: FightProcessResult,
+	darkGoupignons: FighterRecap[],
+	reviveStates: DarkGoupignonReviveState[]
+): FightStep[] {
+	const steps: FightStep[] = [
+		{
+			action: 'fightText',
+			text: {
+				type: 'message',
+				text: DARK_GOUPIGNON_STOLEN_TEXT_KEY
+			}
+		}
+	];
+	for (const reviveState of reviveStates) {
+		if (!reviveState.wasDead) {
+			continue;
+		}
+		const fighter = fightProcess.fighters.find(entry => entry.id === reviveState.dinozId);
+		if (!fighter) {
+			continue;
+		}
+		const stepFighter = toStepFighter(fighter);
+		steps.push({
+			action: 'revive',
+			fighter: stepFighter
+		});
+		steps.push({
+			action: 'heal',
+			fighter: stepFighter,
+			hp: 1,
+			fx: LifeEffect.Heal
+		});
+	}
+	for (const goupignon of darkGoupignons) {
+		steps.push({
+			action: 'leave',
+			fighter: toStepFighter(goupignon)
+		});
+	}
+	return steps;
+}
+
+/**
+ * Traite l'embuscade des quatre Goupignons sombres.
+ *
+ * L'événement est scénarisé :
+ * - aucune récompense ;
+ * - aucun kill ;
+ * - aucun Goupignon réellement tué ;
+ * - aucun Dinoz ne reste mort ;
+ * - la Potion Anti-Sehd est volée ;
+ * - magnet passe de 9 à 10.
+ */
+async function processDarkGoupignonAmbush(input: ScenarioMoveFightInput): Promise<FightResult> {
+	/**
+	 * 1. Calcul du combat contre quatre Goupignons sombres.
+	 */
+	const fightProcess = calculateFightVsMonsters(input.team, input.user, input.toPlace, DARK_GOUPIGNON_AMBUSH_MONSTERS);
+	/**
+	 * 2. Application du dénouement scénarisé :
+	 * victoire forcée et Dinoz morts relevés à 1 PV.
+	 */
+	const reviveStates = applyDarkGoupignonAmbushOutcome(input, fightProcess);
+	/**
+	 * 3. Les Goupignons ne meurent pas :
+	 * ils doivent pouvoir s'enfuir avec la potion.
+	 */
+	const darkGoupignons = getDarkGoupignonFighters(fightProcess);
+	for (const goupignon of darkGoupignons) {
+		removeFighterDeathStep(fightProcess, goupignon.id);
+	}
+	/**
+	 * 4. Ajout de la scène de fin.
+	 */
+	fightProcess.steps.push(...buildDarkGoupignonPostlude(fightProcess, darkGoupignons, reviveStates));
+	/**
+	 * 5. Persistance des dégâts et objets consommés.
+	 *
+	 * Le tableau de monstres récompensés est vide :
+	 * - aucune XP ;
+	 * - aucun or ;
+	 * - aucun drop ;
+	 * - aucun kill.
+	 */
+	const result = await rewardFightVsMonsters(input.team, [], fightProcess, input.toPlace, input.user, {
+		autoReequip: input.autoReequip,
+		disableGoldReward: true
+	});
+	/**
+	 * 6. Vol de la potion, déplacement et progression.
+	 */
+	const progressed = await prisma.$transaction(async tx => {
+		const currentScenario = await getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY);
+		/**
+		 * Protection contre une double résolution.
+		 */
+		if (currentScenario.progression !== MagnetiteProgression.POTION_READY) {
+			return false;
+		}
+		const teamIds = input.team.map(dinoz => dinoz.id);
+		/**
+		 * Le callback original retire la potion
+		 * à tous les Dinoz du groupe.
+		 *
+		 * deleteMany évite une erreur pour ceux
+		 * qui ne possèdent pas le statut.
+		 */
+		await tx.dinozStatus.deleteMany({
+			where: {
+				dinozId: {
+					in: teamIds
+				},
+				statusId: DinozStatusId.ANTI_SEDH_POTION
+			}
+		});
+		await tx.dinoz.updateMany({
+			where: {
+				id: {
+					in: teamIds
+				}
+			},
+			data: {
+				placeId: input.toPlace
+			}
+		});
+		await setUserScenarioProgression(tx, {
+			userId: input.user.id,
+			scenarioKey: MAGNETITE_SCENARIO_KEY,
+			progression: MagnetiteProgression.FINAL_ASSAULT
+		});
+		return true;
+	});
+	return {
+		...result,
+		monsterKillCount: 0,
+		source: 'scenario',
+		scenario: {
+			key: MAGNETITE_SCENARIO_KEY,
+			fightKey: 'magnet_potion_ambush',
+			progressed,
+			progression: progressed ? MagnetiteProgression.FINAL_ASSAULT : MagnetiteProgression.POTION_READY
+		},
+		startText: {
+			type: 'message',
+			text: DARK_GOUPIGNON_START_TEXT_KEY
+		}
+	};
+}
+
+/**
  * Point d'entrée des combats déclenchés
  * par les déplacements de la Magnétite.
  */
@@ -756,6 +1009,14 @@ export async function processMagnetiteScenarioMoveFight(input: ScenarioMoveFight
 	 */
 	if (await shouldStartFirstGroubourinEncounter(input)) {
 		return processFirstGroubourinEncounter(input);
+	}
+	/**
+	 * Étape 9 :
+	 * embuscade des Goupignons sombres et vol
+	 * de la Potion Anti-Sehd.
+	 */
+	if (await shouldStartDarkGoupignonAmbush(input)) {
+		return processDarkGoupignonAmbush(input);
 	}
 	return false;
 }
