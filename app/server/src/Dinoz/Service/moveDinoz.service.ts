@@ -105,15 +105,95 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 		}
 		throw new ExpectedError('noMovement', { params: { placeName: currentPlace.name } });
 	}
-	let fight: FightResult | false = await processScenarioMoveFight({
-		user,
-		team,
-		dinozId,
-		fromPlace: currentPlace.placeId,
-		triggerPlace: desiredPlace.placeId,
-		toPlace: finalPlace,
-		autoReequip
-	});
+	let fight: FightResult | false;
+	/**
+	 * Passage mortel du Syphon.
+	 *
+	 * APPROCHER_SYPHON correspond au passage sinto1,
+	 * disponible uniquement sans la collection magnet.
+	 *
+	 * Le Dinoz meurt immédiatement et reste au Syphon.
+	 */
+	if (desiredPlace.placeId === PlaceEnum.APPROCHER_SYPHON) {
+		/**
+		 * Le Dinoz actif meurt.
+		 */
+		await updateDinoz(dinoz.id, {
+			life: 0
+		});
+		const followers = team.filter(member => member.leaderId === dinoz.id);
+		for (const follower of followers) {
+			await updateDinoz(follower.id, {
+				life: 0
+			});
+		}
+		/**
+		 * On retourne un résultat de déplacement spécial.
+		 *
+		 * result reste false :
+		 * - aucun combat n'a été gagné ;
+		 * - le groupe n'est pas déplacé ;
+		 * - FightPage ne doit pas être ouverte.
+		 */
+		fight = {
+			fighters: [],
+			goldEarned: 0,
+			xpEarned: 0,
+			levelUp: false,
+			totalHpLost: dinoz.life,
+			result: false,
+			history: [],
+			hpLost: [
+				{
+					id: dinoz.id,
+					hpLost: dinoz.life
+				}
+			],
+			itemsUsed: [],
+			/**
+			 * Le Dinoz reste à son emplacement actuel.
+			 */
+			place: currentPlace.placeId,
+			movementEvent: {
+				key: 'magnet_syphon_death',
+				text: 'scenarios.magnet.texts.syphonDeath'
+			}
+		};
+	} else {
+		fight = await processScenarioMoveFight({
+			user,
+			team,
+			dinozId,
+			fromPlace: currentPlace.placeId,
+			toPlace: finalPlace,
+			triggerPlace: desiredPlace.placeId,
+			autoReequip
+		});
+
+		if (!fight) {
+			fight = await movementListener(user, team, finalPlace, dinozId, {
+				autoReequip,
+				triggerPlace: desiredPlace.placeId
+			});
+		}
+
+		if (!fight) {
+			fight = await fightMonstersAtPlace(team, finalPlace, user, {
+				missionMoveDinozIds: team.map(member => member.id),
+				missionKillDinozIds: [dinozId],
+				autoReequip
+			});
+
+			if (fight.result) {
+				await updateMultipleDinoz(
+					team.map(member => member.id),
+					{
+						placeId: finalPlace
+					}
+				);
+			}
+		}
+	}
 	if (!fight) {
 		fight = await movementListener(user, team, finalPlace, dinozId, {
 			autoReequip,

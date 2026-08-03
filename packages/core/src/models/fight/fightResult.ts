@@ -54,6 +54,10 @@ export interface FightResult {
 	autoReequipped?: { itemId: number; count: number }[];
 	missingReequip?: { itemId: number; count: number }[];
 	monsterKillCount?: number;
+	movementEvent?: {
+		key: string;
+		text: string;
+	};
 }
 
 export interface FighterRecap {
