@@ -93,7 +93,12 @@ export const coralMinerDialog: DialogDefinition = {
 		give: {
 			id: 'give',
 			text: 'npc.coralMiner.dialog.give',
-			special: [{ type: 'status', status: 'corail' }]
+			effects: [
+				{
+					type: 'effect',
+					effect: 'corail'
+				}
+			]
 		}
 	},
 	links: {
