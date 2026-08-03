@@ -4294,6 +4294,8 @@ const checkDefensiveEffects = (
 	}
 
 	// M_WORM: absorb all water damage
+	target.absorbed = 0;
+
 	if (elements.includes(ElementType.WATER) && hasSkill(target, Skill.M_WORM)) {
 		target.absorbed = damage;
 		damage = 0;
@@ -4475,9 +4477,13 @@ const checkAfterDefenseEffects = (
 		loseHp(fightData, attacker, randomBetweenSeeded(fightData.rng, 1, 3), LifeEffect.Lightning);
 	}
 
-	// Worm (or any absorb?): heal the damage absorbed
+	// M_WORM: heal only the damage absorbed by the current water attack
 	if (target.absorbed && hasSkill(target, Skill.M_WORM)) {
-		heal(fightData, target, target.absorbed, undefined, LifeEffect.Water);
+		const absorbedDamage = target.absorbed;
+
+		target.absorbed = 0;
+
+		heal(fightData, target, absorbedDamage, undefined, LifeEffect.Water);
 	}
 
 	// Vol d'or
