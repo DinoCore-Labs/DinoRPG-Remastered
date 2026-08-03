@@ -7,9 +7,9 @@ export const goals: Record<StatTracking, Goal> = {
 		id: StatTracking.PERLE,
 		name: {
 			EN: 'Fountain Pearl',
-			FR: 'Perle DE la Fontaine',
+			FR: 'Perle de la Fontaine',
 			DE: 'Perle aus dem Brunnen',
-			ES: 'Perla DE la Fuente'
+			ES: 'Perla de la Fuente'
 		},
 		rare: 0,
 		hidden: true,
@@ -22,9 +22,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'The Fountain Pearl allows your dinoz to regenerate health every day at the Fountain of Youth.',
-			FR: 'La perle DE la Fontaine permet à tous vos Dinoz DE pouvoir se régénerer chaque jour à la Fontaine DE Jouvence.',
+			FR: 'La perle de la Fontaine permet à tous vos Dinoz de pouvoir se régénerer chaque jour à la Fontaine de Jouvence.',
 			DE: 'Mit der Perle aus dem Brunnen können alle deine Dinoz sich jeden Tag am Jungbrunnen erholen.',
-			ES: 'La Perla DE la Fuente permite a todos tus Dinos regenerarse cada día EN la Fuente DE la Juventud.'
+			ES: 'La Perla de la Fuente permite a todos tus Dinos regenerarse cada día en la Fuente de la Juventud.'
 		}
 	},
 	[StatTracking.PTEROZ]: {
@@ -33,7 +33,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Pteroz Trophy',
 			FR: 'Trophée des Pteroz',
 			DE: 'Trophäe der Pteroz',
-			ES: 'Trofeo DE los Teroz'
+			ES: 'Trofeo de los Teroz'
 		},
 		rare: 0,
 		hidden: true,
@@ -57,7 +57,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Hippoclamps Trophy',
 			FR: 'Trophée des Hippoclamps',
 			DE: 'Trophäe der Hippoklampen',
-			ES: 'Trofeo DE los Hippoclamp'
+			ES: 'Trofeo de los Hippoclamp'
 		},
 		rare: 0,
 		hidden: true,
@@ -72,7 +72,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'The Hippoclamps Trophy is awarded to players who have defeated the wild Hippoclamp. It also unlocks the Hippoclamps, making it available to buy in the Dinoz Shop.',
 			FR: "Le Trophée des Hippoclamps récompense les joueurs ayant vaincu l'Hippoclamp sauvage, et donne accès aux Hippoclamps parmi les Dinoz disponibles dans la Boutique.",
 			DE: 'Die Trophäe der Hippoklampen ist eine Belohnung für Spieler, die den wilden Hippoklampus besiegt haben. Damit habt ihr im Geschäft die Möglichkeit, Hippoklampen als neue Dinozgattung zu kaufen.',
-			ES: 'El Trofeo DE los Hippoclamps recompensa a los jugadores que hayan vencido al Hippoclamp salvaje. Asimismo, este objeto da acceso a la compra DE los Dinos Hippoclamp EN la Tienda.'
+			ES: 'El Trofeo de los Hippoclamps recompensa a los jugadores que hayan vencido al Hippoclamp salvaje. Asimismo, este objeto da acceso a la compra de los Dinos Hippoclamp en la Tienda.'
 		}
 	},
 	[StatTracking.ROCKY]: {
@@ -81,7 +81,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Rockies Trophy',
 			FR: 'Trophée des Rockys',
 			DE: 'Trophäe der Rockys',
-			ES: 'Trofeo DE los Rokkys'
+			ES: 'Trofeo de los Rokkys'
 		},
 		rare: 0,
 		hidden: true,
@@ -96,7 +96,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'The Rockies Trophy is awarded to players who have defeated the sleeping Rocky. It also unlocks the Rocky, making it available to buy in the Dinoz Shop.',
 			FR: 'Le Trophée des Rockys récompense les joueurs ayant vaincu le Rocky endormi, et donne accès aux Rockys parmi les Dinoz disponibles dans la Boutique.',
 			DE: 'Die Trophäe der Rockys ist eine Belohnung für Spieler, die den schläfrigen Rocky besiegt haben. Damit habt ihr im Geschäft die Möglichkeit, Rockys als neue Dinozgattung zu kaufen.',
-			ES: 'El Trofeo DE los Rokkys recompensa a los jugadores que hayan vencido al Rokky dormido. Asimismo, este objeto da acceso a la compra DE los Dinos Rokky EN la Tienda.'
+			ES: 'El Trofeo de los Rokkys recompensa a los jugadores que hayan vencido al Rokky dormido. Asimismo, este objeto da acceso a la compra de los Dinos Rokky en la Tienda.'
 		}
 	},
 	[StatTracking.QUETZU]: {
@@ -105,7 +105,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Quetzu Trophy',
 			FR: 'Trophée des Quetzus',
 			DE: 'Trophäe der Quetzu',
-			ES: 'Trofeo DE los Quetzu'
+			ES: 'Trofeo de los Quetzu'
 		},
 		rare: 0,
 		hidden: true,
@@ -120,16 +120,16 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'The Quetzu Trophy is given by Mandragore to players who have defeated the Archdorogon Grizorg. This unlocks the Quetzu, making it available to buy in the Dinoz shop.',
 			FR: "Le Trophée des Quetzus a été remis par Mandragore aux joueurs ayant vaincu l'Archidorogon Grizorg, il donne accès aux Quetzu parmi les Dinoz disponibles dans la Boutique.",
 			DE: 'Die Trophäe wurde dir von Mandragore nach dem Sieg über den Erzdorogon Grizorg verliehen. Sie gewährt dir u.a. Zugriff auf Quetzu im Dinoz-Geschäft.',
-			ES: 'El Trofeo DE los Quetzu ha sido entregado por Mandrágora a los Maestros que hayan vencido al Archidorogón Grizorg. Da acceso al Dino Quetzu EN la Tienda.'
+			ES: 'El Trofeo de los Quetzu ha sido entregado por Mandrágora a los Maestros que hayan vencido al Archidorogón Grizorg. Da acceso al Dino Quetzu en la Tienda.'
 		}
 	},
 	[StatTracking.TOUR]: {
 		id: StatTracking.TOUR,
 		name: {
 			EN: 'Dinoland Tour',
-			FR: 'Tour DE Dinoland',
+			FR: 'Tour de Dinoland',
 			DE: 'Dinolandtour',
-			ES: 'Vuelta al mundo DE Dinoland'
+			ES: 'Vuelta al mundo de Dinoland'
 		},
 		rare: 0,
 		hidden: true,
@@ -142,9 +142,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'This yellow shirt is awarded for your participation in the Dinoland Tour! You are now one of the great Dinoland explorers.',
-			FR: 'Ce maillot jaune vous récompense pour votre magnifique Tour DE Dinoland ! Vous faites désormais partie des grands explorateurs DE Dinoland.',
+			FR: 'Ce maillot jaune vous récompense pour votre magnifique Tour de Dinoland ! Vous faites désormais partie des grands explorateurs de Dinoland.',
 			DE: 'Dieses gelbe Trikot ist die Belohnung für deine großartige Dinolandtour! Du gehörst nun zu den großen Dinolanderforschern.',
-			ES: 'Este maillot amarillo te recompensa por la vuelta al mundo DE Dinoland. Ya formas parte DE los grandes exploradores DE Dinoland.'
+			ES: 'Este maillot amarillo te recompensa por la vuelta al mundo de Dinoland. Ya formas parte de los grandes exploradores de Dinoland.'
 		}
 	},
 	[StatTracking.VENER]: {
@@ -214,18 +214,18 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: "This unlimited supply of stamps from the Dinoland Postal Militia is proof of your entitlement to stay in Dinoland for as long as you'd like.",
-			FR: 'Ce stock illimité DE timbres homologués par les Services Postaux Dinoziens valide votre séjour à Dinoville.',
+			FR: 'Ce stock illimité de timbres homologués par les Services Postaux Dinoziens valide votre séjour à Dinoville.',
 			DE: 'Mit diesem unbegrenzten Vorrat an offiziellen Briefmarken der Dinoz Post AG kannst du private Nachrichten versenden.',
-			ES: 'Este almacén ilimitado DE sellos homologados por los Servicios Postales Dinonianos permite enviar mensajes privados.'
+			ES: 'Este almacén ilimitado de sellos homologados por los Servicios Postales Dinonianos permite enviar mensajes privados.'
 		}
 	},
 	[StatTracking.MAGNET]: {
 		id: StatTracking.MAGNET,
 		name: {
 			EN: 'Negative Lodestone Shard',
-			FR: 'Eclat DE Magnétite Négative',
+			FR: 'Eclat de Magnétite Négative',
 			DE: 'Splitter aus negativem Magnetit',
-			ES: 'Trozo DE Magnetita Negativa'
+			ES: 'Trozo de Magnetita Negativa'
 		},
 		rare: 0,
 		hidden: true,
@@ -238,9 +238,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'This Negative Lodestone Shard was given to you by the ing of the Rockies himself! Who knows what mysterious powers it holds.',
-			FR: 'Cet éclat DE Magnétite Négative vous a été offert par le Roi des Rockys EN personne ! Qui sait quels pouvoirs mystérieux il possède...',
+			FR: 'Cet éclat de Magnétite Négative vous a été offert par le Roi des Rockys EN personne ! Qui sait quels pouvoirs mystérieux il possède...',
 			DE: 'Dieser Splitter aus negativem Magnetit wurde dir vom König der Rockys höchstpersönlich übergeben! Wer weiß was für mysteriöse Kräfte er in sich birgt...',
-			ES: '¡El Rey DE los Rokkys EN persona te ha ofrecido este trozo DE Magnetita Negativa! A saber los misteriosos poderes que esconde...'
+			ES: '¡El Rey de los Rokkys EN persona te ha ofrecido este trozo de Magnetita Negativa! A saber los misteriosos poderes que esconde...'
 		}
 	},
 	[StatTracking.PLUME]: {
@@ -454,9 +454,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'A doll in the likeness of Mandragore, which can be used as a voodoo doll, punching-bag or a pillow, as you choose.\tIt is in pretty poor condition, the previous owner must have taken their frustrations out on it on a regular basis.',
-			FR: "Une poupée à l'éffigie DE Mandragore, elle peut servir DE poupée vaudou, punching-ball ou DE coussin, c'est au choix. Elle est EN piteuse état, l'ancien propriétaire a dû passer ses nerfs dessus assez souvent.",
+			FR: "Une poupée à l'éffigie de Mandragore, elle peut servir DE poupée vaudou, punching-ball ou DE coussin, c'est au choix. Elle est EN piteuse état, l'ancien propriétaire a dû passer ses nerfs dessus assez souvent.",
 			DE: 'Die Puppe zeigt Mandragore da und kann als Voodoopuppe, Boxsack oder Kissen dienen - je nach Wetter und Laune. Sie ist in einem miserablen Zustand. Ihrem alten Besitzer müssen ziemlich oft die Nerven durchgegangen sein.',
-			ES: 'Un muñeco con la forma DE Mandrágora puede servir como peluche o como cojín. Está EN muy mal estado, su antiguo dueño debió sufrir varias crisis DE nervios con él.'
+			ES: 'Un muñeco con la forma de Mandrágora puede servir como peluche o como cojín. Está EN muy mal estado, su antiguo dueño debió sufrir varias crisis DE nervios con él.'
 		}
 	},
 	[StatTracking.FMEDAL]: {
@@ -465,7 +465,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: '3-eyed Medallion',
 			FR: 'Médaillon à 3 yeux',
 			DE: '3-eyed Medallion',
-			ES: 'Medallón DE 3 ojos'
+			ES: 'Medallón de 3 ojos'
 		},
 		rare: 0,
 		hidden: true,
@@ -489,7 +489,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Smogs Medallion',
 			FR: 'Trophée des Smogs',
 			DE: '',
-			ES: 'Trofeo DE los Smogs'
+			ES: 'Trofeo de los Smogs'
 		},
 		rare: 0,
 		hidden: true,
@@ -510,10 +510,10 @@ export const goals: Record<StatTracking, Goal> = {
 	[StatTracking.MERGUEZ_CARD]: {
 		id: StatTracking.MERGUEZ_CARD,
 		name: {
-			EN: 'Merguez Deluxe Loyalty Card', // TODO: Translation pending review
-			FR: 'Carte DE Fidélité Merguez Deluxe',
-			DE: 'Merguez-Deluxe-Treuekarte', // TODO: Translation pending review
-			ES: 'Tarjeta DE Fidelidad Salchichas Deluxe'
+			EN: 'Merguez Deluxe Loyalty Card',
+			FR: 'Carte de Fidélité Merguez Deluxe',
+			DE: 'Merguez-Deluxe-Treuekarte',
+			ES: 'Tarjeta de Fidelidad Salchichas Deluxe'
 		},
 		rare: 0,
 		hidden: true,
@@ -525,10 +525,10 @@ export const goals: Record<StatTracking, Goal> = {
 			}
 		],
 		description: {
-			EN: 'Grillée à la perfection et tamponnée par le Vendeur DE Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
-			FR: 'Grillée à la perfection et tamponnée par le Vendeur DE Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.',
-			DE: 'Grillée à la perfection et tamponnée par le Vendeur DE Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
-			ES: 'Asada a la perfección y sellada por el Vendedor DE Salchichas EN persona. Esta carta sagrada recompensa a los estómagos más resistentes. Después DE haber devorado una cantidad indecente DE salchichas, ahora has sido ascendido al rango DE Gran Glotón Oficial.'
+			EN: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
+			FR: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.',
+			DE: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
+			ES: 'Asada a la perfección y sellada por el Vendedor de Salchichas EN persona. Esta carta sagrada recompensa a los estómagos más resistentes. Después DE haber devorado una cantidad indecente DE salchichas, ahora has sido ascendido al rango DE Gran Glotón Oficial.'
 		}
 	},
 	[StatTracking.PAC]: {
@@ -537,7 +537,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Scroll of Compiled Abilities',
 			FR: 'Parchemin des Aptitudes Compilées',
 			DE: 'Schriftrolle der Gesammelten Fähigkeiten',
-			ES: 'Pergamino DE Competencias Compiladas'
+			ES: 'Pergamino de Competencias Compiladas'
 		},
 		rare: 0,
 		hidden: true,
@@ -552,7 +552,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'The Scroll of Compiled Abilities is a sophisticated artifact that lists instantly all the skills mastered by your Dinoz. It gives a clear overview and a detailed breakdown of each talent in one look.',
 			FR: "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé DE leurs talents EN un seul regard.",
 			DE: 'Die Schriftrolle der Gesammelten Fähigkeiten ist ein elegantes Artefakt, das alle von deinen Dinoz beherrschten Fähigkeiten auflistet und dir auf einen Blick eine klare und detaillierte Übersicht über deren Talente verschafft.',
-			ES: 'El Pergamino DE Competencias Compiladas ES un artefacto elegante que registra instantáneamente todas las competencias dominadas por tus Dinos, ofreciendo una visión clara y detallada DE sus talentos DE un solo vistazo.'
+			ES: 'El Pergamino de Competencias Compiladas ES un artefacto elegante que registra instantáneamente todas las competencias dominadas por tus Dinos, ofreciendo una visión clara y detallada DE sus talentos DE un solo vistazo.'
 		}
 	},
 	// DAILY STATS
