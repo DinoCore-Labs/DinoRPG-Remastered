@@ -95,6 +95,8 @@ import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { SWAMP_FLOODED_DAYS, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { DinozService } from '../../services/dinoz.service.js';
+import { UserService } from '../../services/user.service.js';
+import { userStore } from '../../store/userStore.js';
 
 export default defineComponent({
 	name: 'WorldMap',
@@ -230,6 +232,33 @@ export default defineComponent({
 
 			try {
 				const moveTry = await DinozService.move(this.dinozData.id, placeId, this.localStore.getAutoReequipItems);
+				if (moveTry.movementEvent) {
+					this.$toast.open({
+						message: formatText(this.$t(moveTry.movementEvent.text) as string),
+						type: 'error'
+					});
+					/**
+					 * Recharge les Dinoz pour récupérer :
+					 * - life = 0 ;
+					 * - la dissolution du groupe ;
+					 * - l'action de combat consommée ;
+					 * - le lieu resté inchangé.
+					 */
+					const refreshedUser = await UserService.me({
+						silent: true
+					});
+					if (refreshedUser) {
+						const user = userStore();
+						const dinoz = dinozStore();
+						user.setUser(refreshedUser);
+						dinoz.setDinozList(refreshedUser.dinoz);
+					}
+					/**
+					 * Ne pas enregistrer ce résultat comme un combat
+					 * et ne pas ouvrir FightPage.
+					 */
+					return;
+				}
 				this.sessionStore.setFightResult(moveTry);
 				if (moveTry.autoReequipped && moveTry.autoReequipped.length > 0) {
 					const itemsStr = moveTry.autoReequipped

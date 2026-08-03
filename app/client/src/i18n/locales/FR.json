@@ -6092,7 +6092,8 @@
 				"fightWTeamWon3": "Vous voulez nous exterminer ?!? Vite ! Refugions-nous au camp du sud !",
 				"fightWTeamEnd": "Attends ! Groubourin n'est pas dans son état normal... Puisque tu nous as suivi jusqu'ici, arrêtons de combattre un instant et parlons entre gens civilisés...",
 				"fightDarkDinoz": "Alors que vous arrivez dans les Steppes Magnétiques, d'étranges ombres vous entourent tout à coup. Il semblerait que vous veniez de tomber dans une embuscade...",
-				"fightPotionStolen": "C'est une catastrophe ! Ces drôles de Goupignons enragés se sont emparés de votre Potion Anti-Sehd !"
+				"fightPotionStolen": "C'est une catastrophe ! Ces drôles de Goupignons enragés se sont emparés de votre Potion Anti-Sehd !",
+				"syphonDeath": "Alors que votre Dinoz tente de franchir le Syphon, une violente décharge magnétique le frappe de plein fouet. Sans protection, il s'effondre instantanément..."
 			}
 		}
 	},
