@@ -14,10 +14,12 @@ import { madameXDialog } from './madameX.dialog.js';
 import {
 	magnetiteCitadelGuardAssaultDialog,
 	magnetiteStrangeRangerDialog,
+	magnetiteStrangeRangerEpilogueDialog,
 	magnetiteTeamWCaptainDebriefDialog,
 	magnetiteTeamWCaptainDialog,
 	magnetiteTeamWCaptainWaitingDialog,
 	rockyKingMagnetiteIntroDialog,
+	rockyKingMagnetiteRewardDialog,
 	rockyKingMagnetiteSehdDialog,
 	sGardeMagnetFirstDialog
 } from './magnet.dialog.js';
@@ -103,5 +105,7 @@ export const dialogDefinitions = [
 	magnetiteTeamWCaptainWaitingDialog,
 	rockyKingMagnetiteSehdDialog,
 	magnetiteCitadelGuardAssaultDialog,
-	magnetiteTeamWCaptainDebriefDialog
+	magnetiteTeamWCaptainDebriefDialog,
+	rockyKingMagnetiteRewardDialog,
+	magnetiteStrangeRangerEpilogueDialog
 ];
