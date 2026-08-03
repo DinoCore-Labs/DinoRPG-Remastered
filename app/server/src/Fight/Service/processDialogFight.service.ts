@@ -17,12 +17,16 @@ import {
 } from '../../Dialog/Controller/dialogReturnPhase.controller.js';
 import { addStatusToDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
+import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { prisma } from '../../prisma.js';
+import { processMagnetiteFinalAssault } from '../../Scenario/Controller/magnetiteScenario.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { checkDialogCondition } from '../../utils/conditions/checkDialogCondition.js';
 import { isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { ProcessDialogFightInput } from '../Schema/fightDialog.schema.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fight.service.js';
+
+const MAGNETITE_FINAL_ASSAULT_DIALOG_ID = 'magnetite_citadel_guard_assault';
 
 function getDialogFightPhase(dialog: RuntimeDialog, phaseId: string): RuntimeDialogPhase {
 	const phase = dialog.phases[phaseId];
@@ -77,10 +81,18 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 		throw new ExpectedError(`Dialog "${dialog.id}" is not available`);
 	}
 	const { monsters, rewardStatusKey } = extractDialogFightData(phase);
-	const returnPhaseId = resolveDialogReturnPhase(phaseId, true);
+	const isMagnetiteFinalAssault = dialogId === MAGNETITE_FINAL_ASSAULT_DIALOG_ID && phaseId === 'fight';
+	/**
+	 * Le combat final Magnétite ne possède volontairement
+	 * aucune phase fight_win.
+	 *
+	 * En cas de victoire, le scénario passe à magnet = 11,
+	 * puis le joueur doit parler manuellement au Capitaine.
+	 */
+	const returnPhaseId = isMagnetiteFinalAssault ? undefined : resolveDialogReturnPhase(phaseId, true);
 	const returnPhase = returnPhaseId ? getDialogFightPhase(dialog, returnPhaseId) : undefined;
 	const returnStatusKeys = getDialogReturnStatusKeys(returnPhase);
-	const lockStatusKey = getDialogFightLockStatusKey(phase, returnPhase);
+	const lockStatusKey = isMagnetiteFinalAssault ? undefined : getDialogFightLockStatusKey(phase, returnPhase);
 	if (lockStatusKey) {
 		const lockStatusId = dinozStatusIdByKey[lockStatusKey];
 		if (lockStatusId == null) {
@@ -100,10 +112,59 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 	if (dinozData.state !== null) {
 		throw new ExpectedError('Dinoz is not able to fight.');
 	}
-	const team = [dinozData];
 	if (!isAlive(dinozData)) {
 		throw new ExpectedError('dead');
 	}
+	/**
+	 * Traitement particulier du combat final Magnétite.
+	 *
+	 * Contrairement aux combats de dialogue classiques,
+	 * ce combat utilise le meneur et ses suiveurs.
+	 */
+	if (isMagnetiteFinalAssault) {
+		const followers = user.dinoz.filter(dinoz => dinoz.id !== dinozId);
+		/**
+		 * Les suiveurs morts ou indisponibles
+		 * sont retirés du groupe.
+		 */
+		const unavailableFollowers = followers.filter(dinoz => dinoz.life <= 0 || dinoz.state !== null);
+		for (const follower of unavailableFollowers) {
+			await updateDinoz(follower.id, {
+				leader: {
+					disconnect: true
+				}
+			});
+		}
+		const availableFollowers = followers.filter(dinoz => dinoz.life > 0 && dinoz.state === null);
+		const team = [dinozData, ...availableFollowers];
+		const result = await processMagnetiteFinalAssault({
+			user,
+			team,
+			dinozId,
+			/**
+			 * Le combat se déroule sur place :
+			 * aucun déplacement du groupe.
+			 */
+			fromPlace: dinozData.placeId,
+			triggerPlace: dinozData.placeId,
+			toPlace: dinozData.placeId,
+			autoReequip: false
+		});
+		if (result.result && (result.monsterKillCount ?? 0) > 0) {
+			await incrementUserStat(StatTracking.KILL_M, user.id, result.monsterKillCount ?? 0);
+		}
+		/**
+		 * Aucun dialogReturn.
+		 *
+		 * Après une victoire, le scénario passe à magnet = 11.
+		 * Le joueur devra ensuite parler manuellement au Capitaine.
+		 */
+		return reply.send(result);
+	}
+	/**
+	 * Traitement générique des autres combats de dialogue.
+	 */
+	const team = [dinozData];
 	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, dinozData.placeId, user);
 	const winner = fightResult.outcome === FightOutcome.AttackerWin;

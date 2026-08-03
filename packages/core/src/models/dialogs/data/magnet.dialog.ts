@@ -1,4 +1,5 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
+import { monsterByKey } from '../../monster/monsterKeyMap.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { defineDialog } from '../defineDialog.js';
 
@@ -593,12 +594,21 @@ export const magnetiteCitadelGuardAssaultDialog = defineDialog({
 		},
 		fight: {
 			id: 'fight',
-			text: 'npc.sGarde.dialog.magnet10.fight'
-
-			/**
-			 * Le special startFight sera ajouté
-			 * lors de l'étape consacrée au combat final.
-			 */
+			text: 'npc.sGarde.dialog.magnet10.fight',
+			special: [
+				{
+					type: 'startFight',
+					/**
+					 * Le monstre déclaré ici permet au moteur
+					 * de dialogue d'identifier cette phase
+					 * comme une phase de combat.
+					 *
+					 * La composition complète est construite
+					 * côté serveur par le contrôleur Magnétite.
+					 */
+					fightId: [monsterByKey.wbour2]
+				}
+			]
 		},
 		no: {
 			id: 'no',
