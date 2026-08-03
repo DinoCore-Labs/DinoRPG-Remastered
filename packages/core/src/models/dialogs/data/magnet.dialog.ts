@@ -825,7 +825,7 @@ export const rockyKingMagnetiteRewardDialog = defineDialog({
  */
 export const magnetiteStrangeRangerEpilogueDialog = defineDialog({
 	id: 'magnetite_strange_ranger_epilogue',
-	place: PlaceEnum.PORTES_DE_CAUSHEMESH,
+	place: PlaceEnum.CONFINS_DES_STEPPES,
 	name: 'npc.rodeur.name',
 	cond: condition('scenario(magnet,12)'),
 	first: 'begin',
