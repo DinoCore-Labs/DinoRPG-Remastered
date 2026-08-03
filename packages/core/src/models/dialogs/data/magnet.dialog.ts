@@ -563,3 +563,142 @@ export const rockyKingMagnetiteSehdDialog = defineDialog({
 		}
 	}
 });
+
+/**
+ * Appel à l'aide du Garde de la Citadelle.
+ *
+ * Ce dialogue devient disponible après le vol
+ * de la Potion Anti-Sehd et le retour à la Citadelle.
+ *
+ * Le déclenchement réel du combat final sera ajouté
+ * dans l'étape consacrée au combat scénarisé.
+ */
+export const magnetiteCitadelGuardAssaultDialog = defineDialog({
+	id: 'magnetite_citadel_guard_assault',
+	place: PlaceEnum.CITADELLE_DU_ROI,
+	name: 'npc.sGarde.name',
+	cond: condition('scenario(magnet,10)'),
+	first: 'begin',
+	pnj: {
+		image: false,
+		gfx: 'sgarde',
+		frame: 'speak',
+		background: '1'
+	},
+	phases: {
+		begin: {
+			id: 'begin',
+			text: 'npc.sGarde.dialog.magnet10.begin',
+			next: ['fight', 'no']
+		},
+		fight: {
+			id: 'fight',
+			text: 'npc.sGarde.dialog.magnet10.fight'
+
+			/**
+			 * Le special startFight sera ajouté
+			 * lors de l'étape consacrée au combat final.
+			 */
+		},
+		no: {
+			id: 'no',
+			text: 'npc.sGarde.dialog.magnet10.no'
+		}
+	},
+	links: {
+		fight: {
+			id: 'fight',
+			text: 'npc.sGarde.choice.magnet10.fight'
+		},
+		no: {
+			id: 'no',
+			text: 'npc.sGarde.choice.magnet10.no'
+		}
+	}
+});
+
+/**
+ * Dialogue de reprise après la victoire
+ * à la Citadelle Royale.
+ *
+ * Le dialogue séparé permet au joueur de reprendre
+ * les explications du Capitaine si la conversation
+ * ouverte après le combat a été interrompue.
+ *
+ * La dernière phase fait passer le scénario
+ * de magnet = 11 à magnet = 12.
+ */
+export const magnetiteTeamWCaptainDebriefDialog = defineDialog({
+	id: 'magnetite_team_w_captain_debrief',
+	place: PlaceEnum.CITADELLE_DU_ROI,
+	name: 'npc.teamWCaptain.name',
+	cond: condition('scenario(magnet,11)'),
+	first: 'begin',
+	pnj: {
+		image: false,
+		gfx: 'wteamc',
+		frame: 'speak',
+		background: '1'
+	},
+	phases: {
+		begin: {
+			id: 'begin',
+			text: 'npc.teamWCaptain.dialog.magnet11.begin',
+			next: ['ok']
+		},
+		ok: {
+			id: 'ok',
+			text: 'npc.teamWCaptain.dialog.magnet11.ok',
+			next: ['thanks']
+		},
+		thanks: {
+			id: 'thanks',
+			text: 'npc.teamWCaptain.dialog.magnet11.thanks',
+			next: ['how']
+		},
+		how: {
+			id: 'how',
+			text: 'npc.teamWCaptain.dialog.magnet11.how',
+			next: ['not']
+		},
+		not: {
+			id: 'not',
+			text: 'npc.teamWCaptain.dialog.magnet11.not',
+			next: ['thanks2']
+		},
+		thanks2: {
+			id: 'thanks2',
+			text: 'npc.teamWCaptain.dialog.magnet11.thanks2',
+			fast: true,
+			effects: [
+				{
+					type: 'scenario',
+					scenario: 'magnet',
+					phase: 12
+				}
+			]
+		}
+	},
+	links: {
+		ok: {
+			id: 'ok',
+			text: 'npc.teamWCaptain.choice.magnet11.ok'
+		},
+		thanks: {
+			id: 'thanks',
+			text: 'npc.teamWCaptain.choice.magnet11.thanks'
+		},
+		how: {
+			id: 'how',
+			text: 'npc.teamWCaptain.choice.magnet11.how'
+		},
+		not: {
+			id: 'not',
+			text: 'npc.teamWCaptain.choice.magnet11.not'
+		},
+		thanks2: {
+			id: 'thanks2',
+			text: 'npc.teamWCaptain.choice.magnet11.thanks2'
+		}
+	}
+});
