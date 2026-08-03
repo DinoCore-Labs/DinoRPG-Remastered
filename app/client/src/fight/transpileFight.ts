@@ -375,7 +375,7 @@ export function transpileFight(
 					action: DinoAction.ADD,
 					fighter: {
 						props: [myFighter.type === FighterType.BOSS ? 'Boss' : null, myFighter.dark ? 'Dark' : null],
-						dino: myFighter.type === FighterType.DINOZ || myFighter.type === FighterType.CLONE,
+						dino: isFighterADinoz(myFighter),
 						life: myFighter.startingHp,
 						maxLife: myFighter.maxHp,
 						name:
