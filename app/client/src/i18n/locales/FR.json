@@ -4130,6 +4130,12 @@
 					"begin": "......... uhmm, aurais-je été repéré ??? .....",
 					"view": "Avant que vous ayez pu vous approcher, le Rôdeur a mystérieusement disparu. Que peut-il bien manigancer ici..."
 				},
+				"magnet12": {
+					"begin": "Alors c'était donc toi.......",
+					"ask": "Oui ! En plus de faire échouer mon plan, tu me poursuis et comptes peut-être pouvoir m'arrêter ?",
+					"euh": "Sache que je n'oublierai rien de ta participation ! Je dois maintenant retourner faire mon rapport aux maîtres de Caushemesh... Tu as de la chance, je suis pressé, mais la prochaine fois que nous nous rencontrerons, je te ferai payer tes actions !",
+					"end": "Le Rôdeur a mystérieusement disparu... Il semblait très en colère contre vous..."
+				},
 				"afterSpy": {
 					"begin": "Maintenant libéré de sa mission d'espionnage, le rôdeur s'est installé tranquillement non loin de dinoplaza. Les doigts de pied en éventail, il se détend au soleil... Mieux vaut le voir ici qu'en train de manigancer quelque chose de louche..."
 				}
@@ -4149,7 +4155,12 @@
 				"next2": "(...)",
 				"more": "...",
 				"mission": "Accepter une mission",
-				"magnet2View": "Surveiller le Rôdeur"
+				"magnet2View": "Surveiller le Rôdeur",
+				"magnet12": {
+					"ask": "Moi ?",
+					"euh": "Euh...",
+					"end": "..."
+				}
 			}
 		},
 		"venerable": {
@@ -4624,6 +4635,17 @@
 			"dialog": {
 				"magnet0": {
 					"begin": "Bonjour étranger... Le Roi est bien trop occupé actuellement avec cette tentative de vol de la Magnétite, il ne pourra pas te recevoir pour l'instant !"
+				},
+				"magnet10": {
+					"begin": "Étranger !! Vite ! Le Roi est attaqué par de puissantes créatures, elles essaient de l'empoisonner et de prendre le contrôle de la Pierre Royale !!! Peux-tu nous aider à les battre ?",
+					"fight": "Vous vous précipitez au secours du Roi des Rockys...",
+					"no": "Faites vite ! La situation est critique !"
+				}
+			},
+			"choice": {
+				"magnet10": {
+					"fight": "À l'attaque !",
+					"no": "J'ai besoin de me préparer un peu avant..."
 				}
 			}
 		},
@@ -4658,6 +4680,15 @@
 					"face": "Oui... nos légendes racontent que Dinoland possède une autre face, une face Sombre. On appelle cet endroit le Monde Sombre. Personne n'en est jamais revenu bien entendu... mais les Sages (ou singes ?) Antiques peuvent librement voyager dans le Monde Sombre... Mais nous doutons que ces informations puissent vous servir à trouver cet être au troisième oeil...",
 					"end": "En tout cas, notre majesté comptons sur vos efforts pour rassembler les trois ingrédients, trouver le Singe Antique, et nous ramener au plus vite la Potion Anti Sedh qui nous permettra de nous protéger contre ce poison... En ce qui concerne ces nomades, nous allons enquêter sur eux pour vérifier leurs dires... L'audience est levée, au revoir...",
 					"bye": "Vous voilà reparti pour de nouvelles aventures..."
+				},
+				"magnet12": {
+					"begin": "Cher ami ! Nous sommes très heureux du dénouement de cet affrontement... Nous voulons vous remercier pour les nombreux services que vous avez rendus à la famille Royale, allant même jusqu'à risquer votre vie...",
+					"not": "Pensez-vous ! Grâce à ces événements, nous avons pu nous réconcilier avec les nomades de l'extrême-occident... Nous serons désormais plus attentionnés envers nos lointains sujets, car il semble que notre jugement à leur encontre ait été quelque peu hâtif.",
+					"not2": "Si, nous insistons pour vous récompenser correctement. Grâce à vous, nous avons pu capturer ces infâmes Goupignons Sombres qui semblent avoir tramé la tentative de vol de la Magnétite, la fabrication du Sehd Actif, l'empoisonnement de Grobourin et l'attaque de la Citadelle... Quel plan machiavélique !!",
+					"plan": "Mais ne vous inquiétez pas, tous les suspects ont été enfermés dans nos geôles les plus profondes et ils ne sont pas près d'en sortir, vous avez notre parole Royale...",
+					"ok": "Bien, bien... Pour vos services rendus, nous vous avons prévu une récompense... royale ! Nous souhaitons que vous l'acceptiez en remerciement de votre action à notre service...",
+					"accept": "Voilà pour vous... Nous vous confions cet Éclat de Magnétite Négative. Il a pour propriété d'annuler les effets de la Magnétite en certains endroits. C'est un objet extrêmement rare et nous souhaitons qu'il vous aide dans vos futurs voyages...",
+					"thanks": "Le Roi des Rockys vous a confié l'objet de collection : « l'Éclat de Magnétite Négative ». Mais à quoi cela peut-il bien servir ?"
 				}
 			},
 			"choice": {
@@ -4689,6 +4720,14 @@
 					"face": "L'autre face ?",
 					"end": "......",
 					"bye": "Partir"
+				},
+				"magnet12": {
+					"not": "Ce n'était rien...",
+					"not2": "Ce n'était rien...",
+					"plan": "Effectivement...",
+					"ok": "....",
+					"accept": "J'accepte — chouette !",
+					"thanks": "Merci beaucoup !"
 				}
 			}
 		},
@@ -4712,6 +4751,14 @@
 				},
 				"magnet7": {
 					"begin": "Tu as vu le Roi ? Tu sais comment soigner Grobourin ? Nous comptons tous sur toi, reviens nous voir avec de bonnes nouvelles !"
+				},
+				"magnet11": {
+					"begin": "Merci pour votre aide... Après votre départ, ces Goupignons sombres se sont emparés de Grobourin. Il semblait que le poison qu'ils utilisaient permettait de le contrôler...",
+					"ok": "Ils ont ensuite utilisé la puissance de Grobourin pour attaquer la Citadelle Royale et tenter de s'emparer de la Magnétite... Heureusement, nous sommes arrivés à temps...",
+					"thanks": "Oui, mais c'était naturel, nous ne pouvions pas laisser Grobourin tout détruire de cette façon. Et c'est grâce à votre Potion que le contrôle a pu être rompu...",
+					"how": "Nous l'avons rapatrié à notre campement. Il est bien amoché, mais il s'en sortira... grâce à vous...",
+					"not": "C'était déjà beaucoup. Le Grand Ver vous a protégé, semble-t-il... Venez nous voir quand vous le voulez au campement, nous vous donnerons accès à notre Boutique secrète...",
+					"thanks2": "Le Capitaine est reparti vers le campement de la Team-W..."
 				}
 			},
 			"choice": {
@@ -4725,6 +4772,13 @@
 					"again": "Je n'ai pas tout suivi...",
 					"yes": "Oui",
 					"no": "Non"
+				},
+				"magnet11": {
+					"ok": "Je comprends...",
+					"thanks": "Merci de votre aide en combat !",
+					"how": "Comment va-t-il ?",
+					"not": "Ce n'était vraiment rien...",
+					"thanks2": "À bientôt !"
 				}
 			}
 		},
@@ -6093,6 +6147,10 @@
 				"fightWTeamEnd": "Attends ! Groubourin n'est pas dans son état normal... Puisque tu nous as suivi jusqu'ici, arrêtons de combattre un instant et parlons entre gens civilisés...",
 				"fightDarkDinoz": "Alors que vous arrivez dans les Steppes Magnétiques, d'étranges ombres vous entourent tout à coup. Il semblerait que vous veniez de tomber dans une embuscade...",
 				"fightPotionStolen": "C'est une catastrophe ! Ces drôles de Goupignons enragés se sont emparés de votre Potion Anti-Sehd !",
+				"fightSkingStart": "Vous reconnaissez le Wanwan Grobourin de la Team-W... Il semble être contrôlé par les Goupignons sombres... mais sont-ils suffisamment intelligents pour faire cela seuls ???",
+				"fightCaptainHelp": "Il semble que vous ayez besoin d'un peu d'aide... Team-W : à l'attaaaaaaque !",
+				"fightSkingEnd1": "Après le combat, vous retrouvez sur le sol la Potion Anti-Sehd que vous aviez confectionnée. Vous l'utilisez sur Grobourin afin qu'il retrouve ses esprits...",
+				"fightSkingEnd2": "Le Roi des Rockys et le Capitaine vous attendent pour vous remercier de votre vaillant combat...",
 				"syphonDeath": "Alors que votre Dinoz tente de franchir le Syphon, une violente décharge magnétique le frappe de plein fouet. Sans protection, il s'effondre instantanément..."
 			}
 		}
