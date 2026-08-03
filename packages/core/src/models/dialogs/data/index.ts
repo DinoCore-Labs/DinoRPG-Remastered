@@ -12,7 +12,9 @@ import { hydargolDialog } from './hydargol.dialog.js';
 import { jovebozeDialog } from './joveboze.dialog.js';
 import { madameXDialog } from './madameX.dialog.js';
 import {
+	magnetiteCitadelGuardAssaultDialog,
 	magnetiteStrangeRangerDialog,
+	magnetiteTeamWCaptainDebriefDialog,
 	magnetiteTeamWCaptainDialog,
 	magnetiteTeamWCaptainWaitingDialog,
 	rockyKingMagnetiteIntroDialog,
@@ -99,5 +101,7 @@ export const dialogDefinitions = [
 	magnetiteStrangeRangerDialog,
 	magnetiteTeamWCaptainDialog,
 	magnetiteTeamWCaptainWaitingDialog,
-	rockyKingMagnetiteSehdDialog
+	rockyKingMagnetiteSehdDialog,
+	magnetiteCitadelGuardAssaultDialog,
+	magnetiteTeamWCaptainDebriefDialog
 ];
