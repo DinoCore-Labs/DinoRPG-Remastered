@@ -1,7 +1,8 @@
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { OfferStatus } from '../../../../prisma/index.js';
+import { GameLogType, MoneyType, OfferStatus } from '../../../../prisma/index.js';
+import { createGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 import { discoverUserSkillsTx } from '../../Skill/Controller/discoveredUserSkills.controller.js';
 import { assertUserHasDinozAtMarket } from '../Helpers/market.helper.js';
@@ -11,11 +12,8 @@ import { offerIdParamsSchema } from '../Schema/market.schema.js';
 
 export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;
-
 	await assertUserHasDinozAtMarket(userId);
-
 	const params = offerIdParamsSchema.parse(req.params);
-
 	const offer = await prisma.offer.findFirst({
 		where: {
 			id: params.offerId,
@@ -43,78 +41,97 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 			}
 		}
 	});
-
 	if (!offer) {
 		throw new ExpectedError('invalidOffer');
 	}
-
 	const winnerBid = offer.bids[0];
 	const winnerId = winnerBid?.userId ?? null;
 	const sellerId = offer.sellerId;
-
 	const hasWinner = winnerId !== null;
 	const isSeller = sellerId === userId;
 	const isWinner = winnerId === userId;
-
 	if (!isSeller && !isWinner) {
 		throw new ExpectedError('invalidOffer');
 	}
-
 	const targetUserId = hasWinner ? winnerId : sellerId;
-
 	if (!targetUserId) {
 		throw new ExpectedError('invalidOffer');
 	}
-
 	const items = offer.items
 		.filter(item => !item.isIngredient)
 		.map(item => ({
 			itemId: item.itemId,
 			quantity: item.quantity
 		}));
-
 	const ingredients = offer.items
 		.filter(item => item.isIngredient)
 		.map(item => ({
 			ingredientId: item.itemId,
 			quantity: item.quantity
 		}));
-
 	await assertUserCanReceiveOfferContent(targetUserId, {
 		items,
 		ingredients,
 		dinozId: offer.dinozId,
 		originalOwnerId: offer.dinoz?.userId ?? null
 	});
-
 	let discoveredSkills: number[] = [];
 	let rewardUnlocked: number | undefined;
-
 	await prisma.$transaction(async tx => {
 		const claimed = await tx.offer.updateMany({
 			where: { id: offer.id, status: OfferStatus.ENDED },
 			data: { status: OfferStatus.CLAIMED }
 		});
-
 		if (claimed.count !== 1) {
 			throw new ExpectedError('invalidOffer');
 		}
-
+		if (winnerBid && sellerId) {
+			const sellerGold = winnerBid.value * 1000;
+			await tx.userWallet.update({
+				where: {
+					userId_type: {
+						userId: sellerId,
+						type: MoneyType.GOLD
+					}
+				},
+				data: {
+					amount: {
+						increment: sellerGold
+					}
+				}
+			});
+			await createGameLog(
+				{
+					type: GameLogType.GoldWon,
+					userId: sellerId,
+					actorUserId: userId,
+					dinozId: offer.dinoz?.id ?? null,
+					values: [String(sellerGold)],
+					metadata: {
+						source: 'market',
+						offerId: offer.id,
+						winnerId: winnerBid.userId,
+						claimedBy: userId,
+						bidValue: winnerBid.value,
+						amount: sellerGold,
+						wallet: MoneyType.GOLD
+					}
+				},
+				tx
+			);
+		}
 		if (offer.dinozId && offer.dinoz) {
 			if (hasWinner) {
 				await tx.dinoz.update({
 					where: { id: offer.dinozId },
 					data: { userId: targetUserId, state: null, leaderId: null }
 				});
-
 				const discovery = await discoverUserSkillsTx(tx, {
 					userId: targetUserId,
 					skillIds: offer.dinoz.skills.map(skill => skill.skillId)
 				});
-
 				discoveredSkills = discovery.discoveredSkills;
 				rewardUnlocked = discovery.rewardUnlocked;
-
 				if (sellerId) {
 					await transferDinozRankingTx(tx, {
 						sellerId,
@@ -129,10 +146,8 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 				});
 			}
 		}
-
 		await addOfferContentToInventoryTx(tx, targetUserId, items, ingredients);
 	});
-
 	return reply.send({
 		ok: true,
 		discoveredSkills,
