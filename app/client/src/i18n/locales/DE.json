@@ -4630,6 +4630,7 @@
 		},
 		"accept": "Accepter la mission",
 		"giveUp": "Abandonner",
+		"already": "Une mission est déjà en cours, il vous faudra la terminer avant d'en accepter une autre.",
 		"lastDialog": "Dernière étape validée",
 		"goals": {
 			"atPlace": "Se rendre à {place}",
