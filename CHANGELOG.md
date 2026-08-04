@@ -2,6 +2,14 @@
 
 ## 🔹 Core
 
+## 0.34.0
+
+### Minor Changes
+
+- 56e0270: Implement the complete Magnetite scenario, including its dialogs, scripted battles, progression, rewards, and special movement events.
+
+  Add the Dark Goupignon ambush, the final Citadel battle with Team-W reinforcements, the lethal unprotected Syphon crossing, the Negative Magnetite Shard reward, and the Strange Ranger epilogue.
+
 ## 0.33.0
 
 ### Minor Changes
@@ -616,6 +624,19 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.36.0
+
+### Minor Changes
+
+- 56e0270: Implement the complete Magnetite scenario, including its dialogs, scripted battles, progression, rewards, and special movement events.
+
+  Add the Dark Goupignon ambush, the final Citadel battle with Team-W reinforcements, the lethal unprotected Syphon crossing, the Negative Magnetite Shard reward, and the Strange Ranger epilogue.
+
+### Patch Changes
+
+- Updated dependencies [56e0270]
+  - @dinorpg/core@0.34.0
 
 ## 0.35.0
 
@@ -1431,6 +1452,14 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.35.0
+
+### Minor Changes
+
+- 56e0270: Implement the complete Magnetite scenario, including its dialogs, scripted battles, progression, rewards, and special movement events.
+
+  Add the Dark Goupignon ambush, the final Citadel battle with Team-W reinforcements, the lethal unprotected Syphon crossing, the Negative Magnetite Shard reward, and the Strange Ranger epilogue.
 
 ## 0.34.0
 
