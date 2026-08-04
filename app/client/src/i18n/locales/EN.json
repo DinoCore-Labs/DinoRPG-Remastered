@@ -456,10 +456,10 @@
 			"title": "Discover the upcoming events on DinoRPG!",
 			"small": "Irma's Prediction",
 			"strong": {
-				"title1": "Alpha 0.11.0 (Soon)",
-				"title2": "Alpha 0.12.0",
-				"title3": "Alpha 0.13.0",
-				"title4": "Alpha 0.14.0"
+				"title1": "Alpha 0.12.0 (Soon)",
+				"title2": "Alpha 0.13.0",
+				"title3": "Alpha 0.14.0",
+				"title4": "Alpha 0.15.0"
 			},
 			"help": "Click on an update above to get more information!",
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
@@ -4630,6 +4630,7 @@
 		},
 		"accept": "Accept the Mission",
 		"giveUp": "Give up",
+		"already": "Une mission est déjà en cours, il vous faudra la terminer avant d'en accepter une autre.",
 		"lastDialog": "Dernière étape validée",
 		"goals": {
 			"atPlace": "Go to {place}",
