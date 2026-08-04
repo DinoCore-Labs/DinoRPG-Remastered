@@ -456,10 +456,10 @@
 			"title": "¡Descubre los próximos eventos de DinoRPG!",
 			"small": "Predicción de Irma",
 			"strong": {
-				"title1": "Alpha 0.10.0 (Próximamente)",
-				"title2": "Alpha 0.11.0",
-				"title3": "Alpha 0.12.0",
-				"title4": "Alpha 0.13.0"
+				"title1": "Alpha 0.12.0 (Próximamente)",
+				"title2": "Alpha 0.13.0",
+				"title3": "Alpha 0.14.0",
+				"title4": "Alpha 0.15.0"
 			},
 			"help": "¡Haz clic en una actualización de arriba para obtener más información!",
 			"disclaimer": "Las predicciones de Madame Irma no son infalibles, por lo que no hay ninguna fecha de lanzamiento disponible para estas novedades. Sin embargo, cada evento será anunciado oficialmente en el sitio cuando llegue el momento.",
@@ -2986,7 +2986,14 @@
 			"cactus": "Kaktuz",
 			"brig1": "Brigand Zaxa",
 			"brig2": "Brigand Emema",
-			"brig3": "Brigand Mattmût"
+			"brig3": "Brigand Mattmût",
+			"wteam1": "[TW]Destructeur",
+			"wteam2": "[TW]Nightmare",
+			"wteam3": "[TW]Tonnerre",
+			"wteamc": "[TW]Capitaine",
+			"wbour1": "[TW]Grobourin",
+			"wbour2": "[TW]Grobourin",
+			"darkgp": "Goupignon Sombre"
 		},
 		"status": {
 			"asleep": "endormi",
@@ -4003,7 +4010,7 @@
 				"thanks": "Oui, merci beaucoup !"
 			}
 		},
-		"speleleologue_ice": {
+		"speleleologueIce": {
 			"dialog": {
 				"begin": "Ah ! Tiens salut ! Il fait frais ici tu ne trouve pas ?",
 				"talk": "Je viens de passer quelques temps à explorer la Grotte du Zéro Relatif... savais tu que la glace qui la compose est extraordinaire ??? Elle est composée de 3% de Mazotte Solide, un ingrédient rarissime qui conserve une température stable...",
@@ -4119,6 +4126,16 @@
 					"begin": "Pour ton information, les Dinoz Sombres que tu as rencontré jusqu'à présent n'étaient que des débutants que nous venons faire entraîner dans cette partie de Dinoland... La puissance des Dinoz de Caushemesh va bien au delà, et même votre Vénérable ne ferait pas le poids contre nos meilleurs maîtres Dinoz !",
 					"next2": "Enfin bon, je tiens ma promesse. Voici une récompense pour te convaincre de la supériorité de la  technologie de Caushemesh. Je n'en ai qu'un exemplaire, alors fais-en bon usage... Il s'agit d'un Bracelet en Tik, que tu pourras équiper sur le Dinoz de ton choix..."
 				},
+				"magnet2": {
+					"begin": "......... uhmm, aurais-je été repéré ??? .....",
+					"view": "Avant que vous ayez pu vous approcher, le Rôdeur a mystérieusement disparu. Que peut-il bien manigancer ici..."
+				},
+				"magnet12": {
+					"begin": "Alors c'était donc toi.......",
+					"ask": "Oui ! En plus de faire échouer mon plan, tu me poursuis et comptes peut-être pouvoir m'arrêter ?",
+					"euh": "Sache que je n'oublierai rien de ta participation ! Je dois maintenant retourner faire mon rapport aux maîtres de Caushemesh... Tu as de la chance, je suis pressé, mais la prochaine fois que nous nous rencontrerons, je te ferai payer tes actions !",
+					"end": "Le Rôdeur a mystérieusement disparu... Il semblait très en colère contre vous..."
+				},
 				"afterSpy": {
 					"begin": "Maintenant libéré de sa mission d'espionnage, le rôdeur s'est installé tranquillement non loin de dinoplaza. Les doigts de pied en éventail, il se détend au soleil... Mieux vaut le voir ici qu'en train de manigancer quelque chose de louche..."
 				}
@@ -4137,7 +4154,13 @@
 				"next": "Et...",
 				"next2": "(...)",
 				"more": "...",
-				"mission": "Accepter une mission"
+				"mission": "Accepter une mission",
+				"magnet2View": "Surveiller le Rôdeur",
+				"magnet12": {
+					"ask": "Moi ?",
+					"euh": "Euh...",
+					"end": "..."
+				}
 			}
 		},
 		"venerable": {
@@ -4605,6 +4628,158 @@
 				"yes": "Ho, bonne idée !",
 				"ok": "Oui, merci !",
 				"no": "Heu, non merci... Mes Dinoz ont encore besoin d'entrainement"
+			}
+		},
+		"sGarde": {
+			"name": "Garde de la Citadelle",
+			"dialog": {
+				"magnet0": {
+					"begin": "Bonjour étranger... Le Roi est bien trop occupé actuellement avec cette tentative de vol de la Magnétite, il ne pourra pas te recevoir pour l'instant !"
+				},
+				"magnet10": {
+					"begin": "Étranger !! Vite ! Le Roi est attaqué par de puissantes créatures, elles essaient de l'empoisonner et de prendre le contrôle de la Pierre Royale !!! Peux-tu nous aider à les battre ?",
+					"fight": "Vous vous précipitez au secours du Roi des Rockys...",
+					"no": "Faites vite ! La situation est critique !"
+				}
+			},
+			"choice": {
+				"magnet10": {
+					"fight": "À l'attaque !",
+					"no": "J'ai besoin de me préparer un peu avant..."
+				}
+			}
+		},
+		"rockyKing": {
+			"name": "Roi des Rockys",
+			"dialog": {
+				"magnet1": {
+					"begin": "Vous racontez que vous avez été attaqué par de féroces Wanwans... Après vous avoir questionné, les gardes vous accordent finalement une audience avec le Roi des Rockys, Monseigneur Rocky IV.",
+					"enter": "Bienvenue à notre cher Maître Dinoz... nous voyons que vous n'êtes pas natif des Steppes Magnétiques, vous avez du faire long voyage, pardonnez-nous de ne pas pouvoir vous recevoir avec l'hospitalité habituelle de notre peuple, mais les événements récents nous ont épuisé...",
+					"events": "Voyez-vous, cela n'est pas un secret, la Famille Royale dont nous sommes l'héritier contrôle tous les Rockys de la région. Ce pouvoir nous a été confié il y a maintenant de nombreuses générations par le Grand-Lourd-Acéré, le dompteur de la Magnétite...",
+					"magnet": "La Magnétite est une pierre que l'on ne trouve que dans les Steppes, qui d'ailleurs lui doivent leur nom... C'est une pierre qui, sous l'action des frottements du vent et du sable, produit de l'énergie électrique !",
+					"magnet2": "A l'état naturel, la Magnétite est très instable et donc difficilement contrôlable, mais le Grand-Lourd-Acéré a dans sa jeunesse découvert une pierre d'une pureté parfaite, la Pierre d'Ange. Les héritiers de la Famille Royale doivent en assurer la protection, pour éviter qu'elle ne tombe dans de mauvaises mains.",
+					"events2": "Et, récemment... quelqu'un a tenté de voler la Pierre d'Ange !!! C'est une lourde responsabilité, mais il faut que nous la protégions à tout prix ! Il en va de l'honneur de la Famille Royale... Avez-vous bien tout compris ?",
+					"me": "Nous y venons... Voyez-vous, de nombreux brigands sévissent à l'extrême-occident des Steppes Magnétiques. On a vu certains d'eux roder à plusieurs reprises aux alentours du château et ce sont sûrement eux qui vous ont attaqué prés du Syphon. Ils se font appeler la Team-W...",
+					"team": "Oui... La Team-W est un groupe de nomades à l'allure étrange contrôlant des Wanwans. Nous les soupçonnons d'être ceux qui cherchent à voler notre Pierre d'Ange. Nous avons envoyé nos soldats d'élite à leur recherche, et nous avons blessé leur leader, mais nous ne savons pas où ils se cachent...",
+					"team2": "Nous avons dû rappeler nos soldats pour qu'ils protègent la Pierre d'Ange, car nous ne savons pas ni quand ni où l'ennemi frappera la prochaine fois... Pourrions-nous vous charger de trouver et de détruire la Team-W ? Vous en serrez royalement récompensé !",
+					"refuse": "Bien bien... nous comprenons, et nous ne voulons pas vous impliquer dans une histoire qui n'est pas la votre. Nous vous souhaitons un bon voyage dans les Steppes Magnétiques, revenez nous voir si malgré tout vous changez d'avis...",
+					"accept": "Vraiment ? Vous nous êtes d'une aide précieuse, cher Maître Dinoz ! Nos conseillers vont vous enseigner les chemins secrets qui vous permettront d'accéder à l'extrême-occident, le repaire des brigands des Steppes... Notre majesté vous souhaite bonne chance, et nous espérons rapidement de positives nouvelles de votre part !",
+					"leave": "Un conseiller du Roi vous explique le chemin qui permet d'accéder aux camps des brigands de l'extrême-occident à partir du Syphon. Il vous met aussi en garde contre les dangers qui vous attendent. Préparez-vous bien !"
+				},
+				"magnet7": {
+					"begin": "Notre cher Maître Dinoz est déjà de retour ? Nous espérons de tout coeur qu'il nous apporte de bonnes nouvelles...",
+					"next": "Bien ! Nous sommes très heureux, racontez-nous vos exploits, mon cher......",
+					"talk": "Vous racontez au Roi des Rockys votre rencontre avec le Capitaine de la Team-W, sa version de l'histoire concernant l'empoisonnement de Grobourin, et son innocence quand à la tentative de vol de la Magnétite. Le Roi vous écoute avec un silence... royal...",
+					"cont": "Bien bien... Vous comprendrez que nous ne pouvons pas faire confiance à ces étranges personnes immédiatement. Il va falloir que nous diligentions une enquête préalable à tout pour parler avec ces habitants des basses-steppes... Pendant ce temps, nous aimerions que vous nous rendiez un autre service, si cela n'est pas abuser de votre precieux temps.",
+					"serv": "Oui tout a fait, c'est cela : un service... Ces ouï-dire concernant un étrange empoisonnement nous inquiètent. Le cas échéant, nous devrions nous préparer au pire. Si nos informations sont exactes, il pourrait s'agir de Sehd Actif.",
+					"sehd": "Le Sehd est un poison très puissant que l'on ne trouve que dans les steppes magnétiques. Il est obtenu en concentrant du poison de Scorpiowink auquel il faut rajouter un ingrédient secret qui permet d'activer ses pouvoirs cachés. Notre armée à depuis longtemps été interdite de fabrication de Sehd car une fois activé il permet de prendre le contrôle total de l'homme ou du Dinoz empoisonné...",
+					"control": "Oui, tout a fait. Qui est sous le contrôle du Sehd Actif ne peut plus raisonner normalement et il lui est même possible de trahir les siens... Le Sedh a été banni du royaume depuis longtemps par nos ancêtres. S'il s'agit vraiment de ce poison, nous devons arrêter son auteur au plus vite...",
+					"serv2": "Nous aimerions que vous alliez chercher certains ingrédients. Une fois ces ingredients rassemblés, cela vous permettra de constituer une Potion Anti Sedh qui permet de guérir les effets du poison.",
+					"ingr": "Oui. D'après nos légendes il faut rassembler les trois ingrédients perpétuels : le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane. Une fois ces trois ingrédients rassemblés, il faut trouver un Singe Antique...",
+					"sage": "Ah... euh... c'était peut-être un Sage Antique, nous ne nous rappellons plus bien. En tout cas, il s'agit d'êtres aux grands pouvoirs et qui paraît-il peuvent vivre pendant plusieurs siècles ! On les reconnais à leur troisième oeil, qui peut voir l'autre face de Dinoland...",
+					"face": "Oui... nos légendes racontent que Dinoland possède une autre face, une face Sombre. On appelle cet endroit le Monde Sombre. Personne n'en est jamais revenu bien entendu... mais les Sages (ou singes ?) Antiques peuvent librement voyager dans le Monde Sombre... Mais nous doutons que ces informations puissent vous servir à trouver cet être au troisième oeil...",
+					"end": "En tout cas, notre majesté comptons sur vos efforts pour rassembler les trois ingrédients, trouver le Singe Antique, et nous ramener au plus vite la Potion Anti Sedh qui nous permettra de nous protéger contre ce poison... En ce qui concerne ces nomades, nous allons enquêter sur eux pour vérifier leurs dires... L'audience est levée, au revoir...",
+					"bye": "Vous voilà reparti pour de nouvelles aventures..."
+				},
+				"magnet12": {
+					"begin": "Cher ami ! Nous sommes très heureux du dénouement de cet affrontement... Nous voulons vous remercier pour les nombreux services que vous avez rendus à la famille Royale, allant même jusqu'à risquer votre vie...",
+					"not": "Pensez-vous ! Grâce à ces événements, nous avons pu nous réconcilier avec les nomades de l'extrême-occident... Nous serons désormais plus attentionnés envers nos lointains sujets, car il semble que notre jugement à leur encontre ait été quelque peu hâtif.",
+					"not2": "Si, nous insistons pour vous récompenser correctement. Grâce à vous, nous avons pu capturer ces infâmes Goupignons Sombres qui semblent avoir tramé la tentative de vol de la Magnétite, la fabrication du Sehd Actif, l'empoisonnement de Grobourin et l'attaque de la Citadelle... Quel plan machiavélique !!",
+					"plan": "Mais ne vous inquiétez pas, tous les suspects ont été enfermés dans nos geôles les plus profondes et ils ne sont pas près d'en sortir, vous avez notre parole Royale...",
+					"ok": "Bien, bien... Pour vos services rendus, nous vous avons prévu une récompense... royale ! Nous souhaitons que vous l'acceptiez en remerciement de votre action à notre service...",
+					"accept": "Voilà pour vous... Nous vous confions cet Éclat de Magnétite Négative. Il a pour propriété d'annuler les effets de la Magnétite en certains endroits. C'est un objet extrêmement rare et nous souhaitons qu'il vous aide dans vos futurs voyages...",
+					"thanks": "Le Roi des Rockys vous a confié l'objet de collection : « l'Éclat de Magnétite Négative ». Mais à quoi cela peut-il bien servir ?"
+				}
+			},
+			"choice": {
+				"magnet1": {
+					"enter": "Entrer dans le Palais",
+					"events": "Que s'est-il passé ?",
+					"magnet": "La Magnétite ?",
+					"magnet2": "...",
+					"events2": "Et ?",
+					"again": "Pouvez-vous répéter ?",
+					"me": "Quel rapport avec moi ?",
+					"team": "La Team-W ?",
+					"team2": "Uhm...",
+					"again2": "Pouvez-vous répéter ?",
+					"accept": "J'accepte !",
+					"refuse": "Je ne peux pas accepter pour l'instant",
+					"leave": "Remercier le Roi"
+				},
+				"magnet7": {
+					"next": "Ah euh... oui...",
+					"talk": "Raconter",
+					"cont": "Continuer",
+					"serv": "Un service ?",
+					"sehd": "De... quoi ?",
+					"control": "Prendre le contrôle ?",
+					"serv2": "Vous parliez d'un service...",
+					"ingr": "Des ingrédients ?",
+					"sage": "Un Singe Antique ?",
+					"face": "L'autre face ?",
+					"end": "......",
+					"bye": "Partir"
+				},
+				"magnet12": {
+					"not": "Ce n'était rien...",
+					"not2": "Ce n'était rien...",
+					"plan": "Effectivement...",
+					"ok": "....",
+					"accept": "J'accepte — chouette !",
+					"thanks": "Merci beaucoup !"
+				}
+			}
+		},
+		"teamWCaptain": {
+			"name": "Capitaine",
+			"dialog": {
+				"magnet6": {
+					"begin": "..... Pourquoi nous as-tu attaqué ? Est-ce pour te venger de notre attaque précédente ? Je pensais pourtant m'être excusé...",
+					"who": "Oui, je ne me suis pas présenté, je suis Mulder, le capitaine de la Team-W... Qui t'envoie et pourquoi nous as-tu attaqué ?",
+					"dont": "Je vois... tu ne veux pas parler... Tu dois donc être un de SES espions ! Je te le demande une dernière fois : qui t'envoie ? Et pourquoi sommes-nous pris pour cible par le Roi ?",
+					"dont2": "Bien... je vois... Puisque tu n'as rien à me dire pour excuser tes actions, va-t'en ! Sache qu'ici nous pouvons tenir des mois face aux attaques du Roi, et que rien ne nous fera abandonner notre mission !",
+					"tell": "Pendant l'heure qui suit, vous racontez au Capitaine tout ce qui vous est arrivé depuis votre entrée dans les Steppes Magnétiques : l'attaque de sa Team-W, puis l'entretien avec le Roi et, bien entendu, le complot pour s'emparer de la Magnétite...",
+					"hist1": "...... Je comprends maintenant... Il y a quelques jours, notre Wanwan le plus puissant — Grobourin — que tu as tenté de combattre dehors, a été empoisonné par une étrange substance...",
+					"hist2": "Nous avons bien entendu enquêté pour savoir qui avait pu commettre un tel acte, et une piste nous a menés jusqu'à la Citadelle du Roi des Rockys. C'est pour cette raison que nous l'observions de près : nous cherchions un moyen de guérir Grobourin...",
+					"hist3": "... mais je peux te jurer qu'à aucun moment nous n'avons eu pour projet de nous emparer de la Magnétite. Cette pierre n'a aucune signification pour nous, les nomades, car nous trouvons déjà dans les steppes tout ce qui suffit à nous rendre heureux...",
+					"hist4": "On nous traite souvent de voleurs, mais c'est parce qu'on nous confond avec ces Brigands de l'extrême-occident ! Nous les combattons régulièrement lorsque nous les trouvons... Ils nous détestent, mais les habitants nous aident, car le Roi n'envoie jamais aucun soldat ici... Ils ont bien trop peur du Grand Ver... Les nomades ont été abandonnés par le Roi...",
+					"hist5": "Voilà... je t'ai tout raconté. Souhaites-tu que je répète ?",
+					"ask": "... je suis désolé de ce qu'il s'est passé... mais tu dois comprendre : nous devons absolument soigner Grobourin. Il faiblit de jour en jour et nous craignons le pire... Tu es en contact avec le Roi : pourrais-tu nous aider en plaidant notre cause ? Il s'agit d'un malentendu, et il est possible qu'il puisse nous aider à trouver la cause de l'empoisonnement...",
+					"no": "Je comprends... Après tout, nous sommes des inconnus et tu n'es pas obligé de nous croire... Reviens me voir si tu changes d'avis.",
+					"yes": "... vraiment ? Tu feras cela pour nous, alors que nous t'avons attaqué ? Que le Grand Ver veille sur toi ! Fais attention aux Brigands sur ta route... Nous attendons avec impatience de tes nouvelles !"
+				},
+				"magnet7": {
+					"begin": "Tu as vu le Roi ? Tu sais comment soigner Grobourin ? Nous comptons tous sur toi, reviens nous voir avec de bonnes nouvelles !"
+				},
+				"magnet11": {
+					"begin": "Merci pour votre aide... Après votre départ, ces Goupignons sombres se sont emparés de Grobourin. Il semblait que le poison qu'ils utilisaient permettait de le contrôler...",
+					"ok": "Ils ont ensuite utilisé la puissance de Grobourin pour attaquer la Citadelle Royale et tenter de s'emparer de la Magnétite... Heureusement, nous sommes arrivés à temps...",
+					"thanks": "Oui, mais c'était naturel, nous ne pouvions pas laisser Grobourin tout détruire de cette façon. Et c'est grâce à votre Potion que le contrôle a pu être rompu...",
+					"how": "Nous l'avons rapatrié à notre campement. Il est bien amoché, mais il s'en sortira... grâce à vous...",
+					"not": "C'était déjà beaucoup. Le Grand Ver vous a protégé, semble-t-il... Venez nous voir quand vous le voulez au campement, nous vous donnerons accès à notre Boutique secrète...",
+					"thanks2": "Le Capitaine est reparti vers le campement de la Team-W..."
+				}
+			},
+			"choice": {
+				"continue": "Continuer",
+				"magnet6": {
+					"who": "Qui êtes-vous ?",
+					"dont": "Ne rien raconter",
+					"tell": "Raconter que le Roi des Rockys vous envoie",
+					"dont2": "Se taire",
+					"ask": "Non merci, j'ai tout compris !",
+					"again": "Je n'ai pas tout suivi...",
+					"yes": "Sí",
+					"no": "No"
+				},
+				"magnet11": {
+					"ok": "Je comprends...",
+					"thanks": "Merci de votre aide en combat !",
+					"how": "Comment va-t-il ?",
+					"not": "Ce n'était vraiment rien...",
+					"thanks2": "À bientôt !"
+				}
 			}
 		},
 		"dialog": {
@@ -5956,6 +6131,27 @@
 				"tower_won": "Vous avez remporté le contrôle de la Dévoreuse ! Gardez-le jusqu'à minuit pour obtenir ses précieuses graînes !",
 				"grains_credited": "Félicitations ! Votre contrôle des Dévoreuses vous rapporte <b>::count::</b> graîne(s) qui ont été rajoutées à vos Ingrédients.",
 				"stop_defend_tower": "Vous avez relaché le contrôle de la Dévoreuse."
+			}
+		},
+		"magnet": {
+			"name": "La Magnétite",
+			"texts": {
+				"initialAmbush": "Alors que vous approchez du Syphon Siffleur, trois membres de la Team W surgissent et attaquent votre groupe !",
+				"initialAmbushRescue": "Attendez ! Ce Dinoz est bien trop faible pour faire partie des troupes d'élite du Roi Rocky... Nous avons dû faire une erreur sur notre adversaire, excusez nous !",
+				"initialAmbushRegeneration": "Electrosoins",
+				"fightWTeamStart": "Alors que vous approchez, un Dinoz de la Team-W apparaît... vous l'attaquez !",
+				"fightWTeamLost": "Vous ne passerez pas !",
+				"fightWTeamWon1": "Pourquoi vous attaquez-nous ? Nous saurons nous venger !",
+				"fightWTeamWon2": "Vous êtes surement des espions du Roi Rocky ! Vous ne perdez rien pour attendre !",
+				"fightWTeamWon3": "Vous voulez nous exterminer ?!? Vite ! Refugions-nous au camp du sud !",
+				"fightWTeamEnd": "Attends ! Groubourin n'est pas dans son état normal... Puisque tu nous as suivi jusqu'ici, arrêtons de combattre un instant et parlons entre gens civilisés...",
+				"fightDarkDinoz": "Alors que vous arrivez dans les Steppes Magnétiques, d'étranges ombres vous entourent tout à coup. Il semblerait que vous veniez de tomber dans une embuscade...",
+				"fightPotionStolen": "C'est une catastrophe ! Ces drôles de Goupignons enragés se sont emparés de votre Potion Anti-Sehd !",
+				"fightSkingStart": "Vous reconnaissez le Wanwan Grobourin de la Team-W... Il semble être contrôlé par les Goupignons sombres... mais sont-ils suffisamment intelligents pour faire cela seuls ???",
+				"fightCaptainHelp": "Il semble que vous ayez besoin d'un peu d'aide... Team-W : à l'attaaaaaaque !",
+				"fightSkingEnd1": "Après le combat, vous retrouvez sur le sol la Potion Anti-Sehd que vous aviez confectionnée. Vous l'utilisez sur Grobourin afin qu'il retrouve ses esprits...",
+				"fightSkingEnd2": "Le Roi des Rockys et le Capitaine vous attendent pour vous remercier de votre vaillant combat...",
+				"syphonDeath": "Alors que votre Dinoz tente de franchir le Syphon, une violente décharge magnétique le frappe de plein fouet. Sans protection, il s'effondre instantanément..."
 			}
 		}
 	},
