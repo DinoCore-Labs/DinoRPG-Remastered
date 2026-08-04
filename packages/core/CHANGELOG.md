@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.33.0
+
+### Minor Changes
+
+- c8ee30b: Add the Devourer system with PvP encounters, contextual actions, control transfer, and scheduled daily rewards.
+
 ## 0.32.0
 
 ### Minor Changes
