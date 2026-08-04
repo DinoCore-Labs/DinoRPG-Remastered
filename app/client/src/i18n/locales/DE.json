@@ -881,7 +881,8 @@
 			"followed": "Dieser Dinoz ist der Gruppenführer.",
 			"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
 			"dojoTeam": "Dieser Dinoz ist bei einem Wettkampf angemeldet. Er kann die Stufe {max} nicht überschreiten bis der laufende Wettkampf beendet ist.",
-			"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein"
+			"unfreezeCountdown": "Dieser Dinoz ist am Aufwachen und wird um {time} verfügbar sein",
+			"defendingDevourer": "Votre Dinoz est occupé à défendre la Dévoreuse."
 		},
 		"stateReason": {
 			"frozen": "Dein Dinoz ist eingefroren.",
@@ -2244,9 +2245,9 @@
 			"spylon": "Au beau milieu du désert s'élèvent les Pylônes, formation naturelle de Magnétite qui crée continuellement de puissants et dangereux arcs électriques ! Mieux vaut ne pas s'y attarder, on a vite fait d'y être foudroyé.",
 			"slake": "Les sables mouvants des environs sont extrêmement dangereux : trés riches en Magnétite, ils prennent un reflet qui ressemble à s'y mépendre à de l'eau. De nombreux aventuriers assoiffés s'y sont laissés prendre et se sont fait aspirer vivant. On raconte qu'à chaque victime, le Syphon emmet un sifflement mélodique, d'où son nom.",
 			"scanyo": "Entre les haut-plateaux de Toulaho sillonnent les Sentiers de Toutemba, connus pour les nombreux Dinoz disparus dans les éboulements de Magnétite. Le sol est couvert de cailloux tranchants et brûlants, et les parois en Magnétite vénèrent régulièrement des arcs électriques mortels en travers de la route.",
-			"stowr1": "Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. Il existe trois Dévoreuses dans les Steppes Magnétiques, mais on raconte qu'elles ont toutes la même racine unique. Seul un Grand Seigneur serait capable de conserver le contrôle des trois Dévoreuses !",
-			"stowr2": "Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. On dit que celui qui en rassemble 100 verra son voeu exaucé. En attendant, les graînes se revendent pour un très bon prix auprès du Marchand Ambulant.",
-			"stowr3": "Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. D'aprés les légendes nomades, les Dévoreuses se nourissent du sang versé par les victimes cherchant à s'emparer d'elles.",
+			"stowr1": "\"Quiconque capturera la Dévoreuse deviendra riche\". Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. Il existe trois Dévoreuses dans les Steppes Magnétiques, mais on raconte qu'elles ont toutes la même racine unique. Seul un Grand Seigneur serait capable de conserver le contrôle des trois Dévoreuses !",
+			"stowr2": "\"Quiconque capturera la Dévoreuse deviendra riche\". Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. On dit que celui qui en rassemble 100 verra son voeu exaucé. En attendant, les graînes se revendent pour un très bon prix auprès du Marchand Ambulant.",
+			"stowr3": "\"Quiconque capturera la Dévoreuse deviendra riche\". Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. D'aprés les légendes nomades, les Dévoreuses se nourissent du sang versé par les victimes cherchant à s'emparer d'elles.",
 			"sband1": "Les Zaxa sont des pillards de père en fils et sont fort logiquement appréciés pour leur travail propre et sans bavure. Leurs attaques de convois sont même recommandées par les guides touristiques de la région…",
 			"sband2": "Les Emmemma sont des mercenaires sans pitié bien connus pour leur technique d'embuscade “à l'ancienne” : le gros rocher dans le ravin d'abord, puis les coups de massue jusqu'à ce que ça ne bouge plus. Ensuite seulement on ramasse. Pas de tracas ni de blabla.",
 			"sband3": "Les Mattmût sont les spécialistes de la filouterie et des jeux pipés. Moins aggressifs que leurs voisins, ils n'en restent pas moins dangereux, pour peu que vous teniez à votre or. Leur technique consiste à épuiser l'adversaire avec leurs chants traditionnels.",
@@ -2815,7 +2816,9 @@
 		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
 		"confirm": {
 			"stop_concen": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
-			"enter_portal": "Préparez-vous bien, personne ne sait quels dangers vous guettent de l'autre côté !"
+			"enter_portal": "Préparez-vous bien, personne ne sait quels dangers vous guettent de l'autre côté !",
+			"tower_attack": "Prendre le contrôle de la Dévoreuse nécessite de combattre ses défenseurs actuels. Voulez-vous continuer ?",
+			"stop_defend_tower": "Vos dinoz vont cesser de défendre la Dévoreuse. Quelqu'un d'autre pourrait en prendre le contrôle ! Etes-vous sûr de vouloir continuer ?"
 		},
 		"description": {
 			"fight": "Recherchez un monstre à combattre à cet endroit.",
@@ -2851,7 +2854,10 @@
 			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
 			"CEF": "Cher client, bienvenue au Centre d'Entraînement de Fosselave !",
 			"stop_concen": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
-			"enter_portal": "Le portail vers le Monde sombre est ouvert. Votre Dinoz peut désormais le franchir."
+			"enter_portal": "Le portail vers le Monde sombre est ouvert. Votre Dinoz peut désormais le franchir.",
+			"tower_attack": "Un autre joueur contrôle déjà la Dévoreuse. Vous devrez combattre pour pouvoir en prendre le contrôle et récolter ses précieuses graînes.",
+			"tower_defend": "Personne n'a actuellement le contrôle de la dévoreuse. Profitez-en pour en prendre le contrôle !",
+			"stop_defend_tower": "Si vous relachez votre contrôle sur la Dévoreuse, il vous faudra à nouveau combattre pour le regagner. Et d'autres joueurs attendent sûrement cette occasion pour s'en emparer à leur tour !"
 		},
 		"name": {
 			"fight": "Combattre",
@@ -2887,7 +2893,10 @@
 			"fb_tournament": "Rohkraft-Turnier",
 			"CEF": "Centre d'Entraînement de Fosselave",
 			"stop_concen": "Arrêter de se concentrer",
-			"enter_portal": "Entrer dans le Portail"
+			"enter_portal": "Entrer dans le Portail",
+			"tower_attack": "Contrôler la Dévoreuse",
+			"tower_defend": "Défendre la Dévoreuse",
+			"stop_defend_tower": "Relacher le Contrôle"
 		}
 	},
 	"fight": {
@@ -5939,6 +5948,14 @@
 		},
 		"pac": {
 			"name": "Le Parchemin des Aptitudes"
+		},
+		"devourer": {
+			"name": "La Dévoreuse",
+			"texts": {
+				"tower_won": "Vous avez remporté le contrôle de la Dévoreuse ! Gardez-le jusqu'à minuit pour obtenir ses précieuses graînes !",
+				"grains_credited": "Félicitations ! Votre contrôle des Dévoreuses vous rapporte <b>::count::</b> graîne(s) qui ont été rajoutées à vos Ingrédients.",
+				"stop_defend_tower": "Vous avez relaché le contrôle de la Dévoreuse."
+			}
 		}
 	},
 	"reportModal": {
