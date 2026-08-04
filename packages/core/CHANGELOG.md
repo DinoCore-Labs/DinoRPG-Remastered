@@ -1,5 +1,13 @@
 # @dinorpg/core
 
+## 0.34.0
+
+### Minor Changes
+
+- 56e0270: Implement the complete Magnetite scenario, including its dialogs, scripted battles, progression, rewards, and special movement events.
+
+  Add the Dark Goupignon ambush, the final Citadel battle with Team-W reinforcements, the lethal unprotected Syphon crossing, the Negative Magnetite Shard reward, and the Strange Ranger epilogue.
+
 ## 0.33.0
 
 ### Minor Changes
