@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.33.0
+
+### Minor Changes
+
+- c8ee30b: Add the Devourer system with PvP encounters, contextual actions, control transfer, and scheduled daily rewards.
+
 ## 0.32.0
 
 ### Minor Changes
@@ -610,6 +616,17 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.35.0
+
+### Minor Changes
+
+- c8ee30b: Add the Devourer system with PvP encounters, contextual actions, control transfer, and scheduled daily rewards.
+
+### Patch Changes
+
+- Updated dependencies [c8ee30b]
+  - @dinorpg/core@0.33.0
 
 ## 0.34.0
 
@@ -1414,6 +1431,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.34.0
+
+### Minor Changes
+
+- c8ee30b: Add the Devourer system with PvP encounters, contextual actions, control transfer, and scheduled daily rewards.
 
 ## 0.33.0
 
