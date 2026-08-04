@@ -560,8 +560,10 @@ export async function rewardFightVsMonsters(
 	for (const fighter of [...fightResult.attackers, ...fightResult.defenders]) {
 		for (const itemUsed of fighter.itemsUsed) {
 			const itemRef = itemList[itemUsed];
-			// Remove only classic items
-			if (itemRef.itemType === ItemType.CLASSIC) {
+			const isConsumableClassicItem = itemRef.itemType === ItemType.CLASSIC && itemUsed !== Item.GOLDEN_NAPODINO;
+			// Remove only consumable classic items.
+			// The Golden Napodino is a permanent equipped item.
+			if (isConsumableClassicItem) {
 				await removeItemFromDinoz(fighter.dinozId, itemUsed);
 				if (options.autoReequip && fighter.userId === user.id) {
 					const inventoryItem = user.items.find(i => i.itemId === itemUsed);
