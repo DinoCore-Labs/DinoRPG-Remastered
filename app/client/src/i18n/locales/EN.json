@@ -881,7 +881,8 @@
 			"followed": "This Dinoz leads a group.",
 			"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
 			"dojoTeam": "This Dinoz is registered to a tournament. It cannot surpass the level {max} until this tournament is finished.",
-			"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}"
+			"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}",
+			"defendingDevourer": "Votre Dinoz est occupé à défendre la Dévoreuse."
 		},
 		"stateReason": {
 			"frozen": "You Dinoz is frozen",
@@ -2815,7 +2816,9 @@
 		"popupConfirm": "Do you confirm the action {action} for your Dinoz?",
 		"confirm": {
 			"stop_concen": "Your Dinoz may try to stop concentrating at any time.",
-			"enter_portal": "Préparez-vous bien, personne ne sait quels dangers vous guettent de l'autre côté !"
+			"enter_portal": "Préparez-vous bien, personne ne sait quels dangers vous guettent de l'autre côté !",
+			"tower_attack": "Prendre le contrôle de la Dévoreuse nécessite de combattre ses défenseurs actuels. Voulez-vous continuer ?",
+			"stop_defend_tower": "Vos dinoz vont cesser de défendre la Dévoreuse. Quelqu'un d'autre pourrait en prendre le contrôle ! Etes-vous sûr de vouloir continuer ?"
 		},
 		"description": {
 			"fight": "Search for a monster to fight at this location.",
@@ -2851,7 +2854,10 @@
 			"fb_tournament": "Access the BrutForce Tournament.",
 			"CEF": "Dear customer, welcome to the Lavapit Training Center!",
 			"stop_concen": "Your Dinoz may try to stop concentrating at any time.",
-			"enter_portal": "Le portail vers le Monde sombre est ouvert. Votre Dinoz peut désormais le franchir."
+			"enter_portal": "Le portail vers le Monde sombre est ouvert. Votre Dinoz peut désormais le franchir.",
+			"tower_attack": "Un autre joueur contrôle déjà la Dévoreuse. Vous devrez combattre pour pouvoir en prendre le contrôle et récolter ses précieuses graînes.",
+			"tower_defend": "Personne n'a actuellement le contrôle de la dévoreuse. Profitez-en pour en prendre le contrôle !",
+			"stop_defend_tower": "Si vous relachez votre contrôle sur la Dévoreuse, il vous faudra à nouveau combattre pour le regagner. Et d'autres joueurs attendent sûrement cette occasion pour s'en emparer à leur tour !"
 		},
 		"name": {
 			"fight": "Fight",
@@ -2887,7 +2893,10 @@
 			"fb_tournament": "Tournament",
 			"CEF": "Lavapit Training Center",
 			"stop_concen": "Stop concentrating",
-			"enter_portal": "Entrer dans le Portail"
+			"enter_portal": "Entrer dans le Portail",
+			"tower_attack": "Contrôler la Dévoreuse",
+			"tower_defend": "Défendre la Dévoreuse",
+			"stop_defend_tower": "Relacher le Contrôle"
 		}
 	},
 	"fight": {
@@ -5939,6 +5948,14 @@
 		},
 		"pac": {
 			"name": "Le Parchemin des Aptitudes"
+		},
+		"devourer": {
+			"name": "La Dévoreuse",
+			"texts": {
+				"tower_won": "Vous avez remporté le contrôle de la Dévoreuse ! Gardez-le jusqu'à minuit pour obtenir ses précieuses graînes !",
+				"grains_credited": "Félicitations ! Votre contrôle des Dévoreuses vous rapporte <b>::count::</b> graîne(s) qui ont été rajoutées à vos Ingrédients.",
+				"stop_defend_tower": "Vous avez relaché le contrôle de la Dévoreuse."
+			}
 		}
 	},
 	"reportModal": {
