@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.35.0
+
+### Minor Changes
+
+- c8ee30b: Add the Devourer system with PvP encounters, contextual actions, control transfer, and scheduled daily rewards.
+
+### Patch Changes
+
+- Updated dependencies [c8ee30b]
+  - @dinorpg/core@0.33.0
+
 ## 0.34.0
 
 ### Minor Changes
