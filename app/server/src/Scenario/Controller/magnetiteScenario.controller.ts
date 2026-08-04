@@ -1344,7 +1344,7 @@ export async function processMagnetiteFinalAssault(input: ScenarioMoveFightInput
 	 * Grobourin et les renforts Team-W ne sont pas
 	 * transmis à rewardFightVsMonsters.
 	 */
-	const result = await rewardFightVsMonsters(input.team, darkGoupignons, fightProcess, input.toPlace, input.user, {
+	const result = await rewardFightVsMonsters(input.team, enemies, fightProcess, input.toPlace, input.user, {
 		autoReequip: input.autoReequip
 	});
 	let progressed = false;
