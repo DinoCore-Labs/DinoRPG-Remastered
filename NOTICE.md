@@ -63,3 +63,21 @@ SPDX identifier:
 See `LICENSE` for the complete license text.
 
 This notice supplements and does not replace any file-level or upstream copyright, authorship, warranty, or license notice.
+
+## Ruffle
+
+DinoRPG Remastered includes a self-hosted web distribution of Ruffle,
+a Flash Player emulator developed by the Ruffle contributors.
+
+- Component: Ruffle
+- Package: `@ruffle-rs/ruffle`
+- Version: `0.2.0-nightly.2025.11.29`
+- Upstream project: https://github.com/ruffle-rs/ruffle
+- Local distribution: `app/client/public/ruffle/`
+- License: MIT OR Apache-2.0, at the recipient's option
+- Apache-2.0 license text: `app/client/public/ruffle/LICENSE_APACHE`
+- MIT license text: `app/client/public/ruffle/LICENSE_MIT`
+
+Ruffle remains licensed under its own license terms and is not relicensed
+under the GNU Affero General Public License applicable to DinoRPG
+Remastered source code.
