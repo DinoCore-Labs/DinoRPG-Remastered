@@ -1,3 +1,16 @@
+<!--
+  This file contains code derived from or adapted from:
+  Eternaltwin DinoRPG
+  Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/3a73bbc6d751e4916cc5fd2e5f23bc2cfd42fc6d/ed-ui/src/pages/HelpPage.vue
+
+  Copyright in the original contributions remains with the respective
+  authors and contributors.
+
+  Modified by DinoRPG Remastered contributors from 2026-01-25 through 2026-07-01.
+  See NOTICE.md and the Git history for provenance and modification details.
+
+  SPDX-License-Identifier: AGPL-3.0-or-later
+-->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.guide')}`" :header="$t('guide.title')" :sub-header="selectedItem?.name ?? ''" />
 	<div class="intro">
@@ -51,7 +64,6 @@
 				<img :src="getImgURL('icons', 'small_page_down')" />
 				{{ nextItemName }}
 			</button>
-
 			<button @click="goToPage('News')" class="next">
 				<img :src="getImgURL('icons', 'small_delete')" />
 				{{ $t(`guide.text.stop`) }}
