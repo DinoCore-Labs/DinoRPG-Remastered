@@ -15,7 +15,7 @@
 	<div class="fx" @click="displayStatus = !displayStatus">
 		<p>{{ $t('dinozPage.fx') }}</p>
 		<div class="status" :class="displayStatus ? 'displayMe' : ''">
-			<template v-for="(status, index) in dinozStatus" :key="index">
+			<template v-for="status in dinozStatus" :key="status.statusId">
 				<Tippy theme="normal" v-if="statusList.displayed[status.statusId]">
 					<img
 						:src="getImgURL('status', `fx_${statusList.imgName[status.statusId]}`)"
