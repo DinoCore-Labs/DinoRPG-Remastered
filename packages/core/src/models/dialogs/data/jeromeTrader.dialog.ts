@@ -212,7 +212,7 @@ export const jeromeKSteppesDialog = defineDialog({
 			id: 'ok',
 			text: 'npc.jeromeK.choice.steppes.ok',
 			target: 'ok',
-			cond: parseCondition(`hasingr(graine_de_devoreuse,${REQUIRED_DEVOURER_SEEDS})`)
+			cond: parseCondition(`hasingr(${Ingredient.GRAINE_DE_DEVOREUSE},${REQUIRED_DEVOURER_SEEDS})`)
 		}
 	}
 });
