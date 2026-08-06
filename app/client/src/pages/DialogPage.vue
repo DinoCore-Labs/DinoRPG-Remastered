@@ -38,9 +38,10 @@ import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import DZButton from '../components/utils/DZButton.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DialogService } from '../services/dialog.service.js';
-import { FightService } from '../services';
+import { FightService, UserService } from '../services';
 import { MissionService } from '../services/mission.service.js';
 import { sessionStore } from '../store/sessionStore';
+import { userStore } from '../store/userStore';
 
 const route = useRoute();
 const router = useRouter();
@@ -53,6 +54,7 @@ const error = ref<string | null>(null);
 const missionCompleted = ref(false);
 
 const sStore = sessionStore();
+const uStore = userStore();
 
 const dinozId = computed(() => Number(route.params.id));
 const dialogId = computed(() => String(route.params.dialogId));
@@ -237,11 +239,17 @@ async function chooseStep(linkId: string, confirmChoice: boolean) {
 	}
 }
 
+async function refreshUserData(): Promise<void> {
+	const user = await UserService.me();
+	uStore.setUser(user);
+}
+
 async function stop() {
 	loading.value = true;
 	error.value = null;
 	try {
 		await completeMissionIfNeeded();
+		await refreshUserData();
 		await navigateBackToDinoz();
 	} catch (err) {
 		error.value = err instanceof Error ? err.message : 'Impossible de quitter le dialogue';
