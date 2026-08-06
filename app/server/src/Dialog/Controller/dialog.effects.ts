@@ -1,4 +1,4 @@
-import { DialogEffect } from '@dinorpg/core/models/dialogs/dialogEffect.js';
+import { DialogEffect, DialogMoneyType } from '@dinorpg/core/models/dialogs/dialogEffect.js';
 import { DialogPhaseResponse } from '@dinorpg/core/models/dialogs/dialogResponse.js';
 import { RuntimeDialog, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
 import { DialogSpecial } from '@dinorpg/core/models/dialogs/dialogSpecial.js';
@@ -180,6 +180,31 @@ async function removeUserIngredient(
 	});
 }
 
+async function addUserMoney(tx: DialogTransaction, context: DialogContext, moneyType: DialogMoneyType, amount: number) {
+	assertPositiveCount(amount, 'Money amount');
+	await tx.userWallet.upsert({
+		where: {
+			userId_type: {
+				userId: context.user.id,
+				type: moneyType
+			}
+		},
+		create: {
+			userId: context.user.id,
+			type: moneyType,
+			amount
+		},
+		update: {
+			amount: {
+				increment: amount
+			}
+		}
+	});
+	if (moneyType === 'GOLD') {
+		context.user.gold += amount;
+	}
+}
+
 async function removeUserGold(tx: DialogTransaction, context: DialogContext, amount: number) {
 	assertPositiveCount(amount, 'Gold amount');
 	assertEnoughQuantity(context.user.gold, amount, 'gold');
@@ -333,6 +358,9 @@ async function applyDialogEffect(
 			return;
 		case 'giveIngredient':
 			await addUserIngredient(tx, context.user.id, effect.ingredientId, effect.count);
+			return;
+		case 'giveMoney':
+			await addUserMoney(tx, context, effect.moneyType, effect.amount);
 			return;
 		case 'giveRandomItem': {
 			const itemId = pickRandomItemId(effect.itemIds);

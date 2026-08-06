@@ -110,6 +110,7 @@ function validateDangerousGivePatterns(dialog: RuntimeDialog) {
 				case 'giveItem':
 				case 'giveIngredient':
 				case 'giveRandomItem':
+				case 'giveMoney':
 					hasGive = true;
 					break;
 
@@ -129,7 +130,7 @@ function validateDangerousGivePatterns(dialog: RuntimeDialog) {
 		}
 		if (hasGive && !hasTest) {
 			throw new Error(
-				`Giving/using an item or ingredient without scenario increment/test is dangerous in phase "${phase.id}" of dialog "${dialog.id}"`
+				`Giving/using a resource without scenario increment/test is dangerous in phase "${phase.id}" of dialog "${dialog.id}"`
 			);
 		}
 	}
