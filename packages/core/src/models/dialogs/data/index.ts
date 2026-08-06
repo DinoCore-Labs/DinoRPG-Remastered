@@ -9,6 +9,7 @@ import { forcebrutOrganizerDialog } from './forcebrutOrganizer.dialog.js';
 import { forestGuardianDialog } from './forestGuardian.dialog.js';
 import { nicolasHulotDialog } from './hulot.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
+import { jeromeKDinovilleDialog, jeromeKSteppesDialog } from './jeromeTrader.dialog.js';
 import { jovebozeDialog } from './joveboze.dialog.js';
 import { madameXDialog } from './madameX.dialog.js';
 import {
@@ -69,6 +70,7 @@ export const dialogDefinitions = [
 	starquestProgressHintDialog,
 	starquestFinalDialog,
 	forcebrutOrganizerDialog,
+	jeromeKDinovilleDialog,
 	// Iles Atlantéinées
 	strangeHippoDialog,
 	coralMinerDialog,
@@ -107,5 +109,6 @@ export const dialogDefinitions = [
 	magnetiteCitadelGuardAssaultDialog,
 	magnetiteTeamWCaptainDebriefDialog,
 	rockyKingMagnetiteRewardDialog,
-	magnetiteStrangeRangerEpilogueDialog
+	magnetiteStrangeRangerEpilogueDialog,
+	jeromeKSteppesDialog
 ];
