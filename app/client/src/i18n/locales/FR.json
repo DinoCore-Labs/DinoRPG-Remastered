@@ -6153,6 +6153,9 @@
 				"fightSkingEnd2": "Le Roi des Rockys et le Capitaine vous attendent pour vous remercier de votre vaillant combat...",
 				"syphonDeath": "Alors que votre Dinoz tente de franchir le Syphon, une violente décharge magnétique le frappe de plein fouet. Sans protection, il s'effondre instantanément..."
 			}
+		},
+		"jeromeTrader": {
+			"name": "L'affaire Warp Street"
 		}
 	},
 	"reportModal": {
