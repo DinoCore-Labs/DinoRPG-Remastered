@@ -1,5 +1,7 @@
 import { PlaceEnum } from '../enums/PlaceEnum.js';
 
+export type DialogMoneyType = 'GOLD' | 'TREASURE_TICKET';
+
 export type DialogEffect =
 	| { type: 'effect'; effect: string }
 	| { type: 'noEffect'; effect: string }
@@ -21,4 +23,5 @@ export type DialogEffect =
 	| { type: 'gameVar'; variable: string; qty: number }
 	| { type: 'userVar'; variable: string; qty: number }
 	| { type: 'giveIngredient'; ingredientId: number; count: number }
+	| { type: 'giveMoney'; moneyType: DialogMoneyType; amount: number }
 	| { type: 'startConcentration' };
