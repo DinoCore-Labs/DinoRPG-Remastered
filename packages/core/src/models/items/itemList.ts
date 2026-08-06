@@ -2162,7 +2162,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		name: 'bamboo_friend',
 		canBeEquipped: true,
 		canBeUsedNow: false,
-		itemType: ItemType.MAGICAL,
+		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 10,
 		sellable: false,
