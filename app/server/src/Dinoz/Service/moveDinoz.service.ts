@@ -1,7 +1,6 @@
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
-import { TemporaryStatus } from '@dinorpg/core/models/enums/TemporaryStatus.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { placeListv2, SWAMP_FLOODED_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
@@ -18,7 +17,7 @@ import { processScenarioMoveFight } from '../../Scenario/Service/scenarioMoveFig
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { canGoToThisPlace, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
-import { addStatusToDinoz, removeStatusFromDinoz } from '../Controller/dinozStatus.controller.js';
+import { addStatusToDinoz } from '../Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../Controller/getDinozFight.controller.js';
 import { updateDinoz, updateMultipleDinoz } from '../Controller/updateDinoz.controller.js';
 import type { MoveDinozInput } from '../Schema/dinoz.schema.js';
@@ -45,14 +44,6 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 			await updateDinoz(d.id, { leader: { disconnect: true } });
 		}
 		team = team.filter(d => d.life > 0 && d.state === null);
-	}
-	for (const dinozData of team) {
-		//Remove temporary status
-		const tempStatus = dinozData.status.filter(r => r.statusId in TemporaryStatus);
-		if (tempStatus.length > 0) {
-			const promises = tempStatus.map(r => removeStatusFromDinoz(dinozData.id, r.statusId));
-			await Promise.all(promises);
-		}
 	}
 	// Concentration
 	const concentratingMember = team.find(member => member.concentration !== null);
