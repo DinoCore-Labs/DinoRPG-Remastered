@@ -25,7 +25,7 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 
 	const team = await prisma.dinoz.findMany({
 		where: { userId, OR: [{ id: dinozId }, { leaderId: dinozId }] },
-		include: { items: true, skills: true, status: true, catches: true, user: true }
+		include: { items: true, skills: { where: { state: { equals: true } } }, status: true, catches: true, user: true }
 	});
 
 	const leader = team.find(d => d.id === dinozId);
@@ -50,7 +50,17 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 	// Fetch current control
 	const currentControl = await prisma.devourerControl.findUnique({
 		where: { placeId },
-		include: { dinozs: { include: { items: true, skills: true, status: true, catches: true, user: true } } }
+		include: {
+			dinozs: {
+				include: {
+					items: true,
+					skills: { where: { state: { equals: true } } },
+					status: true,
+					catches: true,
+					user: true
+				}
+			}
+		}
 	});
 
 	if (currentControl && currentControl.dinozs.length > 0) {
