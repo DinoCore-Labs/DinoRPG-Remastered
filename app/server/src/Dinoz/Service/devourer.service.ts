@@ -1,9 +1,12 @@
+import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { FightOutcome, type FightResult } from '@dinorpg/core/models/fight/fightResult.js';
+import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { calculateFightBetweenPlayers } from '../../Fight/Service/fight.service.js';
+import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { prisma } from '../../prisma.js';
 import { isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { STANDARD_PVP_RULES } from '../../utils/fight/fight.mapper.js';
@@ -153,6 +156,17 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 			});
 		}
 	});
+
+	// Consume used items
+	for (const fighter of [...fightResult.attackers, ...fightResult.defenders]) {
+		for (const itemUsed of fighter.itemsUsed) {
+			const itemRef = itemList[itemUsed];
+			// Remove only classic items
+			if (itemRef.itemType === ItemType.CLASSIC) {
+				await removeItemFromDinoz(fighter.dinozId, itemUsed);
+			}
+		}
+	}
 
 	const clientFightResult: FightResult = {
 		fighters: fightResult.fighters,
