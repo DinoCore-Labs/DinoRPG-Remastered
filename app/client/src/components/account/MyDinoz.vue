@@ -35,7 +35,7 @@
 				{{ $t('reportModal.reportDinoz') }}
 			</div>
 			<template v-if="dinoz.status && dinoz.status.length > 0" #content>
-				<template v-for="(status, index) in dinoz.status" :key="index">
+				<template v-for="status in dinoz.status" :key="status">
 					<img
 						v-if="statusList.displayed[status as StatutId]"
 						:src="getImgURL('status', `fx_${statusList.imgName[status as StatutId]}`)"
