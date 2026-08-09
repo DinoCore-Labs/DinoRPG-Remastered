@@ -14,37 +14,33 @@ export async function setDinozName(req: FastifyRequest<{ Params: Params; Body: B
 	if (!Number.isFinite(dinozId)) {
 		throw new ExpectedError('invalidId');
 	}
-
 	// newName (trim important pour éviter " Dino" / "Dino ")
 	const name = (req.body?.name ?? '').trim();
-
 	const authedUserId = req.user.id;
-
 	const dinoz = await canDinozRename(dinozId);
-
 	if (!dinoz) {
 		throw new ExpectedError('dinozNotFound', { params: { dinozId } });
 	}
-
-	// Vérifie ownership
+	// Check ownership
 	if (!dinoz.user || dinoz.user.id !== authedUserId) {
-		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to user ${authedUserId}`);
+		throw new ExpectedError('dinozDoesNotBelongToUser', {
+			params: {
+				dinozId: dinoz.id,
+				userId: authedUserId
+			}
+		});
 	}
-
-	// Vérifie droit rename
+	// Check rename rights
 	if (!dinoz.canRename) {
 		throw new ExpectedError(`Can't update dinoz name`);
 	}
-
-	// Vérifie regex
+	// Check regex
 	if (!regexName.test(name)) {
 		throw new ExpectedError('OnlyLettersAndNumbers');
 	}
-
 	await updateDinoz(+req.params.id, {
 		name: req.body.name,
 		canRename: false
 	});
-
 	return reply.send({ ok: true });
 }

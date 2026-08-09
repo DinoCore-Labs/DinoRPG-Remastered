@@ -3392,7 +3392,6 @@
 			"questions4": "**DinoRPG est-t-il gratuit ?** Oui, DinoRPG est un jeu gratuit.",
 			"questions5": "**Comment obtenir plus de pièces d'or ?** Vos Dinoz pourront récupérer des pièces d'or chaque jour en combattant, ou en validant leurs missions. De plus, chaque jour vous obtiendrez un Ticket Quotidien qui vous permettra de récupérer de l'or ou une Boîte contenant divers objets, oeufs de Dinoz. Ou tout simplement vendre vos ingrédients au Marchand Ambulant.",
 			"questions6": "**Comment recommencer le jeu ?** En cas de problème, vous pouvez recommencer le jeu depuis le début. Pour cela il vous suffit d'aller dans la section **Mon Compte / Modifier mes Infos** de façon à effectuer une remise à zéro de votre compte.",
-			"questions7": "En cas de problèmes, bugs, ou de suggestions, merci de nous contacter sur le Discord d'Eternaltwin.",
 			"support": "Vider son cache",
 			"support-1": "Avant toute autre chose, pensez à essayer de **vider le cache** de votre navigateur Internet ! Cette opération simple peut solutionner bon nombre de problèmes techniques.",
 			"support1": "Sur Microsoft Edge :",
@@ -3407,8 +3406,6 @@
 			"support3": "Sur Google Chrome :",
 			"support3-1": "Cliquez sur 'Plus', et choisissez 'Effacer les données de navigation'",
 			"support3-2": "Sélectionnez 'Images et fichiers en cache' et cliquez sur 'Effacer les données'",
-			"support4": "Demander de l'aide",
-			"support4-1": "Vous trouverez souvent la réponse à vos questions directement sur le **Discord d'Eternaltwin**. && && Si ce n'est pas le cas, posez vos questions et quelqu'un de la communauté vous aidera.",
 			"security": "Sécurité de mon compte",
 			"security-1": "**Peu importe qui vous le demande**... && && Ne communiquez jamais vos identifiants et mots de passe !"
 		}

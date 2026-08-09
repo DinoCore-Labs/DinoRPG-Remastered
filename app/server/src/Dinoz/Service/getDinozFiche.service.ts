@@ -19,44 +19,36 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 	if (!Number.isFinite(dinozId)) {
 		throw new ExpectedError('invalidId');
 	}
-
 	const authedId = req.user.id;
-
 	// 1) apply resting and check if mission wait time is over
 	const restInfos = await prisma.$transaction(async tx => {
 		await applyUnfreezeIfNeeded(tx, dinozId);
 		await advanceDinozMissionOnWait(tx, dinozId);
 		return applyRestIfNeeded(tx, dinozId);
 	});
-
 	const ficheRest = restInfos
 		? { regen: restInfos.regen, next: restInfos.next.toISOString(), maxed: restInfos.maxed }
 		: null;
-
 	// 2) retrieve player from dinozId
 	const playerData = await getDinozFicheRequest(dinozId, authedId);
-
 	if (!playerData) {
 		throw new ExpectedError('userNotFound', { params: { authedId } });
 	}
 	if (playerData.dinoz.length === 0) {
 		throw new ExpectedError('dinozNotFound', { params: { dinozId } });
 	}
-
 	const myDinoz = playerData.dinoz.find(d => d.id === dinozId);
-
 	// If player found is different from player who do the request, throw exception
 	if (!myDinoz) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${authedId}`);
+		throw new ExpectedError('dinozDoesNotBelongToUser', {
+			params: {
+				dinozId,
+				userId: authedId
+			}
+		});
 	}
-
-	//const currentTournament = await TournamentManager.getCurrentTournamentState(prisma);
-
-	//const isInTournament = await isDinozInTournament(dinozId);
-
 	// Create the answer that will be sent back
-	const ret = toDinozFiche(playerData, dinozId, ficheRest /*isInTournament ? currentTournament : null*/);
+	const ret = toDinozFiche(playerData, dinozId, ficheRest);
 	ret.actions = await getAvailableActions(myDinoz, playerData);
-
 	return reply.send(ret);
 }

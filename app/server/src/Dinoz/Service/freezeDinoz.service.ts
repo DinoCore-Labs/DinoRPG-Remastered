@@ -38,7 +38,12 @@ export async function freezeDinoz(req: FastifyRequest<{ Params: { id: string } }
 		throw new ExpectedError('No dinoz found');
 	}
 	if (dinoz.userId !== userId) {
-		throw new ExpectedError('Player does not own this dinoz');
+		throw new ExpectedError('dinozDoesNotBelongToUser', {
+			params: {
+				dinozId,
+				userId
+			}
+		});
 	}
 	await assertDinozNotConcentrating(dinozId);
 	assertCanFreezeDinozAction(dinoz);

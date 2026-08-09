@@ -495,8 +495,7 @@ export default defineComponent({
 								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions3') },
 								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions4') },
 								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions5') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions6') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions7') }
+								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions6') }
 							]
 						}
 					],
@@ -531,8 +530,7 @@ export default defineComponent({
 								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.support3-1') },
 								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.support3-2') }
 							]
-						},
-						{ name: this.$t('guide.text.support4'), texts: [this.$t('guide.text.support4-1')] }
+						}
 					],
 					nextItem: 21,
 					prevItem: 19
