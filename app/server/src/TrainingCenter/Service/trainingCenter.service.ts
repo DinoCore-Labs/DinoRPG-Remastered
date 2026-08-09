@@ -38,7 +38,7 @@ export async function startTrainingCenter(
 
 	if (!user) {
 		throw new ExpectedError('userNotFound', {
-			params: { id: authed.id }
+			params: { userId: authed.id }
 		});
 	}
 

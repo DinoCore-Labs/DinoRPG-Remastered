@@ -18,16 +18,20 @@ export async function followDinoz(req: FastifyRequest<{ Params: Params }>, _repl
 	const authed = req.user;
 	const dinozId = +req.params.id;
 	const dinozToFollowId = +req.params.targetId;
-	const player_dinoz = await getDinozFicheRequest(dinozId, authed.id);
-	const player_leader = await getDinozFicheRequest(dinozToFollowId, authed.id);
-	if (!player_dinoz || !player_leader) {
-		throw new ExpectedError('playerNotFound', { params: { id: authed.id } });
+	const user_dinoz = await getDinozFicheRequest(dinozId, authed.id);
+	const user_leader = await getDinozFicheRequest(dinozToFollowId, authed.id);
+	if (!user_dinoz || !user_leader) {
+		throw new ExpectedError('userNotFound', {
+			params: {
+				userId: authed.id
+			}
+		});
 	}
 	if (dinozId === dinozToFollowId) {
 		throw new ExpectedError('Cannot follow itself');
 	}
-	const dinoz = player_dinoz.dinoz.find(d => d.id === dinozId);
-	const leader = player_leader.dinoz.find(d => d.id === dinozToFollowId);
+	const dinoz = user_dinoz.dinoz.find(d => d.id === dinozId);
+	const leader = user_leader.dinoz.find(d => d.id === dinozToFollowId);
 	if (!dinoz || !leader) {
 		throw new ExpectedError('dinozNotFound', {
 			params: {
@@ -39,7 +43,7 @@ export async function followDinoz(req: FastifyRequest<{ Params: Params }>, _repl
 		throw new ExpectedError(`Dinoz has to be named.`);
 	}
 	//Check if leader is not at max followers
-	const max = getMaxFollowers(toDinozFiche(player_leader, leader.id /*, null*/));
+	const max = getMaxFollowers(toDinozFiche(user_leader, leader.id));
 	if (leader.followers.length >= max) {
 		throw new ExpectedError('maxFollowers');
 	}

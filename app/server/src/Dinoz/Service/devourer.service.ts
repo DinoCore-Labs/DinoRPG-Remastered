@@ -17,17 +17,18 @@ const DEVOURER_PLACES = [PlaceEnum.DEVOREUSE_DE_L_EST, PlaceEnum.DEVOREUSE_DU_NO
 export async function devourerAttackHandler(req: FastifyRequest<{ Params: DevourerParams }>, reply: FastifyReply) {
 	const dinozId = Number(req.params.id);
 	const userId = req.user.id;
-
 	const user = await prisma.user.findUnique({ where: { id: userId } });
 	if (!user) {
-		throw new ExpectedError('User not found');
+		throw new ExpectedError('userNotFound', {
+			params: {
+				userId
+			}
+		});
 	}
-
 	const team = await prisma.dinoz.findMany({
 		where: { userId, OR: [{ id: dinozId }, { leaderId: dinozId }] },
 		include: { items: true, skills: true, status: true, catches: true, user: true }
 	});
-
 	const leader = team.find(d => d.id === dinozId);
 	if (!leader) {
 		throw new ExpectedError('dinozNotFound', {
@@ -38,27 +39,22 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 	}
 	if (leader.leaderId) throw new ExpectedError('Only leaders can attack');
 	if (!DEVOURER_PLACES.includes(leader.placeId)) throw new ExpectedError('Not on a Devourer place');
-
 	// Verify everyone is alive and available
 	for (const d of team) {
 		if (!isAlive(d)) throw new ExpectedError('Dead dinoz in team');
 		if (d.state !== null) throw new ExpectedError('Dinoz is busy');
 		if (d.placeId !== leader.placeId) throw new ExpectedError('Dinoz not on same place');
 	}
-
 	const placeId = leader.placeId;
-
 	// Verify team has action
 	for (const d of team) {
 		if (!d.fight) throw new ExpectedError('Dinoz does not have an action available');
 	}
-
 	// Fetch current control
 	const currentControl = await prisma.devourerControl.findUnique({
 		where: { placeId },
 		include: { dinozs: { include: { items: true, skills: true, status: true, catches: true, user: true } } }
 	});
-
 	if (currentControl && currentControl.dinozs.length > 0) {
 		if (user.devourerAttacksLeft <= 0) {
 			throw new ExpectedError('No more attacks left');
@@ -66,7 +62,6 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 		// Remove an attack point
 		await prisma.user.update({ where: { id: userId }, data: { devourerAttacksLeft: { decrement: 1 } } });
 	}
-
 	// Consume fight action
 	for (const d of team) {
 		await prisma.dinoz.update({
@@ -74,7 +69,6 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 			data: { fight: false }
 		});
 	}
-
 	if (!currentControl || currentControl.dinozs.length === 0) {
 		// Take control directly
 		if (currentControl) {
@@ -89,11 +83,9 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 		});
 		return reply.send({ success: true, fight: null, victory: true });
 	}
-
 	// Opponent exists, trigger Hardcore PvP fight!
 	const attackers = team;
 	const defenders = currentControl.dinozs.filter(d => d.life > 0);
-
 	if (defenders.length === 0) {
 		await prisma.$transaction([
 			prisma.devourerControl.update({
@@ -104,7 +96,6 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 		]);
 		return reply.send({ success: true, fight: null, victory: true });
 	}
-
 	const fightResult = calculateFightBetweenPlayers(
 		STANDARD_PVP_RULES,
 		attackers,
@@ -113,9 +104,7 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 		defenders[0]?.user?.cooker ?? false,
 		placeId
 	);
-
 	const victory = fightResult.outcome === FightOutcome.AttackerWin;
-
 	// Apply Hardcore HP loss
 	await prisma.$transaction(async tx => {
 		// Attackers HP loss
@@ -136,7 +125,6 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 				});
 			}
 		}
-
 		if (victory) {
 			// Attacker wins, take control
 			await tx.devourerControl.delete({ where: { placeId } });
@@ -149,7 +137,6 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 			});
 		}
 	});
-
 	const clientFightResult: FightResult = {
 		fighters: fightResult.fighters,
 		goldEarned: 0,
@@ -163,7 +150,6 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 		place: placeId,
 		endText: victory ? { type: 'message', text: 'scenarios.devourer.texts.tower_won' } : undefined
 	};
-
 	return reply.send({ success: true, fight: clientFightResult, victory });
 }
 

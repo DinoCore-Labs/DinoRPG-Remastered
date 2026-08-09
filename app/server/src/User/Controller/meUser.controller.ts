@@ -2,6 +2,7 @@ import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { GAME_RULES_VERSION } from '@dinorpg/core/models/game/gameRules.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
+import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { getMaxXp, orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -142,7 +143,12 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			}
 		});
 		if (!user) {
-			return reply.status(404).send({ message: 'User not found' });
+			throw new ExpectedError('userNotFound', {
+				statusCode: 404,
+				params: {
+					userId
+				}
+			});
 		}
 		if (shouldLogPlayerConnection) {
 			void safeCreateGameLog(

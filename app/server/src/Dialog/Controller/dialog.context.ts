@@ -293,7 +293,7 @@ export async function buildDialogContext(
 		dinozMissions.filter(mission => mission.isCompleted).map(mission => mission.missionKey)
 	);
 	if (!user) {
-		throw new ExpectedError('userNotFound', { params: { authedId: params.userId } });
+		throw new ExpectedError('userNotFound', { params: { userId: params.userId } });
 	}
 	if (!dinoz) {
 		throw new ExpectedError('dinozNotFound', {
