@@ -214,8 +214,8 @@
 		"admin": "DinoRPG [ Panel de Admin ]",
 		"moderation": "DinoRPG [ Moderation ]",
 		"clan": "DinoRPG [ Clan : {clan} ]",
-		"createClan": "DinoRPG [ Créer un Clan ]",
-		"clansList": "DinoRPG [ Clans ]"
+		"createClan": "DinoRPG [ Crear Clan ]",
+		"clansList": "DinoRPG [ Clanes ]"
 	},
 	"adminPage": {
 		"news": {
@@ -281,65 +281,65 @@
 	},
 	"clan": {
 		"icons": {
-			"members": "Nombre de membres",
-			"gold": "Valeur du trésor",
-			"crown": "Chef du Clan"
+			"members": "Número de miembros",
+			"gold": "Valor del tesoro",
+			"crown": "Líder del Clan"
 		},
 		"header": {
 			"title": "Clan: {name}",
-			"infos": "Informations sur le clan",
-			"creation_date": "Créé le {date}"
+			"infos": "Información del clan",
+			"creation_date": "Creado el {date}"
 		},
 		"tabs": {
-			"pages": "Pages du clan",
-			"members": "Membres du clan",
+			"pages": "Páginas del clan",
+			"members": "Lista de miembros",
 			"treasure": "Tesoro del Clan",
-			"discussion": "Forum du Clan",
-			"history": "Historique du clan",
-			"parameters": "Paramètres"
+			"discussion": "Foro",
+			"history": "Histórico",
+			"parameters": "Configuración"
 		},
 		"clanPages": {
 			"button": {
-				"create": "Créer une page",
-				"edit": "Modifier la page",
-				"delete": "Supprimer la page",
-				"join_clan": "Rejoindre le Clan"
+				"create": "Crear nueva página",
+				"edit": "Editar página",
+				"delete": "Eliminar página",
+				"join_clan": "Unirse al clan"
 			},
 			"creation": {
-				"edit": "Modifier la page de clan",
-				"new": "Créer une page de clan",
-				"title": "Titre",
-				"content": "Contenu",
-				"public": "Page publique ?",
+				"edit": "Modificación de una página del clan",
+				"new": "Nueva página del clan",
+				"title": "Título",
+				"content": "Contenido",
+				"public": "Página pública",
 				"action": {
-					"create": "Créer",
-					"edit": "Modifier",
+					"create": "Crear",
+					"edit": "Editar",
 					"cancel": "Cancelar"
 				}
 			}
 		},
 		"members": {
 			"th": {
-				"name": "Nom",
-				"donation": "Dons",
-				"stats": "Stats",
+				"name": "Nombre",
+				"donation": "Donaciones",
+				"stats": "Estadísticas",
 				"actions": "Acciones",
-				"event": "Score d'événement"
+				"event": "Puntos del evento"
 			},
 			"edit": {
-				"disclaimer": "Cette page vous permet de modifier les droits du joueur <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> dans le Clan.",
+				"disclaimer": "Esta página le permite modificar los derechos del jugador <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> en el Clan.",
 				"right": {
-					"MEMBER_EDIT": "Peut changer les droits et surnoms des membres",
-					"PAGE_MANAGE": "Peut gérer les pages du Clan",
-					"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Peut accepter et refuser de nouveaux membres",
-					"MEMBER_EXCLUDE": "Peut renvoyer des membres",
-					"DISCUSSION_DELETE_MESSAGE": "Peut supprimer des messages du fil de discussion",
-					"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan",
-					"CLAN_EDIT_LANG": "Peut changer la langue du Clan",
+					"MEMBER_EDIT": "Puede cambiar los derechos y apodos de los miembros",
+					"PAGE_MANAGE": "Puede gestionar las páginas del Clan",
+					"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Puede aceptar y rechazar nuevos miembros",
+					"MEMBER_EXCLUDE": "Puede expulsar miembros",
+					"DISCUSSION_DELETE_MESSAGE": "Puede eliminar mensajes del hilo de discusión",
+					"CLAN_EDIT_BANNER": "Puede cambiar el banner del Clan",
+					"CLAN_EDIT_LANG": "Puede cambiar el idioma del Clan",
 					"CLAN_EDIT_NAME": "Peut changer le nom du Clan"
 				},
-				"nickname": "Surnom du joueur",
-				"save": "Enregistrer",
+				"nickname": "Apodo del jugador",
+				"save": "Guardar",
 				"saved": "Modifications enregistrées avec succès !"
 			},
 			"request": {
@@ -427,13 +427,13 @@
 		}
 	},
 	"createClan": {
-		"title": "Créer un clan",
-		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
-		"clan_name": "Nom",
-		"clan_langs": "Langues",
-		"clan_description": "Description",
+		"title": "Crear un clan",
+		"information": "Por favor completa la información a continuación para crear tu Clan. La creación de un Clan te costará **{cost}** :gold:",
+		"clan_name": "Nombre del Clan",
+		"clan_langs": "Idiomas del Clan",
+		"clan_description": "Descripción del Clan",
 		"go_back_button": "Cancelar",
-		"create_button": "Créer"
+		"create_button": "Crear"
 	},
 	"manageDinoz": {
 		"title": "Gestión de mis Dinos",
@@ -683,7 +683,7 @@
 		"Missing_device_cookie": "Impossible d’identifier votre navigateur. Veuillez autoriser les cookies et réessayer.",
 		"Too_many_accounts_created_from_this_device_this_month": "Trop de comptes ont été créés depuis ce navigateur ce mois-ci. Veuillez réessayer le mois prochain.",
 		"Too_many_accounts_created_from_this_network_this_month": "Trop de comptes ont été créés depuis ce réseau ce mois-ci. Veuillez réessayer le mois prochain.",
-		"userNotFound": "Le joueur {{authedId}} n'a pas été trouvé.",
+		"userNotFound": "Le joueur {userId} n'a pas été trouvé.",
 		"dinozNotFound": "Le Dinoz {{dinozId}} n'a pas été trouvé.",
 		"dinozDoesNotBelongToUser": "Le Dinoz {dinozId} n'appartient pas au joueur {userId}.",
 		"invalidId": "L'id est invalide",
@@ -699,6 +699,9 @@
 		"OnlyLettersAndNumbers": "¡Nombre incorrecto! Debes usar entre 3 y 32 caracteres, que pueden ser números o letras.",
 		"tooManyActiveDinoz": "Ya tienes demasiados Dinos activos.",
 		"notEnoughIngredients": "Vous n'avez pas assez d'ingrédients.",
+		"itemNotFound": "Cet objet est introuvable.",
+		"itemNotEquipped": "Ce Dinoz n'a pas équipé cet objet.",
+		"itemCannotBeEquipped": "Cet objet ne peut pas être équipé.",
 		"notEnoughItems": "No tienes suficiente cantidad de este objeto.",
 		"notEnoughMoney": "No tienes suficiente oro.",
 		"tooManyMagicItemEquiped": "Tu Dino no puede equiparse con más objetos mágicos.",
@@ -778,7 +781,7 @@
 			"average": "Promedio",
 			"completion": "Completado",
 			"clans": "Clanes",
-			"treasure": "Valeur du trésor"
+			"treasure": "Valor del tesoro"
 		},
 		"th": {
 			"pos": "Pos.",
@@ -1284,6 +1287,7 @@
 			"CursedWand": "Baguette Maudite",
 			"Elemental": "Élémentaire",
 			"Steal": "Vol",
+			"Flee": "Fuite",
 			"Stinger": "Dard",
 			"PoisonedPicks": "Pics empoisonnées",
 			"Contamination": "Contamination"
@@ -3392,7 +3396,6 @@
 			"questions4": "**DinoRPG est-t-il gratuit ?** Oui, DinoRPG est un jeu gratuit.",
 			"questions5": "**Comment obtenir plus de pièces d'or ?** Vos Dinoz pourront récupérer des pièces d'or chaque jour en combattant, ou en validant leurs missions. De plus, chaque jour vous obtiendrez un Ticket Quotidien qui vous permettra de récupérer de l'or ou une Boîte contenant divers objets, oeufs de Dinoz. Ou tout simplement vendre vos ingrédients au Marchand Ambulant.",
 			"questions6": "**Comment recommencer le jeu ?** En cas de problème, vous pouvez recommencer le jeu depuis le début. Pour cela il vous suffit d'aller dans la section **Mon Compte / Modifier mes Infos** de façon à effectuer une remise à zéro de votre compte.",
-			"questions7": "En cas de problèmes, bugs, ou de suggestions, merci de nous contacter sur le Discord d'Eternaltwin.",
 			"support": "Vider son cache",
 			"support-1": "Avant toute autre chose, pensez à essayer de **vider le cache** de votre navigateur Internet ! Cette opération simple peut solutionner bon nombre de problèmes techniques.",
 			"support1": "Sur Microsoft Edge :",
@@ -3407,8 +3410,6 @@
 			"support3": "Sur Google Chrome :",
 			"support3-1": "Cliquez sur 'Plus', et choisissez 'Effacer les données de navigation'",
 			"support3-2": "Sélectionnez 'Images et fichiers en cache' et cliquez sur 'Effacer les données'",
-			"support4": "Demander de l'aide",
-			"support4-1": "Vous trouverez souvent la réponse à vos questions directement sur le **Discord d'Eternaltwin**. && && Si ce n'est pas le cas, posez vos questions et quelqu'un de la communauté vous aidera.",
 			"security": "Sécurité de mon compte",
 			"security-1": "**Peu importe qui vous le demande**... && && Ne communiquez jamais vos identifiants et mots de passe !"
 		}
