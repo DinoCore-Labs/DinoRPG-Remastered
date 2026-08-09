@@ -10,7 +10,7 @@ export async function freezeDinoz(req: FastifyRequest<{ Params: { id: string } }
 	const userId = req.user.id;
 	const dinozId = Number(req.params.id);
 	if (!Number.isInteger(dinozId) || dinozId <= 0) {
-		throw new ExpectedError('Invalid dinoz id');
+		throw new ExpectedError('invalidId');
 	}
 	const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },
@@ -35,7 +35,11 @@ export async function freezeDinoz(req: FastifyRequest<{ Params: { id: string } }
 		}
 	});
 	if (!dinoz) {
-		throw new ExpectedError('No dinoz found');
+		throw new ExpectedError('dinozNotFound', {
+			params: {
+				dinozId
+			}
+		});
 	}
 	if (dinoz.userId !== userId) {
 		throw new ExpectedError('dinozDoesNotBelongToUser', {

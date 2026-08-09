@@ -29,7 +29,13 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 	});
 
 	const leader = team.find(d => d.id === dinozId);
-	if (!leader) throw new ExpectedError('Dinoz not found');
+	if (!leader) {
+		throw new ExpectedError('dinozNotFound', {
+			params: {
+				dinozId
+			}
+		});
+	}
 	if (leader.leaderId) throw new ExpectedError('Only leaders can attack');
 	if (!DEVOURER_PLACES.includes(leader.placeId)) throw new ExpectedError('Not on a Devourer place');
 
@@ -164,21 +170,22 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 export async function devourerDefendStopHandler(req: FastifyRequest<{ Params: DevourerParams }>, reply: FastifyReply) {
 	const dinozId = Number(req.params.id);
 	const userId = req.user.id;
-
 	const dinoz = await prisma.dinoz.findUnique({ where: { id: dinozId } });
-	if (!dinoz || dinoz.userId !== userId) throw new ExpectedError('Dinoz not found');
+	if (!dinoz || dinoz.userId !== userId) {
+		throw new ExpectedError('dinozNotFound', {
+			params: {
+				dinozId
+			}
+		});
+	}
 	if (dinoz.leaderId) throw new ExpectedError('Only leaders can stop defend');
-
 	const placeId = dinoz.placeId;
 	if (!DEVOURER_PLACES.includes(placeId)) throw new ExpectedError('Not on a Devourer place');
-
 	const currentControl = await prisma.devourerControl.findUnique({ where: { placeId } });
 	if (!currentControl || currentControl.userId !== userId) {
 		throw new ExpectedError('You do not control this devourer');
 	}
-
 	await prisma.devourerControl.delete({ where: { placeId } });
-
 	return reply.send({ success: true });
 }
 

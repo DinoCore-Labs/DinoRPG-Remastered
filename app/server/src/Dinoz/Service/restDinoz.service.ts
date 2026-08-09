@@ -22,7 +22,13 @@ export async function startResting(req: FastifyRequest<{ Params: Params }>, repl
 				state: true
 			}
 		});
-		if (!d) throw new ExpectedError('Unknown dinoz');
+		if (!d) {
+			throw new ExpectedError('dinozNotFound', {
+				params: {
+					dinozId
+				}
+			});
+		}
 		if (d.userId !== userId) {
 			throw new ExpectedError('dinozDoesNotBelongToUser', {
 				params: {
