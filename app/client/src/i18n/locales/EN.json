@@ -1285,9 +1285,9 @@
 			"Resistance": "Resistance",
 			"ElementalDisciple": "Elemental Disciple",
 			"CursedWand": "Cursed Wand",
-			"Elemental": "Élémentaire",
-			"Steal": "Vol",
-			"Flee": "Fuite",
+			"Elemental": "Elemental",
+			"Steal": "Steal",
+			"Flee": "Flee",
 			"Stinger": "Dard",
 			"PoisonedPicks": "Pics empoisonnées",
 			"Contamination": "Contamination"
@@ -2970,34 +2970,34 @@
 			"gang3": "Louis Stanislas",
 			"suspc": "Suspect",
 			"suspc1": "Suspected Number 1",
-			"elhelp": "Elève-Elémentaire",
+			"elhelp": "Elemental-Disciple",
 			"pign1": "Fiodor Pignight",
 			"pign2": "Dmitri Pignight",
 			"korven": "Revenge Korgon",
 			"kvenbs": "Masked Korgon",
-			"megoup": "Mégapignon Sombre",
-			"darkg2": "Goupignon Sombre",
+			"megoup": "Dark Megashroom",
+			"darkg2": "Dark Smashroom",
 			"pirao2": "Pirhan-os",
-			"garouz": "Garouzore",
+			"garouz": "Werezore",
 			"piraos": "Pirhan-os",
-			"amanpe": "Amenpenne",
+			"amanpe": "Amenciao",
 			"amanp2": "Amenpenne",
-			"feufol": "Feu-Folle",
-			"towgrd": "Gardien de la Tour",
-			"worm2": "Chtiver",
-			"worm": "Longbrik",
+			"feufol": "Will-o-the-Wisp",
+			"towgrd": "Tower Guardian",
+			"worm2": "Lilworm",
+			"worm": "Earthworm",
 			"scorp": "Scorpwink",
 			"cactus": "Kaktuz",
-			"brig1": "Brigand Zaxa",
-			"brig2": "Brigand Emema",
-			"brig3": "Brigand Mattmût",
-			"wteam1": "[TW]Destructeur",
+			"brig1": "Zaxa Bandit",
+			"brig2": "Emmema Bandit",
+			"brig3": "Mattmut Bandit",
+			"wteam1": "[TW]Destructor",
 			"wteam2": "[TW]Nightmare",
-			"wteam3": "[TW]Tonnerre",
-			"wteamc": "[TW]Capitaine",
-			"wbour1": "[TW]Grobourin",
-			"wbour2": "[TW]Grobourin",
-			"darkgp": "Goupignon Sombre"
+			"wteam3": "[TW]Thunder",
+			"wteamc": "[TW]Captain",
+			"wbour1": "[TW]Bigbeastly",
+			"wbour2": "[TW]Bigbeastly",
+			"darkgp": "Dark Smashroom"
 		},
 		"status": {
 			"asleep": "Asleep",
@@ -3621,12 +3621,12 @@
 		}
 	},
 	"legalNotices": {
-		"pageTitle": "Informations légales",
-		"title": "Mentions légales",
+		"pageTitle": "Legal information",
+		"title": "Legal notice",
 		"updatedAt": "Dernière mise à jour : {date}",
 		"contactEmail": "contact{'@'}dinorpg.fr",
 		"footer": {
-			"link": "Mentions légales"
+			"link": "Legal notice"
 		},
 		"sections": {
 			"publisher": {
@@ -3644,7 +3644,7 @@
 				"addressLine2": "BP 70109",
 				"addressLine3": "57200 Sarreguemines Cedex",
 				"country": "France",
-				"phone": "Téléphone : 09.70.80.89.11",
+				"phone": "Phone: 09.70.80.89.11",
 				"websiteIntro": "Site de l'hébergeur : ",
 				"websiteLabel": "IONOS"
 			},
@@ -4013,19 +4013,19 @@
 		},
 		"speleleologueIce": {
 			"dialog": {
-				"begin": "Ah ! Tiens salut ! Il fait frais ici tu ne trouve pas ?",
-				"talk": "Je viens de passer quelques temps à explorer la Grotte du Zéro Relatif... savais tu que la glace qui la compose est extraordinaire ??? Elle est composée de 3% de Mazotte Solide, un ingrédient rarissime qui conserve une température stable...",
-				"next": "Cela permet à la glace de ne pas dégeler, même pendant l'été quand les flux de magma ralentissent le cycle de refroidissement de la grotte. Bien entendu, le Mazotte Solide est entièrement contraire à toutes les lois connues de la thermodynamique, mais malgré cela il continue d'exister... C'est d'ailleurs un grand casse-tête pour les professeurs de l'Université.",
-				"prof": "Oui ! Certains tels le fameux professeur Eugène ont même mis en place une théorie qui explique l'existence du Mazotte Solide. C'est un peu compliqué car cela nécessite de considérer que l'Univers est composé de 4,24 dimensions : trois dimensions pour le monde normal et 1,24 dimension utilisée uniquement par le Mazotte Solide.",
-				"theo": "Oui, mais cette théorie a de très intéressantes applications, comme le fait de pouvoir prévoir la température d'ébulition d'un Archélion. Son principal défaut est qu'elle prévoit aussi l'existence d'un Monde Sombre parallèle à Dinoland... La communauté scientifique pense donc que le professeur Eugène se trompe, car un tel endroit ne peut pas exister... Tout du moins pas d'après la théorie du professeur Stinstanstein.",
-				"ok": "Enfin, tout cela pour te dire que cette glace est géniale. Tiens, en voilà un petit bout, garde le avec toi pour te rafraîchir quand il fait chaud !"
+				"begin": "Ah! Hello, It's you! It's very cold isn't it?",
+				"talk": "I just spent some time in the Relative Zero Cave ... did you know how complex the ice inside is? It's composed of 3% of Solid Nitrogenious, a rare ingredient which keeps the temperature stable...",
+				"next": "This means that the ice doesn't defrost, even during the summer when magma flows slowly down the cave. Solid Nitrogenious goes against all the rules of thermodynamics, this is why it's so confusing for the University professors.",
+				"prof": "Yup! Some intellectuals, such as the famous Professor Eugene have put forward a theory explaining the existence of Solid Nitrogenious. It's extremely complicated as it requires one to consider that the Universe is composed of 4,24 dimensions: 3 dimensions for the normal world and 1,24 dimensions used only by the Solid Nitrogenious.",
+				"theo": "Crazy right? But this theory is very useful. It can be used to predict the boiling temperature of an Archelion. It's main flaw is that it predicts the existence of a Parallel Dark World to Dinoland ... the scientific community believes that Professor Eugene is wrong as it's simply not possible for a place such as this to exist. Well, at least according to Professor Stinstanstein's theory.",
+				"ok": "In any case, the ice here is awesome! Here, take this small piece, keep it with you to refresh yourself when you're hot!"
 			},
 			"choice": {
-				"talk": "Glaglaglagla...",
-				"next": "Mazotte ?",
-				"prof": "Effectivement...",
-				"theo": "Oulala...",
-				"ok": "... effectivement...."
+				"talk": "Glaglagla...",
+				"next": "Nitrogenious?",
+				"prof": "Indeed...",
+				"theo": "Woaaww...",
+				"ok": "... indeed...."
 			}
 		},
 		"strangePteroz": {
@@ -4216,19 +4216,19 @@
 			}
 		},
 		"woundedSoldier": {
-			"name": "Soldat Blessé",
+			"name": "Injured Soldier",
 			"dialog": {
 				"begin": "Sur le bord d'une rue, vous rencontrez un Soldat Blessé. Il a l'air vraiment mal en point, mais il est encore conscient.",
-				"talk": "................ du.. pain.... F'il te.... plait.... !",
-				"no": "Vous vous éloignez. Après tout, il est peut-être dangereux de soigner un inconnu !",
-				"give": "..... miam.... gloup... miam... MERFI !!! VE VAIS BEAUCOUP MIEUX !!! TU ES MON FAUVEUR !!!",
-				"derien": "ATTENDS !!! VE VAIS TE RECOMPENFER !!! Tu vois, Ve n'étais pas dans Fet état par haVard... Il Fe trouve que v'ai partiFipé à un entrainement FPECIAL dans les Cavernes de FoFFelave. F'est très dûr et Felà coute un peu d'arVent mais F'est grâce à Fa que V'ai pu devenir auFFi coFtaud ! TIENS ! Prends cette Carte de Membre pour ton Dinoz, Ve n'en ai plus beVoin..."
+				"talk": "Some.........bread .......please!",
+				"no": "You don't stop, but instead keep walking, it's dangerous to talk to strangers!",
+				"give": ".....yum.....yum...THANKS!!! I feel much better already, you're my saviour!",
+				"derien": "WAIT!!! I want to reward you! You see, I wasn't always like this. I took part in special training at the Lavapit Caves. It's very hard and very expensive, but it makes you very strong. HERE! Take this Membership Card for your Dinoz, I don't need it anymore..."
 			},
 			"choice": {
 				"talk": "Talk to the strange man",
-				"give": "Donner un Pain Chaud au Soldat",
-				"no": "Ne rien lui donner",
-				"derien": "Euh.. De rien, au revoir"
+				"give": "Give the soldier a warm bread",
+				"no": "Keep walking",
+				"derien": "Please, don't mention it. I'm glad you're feeling better!"
 			}
 		},
 		"baoBob": {
@@ -4472,37 +4472,37 @@
 		"elMaster": {
 			"name": "Elemental Master",
 			"dialog": {
-				"begin": "Vous avez entendu parler du Maître Elémentaire lors de vos études de Maître Dinoz. Il s'agit d'un Maître très respecté, expert dans la compréhension et la manipulation des éléments. De nombreux jeunes Maîtres Dinoz recherchent ses conseils pour pouvoir progresser, mais il est connu pour être plutôt sec et ne se laisse pas facilement approcher...",
-				"talk": "Uh ? Tiens, voilà encore un emmmm...aître qui vient me faire ch...auffer pour que je l'aide. Je commence en a avoir ras-le-c...ortex de ces histoires... Enfin bref... qu'est-ce qu'il veut ?",
-				"ask": "Ben voyons.... Ca veut progresser, mais sans pour autant travailler. Ca veut faire des miracles, sans lever le petit doigt. S'il veut mon conseil, le voilà : bouge-toi-le-c...iboulot !!!",
-				"ask2": ".... et en plus ça insiste... Voyons voir... S'il veut vraiment apprendre quelque chose, il va falloir qu'il rende bien service d'abord. Ensuite on verra s'il est digne de nos conseils !",
-				"talk2": "Bon, alors, il avance comment dans son apprentissage de la vie ? J'ai bien peur qu'on ne puisse pas faire grand chose de lui...",
-				"talk3": "La formation est terminée... Je ne suis pas du genre à faire des compliments, mais la plupart des Dinoz n'arrivent pas au bout, donc... c'est pas mal.",
-				"maudit": "Quoi ? Une malédiction ? Ne me dit pas qu'il a encore été se frotter à ma Baguette de Bois-Maudit ???? Je lui avais pourtant dit de ne surtout pas y toucher !!",
-				"maudit2": "Et bien entendu, maintenant qu'il a fait sa con.... bétise, il veut que je l'aide ! Comme si je n'avais que ça à faire ! Enfin bon... ce qui est fait est fait... Pour lever la malédiction, il faut utiliser un Onguent du Démon. Le seul problème, c'est que la dernière boutique qui en vendait a fait faillite...",
-				"maudit3": "Cependant, j'ai entendu dire qu'une boutique cachée existait, et qu'elle vendait des objets quasi-introuvables ailleurs. Le prix s'en ressent, mais vu les circonstances je ne pense pas qu'il ait le choix...",
-				"maudit4": "D'après les dernières rumeurs, la boutique apparaîtrait aux Ruines Ashpouk à ceux qui sont maudits...",
-				"sphere": "Alors comme ça il veut sa récompense ?!? ..... C'est vrai qu'il a fait preuve d'une certaine persévérance dans sa formation aux cinq éléments... une persévérance proche de la stupidité, mais bon pourquoi pas...",
-				"sphere2": "En tant que professeur, j'espère au moins qu'il aura appris quelque chose pendant ce temps, et qu'il sera reconnaissant envers les gens qui ont gaspillé leur temps en essayant de lui faire rentrer des évidences dans le crâne, et tout particulièrement envers moi !",
-				"sphere3": "Ah ! Au moins, il est poli ! C'est une qualité qui se perd ces temps-ci... Pour la peine, je vais lui offrir une belle récompense. Sait-il au moins ce qu'est une Sphère Elémentaire ?",
-				"sphere4": ".... C'est malheureusement bien ce que je pensais.... Je me demande parfois pourquoi je dois tout le temps expliquer la même chose.... Enfin bref, une Sphère Elémentaire est un objet magique chargé de la puissance d'un élément.",
-				"sphere5": "Il existe donc cinq types de sphères, une pour chaque élément. Quand un Dinoz en absorbe une, il apprend directement une nouvelle compétence liée à cet élément... C'est donc un objet assez puissant...",
-				"sphere6": "Mais ce n'est pas tout ! En cumulant plusieurs Sphères du même élément, le Dinoz peut apprendre des compétences encore plus puissantes ! Il y a ainsi trois niveaux sphériques par élément, soit en tout quinze compétences sphériques... A-t-il bien tout compris ce que je viens de lui dire ?",
-				"sphere7": "Bien ! S'il a tout compris, je lui confie une de mes Sphères ! Attention, comme mon coffre-à-sphères n'est pas très bien rangé, je ne sais jamais sur laquelle je vais tomber...",
-				"end": "Qu'il réfléchisse bien avant d'utiliser sa Sphère, car elle est très précieuse. De nombreux Maîtres-Dinoz seraient d'ailleurs prêts à donner une petite fortune pour en obtenir une, ce qui fait qu'on en trouve parfois en vente à la Place du Marché !"
+				"begin": "You've heard about the Elemental Master during your Dinoz Master studies. He's a very well-respected Master, an expert in the comprehension and manipulation of the elements. Young Dinoz Masters can only wish to be taught by him, but he is known for being rude and unapproachable....",
+				"talk": "Huh? Who's this? Another nuisance no doubt. I'm starting to get sick of these situations .... go on then boy, SPEAK! .... WHAT DO YOU WANT?",
+				"ask": "Of course you want to improve, everyone wants to improve, but no one is willing to put in the effort required. Everyone wants to suddenly improve, but without lifting a finger. If you want my advice, put some effort in!!",
+				"ask2": "Mmmm .... insistent aren't you? Let's see .... if you really want to improve you must be willing to work. Only then will I decide if you're worthy of my advice?",
+				"talk2": "How is your training coming along? I'm afraid we can't do anything with that.",
+				"talk3": "Your training is complete .... I'm not one to give out compliments, but most Dinoz can't complete it, so you're not doing that badly.",
+				"maudit": "What? A curse? Don't tell me that you played with my Cursed Wooden Wand? I told you not to touch it!",
+				"maudit2": "Typical, now that you've made this stupid mistake, you want my help! As if that's the only thing I have to do! In any case .... what's done is done .... to remove the curse, you must use Devil Ointment. There is a small problem though, the shop that was selling it has gone bankrupt....",
+				"maudit3": "However, I've heard tales that a hidden shop exists. This hidden shop is said to sell very rare objects. The prices are very high due to the rarity of the items, but in this instance it seems you don't really have a choice.",
+				"maudit4": "According to rumours, only the cursed who venture to the Ashpouk Ruins are able to see the shop....",
+				"sphere": "You want a reward!? ..... yes it's true you have shown perseverance in your training in each of the five elements ... perseverance in stupidity! But ok, I give in, why not....",
+				"sphere2": "As a teacher, I hope that you have learned something, and that from now on you will be thankful towards those who take their time to teach you new skills,paticularly towards me!",
+				"sphere3": "Ah! At least, you're being polite towards me! People are less and less polite these days, it truly is a rare quality ... you know what? I'm going to reward you for your efforts. Do you know what an Elemental Sphere is?",
+				"sphere4": ".... as I expected ... why is it that I always have to explain myself to you! An Elemental Sphere is a magical item which has been charged with the power of an element.",
+				"sphere5": "There are five varieties of sphere, one for each of the elements. When a Dinoz absorbs one, he will learn a new skill which is directly linked to this element .... it's fair to say that a Sphere is a powerful item.",
+				"sphere6": "Wait! that's not all! By accumulating many spheres of the same element, your Dinoz can learn more powerful skills! This means that there are 3 Sphere Levels for each element, making 15 Sphere Skills in total .... do you understand? I can't tell.",
+				"sphere7": "Well done! If you understand, I'll give you one of my Spheres! But, as my Sphere Chest is not very tidy, I'm not sure which one I'll end up giving you.",
+				"end": "Your Sphere is very precious, you must be absolutely certain before you use it. There are many Dinoz Masters throughout Dino Land who would pay for your Sphere, you can sometimes find them on sale at the Market Place!"
 			},
 			"choice": {
-				"talk": "Parler au Maître Elémentaire",
-				"ask": "J'aimerais progresser !",
+				"talk": "Talk to the Elemental Master",
+				"ask": "I want to improve!",
 				"ask2": "And that's it?",
-				"mission": "Liste des Missions",
-				"maudit": "Malédiction ?",
-				"sphere": "Récompense...",
+				"mission": "List of Missions",
+				"maudit": "Curse?",
+				"sphere": "Reward...",
 				"dot": "...",
 				"sphere3": "Thank you",
-				"sphere4": "Une quoi ?",
-				"again": "Répéter",
-				"understand": "J'ai bien compris",
+				"sphere4": "A what?!?",
+				"again": "Can you explain everything again?",
+				"understand": "I understand",
 				"end": "That's great news!"
 			}
 		},
@@ -4725,7 +4725,7 @@
 				"magnet12": {
 					"not": "Ce n'était rien...",
 					"not2": "Ce n'était rien...",
-					"plan": "Effectivement...",
+					"plan": "Indeed...",
 					"ok": "....",
 					"accept": "J'accepte — chouette !",
 					"thanks": "Merci beaucoup !"
