@@ -27,15 +27,15 @@ export async function reincarnate(
 ) {
 	const dinozId = +req.params.id;
 	const authed = req.user;
-
 	const keepSeed = req.body?.keepSeed ?? false;
-
 	const dinoz = await getDinozToReincarnate(dinozId);
-
 	if (!dinoz) {
-		throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
+		throw new ExpectedError('dinozNotFound', {
+			params: {
+				dinozId
+			}
+		});
 	}
-
 	if (
 		!dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) ||
 		dinoz.level < 40 ||
@@ -43,24 +43,18 @@ export async function reincarnate(
 	) {
 		throw new ExpectedError('reincarnationNotPossible', { params: { id: dinozId } });
 	}
-
 	// 🔎 Check if the dinoz has any equipped items before reincarnation and prevent reincarnation if it has any
 	const equippedItems = dinoz.items.filter(i => i.itemId);
 	if (equippedItems && equippedItems.length > 0) {
 		throw new ExpectedError('reincarnationWithEquippedItems', { params: { id: dinozId } });
 	}
-
 	const race = getRace(dinoz.raceId);
-
 	if (keepSeed) {
 		await removeMoney(authed.id, Math.round(race.price * dinoz.level ** 0.5));
 	}
-
 	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, keepSeed, dinoz.seed));
-
 	// Note: remove all skills *before*  going through the promises because the removal may conflict with adding back the race native skills.
 	await removeAllSkillFromDinoz(dinoz.id);
-
 	const promises = [];
 	if (race.skillId && race.skillId.length > 0) {
 		for (const skill of race.skillId) {
@@ -73,6 +67,5 @@ export async function reincarnate(
 	promises.push(updatePoints(authed.id, -dinoz.level));
 	promises.push(computeUSkillsForUser(authed.id));
 	await Promise.all(promises);
-
 	await addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION);
 }

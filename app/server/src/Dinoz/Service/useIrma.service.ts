@@ -48,7 +48,12 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 		}
 	});
 	if (!dinoz || !dinoz.user) {
-		throw new ExpectedError('dinozNotFound', { statusCode: 404 });
+		throw new ExpectedError('dinozNotFound', {
+			statusCode: 404,
+			params: {
+				dinozId
+			}
+		});
 	}
 	const team = [dinoz, ...(dinoz.followers ?? [])];
 	for (const teamDinoz of team) {

@@ -25,7 +25,11 @@ export async function resurrectDinoz(req: FastifyRequest<{ Params: Params }>, _r
 	// Retrieve dinoz from id
 	const dinozData = await getDinozFicheLiteRequest(dinozId);
 	if (!dinozData) {
-		throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
+		throw new ExpectedError('dinozNotFound', {
+			params: {
+				dinozId
+			}
+		});
 	}
 	// Check ownership
 	if (!dinozData.user || dinozData.user.id !== user.id) {

@@ -23,7 +23,11 @@ export async function disband(req: FastifyRequest<{ Params: Params }>, _reply: F
 	}
 	const dinoz = await getFollowingDinoz(dinozId);
 	if (!dinoz) {
-		throw new ExpectedError('No dinoz found');
+		throw new ExpectedError('dinozNotFound', {
+			params: {
+				dinozId
+			}
+		});
 	}
 	for (const d of dinoz.followers) {
 		await updateDinoz(d.id, { leader: { disconnect: true } });
