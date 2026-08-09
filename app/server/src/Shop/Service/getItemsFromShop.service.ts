@@ -36,7 +36,11 @@ export async function getItemsFromShopHandler(
 		const playerShopData = await getUserShopItemsDataRequest(userId);
 
 		if (!playerShopData) {
-			throw new ExpectedError(`Player ${userId} doesn't exist.`);
+			throw new ExpectedError('userNotFound', {
+				params: {
+					userId
+				}
+			});
 		}
 
 		checkDinozPlace(tempShop, playerShopData, shopId);
@@ -57,7 +61,7 @@ export async function getItemsFromShopHandler(
 			}
 			const itemReference = Object.values(itemList).find(item => item.itemId === itemSold.id);
 			if (!itemReference) {
-				throw new ExpectedError(`Item ${itemSold.id} does not exist`);
+				throw new ExpectedError('itemNotFound');
 			}
 			return {
 				id: itemSold.id,

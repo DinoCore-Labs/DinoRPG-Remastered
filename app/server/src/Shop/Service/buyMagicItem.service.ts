@@ -26,26 +26,20 @@ export async function buyMagicItem({
 }: BuyMagicItemParams) {
 	// quantité possédée de golden napodinos
 	const napoItemId = itemList[Item.GOLDEN_NAPODINO].itemId;
-
 	const playerNapoData = playerItems.find(i => i.itemId === napoItemId);
 	const napoOwned = playerNapoData?.quantity ?? 0;
-
 	const totalCost = itemReference.price * quantityBought;
 	const newQuantity = currentQuantity + quantityBought;
-
 	// 💰 check napodinos
 	if (napoOwned < totalCost) {
-		throw new ExpectedError('Not enough golden napodinos');
+		throw new ExpectedError('notEnoughItems');
 	}
-
 	// 📦 check stockage
 	if (newQuantity > itemReference.maxQuantity) {
-		throw new ExpectedError('Not enough storage');
+		throw new ExpectedError('maxQuantityInventory');
 	}
-
 	// 💸 paiement
 	await removeItem(userId, napoItemId, totalCost);
-
 	if (log) {
 		void safeCreateGameLog(
 			{

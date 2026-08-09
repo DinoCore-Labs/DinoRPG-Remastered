@@ -68,11 +68,13 @@ export async function useItemHandler(
 	}
 	const item = Object.values(itemList).find(i => i.itemId === itemId);
 	if (!item) {
-		throw new ExpectedError(`This item didn't exist`, { statusCode: 404 });
+		throw new ExpectedError('itemNotFound', {
+			statusCode: 404
+		});
 	}
 	const itemData = dinoz.user.items.find(i => i.itemId === itemId);
 	if (!itemData || itemData.quantity <= 0) {
-		throw new ExpectedError(`notEnoughItems`, { params: { id: itemData?.id } });
+		throw new ExpectedError('notEnoughItems');
 	}
 	const effects: ItemFeedBack[] = [];
 	let createdDinoz: UseItemResult['createdDinoz'];
@@ -165,10 +167,8 @@ export async function useItemHandler(
 		default:
 			throw new ExpectedError('Unsupported item effect', { statusCode: 400 });
 	}
-
 	await removeItem(dinoz.user.id, itemData.itemId, 1);
 	await incrementUserStat(StatTracking.ITEM_USED, dinoz.user.id, 1);
-
 	return {
 		effects,
 		createdDinoz
@@ -192,7 +192,6 @@ async function hatchEgg(item: ItemFiche, authed: Pick<User, 'id'>) {
 		}
 	}
 	let randomDisplay = '0';
-
 	switch (item.itemId) {
 		case itemList[Item.MOUEFFE_EGG_RARE].itemId:
 			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
@@ -288,27 +287,21 @@ async function hatchEgg(item: ItemFiche, authed: Pick<User, 'id'>) {
 			randomDisplay = generateDinozDisplay(raceList[race], '0', '0', '0');
 			break;
 	}
-
 	const dinozCreated = await createDinoz(initializeDinoz(raceList[race], authed.id, randomDisplay));
-
 	const skillsToAdd: SkillDetails[] = Object.values(skillList).filter(
 		skill => skill.raceId?.some(raceId => raceId === raceList[race].raceId) && skill.isBaseSkill
 	);
-
 	await addMultipleSkillToDinoz(
 		dinozCreated.id,
 		skillsToAdd.map(skill => skill.id)
 	);
-
 	await updateDinozCount(authed.id, 1);
 	await updatePoints(authed.id, 1);
-
 	const newDinoz: UserForDinozFiche = {
 		id: authed.id,
 		engineer: false,
 		items: [],
 		rewards: [],
-		//quests: [],
 		ranking: null,
 		dinoz: [
 			{
@@ -318,15 +311,10 @@ async function hatchEgg(item: ItemFiche, authed: Pick<User, 'id'>) {
 				missions: [],
 				items: [],
 				followers: []
-				//concentration: null,
-				//TournamentTeam: [],
-				//build: null
 			}
 		]
 	};
-
 	const createdDinoz = toDinozFiche(newDinoz, dinozCreated.id);
-
 	return {
 		race,
 		dinoz: createdDinoz
@@ -349,17 +337,13 @@ async function useSpecialItem(
 	if (!dinoz.user) {
 		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to a player.`);
 	}
-
 	if (item.effect?.category !== ItemEffect.SPECIAL) return;
-
 	switch (item.effect.value) {
 		case 'ointment':
 			if (!dinoz.status.some(status => status.statusId === DinozStatusId.CURSED)) {
 				throw new ExpectedError(`NotCursed`, { params: { id: dinoz.user } });
 			}
-
 			await removeStatusFromDinoz(dinoz.id, DinozStatusId.CURSED);
-
 			return {
 				specialEffect: {
 					category: ItemEffect.SPECIAL,
@@ -368,10 +352,8 @@ async function useSpecialItem(
 					quantity: 1
 				}
 			};
-
 		case 'rice':
 			await useRice(dinoz);
-
 			return {
 				specialEffect: {
 					category: ItemEffect.SPECIAL,
@@ -380,14 +362,11 @@ async function useSpecialItem(
 					quantity: 1
 				}
 			};
-
 		case 'pampleboum': {
 			const initialLife = dinoz.life;
 			const healed = heal(dinoz, 15 * (dinoz.user.cooker ? 1.1 : 1));
 			const lifeHealed = Math.max(0, healed.life - initialLife);
-
 			await updateDinoz(dinoz.id, healed);
-
 			const pamp = dinoz.user.items.find(entry => entry.itemId === itemList[Item.PAMPLEBOUM_PIT].itemId);
 			if (!pamp) {
 				await addItemToInventory(dinoz.user.id, itemList[Item.PAMPLEBOUM_PIT].itemId, 1);
@@ -399,9 +378,7 @@ async function useSpecialItem(
 			) {
 				await addItemToInventory(dinoz.user.id, itemList[Item.PAMPLEBOUM_PIT].itemId, 1);
 			}
-
 			await incrementUserStat(StatTracking.HEAL_PV, dinoz.user.id, lifeHealed);
-
 			return {
 				specialEffect: {
 					category: ItemEffect.SPECIAL,
@@ -412,17 +389,13 @@ async function useSpecialItem(
 				extraEffects: [{ category: ItemEffect.HEAL, value: lifeHealed }]
 			};
 		}
-
 		case 'box': {
 			if (!item.name) {
 				throw new ExpectedError(`Special item with ${item.effect.value} value is not implemented`);
 			}
-
 			const boxOpened = boxOpening(item);
 			await addItemToInventory(dinoz.user.id, boxOpened.item.itemId, boxOpened.quantity);
-
 			const wonItem = itemList[boxOpened.item.itemId as Item];
-
 			return {
 				specialEffect: {
 					category: ItemEffect.SPECIAL,
@@ -432,7 +405,6 @@ async function useSpecialItem(
 				}
 			};
 		}
-
 		default:
 			throw new ExpectedError(`Special item with ${item.effect.value} value is not implemented`);
 	}
