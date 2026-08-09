@@ -46,14 +46,14 @@ export async function equipItem(
 		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${authed.id}`);
 	}
 	if (!itemToEquip) {
-		throw new ExpectedError(`This item doesn't exist`);
+		throw new ExpectedError('itemNotFound');
 	}
 	if (!itemToEquip.canBeEquipped) {
-		throw new ExpectedError(`Item n°${itemToEquip.itemId} cannot be equiped`);
+		throw new ExpectedError('itemCannotBeEquipped');
 	}
 	const playerItemQuantity = dinoz.user.items.find(i => i.itemId === itemId)?.quantity ?? 0;
 	if (playerItemQuantity === 0 && equip) {
-		throw new ExpectedError(`You don't have enought ${itemToEquip.itemId}`);
+		throw new ExpectedError('notEnoughItems');
 	}
 	// Limite objets magiques
 	if (equip && itemToEquip.itemType === ItemType.MAGICAL) {
@@ -73,13 +73,15 @@ export async function equipItem(
 	}
 	const dinozItem = dinoz.items.find(i => i.itemId === itemId);
 	if (!dinozItem && !equip) {
-		throw new ExpectedError(`This dinoz don't have this item equiped`);
+		throw new ExpectedError('itemNotEquipped');
 	}
 	if (equip) {
 		await removeItem(dinoz.user.id, itemToEquip.itemId, 1);
 		dinoz.items.push(await addItemToDinoz(dinoz.id, itemToEquip.itemId));
 	} else {
-		if (!dinozItem) throw new ExpectedError(`This dinoz doesn't have this item equiped`);
+		if (!dinozItem) {
+			throw new ExpectedError('itemNotEquipped');
+		}
 		const itemMaxQuantity = getItemMaxQuantity(dinoz.user, itemToEquip);
 		if (playerItemQuantity >= itemMaxQuantity) {
 			throw new ExpectedError('maxQuantityInventory');

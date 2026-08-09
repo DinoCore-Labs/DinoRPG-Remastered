@@ -50,7 +50,6 @@ export async function buyItemHandler(
 		const playerItemData = playerShopData.items.find(i => i.itemId === itemId);
 
 		if (quantityBought <= 0) {
-			// throw new ExpectedError(translate('wrongQuantity', req.user));
 			throw new ExpectedError('Wrong quantity');
 		}
 
@@ -64,7 +63,9 @@ export async function buyItemHandler(
 
 		// Récup item référence
 		const itemReference = structuredClone(Object.values(itemList).find(i => i.itemId === itemId));
-		if (!itemReference) throw new ExpectedError(`Item ${itemId} doesn't exist.`);
+		if (!itemReference) {
+			throw new ExpectedError('itemNotFound');
+		}
 
 		// Prix shop (merchant -10% au flying shop)
 		itemReference.price =
@@ -150,13 +151,12 @@ export async function buyItemHandler(
 			const currentGold = goldWallet?.amount ?? 0;
 
 			if (currentGold < itemReference.price * quantityBought) {
-				throw new ExpectedError('Not enough money');
+				throw new ExpectedError('notEnoughMoney');
 			}
 
 			// Storage check
 			if (itemReference.quantity + quantityBought > itemReference.maxQuantity) {
-				// throw new ExpectedError(translate('notEnoughStorage', req.user));
-				throw new ExpectedError('Not enough storage');
+				throw new ExpectedError('maxQuantityInventory');
 			}
 
 			await removeMoney(userId, itemReference.price * quantityBought);
