@@ -213,7 +213,7 @@
 		"bank": "DinoRPG [ Banque de Dinoland ]",
 		"admin": "DinoRPG [ Panel de Admin ]",
 		"moderation": "DinoRPG [ Moderation ]",
-		"clan": "DinoRPG [ Clan : {clan} ]",
+		"clan": "DinoRPG [ Clan: {clan} ]",
 		"createClan": "DinoRPG [ Crear Clan ]",
 		"clansList": "DinoRPG [ Clanes ]"
 	},
@@ -6179,7 +6179,7 @@
 			"clanPages": "Description / Pages inappropriées",
 			"other": "Autre"
 		},
-		"reportUser": "Signaler ce joueur",
+		"reportUser": "Reportar al jugador",
 		"reportClan": "Signaler ce clan",
 		"reportDinoz": "Signaler ce dinoz"
 	}
