@@ -28,7 +28,7 @@ export async function getGatherGridHandler(
 
 	const user = await getDinozGatherData(dinozId, authed.id);
 	if (!user) {
-		throw new ExpectedError('userNotFound', { params: { id: authed.id } });
+		throw new ExpectedError('userNotFound', { params: { userId: authed.id } });
 	}
 
 	const dinozData = user.dinoz.find(d => d.id === dinozId);

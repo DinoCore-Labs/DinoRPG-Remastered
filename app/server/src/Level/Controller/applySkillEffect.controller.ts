@@ -13,20 +13,19 @@ export async function applySkillEffect(
 	dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>,
 	skill: SkillDetails,
 	userId: string
-	//event?: GameDinozUsage
 ) {
 	if (skill.effects) {
 		const updates = applySkillToDinoz(skill.effects, dinoz);
-		/*if (event) {
-			await updateEventDinoz(dinoz.id, updates);
-		} else {*/
 		await updateDinoz(dinoz.id, updates);
-		//}
 	}
 	if (userId && skill.type === SkillType.U /*&& !event*/) {
 		const user = await getUserUniqueSkills(userId);
 		if (!user) {
-			throw new ExpectedError(`This player doesn't exist.`);
+			throw new ExpectedError('userNotFound', {
+				params: {
+					userId
+				}
+			});
 		}
 		applyUSkillEffect(user, skill);
 		await setUser(userId, user);
@@ -37,7 +36,11 @@ export async function computeUSkillsForUser(userId: string) {
 	// Get player with its U skills
 	const user = await getUserUniqueSkills(userId);
 	if (!user) {
-		throw new ExpectedError(`This player doesn't exist.`);
+		throw new ExpectedError('userNotFound', {
+			params: {
+				userId
+			}
+		});
 	}
 	// Get player dinoz list
 	const dinozList = await getAllDinozFromAccount(userId);

@@ -77,7 +77,7 @@ function buildMissionStartText(
 export async function processMissionFight(input: StartMissionGoalFightInput): Promise<FightResult> {
 	const user = await getDinozFightDataRequest(input.dinozId, input.userId);
 	if (!user) {
-		throw new ExpectedError('userNotFound', { params: { id: input.userId } });
+		throw new ExpectedError('userNotFound', { params: { userId: input.userId } });
 	}
 	const dinozData = user.dinoz.find(dinoz => dinoz.id === input.dinozId);
 	if (!dinozData) {

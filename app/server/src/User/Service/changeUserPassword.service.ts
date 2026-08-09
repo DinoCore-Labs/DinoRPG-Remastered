@@ -20,7 +20,11 @@ export async function changeUserPassword(
 		}
 	});
 	if (!user) {
-		throw new ExpectedError('Utilisateur introuvable');
+		throw new ExpectedError('userNotFound', {
+			params: {
+				userId
+			}
+		});
 	}
 	const isCurrentPasswordValid = await bcrypt.compare(oldPassword, user.password);
 	if (!isCurrentPasswordValid) {

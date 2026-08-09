@@ -1,3 +1,4 @@
+import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { GameLogType } from '../../../../prisma/index.js';
@@ -63,7 +64,12 @@ export async function getAdminUserDetailsHandler(request: FastifyRequest, reply:
 	}
 	const user = await getAdminUserDetails(parsedParams.data.id);
 	if (!user) {
-		return reply.status(404).send({ message: 'User not found' });
+		throw new ExpectedError('userNotFound', {
+			statusCode: 404,
+			params: {
+				userId: parsedParams.data.id
+			}
+		});
 	}
 	return reply.status(200).send(user);
 }

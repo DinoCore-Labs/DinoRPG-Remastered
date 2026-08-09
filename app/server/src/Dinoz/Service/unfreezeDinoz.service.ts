@@ -39,7 +39,11 @@ export async function unfreezeDinoz(req: FastifyRequest<{ Params: { id: string }
 		});
 	}
 	if (!user) {
-		throw new ExpectedError('No user found');
+		throw new ExpectedError('userNotFound', {
+			params: {
+				userId
+			}
+		});
 	}
 	if (dinoz.userId !== userId) {
 		throw new ExpectedError('dinozDoesNotBelongToUser', {

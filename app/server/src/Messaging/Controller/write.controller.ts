@@ -20,18 +20,14 @@ export async function createThread(
 	}
 ) {
 	await assertMessagingAccess(userId);
-
 	const message = assertValidMessageContent(input.message);
 	const participantIds = [...new Set(input.participantIds)].filter(participantId => participantId !== userId);
-
 	if (participantIds.length === 0) {
 		throw new ExpectedError('At least one participant is required');
 	}
-
 	if (participantIds.length > 9) {
 		throw new ExpectedError('Too many participants');
 	}
-
 	const [author, participants] = await Promise.all([
 		prisma.user.findUnique({
 			where: {
@@ -54,30 +50,27 @@ export async function createThread(
 			}
 		})
 	]);
-
 	if (!author) {
-		throw new ExpectedError('User not found');
+		throw new ExpectedError('userNotFound', {
+			params: {
+				userId
+			}
+		});
 	}
-
 	if (participants.length !== participantIds.length) {
 		throw new ExpectedError('One or more participants were not found');
 	}
-
 	const isDirect = participantIds.length === 1;
-
 	if (isDirect) {
 		const existingConversation = await findExistingDirectConversation(userId, participantIds[0]!);
-
 		if (existingConversation) {
 			await answerThread(existingConversation.id, userId, { message });
 			return getThreadBasicById(existingConversation.id, userId);
 		}
 	}
-
 	const now = new Date();
 	const type: ConversationTypeValue = isDirect ? 'DIRECT' : 'GROUP';
 	const title = isDirect ? null : normalizeThreadTitle(input.title);
-
 	const createdConversation = await prisma.conversation.create({
 		data: {
 			type,
@@ -108,7 +101,6 @@ export async function createThread(
 			id: true
 		}
 	});
-
 	return getThreadBasicById(createdConversation.id, userId);
 }
 
@@ -121,9 +113,7 @@ export async function answerThread(
 ) {
 	await assertMessagingAccess(userId);
 	await ensureThreadParticipant(threadId, userId);
-
 	const message = assertValidMessageContent(input.message);
-
 	const [author, conversation] = await Promise.all([
 		prisma.user.findUnique({
 			where: {
@@ -144,21 +134,20 @@ export async function answerThread(
 			}
 		})
 	]);
-
 	if (!author) {
-		throw new ExpectedError('User not found');
+		throw new ExpectedError('userNotFound', {
+			params: {
+				userId
+			}
+		});
 	}
-
 	if (!conversation) {
 		throw new ExpectedError('Conversation not found');
 	}
-
 	if (conversation.type === 'SYSTEM') {
 		throw new ExpectedError('Cannot answer a system conversation');
 	}
-
 	const now = new Date();
-
 	await prisma.$transaction(async tx => {
 		await tx.message.create({
 			data: {
@@ -168,7 +157,6 @@ export async function answerThread(
 				senderNameSnapshot: author.name
 			}
 		});
-
 		await tx.conversation.update({
 			where: {
 				id: threadId
@@ -177,7 +165,6 @@ export async function answerThread(
 				updatedAt: now
 			}
 		});
-
 		await tx.participant.updateMany({
 			where: {
 				conversationId: threadId,
@@ -189,7 +176,6 @@ export async function answerThread(
 				isArchived: false
 			}
 		});
-
 		await tx.participant.updateMany({
 			where: {
 				conversationId: threadId,
@@ -203,6 +189,5 @@ export async function answerThread(
 			}
 		});
 	});
-
 	return getThread(threadId, userId);
 }
