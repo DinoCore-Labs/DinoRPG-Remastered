@@ -683,7 +683,7 @@
 		"Missing_device_cookie": "Could not identify your browser. Please allow cookies and try again.",
 		"Too_many_accounts_created_from_this_device_this_month": "Too many accounts were created from this browser this month. Please try again next month.",
 		"Too_many_accounts_created_from_this_network_this_month": "Too many accounts were created from this network this month. Please try again next month.",
-		"userNotFound": "The player {{authedId}} was not found.",
+		"userNotFound": "The player {userId} was not found.",
 		"dinozNotFound": "The Dinoz {{id}} was not found.",
 		"dinozDoesNotBelongToUser": "Dinoz {dinozId} doesn't belong to player {userId}.",
 		"invalidId": "id was not found.",
@@ -699,6 +699,9 @@
 		"OnlyLettersAndNumbers": "Incorrect name ! You can only use between 3 and 16 letters or numbers.",
 		"tooManyActiveDinoz": "You have too many active Dinoz.",
 		"notEnoughIngredients": "You don't have enough ingredients.",
+		"itemNotFound": "Cet objet est introuvable.",
+		"itemNotEquipped": "Ce Dinoz n'a pas équipé cet objet.",
+		"itemCannotBeEquipped": "Cet objet ne peut pas être équipé.",
 		"notEnoughItems": "You don't have enough of this item.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or",
 		"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
@@ -1284,6 +1287,7 @@
 			"CursedWand": "Cursed Wand",
 			"Elemental": "Élémentaire",
 			"Steal": "Vol",
+			"Flee": "Fuite",
 			"Stinger": "Dard",
 			"PoisonedPicks": "Pics empoisonnées",
 			"Contamination": "Contamination"
@@ -3392,7 +3396,6 @@
 			"questions4": "**Is DinoRPG free ?** Yes, DinoRPG is a free game.",
 			"questions5": "**How can I get more gold coins?** Your Dinoz can earn gold coins every day by battling or completing missions. In addition, every day, you will obtain a Daily Ticket that will either give you gold or a Box that contains various objects. Or simply, gather ingredients and sell them to the Wandering Merchant.",
 			"questions6": "**How to restart the game?** In case of a problem, you can restart the game from the beginning. To do this, simply go to the **My Account / Edit my Info** section to reset your account.",
-			"questions7": "In case of issues, bugs, or suggestions, please contact us on the Eternaltwin Discord.",
 			"support": "...Clearing your cache :",
 			"support-1": "Before anything else, consider trying **to clear the cache* of your web browser! This simple operation can solve many technical problems.",
 			"support1": "On Microsoft Edge :",
@@ -3407,8 +3410,6 @@
 			"support3": "On Google Chrome :",
 			"support3-1": "Click on 'More', and choose 'Clear browsing data'.",
 			"support3-2": "Select 'Cached images and files' and click on 'Clear data'.",
-			"support4": "...Requesting help :",
-			"support4-1": "You will often find the answer to your questions directly on **the Eternaltwin Discord**. && && If not, ask your questions and someone from the community will assist you.",
 			"security": "...Account Security :",
 			"security-1": "**No matter who asks for it**... && && **Never** disclose your login credentials and passwords !"
 		}
