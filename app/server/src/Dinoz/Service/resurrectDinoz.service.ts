@@ -27,9 +27,14 @@ export async function resurrectDinoz(req: FastifyRequest<{ Params: Params }>, _r
 	if (!dinozData) {
 		throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
 	}
-	// Check ownership (user au lieu de player)
+	// Check ownership
 	if (!dinozData.user || dinozData.user.id !== user.id) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to user.`);
+		throw new ExpectedError('dinozDoesNotBelongToUser', {
+			params: {
+				dinozId,
+				userId: user.id
+			}
+		});
 	}
 	if (dinozData.life > 0) {
 		throw new ExpectedError(`${dinozData.name} is not dead`);
@@ -55,7 +60,6 @@ export async function resurrectDinoz(req: FastifyRequest<{ Params: Params }>, _r
 		})
 	);
 	await incrementUserStat(StatTracking.DEATHS, dinozData.user.id, 1);
-
 	safeCreateGameLog({
 		type: GameLogType.Revive,
 		userId: dinozData.user.id,

@@ -38,7 +38,12 @@ export async function unfreezeDinoz(req: FastifyRequest<{ Params: { id: string }
 		throw new ExpectedError('No user found');
 	}
 	if (dinoz.userId !== userId) {
-		throw new ExpectedError('Player does not own this dinoz');
+		throw new ExpectedError('dinozDoesNotBelongToUser', {
+			params: {
+				dinozId,
+				userId
+			}
+		});
 	}
 	const activeDinozCount = await getActiveDinozCount(userId);
 	const maxDinoz = getUserMaxDinoz({

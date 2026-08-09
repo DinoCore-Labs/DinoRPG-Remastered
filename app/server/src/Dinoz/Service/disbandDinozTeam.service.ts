@@ -12,17 +12,19 @@ type Params = {
 export async function disband(req: FastifyRequest<{ Params: Params }>, _reply: FastifyReply) {
 	const authed = req.user;
 	const dinozId = +req.params.id;
-
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(authed.id, dinozId))) {
-		throw new ExpectedError('Player does not own this dinoz');
+		throw new ExpectedError('dinozDoesNotBelongToUser', {
+			params: {
+				dinozId,
+				userId: authed.id
+			}
+		});
 	}
 	const dinoz = await getFollowingDinoz(dinozId);
-
 	if (!dinoz) {
 		throw new ExpectedError('No dinoz found');
 	}
-
 	for (const d of dinoz.followers) {
 		await updateDinoz(d.id, { leader: { disconnect: true } });
 	}

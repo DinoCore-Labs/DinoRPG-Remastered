@@ -20,15 +20,17 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 	if (!Number.isFinite(dinozId)) {
 		throw new ExpectedError('invalidId', { statusCode: 400 });
 	}
-
 	const userId = req.user.id;
-
 	// Check ownership
 	const isOwner = await ownsDinoz(userId, dinozId);
 	if (!isOwner) {
-		throw new ExpectedError('Player does not own this dinoz', { statusCode: 403 });
+		throw new ExpectedError('dinozDoesNotBelongToUser', {
+			params: {
+				dinozId,
+				userId
+			}
+		});
 	}
-
 	const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },
 		select: {
@@ -48,23 +50,17 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 	if (!dinoz || !dinoz.user) {
 		throw new ExpectedError('dinozNotFound', { statusCode: 404 });
 	}
-
 	const team = [dinoz, ...(dinoz.followers ?? [])];
-
 	for (const teamDinoz of team) {
 		await assertDinozNotConcentrating(teamDinoz.id);
 	}
-
 	const irmaItemId = itemList[Item.POTION_IRMA].itemId;
 	const irmaQuantity = dinoz.user.items?.find(i => i.itemId === irmaItemId);
-
 	// On consomme une Irma seulement quand remaining === 0 ET (fight=false OU gather=false)
 	const neededIrma = team.filter(d => d.remaining === 0 && (!d.fight || !d.gather)).length;
-
 	if (neededIrma > 0 && (!irmaQuantity || irmaQuantity.quantity < neededIrma)) {
 		throw new ExpectedError('notEnoughIrma', { statusCode: 400 });
 	}
-
 	// Réactive fight/gather. Si remaining > 0, on décrémente.
 	for (const dino of team.filter(d => !d.fight || !d.gather)) {
 		if (dino.remaining > 0) {
@@ -80,12 +76,10 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 			});
 		}
 	}
-
 	if (neededIrma > 0) {
 		await removeItem(dinoz.user.id, irmaItemId, neededIrma);
 		await incrementUserStat(StatTracking.ITEM_USED, dinoz.user.id, neededIrma);
 	}
-
 	return reply.send({
 		category: ItemEffect.ACTION,
 		value: neededIrma
