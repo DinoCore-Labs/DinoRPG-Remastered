@@ -466,12 +466,12 @@
 			"futurTitle": "Dinolandian Future",
 			"futureInfo1": {
 				"text1": "Maître Zenith et le dojo",
-				"text2": "Le tournoi inter dojo (event PVP)",
+				"text2": "The Inter-Dojo Tournament (PVP)",
 				"text3": "Bug fixes"
 			},
 			"futureInfo2": {
-				"text1": "Mayor Zenith and the Dojo",
-				"text2": "The Inter-Dojo Tournament (PVP)",
+				"text1": "Le scénario des steppes",
+				"text2": "De nouveaux PNJ et de nouvelles missions",
 				"text3": "Bug fixes"
 			},
 			"futureInfo3": {
@@ -610,7 +610,7 @@
 	"toast": {
 		"Account_banned_until": "Votre compte est banni jusqu'au {date} à {time} à cause de : {reason}.",
 		"Account_muted_until": "Vous êtes rendu muet jusqu'au {date} à {time} à cause de : {reason}.",
-		"Account_banned": "Votre compte est banni.",
+		"Account_banned": "Your account is banned.",
 		"autoReequipSuccess": "Objet(s) rééquipé(s) automatiquement : {items}",
 		"autoReequipMissing": "Objet(s) manquant(s) pour le rééquipement : {items}",
 		"heal": "Your Dinoz has been healed for {value} :hp:.",
@@ -683,7 +683,7 @@
 		"Missing_device_cookie": "Could not identify your browser. Please allow cookies and try again.",
 		"Too_many_accounts_created_from_this_device_this_month": "Too many accounts were created from this browser this month. Please try again next month.",
 		"Too_many_accounts_created_from_this_network_this_month": "Too many accounts were created from this network this month. Please try again next month.",
-		"userNotFound": "The player {{authedId}} was not found.",
+		"userNotFound": "The player {userId} was not found.",
 		"dinozNotFound": "The Dinoz {{id}} was not found.",
 		"dinozDoesNotBelongToUser": "Dinoz {dinozId} doesn't belong to player {userId}.",
 		"invalidId": "id was not found.",
@@ -699,6 +699,9 @@
 		"OnlyLettersAndNumbers": "Incorrect name ! You can only use between 3 and 16 letters or numbers.",
 		"tooManyActiveDinoz": "You have too many active Dinoz.",
 		"notEnoughIngredients": "You don't have enough ingredients.",
+		"itemNotFound": "Cet objet est introuvable.",
+		"itemNotEquipped": "Ce Dinoz n'a pas équipé cet objet.",
+		"itemCannotBeEquipped": "Cet objet ne peut pas être équipé.",
 		"notEnoughItems": "You don't have enough of this item.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or",
 		"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
@@ -1282,8 +1285,9 @@
 			"Resistance": "Resistance",
 			"ElementalDisciple": "Elemental Disciple",
 			"CursedWand": "Cursed Wand",
-			"Elemental": "Élémentaire",
-			"Steal": "Vol",
+			"Elemental": "Elemental",
+			"Steal": "Steal",
+			"Flee": "Flee",
 			"Stinger": "Dard",
 			"PoisonedPicks": "Pics empoisonnées",
 			"Contamination": "Contamination"
@@ -2245,9 +2249,9 @@
 			"spylon": "Located in the middle of the desert are the Pylons, a natural formation of Lodestone that continually creates the mighty electric arcs! It's better to not stay here too long, as you may be electrocuted by the Pylons.",
 			"slake": "The quicksand here is extremely dangerous: full of Lodestone, it appears just like water. Many thirsty adventurers have fallen for this intricate trap and have been swallowed alive. People say that for each victim, the Syphon emits a melodic whistle, hence it's haunting name.",
 			"scanyo": "Between the high plateau of Neerheeven are the Neerhel Paths. Notorious due to the many Dinoz who have fallen victim to the Lodestone rockfalls. The ground is covered by jagged and burning stones, and the lodestone rock faces regularly generate deadly electric arcs in the middle of the road.",
-			"stowr1": "Dinoz Masters have fought for eternity to take control of the Devourer's daily seed production. There are three Devourers in the Magnetic Steppes, but people say that they all have the same origin. Only a Great Lord will be able to capture and control the three Devourers!",
-			"stowr2": "Dinoz Masters have fought for eternity to take control of the Devourer's daily seed production. People say that whoever gathers 100 seeds will see his wish granted. In the meantime, the seeds are resold for a very good price to the Traveling Merchant.",
-			"stowr3": "Dinoz Masters have fought for eternity to take control of the Devourer's daily seed production. According to the legend of the Nomads, Devourers feed on the blood shed by their victims.",
+			"stowr1": "\"Quiconque capturera la Dévoreuse deviendra riche\". Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. Il existe trois Dévoreuses dans les Steppes Magnétiques, mais on raconte qu'elles ont toutes la même racine unique. Seul un Grand Seigneur serait capable de conserver le contrôle des trois Dévoreuses !",
+			"stowr2": "\"Quiconque capturera la Dévoreuse deviendra riche\". Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. On dit que celui qui en rassemble 100 verra son voeu exaucé. En attendant, les graînes se revendent pour un très bon prix auprès du Marchand Ambulant.",
+			"stowr3": "\"Quiconque capturera la Dévoreuse deviendra riche\". Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. D'aprés les légendes nomades, les Dévoreuses se nourissent du sang versé par les victimes cherchant à s'emparer d'elles.",
 			"sband1": "The Zaxa have always been pillagers and are highly logical, renowned for their flawless skill and errorless work. Their convoy attacks are even recognized by local tourist guides…",
 			"sband2": "The Emmemma are pitiless mercenaries well known for their ancient ambush tactics. First, they send massive boulders into the ravine, then attack with clubs until their foes have been beaten an inch within their lives. Then they scavenge. Only then do we pick up. No arguing no hassling.",
 			"sband3": "The Mattmut are the specialists of filtering and piped-up games. Less aggressive than their neighbors, they are no less dangerous, provided you hold your gold. Their technique consists of exhausting the opponent with their traditional songs.",
@@ -2966,27 +2970,34 @@
 			"gang3": "Louis Stanislas",
 			"suspc": "Suspect",
 			"suspc1": "Suspected Number 1",
-			"elhelp": "Elève-Elémentaire",
+			"elhelp": "Elemental-Disciple",
 			"pign1": "Fiodor Pignight",
 			"pign2": "Dmitri Pignight",
 			"korven": "Revenge Korgon",
 			"kvenbs": "Masked Korgon",
-			"megoup": "Mégapignon Sombre",
-			"darkg2": "Goupignon Sombre",
+			"megoup": "Dark Megashroom",
+			"darkg2": "Dark Smashroom",
 			"pirao2": "Pirhan-os",
-			"garouz": "Garouzore",
+			"garouz": "Werezore",
 			"piraos": "Pirhan-os",
-			"amanpe": "Amenpenne",
+			"amanpe": "Amenciao",
 			"amanp2": "Amenpenne",
-			"feufol": "Feu-Folle",
-			"towgrd": "Gardien de la Tour",
-			"worm2": "Chtiver",
-			"worm": "Longbrik",
+			"feufol": "Will-o-the-Wisp",
+			"towgrd": "Tower Guardian",
+			"worm2": "Lilworm",
+			"worm": "Earthworm",
 			"scorp": "Scorpwink",
 			"cactus": "Kaktuz",
-			"brig1": "Brigand Zaxa",
-			"brig2": "Brigand Emema",
-			"brig3": "Brigand Mattmût"
+			"brig1": "Zaxa Bandit",
+			"brig2": "Emmema Bandit",
+			"brig3": "Mattmut Bandit",
+			"wteam1": "[TW]Destructor",
+			"wteam2": "[TW]Nightmare",
+			"wteam3": "[TW]Thunder",
+			"wteamc": "[TW]Captain",
+			"wbour1": "[TW]Bigbeastly",
+			"wbour2": "[TW]Bigbeastly",
+			"darkgp": "Dark Smashroom"
 		},
 		"status": {
 			"asleep": "Asleep",
@@ -3385,7 +3396,6 @@
 			"questions4": "**Is DinoRPG free ?** Yes, DinoRPG is a free game.",
 			"questions5": "**How can I get more gold coins?** Your Dinoz can earn gold coins every day by battling or completing missions. In addition, every day, you will obtain a Daily Ticket that will either give you gold or a Box that contains various objects. Or simply, gather ingredients and sell them to the Wandering Merchant.",
 			"questions6": "**How to restart the game?** In case of a problem, you can restart the game from the beginning. To do this, simply go to the **My Account / Edit my Info** section to reset your account.",
-			"questions7": "In case of issues, bugs, or suggestions, please contact us on the Eternaltwin Discord.",
 			"support": "...Clearing your cache :",
 			"support-1": "Before anything else, consider trying **to clear the cache* of your web browser! This simple operation can solve many technical problems.",
 			"support1": "On Microsoft Edge :",
@@ -3400,8 +3410,6 @@
 			"support3": "On Google Chrome :",
 			"support3-1": "Click on 'More', and choose 'Clear browsing data'.",
 			"support3-2": "Select 'Cached images and files' and click on 'Clear data'.",
-			"support4": "...Requesting help :",
-			"support4-1": "You will often find the answer to your questions directly on **the Eternaltwin Discord**. && && If not, ask your questions and someone from the community will assist you.",
 			"security": "...Account Security :",
 			"security-1": "**No matter who asks for it**... && && **Never** disclose your login credentials and passwords !"
 		}
@@ -3613,12 +3621,12 @@
 		}
 	},
 	"legalNotices": {
-		"pageTitle": "Informations légales",
-		"title": "Mentions légales",
+		"pageTitle": "Legal information",
+		"title": "Legal notice",
 		"updatedAt": "Dernière mise à jour : {date}",
 		"contactEmail": "contact{'@'}dinorpg.fr",
 		"footer": {
-			"link": "Mentions légales"
+			"link": "Legal notice"
 		},
 		"sections": {
 			"publisher": {
@@ -3636,7 +3644,7 @@
 				"addressLine2": "BP 70109",
 				"addressLine3": "57200 Sarreguemines Cedex",
 				"country": "France",
-				"phone": "Téléphone : 09.70.80.89.11",
+				"phone": "Phone: 09.70.80.89.11",
 				"websiteIntro": "Site de l'hébergeur : ",
 				"websiteLabel": "IONOS"
 			},
@@ -4003,10 +4011,10 @@
 				"thanks": "Yes, thanks a lot!"
 			}
 		},
-		"speleleologue_ice": {
+		"speleleologueIce": {
 			"dialog": {
 				"begin": "Ah! Hello, It's you! It's very cold isn't it?",
-				"talk": "I just spent some time in the Relative Zero Cave ... did you know how complex the ice inside is? It's composed of 3% of Solid Nitrogenious, a rare ingredient which keeps the temperature stable....",
+				"talk": "I just spent some time in the Relative Zero Cave ... did you know how complex the ice inside is? It's composed of 3% of Solid Nitrogenious, a rare ingredient which keeps the temperature stable...",
 				"next": "This means that the ice doesn't defrost, even during the summer when magma flows slowly down the cave. Solid Nitrogenious goes against all the rules of thermodynamics, this is why it's so confusing for the University professors.",
 				"prof": "Yup! Some intellectuals, such as the famous Professor Eugene have put forward a theory explaining the existence of Solid Nitrogenious. It's extremely complicated as it requires one to consider that the Universe is composed of 4,24 dimensions: 3 dimensions for the normal world and 1,24 dimensions used only by the Solid Nitrogenious.",
 				"theo": "Crazy right? But this theory is very useful. It can be used to predict the boiling temperature of an Archelion. It's main flaw is that it predicts the existence of a Parallel Dark World to Dinoland ... the scientific community believes that Professor Eugene is wrong as it's simply not possible for a place such as this to exist. Well, at least according to Professor Stinstanstein's theory.",
@@ -4119,6 +4127,16 @@
 					"begin": "I thought I should let you know that all the Dark Dinoz you have met up until now were only newbies that we train in this region of Dinoland... the Dinoz of Caushemesh are far stronger. Even your Venerable will be no match for our strongest Dinoz masters!",
 					"next2": "I'm a man of my word. Here's a reward to convince you of the superiority of Caushemesh technology. I only have one, so use it well... it's a bracelet made of Tik, you can equip it on the Dinoz of your choice..."
 				},
+				"magnet2": {
+					"begin": "......... uhmm, aurais-je été repéré ??? .....",
+					"view": "Avant que vous ayez pu vous approcher, le Rôdeur a mystérieusement disparu. Que peut-il bien manigancer ici..."
+				},
+				"magnet12": {
+					"begin": "Alors c'était donc toi.......",
+					"ask": "Oui ! En plus de faire échouer mon plan, tu me poursuis et comptes peut-être pouvoir m'arrêter ?",
+					"euh": "Sache que je n'oublierai rien de ta participation ! Je dois maintenant retourner faire mon rapport aux maîtres de Caushemesh... Tu as de la chance, je suis pressé, mais la prochaine fois que nous nous rencontrerons, je te ferai payer tes actions !",
+					"end": "Le Rôdeur a mystérieusement disparu... Il semblait très en colère contre vous..."
+				},
 				"afterSpy": {
 					"begin": "Maintenant libéré de sa mission d'espionnage, le rôdeur s'est installé tranquillement non loin de dinoplaza. Les doigts de pied en éventail, il se détend au soleil... Mieux vaut le voir ici qu'en train de manigancer quelque chose de louche..."
 				}
@@ -4137,7 +4155,13 @@
 				"next": "And...",
 				"next2": "(...)",
 				"more": "...",
-				"mission": "Accept the mission"
+				"mission": "Accept the mission",
+				"magnet2View": "Surveiller le Rôdeur",
+				"magnet12": {
+					"ask": "Moi ?",
+					"euh": "Uh...",
+					"end": "..."
+				}
 			}
 		},
 		"venerable": {
@@ -4192,19 +4216,19 @@
 			}
 		},
 		"woundedSoldier": {
-			"name": "Soldat Blessé",
+			"name": "Injured Soldier",
 			"dialog": {
 				"begin": "Sur le bord d'une rue, vous rencontrez un Soldat Blessé. Il a l'air vraiment mal en point, mais il est encore conscient.",
-				"talk": "................ du.. pain.... F'il te.... plait.... !",
-				"no": "Vous vous éloignez. Après tout, il est peut-être dangereux de soigner un inconnu !",
-				"give": "..... miam.... gloup... miam... MERFI !!! VE VAIS BEAUCOUP MIEUX !!! TU ES MON FAUVEUR !!!",
-				"derien": "ATTENDS !!! VE VAIS TE RECOMPENFER !!! Tu vois, Ve n'étais pas dans Fet état par haVard... Il Fe trouve que v'ai partiFipé à un entrainement FPECIAL dans les Cavernes de FoFFelave. F'est très dûr et Felà coute un peu d'arVent mais F'est grâce à Fa que V'ai pu devenir auFFi coFtaud ! TIENS ! Prends cette Carte de Membre pour ton Dinoz, Ve n'en ai plus beVoin..."
+				"talk": "Some.........bread .......please!",
+				"no": "You don't stop, but instead keep walking, it's dangerous to talk to strangers!",
+				"give": ".....yum.....yum...THANKS!!! I feel much better already, you're my saviour!",
+				"derien": "WAIT!!! I want to reward you! You see, I wasn't always like this. I took part in special training at the Lavapit Caves. It's very hard and very expensive, but it makes you very strong. HERE! Take this Membership Card for your Dinoz, I don't need it anymore..."
 			},
 			"choice": {
 				"talk": "Talk to the strange man",
-				"give": "Donner un Pain Chaud au Soldat",
-				"no": "Ne rien lui donner",
-				"derien": "Euh.. De rien, au revoir"
+				"give": "Give the soldier a warm bread",
+				"no": "Keep walking",
+				"derien": "Please, don't mention it. I'm glad you're feeling better!"
 			}
 		},
 		"baoBob": {
@@ -4448,37 +4472,37 @@
 		"elMaster": {
 			"name": "Elemental Master",
 			"dialog": {
-				"begin": "Vous avez entendu parler du Maître Elémentaire lors de vos études de Maître Dinoz. Il s'agit d'un Maître très respecté, expert dans la compréhension et la manipulation des éléments. De nombreux jeunes Maîtres Dinoz recherchent ses conseils pour pouvoir progresser, mais il est connu pour être plutôt sec et ne se laisse pas facilement approcher...",
-				"talk": "Uh ? Tiens, voilà encore un emmmm...aître qui vient me faire ch...auffer pour que je l'aide. Je commence en a avoir ras-le-c...ortex de ces histoires... Enfin bref... qu'est-ce qu'il veut ?",
-				"ask": "Ben voyons.... Ca veut progresser, mais sans pour autant travailler. Ca veut faire des miracles, sans lever le petit doigt. S'il veut mon conseil, le voilà : bouge-toi-le-c...iboulot !!!",
-				"ask2": ".... et en plus ça insiste... Voyons voir... S'il veut vraiment apprendre quelque chose, il va falloir qu'il rende bien service d'abord. Ensuite on verra s'il est digne de nos conseils !",
-				"talk2": "Bon, alors, il avance comment dans son apprentissage de la vie ? J'ai bien peur qu'on ne puisse pas faire grand chose de lui...",
-				"talk3": "La formation est terminée... Je ne suis pas du genre à faire des compliments, mais la plupart des Dinoz n'arrivent pas au bout, donc... c'est pas mal.",
-				"maudit": "Quoi ? Une malédiction ? Ne me dit pas qu'il a encore été se frotter à ma Baguette de Bois-Maudit ???? Je lui avais pourtant dit de ne surtout pas y toucher !!",
-				"maudit2": "Et bien entendu, maintenant qu'il a fait sa con.... bétise, il veut que je l'aide ! Comme si je n'avais que ça à faire ! Enfin bon... ce qui est fait est fait... Pour lever la malédiction, il faut utiliser un Onguent du Démon. Le seul problème, c'est que la dernière boutique qui en vendait a fait faillite...",
-				"maudit3": "Cependant, j'ai entendu dire qu'une boutique cachée existait, et qu'elle vendait des objets quasi-introuvables ailleurs. Le prix s'en ressent, mais vu les circonstances je ne pense pas qu'il ait le choix...",
-				"maudit4": "D'après les dernières rumeurs, la boutique apparaîtrait aux Ruines Ashpouk à ceux qui sont maudits...",
-				"sphere": "Alors comme ça il veut sa récompense ?!? ..... C'est vrai qu'il a fait preuve d'une certaine persévérance dans sa formation aux cinq éléments... une persévérance proche de la stupidité, mais bon pourquoi pas...",
-				"sphere2": "En tant que professeur, j'espère au moins qu'il aura appris quelque chose pendant ce temps, et qu'il sera reconnaissant envers les gens qui ont gaspillé leur temps en essayant de lui faire rentrer des évidences dans le crâne, et tout particulièrement envers moi !",
-				"sphere3": "Ah ! Au moins, il est poli ! C'est une qualité qui se perd ces temps-ci... Pour la peine, je vais lui offrir une belle récompense. Sait-il au moins ce qu'est une Sphère Elémentaire ?",
-				"sphere4": ".... C'est malheureusement bien ce que je pensais.... Je me demande parfois pourquoi je dois tout le temps expliquer la même chose.... Enfin bref, une Sphère Elémentaire est un objet magique chargé de la puissance d'un élément.",
-				"sphere5": "Il existe donc cinq types de sphères, une pour chaque élément. Quand un Dinoz en absorbe une, il apprend directement une nouvelle compétence liée à cet élément... C'est donc un objet assez puissant...",
-				"sphere6": "Mais ce n'est pas tout ! En cumulant plusieurs Sphères du même élément, le Dinoz peut apprendre des compétences encore plus puissantes ! Il y a ainsi trois niveaux sphériques par élément, soit en tout quinze compétences sphériques... A-t-il bien tout compris ce que je viens de lui dire ?",
-				"sphere7": "Bien ! S'il a tout compris, je lui confie une de mes Sphères ! Attention, comme mon coffre-à-sphères n'est pas très bien rangé, je ne sais jamais sur laquelle je vais tomber...",
-				"end": "Qu'il réfléchisse bien avant d'utiliser sa Sphère, car elle est très précieuse. De nombreux Maîtres-Dinoz seraient d'ailleurs prêts à donner une petite fortune pour en obtenir une, ce qui fait qu'on en trouve parfois en vente à la Place du Marché !"
+				"begin": "You've heard about the Elemental Master during your Dinoz Master studies. He's a very well-respected Master, an expert in the comprehension and manipulation of the elements. Young Dinoz Masters can only wish to be taught by him, but he is known for being rude and unapproachable....",
+				"talk": "Huh? Who's this? Another nuisance no doubt. I'm starting to get sick of these situations .... go on then boy, SPEAK! .... WHAT DO YOU WANT?",
+				"ask": "Of course you want to improve, everyone wants to improve, but no one is willing to put in the effort required. Everyone wants to suddenly improve, but without lifting a finger. If you want my advice, put some effort in!!",
+				"ask2": "Mmmm .... insistent aren't you? Let's see .... if you really want to improve you must be willing to work. Only then will I decide if you're worthy of my advice?",
+				"talk2": "How is your training coming along? I'm afraid we can't do anything with that.",
+				"talk3": "Your training is complete .... I'm not one to give out compliments, but most Dinoz can't complete it, so you're not doing that badly.",
+				"maudit": "What? A curse? Don't tell me that you played with my Cursed Wooden Wand? I told you not to touch it!",
+				"maudit2": "Typical, now that you've made this stupid mistake, you want my help! As if that's the only thing I have to do! In any case .... what's done is done .... to remove the curse, you must use Devil Ointment. There is a small problem though, the shop that was selling it has gone bankrupt....",
+				"maudit3": "However, I've heard tales that a hidden shop exists. This hidden shop is said to sell very rare objects. The prices are very high due to the rarity of the items, but in this instance it seems you don't really have a choice.",
+				"maudit4": "According to rumours, only the cursed who venture to the Ashpouk Ruins are able to see the shop....",
+				"sphere": "You want a reward!? ..... yes it's true you have shown perseverance in your training in each of the five elements ... perseverance in stupidity! But ok, I give in, why not....",
+				"sphere2": "As a teacher, I hope that you have learned something, and that from now on you will be thankful towards those who take their time to teach you new skills,paticularly towards me!",
+				"sphere3": "Ah! At least, you're being polite towards me! People are less and less polite these days, it truly is a rare quality ... you know what? I'm going to reward you for your efforts. Do you know what an Elemental Sphere is?",
+				"sphere4": ".... as I expected ... why is it that I always have to explain myself to you! An Elemental Sphere is a magical item which has been charged with the power of an element.",
+				"sphere5": "There are five varieties of sphere, one for each of the elements. When a Dinoz absorbs one, he will learn a new skill which is directly linked to this element .... it's fair to say that a Sphere is a powerful item.",
+				"sphere6": "Wait! that's not all! By accumulating many spheres of the same element, your Dinoz can learn more powerful skills! This means that there are 3 Sphere Levels for each element, making 15 Sphere Skills in total .... do you understand? I can't tell.",
+				"sphere7": "Well done! If you understand, I'll give you one of my Spheres! But, as my Sphere Chest is not very tidy, I'm not sure which one I'll end up giving you.",
+				"end": "Your Sphere is very precious, you must be absolutely certain before you use it. There are many Dinoz Masters throughout Dino Land who would pay for your Sphere, you can sometimes find them on sale at the Market Place!"
 			},
 			"choice": {
-				"talk": "Parler au Maître Elémentaire",
-				"ask": "J'aimerais progresser !",
+				"talk": "Talk to the Elemental Master",
+				"ask": "I want to improve!",
 				"ask2": "And that's it?",
-				"mission": "Liste des Missions",
-				"maudit": "Malédiction ?",
-				"sphere": "Récompense...",
+				"mission": "List of Missions",
+				"maudit": "Curse?",
+				"sphere": "Reward...",
 				"dot": "...",
 				"sphere3": "Thank you",
-				"sphere4": "Une quoi ?",
-				"again": "Répéter",
-				"understand": "J'ai bien compris",
+				"sphere4": "A what?!?",
+				"again": "Can you explain everything again?",
+				"understand": "I understand",
 				"end": "That's great news!"
 			}
 		},
@@ -4605,6 +4629,158 @@
 				"yes": "Yes, definitely!",
 				"ok": "Yes, thanks!",
 				"no": "Hmmm, no thanks... I need to train my Dinoz"
+			}
+		},
+		"sGarde": {
+			"name": "Garde de la Citadelle",
+			"dialog": {
+				"magnet0": {
+					"begin": "Bonjour étranger... Le Roi est bien trop occupé actuellement avec cette tentative de vol de la Magnétite, il ne pourra pas te recevoir pour l'instant !"
+				},
+				"magnet10": {
+					"begin": "Étranger !! Vite ! Le Roi est attaqué par de puissantes créatures, elles essaient de l'empoisonner et de prendre le contrôle de la Pierre Royale !!! Peux-tu nous aider à les battre ?",
+					"fight": "Vous vous précipitez au secours du Roi des Rockys...",
+					"no": "Faites vite ! La situation est critique !"
+				}
+			},
+			"choice": {
+				"magnet10": {
+					"fight": "À l'attaque !",
+					"no": "J'ai besoin de me préparer un peu avant..."
+				}
+			}
+		},
+		"rockyKing": {
+			"name": "Roi des Rockys",
+			"dialog": {
+				"magnet1": {
+					"begin": "Vous racontez que vous avez été attaqué par de féroces Wanwans... Après vous avoir questionné, les gardes vous accordent finalement une audience avec le Roi des Rockys, Monseigneur Rocky IV.",
+					"enter": "Bienvenue à notre cher Maître Dinoz... nous voyons que vous n'êtes pas natif des Steppes Magnétiques, vous avez du faire long voyage, pardonnez-nous de ne pas pouvoir vous recevoir avec l'hospitalité habituelle de notre peuple, mais les événements récents nous ont épuisé...",
+					"events": "Voyez-vous, cela n'est pas un secret, la Famille Royale dont nous sommes l'héritier contrôle tous les Rockys de la région. Ce pouvoir nous a été confié il y a maintenant de nombreuses générations par le Grand-Lourd-Acéré, le dompteur de la Magnétite...",
+					"magnet": "La Magnétite est une pierre que l'on ne trouve que dans les Steppes, qui d'ailleurs lui doivent leur nom... C'est une pierre qui, sous l'action des frottements du vent et du sable, produit de l'énergie électrique !",
+					"magnet2": "A l'état naturel, la Magnétite est très instable et donc difficilement contrôlable, mais le Grand-Lourd-Acéré a dans sa jeunesse découvert une pierre d'une pureté parfaite, la Pierre d'Ange. Les héritiers de la Famille Royale doivent en assurer la protection, pour éviter qu'elle ne tombe dans de mauvaises mains.",
+					"events2": "Et, récemment... quelqu'un a tenté de voler la Pierre d'Ange !!! C'est une lourde responsabilité, mais il faut que nous la protégions à tout prix ! Il en va de l'honneur de la Famille Royale... Avez-vous bien tout compris ?",
+					"me": "Nous y venons... Voyez-vous, de nombreux brigands sévissent à l'extrême-occident des Steppes Magnétiques. On a vu certains d'eux roder à plusieurs reprises aux alentours du château et ce sont sûrement eux qui vous ont attaqué prés du Syphon. Ils se font appeler la Team-W...",
+					"team": "Oui... La Team-W est un groupe de nomades à l'allure étrange contrôlant des Wanwans. Nous les soupçonnons d'être ceux qui cherchent à voler notre Pierre d'Ange. Nous avons envoyé nos soldats d'élite à leur recherche, et nous avons blessé leur leader, mais nous ne savons pas où ils se cachent...",
+					"team2": "Nous avons dû rappeler nos soldats pour qu'ils protègent la Pierre d'Ange, car nous ne savons pas ni quand ni où l'ennemi frappera la prochaine fois... Pourrions-nous vous charger de trouver et de détruire la Team-W ? Vous en serrez royalement récompensé !",
+					"refuse": "Bien bien... nous comprenons, et nous ne voulons pas vous impliquer dans une histoire qui n'est pas la votre. Nous vous souhaitons un bon voyage dans les Steppes Magnétiques, revenez nous voir si malgré tout vous changez d'avis...",
+					"accept": "Vraiment ? Vous nous êtes d'une aide précieuse, cher Maître Dinoz ! Nos conseillers vont vous enseigner les chemins secrets qui vous permettront d'accéder à l'extrême-occident, le repaire des brigands des Steppes... Notre majesté vous souhaite bonne chance, et nous espérons rapidement de positives nouvelles de votre part !",
+					"leave": "Un conseiller du Roi vous explique le chemin qui permet d'accéder aux camps des brigands de l'extrême-occident à partir du Syphon. Il vous met aussi en garde contre les dangers qui vous attendent. Préparez-vous bien !"
+				},
+				"magnet7": {
+					"begin": "Notre cher Maître Dinoz est déjà de retour ? Nous espérons de tout coeur qu'il nous apporte de bonnes nouvelles...",
+					"next": "Bien ! Nous sommes très heureux, racontez-nous vos exploits, mon cher......",
+					"talk": "Vous racontez au Roi des Rockys votre rencontre avec le Capitaine de la Team-W, sa version de l'histoire concernant l'empoisonnement de Grobourin, et son innocence quand à la tentative de vol de la Magnétite. Le Roi vous écoute avec un silence... royal...",
+					"cont": "Bien bien... Vous comprendrez que nous ne pouvons pas faire confiance à ces étranges personnes immédiatement. Il va falloir que nous diligentions une enquête préalable à tout pour parler avec ces habitants des basses-steppes... Pendant ce temps, nous aimerions que vous nous rendiez un autre service, si cela n'est pas abuser de votre precieux temps.",
+					"serv": "Oui tout a fait, c'est cela : un service... Ces ouï-dire concernant un étrange empoisonnement nous inquiètent. Le cas échéant, nous devrions nous préparer au pire. Si nos informations sont exactes, il pourrait s'agir de Sehd Actif.",
+					"sehd": "Le Sehd est un poison très puissant que l'on ne trouve que dans les steppes magnétiques. Il est obtenu en concentrant du poison de Scorpiowink auquel il faut rajouter un ingrédient secret qui permet d'activer ses pouvoirs cachés. Notre armée à depuis longtemps été interdite de fabrication de Sehd car une fois activé il permet de prendre le contrôle total de l'homme ou du Dinoz empoisonné...",
+					"control": "Oui, tout a fait. Qui est sous le contrôle du Sehd Actif ne peut plus raisonner normalement et il lui est même possible de trahir les siens... Le Sedh a été banni du royaume depuis longtemps par nos ancêtres. S'il s'agit vraiment de ce poison, nous devons arrêter son auteur au plus vite...",
+					"serv2": "Nous aimerions que vous alliez chercher certains ingrédients. Une fois ces ingredients rassemblés, cela vous permettra de constituer une Potion Anti Sedh qui permet de guérir les effets du poison.",
+					"ingr": "Oui. D'après nos légendes il faut rassembler les trois ingrédients perpétuels : le Corail qui jamais ne se brise, la Glace qui jamais ne fond, et la Branche qui jamais ne fane. Une fois ces trois ingrédients rassemblés, il faut trouver un Singe Antique...",
+					"sage": "Ah... euh... c'était peut-être un Sage Antique, nous ne nous rappellons plus bien. En tout cas, il s'agit d'êtres aux grands pouvoirs et qui paraît-il peuvent vivre pendant plusieurs siècles ! On les reconnais à leur troisième oeil, qui peut voir l'autre face de Dinoland...",
+					"face": "Oui... nos légendes racontent que Dinoland possède une autre face, une face Sombre. On appelle cet endroit le Monde Sombre. Personne n'en est jamais revenu bien entendu... mais les Sages (ou singes ?) Antiques peuvent librement voyager dans le Monde Sombre... Mais nous doutons que ces informations puissent vous servir à trouver cet être au troisième oeil...",
+					"end": "En tout cas, notre majesté comptons sur vos efforts pour rassembler les trois ingrédients, trouver le Singe Antique, et nous ramener au plus vite la Potion Anti Sedh qui nous permettra de nous protéger contre ce poison... En ce qui concerne ces nomades, nous allons enquêter sur eux pour vérifier leurs dires... L'audience est levée, au revoir...",
+					"bye": "Vous voilà reparti pour de nouvelles aventures..."
+				},
+				"magnet12": {
+					"begin": "Cher ami ! Nous sommes très heureux du dénouement de cet affrontement... Nous voulons vous remercier pour les nombreux services que vous avez rendus à la famille Royale, allant même jusqu'à risquer votre vie...",
+					"not": "Pensez-vous ! Grâce à ces événements, nous avons pu nous réconcilier avec les nomades de l'extrême-occident... Nous serons désormais plus attentionnés envers nos lointains sujets, car il semble que notre jugement à leur encontre ait été quelque peu hâtif.",
+					"not2": "Si, nous insistons pour vous récompenser correctement. Grâce à vous, nous avons pu capturer ces infâmes Goupignons Sombres qui semblent avoir tramé la tentative de vol de la Magnétite, la fabrication du Sehd Actif, l'empoisonnement de Grobourin et l'attaque de la Citadelle... Quel plan machiavélique !!",
+					"plan": "Mais ne vous inquiétez pas, tous les suspects ont été enfermés dans nos geôles les plus profondes et ils ne sont pas près d'en sortir, vous avez notre parole Royale...",
+					"ok": "Bien, bien... Pour vos services rendus, nous vous avons prévu une récompense... royale ! Nous souhaitons que vous l'acceptiez en remerciement de votre action à notre service...",
+					"accept": "Voilà pour vous... Nous vous confions cet Éclat de Magnétite Négative. Il a pour propriété d'annuler les effets de la Magnétite en certains endroits. C'est un objet extrêmement rare et nous souhaitons qu'il vous aide dans vos futurs voyages...",
+					"thanks": "Le Roi des Rockys vous a confié l'objet de collection : « l'Éclat de Magnétite Négative ». Mais à quoi cela peut-il bien servir ?"
+				}
+			},
+			"choice": {
+				"magnet1": {
+					"enter": "Entrer dans le Palais",
+					"events": "Que s'est-il passé ?",
+					"magnet": "La Magnétite ?",
+					"magnet2": "...",
+					"events2": "And?",
+					"again": "Pouvez-vous répéter ?",
+					"me": "Quel rapport avec moi ?",
+					"team": "La Team-W ?",
+					"team2": "Shout donga donga...",
+					"again2": "Pouvez-vous répéter ?",
+					"accept": "J'accepte !",
+					"refuse": "Je ne peux pas accepter pour l'instant",
+					"leave": "Remercier le Roi"
+				},
+				"magnet7": {
+					"next": "Ah euh... oui...",
+					"talk": "Raconter",
+					"cont": "Continue",
+					"serv": "Un service ?",
+					"sehd": "De... quoi ?",
+					"control": "Prendre le contrôle ?",
+					"serv2": "Vous parliez d'un service...",
+					"ingr": "Des ingrédients ?",
+					"sage": "Un Singe Antique ?",
+					"face": "L'autre face ?",
+					"end": "......",
+					"bye": "Partir"
+				},
+				"magnet12": {
+					"not": "Ce n'était rien...",
+					"not2": "Ce n'était rien...",
+					"plan": "Indeed...",
+					"ok": "....",
+					"accept": "J'accepte — chouette !",
+					"thanks": "Merci beaucoup !"
+				}
+			}
+		},
+		"teamWCaptain": {
+			"name": "Capitaine",
+			"dialog": {
+				"magnet6": {
+					"begin": "..... Pourquoi nous as-tu attaqué ? Est-ce pour te venger de notre attaque précédente ? Je pensais pourtant m'être excusé...",
+					"who": "Oui, je ne me suis pas présenté, je suis Mulder, le capitaine de la Team-W... Qui t'envoie et pourquoi nous as-tu attaqué ?",
+					"dont": "Je vois... tu ne veux pas parler... Tu dois donc être un de SES espions ! Je te le demande une dernière fois : qui t'envoie ? Et pourquoi sommes-nous pris pour cible par le Roi ?",
+					"dont2": "Bien... je vois... Puisque tu n'as rien à me dire pour excuser tes actions, va-t'en ! Sache qu'ici nous pouvons tenir des mois face aux attaques du Roi, et que rien ne nous fera abandonner notre mission !",
+					"tell": "Pendant l'heure qui suit, vous racontez au Capitaine tout ce qui vous est arrivé depuis votre entrée dans les Steppes Magnétiques : l'attaque de sa Team-W, puis l'entretien avec le Roi et, bien entendu, le complot pour s'emparer de la Magnétite...",
+					"hist1": "...... Je comprends maintenant... Il y a quelques jours, notre Wanwan le plus puissant — Grobourin — que tu as tenté de combattre dehors, a été empoisonné par une étrange substance...",
+					"hist2": "Nous avons bien entendu enquêté pour savoir qui avait pu commettre un tel acte, et une piste nous a menés jusqu'à la Citadelle du Roi des Rockys. C'est pour cette raison que nous l'observions de près : nous cherchions un moyen de guérir Grobourin...",
+					"hist3": "... mais je peux te jurer qu'à aucun moment nous n'avons eu pour projet de nous emparer de la Magnétite. Cette pierre n'a aucune signification pour nous, les nomades, car nous trouvons déjà dans les steppes tout ce qui suffit à nous rendre heureux...",
+					"hist4": "On nous traite souvent de voleurs, mais c'est parce qu'on nous confond avec ces Brigands de l'extrême-occident ! Nous les combattons régulièrement lorsque nous les trouvons... Ils nous détestent, mais les habitants nous aident, car le Roi n'envoie jamais aucun soldat ici... Ils ont bien trop peur du Grand Ver... Les nomades ont été abandonnés par le Roi...",
+					"hist5": "Voilà... je t'ai tout raconté. Souhaites-tu que je répète ?",
+					"ask": "... je suis désolé de ce qu'il s'est passé... mais tu dois comprendre : nous devons absolument soigner Grobourin. Il faiblit de jour en jour et nous craignons le pire... Tu es en contact avec le Roi : pourrais-tu nous aider en plaidant notre cause ? Il s'agit d'un malentendu, et il est possible qu'il puisse nous aider à trouver la cause de l'empoisonnement...",
+					"no": "Je comprends... Après tout, nous sommes des inconnus et tu n'es pas obligé de nous croire... Reviens me voir si tu changes d'avis.",
+					"yes": "... vraiment ? Tu feras cela pour nous, alors que nous t'avons attaqué ? Que le Grand Ver veille sur toi ! Fais attention aux Brigands sur ta route... Nous attendons avec impatience de tes nouvelles !"
+				},
+				"magnet7": {
+					"begin": "Tu as vu le Roi ? Tu sais comment soigner Grobourin ? Nous comptons tous sur toi, reviens nous voir avec de bonnes nouvelles !"
+				},
+				"magnet11": {
+					"begin": "Merci pour votre aide... Après votre départ, ces Goupignons sombres se sont emparés de Grobourin. Il semblait que le poison qu'ils utilisaient permettait de le contrôler...",
+					"ok": "Ils ont ensuite utilisé la puissance de Grobourin pour attaquer la Citadelle Royale et tenter de s'emparer de la Magnétite... Heureusement, nous sommes arrivés à temps...",
+					"thanks": "Oui, mais c'était naturel, nous ne pouvions pas laisser Grobourin tout détruire de cette façon. Et c'est grâce à votre Potion que le contrôle a pu être rompu...",
+					"how": "Nous l'avons rapatrié à notre campement. Il est bien amoché, mais il s'en sortira... grâce à vous...",
+					"not": "C'était déjà beaucoup. Le Grand Ver vous a protégé, semble-t-il... Venez nous voir quand vous le voulez au campement, nous vous donnerons accès à notre Boutique secrète...",
+					"thanks2": "Le Capitaine est reparti vers le campement de la Team-W..."
+				}
+			},
+			"choice": {
+				"continue": "Continue",
+				"magnet6": {
+					"who": "Qui êtes-vous ?",
+					"dont": "Ne rien raconter",
+					"tell": "Raconter que le Roi des Rockys vous envoie",
+					"dont2": "Se taire",
+					"ask": "Non merci, j'ai tout compris !",
+					"again": "Je n'ai pas tout suivi...",
+					"yes": "Yes",
+					"no": "No"
+				},
+				"magnet11": {
+					"ok": "Je comprends...",
+					"thanks": "Merci de votre aide en combat !",
+					"how": "Comment va-t-il ?",
+					"not": "Ce n'était vraiment rien...",
+					"thanks2": "À bientôt !"
+				}
 			}
 		},
 		"dialog": {
@@ -5956,6 +6132,27 @@
 				"tower_won": "Vous avez remporté le contrôle de la Dévoreuse ! Gardez-le jusqu'à minuit pour obtenir ses précieuses graînes !",
 				"grains_credited": "Félicitations ! Votre contrôle des Dévoreuses vous rapporte <b>::count::</b> graîne(s) qui ont été rajoutées à vos Ingrédients.",
 				"stop_defend_tower": "Vous avez relaché le contrôle de la Dévoreuse."
+			}
+		},
+		"magnet": {
+			"name": "La Magnétite",
+			"texts": {
+				"initialAmbush": "Alors que vous approchez du Syphon Siffleur, trois membres de la Team W surgissent et attaquent votre groupe !",
+				"initialAmbushRescue": "Attendez ! Ce Dinoz est bien trop faible pour faire partie des troupes d'élite du Roi Rocky... Nous avons dû faire une erreur sur notre adversaire, excusez nous !",
+				"initialAmbushRegeneration": "Electrosoins",
+				"fightWTeamStart": "Alors que vous approchez, un Dinoz de la Team-W apparaît... vous l'attaquez !",
+				"fightWTeamLost": "Vous ne passerez pas !",
+				"fightWTeamWon1": "Pourquoi vous attaquez-nous ? Nous saurons nous venger !",
+				"fightWTeamWon2": "Vous êtes surement des espions du Roi Rocky ! Vous ne perdez rien pour attendre !",
+				"fightWTeamWon3": "Vous voulez nous exterminer ?!? Vite ! Refugions-nous au camp du sud !",
+				"fightWTeamEnd": "Attends ! Groubourin n'est pas dans son état normal... Puisque tu nous as suivi jusqu'ici, arrêtons de combattre un instant et parlons entre gens civilisés...",
+				"fightDarkDinoz": "Alors que vous arrivez dans les Steppes Magnétiques, d'étranges ombres vous entourent tout à coup. Il semblerait que vous veniez de tomber dans une embuscade...",
+				"fightPotionStolen": "C'est une catastrophe ! Ces drôles de Goupignons enragés se sont emparés de votre Potion Anti-Sehd !",
+				"fightSkingStart": "Vous reconnaissez le Wanwan Grobourin de la Team-W... Il semble être contrôlé par les Goupignons sombres... mais sont-ils suffisamment intelligents pour faire cela seuls ???",
+				"fightCaptainHelp": "Il semble que vous ayez besoin d'un peu d'aide... Team-W : à l'attaaaaaaque !",
+				"fightSkingEnd1": "Après le combat, vous retrouvez sur le sol la Potion Anti-Sehd que vous aviez confectionnée. Vous l'utilisez sur Grobourin afin qu'il retrouve ses esprits...",
+				"fightSkingEnd2": "Le Roi des Rockys et le Capitaine vous attendent pour vous remercier de votre vaillant combat...",
+				"syphonDeath": "Alors que votre Dinoz tente de franchir le Syphon, une violente décharge magnétique le frappe de plein fouet. Sans protection, il s'effondre instantanément..."
 			}
 		}
 	},
