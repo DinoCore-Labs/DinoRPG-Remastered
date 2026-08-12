@@ -465,13 +465,13 @@
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
 			"futurTitle": "Dinolandian Future",
 			"futureInfo1": {
-				"text1": "Maître Zenith et le dojo",
+				"text1": "Master Zenith and the Dojo",
 				"text2": "The Inter-Dojo Tournament (PVP)",
 				"text3": "Bug fixes"
 			},
 			"futureInfo2": {
-				"text1": "Le scénario des steppes",
-				"text2": "De nouveaux PNJ et de nouvelles missions",
+				"text1": "The Magnetic Steppes storyline",
+				"text2": "New NPCs and new missions",
 				"text3": "Bug fixes"
 			},
 			"futureInfo3": {
@@ -647,13 +647,13 @@
 		},
 		"bank": {
 			"exchange": {
-				"success": "Vous avez converti {quantity} :ticket: contre {gold} :gold:.",
-				"rateError": "Impossible de récupérer le taux de change de la banque."
+				"success": "You converted {quantity} :ticket: into {gold} :gold:.",
+				"rateError": "Unable to retrieve the bank exchange rate."
 			},
 			"savings": {
-				"success": "Vous avez placé {gold} :gold: en épargne pendant {days} jours. Vous récupérerez {total} :gold:.",
-				"claimSuccess": "Vous avez récupéré votre épargne : {gold} :gold:.",
-				"loadError": "Impossible de récupérer vos épargnes."
+				"success": "You deposited {gold} :gold: into savings for {days} days. You will receive {total} :gold:.",
+				"claimSuccess": "You collected your savings: {gold} :gold:.",
+				"loadError": "Unable to retrieve your savings."
 			}
 		},
 		"isSelling": "Your Dinoz is currently on sale at the Tamer Market.",
@@ -677,9 +677,9 @@
 		},
 		"Invalid_email_or_password": "Invalid username or password.",
 		"Invalid_credentials": "Incorrect credentials.",
-		"Too_many_login_attempts": "Trop de tentatives de connexion ont été effectuées. Par sécurité, veuillez patienter 5 minutes avant de réessayer.",
-		"Too_many_registration_attempts": "Trop de tentatives de création de compte ont été effectuées. Veuillez patienter 1 heure avant de réessayer.",
-		"Rate_limit_exceeded": "Vous avez effectué trop d'actions en peu de temps. Veuillez patienter 60 secondes avant de réessayer.",
+		"Too_many_login_attempts": "Too many login attempts have been made. For security reasons, please wait 5 minutes before trying again.",
+		"Too_many_registration_attempts": "Too many account creation attempts have been made. Please wait 1 hour before trying again.",
+		"Rate_limit_exceeded": "You have performed too many actions in a short period of time. Please wait 60 seconds before trying again.",
 		"Missing_device_cookie": "Could not identify your browser. Please allow cookies and try again.",
 		"Too_many_accounts_created_from_this_device_this_month": "Too many accounts were created from this browser this month. Please try again next month.",
 		"Too_many_accounts_created_from_this_network_this_month": "Too many accounts were created from this network this month. Please try again next month.",
@@ -699,9 +699,9 @@
 		"OnlyLettersAndNumbers": "Incorrect name ! You can only use between 3 and 16 letters or numbers.",
 		"tooManyActiveDinoz": "You have too many active Dinoz.",
 		"notEnoughIngredients": "You don't have enough ingredients.",
-		"itemNotFound": "Cet objet est introuvable.",
-		"itemNotEquipped": "Ce Dinoz n'a pas équipé cet objet.",
-		"itemCannotBeEquipped": "Cet objet ne peut pas être équipé.",
+		"itemNotFound": "This item could not be found.",
+		"itemNotEquipped": "This Dinoz does not have this item equipped.",
+		"itemCannotBeEquipped": "This item cannot be equipped.",
 		"notEnoughItems": "You don't have enough of this item.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or",
 		"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
@@ -733,27 +733,27 @@
 			"noOpponent": "No opponents are available for this level yet."
 		},
 		"notEnoughGold": "Vous n'avez pas assez d'or",
-		"wrongQuantity": "La quantité demandée est invalide.",
-		"wrongBankSavingDuration": "La durée d'épargne demandée est invalide.",
-		"bankSavingNotReady": "Cette épargne n'est pas encore disponible.",
-		"bankSavingAlreadyClaimed": "Cette épargne a déjà été récupérée.",
-		"bankSavingNotFound": "Cette épargne est introuvable.",
-		"bankSavingMaxDepositExceeded": "Vous ne pouvez pas épargner plus de 1 000 000 :gold: à la fois.",
-		"bankSavingPlanAlreadyActive": "Vous avez déjà une épargne de cette durée en attente de récupération.",
-		"concentrationStopped": "Votre Dinoz a arrêté de se concentrer.",
-		"darkPortalEntered": "Votre Dinoz a franchi le portail vers le Monde sombre.",
-		"dinozAlreadyConcentrating": "Ce Dinoz se concentre déjà.",
-		"dinozNotConcentrating": "Ce Dinoz ne se concentre pas.",
-		"dinozConcentrating": "Ce Dinoz se concentre actuellement et ne peut effectuer aucune autre action.",
-		"concentrationInvalidPlace": "Le Dinoz doit se trouver auprès de Mr Bao.",
-		"concentrationDeadDinoz": "Un Dinoz mort ne peut pas se concentrer.",
-		"concentrationUnavailableDinoz": "Ce Dinoz est actuellement indisponible.",
-		"concentrationMissingFlippers": "Le Dinoz doit posséder les Palmes pour commencer cette concentration.",
-		"concentrationSylvenoireKey": "Un Dinoz possédant déjà la Clé de Sylvenoire ne peut pas participer.",
-		"concentrationFull": "Les sept places de cette concentration sont déjà occupées.",
-		"concentrationCannotStopAfterOpening": "La concentration est terminée : le Dinoz doit maintenant entrer dans le portail.",
-		"concentrationNotCompleted": "Sept Dinoz doivent terminer leur concentration avant que le portail puisse être franchi.",
-		"maxFollowers": "Vous ne pouvez avoir plus de {maxFollowers} Dinoz dans votre groupe."
+		"wrongQuantity": "The requested quantity is invalid.",
+		"wrongBankSavingDuration": "The requested savings duration is invalid.",
+		"bankSavingNotReady": "This savings deposit is not available yet.",
+		"bankSavingAlreadyClaimed": "This savings deposit has already been collected.",
+		"bankSavingNotFound": "This savings deposit could not be found.",
+		"bankSavingMaxDepositExceeded": "You cannot deposit more than 1,000,000 :gold: into savings at a time.",
+		"bankSavingPlanAlreadyActive": "You already have a savings deposit with this duration waiting to be collected.",
+		"concentrationStopped": "Your Dinoz stopped concentrating.",
+		"darkPortalEntered": "Your Dinoz entered the portal to the Dark World.",
+		"dinozAlreadyConcentrating": "This Dinoz is already concentrating.",
+		"dinozNotConcentrating": "This Dinoz is not concentrating.",
+		"dinozConcentrating": "This Dinoz is currently concentrating and cannot perform any other action.",
+		"concentrationInvalidPlace": "The Dinoz must be at Mr. Bao's.",
+		"concentrationDeadDinoz": "A dead Dinoz cannot concentrate.",
+		"concentrationUnavailableDinoz": "This Dinoz is currently unavailable.",
+		"concentrationMissingFlippers": "The Dinoz must have the Korgon Fins to begin concentrating.",
+		"concentrationSylvenoireKey": "A Dinoz that already has the Blacksylva Key cannot participate.",
+		"concentrationFull": "All seven spots for this concentration are already occupied.",
+		"concentrationCannotStopAfterOpening": "The concentration is complete: the Dinoz must now enter the portal.",
+		"concentrationNotCompleted": "Seven Dinoz must complete their concentration before the portal can be entered.",
+		"maxFollowers": "You cannot have more than {maxFollowers} Dinoz in your group."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -797,7 +797,7 @@
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
 			"average": "The Player Ranking is updated in real time and is calculated from the average level of all the player's Dinoz.",
 			"completion": "The ranking of players is updated at midnight and base on the completion formula. This formula is based on the active Dinoz of the player and its progress in the story.",
-			"clan": "Le classement des clans est mis à jour en temps réel et est calculé à partir de la somme des points des membres d'un clan",
+			"clan": "The clan ranking is updated in real time and is calculated from the total points of all clan members",
 			"treasure": "The clan ranking is updated in real time and based on the treasure value of the clan."
 		},
 		"page": {
@@ -885,7 +885,7 @@
 			"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
 			"dojoTeam": "This Dinoz is registered to a tournament. It cannot surpass the level {max} until this tournament is finished.",
 			"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}",
-			"defendingDevourer": "Votre Dinoz est occupé à défendre la Dévoreuse."
+			"defendingDevourer": "Your Dinoz is busy defending the Devourer."
 		},
 		"stateReason": {
 			"frozen": "You Dinoz is frozen",
@@ -1289,7 +1289,7 @@
 			"Steal": "Steal",
 			"Flee": "Flee",
 			"Stinger": "Dard",
-			"PoisonedPicks": "Pics empoisonnées",
+			"PoisonedPicks": "Poisoned Spikes",
 			"Contamination": "Contamination"
 		},
 		"description": {
@@ -2249,9 +2249,9 @@
 			"spylon": "Located in the middle of the desert are the Pylons, a natural formation of Lodestone that continually creates the mighty electric arcs! It's better to not stay here too long, as you may be electrocuted by the Pylons.",
 			"slake": "The quicksand here is extremely dangerous: full of Lodestone, it appears just like water. Many thirsty adventurers have fallen for this intricate trap and have been swallowed alive. People say that for each victim, the Syphon emits a melodic whistle, hence it's haunting name.",
 			"scanyo": "Between the high plateau of Neerheeven are the Neerhel Paths. Notorious due to the many Dinoz who have fallen victim to the Lodestone rockfalls. The ground is covered by jagged and burning stones, and the lodestone rock faces regularly generate deadly electric arcs in the middle of the road.",
-			"stowr1": "\"Quiconque capturera la Dévoreuse deviendra riche\". Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. Il existe trois Dévoreuses dans les Steppes Magnétiques, mais on raconte qu'elles ont toutes la même racine unique. Seul un Grand Seigneur serait capable de conserver le contrôle des trois Dévoreuses !",
-			"stowr2": "\"Quiconque capturera la Dévoreuse deviendra riche\". Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. On dit que celui qui en rassemble 100 verra son voeu exaucé. En attendant, les graînes se revendent pour un très bon prix auprès du Marchand Ambulant.",
-			"stowr3": "\"Quiconque capturera la Dévoreuse deviendra riche\". Depuis une éternité, les Maîtres Dinoz combattent pour garder ou prendre le contrôle de la production quotidienne des précieuses graînes de la Devoreuse. D'aprés les légendes nomades, les Dévoreuses se nourissent du sang versé par les victimes cherchant à s'emparer d'elles.",
+			"stowr1": "\"Whoever captures the Devourer will become rich.\" For ages, Dinoz Masters have fought to keep or seize control of the daily production of precious Devourer Seeds. There are three Devourers in the Magnetic Steppes, but legend says they all share the same single root. Only a Great Lord would be capable of retaining control of all three Devourers!",
+			"stowr2": "\"Whoever captures the Devourer will become rich.\" For ages, Dinoz Masters have fought to keep or seize control of the daily production of precious Devourer Seeds. It is said that whoever gathers 100 of them will have their wish granted. In the meantime, the seeds can be sold to the Travelling Merchant for a very good price.",
+			"stowr3": "\"Whoever captures the Devourer will become rich.\" For ages, Dinoz Masters have fought to keep or seize control of the daily production of precious Devourer Seeds. According to nomad legends, the Devourers feed on the blood shed by those who try to seize them.",
 			"sband1": "The Zaxa have always been pillagers and are highly logical, renowned for their flawless skill and errorless work. Their convoy attacks are even recognized by local tourist guides…",
 			"sband2": "The Emmemma are pitiless mercenaries well known for their ancient ambush tactics. First, they send massive boulders into the ravine, then attack with clubs until their foes have been beaten an inch within their lives. Then they scavenge. Only then do we pick up. No arguing no hassling.",
 			"sband3": "The Mattmut are the specialists of filtering and piped-up games. Less aggressive than their neighbors, they are no less dangerous, provided you hold your gold. Their technique consists of exhausting the opponent with their traditional songs.",
@@ -2820,9 +2820,9 @@
 		"popupConfirm": "Do you confirm the action {action} for your Dinoz?",
 		"confirm": {
 			"stop_concen": "Your Dinoz may try to stop concentrating at any time.",
-			"enter_portal": "Préparez-vous bien, personne ne sait quels dangers vous guettent de l'autre côté !",
-			"tower_attack": "Prendre le contrôle de la Dévoreuse nécessite de combattre ses défenseurs actuels. Voulez-vous continuer ?",
-			"stop_defend_tower": "Vos dinoz vont cesser de défendre la Dévoreuse. Quelqu'un d'autre pourrait en prendre le contrôle ! Etes-vous sûr de vouloir continuer ?"
+			"enter_portal": "Prepare yourself well; no one knows what dangers await you on the other side!",
+			"tower_attack": "Taking control of the Devourer requires fighting its current defenders. Do you want to continue?",
+			"stop_defend_tower": "Your Dinoz will stop defending the Devourer. Someone else could take control of it! Are you sure you want to continue?"
 		},
 		"description": {
 			"fight": "Search for a monster to fight at this location.",
@@ -2858,10 +2858,10 @@
 			"fb_tournament": "Access the BrutForce Tournament.",
 			"CEF": "Dear customer, welcome to the Lavapit Training Center!",
 			"stop_concen": "Your Dinoz may try to stop concentrating at any time.",
-			"enter_portal": "Le portail vers le Monde sombre est ouvert. Votre Dinoz peut désormais le franchir.",
-			"tower_attack": "Un autre joueur contrôle déjà la Dévoreuse. Vous devrez combattre pour pouvoir en prendre le contrôle et récolter ses précieuses graînes.",
-			"tower_defend": "Personne n'a actuellement le contrôle de la dévoreuse. Profitez-en pour en prendre le contrôle !",
-			"stop_defend_tower": "Si vous relachez votre contrôle sur la Dévoreuse, il vous faudra à nouveau combattre pour le regagner. Et d'autres joueurs attendent sûrement cette occasion pour s'en emparer à leur tour !"
+			"enter_portal": "The portal to the Dark World is open. Your Dinoz can now enter it.",
+			"tower_attack": "Another player already controls the Devourer. You will have to fight to take control of it and harvest its precious seeds.",
+			"tower_defend": "No one currently controls the Devourer. Take this opportunity to seize control!",
+			"stop_defend_tower": "If you relinquish control of the Devourer, you will have to fight again to regain it. Other players are surely waiting for the opportunity to seize it themselves!"
 		},
 		"name": {
 			"fight": "Fight",
@@ -2897,10 +2897,10 @@
 			"fb_tournament": "Tournament",
 			"CEF": "Lavapit Training Center",
 			"stop_concen": "Stop concentrating",
-			"enter_portal": "Entrer dans le Portail",
-			"tower_attack": "Contrôler la Dévoreuse",
-			"tower_defend": "Défendre la Dévoreuse",
-			"stop_defend_tower": "Relacher le Contrôle"
+			"enter_portal": "Enter the Portal",
+			"tower_attack": "Take Control of the Devourer",
+			"tower_defend": "Defend the Devourer",
+			"stop_defend_tower": "Relinquish Control"
 		}
 	},
 	"fight": {
@@ -3415,215 +3415,215 @@
 		}
 	},
 	"gameRules": {
-		"pageTitle": "Règlement du jeu",
-		"title": "Règlement de DinoRPG Remastered",
+		"pageTitle": "Game Rules",
+		"title": "DinoRPG Remastered Rules",
 		"version": "Version: {version}",
-		"updatedAt": "Dernière mise à jour : {date}",
+		"updatedAt": "Last updated: {date}",
 		"footer": {
-			"title": "Règles et sécurité",
-			"link": "Règlement du jeu"
+			"title": "Rules and Safety",
+			"link": "Game Rules"
 		},
 		"registration": {
-			"label": "J’ai lu et j’accepte le {rules} dans sa version {version}.",
-			"link": "règlement du jeu"
+			"label": "I have read and accept the {rules}, version {version}.",
+			"link": "game rules"
 		},
 		"acceptance": {
-			"title": "Acceptation du règlement requise",
-			"description": "Le règlement du jeu a été ajouté ou mis à jour. Vous devez le lire et l’accepter avant de continuer à jouer.",
-			"checkbox": "J’ai lu et j’accepte le règlement du jeu dans sa version {version}.",
-			"button": "Accepter le règlement",
+			"title": "Acceptance of the Rules Required",
+			"description": "The game rules have been added or updated. You must read and accept them before continuing to play.",
+			"checkbox": "I have read and accept version {version} of the game rules.",
+			"button": "Accept the Rules",
 			"submitting": "Saving….",
-			"success": "Le règlement du jeu a bien été accepté.",
-			"error": "L’acceptation du règlement n’a pas pu être enregistrée."
+			"success": "The game rules have been accepted successfully.",
+			"error": "Your acceptance of the rules could not be recorded."
 		},
 		"sections": {
 			"general": {
-				"title": "1. Principes généraux",
-				"intro": "DinoRPG Remastered doit être utilisé de manière loyale et respectueuse.",
-				"commitmentIntro": "Chaque joueur s’engage à :",
+				"title": "1. General Principles",
+				"intro": "DinoRPG Remastered must be used fairly and respectfully.",
+				"commitmentIntro": "Each player agrees to:",
 				"commitments": {
-					"respect": "respecter les autres utilisateurs ;",
-					"features": "utiliser les fonctionnalités conformément à leur objectif ;",
-					"advantage": "ne pas chercher à obtenir un avantage par un moyen anormal ;",
-					"security": "ne pas compromettre la sécurité ou le fonctionnement du service."
+					"respect": "respect other users;",
+					"features": "use features for their intended purpose;",
+					"advantage": "not seek to gain an advantage through abnormal means;",
+					"security": "not compromise the security or operation of the service."
 				},
-				"outro": "Un comportement manifestement abusif peut être sanctionné même s’il n’est pas expressément mentionné dans le présent règlement."
+				"outro": "Clearly abusive behavior may be sanctioned even if it is not expressly mentioned in these rules."
 			},
 			"communication": {
-				"title": "2. Respect et communication",
-				"intro": "Les pseudonymes, profils, messages et contenus publiés doivent rester appropriés.",
-				"forbiddenIntro": "Sont notamment interdits :",
+				"title": "2. Respect and Communication",
+				"intro": "Usernames, profiles, messages, and published content must remain appropriate.",
+				"forbiddenIntro": "The following are prohibited in particular:",
 				"forbidden": {
-					"harassment": "les insultes, menaces et comportements de harcèlement ;",
-					"hate": "les propos haineux ou discriminatoires ;",
-					"illegal": "les contenus sexuellement explicites ou manifestement illicites ;",
-					"spam": "le spam et la publicité répétée ou non autorisée ;",
-					"impersonation": "l’usurpation de l’identité d’un joueur, d’un administrateur ou d’un modérateur ;",
-					"personalData": "la divulgation des informations personnelles d’un tiers ;",
-					"links": "les liens dangereux, frauduleux ou trompeurs."
+					"harassment": "insults, threats, and harassing behavior;",
+					"hate": "hateful or discriminatory remarks;",
+					"illegal": "sexually explicit or clearly illegal content;",
+					"spam": "spam and repeated or unauthorized advertising;",
+					"impersonation": "impersonating a player, administrator, or moderator;",
+					"personalData": "disclosing another person's personal information;",
+					"links": "dangerous, fraudulent, or misleading links."
 				},
-				"outro": "Les désaccords entre joueurs doivent rester respectueux."
+				"outro": "Disagreements between players must remain respectful."
 			},
 			"accounts": {
-				"title": "3. Comptes",
-				"intro": "Un compte est personnel. Il est interdit de :",
+				"title": "3. Accounts",
+				"intro": "An account is personal. It is forbidden to:",
 				"forbidden": {
-					"share": "partager ou prêter son compte ;",
-					"trade": "vendre, donner ou échanger un compte ;",
-					"useOther": "utiliser le compte d’une autre personne ;",
-					"password": "demander ou communiquer un mot de passe ;",
-					"sanction": "créer un compte pour contourner une sanction."
+					"share": "share or lend your account;",
+					"trade": "sell, give away, or trade an account;",
+					"useOther": "use another person's account;",
+					"password": "ask for or share a password;",
+					"sanction": "create an account to circumvent a sanction."
 				},
-				"singleAccount": "Une même personne ne peut normalement utiliser qu’un seul compte joueur.",
-				"household": "Plusieurs personnes d’un même foyer peuvent chacune disposer de leur propre compte, à condition que ces comptes ne soient pas utilisés pour obtenir un avantage artificiel ou contourner une limitation."
+				"singleAccount": "A single person may normally use only one player account.",
+				"household": "Several people in the same household may each have their own account, provided those accounts are not used to gain an artificial advantage or circumvent a limitation."
 			},
 			"automation": {
-				"title": "4. Triche et automatisation",
-				"intro": "Il est interdit d’utiliser :",
+				"title": "4. Cheating and Automation",
+				"intro": "It is forbidden to use:",
 				"forbidden": {
-					"bot": "un robot ;",
-					"script": "un script de jeu ;",
-					"autoClick": "un système de clic automatique ;",
-					"macro": "une macro automatisant des actions ;",
-					"requests": "un programme envoyant automatiquement des requêtes ;",
-					"tool": "un outil jouant à la place de l’utilisateur ;",
-					"clientModification": "une modification du client destinée à contourner les règles du jeu."
+					"bot": "a bot;",
+					"script": "a game script;",
+					"autoClick": "an auto-clicking system;",
+					"macro": "a macro that automates actions;",
+					"requests": "a program that automatically sends requests;",
+					"tool": "a tool that plays on behalf of the user;",
+					"clientModification": "a client modification intended to bypass the game rules."
 				},
-				"accessibility": "Les outils d’accessibilité ne procurant aucun avantage peuvent être examinés au cas par cas."
+				"accessibility": "Accessibility tools that provide no advantage may be reviewed on a case-by-case basis."
 			},
 			"bugs": {
-				"title": "5. Exploitation de bugs",
-				"intro": "L’exploitation volontaire d’un bug ou d’un comportement anormal est interdite.",
-				"examplesIntro": "Un joueur constatant qu’une action permet notamment :",
+				"title": "5. Bug Exploitation",
+				"intro": "Deliberately exploiting a bug or abnormal behavior is prohibited.",
+				"examplesIntro": "A player who notices that an action allows, in particular:",
 				"examples": {
-					"reward": "d’obtenir plusieurs fois une récompense ;",
-					"duplicate": "de dupliquer un objet, une ressource ou une monnaie ;",
-					"condition": "de contourner une condition ;",
-					"unavailable": "d’accéder à une fonctionnalité normalement indisponible ;",
-					"repeat": "de répéter anormalement une action limitée ;"
+					"reward": "obtaining the same reward multiple times;",
+					"duplicate": "duplicating an item, resource, or currency;",
+					"condition": "bypassing a requirement;",
+					"unavailable": "accessing a feature that is normally unavailable;",
+					"repeat": "abnormally repeating a limited action;"
 				},
-				"report": "doit cesser de reproduire le problème et le signaler.",
-				"outro": "Continuer à utiliser une anomalie après l’avoir constatée peut être considéré comme une exploitation volontaire."
+				"report": "must stop reproducing the issue and report it.",
+				"outro": "Continuing to use an anomaly after noticing it may be considered deliberate exploitation."
 			},
 			"security": {
-				"title": "6. Sécurité et requêtes interdites",
-				"intro": "Il est interdit de tenter :",
+				"title": "6. Security and Prohibited Requests",
+				"intro": "It is forbidden to attempt to:",
 				"forbidden": {
-					"account": "d’accéder au compte ou aux données d’un autre utilisateur ;",
-					"authorization": "de contourner une autorisation ;",
-					"request": "de falsifier une requête envoyée au serveur ;",
-					"values": "de modifier artificiellement une quantité, un identifiant ou un résultat ;",
-					"restricted": "d’accéder à une page ou une API réservée ;",
-					"disruption": "de perturber ou de saturer le service ;",
-					"credentials": "de voler un cookie, un jeton de connexion ou un mot de passe."
+					"account": "access another user's account or data;",
+					"authorization": "bypass an authorization;",
+					"request": "forge a request sent to the server;",
+					"values": "artificially modify a quantity, identifier, or result;",
+					"restricted": "access a restricted page or API;",
+					"disruption": "disrupt or overload the service;",
+					"credentials": "steal a cookie, login token, or password."
 				},
-				"devTools": "L’utilisation des outils de développement du navigateur n’est pas interdite en elle-même. Elle devient interdite lorsqu’elle sert à tricher, à contourner une règle ou à compromettre le service."
+				"devTools": "Using browser developer tools is not prohibited in itself. It becomes prohibited when used to cheat, bypass a rule, or compromise the service."
 			},
 			"market": {
-				"title": "7. Marché et échanges",
-				"intro": "Les fonctionnalités de marché et d’échange doivent être utilisées loyalement.",
-				"forbiddenIntro": "Il est notamment interdit de :",
+				"title": "7. Market and Trading",
+				"intro": "Market and trading features must be used fairly.",
+				"forbiddenIntro": "In particular, it is forbidden to:",
 				"forbidden": {
-					"prices": "manipuler artificiellement les prix ou les offres ;",
-					"ownBid": "enchérir sur sa propre offre au moyen d’un autre compte ;",
-					"transfer": "transférer artificiellement des ressources entre plusieurs comptes ;",
-					"error": "exploiter une erreur de prix ou de quantité ;",
-					"limit": "contourner une limite d’achat, de vente ou de possession ;",
-					"duplicate": "utiliser une faille afin de dupliquer une ressource."
+					"prices": "artificially manipulate prices or offers;",
+					"ownBid": "bid on your own offer using another account;",
+					"transfer": "artificially transfer resources between multiple accounts;",
+					"error": "exploit a pricing or quantity error;",
+					"limit": "circumvent a purchase, sale, or ownership limit;",
+					"duplicate": "use an exploit to duplicate a resource."
 				},
-				"outro": "Une transaction obtenue par fraude, manipulation ou exploitation d’une anomalie peut être annulée ou corrigée."
+				"outro": "A transaction obtained through fraud, manipulation, or exploitation of an anomaly may be canceled or corrected."
 			},
 			"reporting": {
-				"title": "8. Signalement des problèmes",
-				"intro": "Un comportement interdit, un bug ou une faille peut être signalé à :",
+				"title": "8. Reporting Issues",
+				"intro": "Prohibited behavior, a bug, or a vulnerability can be reported to:",
 				"email": "contact{'@'}dinorpg.fr",
-				"detailsIntro": "Le signalement doit contenir autant que possible :",
+				"detailsIntro": "The report should include, whenever possible:",
 				"details": {
-					"username": "le pseudonyme concerné ;",
-					"date": "la date approximative ;",
-					"feature": "la fonctionnalité concernée ;",
-					"description": "une description précise ;",
-					"steps": "les étapes de reproduction d’un bug ;",
-					"proof": "les preuves ou captures disponibles."
+					"username": "the username concerned;",
+					"date": "the approximate date;",
+					"feature": "the feature concerned;",
+					"description": "a precise description;",
+					"steps": "the steps to reproduce a bug;",
+					"proof": "any available evidence or screenshots."
 				},
-				"disclosure": "Il est interdit de publier une faille non corrigée, d’en poursuivre l’exploitation ou de l’utiliser pour accéder aux données d’un autre utilisateur.",
-				"goodFaith": "Un signalement effectué de bonne foi ne sera pas considéré comme une tentative de triche."
+				"disclosure": "It is prohibited to publish an unpatched vulnerability, continue exploiting it, or use it to access another user's data.",
+				"goodFaith": "A report made in good faith will not be considered an attempt to cheat."
 			},
 			"sanctions": {
 				"title": "9. Sanctions",
-				"intro": "Selon la gravité des faits, l’administration peut appliquer :",
+				"intro": "Depending on the severity of the violation, the administration may apply:",
 				"list": {
-					"reminder": "un rappel à la règle ;",
-					"warning": "un avertissement ;",
-					"content": "la suppression ou la modification d’un contenu ;",
-					"transaction": "l’annulation d’une action ou d’une transaction ;",
-					"advantage": "le retrait d’un avantage obtenu irrégulièrement ;",
-					"restriction": "la restriction temporaire d’une fonctionnalité ;",
-					"suspension": "la suspension temporaire du compte ;",
-					"closure": "la fermeture définitive du compte."
+					"reminder": "a reminder of the rules;",
+					"warning": "a warning;",
+					"content": "removal or modification of content;",
+					"transaction": "cancellation of an action or transaction;",
+					"advantage": "removal of an improperly obtained advantage;",
+					"restriction": "temporary restriction of a feature;",
+					"suspension": "temporary suspension of the account;",
+					"closure": "permanent closure of the account."
 				},
-				"order": "Les sanctions ne suivent pas obligatoirement cet ordre.",
-				"serious": "Une infraction grave peut entraîner directement une suspension ou une fermeture définitive.",
-				"criteriaIntro": "La décision peut tenir compte :",
+				"order": "Sanctions do not necessarily follow this order.",
+				"serious": "A serious violation may result directly in suspension or permanent account closure.",
+				"criteriaIntro": "The decision may take into account:",
 				"criteria": {
-					"severity": "de la gravité des faits ;",
-					"repetition": "de leur répétition ;",
-					"intent": "du caractère volontaire ou accidentel ;",
-					"advantage": "de l’avantage obtenu ;",
-					"damage": "des dommages causés ;",
-					"cooperation": "de la coopération du joueur ;",
-					"history": "des éventuels antécédents."
+					"severity": "the severity of the violation;",
+					"repetition": "whether it was repeated;",
+					"intent": "whether it was intentional or accidental;",
+					"advantage": "the advantage obtained;",
+					"damage": "the damage caused;",
+					"cooperation": "the player's cooperation;",
+					"history": "any previous violations."
 				}
 			},
 			"circumvention": {
-				"title": "10. Contournement des sanctions",
-				"intro": "Il est interdit de contourner une sanction au moyen :",
+				"title": "10. Circumventing Sanctions",
+				"intro": "It is forbidden to circumvent a sanction by using:",
 				"methods": {
-					"newAccount": "d’un nouveau compte ;",
-					"relative": "du compte d’un proche ;",
-					"device": "d’un appareil différent ;",
-					"vpn": "d’un VPN ou d’un relais technique ;",
-					"username": "d’un changement de pseudonyme ;",
-					"otherPlayer": "de l’intervention d’un autre joueur."
+					"newAccount": "a new account;",
+					"relative": "a relative's or acquaintance's account;",
+					"device": "a different device;",
+					"vpn": "a VPN or technical relay;",
+					"username": "a username change;",
+					"otherPlayer": "another player's intervention."
 				},
-				"participants": "Les comptes participant volontairement au contournement peuvent également être sanctionnés.",
-				"household": "Les autres membres d’un même foyer ne sont pas automatiquement sanctionnés s’ils ne participent pas au contournement."
+				"participants": "Accounts that knowingly participate in circumventing a sanction may also be sanctioned.",
+				"household": "Other members of the same household are not automatically sanctioned if they do not participate in the circumvention."
 			},
 			"appeal": {
-				"title": "11. Contestation",
-				"intro": "Une sanction peut être contestée à l’adresse :",
+				"title": "11. Appeals",
+				"intro": "A sanction may be appealed at:",
 				"email": "contact{'@'}dinorpg.fr",
-				"detailsIntro": "La demande doit préciser :",
+				"detailsIntro": "The request must specify:",
 				"details": {
-					"username": "le pseudonyme du compte ;",
-					"date": "la date approximative de la sanction ;",
-					"decision": "la décision contestée ;",
-					"reasons": "les raisons de la contestation ;",
-					"information": "tout élément utile au réexamen."
+					"username": "the account username;",
+					"date": "the approximate date of the sanction;",
+					"decision": "the decision being appealed;",
+					"reasons": "the reasons for the appeal;",
+					"information": "any information useful for the review."
 				},
-				"respect": "La contestation doit rester respectueuse et factuelle.",
-				"suspension": "Elle ne suspend pas automatiquement la sanction.",
-				"repeated": "Les demandes répétées ne contenant aucun élément nouveau peuvent ne plus recevoir de réponse."
+				"respect": "The appeal must remain respectful and factual.",
+				"suspension": "It does not automatically suspend the sanction.",
+				"repeated": "Repeated requests containing no new information may no longer receive a response."
 			},
 			"changes": {
-				"title": "12. Modification du règlement",
-				"intro": "Le présent règlement peut être modifié afin de tenir compte :",
+				"title": "12. Changes to the Rules",
+				"intro": "These rules may be amended to take into account:",
 				"reasons": {
-					"game": "d’une évolution du jeu ;",
-					"feature": "d’une nouvelle fonctionnalité ;",
-					"abuse": "d’une nouvelle forme d’abus ;",
-					"security": "d’un incident de sécurité ;",
-					"legal": "d’une évolution légale."
+					"game": "changes to the game;",
+					"feature": "a new feature;",
+					"abuse": "a new form of abuse;",
+					"security": "a security incident;",
+					"legal": "a legal change."
 				},
-				"version": "La version et la date de dernière mise à jour sont indiquées en haut du document.",
-				"acceptance": "Une nouvelle acceptation peut être demandée lorsqu’une modification importante est apportée."
+				"version": "The version and date of the latest update are shown at the top of the document.",
+				"acceptance": "A new acceptance may be required when a significant change is made."
 			}
 		}
 	},
 	"legalNotices": {
 		"pageTitle": "Legal information",
 		"title": "Legal notice",
-		"updatedAt": "Dernière mise à jour : {date}",
+		"updatedAt": "Last updated: {date}",
 		"contactEmail": "contact{'@'}dinorpg.fr",
 		"footer": {
 			"link": "Legal notice"
@@ -3743,37 +3743,37 @@
 	"skillTrees": {
 		"title": "Skill Trees",
 		"description": "Here you will find all the competencies discovered by your Dinoz.",
-		"empty": "Aucune compétence découverte pour le moment.",
+		"empty": "No skills discovered yet.",
 		"level": "Level {level}"
 	},
 	"bank": {
 		"title": "The Bank of Dinoland",
 		"rotshil": "Rotshil",
-		"description": "Bienvenue à la Banque de Dinoland, je suis Rotshil, le banquier. && && Chaque jour, je vous offre la possibilité d'échanger vos bons du trésor contre de l'or. Bien sûr, le taux de change va fluctuer chaque jour, alors n'hésitez pas à revenir régulièrement pour profiter des meilleurs taux ! && && En plus de cela, je peux aussi vous proposer d'autres services financiers très intéressants, mais ils ne sont pas encore disponibles, alors un peu de patience !",
+		"description": "Welcome to the Bank of Dinoland, I'm Rotshil, the banker. && && Every day, I offer you the opportunity to exchange your Treasury Notes for gold. Of course, the exchange rate changes every day, so don't hesitate to come back regularly to take advantage of the best rates! && && In addition to that, I can also offer you other very interesting financial services, but they aren't available yet, so please be patient!",
 		"tabs": {
 			"conversion": "Converting",
 			"savings": "Saving"
 		},
 		"exchange": {
-			"title": "Conversion des Bons du Trésor",
-			"dailyRate": "Taux de change du jour",
-			"rateValue": "1 :ticket: = **{gold}** :gold: (taux x{rate})",
+			"title": "Treasury Note Exchange",
+			"dailyRate": "Today's exchange rate",
+			"rateValue": "1 :ticket: = **{gold}** :gold: (rate x{rate})",
 			"yourTickets": "Your Treasure Coupons",
-			"quantity": "Quantité à convertir",
+			"quantity": "Amount to exchange",
 			"max": "Max",
 			"youWillReceive": "You will receive **{gold}** :gold:",
 			"convert": "Convert"
 		},
 		"savings": {
 			"title": "Savings",
-			"amount": "Montant à épargner",
-			"duration": "Durée de l'épargne",
+			"amount": "Amount to save",
+			"duration": "Savings duration",
 			"durationOption": "{days} days (+{percent}%)",
 			"save": "Saving",
 			"activeTitle": "Your savings",
-			"empty": "Vous n'avez aucune épargne en cours.",
-			"previewEmpty": "Choisissez un montant à épargner.",
-			"preview": "Vous épargnez **{gold}** :gold: et recevrez **{interest}** :gold: d'intérêts, soit **{total}** :gold: au total.",
+			"empty": "You have no active savings.",
+			"previewEmpty": "Choose an amount to save.",
+			"preview": "You are saving **{gold}** :gold: and will receive **{interest}** :gold: in interest, for a total of **{total}** :gold:.",
 			"itemDuration": "Duration: {days} days",
 			"itemGain": "Win: **{gold}** :gold: — Total: **{total}** :gold:",
 			"unlockAt": "Available on {date}",
@@ -4733,25 +4733,25 @@
 			}
 		},
 		"teamWCaptain": {
-			"name": "Capitaine",
+			"name": "Captain",
 			"dialog": {
 				"magnet6": {
 					"begin": "..... Pourquoi nous as-tu attaqué ? Est-ce pour te venger de notre attaque précédente ? Je pensais pourtant m'être excusé...",
-					"who": "Oui, je ne me suis pas présenté, je suis Mulder, le capitaine de la Team-W... Qui t'envoie et pourquoi nous as-tu attaqué ?",
-					"dont": "Je vois... tu ne veux pas parler... Tu dois donc être un de SES espions ! Je te le demande une dernière fois : qui t'envoie ? Et pourquoi sommes-nous pris pour cible par le Roi ?",
-					"dont2": "Bien... je vois... Puisque tu n'as rien à me dire pour excuser tes actions, va-t'en ! Sache qu'ici nous pouvons tenir des mois face aux attaques du Roi, et que rien ne nous fera abandonner notre mission !",
-					"tell": "Pendant l'heure qui suit, vous racontez au Capitaine tout ce qui vous est arrivé depuis votre entrée dans les Steppes Magnétiques : l'attaque de sa Team-W, puis l'entretien avec le Roi et, bien entendu, le complot pour s'emparer de la Magnétite...",
-					"hist1": "...... Je comprends maintenant... Il y a quelques jours, notre Wanwan le plus puissant — Grobourin — que tu as tenté de combattre dehors, a été empoisonné par une étrange substance...",
-					"hist2": "Nous avons bien entendu enquêté pour savoir qui avait pu commettre un tel acte, et une piste nous a menés jusqu'à la Citadelle du Roi des Rockys. C'est pour cette raison que nous l'observions de près : nous cherchions un moyen de guérir Grobourin...",
-					"hist3": "... mais je peux te jurer qu'à aucun moment nous n'avons eu pour projet de nous emparer de la Magnétite. Cette pierre n'a aucune signification pour nous, les nomades, car nous trouvons déjà dans les steppes tout ce qui suffit à nous rendre heureux...",
-					"hist4": "On nous traite souvent de voleurs, mais c'est parce qu'on nous confond avec ces Brigands de l'extrême-occident ! Nous les combattons régulièrement lorsque nous les trouvons... Ils nous détestent, mais les habitants nous aident, car le Roi n'envoie jamais aucun soldat ici... Ils ont bien trop peur du Grand Ver... Les nomades ont été abandonnés par le Roi...",
-					"hist5": "Voilà... je t'ai tout raconté. Souhaites-tu que je répète ?",
-					"ask": "... je suis désolé de ce qu'il s'est passé... mais tu dois comprendre : nous devons absolument soigner Grobourin. Il faiblit de jour en jour et nous craignons le pire... Tu es en contact avec le Roi : pourrais-tu nous aider en plaidant notre cause ? Il s'agit d'un malentendu, et il est possible qu'il puisse nous aider à trouver la cause de l'empoisonnement...",
-					"no": "Je comprends... Après tout, nous sommes des inconnus et tu n'es pas obligé de nous croire... Reviens me voir si tu changes d'avis.",
-					"yes": "... vraiment ? Tu feras cela pour nous, alors que nous t'avons attaqué ? Que le Grand Ver veille sur toi ! Fais attention aux Brigands sur ta route... Nous attendons avec impatience de tes nouvelles !"
+					"who": "Sorry, you're right, I haven't introduced myself. My name is Mulder, I'm the captain of Team-W ... Who sent you and why did you attack us?",
+					"dont": "I see ... you don't want to talk ... you must be one of his spies! I'm going to ask you for the last time: Who sent you? And why are we being targeted by the King?",
+					"dont2": "I see ... if you have nothing to say, leave! We can withstand the King's attacks for months, nothing is going to make us surrender!",
+					"tell": "You spend the next hour telling the captain everything that has happened since you entered the Magnetic Steppes. You tell him about Team-W's attack, the audience with the King and of course the plot to take some Lodestone.",
+					"hist1": "Ah, now I understand. Some days ago, our strongest Wanwan, Bigbeastly - the one you tried to fight outside - was poisoned by a strange substance.",
+					"hist2": "Of course we investigated to see how it happened. We found a secret path during our investigation which led us all the way to the Rockies King's Citadel. That's why we're watching it so closely: we were searching for a way to cure Bigbeastly.",
+					"hist3": "I can swear that we never planned to take any Lodestone. This stone is of no importance for us nomads, we already have everything we right here at the steppes....",
+					"hist4": "We're often treated like thieves, often because people mix us up with the bandits of the Extreme West! We often find them here and end up fighting ... although they hate us, the inhabitants often help us as the King never sends any soldiers here ... they're too scared by the Huge Worm ... It seems the Nomads have been abandoned by the King.",
+					"hist5": "That's everything I have to tell you. Do you need me to repeat it?",
+					"ask": "I'm very sorry for everyhting that has happened ... but you must understand, we have to cure Bigbeastly ... he is getting weaker by the day and we fear the worst for him. You're in contact with the King, do you think you could help us plead our cause? It's simply a big misunderstanding, and he'll be able to help us find the cause of the poisoning.",
+					"no": "I understand ... come back if you change your mind though.",
+					"yes": "... Really? You'll do that for us, even though we attacked you? ... may the Huge Worm watch over you! Take care, there may be bandits on the road ... we look forward to hearing from you!"
 				},
 				"magnet7": {
-					"begin": "Tu as vu le Roi ? Tu sais comment soigner Grobourin ? Nous comptons tous sur toi, reviens nous voir avec de bonnes nouvelles !"
+					"begin": "Have you seen the King? Do you know how to cure Bigbeastly? ... We're all counting on you, make sure youn return with some good news!"
 				},
 				"magnet11": {
 					"begin": "Merci pour votre aide... Après votre départ, ces Goupignons sombres se sont emparés de Grobourin. Il semblait que le poison qu'ils utilisaient permettait de le contrôler...",
@@ -6217,30 +6217,30 @@
 		}
 	},
 	"reportModal": {
-		"title": "Signalement",
-		"reportingUser": "Signalement du joueur : ",
-		"reportingDinoz": "Signalement du dinoz : ",
-		"reportingClan": "Signalement du clan : ",
-		"reason": "Raison :",
-		"comment": "Commentaire :",
+		"title": "Report",
+		"reportingUser": "Reporting player:",
+		"reportingDinoz": "Reporting Dinoz:",
+		"reportingClan": "Reporting clan:",
+		"reason": "Reason:",
+		"comment": "Comment:",
 		"cancel": "Cancel",
 		"send": "Send",
-		"success": "Signalement envoyé.",
-		"error": "Erreur lors de l'envoi du signalement.",
+		"success": "Report sent.",
+		"error": "Error while sending the report.",
 		"reasons": {
-			"multiAccounts": "Usage de multicomptes",
-			"pseudo": "Pseudo inapproprié",
-			"description": "Description inappropriée",
-			"avatar": "Avatar inapproprié",
-			"behavior": "Comportement inapproprié",
-			"inappropriateName": "Nom inapproprié",
-			"clanName": "Nom de clan inapproprié",
-			"banner": "Bannière inappropriée",
-			"clanPages": "Description / Pages inappropriées",
-			"other": "Autre"
+			"multiAccounts": "Use of multiple accounts",
+			"pseudo": "Inappropriate username",
+			"description": "Inappropriate description",
+			"avatar": "Inappropriate avatar",
+			"behavior": "Inappropriate behavior",
+			"inappropriateName": "Inappropriate name",
+			"clanName": "Inappropriate clan name",
+			"banner": "Inappropriate banner",
+			"clanPages": "Inappropriate description / pages",
+			"other": "Other"
 		},
-		"reportUser": "Signaler ce joueur",
-		"reportClan": "Signaler ce clan",
-		"reportDinoz": "Signaler ce dinoz"
+		"reportUser": "Report this player",
+		"reportClan": "Report this clan",
+		"reportDinoz": "Report this Dinoz"
 	}
 }
