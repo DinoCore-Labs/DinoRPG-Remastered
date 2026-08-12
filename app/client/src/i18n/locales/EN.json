@@ -14,7 +14,7 @@
 	},
 	"maintenancepage": {
 		"title": "Maintenance",
-		"description": "Le site est actuellement en maintenance. Toute l'équipe des administrateurs travaille à mettre à jour le site qui devrait à nouveau être accessible dès que possible. Merci de votre patience et de votre compréhension."
+		"description": "The website is currently undergoing maintenance. Our entire administration team is working to update the website, which should be accessible again as soon as possible. Thank you for your patience and understanding."
 	},
 	"topBar": {
 		"createAccount": "Create an account",
@@ -53,7 +53,7 @@
 			"system": "Settings",
 			"skipLevelAnimation": "Skip level up animation",
 			"skipFightAnimation": "Skip battle animation",
-			"autoReequipItems": "Rééquiper automatiquement les objets consommés",
+			"autoReequipItems": "Automatically re-equip consumed items",
 			"bypassGatheringGrid": "Skip gathering grid",
 			"goodbye": "Goodbye, Master {name}..."
 		}
@@ -336,7 +336,7 @@
 					"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
 					"CLAN_EDIT_BANNER": "Can change the Clan banner",
 					"CLAN_EDIT_LANG": "Can change the language of the Clan",
-					"CLAN_EDIT_NAME": "Peut changer le nom du Clan"
+					"CLAN_EDIT_NAME": "Can change the Clan name"
 				},
 				"nickname": "Player's nickname",
 				"save": "Save",
@@ -361,7 +361,7 @@
 			"help": "Your treasure worth **{value}** :gold: is protected by the castle. You can donate ingredients to be added to the Clan's treasure.",
 			"price": "{price} :gold:",
 			"giveAway": "Donate to the clan",
-			"confirm": "Voulez vous vraiment donner au clan ces ingrédients d'une valeur de {gold} Or"
+			"confirm": "Are you sure you want to give the Clan these ingredients worth {gold} Gold?"
 		},
 		"discussion": {
 			"action": {
@@ -398,9 +398,9 @@
 				"save": "Rename it"
 			},
 			"leader": {
-				"title": "Changer le chef du clan",
-				"save": "Nommer chef",
-				"newLeader": "Chef de Clan modifié avec succès !"
+				"title": "Change the Clan leader",
+				"save": "Appoint as leader",
+				"newLeader": "Clan leader changed successfully!"
 			},
 			"action": {
 				"delete": "Delete clan"
@@ -422,7 +422,7 @@
 			"date": "Creation date"
 		},
 		"request": {
-			"info": "Vous avez envoyé une demande pour rejoindre le clan ",
+			"info": "You sent a request to join the Clan ",
 			"cancel": "Cancel the request."
 		}
 	},
@@ -528,19 +528,19 @@
 	"reincarnate": {
 		"choice1": {
 			"name": "Choice 1: <br/>Keep Destiny ({price}{goldIcon})",
-			"action": "Conserver la destinée",
-			"explanation": "Vous pouvez réincarner votre Dinoz en conservant sa destinée :",
+			"action": "Keep destiny",
+			"explanation": "You can reincarnate your Dinoz while keeping its destiny:",
 			"list1": "Will return to level 1",
-			"list2": "Il prendra les mêmes éléments, dans le même ordre que lors de sa première vie"
+			"list2": "It will have the same elements, in the same order as in its first life."
 		},
 		"choice2": {
 			"name": "Choice 2: <br/>New Destiny",
-			"action": "Changer de destinée",
-			"explanation": "Vous pouvez réincarner votre Dinoz en changeant sa destinée :",
+			"action": "Change destiny",
+			"explanation": "You can reincarnate your Dinoz and change its destiny:",
 			"list1": "Will return to level 1",
-			"list2": "Tous ses niveaux seront à nouveau aléatoires"
+			"list2": "All its levels will be randomized again."
 		},
-		"finalWarning": "Voulez-vous vraiment réincarner ce Dinoz ? \nAttention, un Dinoz ne peut être réincarné qu'une seule fois !"
+		"finalWarning": "Are you sure you want to reincarnate this Dinoz? Warning: a Dinoz can only be reincarnated once!"
 	},
 	"modal": {
 		"messagerie": {
@@ -608,11 +608,11 @@
 		"buttonValidateAdvEditor": "Validate and send the message"
 	},
 	"toast": {
-		"Account_banned_until": "Votre compte est banni jusqu'au {date} à {time} à cause de : {reason}.",
-		"Account_muted_until": "Vous êtes rendu muet jusqu'au {date} à {time} à cause de : {reason}.",
+		"Account_banned_until": "Your account is banned until {date} at {time} because of: {reason}.",
+		"Account_muted_until": "You muted until {date} {time} because of: {reason}.",
 		"Account_banned": "Your account is banned.",
-		"autoReequipSuccess": "Objet(s) rééquipé(s) automatiquement : {items}",
-		"autoReequipMissing": "Objet(s) manquant(s) pour le rééquipement : {items}",
+		"autoReequipSuccess": "Item(s) automatically re-equipped: {items}",
+		"autoReequipMissing": "Missing item(s) for re-equipping: {items}",
 		"heal": "Your Dinoz has been healed for {value} :hp:.",
 		"gold": "You received {value} :gold:.",
 		"sphere": "Your Dinoz has learned the {value} skill.",
@@ -636,7 +636,7 @@
 		"reincarnation": "Your Dinoz has been reincarnated.",
 		"loginToLike": "Sign in to like this news.",
 		"shovelMine": "You aren't going to dig right next to the miner !?!",
-		"gatherAlertError": "Erreur lors de la collecte automatique.",
+		"gatherAlertError": "Error during automatic collection.",
 		"market": {
 			"minimalValueError": "Your offer's total value doesn't reach the minimal value.",
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
@@ -1366,9 +1366,9 @@
 			"ChasseurDeGeant": "Enable the Dinoz to hunt medium animals in some places",
 			"CouleeDeLave": "Attack one enemy with a Fire power of 12",
 			"BouleDeFeu": "Attacks one enemy with a Fire power of 7",
-			"Combustion": "All enemies lose health points equal to their Wood element (affected by balance)",
+			"Combustion": "All enemies lose health points equal to their Wood element",
 			"ChasseurDeDragon": "Enable the Dinoz to hunt very rare and dangerous animals in some places",
-			"Torche": "The Dinoz is on fire and loses 1 HP per cycle. All enemies touching the Dinoz, will lose health relative to the Dinoz Fire element (affected by balance).",
+			"Torche": "The Dinoz is on fire and loses 1 HP per cycle. All enemies touching the Dinoz, will lose health relative to the Dinoz Fire element.",
 			"AuraIncandescente": "Increase the Fire element by 2",
 			"Vengeance": "Increase the counter-attack chances by 5%",
 			"Sieste": "The Dinoz recovers up to 20 health points and falls asleep",
@@ -1401,9 +1401,9 @@
 			"RayonKaarSher": "Attack all the enemies with Water at a strength of 7",
 			"Magasinier": "Increase maximum inventory capacity by 50% (non-cumulative)",
 			"Perception": "Increase the strength of Water **assaults** by 4 and allow the Dinoz to cancel the immaterial effect on each assault. Prevents as well the extra effect of tricky and fatal hits.",
-			"CoupsSournois": "Attack one enemy. If successful and if the enemy does not have perception, the enemy loses half of its health points (subject to balancing). Note: it does not affect bosses.",
+			"CoupsSournois": "Attack one enemy. If successful and if the enemy does not have perception, the enemy loses half of its health points. Note: it does not affect bosses.",
 			"ApprentiPecheur": "Allow Dinoz to catch small fish in some places",
-			"CoupFatal": "Attack one enemy. If successful and if the enemy does not have perception, the enemy loses all of its health points (subject to balancing). Note: it does not affect bosses.",
+			"CoupFatal": "Attack one enemy. If successful and if the enemy does not have perception, the enemy loses all of its health points. Note: it does not affect bosses.",
 			"EntrainementSousMarin": "Increase maximum health points by 10",
 			"PecheurConfirme": "Enable the Dinoz to catch large fish in some places",
 			"Marecage": "Slow down all enemies by 50% for a medium duration",
@@ -1416,7 +1416,7 @@
 			"CloneAqueux": "Create a clone of the Dinoz with 1 health point. The clone inherits solely of base statistics of the original (attack, defense, dodge, counter, multi-hit, critical hit).",
 			"GriffesEmpoisonnees": "If a Water **assault** hits an opponent, it becomes poisoned for a medium duration and the poison deals 14 damage",
 			"Cuisinier": "Increase the life gain of items by 10% for all Dinoz (non-cumulative)",
-			"SangAcide": "Whenever an opponent hits the Dinoz in melee, it has 50% chance to receive acid damage based on the Water element of the Dinoz (affected by balance)",
+			"SangAcide": "Whenever an opponent hits the Dinoz in melee, it has 50% chance to receive acid damage based on the Water element of the Dinoz",
 			"Regenerescence": "Increase resting rate by 2 HP per hour",
 			"PremiersSoins": "Dinoz will recover one health point at the end of the fight if he has lost some life",
 			"PureeSalvatrice": "Cancel all Negative Status of the Group",
@@ -4783,6 +4783,63 @@
 				}
 			}
 		},
+		"jeromeK": {
+			"name": "Jérôme K.",
+			"dialog": {
+				"steppes": {
+					"begin": "Laisse-moi... je veux mourir...",
+					"ask": "Ça, tu peux le dire... J'avais tout ! Tout ! Tout : la richesse, les femmes, la célébrité... Le monde entier était à moi...",
+					"ask2": "Pfff... Je préfère ne plus y penser... mais je vais te répondre... J'ai tout perdu... à Warp Street...",
+					"ask3": "Oui... Tu ne connais peut-être pas, mais Warp Street est une petite rue de Dinoville... C'est un marché réservé aux élites, on y achète et vend des Produits Déguisés !",
+					"deriv": "Des produits déguisés ! Tu vois, quand le cours du Santaz augmente, le produit déguisé qui est lié au Santaz baisse. Sauf si, bien entendu, le Féross augmente lui aussi, auquel cas ça dépend alors du cours du Riz Amnésique du mois précédent... Enfin bref, avec les produits déguisés, tu peux te faire un max de thune très rapidement !",
+					"deriv2": "Oui, exactement ! Enfin, jusqu'à il y a quelques jours...",
+					"ask4": "C'est simple... Je n'ai pas vu venir la crise mobilière...",
+					"ask5": "Non ! Rien à voir ! L'immobilier, ce sont les bâtiments... Ça marche très fort en ce moment, avec tous ces châteaux à construire pour la Guerre des Clans ! Il y en a qui amassent des fortunes en quelques jours seulement !",
+					"ask6": "Oui. Le mobilier, avant, c'était l'avenir ! Tout le monde voulait son bureau en Bois de Grumhel ! Mais voilà, le réchauffement climatique et tout ça, la guérilla Gorilloz qui attaque ceux qui coupent les arbres... Enfin bref, l'effondrement du marché et ma ruine...",
+					"ask7": "Combien ? Euh... dans les quatre milliards de pièces d'or...",
+					"ask8": "Comme je te dis, quatre milliards... Oui, je sais, ça a l'air énorme pour quelqu'un qui ne fait pas partie de l'élite comme moi, mais crois-moi, aujourd'hui, avec quatre milliards, tu n'as plus rien...",
+					"ask9": "Mais bon... Le coup dur est passé, je vais me refaire, c'est cent pour cent certain ! J'ai trouvé ZE affaire, le truc de ouf qui va faire péter les thunes ! Mais pour cela, j'ai besoin d'un partenaire... Ça te tente ?",
+					"ask10": "Oui, toi ! Tu as l'air d'être plutôt un bon Maître Dinoz, assez puissant. Alors voilà, je te propose une affaire : tu t'occupes de la logistique et je m'occupe de la vente. Ensemble, on va réussir et gagner des millions... Et qui ne veut pas gagner des millions, hein ?",
+					"ask11": "C'est très simple, voilà le plan : tu me rapportes 100 Graines de la Dévoreuse, tu en trouveras dans les Steppes. Il m'en faut 100 au minimum. Ensuite, tu me les confies... En échange, je te laisse un truc super rare que j'ai trouvé. Ensuite, tu me donnes quelques jours pour tout revendre à Warp Street et on partage les bénéfices. Tu en dis quoi ?",
+					"no": "OK, comme tu veux, tant pis pour toi !",
+					"yes": "Super ! Alors, voilà ce qu'on va faire : tu réunis les 100 Graines puis tu reviens me voir ! Je t'attends, OK ?",
+					"ok": "Génial ! Tu es super ! Tiens, je te laisse mon objet rare. On se retrouve plus tard à Dinoville, le temps que je vende tout le stock !"
+				},
+				"dinoville": {
+					"begin": "Laisse-moi... je veux mourir...",
+					"ask": "Tout allait bien... au début... Les Graines partaient à des prix énormes, on gagnait beaucoup d'argent, tout le monde en voulait !",
+					"ask2": "Ensuite, ça a été l'horreur... Des concurrents ont fait courir le bruit que nos graines contenaient du xylophone, un produit dangereux qui fait des bruits bizarres dans l'estomac de celui qui l'avale... Ça a été la panique sur le marché, j'ai dû tout vendre en catastrophe pour limiter les pertes...",
+					"ask3": "Tiens... C'est ta part... C'est tout ce que j'ai pu sauver lors du krach... 800 Bons du trésor...",
+					"ask4": "Oui... Tu peux garder l'objet rare que je t'ai confié... Mais ne t'inquiète pas pour moi ! Je vais trouver un nouveau truc, et la prochaine fois, ça va marcher d'enfer !"
+				}
+			},
+			"choice": {
+				"steppes": {
+					"ask": "Ça n'a pas l'air d'aller fort...",
+					"ask2": "Et que s'est-il passé ?",
+					"ask3": "Warp Street ?",
+					"deriv": "Des... quoi ?",
+					"deriv2": "Comme vous ?",
+					"ask4": "Que s'est-il passé ?",
+					"ask5": "Vous voulez dire immobilière, non ?",
+					"ask6": "La crise mobilière, donc...",
+					"ask7": "Vous avez perdu combien ?",
+					"ask8": "COMBIEN ?",
+					"ask9": "Oui, mais quand même...",
+					"ask10": "Euh... moi ?",
+					"ask11": "Que faut-il faire ?",
+					"yes": "OK !",
+					"no": "No way",
+					"ok": "OK !"
+				},
+				"dinoville": {
+					"ask": "Encore ? Que s'est-il passé ?",
+					"ask2": "Et ensuite ?",
+					"ask3": "Et mes pièces ?",
+					"ask4": "C'est tout ?"
+				}
+			}
+		},
 		"dialog": {
 			"exit": "See you soon.",
 			"leave": "Quit"
@@ -6154,6 +6211,9 @@
 				"fightSkingEnd2": "Le Roi des Rockys et le Capitaine vous attendent pour vous remercier de votre vaillant combat...",
 				"syphonDeath": "Alors que votre Dinoz tente de franchir le Syphon, une violente décharge magnétique le frappe de plein fouet. Sans protection, il s'effondre instantanément..."
 			}
+		},
+		"jeromeTrader": {
+			"name": "L'affaire Warp Street"
 		}
 	},
 	"reportModal": {
