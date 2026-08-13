@@ -3630,81 +3630,81 @@
 		},
 		"sections": {
 			"publisher": {
-				"title": "1. Édition du site",
-				"description": "DinoRPG Remastered est un service de communication au public en ligne édité à titre non professionnel par une personne physique. Il s'agit d'un projet personnel et communautaire.",
-				"anonymity": "Conformément au II de l'article 1-1 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, l'éditeur a choisi de préserver son anonymat. Les informations permettant de l'identifier ont été communiquées à l'hébergeur dans le cadre du contrat d'hébergement.",
-				"director": "Le directeur de la publication est l'éditeur du site.",
-				"contactIntro": "Pour contacter l'éditeur :"
+				"title": "1. Website Publisher",
+				"description": "DinoRPG Remastered is an online public communication service published on a non-professional basis by an individual. It is a personal and community project.",
+				"anonymity": "In accordance with II of Article 1-1 of French Law No. 2004-575 of June 21, 2004 on confidence in the digital economy, the publisher has chosen to preserve their anonymity. The information required to identify the publisher has been provided to the hosting provider as part of the hosting agreement.",
+				"director": "The publication director is the website publisher.",
+				"contactIntro": "To contact the publisher:"
 			},
 			"hosting": {
-				"title": "2. Hébergement",
-				"intro": "Le site et les données nécessaires à son fonctionnement sont hébergés par :",
+				"title": "2. Hosting",
+				"intro": "The website and the data required for its operation are hosted by:",
 				"provider": "IONOS SARL",
 				"addressLine1": "7, place de la Gare",
 				"addressLine2": "BP 70109",
 				"addressLine3": "57200 Sarreguemines Cedex",
 				"country": "France",
 				"phone": "Phone: 09.70.80.89.11",
-				"websiteIntro": "Site de l'hébergeur : ",
+				"websiteIntro": "Hosting provider website:",
 				"websiteLabel": "IONOS"
 			},
 			"project": {
-				"title": "3. Nature du projet",
-				"independent": "DinoRPG Remastered est une recréation open source et un projet de fans indépendant. Le projet n'est ni affilié, ni approuvé, ni parrainé par Motion Twin ou Eternaltwin.",
-				"nonCommercial": "L'accès au jeu est gratuit. Le projet est exploité sans publicité, abonnement, achat intégré, vente de contenu, monétisation ou collecte de dons.",
-				"attribution": "Le jeu DinoRPG original a été créé par Motion Twin. Certaines parties du code, des modèles, des données et de la logique de jeu sont dérivées ou adaptées des archives de Motion Twin et du projet open source Eternaltwin DinoRPG. Les attributions détaillées figurent dans le dépôt du projet."
+				"title": "3. Nature of the Project",
+				"independent": "DinoRPG Remastered is an open-source recreation and an independent fan project. The project is not affiliated with, endorsed by, or sponsored by Motion Twin or Eternaltwin.",
+				"nonCommercial": "Access to the game is free. The project is operated without advertising, subscriptions, in-app purchases, content sales, monetization, or donation collection.",
+				"attribution": "The original DinoRPG game was created by Motion Twin. Certain parts of the code, models, data, and game logic are derived or adapted from Motion Twin archives and the open-source Eternaltwin DinoRPG project. Detailed attributions are provided in the project repository."
 			},
 			"intellectualProperty": {
-				"title": "4. Propriété intellectuelle",
-				"rights": "Les marques, noms, univers, personnages, textes, illustrations, sons et autres éléments provenant du jeu DinoRPG original restent la propriété de leurs titulaires respectifs, notamment Motion Twin lorsque cela s'applique. Leur présence dans ce projet ne constitue aucun transfert de droits.",
-				"code": "Le code source de DinoRPG Remastered est mis à disposition sous licence GNU Affero General Public License version 3 (AGPL-3.0), conformément aux conditions précisées dans le dépôt du projet.",
-				"assets": "Certains éléments graphiques et contenus originaux provenant de DinoRPG sont mis à disposition selon les conditions indiquées dans le dépôt, notamment sous licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International (CC BY-NC-SA 4.0).",
-				"repositoryIntro": "Le code source, les licences et les attributions sont disponibles sur le",
-				"repositoryLabel": " dépôt GitHub de DinoRPG Remastered"
+				"title": "4. Intellectual Property",
+				"rights": "The trademarks, names, universe, characters, texts, illustrations, sounds, and other elements from the original DinoRPG game remain the property of their respective rights holders, including Motion Twin where applicable. Their presence in this project does not constitute any transfer of rights.",
+				"code": "The source code of DinoRPG Remastered is made available under the GNU Affero General Public License version 3 (AGPL-3.0), in accordance with the terms specified in the project repository.",
+				"assets": "Certain graphical assets and original content from DinoRPG are made available under the conditions indicated in the repository, notably under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license (CC BY-NC-SA 4.0).",
+				"repositoryIntro": "The source code, licenses, and attributions are available in the",
+				"repositoryLabel": "DinoRPG Remastered GitHub repository"
 			},
 			"personalData": {
-				"title": "5. Données personnelles et cookies",
-				"controller": "Le responsable du traitement est l'éditeur non professionnel de DinoRPG Remastered. Il peut être contacté à l'adresse électronique indiquée ci-dessous.",
-				"introduction": "DinoRPG Remastered traite uniquement les données nécessaires à la création et à la gestion des comptes, au fonctionnement du jeu, à la sauvegarde de la progression, à la messagerie, à la modération, à la sécurité et au support.",
-				"optionalData": "Le pseudonyme et le mot de passe sont nécessaires à la création et à la sécurisation du compte. L'adresse électronique est facultative lorsqu'elle n'est pas exigée par le formulaire d'inscription. En l'absence d'adresse électronique, certaines fonctionnalités, notamment la récupération du mot de passe et les communications relatives au compte, peuvent être indisponibles.",
+				"title": "5. Personal Data and Cookies",
+				"controller": "The data controller is the non-professional publisher of DinoRPG Remastered. They can be contacted at the email address indicated below.",
+				"introduction": "DinoRPG Remastered processes only the data necessary for account creation and management, game operation, progress saving, messaging, moderation, security, and support.",
+				"optionalData": "The username and password are required to create and secure the account. The email address is optional when it is not required by the registration form. Without an email address, certain features, particularly password recovery and account-related communications, may be unavailable.",
 				"data": {
-					"account": "Données de compte : pseudonyme, adresse électronique lorsqu'elle est fournie, identifiant interne, mot de passe conservé sous forme hachée, rôle, dates de création et de connexion.",
-					"game": "Données de jeu : progression, Dinoz, inventaire, monnaies virtuelles, missions, scénarios, classements, profil et historique des actions réalisées dans le jeu.",
-					"messages": "Données de communication : messages privés, participants, dates d'envoi, statut de lecture et éventuels signalements nécessaires à la modération.",
-					"technical": "Données techniques : adresse IP, informations de connexion, journaux du serveur, erreurs techniques et actions nécessaires à la sécurité du service."
+					"account": "Account data: username, email address when provided, internal identifier, password stored in hashed form, role, and account creation and login dates.",
+					"game": "Game data: progress, Dinoz, inventory, virtual currencies, missions, scenarios, rankings, profile, and history of actions performed in the game.",
+					"messages": "Communication data: private messages, participants, sending dates, read status, and any reports required for moderation.",
+					"technical": "Technical data: IP address, connection information, server logs, technical errors, and actions required for service security."
 				},
-				"purposes": "Ces données sont utilisées pour fournir le service demandé, authentifier les joueurs, enregistrer leur progression, permettre les communications, assurer le support, faire respecter le règlement et protéger le site contre les erreurs, abus et accès non autorisés.",
-				"legalBases": "Les traitements nécessaires au compte, au jeu et à la messagerie reposent sur l'exécution du service demandé par le joueur. Les traitements liés à la sécurité, à la prévention des abus et à la modération reposent sur l'intérêt légitime de l'éditeur à protéger le projet et ses utilisateurs.",
-				"recipients": "Les données peuvent être accessibles à l'éditeur et aux administrateurs habilités lorsque leur intervention est nécessaire, ainsi qu'aux prestataires techniques strictement nécessaires à l'hébergement, à la sécurité et au fonctionnement du projet. Les données principales sont hébergées sur l'infrastructure IONOS. Elles ne sont ni vendues ni utilisées à des fins publicitaires.",
-				"retention": "Les données du compte, la progression et les messages sont conservés pendant l'existence du compte. Après une demande de suppression, les données sont supprimées de la base active dans un délai maximal de 30 jours et disparaissent progressivement des sauvegardes dans un délai maximal de 90 jours. Les journaux techniques et de sécurité sont conservés pendant une durée maximale de 12 mois. Les données relatives au support et à la modération sont conservées pendant une durée maximale de 12 mois après la clôture de la demande ou du dossier.",
-				"cookiesIntroduction": "Le site utilise exclusivement des cookies et des stockages locaux nécessaires à son fonctionnement ou aux fonctionnalités expressément demandées par le joueur :",
+				"purposes": "This data is used to provide the requested service, authenticate players, save their progress, enable communications, provide support, enforce the rules, and protect the website against errors, abuse, and unauthorized access.",
+				"legalBases": "Processing necessary for the account, game, and messaging is based on the performance of the service requested by the player. Processing related to security, abuse prevention, and moderation is based on the publisher's legitimate interest in protecting the project and its users.",
+				"recipients": "Data may be accessible to the publisher and authorized administrators when their intervention is necessary, as well as to technical service providers strictly necessary for hosting, security, and operation of the project. The main data is hosted on IONOS infrastructure. It is neither sold nor used for advertising purposes.",
+				"retention": "Account data, progress, and messages are retained for the lifetime of the account. After a deletion request, data is removed from the active database within a maximum of 30 days and progressively disappears from backups within a maximum of 90 days. Technical and security logs are retained for a maximum of 12 months. Support and moderation data is retained for a maximum of 12 months after the request or case is closed.",
+				"cookiesIntroduction": "The website exclusively uses cookies and local storage necessary for its operation or for features expressly requested by the player:",
 				"cookies": {
-					"authentication": "Cookie d'authentification : il permet de maintenir la session du joueur et de sécuriser l'accès à son compte. Sa durée maximale est de sept jours.",
-					"language": "Préférence de langue : elle permet de conserver la langue choisie sur l'appareil utilisé.",
-					"preferences": "Préférences locales du jeu : elles permettent de mémoriser certains réglages d'interface et d'animation choisis par le joueur."
+					"authentication": "Authentication cookie: it keeps the player's session active and secures access to their account. Its maximum lifetime is seven days.",
+					"language": "Language preference: it stores the selected language on the device being used.",
+					"preferences": "Local game preferences: they store certain interface and animation settings selected by the player."
 				},
-				"cookiesConsent": "Ces traceurs ne sont utilisés ni à des fins publicitaires, ni pour mesurer l'audience, ni pour suivre la navigation sur d'autres sites. Étant strictement nécessaires au service ou aux préférences demandées, ils ne font pas l'objet d'une demande de consentement préalable.",
-				"cookiesRemoval": "Le joueur peut supprimer les cookies et données locales depuis les paramètres de son navigateur. Cette suppression peut entraîner sa déconnexion et la réinitialisation de ses préférences.",
-				"rights": "Chaque joueur peut demander l'accès, la rectification ou l'effacement de ses données, ainsi que la limitation de certains traitements, leur portabilité lorsqu'elle est applicable, ou s'opposer à certains traitements lorsque la loi le permet. La demande doit permettre d'identifier le compte concerné, par exemple à l'aide du pseudonyme et de l'adresse électronique associée.",
-				"rightsContact": "Pour exercer ces droits ou poser une question relative aux données personnelles :",
-				"cnilIntro": "Une réclamation peut également être adressée à la",
-				"cnilLabel": " Commission nationale de l'informatique et des libertés (CNIL)"
+				"cookiesConsent": "These trackers are not used for advertising, audience measurement, or tracking browsing on other websites. As they are strictly necessary for the service or requested preferences, they are not subject to prior consent.",
+				"cookiesRemoval": "The player can delete cookies and local data from their browser settings. Doing so may log them out and reset their preferences.",
+				"rights": "Each player may request access to, rectification of, or deletion of their data, as well as restriction of certain processing, data portability where applicable, or object to certain processing where permitted by law. The request must make it possible to identify the account concerned, for example using the username and associated email address.",
+				"rightsContact": "To exercise these rights or ask a question about personal data:",
+				"cnilIntro": "A complaint may also be submitted to the",
+				"cnilLabel": "Commission nationale de l'informatique et des libéertés (CNIL)"
 			},
 			"liability": {
-				"title": "6. Responsabilité",
-				"availability": "L'éditeur s'efforce de maintenir le service accessible et les informations publiées exactes. Il ne garantit toutefois pas une disponibilité continue, l'absence d'erreurs ou l'absence d'interruptions, notamment lors des opérations de maintenance, des mises à jour ou en cas d'incident technique.",
-				"use": "L'utilisateur reste responsable de son équipement, de sa connexion à Internet et de l'usage qu'il fait du service. Le service est fourni gratuitement et en l'état, dans les limites autorisées par la loi applicable.",
-				"externalLinks": "Le site peut contenir des liens vers des services externes. L'éditeur ne contrôle pas leur contenu, leur disponibilité ni leurs éventuelles modifications."
+				"title": "6. Liability",
+				"availability": "The publisher endeavors to keep the service accessible and the published information accurate. However, they do not guarantee continuous availability, absence of errors, or absence of interruptions, particularly during maintenance, updates, or in the event of a technical incident.",
+				"use": "The user remains responsible for their equipment, Internet connection, and use of the service. The service is provided free of charge and as is, within the limits permitted by applicable law.",
+				"externalLinks": "The website may contain links to external services. The publisher does not control their content, availability, or any changes made to them."
 			},
 			"contact": {
-				"title": "7. Contact et signalement",
-				"description": "Toute question juridique, demande relative à un droit, réclamation ou signalement concernant un contenu peut être adressé à l'éditeur.",
-				"emailIntro": "Adresse de contact :",
+				"title": "7. Contact and Reporting",
+				"description": "Any legal question, rights-related request, complaint, or report concerning content may be addressed to the publisher.",
+				"emailIntro": "Contact address:",
 				"details": {
-					"url": "Indiquer l'adresse précise de la page concernée.",
-					"content": "Décrire clairement le contenu ou le comportement signalé.",
-					"reason": "Préciser le motif de la demande et, lorsque cela est utile, joindre les justificatifs nécessaires.",
-					"identity": "Fournir des coordonnées permettant de répondre à la demande."
+					"url": "Provide the exact address of the page concerned.",
+					"content": "Clearly describe the reported content or behavior.",
+					"reason": "Specify the reason for the request and, where useful, attach any necessary supporting documents.",
+					"identity": "Provide contact details so that a response can be sent."
 				}
 			}
 		}
