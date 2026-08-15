@@ -108,7 +108,7 @@
 						</svg>
 						<span>{{ $t('topBar.userMenu.ranking') }}</span>
 					</RouterLink>
-					<a class="link" href="https://gerardufoin.github.io/DinoRPG-Legacy-Paradino/">
+					<a class="link" href="https://gerardufoin.github.io/DinoRPG-Legacy-Paradino/" target="_blank">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon">
 							<path
 								d="m18 4 2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4z"
@@ -141,6 +141,14 @@
 						</svg>
 						<span>{{ $t('topBar.userMenu.guide') }}</span>
 					</RouterLink>
+					<a class="link" href="https://wiki.dinorpg.fr" target="_blank">
+						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
+							<path
+								d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 17h-2v-2h2zm2.07-7.75-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25"
+							></path>
+						</svg>
+						<span>{{ $t('topBar.userMenu.wiki') }}</span>
+					</a>
 					<RouterLink v-if="uStore.isAdmin" class="link" to="/admin">
 						<svg
 							class="svgLinkIcon admin"
