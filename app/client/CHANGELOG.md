@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.36.0
+
+### Minor Changes
+
+- 36bb1dc: Add Jerome K and his Warp Street trading storyline, including the Bamboo Friend exchange and Treasure Ticket reward.
+
 ## 0.35.0
 
 ### Minor Changes
