@@ -108,6 +108,8 @@ export async function processMissionFight(input: StartMissionGoalFightInput): Pr
 	});
 
 	if (input.goal.type === 'FIGHT_ACTION') {
+		const outcomeText = result.result ? input.goal.fightAction.winText : input.goal.fightAction.lostText;
+
 		return {
 			...result,
 			source: 'mission',
@@ -117,10 +119,10 @@ export async function processMissionFight(input: StartMissionGoalFightInput): Pr
 				input.goal.fightAction.beginText,
 				input.goal.fightAction.beginMonsterKey
 			),
-			endText: input.goal.fightAction.winText
+			endText: outcomeText
 				? {
 						type: 'message',
-						text: input.goal.fightAction.winText
+						text: outcomeText
 					}
 				: undefined
 		};
