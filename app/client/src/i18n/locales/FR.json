@@ -4853,6 +4853,15 @@
 				}
 			}
 		},
+		"requestOffice": {
+			"name": "Bureau des requêtes",
+			"dialog": {
+				"begin": "Les commerçants du désert ont pour habitude de se rendre ici, au Bureau des requêtes, pour y déposer des offres d'emploi en tous genres destinées aux maîtres Dinoz de passage. Si vous êtes suffisamment courageux(se), prenez un ticket et embarquez pour une mission à hauts risques."
+			},
+			"choice": {
+				"missions": "Consulter les annonces"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"

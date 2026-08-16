@@ -28,6 +28,7 @@ import { merguezSellerDialog } from './merguezSeller.dialog.js';
 import { padamoineDialog } from './padamoine.dialog.js';
 import { papyJoeDialog } from './papy.dialog.js';
 import { professorEugeneDialog } from './prof.dialog.js';
+import { requestOfficeDialog } from './requestOffice.dialog.js';
 import {
 	strangeRangerAfterSpyDialog,
 	strangeRangerIntroDialog,
@@ -110,5 +111,6 @@ export const dialogDefinitions = [
 	magnetiteTeamWCaptainDebriefDialog,
 	rockyKingMagnetiteRewardDialog,
 	magnetiteStrangeRangerEpilogueDialog,
-	jeromeKSteppesDialog
+	jeromeKSteppesDialog,
+	requestOfficeDialog
 ];
