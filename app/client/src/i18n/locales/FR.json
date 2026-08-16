@@ -6340,6 +6340,179 @@
 				},
 				"returnToFadoua": "Retourner voir Fadoua Al-Hépluvit",
 				"end": "L'entreprise Caravoies de l'Est vous remercie pour votre intervention sur nos chantiers. En vous souhaitant un bon voyage sur nos routes !"
+			},
+			"brig2": {
+				"name": "On recherche: Sahalami le trancheur",
+				"begin": "« ON RECHERCHE : Sahalami dit \"le Trancheur sans pitié\". Individu TRÈS dangereux coupable d'innombrables actes de piraterie. Aucune piste concernant sa cachette. Forte récompense à la clé ! Dinoz de faible niveau s'abstenir ! »",
+				"findSahalamiTrail": "Retrouver la trace de Sahalami",
+				"attackedCaravan": {
+					"name": "Caravane attaquée",
+					"description": "Vous trouvez les restes d'une caravane qui a semble-t-il été attaquée récemment..."
+				},
+				"findBandits": "Trouver les pillards",
+				"stackedCrates": {
+					"name": "Caisses empilées",
+					"description": "Vous remarquez la présence de divers objets entassés, volés de toute évidence, à l'entrée d'une caverne sombre... Peut-être que les coupables se cachent à l'intérieur ?"
+				},
+				"enterHideout": {
+					"name": "Entrer dans le repaire",
+					"begin": "Intrus ! ALEEEEEEERTE !",
+					"win": "Vous avez éliminé la patrouille de l'entrée."
+				},
+				"exploreHideout": {
+					"name": "Explorer le repaire",
+					"begin": "Tiens tiens... Regardez qui nous a suivi jusqu'ici... Attrapez-le !",
+					"win": "Vous avez vaincu Sahalami le Trancheur !"
+				},
+				"strangePendant": {
+					"name": "Pendentif étrange",
+					"description": "Sahalami portait un pendentif en forme de Couperet de cuisine. Etrange..."
+				},
+				"end": "Sahalami ne terrorisera plus personne. Reste à élucider le mystère de ce pendentif..."
+			},
+
+			"penden": {
+				"name": "Un collier bien mystérieux",
+				"begin": "Le pendentif en forme de Couperet de cuisine trouvé sur Sahalami est quand même très étrange... Vous devriez mener l'enquête à son sujet.",
+				"soulefMoissa": {
+					"text": "Ce pendentif ne me dit rien. Désolé."
+				},
+				"aliLabah": {
+					"text": "C'est très intéressant... J'ai déjà vu ce pendentif au cou de certains chefs au cours de mes expéditions. On dirait bien que certains clans de voleurs se sont associés ! Voici la liste des noms des chefs en question."
+				},
+				"takeList": {
+					"name": "Prendre la liste",
+					"description": "Vous obtenez les noms de plusieurs chefs brigands. Ils sont probablement liés à cette association de voleurs !"
+				},
+				"end": "Vous avez obtenu les informations qu'il vous fallait. "
+			},
+
+			"hunt1": {
+				"name": "On recherche: Tripou le mou",
+				"begin": "« ON RECHERCHE : Tripou, le pillard mou des nuits sans lune. Les derniers rapports font état d'une attaque au pied de la Dévoreuse du nord. Mission très dangereuse, belle récompense à prévoir. »",
+				"waitForAttack": {
+					"name": "Attendre une attaque",
+					"description": "Vous vous installez au pied de la dévoreuse pour attendre une éventuelle attaque..."
+				},
+				"wait": {
+					"name": "Attendre...",
+					"description": "Après un long moment... rien ne se passe."
+				},
+				"passingMerchant": {
+					"name": "Marchand de passage",
+					"text": "Vous cherchez Tripou ? Ah non, pas vu aujourd'hui. Et j'en suis bien content !"
+				},
+				"waitAgain": {
+					"name": "Attendre encore...",
+					"description": "Vous tournez en rond, tandis que rien ne vous arrive..."
+				},
+				"keepWaiting": {
+					"name": "Persister dans l'attente",
+					"description": "De longues heures s'écoulent. Rien ne se produit."
+				},
+				"passingAdventurer": {
+					"name": "Une aventurière qui passait par là",
+					"text": "Tripou... Jamais entendu ce nom là, désolée. Bonne journée !"
+				},
+				"walkInCircles": {
+					"name": "Tourner en rond",
+					"description": "La fatigue vous gagne, mais c'est bien la seule chose d'intéressante qui se produit..."
+				},
+				"waitLonger": {
+					"name": "Attendre un peu plus...",
+					"begin": "Allez les gars, détroussez-moi ce guignol !",
+					"win": "Vous apercevez Tripou, caché derrière ses hommes, à quelques pas de vous..."
+				},
+				"tripou": {
+					"name": "Tripou",
+					"taunt": "Tu ne fais pas le poids ! Vas-t-en !"
+				},
+				"henchmen": {
+					"name": "Hommes de main",
+					"begin": "Il ne doit pas passer !"
+				},
+				"chargeTripou": {
+					"name": "Foncer sur Tripou !",
+					"begin": "Tu es courageux, mais ça ne te suffira pas... Finissons-en !",
+					"win": "Vous avez vaincu Tripou le pillard mou des nuits sans lune !"
+				},
+				"cleaverPendant": {
+					"name": "Pendentif du Couperet",
+					"description": "Tripou portait bien l'un des pendentifs que vous recherchez. Voilà une bonne chose de faite."
+				},
+				"end": "Vous avez réussi à vaincre Tripou ! Félicitations !"
+			},
+
+			"hunt2": {
+				"name": "On recherche: Boukané l'intuable",
+				"begin": "« ON RECHERCHE : Boukané, l'intuable tortionnaire des abîmes insondables ! Il se terre dans son repaire en Extrême Occident, mission hautement périlleuse ! »",
+				"findBoukane": {
+					"name": "Trouver Boukané",
+					"begin": "Aaah ! Ce n'est pas moi ! Ce n'est pas moi ! Si vous cherchez Boukané, il est parti avec la bande à la Citadelle... Pitié, laissez-moi partir !",
+					"win": "Hmmm... Ce voleur a parlé de la Citadelle... Je devrais aller jeter un oeil là-bas."
+				},
+				"guard": {
+					"startText": "Boukané ? Ici ? Non c'est impossible. Mais jetez un oeil si vous pensez qu'il est à l'intérieur.",
+					"cellarText": "Vous l'avez trouvé ? Bah il reste les caves à vérifier à la limite. Personne n'y va jamais.",
+					"endText": "Ca alors... Boukané.. Chez nous.. Heureusement que vous étiez là !"
+				},
+				"searchHall": {
+					"name": "Fouiller le hall",
+					"description": "On dirait bien qu'il n'y a personne ici..."
+				},
+				"searchRoof": {
+					"name": "Monter sur le toit",
+					"description": "Jolie vue ! Mais Boukané n'est pas ici non plus... Continuons à fouiller la Citadelle."
+				},
+				"enterCellar": {
+					"name": "Descendre à la cave",
+					"begin": "Chut, quelqu'un vient... Raah, on est repérés ! Il ne faut pas les laisser s'enfuir !",
+					"win": "Vous avez vaincu Boukané l'intuable et ses hommes !"
+				},
+				"cleaverPendant": {
+					"name": "Pendentif du Couperet",
+					"description": "Boukané portait bien l'un des pendentifs que vous recherchez. Un chef de moins."
+				},
+				"end": "Vous avez déjoué les plans de Boukané. De toutes évidences, il s'apprêtait à attaquer la Citadelle par son point faible..."
+			},
+
+			"hunt3": {
+				"name": "On recherche: Cervelah l'empoisonneur",
+				"begin": "« ON RECHERCHE : Cervelah, l'empoisonneur verdâtre. Grand, brun, porte une capuche et est toujours accompagné de Pikouz, son fidèle scorpwink. Individu extrêmement hostile. Forte prime offerte par le Consortium des Filous Associés ! Contactez Aboul Tonhor, marchand aux Pylônes. »",
+				"aboulTonhor": {
+					"name": "Aboul Tonhor",
+					"text": "Cervelah ? Oui j'le connais ! Son scorpwink horrible m'a piqué alors qu'ils essayaient de me détrousser... J'en ai été malade pendant plusieurs semaines ! J'ai entendu dire que sa bande se cachait dans le sud..."
+				},
+				"findAttackers": "Retrouver les aggresseurs d'Aboul Tonhor",
+				"noiseBehindRocks": {
+					"name": "Bruits derrière les rochers",
+					"description": "Vous avancez prudemment jusqu'à la source des bruits et vous découvrez un petit groupe de pillards festoyant sur les bords du lac de sable-magnétite... Profitons-en !"
+				},
+				"attackCamp": {
+					"name": "Attaquer le campement",
+					"begin": "Ciel !",
+					"win": "Aucune trace de Cervelah... Il doit pourtant se cacher dans les environs..."
+				},
+				"circleSyphon": {
+					"name": "Faire le tour du Syphon",
+					"begin": "Retiens ce dinoz, je coure prévenir Cervelah !",
+					"win": "Il faut à tout prix retrouver ce brigand."
+				},
+				"searchFugitive": {
+					"name": "Chercher le fuyard",
+					"description": "Personne. Mais vous remarquez des traces de pas allant vers les plateaux de Toulaho..."
+				},
+				"findFugitive": "Trouver où est parti le fuyard",
+				"climb": {
+					"name": "Grimper",
+					"begin": "Chef ! Chef ! Il est là ! Il nous a retrouvé... Tuons-le !",
+					"win": "Quel combat ! Vous avez vaincu Cervelah l'empoisonneur et son fidèle Pikouz."
+				},
+				"cleaverPendant": {
+					"name": "Pendentif du Couperet",
+					"description": "Cervelah portait l'un des pendentifs du Couperet que vous recherchiez..."
+				},
+				"end": "Le Consortium des Filous Associés vous remercie pour votre aide précieuse. Voilà une belle prime pour votre efficacité."
 			}
 		}
 	},
