@@ -58,7 +58,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.SENTIER_DE_TOUTEMBA,
 					monsterKeys: ['brig1', 'brig1', 'brig1'],
 					allyKeys: [],
-					background: 'm_step_cliff',
+					//background: 'm_step_cliff',
 					beginText: 'missions.requestOffice.dexplo.takeMoreNotes.begin',
 					winText: 'missions.requestOffice.dexplo.takeMoreNotes.win'
 				}
@@ -207,7 +207,6 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.DEVOREUSE_DE_L_EST,
 					monsterKeys: ['scorp'],
 					allyKeys: [],
-					background: 'st_devor',
 					beginText: 'missions.requestOffice.scorp1.searchScorpwink.begin',
 					winText: 'missions.requestOffice.scorp1.searchScorpwink.win'
 				}
@@ -220,7 +219,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.DEVOREUSE_DE_L_EST,
 					monsterKeys: ['scorp', 'worm'],
 					allyKeys: [],
-					background: 'st_canyon',
+					background: 's_canyon',
 					beginText: 'missions.requestOffice.scorp1.searchFurther.begin'
 				}
 			},
@@ -333,7 +332,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.CITADELLE_DU_ROI,
 					monsterKeys: ['thief'],
 					allyKeys: [],
-					background: 'm_step_kitchen',
+					background: 'cave4',
 					beginText: 'missions.requestOffice.kitchn.waitInShadows.begin',
 					winText: 'missions.requestOffice.kitchn.waitInShadows.win'
 				}
@@ -346,7 +345,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.CITADELLE_DU_ROI,
 					monsterKeys: ['thief2', 'brig1', 'brig1', 'brig3', 'brig2', 'brig3'],
 					allyKeys: [],
-					background: 'm_step_wcavern',
+					background: 'cavern2',
 					beginMonsterKey: 'brig2',
 					beginText: 'missions.requestOffice.kitchn.chaseScorpwink.begin'
 				}
@@ -444,7 +443,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.PYLONES_DE_MAGNETITES,
 					monsterKeys: ['wormom'],
 					allyKeys: ['buildr'],
-					background: 'm_step_hole',
+					//background: 'm_step_hole',
 					beginMonsterKey: 'buildr',
 					beginText: 'missions.requestOffice.worms.jumpIntoHole.begin'
 				}
@@ -525,7 +524,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.DEVOREUSE_DE_L_OUEST,
 					monsterKeys: ['brig2', 'brig1'],
 					allyKeys: [],
-					background: 'm_step_cave1',
+					background: 'cave1',
 					beginMonsterKey: 'brig2',
 					beginText: 'missions.requestOffice.brig2.enterHideout.begin',
 					winText: 'missions.requestOffice.brig2.enterHideout.win'
@@ -539,7 +538,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.DEVOREUSE_DE_L_OUEST,
 					monsterKeys: ['brig1', 'brig1', 'salami'],
 					allyKeys: [],
-					background: 'm_step_cave2',
+					background: 'cave2',
 					beginMonsterKey: 'salami',
 					beginText: 'missions.requestOffice.brig2.exploreHideout.begin',
 					winText: 'missions.requestOffice.brig2.exploreHideout.win'
@@ -683,7 +682,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.DEVOREUSE_DU_NORD,
 					monsterKeys: ['brig1', 'brig2', 'brig1', 'tripo2'],
 					allyKeys: [],
-					background: 'm_step_fog',
+					background: 'swp_fog',
 					beginMonsterKey: 'tripo2',
 					beginText: 'missions.requestOffice.hunt1.waitLonger.begin',
 					winText: 'missions.requestOffice.hunt1.waitLonger.win'
@@ -704,7 +703,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.DEVOREUSE_DU_NORD,
 					monsterKeys: ['brig1', 'brig1', 'brig1', 'tripo2'],
 					allyKeys: [],
-					background: 'm_step_fog',
+					background: 'swp_fog',
 					beginMonsterKey: 'tripo2',
 					beginText: 'missions.requestOffice.hunt1.henchmen.begin'
 				}
@@ -717,7 +716,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.DEVOREUSE_DU_NORD,
 					monsterKeys: ['brig1', 'brig1', 'brig1', 'tripou'],
 					allyKeys: [],
-					background: 'm_step_fog',
+					background: 'swp_fog',
 					beginMonsterKey: 'tripou',
 					beginText: 'missions.requestOffice.hunt1.chargeTripou.begin',
 					winText: 'missions.requestOffice.hunt1.chargeTripou.win'
@@ -761,7 +760,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.CAMP_DES_EMMEMMA,
 					monsterKeys: ['coward'],
 					allyKeys: [],
-					background: 'm_step_cave2',
+					background: 'cave2',
 					beginMonsterKey: 'coward',
 					beginText: 'missions.requestOffice.hunt2.findBoukane.begin',
 					winText: 'missions.requestOffice.hunt2.findBoukane.win'
@@ -808,7 +807,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.CITADELLE_DU_ROI,
 					monsterKeys: ['boukan', 'brig2', 'brig2', 'brig1', 'brig1'],
 					allyKeys: [],
-					background: 'm_step_citadel3',
+					background: 'cave3',
 					beginMonsterKey: 'boukan',
 					beginText: 'missions.requestOffice.hunt2.enterCellar.begin',
 					winText: 'missions.requestOffice.hunt2.enterCellar.win'
@@ -879,7 +878,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.SYPHON_SIFFLEUR,
 					monsterKeys: ['brig3', 'brig3', 'brig2', 'brig3', 'brig2'],
 					allyKeys: [],
-					background: 'm_step_lake',
+					background: 'desert5',
 					beginMonsterKey: 'brig3',
 					beginText: 'missions.requestOffice.hunt3.attackCamp.begin',
 					winText: 'missions.requestOffice.hunt3.attackCamp.win'
@@ -893,7 +892,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.SYPHON_SIFFLEUR,
 					monsterKeys: ['coward', 'brig1'],
 					allyKeys: [],
-					background: 'st_syphon',
+					background: 's_syphon',
 					beginMonsterKey: 'coward',
 					beginText: 'missions.requestOffice.hunt3.circleSyphon.begin',
 					winText: 'missions.requestOffice.hunt3.circleSyphon.win'
@@ -920,7 +919,7 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					place: PlaceEnum.SENTIER_DE_TOUTEMBA,
 					monsterKeys: ['cowar2', 'cervel', 'pikouz'],
 					allyKeys: [],
-					background: 'm_step_cliff',
+					//background: 'm_step_cliff',
 					beginMonsterKey: 'cowar2',
 					beginText: 'missions.requestOffice.hunt3.climb.begin',
 					winText: 'missions.requestOffice.hunt3.climb.win'
