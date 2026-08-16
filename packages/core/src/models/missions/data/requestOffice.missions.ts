@@ -481,5 +481,469 @@ export const requestOfficeMissions: MissionDefinition[] = [
 		],
 		labels: {},
 		limit: 35
+	},
+	{
+		key: 'brig2',
+		group: REQUEST_OFFICE_GROUP,
+		nameKey: 'missions.requestOffice.brig2.name',
+		beginKey: 'missions.requestOffice.brig2.begin',
+		endKey: 'missions.requestOffice.brig2.end',
+		condition: 'mission(dexplo)',
+		goals: [
+			{
+				type: 'AT',
+				place: PlaceEnum.SYPHON_SIFFLEUR,
+				hidden: true,
+				titleKey: 'missions.requestOffice.brig2.findSahalamiTrail'
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'brig2_inspect_attacked_caravan',
+				place: PlaceEnum.SYPHON_SIFFLEUR,
+				nameKey: 'missions.requestOffice.brig2.attackedCaravan.name',
+				descriptionKey: 'missions.requestOffice.brig2.attackedCaravan.description'
+			},
+			{
+				type: 'AT',
+				place: PlaceEnum.DEVOREUSE_DE_L_OUEST,
+				hidden: true,
+				titleKey: 'missions.requestOffice.brig2.findBandits'
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'brig2_inspect_crates',
+				place: PlaceEnum.DEVOREUSE_DE_L_OUEST,
+				nameKey: 'missions.requestOffice.brig2.stackedCrates.name',
+				descriptionKey: 'missions.requestOffice.brig2.stackedCrates.description'
+			},
+			{
+				type: 'FIGHT_ACTION',
+				fightAction: {
+					actionKey: 'brig2_enter_hideout',
+					nameKey: 'missions.requestOffice.brig2.enterHideout.name',
+					place: PlaceEnum.DEVOREUSE_DE_L_OUEST,
+					monsterKeys: ['brig2', 'brig1'],
+					allyKeys: [],
+					background: 'm_step_cave1',
+					beginMonsterKey: 'brig2',
+					beginText: 'missions.requestOffice.brig2.enterHideout.begin',
+					winText: 'missions.requestOffice.brig2.enterHideout.win'
+				}
+			},
+			{
+				type: 'FIGHT_ACTION',
+				fightAction: {
+					actionKey: 'brig2_explore_hideout',
+					nameKey: 'missions.requestOffice.brig2.exploreHideout.name',
+					place: PlaceEnum.DEVOREUSE_DE_L_OUEST,
+					monsterKeys: ['brig1', 'brig1', 'salami'],
+					allyKeys: [],
+					background: 'm_step_cave2',
+					beginMonsterKey: 'salami',
+					beginText: 'missions.requestOffice.brig2.exploreHideout.begin',
+					winText: 'missions.requestOffice.brig2.exploreHideout.win'
+				}
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'brig2_take_strange_pendant',
+				place: PlaceEnum.DEVOREUSE_DE_L_OUEST,
+				nameKey: 'missions.requestOffice.brig2.strangePendant.name',
+				descriptionKey: 'missions.requestOffice.brig2.strangePendant.description'
+			},
+			requestOfficeValidateGoal()
+		],
+		rewards: [
+			{ type: 'XP', value: 80 },
+			{ type: 'GOLD', value: 2500 },
+			{
+				type: 'ITEM',
+				itemKey: 'hot_bread',
+				quantity: 1
+			}
+		],
+		labels: {},
+		limit: 35
+	},
+
+	{
+		key: 'penden',
+		group: REQUEST_OFFICE_GROUP,
+		nameKey: 'missions.requestOffice.penden.name',
+		beginKey: 'missions.requestOffice.penden.begin',
+		endKey: 'missions.requestOffice.penden.end',
+		condition: 'mission(brig2)',
+		goals: [
+			{
+				type: 'TALK',
+				npcKey: 'soulef_moissa_penden',
+				place: PlaceEnum.AVANT_POSTE_ROCKY,
+				nameKey: 'missions.requestOffice.common.soulefMoissa.name',
+				textKey: 'missions.requestOffice.penden.soulefMoissa.text'
+			},
+			{
+				type: 'AT',
+				place: PlaceEnum.CITADELLE_DU_ROI,
+				hidden: true
+			},
+			{
+				type: 'TALK',
+				npcKey: 'ali_labah_penden',
+				place: PlaceEnum.CITADELLE_DU_ROI,
+				nameKey: 'missions.requestOffice.common.aliLabah.name',
+				textKey: 'missions.requestOffice.penden.aliLabah.text'
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'penden_take_bandit_list',
+				place: PlaceEnum.CITADELLE_DU_ROI,
+				nameKey: 'missions.requestOffice.penden.takeList.name',
+				descriptionKey: 'missions.requestOffice.penden.takeList.description'
+			},
+			requestOfficeValidateGoal()
+		],
+		rewards: [
+			{
+				type: 'XP',
+				value: 90
+			}
+		],
+		labels: {},
+		limit: 35
+	},
+
+	{
+		key: 'hunt1',
+		group: REQUEST_OFFICE_GROUP,
+		nameKey: 'missions.requestOffice.hunt1.name',
+		beginKey: 'missions.requestOffice.hunt1.begin',
+		endKey: 'missions.requestOffice.hunt1.end',
+		condition: 'mission(penden)',
+		goals: [
+			{
+				type: 'AT',
+				place: PlaceEnum.DEVOREUSE_DU_NORD,
+				hidden: true
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt1_wait_for_attack',
+				place: PlaceEnum.DEVOREUSE_DU_NORD,
+				nameKey: 'missions.requestOffice.hunt1.waitForAttack.name',
+				descriptionKey: 'missions.requestOffice.hunt1.waitForAttack.description'
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt1_wait',
+				place: PlaceEnum.DEVOREUSE_DU_NORD,
+				nameKey: 'missions.requestOffice.hunt1.wait.name',
+				descriptionKey: 'missions.requestOffice.hunt1.wait.description'
+			},
+			{
+				type: 'TALK',
+				npcKey: 'hunt1_passing_merchant',
+				place: PlaceEnum.DEVOREUSE_DU_NORD,
+				nameKey: 'missions.requestOffice.hunt1.passingMerchant.name',
+				textKey: 'missions.requestOffice.hunt1.passingMerchant.text'
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt1_wait_again',
+				place: PlaceEnum.DEVOREUSE_DU_NORD,
+				nameKey: 'missions.requestOffice.hunt1.waitAgain.name',
+				descriptionKey: 'missions.requestOffice.hunt1.waitAgain.description'
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt1_keep_waiting',
+				place: PlaceEnum.DEVOREUSE_DU_NORD,
+				nameKey: 'missions.requestOffice.hunt1.keepWaiting.name',
+				descriptionKey: 'missions.requestOffice.hunt1.keepWaiting.description'
+			},
+			{
+				type: 'TALK',
+				npcKey: 'hunt1_passing_adventurer',
+				place: PlaceEnum.DEVOREUSE_DU_NORD,
+				nameKey: 'missions.requestOffice.hunt1.passingAdventurer.name',
+				textKey: 'missions.requestOffice.hunt1.passingAdventurer.text'
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt1_walk_in_circles',
+				place: PlaceEnum.DEVOREUSE_DU_NORD,
+				nameKey: 'missions.requestOffice.hunt1.walkInCircles.name',
+				descriptionKey: 'missions.requestOffice.hunt1.walkInCircles.description'
+			},
+			{
+				type: 'FIGHT_ACTION',
+				fightAction: {
+					actionKey: 'hunt1_wait_longer',
+					nameKey: 'missions.requestOffice.hunt1.waitLonger.name',
+					place: PlaceEnum.DEVOREUSE_DU_NORD,
+					monsterKeys: ['brig1', 'brig2', 'brig1', 'tripo2'],
+					allyKeys: [],
+					background: 'm_step_fog',
+					beginMonsterKey: 'tripo2',
+					beginText: 'missions.requestOffice.hunt1.waitLonger.begin',
+					winText: 'missions.requestOffice.hunt1.waitLonger.win'
+				}
+			},
+			{
+				type: 'TALK',
+				npcKey: 'hunt1_tripou_taunt',
+				place: PlaceEnum.DEVOREUSE_DU_NORD,
+				nameKey: 'missions.requestOffice.hunt1.tripou.name',
+				textKey: 'missions.requestOffice.hunt1.tripou.taunt'
+			},
+			{
+				type: 'FIGHT_ACTION',
+				fightAction: {
+					actionKey: 'hunt1_henchmen',
+					nameKey: 'missions.requestOffice.hunt1.henchmen.name',
+					place: PlaceEnum.DEVOREUSE_DU_NORD,
+					monsterKeys: ['brig1', 'brig1', 'brig1', 'tripo2'],
+					allyKeys: [],
+					background: 'm_step_fog',
+					beginMonsterKey: 'tripo2',
+					beginText: 'missions.requestOffice.hunt1.henchmen.begin'
+				}
+			},
+			{
+				type: 'FIGHT_ACTION',
+				fightAction: {
+					actionKey: 'hunt1_charge_tripou',
+					nameKey: 'missions.requestOffice.hunt1.chargeTripou.name',
+					place: PlaceEnum.DEVOREUSE_DU_NORD,
+					monsterKeys: ['brig1', 'brig1', 'brig1', 'tripou'],
+					allyKeys: [],
+					background: 'm_step_fog',
+					beginMonsterKey: 'tripou',
+					beginText: 'missions.requestOffice.hunt1.chargeTripou.begin',
+					winText: 'missions.requestOffice.hunt1.chargeTripou.win'
+				}
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt1_take_cleaver_pendant',
+				place: PlaceEnum.DEVOREUSE_DU_NORD,
+				nameKey: 'missions.requestOffice.hunt1.cleaverPendant.name',
+				descriptionKey: 'missions.requestOffice.hunt1.cleaverPendant.description'
+			},
+			requestOfficeValidateGoal()
+		],
+		rewards: [
+			{ type: 'GOLD', value: 3000 },
+			{ type: 'XP', value: 90 }
+		],
+		labels: {},
+		limit: 35
+	},
+
+	{
+		key: 'hunt2',
+		group: REQUEST_OFFICE_GROUP,
+		nameKey: 'missions.requestOffice.hunt2.name',
+		beginKey: 'missions.requestOffice.hunt2.begin',
+		endKey: 'missions.requestOffice.hunt2.end',
+		condition: 'mission(penden)',
+		goals: [
+			{
+				type: 'AT',
+				place: PlaceEnum.CAMP_DES_EMMEMMA,
+				hidden: false
+			},
+			{
+				type: 'FIGHT_ACTION',
+				fightAction: {
+					actionKey: 'hunt2_find_boukane',
+					nameKey: 'missions.requestOffice.hunt2.findBoukane.name',
+					place: PlaceEnum.CAMP_DES_EMMEMMA,
+					monsterKeys: ['coward'],
+					allyKeys: [],
+					background: 'm_step_cave2',
+					beginMonsterKey: 'coward',
+					beginText: 'missions.requestOffice.hunt2.findBoukane.begin',
+					winText: 'missions.requestOffice.hunt2.findBoukane.win'
+				}
+			},
+			{
+				type: 'AT',
+				place: PlaceEnum.CITADELLE_DU_ROI,
+				hidden: false
+			},
+			{
+				type: 'TALK',
+				npcKey: 'hunt2_citadel_guard_start',
+				place: PlaceEnum.CITADELLE_DU_ROI,
+				nameKey: 'missions.requestOffice.common.guard.name',
+				textKey: 'missions.requestOffice.hunt2.guard.startText'
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt2_search_hall',
+				place: PlaceEnum.CITADELLE_DU_ROI,
+				nameKey: 'missions.requestOffice.hunt2.searchHall.name',
+				descriptionKey: 'missions.requestOffice.hunt2.searchHall.description'
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt2_search_roof',
+				place: PlaceEnum.CITADELLE_DU_ROI,
+				nameKey: 'missions.requestOffice.hunt2.searchRoof.name',
+				descriptionKey: 'missions.requestOffice.hunt2.searchRoof.description'
+			},
+			{
+				type: 'TALK',
+				npcKey: 'hunt2_citadel_guard_cellar',
+				place: PlaceEnum.CITADELLE_DU_ROI,
+				nameKey: 'missions.requestOffice.common.guard.name',
+				textKey: 'missions.requestOffice.hunt2.guard.cellarText'
+			},
+			{
+				type: 'FIGHT_ACTION',
+				fightAction: {
+					actionKey: 'hunt2_enter_cellar',
+					nameKey: 'missions.requestOffice.hunt2.enterCellar.name',
+					place: PlaceEnum.CITADELLE_DU_ROI,
+					monsterKeys: ['boukan', 'brig2', 'brig2', 'brig1', 'brig1'],
+					allyKeys: [],
+					background: 'm_step_citadel3',
+					beginMonsterKey: 'boukan',
+					beginText: 'missions.requestOffice.hunt2.enterCellar.begin',
+					winText: 'missions.requestOffice.hunt2.enterCellar.win'
+				}
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt2_take_cleaver_pendant',
+				place: PlaceEnum.CITADELLE_DU_ROI,
+				nameKey: 'missions.requestOffice.hunt2.cleaverPendant.name',
+				descriptionKey: 'missions.requestOffice.hunt2.cleaverPendant.description'
+			},
+			{
+				type: 'TALK',
+				npcKey: 'hunt2_citadel_guard_end',
+				place: PlaceEnum.CITADELLE_DU_ROI,
+				nameKey: 'missions.requestOffice.common.guard.name',
+				textKey: 'missions.requestOffice.hunt2.guard.endText'
+			},
+			requestOfficeValidateGoal()
+		],
+		rewards: [
+			{ type: 'GOLD', value: 3500 },
+			{ type: 'XP', value: 90 }
+		],
+		labels: {},
+		limit: 35
+	},
+
+	{
+		key: 'hunt3',
+		group: REQUEST_OFFICE_GROUP,
+		nameKey: 'missions.requestOffice.hunt3.name',
+		beginKey: 'missions.requestOffice.hunt3.begin',
+		endKey: 'missions.requestOffice.hunt3.end',
+		condition: 'mission(penden)',
+		goals: [
+			{
+				type: 'AT',
+				place: PlaceEnum.PYLONES_DE_MAGNETITES,
+				hidden: true
+			},
+			{
+				type: 'TALK',
+				npcKey: 'hunt3_aboul_tonhor',
+				place: PlaceEnum.PYLONES_DE_MAGNETITES,
+				nameKey: 'missions.requestOffice.hunt3.aboulTonhor.name',
+				textKey: 'missions.requestOffice.hunt3.aboulTonhor.text'
+			},
+			{
+				type: 'AT',
+				place: PlaceEnum.SYPHON_SIFFLEUR,
+				hidden: true,
+				titleKey: 'missions.requestOffice.hunt3.findAttackers'
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt3_investigate_rocks',
+				place: PlaceEnum.SYPHON_SIFFLEUR,
+				nameKey: 'missions.requestOffice.hunt3.noiseBehindRocks.name',
+				descriptionKey: 'missions.requestOffice.hunt3.noiseBehindRocks.description'
+			},
+			{
+				type: 'FIGHT_ACTION',
+				fightAction: {
+					actionKey: 'hunt3_attack_camp',
+					nameKey: 'missions.requestOffice.hunt3.attackCamp.name',
+					place: PlaceEnum.SYPHON_SIFFLEUR,
+					monsterKeys: ['brig3', 'brig3', 'brig2', 'brig3', 'brig2'],
+					allyKeys: [],
+					background: 'm_step_lake',
+					beginMonsterKey: 'brig3',
+					beginText: 'missions.requestOffice.hunt3.attackCamp.begin',
+					winText: 'missions.requestOffice.hunt3.attackCamp.win'
+				}
+			},
+			{
+				type: 'FIGHT_ACTION',
+				fightAction: {
+					actionKey: 'hunt3_circle_syphon',
+					nameKey: 'missions.requestOffice.hunt3.circleSyphon.name',
+					place: PlaceEnum.SYPHON_SIFFLEUR,
+					monsterKeys: ['coward', 'brig1'],
+					allyKeys: [],
+					background: 'st_syphon',
+					beginMonsterKey: 'coward',
+					beginText: 'missions.requestOffice.hunt3.circleSyphon.begin',
+					winText: 'missions.requestOffice.hunt3.circleSyphon.win'
+				}
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt3_search_fugitive',
+				place: PlaceEnum.SYPHON_SIFFLEUR,
+				nameKey: 'missions.requestOffice.hunt3.searchFugitive.name',
+				descriptionKey: 'missions.requestOffice.hunt3.searchFugitive.description'
+			},
+			{
+				type: 'AT',
+				place: PlaceEnum.SENTIER_DE_TOUTEMBA,
+				hidden: true,
+				titleKey: 'missions.requestOffice.hunt3.findFugitive'
+			},
+			{
+				type: 'FIGHT_ACTION',
+				fightAction: {
+					actionKey: 'hunt3_climb',
+					nameKey: 'missions.requestOffice.hunt3.climb.name',
+					place: PlaceEnum.SENTIER_DE_TOUTEMBA,
+					monsterKeys: ['cowar2', 'cervel', 'pikouz'],
+					allyKeys: [],
+					background: 'm_step_cliff',
+					beginMonsterKey: 'cowar2',
+					beginText: 'missions.requestOffice.hunt3.climb.begin',
+					winText: 'missions.requestOffice.hunt3.climb.win'
+				}
+			},
+			{
+				type: 'ACTION',
+				actionKey: 'hunt3_take_cleaver_pendant',
+				place: PlaceEnum.SENTIER_DE_TOUTEMBA,
+				nameKey: 'missions.requestOffice.hunt3.cleaverPendant.name',
+				descriptionKey: 'missions.requestOffice.hunt3.cleaverPendant.description'
+			},
+			requestOfficeValidateGoal()
+		],
+		rewards: [
+			{ type: 'GOLD', value: 3500 },
+			{ type: 'XP', value: 90 },
+			{
+				type: 'ITEM',
+				itemKey: 'poisonite_shot',
+				quantity: 2
+			}
+		],
+		labels: {},
+		limit: 35
 	}
 ];
