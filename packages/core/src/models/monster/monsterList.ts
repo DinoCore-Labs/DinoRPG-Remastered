@@ -6,7 +6,7 @@
  * Copyright in the original contributions remains with the respective
  * authors and contributors.
  *
- * Modified by DinoRPG Remastered contributors from 2026-02-09 through 2026-08-04.
+ * Modified by DinoRPG Remastered contributors from 2026-02-09 through 2026-08-16.
  * See NOTICE.md and the Git history for provenance and modification details.
  *
  * SPDX-License-Identifier: AGPL-3.0-or-later
@@ -82,6 +82,12 @@ export enum Monster {
 	SCORPWINK_THIEF_2 = 'SCORPWINK_THIEF_2',
 	TRIPOU_THE_SOFTY = 'TRIPOU_THE_SOFTY',
 	EMMEMA_BANDIT = 'EMMEMA_BANDIT',
+	SAHALAMI = 'SAHALAMI',
+	TRIPOU_BOSS = 'TRIPOU_BOSS',
+	EMMEMA_BANDIT_2 = 'EMMEMA_BANDIT_2',
+	BOUKANE = 'BOUKANE',
+	CERVELAH = 'CERVELAH',
+	CARAVOIES_WORKER = 'CARAVOIES_WORKER',
 	MERCHANT_1 = 'MERCHANT_1',
 	MERCHANT_2 = 'MERCHANT_2',
 	GANG_1 = 'GANG_1',
@@ -1412,6 +1418,9 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.DINOLAND, MapZone.ILES],
 		canBeCaptured: true
 	},
+	/* -------------------------------------------------
+	 * REQUEST OFFICE MISSIONS
+	 * ------------------------------------------------- */
 	[Monster.EARTHWORM_MATRIARCH]: {
 		id: Monster.EARTHWORM_MATRIARCH,
 		name: 'wormom',
@@ -1428,10 +1437,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		resilience: 40,
 		hp: 160,
 		odds: 100,
-		skills: [Skill.COQUE, Skill.M_ELECTROCUTION, Skill.M_WORM, Skill.EMBUCHE, Skill.M_WORM_CALL],
+		skills: [Skill.COQUE, Skill.M_ELECTROCUTION, Skill.M_WORM, Skill.EMBUCHE, Skill.M_WORM_CALL, Skill.M_WORM_CALL],
 		zones: [],
 		canBeCaptured: true,
 		noMove: true,
+		display: 'worm',
 		entrance: EntranceEffect.GROUND
 	},
 	[Monster.EARTHWORM_BABY]: {
@@ -1454,7 +1464,269 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: true,
 		noMove: true,
+		display: 'worm',
 		entrance: EntranceEffect.GROUND
+	},
+	[Monster.STINGOZ]: {
+		id: Monster.STINGOZ,
+		name: 'pikouz',
+		level: 25,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 12,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 50,
+		odds: 100,
+		skills: [Skill.M_STINGER],
+		zones: [],
+		canBeCaptured: true,
+		display: 'scorp',
+		size: 50
+	},
+	[Monster.SCORPWINK_THIEF]: {
+		id: Monster.SCORPWINK_THIEF,
+		name: 'thief',
+		level: 20,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 9,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 1000,
+		odds: 100,
+		skills: [Skill.M_STEAL, Skill.ATTAQUE_ECLAIR, Skill.CELERITE, Skill.M_STINGER, Skill.M_FLEE],
+		zones: [],
+		canBeCaptured: true,
+		display: 'scorp'
+	},
+	[Monster.SCORPWINK_THIEF_2]: {
+		id: Monster.SCORPWINK_THIEF_2,
+		name: 'thief2',
+		level: 20,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 9,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 50,
+		odds: 100,
+		skills: [Skill.M_STEAL, Skill.ATTAQUE_ECLAIR, Skill.M_STINGER],
+		zones: [],
+		canBeCaptured: true,
+		display: 'scorp'
+	},
+	[Monster.TRIPOU_THE_SOFTY]: {
+		id: Monster.TRIPOU_THE_SOFTY,
+		name: 'tripo2',
+		level: 25,
+		elements: {
+			fire: 10,
+			wood: 10,
+			water: 10,
+			lightning: 10,
+			air: 10
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 9999,
+		odds: 100,
+		skills: [
+			Skill.M_INSTANT_FLEE,
+			Skill.EMBUCHE,
+			Skill.EMBUCHE,
+			Skill.EMBUCHE,
+			Skill.EMBUCHE,
+			Skill.EMBUCHE,
+			Skill.EMBUCHE
+		],
+		xp: 1,
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig3'
+	},
+	[Monster.EMMEMA_BANDIT]: {
+		id: Monster.EMMEMA_BANDIT,
+		name: 'coward',
+		level: 25,
+		elements: {
+			fire: 10,
+			wood: 10,
+			water: 10,
+			lightning: 10,
+			air: 10
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 9999,
+		odds: 100,
+		skills: [
+			Skill.M_INSTANT_FLEE,
+			Skill.EMBUCHE,
+			Skill.EMBUCHE,
+			Skill.EMBUCHE,
+			Skill.EMBUCHE,
+			Skill.EMBUCHE,
+			Skill.EMBUCHE
+		],
+		xp: 1,
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig2'
+	},
+	[Monster.SAHALAMI]: {
+		id: Monster.SAHALAMI,
+		name: 'salami',
+		level: 25,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 10,
+			lightning: 10,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 100,
+		odds: 100,
+		xp: 20,
+		skills: [Skill.VIGNES],
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig3'
+	},
+	[Monster.TRIPOU_BOSS]: {
+		id: Monster.TRIPOU_BOSS,
+		name: 'tripou',
+		level: 30,
+		elements: {
+			fire: 8,
+			wood: 12,
+			water: 8,
+			lightning: 8,
+			air: 12
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 80,
+		odds: 100,
+		xp: 20,
+		skills: [Skill.EMBUCHE, Skill.EMBUCHE, Skill.COLERE, Skill.AUBE_FEUILLUE],
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig3'
+	},
+	[Monster.EMMEMA_BANDIT_2]: {
+		id: Monster.EMMEMA_BANDIT_2,
+		name: 'cowar2',
+		level: 25,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 1,
+		odds: 100,
+		xp: 3,
+		groups: [
+			{ quantity: 0, odds: 0 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 0 },
+			{ quantity: 3, odds: 1 }
+		],
+		skills: [Skill.EMBUCHE, Skill.EMBUCHE, Skill.EMBUCHE, Skill.EMBUCHE, Skill.EMBUCHE, Skill.EMBUCHE],
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig2'
+	},
+	[Monster.BOUKANE]: {
+		id: Monster.BOUKANE,
+		name: 'boukan',
+		level: 30,
+		elements: {
+			fire: 15,
+			wood: 15,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 100,
+		odds: 100,
+		xp: 20,
+		skills: [Skill.FOCUS, Skill.METEORES, Skill.METEORES, Skill.FOUDRE, Skill.FOUDRE, Skill.FOUDRE, Skill.FOUDRE],
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig3'
+	},
+	[Monster.CERVELAH]: {
+		id: Monster.CERVELAH,
+		name: 'cervel',
+		level: 30,
+		elements: {
+			fire: 15,
+			wood: 15,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 100,
+		odds: 100,
+		xp: 20,
+		skills: [Skill.ATTAQUE_ECLAIR, Skill.ATTAQUE_ECLAIR, Skill.NUAGE_TOXIQUE, Skill.NUAGE_TOXIQUE, Skill.NUAGE_TOXIQUE],
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig3'
+	},
+	[Monster.CARAVOIES_WORKER]: {
+		id: Monster.CARAVOIES_WORKER,
+		name: 'buildr',
+		level: 25,
+		elements: {
+			fire: 2,
+			wood: 10,
+			water: 0,
+			lightning: 2,
+			air: 6
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		hp: 9999,
+		odds: 100,
+		skills: [Skill.TENACITE],
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig3'
 	},
 	[Monster.GROULEM]: {
 		id: Monster.GROULEM,
@@ -1480,108 +1752,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false,
 		entrance: EntranceEffect.GROUND
-	},
-	[Monster.STINGOZ]: {
-		id: Monster.STINGOZ,
-		name: 'pikouz',
-		level: 25,
-		elements: {
-			fire: 0,
-			wood: 0,
-			water: 0,
-			lightning: 12,
-			air: 0
-		},
-		bonus_attack: 0,
-		bonus_defense: 0,
-		resilience: 40,
-		hp: 50,
-		odds: 100,
-		skills: [Skill.M_STINGER],
-		zones: [],
-		canBeCaptured: true
-	},
-	[Monster.SCORPWINK_THIEF]: {
-		id: Monster.SCORPWINK_THIEF,
-		name: 'thief',
-		level: 20,
-		elements: {
-			fire: 0,
-			wood: 0,
-			water: 0,
-			lightning: 9,
-			air: 0
-		},
-		bonus_attack: 0,
-		bonus_defense: 0,
-		resilience: 40,
-		hp: 1000,
-		odds: 100,
-		skills: [Skill.M_STEAL, Skill.ATTAQUE_ECLAIR, Skill.CELERITE, Skill.M_STINGER, Skill.M_FLEE],
-		zones: [],
-		canBeCaptured: true
-	},
-	[Monster.SCORPWINK_THIEF_2]: {
-		id: Monster.SCORPWINK_THIEF_2,
-		name: 'thief2',
-		level: 20,
-		elements: {
-			fire: 0,
-			wood: 0,
-			water: 0,
-			lightning: 9,
-			air: 0
-		},
-		bonus_attack: 0,
-		bonus_defense: 0,
-		resilience: 40,
-		hp: 50,
-		odds: 100,
-		skills: [Skill.M_STEAL, Skill.ATTAQUE_ECLAIR, Skill.M_STINGER],
-		zones: [],
-		canBeCaptured: true
-	},
-	[Monster.TRIPOU_THE_SOFTY]: {
-		id: Monster.TRIPOU_THE_SOFTY,
-		name: 'tripo2',
-		level: 25,
-		elements: {
-			fire: 10,
-			wood: 10,
-			water: 10,
-			lightning: 10,
-			air: 10
-		},
-		bonus_attack: 0,
-		bonus_defense: 0,
-		resilience: 40,
-		hp: 9999,
-		odds: 100,
-		skills: [Skill.M_INSTANT_FLEE, Skill.EMBUCHE],
-		xp: 1,
-		zones: [],
-		canBeCaptured: true
-	},
-	[Monster.EMMEMA_BANDIT]: {
-		id: Monster.EMMEMA_BANDIT,
-		name: 'coward',
-		level: 25,
-		elements: {
-			fire: 10,
-			wood: 10,
-			water: 10,
-			lightning: 10,
-			air: 10
-		},
-		bonus_attack: 0,
-		bonus_defense: 0,
-		resilience: 40,
-		hp: 9999,
-		odds: 100,
-		skills: [Skill.M_INSTANT_FLEE, Skill.EMBUCHE],
-		xp: 1,
-		zones: [],
-		canBeCaptured: true
 	},
 	[Monster.MERCHANT_1]: {
 		id: Monster.MERCHANT_1,
