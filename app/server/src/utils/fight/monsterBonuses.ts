@@ -155,6 +155,20 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Monster.EMMEMA_BANDIT]: monster => {
 		multiplySkillProbability(monster, Skill.EMBUCHE, 6);
 	},
+	[Monster.TRIPOU_BOSS]: monster => {
+		multiplySkillProbability(monster, Skill.EMBUCHE, 2);
+	},
+	[Monster.EMMEMA_BANDIT_2]: monster => {
+		multiplySkillProbability(monster, Skill.EMBUCHE, 6);
+	},
+	[Monster.BOUKANE]: monster => {
+		multiplySkillProbability(monster, Skill.METEORES, 2);
+		multiplySkillProbability(monster, Skill.FOUDRE, 4);
+	},
+	[Monster.CERVELAH]: monster => {
+		multiplySkillProbability(monster, Skill.ATTAQUE_ECLAIR, 2);
+		multiplySkillProbability(monster, Skill.NUAGE_TOXIQUE, 3);
+	},
 	[Monster.BRIG1_ALL]: monster => {
 		brig1(monster);
 	},
