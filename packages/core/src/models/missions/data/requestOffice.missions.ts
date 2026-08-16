@@ -153,7 +153,8 @@ export const requestOfficeMissions: MissionDefinition[] = [
 					allyKeys: [],
 					background: 'st_syphon',
 					beginText: 'missions.requestOffice.dcarav.suspiciousNoise.begin',
-					winText: 'missions.requestOffice.dcarav.suspiciousNoise.win'
+					winText: 'missions.requestOffice.dcarav.suspiciousNoise.win',
+					lostText: 'missions.requestOffice.dcarav.suspiciousNoise.lost'
 				}
 			},
 			{

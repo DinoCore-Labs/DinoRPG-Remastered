@@ -10,6 +10,7 @@ export type MissionFightAction = {
 	beginText?: string | null;
 	beginMonsterKey?: MissionMonsterKey | null;
 	winText?: string | null;
+	lostText?: string | null;
 	endText?: string | null;
 	background?: MissionBackgroundKey | null;
 	timeoutSeconds?: number | null;
