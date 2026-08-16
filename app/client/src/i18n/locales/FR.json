@@ -2997,7 +2997,20 @@
 			"wteamc": "[TW]Capitaine",
 			"wbour1": "[TW]Grobourin",
 			"wbour2": "[TW]Grobourin",
-			"darkgp": "Goupignon Sombre"
+			"darkgp": "Goupignon Sombre",
+			"wormom": "Matriarche Longbrik",
+			"wormy": "Bébé Longbrik",
+			"pikouz": "Pikouz",
+			"thief": "Scorpwink chapardeur",
+			"thief2": "Scorpwink chapardeur",
+			"tripo2": "Tripou le Mou",
+			"coward": "Brigand Emmema",
+			"salami": "Sahalami le Trancheur",
+			"tripou": "Tripou le Mou",
+			"cowar2": "Brigand Emmema",
+			"boukan": "Boukané l'intuable",
+			"cervel": "Cervelah l'empoisonneur",
+			"buildr": "Ouvrier de Caravoies"
 		},
 		"status": {
 			"asleep": "endormi",
