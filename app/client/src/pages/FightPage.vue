@@ -135,7 +135,7 @@ export default defineComponent({
 			});
 			return;
 		}
-		const initPlace = resolveFightingPlace(this.fight.place);
+		const initPlace = resolveFightingPlace(this.fight.place, this.fight.background);
 		this.fightTransformed = {
 			...initPlace,
 			history: nextFight.filter(n => n != undefined),
