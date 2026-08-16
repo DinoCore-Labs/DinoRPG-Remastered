@@ -1437,7 +1437,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		resilience: 40,
 		hp: 160,
 		odds: 100,
-		skills: [Skill.COQUE, Skill.M_ELECTROCUTION, Skill.M_WORM, Skill.EMBUCHE, Skill.M_WORM_CALL, Skill.M_WORM_CALL],
+		skills: [Skill.COQUE, Skill.M_ELECTROCUTION, Skill.M_WORM, Skill.EMBUCHE, Skill.M_WORM_CALL],
 		zones: [],
 		canBeCaptured: true,
 		noMove: true,
@@ -1547,15 +1547,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		resilience: 40,
 		hp: 9999,
 		odds: 100,
-		skills: [
-			Skill.M_INSTANT_FLEE,
-			Skill.EMBUCHE,
-			Skill.EMBUCHE,
-			Skill.EMBUCHE,
-			Skill.EMBUCHE,
-			Skill.EMBUCHE,
-			Skill.EMBUCHE
-		],
+		skills: [Skill.M_INSTANT_FLEE, Skill.EMBUCHE],
 		xp: 1,
 		zones: [],
 		canBeCaptured: true,
@@ -1577,15 +1569,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		resilience: 40,
 		hp: 9999,
 		odds: 100,
-		skills: [
-			Skill.M_INSTANT_FLEE,
-			Skill.EMBUCHE,
-			Skill.EMBUCHE,
-			Skill.EMBUCHE,
-			Skill.EMBUCHE,
-			Skill.EMBUCHE,
-			Skill.EMBUCHE
-		],
+		skills: [Skill.M_INSTANT_FLEE, Skill.EMBUCHE],
 		xp: 1,
 		zones: [],
 		canBeCaptured: true,
@@ -1630,7 +1614,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 80,
 		odds: 100,
 		xp: 20,
-		skills: [Skill.EMBUCHE, Skill.EMBUCHE, Skill.COLERE, Skill.AUBE_FEUILLUE],
+		skills: [Skill.EMBUCHE, Skill.COLERE, Skill.AUBE_FEUILLUE],
 		zones: [],
 		canBeCaptured: true,
 		display: 'brig3'
@@ -1658,7 +1642,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 2, odds: 0 },
 			{ quantity: 3, odds: 1 }
 		],
-		skills: [Skill.EMBUCHE, Skill.EMBUCHE, Skill.EMBUCHE, Skill.EMBUCHE, Skill.EMBUCHE, Skill.EMBUCHE],
+		skills: [Skill.EMBUCHE],
 		zones: [],
 		canBeCaptured: true,
 		display: 'brig2'
@@ -1680,7 +1664,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 100,
 		odds: 100,
 		xp: 20,
-		skills: [Skill.FOCUS, Skill.METEORES, Skill.METEORES, Skill.FOUDRE, Skill.FOUDRE, Skill.FOUDRE, Skill.FOUDRE],
+		skills: [Skill.FOCUS, Skill.METEORES, Skill.FOUDRE],
 		zones: [],
 		canBeCaptured: true,
 		display: 'brig3'
@@ -1702,7 +1686,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 100,
 		odds: 100,
 		xp: 20,
-		skills: [Skill.ATTAQUE_ECLAIR, Skill.ATTAQUE_ECLAIR, Skill.NUAGE_TOXIQUE, Skill.NUAGE_TOXIQUE, Skill.NUAGE_TOXIQUE],
+		skills: [Skill.ATTAQUE_ECLAIR, Skill.NUAGE_TOXIQUE],
 		zones: [],
 		canBeCaptured: true,
 		display: 'brig3'
