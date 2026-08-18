@@ -118,8 +118,7 @@ export default defineComponent({
 				case 2:
 					this.futurInfoList = [
 						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo2.text1') },
-						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo2.text2') },
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo2.text3') }
+						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo2.text2') }
 					];
 					break;
 				case 3:

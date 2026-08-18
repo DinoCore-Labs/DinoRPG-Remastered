@@ -456,10 +456,10 @@
 			"title": "Découvrez les prochains événements sur DinoRPG !",
 			"small": "Prédiction d'Irma",
 			"strong": {
-				"title1": "Alpha 0.12.0 (Bientôt)",
-				"title2": "Alpha 0.13.0",
-				"title3": "Alpha 0.14.0",
-				"title4": "Alpha 0.15.0"
+				"title1": "Alpha 0.13.0 (Bientôt)",
+				"title2": "Alpha 0.14.0",
+				"title3": "Alpha 0.15.0",
+				"title4": "Alpha 0.16.0"
 			},
 			"help": "Cliquez sur une mise à jour ci-dessus pour obtenir d'avantage d'informations !",
 			"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
@@ -470,9 +470,8 @@
 				"text3": "Correction de bugs"
 			},
 			"futureInfo2": {
-				"text1": "Le scénario des steppes",
-				"text2": "De nouveaux PNJ et de nouvelles missions",
-				"text3": "Correction de bugs"
+				"text1": "Le scénario tutoriel et le guide Michel",
+				"text2": "Correction de bugs"
 			},
 			"futureInfo3": {
 				"text1": "La chasse aux Monstres (event PVE)",
