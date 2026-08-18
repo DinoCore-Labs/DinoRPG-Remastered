@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.36.0
+
+### Minor Changes
+
+- 19a55de: Add the Rocky Request Office NPC and its new desert mission chain.
+
 ## 0.35.0
 
 ### Minor Changes
