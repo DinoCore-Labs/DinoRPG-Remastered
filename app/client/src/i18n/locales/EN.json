@@ -2997,7 +2997,20 @@
 			"wteamc": "[TW]Captain",
 			"wbour1": "[TW]Bigbeastly",
 			"wbour2": "[TW]Bigbeastly",
-			"darkgp": "Dark Smashroom"
+			"darkgp": "Dark Smashroom",
+			"wormom": "Matriarche Longbrik",
+			"wormy": "Bébé Longbrik",
+			"pikouz": "Pikouz",
+			"thief": "Scorpwink chapardeur",
+			"thief2": "Scorpwink chapardeur",
+			"tripo2": "Tripou le Mou",
+			"coward": "Brigand Emmema",
+			"salami": "Sahalami le Trancheur",
+			"tripou": "Tripou le Mou",
+			"cowar2": "Brigand Emmema",
+			"boukan": "Boukané l'intuable",
+			"cervel": "Cervelah l'empoisonneur",
+			"buildr": "Ouvrier de Caravoies"
 		},
 		"status": {
 			"asleep": "Asleep",
@@ -4840,6 +4853,15 @@
 				}
 			}
 		},
+		"requestOffice": {
+			"name": "Bureau des requêtes",
+			"dialog": {
+				"begin": "Les commerçants du désert ont pour habitude de se rendre ici, au Bureau des requêtes, pour y déposer des offres d'emploi en tous genres destinées aux maîtres Dinoz de passage. Si vous êtes suffisamment courageux(se), prenez un ticket et embarquez pour une mission à hauts risques."
+			},
+			"choice": {
+				"missions": "Consulter les annonces"
+			}
+		},
 		"dialog": {
 			"exit": "See you soon.",
 			"leave": "Quit"
@@ -6163,6 +6185,330 @@
 				"baoTalk6": "Mmm.... C'est à peu près tout ce que j'avais à te dire sur l'Eau. Je vais faire savoir au Maître Elémentaire que tu as fini ta formation...",
 				"elmaTalk3": "Alors, comment va ce vieux Bao ? Je n'ai eu que peu d'occasions de le voir depuis qu'il a été assigné à la garde du Portail par Mandragore... Mais bon, apparemment, la formation est terminée...",
 				"end": "La dernière leçon se termine, qu'il vienne donc me parler pour sa récompense finale..."
+			}
+		},
+		"requestOffice": {
+			"common": {
+				"soulefMoissa": {
+					"name": "Intendant Soulef Moissa"
+				},
+				"aliLabah": {
+					"name": "Eclaireur Ali Labah"
+				},
+				"guard": {
+					"name": "Garde en faction"
+				}
+			},
+			"dexplo": {
+				"name": "Ouvrir la route",
+				"begin": "« RECHERCHE : mercenaire H ou F pour exploration désert et sécurisation des chemins. Candidats peu motivés s'abstenir.»",
+				"takeNotesCrossroads": {
+					"name": "Prendre des notes",
+					"description": "Vous commencez à écrire votre rapport."
+				},
+				"takeNotesToutemba": {
+					"name": "Prendre des notes",
+					"description": "Vous ajoutez les détails de cette étape à votre rapport. Le défilé semble être plutôt calme..."
+				},
+				"climbCliff": {
+					"name": "Grimper la paroi",
+					"description": "Au prix d'un gros effort, vous parvenez au sommet d'un plateau de Toulaho. La vue est splendide !"
+				},
+				"takeMoreNotes": {
+					"name": "Prendre d'autres notes",
+					"begin": "Alors que vous vous installez pour prendre quelques notes en profitant de cette position stratégique, un groupe de brigands en embuscade ici se jète sur vous !",
+					"win": "Ouf, c'était moins une ! Il faut à tout prix signaler leur présence à l'Avant-Poste..."
+				},
+				"end": "Tandis que vous lisez votre rapport, une inquiétude grandissante se lit sur le visage des marchands qui vous écoutent. Plusieurs d'entre eux s'empressent de rédiger de nouvelles annonces au Bureau."
+			},
+			"dcarav": {
+				"name": "La caravane occidentale",
+				"begin": "« Association des Marchands recherche transporteur qualifié pour livraison de routine. S'adresser à l'intendant Soulef Moissa. Pillards du désert s'abstenir.»",
+				"soulefMoissaStart": {
+					"text": "Ordre de mission 51... Ok. Pour la caravane, allez prendre livraison des caisses de matériel à la Frontière crépitante. C'est au sud. Suivant !"
+				},
+				"carrier": {
+					"name": "Porteur",
+					"text": "Voilà les caisses. C'est bizarre, j'aurais juré avoir entendu du bruit dedans... Emmenez-les aux Pylônes de Magnétite, tout au nord."
+				},
+				"pickUpCrates": {
+					"name": "Caisses à livrer",
+					"description": "Vous ramassez 4 petites caisses. "
+				},
+				"citadelBreak": {
+					"name": "Faire une pause",
+					"description": "C'est qu'elles sont lourdes ces caisses... Pfiou !"
+				},
+				"deliveryService": {
+					"name": "Service livraison",
+					"text": "Ah parfait ! Mais je n'ai besoin que d'une caisse. Envoyez donc les autres à mon collègue de Toutemba. Mais passez par le lac, ça sera moins dangereux."
+				},
+				"syphonBreak": {
+					"name": "Faire une pause",
+					"description": "Le poids des caisses devient de plus en plus pénible ! Vous faites une petite pause histoire de souffler un peu."
+				},
+				"suspiciousNoise": {
+					"name": "Bruit suspect",
+					"begin": "Les caisses se brisent soudainement dans un grand fracas ! Une marée de Korgons énervés en sort en hurlant !",
+					"win": "On dirait bien que cette livraison cache un traffic de Korgons... Vous devriez aller prévenir l'Intendant.",
+					"lost": "Les Korgons se sont échappés ! Il va falloir les retrouver..."
+				},
+				"soulefMoissaEnd": {
+					"text": "Des Korgons vous dites ? Hmmm... C'est bien noté, je vais faire le nécessaire. Allez chercher votre paie maintenant."
+				},
+				"end": "Vous signez votre rapport de mission au Bureau pour empocher votre prime."
+			},
+			"scorp1": {
+				"name": "Zeste de Scorpwink",
+				"begin": "« Apothicaire sans scrupule recherche Dard de scorpwink en bon état pour expériences douteuses. Une bonne connaissance des poisons sera un plus appréciable pour votre candidature. »",
+				"soulefMoissa": {
+					"text": "Des dards ? Encore ? Vous devriez aller près de la dévoreuse de l'Est. Ca pullule de scorpwinks dans les rochers là-bas."
+				},
+				"searchScorpwink": {
+					"name": "Chercher un scorpwink",
+					"begin": "Il ne vous faut pas longtemps pour tomber nez à nez avec un scorpwink...",
+					"win": "Malheureusement, le dard de ce scorpwink n'a pas tenu le choc du combat. Il va falloir en trouver un autre en meilleur état..."
+				},
+				"searchFurther": {
+					"name": "Chercher plus loin",
+					"begin": "Vous parvenez, non sans mal, en haut de l'amas rocailleux... pour tomber sur un scorpwink en plein combat contre un Longbrik ! Ils se retournent tous deux dans votre direction et se jettent sur vous."
+				},
+				"collectStinger": {
+					"name": "Récupérez le dard",
+					"description": "Vous ramassez un dard de scorpwink."
+				},
+				"end": "Vous donnez le dard à l'Intendant, il se chargera de le livrer à l'apothicaire."
+			},
+			"brig1": {
+				"name": "Sécuriser la croisée",
+				"begin": "« Le Consortium des Filous Associés recrute ! Si vous êtes jeune, en bonne santé et que vous aimez les rencontres enrichissantes, cette opportunité est pour vous. Adressez-vous à Ali Labah, l'éclaireur. »",
+				"aliLabah": {
+					"text": "C'est vous qu'on envoie pour faire le ménage. Mouais. Bon. On attend de vous que vous nettoyiez les alentours de la Croisée des Nomades. Suivez la route au sud. Quand on vous attaquera, c'est que vous y serez."
+				},
+				"banditsToEliminate": "Brigands à éliminer",
+				"end": "Le Consortium sait reconnaître ses alliés. Voici pour votre peine !"
+			},
+			"kitchn": {
+				"name": "Le voleur gourmand",
+				"begin": "« Recherche dinoz rapide pour petit boulot à la Citadelle. Contacter cuisinère Malika Ramhel. »",
+				"guardStart": {
+					"text": "Malika se trouve aux cuisines du palais au fond à gauche."
+				},
+				"malikaRamhel": {
+					"name": "Malika Ramhel",
+					"startText": "Merci d'avoir répondu à mon annonce ! Depuis plusieurs jours, un petit malin s'amuse à piller tous nos stocks de nourriture... Il faudrait régler ce problème au plus vite !",
+					"endText": "Hé beh. C'est vraiment plus ce que c'était notre bonne vieille Citadelle. Ca rentre et ça sort tout le temps, ça crie, ça se tape dessus... Bon bah merci quand même. Votre paie vous attend à l'Avant-Poste Rocky."
+				},
+				"enterStoreroom": {
+					"name": "Aller dans les réserves",
+					"description": "Personne ici. Vous décidez de cacher votre Dinoz dans l'obscurité..."
+				},
+				"waitInShadows": {
+					"name": "Attendre dans les ombres",
+					"begin": "Après seulement quelques minutes, vous entendez un bruit s'approcher... Un scorpwink ! Il tient de la nourriture entre ses pinces !",
+					"win": "Le scorpwink a fui dans les dédales de la Citadelle !"
+				},
+				"chaseScorpwink": {
+					"name": "Poursuivre le scorpwink",
+					"begin": "Pourquoi il revient sans rien ? ... Hé... Regardez là-bas ! Un intrus !"
+				},
+				"end": "Un agent du Bureau des Requêtes vous accueille sans un sourire et vous tend votre prime pour ce travail."
+			},
+			"worms": {
+				"name": "Vermifuge",
+				"begin": "« L'entreprise Caravoies de l'Est recherche un agent de maintenance pour l'entretien de ses voiries. Contactez la contremaître Fadoua Al-Hépluvit au chantier de la Frontière Crépitante pour plus d'informations. »",
+				"fadoua": {
+					"name": "Contremaître Fadoua Al-Hépluvit",
+					"startText": "Vous là ! Qu'est-ce que vous faîtes sans casque de protection sur mon chantier ?!",
+					"briefingText": "C'est vous l'agent de maintenance ? Bien. On a des problèmes sur la voie qui traverse les Pylônes de magnétite, au nord. Des attaques de Longbriks. Vous voulez nous rendre service ? Allez faire le ménage là-bas.",
+					"endText": "Une Matriarche... Ca n'est pas bon signe. J'espère que votre intervention calmera un peu les choses. Merci pour le service rendu !"
+				},
+				"takeHelmet": {
+					"name": "Prendre un casque",
+					"description": "Vous enfilez un casque de chantier."
+				},
+				"worker": {
+					"name": "Ouvrier de Caravoies",
+					"startText": "Ah, enfin de l'aide ! On a encore essuyé une attaque de Longbriks ce matin. Ca bloque l'avancée des travaux ! Pire, ils détruisent les routes qu'on construit avec les trous qu'ils laissent derrière eux...",
+					"holeText": "Merci pour le coup de main ! Mais... Qu'est-ce que c'est que ce bruit ?! Regardez ! Un trou énorme s'est ouvert dans le sol !",
+					"endText": "J'ai bien cru qu'on allait y rester... Merci pour votre aide, Caravoies saura vous récompenser ! A bientôt !"
+				},
+				"longbriksToEliminate": "Longbriks à éliminer",
+				"jumpIntoHole": {
+					"name": "Sauter dans le trou",
+					"begin": "Argh ! Une Matriarche Longbrik !"
+				},
+				"returnToFadoua": "Retourner voir Fadoua Al-Hépluvit",
+				"end": "L'entreprise Caravoies de l'Est vous remercie pour votre intervention sur nos chantiers. En vous souhaitant un bon voyage sur nos routes !"
+			},
+			"brig2": {
+				"name": "On recherche: Sahalami le trancheur",
+				"begin": "« ON RECHERCHE : Sahalami dit \"le Trancheur sans pitié\". Individu TRÈS dangereux coupable d'innombrables actes de piraterie. Aucune piste concernant sa cachette. Forte récompense à la clé ! Dinoz de faible niveau s'abstenir ! »",
+				"findSahalamiTrail": "Retrouver la trace de Sahalami",
+				"attackedCaravan": {
+					"name": "Caravane attaquée",
+					"description": "Vous trouvez les restes d'une caravane qui a semble-t-il été attaquée récemment..."
+				},
+				"findBandits": "Trouver les pillards",
+				"stackedCrates": {
+					"name": "Caisses empilées",
+					"description": "Vous remarquez la présence de divers objets entassés, volés de toute évidence, à l'entrée d'une caverne sombre... Peut-être que les coupables se cachent à l'intérieur ?"
+				},
+				"enterHideout": {
+					"name": "Entrer dans le repaire",
+					"begin": "Intrus ! ALEEEEEEERTE !",
+					"win": "Vous avez éliminé la patrouille de l'entrée."
+				},
+				"exploreHideout": {
+					"name": "Explorer le repaire",
+					"begin": "Tiens tiens... Regardez qui nous a suivi jusqu'ici... Attrapez-le !",
+					"win": "Vous avez vaincu Sahalami le Trancheur !"
+				},
+				"strangePendant": {
+					"name": "Pendentif étrange",
+					"description": "Sahalami portait un pendentif en forme de Couperet de cuisine. Etrange..."
+				},
+				"end": "Sahalami ne terrorisera plus personne. Reste à élucider le mystère de ce pendentif..."
+			},
+			"penden": {
+				"name": "Un collier bien mystérieux",
+				"begin": "Le pendentif en forme de Couperet de cuisine trouvé sur Sahalami est quand même très étrange... Vous devriez mener l'enquête à son sujet.",
+				"soulefMoissa": {
+					"text": "Ce pendentif ne me dit rien. Désolé."
+				},
+				"aliLabah": {
+					"text": "C'est très intéressant... J'ai déjà vu ce pendentif au cou de certains chefs au cours de mes expéditions. On dirait bien que certains clans de voleurs se sont associés ! Voici la liste des noms des chefs en question."
+				},
+				"takeList": {
+					"name": "Prendre la liste",
+					"description": "Vous obtenez les noms de plusieurs chefs brigands. Ils sont probablement liés à cette association de voleurs !"
+				},
+				"end": "Vous avez obtenu les informations qu'il vous fallait. "
+			},
+			"hunt1": {
+				"name": "On recherche: Tripou le mou",
+				"begin": "« ON RECHERCHE : Tripou, le pillard mou des nuits sans lune. Les derniers rapports font état d'une attaque au pied de la Dévoreuse du nord. Mission très dangereuse, belle récompense à prévoir. »",
+				"waitForAttack": {
+					"name": "Attendre une attaque",
+					"description": "Vous vous installez au pied de la dévoreuse pour attendre une éventuelle attaque..."
+				},
+				"wait": {
+					"name": "Attendre...",
+					"description": "Après un long moment... rien ne se passe."
+				},
+				"passingMerchant": {
+					"name": "Marchand de passage",
+					"text": "Vous cherchez Tripou ? Ah non, pas vu aujourd'hui. Et j'en suis bien content !"
+				},
+				"waitAgain": {
+					"name": "Attendre encore...",
+					"description": "Vous tournez en rond, tandis que rien ne vous arrive..."
+				},
+				"keepWaiting": {
+					"name": "Persister dans l'attente",
+					"description": "De longues heures s'écoulent. Rien ne se produit."
+				},
+				"passingAdventurer": {
+					"name": "Une aventurière qui passait par là",
+					"text": "Tripou... Jamais entendu ce nom là, désolée. Bonne journée !"
+				},
+				"walkInCircles": {
+					"name": "Tourner en rond",
+					"description": "La fatigue vous gagne, mais c'est bien la seule chose d'intéressante qui se produit..."
+				},
+				"waitLonger": {
+					"name": "Attendre un peu plus...",
+					"begin": "Allez les gars, détroussez-moi ce guignol !",
+					"win": "Vous apercevez Tripou, caché derrière ses hommes, à quelques pas de vous..."
+				},
+				"tripou": {
+					"name": "Tripou",
+					"taunt": "Tu ne fais pas le poids ! Vas-t-en !"
+				},
+				"henchmen": {
+					"name": "Hommes de main",
+					"begin": "Il ne doit pas passer !"
+				},
+				"chargeTripou": {
+					"name": "Foncer sur Tripou !",
+					"begin": "Tu es courageux, mais ça ne te suffira pas... Finissons-en !",
+					"win": "Vous avez vaincu Tripou le pillard mou des nuits sans lune !"
+				},
+				"cleaverPendant": {
+					"name": "Pendentif du Couperet",
+					"description": "Tripou portait bien l'un des pendentifs que vous recherchez. Voilà une bonne chose de faite."
+				},
+				"end": "Vous avez réussi à vaincre Tripou ! Félicitations !"
+			},
+			"hunt2": {
+				"name": "On recherche: Boukané l'intuable",
+				"begin": "« ON RECHERCHE : Boukané, l'intuable tortionnaire des abîmes insondables ! Il se terre dans son repaire en Extrême Occident, mission hautement périlleuse ! »",
+				"findBoukane": {
+					"name": "Trouver Boukané",
+					"begin": "Aaah ! Ce n'est pas moi ! Ce n'est pas moi ! Si vous cherchez Boukané, il est parti avec la bande à la Citadelle... Pitié, laissez-moi partir !",
+					"win": "Hmmm... Ce voleur a parlé de la Citadelle... Je devrais aller jeter un oeil là-bas."
+				},
+				"guard": {
+					"startText": "Boukané ? Ici ? Non c'est impossible. Mais jetez un oeil si vous pensez qu'il est à l'intérieur.",
+					"cellarText": "Vous l'avez trouvé ? Bah il reste les caves à vérifier à la limite. Personne n'y va jamais.",
+					"endText": "Ca alors... Boukané.. Chez nous.. Heureusement que vous étiez là !"
+				},
+				"searchHall": {
+					"name": "Fouiller le hall",
+					"description": "On dirait bien qu'il n'y a personne ici..."
+				},
+				"searchRoof": {
+					"name": "Monter sur le toit",
+					"description": "Jolie vue ! Mais Boukané n'est pas ici non plus... Continuons à fouiller la Citadelle."
+				},
+				"enterCellar": {
+					"name": "Descendre à la cave",
+					"begin": "Chut, quelqu'un vient... Raah, on est repérés ! Il ne faut pas les laisser s'enfuir !",
+					"win": "Vous avez vaincu Boukané l'intuable et ses hommes !"
+				},
+				"cleaverPendant": {
+					"name": "Pendentif du Couperet",
+					"description": "Boukané portait bien l'un des pendentifs que vous recherchez. Un chef de moins."
+				},
+				"end": "Vous avez déjoué les plans de Boukané. De toutes évidences, il s'apprêtait à attaquer la Citadelle par son point faible..."
+			},
+			"hunt3": {
+				"name": "On recherche: Cervelah l'empoisonneur",
+				"begin": "« ON RECHERCHE : Cervelah, l'empoisonneur verdâtre. Grand, brun, porte une capuche et est toujours accompagné de Pikouz, son fidèle scorpwink. Individu extrêmement hostile. Forte prime offerte par le Consortium des Filous Associés ! Contactez Aboul Tonhor, marchand aux Pylônes. »",
+				"aboulTonhor": {
+					"name": "Aboul Tonhor",
+					"text": "Cervelah ? Oui j'le connais ! Son scorpwink horrible m'a piqué alors qu'ils essayaient de me détrousser... J'en ai été malade pendant plusieurs semaines ! J'ai entendu dire que sa bande se cachait dans le sud..."
+				},
+				"findAttackers": "Retrouver les aggresseurs d'Aboul Tonhor",
+				"noiseBehindRocks": {
+					"name": "Bruits derrière les rochers",
+					"description": "Vous avancez prudemment jusqu'à la source des bruits et vous découvrez un petit groupe de pillards festoyant sur les bords du lac de sable-magnétite... Profitons-en !"
+				},
+				"attackCamp": {
+					"name": "Attaquer le campement",
+					"begin": "Ciel !",
+					"win": "Aucune trace de Cervelah... Il doit pourtant se cacher dans les environs..."
+				},
+				"circleSyphon": {
+					"name": "Faire le tour du Syphon",
+					"begin": "Retiens ce dinoz, je coure prévenir Cervelah !",
+					"win": "Il faut à tout prix retrouver ce brigand."
+				},
+				"searchFugitive": {
+					"name": "Chercher le fuyard",
+					"description": "Personne. Mais vous remarquez des traces de pas allant vers les plateaux de Toulaho..."
+				},
+				"findFugitive": "Trouver où est parti le fuyard",
+				"climb": {
+					"name": "Grimper",
+					"begin": "Chef ! Chef ! Il est là ! Il nous a retrouvé... Tuons-le !",
+					"win": "Quel combat ! Vous avez vaincu Cervelah l'empoisonneur et son fidèle Pikouz."
+				},
+				"cleaverPendant": {
+					"name": "Pendentif du Couperet",
+					"description": "Cervelah portait l'un des pendentifs du Couperet que vous recherchiez..."
+				},
+				"end": "Le Consortium des Filous Associés vous remercie pour votre aide précieuse. Voilà une belle prime pour votre efficacité."
 			}
 		}
 	},
