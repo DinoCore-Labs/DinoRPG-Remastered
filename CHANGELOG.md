@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.36.0
+
+### Minor Changes
+
+- 19a55de: Add the Rocky Request Office NPC and its new desert mission chain.
+
 ## 0.35.0
 
 ### Minor Changes
@@ -630,6 +636,17 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.38.0
+
+### Minor Changes
+
+- 19a55de: Add the Rocky Request Office NPC and its new desert mission chain.
+
+### Patch Changes
+
+- Updated dependencies [19a55de]
+  - @dinorpg/core@0.36.0
 
 ## 0.37.0
 
@@ -1469,6 +1486,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.37.0
+
+### Minor Changes
+
+- 19a55de: Add the Rocky Request Office NPC and its new desert mission chain.
 
 ## 0.36.0
 
