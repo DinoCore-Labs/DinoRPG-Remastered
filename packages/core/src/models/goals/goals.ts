@@ -61,7 +61,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'The Pteroz Trophy is awarded to players who have defeated the strange Pteroz. It also unlocks the Pteroz, making it available to buy in the Dinoz Shop.',
 			FR: 'Le Trophée des Pteroz récompense les joueurs ayant vaincu le Ptéroz étrange, et donne accès aux Pteroz parmi les Dinoz disponibles dans la Boutique.',
 			DE: 'Die Trophäe der Pteroz ist eine Belohung für Spieler, die den seltsamen Pteroz besiegt haben. Damit habt ihr im Geschäft die Möglichkeit, Pteroz als neue Dinogattung zu kaufen.',
-			ES: 'El Trofeo DE los Teroz recompensa a los jugadores que hayan vencido al Teroz extraño. Asimismo, este objeto da acceso a la compra DE los Dinos Teroz EN la Tienda.'
+			ES: 'El Trofeo DE los Teroz recompensa a los jugadores que hayan vencido al Teroz extraño. Asimismo, este objeto da acceso a la compra de los Dinos Teroz en la Tienda.'
 		}
 	},
 	[StatTracking.HIPPO]: {
@@ -203,7 +203,7 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: "You helped Baobob to dispatch Taurus, the infamous Moueffe, to the depths of the Dark World. You're not ready to meet him again yet, although word of your courage is already spreading throughout Dinoland.",
-			FR: "Vous avez aidé Baobob à refouler le puissant Moueffe infernal Taurus dans les profondeurs du Monde Sombre. Vous n'êtes pas prêt DE le revoir, votre courage commence déjà à traverser les frontières DE Dinoland.",
+			FR: "Vous avez aidé Baobob à refouler le puissant Moueffe infernal Taurus dans les profondeurs du Monde Sombre. Vous n'êtes pas prêt de le revoir, votre courage commence déjà à traverser les frontières de Dinoland.",
 			DE: 'Du hast Bao Bob dabei geholfen, den mächtigen und teuflischen Moeffe Taurus zurück in die Tiefen der dunklen Welt zu schicken. Du bist nicht bereit, ihn wiederzusehen. Dein Mut überschreitet bereits die Grenzen von Dinoland.',
 			ES: 'Has ayudado a Baobob a enviar al poderoso e infernal Moueffe Taurus a las profundidades del Mundo Sombra. Las historias sobre esta hazaña ya han dado la vuelta a todo Dinoland.'
 		}
@@ -275,9 +275,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'This feather, a gift from a distant traveller, allows you to edit your presentation on your player profile.',
-			FR: "Cette plume, cadeau DE quelqu'un venu DE très loin, permet d'éditer la présentation DE la fiche joueur.",
+			FR: "Cette plume, cadeau de quelqu'un venu de très loin, permet d'éditer la présentation de la fiche joueur.",
 			DE: "Diese Feder ist ein Geschenk von jemandem, der von seeeehr weit her gekommen ist. Mit ihr kannst du das Spielerprofil bearbeiten und in den 'Roleplay'-Bereich gelangen, der sich im Forum befindet.",
-			ES: 'Esta pluma ES un regalo DE procedencia muy lejana. Permite editar la presentación DE la ficha del jugador.'
+			ES: 'Esta pluma es un regalo de procedencia muy lejana. Permite editar la presentación de la ficha del jugador.'
 		}
 	},
 	[StatTracking.KAURA]: {
@@ -349,16 +349,16 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'The Illustrated Mission Guidebook lets you see the list of missions which have been completed by your Dinoz, and which remain to be completed.',
 			FR: "Le Petit Missionnaire Illustré permet d'avoir accés à tout moment à la liste des missions effectuées et restant à faire pour vos Dinoz.",
 			DE: 'Das illustrierte Missionsbuch zeigt dir alle Missionen, die deine Dinoz bereits abgeschlossen oder noch vor sich haben.',
-			ES: 'El Pequeño Misionario Ilustrado te da acceso EN todo momento a la lista DE misiones efectuadas por tu Dino y las que le quedan por hacer..'
+			ES: 'El Pequeño Misionario Ilustrado te da acceso en todo momento a la lista de misiones efectuadas por tu Dino y las que le quedan por hacer..'
 		}
 	},
 	[StatTracking.PDA]: {
 		id: StatTracking.PDA,
 		name: {
 			EN: 'Diamantite Pebble',
-			FR: 'Pierre EN Diamantite Agglomérée',
+			FR: 'Pierre en Diamantite Agglomérée',
 			DE: 'Stein aus gepresstem Diamantit',
-			ES: 'Piedra EN Diamantito Aglomerado'
+			ES: 'Piedra en Diamantito Aglomerado'
 		},
 		rare: 0,
 		hidden: true,
@@ -371,9 +371,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'The Diamantite Pebble is a stone which is packed with a naturally occurring array of elements which, when combined under pressure, allow the owner to see all their dinoz at a glance. The diamantite, on the other hand, is only for show.',
-			FR: "La P.D.A. est une pierre remplie (chose surprenante) DE technologie formée naturellement et permettant à l'éleveur d'avoir un aperçu DE tous ses Dinoz EN un simple coup d'oeil. La Diamantite au contraire c'est juste pour la frime.",
+			FR: "La P.D.A. est une pierre remplie (chose surprenante) de technologie formée naturellement et permettant à l'éleveur d'avoir un aperçu de tous ses Dinoz en un simple coup d'oeil. La Diamantite au contraire c'est juste pour la frime.",
 			DE: 'Der Stein aus gepresstem Diamantit ist ein Stein, der mit natürlicher Technologie geformt wurde (was überraschend ist) und der den Züchtern erlaubt sich mit einem Blick eine Übersicht all seiner Dinoz zu verschaffen. Das Diamantit hingegen ist nur zum Angeben.',
-			ES: 'La PDA ES una piedra producida con una tecnología especial que permite al maestro que la posea tener una visión general DE todos sus Dinos. Lo del Diamantito ES sólo para chulear.'
+			ES: 'La PDA es una piedra producida con una tecnología especial que permite al maestro que la posea tener una visión general de todos sus Dinos. Lo del Diamantito es sólo para chulear.'
 		}
 	},
 	[StatTracking.DICARB]: {
@@ -454,7 +454,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Mandragore Doll',
 			FR: 'Poupée Mandragore',
 			DE: 'Mandragore-Puppe',
-			ES: 'Muñeco DE Mandrágora'
+			ES: 'Muñeco de Mandrágora'
 		},
 		rare: 0,
 		hidden: true,
@@ -467,9 +467,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'A doll in the likeness of Mandragore, which can be used as a voodoo doll, punching-bag or a pillow, as you choose.\tIt is in pretty poor condition, the previous owner must have taken their frustrations out on it on a regular basis.',
-			FR: "Une poupée à l'éffigie de Mandragore, elle peut servir DE poupée vaudou, punching-ball ou DE coussin, c'est au choix. Elle est EN piteuse état, l'ancien propriétaire a dû passer ses nerfs dessus assez souvent.",
+			FR: "Une poupée à l'éffigie de Mandragore, elle peut servir de poupée vaudou, punching-ball ou de coussin, c'est au choix. Elle est en piteuse état, l'ancien propriétaire a dû passer ses nerfs dessus assez souvent.",
 			DE: 'Die Puppe zeigt Mandragore da und kann als Voodoopuppe, Boxsack oder Kissen dienen - je nach Wetter und Laune. Sie ist in einem miserablen Zustand. Ihrem alten Besitzer müssen ziemlich oft die Nerven durchgegangen sein.',
-			ES: 'Un muñeco con la forma de Mandrágora puede servir como peluche o como cojín. Está EN muy mal estado, su antiguo dueño debió sufrir varias crisis DE nervios con él.'
+			ES: 'Un muñeco con la forma de Mandrágora puede servir como peluche o como cojín. Está en muy mal estado, su antiguo dueño debió sufrir varias crisis de nervios con él.'
 		}
 	},
 	[StatTracking.FMEDAL]: {
@@ -501,7 +501,7 @@ export const goals: Record<StatTracking, Goal> = {
 		name: {
 			EN: 'Smogs Medallion',
 			FR: 'Trophée des Smogs',
-			DE: '',
+			DE: 'Trophäe der Smogs',
 			ES: 'Trofeo de los Smogs'
 		},
 		rare: 0,
@@ -516,7 +516,7 @@ export const goals: Record<StatTracking, Goal> = {
 		description: {
 			EN: 'This medallion proves that you have finished the smog quest.',
 			FR: 'Ce trophée prouve que vous avez terminé la quête du Smog.',
-			DE: '',
+			DE: 'Diese Trophäe beweist, dass ihr die Smog-Quest abgeschlossen habt.',
 			ES: 'Este medallón prueba que has terminado la búsqueda del Smog.'
 		}
 	},
@@ -538,10 +538,10 @@ export const goals: Record<StatTracking, Goal> = {
 			}
 		],
 		description: {
-			EN: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
-			FR: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.',
-			DE: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent DE merguez, vous voilà promu au rang DE Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
-			ES: 'Asada a la perfección y sellada por el Vendedor de Salchichas EN persona. Esta carta sagrada recompensa a los estómagos más resistentes. Después DE haber devorado una cantidad indecente DE salchichas, ahora has sido ascendido al rango DE Gran Glotón Oficial.'
+			EN: 'Grilled to perfection and stamped by the Merguez Vendor himself, this sacred card rewards the toughest stomachs. After devouring an indecent number of merguez sausages, you’ve now been promoted to the rank of Official Grand Gourmet. From now on, your purchases will blow the counters sky-high: x100 merguez at once, because x5 is for amateurs.',
+			FR: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.',
+			DE: 'Perfekt gegrillt und vom Merguez-Verkäufer höchstpersönlich abgestempelt, belohnt diese heilige Karte die ausdauerndsten Mägen. Nachdem ihr eine unanständige Menge Merguez verschlungen habt, wurdet ihr nun in den Rang des Offiziellen Großen Feinschmeckers erhoben. Von nun an sprengen eure Einkäufe alle Zähler: x100 Merguez auf einmal, denn x5 ist etwas für Amateure.',
+			ES: 'Asada a la perfección y sellada por el Vendedor de Salchichas en persona. Esta carta sagrada recompensa a los estómagos más resistentes. Después DE haber devorado una cantidad indecente DE salchichas, ahora has sido ascendido al rango DE Gran Glotón Oficial.'
 		}
 	},
 	[StatTracking.PAC]: {
@@ -563,9 +563,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'The Scroll of Compiled Abilities is a sophisticated artifact that lists instantly all the skills mastered by your Dinoz. It gives a clear overview and a detailed breakdown of each talent in one look.',
-			FR: "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé DE leurs talents EN un seul regard.",
+			FR: "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé de leurs talents en un seul regard.",
 			DE: 'Die Schriftrolle der Gesammelten Fähigkeiten ist ein elegantes Artefakt, das alle von deinen Dinoz beherrschten Fähigkeiten auflistet und dir auf einen Blick eine klare und detaillierte Übersicht über deren Talente verschafft.',
-			ES: 'El Pergamino de Competencias Compiladas ES un artefacto elegante que registra instantáneamente todas las competencias dominadas por tus Dinos, ofreciendo una visión clara y detallada DE sus talentos DE un solo vistazo.'
+			ES: 'El Pergamino de Competencias Compiladas ES un artefacto elegante que registra instantáneamente todas las competencias dominadas por tus Dinos, ofreciendo una visión clara y detallada de sus talentos de un solo vistazo.'
 		}
 	},
 	// DAILY STATS
@@ -854,7 +854,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'What kind of adventurer are you?',
 					FR: "Quel type d'aventurier êtes-vous ?",
 					DE: 'So ein Typ Abenteurer bist du',
-					ES: '¿Qué tipo DE aventurero eres?'
+					ES: '¿Qué tipo de aventurero eres?'
 				}
 			},
 			{
@@ -989,9 +989,9 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Dinoland Legend',
-					FR: 'Légende DE Dinoland',
+					FR: 'Légende de Dinoland',
 					DE: 'Dinoland-Legende',
-					ES: 'Leyenda DE Dinoland'
+					ES: 'Leyenda de Dinoland'
 				}
 			}
 		],
@@ -999,7 +999,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'What kind of adventurer are you?',
 			FR: "Quel type d'aventurier êtes-vous?",
 			DE: 'So ein Typ Abenteurer bist du',
-			ES: '¿Qué tipo DE aventurero eres?'
+			ES: '¿Qué tipo de aventurero eres?'
 		}
 	},
 	[StatTracking.DEATHS]: {
@@ -1018,15 +1018,15 @@ export const goals: Record<StatTracking, Goal> = {
 				icon: 'r_barbare.gif',
 				title: {
 					EN: 'Spirit Dinoz master',
-					FR: 'Revenant DE loin',
+					FR: 'Revenant de loin',
 					DE: 'Wiedergänger',
 					ES: 'Mala Hierba'
 				},
 				description: {
 					EN: 'How many times have you died in combat?',
-					FR: 'Combien DE fois êtes-vous mort au combat ?',
+					FR: 'Combien de fois êtes-vous mort au combat ?',
 					DE: 'So oft bist du im Kampf gefallen',
-					ES: 'Cantidad DE veces que has muerto EN combate'
+					ES: 'Cantidad de veces que has muerto EN combate'
 				}
 			},
 			{
@@ -1072,9 +1072,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'How many times have you died in combat?',
-			FR: 'Combien DE fois êtes-vous mort au combat ?',
+			FR: 'Combien de fois êtes-vous mort au combat ?',
 			DE: 'So oft bist du im Kampf gefallen.',
-			ES: 'Cantidad DE veces que has muerto EN combate'
+			ES: 'Cantidad de veces que has muerto en combate'
 		}
 	},
 	[StatTracking.P_DAYS]: {
@@ -1083,7 +1083,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Education',
 			FR: 'Eleveur',
 			DE: 'Schüler',
-			ES: 'Criador DE Dinos'
+			ES: 'Criador de Dinos'
 		},
 		rare: 2,
 		unlocks: [
@@ -1099,9 +1099,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'Number of days spent on the site.',
-					FR: 'Nombre DE jours DE présence sur le site.',
+					FR: 'Nombre de jours de présence sur le site.',
 					DE: 'Anzahl der in Dinoland verbrachten Tage',
-					ES: 'Cantidad DE días presente EN el sitio.'
+					ES: 'Cantidad de días presente en el sitio.'
 				}
 			},
 			{
@@ -1121,7 +1121,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Gifted Preacher',
 					FR: 'Prêcheur accompli',
 					DE: 'Vollkommener Prediger',
-					ES: 'Profeta EN su Tierra'
+					ES: 'Profeta en su Tierra'
 				}
 			},
 			{
@@ -1167,9 +1167,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'Number of days spent on the site',
-			FR: 'Nombre DE jours DE présence sur le site',
+			FR: 'Nombre de jours de présence sur le site',
 			DE: 'Anzahl der in Dinoland verbrachten Tage',
-			ES: 'Cantidad DE días presente EN el sitio'
+			ES: 'Cantidad de días presente en el sitio'
 		}
 	},
 	[StatTracking.LVL_UP]: {
@@ -1178,7 +1178,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Trainer',
 			FR: 'Entraîneur',
 			DE: 'Trainer',
-			ES: 'Entrenador DE Dinos'
+			ES: 'Entrenador de Dinos'
 		},
 		rare: 2,
 		unlocks: [
@@ -1194,9 +1194,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'Number of Level-ups carried out.',
-					FR: 'Nombre DE level-up réalisés.',
+					FR: 'Nombre de level-up réalisés.',
 					DE: 'Anzahl der Level-Ups',
-					ES: 'Cantidad DE subida DE niveles que has realizado.'
+					ES: 'Cantidad de subida de niveles que has realizado.'
 				}
 			},
 			{
@@ -1206,7 +1206,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Apprentice Trainer',
 					FR: 'Apprenti entraineur',
 					DE: 'Trainer-Novize',
-					ES: 'Aprendiz DE Entrenador'
+					ES: 'Aprendiz de Entrenador'
 				}
 			},
 			{
@@ -1262,18 +1262,18 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'Number of Level-ups carried out',
-			FR: 'Nombre DE levelup réalisés',
+			FR: 'Nombre de levelup réalisés',
 			DE: 'Anzahl der Level-Ups',
-			ES: 'Cantidad DE subidas DE niveles que has realizado'
+			ES: 'Cantidad de subidas de niveles que has realizado'
 		}
 	},
 	[StatTracking.KILL_M]: {
 		id: StatTracking.KILL_M,
 		name: {
 			EN: 'Monster Killer',
-			FR: 'Tueur DE monstres',
+			FR: 'Tueur de monstres',
 			DE: 'Monsterjäger',
-			ES: 'Terror DE monstruos'
+			ES: 'Terror de monstruos'
 		},
 		rare: 2,
 		unlocks: [
@@ -1283,15 +1283,15 @@ export const goals: Record<StatTracking, Goal> = {
 				icon: 'r_monster.gif',
 				title: {
 					EN: 'Monster Hunter',
-					FR: 'Balayeur DE restes',
+					FR: 'Balayeur de restes',
 					DE: 'Freizeit-Jäger',
-					ES: 'Barredor DE Restos'
+					ES: 'Barredor de Restos'
 				},
 				description: {
 					EN: 'Number of monsters killed on your adventures.',
-					FR: 'Nombre DE monstres tués durant vos aventures.',
+					FR: 'Nombre DdeE monstres tués durant vos aventures.',
 					DE: 'Anzahl der von dir getöteten Monster',
-					ES: 'Cantidad DE monstruos que mataste EN tus aventuras.'
+					ES: 'Cantidad de monstruos que mataste en tus aventuras.'
 				}
 			},
 			{
@@ -1301,7 +1301,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Scourge of Beasts',
 					FR: 'Bourreau des corps',
 					DE: 'Leichenschinder',
-					ES: 'Cazador DE Monstruos'
+					ES: 'Cazador de Monstruos'
 				}
 			},
 			{
@@ -1309,7 +1309,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Monster Killer',
-					FR: 'Chasseur DE monstres',
+					FR: 'Chasseur de monstres',
 					DE: 'Monsterjäger',
 					ES: 'Mercenario'
 				}
@@ -1321,7 +1321,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Monster Annihilator',
 					FR: 'Tueur barbare',
 					DE: 'Barbarentöter',
-					ES: 'Devorador DE Monstruos'
+					ES: 'Devorador de Monstruos'
 				}
 			},
 			{
@@ -1329,7 +1329,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Giant Killer',
-					FR: 'Annihilateur DE géant',
+					FR: 'Annihilateur de géant',
 					DE: 'Zerschmetterer der Riesen',
 					ES: 'Aniquilador'
 				}
@@ -1339,7 +1339,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Barbarian Destroyer',
-					FR: 'Dévastateur DE colosses',
+					FR: 'Dévastateur de colosses',
 					DE: 'Verheerer der Kolosse',
 					ES: 'Practicante del F.U.A.'
 				}
@@ -1349,7 +1349,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Reaper of Titans',
-					FR: 'Exterminateur DE Titans',
+					FR: 'Exterminateur de Titans',
 					DE: 'Vernichter der Titanen',
 					ES: 'Matador'
 				}
@@ -1361,7 +1361,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'King of Chaos',
 					FR: 'Roi du chaos',
 					DE: 'König des Chaos',
-					ES: 'Devorador DE Monstruos'
+					ES: 'Devorador de Monstruos'
 				}
 			},
 			{
@@ -1369,24 +1369,24 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'God of Destruction',
-					FR: 'Dieu DE la destruction',
+					FR: 'Dieu de la destruction',
 					DE: 'Gott der Zerstörung',
-					ES: 'Exterminador DE Monstruos'
+					ES: 'Exterminador de Monstruos'
 				}
 			}
 		],
 		description: {
 			EN: 'Number of monsters killed on your adventures',
-			FR: 'Nombre DE monstres tués durant vos aventures',
+			FR: 'Nombre de monstres tués durant vos aventures',
 			DE: 'Anzahl der von dir getöteten Monster',
-			ES: 'Cantidad DE monstruos que mataste EN tus aventuras'
+			ES: 'Cantidad de monstruos que mataste en tus aventuras'
 		}
 	},
 	[StatTracking.KILL_D]: {
 		id: StatTracking.KILL_D,
 		name: {
 			EN: 'Dinoz Challenger',
-			FR: 'Challenger DE Dinoz',
+			FR: 'Challenger de Dinoz',
 			DE: 'Dinoz-Herausforderer',
 			ES: 'Gladiador'
 		},
@@ -1404,9 +1404,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'Number of Dinoz defeated in events.',
-					FR: 'Nombre DE Dinoz vaincus durant les évènements',
+					FR: 'Nombre de Dinoz vaincus durant les évènements',
 					DE: 'Anzahl der während Events besiegter Dinoz',
-					ES: 'Cantidad DE Dinos vencidos EN los eventos'
+					ES: 'Cantidad de Dinos vencidos en los eventos'
 				}
 			},
 			{
@@ -1454,17 +1454,17 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'God of Death',
-					FR: 'Dieu DE la mort',
+					FR: 'Dieu de la mort',
 					DE: 'Gott des Todes',
-					ES: 'Dios DE la Muerte'
+					ES: 'Dios de la Muerte'
 				}
 			}
 		],
 		description: {
 			EN: 'Number of Dinoz defeated in events',
-			FR: 'Nombre DE Dinoz vaincus durant les évènements',
+			FR: 'Nombre de Dinoz vaincus durant les évènements',
 			DE: 'Anzahl der während Events besiegter Dinoz',
-			ES: 'Cantidad DE Dinos vencidos EN los eventos'
+			ES: 'Cantidad de Dinos vencidos en los eventos'
 		}
 	},
 	[StatTracking.HEAL_PV]: {
@@ -1489,9 +1489,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'How many HP have you regained?',
-					FR: 'Combien DE pv avez vous regagné ?',
+					FR: 'Combien de pv avez vous regagné ?',
 					DE: 'Soviele Lebenspunkte hast du wiedergewonnen',
-					ES: 'La cantidad DE puntos DE vida que has recuperado'
+					ES: 'La cantidad de puntos de vida que has recuperado'
 				}
 			},
 			{
@@ -1547,9 +1547,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'How many HP have you regained?',
-			FR: 'Combien DE pv avez vous regagnés ?',
+			FR: 'Combien de pv avez vous regagnés ?',
 			DE: 'Soviele Lebenspunkte hast du wiedergewonnen',
-			ES: 'La cantidad DE puntos DE vida que has recuperado'
+			ES: 'La cantidad de puntos de vida que has recuperado'
 		}
 	},
 	[StatTracking.UP_WOOD]: {
@@ -1558,7 +1558,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Wood Specialist',
 			FR: 'Spécialiste du bois',
 			DE: 'Holzspezialist',
-			ES: 'Especialista DE Madera'
+			ES: 'Especialista de Madera'
 		},
 		rare: 0,
 		unlocks: [
@@ -1570,13 +1570,13 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Tiny Acorn',
 					FR: 'Jeune pi-mousse',
 					DE: 'Jungspund',
-					ES: 'Oledor DE Madera'
+					ES: 'Oledor de Madera'
 				},
 				description: {
 					EN: 'Number of Wood level-ups.',
-					FR: "Nombre DE up réalisés sur l'élément bois.",
+					FR: "Nombre de up réalisés sur l'élément bois.",
 					DE: 'Anzahl der Level-Ups beim Holz-Element',
-					ES: 'Cantidad DE subidas DE nivel realizadas EN elemento madera'
+					ES: 'Cantidad de subidas de nivel realizadas en elemento madera'
 				}
 			},
 			{
@@ -1586,7 +1586,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Young Shoot',
 					FR: 'Belle au bois dormant',
 					DE: 'Meister Eder',
-					ES: 'Recogedor DE Ramas'
+					ES: 'Recogedor de Ramas'
 				}
 			},
 			{
@@ -1594,9 +1594,9 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Sturdy Oak',
-					FR: 'Gueule DE bois',
+					FR: 'Gueule de bois',
 					DE: 'Erfahrener Schreiner',
-					ES: 'Ayudante DE Carpintero'
+					ES: 'Ayudante de Carpintero'
 				}
 			},
 			{
@@ -1622,9 +1622,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'Number of Wood level-ups',
-			FR: "Nombre DE up réalisés sur l'élément bois",
+			FR: "Nombre de up réalisés sur l'élément bois",
 			DE: 'Anzahl der Level-Ups beim Holz-Element',
-			ES: 'Cantidad DE subidas DE nivel realizadas EN elemento madera'
+			ES: 'Cantidad de subidas de nivel realizadas en elemento madera'
 		}
 	},
 	[StatTracking.UP_FIRE]: {
@@ -1633,7 +1633,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Fire Specialist',
 			FR: 'Spécialiste du feu',
 			DE: 'Feuerspezialist',
-			ES: 'Especialista DE Fuego'
+			ES: 'Especialista de Fuego'
 		},
 		rare: 0,
 		unlocks: [
@@ -1649,9 +1649,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'Number of Fire level-ups.',
-					FR: "Nombre DE up réalisés sur l'élément feu.",
+					FR: "Nombre de up réalisés sur l'élément feu.",
 					DE: 'Anzahl der Level-Ups beim Feuer-Element',
-					ES: 'Cantidad DE subidas DE nivel realizadas EN elemento fuego'
+					ES: 'Cantidad de subidas de nivel realizadas en elemento fuego'
 				}
 			},
 			{
@@ -1661,7 +1661,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Firestarter',
 					FR: 'Brasier des ténèbres',
 					DE: 'Flamme der Finsternis',
-					ES: 'Flama DE Vela'
+					ES: 'Flama de Vela'
 				}
 			},
 			{
@@ -1697,16 +1697,16 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'Number of Fire level-ups',
-			FR: "Nombre DE up réalisés sur l'élément feu",
+			FR: "Nombre de up réalisés sur l'élément feu",
 			DE: 'Anzahl der Level-Ups beim Feuer-Element',
-			ES: 'Cantidad DE subidas DE nivel realizadas EN elemento fuego'
+			ES: 'Cantidad de subidas de nivel realizadas en elemento fuego'
 		}
 	},
 	[StatTracking.UP_LIGHTNING]: {
 		id: StatTracking.UP_LIGHTNING,
 		name: {
 			EN: 'Lightning Specialist',
-			FR: 'Spécialiste DE la foudre',
+			FR: 'Spécialiste de la foudre',
 			DE: 'Blitzspezialist',
 			ES: 'Especialista del Rayo'
 		},
@@ -1724,9 +1724,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'Number of Lightning level-ups.',
-					FR: "Nombre DE up réalisés sur l'élément foudre.",
+					FR: "Nombre de up réalisés sur l'élément foudre.",
 					DE: 'Anzahl der Level-Ups beim Blitz-Element',
-					ES: 'Cantidad DE subidas DE nivel realizadas EN elemento rayo'
+					ES: 'Cantidad de subidas de nivel realizadas en elemento rayo'
 				}
 			},
 			{
@@ -1734,7 +1734,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Overload',
-					FR: 'Excès DE vitesse',
+					FR: 'Excès de vitesse',
 					DE: 'Überladung',
 					ES: 'Ráfaga'
 				}
@@ -1744,7 +1744,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Caged Lightning',
-					FR: 'Eclair DE génie',
+					FR: 'Eclair de génie',
 					DE: 'Blitzschlag',
 					ES: 'Flash'
 				}
@@ -1772,16 +1772,16 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'Number of Lightning level-ups',
-			FR: "Nombre DE up réalisés sur l'élément foudre",
+			FR: "Nombre de up réalisés sur l'élément foudre",
 			DE: 'Anzahl der Level-Ups beim Blitz-Element',
-			ES: 'Cantidad DE subidas DE nivel realizadas EN elemento rayo'
+			ES: 'Cantidad de subidas de nivel realizadas en elemento rayo'
 		}
 	},
 	[StatTracking.UP_AIR]: {
 		id: StatTracking.UP_AIR,
 		name: {
 			EN: 'Air Specialist',
-			FR: "Spécialiste DE l'air",
+			FR: "Spécialiste de l'air",
 			DE: 'Luftspezialist',
 			ES: 'Especialista del Aire'
 		},
@@ -1799,9 +1799,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'Number of Air level-ups.',
-					FR: "Nombre DE up réalisés sur l'élément air.",
+					FR: "Nombre de up réalisés sur l'élément air.",
 					DE: 'Anzahl der Level-Ups beim Luft-Element',
-					ES: 'Cantidad DE subidas DE nivel realizadas EN elemento aire.'
+					ES: 'Cantidad de subidas de nivel realizadas en elemento aire.'
 				}
 			},
 			{
@@ -1847,18 +1847,18 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'Number of Air level-ups',
-			FR: "Nombre DE up réalisés sur l'élément air",
+			FR: "Nombre de up réalisés sur l'élément air",
 			DE: 'Anzahl der Level-Ups beim Luft-Element',
-			ES: 'Cantidad DE subidas DE nivel realizadas EN elemento aire'
+			ES: 'Cantidad de subidas de nivel realizadas en elemento aire'
 		}
 	},
 	[StatTracking.UP_WATER]: {
 		id: StatTracking.UP_WATER,
 		name: {
 			EN: 'Water Specialist',
-			FR: "Spécialiste DE l'eau",
+			FR: "Spécialiste de l'eau",
 			DE: 'Wasserspezialist',
-			ES: 'Especialista EN Agua'
+			ES: 'Especialista en Agua'
 		},
 		rare: 0,
 		unlocks: [
@@ -1868,15 +1868,15 @@ export const goals: Record<StatTracking, Goal> = {
 				icon: 'r_water.gif',
 				title: {
 					EN: 'Rubber Duck',
-					FR: 'Canard DE bain',
+					FR: 'Canard de bain',
 					DE: 'Gummiente',
 					ES: 'Pez'
 				},
 				description: {
 					EN: 'Number of Water level-ups.',
-					FR: "Nombre DE up réalisés sur l'élément eau.",
+					FR: "Nombre de up réalisés sur l'élément eau.",
 					DE: 'Anzahl der Level-Ups beim Wasser-Element',
-					ES: 'Cantidad DE subidas DE nivel realizadas EN elemento agua'
+					ES: 'Cantidad de subidas de nivel realizadas en elemento agua'
 				}
 			},
 			{
@@ -1894,7 +1894,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Heart of Ice',
-					FR: 'Coeur DE glace',
+					FR: 'Coeur de glace',
 					DE: 'Herz aus Eis',
 					ES: 'Marea Alta'
 				}
@@ -1922,16 +1922,16 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'Number of Water level-ups',
-			FR: "Nombre DE up réalisés sur l'élément eau",
+			FR: "Nombre de up réalisés sur l'élément eau",
 			DE: 'Anzahl der Level-Ups beim Wasser-Element',
-			ES: 'Cantidad DE subidas DE nivel realizadas EN elemento agua'
+			ES: 'Cantidad de subidas de nivel realizadas en elemento agua'
 		}
 	},
 	[StatTracking.BROKEN_SHOVEL]: {
 		id: StatTracking.BROKEN_SHOVEL,
 		name: {
 			EN: 'Shovel Smasher',
-			FR: 'Casseur DE pelles',
+			FR: 'Casseur de pelles',
 			DE: 'Schaufelzerbrecher',
 			ES: 'Rompe-palas'
 		},
@@ -1943,15 +1943,15 @@ export const goals: Record<StatTracking, Goal> = {
 				icon: 'r_digger.gif',
 				title: {
 					EN: 'Earthworm',
-					FR: 'Ver DE terre',
+					FR: 'Ver de terre',
 					DE: 'Regenwurm',
 					ES: 'Gusano'
 				},
 				description: {
 					EN: 'Number of broken shovels.',
-					FR: 'Nombre DE pelles cassées.',
+					FR: 'Nombre de pelles cassées.',
 					DE: 'Anzahl der von dir zerbrochenen Schaufeln',
-					ES: 'Cantidad DE palas rotas.'
+					ES: 'Cantidad de palas rotas.'
 				}
 			},
 			{
@@ -1971,7 +1971,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Craftsman Miner',
 					FR: 'Galibot',
 					DE: 'Bergmann',
-					ES: 'Ayudante DE Minero'
+					ES: 'Ayudante de Minero'
 				}
 			},
 			{
@@ -1999,7 +1999,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Manic Miner',
-					FR: 'Ravineur DE légende',
+					FR: 'Ravineur de légende',
 					DE: 'Legendärer Buddler',
 					ES: 'Escavador tectónico'
 				}
@@ -2021,15 +2021,15 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Subterranean Master',
 					FR: 'Maître des profondeurs',
 					DE: 'Meister der Tiefen',
-					ES: 'Dios DE las Profundidades'
+					ES: 'Dios de las Profundidades'
 				}
 			}
 		],
 		description: {
 			EN: 'Number of broken shovels',
-			FR: 'Nombre DE pelles cassées',
+			FR: 'Nombre de pelles cassées',
 			DE: 'Anzahl der von dir zerbrochenen Schaufeln',
-			ES: 'Cantidad DE palas rotas'
+			ES: 'Cantidad de palas rotas'
 		}
 	},
 	[StatTracking.CHASSE]: {
@@ -2050,13 +2050,13 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Dinoville Hunt Subscriber',
 					FR: 'Galinette Cendrée',
 					DE: 'Frischling',
-					ES: 'Colocador DE Trampas'
+					ES: 'Colocador de Trampas'
 				},
 				description: {
-					EN: "Nombre d'actions DE chasses réalisées.",
-					FR: "Nombre d'actions DE chasses réalisées.",
+					EN: "Nombre d'actions de chasses réalisées.",
+					FR: "Nombre d'actions de chasses réalisées.",
 					DE: 'Anzahl der durchgeführten Jagden',
-					ES: 'Cantidad DE cazas realizadas.'
+					ES: 'Cantidad de cazas realizadas.'
 				}
 			},
 			{
@@ -2066,7 +2066,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Reader of Hunting, Shooting, Fishing etc.',
 					FR: "Champion d'appeau",
 					DE: 'Waidmann',
-					ES: 'Aprendiz DE Cazador'
+					ES: 'Aprendiz de Cazador'
 				}
 			},
 			{
@@ -2104,7 +2104,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 0,
 				title: {
 					EN: 'King of the Hunt',
-					FR: 'Roi DE la chasse',
+					FR: 'Roi de la chasse',
 					DE: 'König der Jagd',
 					ES: 'Rey Cazador'
 				}
@@ -2114,17 +2114,17 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 0,
 				title: {
 					EN: 'God of the Hunt',
-					FR: 'Dieu DE la chasse',
+					FR: 'Dieu de la chasse',
 					DE: 'Gott der Jagd',
-					ES: 'Dios DE la Caza'
+					ES: 'Dios de la Caza'
 				}
 			}
 		],
 		description: {
 			EN: "Number of times you've set out to kill stuff!",
-			FR: "Nombre d'actions DE chasses réalisées",
+			FR: "Nombre d'actions de chasses réalisées",
 			DE: 'Anzahl der von dir durchgeführten Jagden',
-			ES: 'Cantidad DE cazas realizadas'
+			ES: 'Cantidad de cazas realizadas'
 		}
 	},
 	[StatTracking.CUEILLE]: {
@@ -2149,9 +2149,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'Number of harvesting operations carried out.',
-					FR: "Nombre d'actions DE cueillette réalisées.",
+					FR: "Nombre d'actions de cueillette réalisées.",
 					DE: 'Anzahl der von dir durchgeführten Ernten',
-					ES: 'Cantidad DE recolecciones realizadas.'
+					ES: 'Cantidad de recolecciones realizadas.'
 				}
 			},
 			{
@@ -2159,7 +2159,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Evil Herb Collector',
-					FR: 'Ramasseur DE mauvaises herbes',
+					FR: 'Ramasseur de mauvaises herbes',
 					DE: 'Unkrautjäter',
 					ES: 'Recolector Aficionado'
 				}
@@ -2201,7 +2201,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'King of the Harvest',
 					FR: 'Roi des récoltes',
 					DE: 'König der Ernte',
-					ES: 'Rey DE la Cosecha'
+					ES: 'Rey de la Cosecha'
 				}
 			},
 			{
@@ -2211,15 +2211,15 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'God of the Harvest',
 					FR: 'Dieu des récoltes',
 					DE: 'Gott der Ernte',
-					ES: 'Dios DE la Cosecha'
+					ES: 'Dios de la Cosecha'
 				}
 			}
 		],
 		description: {
 			EN: 'Number of harvesting operations carried out',
-			FR: "Nombre d'actions DE cueillette réalisées",
+			FR: "Nombre d'actions de cueillette réalisées",
 			DE: 'Anzahl der von dir durchgeführten Ernten',
-			ES: 'Cantidad DE recolecciones realizadas'
+			ES: 'Cantidad de recolecciones realizadas'
 		}
 	},
 	[StatTracking.FISH]: {
@@ -2240,13 +2240,13 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Line Fisherman',
 					FR: 'Pêcheur à la ligne',
 					DE: 'Kescher',
-					ES: 'Ayudante DE Pescador'
+					ES: 'Ayudante de Pescador'
 				},
 				description: {
 					EN: 'Number of fishing trips.',
-					FR: "Nombre d'actions DE pêche réalisées.",
+					FR: "Nombre d'actions de pêche réalisées.",
 					DE: 'Anzahl deiner Angelausflüge',
-					ES: 'Cantidad DE pescas realizadas.'
+					ES: 'Cantidad de pescas realizadas.'
 				}
 			},
 			{
@@ -2264,7 +2264,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Deadliest Catch',
-					FR: 'Pêcheur EN haute mer',
+					FR: 'Pêcheur en haute mer',
 					DE: 'Hochseefischer',
 					ES: 'Pescador'
 				}
@@ -2276,7 +2276,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Fishing with Dynamite',
 					FR: 'Pêcheur à la dynamite',
 					DE: 'Dynamit-Angler',
-					ES: 'Pescador DE Río'
+					ES: 'Pescador de Río'
 				}
 			},
 			{
@@ -2286,7 +2286,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Ultimate Fisherman',
 					FR: 'Pêcheur ultime',
 					DE: 'Ultimativer Angler',
-					ES: 'Pescador DE Alta Mar'
+					ES: 'Pescador de Alta Mar'
 				}
 			},
 			{
@@ -2294,9 +2294,9 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 0,
 				title: {
 					EN: 'King Fisherman',
-					FR: 'Roi DE la Pêche',
+					FR: 'Roi de la Pêche',
 					DE: 'König des Angelns',
-					ES: 'Rey DE la Pesca'
+					ES: 'Rey de la Pesca'
 				}
 			},
 			{
@@ -2304,17 +2304,17 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 0,
 				title: {
 					EN: 'God of Fishing',
-					FR: 'Dieu DE la Pêche',
+					FR: 'Dieu de la Pêche',
 					DE: 'Gott des Angelns',
-					ES: 'Dios DE la Pesca'
+					ES: 'Dios de la Pesca'
 				}
 			}
 		],
 		description: {
 			EN: 'Number of fishing trips',
-			FR: "Nombre d'actions DE pêche réalisées",
+			FR: "Nombre d'actions de pêche réalisées",
 			DE: 'Anzahl deiner Angelausflüge',
-			ES: 'Cantidad DE pescas realizadas'
+			ES: 'Cantidad de pescas realizadas'
 		}
 	},
 	[StatTracking.ENERGY]: {
@@ -2341,7 +2341,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Number of actions carried out which regenerate energy.',
 					FR: "Nombre d'actions d'énergétisation réalisées.",
 					DE: 'Anzahl der Energizer-Aktionen',
-					ES: 'Cantidad DE energizaciones realizadas.'
+					ES: 'Cantidad de energizaciones realizadas.'
 				}
 			},
 			{
@@ -2369,7 +2369,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Fission Researcher',
-					FR: 'Chercheur EN fission',
+					FR: 'Chercheur en fission',
 					DE: 'Atomforscher',
 					ES: 'Maestro Atómico'
 				}
@@ -2389,9 +2389,9 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 0,
 				title: {
 					EN: 'King of Fusion',
-					FR: 'Roi DE la fusion',
+					FR: 'Roi de la fusion',
 					DE: 'König der Fusion',
-					ES: 'Rey DE la Fusión'
+					ES: 'Rey de la Fusión'
 				}
 			},
 			{
@@ -2399,9 +2399,9 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 0,
 				title: {
 					EN: 'God of Fusion',
-					FR: 'Dieu DE la fusion',
+					FR: 'Dieu de la fusion',
 					DE: 'Gott der Fusion',
-					ES: 'Dios DE la Fusión'
+					ES: 'Dios de la Fusión'
 				}
 			}
 		],
@@ -2409,7 +2409,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Number of actions carried out which regenerate energy',
 			FR: "Nombre d'actions d'énergétisation réalisées",
 			DE: 'Anzahl der Energizer-Aktionen',
-			ES: 'Cantidad DE energizaciones realizadas'
+			ES: 'Cantidad de energizaciones realizadas'
 		}
 	},
 	[StatTracking.SEEK]: {
@@ -2428,15 +2428,15 @@ export const goals: Record<StatTracking, Goal> = {
 				icon: 'r_fouille.gif',
 				title: {
 					EN: 'Pebble Collector',
-					FR: 'Ramasseur DE cailloux',
+					FR: 'Ramasseur de cailloux',
 					DE: 'Kieswühler',
-					ES: 'Recogedor DE piedritas'
+					ES: 'Recogedor de piedritas'
 				},
 				description: {
 					EN: 'Number of scavenges carried out.',
-					FR: "Nombre d'actions DE fouilles réalisées.",
+					FR: "Nombre d'actions de fouilles réalisées.",
 					DE: 'Anzahl der von dir ausgeführten Grabungen',
-					ES: 'Cantidad DE excavaciones realizadas.'
+					ES: 'Cantidad de excavaciones realizadas.'
 				}
 			},
 			{
@@ -2454,7 +2454,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Ruin Fan',
-					FR: 'Amateur DE ruines',
+					FR: 'Amateur de ruines',
 					DE: 'Ruinennovize',
 					ES: 'Excavador profesional'
 				}
@@ -2466,7 +2466,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Documented Architect',
 					FR: 'Archéologue documenté',
 					DE: 'Diplomierter Archäologe',
-					ES: 'Maestro DE excavaciones'
+					ES: 'Maestro de excavaciones'
 				}
 			},
 			{
@@ -2474,7 +2474,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Treasure Inventor',
-					FR: 'Inventeur DE trésor',
+					FR: 'Inventeur de trésor',
 					DE: 'Schatzfinder',
 					ES: 'Buscatesoros'
 				}
@@ -2502,9 +2502,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'Number of scavenges carried out',
-			FR: "Nombre d'actions DE fouilles réalisées",
+			FR: "Nombre d'actions de fouilles réalisées",
 			DE: 'Anzahl der von dir ausgeführten Grabungen',
-			ES: 'Cantidad DE excavaciones realizadas'
+			ES: 'Cantidad de excavaciones realizadas'
 		}
 	},
 	[StatTracking.MARKET]: {
@@ -2523,15 +2523,15 @@ export const goals: Record<StatTracking, Goal> = {
 				icon: 'r_market.gif',
 				title: {
 					EN: 'Soul of Camelot',
-					FR: 'Âme DE camelot',
+					FR: 'Âme de camelot',
 					DE: 'Seele von Camelot',
 					ES: 'Vendedor Debutante'
 				},
 				description: {
 					EN: 'Number of sales made at the market.',
-					FR: 'Nombre DE ventes conclues au marché.',
+					FR: 'Nombre de ventes conclues au marché.',
 					DE: 'Anzahl der auf dem Markt verkauften Artikel',
-					ES: 'Cantidad DE ventas EN el Mercado.'
+					ES: 'Cantidad de ventas en el Mercado.'
 				}
 			},
 			{
@@ -2569,9 +2569,9 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Dinoz Broker',
-					FR: 'Négociant EN Dinoz',
+					FR: 'Négociant en Dinoz',
 					DE: 'Gordon Dinoz',
-					ES: 'Proveedor DE Dinos'
+					ES: 'Proveedor de Dinos'
 				}
 			},
 			{
@@ -2591,15 +2591,15 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Traffick-King',
 					FR: 'Roi Trafiquant',
 					DE: 'König der Verschieber',
-					ES: 'Traficante DE Dinos'
+					ES: 'Traficante de Dinos'
 				}
 			}
 		],
 		description: {
 			EN: 'Number of sales made at the market',
-			FR: 'Nombre DE ventes conclues au marché',
+			FR: 'Nombre de ventes conclues au marché',
 			DE: 'Anzahl der auf dem Markt verkauften Artikel',
-			ES: 'Cantidad DE ventas EN el Mercado'
+			ES: 'Cantidad de ventas en el Mercado'
 		}
 	},
 	[StatTracking.S_BUYER]: {
@@ -2624,9 +2624,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'Number of purchases made in the shop',
-					FR: "Nombre d'objet acquis EN boutique",
+					FR: "Nombre d'objet acquis en boutique",
 					DE: 'Anzahl der in Geschäften gekauften Artikel',
-					ES: 'Cantidad DE objetos adquiridos EN la tienda'
+					ES: 'Cantidad de objetos adquiridos en la tienda'
 				}
 			},
 			{
@@ -2674,7 +2674,7 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 1,
 				title: {
 					EN: 'Caveat Emptor',
-					FR: 'Géant DE la consommation',
+					FR: 'Géant de la consommation',
 					DE: 'Ungezügelter Konsument',
 					ES: 'Magnate'
 				}
@@ -2692,9 +2692,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'Number of purchases made in the shop',
-			FR: "Nombre d'objets acquis EN boutique",
+			FR: "Nombre d'objets acquis en boutique",
 			DE: 'Anzahl der in Geschäften gekauften Artikel',
-			ES: 'Cantidad DE objetos adquiridos EN la tienda'
+			ES: 'Cantidad de objetos adquiridos en la tienda'
 		}
 	},
 	[StatTracking.CLANS]: {
@@ -2720,9 +2720,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'Number of clans this player has appeared in.',
-					FR: 'Nombre DE clans dans lequel le joueur a été aperçu.',
+					FR: 'Nombre de clans dans lequel le joueur a été aperçu.',
 					DE: 'Anzahl der Klans, in denen du schon einmal warst',
-					ES: 'Cantidad DE clanes EN los que has sido identificado.'
+					ES: 'Cantidad de clanes en los que has sido identificado.'
 				}
 			},
 			{
@@ -2750,9 +2750,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'Number of clans this player has appeared in',
-			FR: 'Nombre DE clans dans lequel le joueur a été aperçu',
+			FR: 'Nombre de clans dans lequel le joueur a été aperçu',
 			DE: 'Anzahl der Klans, in denen du schon einmal warst',
-			ES: 'Cantidad DE clanes EN los que has sido identificado'
+			ES: 'Cantidad de clanes en los que has sido identificado'
 		}
 	},
 	[StatTracking.BEAUTY]: {
@@ -2777,9 +2777,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: "Number of Beauty Contest titles won by this player's dinoz.",
-					FR: 'Nombre DE titres DE beautés remportés par les Dinoz du joueur.',
+					FR: 'Nombre de titres de beauté remportés par les Dinoz du joueur.',
 					DE: 'Anzahl der von deinen Dinoz gewonnenen Schönheitstitel',
-					ES: 'Cantidad DE títulos DE belleza.'
+					ES: 'Cantidad de títulos de belleza.'
 				}
 			},
 			{
@@ -2825,9 +2825,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: "Number of Beauty Contest titles won by this player's dinoz",
-			FR: 'Nombre DE titres DE beautés remportés par les Dinoz du joueur',
+			FR: 'Nombre de titres de beauté remportés par les Dinoz du joueur',
 			DE: 'Anzahl der von deinen Dinoz gewonnenen Schönheitstitel',
-			ES: 'Cantidad DE títulos DE belleza'
+			ES: 'Cantidad de títulos de belleza'
 		}
 	},
 	[StatTracking.GDC_ATK]: {
@@ -2854,7 +2854,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Number of attacks carried out against enemy castles.',
 					FR: "Nombre d'attaques menées contre un château adverse.",
 					DE: 'So oft hast du ein gegnerisches Schloss angegriffen',
-					ES: 'Cantidad DE atacantes enviados al castillo enemigo.'
+					ES: 'Cantidad de atacantes enviados al castillo enemigo.'
 				}
 			},
 			{
@@ -2924,7 +2924,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Almighty Destroyer',
 					FR: 'Dieu destructeur',
 					DE: 'Gott der Zerstörung',
-					ES: 'Dios DE la Guerra'
+					ES: 'Dios de la Guerra'
 				}
 			}
 		],
@@ -2932,7 +2932,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Number of attacks carried out against enemy castles',
 			FR: "Nombre d'attaques menées contre un château adverse",
 			DE: 'So viele Male hast du ein gegnerisches Schloss angegriffen',
-			ES: 'Cantidad DE atacantes enviados al castillo enemigo'
+			ES: 'Cantidad de atacantes enviados al castillo enemigo'
 		}
 	},
 	[StatTracking.GDC_DEF]: {
@@ -2957,9 +2957,9 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'Number of times you have defended your castle.',
-					FR: 'Nombre DE fois où vous avez défendu votre château.',
+					FR: 'Nombre de fois où vous avez défendu votre château.',
 					DE: 'So viele Male hast du dein Schloss verteidigt',
-					ES: 'Cantidad DE veces que has defendido tu castillo.'
+					ES: 'Cantidad de veces que has defendido tu castillo.'
 				}
 			},
 			{
@@ -3035,9 +3035,9 @@ export const goals: Record<StatTracking, Goal> = {
 		],
 		description: {
 			EN: 'Number of times you have defended your castle',
-			FR: 'Nombre DE fois où vous avez défendu votre château',
+			FR: 'Nombre de fois où vous avez défendu votre château',
 			DE: 'So viele Male hast du dein Schloss verteidigt',
-			ES: 'Cantidad DE veces que has defendido tu castillo'
+			ES: 'Cantidad de veces que has defendido tu castillo'
 		}
 	},
 	[StatTracking.BGUM]: {
@@ -3062,7 +3062,7 @@ export const goals: Record<StatTracking, Goal> = {
 				},
 				description: {
 					EN: 'For those who are committed to making Dinoland an even better place!',
-					FR: 'Vous oeuvrez pour rendre le monde DE Dinoland encore meilleur !',
+					FR: 'Vous oeuvrez pour rendre le monde de Dinoland encore meilleur !',
 					DE: 'Du bist ein aktives Mitglieder der Dinoland-Community!',
 					ES: '¡Maestros como tú hacen que Dinoland sea cada vez mejor!'
 				}
@@ -3112,9 +3112,9 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 0,
 				title: {
 					EN: "Papy Joe's Twin",
-					FR: 'Jumeau DE Papy joe',
+					FR: 'Jumeau de Papy joe',
 					DE: 'Papy Joes Zwilling',
-					ES: 'Nieto DE Papy Jose'
+					ES: 'Nieto de Papy Jose'
 				}
 			},
 			{
@@ -3122,9 +3122,9 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 0,
 				title: {
 					EN: "Bao's Ancestor",
-					FR: 'Ancêtre DE Bao',
+					FR: 'Ancêtre de Bao',
 					DE: 'Vorfahre Baos',
-					ES: 'Ancestro DE Bao'
+					ES: 'Ancestro de Bao'
 				}
 			},
 			{
@@ -3142,16 +3142,16 @@ export const goals: Record<StatTracking, Goal> = {
 				points: 0,
 				title: {
 					EN: '6th Guardian of Dinoland',
-					FR: '6ème Gardien DE Dinoland',
+					FR: '6ème Gardien de Dinoland',
 					DE: '6. Wächter von Dinoland',
-					ES: '6to Guardián DE Dinoland'
+					ES: '6to Guardián de Dinoland'
 				}
 			}
 		],
 		description: {
 			EN: 'The most giving of Dinoz masters',
 			FR: 'La crême des maîtres Dinoz',
-			DE: 'Die Crème DE la Crème der Dinozmeister',
+			DE: 'Die Crème de la Crème der Dinozmeister',
 			ES: 'Aportes al sitio y a la comunidad'
 		}
 	},
@@ -3167,9 +3167,9 @@ export const goals: Record<StatTracking, Goal> = {
 		unlocks: [],
 		description: {
 			EN: 'Number of merguez sausages consumed',
-			FR: 'Nombre DE merguez consommées',
+			FR: 'Nombre de merguez consommées',
 			DE: 'Anzahl der verzehrten Merguez',
-			ES: 'Cantidad DE salchichas consumidas'
+			ES: 'Cantidad de salchichas consumidas'
 		}
 	},
 	[StatTracking.MEDAL_1]: {
@@ -3178,7 +3178,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Gold Medal',
 			FR: "Médaille d'or",
 			DE: 'Goldmedaille',
-			ES: 'Medalla dinolímpica DE oro'
+			ES: 'Medalla dinolímpica de oro'
 		},
 		rare: 1,
 		unlocks: [
@@ -3190,7 +3190,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Gold Medal',
 					FR: "Médaille d'or",
 					DE: 'Goldmedaille',
-					ES: 'Medallista olímpico DE oro'
+					ES: 'Medallista olímpico de oro'
 				},
 				description: {
 					EN: 'You finished first! Congratulations!',
@@ -3213,7 +3213,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Silver medal',
 			FR: "Médaille d'argent",
 			DE: 'Silbermedaille',
-			ES: 'Medalla dinolímpica DE plata'
+			ES: 'Medalla dinolímpica de plata'
 		},
 		rare: 1,
 		unlocks: [
@@ -3225,7 +3225,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Silver Medal',
 					FR: "Médaille d'argent",
 					DE: 'Silbermedaille',
-					ES: 'Medallista olímpico DE plata'
+					ES: 'Medallista olímpico de plata'
 				},
 				description: {
 					EN: 'You finished second! Bravo!',
@@ -3239,16 +3239,16 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'The Silver Medallist in the 1st Dinolympic Games!',
 			FR: 'Vous avez fini second !',
 			DE: 'Bravo, ihr seid zweiter',
-			ES: '¡Segundo lugar EN los 1ros. Juegos Dinolímpicos Internacionales!'
+			ES: '¡Segundo lugar en los 1ros. Juegos Dinolímpicos Internacionales!'
 		}
 	},
 	[StatTracking.MEDAL_3]: {
 		id: StatTracking.MEDAL_3,
 		name: {
 			EN: 'Bronze Medal',
-			FR: 'Médaille DE bronze',
+			FR: 'Médaille de bronze',
 			DE: 'Bronzemedaille',
-			ES: 'Medalla dinolímpica DE bronce'
+			ES: 'Medalla dinolímpica de bronce'
 		},
 		rare: 1,
 		unlocks: [
@@ -3258,15 +3258,15 @@ export const goals: Record<StatTracking, Goal> = {
 				icon: 'r_medbro.gif',
 				title: {
 					EN: 'Bronze Medal',
-					FR: 'Médaille DE bronze',
+					FR: 'Médaille de bronze',
 					DE: 'Bronzemedaille',
-					ES: 'Medallista olímpico DE bronce'
+					ES: 'Medallista olímpico de bronce'
 				},
 				description: {
 					EN: 'You finished third! Great performance!',
 					FR: "Vous avez fini troisième ! C'est une très belle performance !",
 					DE: 'Ihr seid auf Rang drei. Super Leistung!',
-					ES: '¡Tercer lugar EN los 1ros. Juegos Dinolímpicos Internacionales!'
+					ES: '¡Tercer lugar en los 1ros. Juegos Dinolímpicos Internacionales!'
 				}
 			}
 		],
@@ -3274,7 +3274,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'The Bronze medal winner in the 1st Dinolympic Games!',
 			FR: 'Vous avez fini troisième !',
 			DE: 'Ihr seid auf Rang drei!',
-			ES: '¡Tercer lugar EN los 1ros. Juegos Dinolímpicos Internacionales!'
+			ES: '¡Tercer lugar en los 1ros. Juegos Dinolímpicos Internacionales!'
 		}
 	},
 	[StatTracking.MEDAL_4]: {
@@ -3293,7 +3293,7 @@ export const goals: Record<StatTracking, Goal> = {
 				icon: 'r_medpla.gif',
 				title: {
 					EN: 'Dinolympic Medal',
-					FR: 'Médaille DE participation',
+					FR: 'Médaille de participation',
 					DE: 'Teilnahmemedaille',
 					ES: 'Atleta olímpico'
 				},
@@ -3301,7 +3301,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Dinolympic Athlete - be proud of your achievements!',
 					FR: 'Vous avez réussi à vous classer parmi les meilleurs participants !',
 					DE: 'Ihr gehört zu den besten Teilnehmern!!',
-					ES: '¡Te colocaste EN el Top 10 DE nuestro servidor EN los 1ros. Juegos Dinolímpicos!'
+					ES: '¡Te colocaste en el Top 10 DE nuestro servidor en los 1ros. Juegos Dinolímpicos!'
 				}
 			}
 		],
@@ -3309,7 +3309,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'You were ranked amongst the top Dinolympic competitors!',
 			FR: 'Vous avez réussi à vous classer parmi les meilleurs participants !',
 			DE: 'Ihr gehört zu den besten Teilnehmern!',
-			ES: '¡Te colocaste EN el Top 10 DE nuestro servidor EN los 1ros. Juegos Dinolímpicos!'
+			ES: '¡Te colocaste en el Top 10 de nuestro servidor en los 1ros. Juegos Dinolímpicos!'
 		}
 	},
 	[StatTracking.LEVELUP_1]: {
