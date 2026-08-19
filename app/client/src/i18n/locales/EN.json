@@ -674,7 +674,6 @@
 			"amnesic_rice": "Your Dinoz doesn't remember its name anymore and also lost all of its experience :xp:!",
 			"pampleboum": "Ouch! There was a pit in this grapeboom!"
 		},
-		"Invalid_email_or_password": "Invalid username or password.",
 		"Invalid_credentials": "Incorrect credentials.",
 		"Too_many_login_attempts": "Too many login attempts have been made. For security reasons, please wait 5 minutes before trying again.",
 		"Too_many_registration_attempts": "Too many account creation attempts have been made. Please wait 1 hour before trying again.",
@@ -752,7 +751,8 @@
 		"concentrationFull": "All seven spots for this concentration are already occupied.",
 		"concentrationCannotStopAfterOpening": "The concentration is complete: the Dinoz must now enter the portal.",
 		"concentrationNotCompleted": "Seven Dinoz must complete their concentration before the portal can be entered.",
-		"maxFollowers": "You cannot have more than {maxFollowers} Dinoz in your group."
+		"maxFollowers": "You cannot have more than {maxFollowers} Dinoz in your group.",
+		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -3789,7 +3789,8 @@
 			"itemDuration": "Duration: {days} days",
 			"itemGain": "Win: **{gold}** :gold: — Total: **{total}** :gold:",
 			"unlockAt": "Available on {date}",
-			"claim": "Recover"
+			"claim": "Recover",
+			"maxDeposit": "Dépôt maximum : {gold} :gold:"
 		}
 	},
 	"npc": {
