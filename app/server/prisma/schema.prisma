@@ -607,6 +607,8 @@ model User {
   matelasseur   Boolean            @default(false)
   messie        Boolean            @default(false)
 
+  keepSeedReincarnationCount Int   @default(0)
+
   newsLikes     NewsLike[]
   pollVotes     PollVote[]
 

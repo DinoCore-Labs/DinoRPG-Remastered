@@ -6,6 +6,7 @@ interface DinozConfig {
 	maxLevel: number;
 	maxQuantity: number;
 	initialMaxLevel: number;
+	maxKeepSeedReincarnations: number;
 }
 
 interface ShopConfig {
@@ -43,7 +44,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		dinoz: {
 			maxLevel: 80,
 			maxQuantity: 18,
-			initialMaxLevel: 50
+			initialMaxLevel: 50,
+			maxKeepSeedReincarnations: 5
 		},
 		shop: {
 			dinozNumber: 30
@@ -72,7 +74,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		dinoz: {
 			maxLevel: 80,
 			maxQuantity: 18,
-			initialMaxLevel: 50
+			initialMaxLevel: 50,
+			maxKeepSeedReincarnations: 5
 		},
 		shop: {
 			dinozNumber: 30
