@@ -21,6 +21,16 @@
 					:disabled="saving || maxSavingAmount <= 0"
 					@input="normalizeAmount"
 				/>
+				<p
+					class="maxDeposit"
+					v-html="
+						formatContent(
+							$t('bank.savings.maxDeposit', {
+								gold: beautifulNumber(BANK_SAVING_MAX_DEPOSIT)
+							})
+						)
+					"
+				/>
 				<label for="bankSavingDuration">{{ $t('bank.savings.duration') }}</label>
 				<DZSelect
 					id="bankSavingDuration"
@@ -101,7 +111,8 @@ export default defineComponent({
 	setup() {
 		const uStore = userStore();
 		return {
-			uStore
+			uStore,
+			BANK_SAVING_MAX_DEPOSIT
 		};
 	},
 	data() {
@@ -198,8 +209,8 @@ export default defineComponent({
 				this.amount = 1;
 				return;
 			}
-			if (amount > this.uStore.gold) {
-				this.amount = this.uStore.gold;
+			if (amount > this.maxSavingAmount) {
+				this.amount = this.maxSavingAmount;
 				return;
 			}
 			this.amount = amount;
@@ -327,6 +338,12 @@ export default defineComponent({
 		display: flex;
 		flex-direction: column;
 		gap: 3px;
+	}
+	.maxDeposit {
+		margin: 0;
+		text-align: center;
+		font-size: 9pt;
+		opacity: 0.85;
 	}
 }
 @media (max-width: 540px) {
