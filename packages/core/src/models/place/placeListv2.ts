@@ -670,7 +670,7 @@ export const placeListv2 = definePlaces({
 		moves: [
 			{ target: PlaceEnum.PORTAIL },
 			{ target: PlaceEnum.TOUR_SOMBRE },
-			{ target: PlaceEnum.RETOUR_SURFACE /*, condition: 'active(gulom)'*/ },
+			{ target: PlaceEnum.RETOUR_SURFACE, condition: 'active(gulom)' },
 			{ target: PlaceEnum.DARK_FAKE, condition: 'curmission(ouestu)|curmission(lumi)|curmission(truci2)|fx(morsso)' }
 		],
 		background: 's_dkChutes'
