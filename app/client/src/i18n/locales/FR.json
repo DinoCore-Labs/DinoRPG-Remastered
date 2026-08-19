@@ -674,7 +674,6 @@
 			"amnesic_rice": "Votre Dinoz ne sait plus comment il se prénomme, il a également perdu toute son expérience :xp: !",
 			"pampleboum": "Ouille ! Il y avait un noyau dans ce pampleboum !"
 		},
-		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
 		"Invalid_credentials": "Identifiants incorrects.",
 		"Too_many_login_attempts": "Trop de tentatives de connexion ont été effectuées. Par sécurité, veuillez patienter 5 minutes avant de réessayer.",
 		"Too_many_registration_attempts": "Trop de tentatives de création de compte ont été effectuées. Veuillez patienter 1 heure avant de réessayer.",
