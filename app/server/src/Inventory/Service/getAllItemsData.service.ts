@@ -19,9 +19,11 @@ type ItemMaxQuantityUser = {
 };
 
 export const getItemMaxQuantity = (userInventory: ItemMaxQuantityUser, item: ItemFiche): number => {
-	const hasMerguezCard = userInventory.rewards.some(reward => reward.rewardId === Reward.MERGUEZ_CARD);
-	if (item.itemId === Item.GOBLIN_MERGUEZ && hasMerguezCard) {
-		return userInventory.shopKeeper ? MERGUEZ_SHOPKEEPER_MAX_QUANTITY : MERGUEZ_CARD_MAX_QUANTITY;
+	if (item.itemId === Item.GOBLIN_MERGUEZ) {
+		const hasMerguezCard = userInventory.rewards.some(reward => reward.rewardId === Reward.MERGUEZ_CARD);
+		if (hasMerguezCard) {
+			return userInventory.shopKeeper ? MERGUEZ_SHOPKEEPER_MAX_QUANTITY : MERGUEZ_CARD_MAX_QUANTITY;
+		}
 	}
 	if (userInventory.shopKeeper && item.itemType !== ItemType.MAGICAL) {
 		return Math.round(item.maxQuantity * 1.5);
