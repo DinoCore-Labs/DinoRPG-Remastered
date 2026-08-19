@@ -674,7 +674,6 @@
 			"amnesic_rice": "Dein Dinoz erinnert sich nicht mehr an seinen Namen und außerdem hat er all seine :xp: verloren!",
 			"pampleboum": "Autsch! Dieser Granatenapfel enthielt einen Kern!"
 		},
-		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
 		"Invalid_credentials": "Identifiants incorrects.",
 		"Too_many_login_attempts": "Trop de tentatives de connexion ont été effectuées. Par sécurité, veuillez patienter 5 minutes avant de réessayer.",
 		"Too_many_registration_attempts": "Trop de tentatives de création de compte ont été effectuées. Veuillez patienter 1 heure avant de réessayer.",
@@ -752,7 +751,8 @@
 		"concentrationFull": "Les sept places de cette concentration sont déjà occupées.",
 		"concentrationCannotStopAfterOpening": "La concentration est terminée : le Dinoz doit maintenant entrer dans le portail.",
 		"concentrationNotCompleted": "Sept Dinoz doivent terminer leur concentration avant que le portail puisse être franchi.",
-		"maxFollowers": "Vous ne pouvez avoir plus de {maxFollowers} Dinoz dans votre groupe."
+		"maxFollowers": "Vous ne pouvez avoir plus de {maxFollowers} Dinoz dans votre groupe.",
+		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée."
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
@@ -3789,7 +3789,8 @@
 			"itemDuration": "Durée : {days} jours",
 			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
 			"unlockAt": "Disponible le {date}",
-			"claim": "Récupérer"
+			"claim": "Récupérer",
+			"maxDeposit": "Dépôt maximum : {gold} :gold:"
 		}
 	},
 	"npc": {
