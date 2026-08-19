@@ -6,6 +6,8 @@ import { ACCESS_TOKEN_COOKIE, authCookieOptions } from '../../config/cookie.js';
 import { prisma } from '../../prisma.js';
 import { LoginUserInput } from '../Schema/user.schema.js';
 
+const DUMMY_PASSWORD_HASH = '$2b$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy';
+
 export async function loginUser(
 	req: FastifyRequest<{
 		Body: LoginUserInput;
@@ -14,12 +16,11 @@ export async function loginUser(
 ) {
 	const { name, password } = req.body;
 	const user = await prisma.user.findUnique({ where: { name: name } });
-	if (!user) {
-		throw new ExpectedError('Invalid_credentials', { statusCode: 401 });
-	}
-	const isMatch = user && (await bcrypt.compare(password, user.password));
+	const isMatch = await bcrypt.compare(password, user?.password ?? DUMMY_PASSWORD_HASH);
 	if (!user || !isMatch) {
-		throw new ExpectedError('Invalid_email_or_password', { statusCode: 401 });
+		throw new ExpectedError('Invalid_credentials', {
+			statusCode: 401
+		});
 	}
 	if (user.bannedUntil && user.bannedUntil > new Date()) {
 		throw new ExpectedError('Account_banned_until', {
