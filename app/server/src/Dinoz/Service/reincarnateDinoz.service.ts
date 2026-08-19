@@ -4,7 +4,10 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { getRace } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { Role } from '../../../../prisma/client.js';
+import gameConfig from '../../config/game.config.js';
 import { computeUSkillsForUser } from '../../Level/Controller/applySkillEffect.controller.js';
+import { prisma } from '../../prisma.js';
 import { updatePoints } from '../../Ranking/Controller/updatePoints.js';
 import { removeMoney } from '../../User/Controller/money.controller.js';
 import { reincarnateDinoz } from '../../utils/dinoz/level.mapper.js';
@@ -49,6 +52,39 @@ export async function reincarnate(
 		throw new ExpectedError('reincarnationWithEquippedItems', { params: { id: dinozId } });
 	}
 	const race = getRace(dinoz.raceId);
+	const user = await prisma.user.findUnique({
+		where: {
+			id: authed.id
+		},
+		select: {
+			role: true
+		}
+	});
+	if (!user) {
+		throw new ExpectedError('userNotFound');
+	}
+	if (keepSeed && user.role !== Role.ADMIN) {
+		const quota = await prisma.user.updateMany({
+			where: {
+				id: authed.id,
+				keepSeedReincarnationCount: {
+					lt: gameConfig.dinoz.maxKeepSeedReincarnations
+				}
+			},
+			data: {
+				keepSeedReincarnationCount: {
+					increment: 1
+				}
+			}
+		});
+		if (quota.count === 0) {
+			throw new ExpectedError('keepSeedReincarnationLimitReached', {
+				params: {
+					limit: gameConfig.dinoz.maxKeepSeedReincarnations
+				}
+			});
+		}
+	}
 	if (keepSeed) {
 		await removeMoney(authed.id, Math.round(race.price * dinoz.level ** 0.5));
 	}
