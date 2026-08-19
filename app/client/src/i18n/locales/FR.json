@@ -3789,7 +3789,8 @@
 			"itemDuration": "Durée : {days} jours",
 			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
 			"unlockAt": "Disponible le {date}",
-			"claim": "Récupérer"
+			"claim": "Récupérer",
+			"maxDeposit": "Dépôt maximum : {gold} :gold:"
 		}
 	},
 	"npc": {
