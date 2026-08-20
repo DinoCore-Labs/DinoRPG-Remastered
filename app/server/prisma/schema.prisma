@@ -87,6 +87,10 @@ model Dinoz {
   marketOffers       Offer[]                @relation("OfferDinoz")
   FBTournamentStep   Int                    @default(0)
 
+  DojoOpponents  DojoOpponents[]
+  DojoTeam       DojoTeam[]
+  TournamentTeam TournamentTeam[]
+
   userId             String                 @db.Uuid
   user               User                   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)  
 
@@ -630,7 +634,27 @@ model User {
 
   reportsMade Report[] @relation("ReportReporter")
   reports     Report[] @relation("ReportReportedUser")
+
+  notifications Notification[]
+
+  dojo               Dojo?
+  FightArchive       FightArchive[] @relation("UserRelation")
+  LeftFightArchives  FightArchive[] @relation("LeftUserRelation")
+  RightFightArchives FightArchive[] @relation("RightUserRelation")
+  FightWatched       FightWatched[]
 }
+
+model Notification {
+  id      String @id @default(uuid()) @db.Uuid
+  userId  String @db.Uuid
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type    String 
+  content Json?  
+
+  @@index([userId])
+  @@map("notification")
+}
+
 
 model UserDinozShop {
   id      Int     @id  @default(autoincrement())
@@ -931,9 +955,147 @@ model ClanPage {
   @@index([clanId])
 }
 
+<<<<<<< HEAD
 enum DinozConcentrationState {
   GATHERING
   OPEN
+=======
+model Dojo {
+  id                   String                 @id @default(uuid()) @db.Uuid
+  userId               String                 @unique @db.Uuid
+  user                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team                 DojoTeam[]
+  activeChallenge      Json?                  @db.JsonB
+  DojoChallengeHistory DojoChallengeHistory[]
+  reputation           Int                    @default(0)
+  DojoOpponents        DojoOpponents[]
+  teamUpdate           DateTime?
+  dailyReset           Int                    @default(0)
+  TournamentTeam       TournamentTeam?        @relation(fields: [tournamentTeamId], references: [id])
+  tournamentTeamId     String?                @unique @db.Uuid
+
+  @@index([userId])
+  @@map("dojo")
+}
+
+model DojoTeam {
+  id      String  @id @default(uuid()) @db.Uuid
+  dojoId  String  @db.Uuid
+  dojo    Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  dinozId Int
+  dinoz   Dinoz   @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+  fighted Boolean @default(false)
+
+  @@unique([dojoId, dinozId])
+  @@index([dojoId])
+}
+
+model DojoOpponents {
+  id       String  @id @default(uuid()) @db.Uuid
+  dojoId   String  @db.Uuid
+  dojo     Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  dinozId  Int
+  dinoz   Dinoz   @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+  fighted  Boolean @default(false)
+  achieved Boolean @default(false)
+
+  @@unique([dojoId, dinozId])
+  @@index([dojoId])
+}
+
+model DojoChallengeHistory {
+  id         String   @id @default(uuid()) @db.Uuid
+  dojoId     String   @db.Uuid
+  dojo       Dojo     @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  myDinozId  Int
+  opponentId Int
+  challenge  String
+  victory    Boolean
+  achieved   Boolean
+  archivedAt DateTime @default(now()) @db.Date
+
+  @@index([dojoId])
+}
+
+model FightArchive {
+  id                    String          @id @default(uuid()) @db.Uuid
+  fighters              String          @db.Text
+  steps                 String          @db.Text
+  seed                  String          @db.VarChar(255)
+  result                Boolean         @db.Boolean
+  userId                String?         @db.Uuid
+  user                  User?           @relation("UserRelation", fields: [userId], references: [id])
+  leftUserId            String?         @db.Uuid
+  leftUser              User?           @relation("LeftUserRelation", fields: [leftUserId], references: [id])
+  rightUserId           String?         @db.Uuid
+  rightUser             User?           @relation("RightUserRelation", fields: [rightUserId], references: [id])
+  tournamentStep        Int             @default(0)
+  slot                  Int             @default(0)
+  createdDate           DateTime        @default(now()) @db.Timestamp(6)
+  Tournament            Tournament?     @relation(fields: [tournamentId], references: [id])
+  tournamentTeamLeftId  String?         @db.Uuid
+  tournamentTeamLeft    TournamentTeam? @relation("LeftTeamRelation", fields: [tournamentTeamLeftId], references: [id])
+  tournamentTeamRightId String?         @db.Uuid
+  tournamentTeamRight   TournamentTeam? @relation("RightTeamRelation", fields: [tournamentTeamRightId], references: [id])
+  tournamentId          String?         @db.Uuid
+  metadata              String?         @db.Text
+  FightWatched          FightWatched[]
+
+  @@index([tournamentId, tournamentStep])
+}
+
+model FightWatched {
+  id             String       @id @default(uuid()) @db.Uuid
+  fight          FightArchive @relation(fields: [fightArchiveId], references: [id])
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String       @db.Uuid
+  favorite       Boolean
+  fightArchiveId String       @db.Uuid
+
+  @@unique([userId, fightArchiveId])
+  @@index([userId, fightArchiveId])
+}
+
+model Tournament {
+  id           String           @id @unique @default(uuid()) @db.Uuid
+  date         DateTime         @default(now()) @db.Timestamp(6)
+  formatName   String           @default("ffa") @db.Text
+  teamSize     Int              @default(1)
+  raceMinimum  Int              @default(1)
+  poison       Boolean          @default(true)
+  teamRace     String           @db.Text
+  levelLimit   Int              @default(50)
+  participants TournamentTeam[]
+  fights       FightArchive[]
+  cashPrice    Int              @default(0)
+  nextRound    DateTime         @default(now())
+
+  @@index([id, date])
+}
+
+model TournamentTeam {
+  id                String         @id @default(uuid()) @db.Uuid
+  dojoId            String?        @db.Uuid
+  dojo              Dojo?
+  dinoz             Dinoz[]
+  teamCount         Int            @default(1)
+  Tournament        Tournament?    @relation(fields: [tournamentId], references: [id])
+  tournamentId      String?        @db.Uuid
+  FightArchiveLeft  FightArchive[] @relation("LeftTeamRelation")
+  FightArchiveRight FightArchive[] @relation("RightTeamRelation")
+
+  // --- Inter-dojo tournament pool phase state ---
+  poolNumber        Int?           // 0-15, assigned once qualification ends
+  poolWins          Int            @default(0)
+  poolLosses        Int            @default(0)
+  poolQualified     Boolean        @default(false) // true once poolWins reaches POOL_WIN_COUNT
+  poolEliminated    Boolean        @default(false) // true once poolLosses reaches POOL_LOSS_COUNT
+  finalSeed         Int?           // 1..32, computed from pool performance for the final bracket
+
+  @@unique([dojoId, tournamentId])
+  @@index([dojoId])
+  @@index([tournamentId, poolNumber])
+>>>>>>> 3a007901 (feat(dojo): add dojo and notification schema)
 }
 
 enum DinozState {
