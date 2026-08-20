@@ -160,6 +160,7 @@ import { GatherService } from '../../services/gather.service.js';
 import { localStore } from '../../store/localStore.js';
 import GatherRewardModal from '../modal/GatherRewardModal.vue';
 import type { GatherResult } from '@dinorpg/core/models/gather/gatherResult.js';
+import { DojoService } from '../../services/dojo.service.ts';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -796,6 +797,19 @@ export default defineComponent({
 						name: 'ForcebrutPage',
 						query: { dinozId: this.dinozId }
 					});
+					break;
+				case Action.BUILD_DOJO:
+					const res = await this.$confirm({
+						message: this.$t('popup.dojoConfirmMessage'),
+						acceptLabel: this.$t('popup.accept'),
+						rejectLabel: this.$t('popup.reject'),
+						icon: 'pi pi-exclamation-triangle'
+					});
+
+					if (res) {
+						const dojo = await DojoService.buildDojo();
+						userStore().setDojoId(dojo.id);
+					}
 					break;
 				default:
 					console.log(action.name);
