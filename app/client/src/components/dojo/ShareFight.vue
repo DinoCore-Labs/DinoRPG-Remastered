@@ -18,11 +18,11 @@ import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { DojoService } from '../../services/dojo.service.js';
-import type { preFightLoader } from '@dinorpg/core/models/fight/transpiler.js';
 import { resolveFightingPlace, transpileFight } from '../../fight/transpileFight.js';
-import type { FightStep } from '@dinorpg/core/models/fight/FightStep.js';
-import type { FighterRecap } from '@dinorpg/core/models/fight/FightResult.js';
 import FightersHeader from '../fight/FightHeader.vue';
+import type { preFightLoader } from '@dinorpg/core/models/fight/transpiler.js';
+import type { FightStep } from '@dinorpg/core/models/fight/fightStep.js';
+import type { FighterRecap } from '@dinorpg/core/models/fight/fightResult.js';
 
 export default defineComponent({
 	name: 'ShareFight',

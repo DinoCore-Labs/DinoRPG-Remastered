@@ -1,6 +1,6 @@
+import { dojoScenario } from './data/dojoScenario.js';
 import { jeromeTraderScenario } from './data/jeromeTraderScenario.js';
 import { magnetiteScenario } from './data/magnetiteScenario.js';
-import { dojoScenario } from './data/dojoScenario.js';
 import { merguezScenario } from './data/merguezScenario.js';
 import { pacScenario } from './data/pacScenario.js';
 import { starScenario } from './data/starScenario.js';
