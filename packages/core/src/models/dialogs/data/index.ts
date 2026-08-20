@@ -51,6 +51,7 @@ import { strangeHippoDialog, strangePterozDialog, strangeRockyDialog } from './t
 import { venerableDialog, venerableHurtDialog } from './venerable.dialog.js';
 import { weirdManDialog } from './weirdMan.dialog.js';
 import { woundedSoldierDialog } from './woundedSoldier.dialog.js';
+import { maitrZenitDialog } from './zenit.dialog.js';
 
 export const dialogDefinitions = [
 	// Dinoville
@@ -65,6 +66,7 @@ export const dialogDefinitions = [
 	skullyMissionsDialog,
 	skullyEndDialog,
 	madameXDialog,
+	maitrZenitDialog,
 	starquestSkullyDialog,
 	starquestIntroDialog,
 	starquestMegawolfHintDialog,
