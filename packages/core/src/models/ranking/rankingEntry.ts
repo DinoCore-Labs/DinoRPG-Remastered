@@ -19,3 +19,8 @@ export interface ClanRankingEntry {
 	totalPoints: number;
 	clan: Pick<Clan, 'id' | 'name' | 'languages' | 'treasureValue'>;
 }
+
+export interface DojoRankingEntry {
+	user: Pick<UserData, 'id' | 'name'> & { worth: number };
+	dojo: number;
+}
