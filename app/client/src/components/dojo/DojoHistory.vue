@@ -8,12 +8,12 @@
 		</tr>
 		<tr v-for="fight in history" :key="fight.id">
 			<td>
-				<li v-for="dino in fight.fighters.filter(f => f.attacker && f.type === FighterType.DINOZ)" :key="dino.id">
+				<li v-for="dino in getDinozFighters(fight.fighters, true)" :key="dino.id">
 					{{ dino.name }}
 				</li>
 			</td>
 			<td>
-				<li v-for="dino in fight.fighters.filter(f => !f.attacker && f.type === FighterType.DINOZ)" :key="dino.id">
+				<li v-for="dino in getDinozFighters(fight.fighters, true)" :key="dino.id">
 					{{ dino.name }}
 				</li>
 			</td>
@@ -54,9 +54,9 @@ import { defineComponent } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { DojoService } from '../../services/dojo.service.js';
-import type { FighterRecap } from '@dinorpg/core/models/fight/FightResult.js';
 import DZTable from '../utils/DZTable.vue';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
+import type { FighterRecap } from '@dinorpg/core/models/fight/fightResult.js';
 
 export default defineComponent({
 	name: 'DojoHistory',
@@ -106,6 +106,11 @@ export default defineComponent({
 					return;
 				}
 			}
+		},
+		getDinozFighters(fighters: FighterRecap[], attacker: boolean): FighterRecap[] {
+			return fighters.filter(
+				(fighter: FighterRecap) => fighter.attacker === attacker && fighter.type === FighterType.DINOZ
+			);
 		}
 	},
 	async mounted() {

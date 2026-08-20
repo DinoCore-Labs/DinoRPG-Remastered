@@ -28,9 +28,7 @@
 				</Suspense>
 			</div>
 		</div>
-
 		<DZButton style="align-self: center" @click="returnToFighterSelection()">{{ $t('dojo.return') }}</DZButton>
-
 		<Transition name="bounce">
 			<FightRecap :stats="fightStat" />
 		</Transition>
@@ -41,25 +39,24 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
-//import { dojoStore } from '../../store/dojoStore.js';
 import { userStore } from '../../store/userStore.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import DZButton from '../utils/DZButton.vue';
 import DZDisclaimer from '../utils/DZDisclaimer.vue';
 import DZInput from '../utils/DZInput.vue';
-import type { DinozDojoFiche } from '@dinorpg/core/models/dinoz/DinozFiche.js';
 import { ClanService, UserService, DojoService } from '../../services/index.js';
-import type { ClanMember } from '@dinorpg/core/models/clan/clanMember.js';
 import SelectDinoz from './SelectDinoz.vue';
-import type { preFightLoader } from '@dinorpg/core/models/fight/transpiler.js';
 import { resolveFightingPlace, transpileFight } from '../../fight/transpileFight.js';
-import type { FightStep } from '@dinorpg/core/models/fight/FightStep.js';
-import type { FighterRecap, FullFightStats } from '@dinorpg/core/models/fight/FightResult.js';
-import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 import FightRecap from './FightRecap.vue';
 import FightersHeader from '../fight/FightHeader.vue';
 import { dojoStore } from '../../store/dojoStore.ts';
+import type { ClanMember } from '@dinorpg/core/models/clan/clanMember.js';
+import type { DinozDojoFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import type { preFightLoader } from '@dinorpg/core/models/fight/transpiler.js';
+import type { FighterRecap, FullFightStats } from '@dinorpg/core/models/fight/fightResult.js';
+import type { FightStep } from '@dinorpg/core/models/fight/fightStep.js';
+import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 
 export default defineComponent({
 	name: 'ChallengeFriend',

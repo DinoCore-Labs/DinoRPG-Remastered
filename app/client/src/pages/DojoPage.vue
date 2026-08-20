@@ -100,10 +100,10 @@ import { dojoStore } from '../store/dojoStore.js';
 import { localStore } from '../store/localStore.js';
 import { DojoService } from '../services/dojo.service.js';
 import { errorHandler } from '../utils/errorHandler.js';
-import type { DinozDojoFiche } from '@dinorpg/core/models/dinoz/DinozFiche.js';
 import { TournamentPhase } from '@dinorpg/core/models/dojo/tournament.js';
 import DojoTimer from '../components/dojo/DojoTimer.vue';
 import { formatDateTime } from '../utils/formatDate.js';
+import type { DinozDojoFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 
 export default defineComponent({
 	name: 'DojoHome',

@@ -146,7 +146,7 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
 import DZTable from '../utils/DZTable.vue';
-import type { FullFightStats } from '@dinorpg/core/models/fight/FightResult.js';
+import type { FullFightStats } from '@dinorpg/core/models/fight/fightResult.js';
 
 export default defineComponent({
 	name: 'FightRecap',
