@@ -5,6 +5,7 @@ import { getClanScoreRanking } from '../Controller/getClanScoreRanking.controlle
 import { getClanTreasureRanking } from '../Controller/getClanTreasureRanking.controller.js';
 import { getClassicRanking } from '../Controller/getClassicRanking.controller.js';
 import { getCompletionRanking } from '../Controller/getCompletionRanking.controller.js';
+import { getDojoRanking } from '../Controller/getDojoRanking.controller.js';
 import { RankingListParams } from '../Schema/ranking.schema.js';
 
 export async function getRanking(params: RankingListParams) {
@@ -28,6 +29,9 @@ export async function getRanking(params: RankingListParams) {
 			break;
 		case 'clanTreasure':
 			ranking = await getClanTreasureRanking(pageNum);
+			break;
+		case 'dojo':
+			ranking = await getDojoRanking(pageNum);
 			break;
 		default:
 			ranking = await getClassicRanking(pageNum);
