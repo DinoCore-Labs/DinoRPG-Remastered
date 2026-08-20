@@ -505,7 +505,10 @@ export async function getAvailableActions(
 
 	const currentPlaceDef = placeListv2[dinoz.placeId as PlaceEnum];
 	if (currentPlaceDef?.map === MapZone.DINOLAND) {
-		const isDojoUnlocked = checkCondition({ type: 'scenario', key: 'dojo', phase: 1, compare: 'eq' }, currentContext);
+		const isDojoUnlocked = checkCondition(
+			{ type: 'scenario', key: 'dojo', progression: 1, compare: 'eq' },
+			currentContext
+		);
 		if (isDojoUnlocked) {
 			pushUniqueAction(availableActions, actionList[Action.BUILD_DOJO]);
 		}

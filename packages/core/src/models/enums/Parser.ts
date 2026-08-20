@@ -12,6 +12,21 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
+export enum RewardEnum {
+	STATUS = 'status',
+	CHANGE_ELEMENT = 'changeelem',
+	MAXEXPERIENCE = 'maxExp',
+	SKILL = 'skill',
+	EXPERIENCE = 'xp',
+	GOLD = 'gold',
+	ITEM = 'item',
+	MAX_ITEM = 'max_item',
+	EPIC = 'epic',
+	SCENARIO = 'scenario',
+	TELEPORT = 'teleport',
+	REDIRECT = 'redirect'
+}
+
 export enum Operator {
 	AND = 'AND',
 	OR = 'OR',
