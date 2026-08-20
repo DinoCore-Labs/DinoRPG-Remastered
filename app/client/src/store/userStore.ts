@@ -19,6 +19,7 @@ export const userStore = defineStore('userStore', {
 		rewards: [],
 		discoveredSkills: [],
 		clanId: null,
+		dojoId: null,
 		gameRules: null
 	}),
 	getters: {
@@ -58,6 +59,7 @@ export const userStore = defineStore('userStore', {
 			this.rewards = data.rewards ?? [];
 			this.discoveredSkills = data.discoveredSkills ?? [];
 			this.clanId = data.clanId ?? null;
+			this.dojoId = data.dojoId ?? null;
 			this.gameRules = data.gameRules;
 		},
 		setGold(gold: number) {
@@ -80,6 +82,9 @@ export const userStore = defineStore('userStore', {
 		},
 		setClanId(clanId: number | null) {
 			this.clanId = clanId;
+		},
+		setDojoId(dojoId: string | null) {
+			this.dojoId = dojoId;
 		},
 		addReward(rewardId: number) {
 			if (!this.rewards.includes(rewardId)) {
@@ -110,6 +115,7 @@ export const userStore = defineStore('userStore', {
 			this.rewards = [];
 			this.discoveredSkills = [];
 			this.clanId = null;
+			this.dojoId = null;
 			this.gameRules = null;
 		}
 	},
