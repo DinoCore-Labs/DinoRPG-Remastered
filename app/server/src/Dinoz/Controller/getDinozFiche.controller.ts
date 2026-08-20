@@ -16,6 +16,13 @@ export async function getDinozFicheRequest(dinozId: number, userId: string) {
 			leader: true,
 			messie: true,
 			rewards: { select: { rewardId: true } },
+			scenarios: {
+				select: {
+					scenarioKey: true,
+					progression: true,
+					tracking: true
+				}
+			},
 			ranking: { select: { dinozCount: true, points: true } },
 			scenarios: { select: { scenarioKey: true, progression: true, tracking: true, updatedAt: true } },
 			ingredients: { select: { ingredientId: true, quantity: true } },
