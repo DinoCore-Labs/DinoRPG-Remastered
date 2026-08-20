@@ -1,6 +1,9 @@
 import { MARKET_EXPIRATION_JOB_KEY } from '@dinorpg/core/models/market/constants.js';
+import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 
-import { OfferStatus } from '../../../../prisma/index.js';
+import { GameLogType, MoneyType, OfferStatus } from '../../../../prisma/index.js';
+import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
+import { newNotif } from '../../Notification/Service/notification.service.js';
 import { prisma } from '../../prisma.js';
 
 const BATCH_SIZE = 50;
@@ -74,6 +77,70 @@ export async function expireMarketOffer(offerId: number) {
 				dinozDetails: offer.dinoz ? JSON.stringify(offer.dinoz) : null
 			}
 		});
+
+		if (winnerBid?.userId && offer.sellerId) {
+			const sellerGold = winnerBid.value * 1000;
+			await tx.userWallet.update({
+				where: {
+					userId_type: {
+						userId: offer.sellerId,
+						type: MoneyType.GOLD
+					}
+				},
+				data: {
+					amount: { increment: sellerGold }
+				}
+			});
+
+			await safeCreateGameLog({
+				type: GameLogType.GoldWon,
+				userId: offer.sellerId,
+				dinozId: offer.dinoz?.id ?? null,
+				values: [String(sellerGold)],
+				metadata: {
+					source: 'market',
+					offerId: offer.id,
+					winnerId: winnerBid.userId,
+					bidValue: winnerBid.value,
+					amount: sellerGold,
+					wallet: MoneyType.GOLD
+				}
+			});
+
+			await safeCreateGameLog({
+				type: GameLogType.OfferWon,
+				userId: winnerBid.userId,
+				dinozId: offer.dinoz?.id ?? null,
+				values: [String(winnerBid.value)],
+				metadata: {
+					offerId: offer.id,
+					sellerId: offer.sellerId,
+					winnerId: winnerBid.userId,
+					value: winnerBid.value,
+					currency: MoneyType.TREASURE_TICKET,
+					dinozId: offer.dinoz?.id ?? null
+				}
+			});
+
+			await newNotif(offer.sellerId, NotificationType.MARKET_OFFER_SOLD, { price: sellerGold });
+			await newNotif(winnerBid.userId, NotificationType.MARKET_OFFER_WIN, { price: winnerBid.value });
+		} else {
+			await safeCreateGameLog({
+				type: GameLogType.OfferExpired,
+				userId: offer.sellerId,
+				dinozId: offer.dinoz?.id ?? null,
+				metadata: {
+					offerId: offer.id,
+					sellerId: offer.sellerId,
+					dinozId: offer.dinoz?.id ?? null,
+					reason: 'no_bid'
+				}
+			});
+
+			if (offer.sellerId) {
+				await newNotif(offer.sellerId, NotificationType.MARKET_OFFER_UNSOLD);
+			}
+		}
 		return true;
 	});
 }
