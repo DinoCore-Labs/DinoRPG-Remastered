@@ -1565,6 +1565,23 @@ export const placeListv2 = definePlaces({
 		name: 'nowhere',
 		map: MapZone.ALL,
 		moves: []
+	},
+
+	// DOJO
+
+	[PlaceEnum.DOJO]: {
+		placeId: PlaceEnum.DOJO,
+		name: 'dojo',
+		background: 'dojo_arene',
+		map: MapZone.ALL,
+		moves: []
+	},
+	[PlaceEnum.DOJO_WINNER]: {
+		placeId: PlaceEnum.DOJO_WINNER,
+		name: 'dojo_win',
+		background: 'dojo_champion',
+		map: MapZone.ALL,
+		moves: []
 	}
 } satisfies Partial<Record<PlaceEnum, PlaceDefinitionInput>>);
 

@@ -155,7 +155,7 @@ export enum PlaceEnum {
 	CEXTRA = 140,
 	CPYRA1 = 141,
 	CPYRA2 = 142,
-	//DOJO = 996,
-	//DOJO_WINNER = 997,
+	DOJO = 996,
+	DOJO_WINNER = 997,
 	NOWHERE = 999
 }
