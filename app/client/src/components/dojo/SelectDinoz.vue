@@ -29,7 +29,7 @@ import { userStore } from '../../store/userStore.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import DZButton from '../utils/DZButton.vue';
 import DinozMini from '../dinoz/DinozMini.vue';
-import type { DinozDojoFiche } from '@dinorpg/core/models/dinoz/DinozFiche.js';
+import type { DinozDojoFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 
 export default defineComponent({
 	name: 'SelectDinoz',

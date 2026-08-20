@@ -68,7 +68,6 @@
 				@validate="selectMyFighter"
 			></CarousselDinoz>
 		</template>
-
 		<template v-if="fightTransformed && fightStat">
 			<div id="fightContent">
 				<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
@@ -92,25 +91,24 @@ import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
 import { DojoService } from '../../services/dojo.service.js';
 import { errorHandler } from '../../utils/errorHandler.js';
-import { type Challenge, ChallengeType, parseChallenge } from '@dinorpg/core/models/dojo/challenge.js';
-import type { DinozDojoFiche } from '@dinorpg/core/models/dinoz/DinozFiche.js';
 import { dojoStore } from '../../store/dojoStore.js';
 import { userStore } from '../../store/userStore.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import SelectDinoz from './SelectDinoz.vue';
 import DZDisclaimer from '../utils/DZDisclaimer.vue';
-import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
-import type { DojoOpponents, DojoTeam } from '@dinorpg/core/models/dojo/dojoChallenge.js';
 import CarousselDinoz from './CarousselDinoz.vue';
 import DinozWithoutFlash from '../dinoz/DinozAnimation.vue';
 import FightRecap from './FightRecap.vue';
-import type { preFightLoader } from '@dinorpg/core/models/fight/transpiler.js';
-import type { FightStep } from '@dinorpg/core/models/fight/FightStep.js';
-import type { FighterRecap, FullFightStats } from '@dinorpg/core/models/fight/FightResult.js';
-import { DOJO_MAX_SERIES, DOJO_FIGHT_COST } from '@dinorpg/core/models/dojo/constants.js';
 import { resolveFightingPlace, transpileFight } from '../../fight/transpileFight.js';
 import DZButton from '../utils/DZButton.vue';
 import FightersHeader from '../fight/FightHeader.vue';
+import type { DojoOpponents, DojoTeam } from '@dinorpg/core/models/dojo/dojoChallenge.js';
+import type { DinozDojoFiche, DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { ChallengeType, parseChallenge, type Challenge } from '@dinorpg/core/models/dojo/challenge.js';
+import type { preFightLoader } from '@dinorpg/core/models/fight/transpiler.js';
+import type { FighterRecap, FullFightStats } from '@dinorpg/core/models/fight/fightResult.js';
+import { DOJO_FIGHT_COST, DOJO_MAX_SERIES } from '@dinorpg/core/models/dojo/constants.js';
+import type { FightStep } from '@dinorpg/core/models/fight/fightStep.js';
 import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 
 export default defineComponent({
@@ -135,7 +133,6 @@ export default defineComponent({
 			})[],
 			composeTeam: false as boolean,
 			myDinoz: [] as DinozDojoFiche[],
-
 			opponent: {} as Pick<DinozFiche, 'id' | 'name' | 'level' | 'display'>,
 			myFighter: {} as Pick<DinozFiche, 'id' | 'name' | 'level' | 'display'>,
 			fightTransformed: undefined as undefined | preFightLoader,
@@ -155,7 +152,6 @@ export default defineComponent({
 	methods: {
 		async composeMyTeam(data: number[]) {
 			const myTeam = data;
-
 			try {
 				const dojo = await DojoService.createMyTeam(myTeam);
 				this.myTeam = dojo.team.sort((a, b) => b.dinoz.level - a.dinoz.level);
@@ -192,7 +188,6 @@ export default defineComponent({
 		},
 		async launchChallenge() {
 			if (!this.myFighter.id || !this.opponent.id) return;
-
 			try {
 				const rawFight = await DojoService.fightChallenge(this.myFighter.id, this.opponent.id);
 				const fightResult = rawFight.fight;
@@ -202,7 +197,6 @@ export default defineComponent({
 				const fightSteps = fightResult.history as FightStep[];
 				const fighters = fightResult.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
-
 				const nextFight = transpileFight(
 					structuredClone(toRaw(fighters)),
 					fightSteps,
@@ -226,7 +220,6 @@ export default defineComponent({
 				// if (this.userStore.getPlayerOptions.skipFight) {
 				// 	this.fightAnimationEnded = true;
 				// }
-
 				await this.$refreshGold();
 				dojoStore().incrementCashPrice(DOJO_FIGHT_COST);
 			} catch (e) {
@@ -264,7 +257,6 @@ export default defineComponent({
 		formattedGoal() {
 			if (!this.activeChallenge) return 0;
 			const goal = this.calculateMissedGoal(this.activeChallenge);
-
 			// For percentage based challenges, show up to 2 digits after the comma.
 			if (
 				this.activeChallenge.type === ChallengeType.TakePercentDamage ||
