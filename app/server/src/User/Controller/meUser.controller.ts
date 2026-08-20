@@ -99,6 +99,11 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				name: true,
 				role: true,
 				clanId: true,
+				dojo: {
+					select: {
+						id: true
+					}
+				},
 				priest: true,
 				shopKeeper: true,
 				leader: true,
@@ -177,6 +182,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			name: user.name,
 			role: user.role,
 			clanId: user.clanId,
+			dojoId: user.dojo?.id ?? null,
 			gold,
 			treasureTicket,
 			maxDinoz,
