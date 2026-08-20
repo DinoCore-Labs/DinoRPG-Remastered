@@ -955,11 +955,9 @@ model ClanPage {
   @@index([clanId])
 }
 
-<<<<<<< HEAD
 enum DinozConcentrationState {
   GATHERING
   OPEN
-=======
 model Dojo {
   id                   String                 @id @default(uuid()) @db.Uuid
   userId               String                 @unique @db.Uuid
@@ -1095,7 +1093,6 @@ model TournamentTeam {
   @@unique([dojoId, tournamentId])
   @@index([dojoId])
   @@index([tournamentId, poolNumber])
->>>>>>> 3a007901 (feat(dojo): add dojo and notification schema)
 }
 
 enum DinozState {
