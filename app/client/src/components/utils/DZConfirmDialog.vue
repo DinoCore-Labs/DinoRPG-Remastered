@@ -26,7 +26,7 @@
 
 			<section class="simple-confirm-dialog-content">
 				<i v-if="icon" :class="icon" class="simple-confirm-dialog-icon"></i>
-				<p class="simple-confirm-dialog-message">{{ message }}</p>
+				<div class="simple-confirm-dialog-message" v-html="message"></div>
 			</section>
 
 			<footer class="simple-confirm-dialog-footer">
