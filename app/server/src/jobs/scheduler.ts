@@ -1,6 +1,29 @@
 import { logSchedulerError, logSchedulerSuccess } from '../logger/Helpers/logScheduler.js';
 import { prisma } from '../prisma.js';
-import { nextDailyAtUtc } from './helpers/time.js';
+import {
+	TOURNAMENT_FINALS_R0_JOB_KEY,
+	TOURNAMENT_FINALS_R1_JOB_KEY,
+	TOURNAMENT_FINALS_R2_JOB_KEY,
+	TOURNAMENT_FINALS_R3_JOB_KEY,
+	TOURNAMENT_FINALS_R4_JOB_KEY,
+	TOURNAMENT_INIT_JOB_KEY,
+	TOURNAMENT_POOLS_R1_JOB_KEY,
+	TOURNAMENT_POOLS_R2_JOB_KEY,
+	TOURNAMENT_POOLS_START_JOB_KEY
+} from '../utils/tournamentManager.js';
+import { nextDailyAtUtc, nextWeeklyAtUtc } from './helpers/time.js';
+
+const WEEKLY_JOB_DAYS: Record<string, number> = {
+	[TOURNAMENT_INIT_JOB_KEY]: 0,
+	[TOURNAMENT_POOLS_START_JOB_KEY]: 0,
+	[TOURNAMENT_POOLS_R1_JOB_KEY]: 1,
+	[TOURNAMENT_POOLS_R2_JOB_KEY]: 1,
+	[TOURNAMENT_FINALS_R0_JOB_KEY]: 3,
+	[TOURNAMENT_FINALS_R1_JOB_KEY]: 4,
+	[TOURNAMENT_FINALS_R2_JOB_KEY]: 5,
+	[TOURNAMENT_FINALS_R3_JOB_KEY]: 6,
+	[TOURNAMENT_FINALS_R4_JOB_KEY]: 0
+};
 
 const INSTANCE_ID = process.env.INSTANCE_ID ?? `local-${process.pid}`;
 
@@ -9,6 +32,7 @@ type JobHandler = () => Promise<JobHandlerResult>;
 
 function resolveNextRun(
 	job: {
+		key: string;
 		type: 'DAILY_AT' | 'INTERVAL';
 		dailyHour: number | null;
 		dailyMinute: number | null;
@@ -23,12 +47,17 @@ function resolveNextRun(
 }
 
 function computeNextRun(job: {
+	key: string;
 	type: 'DAILY_AT' | 'INTERVAL';
 	dailyHour: number | null;
 	dailyMinute: number | null;
 	intervalMs: number | null;
 }) {
 	if (job.type === 'DAILY_AT') {
+		const weeklyDay = WEEKLY_JOB_DAYS[job.key];
+		if (weeklyDay !== undefined) {
+			return nextWeeklyAtUtc(weeklyDay, job.dailyHour ?? 0, job.dailyMinute ?? 0);
+		}
 		return nextDailyAtUtc(job.dailyHour ?? 0, job.dailyMinute ?? 0);
 	}
 	if (job.type === 'INTERVAL') {

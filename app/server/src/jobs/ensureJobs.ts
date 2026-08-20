@@ -7,7 +7,18 @@ import { MARKET_EXPIRATION_INTERVAL_MS, MARKET_EXPIRATION_JOB_KEY } from '@dinor
 
 import { getNextMarketOfferExpirationDate } from '../Market/Service/expireMarketOffers.service.js';
 import { prisma } from '../prisma.js';
-import { nextDailyAtUtc } from './helpers/time.js';
+import {
+	TOURNAMENT_FINALS_R0_JOB_KEY,
+	TOURNAMENT_FINALS_R1_JOB_KEY,
+	TOURNAMENT_FINALS_R2_JOB_KEY,
+	TOURNAMENT_FINALS_R3_JOB_KEY,
+	TOURNAMENT_FINALS_R4_JOB_KEY,
+	TOURNAMENT_INIT_JOB_KEY,
+	TOURNAMENT_POOLS_R1_JOB_KEY,
+	TOURNAMENT_POOLS_R2_JOB_KEY,
+	TOURNAMENT_POOLS_START_JOB_KEY
+} from '../utils/tournamentManager.js';
+import { nextDailyAtUtc, nextWeeklyAtUtc } from './helpers/time.js';
 
 export async function ensureJobsExist() {
 	// Dinoz shop
@@ -133,4 +144,60 @@ export async function ensureJobsExist() {
 			enabled: true
 		}
 	});
+	//TID
+	await prisma.jobDefinition.upsert({
+		where: { key: 'reset-dojo-challenge' },
+		create: {
+			key: 'reset-dojo-challenge',
+			name: 'Reset Dojo Challenge',
+			type: 'DAILY_AT',
+			timezone: 'UTC',
+			dailyHour: 0,
+			dailyMinute: 0,
+			nextRunAt: nextDailyAtUtc(0, 0),
+			enabled: true
+		},
+		update: {}
+	});
+
+	const tournamentJobs = [
+		{ key: TOURNAMENT_INIT_JOB_KEY, name: 'Tournament — init qualifications', dayOfWeek: 0, hour: 0, minute: 0 },
+		{
+			key: TOURNAMENT_POOLS_START_JOB_KEY,
+			name: 'Tournament — pools start + round 0',
+			dayOfWeek: 0,
+			hour: 0,
+			minute: 0
+		},
+		{ key: TOURNAMENT_POOLS_R1_JOB_KEY, name: 'Tournament — pool round 1', dayOfWeek: 1, hour: 12, minute: 0 },
+		{
+			key: TOURNAMENT_POOLS_R2_JOB_KEY,
+			name: 'Tournament — pool round 2 + bracket',
+			dayOfWeek: 1,
+			hour: 22,
+			minute: 0
+		},
+		{ key: TOURNAMENT_FINALS_R0_JOB_KEY, name: 'Tournament — finals 1/16', dayOfWeek: 3, hour: 12, minute: 0 },
+		{ key: TOURNAMENT_FINALS_R1_JOB_KEY, name: 'Tournament — finals 1/8', dayOfWeek: 4, hour: 12, minute: 0 },
+		{ key: TOURNAMENT_FINALS_R2_JOB_KEY, name: 'Tournament — finals QF', dayOfWeek: 5, hour: 12, minute: 0 },
+		{ key: TOURNAMENT_FINALS_R3_JOB_KEY, name: 'Tournament — finals SF', dayOfWeek: 6, hour: 12, minute: 0 },
+		{ key: TOURNAMENT_FINALS_R4_JOB_KEY, name: 'Tournament — finals Final', dayOfWeek: 0, hour: 12, minute: 0 }
+	];
+	for (const job of tournamentJobs) {
+		await prisma.jobDefinition.upsert({
+			where: { key: job.key },
+			create: {
+				key: job.key,
+				name: job.name,
+				type: 'DAILY_AT',
+				timezone: 'UTC',
+				dailyHour: job.hour,
+				dailyMinute: job.minute,
+				nextRunAt: nextWeeklyAtUtc(job.dayOfWeek, job.hour, job.minute),
+				lockTimeoutS: 300,
+				enabled: true
+			},
+			update: {}
+		});
+	}
 }
