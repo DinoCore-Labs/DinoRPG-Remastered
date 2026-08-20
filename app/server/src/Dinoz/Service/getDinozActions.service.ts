@@ -1,9 +1,11 @@
 import { defaultConditionKeyMaps } from '@dinorpg/core/models/conditions/defaultConditionKeyMaps.js';
 import { Action, ActionFiche, actionList } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
+import { MapZone } from '@dinorpg/core/models/enums/MapZone.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
 import { MissionGoal } from '@dinorpg/core/models/missions/missionGoal.js';
+import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import {
@@ -501,5 +503,12 @@ export async function getAvailableActions(
 		}
 	}
 
+	const currentPlaceDef = placeListv2[dinoz.placeId as PlaceEnum];
+	if (currentPlaceDef?.map === MapZone.DINOLAND) {
+		const isDojoUnlocked = checkCondition({ type: 'scenario', key: 'dojo', phase: 1, compare: 'eq' }, currentContext);
+		if (isDojoUnlocked) {
+			pushUniqueAction(availableActions, actionList[Action.BUILD_DOJO]);
+		}
+	}
 	return availableActions;
 }
