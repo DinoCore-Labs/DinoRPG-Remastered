@@ -13,5 +13,6 @@ export interface UserData {
 	rewards: number[];
 	discoveredSkills: number[];
 	clanId: number | null;
+	dojoId: string | null;
 	gameRules: GameRulesAcceptance;
 }
