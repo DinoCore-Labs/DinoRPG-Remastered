@@ -31,14 +31,12 @@
 			<RouterLink :to="`/clans`" class="link" :title="$t('button.clan')" v-if="!user.clanId">
 				<img :src="getImgURL('act', 'act_castle')" alt="clan" />
 			</RouterLink>
-			<span class="link linkDisabled" :title="$t('button.unavailable')" aria-disabled="true">
+			<span class="link linkDisabled" :title="$t('button.unavailable')" aria-disabled="true" v-if="!user.dojoId">
 				<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 			</span>
-			<!--
-			<RouterLink class="link" :to="`/dojo`">
+			<RouterLink :to="`/dojo`" class="link" :title="$t('button.dojo')" v-if="user.dojoId">
 				<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 			</RouterLink>
-			-->
 		</div>
 		<div class="place" v-if="place" @click="goToDinozPage()">
 			<div class="img-wrapper">
