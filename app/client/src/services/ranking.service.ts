@@ -1,5 +1,6 @@
 import type {
 	ClanRankingEntry,
+	DojoRankingEntry,
 	RankingEntry,
 	RankingPositionResponse
 } from '@dinorpg/core/models/ranking/rankingEntry.js';
@@ -15,5 +16,8 @@ export const RankingService = {
 	},
 	getPositionRanking(userId: string): Promise<RankingPositionResponse> {
 		return api.get<RankingPositionResponse>(`/ranking/position/${encodeURIComponent(userId)}`);
+	},
+	getDojoRanking(sort: string, page: number): Promise<DojoRankingEntry[]> {
+		return api.get<DojoRankingEntry[]>(`/ranking/list/${sort}/${page}`);
 	}
 };
