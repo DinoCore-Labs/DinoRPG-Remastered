@@ -21,6 +21,7 @@ import ClanList from '../pages/Clan/ClanList.vue';
 import createClan from '../pages/Clan/CreateClan.vue';
 import DialogPage from '../pages/DialogPage.vue';
 import DinozPage from '../pages/DinozPage.vue';
+import DojoPage from '../pages/DojoPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
 import FightPage from '../pages/FightPage.vue';
 import ForcebrutPage from '../pages/ForcebrutPage.vue';
@@ -377,6 +378,56 @@ const routes: RouteRecord[] = [
 				name: 'clansList',
 				component: ClanList,
 				meta: { auth: true }
+			},
+			{
+				path: '/dojo',
+				name: 'DojoPage',
+				component: DojoPage,
+				meta: { auth: true },
+				children: [
+					{
+						path: '/dojo/tournament/:id/:group',
+						name: 'DojoTournament',
+						component: () => import('../components/dojo/DojoTournament.vue')
+					},
+					{
+						path: '/dojo/tournament/info',
+						name: 'TournamentInfo',
+						component: () => import('../components/dojo/TournamentInfo.vue')
+					},
+					{
+						path: 'test',
+						name: 'DojoTest',
+						component: () => import('../components/dojo/DojoTest.vue'),
+						meta: { auth: true }
+					},
+					{
+						path: '/dojo/share/:archive',
+						name: 'ShareFight',
+						component: () => import('../components/dojo/ShareFight.vue')
+					},
+					{
+						path: 'history',
+						name: 'DojoHistory',
+						component: () => import('../components/dojo/DojoHistory.vue'),
+						meta: { auth: true }
+					},
+					{
+						path: '/dojo/challenge',
+						name: 'DojoChallenge',
+						component: () => import('../components/dojo/DojoChallenge.vue')
+					},
+					{
+						path: '/dojo/ranking',
+						name: 'DojoRanking',
+						component: () => import('../components/dojo/DojoRanking.vue')
+					},
+					{
+						path: '/dojo/tournaments',
+						name: 'TournamentHistory',
+						component: () => import('../components/dojo/TournamentHistory.vue')
+					}
+				]
 			},
 			{
 				path: '/faq',
