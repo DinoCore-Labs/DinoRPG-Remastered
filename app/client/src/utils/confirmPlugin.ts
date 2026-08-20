@@ -14,6 +14,7 @@
 import { type App, createVNode, reactive, render } from 'vue';
 
 import DZConfirmDialog from '../components/utils/DZConfirmDialog.vue';
+import { formatText } from './formatText';
 
 export interface ConfirmOptions {
 	message: string;
@@ -42,11 +43,11 @@ const confirmationState: ConfirmationState = reactive({
 
 export const confirm = (options: ConfirmOptions): Promise<boolean> => {
 	return new Promise((resolve: (value: boolean) => void, reject: (reason: boolean) => void) => {
-		confirmationState.message = options.message;
-		confirmationState.header = options.header ?? 'Confirmation';
+		confirmationState.message = formatText(options.message);
+		confirmationState.header = formatText(options.header ?? 'Confirmation');
 		confirmationState.icon = options.icon ?? 'pi pi-exclamation-triangle';
-		confirmationState.acceptLabel = options.acceptLabel ?? 'Oui';
-		confirmationState.rejectLabel = options.rejectLabel ?? 'Non';
+		confirmationState.acceptLabel = formatText(options.acceptLabel ?? 'Oui');
+		confirmationState.rejectLabel = formatText(options.rejectLabel ?? 'Non');
 
 		confirmationState.acceptCallback = () => {
 			closeDialog();
