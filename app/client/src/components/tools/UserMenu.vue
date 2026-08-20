@@ -280,36 +280,22 @@
 					</label>
 				</div>
 			</div>
-			<!--</div>
 			<div class="notifications" v-if="notifications.length > 0">
 				<div class="section">
 					<span class="title">
-						<span>{{ $t('topBar.rightMenu.notifications') }}</span>
+						<span>{{ $t('notifications.title') }}</span>
 					</span>
-					<button @click="readAll()">{{ $t('topBar.rightMenu.readAll') }}</button>
 				</div>
 
-				<div
-					:class="{
-						notification: true,
-						warning: notification.severity === 'warning',
-						ban: notification.severity === 'ban'
-					}"
-					v-for="notification in notifications"
-					:key="notification.id"
-				>
+				<div class="notification" v-for="notification in notifications" :key="notification.id">
 					<div class="element">
-						<span v-html="formatContent(notification.message)" />
+						<span>{{ formatNotificationText(notification) }}</span>
 					</div>
 					<div class="element">
-						<RouterLink v-if="notification.link" @click="cleanNotif(notification.id)" class="go" :to="notification.link"
-							>Go</RouterLink
-						>
-						<a v-else @click="cleanNotif(notification.id)" class="go">OK</a>
+						<a @click="cleanNotif(notification.id)" class="go">{{ $t('notifications.ok') }}</a>
 					</div>
 				</div>
 			</div>
-			<PlayerOptions v-if="playerStore.getPlayerId" />-->
 		</div>
 	</Transition>
 </template>
@@ -324,6 +310,8 @@ import eventBus from '../../events/index.js';
 import { clearClientSession, startLogoutSession, stopLogoutSession } from '../../utils/clearSession.js';
 import { messagingStore } from '../../store/messagingStore.js';
 import { localStore } from '../../store/localStore.js';
+import { NotificationService } from '../../services/notification.service.js';
+import type { NotificationItem } from '../../services/notification.service.js';
 
 export default defineComponent({
 	name: 'UserMenu',
@@ -335,7 +323,8 @@ export default defineComponent({
 			uStore: userStore(),
 			dStore: dinozStore(),
 			mStore: messagingStore(),
-			localStore: localStore()
+			localStore: localStore(),
+			notifications: [] as NotificationItem[]
 		};
 	},
 	methods: {
@@ -416,46 +405,45 @@ export default defineComponent({
 		onBypassGatheringGridChange(event: Event): void {
 			const target = event.target as HTMLInputElement;
 			this.localStore.setBypassGatheringGrid(target.checked);
+		},
+		async fetchNotifications() {
+			try {
+				this.notifications = await NotificationService.getNotifications();
+			} catch (e) {
+				console.error(e);
+			}
+		},
+		async cleanNotif(id: string) {
+			try {
+				await NotificationService.deleteNotification(id);
+				this.notifications = this.notifications.filter(n => n.id !== id);
+			} catch (e) {
+				console.error(e);
+			}
+		},
+		formatNotificationText(notification: NotificationItem): string {
+			if (notification.type === 'newClanJoinRequest') {
+				return this.$t('notifications.newClanJoinRequest', { name: notification.content?.playerName || '' });
+			}
+			if (notification.type === 'newReward') {
+				const rewardsList = notification.content?.rewards || [];
+				const formattedRewards = rewardsList.map((r: any) => `${r.amount} ${r.type}`).join(' + ');
+				return this.$t('notifications.newReward', { rewards: formattedRewards });
+			}
+			if (notification.type === 'marketOfferWin') {
+				return this.$t('notifications.marketOfferWin', {
+					item: notification.content?.itemName || '',
+					price: notification.content?.price || 0
+				});
+			}
+			if (notification.type === 'marketOfferSold') {
+				return this.$t('notifications.marketOfferSold', { price: notification.content?.price || 0 });
+			}
+			if (notification.type === 'marketOfferUnsold') {
+				return this.$t('notifications.marketOfferUnsold');
+			}
+			return '';
 		}
-		/*async cleanNotif(id: string) {
-			try {
-				await NotificationService.readNotification(id);
-				const notifications = this.playerStore.getNotifications.filter(n => n.id !== id);
-				this.playerStore.setNotifications(notifications);
-				this.playerStore.setNotificationsCounter(this.notifications.length - 1);
-			} catch (e) {
-				errorHandler.handle(e, this.$toast);
-			}
-		},
-		formatDate(dateString: string) {
-			const date = new Date(dateString);
-			const lang = this.localStore.getLanguage ?? 'fr';
-
-			// Formatter pour la date (jour, mois, année)
-			const dateFormatter = new Intl.DateTimeFormat(lang, { day: '2-digit', month: 'short', year: 'numeric' });
-			const formattedDate = dateFormatter.format(date);
-
-			// Formatter pour l'heure (heure, minute, seconde)
-			const timeFormatter = new Intl.DateTimeFormat(lang, {
-				hour: '2-digit',
-				minute: '2-digit',
-				second: '2-digit',
-				hour12: false
-			});
-			const formattedTime = timeFormatter.format(date);
-
-			// Combinaison date + heure
-			return `${formattedDate}, ${formattedTime}`;
-		},
-		async readAll() {
-			try {
-				await NotificationService.readAllNotification();
-				this.playerStore.setNotifications([]);
-				this.playerStore.setNotificationsCounter(0);
-			} catch (e) {
-				errorHandler.handle(e, this.$toast);
-			}
-		},*/
 	},
 	beforeUnmount() {
 		this.mStore.stopUnreadPolling();
@@ -476,6 +464,11 @@ export default defineComponent({
 			deep: true,
 			handler() {
 				this.syncMessagingUnreadPolling();
+			}
+		},
+		menuCalled(val) {
+			if (val) {
+				this.fetchNotifications();
 			}
 		}
 	}
