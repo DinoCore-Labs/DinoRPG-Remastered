@@ -31,6 +31,7 @@ import { devourerRoutes } from './Devourer/Routes/devourer.routes.js';
 import { loadDialogs } from './Dialog/Controller/dialog.registry.js';
 import { dialogRoutes } from './Dialog/Routes/dialog.routes.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
+import { dojoRoutes } from './Dojo/Routes/dojo.routes.js';
 import { fightRoutes } from './Fight/Routes/fight.routes.js';
 import { forcebrutRoutes } from './Forcebrut/Routes/forcebrutTournament.routes.js';
 import { gatherRoutes } from './Gather/Routes/gather.routes.js';
@@ -44,6 +45,7 @@ import { healFountainPearlDinozJob } from './jobs/handlers/healFountainPearlDino
 import { itinerantMerchantMoveJob } from './jobs/handlers/itinerantMerchantMove.js';
 import { refreshBankExchangeRateJob } from './jobs/handlers/refreshBankExchangeRate.js';
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
+import { resetDojoChallenge } from './jobs/handlers/resetDojoChallenge.js';
 import { startScheduler } from './jobs/scheduler.js';
 import { levelRoutes } from './Level/Routes/level.routes.js';
 import { appDiscordClient } from './logger/appDiscordClient.js';
@@ -59,6 +61,7 @@ import { reportRoutes } from './Report/Routes/report.routes.js';
 import { shopRoutes } from './Shop/Routes/shop.routes.js';
 import { trainingCenterRoutes } from './TrainingCenter/Routes/trainingCenter.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
+import { TournamentManager } from './utils/tournamentManager.js';
 import version from './utils/version.js';
 import { versionRoutes } from './Version/Routes/version.routes.js';
 
@@ -357,6 +360,7 @@ async function buildServer() {
 	server.register(clanRoutes, { prefix: 'api/clan' });
 	server.register(devourerRoutes, { prefix: 'api/devourer' });
 	server.register(maintenanceRoutes, { prefix: 'api/maintenance' });
+	server.register(dojoRoutes, { prefix: 'api/dojo' });
 	server.register(versionRoutes, { prefix: 'api' });
 
 	//------------------------------------------------------
@@ -376,7 +380,11 @@ async function buildServer() {
 			},
 			[MARKET_EXPIRATION_JOB_KEY]: () => expireDueMarketOffersJob(server.log),
 			[GAME_LOG_MAINTENANCE_JOB_KEY]: () => gameLogMaintenanceJob(server.log),
-			[BANK_EXCHANGE_RATE_JOB_KEY]: () => refreshBankExchangeRateJob(server.log)
+			[BANK_EXCHANGE_RATE_JOB_KEY]: () => refreshBankExchangeRateJob(server.log),
+
+			'reset-dojo-challenge': () => resetDojoChallenge(),
+
+			...TournamentManager.HANDLERS
 		},
 		server.log
 	);
