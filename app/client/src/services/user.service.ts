@@ -72,5 +72,15 @@ export const UserService = {
 		return api.post<GameRulesAcceptance>('/users/me/rules/accept', {
 			version
 		});
+	},
+	deleteAccount(password: string): Promise<void> {
+		return api.delete<void>('/users/me/delete', {
+			data: { password }
+		});
+	},
+	resetAccount(password: string): Promise<void> {
+		return api.post<void>('/users/me/reset', {
+			password
+		});
 	}
 };

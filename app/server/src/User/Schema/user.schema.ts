@@ -90,3 +90,4 @@ export const changeUserPasswordSchema = z
 	});
 
 export type ChangeUserPasswordInput = z.infer<typeof changeUserPasswordSchema>;
+export const confirmActionSchema = z.object({ password: z.string() });
