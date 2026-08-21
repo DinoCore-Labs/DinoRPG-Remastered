@@ -61,11 +61,9 @@
 			<p v-if="bestBid">
 				<span>{{ $t('market.highestBid') }}:</span>
 				<span>
-					<span class="bid-value">{{ bestBid.value }}</span>
-					<img :src="getImgURL('icons', 'ticket')" />
-					<span>{{ $t('market.by') }} </span>
-					<DZUser v-if="bestBid.user" :user="bestBid.user" />
-					<span v-else>{{ bestBid.userName }}</span>
+					<span class="bid-value">{{ bestBid.value }}</span
+					><img :src="getImgURL('icons', 'ticket')" /><span>{{ $t('market.by') }}</span
+					>&nbsp;<DZUser v-if="bestBid.user" :user="bestBid.user" /><span v-else>{{ bestBid.userName }}</span>
 				</span>
 			</p>
 			<p v-else>

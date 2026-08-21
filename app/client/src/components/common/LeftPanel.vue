@@ -14,10 +14,8 @@
 <template>
 	<div id="accountList">
 		<div class="money">
-			<span class="moneyValue">
-				{{ beautifulNumber(displayedAmount) }}
-			</span>
-			<img :src="walletIcon" :alt="selectedWallet" />
+			<span class="moneyValue">{{ beautifulNumber(displayedAmount) }}</span>
+			<img class="wallet-icon" :src="walletIcon" :alt="selectedWallet" />
 		</div>
 		<DZSelect id="wallet-select" class="moneySelect" v-model="selectedWallet" :options="walletOptions" />
 		<div class="iconMenu">
@@ -294,6 +292,7 @@ export default defineComponent({
 		font-weight: bold;
 		img {
 			vertical-align: -5%;
+			margin-left: 4px;
 		}
 	}
 	.moneySelect {
