@@ -92,29 +92,19 @@
 				{{ $t(`accountPage.options.title`) }}
 				<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 			</h3>
-			<dl>
-				<DZButton @click="openPasswordModal">{{ $t(`accountPage.options.mdp`) }}</DZButton>
-				<dd></dd>
-				<dt>
-					{{ $t(`accountPage.options.todo`) }}
-				</dt>
-				<dd></dd>
-				<dt>
-					{{ $t(`accountPage.options.todo`) }}
-				</dt>
-				<dd></dd>
-				<dt>
-					{{ $t(`accountPage.options.todo`) }}
-				</dt>
-				<dd></dd>
-				<dt>
-					{{ $t(`accountPage.options.todo`) }}
-				</dt>
-				<dd></dd>
-			</dl>
 			<div class="buttonLand" v-if="isMyAccount()">
-				<!--<DZButton href="" @click="resetAccount()">{{ $t(`myAccount.options.reset`) }}</DZButton>-->
-				<DZButton class="bSmall" back @click="option = false">{{ $t(`accountPage.options.retour`) }}</DZButton>
+				<DZButton class="no-first-letter btn-wide" @click="openPasswordModal">{{
+					$t(`accountPage.options.mdp`)
+				}}</DZButton>
+				<DZButton class="no-first-letter btn-wide" @click="openResetModal">{{
+					$t(`accountPage.options.reset`)
+				}}</DZButton>
+				<DZButton class="no-first-letter btn-wide" @click="openDeleteModal">{{
+					$t(`accountPage.options.delete`)
+				}}</DZButton>
+				<DZButton class="bSmall no-first-letter" back @click="option = false">{{
+					$t(`accountPage.options.retour`)
+				}}</DZButton>
 			</div>
 		</div>
 	</transition>
@@ -125,6 +115,16 @@
 		:with-old-password="true"
 		@close="closePasswordModal"
 		@submit="submitPasswordChange"
+	/>
+	<ConfirmActionModal
+		v-if="confirmActionModalOpen"
+		:title="confirmActionConfig.title"
+		:description="confirmActionConfig.description"
+		:actionType="confirmActionConfig.actionType"
+		:loading="confirmActionLoading"
+		:error="confirmActionError"
+		@close="closeConfirmActionModal"
+		@submit="submitConfirmAction"
 	/>
 </template>
 
@@ -159,13 +159,22 @@ export default defineComponent({
 			//dinozStore: dinozStore()
 			passwordModalOpen: false,
 			passwordLoading: false,
-			passwordError: null as string | null
+			passwordError: null as string | null,
+			confirmActionModalOpen: false,
+			confirmActionLoading: false,
+			confirmActionError: null as string | null,
+			confirmActionConfig: {
+				title: '',
+				description: '',
+				actionType: 'delete' as 'delete' | 'reset'
+			}
 		};
 	},
 	components: {
 		DZUser: defineAsyncComponent(() => import('../utils/DZUser.vue')),
 		DZButton,
-		ChangePasswordModal
+		ChangePasswordModal,
+		ConfirmActionModal: defineAsyncComponent(() => import('../modal/ConfirmActionModal.vue'))
 	},
 	props: {
 		profile: {
@@ -223,6 +232,59 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 			} finally {
 				this.passwordLoading = false;
+			}
+		},
+		openResetModal() {
+			this.confirmActionConfig = {
+				title: this.$t('accountPage.options.resetTitle'),
+				description: this.$t('accountPage.options.resetDescription'),
+				actionType: 'reset'
+			};
+			this.confirmActionError = null;
+			this.confirmActionModalOpen = true;
+		},
+		openDeleteModal() {
+			this.confirmActionConfig = {
+				title: this.$t('accountPage.options.deleteTitle'),
+				description: this.$t('accountPage.options.deleteDescription'),
+				actionType: 'delete'
+			};
+			this.confirmActionError = null;
+			this.confirmActionModalOpen = true;
+		},
+		closeConfirmActionModal() {
+			if (this.confirmActionLoading) return;
+			this.confirmActionError = null;
+			this.confirmActionModalOpen = false;
+		},
+		async submitConfirmAction(payload: { password: string }) {
+			this.confirmActionError = null;
+			this.confirmActionLoading = true;
+			try {
+				if (this.confirmActionConfig.actionType === 'delete') {
+					await UserService.deleteAccount(payload.password);
+				} else {
+					await UserService.resetAccount(payload.password);
+				}
+				this.confirmActionModalOpen = false;
+
+				// Clear the user store to trigger a logout state
+				this.uStore.clearUser();
+				// Redirect to home
+				window.location.href = '/';
+			} catch (err: any) {
+				const errMsg = err?.response?.data?.message || err?.message;
+				if (errMsg === 'userInClan') {
+					this.confirmActionError =
+						"Vous ne pouvez pas faire ça car vous êtes dans un clan. Veuillez d'abord le quitter.";
+				} else if (errMsg === 'invalidConfirmation') {
+					this.confirmActionError = 'Mot de passe incorrect.';
+				} else {
+					errorHandler.handle(err, this.$toast);
+					this.confirmActionError = 'Une erreur est survenue.';
+				}
+			} finally {
+				this.confirmActionLoading = false;
 			}
 		},
 		startProfileTextEdit() {
@@ -407,8 +469,22 @@ export default defineComponent({
 	margin-bottom: auto;
 	align-items: center;
 	margin-bottom: 5px;
-	* {
+	> * {
 		margin-bottom: 5px;
+	}
+}
+.btn-wide {
+	width: auto !important;
+	min-width: 145px;
+	padding: 0 15px;
+	background-size: 100% 100% !important;
+}
+.no-first-letter {
+	&::first-letter {
+		color: inherit !important;
+	}
+	:deep(span::first-letter) {
+		color: inherit !important;
 	}
 }
 .tinybutton {

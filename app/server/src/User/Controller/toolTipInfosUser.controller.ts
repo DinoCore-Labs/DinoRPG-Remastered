@@ -9,7 +9,7 @@ export async function userToolTip(req: FastifyRequest) {
 	const user = await getToolTipInfos(id);
 
 	if (!user) {
-		throw new ExpectedError(`Missing user.`);
+		throw new ExpectedError('userNotFound');
 	}
 
 	return user;

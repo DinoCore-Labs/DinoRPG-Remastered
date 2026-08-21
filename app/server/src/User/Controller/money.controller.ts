@@ -31,17 +31,22 @@ export async function addMoney(userId: string, money: number) {
 }
 
 export async function addTreasureTicket(userId: string, money: number) {
-	return prisma.userWallet.update({
+	return prisma.userWallet.upsert({
 		where: {
 			userId_type: {
 				userId,
 				type: MoneyType.TREASURE_TICKET
 			}
 		},
-		data: {
+		update: {
 			amount: {
 				increment: money
 			}
+		},
+		create: {
+			userId,
+			type: MoneyType.TREASURE_TICKET,
+			amount: money
 		}
 	});
 }

@@ -3,9 +3,11 @@ import { FastifyInstance } from 'fastify';
 import { acceptGameRules } from '../Controller/acceptGameRules.controller.js';
 import { checkNameUser } from '../Controller/checkNameUser.controller.js';
 import { createUser } from '../Controller/createUser.controller.js';
+import { deleteUser } from '../Controller/deleteUser.controller.js';
 import { loginUser } from '../Controller/loginUser.controller.js';
 import { logoutUser } from '../Controller/logoutUser.controller.js';
 import { meUser } from '../Controller/meUser.controller.js';
+import { resetUser } from '../Controller/resetUser.controller.js';
 import { searchUsersByName } from '../Controller/searchUsersByName.controller.js';
 import { userToolTip } from '../Controller/toolTipInfosUser.controller.js';
 import {
@@ -17,6 +19,7 @@ import {
 import {
 	acceptGameRulesSchema,
 	changeUserPasswordSchema,
+	confirmActionSchema,
 	createUserResponseSchema,
 	createUserSchema,
 	loginResponseSchema,
@@ -73,6 +76,30 @@ export async function userRoutes(app: FastifyInstance) {
 			}
 		},
 		changeUserPassword
+	);
+
+	app.delete(
+		'/me/delete',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				tags: ['Users'],
+				body: confirmActionSchema
+			}
+		},
+		deleteUser
+	);
+
+	app.post(
+		'/me/reset',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				tags: ['Users'],
+				body: confirmActionSchema
+			}
+		},
+		resetUser
 	);
 	// Check name of account creation
 	app.get(
