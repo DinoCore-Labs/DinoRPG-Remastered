@@ -49,12 +49,24 @@ export async function resetUser(req: FastifyRequest<{ Body: { password: string }
 		await tx.userDinozShop.deleteMany({ where: { userId } });
 		await tx.clanJoinRequest.deleteMany({ where: { userId } });
 		await tx.devourerControl.deleteMany({ where: { userId } });
+		await tx.bankSaving.deleteMany({ where: { userId } });
 
-		// 3. Réinitialiser les compteurs du User
+		// 3. Réinitialiser les compteurs et compétences uniques du User
 		await tx.user.update({
 			where: { id: userId },
 			data: {
-				devourerAttacksLeft: 3
+				devourerAttacksLeft: 3,
+				leader: false,
+				engineer: false,
+				cooker: false,
+				shopKeeper: false,
+				merchant: false,
+				priest: false,
+				teacher: false,
+				matelasseur: false,
+				messie: false,
+				discoveredSkills: [],
+				keepSeedReincarnationCount: 0
 			}
 		});
 		await tx.ranking.update({
