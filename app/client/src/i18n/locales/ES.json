@@ -581,6 +581,14 @@
 				"passwordMismatch": "Les nouveaux mots de passe ne correspondent pas."
 			}
 		},
+		"confirmAction": {
+			"label": "Veuillez entrer votre mot de passe pour confirmer :",
+			"passwordPlaceholder": "Mot de passe",
+			"loading": "Cargando...",
+			"confirm": "Confirmer",
+			"cancel": "Cancelar",
+			"passwordRequired": "Veuillez entrer votre mot de passe pour confirmer."
+		},
 		"modif": "Modificar...",
 		"valid": "Aceptar",
 		"close": "Cerrar",
@@ -681,7 +689,7 @@
 		"Missing_device_cookie": "Impossible d’identifier votre navigateur. Veuillez autoriser les cookies et réessayer.",
 		"Too_many_accounts_created_from_this_device_this_month": "Trop de comptes ont été créés depuis ce navigateur ce mois-ci. Veuillez réessayer le mois prochain.",
 		"Too_many_accounts_created_from_this_network_this_month": "Trop de comptes ont été créés depuis ce réseau ce mois-ci. Veuillez réessayer le mois prochain.",
-		"userNotFound": "Le joueur {userId} n'a pas été trouvé.",
+		"userNotFound": "Le joueur {userId} a été supprimé ou n'existe plus.",
 		"dinozNotFound": "Le Dinoz {{dinozId}} n'a pas été trouvé.",
 		"dinozDoesNotBelongToUser": "Le Dinoz {dinozId} n'appartient pas au joueur {userId}.",
 		"invalidId": "L'id est invalide",
@@ -813,6 +821,17 @@
 		"userTitle": "Jugador: {name}",
 		"noDescription": "Aucune description sur ce profil...",
 		"editProfile": "Editar mi perfil",
+		"options": {
+			"title": "Opciones de Mi Cuenta",
+			"mdp": "Modifier le MDP",
+			"reset": "Recommencer le compte",
+			"delete": "Supprimer le compte",
+			"resetTitle": "Recommencer le compte",
+			"resetDescription": "Êtes-vous sûr de vouloir tout recommencer ? Vous conserverez votre nom, votre description, votre avatar et votre messagerie. Cependant, TOUS VOS DINOZ, VOTRE INVENTAIRE ET VOTRE ARGENT SERONT DÉFINITIVEMENT PERDUS. Vous recommencerez l'aventure à zéro avec 100 000 pièces d'or.",
+			"deleteTitle": "Supprimer le compte",
+			"deleteDescription": "ATTENTION : Êtes-vous absolument sûr de vouloir supprimer votre compte ? Cette action effacera DÉFINITIVEMENT votre progression, vos dinoz, votre inventaire et votre profil. CETTE ACTION EST IRRÉVERSIBLE.",
+			"retour": "Volver"
+		},
 		"changeAvatar": "Changer l'avatar",
 		"save": "Sauvegarder le profil",
 		"cancel": "Annuler les changements",
@@ -830,13 +849,6 @@
 		"editAccount": "Edite el perfil",
 		"edit": "Editar",
 		"descriptionUpdated": "Description mise à jour !",
-		"options": {
-			"title": "Opciones de Mi Cuenta",
-			"mdp": "Modifier le MDP",
-			"todo": "próximamente...",
-			"reset": "Réinitialiser le compte",
-			"retour": "Volver"
-		},
 		"goals": {
 			"title": "Estadísticas de DinoRPG",
 			"points": "Puntos",
