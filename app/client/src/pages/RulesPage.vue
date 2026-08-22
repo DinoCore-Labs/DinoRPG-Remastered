@@ -170,50 +170,22 @@ export default defineComponent({
 						},
 						{
 							type: 'paragraph',
-							key: 'gameRules.sections.general.commitmentIntro'
+							key: 'gameRules.sections.general.forbiddenIntro'
 						},
 						{
 							type: 'list',
 							keys: [
-								'gameRules.sections.general.commitments.respect',
-								'gameRules.sections.general.commitments.features',
-								'gameRules.sections.general.commitments.advantage',
-								'gameRules.sections.general.commitments.security'
+								'gameRules.sections.general.forbidden.harassment',
+								'gameRules.sections.general.forbidden.illegal',
+								'gameRules.sections.general.forbidden.spam',
+								'gameRules.sections.general.forbidden.impersonation',
+								'gameRules.sections.general.forbidden.personalData',
+								'gameRules.sections.general.forbidden.links'
 							]
 						},
 						{
 							type: 'paragraph',
 							key: 'gameRules.sections.general.outro'
-						}
-					]
-				},
-				{
-					id: 'communication',
-					name: this.$t('gameRules.sections.communication.title'),
-					blocks: [
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.communication.intro'
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.communication.forbiddenIntro'
-						},
-						{
-							type: 'list',
-							keys: [
-								'gameRules.sections.communication.forbidden.harassment',
-								'gameRules.sections.communication.forbidden.hate',
-								'gameRules.sections.communication.forbidden.illegal',
-								'gameRules.sections.communication.forbidden.spam',
-								'gameRules.sections.communication.forbidden.impersonation',
-								'gameRules.sections.communication.forbidden.personalData',
-								'gameRules.sections.communication.forbidden.links'
-							]
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.communication.outro'
 						}
 					]
 				},
@@ -226,14 +198,8 @@ export default defineComponent({
 							key: 'gameRules.sections.accounts.intro'
 						},
 						{
-							type: 'list',
-							keys: [
-								'gameRules.sections.accounts.forbidden.share',
-								'gameRules.sections.accounts.forbidden.trade',
-								'gameRules.sections.accounts.forbidden.useOther',
-								'gameRules.sections.accounts.forbidden.password',
-								'gameRules.sections.accounts.forbidden.sanction'
-							]
+							type: 'paragraph',
+							key: 'gameRules.sections.accounts.password'
 						},
 						{
 							type: 'paragraph',
@@ -246,86 +212,36 @@ export default defineComponent({
 					]
 				},
 				{
-					id: 'automation',
-					name: this.$t('gameRules.sections.automation.title'),
+					id: 'cheating',
+					name: this.$t('gameRules.sections.cheating.title'),
 					blocks: [
 						{
 							type: 'paragraph',
-							key: 'gameRules.sections.automation.intro'
+							key: 'gameRules.sections.cheating.intro'
+						},
+						{
+							type: 'paragraph',
+							key: 'gameRules.sections.cheating.forbiddenIntro'
 						},
 						{
 							type: 'list',
 							keys: [
-								'gameRules.sections.automation.forbidden.bot',
-								'gameRules.sections.automation.forbidden.script',
-								'gameRules.sections.automation.forbidden.autoClick',
-								'gameRules.sections.automation.forbidden.macro',
-								'gameRules.sections.automation.forbidden.requests',
-								'gameRules.sections.automation.forbidden.tool',
-								'gameRules.sections.automation.forbidden.clientModification'
+								'gameRules.sections.cheating.forbidden.automation',
+								'gameRules.sections.cheating.forbidden.exploit',
+								'gameRules.sections.cheating.forbidden.duplicate',
+								'gameRules.sections.cheating.forbidden.requests',
+								'gameRules.sections.cheating.forbidden.authorization',
+								'gameRules.sections.cheating.forbidden.account',
+								'gameRules.sections.cheating.forbidden.disruption'
 							]
 						},
 						{
 							type: 'paragraph',
-							key: 'gameRules.sections.automation.accessibility'
-						}
-					]
-				},
-				{
-					id: 'bugs',
-					name: this.$t('gameRules.sections.bugs.title'),
-					blocks: [
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.bugs.intro'
+							key: 'gameRules.sections.cheating.report'
 						},
 						{
 							type: 'paragraph',
-							key: 'gameRules.sections.bugs.examplesIntro'
-						},
-						{
-							type: 'list',
-							keys: [
-								'gameRules.sections.bugs.examples.reward',
-								'gameRules.sections.bugs.examples.duplicate',
-								'gameRules.sections.bugs.examples.condition',
-								'gameRules.sections.bugs.examples.unavailable',
-								'gameRules.sections.bugs.examples.repeat'
-							]
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.bugs.report'
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.bugs.outro'
-						}
-					]
-				},
-				{
-					id: 'security',
-					name: this.$t('gameRules.sections.security.title'),
-					blocks: [
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.security.intro'
-						},
-						{
-							type: 'list',
-							keys: [
-								'gameRules.sections.security.forbidden.account',
-								'gameRules.sections.security.forbidden.authorization',
-								'gameRules.sections.security.forbidden.request',
-								'gameRules.sections.security.forbidden.values',
-								'gameRules.sections.security.forbidden.restricted',
-								'gameRules.sections.security.forbidden.disruption',
-								'gameRules.sections.security.forbidden.credentials'
-							]
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.security.devTools'
+							key: 'gameRules.sections.cheating.devTools'
 						}
 					]
 				},
@@ -339,18 +255,7 @@ export default defineComponent({
 						},
 						{
 							type: 'paragraph',
-							key: 'gameRules.sections.market.forbiddenIntro'
-						},
-						{
-							type: 'list',
-							keys: [
-								'gameRules.sections.market.forbidden.prices',
-								'gameRules.sections.market.forbidden.ownBid',
-								'gameRules.sections.market.forbidden.transfer',
-								'gameRules.sections.market.forbidden.error',
-								'gameRules.sections.market.forbidden.limit',
-								'gameRules.sections.market.forbidden.duplicate'
-							]
+							key: 'gameRules.sections.market.forbidden'
 						},
 						{
 							type: 'paragraph',
@@ -369,18 +274,7 @@ export default defineComponent({
 						},
 						{
 							type: 'paragraph',
-							key: 'gameRules.sections.reporting.detailsIntro'
-						},
-						{
-							type: 'list',
-							keys: [
-								'gameRules.sections.reporting.details.username',
-								'gameRules.sections.reporting.details.date',
-								'gameRules.sections.reporting.details.feature',
-								'gameRules.sections.reporting.details.description',
-								'gameRules.sections.reporting.details.steps',
-								'gameRules.sections.reporting.details.proof'
-							]
+							key: 'gameRules.sections.reporting.details'
 						},
 						{
 							type: 'paragraph',
@@ -401,107 +295,16 @@ export default defineComponent({
 							key: 'gameRules.sections.sanctions.intro'
 						},
 						{
-							type: 'list',
-							keys: [
-								'gameRules.sections.sanctions.list.reminder',
-								'gameRules.sections.sanctions.list.warning',
-								'gameRules.sections.sanctions.list.content',
-								'gameRules.sections.sanctions.list.transaction',
-								'gameRules.sections.sanctions.list.advantage',
-								'gameRules.sections.sanctions.list.restriction',
-								'gameRules.sections.sanctions.list.suspension',
-								'gameRules.sections.sanctions.list.closure'
-							]
+							type: 'paragraph',
+							key: 'gameRules.sections.sanctions.proportionality'
 						},
 						{
 							type: 'paragraph',
-							key: 'gameRules.sections.sanctions.order'
+							key: 'gameRules.sections.sanctions.circumvention'
 						},
 						{
 							type: 'paragraph',
-							key: 'gameRules.sections.sanctions.serious'
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.sanctions.criteriaIntro'
-						},
-						{
-							type: 'list',
-							keys: [
-								'gameRules.sections.sanctions.criteria.severity',
-								'gameRules.sections.sanctions.criteria.repetition',
-								'gameRules.sections.sanctions.criteria.intent',
-								'gameRules.sections.sanctions.criteria.advantage',
-								'gameRules.sections.sanctions.criteria.damage',
-								'gameRules.sections.sanctions.criteria.cooperation',
-								'gameRules.sections.sanctions.criteria.history'
-							]
-						}
-					]
-				},
-				{
-					id: 'circumvention',
-					name: this.$t('gameRules.sections.circumvention.title'),
-					blocks: [
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.circumvention.intro'
-						},
-						{
-							type: 'list',
-							keys: [
-								'gameRules.sections.circumvention.methods.newAccount',
-								'gameRules.sections.circumvention.methods.relative',
-								'gameRules.sections.circumvention.methods.device',
-								'gameRules.sections.circumvention.methods.vpn',
-								'gameRules.sections.circumvention.methods.username',
-								'gameRules.sections.circumvention.methods.otherPlayer'
-							]
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.circumvention.participants'
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.circumvention.household'
-						}
-					]
-				},
-				{
-					id: 'appeal',
-					name: this.$t('gameRules.sections.appeal.title'),
-					blocks: [
-						{
-							type: 'email',
-							introKey: 'gameRules.sections.appeal.intro',
-							emailKey: 'gameRules.sections.appeal.email'
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.appeal.detailsIntro'
-						},
-						{
-							type: 'list',
-							keys: [
-								'gameRules.sections.appeal.details.username',
-								'gameRules.sections.appeal.details.date',
-								'gameRules.sections.appeal.details.decision',
-								'gameRules.sections.appeal.details.reasons',
-								'gameRules.sections.appeal.details.information'
-							]
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.appeal.respect'
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.appeal.suspension'
-						},
-						{
-							type: 'paragraph',
-							key: 'gameRules.sections.appeal.repeated'
+							key: 'gameRules.sections.sanctions.appeal'
 						}
 					]
 				},
@@ -512,16 +315,6 @@ export default defineComponent({
 						{
 							type: 'paragraph',
 							key: 'gameRules.sections.changes.intro'
-						},
-						{
-							type: 'list',
-							keys: [
-								'gameRules.sections.changes.reasons.game',
-								'gameRules.sections.changes.reasons.feature',
-								'gameRules.sections.changes.reasons.abuse',
-								'gameRules.sections.changes.reasons.security',
-								'gameRules.sections.changes.reasons.legal'
-							]
 						},
 						{
 							type: 'paragraph',
