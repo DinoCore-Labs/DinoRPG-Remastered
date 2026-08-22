@@ -1,6 +1,7 @@
 import { DialogPhaseResponse, DialogResponseLink } from '@dinorpg/core/models/dialogs/dialogResponse.js';
 import { RuntimeDialog, RuntimeDialogLink, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/dialogRuntime.js';
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
+import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/index.js';
 import { advanceDinozMissionOnTalk } from '../../Mission/Controller/mission.progress.js';
@@ -142,7 +143,7 @@ export async function assertDialogAvailability(
 		dialog
 	});
 	if (dialog.cond && !checkDialogCondition(dialog.cond, context)) {
-		throw new Error(`Dialog "${dialog.id}" is not available`);
+		throw new ExpectedError('dialogNotAvailable');
 	}
 }
 
