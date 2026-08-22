@@ -581,6 +581,14 @@
 				"passwordMismatch": "New passwords don't match."
 			}
 		},
+		"confirmAction": {
+			"label": "Veuillez entrer votre mot de passe pour confirmer :",
+			"passwordPlaceholder": "Mot de passe",
+			"loading": "Loading...",
+			"confirm": "Confirmer",
+			"cancel": "Cancel",
+			"passwordRequired": "Veuillez entrer votre mot de passe pour confirmer."
+		},
 		"modif": "Modify...",
 		"valid": "Validate",
 		"close": "Close",
@@ -813,6 +821,17 @@
 		"userTitle": "Player: {name}",
 		"noDescription": "No description on this profile...",
 		"editProfile": "Edit my profile",
+		"options": {
+			"title": "Account Options",
+			"mdp": "Modify Password",
+			"reset": "Reset account",
+			"delete": "Supprimer le compte",
+			"resetTitle": "Reset account",
+			"resetDescription": "Êtes-vous sûr de vouloir tout recommencer ? Vous conserverez votre nom, votre description, votre avatar et votre messagerie. Cependant, TOUS VOS DINOZ, VOTRE INVENTAIRE ET VOTRE ARGENT SERONT DÉFINITIVEMENT PERDUS. Vous recommencerez l'aventure à zéro avec 100 000 pièces d'or.",
+			"deleteTitle": "Supprimer le compte",
+			"deleteDescription": "ATTENTION : Êtes-vous absolument sûr de vouloir supprimer votre compte ? Cette action effacera DÉFINITIVEMENT votre progression, vos dinoz, votre inventaire et votre profil. CETTE ACTION EST IRRÉVERSIBLE.",
+			"retour": "Return"
+		},
 		"changeAvatar": "Change avatar",
 		"save": "Save Profile",
 		"cancel": "Discard changes",
@@ -830,13 +849,6 @@
 		"editAccount": "Edit Profile",
 		"edit": "Edit",
 		"descriptionUpdated": "Description updated!",
-		"options": {
-			"title": "Account Options",
-			"mdp": "Modify Password",
-			"todo": "coming...",
-			"reset": "Reset account",
-			"retour": "Return"
-		},
 		"goals": {
 			"title": "DinoRPG Statistics",
 			"points": "points",
