@@ -644,6 +644,7 @@
 		"loginToLike": "Sign in to like this news.",
 		"shovelMine": "You aren't going to dig right next to the miner !?!",
 		"gatherAlertError": "Error during automatic collection.",
+		"dialogNotFound": "Dialogue introuvable.",
 		"market": {
 			"minimalValueError": "Your offer's total value doesn't reach the minimal value.",
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
@@ -3464,181 +3465,64 @@
 			"general": {
 				"title": "1. General Principles",
 				"intro": "DinoRPG Remastered must be used fairly and respectfully.",
-				"commitmentIntro": "Each player agrees to:",
-				"commitments": {
-					"respect": "respect other users;",
-					"features": "use features for their intended purpose;",
-					"advantage": "not seek to gain an advantage through abnormal means;",
-					"security": "not compromise the security or operation of the service."
+				"forbiddenIntro": "Sont notamment interdits :",
+				"forbidden": {
+					"harassment": "les insultes, menaces, comportements de harcèlement ou propos discriminatoires ;",
+					"illegal": "les contenus inappropriés ou manifestement illicites ;",
+					"spam": "le spam et la publicité abusive ;",
+					"impersonation": "l’usurpation de l’identité d’un joueur ou d’un membre de l’équipe ;",
+					"personalData": "la divulgation des informations personnelles d’un tiers ;",
+					"links": "les liens dangereux, frauduleux ou trompeurs."
 				},
 				"outro": "Clearly abusive behavior may be sanctioned even if it is not expressly mentioned in these rules."
-			},
-			"communication": {
-				"title": "2. Respect and Communication",
-				"intro": "Usernames, profiles, messages, and published content must remain appropriate.",
-				"forbiddenIntro": "The following are prohibited in particular:",
-				"forbidden": {
-					"harassment": "insults, threats, and harassing behavior;",
-					"hate": "hateful or discriminatory remarks;",
-					"illegal": "sexually explicit or clearly illegal content;",
-					"spam": "spam and repeated or unauthorized advertising;",
-					"impersonation": "impersonating a player, administrator, or moderator;",
-					"personalData": "disclosing another person's personal information;",
-					"links": "dangerous, fraudulent, or misleading links."
-				},
-				"outro": "Disagreements between players must remain respectful."
 			},
 			"accounts": {
 				"title": "3. Accounts",
 				"intro": "An account is personal. It is forbidden to:",
-				"forbidden": {
-					"share": "share or lend your account;",
-					"trade": "sell, give away, or trade an account;",
-					"useOther": "use another person's account;",
-					"password": "ask for or share a password;",
-					"sanction": "create an account to circumvent a sanction."
-				},
+				"password": "Ne communiquez jamais votre mot de passe et ne demandez jamais celui d’un autre joueur.",
 				"singleAccount": "A single person may normally use only one player account.",
 				"household": "Several people in the same household may each have their own account, provided those accounts are not used to gain an artificial advantage or circumvent a limitation."
 			},
-			"automation": {
-				"title": "4. Cheating and Automation",
-				"intro": "It is forbidden to use:",
+			"cheating": {
+				"title": "3. Triche, bugs et sécurité",
+				"intro": "Toute méthode permettant d’obtenir un avantage anormal ou de contourner le fonctionnement prévu du jeu est interdite.",
+				"forbiddenIntro": "Il est notamment interdit :",
 				"forbidden": {
-					"bot": "a bot;",
-					"script": "a game script;",
-					"autoClick": "an auto-clicking system;",
-					"macro": "a macro that automates actions;",
-					"requests": "a program that automatically sends requests;",
-					"tool": "a tool that plays on behalf of the user;",
-					"clientModification": "a client modification intended to bypass the game rules."
+					"automation": "d’utiliser un bot, script, clic automatique, macro ou autre outil jouant à la place de l’utilisateur ;",
+					"exploit": "d’exploiter volontairement un bug ou une faille ;",
+					"duplicate": "de dupliquer ou d’obtenir anormalement des objets, ressources, monnaies ou récompenses ;",
+					"requests": "de falsifier des requêtes ou de modifier artificiellement des données envoyées au serveur ;",
+					"authorization": "de contourner une autorisation ou d’accéder à une fonctionnalité normalement inaccessible ;",
+					"account": "de tenter d’accéder au compte ou aux données d’un autre utilisateur ;",
+					"disruption": "de perturber, attaquer ou saturer le service."
 				},
-				"accessibility": "Accessibility tools that provide no advantage may be reviewed on a case-by-case basis."
-			},
-			"bugs": {
-				"title": "5. Bug Exploitation",
-				"intro": "Deliberately exploiting a bug or abnormal behavior is prohibited.",
-				"examplesIntro": "A player who notices that an action allows, in particular:",
-				"examples": {
-					"reward": "obtaining the same reward multiple times;",
-					"duplicate": "duplicating an item, resource, or currency;",
-					"condition": "bypassing a requirement;",
-					"unavailable": "accessing a feature that is normally unavailable;",
-					"repeat": "abnormally repeating a limited action;"
-				},
-				"report": "must stop reproducing the issue and report it.",
-				"outro": "Continuing to use an anomaly after noticing it may be considered deliberate exploitation."
-			},
-			"security": {
-				"title": "6. Security and Prohibited Requests",
-				"intro": "It is forbidden to attempt to:",
-				"forbidden": {
-					"account": "access another user's account or data;",
-					"authorization": "bypass an authorization;",
-					"request": "forge a request sent to the server;",
-					"values": "artificially modify a quantity, identifier, or result;",
-					"restricted": "access a restricted page or API;",
-					"disruption": "disrupt or overload the service;",
-					"credentials": "steal a cookie, login token, or password."
-				},
-				"devTools": "Using browser developer tools is not prohibited in itself. It becomes prohibited when used to cheat, bypass a rule, or compromise the service."
+				"report": "Lorsqu’un bug ou une faille est découvert, le joueur doit cesser de l’exploiter et le signaler.",
+				"devTools": "Les outils de développement du navigateur sont autorisés tant qu’ils ne sont pas utilisés pour tricher, contourner une règle ou compromettre le service."
 			},
 			"market": {
 				"title": "7. Market and Trading",
 				"intro": "Market and trading features must be used fairly.",
-				"forbiddenIntro": "In particular, it is forbidden to:",
-				"forbidden": {
-					"prices": "artificially manipulate prices or offers;",
-					"ownBid": "bid on your own offer using another account;",
-					"transfer": "artificially transfer resources between multiple accounts;",
-					"error": "exploit a pricing or quantity error;",
-					"limit": "circumvent a purchase, sale, or ownership limit;",
-					"duplicate": "use an exploit to duplicate a resource."
-				},
+				"forbidden": "Il est interdit de manipuler artificiellement les prix, d’utiliser plusieurs comptes pour transférer des ressources ou enchérir sur ses propres offres, et d’exploiter une erreur ou une faille du marché.",
 				"outro": "A transaction obtained through fraud, manipulation, or exploitation of an anomaly may be canceled or corrected."
 			},
 			"reporting": {
 				"title": "8. Reporting Issues",
 				"intro": "Prohibited behavior, a bug, or a vulnerability can be reported to:",
 				"email": "contact{'@'}dinorpg.fr",
-				"detailsIntro": "The report should include, whenever possible:",
-				"details": {
-					"username": "the username concerned;",
-					"date": "the approximate date;",
-					"feature": "the feature concerned;",
-					"description": "a precise description;",
-					"steps": "the steps to reproduce a bug;",
-					"proof": "any available evidence or screenshots."
-				},
+				"details": "Merci d’indiquer autant que possible le pseudonyme concerné, la date, une description du problème et les éventuelles preuves ou étapes permettant de le reproduire.",
 				"disclosure": "It is prohibited to publish an unpatched vulnerability, continue exploiting it, or use it to access another user's data.",
 				"goodFaith": "A report made in good faith will not be considered an attempt to cheat."
 			},
 			"sanctions": {
 				"title": "9. Sanctions",
 				"intro": "Depending on the severity of the violation, the administration may apply:",
-				"list": {
-					"reminder": "a reminder of the rules;",
-					"warning": "a warning;",
-					"content": "removal or modification of content;",
-					"transaction": "cancellation of an action or transaction;",
-					"advantage": "removal of an improperly obtained advantage;",
-					"restriction": "temporary restriction of a feature;",
-					"suspension": "temporary suspension of the account;",
-					"closure": "permanent closure of the account."
-				},
-				"order": "Sanctions do not necessarily follow this order.",
-				"serious": "A serious violation may result directly in suspension or permanent account closure.",
-				"criteriaIntro": "The decision may take into account:",
-				"criteria": {
-					"severity": "the severity of the violation;",
-					"repetition": "whether it was repeated;",
-					"intent": "whether it was intentional or accidental;",
-					"advantage": "the advantage obtained;",
-					"damage": "the damage caused;",
-					"cooperation": "the player's cooperation;",
-					"history": "any previous violations."
-				}
-			},
-			"circumvention": {
-				"title": "10. Circumventing Sanctions",
-				"intro": "It is forbidden to circumvent a sanction by using:",
-				"methods": {
-					"newAccount": "a new account;",
-					"relative": "a relative's or acquaintance's account;",
-					"device": "a different device;",
-					"vpn": "a VPN or technical relay;",
-					"username": "a username change;",
-					"otherPlayer": "another player's intervention."
-				},
-				"participants": "Accounts that knowingly participate in circumventing a sanction may also be sanctioned.",
-				"household": "Other members of the same household are not automatically sanctioned if they do not participate in the circumvention."
-			},
-			"appeal": {
-				"title": "11. Appeals",
-				"intro": "A sanction may be appealed at:",
-				"email": "contact{'@'}dinorpg.fr",
-				"detailsIntro": "The request must specify:",
-				"details": {
-					"username": "the account username;",
-					"date": "the approximate date of the sanction;",
-					"decision": "the decision being appealed;",
-					"reasons": "the reasons for the appeal;",
-					"information": "any information useful for the review."
-				},
-				"respect": "The appeal must remain respectful and factual.",
-				"suspension": "It does not automatically suspend the sanction.",
-				"repeated": "Repeated requests containing no new information may no longer receive a response."
+				"proportionality": "La sanction tient notamment compte de la gravité, de la répétition et du caractère volontaire des faits.",
+				"circumvention": "Il est interdit de contourner une sanction à l’aide d’un autre compte, d’un autre joueur ou de tout autre moyen.",
+				"appeal": "Une sanction peut être contestée de manière respectueuse et factuelle à l’adresse contact{'@'}dinorpg.fr."
 			},
 			"changes": {
 				"title": "12. Changes to the Rules",
 				"intro": "These rules may be amended to take into account:",
-				"reasons": {
-					"game": "changes to the game;",
-					"feature": "a new feature;",
-					"abuse": "a new form of abuse;",
-					"security": "a security incident;",
-					"legal": "a legal change."
-				},
 				"version": "The version and date of the latest update are shown at the top of the document.",
 				"acceptance": "A new acceptance may be required when a significant change is made."
 			}
