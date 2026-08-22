@@ -470,9 +470,8 @@
 				"text3": "Correction de bugs"
 			},
 			"futureInfo2": {
-				"text1": "Le scénario des steppes",
-				"text2": "De nouveaux PNJ et de nouvelles missions",
-				"text3": "Correction de bugs"
+				"text1": "Le scénario tutoriel et le guide Michel",
+				"text2": "Correction de bugs"
 			},
 			"futureInfo3": {
 				"text1": "La chasse aux Monstres (event PVE)",
@@ -582,6 +581,14 @@
 				"passwordMismatch": "Les nouveaux mots de passe ne correspondent pas."
 			}
 		},
+		"confirmAction": {
+			"label": "Veuillez entrer votre mot de passe pour confirmer :",
+			"passwordPlaceholder": "Mot de passe",
+			"loading": "Cargando...",
+			"confirm": "Confirmer",
+			"cancel": "Cancelar",
+			"passwordRequired": "Veuillez entrer votre mot de passe pour confirmer."
+		},
 		"modif": "Modificar...",
 		"valid": "Aceptar",
 		"close": "Cerrar",
@@ -637,6 +644,7 @@
 		"loginToLike": "Connectez-vous pour aimer cette news.",
 		"shovelMine": "¡No vas a excavar al lado del minero, ¿verdad?!",
 		"gatherAlertError": "Error durante la recolección automática",
+		"dialogNotFound": "Dialogue introuvable.",
 		"market": {
 			"minimalValueError": "El valor total de su oferta no alcanza el valor mínimo.",
 			"tooManyItems": "No puedes vender más de {items} objetos diferentes a la vez.",
@@ -675,7 +683,6 @@
 			"amnesic_rice": "¡Tu Dino ha olvidado su nombre y además perdió todo su :xp: !",
 			"pampleboum": "¡Ay! ¡Había un hoyo en este Pomelum!"
 		},
-		"Invalid_email_or_password": "Pseudo ou mot de passe invalide.",
 		"Invalid_credentials": "Identifiants incorrects.",
 		"Too_many_login_attempts": "Trop de tentatives de connexion ont été effectuées. Par sécurité, veuillez patienter 5 minutes avant de réessayer.",
 		"Too_many_registration_attempts": "Trop de tentatives de création de compte ont été effectuées. Veuillez patienter 1 heure avant de réessayer.",
@@ -683,7 +690,7 @@
 		"Missing_device_cookie": "Impossible d’identifier votre navigateur. Veuillez autoriser les cookies et réessayer.",
 		"Too_many_accounts_created_from_this_device_this_month": "Trop de comptes ont été créés depuis ce navigateur ce mois-ci. Veuillez réessayer le mois prochain.",
 		"Too_many_accounts_created_from_this_network_this_month": "Trop de comptes ont été créés depuis ce réseau ce mois-ci. Veuillez réessayer le mois prochain.",
-		"userNotFound": "Le joueur {userId} n'a pas été trouvé.",
+		"userNotFound": "Le joueur {userId} a été supprimé ou n'existe plus.",
 		"dinozNotFound": "Le Dinoz {{dinozId}} n'a pas été trouvé.",
 		"dinozDoesNotBelongToUser": "Le Dinoz {dinozId} n'appartient pas au joueur {userId}.",
 		"invalidId": "L'id est invalide",
@@ -753,7 +760,8 @@
 		"concentrationFull": "Les sept places de cette concentration sont déjà occupées.",
 		"concentrationCannotStopAfterOpening": "La concentration est terminée : le Dinoz doit maintenant entrer dans le portail.",
 		"concentrationNotCompleted": "Sept Dinoz doivent terminer leur concentration avant que le portail puisse être franchi.",
-		"maxFollowers": "Vous ne pouvez avoir plus de {maxFollowers} Dinoz dans votre groupe."
+		"maxFollowers": "Vous ne pouvez avoir plus de {maxFollowers} Dinoz dans votre groupe.",
+		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée."
 	},
 	"tooltip": {
 		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
@@ -814,6 +822,17 @@
 		"userTitle": "Jugador: {name}",
 		"noDescription": "Aucune description sur ce profil...",
 		"editProfile": "Editar mi perfil",
+		"options": {
+			"title": "Opciones de Mi Cuenta",
+			"mdp": "Modifier le MDP",
+			"reset": "Recommencer le compte",
+			"delete": "Supprimer le compte",
+			"resetTitle": "Recommencer le compte",
+			"resetDescription": "Êtes-vous sûr de vouloir tout recommencer ? Vous conserverez votre nom, votre description, votre avatar et votre messagerie. Cependant, TOUS VOS DINOZ, VOTRE INVENTAIRE ET VOTRE ARGENT SERONT DÉFINITIVEMENT PERDUS. Vous recommencerez l'aventure à zéro avec 100 000 pièces d'or.",
+			"deleteTitle": "Supprimer le compte",
+			"deleteDescription": "ATTENTION : Êtes-vous absolument sûr de vouloir supprimer votre compte ? Cette action effacera DÉFINITIVEMENT votre progression, vos dinoz, votre inventaire et votre profil. CETTE ACTION EST IRRÉVERSIBLE.",
+			"retour": "Volver"
+		},
 		"changeAvatar": "Changer l'avatar",
 		"save": "Sauvegarder le profil",
 		"cancel": "Annuler les changements",
@@ -831,13 +850,6 @@
 		"editAccount": "Edite el perfil",
 		"edit": "Editar",
 		"descriptionUpdated": "Description mise à jour !",
-		"options": {
-			"title": "Opciones de Mi Cuenta",
-			"mdp": "Modifier le MDP",
-			"todo": "próximamente...",
-			"reset": "Réinitialiser le compte",
-			"retour": "Volver"
-		},
 		"goals": {
 			"title": "Estadísticas de DinoRPG",
 			"points": "Puntos",
@@ -2997,7 +3009,20 @@
 			"wteamc": "[TW]Capitaine",
 			"wbour1": "[TW]Grobourin",
 			"wbour2": "[TW]Grobourin",
-			"darkgp": "Goupignon Sombre"
+			"darkgp": "Goupignon Sombre",
+			"wormom": "Matriarche Longbrik",
+			"wormy": "Bébé Longbrik",
+			"pikouz": "Pikouz",
+			"thief": "Scorpwink chapardeur",
+			"thief2": "Scorpwink chapardeur",
+			"tripo2": "Tripou le Mou",
+			"coward": "Brigand Emmema",
+			"salami": "Sahalami le Trancheur",
+			"tripou": "Tripou le Mou",
+			"cowar2": "Brigand Emmema",
+			"boukan": "Boukané l'intuable",
+			"cervel": "Cervelah l'empoisonneur",
+			"buildr": "Ouvrier de Caravoies"
 		},
 		"status": {
 			"asleep": "endormi",
@@ -3438,184 +3463,67 @@
 		},
 		"sections": {
 			"general": {
-				"title": "1. Principes généraux",
+				"title": "1. Respect et comportement",
 				"intro": "DinoRPG Remastered doit être utilisé de manière loyale et respectueuse.",
-				"commitmentIntro": "Chaque joueur s’engage à :",
-				"commitments": {
-					"respect": "respecter les autres utilisateurs ;",
-					"features": "utiliser les fonctionnalités conformément à leur objectif ;",
-					"advantage": "ne pas chercher à obtenir un avantage par un moyen anormal ;",
-					"security": "ne pas compromettre la sécurité ou le fonctionnement du service."
-				},
-				"outro": "Un comportement manifestement abusif peut être sanctionné même s’il n’est pas expressément mentionné dans le présent règlement."
-			},
-			"communication": {
-				"title": "2. Respect et communication",
-				"intro": "Les pseudonymes, profils, messages et contenus publiés doivent rester appropriés.",
 				"forbiddenIntro": "Sont notamment interdits :",
 				"forbidden": {
-					"harassment": "les insultes, menaces et comportements de harcèlement ;",
-					"hate": "les propos haineux ou discriminatoires ;",
-					"illegal": "les contenus sexuellement explicites ou manifestement illicites ;",
-					"spam": "le spam et la publicité répétée ou non autorisée ;",
-					"impersonation": "l’usurpation de l’identité d’un joueur, d’un administrateur ou d’un modérateur ;",
+					"harassment": "les insultes, menaces, comportements de harcèlement ou propos discriminatoires ;",
+					"illegal": "les contenus inappropriés ou manifestement illicites ;",
+					"spam": "le spam et la publicité abusive ;",
+					"impersonation": "l’usurpation de l’identité d’un joueur ou d’un membre de l’équipe ;",
 					"personalData": "la divulgation des informations personnelles d’un tiers ;",
 					"links": "les liens dangereux, frauduleux ou trompeurs."
 				},
-				"outro": "Les désaccords entre joueurs doivent rester respectueux."
+				"outro": "Tout comportement abusif ou portant volontairement atteinte au jeu ou à ses utilisateurs peut être sanctionné."
 			},
 			"accounts": {
-				"title": "3. Comptes",
-				"intro": "Un compte est personnel. Il est interdit de :",
-				"forbidden": {
-					"share": "partager ou prêter son compte ;",
-					"trade": "vendre, donner ou échanger un compte ;",
-					"useOther": "utiliser le compte d’une autre personne ;",
-					"password": "demander ou communiquer un mot de passe ;",
-					"sanction": "créer un compte pour contourner une sanction."
-				},
+				"title": "2. Comptes",
+				"intro": "Un compte est personnel. Il est interdit de le partager, le vendre, le donner ou d’utiliser le compte d’une autre personne.",
+				"password": "Ne communiquez jamais votre mot de passe et ne demandez jamais celui d’un autre joueur.",
 				"singleAccount": "Une même personne ne peut normalement utiliser qu’un seul compte joueur.",
-				"household": "Plusieurs personnes d’un même foyer peuvent chacune disposer de leur propre compte, à condition que ces comptes ne soient pas utilisés pour obtenir un avantage artificiel ou contourner une limitation."
+				"household": "Plusieurs personnes d’un même foyer peuvent chacune disposer de leur propre compte, à condition de ne pas les utiliser pour obtenir un avantage artificiel ou contourner une limitation."
 			},
-			"automation": {
-				"title": "4. Triche et automatisation",
-				"intro": "Il est interdit d’utiliser :",
+			"cheating": {
+				"title": "3. Triche, bugs et sécurité",
+				"intro": "Toute méthode permettant d’obtenir un avantage anormal ou de contourner le fonctionnement prévu du jeu est interdite.",
+				"forbiddenIntro": "Il est notamment interdit :",
 				"forbidden": {
-					"bot": "un robot ;",
-					"script": "un script de jeu ;",
-					"autoClick": "un système de clic automatique ;",
-					"macro": "une macro automatisant des actions ;",
-					"requests": "un programme envoyant automatiquement des requêtes ;",
-					"tool": "un outil jouant à la place de l’utilisateur ;",
-					"clientModification": "une modification du client destinée à contourner les règles du jeu."
+					"automation": "d’utiliser un bot, script, clic automatique, macro ou autre outil jouant à la place de l’utilisateur ;",
+					"exploit": "d’exploiter volontairement un bug ou une faille ;",
+					"duplicate": "de dupliquer ou d’obtenir anormalement des objets, ressources, monnaies ou récompenses ;",
+					"requests": "de falsifier des requêtes ou de modifier artificiellement des données envoyées au serveur ;",
+					"authorization": "de contourner une autorisation ou d’accéder à une fonctionnalité normalement inaccessible ;",
+					"account": "de tenter d’accéder au compte ou aux données d’un autre utilisateur ;",
+					"disruption": "de perturber, attaquer ou saturer le service."
 				},
-				"accessibility": "Les outils d’accessibilité ne procurant aucun avantage peuvent être examinés au cas par cas."
-			},
-			"bugs": {
-				"title": "5. Exploitation de bugs",
-				"intro": "L’exploitation volontaire d’un bug ou d’un comportement anormal est interdite.",
-				"examplesIntro": "Un joueur constatant qu’une action permet notamment :",
-				"examples": {
-					"reward": "d’obtenir plusieurs fois une récompense ;",
-					"duplicate": "de dupliquer un objet, une ressource ou une monnaie ;",
-					"condition": "de contourner une condition ;",
-					"unavailable": "d’accéder à une fonctionnalité normalement indisponible ;",
-					"repeat": "de répéter anormalement une action limitée ;"
-				},
-				"report": "doit cesser de reproduire le problème et le signaler.",
-				"outro": "Continuer à utiliser une anomalie après l’avoir constatée peut être considéré comme une exploitation volontaire."
-			},
-			"security": {
-				"title": "6. Sécurité et requêtes interdites",
-				"intro": "Il est interdit de tenter :",
-				"forbidden": {
-					"account": "d’accéder au compte ou aux données d’un autre utilisateur ;",
-					"authorization": "de contourner une autorisation ;",
-					"request": "de falsifier une requête envoyée au serveur ;",
-					"values": "de modifier artificiellement une quantité, un identifiant ou un résultat ;",
-					"restricted": "d’accéder à une page ou une API réservée ;",
-					"disruption": "de perturber ou de saturer le service ;",
-					"credentials": "de voler un cookie, un jeton de connexion ou un mot de passe."
-				},
-				"devTools": "L’utilisation des outils de développement du navigateur n’est pas interdite en elle-même. Elle devient interdite lorsqu’elle sert à tricher, à contourner une règle ou à compromettre le service."
+				"report": "Lorsqu’un bug ou une faille est découvert, le joueur doit cesser de l’exploiter et le signaler.",
+				"devTools": "Les outils de développement du navigateur sont autorisés tant qu’ils ne sont pas utilisés pour tricher, contourner une règle ou compromettre le service."
 			},
 			"market": {
-				"title": "7. Marché et échanges",
-				"intro": "Les fonctionnalités de marché et d’échange doivent être utilisées loyalement.",
-				"forbiddenIntro": "Il est notamment interdit de :",
-				"forbidden": {
-					"prices": "manipuler artificiellement les prix ou les offres ;",
-					"ownBid": "enchérir sur sa propre offre au moyen d’un autre compte ;",
-					"transfer": "transférer artificiellement des ressources entre plusieurs comptes ;",
-					"error": "exploiter une erreur de prix ou de quantité ;",
-					"limit": "contourner une limite d’achat, de vente ou de possession ;",
-					"duplicate": "utiliser une faille afin de dupliquer une ressource."
-				},
-				"outro": "Une transaction obtenue par fraude, manipulation ou exploitation d’une anomalie peut être annulée ou corrigée."
+				"title": "4. Marché et échanges",
+				"intro": "Les échanges entre joueurs doivent rester loyaux.",
+				"forbidden": "Il est interdit de manipuler artificiellement les prix, d’utiliser plusieurs comptes pour transférer des ressources ou enchérir sur ses propres offres, et d’exploiter une erreur ou une faille du marché.",
+				"outro": "Une transaction obtenue de manière irrégulière peut être annulée ou corrigée."
 			},
 			"reporting": {
-				"title": "8. Signalement des problèmes",
-				"intro": "Un comportement interdit, un bug ou une faille peut être signalé à :",
+				"title": "5. Signalement",
+				"intro": "Un bug, une faille ou un comportement interdit peut être signalé à :",
 				"email": "contact{'@'}dinorpg.fr",
-				"detailsIntro": "Le signalement doit contenir autant que possible :",
-				"details": {
-					"username": "le pseudonyme concerné ;",
-					"date": "la date approximative ;",
-					"feature": "la fonctionnalité concernée ;",
-					"description": "une description précise ;",
-					"steps": "les étapes de reproduction d’un bug ;",
-					"proof": "les preuves ou captures disponibles."
-				},
-				"disclosure": "Il est interdit de publier une faille non corrigée, d’en poursuivre l’exploitation ou de l’utiliser pour accéder aux données d’un autre utilisateur.",
+				"details": "Merci d’indiquer autant que possible le pseudonyme concerné, la date, une description du problème et les éventuelles preuves ou étapes permettant de le reproduire.",
+				"disclosure": "Une faille non corrigée ne doit pas être publiée ou exploitée.",
 				"goodFaith": "Un signalement effectué de bonne foi ne sera pas considéré comme une tentative de triche."
 			},
 			"sanctions": {
-				"title": "9. Sanctions",
-				"intro": "Selon la gravité des faits, l’administration peut appliquer :",
-				"list": {
-					"reminder": "un rappel à la règle ;",
-					"warning": "un avertissement ;",
-					"content": "la suppression ou la modification d’un contenu ;",
-					"transaction": "l’annulation d’une action ou d’une transaction ;",
-					"advantage": "le retrait d’un avantage obtenu irrégulièrement ;",
-					"restriction": "la restriction temporaire d’une fonctionnalité ;",
-					"suspension": "la suspension temporaire du compte ;",
-					"closure": "la fermeture définitive du compte."
-				},
-				"order": "Les sanctions ne suivent pas obligatoirement cet ordre.",
-				"serious": "Une infraction grave peut entraîner directement une suspension ou une fermeture définitive.",
-				"criteriaIntro": "La décision peut tenir compte :",
-				"criteria": {
-					"severity": "de la gravité des faits ;",
-					"repetition": "de leur répétition ;",
-					"intent": "du caractère volontaire ou accidentel ;",
-					"advantage": "de l’avantage obtenu ;",
-					"damage": "des dommages causés ;",
-					"cooperation": "de la coopération du joueur ;",
-					"history": "des éventuels antécédents."
-				}
-			},
-			"circumvention": {
-				"title": "10. Contournement des sanctions",
-				"intro": "Il est interdit de contourner une sanction au moyen :",
-				"methods": {
-					"newAccount": "d’un nouveau compte ;",
-					"relative": "du compte d’un proche ;",
-					"device": "d’un appareil différent ;",
-					"vpn": "d’un VPN ou d’un relais technique ;",
-					"username": "d’un changement de pseudonyme ;",
-					"otherPlayer": "de l’intervention d’un autre joueur."
-				},
-				"participants": "Les comptes participant volontairement au contournement peuvent également être sanctionnés.",
-				"household": "Les autres membres d’un même foyer ne sont pas automatiquement sanctionnés s’ils ne participent pas au contournement."
-			},
-			"appeal": {
-				"title": "11. Contestation",
-				"intro": "Une sanction peut être contestée à l’adresse :",
-				"email": "contact{'@'}dinorpg.fr",
-				"detailsIntro": "La demande doit préciser :",
-				"details": {
-					"username": "le pseudonyme du compte ;",
-					"date": "la date approximative de la sanction ;",
-					"decision": "la décision contestée ;",
-					"reasons": "les raisons de la contestation ;",
-					"information": "tout élément utile au réexamen."
-				},
-				"respect": "La contestation doit rester respectueuse et factuelle.",
-				"suspension": "Elle ne suspend pas automatiquement la sanction.",
-				"repeated": "Les demandes répétées ne contenant aucun élément nouveau peuvent ne plus recevoir de réponse."
+				"title": "6. Sanctions et contestation",
+				"intro": "Selon la gravité des faits, une infraction peut entraîner un avertissement, l’annulation d’un avantage ou d’une transaction, une restriction, une suspension ou la fermeture définitive du compte.",
+				"proportionality": "La sanction tient notamment compte de la gravité, de la répétition et du caractère volontaire des faits.",
+				"circumvention": "Il est interdit de contourner une sanction à l’aide d’un autre compte, d’un autre joueur ou de tout autre moyen.",
+				"appeal": "Une sanction peut être contestée de manière respectueuse et factuelle à l’adresse contact{'@'}dinorpg.fr."
 			},
 			"changes": {
-				"title": "12. Modification du règlement",
-				"intro": "Le présent règlement peut être modifié afin de tenir compte :",
-				"reasons": {
-					"game": "d’une évolution du jeu ;",
-					"feature": "d’une nouvelle fonctionnalité ;",
-					"abuse": "d’une nouvelle forme d’abus ;",
-					"security": "d’un incident de sécurité ;",
-					"legal": "d’une évolution légale."
-				},
-				"version": "La version et la date de dernière mise à jour sont indiquées en haut du document.",
+				"title": "7. Modification du règlement",
+				"intro": "Le règlement peut évoluer en fonction du jeu, de nouvelles fonctionnalités, de nouveaux abus ou de besoins de sécurité.",
+				"version": "La version et la date de dernière mise à jour sont indiquées en haut de cette page.",
 				"acceptance": "Une nouvelle acceptation peut être demandée lorsqu’une modification importante est apportée."
 			}
 		}
@@ -3777,7 +3685,8 @@
 			"itemDuration": "Durée : {days} jours",
 			"itemGain": "Gain : **{gold}** :gold: — Total : **{total}** :gold:",
 			"unlockAt": "Disponible le {date}",
-			"claim": "Récupérer"
+			"claim": "Récupérer",
+			"maxDeposit": "Dépôt maximum : {gold} :gold:"
 		}
 	},
 	"npc": {
@@ -4838,6 +4747,15 @@
 					"ask3": "Et mes pièces ?",
 					"ask4": "C'est tout ?"
 				}
+			}
+		},
+		"requestOffice": {
+			"name": "Bureau des requêtes",
+			"dialog": {
+				"begin": "Les commerçants du désert ont pour habitude de se rendre ici, au Bureau des requêtes, pour y déposer des offres d'emploi en tous genres destinées aux maîtres Dinoz de passage. Si vous êtes suffisamment courageux(se), prenez un ticket et embarquez pour une mission à hauts risques."
+			},
+			"choice": {
+				"missions": "Consulter les annonces"
 			}
 		},
 		"dialog": {
@@ -6163,6 +6081,330 @@
 				"baoTalk6": "Mmm.... C'est à peu près tout ce que j'avais à te dire sur l'Eau. Je vais faire savoir au Maître Elémentaire que tu as fini ta formation...",
 				"elmaTalk3": "Alors, comment va ce vieux Bao ? Je n'ai eu que peu d'occasions de le voir depuis qu'il a été assigné à la garde du Portail par Mandragore... Mais bon, apparemment, la formation est terminée...",
 				"end": "La dernière leçon se termine, qu'il vienne donc me parler pour sa récompense finale..."
+			}
+		},
+		"requestOffice": {
+			"common": {
+				"soulefMoissa": {
+					"name": "Intendant Soulef Moissa"
+				},
+				"aliLabah": {
+					"name": "Eclaireur Ali Labah"
+				},
+				"guard": {
+					"name": "Garde en faction"
+				}
+			},
+			"dexplo": {
+				"name": "Ouvrir la route",
+				"begin": "« RECHERCHE : mercenaire H ou F pour exploration désert et sécurisation des chemins. Candidats peu motivés s'abstenir.»",
+				"takeNotesCrossroads": {
+					"name": "Prendre des notes",
+					"description": "Vous commencez à écrire votre rapport."
+				},
+				"takeNotesToutemba": {
+					"name": "Prendre des notes",
+					"description": "Vous ajoutez les détails de cette étape à votre rapport. Le défilé semble être plutôt calme..."
+				},
+				"climbCliff": {
+					"name": "Grimper la paroi",
+					"description": "Au prix d'un gros effort, vous parvenez au sommet d'un plateau de Toulaho. La vue est splendide !"
+				},
+				"takeMoreNotes": {
+					"name": "Prendre d'autres notes",
+					"begin": "Alors que vous vous installez pour prendre quelques notes en profitant de cette position stratégique, un groupe de brigands en embuscade ici se jète sur vous !",
+					"win": "Ouf, c'était moins une ! Il faut à tout prix signaler leur présence à l'Avant-Poste..."
+				},
+				"end": "Tandis que vous lisez votre rapport, une inquiétude grandissante se lit sur le visage des marchands qui vous écoutent. Plusieurs d'entre eux s'empressent de rédiger de nouvelles annonces au Bureau."
+			},
+			"dcarav": {
+				"name": "La caravane occidentale",
+				"begin": "« Association des Marchands recherche transporteur qualifié pour livraison de routine. S'adresser à l'intendant Soulef Moissa. Pillards du désert s'abstenir.»",
+				"soulefMoissaStart": {
+					"text": "Ordre de mission 51... Ok. Pour la caravane, allez prendre livraison des caisses de matériel à la Frontière crépitante. C'est au sud. Suivant !"
+				},
+				"carrier": {
+					"name": "Porteur",
+					"text": "Voilà les caisses. C'est bizarre, j'aurais juré avoir entendu du bruit dedans... Emmenez-les aux Pylônes de Magnétite, tout au nord."
+				},
+				"pickUpCrates": {
+					"name": "Caisses à livrer",
+					"description": "Vous ramassez 4 petites caisses. "
+				},
+				"citadelBreak": {
+					"name": "Faire une pause",
+					"description": "C'est qu'elles sont lourdes ces caisses... Pfiou !"
+				},
+				"deliveryService": {
+					"name": "Service livraison",
+					"text": "Ah parfait ! Mais je n'ai besoin que d'une caisse. Envoyez donc les autres à mon collègue de Toutemba. Mais passez par le lac, ça sera moins dangereux."
+				},
+				"syphonBreak": {
+					"name": "Faire une pause",
+					"description": "Le poids des caisses devient de plus en plus pénible ! Vous faites une petite pause histoire de souffler un peu."
+				},
+				"suspiciousNoise": {
+					"name": "Bruit suspect",
+					"begin": "Les caisses se brisent soudainement dans un grand fracas ! Une marée de Korgons énervés en sort en hurlant !",
+					"win": "On dirait bien que cette livraison cache un traffic de Korgons... Vous devriez aller prévenir l'Intendant.",
+					"lost": "Les Korgons se sont échappés ! Il va falloir les retrouver..."
+				},
+				"soulefMoissaEnd": {
+					"text": "Des Korgons vous dites ? Hmmm... C'est bien noté, je vais faire le nécessaire. Allez chercher votre paie maintenant."
+				},
+				"end": "Vous signez votre rapport de mission au Bureau pour empocher votre prime."
+			},
+			"scorp1": {
+				"name": "Zeste de Scorpwink",
+				"begin": "« Apothicaire sans scrupule recherche Dard de scorpwink en bon état pour expériences douteuses. Une bonne connaissance des poisons sera un plus appréciable pour votre candidature. »",
+				"soulefMoissa": {
+					"text": "Des dards ? Encore ? Vous devriez aller près de la dévoreuse de l'Est. Ca pullule de scorpwinks dans les rochers là-bas."
+				},
+				"searchScorpwink": {
+					"name": "Chercher un scorpwink",
+					"begin": "Il ne vous faut pas longtemps pour tomber nez à nez avec un scorpwink...",
+					"win": "Malheureusement, le dard de ce scorpwink n'a pas tenu le choc du combat. Il va falloir en trouver un autre en meilleur état..."
+				},
+				"searchFurther": {
+					"name": "Chercher plus loin",
+					"begin": "Vous parvenez, non sans mal, en haut de l'amas rocailleux... pour tomber sur un scorpwink en plein combat contre un Longbrik ! Ils se retournent tous deux dans votre direction et se jettent sur vous."
+				},
+				"collectStinger": {
+					"name": "Récupérez le dard",
+					"description": "Vous ramassez un dard de scorpwink."
+				},
+				"end": "Vous donnez le dard à l'Intendant, il se chargera de le livrer à l'apothicaire."
+			},
+			"brig1": {
+				"name": "Sécuriser la croisée",
+				"begin": "« Le Consortium des Filous Associés recrute ! Si vous êtes jeune, en bonne santé et que vous aimez les rencontres enrichissantes, cette opportunité est pour vous. Adressez-vous à Ali Labah, l'éclaireur. »",
+				"aliLabah": {
+					"text": "C'est vous qu'on envoie pour faire le ménage. Mouais. Bon. On attend de vous que vous nettoyiez les alentours de la Croisée des Nomades. Suivez la route au sud. Quand on vous attaquera, c'est que vous y serez."
+				},
+				"banditsToEliminate": "Brigands à éliminer",
+				"end": "Le Consortium sait reconnaître ses alliés. Voici pour votre peine !"
+			},
+			"kitchn": {
+				"name": "Le voleur gourmand",
+				"begin": "« Recherche dinoz rapide pour petit boulot à la Citadelle. Contacter cuisinère Malika Ramhel. »",
+				"guardStart": {
+					"text": "Malika se trouve aux cuisines du palais au fond à gauche."
+				},
+				"malikaRamhel": {
+					"name": "Malika Ramhel",
+					"startText": "Merci d'avoir répondu à mon annonce ! Depuis plusieurs jours, un petit malin s'amuse à piller tous nos stocks de nourriture... Il faudrait régler ce problème au plus vite !",
+					"endText": "Hé beh. C'est vraiment plus ce que c'était notre bonne vieille Citadelle. Ca rentre et ça sort tout le temps, ça crie, ça se tape dessus... Bon bah merci quand même. Votre paie vous attend à l'Avant-Poste Rocky."
+				},
+				"enterStoreroom": {
+					"name": "Aller dans les réserves",
+					"description": "Personne ici. Vous décidez de cacher votre Dinoz dans l'obscurité..."
+				},
+				"waitInShadows": {
+					"name": "Attendre dans les ombres",
+					"begin": "Après seulement quelques minutes, vous entendez un bruit s'approcher... Un scorpwink ! Il tient de la nourriture entre ses pinces !",
+					"win": "Le scorpwink a fui dans les dédales de la Citadelle !"
+				},
+				"chaseScorpwink": {
+					"name": "Poursuivre le scorpwink",
+					"begin": "Pourquoi il revient sans rien ? ... Hé... Regardez là-bas ! Un intrus !"
+				},
+				"end": "Un agent du Bureau des Requêtes vous accueille sans un sourire et vous tend votre prime pour ce travail."
+			},
+			"worms": {
+				"name": "Vermifuge",
+				"begin": "« L'entreprise Caravoies de l'Est recherche un agent de maintenance pour l'entretien de ses voiries. Contactez la contremaître Fadoua Al-Hépluvit au chantier de la Frontière Crépitante pour plus d'informations. »",
+				"fadoua": {
+					"name": "Contremaître Fadoua Al-Hépluvit",
+					"startText": "Vous là ! Qu'est-ce que vous faîtes sans casque de protection sur mon chantier ?!",
+					"briefingText": "C'est vous l'agent de maintenance ? Bien. On a des problèmes sur la voie qui traverse les Pylônes de magnétite, au nord. Des attaques de Longbriks. Vous voulez nous rendre service ? Allez faire le ménage là-bas.",
+					"endText": "Une Matriarche... Ca n'est pas bon signe. J'espère que votre intervention calmera un peu les choses. Merci pour le service rendu !"
+				},
+				"takeHelmet": {
+					"name": "Prendre un casque",
+					"description": "Vous enfilez un casque de chantier."
+				},
+				"worker": {
+					"name": "Ouvrier de Caravoies",
+					"startText": "Ah, enfin de l'aide ! On a encore essuyé une attaque de Longbriks ce matin. Ca bloque l'avancée des travaux ! Pire, ils détruisent les routes qu'on construit avec les trous qu'ils laissent derrière eux...",
+					"holeText": "Merci pour le coup de main ! Mais... Qu'est-ce que c'est que ce bruit ?! Regardez ! Un trou énorme s'est ouvert dans le sol !",
+					"endText": "J'ai bien cru qu'on allait y rester... Merci pour votre aide, Caravoies saura vous récompenser ! A bientôt !"
+				},
+				"longbriksToEliminate": "Longbriks à éliminer",
+				"jumpIntoHole": {
+					"name": "Sauter dans le trou",
+					"begin": "Argh ! Une Matriarche Longbrik !"
+				},
+				"returnToFadoua": "Retourner voir Fadoua Al-Hépluvit",
+				"end": "L'entreprise Caravoies de l'Est vous remercie pour votre intervention sur nos chantiers. En vous souhaitant un bon voyage sur nos routes !"
+			},
+			"brig2": {
+				"name": "On recherche: Sahalami le trancheur",
+				"begin": "« ON RECHERCHE : Sahalami dit \"le Trancheur sans pitié\". Individu TRÈS dangereux coupable d'innombrables actes de piraterie. Aucune piste concernant sa cachette. Forte récompense à la clé ! Dinoz de faible niveau s'abstenir ! »",
+				"findSahalamiTrail": "Retrouver la trace de Sahalami",
+				"attackedCaravan": {
+					"name": "Caravane attaquée",
+					"description": "Vous trouvez les restes d'une caravane qui a semble-t-il été attaquée récemment..."
+				},
+				"findBandits": "Trouver les pillards",
+				"stackedCrates": {
+					"name": "Caisses empilées",
+					"description": "Vous remarquez la présence de divers objets entassés, volés de toute évidence, à l'entrée d'une caverne sombre... Peut-être que les coupables se cachent à l'intérieur ?"
+				},
+				"enterHideout": {
+					"name": "Entrer dans le repaire",
+					"begin": "Intrus ! ALEEEEEEERTE !",
+					"win": "Vous avez éliminé la patrouille de l'entrée."
+				},
+				"exploreHideout": {
+					"name": "Explorer le repaire",
+					"begin": "Tiens tiens... Regardez qui nous a suivi jusqu'ici... Attrapez-le !",
+					"win": "Vous avez vaincu Sahalami le Trancheur !"
+				},
+				"strangePendant": {
+					"name": "Pendentif étrange",
+					"description": "Sahalami portait un pendentif en forme de Couperet de cuisine. Etrange..."
+				},
+				"end": "Sahalami ne terrorisera plus personne. Reste à élucider le mystère de ce pendentif..."
+			},
+			"penden": {
+				"name": "Un collier bien mystérieux",
+				"begin": "Le pendentif en forme de Couperet de cuisine trouvé sur Sahalami est quand même très étrange... Vous devriez mener l'enquête à son sujet.",
+				"soulefMoissa": {
+					"text": "Ce pendentif ne me dit rien. Désolé."
+				},
+				"aliLabah": {
+					"text": "C'est très intéressant... J'ai déjà vu ce pendentif au cou de certains chefs au cours de mes expéditions. On dirait bien que certains clans de voleurs se sont associés ! Voici la liste des noms des chefs en question."
+				},
+				"takeList": {
+					"name": "Prendre la liste",
+					"description": "Vous obtenez les noms de plusieurs chefs brigands. Ils sont probablement liés à cette association de voleurs !"
+				},
+				"end": "Vous avez obtenu les informations qu'il vous fallait. "
+			},
+			"hunt1": {
+				"name": "On recherche: Tripou le mou",
+				"begin": "« ON RECHERCHE : Tripou, le pillard mou des nuits sans lune. Les derniers rapports font état d'une attaque au pied de la Dévoreuse du nord. Mission très dangereuse, belle récompense à prévoir. »",
+				"waitForAttack": {
+					"name": "Attendre une attaque",
+					"description": "Vous vous installez au pied de la dévoreuse pour attendre une éventuelle attaque..."
+				},
+				"wait": {
+					"name": "Attendre...",
+					"description": "Après un long moment... rien ne se passe."
+				},
+				"passingMerchant": {
+					"name": "Marchand de passage",
+					"text": "Vous cherchez Tripou ? Ah non, pas vu aujourd'hui. Et j'en suis bien content !"
+				},
+				"waitAgain": {
+					"name": "Attendre encore...",
+					"description": "Vous tournez en rond, tandis que rien ne vous arrive..."
+				},
+				"keepWaiting": {
+					"name": "Persister dans l'attente",
+					"description": "De longues heures s'écoulent. Rien ne se produit."
+				},
+				"passingAdventurer": {
+					"name": "Une aventurière qui passait par là",
+					"text": "Tripou... Jamais entendu ce nom là, désolée. Bonne journée !"
+				},
+				"walkInCircles": {
+					"name": "Tourner en rond",
+					"description": "La fatigue vous gagne, mais c'est bien la seule chose d'intéressante qui se produit..."
+				},
+				"waitLonger": {
+					"name": "Attendre un peu plus...",
+					"begin": "Allez les gars, détroussez-moi ce guignol !",
+					"win": "Vous apercevez Tripou, caché derrière ses hommes, à quelques pas de vous..."
+				},
+				"tripou": {
+					"name": "Tripou",
+					"taunt": "Tu ne fais pas le poids ! Vas-t-en !"
+				},
+				"henchmen": {
+					"name": "Hommes de main",
+					"begin": "Il ne doit pas passer !"
+				},
+				"chargeTripou": {
+					"name": "Foncer sur Tripou !",
+					"begin": "Tu es courageux, mais ça ne te suffira pas... Finissons-en !",
+					"win": "Vous avez vaincu Tripou le pillard mou des nuits sans lune !"
+				},
+				"cleaverPendant": {
+					"name": "Pendentif du Couperet",
+					"description": "Tripou portait bien l'un des pendentifs que vous recherchez. Voilà une bonne chose de faite."
+				},
+				"end": "Vous avez réussi à vaincre Tripou ! Félicitations !"
+			},
+			"hunt2": {
+				"name": "On recherche: Boukané l'intuable",
+				"begin": "« ON RECHERCHE : Boukané, l'intuable tortionnaire des abîmes insondables ! Il se terre dans son repaire en Extrême Occident, mission hautement périlleuse ! »",
+				"findBoukane": {
+					"name": "Trouver Boukané",
+					"begin": "Aaah ! Ce n'est pas moi ! Ce n'est pas moi ! Si vous cherchez Boukané, il est parti avec la bande à la Citadelle... Pitié, laissez-moi partir !",
+					"win": "Hmmm... Ce voleur a parlé de la Citadelle... Je devrais aller jeter un oeil là-bas."
+				},
+				"guard": {
+					"startText": "Boukané ? Ici ? Non c'est impossible. Mais jetez un oeil si vous pensez qu'il est à l'intérieur.",
+					"cellarText": "Vous l'avez trouvé ? Bah il reste les caves à vérifier à la limite. Personne n'y va jamais.",
+					"endText": "Ca alors... Boukané.. Chez nous.. Heureusement que vous étiez là !"
+				},
+				"searchHall": {
+					"name": "Fouiller le hall",
+					"description": "On dirait bien qu'il n'y a personne ici..."
+				},
+				"searchRoof": {
+					"name": "Monter sur le toit",
+					"description": "Jolie vue ! Mais Boukané n'est pas ici non plus... Continuons à fouiller la Citadelle."
+				},
+				"enterCellar": {
+					"name": "Descendre à la cave",
+					"begin": "Chut, quelqu'un vient... Raah, on est repérés ! Il ne faut pas les laisser s'enfuir !",
+					"win": "Vous avez vaincu Boukané l'intuable et ses hommes !"
+				},
+				"cleaverPendant": {
+					"name": "Pendentif du Couperet",
+					"description": "Boukané portait bien l'un des pendentifs que vous recherchez. Un chef de moins."
+				},
+				"end": "Vous avez déjoué les plans de Boukané. De toutes évidences, il s'apprêtait à attaquer la Citadelle par son point faible..."
+			},
+			"hunt3": {
+				"name": "On recherche: Cervelah l'empoisonneur",
+				"begin": "« ON RECHERCHE : Cervelah, l'empoisonneur verdâtre. Grand, brun, porte une capuche et est toujours accompagné de Pikouz, son fidèle scorpwink. Individu extrêmement hostile. Forte prime offerte par le Consortium des Filous Associés ! Contactez Aboul Tonhor, marchand aux Pylônes. »",
+				"aboulTonhor": {
+					"name": "Aboul Tonhor",
+					"text": "Cervelah ? Oui j'le connais ! Son scorpwink horrible m'a piqué alors qu'ils essayaient de me détrousser... J'en ai été malade pendant plusieurs semaines ! J'ai entendu dire que sa bande se cachait dans le sud..."
+				},
+				"findAttackers": "Retrouver les aggresseurs d'Aboul Tonhor",
+				"noiseBehindRocks": {
+					"name": "Bruits derrière les rochers",
+					"description": "Vous avancez prudemment jusqu'à la source des bruits et vous découvrez un petit groupe de pillards festoyant sur les bords du lac de sable-magnétite... Profitons-en !"
+				},
+				"attackCamp": {
+					"name": "Attaquer le campement",
+					"begin": "Ciel !",
+					"win": "Aucune trace de Cervelah... Il doit pourtant se cacher dans les environs..."
+				},
+				"circleSyphon": {
+					"name": "Faire le tour du Syphon",
+					"begin": "Retiens ce dinoz, je coure prévenir Cervelah !",
+					"win": "Il faut à tout prix retrouver ce brigand."
+				},
+				"searchFugitive": {
+					"name": "Chercher le fuyard",
+					"description": "Personne. Mais vous remarquez des traces de pas allant vers les plateaux de Toulaho..."
+				},
+				"findFugitive": "Trouver où est parti le fuyard",
+				"climb": {
+					"name": "Grimper",
+					"begin": "Chef ! Chef ! Il est là ! Il nous a retrouvé... Tuons-le !",
+					"win": "Quel combat ! Vous avez vaincu Cervelah l'empoisonneur et son fidèle Pikouz."
+				},
+				"cleaverPendant": {
+					"name": "Pendentif du Couperet",
+					"description": "Cervelah portait l'un des pendentifs du Couperet que vous recherchiez..."
+				},
+				"end": "Le Consortium des Filous Associés vous remercie pour votre aide précieuse. Voilà une belle prime pour votre efficacité."
 			}
 		}
 	},
