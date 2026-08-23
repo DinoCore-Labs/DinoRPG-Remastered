@@ -55,6 +55,7 @@ import { marketRoutes } from './Market/Routes/market.routes.js';
 import { messagingRoutes } from './Messaging/Routes/messaging.routes.js';
 import { missionsRoutes } from './Mission/Routes/mission.routes.js';
 import { newsRoutes } from './News/Routes/news.routes.js';
+import { notificationRoutes } from './Notification/Routes/notification.routes.js';
 import { prisma } from './prisma.js';
 import { rankingRoutes } from './Ranking/Routes/ranking.routes.js';
 import { reportRoutes } from './Report/Routes/report.routes.js';
@@ -361,6 +362,7 @@ async function buildServer() {
 	server.register(devourerRoutes, { prefix: 'api/devourer' });
 	server.register(maintenanceRoutes, { prefix: 'api/maintenance' });
 	server.register(dojoRoutes, { prefix: 'api/dojo' });
+	server.register(notificationRoutes, { prefix: 'api/notifications' });
 	server.register(versionRoutes, { prefix: 'api' });
 
 	//------------------------------------------------------
