@@ -808,7 +808,8 @@ export default defineComponent({
 
 					if (res) {
 						const dojo = await DojoService.buildDojo();
-						userStore().setDojoId(dojo.id);
+						userStore().setDojoId(dojo.dojoId);
+						await this.refreshDinoz();
 					}
 					break;
 				default:

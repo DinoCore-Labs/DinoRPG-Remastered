@@ -8,7 +8,7 @@ import type { FighterRecap, FullFightStats } from '@dinorpg/core/models/fight/fi
 import { api } from '../utils/http';
 
 export const DojoService = {
-	async buildDojo(): Promise<Dojo> {
+	async buildDojo(): Promise<{ dojoId: string }> {
 		return api.post('/dojo/create');
 	},
 
