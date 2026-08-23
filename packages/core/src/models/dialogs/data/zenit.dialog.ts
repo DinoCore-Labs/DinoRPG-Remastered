@@ -72,7 +72,7 @@ export const maitrZenitDialog = defineDialog({
 		aideurl: {
 			id: 'aideurl',
 			text: 'npc.maitrZenit.dialog.aideurl',
-			effects: [{ type: 'url', url: '/help?id=dojos' }]
+			effects: [{ type: 'url', url: '/help' }]
 		},
 		maitre: {
 			id: 'maitre',
