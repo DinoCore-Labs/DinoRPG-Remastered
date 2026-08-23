@@ -13,7 +13,7 @@
 				</li>
 			</td>
 			<td>
-				<li v-for="dino in getDinozFighters(fight.fighters, true)" :key="dino.id">
+				<li v-for="dino in getDinozFighters(fight.fighters, false)" :key="dino.id">
 					{{ dino.name }}
 				</li>
 			</td>
