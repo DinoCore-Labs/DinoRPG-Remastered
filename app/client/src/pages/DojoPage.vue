@@ -89,7 +89,6 @@
 		</div>
 		<DojoTimer v-if="tournamentState" :state="tournamentState" />
 	</div>
-	<TournamentTestPanel @refresh="handleTestRefresh" />
 	<RouterView />
 </template>
 
@@ -149,17 +148,6 @@ export default defineComponent({
 				await this.dojoStore.update();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
-			}
-		},
-		async handleTestRefresh(tournamentId?: string, step?: string) {
-			await this.refresh();
-			const id = tournamentId || this.tournamentState?.id;
-			if (id) {
-				if (step && step.startsWith('finals')) {
-					this.$router.push(`/dojo/tournament/${id}/16`);
-				} else if (step && step.startsWith('pools')) {
-					this.$router.push(`/dojo/tournament/${id}/0`);
-				}
 			}
 		},
 		formatDate(oldDate: Date) {
