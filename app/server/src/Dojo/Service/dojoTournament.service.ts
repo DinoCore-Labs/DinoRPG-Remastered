@@ -140,9 +140,11 @@ export async function deleteTournamentTeam(req: FastifyRequest, reply: FastifyRe
 
 export async function getTournamentInfo(req: FastifyRequest, reply: FastifyReply) {
 	const latestTournament = await getLatestTournament();
+
 	if (!latestTournament) {
-		throw new ExpectedError('tournament not found');
+		return reply.send(undefined);
 	}
+
 	return reply.send({
 		...latestTournament,
 		teamRace: latestTournament.teamRace.split(',').map(d => parseInt(d))
