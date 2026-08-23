@@ -60,7 +60,9 @@ export const DojoService = {
 	},
 
 	// Tournament
-	async getTournamentInfo(): Promise<{ id: string; teamRace: number[]; teamSize: number; levelLimit: number }> {
+	async getTournamentInfo(): Promise<
+		{ id: string; teamRace: number[]; teamSize: number; levelLimit: number } | undefined
+	> {
 		return api.get('/dojo/tournament/info');
 	},
 	async getTournamentTeam(): Promise<DinozDojoFiche[]> {
