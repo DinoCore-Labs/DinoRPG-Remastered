@@ -38,7 +38,7 @@ export const placeListv2 = definePlaces({
 		name: 'dnv',
 		map: MapZone.DINOLAND,
 		moves: [
-			{ target: PlaceEnum.UNIVERSITE, condition: 'uvar(tuto,0)|!uvar(ptuto,186861)' },
+			{ target: PlaceEnum.UNIVERSITE },
 			{ target: PlaceEnum.FOUTAINE_DE_JOUVENCE },
 			{ target: PlaceEnum.GO_TO_DINOPLAZA, condition: 'fx(plaza)' }
 		],
@@ -63,9 +63,9 @@ export const placeListv2 = definePlaces({
 		name: 'fountj',
 		map: MapZone.DINOLAND,
 		moves: [
-			{ target: PlaceEnum.DINOVILLE, condition: 'uvar(tuto,0)|!uvar(ptuto,674288)' },
-			{ target: PlaceEnum.PAPY_JOE, condition: 'uvar(tuto,0)|!uvar(ptuto,674288)' },
-			{ target: PlaceEnum.FORCEBRUT, condition: 'uvar(tuto,0)|!uvar(ptuto,674288)' },
+			{ target: PlaceEnum.DINOVILLE },
+			{ target: PlaceEnum.PAPY_JOE },
+			{ target: PlaceEnum.FORCEBRUT },
 			{ target: PlaceEnum.PORT_DE_PRECHE }
 		],
 		gathers: [GatherType.CUEILLE1],
