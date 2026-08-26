@@ -51,11 +51,6 @@ onMounted(() => {
 	box-sizing: border-box;
 	color: #fff4c4;
 }
-
-/*
- * Header et footer :
- * l'image détermine naturellement sa hauteur.
- */
 .tutorial-objective__header,
 .tutorial-objective__footer {
 	display: block;
@@ -64,10 +59,6 @@ onMounted(() => {
 	user-select: none;
 	pointer-events: none;
 }
-
-/*
- * Partie centrale répétable.
- */
 .tutorial-objective__body {
 	width: 100%;
 	background-image: url('../../assets/background/tuto_bg_pix.webp');
@@ -75,19 +66,16 @@ onMounted(() => {
 	background-position: top center;
 	background-size: 100% auto;
 }
-
 .tutorial-objective__content {
 	display: flex;
 	align-items: center;
 	gap: 12px;
 	padding: 6px 14px 8px;
 }
-
 .tutorial-objective__infos {
 	flex: 1;
 	min-width: 0;
 }
-
 .tutorial-objective__title {
 	margin-bottom: 6px;
 	font-weight: 700;
@@ -96,16 +84,11 @@ onMounted(() => {
 	background: #441c0e;
 	box-sizing: border-box;
 }
-
 .tutorial-objective__text {
 	font-size: 14px;
 	font-style: italic;
 	line-height: 1.35;
 }
-
-/*
- * Bouton fermeture
- */
 .tutorial-objective__close {
 	position: absolute;
 	top: -19.5px;
