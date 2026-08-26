@@ -94,12 +94,14 @@ import Elements from '../components/dinoz/Elements.vue';
 import { beautifulNumber } from '../utils/beautifulNumber';
 import { ShopService } from '../services';
 import { errorHandler } from '../utils/errorHandler';
+import { useTutorialStore } from '../store/tutorialStore';
 
 export default defineComponent({
 	name: 'ShopDinoz',
 	data() {
 		return {
 			dinozStore: dinozStore(),
+			tutorialStore: useTutorialStore(),
 			dinozList: [] as Array<DinozShopFicheLite>,
 			raceList,
 			skillList
@@ -134,15 +136,24 @@ export default defineComponent({
 					errorHandler.handle(err, this.$toast);
 					return;
 				}
-
 				const dinozStore = this.dinozStore.getDinozList;
-
 				dinozStore.push(dinozCreated);
-
 				// Update dinoz list
 				this.dinozStore.setDinozList(dinozStore);
 				//console.log(this.dinozStore);
-
+				/*
+				 * Le backend vient de valider DINOZ_ADOPTED.
+				 * On recharge le tutoriel pour afficher immédiatement
+				 * l'objectif suivant.
+				 *
+				 * Une erreur de synchronisation du bandeau ne doit pas
+				 * annuler visuellement une adoption qui a déjà réussi.
+				 */
+				try {
+					await this.tutorialStore.load();
+				} catch (err) {
+					console.error('[tutorial] Failed to refresh tutorial after Dinoz adoption', err);
+				}
 				// Go to dinoz page
 				await this.$router.push({
 					name: 'DinozPage',
