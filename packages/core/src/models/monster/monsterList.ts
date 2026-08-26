@@ -2263,7 +2263,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			Skill.BULLE
 		],
 		zones: [],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'bao'
 	},
 	[Monster.SOLDIER]: {
 		id: Monster.SOLDIER,
