@@ -10,6 +10,14 @@ import { forestGuardianDialog } from './forestGuardian.dialog.js';
 import { guideMichelDialog } from './guideMichel.dialog.js';
 import { nicolasHulotDialog } from './hulot.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
+import {
+	introFallsBaoDialog,
+	introFallsTaurusDialog,
+	introPortDialog,
+	introPortEscortDialog,
+	introSwampDialog,
+	introWaikikiDialog
+} from './intro.dialog.js';
 import { jeromeKDinovilleDialog, jeromeKSteppesDialog } from './jeromeTrader.dialog.js';
 import { jovebozeDialog } from './joveboze.dialog.js';
 import { madameXDialog } from './madameX.dialog.js';
@@ -55,6 +63,13 @@ import { woundedSoldierDialog } from './woundedSoldier.dialog.js';
 import { maitrZenitDialog } from './zenit.dialog.js';
 
 export const dialogDefinitions = [
+	// Intro
+	introFallsBaoDialog,
+	introFallsTaurusDialog,
+	introPortDialog,
+	introPortEscortDialog,
+	introSwampDialog,
+	introWaikikiDialog,
 	// Dinoville
 	professorEugeneDialog,
 	jovebozeDialog,
