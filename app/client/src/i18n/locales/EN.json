@@ -456,10 +456,10 @@
 			"title": "Discover the upcoming events on DinoRPG!",
 			"small": "Irma's Prediction",
 			"strong": {
-				"title1": "Alpha 0.12.0 (Soon)",
-				"title2": "Alpha 0.13.0",
-				"title3": "Alpha 0.14.0",
-				"title4": "Alpha 0.15.0"
+				"title1": "Alpha 0.13.0 (Bientôt)",
+				"title2": "Alpha 0.14.0",
+				"title3": "Alpha 0.15.0",
+				"title4": "Alpha 0.16.0"
 			},
 			"help": "Click on an update above to get more information!",
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
@@ -467,11 +467,11 @@
 			"futureInfo1": {
 				"text1": "Master Zenith and the Dojo",
 				"text2": "The Inter-Dojo Tournament (PVP)",
-				"text3": "New NPCs and new missions"
+				"text3": "Correction de bugs"
 			},
 			"futureInfo2": {
-				"text1": "The Magnetic Steppes storyline",
-				"text2": "New NPCs and new missions"
+				"text1": "Le scénario tutoriel et le guide Michel",
+				"text2": "Correction de bugs"
 			},
 			"futureInfo3": {
 				"text1": "Monster Hunt (PVE)",
@@ -690,7 +690,7 @@
 		"Missing_device_cookie": "Could not identify your browser. Please allow cookies and try again.",
 		"Too_many_accounts_created_from_this_device_this_month": "Too many accounts were created from this browser this month. Please try again next month.",
 		"Too_many_accounts_created_from_this_network_this_month": "Too many accounts were created from this network this month. Please try again next month.",
-		"userNotFound": "The player {userId} was not found.",
+		"userNotFound": "Le joueur {userId} a été supprimé ou n'existe plus.",
 		"dinozNotFound": "The Dinoz {{id}} was not found.",
 		"dinozDoesNotBelongToUser": "Dinoz {dinozId} doesn't belong to player {userId}.",
 		"invalidId": "id was not found.",
@@ -825,9 +825,9 @@
 		"options": {
 			"title": "Account Options",
 			"mdp": "Modify Password",
-			"reset": "Reset account",
+			"reset": "Recommencer le compte",
 			"delete": "Supprimer le compte",
-			"resetTitle": "Reset account",
+			"resetTitle": "Recommencer le compte",
 			"resetDescription": "Êtes-vous sûr de vouloir tout recommencer ? Vous conserverez votre nom, votre description, votre avatar et votre messagerie. Cependant, TOUS VOS DINOZ, VOTRE INVENTAIRE ET VOTRE ARGENT SERONT DÉFINITIVEMENT PERDUS. Vous recommencerez l'aventure à zéro avec 100 000 pièces d'or.",
 			"deleteTitle": "Supprimer le compte",
 			"deleteDescription": "ATTENTION : Êtes-vous absolument sûr de vouloir supprimer votre compte ? Cette action effacera DÉFINITIVEMENT votre progression, vos dinoz, votre inventaire et votre profil. CETTE ACTION EST IRRÉVERSIBLE.",
@@ -3463,7 +3463,7 @@
 		},
 		"sections": {
 			"general": {
-				"title": "1. General Principles",
+				"title": "1. Respect et comportement",
 				"intro": "DinoRPG Remastered must be used fairly and respectfully.",
 				"forbiddenIntro": "Sont notamment interdits :",
 				"forbidden": {
@@ -3474,14 +3474,14 @@
 					"personalData": "la divulgation des informations personnelles d’un tiers ;",
 					"links": "les liens dangereux, frauduleux ou trompeurs."
 				},
-				"outro": "Clearly abusive behavior may be sanctioned even if it is not expressly mentioned in these rules."
+				"outro": "Tout comportement abusif ou portant volontairement atteinte au jeu ou à ses utilisateurs peut être sanctionné."
 			},
 			"accounts": {
-				"title": "3. Accounts",
-				"intro": "An account is personal. It is forbidden to:",
+				"title": "2. Comptes",
+				"intro": "Un compte est personnel. Il est interdit de le partager, le vendre, le donner ou d’utiliser le compte d’une autre personne.",
 				"password": "Ne communiquez jamais votre mot de passe et ne demandez jamais celui d’un autre joueur.",
 				"singleAccount": "A single person may normally use only one player account.",
-				"household": "Several people in the same household may each have their own account, provided those accounts are not used to gain an artificial advantage or circumvent a limitation."
+				"household": "Plusieurs personnes d’un même foyer peuvent chacune disposer de leur propre compte, à condition de ne pas les utiliser pour obtenir un avantage artificiel ou contourner une limitation."
 			},
 			"cheating": {
 				"title": "3. Triche, bugs et sécurité",
@@ -3500,30 +3500,30 @@
 				"devTools": "Les outils de développement du navigateur sont autorisés tant qu’ils ne sont pas utilisés pour tricher, contourner une règle ou compromettre le service."
 			},
 			"market": {
-				"title": "7. Market and Trading",
-				"intro": "Market and trading features must be used fairly.",
+				"title": "4. Marché et échanges",
+				"intro": "Les échanges entre joueurs doivent rester loyaux.",
 				"forbidden": "Il est interdit de manipuler artificiellement les prix, d’utiliser plusieurs comptes pour transférer des ressources ou enchérir sur ses propres offres, et d’exploiter une erreur ou une faille du marché.",
-				"outro": "A transaction obtained through fraud, manipulation, or exploitation of an anomaly may be canceled or corrected."
+				"outro": "Une transaction obtenue de manière irrégulière peut être annulée ou corrigée."
 			},
 			"reporting": {
-				"title": "8. Reporting Issues",
-				"intro": "Prohibited behavior, a bug, or a vulnerability can be reported to:",
+				"title": "5. Signalement",
+				"intro": "Un bug, une faille ou un comportement interdit peut être signalé à :",
 				"email": "contact{'@'}dinorpg.fr",
 				"details": "Merci d’indiquer autant que possible le pseudonyme concerné, la date, une description du problème et les éventuelles preuves ou étapes permettant de le reproduire.",
-				"disclosure": "It is prohibited to publish an unpatched vulnerability, continue exploiting it, or use it to access another user's data.",
+				"disclosure": "Une faille non corrigée ne doit pas être publiée ou exploitée.",
 				"goodFaith": "A report made in good faith will not be considered an attempt to cheat."
 			},
 			"sanctions": {
-				"title": "9. Sanctions",
-				"intro": "Depending on the severity of the violation, the administration may apply:",
+				"title": "6. Sanctions et contestation",
+				"intro": "Selon la gravité des faits, une infraction peut entraîner un avertissement, l’annulation d’un avantage ou d’une transaction, une restriction, une suspension ou la fermeture définitive du compte.",
 				"proportionality": "La sanction tient notamment compte de la gravité, de la répétition et du caractère volontaire des faits.",
 				"circumvention": "Il est interdit de contourner une sanction à l’aide d’un autre compte, d’un autre joueur ou de tout autre moyen.",
 				"appeal": "Une sanction peut être contestée de manière respectueuse et factuelle à l’adresse contact{'@'}dinorpg.fr."
 			},
 			"changes": {
-				"title": "12. Changes to the Rules",
-				"intro": "These rules may be amended to take into account:",
-				"version": "The version and date of the latest update are shown at the top of the document.",
+				"title": "7. Modification du règlement",
+				"intro": "Le règlement peut évoluer en fonction du jeu, de nouvelles fonctionnalités, de nouveaux abus ou de besoins de sécurité.",
+				"version": "La version et la date de dernière mise à jour sont indiquées en haut de cette page.",
 				"acceptance": "A new acceptance may be required when a significant change is made."
 			}
 		}
