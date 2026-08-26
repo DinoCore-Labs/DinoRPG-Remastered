@@ -4895,6 +4895,16 @@
 				"missions": "Consulter les annonces"
 			}
 		},
+		"guideMichel": {
+			"name": "Leguide Michel",
+			"dialog": {
+				"begin": "",
+				"pub": "Je vois que tu as envie de parcourir le monde.\nJe te conseille d'aller au port de prêche en passant par la fontaine de jouvence en partant d'ici.\nTu entendras surement des choses intéressantes sur le monde de Dinoland..."
+			},
+			"choice": {
+				"pub": "J'ai soif d'aventure !"
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
