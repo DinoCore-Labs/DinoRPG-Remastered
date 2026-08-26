@@ -7,6 +7,7 @@ import { dianKorgseyDialog } from './dianKorgsey.dialog.js';
 import { elementalMasterDialog } from './elementalMaster.dialog.js';
 import { forcebrutOrganizerDialog } from './forcebrutOrganizer.dialog.js';
 import { forestGuardianDialog } from './forestGuardian.dialog.js';
+import { guideMichelDialog } from './guideMichel.dialog.js';
 import { nicolasHulotDialog } from './hulot.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
 import { jeromeKDinovilleDialog, jeromeKSteppesDialog } from './jeromeTrader.dialog.js';
@@ -74,6 +75,7 @@ export const dialogDefinitions = [
 	starquestFinalDialog,
 	forcebrutOrganizerDialog,
 	jeromeKDinovilleDialog,
+	guideMichelDialog,
 	// Iles Atlantéinées
 	strangeHippoDialog,
 	coralMinerDialog,
