@@ -17,6 +17,7 @@
 			<a @click="goToNewsPage()" class="linkHome"></a>
 			<LeftPanel v-if="showLeftPanel" />
 			<div class="mainpage-center">
+				<TutorialObjective />
 				<RouterView />
 			</div>
 		</div>
@@ -27,11 +28,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import LeftPanel from '../components/common/LeftPanel.vue';
+import TutorialObjective from '../components/common/TutorialObjective.vue';
 import { userStore } from '../store/userStore';
 
 export default defineComponent({
 	name: 'MainPage',
-	components: { LeftPanel },
+	components: { LeftPanel, TutorialObjective },
 	computed: {
 		showLeftPanel(): boolean {
 			const user = userStore();
