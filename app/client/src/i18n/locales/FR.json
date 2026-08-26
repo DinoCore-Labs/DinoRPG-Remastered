@@ -904,7 +904,8 @@
 		"dinozCannotFollowBrave": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause de la compétence Brave.",
 		"dinozCannotFollowSharedElement": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause d'une mauvaise affinité élémentaire entre vos dinoz.",
 		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée.",
-		"fearFactorDesequip": "Vous ne pouvez pas déséquiper le Trouillomètre tant que ce Dinoz est dans un groupe."
+		"fearFactorDesequip": "Vous ne pouvez pas déséquiper le Trouillomètre tant que ce Dinoz est dans un groupe.",
+		"tutorialMovementRestricted": "Le tutoriel vous demande de suivre un autre chemin pour le moment."
 	},
 	"tooltip": {
 		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",

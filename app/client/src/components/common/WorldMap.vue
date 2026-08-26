@@ -110,6 +110,7 @@ import { errorHandler } from '../../utils/errorHandler.js';
 import { DinozService } from '../../services/dinoz.service.js';
 import { UserService } from '../../services/user.service.js';
 import { userStore } from '../../store/userStore.js';
+import { useTutorialStore } from '../../store/tutorialStore.js';
 
 export default defineComponent({
 	name: 'WorldMap',
@@ -121,6 +122,7 @@ export default defineComponent({
 			sessionStore: sessionStore(),
 			dinozStore: dinozStore(),
 			localStore: localStore(),
+			tutorialStore: useTutorialStore(),
 			placeMap: [] as Array<PlaceDisplayed>,
 			translation: {
 				x: 0,
@@ -236,15 +238,26 @@ export default defineComponent({
 			if (!this.dinozData.borderPlace?.includes(placeId)) {
 				return;
 			}
-
 			// Check if dinoz is being sold
 			if (this.dinozData.state === DINOZ_STATE.selling) {
 				this.$toast.open({ message: formatText(this.$t(`toast.isSelling`)), type: 'error' });
 				return;
 			}
-
 			try {
 				const moveTry = await DinozService.move(this.dinozData.id, placeId, this.localStore.getAutoReequipItems);
+				/*
+				 * Le déplacement peut avoir validé :
+				 * - move ;
+				 * - port.
+				 *
+				 * Une erreur de simple rafraîchissement UI ne doit
+				 * pas invalider le déplacement déjà réussi côté serveur.
+				 */
+				try {
+					await this.tutorialStore.load();
+				} catch (err) {
+					console.error('[tutorial] Failed to refresh tutorial after movement', err);
+				}
 				if (moveTry.movementEvent) {
 					this.$toast.open({
 						message: formatText(this.$t(moveTry.movementEvent.text) as string),
@@ -297,7 +310,6 @@ export default defineComponent({
 						message: formatText(this.$t(`toast.missingData`)),
 						type: 'error'
 					});
-
 					return;
 				}
 				if (moveTry.result) {
@@ -308,7 +320,6 @@ export default defineComponent({
 								if (dinoz.life !== 0) {
 									// Update dinoz place
 									dinoz.placeId = place.alias || placeId;
-
 									// Update dinoz HP
 									dinoz.life -= moveTry.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
 								} else {
