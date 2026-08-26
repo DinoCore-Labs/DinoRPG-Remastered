@@ -520,6 +520,8 @@ async function applyDialogSpecial(
 			await removeUserGold(tx, context, special.amount);
 			return;
 		case 'startFight':
+		case 'fight':
+		case 'fightGroup':
 			actions.startFight = phaseId;
 			return;
 		case 'popup':
@@ -531,8 +533,6 @@ async function applyDialogSpecial(
 		case 'missions':
 			actions.missionsGroup = special.group;
 			return;
-		case 'fight':
-		case 'fightGroup':
 		case 'none':
 			return;
 		default: {
