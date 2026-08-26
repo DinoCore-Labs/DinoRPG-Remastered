@@ -13,6 +13,7 @@ export type DialogEffect =
 	| { type: 'scenario'; scenario: string; phase: number }
 	| { type: 'scenarioDelta'; scenario: string; delta: number }
 	| { type: 'tutorialEvent'; event: TutorialEvent }
+	| { type: 'tutorialRefresh' }
 	| { type: 'giveItem'; itemId: number; count: number }
 	| { type: 'giveRandomItem'; itemIds: number[] }
 	| { type: 'unlockMission'; mission: string }

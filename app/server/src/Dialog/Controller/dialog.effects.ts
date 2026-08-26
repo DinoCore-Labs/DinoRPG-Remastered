@@ -27,7 +27,7 @@ import {
 	setUserScenarioProgression
 } from '../../Scenario/Controller/scenarioProgress.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
-import { handleTutorialEventTx } from '../../Tutorial/Controller/tutorial.controller.js';
+import { handleTutorialEventTx, refreshTutorialProgressTx } from '../../Tutorial/Controller/tutorial.controller.js';
 import { DialogContext } from './dialog.context.js';
 
 type DialogTransaction = Prisma.TransactionClient;
@@ -333,6 +333,68 @@ function resolvePhasePnj(
 	return pnj;
 }
 
+async function moveDialogDinoz(tx: DialogTransaction, context: DialogContext, places: readonly number[], all: boolean) {
+	if (places.length === 0) {
+		throw new Error('moveRandom requires at least one place');
+	}
+	const placeId = places[Math.floor(Math.random() * places.length)];
+	if (placeId === undefined) {
+		throw new Error('Unable to resolve dialog destination');
+	}
+	if (!all) {
+		await tx.dinoz.update({
+			where: {
+				id: context.dinoz.id
+			},
+			data: {
+				placeId
+			}
+		});
+		return;
+	}
+	/*
+	 * moveAll historique :
+	 *
+	 * - si le Dinoz sélectionné est meneur :
+	 *   on déplace le meneur + ses suiveurs ;
+	 *
+	 * - si le Dinoz sélectionné est suiveur :
+	 *   on retrouve son meneur et on déplace tout le groupe.
+	 */
+	const selectedDinoz = await tx.dinoz.findUnique({
+		where: {
+			id: context.dinoz.id
+		},
+		select: {
+			leaderId: true
+		}
+	});
+	if (!selectedDinoz) {
+		throw new ExpectedError('dinozNotFound', {
+			params: {
+				dinozId: context.dinoz.id
+			}
+		});
+	}
+	const leaderId = selectedDinoz.leaderId ?? context.dinoz.id;
+	await tx.dinoz.updateMany({
+		where: {
+			userId: context.user.id,
+			OR: [
+				{
+					id: leaderId
+				},
+				{
+					leaderId
+				}
+			]
+		},
+		data: {
+			placeId
+		}
+	});
+}
+
 async function applyDialogEffect(
 	tx: DialogTransaction,
 	context: DialogContext,
@@ -361,6 +423,12 @@ async function applyDialogEffect(
 				userId: context.user.id,
 				dinozId: context.dinoz.id,
 				event: effect.event
+			});
+			return;
+		case 'tutorialRefresh':
+			await refreshTutorialProgressTx(tx, {
+				userId: context.user.id,
+				dinozId: context.dinoz.id
 			});
 			return;
 		case 'giveItem':
@@ -418,8 +486,10 @@ async function applyDialogEffect(
 		case 'startConcentration':
 			await startDinozConcentration(tx, context.user.id, context.dinoz.id);
 			return;
-		case 'friend':
 		case 'moveRandom':
+			await moveDialogDinoz(tx, context, effect.places, effect.all);
+			return;
+		case 'friend':
 		case 'dialect':
 		case 'tag':
 		case 'removeTag':
