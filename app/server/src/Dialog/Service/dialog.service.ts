@@ -7,7 +7,7 @@ import { Prisma } from '../../../../prisma/index.js';
 import { advanceDinozMissionOnTalk } from '../../Mission/Controller/mission.progress.js';
 import { prisma } from '../../prisma.js';
 import { checkDialogCondition } from '../../utils/conditions/checkDialogCondition.js';
-import { buildDialogContext } from '../Controller/dialog.context.js';
+import { buildDialogContext, getScenarioProgress } from '../Controller/dialog.context.js';
 import { applyDialogPhaseEffects } from '../Controller/dialog.effects.js';
 import { getDialogById, getDialogs } from '../Controller/dialog.registry.js';
 import {
@@ -210,15 +210,25 @@ export async function startDialog(params: OpenDialogParams): Promise<DialogPhase
 export async function selectDialogLink(params: SelectDialogLinkParams): Promise<DialogPhaseResponse> {
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
-		await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
 		const currentPhase = getDialogPhase(dialog, params.phaseId);
-		const selectedLink = getDialogLink(dialog, params.linkId);
-		ensurePhaseContainsLink(currentPhase, selectedLink.id, dialog.id);
 		const currentContext = await buildDialogContext(tx, {
 			userId: params.userId,
 			dinozId: params.dinozId,
 			dialog
 		});
+		if (isDialogFightReturnPhase(currentPhase.id)) {
+			const completionState = getFightReturnCompletionState(dialog, currentPhase, currentContext);
+			if (completionState === false) {
+				throw new ExpectedError(`Dialog fight "${dialog.id}:${currentPhase.id}" has not been completed`);
+			}
+			if (completionState === null) {
+				await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
+			}
+		} else {
+			await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
+		}
+		const selectedLink = getDialogLink(dialog, params.linkId);
+		ensurePhaseContainsLink(currentPhase, selectedLink.id, dialog.id);
 		if (selectedLink.cond && !checkDialogCondition(selectedLink.cond, currentContext)) {
 			throw new Error(`Link "${selectedLink.id}" is not currently available in dialog "${dialog.id}"`);
 		}
@@ -227,24 +237,47 @@ export async function selectDialogLink(params: SelectDialogLinkParams): Promise<
 	});
 }
 
-function isCompletedFightReturnPhase(
+function getFightReturnCompletionState(
 	dialog: RuntimeDialog,
 	returnPhase: RuntimeDialogPhase,
 	context: Awaited<ReturnType<typeof buildDialogContext>>
-): boolean {
+): boolean | null {
 	const fightPhase = findDialogFightPhaseByReturnPhase(dialog, returnPhase.id);
 	if (!fightPhase) {
-		return false;
+		return null;
 	}
+	let hasCompletionProof = false;
+	/*
+	 * Preuve historique via statut.
+	 */
 	const statusKey = getDialogFightLockStatusKey(fightPhase, returnPhase);
-	if (!statusKey) {
-		return false;
+	if (statusKey) {
+		hasCompletionProof = true;
+		const statusId = dinozStatusIdByKey[statusKey];
+		if (statusId == null) {
+			return false;
+		}
+		if (!context.dinoz.statusIds.has(statusId)) {
+			return false;
+		}
 	}
-	const statusId = dinozStatusIdByKey[statusKey];
-	if (statusId == null) {
-		return false;
+	/*
+	 * Nouvelle preuve :
+	 *
+	 * une progression scénario placée dans fight_win
+	 * n'est appliquée que par processDialogFight()
+	 * après une victoire.
+	 */
+	for (const effect of returnPhase.effects) {
+		if (effect.type !== 'scenario') {
+			continue;
+		}
+		hasCompletionProof = true;
+		if (getScenarioProgress(context, effect.scenario) !== effect.phase) {
+			return false;
+		}
 	}
-	return context.dinoz.statusIds.has(statusId);
+	return hasCompletionProof ? true : null;
 }
 
 function isDialogFightReturnPhase(phaseId: string): boolean {
