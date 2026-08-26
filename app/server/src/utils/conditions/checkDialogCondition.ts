@@ -2,6 +2,7 @@ import { CompareMode, Condition, MissionConditionStatus } from '@dinorpg/core/mo
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { resolveItemIdFromKey } from '@dinorpg/core/models/items/itemIdByKey.js';
+import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { UserRole } from '@dinorpg/core/models/user/userRole.js';
 
 import { Role } from '../../../../prisma/index.js';
@@ -34,6 +35,11 @@ function isAdminRole(role: UserRole): boolean {
 
 function getGameHour(date: Date) {
 	return date.getHours();
+}
+
+function resolvePlaceIdFromKey(key: string): number | null {
+	const place = Object.values(placeListv2).find(place => place.name === key);
+	return place?.placeId ?? null;
 }
 
 export function checkDialogCondition(condition: Condition | null | undefined, context: DialogContext): boolean {
@@ -83,8 +89,10 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 			return context.dinoz.level >= condition.value;
 		case 'dinoz':
 			return context.user.dinozCount >= condition.value;
-		case 'position':
-			return String(context.dinoz.placeId) === condition.key;
+		case 'position': {
+			const placeId = resolvePlaceIdFromKey(condition.key);
+			return placeId !== null && context.dinoz.placeId === placeId;
+		}
 		case 'equip': {
 			const itemId = resolveItemIdFromKey(condition.key);
 			if (itemId == null) {

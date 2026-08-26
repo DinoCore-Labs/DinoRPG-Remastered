@@ -334,7 +334,7 @@ export async function buildDialogContext(
 			effects: buildEmptyStringSet(),
 			tags: buildEmptyStringSet(),
 			collections: buildRewardKeySet(userRewards),
-			userVars: buildEmptyNumberMap(),
+			userVars: buildStringNumberMap(userStats),
 			dinozCount: allUserDinoz.length
 		},
 		dinoz: {
