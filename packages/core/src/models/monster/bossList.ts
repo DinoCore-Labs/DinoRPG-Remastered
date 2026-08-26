@@ -68,7 +68,11 @@ export enum Boss {
 	SWAMP_MONSTER_FLOODED = 'SWAMP_MONSTER_FLOODED',
 	SWAMP_MONSTER_FOG = 'SWAMP_MONSTER_FOG',
 	FIODOR_PIGNIGHT = 'FIODOR_PIGNIGHT',
-	DIMITRI_PIGNIGHT = 'DIMITRI_PIGNIGHT'
+	DIMITRI_PIGNIGHT = 'DIMITRI_PIGNIGHT',
+	INTRO_DARKI_1 = 'INTRO_DARKI_1',
+	INTRO_DARKI_2 = 'INTRO_DARKI_2',
+	INTRO_DARKI_3 = 'INTRO_DARKI_3',
+	TAURUS = 'TAURUS'
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -1368,5 +1372,97 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		canBeCaptured: false,
 		display: 'dinoz:19DVYpUf3pkF3M00',
 		size: 150
+	},
+	[Boss.INTRO_DARKI_1]: {
+		id: Boss.INTRO_DARKI_1,
+		boss: true,
+		name: 'darki1',
+		hp: 500,
+		elements: {
+			fire: 30,
+			wood: 20,
+			water: 10,
+			lightning: 5,
+			air: 15
+		},
+		resilience: 0,
+		xp: 0,
+		gold: 0,
+		odds: 100,
+		level: 50,
+		zones: [],
+		canBeCaptured: false,
+		display: 'dinoz:0A0A03B1917200000',
+		dark: true,
+		size: 250
+	},
+
+	[Boss.INTRO_DARKI_2]: {
+		id: Boss.INTRO_DARKI_2,
+		boss: true,
+		name: 'darki2',
+		hp: 600,
+		elements: {
+			fire: 30,
+			wood: 15,
+			water: 10,
+			lightning: 10,
+			air: 5
+		},
+		resilience: 0,
+		xp: 0,
+		gold: 0,
+		odds: 100,
+		level: 50,
+		zones: [],
+		canBeCaptured: false,
+		display: 'dinoz:1A054333407200000',
+		dark: true,
+		size: 250
+	},
+	[Boss.INTRO_DARKI_3]: {
+		id: Boss.INTRO_DARKI_3,
+		boss: true,
+		name: 'darki3',
+		hp: 700,
+		elements: {
+			fire: 5,
+			wood: 10,
+			water: 35,
+			lightning: 20,
+			air: 10
+		},
+		resilience: 0,
+		xp: 50,
+		gold: 0,
+		odds: 100,
+		level: 50,
+		zones: [],
+		canBeCaptured: false,
+		display: 'dinoz:2A0935B1627200000',
+		dark: true,
+		size: 350
+	},
+	[Boss.TAURUS]: {
+		id: Boss.TAURUS,
+		boss: true,
+		name: 'taurus',
+		hp: 2000,
+		elements: {
+			fire: 60,
+			wood: 20,
+			water: 20,
+			lightning: 20,
+			air: 20
+		},
+		resilience: 0,
+		xp: 0,
+		gold: 0,
+		odds: 100,
+		level: 90,
+		zones: [],
+		canBeCaptured: false,
+		skills: [Skill.BOULE_DE_FEU, Skill.COULEE_DE_LAVE, Skill.VULCAIN],
+		display: 'taurus'
 	}
 };
