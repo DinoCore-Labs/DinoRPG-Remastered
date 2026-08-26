@@ -4,6 +4,7 @@ import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import { FightOutcome } from '@dinorpg/core/models/fight/fightResult.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
+import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -30,25 +31,37 @@ const MAGNETITE_FINAL_ASSAULT_DIALOG_ID = 'magnetite_citadel_guard_assault';
 
 function getDialogFightPhase(dialog: RuntimeDialog, phaseId: string): RuntimeDialogPhase {
 	const phase = dialog.phases[phaseId];
-
 	if (!phase) {
 		throw new ExpectedError(`Unknown phase "${phaseId}" in dialog "${dialog.id}"`);
 	}
-
 	return phase;
+}
+
+function resolveDialogMonster(key: string): MonsterFiche {
+	const monster = (monsterByKey as Readonly<Record<string, MonsterFiche>>)[key];
+	if (!monster) {
+		throw new ExpectedError(`Unknown dialog monster key "${key}"`);
+	}
+	return monster;
 }
 
 function extractDialogFightData(phase: RuntimeDialogPhase): {
 	monsters: MonsterFiche[];
+	allies: MonsterFiche[];
 	rewardStatusKey?: string;
 } {
 	let monsters: MonsterFiche[] | null = null;
+	let allies: MonsterFiche[] = [];
 	let rewardStatusKey: string | undefined;
 	for (const special of phase.special) {
 		if (special.type === 'startFight') {
 			monsters = special.fightId;
+			allies = [];
 		}
-
+		if (special.type === 'fightGroup' || special.type === 'fight') {
+			monsters = special.monsters.map(resolveDialogMonster);
+			allies = special.friends.map(resolveDialogMonster);
+		}
 		if (special.type === 'status') {
 			rewardStatusKey = special.status;
 		}
@@ -58,6 +71,7 @@ function extractDialogFightData(phase: RuntimeDialogPhase): {
 	}
 	return {
 		monsters,
+		allies,
 		rewardStatusKey
 	};
 }
@@ -80,7 +94,7 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 	if (dialog.cond && !checkDialogCondition(dialog.cond, context)) {
 		throw new ExpectedError(`Dialog "${dialog.id}" is not available`);
 	}
-	const { monsters, rewardStatusKey } = extractDialogFightData(phase);
+	const { monsters, allies, rewardStatusKey } = extractDialogFightData(phase);
 	const isMagnetiteFinalAssault = dialogId === MAGNETITE_FINAL_ASSAULT_DIALOG_ID && phaseId === 'fight';
 	/**
 	 * Le combat final Magnétite ne possède volontairement
@@ -165,7 +179,7 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 	 * Traitement générique des autres combats de dialogue.
 	 */
 	const team = [dinozData];
-	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters);
+	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters, undefined, allies);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, dinozData.placeId, user);
 	const winner = fightResult.outcome === FightOutcome.AttackerWin;
 	if (winner && returnPhase) {
@@ -197,7 +211,7 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 	await incrementUserStat(
 		StatTracking.KILL_M,
 		user.id,
-		fightResult.fighters.filter(f => f.type === FighterType.MONSTER).length
+		fightResult.fighters.filter(f => !f.attacker && f.type === FighterType.MONSTER).length
 	);
 	return reply.send({
 		...result,
