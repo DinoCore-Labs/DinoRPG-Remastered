@@ -27,6 +27,7 @@ import {
 	setUserScenarioProgression
 } from '../../Scenario/Controller/scenarioProgress.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
+import { handleTutorialEventTx } from '../../Tutorial/Controller/tutorial.controller.js';
 import { DialogContext } from './dialog.context.js';
 
 type DialogTransaction = Prisma.TransactionClient;
@@ -353,6 +354,13 @@ async function applyDialogEffect(
 				userId: context.user.id,
 				scenarioKey: effect.scenario,
 				delta: effect.delta
+			});
+			return;
+		case 'tutorialEvent':
+			await handleTutorialEventTx(tx, {
+				userId: context.user.id,
+				dinozId: context.dinoz.id,
+				event: effect.event
 			});
 			return;
 		case 'giveItem':
