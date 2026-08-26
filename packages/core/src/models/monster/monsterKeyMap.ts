@@ -131,6 +131,11 @@ export const monsterIdByKey: Readonly<Record<MonsterKey, MonsterLikeId>> = {
 	wteamc: Boss.TW_CAPTAIN,
 	darkgp_magnet: Boss.MAGNETITE_DARK_SMASHROOM,
 
+	darki1: Boss.INTRO_DARKI_1,
+	darki2: Boss.INTRO_DARKI_2,
+	darki3: Boss.INTRO_DARKI_3,
+	taurus: Boss.TAURUS,
+
 	any: Monster.ANY
 };
 
