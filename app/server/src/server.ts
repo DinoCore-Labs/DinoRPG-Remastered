@@ -62,6 +62,7 @@ import { reportRoutes } from './Report/Routes/report.routes.js';
 import { roadmapRoutes } from './Roadmap/Routes/roadmap.routes.js';
 import { shopRoutes } from './Shop/Routes/shop.routes.js';
 import { trainingCenterRoutes } from './TrainingCenter/Routes/trainingCenter.routes.js';
+import { tutorialRoutes } from './Tutorial/Routes/tutorial.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
 import { TournamentManager } from './utils/tournamentManager.js';
 import version from './utils/version.js';
@@ -365,6 +366,7 @@ async function buildServer() {
 	server.register(devourerRoutes, { prefix: 'api/devourer' });
 	server.register(dojoRoutes, { prefix: 'api/dojo' });
 	server.register(notificationRoutes, { prefix: 'api/notifications' });
+	server.register(tutorialRoutes, { prefix: 'api/tutorial' });
 	server.register(maintenanceRoutes, { prefix: 'api/maintenance' });
 	server.register(versionRoutes, { prefix: 'api' });
 
