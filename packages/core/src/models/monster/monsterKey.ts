@@ -114,6 +114,10 @@ export const monsterKeys = [
 	'wteam3',
 	'wteamc',
 	'darkgp_magnet',
+	'darki1',
+	'darki2',
+	'darki3',
+	'taurus',
 	'any'
 ] as const;
 
