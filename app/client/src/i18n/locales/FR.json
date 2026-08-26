@@ -6613,5 +6613,120 @@
 		"reportUser": "Signaler ce joueur",
 		"reportClan": "Signaler ce clan",
 		"reportDinoz": "Signaler ce dinoz"
+	},
+	"tutorial": {
+		"objective": "Objectif : {title}",
+		"close": "Masquer",
+		"finish": "Terminer le tutoriel",
+		"objectives": {
+			"dinoz": {
+				"title": "Adopter un Dinoz",
+				"begin": "Bienvenue sur DinoRPG. Je serai ton guide pour ces premières étapes. Tout d'abord, il te faut adopter un Dinoz ! Prends ton temps pour le choisir, il sera ton compagnon pour un bon moment.",
+				"end": "Félicitations, vous voilà maintenant plongé dans un immense univers que nous allons continuer à vous présenter !",
+				"helpers": {
+					"compare": "Compare les caractéristiques de chaque race !",
+					"name": "Très bon choix ! Maintenant, donne un nom à ce Dinoz !"
+				}
+			},
+			"speak": {
+				"title": "Discussion enflammée",
+				"begin": "Bienvenue à Dinoland, je vais t'apprendre à parler avec les personnages du jeu ! <strong>Si tu es bloqué, appuie sur le bouton Nouvelle Action !</strong><br>Appuie sur <strong>Leguide Michel</strong> (c'est moi !) dans la partie <strong>actions</strong>, que tu trouveras en dessous de ton Dinoz.",
+				"end": "Tu viens de parler à l'un des premiers habitants de Dinoland. Tu rencontreras encore beaucoup de personnages tout au long de ton aventure !",
+				"helpers": {
+					"dinoz": "C'est par ici !",
+					"answers": "C'est par ici !",
+					"michel": "C'est par ici !"
+				}
+			},
+			"move": {
+				"title": "À l'aube d'une grande aventure",
+				"begin": "Il est temps maintenant de découvrir les autres lieux. <strong>Si tu es bloqué, appuie sur le bouton Nouvelle Action !</strong><br>Dans la section <strong>Carte</strong>, appuie sur la destination de ton choix en cliquant sur un <strong>des lieux clignotants</strong>, et pars à l'aventure !<br>Je te conseille de te diriger vers la Fontaine de Jouvence dans un premier temps.",
+				"end": "Félicitations, te voilà arrivé dans un nouveau lieu de Dinoland ! Il existe de nombreux lieux à découvrir, tu les verras tous un jour, l'âme d'un aventurier sommeille en toi !",
+				"helpers": {
+					"map": "Direction : La Fontaine de Jouvence !",
+					"combat": "Lorsque tu te déplaces, tu rencontreras différents monstres. Ton Dinoz va combattre seul, ton but sera de le dresser pour lui faire apprendre des techniques plus puissantes !"
+				}
+			},
+			"port": {
+				"title": "Aller au Port de Prêche",
+				"begin": "Ton Dinoz a retrouvé ses forces, et il va lui en falloir pour traverser les terres du Royaume de Dinoville. Dirige-toi vers le Port de Prêche. Tu pourras discuter avec les autochtones locaux et peut-être en savoir plus sur le monde dans lequel tu viens d'arriver !",
+				"end": "Te voilà arrivé à bon port ! (oui oui...)",
+				"helpers": {
+					"map": "Direction : Le Port de Prêche !"
+				}
+			},
+			"pub": {
+				"title": "Vivre une aventure",
+				"begin": "Discute avec les autochtones locaux pour peut-être en savoir plus sur le monde dans lequel tu viens d'arriver !",
+				"end": "Suis Baobob vers cette nouvelle aventure, il t'apprendra sûrement beaucoup de choses...",
+				"helpers": {
+					"pilier": "C'est lui !"
+				}
+			},
+			"baobob": {
+				"title": "Suivez Bao Bob",
+				"begin": "",
+				"end": "Suis Baobob vers cette nouvelle aventure, il t'apprendra sûrement beaucoup de choses...",
+				"helpers": {
+					"intro4": "C'est ici !",
+					"intro5": "C'est ici !",
+					"intro6": "C'est ici !",
+					"intro7": "Gloups...",
+					"levelup": "Félicitations !",
+					"skill": "Tu viens de gagner un niveau ! Il est maintenant temps de choisir une compétence à faire apprendre à ton Dinoz. Choisis bien ! Ces choix caractérisent le futur de ton compagnon.",
+					"heal": "Utilise un Nuage Burger avant d'être à bout de force pour continuer ton aventure."
+				}
+			},
+			"papy": {
+				"title": "Rendre service pour un monde meilleur",
+				"begin": "L'heure est venue de réaliser ta première mission. Va voir Papy Joe dans sa maison en passant par l'Université, il aura sûrement des missions à te proposer.<br>Rejoins la maison de Papy Joe et accepte ta première mission ! Au-dessus de tes actions, tu retrouveras les étapes de ta mission pour ne pas oublier où tu en es !",
+				"end": "Félicitations, tu as accepté ta première mission. Réaliser des missions est important pour progresser dans le jeu.<br>En plus des missions, certains personnages t'entraîneront dans leurs aventures : des <strong>quêtes</strong> incroyables qui te feront visiter de nouveaux lieux et combattre des monstres terrifiants !",
+				"helpers": {
+					"dinoz": "C'est par ici !",
+					"map": "Direction : Chez Papy Joe !",
+					"papy": "Parler à Papy Joe !",
+					"mission": "Choisis une mission parmi celles disponibles."
+				}
+			},
+			"shop": {
+				"title": "L'excitation de l'achat",
+				"begin": "Une fois tous tes objets consommés, il faudra en racheter dans la boutique grâce à l'or que tu auras gagné lors des combats !<br>Appuie sur le bouton <strong>Boutique</strong> en haut à gauche, juste en dessous de ta réserve d'or. Tu découvriras la boutique, il ne te reste plus qu'à choisir <strong>un Nuage Burger</strong> par exemple !",
+				"end": "Bien, ton achat figure désormais dans ton inventaire !",
+				"helpers": {
+					"shop": "C'est par ici !",
+					"burger": "C'est par ici !"
+				}
+			},
+			"burger": {
+				"title": "Un petit creux",
+				"begin": "Durant les combats, ton Dinoz perd des points de vie. Pour le guérir, il te faut utiliser des objets. Utilise par exemple un <strong>Nuage Burger</strong> sur ton Dinoz pour lui redonner de la vie.",
+				"end": "Bien, tu as redonné de la vie à ton Dinoz, ton périple peut continuer.",
+				"helpers": {
+					"burger": "Clique ici pour utiliser l'objet."
+				}
+			},
+			"clan": {
+				"title": "Les clans surpuissants",
+				"begin": "Tu es bientôt prêt à partir à l'aventure. Si tu te sens seul et ne sais pas trop où aller, je te conseille de rejoindre un clan pour discuter et échanger des astuces avec d'autres Maîtres Dinoz.<br>Dans le menu, tu trouveras un bouton <strong>Clans</strong> qui te permettra de découvrir les clans de Dinoland.",
+				"end": "Tu trouveras de nombreux Maîtres Dinoz dans les clans qui se livrent des batailles farouches lors des terrifiantes Guerres de Clans et autres Championnats.",
+				"helpers": {
+					"clan": "C'est ici !"
+				}
+			},
+			"user": {
+				"title": "Se connaître soi-même",
+				"begin": "Sais-tu que tu peux accéder aux informations de ton compte à travers la page <strong>Mon Compte</strong> ? Tu pourras y voir tes informations publiques, tes Dinoz, tes titres et tes récompenses épiques !",
+				"end": "N'oublie pas que tu peux éditer tes informations personnelles depuis cette page !",
+				"helpers": {
+					"account": "C'est ici !"
+				}
+			},
+			"end": {
+				"title": "Fin",
+				"begin": "Voilà, je vais maintenant te laisser partir à l'aventure. Si tu as encore besoin de moi, tu peux venir me parler à Dinoville, je serai toujours là pour te conseiller.",
+				"end": "Nous te souhaitons une excellente et longue aventure sur les terres de Dinoland ! Bon courage Maître Dinoz !",
+				"helpers": {}
+			}
+		}
 	}
 }
