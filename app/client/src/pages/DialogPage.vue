@@ -205,6 +205,13 @@ async function loadDialog() {
 			? await DialogService.resumeDialog(dinozId.value, dialogId.value, phaseId.value)
 			: await DialogService.startDialog(dinozId.value, dialogId.value);
 		loaded.value = true;
+		/*
+		 * Un retour fight_win peut avoir fait progresser
+		 * intro, et donc validé pub / baobob.
+		 */
+		if (phaseId.value) {
+			await refreshTutorialState();
+		}
 		if (dialogState.value) {
 			await handlePhaseActions(dialogState.value);
 		}
