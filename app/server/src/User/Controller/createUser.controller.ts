@@ -88,6 +88,14 @@ export async function createUser(
 		for (const starterItem of gameConfig.general.starterPack) {
 			await addItemToInventory(user.id, starterItem.itemId, starterItem.quantity);
 		}
+		// ➜ 5. Activer le tutoriel pour le nouvel utilisateur
+		await prisma.userScenario.create({
+			data: {
+				userId: user.id,
+				scenarioKey: 'tutorial',
+				progression: 0
+			}
+		});
 		safeCreateGameLog(
 			{
 				type: GameLogType.PlayerCreated,
