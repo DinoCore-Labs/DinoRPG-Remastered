@@ -1,3 +1,4 @@
+import type { Condition } from '@dinorpg/core/models/conditions/conditions.js';
 import type { TutorialEvent } from '@dinorpg/core/models/tutorial/tutorial.js';
 
 import { api } from '../utils/http';
@@ -14,17 +15,20 @@ export type TutorialObjectiveResponse = {
 		fast?: boolean;
 		visible?: boolean;
 	};
-	helpers: Array<{
-		id: string;
-		selector: string;
-		url?: string;
-	}>;
+	helpers: TutorialHelperResponse[];
 };
 
 export type TutorialResponse = {
 	completed: boolean;
 	progression: number;
 	objective: TutorialObjectiveResponse | null;
+};
+
+export type TutorialHelperResponse = {
+	id: string;
+	selector: string;
+	url?: string;
+	cond?: Condition;
 };
 
 export type TutorialClientEvent = Extract<
