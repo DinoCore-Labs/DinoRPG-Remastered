@@ -148,7 +148,8 @@ export class TournamentManager {
 			nextScheduledMatch: tournament.nextRound,
 			schedule: { qualificationStart, qualificationEnd, poolsStart, finalsStart },
 			cashPrice: tournament.cashPrice,
-			levelLimit: tournament.levelLimit
+			levelLimit: tournament.levelLimit,
+			itemsAllowed: tournament.itemsAllowed
 		};
 	}
 
@@ -169,6 +170,7 @@ export class TournamentManager {
 		const qualificationEnd = new Date(now.getTime() + 7 * 24 * 3600 * 1000);
 
 		const format = formatTID[formatName.FFA];
+		const itemsAllowed = Math.random() < 0.5;
 		const tournament = await prismaClient.tournament.create({
 			data: {
 				date: now,
@@ -178,6 +180,7 @@ export class TournamentManager {
 				teamSize: format.teamSize || 4,
 				cashPrice: 0,
 				poison: true,
+				itemsAllowed,
 				nextRound: qualificationEnd
 			}
 		});
@@ -193,7 +196,8 @@ export class TournamentManager {
 			raceMinimum: tournament.raceMinimum,
 			races: tournament.teamRace,
 			levelLimit: tournament.levelLimit,
-			poison: tournament.poison
+			poison: tournament.poison,
+			itemsAllowed: tournament.itemsAllowed
 		});
 
 		await newsService.createAdminNews({
@@ -264,7 +268,7 @@ export class TournamentManager {
 
 		const dbTournament = await prismaClient.tournament.findUniqueOrThrow({
 			where: { id: tournament.id },
-			select: { poison: true }
+			select: { poison: true, itemsAllowed: true }
 		});
 		if (finalsRound !== 0) {
 			const previousStep = FINALS_STEP_OFFSET + finalsRound - 1;
@@ -409,7 +413,7 @@ export class TournamentManager {
 
 		const tournament = await prismaClient.tournament.findUniqueOrThrow({
 			where: { id: tournamentId },
-			select: { poison: true }
+			select: { poison: true, itemsAllowed: true }
 		});
 
 		const shuffled: (string | null)[] = [...teams].sort(() => Math.random() - 0.5).map(t => t.id);
@@ -459,7 +463,7 @@ export class TournamentManager {
 
 		const dbTournament = await prismaClient.tournament.findUniqueOrThrow({
 			where: { id: tournament.id },
-			select: { poison: true }
+			select: { poison: true, itemsAllowed: true }
 		});
 
 		const prevRound = round - 1;
@@ -645,7 +649,7 @@ export class TournamentManager {
 	// -------------------------------------------------------------------------
 
 	private static async generateAndSaveFight(
-		tournamentRules: { poison: boolean },
+		tournamentRules: { poison: boolean; itemsAllowed: boolean },
 		team1Id: string | null,
 		team2Id: string | null,
 		phase: TournamentPhase,
@@ -699,9 +703,11 @@ export class TournamentManager {
 
 		const prepDinoz = (dinoz: typeof team1Dinoz) => {
 			dinoz.forEach(d => {
-				d.items = d.items.filter(i =>
-					Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL)
-				);
+				if (tournamentRules.itemsAllowed) {
+					d.items = d.items.filter(i => Object.values(itemList).find(item => item.itemId === i.itemId));
+				} else {
+					d.items = [];
+				}
 				d.life = d.maxLife;
 				d.skills = d.skills.filter(
 					s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
@@ -711,7 +717,11 @@ export class TournamentManager {
 		prepDinoz(team1Dinoz);
 		prepDinoz(team2Dinoz);
 
-		const rules: FightRules = { ...TOURNAMENT_RULES, poisonEnabled: tournamentRules.poison };
+		const rules: FightRules = {
+			...TOURNAMENT_RULES,
+			poisonEnabled: tournamentRules.poison,
+			canUseEquipment: tournamentRules.itemsAllowed
+		};
 		let fight = calculateFightBetweenPlayers(rules, team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
 
 		const computeWinner = () => {

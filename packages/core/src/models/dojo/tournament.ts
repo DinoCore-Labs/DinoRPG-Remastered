@@ -42,6 +42,7 @@ export interface TournamentState {
 	schedule: TournamentSchedule;
 	cashPrice: number;
 	levelLimit: number;
+	itemsAllowed: boolean;
 }
 
 export type MetaData = {
