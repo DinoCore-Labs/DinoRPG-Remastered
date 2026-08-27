@@ -34,15 +34,15 @@ export type Challenge = {
 
 export const challengeRanges: Readonly<Record<ChallengeType, [number, number]>> = {
 	[ChallengeType.Kill]: [1, 1],
-	[ChallengeType.TakeAttackQuantity]: [2, 10],
-	[ChallengeType.TakeRawDamage]: [10, 80],
-	[ChallengeType.TakePercentDamage]: [5, 50],
+	[ChallengeType.TakeAttackQuantity]: [8, 15],
+	[ChallengeType.TakeRawDamage]: [40, 100],
+	[ChallengeType.TakePercentDamage]: [40, 80],
 	[ChallengeType.Assault]: [2, 10],
 	[ChallengeType.AssaultPercentage]: [10, 50],
-	[ChallengeType.DealDamage]: [30, 100],
-	[ChallengeType.DealPercentDamage]: [10, 50],
-	[ChallengeType.CounterAttack]: [1, 3],
-	[ChallengeType.Dodge]: [1, 3],
+	[ChallengeType.DealDamage]: [70, 100],
+	[ChallengeType.DealPercentDamage]: [25, 75],
+	[ChallengeType.CounterAttack]: [1, 2],
+	[ChallengeType.Dodge]: [1, 2],
 	[ChallengeType.DodgePoison]: [1, 1],
 	[ChallengeType.PoisonOpponent]: [1, 1]
 };
