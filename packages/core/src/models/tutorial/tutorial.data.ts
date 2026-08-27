@@ -20,8 +20,8 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 			},
 			{
 				id: 'name',
-				selector: '#centerContent form .field',
-				url: 'dino/*'
+				selector: '.naming input',
+				url: 'dinoz/*'
 			}
 		],
 		rewards: [],
@@ -43,18 +43,17 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'dinoz',
-				selector: '#dinozList ul li:first',
-				url: '!dino'
+				selector: '#accountList ul li:first'
 			},
 			{
 				id: 'answers',
-				selector: '#answers',
-				url: 'dino/*/act/dialog/guide'
+				selector: '#answer',
+				url: 'dinoz/*/dialog/guide'
 			},
 			{
 				id: 'michel',
-				selector: '#act_dialog_guide_icon',
-				url: 'dino/*'
+				selector: '[data-tutorial-action="dialog:guide"]',
+				url: 'dinoz/*'
 			}
 		],
 		rewards: [
@@ -85,7 +84,7 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'map',
-				selector: '#map',
+				selector: '#boxMap',
 				cond: {
 					type: 'tab',
 					key: 'map'
@@ -93,8 +92,8 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 			},
 			{
 				id: 'combat',
-				selector: '#combat',
-				url: 'dino/*/act/move'
+				selector: '.content',
+				url: 'fight/*'
 			}
 		],
 		rewards: [
@@ -123,7 +122,7 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'map',
-				selector: '#map',
+				selector: '#boxMap',
 				cond: {
 					type: 'tab',
 					key: 'map'
@@ -159,7 +158,8 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'pilier',
-				selector: '#act_dialog_intro__2'
+				selector: '[data-tutorial-action="dialog:intro__2"]',
+				url: 'dinoz/*'
 			}
 		],
 		rewards: [
@@ -197,43 +197,43 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'intro4',
-				selector: '#act_dialog_intro__4',
-				url: 'dino/*'
+				selector: '[data-tutorial-action="dialog:intro__4"]',
+				url: 'dinoz/*'
 			},
 			{
 				id: 'intro5',
-				selector: '#act_dialog_intro__5',
-				url: 'dino/*'
+				selector: '[data-tutorial-action="dialog:intro__5"]',
+				url: 'dinoz/*'
 			},
 			{
 				id: 'intro6',
-				selector: '#act_dialog_intro__6',
-				url: 'dino/*'
+				selector: '[data-tutorial-action="dialog:intro__6"]',
+				url: 'dinoz/*'
 			},
 			{
 				id: 'intro7',
-				selector: '#act_dialog_intro__7',
-				url: 'dino/*'
+				selector: '[data-tutorial-action="dialog:intro__7"]',
+				url: 'dinoz/*'
 			},
 			{
 				id: 'levelup',
 				selector: '#act_levelup',
-				url: 'dino/*'
+				url: 'dinoz/*'
 			},
 			{
 				id: 'skill',
-				selector: '#swf_levelup',
-				url: 'dino/*/act/levelup'
+				selector: '.levelUp .select',
+				url: 'level/*'
 			},
 			{
 				id: 'heal',
-				selector: 'div#inventory table',
+				selector: '.inventory table',
 				cond: {
 					type: 'life',
 					value: 20,
 					compare: 'lte'
 				},
-				url: 'dino/*'
+				url: 'dinoz/*'
 			}
 		],
 		rewards: [
@@ -274,23 +274,22 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'dinoz',
-				selector: '#dinozList ul li:first',
-				url: '!dino'
+				selector: '#accountList ul li:first'
 			},
 			{
 				id: 'map',
-				selector: '#map',
-				url: 'dino/*'
+				selector: '#boxMap',
+				url: 'dinoz/*'
 			},
 			{
 				id: 'papy',
-				selector: '#act_dialog_papy',
-				url: 'dino/*'
+				selector: '[data-tutorial-action="dialog:papy"]',
+				url: 'dinoz/*'
 			},
 			{
 				id: 'mission',
-				selector: 'div.mission table tr.new:first',
-				url: 'dino/*/act/mission/list'
+				selector: 'tr.available',
+				url: 'dinoz/*/missions/*'
 			}
 		],
 		rewards: [
@@ -318,12 +317,12 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'shop',
-				selector: '#menu_shop'
+				selector: '[data-tutorial="shop"]'
 			},
 			{
 				id: 'burger',
-				selector: '#obj_burger',
-				url: 'shop'
+				selector: '#burger',
+				url: 'shop/*'
 			}
 		],
 		rewards: [
@@ -350,8 +349,8 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'burger',
-				selector: '#inv_burger_use',
-				url: 'dino/**'
+				selector: '[data-tutorial-item-use="burger"]',
+				url: 'dinoz/*'
 			}
 		],
 		rewards: [
@@ -373,8 +372,7 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'clan',
-				selector: '#clans_page',
-				url: '!clan'
+				selector: '[data-tutorial="clan"]'
 			}
 		],
 		rewards: [
@@ -398,8 +396,7 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'account',
-				selector: '#account_page',
-				url: '!user'
+				selector: '[data-tutorial="account"]'
 			}
 		],
 		rewards: [
