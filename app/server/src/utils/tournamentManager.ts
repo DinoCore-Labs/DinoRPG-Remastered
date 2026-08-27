@@ -172,8 +172,11 @@ export class TournamentManager {
 		const now = new Date();
 		const qualificationEnd = new Date(now.getTime() + 7 * 24 * 3600 * 1000);
 
+		//fixed FFA format for now.
 		const format = formatTID[formatName.FFA];
+
 		const itemsAllowed = Math.random() < 0.5;
+		const poison = Math.random() < 0.5;
 		const tournament = await prismaClient.tournament.create({
 			data: {
 				date: now,
@@ -182,7 +185,7 @@ export class TournamentManager {
 				teamRace: format.teamRace.join(','),
 				teamSize: format.teamSize || 4,
 				cashPrice: 0,
-				poison: true,
+				poison,
 				itemsAllowed,
 				nextRound: qualificationEnd
 			}
