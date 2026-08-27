@@ -311,6 +311,7 @@ import { userStore } from '../store/userStore.js';
 import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/errorHandler.js';
 import DZInput from '../components/utils/DZInput.vue';
+import { useTutorialStore } from '../store/tutorialStore.js';
 
 export default defineComponent({
 	name: 'ShopItems',
@@ -318,6 +319,7 @@ export default defineComponent({
 		return {
 			userStore: userStore(),
 			dinozStore: dinozStore(),
+			tutorialStore: useTutorialStore(),
 			itemList: [] as Array<ItemFiche>,
 			ingredientList: [] as IngredientFiche[],
 			fullItems: [] as ItemShopFiche[],
@@ -366,6 +368,11 @@ export default defineComponent({
 			if (!this.actualShop || !this.selectedItem) return;
 			try {
 				const bought = await ShopService.buyItem(this.actualShop.shopId, itemId, quantity);
+				try {
+					await this.tutorialStore.load();
+				} catch (err) {
+					console.error('[tutorial] Failed to refresh tutorial after shop purchase', err);
+				}
 				let message = this.$t(`toast.itemBought`, {
 					quantity: bought.quantity,
 					itemName: this.$t(`items.name.${this.resolveItem(this.selectedItem).name}`)

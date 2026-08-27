@@ -37,6 +37,7 @@ import { updateDinozCount } from '../../Ranking/Controller/updateDinozCount.js';
 import { updatePoints } from '../../Ranking/Controller/updatePoints.js';
 import { advanceStarScenarioWithRewardTx } from '../../Scenario/Controller/starScenario.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
+import { refreshTutorialProgress } from '../../Tutorial/Controller/tutorial.controller.js';
 import { addMoney } from '../../User/Controller/money.controller.js';
 import { toDinozFiche, UserForDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { generateDinozDisplay, getLetter, getRandomLetter, getRandomNumber } from '../../utils/dinoz/displayDinoz.js';
@@ -78,6 +79,7 @@ export async function useItemHandler(
 	}
 	const effects: ItemFeedBack[] = [];
 	let createdDinoz: UseItemResult['createdDinoz'];
+	let shouldRefreshTutorial = false;
 	switch (item.effect?.category) {
 		case ItemEffect.ACTION: {
 			await updateDinoz(dinoz.id, { fight: true, gather: true });
@@ -111,6 +113,7 @@ export async function useItemHandler(
 				}
 			}
 			await incrementUserStat(StatTracking.HEAL_PV, dinoz.user.id, lifeHealed);
+			shouldRefreshTutorial = lifeHealed > 0;
 			break;
 		}
 		case ItemEffect.RESURRECT: {
@@ -169,6 +172,20 @@ export async function useItemHandler(
 	}
 	await removeItem(dinoz.user.id, itemData.itemId, 1);
 	await incrementUserStat(StatTracking.ITEM_USED, dinoz.user.id, 1);
+	/*
+	 * Un soin effectif peut valider l'objectif "burger".
+	 *
+	 * HEAL_PV contient déjà le nombre de PV réellement
+	 * restaurés, exactement ce qu'attend :
+	 *
+	 * uvar(healpv, 1+)
+	 */
+	if (shouldRefreshTutorial) {
+		await refreshTutorialProgress({
+			userId: dinoz.user.id,
+			dinozId: dinoz.id
+		});
+	}
 	return {
 		effects,
 		createdDinoz
