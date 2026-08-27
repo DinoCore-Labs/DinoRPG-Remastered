@@ -20,7 +20,7 @@
 					<img :src="getImgURL('news', news.type)" :alt="news.title || 'news'" />
 				</div>
 				<div class="newsContent">
-					<h1 v-if="news.title">{{ news.title }}</h1>
+					<h1 v-if="news.title">{{ translateNewsContent(news.title) }}</h1>
 					<h1 v-else>{{ $t('newsPage.noTranslation') }}</h1>
 					<span>{{ formatCreatedDate(news.publishedAt ?? news.createdAt) }}</span>
 				</div>
@@ -34,7 +34,7 @@
 		</div>
 		<img v-if="news.imageUrl" :src="news.imageUrl" :alt="news.title || 'news'" @error="hideBrokenImage" />
 		<div class="markdown" v-if="news.content">
-			<MarkdownRenderer :source="news.content" />
+			<MarkdownRenderer :source="translateNewsContent(news.content)" />
 		</div>
 		<div class="missingText" v-else>
 			{{ $t('newsPage.noTranslation') }}
@@ -67,6 +67,8 @@ import { userStore } from '../store/userStore';
 import { NewsService } from '../services/news.service';
 import { errorHandler } from '../utils/errorHandler';
 import { getImgURL } from '../utils/getImgURL';
+import { formatDateTime } from '../utils/formatDate';
+import { RaceEnum } from '@dinorpg/core/models/enums/Race.js';
 
 export default defineComponent({
 	name: 'NewsPage',
@@ -95,6 +97,47 @@ export default defineComponent({
 	},
 	methods: {
 		getImgURL,
+		formatDateTime,
+		translateNewsContent(rawContent: string): string {
+			if (!rawContent) return '';
+
+			if (rawContent.includes('|')) {
+				const [key, jsonParams] = rawContent.split(/\|(.+)/);
+				try {
+					const params = JSON.parse(jsonParams);
+
+					if (params.endDate) {
+						params.endDate = this.formatDateTime(params.endDate);
+					}
+					if (typeof params.poison === 'boolean') {
+						const poisonKey = params.poison ? 'news.tournament.poison.enabled' : 'news.tournament.poison.disabled';
+						params.poisonStatus = this.$t(poisonKey);
+					}
+
+					if (typeof params.races === 'string') {
+						params.races = params.races
+							.split(',')
+							.map((r: string) => {
+								const raceId = parseInt(r.trim(), 10);
+
+								const enumKey = RaceEnum[raceId]?.toLowerCase();
+
+								const i18nKey = `race.name.${enumKey}`;
+
+								return this.$te(i18nKey) ? this.$t(i18nKey) : enumKey || r.trim();
+							})
+							.join(', ');
+					}
+
+					return this.$t(key, params);
+				} catch (e) {
+					console.error('Erreur de parsing des paramètres i18n:', e);
+					return this.$t(key);
+				}
+			}
+
+			return this.$te(rawContent) ? this.$t(rawContent) : rawContent;
+		},
 		mapNewsBatch(newsList: PublicNewsListItem[]): NewsPageItem[] {
 			return newsList.map((news, index) => ({
 				...news,
