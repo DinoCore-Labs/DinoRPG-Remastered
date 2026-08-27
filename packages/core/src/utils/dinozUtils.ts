@@ -15,7 +15,9 @@ import { DINOZ_STATE, DinozState } from '../models/dinoz/dinozState.js';
 import { DinozForMaxXp } from '../models/dinoz/dinozXP.js';
 import { raceList } from '../models/dinoz/raceList.js';
 import { DinozStatusId } from '../models/dinoz/statusList.js';
+import { ElementType } from '../models/enums/ElementType.js';
 import { Stat } from '../models/enums/SkillStat.js';
+import { Item } from '../models/items/itemList.js';
 import { placeListv2 } from '../models/place/placeListv2.js';
 import { BaseSpecialStats, SpecialStat } from '../models/skills/getSpecialStats.js';
 import { Skill, skillList } from '../models/skills/skillList.js';
@@ -148,6 +150,8 @@ export type FollowableDinozLike = {
 	followers: readonly unknown[];
 	skills: readonly DinozSkillLike[];
 	life: number;
+	items?: readonly number[];
+	raceId: number;
 };
 
 export type PotentialFollowerLike = {
@@ -156,14 +160,34 @@ export type PotentialFollowerLike = {
 	fight: boolean;
 	remaining: number;
 	skills: readonly DinozSkillLike[];
+	items?: readonly number[];
+	raceId: number;
+};
+
+export const haveElementAffinity = (raceId1: number, raceId2: number): boolean => {
+	const race1 = getRace(raceId1);
+	const race2 = getRace(raceId2);
+	if (!race1 || !race2) return false;
+
+	return (
+		race1.nbrFire * race2.nbrFire > 0 ||
+		race1.nbrWood * race2.nbrWood > 0 ||
+		race1.nbrWater * race2.nbrWater > 0 ||
+		race1.nbrLightning * race2.nbrLightning > 0 ||
+		race1.nbrAir * race2.nbrAir > 0
+	);
 };
 
 export const getFollowableDinoz = <T extends FollowableDinozLike>(
 	dinozList: readonly T[],
 	potentialFollower: PotentialFollowerLike
 ): T[] => {
-	// Brave dinoz cannot follow others
-	if (potentialFollower.skills.some(s => s.skillId === Skill.BRAVE)) return [];
+	const followerHasBrave = potentialFollower.skills.some(s => s.skillId === Skill.BRAVE);
+	const followerHasTrouillometre = potentialFollower.items?.includes(Item.FEAR_FACTOR) ?? false;
+
+	// If follower is brave and doesn't have fear factor, it cannot follow anyone
+	if (followerHasBrave && !followerHasTrouillometre) return [];
+
 	return dinozList.filter(dinoz => {
 		// Filter out current dinoz
 		if (dinoz.id === potentialFollower.id) return false;
@@ -173,21 +197,31 @@ export const getFollowableDinoz = <T extends FollowableDinozLike>(
 		if (dinoz.leaderId !== null) return false;
 		// Filter out Dinoz that are not in the same place
 		if (dinoz.placeId !== potentialFollower.placeId) return false;
-		// Filter out brave Dinoz
-		if (dinoz.skills.some(s => s.skillId === Skill.BRAVE)) return false;
 		// Filter out dead Dinoz
 		if (dinoz.life <= 0) return false;
-		const maxFollowers = getMaxFollowers(dinoz);
+
+		const leaderHasBrave = dinoz.skills.some(s => s.skillId === Skill.BRAVE);
+		const leaderHasTrouillometre = dinoz.items?.includes(Item.FEAR_FACTOR) ?? false;
+
+		if (followerHasBrave || leaderHasBrave) {
+			if (followerHasBrave && !followerHasTrouillometre) return false;
+			if (leaderHasBrave && !leaderHasTrouillometre) return false;
+
+			if (!haveElementAffinity(potentialFollower.raceId, dinoz.raceId)) return false;
+		}
+
+		const maxFollowers = getMaxFollowers(dinoz, leaderHasTrouillometre);
 		// Filter out Dinoz that have too many followers
 		if (dinoz.followers.length >= maxFollowers) return false;
 		return true;
 	});
 };
 
-export const getMaxFollowers = (dinoz: HasSkillsLike) => {
+export const getMaxFollowers = (dinoz: HasSkillsLike, hasFearFactor = false) => {
 	let max = BaseSpecialStats[SpecialStat.MAX_FOLLOWERS];
 	const skillsAffectingMaxFollowers = Object.values(skillList).filter(skill => skill.effects?.[Stat.MAX_FOLLOWERS]);
 	for (const skill of skillsAffectingMaxFollowers) {
+		if (hasFearFactor && skill.id === Skill.BRAVE) continue;
 		if (dinoz.skills.some(s => s.skillId === skill.id)) {
 			const effect = skill.effects?.[Stat.MAX_FOLLOWERS];
 			if (effect) {
