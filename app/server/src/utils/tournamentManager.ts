@@ -185,6 +185,22 @@ export class TournamentManager {
 			}
 		});
 
+		// Reset dojo qualification rankings and challenge history for the new tournament
+		await prismaClient.dojo.updateMany({
+			data: {
+				reputation: 0,
+				dailyReset: 0,
+				tournamentTeamId: null
+			}
+		});
+		await prismaClient.ranking.updateMany({
+			data: {
+				dojo: 0
+			}
+		});
+		await prismaClient.dojoChallengeHistory.deleteMany({});
+		await prismaClient.dojoOpponents.deleteMany({});
+
 		const slug = `tournament-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
 		// Paramètres dynamiques injectés dans la traduction
