@@ -82,6 +82,13 @@ export async function equipItem(
 		if (!dinozItem) {
 			throw new ExpectedError('itemNotEquipped');
 		}
+
+		if (itemToEquip.itemId === Item.FEAR_FACTOR && dinoz.skills.some(s => s.skillId === Skill.BRAVE)) {
+			if (dinoz.leaderId !== null || dinoz.followers.length > 0) {
+				throw new ExpectedError('fearFactorDesequip');
+			}
+		}
+
 		const itemMaxQuantity = getItemMaxQuantity(dinoz.user, itemToEquip);
 		if (playerItemQuantity >= itemMaxQuantity) {
 			throw new ExpectedError('maxQuantityInventory');
@@ -108,6 +115,9 @@ function shouldRefreshDinozAfterEquip(input: {
 	placeId: PlaceEnum;
 	scenarios: Array<{ scenarioKey: string; progression: number }>;
 }) {
+	if (input.itemId === Item.FEAR_FACTOR) {
+		return true;
+	}
 	if (!input.equip) {
 		return false;
 	}

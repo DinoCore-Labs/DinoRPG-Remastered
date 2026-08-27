@@ -5,8 +5,10 @@ export async function getLeaderWithFollowers(dinozId: number) {
 		where: { followers: { some: { id: dinozId } } },
 		select: {
 			id: true,
-			followers: { select: { id: true, skills: true } },
-			skills: true
+			followers: { select: { id: true, skills: true, items: true, raceId: true } },
+			skills: true,
+			items: true,
+			raceId: true
 		}
 	});
 }
