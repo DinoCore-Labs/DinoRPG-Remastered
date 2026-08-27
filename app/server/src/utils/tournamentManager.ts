@@ -1,3 +1,4 @@
+import { Language } from '@dinorpg/core/models/config/language.js';
 import {
 	FINAL_BRACKET_SIZE,
 	POOL_COUNT,
@@ -17,6 +18,7 @@ import { RewardEnum } from '@dinorpg/core/models/enums/Parser.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { FightOutcome } from '@dinorpg/core/models/fight/fightResult.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { NewsType } from '@dinorpg/core/models/news/news.js';
 import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
@@ -24,6 +26,7 @@ import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { getDinozForDojoFight } from '../Dojo/Service/dojoTest.service.js';
 import { calculateFightBetweenPlayers } from '../Fight/Service/fight.service.js';
 import { addItemToInventory } from '../Inventory/Controller/addItem.controller.js';
+import { newsService } from '../News/Service/news.service.js';
 import { newNotif } from '../Notification/Service/notification.service.js';
 import { prisma } from '../prisma.js';
 import { addMoney } from '../User/Controller/money.controller.js';
@@ -163,9 +166,10 @@ export class TournamentManager {
 		if (existing && existing.phase !== TournamentPhase.FINALS) return;
 
 		const now = new Date();
+		const qualificationEnd = new Date(now.getTime() + 7 * 24 * 3600 * 1000);
 
 		const format = formatTID[formatName.FFA];
-		await prismaClient.tournament.create({
+		const tournament = await prismaClient.tournament.create({
 			data: {
 				date: now,
 				levelLimit: 35,
@@ -174,8 +178,43 @@ export class TournamentManager {
 				teamSize: format.teamSize || 4,
 				cashPrice: 0,
 				poison: true,
-				nextRound: new Date(now.getTime() + 7 * 24 * 3600 * 1000) // ouverture des poules dans 7j
+				nextRound: qualificationEnd
 			}
+		});
+
+		const slug = `tournament-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+
+		// Paramètres dynamiques injectés dans la traduction
+		const params = JSON.stringify({
+			edition: tournament.id, // Ou dynamique selon l'ID
+			formatName: format.name,
+			endDate: qualificationEnd.toISOString(),
+			teamSize: tournament.teamSize,
+			raceMinimum: tournament.raceMinimum,
+			races: tournament.teamRace,
+			levelLimit: tournament.levelLimit,
+			poison: tournament.poison
+		});
+
+		await newsService.createAdminNews({
+			slug,
+			type: NewsType.TID_START,
+			isPublished: true,
+			publishedAt: now,
+			translations: [
+				{
+					lang: Language.FR,
+					title: 'news.tournament.start.title',
+					excerpt: `news.tournament.start.excerpt|${params}`,
+					content: `news.tournament.start.content|${params}`
+				},
+				{
+					lang: Language.EN,
+					title: 'news.tournament.start.title',
+					excerpt: `news.tournament.start.excerpt|${params}`,
+					content: `news.tournament.start.content|${params}`
+				}
+			]
 		});
 	}
 
@@ -218,14 +257,7 @@ export class TournamentManager {
 	 */
 	static async finalsRoundJob(finalsRound: number, prismaClient = prisma): Promise<{ matchesPlayed: number }> {
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
-		console.log(
-			'[finalsRoundJob] finalsRound:',
-			finalsRound,
-			'tournament.id:',
-			tournament?.id,
-			'phase:',
-			tournament?.phase
-		);
+
 		if (!tournament) return { matchesPlayed: 0 };
 
 		const tournamentStep = FINALS_STEP_OFFSET + finalsRound;
@@ -868,15 +900,30 @@ export class TournamentManager {
 				});
 				promises.push(addItemToInventory(userId, Item.TOUFUFU_BABY_RARE, 1));
 				promises.push(addItemToInventory(userId, Item.BOX_LEGENDARY, 1));
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.12)));
+				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.15)));
 				promises.push(
 					newNotif(
 						userId,
 						NotificationType.NEW_REWARD,
 						JSON.stringify([
 							{ rewardType: RewardEnum.EPIC, value: Reward.TID1 },
-							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.12) },
+							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.15) },
 							{ rewardType: RewardEnum.ITEM, value: Item.TOUFUFU_BABY_RARE, quantity: 1 },
+							{ rewardType: RewardEnum.ITEM, value: Item.BOX_LEGENDARY, quantity: 1 }
+						])
+					)
+				);
+			} else if (index === 2) {
+				promises.push(addItemToInventory(userId, Item.TOUFUFU_BABY, 1));
+				promises.push(addItemToInventory(userId, Item.BOX_LEGENDARY, 1));
+				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.1)));
+				promises.push(
+					newNotif(
+						userId,
+						NotificationType.NEW_REWARD,
+						JSON.stringify([
+							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.1) },
+							{ rewardType: RewardEnum.ITEM, value: Item.TOUFUFU_BABY, quantity: 1 },
 							{ rewardType: RewardEnum.ITEM, value: Item.BOX_LEGENDARY, quantity: 1 }
 						])
 					)
@@ -884,13 +931,13 @@ export class TournamentManager {
 			} else if (index <= 4) {
 				promises.push(addItemToInventory(userId, Item.TOUFUFU_BABY, 1));
 				promises.push(addItemToInventory(userId, Item.BOX_EPIC, 1));
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.06)));
+				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.075)));
 				promises.push(
 					newNotif(
 						userId,
 						NotificationType.NEW_REWARD,
 						JSON.stringify([
-							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.06) },
+							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.075) },
 							{ rewardType: RewardEnum.ITEM, value: Item.TOUFUFU_BABY, quantity: 1 },
 							{ rewardType: RewardEnum.ITEM, value: Item.BOX_EPIC, quantity: 1 }
 						])
@@ -898,31 +945,40 @@ export class TournamentManager {
 				);
 			} else if (index <= 8) {
 				promises.push(addItemToInventory(userId, Item.BOX_RARE, 1));
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.0375)));
+				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.04)));
 				promises.push(
 					newNotif(
 						userId,
 						NotificationType.NEW_REWARD,
 						JSON.stringify([
-							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.0375) },
+							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.04) },
 							{ rewardType: RewardEnum.ITEM, value: Item.BOX_RARE, quantity: 1 }
 						])
 					)
 				);
 			} else if (index <= 16) {
 				promises.push(addItemToInventory(userId, Item.BOX_RARE, 1));
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.01875)));
+				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.02)));
 				promises.push(
 					newNotif(
 						userId,
 						NotificationType.NEW_REWARD,
 						JSON.stringify([
-							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.01875) },
+							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.02) },
 							{ rewardType: RewardEnum.ITEM, value: Item.BOX_RARE, quantity: 1 }
 						])
 					)
 				);
 			} else if (index <= 32) {
+				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.01)));
+				promises.push(
+					newNotif(
+						userId,
+						NotificationType.NEW_REWARD,
+						JSON.stringify([{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.01) }])
+					)
+				);
+			} else if (index <= 48) {
 				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.0075)));
 				promises.push(
 					newNotif(
@@ -932,13 +988,12 @@ export class TournamentManager {
 					)
 				);
 			} else {
-				// rank 33-64 : pool loosers
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.0025)));
+				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.00625)));
 				promises.push(
 					newNotif(
 						userId,
 						NotificationType.NEW_REWARD,
-						JSON.stringify([{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.0025) }])
+						JSON.stringify([{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.00625) }])
 					)
 				);
 			}
