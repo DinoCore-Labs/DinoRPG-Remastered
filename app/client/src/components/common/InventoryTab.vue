@@ -54,6 +54,7 @@
 						<a
 							class="on"
 							v-if="item.canBeUsedNow"
+							:data-tutorial-item-use="item.name"
 							v-tippy="{
 								content: formatContent($t('tooltip.item.use')),
 								theme: 'small'
