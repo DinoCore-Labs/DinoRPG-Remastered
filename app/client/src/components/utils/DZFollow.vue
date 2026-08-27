@@ -64,6 +64,12 @@ export default defineComponent({
 			required: true
 		}
 	},
+	watch: {
+		dinoz() {
+			this.display = false;
+			this.dinozAvailableToFollow = [];
+		}
+	},
 	methods: {
 		displayFollow(): void {
 			if (!this.dinozStore.getDinozList) {
@@ -80,7 +86,10 @@ export default defineComponent({
 				return;
 			}
 			// Display the list of dinoz available to follow
-			this.dinozAvailableToFollow = getFollowableDinoz(this.dinozStore.getDinozList, currentDinoz);
+			this.dinozAvailableToFollow = getFollowableDinoz(
+				this.dinozStore.getDinozList.map(d => ({ ...d, raceId: d.race.raceId })),
+				{ ...currentDinoz, raceId: currentDinoz.race.raceId }
+			) as DinozFiche[];
 			this.display = true;
 		},
 		async followDinoz(targetId: number) {
