@@ -32,9 +32,23 @@ import { getActiveDinozCount, getUserMaxDinoz } from '../Controller/getActiveDin
 
 type GatherEntry = CompiledGatherData;
 
-type FollowableDinozCandidate = Pick<Dinoz, 'id' | 'placeId' | 'leaderId' | 'state' | 'life'> & {
+type FollowableDinozCandidate = Pick<
+	Dinoz,
+	| 'id'
+	| 'placeId'
+	| 'leaderId'
+	| 'state'
+	| 'life'
+	| 'nbrUpFire'
+	| 'nbrUpWood'
+	| 'nbrUpWater'
+	| 'nbrUpLightning'
+	| 'nbrUpAir'
+	| 'raceId'
+> & {
 	followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
 	skills: Pick<DinozSkills, 'skillId' | 'state'>[];
+	items: { itemId: number }[];
 };
 
 export type AvailableActionsPreloadedContext = {
@@ -170,11 +184,13 @@ export async function getAvailableActions(
 		| 'state'
 		| 'placeId'
 		| 'life'
+		| 'raceId'
 	> & {
 		followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkills, 'skillId' | 'state'>[];
 		missions: DinozMissionState[];
+		items: { itemId: number }[];
 	},
 	user: UserForConditionCheck,
 	conditionOptions: BuildConditionContextOptions = {},
@@ -277,6 +293,7 @@ export async function getAvailableActions(
 					leaderId: true,
 					state: true,
 					life: true,
+					raceId: true,
 					followers: {
 						select: {
 							id: true,
@@ -291,16 +308,25 @@ export async function getAvailableActions(
 							skillId: true,
 							state: true
 						}
-					}
+					},
+					items: {
+						select: { itemId: true }
+					},
+					nbrUpFire: true,
+					nbrUpWood: true,
+					nbrUpWater: true,
+					nbrUpLightning: true,
+					nbrUpAir: true
 				}
 			}));
 		const dinozToFollow = getFollowableDinoz(
 			potentialDinozToFollow.map(candidate => ({
 				...candidate,
 				skills: candidate.skills,
-				followers: candidate.followers
+				followers: candidate.followers,
+				items: candidate.items.map(i => i.itemId)
 			})),
-			dinoz
+			{ ...dinoz, items: dinoz.items.map(i => i.itemId) }
 		);
 		if (dinozToFollow.length > 0 && isAlive(dinoz) && dinoz.followers.length === 0) {
 			availableActions.push(actionList[Action.FOLLOW]);
