@@ -12,6 +12,15 @@
 						}}
 					</div>
 					<div class="tutorial-objective__text" v-html="t(`tutorial.objectives.${objective.id}.begin`)" />
+					<button
+						v-if="objective.id === 'end'"
+						type="button"
+						class="button tutorial-objective__finish"
+						:disabled="finishing"
+						@click="finishTutorial"
+					>
+						{{ t('tutorial.finish') }}
+					</button>
 				</div>
 				<div class="tutorial-objective__swf">
 					<AnimatedNPC NPC="michel" />
@@ -26,20 +35,46 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useTutorialStore } from '../../store/tutorialStore';
 import AnimatedNPC from './AnimatedNPC.vue';
+import { UserService } from '../../services/user.service.js';
+import { userStore } from '../../store/userStore';
 
 const { t } = useI18n();
 
 const tutorialStore = useTutorialStore();
+const uStore = userStore();
 
 const objective = computed(() => tutorialStore.currentObjective);
+
+const finishing = ref(false);
 
 onMounted(() => {
 	void tutorialStore.load();
 });
+
+async function finishTutorial(): Promise<void> {
+	if (finishing.value || objective.value?.id !== 'end') {
+		return;
+	}
+	finishing.value = true;
+	try {
+		await tutorialStore.sendEvent('TUTORIAL_FINISHED');
+		/*
+		 * TUTORIAL_FINISHED donne 1000 pièces d'or.
+		 * On recharge les données venant du serveur plutôt
+		 * que de modifier artificiellement le wallet côté client.
+		 */
+		const user = await UserService.me();
+		uStore.setUser(user);
+	} catch (err) {
+		console.error('[tutorial] Failed to finish tutorial', err);
+	} finally {
+		finishing.value = false;
+	}
+}
 </script>
 
 <style scoped>
@@ -88,6 +123,9 @@ onMounted(() => {
 	font-size: 14px;
 	font-style: italic;
 	line-height: 1.35;
+}
+.tutorial-objective__finish {
+	margin-top: 10px;
 }
 .tutorial-objective__close {
 	position: absolute;

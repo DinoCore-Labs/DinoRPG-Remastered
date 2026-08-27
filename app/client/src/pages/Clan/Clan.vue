@@ -17,7 +17,7 @@
 		:title="$t('pageTitle.clan', { clan: clanStore.getClan.name })"
 		:header="$t('clan.header.title', { name: clanStore.getClan.name })"
 	></TitleHeader>
-	<div class="wrapper">
+	<div id="clans_page" class="wrapper">
 		<div class="filler">
 			<ClanHeader v-if="clanStore.getClan"></ClanHeader>
 		</div>
@@ -103,17 +103,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 import TitleHeader from '../../components/utils/TitleHeader.vue';
-
 import ClanHeader from '../../components/clan/ClanHeader.vue';
-
 import { ClanService } from '../../services/clan.service.ts';
 import { errorHandler } from '../../utils/errorHandler';
-
 import { userStore } from '../../store/userStore';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
 import { clanStore } from '../../store/clanStore';
+import { useTutorialStore } from '../../store/tutorialStore';
 
 export default defineComponent({
 	name: 'Clan',
@@ -125,6 +122,7 @@ export default defineComponent({
 		return {
 			userStore: userStore(),
 			clanStore: clanStore(),
+			tutorialStore: useTutorialStore(),
 			isClanMember: false as boolean,
 			hasBannerEditRight: false as boolean
 		};
@@ -148,12 +146,21 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
+		},
+		async notifyTutorialClanVisit(): Promise<void> {
+			try {
+				await this.tutorialStore.sendEvent('CLAN_PAGE_VISITED');
+				await this.$refreshGold();
+			} catch (err) {
+				console.error('[tutorial] Failed to validate clan page visit', err);
+			}
 		}
 	},
 	mounted(): void {
 		this.isClanMember = this.userStore.clanId == Number(this.$route.params.id);
 	},
 	async created(): Promise<void> {
+		await this.notifyTutorialClanVisit();
 		await this.getClan();
 		await this.getHasBannerEditRight();
 	},
