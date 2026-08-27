@@ -596,11 +596,15 @@
 		"tournament": {
 			"start": {
 				"title": "Nouveau Tournoi inter Dojo",
-				"content": "## Tournois \n\nLes phases qualificatives auront lieux jusqu'au {endDate}. Les règles de créations d'équipes sont:\n\n* Les équipes sont constituées de {teamSize} membres avec au moins {raceMinimum} races différentes.\n* Les races autorisées à participer sont {races}.\n* {poisonStatus}.\n* La limite de niveau maximum est fixé à {levelLimit}.\n\n### Récompenses\n\nLes récompenses seront les suivantes:\n\n* Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 15% du cash price.\n* Pour les deuxième, un oeuf de toufufu, une boite légendaire et 10% du cash price.\n* Pour le troisième et quatrième, un oeuf de Toufufu, une boîte épique et 7,5% du cash price chacun.\n* Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n* Pour les 9 à 16ème, une boîte rare et 2% du cash price chacun.\n* Pour les 17 à 32ème, 1% du cash price chacun.\n* Pour les 33 à 48ème, 0,75% du cash price chacun.\n* Pour les 49 à 64ème, 0,625% du cash price chacun.\n\n### Récompenses de qualifications\n\nN'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications!\n\nBon tournois à tous !"
+				"content": "## Tournois \n\nLes phases qualificatives auront lieux jusqu'au {endDate}. Les règles de créations d'équipes sont:\n\n* Les équipes sont constituées de {teamSize} membres avec au moins {raceMinimum} races différentes.\n* Les races autorisées à participer sont {races}.\n* {poisonStatus}.\n* {itemsStatus}.\n* La limite de niveau maximum est fixé à {levelLimit}.\n\n### Récompenses\n\nLes récompenses seront les suivantes:\n\n* Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 15% du cash price.\n* Pour les deuxième, un oeuf de toufufu, une boite légendaire et 10% du cash price.\n* Pour le troisième et quatrième, un oeuf de Toufufu, une boîte épique et 7,5% du cash price chacun.\n* Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n* Pour les 9 à 16ème, une boîte rare et 2% du cash price chacun.\n* Pour les 17 à 32ème, 1% du cash price chacun.\n* Pour les 33 à 48ème, 0,75% du cash price chacun.\n* Pour les 49 à 64ème, 0,625% du cash price chacun.\n\n### Récompenses de qualifications\n\nN'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications!\n\nBon tournois à tous !"
 			},
 			"poison": {
 				"enabled": "Le poison est activé",
 				"disabled": "Le poison est désactivé"
+			},
+			"items": {
+				"enabled": "Les objets sont activés",
+				"disabled": "les objets sont désactivés"
 			}
 		}
 	},
