@@ -1,20 +1,8 @@
-import type { TutorialEvent } from '@dinorpg/core/models/tutorial/tutorial.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { prisma } from '../../prisma.js';
 import { getCurrentTutorial, handleTutorialEvent } from '../Controller/tutorial.controller.js';
-
-export const tutorialClientEvents = [
-	'CLAN_PAGE_VISITED',
-	'ACCOUNT_PAGE_VISITED',
-	'TUTORIAL_FINISHED'
-] as const satisfies readonly TutorialEvent[];
-
-export type TutorialClientEvent = (typeof tutorialClientEvents)[number];
-
-type TutorialEventBody = {
-	event: TutorialClientEvent;
-};
+import { TutorialEventBody } from '../Schema/tutorial.schema.js';
 
 export async function getCurrentTutorialController(req: FastifyRequest, reply: FastifyReply) {
 	return reply.send(await getCurrentTutorial(req.user.id));
