@@ -525,7 +525,7 @@ export const introFallsTaurusDialog: DialogDefinition = {
 			text: 'npc.intro.fallsTaurus.dialog.vade',
 			next: ['demon'],
 			pnj: {
-				gfx: 'taurus',
+				gfx: 'bob',
 				frame: 'grr',
 				background: '4'
 			}

@@ -216,15 +216,20 @@ export async function selectDialogLink(params: SelectDialogLinkParams): Promise<
 			dinozId: params.dinozId,
 			dialog
 		});
-		if (isDialogFightReturnPhase(currentPhase.id)) {
-			const completionState = getFightReturnCompletionState(dialog, currentPhase, currentContext);
-			if (completionState === false) {
-				throw new ExpectedError(`Dialog fight "${dialog.id}:${currentPhase.id}" has not been completed`);
-			}
-			if (completionState === null) {
-				await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
-			}
-		} else {
+		const postFightState = getPostFightContinuationState(dialog, currentPhase, currentContext);
+		if (postFightState === false) {
+			throw new ExpectedError(`Dialog fight continuation "${dialog.id}:${currentPhase.id}" has not been completed`);
+		}
+		/*
+		 * true :
+		 * on possède une preuve serveur qu'un combat précédent
+		 * a été remporté et que cette phase appartient à sa
+		 * continuation.
+		 *
+		 * Le cond global du dialogue peut avoir été invalidé
+		 * volontairement par fight_win.
+		 */
+		if (postFightState !== true) {
 			await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
 		}
 		const selectedLink = getDialogLink(dialog, params.linkId);
@@ -235,6 +240,96 @@ export async function selectDialogLink(params: SelectDialogLinkParams): Promise<
 		const targetPhase = getDialogPhase(dialog, selectedLink.target);
 		return enterDialogPhase(tx, dialog, targetPhase, params.userId, params.dinozId);
 	});
+}
+
+function isPhaseReachableFrom(dialog: RuntimeDialog, fromPhaseId: string, targetPhaseId: string): boolean {
+	if (fromPhaseId === targetPhaseId) {
+		return true;
+	}
+	const visited = new Set<string>();
+	const pending: string[] = [fromPhaseId];
+	while (pending.length > 0) {
+		const phaseId = pending.shift();
+		if (!phaseId || visited.has(phaseId)) {
+			continue;
+		}
+		visited.add(phaseId);
+		const phase = dialog.phases[phaseId];
+		if (!phase) {
+			continue;
+		}
+		for (const linkId of phase.next) {
+			const link = dialog.links[linkId];
+			if (!link) {
+				continue;
+			}
+			if (link.target === targetPhaseId) {
+				return true;
+			}
+			if (!visited.has(link.target)) {
+				pending.push(link.target);
+			}
+		}
+	}
+	return false;
+}
+
+/**
+ * Détermine si une phase fait partie d'une continuation
+ * après un combat déjà remporté.
+ *
+ * Exemple :
+ *
+ * fight
+ *   ↓
+ * fight_win
+ *   ↓
+ * papy
+ *   ↓
+ * papy2
+ *
+ * fight_win, papy et papy2 sont tous considérés comme
+ * faisant partie de la même continuation post-combat.
+ */
+function getPostFightContinuationState(
+	dialog: RuntimeDialog,
+	currentPhase: RuntimeDialogPhase,
+	context: Awaited<ReturnType<typeof buildDialogContext>>
+): boolean | null {
+	let hasFailedCompletionProof = false;
+	for (const returnPhase of Object.values(dialog.phases)) {
+		/*
+		 * Ce n'est une vraie phase de retour que si elle
+		 * correspond à une phase contenant un combat.
+		 */
+		const fightPhase = findDialogFightPhaseByReturnPhase(dialog, returnPhase.id);
+		if (!fightPhase) {
+			continue;
+		}
+		/*
+		 * La phase courante doit être le fight_win lui-même
+		 * ou une phase accessible depuis celui-ci.
+		 */
+		if (!isPhaseReachableFrom(dialog, returnPhase.id, currentPhase.id)) {
+			continue;
+		}
+		const completionState = getFightReturnCompletionState(dialog, returnPhase, context);
+		if (completionState === true) {
+			return true;
+		}
+		if (completionState === false) {
+			hasFailedCompletionProof = true;
+		}
+	}
+	/*
+	 * false :
+	 * la phase appartient bien à une branche post-combat,
+	 * mais la victoire n'est pas prouvée.
+	 * null :
+	 * cette phase n'est pas une continuation post-combat
+	 * vérifiable ; on utilisera le contrôle normal du dialogue.
+	 */
+	return hasFailedCompletionProof ? false : null;
 }
 
 function getFightReturnCompletionState(
@@ -293,14 +388,31 @@ export async function resumeDialogPhase(params: {
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
 		const phase = getDialogPhase(dialog, params.phaseId);
-		const isFightReturnPhase = isDialogFightReturnPhase(phase.id);
-		if (!isFightReturnPhase) {
+		const context = await buildDialogContext(tx, {
+			userId: params.userId,
+			dinozId: params.dinozId,
+			dialog
+		});
+		const postFightState = getPostFightContinuationState(dialog, phase, context);
+		if (postFightState === false) {
+			throw new ExpectedError(`Dialog fight continuation "${dialog.id}:${phase.id}" has not been completed`);
+		}
+		if (postFightState !== true) {
 			await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
 		}
+		const isFightReturnPhase = isDialogFightReturnPhase(phase.id);
+		/*
+		 * Lors d'un resume d'une continuation post-combat,
+		 * les effets ont déjà été appliqués lors de l'entrée
+		 * réelle dans la phase.
+		 *
+		 * On ne les rejoue donc jamais.
+		 */
+		const isPostFightContinuation = postFightState === true;
 		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId, {
-			applySpecials: !isFightReturnPhase,
-			applyEffects: !isFightReturnPhase,
-			advanceTalkMission: !isFightReturnPhase
+			applySpecials: !isFightReturnPhase && !isPostFightContinuation,
+			applyEffects: !isFightReturnPhase && !isPostFightContinuation,
+			advanceTalkMission: !isFightReturnPhase && !isPostFightContinuation
 		});
 	});
 }
