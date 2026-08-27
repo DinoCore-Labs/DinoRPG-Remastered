@@ -62,7 +62,6 @@ export const introPortDialog: DialogDefinition = {
 			next: ['raison'],
 			pnj: baoPnj
 		},
-
 		raison: {
 			id: 'raison',
 			name: 'npc.intro.names.barPatron',
@@ -72,7 +71,6 @@ export const introPortDialog: DialogDefinition = {
 				gfx: 'pilier'
 			}
 		},
-
 		gloups: {
 			id: 'gloups',
 			name: 'npc.intro.names.baoBobFormal',
