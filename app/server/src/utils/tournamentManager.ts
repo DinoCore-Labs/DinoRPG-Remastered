@@ -132,8 +132,11 @@ export class TournamentManager {
 		const finalsStart = new Date(poolsStart);
 		finalsStart.setDate(finalsStart.getDate() + 2); // tuesday 00:00
 
+		const PHASE_TOLERANCE_MS = 60_000;
+
 		let phase: TournamentPhase = TournamentPhase.QUALIFICATION;
-		if (currentDate >= qualificationEnd && currentDate < finalsStart) phase = TournamentPhase.POOLS;
+		if (currentDate >= new Date(qualificationEnd.getTime() - PHASE_TOLERANCE_MS) && currentDate < finalsStart)
+			phase = TournamentPhase.POOLS;
 		else if (currentDate >= finalsStart) phase = TournamentPhase.FINALS;
 
 		const lastFight = await prismaClient.fightArchive.findFirst({
@@ -253,32 +256,30 @@ export class TournamentManager {
 	/**
 	 * Monday 12:00 UTC — round 1 of the pools (M3 winners, M4 losers).
 	 */
-	static async poolsRound1Job(prismaClient = prisma): Promise<{ matchesPlayed: number }> {
-		return TournamentManager.schedulePoolRound(1, prismaClient);
+	static async poolsRound1Job(prismaClient = prisma): Promise<void> {
+		await TournamentManager.schedulePoolRound(1, prismaClient);
 	}
 
 	/**
 	 * Monday 22:00 UTC — round 2 of the pools (M5 decider).
 	 */
-	static async poolsRound2Job(prismaClient = prisma): Promise<{ matchesPlayed: number }> {
-		const result = await TournamentManager.schedulePoolRound(2, prismaClient);
+	static async poolsRound2Job(prismaClient = prisma): Promise<void> {
+		await TournamentManager.schedulePoolRound(2, prismaClient);
 
 		// After round 2, all pools are completed → final bracket
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
 		if (tournament) {
 			await TournamentManager.generateFinalBracket(tournament.id, prismaClient);
 		}
-
-		return result;
 	}
 
 	/**
 	 * Wednesday 12:00 → Sunday 12:00 UTC — final bracket rounds.
 	 */
-	static async finalsRoundJob(finalsRound: number, prismaClient = prisma): Promise<{ matchesPlayed: number }> {
+	static async finalsRoundJob(finalsRound: number, prismaClient = prisma): Promise<void> {
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
 
-		if (!tournament) return { matchesPlayed: 0 };
+		if (!tournament || tournament.phase !== TournamentPhase.FINALS) return;
 
 		const tournamentStep = FINALS_STEP_OFFSET + finalsRound;
 
@@ -292,8 +293,7 @@ export class TournamentManager {
 				where: { tournamentId: tournament.id, tournamentStep: previousStep },
 				select: { result: true, tournamentTeamLeftId: true, tournamentTeamRightId: true }
 			});
-			console.log('[finalsRoundJob] previousStep:', previousStep, 'previousFights.length:', previousFights.length);
-			if (previousFights.length === 0) return { matchesPlayed: 0 };
+			if (previousFights.length === 0) return;
 		}
 		// -------------------------------------------------------------------------
 		// Round 0 (1/16)
@@ -305,10 +305,7 @@ export class TournamentManager {
 				select: { id: true, finalSeed: true }
 			});
 
-			if (seededTeams.length < FINAL_BRACKET_SIZE) return { matchesPlayed: 0 };
-
 			const scheduledFor = new Date();
-			let matchesPlayed = 0;
 
 			for (let i = 0; i < 16; i++) {
 				const leftTeam = seededTeams[i]; // Team 2-0 (Seed 1 to 16)
@@ -328,10 +325,7 @@ export class TournamentManager {
 					tournament.id,
 					prismaClient
 				);
-				matchesPlayed++;
 			}
-
-			return { matchesPlayed };
 		}
 
 		// -------------------------------------------------------------------------
@@ -343,13 +337,12 @@ export class TournamentManager {
 			select: { result: true, tournamentTeamLeftId: true, tournamentTeamRightId: true }
 		});
 
-		if (previousFights.length === 0) return { matchesPlayed: 0 };
+		if (previousFights.length === 0) return;
 
 		// Extract the winners in the order of the matches
 		const winners = previousFights.map(f => (f.result ? f.tournamentTeamLeftId! : f.tournamentTeamRightId!));
 
 		const scheduledFor = new Date();
-		let matchesPlayed = 0;
 
 		for (let i = 0; i < winners.length; i += 2) {
 			const left = winners[i];
@@ -368,14 +361,11 @@ export class TournamentManager {
 				tournament.id,
 				prismaClient
 			);
-			matchesPlayed++;
 		}
 
-		if (finalsRound === 4 && matchesPlayed > 0) {
+		if (finalsRound === 4) {
 			await TournamentManager.rewardTournament(tournament.id, prismaClient);
 		}
-
-		return { matchesPlayed };
 	}
 
 	// -------------------------------------------------------------------------
@@ -473,9 +463,9 @@ export class TournamentManager {
 	/**
 	 * Plays the matches of a given pool round (1 or 2) and applies the results.
 	 */
-	private static async schedulePoolRound(round: number, prismaClient = prisma): Promise<{ matchesPlayed: number }> {
+	private static async schedulePoolRound(round: number, prismaClient = prisma): Promise<void> {
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
-		if (!tournament || tournament.phase !== TournamentPhase.POOLS) return { matchesPlayed: 0 };
+		if (!tournament || tournament.phase !== TournamentPhase.POOLS) return;
 
 		const dbTournament = await prismaClient.tournament.findUniqueOrThrow({
 			where: { id: tournament.id },
@@ -487,7 +477,6 @@ export class TournamentManager {
 		const losers = await TournamentManager.getLosersFromRound(prevRound, tournament.id, prismaClient);
 
 		const scheduledFor = new Date();
-		let matchesPlayed = 0;
 
 		for (let poolNumber = 0; poolNumber < POOL_COUNT; poolNumber++) {
 			for (const plan of POOL_MATCH_PLAN.filter(p => p.round === round)) {
@@ -507,11 +496,8 @@ export class TournamentManager {
 					prismaClient
 				);
 				await TournamentManager.applyPoolResult(leftTeamId, rightTeamId, plan, prismaClient);
-				matchesPlayed++;
 			}
 		}
-
-		return { matchesPlayed };
 	}
 
 	// -------------------------------------------------------------------------
