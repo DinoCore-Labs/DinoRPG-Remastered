@@ -3143,7 +3143,10 @@
 			"darki2": "Pigmou Sombre",
 			"darki3": "Winks Sombre",
 			"taurus": "Taurus",
-			"bao": "Baobob"
+			"bao": "Baobob",
+			"gropi": "Gropignon",
+			"mimic": "Mimic",
+			"earth2": "Elémental jambes"
 		},
 		"status": {
 			"asleep": "endormi",
