@@ -1063,6 +1063,7 @@ model Tournament {
   teamSize     Int              @default(1)
   raceMinimum  Int              @default(1)
   poison       Boolean          @default(true)
+  itemsAllowed Boolean          @default(true)
   teamRace     String           @db.Text
   levelLimit   Int              @default(50)
   participants TournamentTeam[]
