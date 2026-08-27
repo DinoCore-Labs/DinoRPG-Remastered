@@ -14,8 +14,7 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.clansList')" :header="$t('common.clans')"></TitleHeader>
 	<DZDisclaimer help round :content="$t('clansList.disclaimer.text')" />
-
-	<div class="wrapper">
+	<div id="clans_page" class="wrapper">
 		<ClanJoinRequest :joinRequest="joinRequest" @cancel="cancelRequest" />
 		<table>
 			<tbody>
@@ -84,6 +83,7 @@ import { userStore } from '../../store/userStore.ts';
 import { errorHandler } from '../../utils/errorHandler.ts';
 import { formatNumber, formatText } from '../../utils/formatText';
 import ClanJoinRequest from './ClanJoinRequest.vue';
+import { useTutorialStore } from '../../store/tutorialStore';
 
 export default defineComponent({
 	name: 'ClansList',
@@ -101,6 +101,7 @@ export default defineComponent({
 			searchClanName: '' as string,
 			joinRequest: null as JoinClanResponse | null,
 			userStore: userStore(),
+			tutorialStore: useTutorialStore(),
 			alreadyHasClan: true as boolean,
 			canCreateClan: false as boolean,
 			creationCost: formatNumber(CLAN_CREATE_MONEY, '.'),
@@ -171,9 +172,21 @@ export default defineComponent({
 		},
 		async cancelRequest() {
 			this.joinRequest = null;
+		},
+		async notifyTutorialClanVisit(): Promise<void> {
+			try {
+				await this.tutorialStore.sendEvent('CLAN_PAGE_VISITED');
+				/*
+				 * L'objectif clan donne 500 pièces d'or.
+				 */
+				await this.$refreshGold();
+			} catch (err) {
+				console.error('[tutorial] Failed to validate clan page visit', err);
+			}
 		}
 	},
 	async created(): Promise<void> {
+		await this.notifyTutorialClanVisit();
 		await this.getClansList();
 		await this.getPlayerJoinRequest();
 		this.alreadyHasClan = this.userStore.clanId != undefined;
