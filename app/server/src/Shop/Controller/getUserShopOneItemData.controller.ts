@@ -29,6 +29,7 @@ export async function getUserShopOneItemDataRequest(userId: string, itemId: numb
 			ingredients: true,
 			dinoz: {
 				select: {
+					id: true,
 					placeId: true,
 					status: { select: { statusId: true } }
 				},

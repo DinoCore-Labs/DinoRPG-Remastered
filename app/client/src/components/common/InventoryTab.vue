@@ -115,6 +115,7 @@ import DZSelect from '../utils/DZSelect.vue';
 import { formatText } from '../../utils/formatText.js';
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
+import { useTutorialStore } from '../../store/tutorialStore.js';
 
 export default defineComponent({
 	name: 'InventoryTab',
@@ -124,6 +125,7 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
+			tutorialStore: useTutorialStore(),
 			allItemsData: [] as Array<ItemFiche>,
 			itemNameList: itemNameList,
 			userStore: userStore(),
@@ -180,6 +182,18 @@ export default defineComponent({
 					this.dinozStore.setDinozList(dinozList);
 				}
 				if (categories.includes(ItemEffect.GOLD)) {
+					await this.$refreshGold();
+				}
+				if (categories.includes(ItemEffect.HEAL)) {
+					try {
+						await this.tutorialStore.load();
+					} catch (err) {
+						console.error('[tutorial] Failed to refresh tutorial after healing', err);
+					}
+					/*
+					 * L'objectif burger donne 500 pièces d'or.
+					 * On actualise donc également le wallet.
+					 */
 					await this.$refreshGold();
 				}
 				if (

@@ -14,6 +14,7 @@ import { decreaseIngredientQuantity } from '../../Inventory/Controller/addIngred
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { getItemMaxQuantity } from '../../Inventory/Service/getAllItemsData.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
+import { refreshTutorialProgress } from '../../Tutorial/Controller/tutorial.controller.js';
 import { addTreasureTicket, removeMoney } from '../../User/Controller/money.controller.js';
 import { getUserShopOneItemDataRequest } from '../Controller/getUserShopOneItemData.controller.js';
 import { buyMagicItem } from './buyMagicItem.service.js';
@@ -46,7 +47,7 @@ export async function buyItemHandler(
 		// Données joueur + item (money, shopKeeper, placeId, items, golden napodinos, etc.)
 		const playerShopData = await getUserShopOneItemDataRequest(userId, itemId);
 		if (!playerShopData) throw new ExpectedError(`Player ${userId} doesn't exist.`);
-
+		const tutorialDinozId = playerShopData.dinoz[0]?.id;
 		const playerItemData = playerShopData.items.find(i => i.itemId === itemId);
 
 		if (quantityBought <= 0) {
@@ -115,7 +116,12 @@ export async function buyItemHandler(
 			await addTreasureTicket(userId, quantityBought);
 
 			await incrementUserStat(StatTracking.S_BUYER, userId, quantityBought);
-
+			if (tutorialDinozId !== undefined) {
+				await refreshTutorialProgress({
+					userId,
+					dinozId: tutorialDinozId
+				});
+			}
 			safeCreateGameLog(
 				{
 					type: GameLogType.IngredientSold,
@@ -166,7 +172,12 @@ export async function buyItemHandler(
 		await addItemToInventory(userId, itemReference.itemId, quantityBought);
 
 		await incrementUserStat(StatTracking.S_BUYER, userId, quantityBought);
-
+		if (tutorialDinozId !== undefined) {
+			await refreshTutorialProgress({
+				userId,
+				dinozId: tutorialDinozId
+			});
+		}
 		const totalPrice = itemReference.price * quantityBought;
 		const isMagicShop = theShop.type === ShopType.MAGICAL;
 
