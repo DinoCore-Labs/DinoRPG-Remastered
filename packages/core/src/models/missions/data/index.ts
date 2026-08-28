@@ -3,6 +3,7 @@ import { baoBobMissions } from './baoBob.missions.js';
 import { dianKorgseyMissions } from './dianKorgsey.missions.js';
 import { elementalMasterMissions } from './elementalMaster.missions.js';
 import { forestGuardianMissions } from './forestGuardian.missions.js';
+import { guideMichelMissions } from './guideMichel.missions.js';
 import { hulotMissions } from './hulot.missions.js';
 import { madameXMissions } from './madameX.missions.js';
 import { papyJoeMissions } from './papyJoe.missions.js';
@@ -22,5 +23,6 @@ export const missionList: MissionDefinition[] = [
 	...skullyMissions,
 	...madameXMissions,
 	...elementalMasterMissions,
-	...requestOfficeMissions
+	...requestOfficeMissions,
+	...guideMichelMissions
 ];
