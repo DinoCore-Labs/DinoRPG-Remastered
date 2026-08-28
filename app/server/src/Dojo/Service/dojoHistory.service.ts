@@ -76,6 +76,17 @@ export async function getArchivedFight(req: FastifyRequest, reply: FastifyReply)
 
 	await viewFight(userId, body.id);
 
+	let place = 996; // PlaceEnum.DOJO
+	let background: string | undefined;
+	if (fight.metadata) {
+		try {
+			const meta = JSON.parse(fight.metadata as string);
+			if (meta.placeId) place = meta.placeId;
+			else if (meta.place) place = meta.place;
+			if (meta.background) background = meta.background;
+		} catch {}
+	}
+
 	return reply.send({
 		fight: {
 			id: body.id,
@@ -84,7 +95,9 @@ export async function getArchivedFight(req: FastifyRequest, reply: FastifyReply)
 			history: JSON.parse(fight.steps) as FightStep[],
 			seed: fight.seed,
 			leftUser: fight.leftUser,
-			rightUser: fight.rightUser
+			rightUser: fight.rightUser,
+			place,
+			background
 		}
 	});
 }

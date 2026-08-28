@@ -24,6 +24,8 @@ import type { preFightLoader } from '@dinorpg/core/models/fight/transpiler.js';
 import type { FightStep } from '@dinorpg/core/models/fight/fightStep.js';
 import type { FighterRecap } from '@dinorpg/core/models/fight/fightResult.js';
 
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+
 export default defineComponent({
 	name: 'ShareFight',
 	components: {
@@ -61,7 +63,8 @@ export default defineComponent({
 			if (!nexFight) {
 				return;
 			}
-			const initPlace = resolveFightingPlace(fightResult.fight.place);
+			const placeId = fightResult.fight.place ?? PlaceEnum.DOJO;
+			const initPlace = resolveFightingPlace(placeId, fightResult.fight.background);
 			this.fightTransformed = {
 				...initPlace,
 				history: nexFight.filter(n => n != undefined)
