@@ -4939,7 +4939,8 @@
 				"p5y": "Oui j'en ai déjà fait le tour",
 				"secret": "Ah ? Et quoi par exemple ?",
 				"secret2": "Woaahh !",
-				"lost": "Je ne sais plus quoi faire !"
+				"lost": "Je ne sais plus quoi faire !",
+				"missions": "Consulter les missions"
 			}
 		},
 		"intro": {
@@ -6694,6 +6695,32 @@
 					"description": "Cervelah portait l'un des pendentifs du Couperet que vous recherchiez..."
 				},
 				"end": "Le Consortium des Filous Associés vous remercie pour votre aide précieuse. Voilà une belle prime pour votre efficacité."
+			}
+		},
+		"michel": {
+			"move": {
+				"name": "Découvert bucolique",
+				"begin": "Bienvenue à Dinoland, je vais t'apprendre à parcourir les vertes contrées de notre monde, tiens-toi prêt... Essaie d'aller à l'université et parle moi là-bas !",
+				"end": "LeGuide Michel semble satisfait, il te donne une potion d'irma en cadeau, tu pourras te déplacer une fois de plus !",
+				"guideMichel": {
+					"text": "Bravo, tu as réussi à venir jusqu'ici, il ne te reste plus qu'à valider la mission en revenant me voir à Dinoville"
+				},
+				"madameSeyche": {
+					"name": "Madame Seyche",
+					"text": "Bien joué ! On peut passer à la suite."
+				}
+			},
+			"atk": {
+				"name": "Bataille dangeureuse",
+				"begin": "Tu as du combattre précédemment pour atteindre l'Université, maintenant, tu vas déclencher un combat ici-même !",
+				"kill": "Monstres sauvages",
+				"end": "Bravo, tu as battu des monstres à toi seul ! Tu feras de nombreuses rencontres lors de tes aventures, plus tu combattras, plus tu deviendras fort !"
+			},
+			"boutik": {
+				"name": "Prenons de l'altitude",
+				"begin": "Tu vas maintenant acheter une potion d'ange à la boutique volante, elle sert à ressuciter ton dinoz s'il vient à succomber aux blessures infligés par les monstres !\nPour ce faire, il faut que tu cliques sur le bouton \"Boutique\" en haut à gauche de l'interface, tu pourras ensuite me donner l'objet que tu auras acheté !",
+				"angel": "Potion d'Ange",
+				"end": "Félicitations ! Tu as su te servir correctement de la boutique, elle est accessible à n'importe quel endroit du jeu, n'hésite pas à l'utiliser en cas de besoin !"
 			}
 		}
 	},
