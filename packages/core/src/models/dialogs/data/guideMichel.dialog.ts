@@ -1,4 +1,5 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
+import { TUTORIAL_COMPLETED_PROGRESSION } from '../../tutorial/tutorial.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { DialogDefinition } from '../dialog.js';
 
@@ -20,7 +21,18 @@ export const guideMichelDialog: DialogDefinition = {
 			id: 'begin',
 			text: 'npc.guideMichel.dialog.begin',
 			fast: true,
-			next: ['pub', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9', 'p10', 'p11', 'p12', 'p13']
+			next: ['missions', 'pub', 'p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8', 'p9', 'p10', 'p11', 'p12', 'p13']
+		},
+		missions: {
+			id: 'missions',
+			text: '',
+			next: [],
+			special: [
+				{
+					type: 'missions',
+					group: 'michel'
+				}
+			]
 		},
 		/*
 		 * Introduction / tutoriel
@@ -154,6 +166,12 @@ export const guideMichelDialog: DialogDefinition = {
 		}
 	},
 	links: {
+		missions: {
+			id: 'missions',
+			text: 'npc.guideMichel.choice.missions',
+			target: 'missions',
+			cond: c(`scenario(tutorial,${TUTORIAL_COMPLETED_PROGRESSION}+)`)
+		},
 		pub: {
 			id: 'pub',
 			text: 'npc.guideMichel.choice.pub',
