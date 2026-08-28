@@ -383,11 +383,11 @@ export const elementalMasterMissions: MissionDefinition[] = [
 				nameKey: 'npc.elMaster.name',
 				textKey: 'missions.elMaster.elmaair.elmaTalk2'
 			},
-			{ type: 'AT', place: PlaceEnum.DINOVILLE, hidden: false }, // A remplacer par Dinoplaza quand disponible
+			{ type: 'AT', place: PlaceEnum.DINOPLAZA, hidden: false },
 			{
 				type: 'ACTION',
 				actionKey: 'find_scrolls',
-				place: PlaceEnum.DINOVILLE, // A remplacer par Dinoplaza quand disponible
+				place: PlaceEnum.DINOPLAZA,
 				nameKey: 'missions.elMaster.elmaair.scrolls.name',
 				descriptionKey: 'missions.elMaster.elmaair.scrolls.text'
 			},
