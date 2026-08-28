@@ -33,7 +33,7 @@
 
 				<div class="textbox">
 					<p class="name">{{ dinoz.name }}</p>
-					<p class="level">{{ $t('myAccount.level') }} {{ dinoz.level }}</p>
+					<p class="level">{{ $t('accountPage.level') }} {{ dinoz.level }}</p>
 				</div>
 			</div>
 		</div>
@@ -217,7 +217,7 @@ export default defineComponent({
 	user-select: none;
 	display: flex;
 	flex-direction: column;
-	background-image: url('../../assets/battle/forcebrut.webp');
+	background-image: url('../../assets/place/forcebrut.webp');
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position-x: center;
