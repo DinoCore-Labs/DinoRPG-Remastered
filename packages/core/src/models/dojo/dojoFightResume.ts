@@ -12,4 +12,5 @@ export interface DojoFightResume {
 	leftPlayer: UserToolTip;
 	rightPlayer: UserToolTip;
 	place: PlaceEnum;
+	background?: string;
 }
