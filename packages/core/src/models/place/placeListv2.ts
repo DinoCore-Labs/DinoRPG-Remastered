@@ -1008,7 +1008,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.VILLA, condition: 'scenario(nimbao,3+)' }
 		],
 		ground: GroundEnum.DIRT,
-		background: 's_dnv',
+		background: 's_plaza',
 		top: 110
 	},
 
