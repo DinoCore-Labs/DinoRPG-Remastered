@@ -21,7 +21,7 @@ import type { TutorialHelperResponse } from '../../services/tutorial.service';
 import { dinozStore } from '../../store/dinozStore';
 import { sessionStore } from '../../store/sessionStore';
 import { useTutorialStore } from '../../store/tutorialStore';
-import { checkTutorialHelperCondition } from './TutorialHelperCondition';
+import { checkTutorialHelperCondition } from './tutorialHelperCondition';
 
 type DisplayedHelper = {
 	key: string;
