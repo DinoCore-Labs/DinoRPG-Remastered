@@ -128,7 +128,7 @@ export default defineComponent({
 			try {
 				this.loading = true;
 				const newsList = await NewsService.getNewsPage(1, this.localStore.getLanguage ?? Language.FR);
-				console.log(newsList);
+				//console.log(newsList);
 				this.batch = this.mapNewsBatch(newsList);
 				this.page = 1;
 			} catch (err) {
