@@ -30,11 +30,9 @@ function validateNewsTranslations(
 	translations: CreateNewsBody['translations'] | NonNullable<UpdateNewsBody['translations']>
 ) {
 	const filledTranslations = getFilledNewsTranslations(translations);
-
 	if (filledTranslations.length === 0) {
 		throw new ExpectedError('At least one news translation is required');
 	}
-
 	ensureUniqueLanguages(filledTranslations, 'Duplicate news translation language');
 }
 
@@ -42,18 +40,14 @@ function validatePollInput(poll: NonNullable<CreateNewsBody['poll'] | UpdateNews
 	if (poll.options.length < 2) {
 		throw new ExpectedError('A poll requires at least 2 options');
 	}
-
 	if (poll.endAt <= new Date()) {
 		throw new ExpectedError('Poll end date must be in the future');
 	}
-
 	for (const option of poll.options) {
 		if (option.translations.length === 0) {
 			throw new ExpectedError('Each poll option must have at least one translation');
 		}
-
 		ensureUniqueLanguages(option.translations, 'Duplicate poll option translation language');
-
 		for (const translation of option.translations) {
 			if (!translation.label.trim()) {
 				throw new ExpectedError(`Missing poll option label for language ${translation.lang}`);
@@ -67,13 +61,10 @@ export const newsService = {
 		const filledTranslations = input.translations.filter(
 			translation => translation.title.trim().length > 0 && translation.content.trim().length > 0
 		);
-
 		validateNewsTranslations(filledTranslations);
-
 		if (input.poll) {
 			validatePollInput(input.poll);
 		}
-
 		return prisma.$transaction(async tx => {
 			const createdNews = await tx.news.create({
 				data: {
@@ -81,8 +72,8 @@ export const newsService = {
 					type: input.type,
 					isPublished: input.isPublished ?? false,
 					publishedAt: input.publishedAt ?? null,
-					image: new Uint8Array(),
-					imageMimeType: imageMimeType ?? null,
+					image: image?.length ? new Uint8Array(image) : null,
+					imageMimeType: image?.length ? (imageMimeType ?? null) : null,
 					translations: {
 						create: input.translations.map(translation => ({
 							lang: translation.lang,
@@ -113,7 +104,6 @@ export const newsService = {
 				},
 				include: adminNewsDetailsInclude
 			});
-
 			return createdNews;
 		});
 	},
@@ -122,28 +112,34 @@ export const newsService = {
 		if (!existingNews) {
 			throw new ExpectedError('News not found');
 		}
-
 		if (input.translations) {
 			validateNewsTranslations(input.translations);
 		}
-
 		if (input.poll) {
 			validatePollInput(input.poll);
 		}
-
 		return prisma.$transaction(async tx => {
 			if (input.translations) {
 				await tx.newsTranslation.deleteMany({
 					where: { newsId }
 				});
 			}
-
 			if (input.poll !== undefined && existingNews.poll) {
 				await tx.poll.delete({
 					where: { id: existingNews.poll.id }
 				});
 			}
-
+			const imageUpdate = input.removeImage
+				? {
+						image: null,
+						imageMimeType: null
+					}
+				: image?.length
+					? {
+							image: new Uint8Array(image),
+							imageMimeType: imageMimeType ?? null
+						}
+					: {};
 			const updatedNews = await tx.news.update({
 				where: { id: newsId },
 				data: {
@@ -151,8 +147,7 @@ export const newsService = {
 					type: input.type,
 					isPublished: input.isPublished,
 					publishedAt: input.publishedAt,
-					image: image ? new Uint8Array(image) : null,
-					imageMimeType: input.removeImage ? null : (imageMimeType ?? undefined),
+					...imageUpdate,
 					translations: input.translations
 						? {
 								create: input.translations.map(translation => ({
@@ -188,7 +183,6 @@ export const newsService = {
 				},
 				include: adminNewsDetailsInclude
 			});
-
 			return updatedNews;
 		});
 	},
@@ -206,12 +200,11 @@ export const newsService = {
 		if (page < 1) {
 			throw new ExpectedError('Invalid page');
 		}
-
 		return newsRepository.findPublicNewsPage(page, 10);
 	},
 	async getNewsImage(newsId: number) {
 		const image = await newsRepository.findNewsImage(newsId);
-		if (!image || !image.image) {
+		if (!image?.image?.length) {
 			throw new ExpectedError('News image not found');
 		}
 		return image;
@@ -221,21 +214,16 @@ export const newsService = {
 		if (!news) {
 			throw new ExpectedError('News not found');
 		}
-
 		const existingLike = await newsRepository.findNewsLike(newsId, userId);
-
 		if (existingLike) {
 			await newsRepository.deleteNewsLike(newsId, userId);
-
 			return {
 				newsId,
 				likes: await newsRepository.countNewsLikes(newsId),
 				likedByMe: false
 			};
 		}
-
 		await newsRepository.createNewsLike(newsId, userId);
-
 		return {
 			newsId,
 			likes: await newsRepository.countNewsLikes(newsId),
@@ -247,39 +235,30 @@ export const newsService = {
 		if (!poll) {
 			throw new ExpectedError('Poll not found');
 		}
-
 		if (!poll.isActive || poll.endAt <= new Date()) {
 			throw new ExpectedError('Poll is over');
 		}
-
 		const option = poll.options.find(item => item.id === optionId);
 		if (!option) {
 			throw new ExpectedError('Invalid poll option');
 		}
-
 		const currentVote = poll.votes[0];
 		if (currentVote && currentVote.pollOptionId === optionId) {
 			return { success: true };
 		}
-
 		await newsRepository.upsertPollVote(pollId, optionId, userId);
-
 		return { success: true };
 	},
 	async deleteAdminNews(id: number) {
 		const news = await newsRepository.findNewsById(id);
-
 		if (!news) {
 			throw new ExpectedError('News not found');
 		}
-
 		await newsRepository.deleteNews(id);
-
 		return { success: true };
 	},
 	mapAdminNews(news: AdminNewsDetailsRecord) {
 		if (!news) throw new ExpectedError('News not found');
-
 		return {
 			id: news.id,
 			slug: news.slug,
@@ -289,7 +268,7 @@ export const newsService = {
 			createdAt: news.createdAt,
 			updatedAt: news.updatedAt,
 			image: {
-				hasImage: !!news.image,
+				hasImage: !!news.image?.length,
 				mimeType: news.imageMimeType ?? null
 			},
 			translations: news.translations,
@@ -322,7 +301,6 @@ export const newsService = {
 			})),
 			lang as Language
 		);
-
 		return {
 			id: news.id,
 			slug: news.slug,
@@ -332,7 +310,7 @@ export const newsService = {
 			content: translation?.content ?? '',
 			createdAt: news.createdAt,
 			publishedAt: news.publishedAt,
-			imageUrl: news.image ? `/news/${news.id}/image` : null,
+			imageUrl: news.image?.length ? `/news/${news.id}/image` : null,
 			likes: news.likedBy.length,
 			likedByMe: !!userId && news.likedBy.some(like => like.userId === userId),
 			poll: news.poll

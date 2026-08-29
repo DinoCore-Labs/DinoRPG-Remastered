@@ -34,6 +34,7 @@ import AdminNewsForm from '../../components/admin/news/AdminNewsForm.vue';
 import AdminNewsPreview from '../../components/admin/news/AdminNewsPreview.vue';
 import { AdminNewsService } from '../../services/adminNews.service';
 import { errorHandler } from '../../utils/errorHandler';
+import { API_BASE } from '../../utils/http.ts';
 
 function createDefaultForm() {
 	return {
@@ -104,9 +105,11 @@ export default defineComponent({
 			return this.newsId !== null;
 		},
 		previewImageUrl(): string | null {
-			if (this.imagePreviewUrl) return this.imagePreviewUrl;
+			if (this.imagePreviewUrl) {
+				return this.imagePreviewUrl;
+			}
 			if (this.isEdit && this.newsId && this.hasCurrentImage && !this.form.removeImage) {
-				return `${import.meta.env.VITE_API_URL}/api/news/${this.newsId}/image`;
+				return `${API_BASE}/news/${this.newsId}/image`;
 			}
 			return null;
 		}
@@ -185,7 +188,7 @@ export default defineComponent({
 				this.error = '';
 				const news = await AdminNewsService.getAdminNewsDetails(this.newsId);
 				this.form = this.mapNewsToForm(news);
-				this.hasCurrentImage = !!news.image;
+				this.hasCurrentImage = news.image?.hasImage ?? false;
 			} catch (err) {
 				this.error = 'Impossible de charger la news.';
 				errorHandler.handle(err, this.$toast);

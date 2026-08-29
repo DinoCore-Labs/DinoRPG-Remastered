@@ -99,7 +99,7 @@ export default defineComponent({
 			default: false
 		}
 	},
-	emits: ['update:modelValue', 'submit'],
+	emits: ['update:modelValue', 'image-change', 'submit'],
 	data() {
 		return {
 			imageFile: null as File | null,
@@ -126,6 +126,7 @@ export default defineComponent({
 		onImageChange(event: Event) {
 			const target = event.target as HTMLInputElement;
 			this.imageFile = target.files?.[0] ?? null;
+			this.$emit('image-change', this.imageFile);
 		},
 		submit() {
 			this.$emit('submit', this.imageFile);

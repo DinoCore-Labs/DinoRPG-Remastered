@@ -32,7 +32,13 @@
 				</div>
 			</div>
 		</div>
-		<img v-if="news.imageUrl" :src="news.imageUrl" :alt="news.title || 'news'" @error="hideBrokenImage" />
+		<img
+			class="news-image"
+			v-if="news.imageUrl"
+			:src="NewsService.getImageUrl(news.id)"
+			:alt="news.title || 'news'"
+			@error="hideBrokenImage"
+		/>
 		<div class="markdown" v-if="news.content">
 			<MarkdownRenderer :source="news.content" />
 		</div>
@@ -83,7 +89,8 @@ export default defineComponent({
 			localStore: localStore(),
 			batch: [] as NewsPageItem[],
 			page: 1,
-			loading: false
+			loading: false,
+			NewsService
 		};
 	},
 	computed: {
@@ -471,6 +478,11 @@ export default defineComponent({
 				margin-bottom: 20px;
 			}
 		}
+	}
+	.news-image {
+		align-self: center;
+		width: 50%;
+		height: auto;
 	}
 }
 </style>

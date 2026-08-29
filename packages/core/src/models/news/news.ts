@@ -15,8 +15,8 @@ export enum NewsType {
 }
 
 export interface NewsImage {
-	data: number[];
-	mimeType: string;
+	hasImage: boolean;
+	mimeType: string | null;
 }
 
 export interface NewsTranslation {
