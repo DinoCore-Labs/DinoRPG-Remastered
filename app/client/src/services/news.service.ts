@@ -1,11 +1,14 @@
+import type { Language } from '@dinorpg/core/models/config/language.js';
 import type { PublicNewsListItem } from '@dinorpg/core/models/news/news.js';
 import type { ToggleNewsLikeResult, VotePollResult } from '@dinorpg/core/models/news/newsInput.js';
 
 import { api } from '../utils/http';
 
 export const NewsService = {
-	getNewsPage(page: number): Promise<PublicNewsListItem[]> {
-		return api.get<PublicNewsListItem[]>(`/news/page/${page}`);
+	getNewsPage(page: number, lang: Language): Promise<PublicNewsListItem[]> {
+		return api.get<PublicNewsListItem[]>(`/news/page/${page}`, {
+			params: { lang }
+		});
 	},
 	toggleLike(newsId: number): Promise<ToggleNewsLikeResult> {
 		return api.post<ToggleNewsLikeResult>(`/news/${newsId}/like`);

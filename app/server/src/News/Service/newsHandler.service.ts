@@ -1,7 +1,12 @@
 import { Language } from '@dinorpg/core/models/config/language.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { newsIdParamsSchema, newsPageParamsSchema, pollVoteParamsSchema } from '../Schema/news.schema.js';
+import {
+	newsIdParamsSchema,
+	newsLanguageQuerySchema,
+	newsPageParamsSchema,
+	pollVoteParamsSchema
+} from '../Schema/news.schema.js';
 import { newsService } from './news.service.js';
 
 type AuthenticatedRequest = FastifyRequest & {
@@ -15,10 +20,10 @@ type AuthenticatedRequest = FastifyRequest & {
 
 export async function getNewsListHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { page } = newsPageParamsSchema.parse(req.params);
-
+	const { lang: requestedLang } = newsLanguageQuerySchema.parse(req.query);
 	const user = (req as AuthenticatedRequest).user;
 
-	const lang = (user?.profile?.language ?? Language.FR) as Language;
+	const lang = requestedLang ?? user?.profile?.language ?? Language.FR;
 
 	const news = await newsService.getPublicNews(page);
 

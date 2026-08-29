@@ -67,6 +67,7 @@ import { userStore } from '../store/userStore';
 import { NewsService } from '../services/news.service';
 import { errorHandler } from '../utils/errorHandler';
 import { getImgURL } from '../utils/getImgURL';
+import { Language } from '@dinorpg/core/models/config/language.js';
 
 export default defineComponent({
 	name: 'NewsPage',
@@ -91,6 +92,9 @@ export default defineComponent({
 		},
 		canLoadMore(): boolean {
 			return this.batch.length > 0 && this.batch.length % 10 === 0;
+		},
+		currentLanguage(): Language {
+			return this.$i18n.locale as Language;
 		}
 	},
 	methods: {
@@ -116,7 +120,8 @@ export default defineComponent({
 		async getFirstNews() {
 			try {
 				this.loading = true;
-				const newsList = await NewsService.getNewsPage(1);
+				const newsList = await NewsService.getNewsPage(1, this.localStore.getLanguage ?? Language.FR);
+				console.log(newsList);
 				this.batch = this.mapNewsBatch(newsList);
 				this.page = 1;
 			} catch (err) {
@@ -129,7 +134,7 @@ export default defineComponent({
 		async overload(page: number) {
 			try {
 				this.loading = true;
-				const newLoad = await NewsService.getNewsPage(page);
+				const newLoad = await NewsService.getNewsPage(page, this.localStore.getLanguage ?? Language.FR);
 				this.batch.push(
 					...newLoad.map(news => ({
 						...news,
@@ -146,7 +151,7 @@ export default defineComponent({
 		},
 		async refreshCurrentPage() {
 			try {
-				const refreshed = await NewsService.getNewsPage(this.page);
+				const refreshed = await NewsService.getNewsPage(this.page, this.localStore.getLanguage ?? Language.FR);
 				this.batch = refreshed.map((news, index) => {
 					const previous = this.batch[index];
 					return {
@@ -182,6 +187,14 @@ export default defineComponent({
 	},
 	async mounted() {
 		await this.getFirstNews();
+	},
+	watch: {
+		currentLanguage: {
+			async handler(newLanguage, oldLanguage) {
+				if (newLanguage === oldLanguage) return;
+				await this.getFirstNews();
+			}
+		}
 	}
 });
 </script>

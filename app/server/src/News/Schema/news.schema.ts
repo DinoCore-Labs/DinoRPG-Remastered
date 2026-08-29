@@ -13,6 +13,10 @@ export const newsPageParamsSchema = z.object({
 	page: z.coerce.number().int().positive()
 });
 
+export const newsLanguageQuerySchema = z.object({
+	lang: languageSchema.optional()
+});
+
 export const pollVoteParamsSchema = z.object({
 	id: z.coerce.number().int().positive(),
 	optionId: z.coerce.number().int().positive()

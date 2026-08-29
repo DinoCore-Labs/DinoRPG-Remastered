@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify';
 
 import {
 	newsIdParamsSchema,
+	newsLanguageQuerySchema,
 	newsPageParamsSchema,
 	pollVoteParamsSchema,
 	toggleNewsLikeResponseSchema,
@@ -21,7 +22,8 @@ export async function newsRoutes(app: FastifyInstance) {
 			preHandler: [app.noAuth],
 			schema: {
 				tags: ['News'],
-				params: newsPageParamsSchema
+				params: newsPageParamsSchema,
+				querystring: newsLanguageQuerySchema
 			}
 		},
 		getNewsListHandler
