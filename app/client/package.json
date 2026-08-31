@@ -33,7 +33,7 @@
 		"@vue/tsconfig": "^0.9.1",
 		"sass": "^1.103.1",
 		"vite": "^8.2.2",
-		"vite-plugin-vue-devtools": "^8.1.2",
+		"vite-plugin-vue-devtools": "^8.2.1",
 		"vue-tsc": "^3.3.11"
 	}
 }
