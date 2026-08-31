@@ -1,3 +1,17 @@
+/**
+ * This file contains code derived from or adapted from:
+ * Eternaltwin DinoRPG
+ * Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/staging/ed-be/src/business/dojoService.ts
+ *
+ * Copyright in the original contributions remains with the respective
+ * authors and contributors.
+ *
+ * Modified by DinoRPG Remastered contributors on 2026-08-31.
+ * See NOTICE.md and the Git history for provenance and modification details.
+ *
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import { PublicMetada, PublicTournament, TournamentPhase } from '@dinorpg/core/models/dojo/tournament.js';
 import { FighterRecap } from '@dinorpg/core/models/fight/fightResult.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
@@ -37,7 +51,6 @@ export async function createTournamentTeam(req: FastifyRequest, reply: FastifyRe
 
 	const latestTournament = await getLatestTournament();
 
-	// This shouldn't happen
 	if (!latestTournament) {
 		throw new Error('No tournament found.');
 	}

@@ -1,3 +1,17 @@
+/**
+ * This file contains code derived from or adapted from:
+ * Eternaltwin DinoRPG
+ * Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/staging/ed-ui/src/store/dojoStore.ts
+ *
+ * Copyright in the original contributions remains with the respective
+ * authors and contributors.
+ *
+ * Modified by DinoRPG Remastered contributors from 2026-06-13 through 2026-07-01.
+ * See NOTICE.md and the Git history for provenance and modification details.
+ *
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import type { DojoStore } from '@dinorpg/core/models/store/dojoStore.js';
 import { defineStore } from 'pinia';
 
