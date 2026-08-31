@@ -2,6 +2,27 @@
 
 ## 🔹 Core
 
+## 0.37.0
+
+### Minor Changes
+
+- 85774a8: Introduce the Dojo and Inter-Dojo Tournament (TID) system.
+
+  ### Dojo
+  - Add the new Dojo interface and related player actions.
+  - Add Dojo challenges, rankings and fight history.
+  - Add Dinoz selection and team management.
+  - Add fight recap, replay and sharing features.
+
+  ### Inter-Dojo Tournament
+  - Add the complete TID tournament lifecycle with qualification, pool and final phases.
+  - Add tournament team registration and selection.
+  - Add configurable tournament rules, including level limits and item restrictions.
+  - Add tournament brackets, match scheduling and history.
+  - Add qualification and tournament reward distribution.
+  - Add tournament announcements and player notifications.
+  - Add automatic scheduling for tournament progression and Dojo challenge resets.
+
 ## 0.36.0
 
 ### Minor Changes
@@ -636,6 +657,32 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.39.0
+
+### Minor Changes
+
+- 85774a8: Introduce the Dojo and Inter-Dojo Tournament (TID) system.
+
+  ### Dojo
+  - Add the new Dojo interface and related player actions.
+  - Add Dojo challenges, rankings and fight history.
+  - Add Dinoz selection and team management.
+  - Add fight recap, replay and sharing features.
+
+  ### Inter-Dojo Tournament
+  - Add the complete TID tournament lifecycle with qualification, pool and final phases.
+  - Add tournament team registration and selection.
+  - Add configurable tournament rules, including level limits and item restrictions.
+  - Add tournament brackets, match scheduling and history.
+  - Add qualification and tournament reward distribution.
+  - Add tournament announcements and player notifications.
+  - Add automatic scheduling for tournament progression and Dojo challenge resets.
+
+### Patch Changes
+
+- Updated dependencies [85774a8]
+  - @dinorpg/core@0.37.0
 
 ## 0.38.0
 
@@ -1486,6 +1533,27 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.38.0
+
+### Minor Changes
+
+- 85774a8: Introduce the Dojo and Inter-Dojo Tournament (TID) system.
+
+  ### Dojo
+  - Add the new Dojo interface and related player actions.
+  - Add Dojo challenges, rankings and fight history.
+  - Add Dinoz selection and team management.
+  - Add fight recap, replay and sharing features.
+
+  ### Inter-Dojo Tournament
+  - Add the complete TID tournament lifecycle with qualification, pool and final phases.
+  - Add tournament team registration and selection.
+  - Add configurable tournament rules, including level limits and item restrictions.
+  - Add tournament brackets, match scheduling and history.
+  - Add qualification and tournament reward distribution.
+  - Add tournament announcements and player notifications.
+  - Add automatic scheduling for tournament progression and Dojo challenge resets.
 
 ## 0.37.0
 
