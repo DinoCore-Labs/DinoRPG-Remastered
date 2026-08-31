@@ -114,6 +114,7 @@ import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import DZSelect from '../utils/DZSelect.vue';
 import { formatText } from '../../utils/formatText.js';
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
+import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 
 export default defineComponent({
 	name: 'InventoryTab',
@@ -246,6 +247,16 @@ export default defineComponent({
 		},
 		async equipItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
+				if (item.itemType === ItemType.MAGICAL) {
+					const res = await this.$confirm({
+						message: this.$t(`dinozPage.inventory.confirmEquipMagicItem`),
+						header: this.$t('popup.attention'),
+						acceptLabel: this.$t('popup.accept'),
+						rejectLabel: this.$t('popup.reject'),
+						icon: 'pi pi-exclamation-triangle'
+					}).catch(() => false);
+					if (!res) return;
+				}
 				const dinozId = parseInt(this.$route.params.id as string);
 				try {
 					const result = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
@@ -255,6 +266,7 @@ export default defineComponent({
 						eventBus.emit('refreshDinoz', true);
 					}
 				} catch (error) {
+					console.error('[equipItem] Erreur backend :', error);
 					errorHandler.handle(error, this.$toast);
 					return;
 				}

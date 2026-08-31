@@ -129,6 +129,7 @@
 			"full": "Stock plein",
 			"sortBy": "Trier par",
 			"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
+			"confirmEquipMagicItem": "Etes vous sur de vouloir équiper cette objet ?",
 			"sort": {
 				"default": "Par défaut",
 				"nameAsc": "Nom (A → Z)",
@@ -764,6 +765,7 @@
 		"resurrect": "Votre Dinoz est ressuscité.",
 		"egg": "Vous avez ouvert un œuf de {value}.",
 		"dinozAlreadySelling": "Votre Dinoz est déjà en vente.",
+		"cannotEquipSellingDinoz": "Vous ne pouvez pas équiper d'objet sur un dinoz en vente",
 		"noPDA": "Tu as besoin de la Pierre en Diamantite Agglomérée pour accéder à cette page.",
 		"noPMI": "Tu as besoin du Petit Missionnaire Illustré pour accéder à cette page.",
 		"noPAC": "Tu as besoin du Parchemin des Aptitudes Compilées pour accéder à cette page.",

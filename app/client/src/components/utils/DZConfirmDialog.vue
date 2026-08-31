@@ -139,8 +139,8 @@ export default {
 .simple-confirm-dialog-footer {
 	padding: 1rem;
 	display: flex;
-	justify-content: flex-end;
-	gap: 0.5rem;
+	justify-content: center;
+	gap: 2rem;
 }
 .btn-content {
 	display: flex;
