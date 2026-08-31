@@ -59,7 +59,7 @@
 				</RouterLink>
 				<RouterLink to="/dojo/tournaments">
 					<img
-						:src="getImgURL('act', 'act_history')"
+						:src="getImgURL('act', 'act_fav')"
 						v-tippy="{
 							content: formatContent($t('dojo.tournamentHistory')),
 							theme: 'small'
