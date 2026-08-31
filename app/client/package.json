@@ -31,7 +31,7 @@
 		"@types/sanitize-html": "^2.16.1",
 		"@vitejs/plugin-vue": "^6.0.5",
 		"@vue/tsconfig": "^0.9.1",
-		"sass": "^1.99.0",
+		"sass": "^1.103.1",
 		"vite": "^8.0.16",
 		"vite-plugin-vue-devtools": "^8.1.2",
 		"vue-tsc": "^3.3.11"
