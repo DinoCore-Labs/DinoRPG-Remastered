@@ -39,7 +39,7 @@ export async function equipItem(
 		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 	}
 	if (dinoz.state === DinozState.selling) {
-		throw new ExpectedError(`dinoz.stateReason.${dinoz.state}`);
+		throw new ExpectedError('cannotEquipSellingDinoz');
 	}
 	const itemId = Number(req.body.itemId);
 	const equip = Boolean(req.body.equip);
