@@ -241,6 +241,30 @@ export async function getDojoTournamentFights(req: FastifyRequest, reply: Fastif
 			id: true,
 			tournamentTeamLeftId: true,
 			tournamentTeamRightId: true,
+			tournamentTeamLeft: {
+				select: {
+					dinoz: {
+						take: 1,
+						select: {
+							id: true,
+							name: true,
+							display: true
+						}
+					}
+				}
+			},
+			tournamentTeamRight: {
+				select: {
+					dinoz: {
+						take: 1,
+						select: {
+							id: true,
+							name: true,
+							display: true
+						}
+					}
+				}
+			},
 			leftUser: {
 				select: {
 					id: true,
@@ -265,17 +289,56 @@ export async function getDojoTournamentFights(req: FastifyRequest, reply: Fastif
 	const transformedFights = fights.map(f => {
 		const fighters = JSON.parse(f.fighters) as FighterRecap[]; // fighters are preserved after player deletion
 		fighters.sort((a, b) => a.id - b.id);
+		const leftDinoz =
+			fighters.filter(fighter => fighter.type === 'dinoz').filter(fighter => fighter.attacker)[0] ??
+			(f.tournamentTeamLeft?.dinoz[0]
+				? ({
+						id: f.tournamentTeamLeft.dinoz[0].id,
+						name: f.tournamentTeamLeft.dinoz[0].name,
+						display: f.tournamentTeamLeft.dinoz[0].display,
+						type: 'dinoz',
+						attacker: true,
+						maxHp: 100,
+						startingHp: 100,
+						energy: 0,
+						maxEnergy: 0,
+						energyRecovery: 0,
+						dark: false,
+						size: 100,
+						entrance: 0
+					} as FighterRecap)
+				: null);
+		const rightDinoz =
+			fighters.filter(fighter => fighter.type === 'dinoz').filter(fighter => !fighter.attacker)[0] ??
+			(f.tournamentTeamRight?.dinoz[0]
+				? ({
+						id: f.tournamentTeamRight.dinoz[0].id,
+						name: f.tournamentTeamRight.dinoz[0].name,
+						display: f.tournamentTeamRight.dinoz[0].display,
+						type: 'dinoz',
+						attacker: false,
+						maxHp: 100,
+						startingHp: 100,
+						energy: 0,
+						maxEnergy: 0,
+						energyRecovery: 0,
+						dark: false,
+						size: 100,
+						entrance: 0
+					} as FighterRecap)
+				: null);
+
 		return {
 			id: f.id,
 			tournamentTeamLeft: f.tournamentTeamLeftId
 				? {
-						dinoz: fighters.filter(fighter => fighter.type === 'dinoz').filter(fighter => fighter.attacker)[0],
+						dinoz: leftDinoz,
 						user: f.leftUser
 					}
 				: null,
 			tournamentTeamRight: f.tournamentTeamRightId
 				? {
-						dinoz: fighters.filter(fighter => fighter.type === 'dinoz').filter(fighter => !fighter.attacker)[0],
+						dinoz: rightDinoz,
 						user: f.rightUser
 					}
 				: null,
