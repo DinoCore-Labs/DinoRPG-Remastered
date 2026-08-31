@@ -2362,6 +2362,12 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// If the target is not a boss or the skill was not evaded, remove the opponent
 			if (opponent.type !== FighterType.BOSS && !result.evasion) {
 				opponent.escaped = true;
+				// Add leave step
+				fightData.steps.push({
+					action: 'leave',
+					fighter: stepFighter(opponent),
+					animation: LeaveAnimation.BLACKHOLE
+				});
 			}
 
 			break;

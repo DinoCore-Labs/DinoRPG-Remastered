@@ -452,7 +452,10 @@ export function transpileFight(
 					action: DinoAction.DEAD,
 					fid: step.fighter.id
 				});
-				activeFighters.filter(f => f.id != step.fighter.id);
+				const deathIndex = activeFighters.findIndex(f => f.id === step.fighter.id);
+				if (deathIndex !== -1) {
+					activeFighters.splice(deathIndex, 1);
+				}
 				myFighter = undefined;
 				break;
 			case 'disabledItems':
@@ -789,10 +792,6 @@ export function transpileFight(
 							fx: skill?.fx
 						}
 					});
-				}
-				// Black hole and sylphide extract the fighter from the fight so extract it from the list of actives too
-				if (step.skill && (step.skill == Skill.TROU_NOIR || step.skill == Skill.SYLPHIDES)) {
-					activeFighters.filter(f => f.id != step.fid);
 				}
 				myFighter = undefined;
 				break;
