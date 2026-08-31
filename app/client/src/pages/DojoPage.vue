@@ -197,18 +197,15 @@ export default defineComponent({
 		background-repeat: no-repeat;
 		align-items: center;
 
+		position: relative;
 		height: 288px;
 		flex-direction: column-reverse;
 
 		.header-text {
 			width: 96%;
 			padding: 4px;
-			//background-color: rgba(0, 0, 0, 0.5);
+			height: 35px;
 			color: #fff;
-
-			p:last-child {
-				color: #aae59c;
-			}
 		}
 	}
 
