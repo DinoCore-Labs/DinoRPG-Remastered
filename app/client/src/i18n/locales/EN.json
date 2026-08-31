@@ -1,4 +1,13 @@
 {
+	"notifications": {
+		"title": "Notifications",
+		"newClanJoinRequest": "Le joueur {name} a demandé à rejoindre le clan.",
+		"newReward": "Vous avez reçu une récompense : {rewards}",
+		"marketOfferWin": "Vous avez remporté une enchère pour un montant de {price} bons !",
+		"marketOfferSold": "Votre enchère a été vendue ! Vous avez gagné {price} pièces d'or.",
+		"marketOfferUnsold": "Votre enchère est terminée sans trouver d'acheteur.",
+		"ok": "OK"
+	},
 	"homepage": {
 		"connexion": "Login",
 		"news": "Latest News",
@@ -215,7 +224,8 @@
 		"moderation": "DinoRPG [ Moderation ]",
 		"clan": "DinoRPG [ Clan: {clan}]",
 		"createClan": "DinoRPG [ Create a Clan ]",
-		"clansList": "DinoRPG [ Clan: ]"
+		"clansList": "DinoRPG [ Clan: ]",
+		"dojo": "DinoRPG [ Dojo ]"
 	},
 	"adminPage": {
 		"news": {
@@ -435,11 +445,168 @@
 		"go_back_button": "Cancel",
 		"create_button": "Create"
 	},
+	"dojo": {
+		"welcome": "Bienvenue dans votre Dojo",
+		"markAsRead": "Marquer comme vus",
+		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournoi, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
+		"return": "Return",
+		"accessTournament": "Accéder au tournoi",
+		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis !",
+		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",
+		"reputation": "Réputation",
+		"points": "Points",
+		"worth": "Mérite",
+		"ranking": "Classement",
+		"position": "Position",
+		"accessChallenges": "Accéder aux défis",
+		"testDinoz": "Tester vos Dinoz",
+		"fightHistory": "Historique des combats",
+		"tournamentHistory": "Historique des tournois",
+		"team": "Mon équipe",
+		"tournaments": "Tournois",
+		"build": "Construire mon dojo",
+		"group": "Groupe {group}",
+		"seeFinal": "Voir la finale",
+		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer {max} vagues par jour au maximum.//",
+		"soon": "Bientôt",
+		"seeFight": "Voir le combat entre {playerA} et {playerB}",
+		"deleteTeam": "Supprimer mon équipe",
+		"timer": {
+			"qualification": ":chrono: Il reste encore {day} jours, {hours} heures et {minutes} minutes avant la fin des qualifications.",
+			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
+			"finals": ":chrono: Le prochain match des finales aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
+			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jours, {hours} heures et {minutes} minutes.",
+			"cashPrice": ":gold: La cagnotte pour ce tournoi est de {cashPrice} :gold: !!",
+			"noTeam": "Vous n'avez pas inscrit d'équipe pour ce tournoi."
+		},
+		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de **{team} Dinoz** étant au maximum **niveau {level}**. Les races de Dinoz acceptées sont **{races}**. Elles sont déjà filtrées pour vous.",
+		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
+		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&La cagnotte est maintenant de **{cashPrice}** :gold:.",
+		"finals": "Et voici les phases finales tant attendues.&&La cagnotte est à présent de **{cashPrice}** :gold:.",
+		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
+		"challengeFriend": {
+			"disclaimer": "Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Les frais d'utilisation du dojo d'entrainement sont de **50 :gold: par Dinoz combattant**. Cet argent ira dans la cagnotte du tournoi en cours.",
+			"selectYourDinoz": "Sélectionnez jusqu'à **6 de vos Dinoz**.",
+			"selectOpponentDinoz": "Sélectionnez ici votre adversaire et jusqu'à **6 Dinoz** à affronter.",
+			"startFight": "{gold} :gold:",
+			"doubleDinoz": "Vous ne pouvez pas faire combattre le même Dinoz avec lui-même."
+		},
+		"tournamentFormats": {
+			"uncommon": "Dinoz non communs",
+			"common": "Dinoz communs",
+			"fire": "Dinoz feu",
+			"water": "Dinoz eau",
+			"wood": "Dinoz bois",
+			"air": "Dinoz air",
+			"lightning": "Dinoz foudre",
+			"ffa": "Free for All",
+			"bipede": "Bipèdes",
+			"quadrupede": "Quadrupèdes",
+			"flying": "Volants et rampants",
+			"anti_poison": "Anti poisons",
+			"hippo": "Hippoclamp",
+			"demons": "Dinoz démoniaques"
+		},
+		"history": {
+			"myDinoz": "Mes combattants",
+			"ennemis": "Adversaires",
+			"seeFight": "Voir le combat",
+			"link": "Lien",
+			"copyLink": "Copier le lien",
+			"tournamentType": "Type de tournois",
+			"startDate": "Date du début"
+		},
+		"fightRecap": {
+			"hpLost": "Quantité de points de vie perdus :pv:",
+			"hpHealed": "Quantité de points de vie gagnés",
+			"attacks": "Quantité d'attaques",
+			"multiHit": "Nombre de multi-coups",
+			"assaults": "Nombre d'assauts",
+			"evasions": "Nombre d'esquives",
+			"counters": "Nombre de contres",
+			"criticalHits": "Nombre de coups critiques",
+			"poisoned": "Nombre d'adversaires empoisonnés",
+			"poison_damage": "Dégâts de poison infligés",
+			"burn_damage": "Dégâts de brûlure infligés",
+			"reinforcements": "Nombre de renforts appelés",
+			"petrified": "Nombre d'adversaires pétrifiés",
+			"damageFire": "Dégâts :fire: infligés",
+			"assaultFire": "Nombre d'assauts :fire: réalisés",
+			"damageWater": "Dégâts :water: infligés",
+			"assaultWater": "Nombre d'assauts :water: réalisés",
+			"damageWood": "Dégâts :wood: infligés",
+			"assaultWood": "Nombre d'assauts :wood: réalisés",
+			"damageLightning": "Dégâts :lightning: infligés",
+			"assaultLightning": "Nombre d'assauts :lightning: réalisés",
+			"damageAir": "Dégâts :air: infligés",
+			"assaultAir": "Nombre d'assauts :air: réalisés",
+			"damageVoid": "Dégâts :void: infligés",
+			"assaultVoid": "Nombre d'assauts :void: réalisés",
+			"hpRemaining": "Vie restante",
+			"times_poisoned": "Nombre de fois qu'un Dinoz est empoisonné",
+			"myTeam": "Mon équipe",
+			"enemyTeam": "Équipe adverse"
+		},
+		"challenge": {
+			"selectChampions": "Choisissez vos champions",
+			"selectTeam": "Sélectionnez votre équipe de Dinoz pour les défis d'aujourd'hui",
+			"disclaimer": "Vous devez sélectionner **entre 5 et 10** Dinoz d'un niveau supérieur ou égal à 10 pour votre équipe. Choisissez bien, vous ne pourrez modifier votre sélection que demain.",
+			"validate": "Valider ma sélection",
+			"edit": "Modifier ma sélection",
+			"launch": "Lancer le combat",
+			"challenge": {
+				"kill": "Remportez la victoire en anéantissant votre adversaire avant la fin du temps imparti, ne lui laissez aucune chance !",
+				"takeAttack": "Remportez la victoire en subissant au maximum {goal} attaques de votre adversaire.",
+				"takeRawDmg": "Remportez la victoire en encaissant au maximum {goal} points de vie.",
+				"takePrctDmg": "Remportez la victoire en encaissant tout au plus {goal}% de points de vie.",
+				"assault": "Remportez la victoire en réalisant au minimum {goal} assauts.",
+				"assaultPrct": "Remportez la victoire en réalisant au moins {goal}% d'assauts parmi l'ensemble de vos attaques.",
+				"maxDmg": "Remportez la victoire en ne faisant pas perdre plus de {goal} points de vie à votre adversaire.",
+				"minPrctDmg": "Remportez la victoire en faisant perdre au moins {goal}% de points de vie à votre adversaire.",
+				"counter": "Remportez la victoire en réalisant {goal} contre-attaque(s) ou plus.",
+				"dodge": "Remportez la victoire en réalisant au minimum {goal} esquive(s).",
+				"noPoison": "Remportez la victoire sans vous faire empoisonner.",
+				"poison": "Remportez la victoire en empoisonnant votre adversaire durant le combat.",
+				"undefined": "Erreur : aucun challenge sélectionné"
+			},
+			"challengeExplanation": {
+				"kill": "Dommage, vous n'avez pas réussi à vaincre votre adversaire avant la fin du temps imparti.",
+				"takeAttack": "Dommage, vous avez subis {goal} attaques de trop.",
+				"takeRawDmg": "Dommage, vous avez encaissé {goal} dégâts de trop.",
+				"takePrctDmg": "Dommage, vous avez perdu {goal}% de vie en trop.",
+				"assault": "Dommage, il vous manquait {goal} assaut pour réussir.",
+				"assaultPrct": "Dommage, il vous manque {goal}% d'assauts.",
+				"maxDmg": "Dommage, vous avez infligé {goal} dégâts en trop.",
+				"minPrctDmg": "Dommage, il fallait faire {goal}% de dégâts en plus.",
+				"counter": "Dommage, il fallait faire {goal} contres supplémentaires.",
+				"dodge": "Dommage, il fallait faire {goal} esquives supplémentaires.",
+				"noPoison": "Dommage, vous avez été empoisonné {goal} fois.",
+				"poison": "Dommage, vous n'avez pas réussi à empoisonner votre adversaire.",
+				"looseFight": "Vous n'avez pas réussi à gagner le combat."
+			}
+		}
+	},
 	"manageDinoz": {
 		"title": "My Dinoz management",
 		"disclaimer": "This management module is accessible thanks to your **Diamantite Pebble**: a real concentrate of technology!",
 		"dinoz": "Dinoz",
 		"elements": "Elements"
+	},
+	"news": {
+		"tournament": {
+			"start": {
+				"title": "Nouveau Tournoi inter Dojo",
+				"content": "## Tournois \n\nLes phases qualificatives auront lieux jusqu'au {endDate}. Les règles de créations d'équipes sont:\n\n* Les équipes sont constituées de {teamSize} membres avec au moins {raceMinimum} races différentes.\n* Les races autorisées à participer sont {races}.\n* {poisonStatus}.\n* {itemsStatus}.\n* La limite de niveau maximum est fixé à {levelLimit}.\n\n### Récompenses\n\nLes récompenses seront les suivantes:\n\n* Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 15% du cash price.\n* Pour les deuxième, un oeuf de toufufu, une boite légendaire et 10% du cash price.\n* Pour le troisième et quatrième, un oeuf de Toufufu, une boîte épique et 7,5% du cash price chacun.\n* Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n* Pour les 9 à 16ème, une boîte rare et 2% du cash price chacun.\n* Pour les 17 à 32ème, 1% du cash price chacun.\n* Pour les 33 à 48ème, 0,75% du cash price chacun.\n* Pour les 49 à 64ème, 0,625% du cash price chacun.\n\n### Récompenses de qualifications\n\nN'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications!\n\nBon tournois à tous !"
+			},
+			"poison": {
+				"enabled": "Le poison est activé",
+				"disabled": "Le poison est désactivé"
+			},
+			"items": {
+				"enabled": "Les objets sont activés",
+				"disabled": "les objets sont désactivés"
+			}
+		}
 	},
 	"newsPage": {
 		"title": "Dinoland News",
@@ -497,6 +664,7 @@
 		"clan": "Clan"
 	},
 	"popup": {
+		"dojoConfirmMessage": "Voulez-vous construire votre Dojo ? cela coutera 50.000 :gold: ",
 		"confirm": "Confirm this action?",
 		"confirmBanAction": "Confirm this ban?",
 		"attention": "Attention",
@@ -2873,7 +3041,8 @@
 			"enter_portal": "The portal to the Dark World is open. Your Dinoz can now enter it.",
 			"tower_attack": "Another player already controls the Devourer. You will have to fight to take control of it and harvest its precious seeds.",
 			"tower_defend": "No one currently controls the Devourer. Take this opportunity to seize control!",
-			"stop_defend_tower": "If you relinquish control of the Devourer, you will have to fight again to regain it. Other players are surely waiting for the opportunity to seize it themselves!"
+			"stop_defend_tower": "If you relinquish control of the Devourer, you will have to fight again to regain it. Other players are surely waiting for the opportunity to seize it themselves!",
+			"build_dojo": "Construire votre Dojo"
 		},
 		"name": {
 			"fight": "Fight",
@@ -2912,7 +3081,8 @@
 			"enter_portal": "Enter the Portal",
 			"tower_attack": "Take Control of the Devourer",
 			"tower_defend": "Defend the Devourer",
-			"stop_defend_tower": "Relinquish Control"
+			"stop_defend_tower": "Relinquish Control",
+			"build_dojo": "Construire le Dojo"
 		}
 	},
 	"fight": {
@@ -4413,6 +4583,43 @@
 				"again": "Can you explain everything again?",
 				"understand": "I understand",
 				"end": "That's great news!"
+			}
+		},
+		"maitrZenit": {
+			"name": "Maître Zénith",
+			"dialog": {
+				"begin": "Un vieil homme immobile médite dans un coin. Il vous regarde avec attention en trifouillant sa fine barbichette... Vous regarder tourner en rond semble beaucoup l'amuser...",
+				"talk": "Tu n'es pas encore prêt jeune impudent.",
+				"talk2": "Je vois que tu aimes te battre jeune apprenti...",
+				"ouep": "Haha, ta fougue me rappelle ma jeunesse, je m'amusais autrefois à terrasser les monstres des Steppes à mains nues pour m'endurcir...",
+				"insol": "Je lis dans tes yeux l'incrédulité et le doute... à moins que ce ne soit de l'ennui ! Tant pis pour toi.",
+				"hm2": "Bien, bien, ton coeur semble limpide, tu ne doutes pas, tu dois être prêt pour créer ton Dojo.",
+				"dojo": "Oui, grâce à moi, tu vas pouvoir construire ton Dojo sur le lieu de ton choix, partout à Dinoland. Ce lieu de méditation et de perfectionnement te permettra de combattre les autres maîtres dinoz qui foulent ces terres. Tu pourras aussi participer au Tournoi Inter-Dojo, cette compétition montrera aux yeux de tous ta valeur et ton courage.",
+				"va": "Choisis un lieu où tu voudras le construire. Tu pourras toujours venir me voir pour obtenir de l'aide de ma part. Maintenant, va...",
+				"bien": "Vous vous éloignez d'un pied ferme, êtes-vous prêt à relever les défis qui vous attendent ?",
+				"aide": "Besoin de mon aide... Voilà qui est une demande fort respectueuse. Que puis-je faire pour t'aider ?",
+				"aideurl": "Tu peux consulter l'aide pour y voir plus clair.",
+				"maitre": "En effet, j'élève moi-même de charmantes créatures que je suis d'ailleurs le seul à avoir apprivoisées. Si ton Dojo devient un des plus célèbres de Dinoland, tu auras prouvé ta valeur, et je te récompenserai en te donnant un de ces dinoz en ma possession.",
+				"noaide": "Vous vous éloignez, le Dojo n'a visiblement plus de secret pour vous.",
+				"dinoz": "Tu le découvriras bien assez tôt, sache juste que même si tu ne les vois pas, cela ne veut pas forcément dire qu'ils n'existent pas...",
+				"sustense": "Le vieux maître vous regarde vous éloigner en esquissant un sourire amusé..."
+			},
+			"choice": {
+				"talk": "Hey, salut papy !",
+				"talk2": "(S'incliner devant le maître)",
+				"ouep": "Je m'entraîne pour devenir le meilleur !",
+				"hm": "(Encore un vieux qui radote...)",
+				"hm2": "(Ne pas bouger !)",
+				"hm3": "(Faire semblant d'être impressionné.)",
+				"dojo": "Mon Dojo ?",
+				"va": "Que dois je faire pour construire mon Dojo ?",
+				"bien": "Bien !",
+				"aide": "Maître, j'ai besoin de votre aide !",
+				"aideurl": "Pouvez-vous m'expliquer un peu mieux le Dojo ?",
+				"noaide": "Heu... non rien en fait.",
+				"maitre": "Etes-vous aussi un maître Dinoz ?",
+				"dinoz": "Quel genre de dinoz est-ce ?",
+				"sustense": "Je vais me donner à fond !"
 			}
 		},
 		"merguez": {
