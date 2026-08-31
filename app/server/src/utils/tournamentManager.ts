@@ -253,6 +253,7 @@ export class TournamentManager {
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
 		if (!tournament || tournament.phase !== TournamentPhase.POOLS) return;
 
+		await TournamentManager.rewardQualification();
 		await TournamentManager.generatePoolBrackets(tournament.id, tournament.schedule.poolsStart, prismaClient);
 	}
 
@@ -960,6 +961,78 @@ export class TournamentManager {
 				return { teamId: loserId, dojoId: loserDojo ?? null };
 			})
 			.filter((t): t is { teamId: string; dojoId: string | null } => !!t.teamId);
+	}
+
+	private static async rewardQualification() {
+		const rankings = await prisma.ranking.findMany({
+			where: {
+				dojo: {
+					gt: 500
+				}
+			},
+			select: {
+				dojo: true,
+				user: {
+					select: {
+						id: true,
+						name: true
+					}
+				}
+			}
+		});
+
+		for (const rank of rankings) {
+			if (!rank.user?.id) continue;
+
+			const userId = rank.user.id;
+			const score = rank.dojo;
+
+			const promises: Promise<unknown>[] = [];
+			const notifRewards: Array<{ rewardType: RewardEnum; value: unknown; quantity?: number }> = [];
+
+			let totalGold = 0;
+
+			if (score >= 500) {
+				totalGold += 25000;
+				promises.push(addItemToInventory(userId, Item.BOX_EPIC, 1));
+				notifRewards.push({ rewardType: RewardEnum.ITEM, value: Item.BOX_EPIC, quantity: 1 });
+			}
+			if (score >= 750) {
+				totalGold += 50000;
+				promises.push(addItemToInventory(userId, Item.VOID_SPHERE, 1));
+				notifRewards.push({ rewardType: RewardEnum.ITEM, value: Item.VOID_SPHERE, quantity: 1 });
+			}
+			if (score >= 1000) {
+				promises.push(addItemToInventory(userId, Item.TOUFUFU_BABY, 1));
+				notifRewards.push({ rewardType: RewardEnum.ITEM, value: Item.TOUFUFU_BABY, quantity: 1 });
+			}
+			if (score >= 1200) {
+				totalGold += 75000;
+				promises.push(addItemToInventory(userId, Item.BOX_LEGENDARY, 1));
+				notifRewards.push({ rewardType: RewardEnum.ITEM, value: Item.BOX_LEGENDARY, quantity: 1 });
+			}
+			if (score >= 1300) {
+				promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 1));
+				promises.push(addItemToInventory(userId, Item.TOUFUFU_BABY_RARE, 1));
+				notifRewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 1 });
+				notifRewards.push({ rewardType: RewardEnum.ITEM, value: Item.TOUFUFU_BABY_RARE, quantity: 1 });
+			}
+			if (score >= 1400) {
+				totalGold += 150000;
+				promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 1));
+				promises.push(addItemToInventory(userId, Item.TOUFUFU_BABY_RARE, 1));
+				promises.push(addItemToInventory(userId, Item.BOX_LEGENDARY, 1));
+				notifRewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 1 });
+				notifRewards.push({ rewardType: RewardEnum.ITEM, value: Item.TOUFUFU_BABY_RARE, quantity: 1 });
+				notifRewards.push({ rewardType: RewardEnum.ITEM, value: Item.BOX_LEGENDARY, quantity: 1 });
+			}
+			promises.push(addMoney(userId, totalGold));
+			notifRewards.unshift({ rewardType: RewardEnum.GOLD, value: totalGold });
+
+			promises.push(newNotif(userId, NotificationType.NEW_REWARD, JSON.stringify(notifRewards)));
+
+			await Promise.all(promises);
+		}
 	}
 
 	private static async rewardTournament(tournamentId: string, prismaClient = prisma) {
