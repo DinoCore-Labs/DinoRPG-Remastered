@@ -312,6 +312,7 @@ import { messagingStore } from '../../store/messagingStore.js';
 import { localStore } from '../../store/localStore.js';
 import { NotificationService } from '../../services/notification.service.js';
 import type { NotificationItem } from '../../services/notification.service.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 
 export default defineComponent({
 	name: 'UserMenu',
@@ -421,28 +422,72 @@ export default defineComponent({
 				console.error(e);
 			}
 		},
+		getItemName(itemId: number): string {
+			const item = itemList[itemId as Item];
+			if (!item) {
+				return `Item #${itemId}`;
+			}
+
+			const translationKey = `items.name.${item.name}`;
+			const translated = this.$t(translationKey);
+
+			// vue-i18n renvoie la clé elle-même si la traduction n'existe pas
+			if (translated === translationKey) {
+				console.warn(`Missing translation for item: ${item.name} (id: ${itemId})`);
+				return item.name; // fallback sur le nom technique
+			}
+
+			return translated;
+		},
 		formatNotificationText(notification: NotificationItem): string {
 			if (notification.type === 'newClanJoinRequest') {
-				return this.$t('notifications.newClanJoinRequest', { name: notification.content?.playerName || '' });
+				const content = this.parseContent(notification.content);
+				return this.$t('notifications.newClanJoinRequest', { name: content?.playerName || '' });
 			}
 			if (notification.type === 'newReward') {
-				const rewardsList = notification.content?.rewards || [];
-				const formattedRewards = rewardsList.map((r: any) => `${r.amount} ${r.type}`).join(' + ');
+				const rewardsList = this.parseContent(notification.content) || [];
+				const formattedRewards = rewardsList
+					.map((r: any) => {
+						if (r.rewardType === 'gold') {
+							return `${r.value} or`;
+						}
+						if (r.rewardType === 'item') {
+							const itemName = this.getItemName(r.value);
+							const qty = r.quantity > 1 ? ` x${r.quantity}` : '';
+							return `${itemName}${qty}`;
+						}
+						return '';
+					})
+					.filter(Boolean)
+					.join(' + ');
+
 				return this.$t('notifications.newReward', { rewards: formattedRewards });
 			}
 			if (notification.type === 'marketOfferWin') {
+				const content = this.parseContent(notification.content);
 				return this.$t('notifications.marketOfferWin', {
-					item: notification.content?.itemName || '',
-					price: notification.content?.price || 0
+					item: content?.itemName || '',
+					price: content?.price || 0
 				});
 			}
 			if (notification.type === 'marketOfferSold') {
-				return this.$t('notifications.marketOfferSold', { price: notification.content?.price || 0 });
+				const content = this.parseContent(notification.content);
+				return this.$t('notifications.marketOfferSold', { price: content?.price || 0 });
 			}
 			if (notification.type === 'marketOfferUnsold') {
 				return this.$t('notifications.marketOfferUnsold');
 			}
 			return '';
+		},
+
+		parseContent(content: any) {
+			if (typeof content !== 'string') return content;
+			try {
+				return JSON.parse(content);
+			} catch (e) {
+				console.error('Failed to parse notification content', e);
+				return null;
+			}
 		}
 	},
 	beforeUnmount() {
