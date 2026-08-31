@@ -414,20 +414,59 @@ export class TournamentManager {
 		});
 		if (alreadyAssigned > 0) return;
 
+		const maxTeamsCount = POOL_COUNT * POOL_SIZE;
+
 		const teams = await prismaClient.tournamentTeam.findMany({
 			where: { tournamentId },
-			select: { id: true }
+			select: {
+				id: true,
+				dojo: {
+					select: {
+						reputation: true,
+						DojoChallengeHistory: {
+							select: { victory: true }
+						}
+					}
+				}
+			}
 		});
+
 		if (teams.length === 0) return;
+
+		const teamsWithScore = teams.map(team => {
+			const reputation = team.dojo?.reputation ?? 0;
+			const history = team.dojo?.DojoChallengeHistory ?? [];
+
+			const totalMatches = history.length;
+			const victoryCount = history.filter(h => h.victory).length;
+
+			const worthRatio = totalMatches > 0 ? victoryCount / totalMatches : 0;
+			const worth = Math.trunc(worthRatio * 10000) / 100;
+
+			const score = reputation * worth;
+
+			return {
+				id: team.id,
+				score
+			};
+		});
+
+		const sortedTeams = teamsWithScore.sort((a, b) => {
+			if (b.score !== a.score) {
+				return b.score - a.score;
+			}
+			return Math.random() - 0.5;
+		});
+
+		const selectedTeams = sortedTeams.slice(0, maxTeamsCount);
 
 		const tournament = await prismaClient.tournament.findUniqueOrThrow({
 			where: { id: tournamentId },
 			select: { poison: true, itemsAllowed: true }
 		});
+		const shuffled: (string | null)[] = selectedTeams.sort(() => Math.random() - 0.5).map(t => t.id);
 
-		const shuffled: (string | null)[] = [...teams].sort(() => Math.random() - 0.5).map(t => t.id);
-
-		while (shuffled.length < POOL_COUNT * POOL_SIZE) shuffled.push(null);
+		while (shuffled.length < maxTeamsCount) shuffled.push(null);
 
 		const scheduledFor = new Date(poolsStart);
 
