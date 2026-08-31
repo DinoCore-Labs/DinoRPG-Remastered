@@ -421,7 +421,7 @@ export default defineComponent({
 	}
 	p {
 		display: inline-block;
-		margin: 01;
+		margin: 1px;
 		vertical-align: middle;
 	}
 }
