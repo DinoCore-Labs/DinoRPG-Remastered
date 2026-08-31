@@ -361,7 +361,7 @@ export default defineComponent({
 			}
 		}
 		td {
-			vertical-align: top;
+			vertical-align: middle;
 			height: 34.5px;
 		}
 	}
@@ -412,12 +412,17 @@ export default defineComponent({
 	line-height: 11pt;
 	font-variant: small-caps;
 	cursor: help;
+	vertical-align: middle;
 	img {
-		float: left;
-		position: relative;
+		display: inline-block;
 		margin-right: 5px;
 		border: 1px solid #ae6733;
-		vertical-align: bottom;
+		vertical-align: middle;
+	}
+	p {
+		display: inline-block;
+		margin: 01;
+		vertical-align: middle;
 	}
 }
 .type {
@@ -431,16 +436,20 @@ export default defineComponent({
 }
 .act {
 	padding-left: 5px;
-	display: flex;
-	justify-content: center;
-	align-content: space-evenly;
-	align-items: center;
+	text-align: center;
+	vertical-align: middle;
 	a {
-		height: fit-content;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		vertical-align: middle;
+		padding: 4px;
+		margin: 0 2px;
+		border-radius: 4px;
+		transition: background-color 0.2s;
 	}
 	img {
-		padding-left: 5px;
-		padding-right: 5px;
+		display: block;
 	}
 }
 .qty {
@@ -449,7 +458,7 @@ export default defineComponent({
 	text-align: center;
 	padding-left: 4px;
 	padding-right: 4px;
-	vertical-align: center;
+	vertical-align: middle;
 	& > div {
 		height: 100%;
 		display: flex;
@@ -462,5 +471,6 @@ export default defineComponent({
 }
 .on:hover {
 	cursor: pointer;
+	background-color: rgba(255, 255, 255, 0.15);
 }
 </style>
