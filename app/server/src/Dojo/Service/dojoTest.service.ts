@@ -1,3 +1,17 @@
+/**
+ * This file contains code derived from or adapted from:
+ * Eternaltwin DinoRPG
+ * Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/staging/ed-be/src/business/dojoService.ts
+ *
+ * Copyright in the original contributions remains with the respective
+ * authors and contributors.
+ *
+ * Modified by DinoRPG Remastered contributors on 2026-08-31.
+ * See NOTICE.md and the Git history for provenance and modification details.
+ *
+ * SPDX-License-Identifier: AGPL-3.0-or-later
+ */
+
 import { DOJO_FIGHT_FRIENDS_DINOZ_COST } from '@dinorpg/core/models/dojo/constants.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
@@ -71,7 +85,6 @@ export async function dojoTest(req: FastifyRequest, reply: FastifyReply) {
 	const rightTeam = await getDinozForDojoFight(body.rightTeam);
 	const leftTeam = await getDinozForDojoFight(body.leftTeam);
 
-	// Keep only magic items from dinoz for the fight and set life to maxLife
 	rightTeam.map(d => {
 		d.items = d.items.filter(i =>
 			Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL)
@@ -95,7 +108,7 @@ export async function dojoTest(req: FastifyRequest, reply: FastifyReply) {
 	);
 
 	await removeMoney(userId, fightCost);
-	// Add the fees to the tournament cash price if one is ongoing
+
 	const tournament = await getLatestTournament();
 	if (tournament) {
 		await prisma.tournament.update({
