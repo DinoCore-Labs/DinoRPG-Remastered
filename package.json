@@ -50,7 +50,7 @@
 		"eslint-plugin-vue": "^10.9.0",
 		"globals": "^17.7.0",
 		"husky": "^9.1.7",
-		"lint-staged": "^17.2.0",
+		"lint-staged": "^17.4.1",
 		"prettier": "^3.9.6",
 		"tsc-watch": "^7.2.1",
 		"typescript": "~6.0.3",
