@@ -73,7 +73,8 @@ export async function getDinozMenuRequest(userId: string) {
 					canRename: true,
 					items: {
 						select: {
-							itemId: true
+							itemId: true,
+							equippedAt: true
 						}
 					},
 					status: {

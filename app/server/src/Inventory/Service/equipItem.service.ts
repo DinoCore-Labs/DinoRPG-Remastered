@@ -24,6 +24,8 @@ type EquipItemBody = {
 	equip: boolean;
 };
 
+const MAGIC_ITEM_COOLDOWN_HOURS = 119;
+
 export async function equipItem(
 	req: FastifyRequest<{ Params: EquipItemParams; Body: EquipItemBody }>
 ): Promise<EquipItemResponse> {
@@ -81,6 +83,13 @@ export async function equipItem(
 	} else {
 		if (!dinozItem) {
 			throw new ExpectedError('itemNotEquipped');
+		}
+
+		if (itemToEquip.itemType === ItemType.MAGICAL) {
+			const hoursSinceEquip = (Date.now() - dinozItem.equippedAt.getTime()) / (1000 * 60 * 60);
+			if (hoursSinceEquip < MAGIC_ITEM_COOLDOWN_HOURS) {
+				throw new ExpectedError('magicItemHomesick');
+			}
 		}
 
 		if (itemToEquip.itemId === Item.FEAR_FACTOR && dinoz.skills.some(s => s.skillId === Skill.BRAVE)) {
