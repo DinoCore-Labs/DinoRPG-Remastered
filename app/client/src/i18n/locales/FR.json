@@ -845,10 +845,11 @@
 		"notEnoughIngredients": "Vous n'avez pas assez d'ingrédients.",
 		"itemNotFound": "Cet objet est introuvable.",
 		"itemNotEquipped": "Ce Dinoz n'a pas équipé cet objet.",
-		"itemCannotBeEquipped": "Cet objet ne peut pas être équipé.",
+		"itemCannotBeEquipped": "Cet objet ne peut pas être équipé sur un Dinoz.",
+		"magicItemHomesick": "Cet Objet Magique souffre du mal du pays. Il doit encore s'habituer à son porteur avant de pouvoir être retiré !",
+		"tooManyMagicItemEquiped": "Ce dinoz ne peut pas équiper autant d'objets magiques.",
 		"notEnoughItems": "Vous n'avez pas la quantité attendue pour l'item requis.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or.",
-		"tooManyMagicItemEquiped": "Votre Dinoz ne peut pas équiper plus d'objets magiques.",
 		"maxQuantityInventory": "Vous avez déjà trop de cet objet dans votre inventaire",
 		"missingStatus": "L'un de vos Dinoz ne remplit pas les conditions pour faire cette action.",
 		"noFight": "Aujourd'hui, le marais est perdu dans la brume... Vous ne trouverez aucun monstre à combattre.",
@@ -2137,7 +2138,8 @@
 			"empty": "Il n'y a aucun objet dans cette case.",
 			"undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
 		},
-		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//"
+		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//",
+		"magicItemHomesickTooltip": "//Cet Objet Magique souffre du mal du pays. Il doit encore s'habituer à son porteur avant de pouvoir être retiré.//&&**Temps restant : {time}**"
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
