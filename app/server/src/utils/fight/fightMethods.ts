@@ -3618,12 +3618,11 @@ const counterTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
  * Test if a fighter succeeds a multihit roll.
  * @param fightData Fight data used for seeded random.
  * @param fighter The fighter to roll the multihit for.
- * @param multiHitCounter Number of multihits
  * @returns {bool} True if the fighter has succeeded its multihit roll.
  */
-const multiHitTest = (fightData: DetailedFight, fighter: DetailedFighter, multiHitCounter: number) => {
+const multiHitTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	const random = fightData.rng();
-	return random < getFighterMultihit(fighter, multiHitCounter);
+	return random < getFighterMultihit(fighter);
 };
 
 /**
@@ -4112,7 +4111,7 @@ const attackTarget = (
 			attacker.hp > 0 &&
 			!isIncapacitated(attacker) &&
 			attacker.energy > totalEnergyCost + energyCost + 1 &&
-			multiHitTest(fightData, attacker, multiHitCounter)
+			multiHitTest(fightData, attacker)
 		) {
 			// If the fighter succeeds to multihit, increase the energy cost and repeat the loop
 			energyCost++;
