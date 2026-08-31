@@ -311,15 +311,15 @@ export class TournamentManager {
 			const scheduledFor = new Date();
 
 			for (let i = 0; i < 16; i++) {
-				const leftTeam = seededTeams[i]; // Team 2-0 (Seed 1 to 16)
-				const rightTeam = seededTeams[seededTeams.length - 1 - i]; // Team 2-1 (Seed 32 to 17)
+				const leftTeam = seededTeams.find(t => t.finalSeed === i + 1);
+				const rightTeam = seededTeams.find(t => t.finalSeed === 32 - i);
 
-				if (!leftTeam || !rightTeam) continue;
+				if (!leftTeam && !rightTeam) continue;
 
 				await TournamentManager.generateAndSaveFight(
 					dbTournament,
-					leftTeam.id,
-					rightTeam.id,
+					leftTeam?.id ?? null,
+					rightTeam?.id ?? null,
 					TournamentPhase.FINALS,
 					tournamentStep,
 					scheduledFor,
@@ -517,32 +517,38 @@ export class TournamentManager {
 			where: { tournamentId, poolQualified: true },
 			select: { id: true, poolWins: true, poolLosses: true }
 		});
-		if (qualified.length < FINAL_BRACKET_SIZE) return;
+		if (qualified.length === 0) return;
 
-		const twoZero = qualified.filter(t => t.poolLosses === 0 && t.poolWins >= 2);
-		const twoOne = qualified.filter(t => t.poolLosses === 1 && t.poolWins >= 2);
+		const twoZero = qualified.filter(t => t.poolLosses === 0);
+		const twoOne = qualified.filter(t => t.poolLosses > 0);
 
-		const shuffle = <T>(arr: T[]) => arr.sort(() => Math.random() - 0.5);
+		const shuffle = <T>(arr: T[]) => [...arr].sort(() => Math.random() - 0.5);
 		const twoZeroShuffled = shuffle(twoZero);
 		const twoOneShuffled = shuffle(twoOne);
 
-		if (twoZeroShuffled.length !== 16 || twoOneShuffled.length !== 16) {
-			console.warn(
-				`[TournamentManager] Expected 16 2-0 and 16 2-1 teams, got ${twoZeroShuffled.length} and ${twoOneShuffled.length}`
-			);
-		}
+		const updates: Promise<any>[] = [];
+		twoZeroShuffled.forEach((team, i) => {
+			if (i < 16) {
+				updates.push(
+					prismaClient.tournamentTeam.update({
+						where: { id: team.id },
+						data: { finalSeed: i + 1 }
+					})
+				);
+			}
+		});
+		twoOneShuffled.forEach((team, i) => {
+			if (i < 16) {
+				updates.push(
+					prismaClient.tournamentTeam.update({
+						where: { id: team.id },
+						data: { finalSeed: 32 - i }
+					})
+				);
+			}
+		});
 
-		const seeded: typeof qualified = [];
-		for (let i = 0; i < 16; i++) {
-			if (twoZeroShuffled[i]) seeded.push(twoZeroShuffled[i]);
-			if (twoOneShuffled[i]) seeded.push(twoOneShuffled[i]);
-		}
-
-		await Promise.all(
-			seeded.map((team, i) =>
-				prismaClient.tournamentTeam.update({ where: { id: team.id }, data: { finalSeed: i + 1 } })
-			)
-		);
+		await Promise.all(updates);
 	}
 
 	// -------------------------------------------------------------------------
@@ -668,6 +674,17 @@ export class TournamentManager {
 		const isBye = !team1Id || !team2Id;
 		const leftWonBye = !team1Id ? false : true;
 
+		const getDinozIds = async (teamId: string) => {
+			const team = await prismaClient.tournamentTeam.findUniqueOrThrow({
+				where: { id: teamId },
+				select: { dinoz: { select: { id: true } } }
+			});
+			return team.dinoz.map(d => d.id);
+		};
+
+		let team1Dinoz = team1Id ? await getDinozForDojoFight(await getDinozIds(team1Id)) : [];
+		let team2Dinoz = team2Id ? await getDinozForDojoFight(await getDinozIds(team2Id)) : [];
+
 		if (isBye) {
 			const metadata: MetaData = {
 				phase,
@@ -679,9 +696,41 @@ export class TournamentManager {
 				team2Id,
 				place: PlaceEnum.DOJO
 			};
+			const fighters = [
+				...team1Dinoz.map(d => ({
+					id: d.id,
+					type: 'dinoz',
+					name: d.name,
+					display: d.display,
+					attacker: true,
+					maxHp: d.maxLife,
+					startingHp: d.life,
+					energy: 0,
+					maxEnergy: 0,
+					energyRecovery: 0,
+					dark: false,
+					size: 100,
+					entrance: 0
+				})),
+				...team2Dinoz.map(d => ({
+					id: d.id,
+					type: 'dinoz',
+					name: d.name,
+					display: d.display,
+					attacker: false,
+					maxHp: d.maxLife,
+					startingHp: d.life,
+					energy: 0,
+					maxEnergy: 0,
+					energyRecovery: 0,
+					dark: false,
+					size: 100,
+					entrance: 0
+				}))
+			];
 			await prismaClient.fightArchive.create({
 				data: {
-					fighters: '[]',
+					fighters: JSON.stringify(fighters),
 					steps: '[]',
 					seed: 'bye',
 					result: leftWonBye,
@@ -689,22 +738,15 @@ export class TournamentManager {
 					Tournament: { connect: { id: tournamentId } },
 					metadata: JSON.stringify(metadata),
 					tournamentTeamLeft: team1Id ? { connect: { id: team1Id } } : undefined,
-					tournamentTeamRight: team2Id ? { connect: { id: team2Id } } : undefined
+					tournamentTeamRight: team2Id ? { connect: { id: team2Id } } : undefined,
+					leftUser:
+						team1Dinoz.length > 0 && team1Dinoz[0].userId ? { connect: { id: team1Dinoz[0].userId } } : undefined,
+					rightUser:
+						team2Dinoz.length > 0 && team2Dinoz[0].userId ? { connect: { id: team2Dinoz[0].userId } } : undefined
 				}
 			});
 			return leftWonBye;
 		}
-
-		const getDinozIds = async (teamId: string) => {
-			const team = await prismaClient.tournamentTeam.findUniqueOrThrow({
-				where: { id: teamId },
-				select: { dinoz: { select: { id: true } } }
-			});
-			return team.dinoz.map(d => d.id);
-		};
-
-		let team1Dinoz = await getDinozForDojoFight(await getDinozIds(team1Id));
-		let team2Dinoz = await getDinozForDojoFight(await getDinozIds(team2Id));
 
 		const prepDinoz = (dinoz: typeof team1Dinoz) => {
 			dinoz.forEach(d => {

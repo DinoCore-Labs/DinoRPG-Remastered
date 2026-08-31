@@ -34,7 +34,7 @@
 							:flip="displayFinal && isFlipped(count)"
 							class="dinoz-display"
 						/>
-						<span class="name" v-if="team.dinoz">{{ team.player?.name ?? '???' }}</span>
+						<span class="name" v-if="team.player || team.dinoz">{{ team.player?.name ?? '???' }}</span>
 
 						<template #content>
 							<h1>{{ team?.player?.name + ' Vs ' + team?.opponent?.name }}</h1>
@@ -78,7 +78,7 @@
 							:flip="isFinalFlipped(index)"
 							class="dinoz-display"
 						/>
-						<span class="name" v-if="team.dinoz">{{ team.player?.name ?? '???' }}</span>
+						<span class="name" v-if="team.player || team.dinoz">{{ team.player?.name ?? '???' }}</span>
 
 						<template #content>
 							<h1>{{ team?.player?.name + ' Vs ' + team?.opponent?.name }}</h1>
@@ -253,7 +253,7 @@ export default defineComponent({
 				pool: match.metadata.poolNumber,
 				matchNumber: match.metadata.matchNumber,
 				watched: match.watched,
-				show: match.watched,
+				show: true,
 				slot: 'left'
 			};
 		},
@@ -281,19 +281,17 @@ export default defineComponent({
 				);
 				this.pool = Array.from({ length: 12 });
 				this.dinozInFights = this.tournament.reduce((acc, fight) => {
-					const isMatch3 = fight.metadata.round === 1 && fight.metadata.matchNumber === 3;
-
 					const d1 = {
 						dinoz: fight.tournamentTeamLeft?.dinoz ?? null,
 						player: fight.tournamentTeamLeft?.user ?? null,
 						opponent: fight.tournamentTeamRight?.user ?? null,
 						fight: fight.id,
-						won: isMatch3 ? !fight.result : fight.result,
+						won: fight.result,
 						round: fight.metadata.round,
 						pool: fight.metadata.poolNumber,
 						matchNumber: fight.metadata.matchNumber,
 						watched: fight.watched,
-						show: fight.watched,
+						show: true,
 						slot: 'left'
 					} as DisplayedLeader;
 					const d2 = {
@@ -301,12 +299,12 @@ export default defineComponent({
 						player: fight.tournamentTeamRight?.user ?? null,
 						opponent: fight.tournamentTeamLeft?.user ?? null,
 						fight: fight.id,
-						won: isMatch3 ? fight.result : !fight.result,
+						won: !fight.result,
 						round: fight.metadata.round,
 						pool: fight.metadata.poolNumber,
 						matchNumber: fight.metadata.matchNumber,
 						watched: fight.watched,
-						show: fight.watched,
+						show: true,
 						slot: 'right'
 					} as DisplayedLeader;
 
@@ -327,12 +325,12 @@ export default defineComponent({
 				// Place qualified winners in dedicated slots at the far right
 				// Match 3 winner (2-0) -> index 10
 				const match3Winner = this.dinozInFights.find(d => d.round === 1 && d.matchNumber === 3 && d.won);
-				if (match3Winner) {
+				if (match3Winner && match3Winner.watched) {
 					this.pool[10] = { ...match3Winner, show: true };
 				}
 				// Match 5 winner (2-1) -> index 11
 				const match5Winner = this.dinozInFights.find(d => d.round === 2 && d.matchNumber === 5 && d.won);
-				if (match5Winner) {
+				if (match5Winner && match5Winner.watched) {
 					this.pool[11] = { ...match5Winner, show: true };
 				}
 
@@ -438,13 +436,13 @@ export default defineComponent({
 	}
 }
 .wrapper.final {
-	width: 620px;
-	height: 1000px;
+	width: 700px;
+	height: 1032px;
 }
 
 .wrapper.tournament {
 	width: 620px;
-	height: 520px;
+	height: 666px;
 }
 
 .tournament {
