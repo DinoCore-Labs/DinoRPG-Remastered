@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
       - name: Add pnpm to PATH
         run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
       - name: Add pnpm to PATH
         run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
@@ -63,7 +63,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
 
       - name: Add pnpm to PATH
         run: echo "$HOME/.local/share/pnpm" >> $GITHUB_PATH
