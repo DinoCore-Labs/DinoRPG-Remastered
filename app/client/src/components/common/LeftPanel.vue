@@ -129,6 +129,7 @@ export default defineComponent({
 	watch: {
 		'$route.fullPath': {
 			async handler() {
+				if (this.$route.name === 'FightPage') return;
 				await this.refreshDinozMenu();
 			}
 		}
