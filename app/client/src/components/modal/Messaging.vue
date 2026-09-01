@@ -94,14 +94,14 @@
 						<p>{{ $t('common.newMessage') }}</p>
 					</div>
 					<div class="messageTitle">
-						<label for="title">{{ $t('common.newMessageTitle') }}</label>
+						<label for="title">{{ $t('modal.messagerie.newMsgTitle') }}</label>
 						<input type="text" id="title" v-model="newThread.title" :placeholder="$t('modal.messagerie.title')" />
 					</div>
 					<div
 						class="search"
 						v-if="!newThread.participants || (newThread.participants && newThread.participants.length < 9)"
 					>
-						<label for="user">{{ $t('common.newMessageParticipants') }}</label>
+						<label for="user">{{ $t('modal.messagerie.newMsgParticipants') }}</label>
 						<DZSearch
 							background
 							entityType="user"
@@ -116,12 +116,12 @@
 						</template>
 					</div>
 					<div class="message">
-						<label for="message">{{ $t('common.newMessageMessage') }}</label>
+						<label for="message">{{ $t('modal.messagerie.newMsgMessage') }}</label>
 						<textarea id="message" v-model="newThread.message" :placeholder="$t('modal.messagerie.message')" />
 					</div>
 					<div class="send">
 						<DZButton @click="sendMessage" :disabled="isSending">
-							{{ $t('common.newMessageSend') }}
+							{{ $t('modal.messagerie.newMsgSend') }}
 						</DZButton>
 					</div>
 				</div>
