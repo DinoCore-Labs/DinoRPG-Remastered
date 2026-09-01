@@ -33,7 +33,7 @@ import {
 	SkillActivateStep,
 	StepFighter
 } from '@dinorpg/core/models/fight/fightStep.js';
-import { LifeEffect, NotificationList } from '@dinorpg/core/models/fight/transpiler.js';
+import { AuraFxType, LifeEffect, NotificationList } from '@dinorpg/core/models/fight/transpiler.js';
 import { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { bossList } from '@dinorpg/core/models/monster/bossList.js';
@@ -3811,8 +3811,15 @@ export const heal = (
 	isItem?: boolean
 ) => {
 	// No heal if BEER
-	// TODO add fx for no healing
-	if (hasStatus(fighter, FightStatus.BEER)) return;
+	if (hasStatus(fighter, FightStatus.BEER)) {
+		fightData.steps.push({
+			action: 'aura',
+			fid: fighter.id,
+			type: AuraFxType.Spiral,
+			color: '0xFF3366'
+		});
+		return;
+	}
 
 	const hpBeforeHeal = fighter.hp;
 
