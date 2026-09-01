@@ -25,6 +25,15 @@
 		<template v-if="opponentDinoz.length > 0">
 			<SelectDinoz :dinozList="opponentDinoz" :selectLimit="6" @validate="composeEnnemyTeam"></SelectDinoz>
 		</template>
+		<div class="fight-options" v-if="myTeam.length > 0 && opponentTeam.length > 0">
+			<DZButton :class="{ active: enablePoison }" @click="enablePoison = !enablePoison">
+				Poison: {{ enablePoison ? 'ON' : 'OFF' }}
+			</DZButton>
+
+			<DZButton :class="{ active: enableItems }" @click="enableItems = !enableItems">
+				Objets: {{ enableItems ? 'ON' : 'OFF' }}
+			</DZButton>
+		</div>
 		<div
 			class="fight"
 			@click="startFight()"
@@ -101,6 +110,8 @@ export default defineComponent({
 			fightStat: {} as FullFightStats,
 			leftPlayer: null as null | { id: string; name: string },
 			rightPlayer: null as null | { id: string; name: string },
+			enablePoison: true,
+			enableItems: true,
 			dojoStore: dojoStore()
 		};
 	},
@@ -133,7 +144,13 @@ export default defineComponent({
 				return;
 			}
 			try {
-				const rawFight = await DojoService.fightTest(this.myTeam, this.opponentTeam, this.opponentId);
+				const rawFight = await DojoService.fightTest(
+					this.myTeam,
+					this.opponentTeam,
+					this.opponentId,
+					this.enablePoison,
+					this.enableItems
+				);
 				const fightResult = rawFight.fight;
 				this.fightStat = rawFight.stats;
 				const fightSteps = fightResult.history as FightStep[];
