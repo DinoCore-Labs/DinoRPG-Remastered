@@ -405,7 +405,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 				// Add item use step
 				fightData.steps.push({
 					action: 'itemUse',
-					fighter: stepFighter(timeManipulator),
+					fighter: stepFighter(temporalStabiliser),
 					itemId: Item.TEMPORAL_STABILISER
 				});
 
