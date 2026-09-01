@@ -32,7 +32,7 @@ import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { Boss, bossList } from '@dinorpg/core/models/monster/bossList.js';
 import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
-import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
+import { skillList } from '@dinorpg/core/models/skills/skillList.js';
 import {
 	BASE_ASSAULT_ENERGY_COST,
 	BASE_ENERGY_COST,
@@ -812,6 +812,18 @@ export function transpileFight(
 					details: {
 						fid: step.fid,
 						anim: step.anim
+					}
+				});
+				break;
+			}
+			case 'aura': {
+				history.push({
+					action: DinoAction.SKILL,
+					skill: SkillVisualEffect.AURA,
+					details: {
+						fid: step.fid,
+						type: step.type,
+						color: step.color
 					}
 				});
 				break;
