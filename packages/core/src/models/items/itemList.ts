@@ -971,7 +971,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		maxQuantity: 5,
 		sellable: false,
 		price: 5, // TODO double check
-		display: 'mbraise'
+		display: 'mbrais'
 	},
 	// Scale: an enemy dinoz will be killed if your dinoz dies during a fight
 	[Item.SCALE]: {
