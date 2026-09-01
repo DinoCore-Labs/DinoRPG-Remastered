@@ -48,7 +48,7 @@
 								<p v-if="item.itemType === 'magical'">
 									{{ formatContent($t(`shop.item.price`)) }}
 									<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
-									{{ formatContent($t(`common.goldCoinsen_napodino`)) }}
+									{{ formatContent($t(`items.name.golden_napodino`)) }}
 									x {{ item.price }}
 								</p>
 								<p v-else>
@@ -208,7 +208,7 @@
 					<div v-if="selectedItem.itemType === 'magical'" class="objValue">
 						{{ formatContent($t(`shop.item.price`)) }}
 						<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
-						{{ formatContent($t(`common.goldCoinsen_napodino`)) }}
+						{{ formatContent($t(`items.name.golden_napodino`)) }}
 						x {{ selectedItem.price }}
 					</div>
 					<div class="desc" v-html="formatContent($t(`items.description.${resolveItem(selectedItem).name}`))" />

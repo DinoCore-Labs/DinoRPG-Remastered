@@ -105,7 +105,7 @@ export default defineComponent({
 		myDinoz() {
 			return dinozStore()
 				.getDinozList.filter(d => d.state === null || d.state === DINOZ_STATE.resting)
-				.filter(d => this.tournamentInfo?.teamRace.includes(d.common.raceId))
+				.filter(d => this.tournamentInfo?.teamRace.includes(d.race.raceId))
 				.filter(d => d.level <= (this.tournamentInfo?.levelLimit ?? 0))
 				.map(d => {
 					return {
