@@ -25,20 +25,10 @@
 			<RouterLink to="/shop/flying" class="link" :title="$t('button.shop')">
 				<img :src="getImgURL('act', 'act_boutique')" alt="shop" />
 			</RouterLink>
-			<RouterLink
-				:to="`/clan/${user.clanId}`"
-				class="link"
-				:title="$t('topBar.leftUserMenu.clan')"
-				v-if="user.clanId"
-			>
+			<RouterLink :to="`/clan/${user.clanId}`" class="link" :title="$t('topBar.leftUserMenu.clan')" v-if="user.clanId">
 				<img :src="getImgURL('act', 'act_castle')" alt="clan" />
 			</RouterLink>
-			<RouterLink
-				:to="`/clans`"
-				class="link"
-				:title="$t('topBar.leftUserMenu.clan')"
-				v-if="!user.clanId"
-			>
+			<RouterLink :to="`/clans`" class="link" :title="$t('topBar.leftUserMenu.clan')" v-if="!user.clanId">
 				<img :src="getImgURL('act', 'act_castle')" alt="clan" />
 			</RouterLink>
 			<span class="link linkDisabled" :title="$t('button.unavailable')" aria-disabled="true" v-if="!user.dojoId">
