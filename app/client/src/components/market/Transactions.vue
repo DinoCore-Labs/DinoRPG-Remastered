@@ -69,7 +69,7 @@
 					</p>
 					<p v-else>{{ $t('market.transactionView.noBidYet') }}</p>
 					<DZButton @click="cancelOffer">
-						{{ $t('market.transactionView.cancel') }}
+						{{ $t('button.cancel') }}
 					</DZButton>
 				</td>
 			</tr>

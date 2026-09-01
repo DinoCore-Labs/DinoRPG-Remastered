@@ -89,7 +89,7 @@ const isTerminalPhase = computed(() => {
 });
 
 const leaveButtonLabel = computed(() =>
-	isMissionDialog.value && isTerminalPhase.value ? t('npc.continue') : t('npc.leave')
+	isMissionDialog.value && isTerminalPhase.value ? t('button.continue') : t('npc.leave')
 );
 
 const swfName = computed(() => dialogState.value?.pnj.gfx ?? null);

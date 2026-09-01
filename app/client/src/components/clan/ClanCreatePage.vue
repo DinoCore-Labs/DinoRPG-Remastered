@@ -27,9 +27,9 @@
 			</div>
 		</div>
 		<div class="df">
-			<a class="button" @click="createClanPage()" v-if="!editMode">{{ $t('clan.clanPages.creation.action.create') }}</a>
+			<a class="button" @click="createClanPage()" v-if="!editMode">{{ $t('button.create') }}</a>
 			<a class="button" @click="updateClanPage()" v-if="editMode">{{ $t('clan.clanPages.creation.action.edit') }}</a>
-			<a class="button" @click="cancel()">{{ $t('clan.clanPages.creation.action.cancel') }}</a>
+			<a class="button" @click="cancel()">{{ $t('button.cancel') }}</a>
 		</div>
 	</div>
 </template>

@@ -20,7 +20,7 @@
 				<div class="content">
 					<span class="dialog" v-html="formatContent($t(textKey).toString())" />
 					<DZButton class="continue" @click="$emit('close')">
-						{{ $t('npc.continue') }}
+						{{ $t('button.continue') }}
 					</DZButton>
 				</div>
 			</div>

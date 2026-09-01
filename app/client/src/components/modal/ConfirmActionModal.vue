@@ -20,10 +20,10 @@
 
 			<div class="buttonLand">
 				<DZButton class="bSmall no-first-letter" @click="submit">
-					{{ loading ? $t('modal.confirmAction.loading') : $t('modal.confirmAction.confirm') }}
+					{{ loading ? $t('button.loading') : $t('modal.confirmAction.confirm') }}
 				</DZButton>
 				<DZButton class="bSmall no-first-letter" back @click="$emit('close')">{{
-					$t('modal.confirmAction.cancel')
+					$t('button.cancel')
 				}}</DZButton>
 			</div>
 		</div>

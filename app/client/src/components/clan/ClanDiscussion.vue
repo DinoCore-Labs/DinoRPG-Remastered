@@ -23,7 +23,7 @@
 				<RichTextEditor ref="editorRef" v-model="newMessage" />
 			</div>
 			<div class="button-land">
-				<DZButton class="button" @click="submitMessage()">{{ t('clan.discussion.action.send') }}</DZButton>
+				<DZButton class="button" @click="submitMessage()">{{ t('button.send') }}</DZButton>
 			</div>
 		</template>
 	</div>

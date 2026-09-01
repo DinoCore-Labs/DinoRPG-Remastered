@@ -80,7 +80,7 @@
 				</div>
 			</div>
 			<a class="button" @click="$emit('close')">
-				{{ $t('modal.continue') }}
+				{{ $t('button.continue') }}
 			</a>
 		</div>
 	</Transition>
