@@ -1,12 +1,26 @@
 {
 	"common": {
 		"account": "Mon Compte",
+		"actions": "Actions",
+		"back": "Retour",
 		"bank": "Banque",
 		"clan": "Clan",
+		"details": "Détails",
+		"dinoz": "Dinoz",
 		"dojo": "Dojo",
+		"goldCoins": "Pièces d'or",
 		"ingredients": "Ingrédients",
 		"inventory": "Inventaire",
-		"skills": "Compétences"
+		"items": "Objets",
+		"name": "Nom",
+		"newMessage": "Nouveau message",
+		"page": "Page",
+		"quantity": "Quantité",
+		"skills": "Compétences",
+		"stock": "Stock",
+		"title": "Titre",
+		"treasureNotes": "Vos Bons du Trésor",
+		"type": "Type"
 	},
 	"notifications": {
 		"title": "Notifications",
@@ -88,10 +102,8 @@
 		"elements": "Informations",
 		"level": "Ce niveau reflète la puissance de votre Dinoz.",
 		"slot": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper. &&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//",
-		"action": "Actions",
 		"tabs": {
-			"map": "Carte",
-			"details": "Détails"
+			"map": "Carte"
 		},
 		"chooseDinoz": {
 			"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
@@ -118,7 +130,6 @@
 			"desc": "Descendant",
 			"th": {
 				"comp": "Compétence",
-				"type": "Type",
 				"active": "Actif"
 			},
 			"type": {
@@ -236,8 +247,6 @@
 		"myTransactions": "Mes transactions",
 		"sell": "Vendre",
 		"history": "Historique",
-		"dinoz": "Dinoz",
-		"items": "Objets",
 		"makeAnOffer": "Faire une offre",
 		"filter": "Filtrer",
 		"all": "Tout",
@@ -249,10 +258,8 @@
 		"by": "par",
 		"time": "{days}j {hours}h {minutes}m {seconds}s",
 		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Éleveurs peuvent être obtenus de diverses façons dans Dinoland. La **Banque de Dinoland** peut vous les racheter au taux de **1** :ticket: **= 1000** :gold: mais elle n'en émet plus.",
-		"back": "Retour",
 		"bid": "Enchérir",
 		"detail": "Voir détails",
-		"yourTreasuryNotes": "Vos Bons du Trésor",
 		"sellView": {
 			"disclaimer": "Ici, vous pouvez construire votre offre, elle sera soumise aux autres Maîtres Dinoz. Si vous vendez un Dinoz ou des objets, ces derniers seront indisponibles pendant la durée de l'offre.",
 			"prepareYourOffer": "Préparer votre offre",
@@ -313,7 +320,6 @@
 			"creation": {
 				"edit": "Modifier la page de clan",
 				"new": "Créer une page de clan",
-				"title": "Titre",
 				"content": "Contenu",
 				"public": "Page publique ?",
 				"action": {
@@ -323,7 +329,6 @@
 		},
 		"members": {
 			"th": {
-				"name": "Nom",
 				"donation": "Dons",
 				"stats": "Stats",
 				"event": "Score d'événement"
@@ -368,7 +373,6 @@
 		"discussion": {
 			"delete": "Supprimer le message",
 			"pagination": {
-				"page": "Page",
 				"go_to": "Aller à la page"
 			}
 		},
@@ -701,7 +705,6 @@
 			"disclaimer": "Veuillez sélectionner une conversation.",
 			"close": "Fermer",
 			"participants": "participants",
-			"newMsg": "Nouveau message",
 			"newMsgTitle": "Titre de la conversation :",
 			"title": "Votre titre...",
 			"newMsgParticipants": "Ajouter un destinataire :",
@@ -1872,7 +1875,6 @@
 	},
 	"items": {
 		"disclaimer": "Ici, sont regroupés tous les objets que vous avez pu obtenir au cours de vos aventures.",
-		"tstock": "Stock",
 		"name": {
 			"gold": "Pièces d'or",
 			"potion_irma": "Potion de Madame Irma",
@@ -2460,7 +2462,6 @@
 			"help": "Cliquez sur un objet dans la liste pour l'examiner...",
 			"advice": "**Conseil du jour :**",
 			"advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma : l'essayer, c'est l'adopter !",
-			"quantity": "Quantité",
 			"buy": "Acheter",
 			"sell": "Vendre pour {sell} :gold:",
 			"title": "Marchand : ",

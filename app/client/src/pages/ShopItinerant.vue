@@ -32,8 +32,8 @@
 					<tr>
 						<th class="icon"></th>
 						<th class="name">{{ $t('common.ingredients') }}</th>
-						<th class="stock">{{ $t('items.tstock') }}</th>
-						<th class="quantity">{{ $t('shop.item.quantity') }}</th>
+						<th class="stock">{{ $t('common.stock') }}</th>
+						<th class="quantity">{{ $t('common.quantity') }}</th>
 					</tr>
 					<Tippy
 						theme="normal"

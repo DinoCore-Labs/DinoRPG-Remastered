@@ -21,7 +21,7 @@
 				<a @click="sessionStore.setTabDinoz(2)">{{ $t('common.inventory') }}</a>
 			</li>
 			<li :class="tabSelected === 3 ? 'active' : ''">
-				<a @click="sessionStore.setTabDinoz(3)">{{ $t('dinozPage.tabs.details') }}</a>
+				<a @click="sessionStore.setTabDinoz(3)">{{ $t('common.details') }}</a>
 			</li>
 		</ul>
 		<MapTab v-if="tabSelected === 1" :dinozData="dinozData" />

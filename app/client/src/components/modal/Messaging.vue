@@ -24,7 +24,7 @@
 				<div class="actions">
 					<div class="title">
 						<img :src="getImgURL('icons', 'small_browse_next')" />
-						<p>{{ $t('dinozPage.action') }}</p>
+						<p>{{ $t('common.actions') }}</p>
 					</div>
 					<div class="buttons">
 						<div @click="create()" class="clickable">
@@ -91,17 +91,17 @@
 				<DZDisclaimer help v-if="!threadSelected" content="modal.messagerie.disclaimer" />
 				<div class="creationMode" v-if="creationMode">
 					<div class="title">
-						<p>{{ $t('modal.messagerie.newMsg') }}</p>
+						<p>{{ $t('common.newMessage') }}</p>
 					</div>
 					<div class="messageTitle">
-						<label for="title">{{ $t('modal.messagerie.newMsgTitle') }}</label>
+						<label for="title">{{ $t('common.newMessageTitle') }}</label>
 						<input type="text" id="title" v-model="newThread.title" :placeholder="$t('modal.messagerie.title')" />
 					</div>
 					<div
 						class="search"
 						v-if="!newThread.participants || (newThread.participants && newThread.participants.length < 9)"
 					>
-						<label for="user">{{ $t('modal.messagerie.newMsgParticipants') }}</label>
+						<label for="user">{{ $t('common.newMessageParticipants') }}</label>
 						<DZSearch
 							background
 							entityType="user"
@@ -116,12 +116,12 @@
 						</template>
 					</div>
 					<div class="message">
-						<label for="message">{{ $t('modal.messagerie.newMsgMessage') }}</label>
+						<label for="message">{{ $t('common.newMessageMessage') }}</label>
 						<textarea id="message" v-model="newThread.message" :placeholder="$t('modal.messagerie.message')" />
 					</div>
 					<div class="send">
 						<DZButton @click="sendMessage" :disabled="isSending">
-							{{ $t('modal.messagerie.newMsgSend') }}
+							{{ $t('common.newMessageSend') }}
 						</DZButton>
 					</div>
 				</div>

@@ -20,13 +20,13 @@
 			<div v-if="rewardList.gold > 0" class="item-container">
 				<Tippy theme="normal" tag="img" :src="getImgURL('item', 'item_gold')" alt="gold">
 					<template #content>
-						<h1 v-html="formatContent($t('items.name.gold'))" />
+						<h1 v-html="formatContent($t('common.goldCoins'))" />
 						<p v-html="formatContent($t('items.description.gold', { quantity: rewardList.gold }))" />
 					</template>
 				</Tippy>
 				<div class="name-info">
 					<span>{{ rewardList.gold }} </span>
-					<span>{{ formatContent($t('items.name.gold')) }}</span>
+					<span>{{ formatContent($t('common.goldCoins')) }}</span>
 				</div>
 			</div>
 			<div v-for="ingredient in displayedIngredients" :key="ingredient.displayKey" class="ingredient-container">

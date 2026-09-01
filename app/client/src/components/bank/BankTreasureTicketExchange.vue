@@ -20,9 +20,9 @@
 				/>
 			</div>
 			<dl class="walletInfo">
-				<dt>{{ $t('market.yourTreasuryNotes') }}</dt>
+				<dt>{{ $t('common.treasureNotes') }}</dt>
 				<dd v-html="formatContent(`${beautifulNumber(uStore.treasureTicket)} :ticket:`)" />
-				<dt>{{ $t('items.name.gold') }}</dt>
+				<dt>{{ $t('common.goldCoins') }}</dt>
 				<dd v-html="formatContent(`${beautifulNumber(uStore.gold)} :gold:`)" />
 			</dl>
 			<div class="formLine">

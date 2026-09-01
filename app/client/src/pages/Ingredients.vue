@@ -18,7 +18,7 @@
 		<tr>
 			<th class="thIcon"></th>
 			<th class="thName">{{ $t('common.ingredients') }}</th>
-			<th class="thStock">{{ $t('items.tstock') }}</th>
+			<th class="thStock">{{ $t('common.stock') }}</th>
 			<th v-if="isClan" class="clan"></th>
 		</tr>
 
