@@ -46,11 +46,21 @@
 						<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 						<span>{{ $t('topBar.leftUserMenu.dojo') }}</span>
 					</RouterLink>
-					<RouterLink :to="`/clan/${userStore.clanId}`" class="link" :title="$t('button.clan')" v-if="userStore.clanId">
+					<RouterLink
+						:to="`/clan/${userStore.clanId}`"
+						class="link"
+						:title="$t('topBar.leftUserMenu.clan')"
+						v-if="userStore.clanId"
+					>
 						<img :src="getImgURL('act', 'act_castle')" alt="clan" />
 						<span>{{ $t('topBar.leftUserMenu.clan') }}</span>
 					</RouterLink>
-					<RouterLink :to="`/clans`" class="link" :title="$t('button.clan')" v-if="!userStore.clanId">
+					<RouterLink
+						:to="`/clans`"
+						class="link"
+						:title="$t('topBar.leftUserMenu.clan')"
+						v-if="!userStore.clanId"
+					>
 						<img :src="getImgURL('act', 'act_castle')" alt="clan" />
 						<span>{{ $t('topBar.leftUserMenu.clan') }}</span>
 					</RouterLink>

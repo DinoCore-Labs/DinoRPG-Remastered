@@ -20,7 +20,7 @@
 		<table>
 			<tbody>
 				<tr>
-					<th class="name">{{ $t('clansList.th.name') }}</th>
+					<th class="name">{{ $t('topBar.leftUserMenu.clan') }}</th>
 					<th class="leader">{{ $t('clansList.th.leader') }}</th>
 					<th class="members">{{ $t('clansList.th.members') }}</th>
 					<th class="date">{{ $t('clansList.th.date') }}</th>
