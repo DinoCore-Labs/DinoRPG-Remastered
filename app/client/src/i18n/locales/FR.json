@@ -3570,8 +3570,7 @@
 		"version": "Version : {version}",
 		"updatedAt": "Dernière mise à jour : {date}",
 		"footer": {
-			"title": "Règles et sécurité",
-			"link": "Règlement du jeu"
+			"title": "Règles et sécurité"
 		},
 		"registration": {
 			"label": "J’ai lu et j’accepte le {rules} dans sa version {version}.",
@@ -3633,7 +3632,6 @@
 			"reporting": {
 				"title": "5. Signalement",
 				"intro": "Un bug, une faille ou un comportement interdit peut être signalé à :",
-				"email": "contact{'@'}dinorpg.fr",
 				"details": "Merci d’indiquer autant que possible le pseudonyme concerné, la date, une description du problème et les éventuelles preuves ou étapes permettant de le reproduire.",
 				"disclosure": "Une faille non corrigée ne doit pas être publiée ou exploitée.",
 				"goodFaith": "Un signalement effectué de bonne foi ne sera pas considéré comme une tentative de triche."
@@ -3656,11 +3654,7 @@
 	"legalNotices": {
 		"pageTitle": "Informations légales",
 		"title": "Mentions légales",
-		"updatedAt": "Dernière mise à jour : {date}",
 		"contactEmail": "contact{'@'}dinorpg.fr",
-		"footer": {
-			"link": "Mentions légales"
-		},
 		"sections": {
 			"publisher": {
 				"title": "1. Édition du site",
