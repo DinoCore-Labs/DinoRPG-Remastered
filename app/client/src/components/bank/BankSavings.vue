@@ -40,7 +40,7 @@
 				/>
 				<p class="preview" v-html="formatContent(previewLabel)" />
 				<DZButton :disabled="!canSave" @click="createSaving">
-					{{ saving ? $t('button.loading') : $t('bank.savings.save') }}
+					{{ saving ? $t('common.loading') : $t('bank.savings.save') }}
 				</DZButton>
 			</div>
 			<div class="activeSavings">
