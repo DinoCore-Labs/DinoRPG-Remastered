@@ -20,7 +20,7 @@
 				/>
 			</div>
 			<dl class="walletInfo">
-				<dt>{{ $t('bank.exchange.yourTickets') }}</dt>
+				<dt>{{ $t('market.yourTreasuryNotes') }}</dt>
 				<dd v-html="formatContent(`${beautifulNumber(uStore.treasureTicket)} :ticket:`)" />
 				<dt>{{ $t('items.name.gold') }}</dt>
 				<dd v-html="formatContent(`${beautifulNumber(uStore.gold)} :gold:`)" />

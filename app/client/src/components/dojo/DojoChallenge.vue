@@ -92,7 +92,7 @@
 					</Suspense>
 				</div>
 			</div>
-			<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('dojo.return') }}</DZButton>
+			<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('market.back') }}</DZButton>
 			<Transition name="bounce">
 				<FightRecap :stats="fightStat" />
 			</Transition>

@@ -33,7 +33,7 @@
 					{{ userDinozCount !== null ? userDinozCount : '-' }}
 				</dd>
 				<dt>
-					{{ $t(`accountPage.ranking`) }}
+					{{ $t(`ranking.title`) }}
 				</dt>
 				<dd>
 					<RouterLink
@@ -59,7 +59,7 @@
 					<a @click="goToClan(profile.clan.id)">{{ profile.clan.name }}</a>
 				</dd>
 				<dt>
-					{{ $t(`accountPage.completion`) }}
+					{{ $t(`ranking.tabs.completion`) }}
 				</dt>
 				<dd>
 					{{ profile.completion.toFixed(2) }}
@@ -103,7 +103,7 @@
 					$t(`accountPage.options.delete`)
 				}}</DZButton>
 				<DZButton class="bSmall no-first-letter" back @click="option = false">{{
-					$t(`accountPage.options.retour`)
+					$t(`market.back`)
 				}}</DZButton>
 			</div>
 		</div>
