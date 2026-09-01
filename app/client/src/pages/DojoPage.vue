@@ -159,10 +159,6 @@ export default defineComponent({
 		},
 		async refresh() {
 			await this.dojoStore.update();
-
-			if (!this.dojoStore.getState) {
-				throw new Error(this.$t('Dojo not Found'));
-			}
 		},
 		formatDate(oldDate: Date) {
 			return formatDateTime(oldDate.toString());
