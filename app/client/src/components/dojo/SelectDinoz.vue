@@ -143,6 +143,7 @@ export default defineComponent({
 			width: 100%;
 			display: flex;
 			justify-content: center;
+			padding-top: 18px;
 		}
 
 		.textbox {
