@@ -27,8 +27,8 @@
 		</div>
 		<div class="end-content">
 			<div class="buttons">
-				<a class="button" @click="goToClanList()">{{ $t('createClan.go_back_button') }}</a>
-				<a class="button" @click="CreateClan()">{{ $t('createClan.create_button') }}</a>
+				<a class="button" @click="goToClanList()">{{ $t('button.cancel') }}</a>
+				<a class="button" @click="CreateClan()">{{ $t('button.create') }}</a>
 			</div>
 			<img :src="getImgURL('background', 'logo_clan_swords')" alt="clan_image" />
 		</div>

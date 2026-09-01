@@ -124,7 +124,7 @@ export default defineComponent({
 		continueLabel(): string {
 			return this.$te('missions.continue')
 				? this.$t('missions.continue').toString()
-				: this.$t('npc.continue').toString();
+				: this.$t('button.continue').toString();
 		}
 	},
 	methods: {
