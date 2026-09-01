@@ -158,10 +158,10 @@ export default defineComponent({
 			}
 		},
 		async refresh() {
-			try {
-				await this.dojoStore.update();
-			} catch (e) {
-				errorHandler.handle(e, this.$toast);
+			await this.dojoStore.update();
+
+			if (!this.dojoStore.getState) {
+				throw new Error(this.$t('Dojo not Found'));
 			}
 		},
 		formatDate(oldDate: Date) {
@@ -186,7 +186,15 @@ export default defineComponent({
 		}
 	},
 	async created() {
-		await this.refresh();
+		try {
+			if (!this.dojoStore) {
+				throw new Error('Dojo not found');
+			}
+			await this.refresh();
+		} catch (e) {
+			errorHandler.handle(e, this.$toast);
+			this.$router.push({ name: 'NewsPage' });
+		}
 	}
 });
 </script>
