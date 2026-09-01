@@ -272,11 +272,11 @@ export default defineComponent({
 						nameKey: this.$t(goal.nameKey).toString()
 					}).toString();
 				case 'LOCK':
-					return this.$t('missions.goals.lock', {
+					return this.$t('missions.goals.named', {
 						nameKey: this.$t(goal.nameKey ?? '').toString()
 					}).toString();
 				case 'ACTION':
-					return this.$t('missions.goals.action', {
+					return this.$t('missions.goals.named', {
 						nameKey: this.$t(goal.nameKey).toString()
 					}).toString();
 				case 'VALIDATE':
@@ -294,19 +294,19 @@ export default defineComponent({
 					}).toString();
 				}
 				case 'USE_ITEM':
-					return this.$t('missions.goals.useItem', {
+					return this.$t('missions.goals.named', {
 						nameKey: this.$t(goal.nameKey).toString()
 					}).toString();
 				case 'USE_MONEY':
-					return this.$t('missions.goals.useMoney', {
+					return this.$t('missions.goals.named', {
 						nameKey: this.$t(goal.nameKey).toString()
 					}).toString();
 				case 'USE_INGREDIENT':
-					return this.$t('missions.goals.useIngredient', {
+					return this.$t('missions.goals.named', {
 						nameKey: this.$t(goal.nameKey).toString()
 					}).toString();
 				case 'FIGHT_ACTION':
-					return this.$t('missions.goals.fightAction', {
+					return this.$t('missions.goals.named', {
 						nameKey: this.$t(goal.fightAction.nameKey).toString()
 					}).toString();
 				case 'WAIT':
