@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="$t('legalNotices.pageTitle')" :header="$t('legalNotices.title')" />
+	<TitleHeader :title="$t('legalNotices.pageTitle')" :header="$t('common.legalNotices')" />
 	<div class="intro">
 		<div class="menu">
 			<ul class="list">
@@ -22,7 +22,7 @@
 			<div class="rulesMetadata">
 				<span>
 					{{
-						$t('gameRules.updatedAt', {
+						$t('common.lastUpdated', {
 							date: formattedUpdatedAt
 						})
 					}}
@@ -142,7 +142,7 @@ export default defineComponent({
 						{
 							type: 'email',
 							introKey: 'legalNotices.sections.publisher.contactIntro',
-							emailKey: 'legalNotices.contactEmail'
+							emailKey: 'common.contactEmail'
 						}
 					]
 				},
@@ -283,7 +283,7 @@ export default defineComponent({
 						{
 							type: 'email',
 							introKey: 'legalNotices.sections.personalData.rightsContact',
-							emailKey: 'legalNotices.contactEmail'
+							emailKey: 'common.contactEmail'
 						},
 						{
 							type: 'link',
@@ -322,7 +322,7 @@ export default defineComponent({
 						{
 							type: 'email',
 							introKey: 'legalNotices.sections.contact.emailIntro',
-							emailKey: 'legalNotices.contactEmail'
+							emailKey: 'common.contactEmail'
 						},
 						{
 							type: 'list',
