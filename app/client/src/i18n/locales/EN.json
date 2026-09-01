@@ -1,4 +1,13 @@
 {
+	"common": {
+		"account": "My Account",
+		"bank": "Bank",
+		"clan": "Clan",
+		"dojo": "Dojo",
+		"ingredients": "Ingredients",
+		"inventory": "Inventory",
+		"skills": "Skills"
+	},
 	"notifications": {
 		"title": "Notifications",
 		"newClanJoinRequest": "Le joueur {name} a demandé à rejoindre le clan.",
@@ -31,12 +40,8 @@
 		"menu": "Menu",
 		"leftUserMenu": {
 			"shop": "Shop",
-			"bank": "Bank",
-			"dojo": "Dojo",
-			"clan": "Clan",
 			"order": "Order",
-			"enclosure": "Enclosure",
-			"skills": "Skills"
+			"enclosure": "Enclosure"
 		},
 		"authMenu": {
 			"name": "Username:",
@@ -49,11 +54,8 @@
 			"welcomeBack": "Welcome back, Master {name}!"
 		},
 		"userMenu": {
-			"account": "My Account",
 			"ranking": "Ranking",
 			"messagerie": "Messaging",
-			"items": "Inventory",
-			"ingredients": "Ingredients",
 			"news": "News",
 			"cinema": "Theater",
 			"faq": "FAQ",

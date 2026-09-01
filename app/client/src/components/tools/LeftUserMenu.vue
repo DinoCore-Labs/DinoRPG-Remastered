@@ -40,24 +40,24 @@
 					</RouterLink>
 					<RouterLink class="link" :to="`/bank`">
 						<img :src="getImgURL('act', 'act_shop')" alt="bank" />
-						<span>{{ $t('topBar.leftUserMenu.bank') }}</span>
+						<span>{{ $t('common.bank') }}</span>
 					</RouterLink>
 					<RouterLink class="link" :to="`/dojo`" v-if="userStore.dojoId">
 						<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
-						<span>{{ $t('topBar.leftUserMenu.dojo') }}</span>
+						<span>{{ $t('common.dojo') }}</span>
 					</RouterLink>
 					<RouterLink
 						:to="`/clan/${userStore.clanId}`"
 						class="link"
-						:title="$t('topBar.leftUserMenu.clan')"
+						:title="$t('common.clan')"
 						v-if="userStore.clanId"
 					>
 						<img :src="getImgURL('act', 'act_castle')" alt="clan" />
-						<span>{{ $t('topBar.leftUserMenu.clan') }}</span>
+						<span>{{ $t('common.clan') }}</span>
 					</RouterLink>
-					<RouterLink :to="`/clans`" class="link" :title="$t('topBar.leftUserMenu.clan')" v-if="!userStore.clanId">
+					<RouterLink :to="`/clans`" class="link" :title="$t('common.clan')" v-if="!userStore.clanId">
 						<img :src="getImgURL('act', 'act_castle')" alt="clan" />
-						<span>{{ $t('topBar.leftUserMenu.clan') }}</span>
+						<span>{{ $t('common.clan') }}</span>
 					</RouterLink>
 					<RouterLink class="link" :to="{ name: 'ManageDinoz' }" v-if="userStore.canManageDinozOrder">
 						<img :src="getImgURL('act', 'act_pda')" alt="pda" />
@@ -65,7 +65,7 @@
 					</RouterLink>
 					<RouterLink class="link" :to="{ name: 'SkillTreesPage' }" v-if="userStore.canAccessSkillsPage">
 						<img :src="getImgURL('act', 'act_pac')" />
-						<span>{{ $t('topBar.leftUserMenu.skills') }}</span>
+						<span>{{ $t('common.skills') }}</span>
 					</RouterLink>
 					<!--
 					<RouterLink class="link" :to="`/missions`" v-if="playerStore.playerOptions.hasPMI">

@@ -1,4 +1,13 @@
 {
+	"common": {
+		"account": "Mon Compte",
+		"bank": "Banque",
+		"clan": "Clan",
+		"dojo": "Dojo",
+		"ingredients": "Ingrédients",
+		"inventory": "Inventaire",
+		"skills": "Compétences"
+	},
 	"notifications": {
 		"title": "Notifications",
 		"newClanJoinRequest": "Le joueur {name} a demandé à rejoindre le clan.",
@@ -31,12 +40,8 @@
 		"menu": "Menu",
 		"leftUserMenu": {
 			"shop": "Boutique",
-			"bank": "Banque",
-			"dojo": "Dojo",
-			"clan": "Clan",
 			"order": "Ordonner",
-			"enclosure": "Enclos",
-			"skills": "Compétences"
+			"enclosure": "Enclos"
 		},
 		"authMenu": {
 			"name": "Pseudo :",
@@ -49,11 +54,8 @@
 			"welcomeBack": "Content de te revoir Maître {name} !"
 		},
 		"userMenu": {
-			"account": "Mon Compte",
 			"ranking": "Classements",
 			"messagerie": "Messagerie",
-			"items": "Inventaire",
-			"ingredients": "Ingrédients",
 			"news": "News",
 			"cinema": "Cinéma",
 			"faq": "FAQ",

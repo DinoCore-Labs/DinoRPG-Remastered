@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.items')" :header="$t(`topBar.userMenu.items`)" />
+	<TitleHeader :title="$t('pageTitle.items')" :header="$t(`common.inventory`)" />
 	<DZDisclaimer help round content="items.disclaimer" />
 	<DZTable>
 		<tr>
