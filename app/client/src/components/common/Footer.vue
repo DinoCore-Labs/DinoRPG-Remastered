@@ -141,13 +141,13 @@
 				<ul class="footerLinks">
 					<li>
 						<RouterLink :to="{ name: 'RulesPage' }">
-							{{ $t('gameRules.pageTitle') }}
+							{{ $t('common.gameRules') }}
 						</RouterLink>
 					</li>
 					<li>|</li>
 					<li>
 						<RouterLink :to="{ name: 'LegalNoticesPage' }">
-							{{ $t('legalNotices.title') }}
+							{{ $t('common.legalNotices') }}
 						</RouterLink>
 					</li>
 				</ul>
