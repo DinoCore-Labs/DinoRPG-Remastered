@@ -5,8 +5,8 @@
 		<DZTable>
 			<tr>
 				<th class="thPos">{{ $t('ranking.th.pos') }}</th>
-				<th class="thClan">{{ $t('ranking.th.clans') }}</th>
-				<th class="thPoints">{{ $t('ranking.th.treasure') }}</th>
+				<th class="thClan">{{ $t('clansList.title') }}</th>
+				<th class="thPoints">{{ $t('clan.tabs.treasure') }}</th>
 			</tr>
 			<tr class="select" @click="changePage(-1)" v-if="page > 1">
 				<td class="pos" colspan="5" style="text-align: center">
