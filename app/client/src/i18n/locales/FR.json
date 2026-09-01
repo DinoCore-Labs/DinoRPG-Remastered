@@ -364,9 +364,6 @@
 			"confirm": "Voulez vous vraiment donner au clan ces ingrédients d'une valeur de {gold} Or"
 		},
 		"discussion": {
-			"action": {
-				"create": "Nouveau message"
-			},
 			"delete": "Supprimer le message",
 			"pagination": {
 				"page": "Page",
@@ -374,7 +371,6 @@
 			}
 		},
 		"history": {
-			"page": "Page",
 			"type": {
 				"CLAN_CREATED": "Création du clan.",
 				"PLAYER_JOIN": "Un joueur a rejoint le clan.",
