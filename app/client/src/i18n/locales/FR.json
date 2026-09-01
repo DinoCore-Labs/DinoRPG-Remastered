@@ -441,7 +441,6 @@
 		"welcome": "Bienvenue dans votre Dojo",
 		"markAsRead": "Marquer comme vus",
 		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournoi, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
-		"return": "Retour",
 		"accessTournament": "Accéder au tournoi",
 		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis !",
 		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",
@@ -464,7 +463,6 @@
 		"seeFight": "Voir le combat entre {playerA} et {playerB}",
 		"deleteTeam": "Supprimer mon équipe",
 		"poison": "Poison",
-		"items": "Objets",
 		"on": "Activé",
 		"off": "Désactivé",
 		"timer": {
@@ -540,7 +538,6 @@
 			"assaultVoid": "Nombre d'assauts :void: réalisés",
 			"hpRemaining": "Vie restante",
 			"times_poisoned": "Nombre de fois qu'un Dinoz est empoisonné",
-			"myTeam": "Mon équipe",
 			"enemyTeam": "Équipe adverse"
 		},
 		"challenge": {
@@ -944,18 +941,14 @@
 		"tabs": {
 			"players": "Joueurs",
 			"average": "Moyenne",
-			"completion": "Complétion",
-			"clans": "Clans",
-			"treasure": "Valeur du trésor"
+			"completion": "Complétion"
 		},
 		"th": {
 			"pos": "Pos.",
 			"player": "Maître",
 			"points": "Pts",
 			"average": "Moy.",
-			"completion": "Comp.",
-			"clans": "Clans",
-			"treasure": "Trésor du Clan"
+			"completion": "Comp."
 		},
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
@@ -985,8 +978,7 @@
 			"resetTitle": "Recommencer le compte",
 			"resetDescription": "Êtes-vous sûr de vouloir tout recommencer ? Vous conserverez votre nom, votre description, votre avatar et votre messagerie. Cependant, TOUS VOS DINOZ, VOTRE INVENTAIRE ET VOTRE ARGENT SERONT DÉFINITIVEMENT PERDUS. Vous recommencerez l'aventure à zéro avec 100 000 pièces d'or.",
 			"deleteTitle": "Supprimer le compte",
-			"deleteDescription": "ATTENTION : Êtes-vous absolument sûr de vouloir supprimer votre compte ? Cette action effacera DÉFINITIVEMENT votre progression, vos dinoz, votre inventaire et votre profil. CETTE ACTION EST IRRÉVERSIBLE.",
-			"retour": "Retour"
+			"deleteDescription": "ATTENTION : Êtes-vous absolument sûr de vouloir supprimer votre compte ? Cette action effacera DÉFINITIVEMENT votre progression, vos dinoz, votre inventaire et votre profil. CETTE ACTION EST IRRÉVERSIBLE."
 		},
 		"changeAvatar": "Changer l'avatar",
 		"save": "Sauvegarder le profil",
@@ -997,10 +989,8 @@
 		"profil": "Profil DinoRPG",
 		"player": "Joueur :",
 		"dinoz": "Dinoz :",
-		"ranking": "Classement :",
 		"inscription": "Inscrit le",
 		"clan": "Clan :",
-		"completion": "Complétion",
 		"rewards": "Récompenses épiques",
 		"editAccount": "Modifier le profil",
 		"edit": "Editer",
@@ -3232,7 +3222,6 @@
 		"event": {
 			"christmas_ticket": "Il semblerait que ce monstre possédait un ticket de Noël sur lui. Quelle aubaine !"
 		},
-		"player": "Maître",
 		"vs": "VS"
 	},
 	"gather": {
@@ -3819,7 +3808,6 @@
 			"title": "Conversion des Bons du Trésor",
 			"dailyRate": "Taux de change du jour",
 			"rateValue": "1 :ticket: = **{gold}** :gold: (taux x{rate})",
-			"yourTickets": "Vos Bons du Trésor",
 			"quantity": "Quantité à convertir",
 			"max": "Max",
 			"youWillReceive": "Vous recevrez **{gold}** :gold:",

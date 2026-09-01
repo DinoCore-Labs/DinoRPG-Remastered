@@ -9,7 +9,7 @@
 		</li>
 		<li :class="{ active: isClanTab }">
 			<RouterLink :to="{ name: 'RankingClans', params: { pageLoaded: 1 } }">
-				{{ $t('ranking.tabs.clans') }}
+				{{ $t('clansList.title') }}
 			</RouterLink>
 		</li>
 	</ul>
@@ -35,12 +35,12 @@
 	<ul class="onglets sub-tabs" v-if="isClanTab">
 		<li :class="{ active: $route.name === 'RankingClans' }">
 			<RouterLink :to="{ name: 'RankingClans', params: { pageLoaded: 1 } }">
-				{{ $t('ranking.tabs.clans') }}
+				{{ $t('clansList.title') }}
 			</RouterLink>
 		</li>
 		<li :class="{ active: $route.name === 'RankingTreasure' }">
 			<RouterLink :to="{ name: 'RankingTreasure', params: { pageLoaded: 1 } }">
-				{{ $t('ranking.tabs.treasure') }}
+				{{ $t('clan.icons.gold') }}
 			</RouterLink>
 		</li>
 	</ul>
@@ -105,9 +105,9 @@ export default defineComponent({
 				case 'RankingCompletion':
 					return 'ranking.tabs.completion';
 				case 'RankingClans':
-					return 'ranking.tabs.clans';
+					return 'clansList.title';
 				case 'RankingTreasure':
-					return 'ranking.tabs.treasure';
+					return 'clan.icons.gold';
 				default:
 					return 'ranking.tabs.players';
 			}
