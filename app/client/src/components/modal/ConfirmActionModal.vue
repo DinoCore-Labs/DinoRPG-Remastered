@@ -22,9 +22,7 @@
 				<DZButton class="bSmall no-first-letter" @click="submit">
 					{{ loading ? $t('button.loading') : $t('modal.confirmAction.confirm') }}
 				</DZButton>
-				<DZButton class="bSmall no-first-letter" back @click="$emit('close')">{{
-					$t('button.cancel')
-				}}</DZButton>
+				<DZButton class="bSmall no-first-letter" back @click="$emit('close')">{{ $t('button.cancel') }}</DZButton>
 			</div>
 		</div>
 	</div>
