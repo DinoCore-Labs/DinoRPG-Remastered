@@ -111,8 +111,7 @@ export default defineComponent({
 				case 1:
 					this.futurInfoList = [
 						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo1.text1') },
-						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo1.text2') },
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo1.text3') }
+						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo1.text2') }
 					];
 					break;
 				case 2:
@@ -123,8 +122,7 @@ export default defineComponent({
 					break;
 				case 3:
 					this.futurInfoList = [
-						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo3.text1') },
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo3.text2') }
+						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo3.text1') }
 					];
 					break;
 				case 4:
