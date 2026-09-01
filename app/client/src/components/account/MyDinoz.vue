@@ -41,7 +41,7 @@
 				{{ dinoz.name }}
 			</div>
 			<div class="dinozInfo">
-				{{ $t(`race.name.${raceList[dinoz.common.raceId]}`) }}
+				{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}
 				{{ $t(`accountPage.level`) }} {{ dinoz.level }}
 			</div>
 			<div class="report-btn" v-if="!isOwner" @click.stop="openReportModal(dinoz)">
@@ -178,7 +178,7 @@ export default defineComponent({
 		},
 		filteredDinozList(): DinozPublicFiche[] {
 			return this.sortedDinozList.filter(dinoz => {
-				if (this.selectedRaceId !== 0 && dinoz.common.raceId !== this.selectedRaceId) {
+				if (this.selectedRaceId !== 0 && dinoz.race.raceId !== this.selectedRaceId) {
 					return false;
 				}
 				const levelRange = DINOZ_LEVEL_RANGES.find(range => range.value === this.selectedLevelRange);
@@ -201,7 +201,7 @@ export default defineComponent({
 			this.showReportModal = true;
 		},
 		style(dinoz: DinozPublicFiche): string {
-			const race = Object.entries(raceList).find(([k]) => Number(k) === dinoz.common.raceId)?.[1];
+			const race = Object.entries(raceList).find(([k]) => Number(k) === dinoz.race.raceId)?.[1];
 			const first = dinoz.display.charAt(0);
 			const second = dinoz.display.charAt(1);
 			if (!first || !second) {

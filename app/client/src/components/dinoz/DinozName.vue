@@ -22,7 +22,7 @@
 					:display="dinozData.display"
 					:life="1"
 					flip
-					:race="dinozData.common.raceId"
+					:race="dinozData.race.raceId"
 				></DinozAnimation>
 				<template #fallback> <Loading /> </template>
 			</Suspense>
