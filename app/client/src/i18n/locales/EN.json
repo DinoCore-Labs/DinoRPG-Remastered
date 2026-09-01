@@ -5,21 +5,30 @@
 		"back": "Return",
 		"bank": "Bank",
 		"clan": "Clan",
+		"clans": "Clans",
+		"clanTreasure": "Clan Treasure",
+		"completion": "Completion",
 		"details": "Details",
 		"dinoz": "Dinoz",
 		"dojo": "Dojo",
+		"gains": "Gains",
 		"goldCoins": "Gold coins",
 		"ingredients": "Ingredients",
 		"inventory": "Inventory",
 		"items": "Items",
+		"master": "Master",
+		"myTeam": "Mon équipe",
 		"name": "Name",
 		"newMessage": "New Message",
 		"page": "Page",
 		"quantity": "Quantity",
+		"race": "Race:",
+		"ranking": "Ranking:",
 		"skills": "Skills",
 		"stock": "Stock",
 		"title": "Title",
 		"treasureNotes": "Your Treasure Coupons",
+		"treasureValue": "Treasure value",
 		"type": "Type"
 	},
 	"notifications": {
@@ -301,7 +310,6 @@
 	"clan": {
 		"icons": {
 			"members": "Number of members",
-			"gold": "Treasure value",
 			"crown": "Clan leader"
 		},
 		"header": {
@@ -312,7 +320,6 @@
 		"tabs": {
 			"pages": "Clan pages",
 			"members": "Members list",
-			"treasure": "Clan Treasure",
 			"discussion": "Discussion thread",
 			"history": "Clan history",
 			"parameters": "Settings"
@@ -424,7 +431,6 @@
 		}
 	},
 	"clansList": {
-		"title": "Clans",
 		"disclaimer": {
 			"text": "Clans are groups of players who fight together in the Dinoland universe."
 		},
@@ -468,7 +474,6 @@
 		"testDinoz": "Tester vos Dinoz",
 		"fightHistory": "Historique des combats",
 		"tournamentHistory": "Historique des tournois",
-		"team": "Mon équipe",
 		"tournaments": "Tournois",
 		"build": "Construire mon dojo",
 		"group": "Groupe {group}",
@@ -960,17 +965,14 @@
 		"serverTime": "Server Time"
 	},
 	"ranking": {
-		"title": "Ranking:",
 		"tabs": {
 			"players": "Players",
 			"average": "Average",
-			"completion": "Completion",
 			"clans": "Clans",
 			"treasure": "Treasure value"
 		},
 		"th": {
 			"pos": "Pos.",
-			"player": "Master",
 			"dinoz": "Dinoz",
 			"points": "Pts",
 			"average": "Avg.",
@@ -1031,7 +1033,6 @@
 			"title": "DinoRPG Statistics",
 			"points": "points",
 			"linkStats": "Statistics",
-			"linkGains": "Gains",
 			"help": {
 				"question": "What do those counters mean?",
 				"response": "Those counters increase when certain actions are done on DinoRPG. && **You can earn icons, titles and points by reaching certain thresholds of those.** && The golden counters represent rare rewards or some that are difficult to obtain."
@@ -1092,7 +1093,6 @@
 		"completed": "Your Dinoz has defeated all available opponents in the tournament."
 	},
 	"race": {
-		"race": "Race:",
 		"name": {
 			"winks": "Winks",
 			"winks_demon": "Demon Winks",

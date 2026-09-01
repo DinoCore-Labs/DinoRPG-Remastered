@@ -12,7 +12,7 @@
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<TitleHeader :title="$t('pageTitle.clansList')" :header="$t('clansList.title')"></TitleHeader>
+	<TitleHeader :title="$t('pageTitle.clansList')" :header="$t('common.clans')"></TitleHeader>
 	<DZDisclaimer help round :content="$t('clansList.disclaimer.text')" />
 
 	<div class="wrapper">

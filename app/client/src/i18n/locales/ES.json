@@ -5,21 +5,30 @@
 		"back": "Volver",
 		"bank": "Banque",
 		"clan": "Clan",
+		"clans": "Clanes",
+		"clanTreasure": "Tesoro del Clan",
+		"completion": "Completado",
 		"details": "Detalles",
 		"dinoz": "Dinos",
 		"dojo": "Dojo",
+		"gains": "Ganancias",
 		"goldCoins": "Monedas de oro",
 		"ingredients": "Ingredientes",
 		"inventory": "Inventario",
 		"items": "Objetos",
+		"master": "Maestro",
+		"myTeam": "Mon équipe",
 		"name": "Nombre",
 		"newMessage": "Nuevo mensaje",
 		"page": "Página",
 		"quantity": "Quantité",
+		"race": "Raza:",
+		"ranking": "Clasificación :",
 		"skills": "Competencias",
 		"stock": "Almacén",
 		"title": "Título",
 		"treasureNotes": "Tus Bonos del Tesoro",
+		"treasureValue": "Valor del tesoro",
 		"type": "Tipo"
 	},
 	"notifications": {
@@ -301,7 +310,6 @@
 	"clan": {
 		"icons": {
 			"members": "Número de miembros",
-			"gold": "Valor del tesoro",
 			"crown": "Líder del Clan"
 		},
 		"header": {
@@ -312,7 +320,6 @@
 		"tabs": {
 			"pages": "Páginas del clan",
 			"members": "Lista de miembros",
-			"treasure": "Tesoro del Clan",
 			"discussion": "Foro",
 			"history": "Histórico",
 			"parameters": "Configuración"
@@ -424,7 +431,6 @@
 		}
 	},
 	"clansList": {
-		"title": "Clanes",
 		"disclaimer": {
 			"text": "Los clanes son grupos de jugadores que luchan juntos en el universo Dinoland."
 		},
@@ -468,7 +474,6 @@
 		"testDinoz": "Tester vos Dinoz",
 		"fightHistory": "Historique des combats",
 		"tournamentHistory": "Historique des tournois",
-		"team": "Mon équipe",
 		"tournaments": "Tournois",
 		"build": "Construire mon dojo",
 		"group": "Groupe {group}",
@@ -960,17 +965,14 @@
 		"serverTime": "Hora del servidor"
 	},
 	"ranking": {
-		"title": "Clasificación :",
 		"tabs": {
 			"players": "Jugadores",
 			"average": "Promedio",
-			"completion": "Completado",
 			"clans": "Clanes",
 			"treasure": "Valor del tesoro"
 		},
 		"th": {
 			"pos": "Pos.",
-			"player": "Maestro",
 			"dinoz": "Dinos",
 			"points": "Pts",
 			"average": "Med.",
@@ -1031,7 +1033,6 @@
 			"title": "Estadísticas de DinoRPG",
 			"points": "Puntos",
 			"linkStats": "Estatísticas",
-			"linkGains": "Ganancias",
 			"help": {
 				"question": "¿Qué significan estos contadores?",
 				"response": "Estos contadores aumentan al realizar determinadas acciones en DinoRPG. && **Ganas íconos, títulos y puntos al alcanzar ciertos niveles de contador.** && **¡Los contadores dorados** representan ganancias raras o difíciles de obtener!"
@@ -1092,7 +1093,6 @@
 		"completed": "Votre Dinoz a vaincu tous les adversaires disponibles du tournoi."
 	},
 	"race": {
-		"race": "Raza:",
 		"name": {
 			"winks": "Winks",
 			"winks_demon": "Winks Demonio",

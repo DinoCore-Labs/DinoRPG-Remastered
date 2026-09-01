@@ -5,8 +5,8 @@
 		<DZTable>
 			<tr>
 				<th class="thPos">{{ $t('ranking.th.pos') }}</th>
-				<th class="thClan">{{ $t('clansList.title') }}</th>
-				<th class="thPoints">{{ $t('clan.tabs.treasure') }}</th>
+				<th class="thClan">{{ $t('common.clans') }}</th>
+				<th class="thPoints">{{ $t('common.clanTreasure') }}</th>
 			</tr>
 			<tr class="select" @click="changePage(-1)" v-if="page > 1">
 				<td class="pos" colspan="5" style="text-align: center">
@@ -33,7 +33,7 @@
 						:src="getImgURL('icons', 'small_gold')"
 						alt="gold"
 						v-tippy="{
-							content: formatContent($t('clan.icons.gold')),
+							content: formatContent($t('common.treasureValue')),
 							theme: 'small'
 						}"
 					/>

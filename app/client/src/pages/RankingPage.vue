@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.ranking')}`" :header="$t('ranking.title')" :sub-header="$t(subHeader)" />
+	<TitleHeader :title="`${$t('pageTitle.ranking')}`" :header="$t('common.ranking')" :sub-header="$t(subHeader)" />
 
 	<ul class="onglets main-tabs">
 		<li :class="{ active: isPlayerTab }">
@@ -9,7 +9,7 @@
 		</li>
 		<li :class="{ active: isClanTab }">
 			<RouterLink :to="{ name: 'RankingClans', params: { pageLoaded: 1 } }">
-				{{ $t('clansList.title') }}
+				{{ $t('common.clans') }}
 			</RouterLink>
 		</li>
 	</ul>
@@ -27,7 +27,7 @@
 		</li>
 		<li :class="{ active: $route.name === 'RankingCompletion' }">
 			<RouterLink :to="{ name: 'RankingCompletion', params: { pageLoaded: 1 } }">
-				{{ $t('ranking.tabs.completion') }}
+				{{ $t('common.completion') }}
 			</RouterLink>
 		</li>
 	</ul>
@@ -35,12 +35,12 @@
 	<ul class="onglets sub-tabs" v-if="isClanTab">
 		<li :class="{ active: $route.name === 'RankingClans' }">
 			<RouterLink :to="{ name: 'RankingClans', params: { pageLoaded: 1 } }">
-				{{ $t('clansList.title') }}
+				{{ $t('common.clans') }}
 			</RouterLink>
 		</li>
 		<li :class="{ active: $route.name === 'RankingTreasure' }">
 			<RouterLink :to="{ name: 'RankingTreasure', params: { pageLoaded: 1 } }">
-				{{ $t('clan.icons.gold') }}
+				{{ $t('common.treasureValue') }}
 			</RouterLink>
 		</li>
 	</ul>
@@ -103,11 +103,11 @@ export default defineComponent({
 				case 'RankingAverage':
 					return 'ranking.tabs.average';
 				case 'RankingCompletion':
-					return 'ranking.tabs.completion';
+					return 'common.completion';
 				case 'RankingClans':
-					return 'clansList.title';
+					return 'common.clans';
 				case 'RankingTreasure':
-					return 'clan.icons.gold';
+					return 'common.treasureValue';
 				default:
 					return 'ranking.tabs.players';
 			}

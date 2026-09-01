@@ -81,7 +81,7 @@
 							:src="getImgURL('icons', 'small_gold')"
 							alt="gold"
 							v-tippy="{
-								content: formatContent($t('clan.icons.gold')),
+								content: formatContent($t('common.treasureValue')),
 								theme: 'small'
 							}"
 						/>
