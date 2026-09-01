@@ -25,7 +25,7 @@
 		"@fastify/swagger": "^9.8.1",
 		"@fastify/swagger-ui": "^5.2.6",
 		"@prisma/adapter-pg": "^7.9.0",
-		"@prisma/client": "^7.9.0",
+		"@prisma/client": "^7.10.0",
 		"bcrypt": "^6.0.0",
 		"discord.js": "^14.27.0",
 		"fastify": "^5.10.0",
