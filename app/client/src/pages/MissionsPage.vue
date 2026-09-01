@@ -15,7 +15,7 @@
 	<TitleHeader :title="`${$t('pageTitle.missions')}`" :header="formatContent($t(`missions.header`))" />
 	<DZTable>
 		<tr>
-			<th class="name">{{ $t('missions.th.title') }}</th>
+			<th class="name">{{ $t('clan.clanPages.creation.title') }}</th>
 			<th class="status">{{ $t('missions.th.status') }}</th>
 		</tr>
 		<tr v-for="mission in missionList" :key="mission.missionId" :class="mission.status">

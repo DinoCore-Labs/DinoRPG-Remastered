@@ -66,7 +66,7 @@
 					<th class="name">{{ $t('clan.members.th.name') }}</th>
 					<th class="donations">{{ $t('clan.members.th.donation') }}</th>
 					<th class="stats" v-if="selfMember">{{ $t('clan.members.th.stats') }}</th>
-					<th class="actions" v-if="selfMember">{{ $t('clan.members.th.actions') }}</th>
+					<th class="actions" v-if="selfMember">{{ $t('dinozPage.action') }}</th>
 				</tr>
 				<tr v-for="member in clanMembersList" :key="member.id" :class="(member.id + 1) % 2 === 0 ? 'even' : ''">
 					<td class="name-column">

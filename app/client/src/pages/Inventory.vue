@@ -4,7 +4,7 @@
 	<DZTable>
 		<tr>
 			<th class="thIcon"></th>
-			<th class="thName">{{ $t('items.tname') }}</th>
+			<th class="thName">{{ $t('clan.members.th.name') }}</th>
 			<th class="thStock">{{ $t('items.tstock') }}</th>
 		</tr>
 		<Tippy

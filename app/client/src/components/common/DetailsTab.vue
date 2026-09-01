@@ -365,7 +365,7 @@ export default defineComponent({
 			sortOptions: [
 				{ label: this.$t('dinozPage.details.sort.default'), value: 'Default' },
 				{ label: this.$t('dinozPage.details.sort.energy'), value: 'Energy' },
-				{ label: this.$t('dinozPage.details.sort.type'), value: 'Type' },
+				{ label: this.$t('dinozPage.details.th.type'), value: 'Type' },
 				{ label: this.$t('dinozPage.details.sort.state'), value: 'State' }
 			]
 			//ownBuilds: [] as GetOwnDinozBuildResponse,
