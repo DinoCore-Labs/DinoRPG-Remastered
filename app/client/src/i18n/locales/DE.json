@@ -1,12 +1,26 @@
 {
 	"common": {
 		"account": "Mein Konto",
+		"actions": "Aktionen",
+		"back": "Zurück",
 		"bank": "Banque",
 		"clan": "Clan",
+		"details": "Details",
+		"dinoz": "Dinoz",
 		"dojo": "Dojo",
+		"goldCoins": "Goldstücke",
 		"ingredients": "Zutaten",
 		"inventory": "Inventar",
-		"skills": "Fähigkeiten"
+		"items": "Gegenstände",
+		"name": "Nom",
+		"newMessage": "Neue Nachricht",
+		"page": "Page",
+		"quantity": "Quantité",
+		"skills": "Fähigkeiten",
+		"stock": "Vorrat",
+		"title": "Titre",
+		"treasureNotes": "Deine Schatzbriefe",
+		"type": "Typ"
 	},
 	"notifications": {
 		"title": "Notifications",
@@ -89,11 +103,9 @@
 		"elements": "Informationen",
 		"level": "Die Stufe spiegelt die Stärke deines Dinoz wider.",
 		"slot": "Dieser Platz ist leer, wähle einen Gegenstand aus dem Inventar, den du ausrüsten möchtest. &&///Die ausgerüsteten Gegenstände können von deinem Dinoz im Kampf benutzt werden.//",
-		"action": "Aktionen",
 		"tabs": {
 			"map": "Karte",
-			"inventory": "Inventar",
-			"details": "Details"
+			"inventory": "Inventar"
 		},
 		"chooseDinoz": {
 			"information": "Bevor der Dinoz dir zur Verfügung steht, musst du ihm zunächst einen Namen geben.",
@@ -122,7 +134,6 @@
 			"desc": "Absteigend",
 			"th": {
 				"comp": "Fähigkeit",
-				"type": "Typ",
 				"active": "Aktiv"
 			},
 			"type": {
@@ -241,8 +252,6 @@
 		"myTransactions": "Meine Transaktionen",
 		"sell": "Verkaufen",
 		"history": "Verlauf",
-		"dinoz": "Dinoz",
-		"items": "Gegenstände",
 		"makeAnOffer": "Angebot erstellen",
 		"filter": "Filtern",
 		"all": "Alle",
@@ -255,10 +264,8 @@
 		"details": "Details",
 		"time": "{days}T {hours}Std. {minutes}Min. {seconds}Sek",
 		"currency": "Die **Schatzbriefe**, die zum Handeln auf dem Züchtermarkt benötigt werden, können bei der **Dinoländischen Bank** in einem Verhältnis von **1** :ticket: **= 1000** :gold: erworben werden.",
-		"back": "Zurück",
 		"bid": "Bieten",
 		"detail": "Details zeigen",
-		"yourTreasuryNotes": "Deine Schatzbriefe",
 		"sellView": {
 			"disclaimer": "Hier kannst du dein Angebot erstellen, das anderen Dinoz-Meistern unterbreitet wird. Falls du Dinoz oder Gegenstände anbietest, werden diese für die Dauer des Angebots nicht verfügbar sein.",
 			"prepareYourOffer": "Bereite dein Angebot vor",
@@ -320,7 +327,6 @@
 			"creation": {
 				"edit": "Modifier la page de clan",
 				"new": "Créer une page de clan",
-				"title": "Titre",
 				"content": "Contenu",
 				"public": "Page publique ?",
 				"action": {
@@ -332,7 +338,6 @@
 		},
 		"members": {
 			"th": {
-				"name": "Nom",
 				"donation": "Dons",
 				"stats": "Stats",
 				"actions": "Aktionen",
@@ -382,7 +387,6 @@
 			},
 			"delete": "Supprimer le message",
 			"pagination": {
-				"page": "Page",
 				"go_to": "Aller à la page"
 			}
 		},
@@ -727,7 +731,6 @@
 			"disclaimer": "Wähle eine Konversation.",
 			"close": "Schließen",
 			"participants": "Teilnehmer",
-			"newMsg": "Neue Nachricht",
 			"newMsgTitle": "Titel der Konversation:",
 			"title": "Dein Titel...",
 			"newMsgParticipants": "Empfänger hinzufügen:",
@@ -1914,7 +1917,6 @@
 	"items": {
 		"disclaimer": "Ici, sont regroupés tous les objets que vous avez pu obtenir au cours de vos aventures.",
 		"tname": "Nom",
-		"tstock": "Vorrat",
 		"name": {
 			"gold": "Goldstücke",
 			"potion_irma": "Potion de Madame Irma",
@@ -2505,7 +2507,6 @@
 			"help": "Cliquez sur un objet dans la liste pour l'examiner...",
 			"advice": "**Conseil du jour :**",
 			"advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma : l'essayer, c'est l'adopter !",
-			"quantity": "Quantité",
 			"buy": "Acheter",
 			"sell": "Vendre pour {sell} :gold:",
 			"title": "Marchand : ",

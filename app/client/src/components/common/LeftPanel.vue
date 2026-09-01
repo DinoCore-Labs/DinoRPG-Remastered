@@ -100,7 +100,7 @@ export default defineComponent({
 	computed: {
 		walletOptions() {
 			return [
-				{ value: 'GOLD' as const, label: this.$t('items.name.gold') },
+				{ value: 'GOLD' as const, label: this.$t('common.goldCoins') },
 				{ value: 'TREASURE_TICKET' as const, label: this.$t('leftPanel.wallets.treasureTicket') }
 			];
 		},

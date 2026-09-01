@@ -48,7 +48,7 @@
 								<p v-if="item.itemType === 'magical'">
 									{{ formatContent($t(`shop.item.price`)) }}
 									<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
-									{{ formatContent($t(`items.name.golden_napodino`)) }}
+									{{ formatContent($t(`common.goldCoinsen_napodino`)) }}
 									x {{ item.price }}
 								</p>
 								<p v-else>
@@ -171,7 +171,7 @@
 						</Tippy>
 					</div>
 					<div class="infos">
-						<label for="field_1">{{ $t('shop.item.quantity') }}</label>
+						<label for="field_1">{{ $t('common.quantity') }}</label>
 						<DZInput type="number" v-model="selectedQuantity" :max="resolveItem(selectedItem).maxQuantity" min="0" />
 						<a
 							class="button"
@@ -208,7 +208,7 @@
 					<div v-if="selectedItem.itemType === 'magical'" class="objValue">
 						{{ formatContent($t(`shop.item.price`)) }}
 						<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
-						{{ formatContent($t(`items.name.golden_napodino`)) }}
+						{{ formatContent($t(`common.goldCoinsen_napodino`)) }}
 						x {{ selectedItem.price }}
 					</div>
 					<div class="desc" v-html="formatContent($t(`items.description.${resolveItem(selectedItem).name}`))" />
@@ -245,7 +245,7 @@
 						</template>
 					</Tippy>
 					<div class="infos">
-						<label for="field_1">{{ $t('shop.item.quantity') }}</label>
+						<label for="field_1">{{ $t('common.quantity') }}</label>
 						<DZInput type="number" v-model="selectedQuantity" :max="selectedItem.quantity" min="0" />
 						<a
 							class="button"

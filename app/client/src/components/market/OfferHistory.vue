@@ -21,8 +21,8 @@
 	</div>
 	<DZTable>
 		<tr>
-			<th class="dinoz-header">{{ $t('market.dinoz') }}</th>
-			<th class="items-header">{{ $t('market.items') }}</th>
+			<th class="dinoz-header">{{ $t('common.dinoz') }}</th>
+			<th class="items-header">{{ $t('common.items') }}</th>
 			<th></th>
 			<th></th>
 		</tr>
@@ -78,8 +78,8 @@ export default defineComponent({
 		filterOptions() {
 			return [
 				{ label: this.$t('market.all'), value: 'all' },
-				{ label: this.$t('market.dinoz'), value: 'dinoz' },
-				{ label: this.$t('market.items'), value: 'items' },
+				{ label: this.$t('common.dinoz'), value: 'dinoz' },
+				{ label: this.$t('common.items'), value: 'items' },
 				{ label: this.$t('market.historyView.yourOwnOffers'), value: 'own' },
 				{ label: this.$t('market.historyView.yourOwnBids'), value: 'bids' }
 			];

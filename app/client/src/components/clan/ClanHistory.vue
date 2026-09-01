@@ -32,7 +32,7 @@
 			<div class="arrow-button">
 				<img :src="getImgURL('icons', 'left')" alt="left" @click="changePage(-1)" v-if="page > 1" />
 			</div>
-			<p>{{ $t('clan.discussion.pagination.page') }} {{ page }} / {{ maxPage }}</p>
+			<p>{{ $t('common.page') }} {{ page }} / {{ maxPage }}</p>
 			<div class="arrow-button">
 				<img :src="getImgURL('icons', 'right')" alt="right" @click="changePage(1)" v-if="history.length >= 20" />
 			</div>

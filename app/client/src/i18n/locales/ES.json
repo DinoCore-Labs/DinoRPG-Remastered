@@ -1,12 +1,26 @@
 {
 	"common": {
 		"account": "Mi Cuenta",
+		"actions": "Acciones",
+		"back": "Volver",
 		"bank": "Banque",
 		"clan": "Clan",
+		"details": "Detalles",
+		"dinoz": "Dinos",
 		"dojo": "Dojo",
+		"goldCoins": "Monedas de oro",
 		"ingredients": "Ingredientes",
 		"inventory": "Inventario",
-		"skills": "Competencias"
+		"items": "Objetos",
+		"name": "Nombre",
+		"newMessage": "Nuevo mensaje",
+		"page": "Página",
+		"quantity": "Quantité",
+		"skills": "Competencias",
+		"stock": "Almacén",
+		"title": "Título",
+		"treasureNotes": "Tus Bonos del Tesoro",
+		"type": "Tipo"
 	},
 	"notifications": {
 		"title": "Notifications",
@@ -89,11 +103,9 @@
 		"elements": "Información",
 		"level": "Este nivel presenta el poder de tu Dino.",
 		"slot": "Este espacio está vacío, escoge un objeto del inventario para tu equipamiento. &&//Los objetos puestos aquí podrán ser utlizados por tu Dino durante el combate.//",
-		"action": "Acciones",
 		"tabs": {
 			"map": "Mapa",
-			"inventory": "Inventario",
-			"details": "Detalles"
+			"inventory": "Inventario"
 		},
 		"chooseDinoz": {
 			"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
@@ -122,7 +134,6 @@
 			"desc": "Decreciente",
 			"th": {
 				"comp": "Competencia",
-				"type": "Tipo",
 				"active": "Activo"
 			},
 			"type": {
@@ -241,8 +252,6 @@
 		"myTransactions": "Mis transacciones",
 		"sell": "Vender",
 		"history": "Historial",
-		"dinoz": "Dinos",
-		"items": "Objetos",
 		"makeAnOffer": "Hacer oferta",
 		"filter": "Filtro",
 		"all": "Todos",
@@ -255,10 +264,8 @@
 		"details": "Detalles",
 		"time": "{days}D {hours}h {minutes}m {seconds}s",
 		"currency": "Los **Bonos del Tesoro** necesarios para compras en el Mercado de los Maestros se pueden obtener por el equivalente de **1** :ticket: **= 1000** :gold: del **Banco de Dinoland**.",
-		"back": "Volver",
 		"bid": "Pujar",
 		"detail": "Ver detalles",
-		"yourTreasuryNotes": "Tus Bonos del Tesoro",
 		"sellView": {
 			"disclaimer": "Aquí puedes crear tu oferta, que se enviará a los demás Maestros de Dinos. Si vendes un Dino o artículos, no estarán disponibles mientras dure la oferta.",
 			"prepareYourOffer": "Prepara tu oferta",
@@ -320,7 +327,6 @@
 			"creation": {
 				"edit": "Modificación de una página del clan",
 				"new": "Nueva página del clan",
-				"title": "Título",
 				"content": "Contenido",
 				"public": "Página pública",
 				"action": {
@@ -332,7 +338,6 @@
 		},
 		"members": {
 			"th": {
-				"name": "Nombre",
 				"donation": "Donaciones",
 				"stats": "Estadísticas",
 				"actions": "Acciones",
@@ -382,7 +387,6 @@
 			},
 			"delete": "Supprimer le message",
 			"pagination": {
-				"page": "Página",
 				"go_to": "Ir a la página"
 			}
 		},
@@ -727,7 +731,6 @@
 			"disclaimer": "Por favor seleccione una conversación.",
 			"close": "Cerrar",
 			"participants": "participantes",
-			"newMsg": "Nuevo mensaje",
 			"newMsgTitle": "Título de la conversación:",
 			"title": "Tu título...",
 			"newMsgParticipants": "Agregar un destinatario:",
@@ -1914,7 +1917,6 @@
 	"items": {
 		"disclaimer": "Ici, sont regroupés tous les objets que vous avez pu obtenir au cours de vos aventures.",
 		"tname": "Nom",
-		"tstock": "Almacén",
 		"name": {
 			"gold": "Monedas de oro",
 			"potion_irma": "Potion de Madame Irma",
@@ -2505,7 +2507,6 @@
 			"help": "Cliquez sur un objet dans la liste pour l'examiner...",
 			"advice": "**Conseil du jour :**",
 			"advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma : l'essayer, c'est l'adopter !",
-			"quantity": "Quantité",
 			"buy": "Acheter",
 			"sell": "Vendre pour {sell} :gold:",
 			"title": "Marchand : ",

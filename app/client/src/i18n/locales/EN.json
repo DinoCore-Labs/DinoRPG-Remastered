@@ -1,12 +1,26 @@
 {
 	"common": {
 		"account": "My Account",
+		"actions": "Actions",
+		"back": "Return",
 		"bank": "Bank",
 		"clan": "Clan",
+		"details": "Details",
+		"dinoz": "Dinoz",
 		"dojo": "Dojo",
+		"goldCoins": "Gold coins",
 		"ingredients": "Ingredients",
 		"inventory": "Inventory",
-		"skills": "Skills"
+		"items": "Items",
+		"name": "Name",
+		"newMessage": "New Message",
+		"page": "Page",
+		"quantity": "Quantity",
+		"skills": "Skills",
+		"stock": "Stock",
+		"title": "Title",
+		"treasureNotes": "Your Treasure Coupons",
+		"type": "Type"
 	},
 	"notifications": {
 		"title": "Notifications",
@@ -89,11 +103,9 @@
 		"elements": "Information",
 		"level": "This level reflects the strength of your Dinoz.",
 		"slot": "This slot is empty, choose an item from the inventory to equip.&&//The equipped items can be used by your Dinoz in combat.//",
-		"action": "Actions",
 		"tabs": {
 			"map": "Map",
-			"inventory": "Inventory",
-			"details": "Details"
+			"inventory": "Inventory"
 		},
 		"chooseDinoz": {
 			"information": "Before taking control of your Dinoz, you must first give it a name.",
@@ -122,7 +134,6 @@
 			"desc": "Descending",
 			"th": {
 				"comp": "Skill",
-				"type": "Type",
 				"active": "Active"
 			},
 			"type": {
@@ -241,8 +252,6 @@
 		"myTransactions": "My transactions",
 		"sell": "Sell",
 		"history": "History",
-		"dinoz": "Dinoz",
-		"items": "Items",
 		"makeAnOffer": "Make an offer",
 		"filter": "Filter",
 		"all": "All",
@@ -255,10 +264,8 @@
 		"details": "Details",
 		"time": "{days}d {hours}h {minutes}m {seconds}s",
 		"currency": "**Treasure Coupons** needed for purchases at the Tamer Market can be obtained for the equivalent of **1** :ticket: **= 1000** :gold: from the **Dinoland Bank**.",
-		"back": "Return",
 		"bid": "Bid",
 		"detail": "See Details",
-		"yourTreasuryNotes": "Your Treasure Coupons",
 		"sellView": {
 			"disclaimer": "Here you can build your offer, it will be submitted to the other Dinoz Masters. If you sell a Dinoz or items, they will be unavailable for the duration of the offer.",
 			"prepareYourOffer": "Prepare your offer",
@@ -320,7 +327,6 @@
 			"creation": {
 				"edit": "Edition of clan page",
 				"new": "New clan page",
-				"title": "Title",
 				"content": "Content",
 				"public": "Public page?",
 				"action": {
@@ -332,7 +338,6 @@
 		},
 		"members": {
 			"th": {
-				"name": "Name",
 				"donation": "Donations",
 				"stats": "Stats",
 				"actions": "Actions",
@@ -382,7 +387,6 @@
 			},
 			"delete": "Delete message",
 			"pagination": {
-				"page": "Page",
 				"go_to": "Go to page"
 			}
 		},
@@ -727,7 +731,6 @@
 			"disclaimer": "Make sure to select a conversation.",
 			"close": "Close",
 			"participants": "participants",
-			"newMsg": "New Message",
 			"newMsgTitle": "Conversation Title:",
 			"title": "Your title...",
 			"newMsgParticipants": "Add a recipient :",
@@ -1914,7 +1917,6 @@
 	"items": {
 		"disclaimer": "All the items you have obtained during your adventures are gathered here.",
 		"tname": "Name",
-		"tstock": "Stock",
 		"name": {
 			"gold": "Gold coins",
 			"potion_irma": "Madam Irma's Potion",
@@ -2505,7 +2507,6 @@
 			"help": "Select an item from the list to examine it...",
 			"advice": "**Daily Tip:**",
 			"advice_1": "Do you want to play again without having to wait for tomorrow? Madam Irma's potion is here for you!",
-			"quantity": "Quantity",
 			"buy": "Buy",
 			"sell": "Sell for {gold} :gold:",
 			"title": "Merchant: ",

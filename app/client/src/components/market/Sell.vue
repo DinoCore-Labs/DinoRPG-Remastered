@@ -17,7 +17,7 @@
 	<table>
 		<tbody>
 			<tr>
-				<td>{{ $t('market.dinoz') }}</td>
+				<td>{{ $t('common.dinoz') }}</td>
 				<td>
 					<div class="df aic">
 						<DZCheckbox id="sell-dinoz" v-model="sellDinoz" @change="toggleSellDinoz" />

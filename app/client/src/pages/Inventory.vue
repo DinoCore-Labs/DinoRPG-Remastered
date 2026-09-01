@@ -4,8 +4,8 @@
 	<DZTable>
 		<tr>
 			<th class="thIcon"></th>
-			<th class="thName">{{ $t('clan.members.th.name') }}</th>
-			<th class="thStock">{{ $t('items.tstock') }}</th>
+			<th class="thName">{{ $t('common.name') }}</th>
+			<th class="thStock">{{ $t('common.stock') }}</th>
 		</tr>
 		<Tippy
 			theme="normal"

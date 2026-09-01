@@ -31,7 +31,7 @@
 			</DZButton>
 
 			<DZButton :class="{ active: enableItems }" @click="enableItems = !enableItems">
-				{{ $t('market.items') }}: {{ enableItems ? $t('dojo.on') : $t('dojo.off') }}
+				{{ $t('common.items') }}: {{ enableItems ? $t('dojo.on') : $t('dojo.off') }}
 			</DZButton>
 		</div>
 		<div
@@ -51,7 +51,7 @@
 				</Suspense>
 			</div>
 		</div>
-		<DZButton style="align-self: center" @click="returnToFighterSelection()">{{ $t('market.back') }}</DZButton>
+		<DZButton style="align-self: center" @click="returnToFighterSelection()">{{ $t('common.back') }}</DZButton>
 		<Transition name="bounce">
 			<FightRecap :stats="fightStat" />
 		</Transition>

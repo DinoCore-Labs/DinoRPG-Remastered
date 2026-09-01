@@ -44,7 +44,7 @@
 		<DZTable>
 			<tr>
 				<th class="name">{{ $t('dinozPage.details.th.comp') }}</th>
-				<th class="type">{{ $t('dinozPage.details.th.type') }}</th>
+				<th class="type">{{ $t('common.type') }}</th>
 				<th class="state" v-if="hasAmulst()">
 					{{ $t('dinozPage.details.th.active') }}
 				</th>
@@ -365,7 +365,7 @@ export default defineComponent({
 			sortOptions: [
 				{ label: this.$t('dinozPage.details.sort.default'), value: 'Default' },
 				{ label: this.$t('dinozPage.details.sort.energy'), value: 'Energy' },
-				{ label: this.$t('dinozPage.details.th.type'), value: 'Type' },
+				{ label: this.$t('common.type'), value: 'Type' },
 				{ label: this.$t('dinozPage.details.sort.state'), value: 'State' }
 			]
 			//ownBuilds: [] as GetOwnDinozBuildResponse,
