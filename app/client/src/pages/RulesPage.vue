@@ -270,7 +270,7 @@ export default defineComponent({
 						{
 							type: 'email',
 							introKey: 'gameRules.sections.reporting.intro',
-							emailKey: 'gameRules.sections.reporting.email'
+							emailKey: 'legalNotices.contactEmail'
 						},
 						{
 							type: 'paragraph',
