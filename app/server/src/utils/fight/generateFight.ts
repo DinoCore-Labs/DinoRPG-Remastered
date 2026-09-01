@@ -691,7 +691,10 @@ const startFight = (fightData: DetailedFight) => {
 		fightData.fighters.forEach(fighter => {
 			// Insert use step for all magic items with passive effects - visual only
 			fighter.items.forEach(item => {
-				if (item.itemType === ItemType.MAGICAL && item.passiveEffect) {
+				if (
+					item.itemType === ItemType.MAGICAL &&
+					(item.passiveEffect || item.itemId === Item.BEER || item.itemId === Item.EMBER)
+				) {
 					fightData.steps.push({
 						action: 'itemUse',
 						fighter: stepFighter(fighter),
