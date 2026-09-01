@@ -236,7 +236,7 @@ export default defineComponent({
 		},
 		openResetModal() {
 			this.confirmActionConfig = {
-				title: this.$t('accountPage.options.resetTitle'),
+				title: this.$t('accountPage.options.reset'),
 				description: this.$t('accountPage.options.resetDescription'),
 				actionType: 'reset'
 			};
@@ -245,7 +245,7 @@ export default defineComponent({
 		},
 		openDeleteModal() {
 			this.confirmActionConfig = {
-				title: this.$t('accountPage.options.deleteTitle'),
+				title: this.$t('accountPage.options.delete'),
 				description: this.$t('accountPage.options.deleteDescription'),
 				actionType: 'delete'
 			};

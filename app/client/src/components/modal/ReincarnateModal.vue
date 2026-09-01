@@ -49,7 +49,7 @@
 						{{ $t(`reincarnate.choice2.explanation`) }}
 					</p>
 					<ul>
-						<li>{{ $t(`reincarnate.choice2.list1`) }}</li>
+						<li>{{ $t(`reincarnate.choice1.list1`) }}</li>
 						<li>{{ $t(`reincarnate.choice2.list2`) }}</li>
 					</ul>
 					<p></p>
