@@ -21,12 +21,16 @@ export const DojoService = {
 	async fightTest(
 		leftTeam: number[],
 		rightTeam: number[],
-		opponentId: string
+		opponentId: string,
+		enablePoison: boolean,
+		enableItems: boolean
 	): Promise<{ fight: DojoFightResume; stats: FullFightStats }> {
 		return api.post('/dojo/fightTest', {
 			leftTeam,
 			rightTeam,
-			opponentId
+			opponentId,
+			enablePoison,
+			enableItems
 		});
 	},
 

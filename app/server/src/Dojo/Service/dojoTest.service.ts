@@ -24,7 +24,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import { calculateFightBetweenPlayers } from '../../Fight/Service/fight.service.js';
 import { prisma } from '../../prisma.js';
 import { removeMoney } from '../../User/Controller/money.controller.js';
-import { DOJO_CHALLENGE_RULES } from '../../utils/fight/fight.mapper.js';
+import { DOJO_CHALLENGE_RULES, FightRules } from '../../utils/fight/fight.mapper.js';
 import { availableDinozIds, getDojoFightPreparationRequest } from '../Controller/dojoFight.controller.js';
 import { fightTestSchema } from '../Schema/dojo.schema.js';
 import { getLatestTournament } from './dojoTournament.service.js';
@@ -85,21 +85,24 @@ export async function dojoTest(req: FastifyRequest, reply: FastifyReply) {
 	const rightTeam = await getDinozForDojoFight(body.rightTeam);
 	const leftTeam = await getDinozForDojoFight(body.leftTeam);
 
-	rightTeam.map(d => {
-		d.items = d.items.filter(i =>
-			Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL)
-		);
+	[...leftTeam, ...rightTeam].forEach(d => {
 		d.life = d.maxLife;
-	});
-	leftTeam.map(d => {
-		d.items = d.items.filter(i =>
-			Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL)
-		);
-		d.life = d.maxLife;
+
+		if (body.enableItems) {
+			d.items = d.items.filter(i => Object.values(itemList).some(item => item.itemId === i.itemId));
+		} else {
+			d.items = [];
+		}
 	});
 
+	const customRules: FightRules = {
+		...DOJO_CHALLENGE_RULES,
+		poisonEnabled: body.enablePoison,
+		canUseEquipment: body.enableItems
+	};
+
 	const fightResult = calculateFightBetweenPlayers(
-		DOJO_CHALLENGE_RULES,
+		customRules,
 		leftTeam,
 		leftUser.cooker,
 		rightTeam,
