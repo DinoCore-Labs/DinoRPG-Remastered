@@ -22,7 +22,7 @@
 			<div class="rulesMetadata">
 				<span>
 					{{
-						$t('legalNotices.updatedAt', {
+						$t('gameRules.updatedAt', {
 							date: formattedUpdatedAt
 						})
 					}}
