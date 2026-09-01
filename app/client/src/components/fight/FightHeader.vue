@@ -14,7 +14,7 @@
 <template>
 	<div class="fighters-header" v-if="leftPlayer || rightPlayer">
 		<div class="player">
-			<span class="title">{{ $t(`ranking.th.player`) }}</span>
+			<span class="title">{{ $t(`common.master`) }}</span>
 			<div v-if="leftPlayer">
 				<DZUser :user="leftPlayer" />
 			</div>
@@ -22,7 +22,7 @@
 		</div>
 		<span class="vs">{{ $t(`fight.vs`) }}</span>
 		<div class="player">
-			<span class="title">{{ $t(`ranking.th.player`) }}</span>
+			<span class="title">{{ $t(`common.master`) }}</span>
 			<div v-if="rightPlayer">
 				<DZUser :user="rightPlayer" />
 			</div>

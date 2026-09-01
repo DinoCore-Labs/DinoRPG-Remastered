@@ -18,7 +18,7 @@
 		<DZTable>
 			<tr>
 				<th class="thPos">{{ $t('ranking.th.pos') }}</th>
-				<th class="thPlayer">{{ $t('ranking.th.player') }}</th>
+				<th class="thPlayer">{{ $t('common.master') }}</th>
 				<th class="thDinoz">Dinoz</th>
 				<th class="thPoints">{{ $t('ranking.th.points') }}</th>
 				<th class="thPoints">{{ $t('ranking.th.average') }}</th>

@@ -55,7 +55,7 @@
 				class="tab"
 				:to="{ name: 'ClanTreasure' }"
 				v-tippy="{
-					content: formatContent($t('clan.tabs.treasure')),
+					content: formatContent($t('common.clanTreasure')),
 					theme: 'small'
 				}"
 			>

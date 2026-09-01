@@ -33,7 +33,7 @@
 					{{ userDinozCount !== null ? userDinozCount : '-' }}
 				</dd>
 				<dt>
-					{{ $t(`ranking.title`) }}
+					{{ $t(`common.ranking`) }}
 				</dt>
 				<dd>
 					<RouterLink
@@ -59,7 +59,7 @@
 					<a @click="goToClan(profile.clan.id)">{{ profile.clan.name }}</a>
 				</dd>
 				<dt>
-					{{ $t(`ranking.tabs.completion`) }}
+					{{ $t(`common.completion`) }}
 				</dt>
 				<dd>
 					{{ profile.completion.toFixed(2) }}

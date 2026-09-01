@@ -26,7 +26,7 @@
 				<div class="row1">
 					<div class="race">
 						<Tippy theme="normal">
-							<strong>{{ $t(`race.race`) }}</strong>
+							<strong>{{ $t(`common.race`) }}</strong>
 							{{ $t(`race.name.${raceList[dinoz.race].name}`) }}
 							<template #content>
 								<h1>{{ $t(`race.name.${raceList[dinoz.race].name}`) }}</h1>
