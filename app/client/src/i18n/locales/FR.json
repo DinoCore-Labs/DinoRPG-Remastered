@@ -69,7 +69,6 @@
 	},
 	"leftPanel": {
 		"wallets": {
-			"gold": "Pièces d'or",
 			"treasureTicket": "Bons du trésor"
 		},
 		"dinozCapacity": "Dinoz : {current}/{max}"
@@ -90,7 +89,6 @@
 		"action": "Actions",
 		"tabs": {
 			"map": "Carte",
-			"inventory": "Inventaire",
 			"details": "Détails"
 		},
 		"chooseDinoz": {
@@ -426,7 +424,6 @@
 			"create": "Créer un Clan"
 		},
 		"th": {
-			"name": "Clan",
 			"leader": "Chef",
 			"members": "Membres",
 			"date": "Date de création"
@@ -656,15 +653,11 @@
 		"chose": "Choisir",
 		"name": "Nommer !",
 		"shop": "Boutique",
-		"bank": "Banque",
 		"search": "Rechercher",
 		"loading": "Chargement...",
 		"noResults": "Aucun résultat",
 		"sortDinoz": "Gérer mes Dinoz",
-		"skills": "Compétences",
-		"unavailable": "Indisponible",
-		"clan": "Clan",
-		"dojo": "Dojo"
+		"unavailable": "Indisponible"
 	},
 	"popup": {
 		"dojoConfirmMessage": "Voulez-vous construire votre Dojo ? cela coutera 50.000 :gold: ",
@@ -989,7 +982,6 @@
 		}
 	},
 	"accountPage": {
-		"title": "Mon Compte",
 		"userTitle": "Joueur : {name}",
 		"noDescription": "Aucune description sur ce profil...",
 		"editProfile": "Editer mon profil",
@@ -2189,7 +2181,6 @@
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
-		"tname": "Ingrédients",
 		"tstock": "Stock",
 		"tquantity": "Quantité",
 		"name": {

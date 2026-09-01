@@ -31,7 +31,7 @@
 				<tbody>
 					<tr>
 						<th class="icon"></th>
-						<th class="name">{{ $t('ingredients.tname') }}</th>
+						<th class="name">{{ $t('topBar.userMenu.ingredients') }}</th>
 						<th class="stock">{{ $t('ingredients.tstock') }}</th>
 						<th class="quantity">{{ $t('ingredients.tquantity') }}</th>
 					</tr>
