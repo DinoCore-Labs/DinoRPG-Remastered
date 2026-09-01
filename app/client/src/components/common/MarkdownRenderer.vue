@@ -12,6 +12,11 @@ const md = new markdownit({
 	html: false
 });
 
+md.linkify.set({
+	fuzzyLink: true,
+	fuzzyEmail: true
+});
+
 export default defineComponent({
 	name: 'MarkdownRenderer',
 	props: {
