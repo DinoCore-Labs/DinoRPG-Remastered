@@ -661,7 +661,8 @@
 		"sortDinoz": "Gérer mes Dinoz",
 		"skills": "Compétences",
 		"unavailable": "Indisponible",
-		"clan": "Clan"
+		"clan": "Clan",
+		"dojo": "Dojo"
 	},
 	"popup": {
 		"dojoConfirmMessage": "Voulez-vous construire votre Dojo ? cela coutera 50.000 :gold: ",
