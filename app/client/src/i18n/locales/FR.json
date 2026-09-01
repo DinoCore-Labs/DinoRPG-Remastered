@@ -471,6 +471,10 @@
 		"soon": "Bientôt",
 		"seeFight": "Voir le combat entre {playerA} et {playerB}",
 		"deleteTeam": "Supprimer mon équipe",
+		"poison": "Poison",
+		"items": "Objets",
+		"on": "Activé",
+		"off": "Désactivé",
 		"timer": {
 			"qualification": ":chrono: Il reste encore {day} jours, {hours} heures et {minutes} minutes avant la fin des qualifications.",
 			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",

@@ -27,11 +27,11 @@
 		</template>
 		<div class="fight-options" v-if="myTeam.length > 0 && opponentTeam.length > 0">
 			<DZButton :class="{ active: enablePoison }" @click="enablePoison = !enablePoison">
-				Poison: {{ enablePoison ? 'ON' : 'OFF' }}
+				{{ $t('dojo.poison') }}: {{ enablePoison ? $t('dojo.on') : $t('dojo.off') }}
 			</DZButton>
 
 			<DZButton :class="{ active: enableItems }" @click="enableItems = !enableItems">
-				Objets: {{ enableItems ? 'ON' : 'OFF' }}
+				{{ $t('dojo.items') }}: {{ enableItems ? $t('dojo.on') : $t('dojo.off') }}
 			</DZButton>
 		</div>
 		<div
