@@ -56,7 +56,7 @@
 				"
 			/>
 			<DZButton class="convertButton" :disabled="!canConvert" @click="convertTreasureTickets">
-				{{ converting ? $t('button.loading') : $t('bank.exchange.convert') }}
+				{{ converting ? $t('common.loading') : $t('bank.exchange.convert') }}
 			</DZButton>
 		</div>
 	</div>
