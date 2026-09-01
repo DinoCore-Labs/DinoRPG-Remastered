@@ -63,6 +63,13 @@ export const initializeDinoz = (
 			throw new Error(`Item ${item.itemId} not found`);
 		}
 
+		if (team && item.itemId === Item.EMBER) {
+			team[Item.EMBER] = true;
+		}
+		if (team && item.itemId === Item.BEER) {
+			team[Item.BEER] = true;
+		}
+
 		return { ...itemFiche };
 	});
 
