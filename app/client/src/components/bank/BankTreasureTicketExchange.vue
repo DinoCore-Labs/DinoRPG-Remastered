@@ -22,7 +22,7 @@
 			<dl class="walletInfo">
 				<dt>{{ $t('bank.exchange.yourTickets') }}</dt>
 				<dd v-html="formatContent(`${beautifulNumber(uStore.treasureTicket)} :ticket:`)" />
-				<dt>{{ $t('leftPanel.wallets.gold') }}</dt>
+				<dt>{{ $t('items.name.gold') }}</dt>
 				<dd v-html="formatContent(`${beautifulNumber(uStore.gold)} :gold:`)" />
 			</dl>
 			<div class="formLine">

@@ -19,22 +19,32 @@
 		</div>
 		<DZSelect id="wallet-select" class="moneySelect" v-model="selectedWallet" :options="walletOptions" />
 		<div class="iconMenu">
-			<RouterLink to="/bank" class="link" :title="$t('button.bank')">
+			<RouterLink to="/bank" class="link" :title="$t('topBar.leftUserMenu.bank')">
 				<img :src="getImgURL('act', 'act_shop')" alt="shop" />
 			</RouterLink>
 			<RouterLink to="/shop/flying" class="link" :title="$t('button.shop')">
 				<img :src="getImgURL('act', 'act_boutique')" alt="shop" />
 			</RouterLink>
-			<RouterLink :to="`/clan/${user.clanId}`" class="link" :title="$t('button.clan')" v-if="user.clanId">
+			<RouterLink
+				:to="`/clan/${user.clanId}`"
+				class="link"
+				:title="$t('topBar.leftUserMenu.clan')"
+				v-if="user.clanId"
+			>
 				<img :src="getImgURL('act', 'act_castle')" alt="clan" />
 			</RouterLink>
-			<RouterLink :to="`/clans`" class="link" :title="$t('button.clan')" v-if="!user.clanId">
+			<RouterLink
+				:to="`/clans`"
+				class="link"
+				:title="$t('topBar.leftUserMenu.clan')"
+				v-if="!user.clanId"
+			>
 				<img :src="getImgURL('act', 'act_castle')" alt="clan" />
 			</RouterLink>
 			<span class="link linkDisabled" :title="$t('button.unavailable')" aria-disabled="true" v-if="!user.dojoId">
 				<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 			</span>
-			<RouterLink :to="`/dojo`" class="link" :title="$t('button.dojo')" v-if="user.dojoId">
+			<RouterLink :to="`/dojo`" class="link" :title="$t('topBar.leftUserMenu.dojo')" v-if="user.dojoId">
 				<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 			</RouterLink>
 		</div>
@@ -54,7 +64,7 @@
 		</a>
 		<a v-if="user.canAccessSkillsPage" class="overviewButton" @click="goToPage('SkillTreesPage')">
 			<img :src="getImgURL('icons', `clipboard`)" alt="skills" />
-			<span>{{ $t('button.skills') }}</span>
+			<span>{{ $t('topBar.leftUserMenu.skills') }}</span>
 		</a>
 		<!--<a v-if="hasPMI" class="overviewButton" @click="goToPage('DinozMissions')">
 			<img :src="getImgURL('icons', `small_right`)" alt="missions" />
@@ -100,7 +110,7 @@ export default defineComponent({
 	computed: {
 		walletOptions() {
 			return [
-				{ value: 'GOLD' as const, label: this.$t('leftPanel.wallets.gold') },
+				{ value: 'GOLD' as const, label: this.$t('items.name.gold') },
 				{ value: 'TREASURE_TICKET' as const, label: this.$t('leftPanel.wallets.treasureTicket') }
 			];
 		},
