@@ -19,18 +19,18 @@
 		</DZButton>
 		<Tippy theme="small" tag="div" class="treasury-notes dz-golden-box no-shadow df aic g4 p2-4">
 			<span>{{ userStore.treasureTicket }}</span>
-			<img :src="getImgURL('icons', 'ticket')" :alt="$t('market.yourTreasuryNotes')" />
+			<img :src="getImgURL('icons', 'ticket')" :alt="$t('common.treasureNotes')" />
 			<template #content>
-				{{ $t('market.yourTreasuryNotes') }}
+				{{ $t('common.treasureNotes') }}
 			</template>
 		</Tippy>
 		<DZSelect id="offer-filter-select" v-model="filter" :options="filterOptions" @change="changeFilter" />
 	</div>
 	<DZTable>
 		<tr>
-			<th class="dinoz-header">{{ $t('market.dinoz') }}</th>
-			<th class="items-header">{{ $t('market.items') }}</th>
-			<th>{{ $t('dinozPage.tabs.details') }}</th>
+			<th class="dinoz-header">{{ $t('common.dinoz') }}</th>
+			<th class="items-header">{{ $t('common.items') }}</th>
+			<th>{{ $t('common.details') }}</th>
 			<th class="bid-action-header"></th>
 		</tr>
 		<OfferLine
@@ -96,8 +96,8 @@ export default defineComponent({
 		filterOptions() {
 			return [
 				{ label: this.$t('market.all'), value: 'all' },
-				{ label: this.$t('market.dinoz'), value: 'dinoz' },
-				{ label: this.$t('market.items'), value: 'items' }
+				{ label: this.$t('common.dinoz'), value: 'dinoz' },
+				{ label: this.$t('common.items'), value: 'items' }
 			];
 		}
 	},

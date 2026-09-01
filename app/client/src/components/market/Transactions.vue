@@ -97,9 +97,9 @@
 		<h4>{{ $t('market.transactionView.yourActiveBids') }}</h4>
 		<DZTable>
 			<tr>
-				<th class="dinoz-header">{{ $t('market.dinoz') }}</th>
-				<th class="items-header">{{ $t('market.items') }}</th>
-				<th>{{ $t('dinozPage.tabs.details') }}</th>
+				<th class="dinoz-header">{{ $t('common.dinoz') }}</th>
+				<th class="items-header">{{ $t('common.items') }}</th>
+				<th>{{ $t('common.details') }}</th>
 				<th class="bid-action-header"></th>
 			</tr>
 			<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" :update-offer="updateOffer" />

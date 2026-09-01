@@ -102,7 +102,7 @@
 				<DZButton class="no-first-letter btn-wide" @click="openDeleteModal">{{
 					$t(`accountPage.options.delete`)
 				}}</DZButton>
-				<DZButton class="bSmall no-first-letter" back @click="option = false">{{ $t(`market.back`) }}</DZButton>
+				<DZButton class="bSmall no-first-letter" back @click="option = false">{{ $t(`common.back`) }}</DZButton>
 			</div>
 		</div>
 	</transition>

@@ -69,7 +69,7 @@
 		<div class="wrapper final" v-if="displayFinal">
 			<div class="header">
 				<RouterLink :to="`/dojo/tournament/${tournamentId}/0`">
-					<DZButton>{{ $t('market.back') }}</DZButton>
+					<DZButton>{{ $t('common.back') }}</DZButton>
 				</RouterLink>
 				<DZButton @click="viewAllFinals()">{{ $t('dojo.markAsRead') }}</DZButton>
 			</div>

@@ -15,7 +15,7 @@
 	<div class="new-message-container" v-if="hasAccess">
 		<template v-if="!showEditor">
 			<div class="button-land">
-				<DZButton class="button" @click="showEditor = !showEditor">{{ t('modal.messagerie.newMsg') }}</DZButton>
+				<DZButton class="button" @click="showEditor = !showEditor">{{ t('common.newMessage') }}</DZButton>
 			</div>
 		</template>
 		<template v-if="showEditor">
@@ -45,7 +45,7 @@
 			<div class="arrow-button">
 				<img src="/src/assets/icons/left.webp" alt="left" @click="changePage(-1)" v-if="page > 1" />
 			</div>
-			<p>{{ t('clan.discussion.pagination.page') }} {{ page }} / {{ maxPage }}</p>
+			<p>{{ t('common.page') }} {{ page }} / {{ maxPage }}</p>
 			<div class="arrow-button">
 				<img
 					src="/src/assets/icons/right.webp"

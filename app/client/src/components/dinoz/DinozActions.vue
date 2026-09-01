@@ -22,7 +22,7 @@
 			@close="closeMissionTalkModal"
 		/>
 		<div class="actions_top">
-			<p>{{ $t('dinozPage.action') }}</p>
+			<p>{{ $t('common.actions') }}</p>
 		</div>
 		<div class="action_content">
 			<template v-for="didi in dinozFullParty" :key="didi.id">

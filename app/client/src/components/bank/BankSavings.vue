@@ -7,7 +7,7 @@
 		</h3>
 		<div v-if="dataLoaded" class="savingsContent">
 			<div class="walletBox">
-				<span>{{ $t('items.name.gold') }}</span>
+				<span>{{ $t('common.goldCoins') }}</span>
 				<strong v-html="formatContent(`${beautifulNumber(uStore.gold)} :gold:`)" />
 			</div>
 			<div class="savingForm">

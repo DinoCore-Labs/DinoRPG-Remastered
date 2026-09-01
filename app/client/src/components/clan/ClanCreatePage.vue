@@ -17,7 +17,7 @@
 		<div class="box">
 			<div class="middle-content">
 				<div class="grid">
-					<p>{{ $t('clan.clanPages.creation.title') }}</p>
+					<p>{{ $t('common.title') }}</p>
 					<DZInput v-model="page.name" />
 					<p>{{ $t('clan.clanPages.creation.content') }}</p>
 					<textarea class="dz-golden-box no-shadow" type="text" v-model="page.content"></textarea>

@@ -34,7 +34,7 @@
 	<Sell v-if="tab === 2" :change-tab="changeTab" />
 	<OfferHistory v-if="tab === 3" :change-tab="changeTab" />
 	<DZButton back @click="goBackToDinozPage">
-		{{ $t('market.back') }}
+		{{ $t('common.back') }}
 	</DZButton>
 </template>
 
