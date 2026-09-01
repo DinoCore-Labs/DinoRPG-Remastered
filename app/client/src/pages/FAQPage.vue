@@ -23,7 +23,7 @@
 							<DZInput name="search" v-model="searchQuery" />
 						</td>
 						<td>
-							<DZButton type="submit">{{ $t(`faq.search`) }}</DZButton>
+							<DZButton type="submit">{{ $t(`button.search`) }}</DZButton>
 						</td>
 					</tr>
 				</tbody>

@@ -32,12 +32,12 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<DZButton size="small" @click="close">{{ $t('reportModal.cancel') }}</DZButton>
+					<DZButton size="small" @click="close">{{ $t('button.cancel') }}</DZButton>
 					<DZButton
 						size="small"
 						:disabled="loading || !form.reason || (form.reason === 'Autre' && !form.comment.trim())"
 						@click="submit"
-						>{{ $t('reportModal.send') }}</DZButton
+						>{{ $t('button.send') }}</DZButton
 					>
 				</div>
 			</div>

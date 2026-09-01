@@ -273,7 +273,6 @@
 			"claim": "Récupérer mes gains",
 			"bid": "Mise",
 			"noBidYet": "Aucune mise pour l'instant.",
-			"cancel": "Annuler",
 			"yourActiveBids": "Vos mises en cours",
 			"noActiveBid": "Vous n'avez enchéri sur aucune offre pour le moment."
 		},
@@ -316,9 +315,7 @@
 				"content": "Contenu",
 				"public": "Page publique ?",
 				"action": {
-					"create": "Créer",
-					"edit": "Modifier",
-					"cancel": "Annuler"
+					"edit": "Modifier"
 				}
 			}
 		},
@@ -368,8 +365,7 @@
 		},
 		"discussion": {
 			"action": {
-				"create": "Nouveau message",
-				"send": "Envoyer"
+				"create": "Nouveau message"
 			},
 			"delete": "Supprimer le message",
 			"pagination": {
@@ -433,9 +429,7 @@
 		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
 		"clan_name": "Nom",
 		"clan_langs": "Langues",
-		"clan_description": "Description",
-		"go_back_button": "Annuler",
-		"create_button": "Créer"
+		"clan_description": "Description"
 	},
 	"dojo": {
 		"welcome": "Bienvenue dans votre Dojo",
@@ -646,6 +640,10 @@
 		"shop": "Boutique",
 		"search": "Rechercher",
 		"loading": "Chargement...",
+		"cancel": "Annuler",
+		"continue": "Continuer",
+		"create": "Créer",
+		"send": "Envoyer",
 		"noResults": "Aucun résultat",
 		"sortDinoz": "Gérer mes Dinoz",
 		"unavailable": "Indisponible"
@@ -701,7 +699,6 @@
 			"system": "Système",
 			"locked": "Vous devez d'abord débloquer la messagerie.",
 			"create": "Écrire",
-			"research": "Rechercher",
 			"search": "Rechercher une conversation...",
 			"conversations": "Conversations",
 			"disclaimer": "Veuillez sélectionner une conversation.",
@@ -738,15 +735,12 @@
 		"confirmAction": {
 			"label": "Veuillez entrer votre mot de passe pour confirmer :",
 			"passwordPlaceholder": "Mot de passe",
-			"loading": "Chargement...",
 			"confirm": "Confirmer",
-			"cancel": "Annuler",
 			"passwordRequired": "Veuillez entrer votre mot de passe pour confirmer."
 		},
 		"modif": "Modification...",
 		"valid": "Valider",
-		"close": "Fermer",
-		"continue": "Continuer"
+		"close": "Fermer"
 	},
 	"richTextEditor": {
 		"boldButtonTitle": "G",
@@ -3064,7 +3058,6 @@
 		"lose": "Vous avez **perdu**...",
 		"lvlup": "Un Dinoz a gagné un **niveau supplémentaire** !",
 		"showAnimation": "Afficher le combat",
-		"continue": "Continuer",
 		"history": {
 			"display": "Afficher l'historique",
 			"hide": "Masquer l'historique"
@@ -3257,7 +3250,6 @@
 	},
 	"faq": {
 		"intro": "Vous pouvez trouver ici toutes les réponses à vos questions sur le jeu. Essayez toutefois de ne pas trop utiliser cette section, car de nombreux secrets sont plus amusants si vous les découvrez par vous-même en cherchant un peu.",
-		"search": "Rechercher",
 		"qa": "Questions / Réponses :",
 		"faq1": {
 			"question": "Pourquoi les deux dernières missions de Papy Joe ne se débloquent pas ?",
@@ -3834,7 +3826,6 @@
 		"description": "Vous pouvez discuter avec cette personne.",
 		"leave": "Arrêter la discussion",
 		"openLink": "Ouvrir le lien",
-		"continue": "Continuer",
 		"eugene": {
 			"name": "Professeur Eugène",
 			"dialog": {
@@ -6642,8 +6633,6 @@
 		"reportingClan": "Signalement du clan : ",
 		"reason": "Raison :",
 		"comment": "Commentaire :",
-		"cancel": "Annuler",
-		"send": "Envoyer",
 		"success": "Signalement envoyé.",
 		"error": "Erreur lors de l'envoi du signalement.",
 		"reasons": {

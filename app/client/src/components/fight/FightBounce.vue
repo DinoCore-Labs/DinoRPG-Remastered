@@ -74,7 +74,7 @@
 					</Tippy>
 				</div>
 			</div>
-			<DZButton :disabled="loadingContinue" @click="returnToDinoz()">{{ $t(`fight.continue`) }}</DZButton>
+			<DZButton :disabled="loadingContinue" @click="returnToDinoz()">{{ $t(`button.continue`) }}</DZButton>
 			<DZButton v-if="canShowAnimation" @click="showAnimation()">
 				{{ $t('fight.showAnimation') }}
 			</DZButton>

@@ -33,7 +33,7 @@
 						</div>
 						<div @click="toggleSearch()" class="clickable">
 							<img :src="getImgURL('icons', 'search')" />
-							<span>{{ $t('modal.messagerie.research') }}</span>
+							<span>{{ $t('button.search') }}</span>
 						</div>
 					</div>
 				</div>
