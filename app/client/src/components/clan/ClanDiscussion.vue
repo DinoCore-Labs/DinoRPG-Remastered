@@ -15,7 +15,7 @@
 	<div class="new-message-container" v-if="hasAccess">
 		<template v-if="!showEditor">
 			<div class="button-land">
-				<DZButton class="button" @click="showEditor = !showEditor">{{ t('clan.discussion.action.create') }}</DZButton>
+				<DZButton class="button" @click="showEditor = !showEditor">{{ t('modal.messagerie.newMsg') }}</DZButton>
 			</div>
 		</template>
 		<template v-if="showEditor">
