@@ -8,14 +8,18 @@
 		"clans": "Klane",
 		"clanTreasure": "Schatzkammer des Klans",
 		"completion": "Complétion",
+		"contactEmail": "contact{'@'}dinorpg.fr",
 		"details": "Details",
 		"dinoz": "Dinoz",
 		"dojo": "Dojo",
 		"gains": "Gains",
+		"gameRules": "Règlement du jeu",
 		"goldCoins": "Goldstücke",
 		"ingredients": "Zutaten",
 		"inventory": "Inventar",
 		"items": "Gegenstände",
+		"lastUpdated": "Dernière mise à jour : {date}",
+		"legalNotices": "Mentions légales",
 		"master": "Meister",
 		"myTeam": "Mon équipe",
 		"name": "Nom",
@@ -3617,10 +3621,8 @@
 		}
 	},
 	"gameRules": {
-		"pageTitle": "Règlement du jeu",
 		"title": "Règlement de DinoRPG Remastered",
 		"version": "Version : {version}",
-		"updatedAt": "Dernière mise à jour : {date}",
 		"footer": {
 			"title": "Règles et sécurité",
 			"link": "Règlement du jeu"
@@ -3707,9 +3709,7 @@
 	},
 	"legalNotices": {
 		"pageTitle": "Informations légales",
-		"title": "Mentions légales",
 		"updatedAt": "Dernière mise à jour : {date}",
-		"contactEmail": "contact{'@'}dinorpg.fr",
 		"footer": {
 			"link": "Mentions légales"
 		},

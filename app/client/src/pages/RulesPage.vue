@@ -1,6 +1,6 @@
 ```vue
 <template>
-	<TitleHeader :title="$t('gameRules.pageTitle')" :header="$t('gameRules.title')" />
+	<TitleHeader :title="$t('common.gameRules')" :header="$t('gameRules.title')" />
 	<div class="intro">
 		<div class="menu">
 			<ul class="list">
@@ -30,7 +30,7 @@
 				</strong>
 				<span>
 					{{
-						$t('gameRules.updatedAt', {
+						$t('common.lastUpdated', {
 							date: formattedUpdatedAt
 						})
 					}}
@@ -270,7 +270,7 @@ export default defineComponent({
 						{
 							type: 'email',
 							introKey: 'gameRules.sections.reporting.intro',
-							emailKey: 'legalNotices.contactEmail'
+							emailKey: 'common.contactEmail'
 						},
 						{
 							type: 'paragraph',

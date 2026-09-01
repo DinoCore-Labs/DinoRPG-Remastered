@@ -8,14 +8,18 @@
 		"clans": "Clans",
 		"clanTreasure": "Clan Treasure",
 		"completion": "Completion",
+		"contactEmail": "contact{'@'}dinorpg.fr",
 		"details": "Details",
 		"dinoz": "Dinoz",
 		"dojo": "Dojo",
 		"gains": "Gains",
+		"gameRules": "Game Rules",
 		"goldCoins": "Gold coins",
 		"ingredients": "Ingredients",
 		"inventory": "Inventory",
 		"items": "Items",
+		"lastUpdated": "Last updated: {date}",
+		"legalNotices": "Legal notice",
 		"master": "Master",
 		"myTeam": "Mon équipe",
 		"name": "Name",
@@ -3617,10 +3621,8 @@
 		}
 	},
 	"gameRules": {
-		"pageTitle": "Game Rules",
 		"title": "DinoRPG Remastered Rules",
 		"version": "Version: {version}",
-		"updatedAt": "Last updated: {date}",
 		"footer": {
 			"title": "Rules and Safety",
 			"link": "Game Rules"
@@ -3707,9 +3709,7 @@
 	},
 	"legalNotices": {
 		"pageTitle": "Legal information",
-		"title": "Legal notice",
 		"updatedAt": "Last updated: {date}",
-		"contactEmail": "contact{'@'}dinorpg.fr",
 		"footer": {
 			"link": "Legal notice"
 		},
