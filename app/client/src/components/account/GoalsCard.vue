@@ -74,9 +74,7 @@
 				<a id="statsLink" :class="tab === 1 ? 'active-link' : ''" @click="tab = 1">{{
 					$t('accountPage.goals.linkStats')
 				}}</a>
-				<a id="gainsLink" :class="tab === 2 ? 'active-link' : ''" @click="tab = 2">{{
-					$t('common.gains')
-				}}</a>
+				<a id="gainsLink" :class="tab === 2 ? 'active-link' : ''" @click="tab = 2">{{ $t('common.gains') }}</a>
 				<div style="width: 100%" class="cadrelist_goals drpg-scrollbar">
 					<table style="width: 100%" class="list_goals" v-if="tab === 1">
 						<tbody>
