@@ -18,7 +18,7 @@
 				<a @click="sessionStore.setTabDinoz(1)">{{ $t('dinozPage.tabs.map') }}</a>
 			</li>
 			<li :class="tabSelected === 2 ? 'active' : ''">
-				<a @click="sessionStore.setTabDinoz(2)">{{ $t('topBar.userMenu.items') }}</a>
+				<a @click="sessionStore.setTabDinoz(2)">{{ $t('common.inventory') }}</a>
 			</li>
 			<li :class="tabSelected === 3 ? 'active' : ''">
 				<a @click="sessionStore.setTabDinoz(3)">{{ $t('dinozPage.tabs.details') }}</a>

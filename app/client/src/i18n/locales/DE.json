@@ -1,4 +1,13 @@
 {
+	"common": {
+		"account": "Mein Konto",
+		"bank": "Banque",
+		"clan": "Clan",
+		"dojo": "Dojo",
+		"ingredients": "Zutaten",
+		"inventory": "Inventar",
+		"skills": "Fähigkeiten"
+	},
 	"notifications": {
 		"title": "Notifications",
 		"newClanJoinRequest": "Le joueur {name} a demandé à rejoindre le clan.",
@@ -31,12 +40,8 @@
 		"menu": "Menü",
 		"leftUserMenu": {
 			"shop": "Boutique",
-			"bank": "Banque",
-			"dojo": "Dojo",
-			"clan": "Clan",
 			"order": "Anordnen",
-			"enclosure": "Gehege",
-			"skills": "Fähigkeiten"
+			"enclosure": "Gehege"
 		},
 		"authMenu": {
 			"name": "Benutzername:",
@@ -49,11 +54,8 @@
 			"welcomeBack": "Schön, dich wiederzusehen, Meister {name}!"
 		},
 		"userMenu": {
-			"account": "Mein Konto",
 			"ranking": "Rangliste",
 			"messagerie": "Nachrichten",
-			"items": "Inventar",
-			"ingredients": "Zutaten",
 			"news": "Neuigkeiten",
 			"cinema": "Kino",
 			"faq": "FAQ",

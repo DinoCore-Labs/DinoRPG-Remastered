@@ -1,4 +1,13 @@
 {
+	"common": {
+		"account": "Mi Cuenta",
+		"bank": "Banque",
+		"clan": "Clan",
+		"dojo": "Dojo",
+		"ingredients": "Ingredientes",
+		"inventory": "Inventario",
+		"skills": "Competencias"
+	},
 	"notifications": {
 		"title": "Notifications",
 		"newClanJoinRequest": "Le joueur {name} a demandé à rejoindre le clan.",
@@ -31,12 +40,8 @@
 		"menu": "Menú",
 		"leftUserMenu": {
 			"shop": "Tienda",
-			"bank": "Banque",
-			"dojo": "Dojo",
-			"clan": "Clan",
 			"order": "Ordenar",
-			"enclosure": "Tienda de Dinos",
-			"skills": "Competencias"
+			"enclosure": "Tienda de Dinos"
 		},
 		"authMenu": {
 			"name": "Nombre de usuario:",
@@ -49,11 +54,8 @@
 			"welcomeBack": "¡Me alegra verte de nuevo, Maestro {name}!"
 		},
 		"userMenu": {
-			"account": "Mi Cuenta",
 			"ranking": "Clasificación",
 			"messagerie": "Mensajería",
-			"items": "Inventario",
-			"ingredients": "Ingredientes",
 			"news": "Novedades",
 			"cinema": "Cine",
 			"faq": "FAQ",
