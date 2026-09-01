@@ -99,7 +99,7 @@
 			<tr>
 				<th class="dinoz-header">{{ $t('market.dinoz') }}</th>
 				<th class="items-header">{{ $t('market.items') }}</th>
-				<th>{{ $t('market.details') }}</th>
+				<th>{{ $t('dinozPage.tabs.details') }}</th>
 				<th class="bid-action-header"></th>
 			</tr>
 			<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" :update-offer="updateOffer" />

@@ -98,8 +98,6 @@
 		},
 		"inventory": {
 			"itemName": "Nom de l'objet",
-			"stock": "Stock",
-			"actions": "Actions",
 			"full": "Stock plein",
 			"sortBy": "Trier par",
 			"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
@@ -149,7 +147,6 @@
 			"sort": {
 				"default": "Défaut",
 				"energy": "Énergie",
-				"type": "Type",
 				"state": "État",
 				"title": "Trier les compétences"
 			},
@@ -248,7 +245,6 @@
 		"minimumPrice": "Prix mini",
 		"highestBid": "Enchère actuelle",
 		"by": "par",
-		"details": "Détails",
 		"time": "{days}j {hours}h {minutes}m {seconds}s",
 		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Éleveurs peuvent être obtenus de diverses façons dans Dinoland. La **Banque de Dinoland** peut vous les racheter au taux de **1** :ticket: **= 1000** :gold: mais elle n'en émet plus.",
 		"back": "Retour",
@@ -331,7 +327,6 @@
 				"name": "Nom",
 				"donation": "Dons",
 				"stats": "Stats",
-				"actions": "Actions",
 				"event": "Score d'événement"
 			},
 			"edit": {
@@ -590,7 +585,6 @@
 	"manageDinoz": {
 		"title": "Gestion de mes Dinoz",
 		"disclaimer": "Ce module de gestion est accessible grâce à votre **Pierre en Diamantite Agglomérée** : un véritable concentré de technologie !",
-		"dinoz": "Dinoz",
 		"elements": "Éléments"
 	},
 	"news": {
@@ -709,7 +703,6 @@
 		"messagerie": {
 			"system": "Système",
 			"locked": "Vous devez d'abord débloquer la messagerie.",
-			"actions": "Actions",
 			"create": "Écrire",
 			"research": "Rechercher",
 			"search": "Rechercher une conversation...",
@@ -958,7 +951,6 @@
 		"th": {
 			"pos": "Pos.",
 			"player": "Maître",
-			"dinoz": "Dinoz",
 			"points": "Pts",
 			"average": "Moy.",
 			"completion": "Comp.",
@@ -1902,7 +1894,6 @@
 	},
 	"items": {
 		"disclaimer": "Ici, sont regroupés tous les objets que vous avez pu obtenir au cours de vos aventures.",
-		"tname": "Nom",
 		"tstock": "Stock",
 		"name": {
 			"gold": "Pièces d'or",
@@ -2181,8 +2172,6 @@
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
-		"tstock": "Stock",
-		"tquantity": "Quantité",
 		"name": {
 			"merou_lujidane": "Mérou Lujidané",
 			"poisson_vengeur": "Poisson-Vengeur",
@@ -4967,7 +4956,6 @@
 	"missions": {
 		"header": "Liste des missions",
 		"th": {
-			"title": "Titre",
 			"status": "Statut"
 		},
 		"status": {

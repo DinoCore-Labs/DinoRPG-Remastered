@@ -18,7 +18,7 @@
 		<tr>
 			<th class="thIcon"></th>
 			<th class="thName">{{ $t('topBar.userMenu.ingredients') }}</th>
-			<th class="thStock">{{ $t('ingredients.tstock') }}</th>
+			<th class="thStock">{{ $t('items.tstock') }}</th>
 			<th v-if="isClan" class="clan"></th>
 		</tr>
 

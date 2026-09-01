@@ -24,7 +24,7 @@
 				<div class="actions">
 					<div class="title">
 						<img :src="getImgURL('icons', 'small_browse_next')" />
-						<p>{{ $t('modal.messagerie.actions') }}</p>
+						<p>{{ $t('dinozPage.action') }}</p>
 					</div>
 					<div class="buttons">
 						<div @click="create()" class="clickable">
