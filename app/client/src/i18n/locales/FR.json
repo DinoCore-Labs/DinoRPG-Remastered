@@ -685,7 +685,6 @@
 			"name": "Choix 2 : <br/>Nouvelle destinée",
 			"action": "Changer de destinée",
 			"explanation": "Vous pouvez réincarner votre Dinoz en changeant sa destinée :",
-			"list1": "Il retournera au niveau 1",
 			"list2": "Tous ses niveaux seront à nouveau aléatoires"
 		},
 		"finalWarning": "Voulez-vous vraiment réincarner ce Dinoz ? \nAttention, un Dinoz ne peut être réincarné qu'une seule fois !"
@@ -965,9 +964,7 @@
 			"mdp": "Modifier le MDP",
 			"reset": "Recommencer le compte",
 			"delete": "Supprimer le compte",
-			"resetTitle": "Recommencer le compte",
 			"resetDescription": "Êtes-vous sûr de vouloir tout recommencer ? Vous conserverez votre nom, votre description, votre avatar et votre messagerie. Cependant, TOUS VOS DINOZ, VOTRE INVENTAIRE ET VOTRE ARGENT SERONT DÉFINITIVEMENT PERDUS. Vous recommencerez l'aventure à zéro avec 100 000 pièces d'or.",
-			"deleteTitle": "Supprimer le compte",
 			"deleteDescription": "ATTENTION : Êtes-vous absolument sûr de vouloir supprimer votre compte ? Cette action effacera DÉFINITIVEMENT votre progression, vos dinoz, votre inventaire et votre profil. CETTE ACTION EST IRRÉVERSIBLE."
 		},
 		"changeAvatar": "Changer l'avatar",
@@ -1005,7 +1002,6 @@
 		},
 		"level": "Niveau",
 		"dinozFilters": {
-			"race": "Race :",
 			"level": "Niveau :",
 			"state": "État :",
 			"allRaces": "Toutes les races",
@@ -3436,7 +3432,6 @@
 			"fight4-3": "Une fois les 5 assauts effectués, le Dinoz recommencera à nouveau le cycle. && && En fonction de ses **éléments** et de ses **compétences**, le Dinoz a donc une certaine **puissance d'assaut** ainsi qu'une **défense** pour chaque élément. Ces caractéristiques sont visibles dans l'onglet **Détails** de la fiche du Dinoz. && && Plus la **puissance d'assaut** d'un élément est forte et plus le Dinoz fera perdre des points de vie à ses adversaires quand il effectuera un assaut de cet élément. Plus la **défense** contre un élément est forte et plus le Dinoz sera protégé contre les attaques des adversaires effectuées avec cet élément.",
 			"fight5": "Les Monstres ",
 			"fight5-1": "De nombreux monstres effectuent des assauts de l'élément Vide. Cela veut dire que tous vos éléments sont pris en compte lors de la défense. Cependant, certains monstres sont capables d'effectuer des assauts ou des attaques spéciales d'un élément particulier.",
-			"fight6": "Gains",
 			"fight6-1": "À la fin du combat, votre Dinoz gagne des **pièces d'or** :gold qui vont lui permettre de se soigner et des **points d'expérience** qui vont lui permettre de changer de niveau.",
 			"fight7": "L'Énergie",
 			"fight7-1": "Chaque Dinoz possède une barre d'énergie bleue, à côté de sa barre de vie. Cette barre représente l'**énergie** que le Dinoz possède, elle est remplie à moitié au début du combat. Comme pour la barre de vie, elle dépend de l'énergie maximale appelée **endurance**, que le Dinoz détient. _L'endurance d'un Dinoz peut varier en fonction de certaines compétences apprises. Des bonus peuvent aussi augmenter l'endurance._ && && Chaque compétence a un coût en énergie. À chaque compétence utilisée, la barre d'énergie diminue. Une fois vide, le Dinoz passe obligatoirement son tour. Certaines compétences extraordinairement fortes demandent d'ailleurs beaucoup plus d'énergie que les autres. && && Cette barre d'énergie se remplit petit à petit pendant le combat, on parle de **récupération**. _La récupération d'un Dinoz peut varier en fonction de certaines compétences apprises._ Le Dinoz doit donc attendre d'avoir refait le plein d'énergie avant de lancer une compétence.",

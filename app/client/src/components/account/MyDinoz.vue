@@ -14,7 +14,7 @@
 <template>
 	<div class="dinozFilters">
 		<label class="filter">
-			<span>{{ $t('accountPage.dinozFilters.race') }}</span>
+			<span>{{ $t('race.race') }}</span>
 			<DZSelect id="account-dinoz-race-filter" v-model="selectedRaceId" :options="raceOptions" />
 		</label>
 		<label class="filter">
