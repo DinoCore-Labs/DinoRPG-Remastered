@@ -35,7 +35,7 @@
 								d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4m0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4"
 							></path>
 						</svg>
-						<span>{{ $t('topBar.userMenu.account') }}</span>
+						<span>{{ $t('common.account') }}</span>
 					</RouterLink>
 					<div
 						:class="{
@@ -78,7 +78,7 @@
 								d="M20 2H4c-1 0-2 .9-2 2v3.01c0 .72.43 1.34 1 1.69V20c0 1.1 1.1 2 2 2h14c.9 0 2-.9 2-2V8.7c.57-.35 1-.97 1-1.69V4c0-1.1-1-2-2-2m-5 12H9v-2h6zm5-7H4V4l16-.02z"
 							></path>
 						</svg>
-						<span>{{ $t('topBar.userMenu.ingredients') }}</span>
+						<span>{{ $t('common.ingredients') }}</span>
 					</RouterLink>
 					<RouterLink class="link" to="/inventory">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
@@ -86,7 +86,7 @@
 								d="M20 2H4c-1 0-2 .9-2 2v3.01c0 .72.43 1.34 1 1.69V20c0 1.1 1.1 2 2 2h14c.9 0 2-.9 2-2V8.7c.57-.35 1-.97 1-1.69V4c0-1.1-1-2-2-2m-5 12H9v-2h6zm5-7H4V4l16-.02z"
 							></path>
 						</svg>
-						<span>{{ $t('topBar.userMenu.items') }}</span>
+						<span>{{ $t('common.inventory') }}</span>
 					</RouterLink>
 					<RouterLink
 						class="link"

@@ -12,12 +12,12 @@
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<TitleHeader :title="$t('pageTitle.ingredients')" :header="$t(`topBar.userMenu.ingredients`)" />
+	<TitleHeader :title="$t('pageTitle.ingredients')" :header="$t(`common.ingredients`)" />
 	<DZDisclaimer help round content="ingredients.disclaimer" />
 	<DZTable>
 		<tr>
 			<th class="thIcon"></th>
-			<th class="thName">{{ $t('topBar.userMenu.ingredients') }}</th>
+			<th class="thName">{{ $t('common.ingredients') }}</th>
 			<th class="thStock">{{ $t('items.tstock') }}</th>
 			<th v-if="isClan" class="clan"></th>
 		</tr>

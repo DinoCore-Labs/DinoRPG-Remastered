@@ -69,7 +69,7 @@ export default defineComponent({
 		accountTitle(): string {
 			if (!this.profile) return '';
 			return this.isOwner
-				? this.$t('topBar.userMenu.account').toString()
+				? this.$t('common.account').toString()
 				: this.$t('accountPage.userTitle', { name: this.profile.name }).toString();
 		},
 		tabSelected(): number {
