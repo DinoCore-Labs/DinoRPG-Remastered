@@ -46,12 +46,7 @@
 						<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 						<span>{{ $t('common.dojo') }}</span>
 					</RouterLink>
-					<RouterLink
-						:to="`/clan/${userStore.clanId}`"
-						class="link"
-						:title="$t('common.clan')"
-						v-if="userStore.clanId"
-					>
+					<RouterLink :to="`/clan/${userStore.clanId}`" class="link" :title="$t('common.clan')" v-if="userStore.clanId">
 						<img :src="getImgURL('act', 'act_castle')" alt="clan" />
 						<span>{{ $t('common.clan') }}</span>
 					</RouterLink>
