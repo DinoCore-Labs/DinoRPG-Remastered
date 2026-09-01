@@ -17,7 +17,7 @@
 	<table>
 		<tbody>
 			<tr>
-				<th class="dinoz" colspan="3">{{ $t('manageDinoz.dinoz') }}</th>
+				<th class="dinoz" colspan="3">{{ $t('market.dinoz') }}</th>
 				<th class="elements">{{ $t('manageDinoz.elements') }}</th>
 				<th class="order"></th>
 			</tr>

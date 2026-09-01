@@ -23,8 +23,8 @@
 			<tbody>
 				<tr>
 					<th class="name">{{ $t('dinozPage.inventory.itemName') }}</th>
-					<th class="qty">{{ $t('dinozPage.inventory.stock') }}</th>
-					<th class="act">{{ $t('dinozPage.inventory.actions') }}</th>
+					<th class="qty">{{ $t('items.tstock') }}</th>
+					<th class="act">{{ $t('dinozPage.action') }}</th>
 				</tr>
 				<tr v-for="(item, index) in allItemsData" :class="index % 2 === 1 ? 'even' : ''" :key="index">
 					<Tippy class="name" tag="td" theme="normal">
