@@ -89,7 +89,7 @@
 					<img
 						:src="getImgURL('act', 'act_sun')"
 						v-tippy="{
-							content: formatContent($t('dojo.team')),
+							content: formatContent($t('common.myTeam')),
 							theme: 'small'
 						}"
 					/>

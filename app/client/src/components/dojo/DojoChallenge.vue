@@ -168,7 +168,7 @@ export default defineComponent({
 			const myTeam = data;
 			try {
 				const dojo = await DojoService.createMyTeam(myTeam);
-				this.myTeam = dojo.team.sort((a, b) => b.dinoz.level - a.dinoz.level);
+				this.myTeam = common.myTeam.sort((a, b) => b.dinoz.level - a.dinoz.level);
 				this.opponents = dojo.DojoOpponents.sort((a, b) => b.dinoz.level - a.dinoz.level);
 				this.composeTeam = false;
 			} catch (e) {
@@ -243,7 +243,7 @@ export default defineComponent({
 		async refresh() {
 			try {
 				const dojo = await DojoService.getMyTeam();
-				if (dojo.team.length === 0) {
+				if (common.myTeam.length === 0) {
 					this.composeTeam = true;
 					this.myDinoz = dinozStore()
 						.getDinozList.filter(d => d.state === null || d.state === DINOZ_STATE.resting)
@@ -257,7 +257,7 @@ export default defineComponent({
 							};
 						});
 				} else {
-					this.myTeam = dojo.team.sort((a, b) => b.dinoz.level - a.dinoz.level);
+					this.myTeam = common.myTeam.sort((a, b) => b.dinoz.level - a.dinoz.level);
 					this.opponents = dojo.DojoOpponents.sort((a, b) => b.dinoz.level - a.dinoz.level);
 					this.dailyReset = dojo.dailyReset;
 				}

@@ -16,7 +16,7 @@
 	<DZTable class="small-icons">
 		<tr>
 			<th></th>
-			<th>{{ $t('dojo.team') }}</th>
+			<th>{{ $t('common.myTeam') }}</th>
 			<th>{{ $t('dojo.fightRecap.enemyTeam') }}</th>
 		</tr>
 		<tr>

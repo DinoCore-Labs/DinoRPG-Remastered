@@ -221,7 +221,7 @@ export default defineComponent({
 						},
 						{ texts: [this.$t('guide.text.fight4-3')] },
 						{ name: this.$t('guide.text.fight5'), texts: [this.$t('guide.text.fight5-1')] },
-						{ name: this.$t('accountPage.goals.linkGains'), texts: [this.$t('guide.text.fight6-1')] },
+						{ name: this.$t('common.gains'), texts: [this.$t('guide.text.fight6-1')] },
 						{ name: this.$t('guide.text.fight7'), ImageUrl: { path: 'guide', name: 'energy' } },
 						{ texts: [this.$t('guide.text.fight7-1')] },
 						{

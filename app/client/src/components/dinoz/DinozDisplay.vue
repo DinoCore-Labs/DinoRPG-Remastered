@@ -31,7 +31,7 @@
 					:display="dinozData.display"
 					:life="dinozData.life / dinozData.maxLife"
 					flip
-					:race="dinozData.race.raceId"
+					:race="dinozData.common.raceId"
 					:key="dinozAnimationKey"
 					:isFrozen="dinozData.state === 'frozen' || dinozData.state === 'unfreezing'"
 				/>
