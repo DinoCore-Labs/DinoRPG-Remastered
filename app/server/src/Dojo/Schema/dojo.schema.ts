@@ -4,7 +4,9 @@ import { z } from 'zod';
 export const fightTestSchema = z.object({
 	leftTeam: z.array(z.number().int().positive()).min(1),
 	rightTeam: z.array(z.number().int().positive()).min(1),
-	opponentId: z.string().uuid()
+	opponentId: z.string().uuid(),
+	enablePoison: z.boolean(),
+	enableItems: z.boolean()
 });
 
 export const dojoHistoryPageSchema = z.object({
