@@ -42,7 +42,7 @@
 				@input="onSearchInput"
 			/>
 			<ul class="options-list" role="listbox" :aria-labelledby="id">
-				<li v-if="loading" class="opt loading">{{ $t('button.loading') }}</li>
+				<li v-if="loading" class="opt loading">{{ $t('common.loading') }}</li>
 				<li v-else-if="filteredOptions.length === 0" class="opt empty">{{ $t('button.noResults') }}</li>
 				<li
 					v-else
