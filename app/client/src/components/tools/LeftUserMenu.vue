@@ -42,7 +42,7 @@
 						<img :src="getImgURL('act', 'act_shop')" alt="bank" />
 						<span>{{ $t('topBar.leftUserMenu.bank') }}</span>
 					</RouterLink>
-					<RouterLink class="link" :to="`/dojo`">
+					<RouterLink class="link" :to="`/dojo`" v-if="userStore.dojoId">
 						<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 						<span>{{ $t('topBar.leftUserMenu.dojo') }}</span>
 					</RouterLink>
