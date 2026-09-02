@@ -14,6 +14,7 @@ import AdminNewsEditPage from '../pages/Admin/AdminNewsEditPage.vue';
 import AdminNewsPage from '../pages/Admin/AdminNewsPage.vue';
 import AdminPage from '../pages/Admin/AdminPage.vue';
 import AdminReportsPage from '../pages/Admin/AdminReportsPage.vue';
+import AdminRoadmapPage from '../pages/Admin/AdminRoadmapPage.vue';
 import AdminSecretsPage from '../pages/Admin/AdminSecretsPage.vue';
 import AdminUserPage from '../pages/Admin/AdminUserPage.vue';
 import BankPage from '../pages/BankPage.vue';
@@ -470,6 +471,15 @@ const routes: RouteRecord[] = [
 						name: 'AdminNews',
 						component: AdminNewsPage,
 						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
+					},
+					{
+						path: '/admin/roadmap',
+						name: 'AdminRoadmap',
+						component: AdminRoadmapPage,
+						meta: {
+							auth: true,
+							roles: ['ADMIN', 'SUPER_ADMIN']
+						}
 					},
 					{
 						path: '/admin/news/create',
