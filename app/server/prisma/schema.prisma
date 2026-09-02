@@ -527,6 +527,38 @@ model Ranking {
   @@index([userId])
 }
 
+model Roadmap {
+  position Int @id
+
+  titleFr String @db.VarChar
+  titleEn String @db.VarChar
+  titleEs String @db.VarChar
+  titleDe String @db.VarChar
+
+  items RoadmapItem[]
+
+  @@map("roadmap")
+}
+
+model RoadmapItem {
+  id              Int @id @default(autoincrement())
+  roadmapPosition Int
+  position        Int
+
+  icon String? @db.VarChar
+
+  textFr String @db.Text
+  textEn String @db.Text
+  textEs String @db.Text
+  textDe String @db.Text
+
+  roadmap Roadmap @relation(fields: [roadmapPosition], references: [position], onDelete: Cascade)
+
+  @@unique([roadmapPosition, position])
+  @@index([roadmapPosition])
+  @@map("roadmap_item")
+}
+
 model Secret {
   key   String @id @db.VarChar
   value String @db.VarChar
