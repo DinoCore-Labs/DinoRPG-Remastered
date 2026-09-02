@@ -59,6 +59,7 @@ import { notificationRoutes } from './Notification/Routes/notification.routes.js
 import { prisma } from './prisma.js';
 import { rankingRoutes } from './Ranking/Routes/ranking.routes.js';
 import { reportRoutes } from './Report/Routes/report.routes.js';
+import { roadmapRoutes } from './Roadmap/Routes/roadmap.routes.js';
 import { shopRoutes } from './Shop/Routes/shop.routes.js';
 import { trainingCenterRoutes } from './TrainingCenter/Routes/trainingCenter.routes.js';
 import { userRoutes } from './User/Routes/user.routes.js';
@@ -300,6 +301,7 @@ async function buildServer() {
 				{ name: 'Shop', description: 'Shops and purchases' },
 				{ name: 'Ranking', description: 'Player rankings and leaderboard' },
 				{ name: 'News', description: 'News endpoints' },
+				{ name: 'Roadmap', description: 'Public roadmap endpoints' },
 				{ name: 'CEF', description: 'Fosselave training center' },
 				{ name: 'Admin', description: 'Administration endpoints' }
 			]
@@ -350,6 +352,7 @@ async function buildServer() {
 	server.register(levelRoutes, { prefix: 'api/level' });
 	server.register(gatherRoutes, { prefix: 'api/gather' });
 	server.register(newsRoutes, { prefix: 'api/news' });
+	server.register(roadmapRoutes, { prefix: 'api/roadmap' });
 	server.register(dialogRoutes, { prefix: 'api/dialog' });
 	server.register(adminRoutes, { prefix: 'api/admin' });
 	server.register(missionsRoutes, { prefix: 'api/missions' });
@@ -360,9 +363,9 @@ async function buildServer() {
 	server.register(forcebrutRoutes, { prefix: 'api/forcebrut' });
 	server.register(clanRoutes, { prefix: 'api/clan' });
 	server.register(devourerRoutes, { prefix: 'api/devourer' });
-	server.register(maintenanceRoutes, { prefix: 'api/maintenance' });
 	server.register(dojoRoutes, { prefix: 'api/dojo' });
 	server.register(notificationRoutes, { prefix: 'api/notifications' });
+	server.register(maintenanceRoutes, { prefix: 'api/maintenance' });
 	server.register(versionRoutes, { prefix: 'api' });
 
 	//------------------------------------------------------
@@ -383,9 +386,7 @@ async function buildServer() {
 			[MARKET_EXPIRATION_JOB_KEY]: () => expireDueMarketOffersJob(server.log),
 			[GAME_LOG_MAINTENANCE_JOB_KEY]: () => gameLogMaintenanceJob(server.log),
 			[BANK_EXCHANGE_RATE_JOB_KEY]: () => refreshBankExchangeRateJob(server.log),
-
 			'reset-dojo-challenge': () => resetDojoChallenge(),
-
 			...TournamentManager.HANDLERS
 		},
 		server.log
@@ -404,7 +405,6 @@ async function buildServer() {
 			mimetype: file?.mimetype,
 			truncated: file?.file.truncated
 		});
-
 		reply.send({ ok: true });
 	});
 	server.get('/debug-device', async req => {
