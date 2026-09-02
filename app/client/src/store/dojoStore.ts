@@ -70,6 +70,6 @@ export const dojoStore = defineStore('dojoStore', {
 		}
 	},
 	persist: {
-		storage: window.sessionStorage
+		storage: window.localStorage
 	}
 });

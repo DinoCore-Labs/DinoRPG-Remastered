@@ -67,6 +67,6 @@ export const clanStore = defineStore('clanStore', {
 		}
 	},
 	persist: {
-		storage: window.sessionStorage
+		storage: window.localStorage
 	}
 });
