@@ -1,5 +1,3 @@
-// app/server/prisma/seeds/forcebrutTournamentOpponents.ts
-
 export const forcebrutTournamentOpponentsSeed = [
 	{
 		step: 1,
