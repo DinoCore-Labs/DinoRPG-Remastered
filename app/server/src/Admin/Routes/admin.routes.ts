@@ -12,6 +12,7 @@ import { setSpecificSecret } from '../../jobs/controller/setSpecificSecret.js';
 import { getMaintenanceMode, setMaintenanceMode } from '../../Maintenance/Controller/maintenance.controller.js';
 import { newsIdParamsSchema } from '../../News/Schema/news.schema.js';
 import { prisma } from '../../prisma.js';
+import { updateRoadmapBodySchema } from '../../Roadmap/Schema/roadmap.schema.js';
 import {
 	adminErrorResponseSchema,
 	adminForcebrutOpponentBodySchema,
@@ -70,6 +71,7 @@ import {
 	updateAdminNewsHandler
 } from '../Service/adminNewsHandler.service.js';
 import { getAdminReportsHandler, updateAdminReportHandler } from '../Service/adminReportHandler.service.js';
+import { getAdminRoadmapHandler, updateAdminRoadmapHandler } from '../Service/adminRoadmapHandler.service.js';
 import {
 	getAdminUserDetailsHandler,
 	getAdminUserDinozHandler,
@@ -337,6 +339,28 @@ export async function adminRoutes(app: FastifyInstance) {
 		},
 		deleteNewsHandler
 	);
+	// Roadmap
+	app.get(
+		'/roadmap',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		getAdminRoadmapHandler
+	);
+	app.put(
+		'/roadmap',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin'],
+				body: updateRoadmapBodySchema
+			}
+		},
+		updateAdminRoadmapHandler
+	);
 	// Reports
 	app.get(
 		'/reports',
@@ -440,14 +464,12 @@ export async function adminRoutes(app: FastifyInstance) {
 		async (request, reply) => {
 			const { key } = adminSecretKeyParamsSchema.parse(request.params);
 			const { value } = updateAdminSecretBodySchema.parse(request.body);
-
 			const existingSecret = await getSpecificSecret(key);
 			if (!existingSecret) {
 				return reply.status(404).send({
 					message: `Secret "${key}" not found`
 				});
 			}
-
 			const updatedSecret = await setSpecificSecret(key, value);
 			return reply.status(200).send({
 				key: updatedSecret.key,
