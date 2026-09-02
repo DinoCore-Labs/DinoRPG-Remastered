@@ -5,6 +5,7 @@ export * from './adminGamelog.service.js';
 export * from './adminJobs.service.js';
 export * from './adminNews.service.js';
 export * from './adminReports.service.js';
+export * from './adminRoadmap.service.js';
 export * from './adminSecrets.service.js';
 export * from './adminUsers.service.js';
 export * from './bank.service.js';
