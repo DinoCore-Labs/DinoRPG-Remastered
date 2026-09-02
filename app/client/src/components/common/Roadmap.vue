@@ -15,39 +15,12 @@
 	<div class="roadmap">
 		<h3>{{ $t('newsPage.roadmap.title') }}</h3>
 		<ul class="timeline">
-			<li @click="showTable(1)">
+			<li v-for="entry in roadmap" :key="entry.position" @click="showTable(entry)">
 				<a>
 					<small>{{ $t('newsPage.roadmap.small') }}</small>
 					<strong>
 						<img :src="getImgURL('icons', 'r_world')" alt="world" />
-						<span>{{ $t('newsPage.roadmap.strong.title1') }}</span>
-					</strong>
-				</a>
-			</li>
-			<li @click="showTable(2)">
-				<a>
-					<small>{{ $t('newsPage.roadmap.small') }}</small>
-					<strong>
-						<img :src="getImgURL('icons', 'r_world')" alt="world" />
-						<span>{{ $t('newsPage.roadmap.strong.title2') }}</span>
-					</strong>
-				</a>
-			</li>
-			<li @click="showTable(3)">
-				<a>
-					<small>{{ $t('newsPage.roadmap.small') }}</small>
-					<strong>
-						<img :src="getImgURL('icons', 'r_world')" alt="world" />
-						<span>{{ $t('newsPage.roadmap.strong.title3') }}</span>
-					</strong>
-				</a>
-			</li>
-			<li @click="showTable(4)">
-				<a>
-					<small>{{ $t('newsPage.roadmap.small') }}</small>
-					<strong>
-						<img :src="getImgURL('icons', 'r_world')" alt="world" />
-						<span>{{ $t('newsPage.roadmap.strong.title4') }}</span>
+						<span>{{ entry.title }}</span>
 					</strong>
 				</a>
 			</li>
@@ -65,8 +38,8 @@
 				<td class="futurDesc">
 					<div class="futurInfo">
 						<ul>
-							<li v-for="(item, index) in futurInfoList" :key="index">
-								<img v-if="item.imageUrl" :src="getImgURL(item.imageUrl.path, item.imageUrl.name)" alt="Image" />
+							<li v-for="item in selectedItems" :key="item.position">
+								<img v-if="item.icon" :src="getImgURL('icons', item.icon)" alt="" />
 								<span v-html="formatContent(item.text)" />
 							</li>
 						</ul>
@@ -81,57 +54,66 @@
 		<DZDisclaimer content="newsPage.roadmap.disclaimer" />
 	</div>
 </template>
+
 <script lang="ts">
+import { Language } from '@dinorpg/core/models/config/language.js';
+import type { RoadmapEntry, RoadmapItem } from '@dinorpg/core/models/roadmap/roadmap.js';
 import { defineComponent } from 'vue';
+
+import { errorHandler } from '../../utils/errorHandler';
 import DZDisclaimer from '../utils/DZDisclaimer.vue';
 import DZTable from '../utils/DZTable.vue';
+import { RoadmapService } from '../../services/index.ts';
 
 export default defineComponent({
 	name: 'Roadmap',
-	components: { DZDisclaimer, DZTable },
+	components: {
+		DZDisclaimer,
+		DZTable
+	},
 	data() {
 		return {
-			showFuturTable: false,
-			currentTableIndex: 0,
-			futurInfoList: [] as { imageUrl: { path: string; name: string }; text: string }[]
+			roadmap: [] as RoadmapEntry[],
+			selectedRoadmap: null as RoadmapEntry | null
 		};
 	},
+	computed: {
+		currentLanguage(): Language {
+			return this.$i18n.locale as Language;
+		},
+		showFuturTable(): boolean {
+			return this.selectedRoadmap !== null;
+		},
+		selectedItems(): RoadmapItem[] {
+			return this.selectedRoadmap?.items ?? [];
+		}
+	},
 	methods: {
-		showTable(tableIndex: number) {
-			this.showFuturTable = this.currentTableIndex !== tableIndex;
-			if (this.showFuturTable) {
-				this.updateFuturInfo(tableIndex);
-				this.currentTableIndex = tableIndex;
-			} else {
-				this.currentTableIndex = 0;
+		async loadRoadmap() {
+			try {
+				this.roadmap = await RoadmapService.getRoadmap(this.currentLanguage);
+				this.selectedRoadmap = null;
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
 			}
 		},
-		updateFuturInfo(tableIndex: number) {
-			switch (tableIndex) {
-				case 1:
-					this.futurInfoList = [
-						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo1.text1') },
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo1.text2') }
-					];
-					break;
-				case 2:
-					this.futurInfoList = [
-						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('newsPage.roadmap.futureInfo2.text1') },
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo2.text2') }
-					];
-					break;
-				case 3:
-					this.futurInfoList = [
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo3.text1') }
-					];
-					break;
-				case 4:
-					this.futurInfoList = [
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('newsPage.roadmap.futureInfo4.text1') }
-					];
-					break;
-				default:
-					this.futurInfoList = [];
+		showTable(entry: RoadmapEntry) {
+			if (this.selectedRoadmap?.position === entry.position) {
+				this.selectedRoadmap = null;
+				return;
+			}
+			this.selectedRoadmap = entry;
+		}
+	},
+	async mounted() {
+		await this.loadRoadmap();
+	},
+	watch: {
+		currentLanguage: {
+			async handler(newLanguage, oldLanguage) {
+				if (newLanguage === oldLanguage) return;
+
+				await this.loadRoadmap();
 			}
 		}
 	}
