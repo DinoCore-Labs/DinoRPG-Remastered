@@ -1,6 +1,7 @@
 import { appDiscordClient } from '../src/logger/appDiscordClient.js';
 import { prisma } from '../src/prisma.js';
 import { forcebrutTournamentOpponentsSeed } from './seeds/forcebrutTournamentOpponents.js';
+import { roadmapSeed } from './seeds/roadmap.js';
 
 async function logSeedMessage(message: string, data: Record<string, unknown>) {
 	try {
@@ -36,8 +37,43 @@ async function seedForcebrutTournamentOpponents() {
 	});
 }
 
+async function seedRoadmap() {
+	for (const entry of roadmapSeed) {
+		await prisma.roadmap.upsert({
+			where: {
+				position: entry.position
+			},
+			update: {},
+			create: {
+				position: entry.position,
+				titleFr: entry.titleFr,
+				titleEn: entry.titleEn,
+				titleEs: entry.titleEs,
+				titleDe: entry.titleDe,
+				items: {
+					create: entry.items.map(item => ({
+						position: item.position,
+						icon: item.icon,
+						textFr: item.textFr,
+						textEn: item.textEn,
+						textEs: item.textEs,
+						textDe: item.textDe
+					}))
+				}
+			}
+		});
+	}
+	await logSeedMessage('🌱 Roadmap seeded', {
+		scope: 'prisma.seed',
+		entity: 'roadmap',
+		count: roadmapSeed.length,
+		seededAt: new Date().toISOString()
+	});
+}
+
 async function main() {
 	await seedForcebrutTournamentOpponents();
+	await seedRoadmap();
 }
 
 main()
