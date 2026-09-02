@@ -375,9 +375,6 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 	// No event if NO_EVENT
 	if (hasStatus(fighter, FightStatus.NO_EVENT)) return null;
 
-	// Check if a time manipulator is present
-	if (fightData.timeManipulatorUsed && !fightData.temporalStabilityUsed) return null;
-
 	// Check if a fighter has Item.TIME_MANIPULATOR
 	if (!fightData.timeManipulatorUsed) {
 		const timeManipulator = getFighters(fightData).find(f =>
@@ -417,15 +414,14 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 
 				// Remove from items
 				temporalStabiliser.items.splice(itemIndex, 1);
-			} else {
-				// Cancel all events
-				return null;
 			}
 		}
 	}
 
+	const isTimeManipulatorActive = fightData.timeManipulatorUsed && !fightData.temporalStabilityUsed;
+
 	const events: (SkillDetails | ItemFiche)[] = fighter.skills.filter(
-		skill => skill.probability && skill.type === SkillType.E
+		skill => skill.probability && skill.type === SkillType.E && !isTimeManipulatorActive
 	);
 
 	events.push(...fighter.items.filter(item => item.probability));
