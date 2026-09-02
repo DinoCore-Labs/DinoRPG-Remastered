@@ -4691,7 +4691,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 			// Check if dinoz has SCALE
 			if (fighter.items.some(item => item.itemId === Item.SCALE)) {
 				// Get random opponent
-				const opponent = getRandomOpponent(fightData, fighter);
+				const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
 
 				if (opponent) {
 					// Add item use step
@@ -4702,7 +4702,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 					});
 
 					// Kill opponent
-					loseHp(fightData, fighter, opponent.hp, LifeEffect.Skull);
+					loseHp(fightData, opponent, opponent.hp, LifeEffect.Skull);
 				}
 			}
 
