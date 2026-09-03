@@ -5092,16 +5092,36 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		}
 	}
 
-	// TODO rework
-	// // Sorceror's Wand replaces attacks
-	// if (attacker.items.some(item => item.itemId === Item.SORCERERS_STICK)) {
-	// 	attackSingleOpponent(fightData, attacker, itemList.SORCERERS_STICK, null);
-	// 	endTurnChecks(fightData, attacker);
-	// 	return;
-	// }
-
 	// No assaults for NO_ASSAULT
 	if (hasStatus(attacker, FightStatus.NO_ASSAULT)) {
+		endTurnChecks(fightData, attacker);
+		return;
+	}
+
+	// Sorceror's Wand replaces attacks
+	if (attacker.items.some(item => item.itemId === Item.SORCERERS_STICK)) {
+		// Find all Dinoz in the fight (allies and opponents)
+		const allDinoz = fightData.fighters.filter(f => f.hp > 0 && !f.escaped && f.type === FighterType.DINOZ);
+
+		if (allDinoz.length > 0) {
+			// Randomly select one
+			const target = allDinoz[randomBetweenSeeded(fightData.rng, 0, allDinoz.length - 1)];
+
+			// Show item use step
+			fightData.steps.push({
+				action: 'itemUse',
+				fighter: stepFighter(attacker),
+				itemId: Item.SORCERERS_STICK
+			});
+
+			// Take 30% of current HP (minimum 1)
+			const hpLost = Math.max(1, Math.floor(target.hp * 0.3));
+
+			if (hpLost > 0) {
+				loseHp(fightData, target, hpLost, LifeEffect.Skull);
+			}
+		}
+
 		endTurnChecks(fightData, attacker);
 		return;
 	}
