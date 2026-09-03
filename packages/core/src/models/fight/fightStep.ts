@@ -79,6 +79,7 @@ export interface LeaveStep {
 	action: 'leave';
 	fighter: StepFighter;
 	animation?: LeaveAnimation;
+	attackerId?: number;
 }
 
 export interface ResistStep {
