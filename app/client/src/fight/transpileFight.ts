@@ -18,7 +18,7 @@ import type { FightText } from '@dinorpg/core/models/fight/fightDialog.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import type { FighterRecap } from '@dinorpg/core/models/fight/fightResult.js';
 import { FightStatus } from '@dinorpg/core/models/fight/fightStatus.js';
-import type { FightStep } from '@dinorpg/core/models/fight/fightStep.js';
+import { type FightStep, LeaveAnimation } from '@dinorpg/core/models/fight/fightStep.js';
 import {
 	DamagesEffect,
 	DinoAction,
@@ -579,6 +579,17 @@ export function transpileFight(
 				});
 				break;
 			case 'leave': {
+				if (step.animation === LeaveAnimation.BLACKHOLE) {
+					history.push({
+						action: DinoAction.SKILL,
+						skill: SkillVisualEffect.HOLE,
+						details: {
+							fid: step.attackerId ?? step.fighter.id,
+							targets: [{ id: step.fighter.id, life: 0 }]
+						}
+					});
+				}
+
 				history.push({
 					action: DinoAction.ESCAPE,
 					fid: step.fighter.id

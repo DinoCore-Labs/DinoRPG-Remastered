@@ -607,34 +607,6 @@ export const initStepFighter = (
 // 			});
 // 		}
 
-// 		// Dimensional powder item
-
-// 		// Check if any fighter has Item.DIMENSIONAL_POWDER
-// 		const dimensionalPowderUser = getFighters(fightData).find(f =>
-// 			f.items.some(item => item.itemId === Item.DIMENSIONAL_POWDER)
-// 		);
-
-// 		if (dimensionalPowderUser) {
-// 			// Add item use step
-// 			fightData.steps.push({
-// 				action: 'itemUse',
-// 				fighter: stepFighter(dimensionalPowderUser),
-// 				itemId: Item.DIMENSIONAL_POWDER
-// 			});
-
-// 			// Escape opponent if HP requirement is met
-// 			if (opponent.startingHp > 10 && opponent.hp > 0 && opponent.hp < 10) {
-// 				// Add leave step
-// 				fightData.steps.push({
-// 					action: 'leave',
-// 					fighter: stepFighter(opponent),
-// 					animation: LeaveAnimation.BLACKHOLE
-// 				});
-
-// 				opponent.escaped = true;
-// 			}
-// 		}
-
 // 		// LIFE_STEALER
 // 		if (
 // 			actualDamage[opponent.id] &&
@@ -2333,14 +2305,16 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			// Prevent if item.ANTI_GRAVE_SUIT from target
-			const opponentWithSuit = opponent.items.some(item => item.itemId === Item.ANTI_GRAVE_SUIT);
+			// Prevent if item.ANTI_GRAVE_SUIT from target's team
+			const suitAlly = getAllies(fightData, opponent).find(ally =>
+				ally.items.some(item => item.itemId === Item.ANTI_GRAVE_SUIT)
+			);
 
-			if (opponentWithSuit) {
+			if (suitAlly) {
 				// Add item use step
 				fightData.steps.push({
 					action: 'itemUse',
-					fighter: stepFighter(opponent),
+					fighter: stepFighter(suitAlly),
 					itemId: Item.ANTI_GRAVE_SUIT
 				});
 
@@ -2361,8 +2335,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Add leave step
 				fightData.steps.push({
 					action: 'leave',
-					fighter: stepFighter(opponent),
-					animation: LeaveAnimation.BLACKHOLE
+					fighter: stepFighter(opponent)
 				});
 			}
 
@@ -4999,6 +4972,60 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		// If it was only a status specific turn, then return early.
 		if (isStatusTurn) {
 			return;
+		}
+	}
+
+	// 3.5 - Dimensional Powder
+	if (fightData.rules.canUseEquipment) {
+		const powderFighters = getFighters(fightData).filter(f =>
+			f.items.some(item => item.itemId === Item.DIMENSIONAL_POWDER)
+		);
+
+		if (powderFighters.length > 0) {
+			const powderFighter = powderFighters[0];
+			const fightersToSuck = getFighters(fightData).filter(
+				f => f.type === FighterType.DINOZ && f.hp > 0 && f.hp < 10 && f.startingHp > 10 && !f.powderResisted
+			);
+
+			if (fightersToSuck.length > 0) {
+				let first = true;
+				fightersToSuck.forEach(target => {
+					// Show powder use if not already
+					if (first) {
+						fightData.steps.push({
+							action: 'itemUse',
+							fighter: stepFighter(powderFighter),
+							itemId: Item.DIMENSIONAL_POWDER
+						});
+						first = false;
+					}
+
+					// Check ANTI_GRAVE_SUIT on target's team (wearer must be alive)
+					const suitAlly = getAllies(fightData, target).find(ally =>
+						ally.items.some(item => item.itemId === Item.ANTI_GRAVE_SUIT)
+					);
+
+					if (suitAlly) {
+						target.powderResisted = true;
+						// Display suit
+						fightData.steps.push({
+							action: 'itemUse',
+							fighter: stepFighter(suitAlly),
+							itemId: Item.ANTI_GRAVE_SUIT
+						});
+						return;
+					}
+
+					// Suck target
+					target.escaped = true;
+					fightData.steps.push({
+						action: 'leave',
+						fighter: stepFighter(target),
+						animation: LeaveAnimation.BLACKHOLE,
+						attackerId: powderFighter.id
+					});
+				});
+			}
 		}
 	}
 

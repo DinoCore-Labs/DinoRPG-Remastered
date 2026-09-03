@@ -139,6 +139,8 @@ export interface DetailedFighter {
 	// Caught by
 	catcher?: number;
 	catchId?: number;
+	// Dimensional Powder resisted
+	powderResisted?: boolean;
 }
 
 export interface FighterResultFiche {
