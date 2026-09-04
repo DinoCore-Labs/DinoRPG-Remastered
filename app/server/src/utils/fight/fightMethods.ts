@@ -4623,198 +4623,200 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 };
 
 export const checkDeaths = (fightData: DetailedFight) => {
+	let hasUnprocessedDeaths = true;
+
+	while (hasUnprocessedDeaths) {
+		hasUnprocessedDeaths = false;
+
+		for (let i = 0; i < fightData.fighters.length; i++) {
+			const fighter = fightData.fighters[i];
+
+			// Skip escaped fighters
+			if (fighter.escaped) continue;
+
+			// Only process if fighter is dead and hasn't died yet
+			if (fighter.hp <= 0 && fightData.deads.filter(fid => fid === fighter.id).length === 0) {
+				hasUnprocessedDeaths = true;
+				let canceledDeath = false;
+
+				// 1. SURVIE (Survival)
+				if (fighter.canSurvive) {
+					fighter.canSurvive = false;
+					canceledDeath = true;
+
+					// Update history & heal
+					fightData.steps.push({
+						action: 'skillAnnounce',
+						fid: fighter.id,
+						skill: Skill.SURVIE
+					});
+					fightData.steps.push({
+						action: 'skillActivate',
+						fid: fighter.id,
+						skill: Skill.SURVIE,
+						targets: []
+					});
+					heal(fightData, fighter, 12, undefined, LifeEffect.Heal);
+				}
+
+				// 2. PLUMES DE PHOENIX
+				if (!canceledDeath && fighter.canPhoenix) {
+					fighter.canPhoenix = false;
+					canceledDeath = true;
+
+					fightData.steps.push({
+						action: 'skillAnnounce',
+						fid: fighter.id,
+						skill: Skill.PLUMES_DE_PHOENIX
+					});
+
+					// Add skillActivate step
+					fightData.steps.push({
+						action: 'skillActivate',
+						fid: fighter.id,
+						skill: Skill.PLUMES_DE_PHOENIX,
+						targets: []
+					});
+
+					// Heal to 12 HP
+					heal(fightData, fighter, 12 - fighter.hp, undefined, LifeEffect.Heal);
+
+					// Increase other fighters time by 10 * speed
+					getFighters(fightData).forEach(f => {
+						if (f.id !== fighter.id) {
+							f.time += 10 * TIME_FACTOR * fighter.stats.speed.global;
+						}
+					});
+
+					// TODO add init up notification for resurrected fighter
+				}
+
+				if (canceledDeath) {
+					continue;
+				}
+
+				// 3. SCALE (Balance)
+				if (fighter.items.some(item => item.itemId === Item.SCALE)) {
+					// Get random opponent
+					const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
+
+					if (opponent) {
+						// Add item use step
+						fightData.steps.push({
+							action: 'itemUse',
+							fighter: stepFighter(fighter),
+							itemId: Item.SCALE
+						});
+
+						// Kill opponent
+						loseHp(fightData, opponent, opponent.hp, LifeEffect.Skull);
+					}
+				}
+
+				// 4. NO_DEATH
+				if (hasStatus(fighter, FightStatus.NO_DEATH)) {
+					// Add leave step
+					fightData.steps.push({
+						action: 'leave',
+						fighter: stepFighter(fighter)
+					});
+
+					fighter.escaped = true;
+					continue;
+				}
+
+				// 5. DEMYOM
+				if (fighter.skills.some(skill => skill.id === Skill.M_DEMYOM_ATTACK)) {
+					const opponentDinoz = getOpponents(fightData, fighter, [FighterType.DINOZ]);
+
+					// Curse dinoz
+					if (opponentDinoz.length) {
+						opponentDinoz.forEach(opponent => {
+							// Add curse step
+							fightData.steps.push({
+								action: 'cursed',
+								fighter: stepFighter(opponent)
+							});
+
+							opponent.permanentStatusGained.push(DinozStatusId.CUSCOUZ_MALEDICTION);
+
+							// Add costume step
+							fightData.steps.push({
+								action: 'setCostume',
+								fighter: stepFighter(opponent),
+								costume: monsterList.FRUTOX_DEFENDER.name
+							});
+						});
+					} else {
+						// Heal boss
+						heal(fightData, fighter, 50, undefined, LifeEffect.Heal);
+					}
+				}
+
+				// Remove catches from combat
+				getAllies(fightData, fighter)
+					.filter(ally => ally.catcher === fighter.id)
+					.forEach(monster => {
+						// Add leave step
+						fightData.steps.push({
+							action: 'leave',
+							fighter: stepFighter(monster)
+						});
+
+						monster.escaped = true;
+					});
+
+				// Cancel environment if the caster died
+				if (fightData.environment && fighter.id === fightData.environment.caster.id) {
+					cancelEnvironment(fightData);
+				}
+
+				// Add death step
+				fightData.steps.push({
+					action: 'death',
+					fighter: stepFighter(fighter)
+				});
+				fightData.deads.push(fighter.id);
+
+				// Reset stolen gold
+				fighter.goldStolen = undefined;
+
+				// M_INFINITE_REINFORCEMENTS
+				if (fighter.skills.some(skill => skill.id === Skill.M_INFINITE_REINFORCEMENTS)) {
+					// Add skillActivate step
+					fightData.steps.push({
+						action: 'skillActivate',
+						fid: fighter.id,
+						skill: Skill.M_INFINITE_REINFORCEMENTS,
+						targets: []
+					});
+
+					// Create a new monster
+					const monsterDetails = Object.values(monsterList).find(monster => monster.name === fighter.name);
+
+					if (!monsterDetails) {
+						throw new Error(`Monster ${fighter.name} not found`);
+					}
+
+					const alliesCount = getAllies(fightData, fighter).length;
+
+					if (alliesCount < 6) {
+						createMonster(fightData, fighter, monsterDetails);
+					}
+					if (alliesCount < 5) {
+						createMonster(fightData, fighter, monsterDetails);
+					}
+				}
+			}
+		}
+	}
+
 	let attackersAlive = 0;
 	let defendersAlive = 0;
 
 	for (let i = 0; i < fightData.fighters.length; i++) {
 		const fighter = fightData.fighters[i];
-
-		// Skip escaped fighters
-		if (fighter.escaped) continue;
-
-		// Only add death step if fighter is dead and hasn't died yet
-		if (fighter.hp <= 0 && fightData.deads.filter(fid => fid === fighter.id).length === 0) {
-			// Check if dinoz can survive
-			if (fighter.canSurvive) {
-				fighter.canSurvive = false;
-
-				// Update history & heal
-				fightData.steps.push({
-					action: 'skillAnnounce',
-					fid: fighter.id,
-					skill: Skill.SURVIE
-				});
-				fightData.steps.push({
-					action: 'skillActivate',
-					fid: fighter.id,
-					skill: Skill.SURVIE,
-					targets: []
-				});
-				heal(fightData, fighter, 12, undefined, LifeEffect.Heal);
-
-				// Make sure the fighter is counted as alive
-				if (fighter.attacker) {
-					attackersAlive++;
-				} else {
-					defendersAlive++;
-				}
-				continue;
-			}
-
-			// Check if dinoz has SCALE
-			if (fighter.items.some(item => item.itemId === Item.SCALE)) {
-				// Get random opponent
-				const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
-
-				if (opponent) {
-					// Add item use step
-					fightData.steps.push({
-						action: 'itemUse',
-						fighter: stepFighter(fighter),
-						itemId: Item.SCALE
-					});
-
-					// Kill opponent
-					loseHp(fightData, opponent, opponent.hp, LifeEffect.Skull);
-				}
-			}
-
-			// NO_DEATH
-			if (hasStatus(fighter, FightStatus.NO_DEATH)) {
-				// Add leave step
-				fightData.steps.push({
-					action: 'leave',
-					fighter: stepFighter(fighter)
-				});
-
-				fighter.escaped = true;
-
-				continue;
-			}
-
-			// Phoenix Feather
-			if (fighter.skills.some(skill => skill.id === Skill.PLUMES_DE_PHOENIX)) {
-				// Add skillActivate step
-				const res_step: SkillActivateStep = {
-					action: 'skillActivate',
-					fid: fighter.id,
-					skill: Skill.PLUMES_DE_PHOENIX,
-					targets: []
-				};
-
-				// Heal to 12 HP
-				// TODO swap for resurrect method
-				heal(fightData, fighter, 12 - fighter.hp, res_step);
-				// TODO add heal affect?
-
-				// Increase other fighters time by 10 * speed
-				getFighters(fightData).forEach(f => {
-					if (f.id !== fighter.id) {
-						f.time += 10 * TIME_FACTOR * fighter.stats.speed.global;
-					}
-				});
-
-				// TODO add init up notification for resurrected fighter
-			}
-
-			// Add death step
-			fightData.steps.push({
-				action: 'death',
-				fighter: stepFighter(fighter)
-			});
-			fightData.deads.push(fighter.id);
-
-			// Reset stolen gold
-			fighter.goldStolen = undefined;
-
-			// M_INFINITE_REINFORCEMENTS
-			if (fighter.skills.some(skill => skill.id === Skill.M_INFINITE_REINFORCEMENTS)) {
-				// Add skillActivate step
-				fightData.steps.push({
-					action: 'skillActivate',
-					fid: fighter.id,
-					skill: Skill.M_INFINITE_REINFORCEMENTS,
-					targets: []
-				});
-
-				// Create a new monster
-				const monsterDetails = Object.values(monsterList).find(monster => monster.name === fighter.name);
-
-				if (!monsterDetails) {
-					throw new Error(`Monster ${fighter.name} not found`);
-				}
-
-				const alliesCount = getAllies(fightData, fighter).length;
-
-				if (alliesCount < 6) {
-					createMonster(fightData, fighter, monsterDetails);
-
-					if (fighter.attacker) {
-						attackersAlive++;
-					} else {
-						defendersAlive++;
-					}
-				}
-				if (alliesCount < 5) {
-					createMonster(fightData, fighter, monsterDetails);
-
-					if (fighter.attacker) {
-						attackersAlive++;
-					} else {
-						defendersAlive++;
-					}
-				}
-			}
-
-			// DEMYOM
-			if (fighter.skills.some(skill => skill.id === Skill.M_DEMYOM_ATTACK)) {
-				const opponentDinoz = getOpponents(fightData, fighter, [FighterType.DINOZ]);
-
-				// Curse dinoz
-				if (opponentDinoz.length) {
-					opponentDinoz.forEach(opponent => {
-						// Add curse step
-						fightData.steps.push({
-							action: 'cursed',
-							fighter: stepFighter(opponent)
-						});
-
-						opponent.permanentStatusGained.push(DinozStatusId.CUSCOUZ_MALEDICTION);
-
-						// Add costume step
-						fightData.steps.push({
-							action: 'setCostume',
-							fighter: stepFighter(opponent),
-							costume: monsterList.FRUTOX_DEFENDER.name
-						});
-					});
-				} else {
-					// Heal boss
-					heal(fightData, fighter, 50, undefined, LifeEffect.Heal);
-				}
-			}
-
-			// Remove catches from combat
-			getAllies(fightData, fighter)
-				.filter(ally => ally.catcher === fighter.id)
-				.forEach(monster => {
-					// Add leave step
-					fightData.steps.push({
-						action: 'leave',
-						fighter: stepFighter(monster)
-					});
-
-					monster.escaped = true;
-				});
-		}
-
-		// Cancel environment if the caster died
-		if (fightData.environment && fighter.id === fightData.environment.caster.id) {
-			cancelEnvironment(fightData);
-		}
-
-		// Count alive fighters
-		if (fighter.hp > 0) {
+		if (!fighter.escaped && fighter.hp > 0) {
 			if (fighter.attacker) {
 				attackersAlive++;
 			} else {

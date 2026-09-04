@@ -1194,7 +1194,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BENEDICTION_DARTEMIS],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		visualEffect: SkillVisualEffect.RESURRECT
 	},
 	[Skill.ACCLAMATION_FRATERNELLE]: {
 		id: Skill.ACCLAMATION_FRATERNELLE,

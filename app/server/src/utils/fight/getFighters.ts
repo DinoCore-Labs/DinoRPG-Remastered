@@ -723,6 +723,10 @@ const handleSkills = (random: SeededRandom, team: Team | null, fighter: Detailed
 		team[Skill.CHEF_DE_GUERRE] = true;
 	}
 
+	if (fighterHas[Skill.PLUMES_DE_PHOENIX]) {
+		fighter.canPhoenix = true;
+	}
+
 	// WOOD
 	if (fighterHas[Skill.TENACITE]) {
 		fighter.minDamage += 1;
