@@ -260,12 +260,6 @@ export const initializeDinoz = (
 	// Time
 	let initiative = fighter.stats.special.initiative;
 
-	// Temporal reduction
-	if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
-		// Reduce by 50%
-		initiative *= 0.5;
-	}
-
 	// Deduct the time from the fighter's initial time
 	fighter.time -= initiative * TIME_FACTOR;
 	// Add a random amount of time between 0 and 9 to randomize the first fighter

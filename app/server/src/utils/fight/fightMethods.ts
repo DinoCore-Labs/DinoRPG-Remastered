@@ -1349,7 +1349,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				if (!hasStatus(opponent, FightStatus.FLYING)) {
 					// Increase the opponent's time
-					opponent.time += 15 * TIME_FACTOR;
+					modifyInitiative(opponent, 15 * TIME_FACTOR);
 					// Add fx for loss of init
 					fightData.steps.push({
 						action: 'notify',
@@ -1695,8 +1695,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const allies: number[] = [];
 				getAllies(fightData, fighter).forEach(ally => {
 					allies.push(ally.id);
-					ally.time -= 5 * TIME_FACTOR;
-					fighter.time += 3 * TIME_FACTOR;
+					modifyInitiative(ally, -5 * TIME_FACTOR);
+					modifyInitiative(fighter, 3 * TIME_FACTOR);
 				});
 				addSkillFx(fightData, fighter.id, event.id, allies);
 				break;
@@ -2337,7 +2337,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			if (hit && hit.hpLost > 0) {
 				// Increase time
-				fighter.time += 15 * TIME_FACTOR;
+				modifyInitiative(fighter, 15 * TIME_FACTOR);
 				// Add fx for loss of init
 				fightData.steps.push({
 					action: 'notify',
@@ -2463,7 +2463,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		case Skill.PAUME_CHALUMEAU: {
 			// Increase time of the attacker
-			fighter.time += 15 * TIME_FACTOR;
+			modifyInitiative(fighter, 15 * TIME_FACTOR);
 			// This skill cannot combo but is an assault
 			launchAssault(
 				fightData,
@@ -2626,7 +2626,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			fightData.steps.push(activate_step);
 			loseHp(fightData, opponent, 0, LifeEffect.Water);
 
-			opponent.time += 25 * TIME_FACTOR;
+			modifyInitiative(opponent, 25 * TIME_FACTOR);
 
 			// Add fx for gain of init
 			fightData.steps.push({
@@ -2685,7 +2685,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				notification: NotificationList.InitDown
 			} as NotifyStep;
 			opponents.forEach(opponent => {
-				opponent.time += 8 * TIME_FACTOR;
+				modifyInitiative(opponent, 8 * TIME_FACTOR);
 				init_down_notify.fids.push(opponent.id);
 			});
 			fightData.steps.push(init_down_notify);
@@ -2957,7 +2957,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			getOpponents(fightData, fighter).forEach(opponent => {
 				// Increase time
-				opponent.time += 10 * TIME_FACTOR;
+				modifyInitiative(opponent, 10 * TIME_FACTOR);
 			});
 			break;
 		}
@@ -3707,6 +3707,24 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 	updateStat(fightData, fighter, 'hpLost', hp_lost);
 
 	return hp_lost;
+};
+
+// Modifies the fighter's initiative modification during fight
+export const modifyInitiative = (fighter: DetailedFighter, amount: number) => {
+	// If the amount is infinite, do not reduce it
+	if (Math.abs(amount) >= FIGHT_INFINITE) {
+		fighter.time += amount;
+		return;
+	}
+
+	let finalAmount = amount;
+
+	// Temporal Reduction item reduces initiative bonuses and penalties by 50%
+	if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
+		finalAmount *= 0.5;
+	}
+
+	fighter.time += finalAmount;
 };
 
 const poison = (
@@ -4731,7 +4749,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 					// Increase other fighters time by 10 * speed
 					getFighters(fightData).forEach(f => {
 						if (f.id !== fighter.id) {
-							f.time += 10 * TIME_FACTOR * fighter.stats.speed.global;
+							modifyInitiative(f, 10 * TIME_FACTOR * fighter.stats.speed.global);
 						}
 					});
 
