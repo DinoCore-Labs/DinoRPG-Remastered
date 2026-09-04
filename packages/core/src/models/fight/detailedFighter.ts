@@ -137,6 +137,8 @@ export interface DetailedFighter {
 	permanentStatusGained: DinozStatusId[];
 	// Previous target - only used for concentration
 	previousTarget?: number;
+	// Has used the friendly whistle item visually
+	hasWhistled?: boolean;
 	// Caught by
 	catcher?: number;
 	catchId?: number;
