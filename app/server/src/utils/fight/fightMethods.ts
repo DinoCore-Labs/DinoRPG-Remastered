@@ -698,7 +698,8 @@ const launchAssault = (
 	skill?: Skill,
 	power?: [ElementType, number][],
 	target?: DetailedFighter | null,
-	goto?: boolean
+	goto?: boolean,
+	isWhistleAssault: boolean = false
 ) => {
 	// Unless specified, this method will add to the history the move to and move back steps by default
 	goto = goto ?? true;
@@ -743,7 +744,53 @@ const launchAssault = (
 		});
 	}
 
-	// Add moveBack step if attacker is still alive
+	// Friendly Whistle
+	if (!isWhistleAssault && attacker.items.some(item => item.itemId === Item.FRIENDLY_WHISTLE) && target.hp > 0) {
+		// Announce the item if it's the first time
+		if (!attacker.hasWhistled) {
+			attacker.hasWhistled = true;
+			fightData.steps.push({
+				action: 'itemUse',
+				fighter: stepFighter(attacker),
+				itemId: Item.FRIENDLY_WHISTLE
+			});
+		}
+
+		// Get all allies (including summons) excluding the ones with the Whistle, and that are alive
+		const allies = getAllies(fightData, attacker).filter(
+			ally => ally.id !== attacker.id && ally.hp > 0 && !ally.items.some(item => item.itemId === Item.FRIENDLY_WHISTLE)
+		);
+
+		if (allies.length > 0) {
+			// Make them assault the SAME target
+			allies.forEach(ally => {
+				// Target must still be alive for each assist
+				if (target && target.hp > 0) {
+					// Move the ally to the target manually
+					fightData.steps.push({
+						action: 'moveTo',
+						fid: ally.id,
+						tid: target.id
+					});
+
+					// Launch assault with goto = false (so they don't move back immediately) and isWhistleAssault = true
+					launchAssault(fightData, ally, true, undefined, undefined, target, false, true);
+				}
+			});
+
+			// Move all allies back at the same time
+			allies.forEach(ally => {
+				if (ally.hp > 0) {
+					fightData.steps.push({
+						action: 'moveBack',
+						fid: ally.id
+					});
+				}
+			});
+		}
+	}
+
+	// Add moveBack step for the bearer if they are still alive
 	if (goto && attacker.hp > 0) {
 		fightData.steps.push({
 			action: 'moveBack',
