@@ -45,6 +45,7 @@ import {
 	hasSkill,
 	hasStatus,
 	heal,
+	modifyInitiative,
 	playFighterTurn,
 	stepFighter,
 	updateStat
@@ -703,15 +704,6 @@ const startFight = (fightData: DetailedFight) => {
 				}
 			});
 
-			// Temporal reduction - effect already applied at this point
-			if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
-				fightData.steps.push({
-					action: 'itemUse',
-					fighter: stepFighter(fighter),
-					itemId: Item.TEMPORAL_REDUCTION
-				});
-			}
-
 			// Curse locker
 			if (fighter.items.some(item => item.itemId === Item.CURSE_LOCKER)) {
 				const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
@@ -781,7 +773,7 @@ const startFight = (fightData: DetailedFight) => {
 
 		if (hasSkill(fighter, Skill.DOUBLE_FACE)) {
 			// 50% chance to get positive / negative time
-			fighter.time += (fightData.rng() > 0.5 ? 10 : -10) * TIME_FACTOR;
+			modifyInitiative(fighter, (fightData.rng() > 0.5 ? 10 : -10) * TIME_FACTOR);
 
 			// Add skill step
 			fightData.steps.push({

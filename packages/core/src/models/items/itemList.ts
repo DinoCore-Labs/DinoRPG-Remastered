@@ -1117,7 +1117,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		maxQuantity: 5,
 		sellable: false,
 		price: 5, // TODO double check
-		display: 'dampt'
+		display: 'dampt',
+		passiveEffect: {
+			[Stat.INITIATIVE]: { operator: MathOperator.MULTIPLY, value: 0.5 }
+		}
 	},
 	// Tear of Life: gives clones 10% of the life of the casting Dinoz
 	[Item.TEAR_OF_LIFE]: {
