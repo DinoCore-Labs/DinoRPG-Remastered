@@ -109,6 +109,7 @@ export interface DetailedFighter {
 	cancelAssaultDodge: boolean;
 	// Survival
 	canSurvive?: boolean;
+	canPhoenix?: boolean;
 	// Costume
 	costume?: {
 		skin: MonsterFiche;
