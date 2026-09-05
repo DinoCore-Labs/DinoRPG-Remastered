@@ -875,7 +875,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 7,
 		zones: [MapZone.DINOWEST],
 		canBeCaptured: true,
-		skills: [Skill.M_CONTAMINATION]
+		skills: [Skill.M_CONTAMINATION],
+		display: 'gropi'
 	},
 	[Monster.MIMIC]: {
 		id: Monster.MIMIC,
@@ -894,7 +895,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		level: 35,
 		zones: [MapZone.DINOWEST],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'mimic'
 	},
 	[Monster.EARTH2]: {
 		id: Monster.EARTH2,
@@ -913,7 +915,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		level: 15,
 		zones: [MapZone.DINOWEST],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'eearth'
 	},
 	/* -------------------------------------------------
 	 * SKILLS DINOZ
@@ -2263,7 +2266,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			Skill.BULLE
 		],
 		zones: [],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'bao'
 	},
 	[Monster.SOLDIER]: {
 		id: Monster.SOLDIER,

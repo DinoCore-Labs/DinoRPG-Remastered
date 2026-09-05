@@ -15,6 +15,8 @@ import { movementListener } from '../../Fight/Service/movementListener.service.j
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { processScenarioMoveFight } from '../../Scenario/Service/scenarioMoveFight.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
+import { refreshTutorialProgress } from '../../Tutorial/Controller/tutorial.controller.js';
+import { assertTutorialMovementAllowed } from '../../Tutorial/Controller/tutorial.movement.js';
 import { canGoToThisPlace, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
 import { addStatusToDinoz } from '../Controller/dinozStatus.controller.js';
@@ -70,6 +72,11 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 	if (!moveToDesiredPlace) {
 		throw new ExpectedError(`${currentPlace.name} is not adjacent with ${desiredPlace.name}`);
 	}
+	await assertTutorialMovementAllowed({
+		userId: authedId,
+		fromPlace: currentPlace.placeId,
+		toPlace: desiredPlace.placeId
+	});
 	// Check if condition to go to desired place are fulfilled for dinoz and followers
 	if (moveToDesiredPlace.condition) {
 		for (const member of team) {
@@ -249,6 +256,21 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 	}
 	// Increment move stat
 	await incrementUserStat(StatTracking.MOVES, authedId, 1);
+	/*
+	 * Vérifie les objectifs conditionnels du tutoriel.
+	 *
+	 * Ici cela permet notamment :
+	 *
+	 * move :
+	 *   uvar(moves, 1+)
+	 *
+	 * port :
+	 *   pos(port)
+	 */
+	await refreshTutorialProgress({
+		userId: authedId,
+		dinozId
+	});
 	// Increment kill stat if monsters were killed
 	const monsterKillCount =
 		fight.monsterKillCount ??

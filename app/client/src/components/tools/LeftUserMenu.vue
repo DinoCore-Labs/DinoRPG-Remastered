@@ -34,7 +34,7 @@
 						<img :src="getImgURL('act', 'act_enclos')" alt="enclosure" />
 						<span>{{ $t('topBar.leftUserMenu.enclosure') }}</span>
 					</RouterLink>
-					<RouterLink class="link" :to="`/shop/flying`">
+					<RouterLink class="link" :to="`/shop/flying`" data-tutorial="shop">
 						<img :src="getImgURL('act', 'act_boutique')" alt="shop" />
 						<span>{{ $t('topBar.leftUserMenu.shop') }}</span>
 					</RouterLink>
@@ -46,11 +46,23 @@
 						<img :src="getImgURL('act', 'act_dojo')" alt="dojo" />
 						<span>{{ $t('common.dojo') }}</span>
 					</RouterLink>
-					<RouterLink :to="`/clan/${userStore.clanId}`" class="link" :title="$t('common.clan')" v-if="userStore.clanId">
+					<RouterLink
+						:to="`/clan/${userStore.clanId}`"
+						class="link"
+						:title="$t('button.clan')"
+						v-if="userStore.clanId"
+						data-tutorial="clan"
+					>
 						<img :src="getImgURL('act', 'act_castle')" alt="clan" />
 						<span>{{ $t('common.clan') }}</span>
 					</RouterLink>
-					<RouterLink :to="`/clans`" class="link" :title="$t('common.clan')" v-if="!userStore.clanId">
+					<RouterLink
+						:to="`/clans`"
+						class="link"
+						:title="$t('button.clan')"
+						v-if="!userStore.clanId"
+						data-tutorial="clan"
+					>
 						<img :src="getImgURL('act', 'act_castle')" alt="clan" />
 						<span>{{ $t('common.clan') }}</span>
 					</RouterLink>
