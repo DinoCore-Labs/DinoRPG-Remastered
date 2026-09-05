@@ -2,6 +2,20 @@
 
 ## 🔹 Core
 
+## 0.38.0
+
+### Minor Changes
+
+- 0cedaed: Add dynamic multilingual roadmap management.
+
+  - Store roadmap titles and items in the database for FR, EN, ES and DE.
+  - Add public and admin roadmap API endpoints.
+  - Add a roadmap management page to the admin panel.
+  - Allow administrators to edit and reorder roadmap entries and items.
+  - Add automatic support for all available `small_*` roadmap icons.
+  - Replace static roadmap translations with database-managed content.
+  - Improve the roadmap admin interface with reusable DinoRPG UI components.
+
 ## 0.37.0
 
 ### Minor Changes
@@ -657,6 +671,25 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.40.0
+
+### Minor Changes
+
+- 0cedaed: Add dynamic multilingual roadmap management.
+
+  - Store roadmap titles and items in the database for FR, EN, ES and DE.
+  - Add public and admin roadmap API endpoints.
+  - Add a roadmap management page to the admin panel.
+  - Allow administrators to edit and reorder roadmap entries and items.
+  - Add automatic support for all available `small_*` roadmap icons.
+  - Replace static roadmap translations with database-managed content.
+  - Improve the roadmap admin interface with reusable DinoRPG UI components.
+
+### Patch Changes
+
+- Updated dependencies [0cedaed]
+  - @dinorpg/core@0.38.0
 
 ## 0.39.0
 
@@ -1533,6 +1566,20 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.39.0
+
+### Minor Changes
+
+- 0cedaed: Add dynamic multilingual roadmap management.
+
+  - Store roadmap titles and items in the database for FR, EN, ES and DE.
+  - Add public and admin roadmap API endpoints.
+  - Add a roadmap management page to the admin panel.
+  - Allow administrators to edit and reorder roadmap entries and items.
+  - Add automatic support for all available `small_*` roadmap icons.
+  - Replace static roadmap translations with database-managed content.
+  - Improve the roadmap admin interface with reusable DinoRPG UI components.
 
 ## 0.38.0
 
