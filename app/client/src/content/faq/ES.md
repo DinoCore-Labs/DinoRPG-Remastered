@@ -1,210 +1,213 @@
-## Pourquoi les deux dernières missions de Papy Joe ne se débloquent pas ?
+## ¿Por qué no se desbloquean las dos últimas misiones de Papy Jose?
 
-La mission 'Les Géants' se débloquera quand votre Dinoz aura atteint le niveau 11 et 'L'exploit du mois' quand il sera au niveau 18.
+La misión 'Los Gigantes' se desbloqueará cuando tu Dino haya alcanzado el nivel 11 y 'El desafío del mes' cuando esté en el nivel 18.
 
-## Où se trouve le chien de Mme Ducraft ?
+## ¿Dónde está el perro de la señora Ducraft?
 
-Le Chien de Mme Ducraft se trouve au Port de Prêche, accessible depuis la Fontaine de Jouvence. La fontaine de Jouvence est accessible depuis Dinoville, Forcebrut, ou Chez Papy Joe.
+El Perro de la señora Ducraft se encuentra en el Puerto de Santa Moría, accesible desde la Fuente de la Juventud. Se puede acceder a la Fuente de la Juventud desde Dinovilla, Fuerzabruta o Casa de Papy Jose.
 
-## Où se trouve le marché des îles Atlantéinées où je dois échanger une banane contre un porte-manteau (deuxième mission de Bao Bob, 'Le troc des îles Atlantéinées' ?
+## ¿Dónde está el mercado de las Islas Atlanteidas donde tengo que cambiar un plátano por un perchero (segunda misión de Bao Bob, 'El Trueque de las Islas Atlanteidas')?
 
-Cette mission se fait par étape. Vous devrez vous rendre au Mines de Corail, puis aux Iles Waikiki, puis au Chutes Mutantes, puis au Marais Collant, à nouveau aux Mines de Corail et enfin chez M. Bao Bob.
+Esta misión se realiza por etapas. Tendrás que ir a las Minas de Coral, luego a la Isla Waïkiki, luego a las Caídas Mutantes, luego al Pantano Pegajoso, nuevamente a las Minas de Coral y finalmente a la Casa de Don Bao Bob.
 
-Dans chacun de ces lieux, vous devez discuter avec un personnage et effectuer l'échange qu'il vous propose.
+En cada uno de estos lugares deberás charlar con un personaje y realizar el intercambio que te ofrece.
 
-## Comment avoir plus de 18 Dinoz ?
+## ¿Cómo tener más de 18 Dinos?
 
-La compétence U Leader :bois: permet d’avoir 3 Dinoz de plus sur votre compte.
-Il en va de même pour Messie :air: sur le nouvel arbre de compétences 50+.
+La habilidad U Líder :bois: te permite tener 3 dinos más en tu cuenta.
+Lo mismo ocurre con Mesías :air: en el nuevo árbol de habilidades 50+.
 
-Les compétences U (unique) ne fonctionnent qu'une seule fois par compte.
-Après, il est possible d’en avoir beaucoup plus en congelant certains de vos Dinoz.
+Las habilidades U (únicas) solo funcionan una vez por cuenta.
+Después, es posible tener muchos Dinos más congelando algunos otros de tus Dinos.
 
-## Que choisir au jeu du Pile-ou-face face à Yakuzi ?
+## ¿Qué elegir en el juego de cara o cruz contra Yakuzi?
 
-Peu importe le choix, le premier pari sera forcément perdu alors que le second sera forcément gagné.
+Independientemente de la elección, la primera apuesta necesariamente la perderás; mientras que la segunda, necesariamente la ganarás.
 
-## Comment fonctionne la Perle de Fontaine ?
+## ¿Cómo funciona la Perla de la Fuente?
 
-Tout Dinoz qui se trouve à la Fontaine de Jouvence à minuit gagnera 5 :pv: par jour lors de votre connexion quotidienne. L’effet n’est pas cumulatif.
+Cualquier Dino que esté en la Fuente de la Juventud ganará 5 :pv: cada media noche durante tu conexión diaria. El efecto no es acumulativo.
 
-## Comment obtenir la Perle de la Fontaine ?
+## ¿Cómo obtengo la Perla de la Fuente?
 
-Il vous faudra la Bouée.
-A partir du Port de Prêche, accédez à l'Île Waïkiki (Îles Atantéinées), puis accédez aux chutes Mutantes (accessibles depuis le Dôme Soulaflotte, Chez Bao Bob, et depuis le Marais Collant).
+Necesitará el Salvavidas.
+Desde el Puerto de Santa Moría, ve a la Isla Waïkiki (Islas Atlanteidas), luego ve a las Caídas Mutantes (accesibles desde Sulaflota, Casa de Bao Bob y desde el Pantano Pegajoso).
 
-Discutez avec Maître Hydargol, et suivez ses instructions. Si vous menez à bien la mission qu'il vous donnera, vous obtiendrez la Perle de la Fontaine.
+Habla con el Maestro Hydargol y sigue sus instrucciones. Si completas con éxito sus instrucciones, obtendrás la Perla de la Fuente.
 
-## Comment enlever une compétence à un Dinoz ?
+## ¿Cómo quitarle una habilidad a un Dino?
 
-Les compétences apprises ne peuvent être supprimées mais vous pouvez en désactiver certaines grâce au Guide de Stratégie en 130 leçons que vous obtiendrez en accomplissant la seconde mission du Shaman mou, 'L'épouvantarchélion'.
+Las habilidades aprendidas no se pueden borrar pero sí puedes desactivar algunas de ellas gracias a la Guía de Estrategia en 130 lecciones que obtendrás al completar la segunda misión del Chamán Lacio, 'Él espanta-arqueliano'.
 
-En règle générale, il faut éviter de choisir des attaques (compétences A) dans les éléments mineurs de votre Dinoz.
-Ex : Canon à eau est déconseillé pour un pigmou.
+Como regla general, debes evitar elegir ataques (competencias A) en los elementos menores de tu Dino.
+Ejemplo: No se recomienda Torrente de Agua para un Pigmou.
 
-## Comment obtenir la Lanterne ?
+## ¿Cómo obtener la Linterna?
 
-Tout d'abord, vous devez avoir le Gant des Zors afin d'accéder à la forêt de Grumhel par les Îles Atlantéinées.
+En primer lugar, deberás tener las **Hojas de Nenúfar** para poder acceder a la Jungla de Grumhel a través de las Islas Atlanteidas.
 
-Allez sur les Collines Hantées et parlez à L'Homme Bizarre. Ignorez-le et combattez un monstre.
-La Lanterne permet d'aller aux Gorges Profondes et faire la mission Hiéroglyphes du Shaman Mou.
+Ve a las Colinas Encantadas y habla con el Hombre Raro. Ignóralo y lucha contra un monstruo.
+La Linterna te permite ir a las **Gargantas Profundas** y realizar la misión Jeroglíficos del Chamán Lacio."
 
-## Où se trouve le dictionnaire demandé dans la première mission du Shaman mou, 'La mise à l'épreuve' ?
+## ¿Dónde está el diccionario solicitado en la primera misión del Chamán Lacio, 'La puesta a prueba'?
 
-Le dictionnaire est à l'Université.
+El diccionario está en la Universidad.
 
-## Est-ce que je peux faire combattre mes Dinoz ensemble ?
+## ¿Puedo hacer que mis Dinos peleen juntos?
 
-Vous ne pouvez pas les faire s'affronter mais vous pouvez les faire se battre les uns aux cotés des autres. Pour grouper vos Dinoz, ils doivent se trouver aux même endroit et posséder chacun une action disponible.
+No puedes hacer que se enfrenten entre ellos, pero puedes hacer que peleen juntos. Para agrupar a tus Dinos, deben encontrarse en el mismo lugar y tener cada uno una acción disponible.
 
-Sélectionnez l'action 'Faire suivre' : vos Dinoz sont désormais en équipe. Vous pouvez grouper jusqu'à trois Dinoz, la limite peut passer à cinq si le Dinoz chef de groupe a appris les compétences :bois: Sympathie et Charisme.
+Selecciona la acción **Seguir**: tus Dinos estarán ahora en grupo. Puedes agrupar hasta tres Dinos, y el límite puede aumentar a cinco si el Dino líder del grupo ha aprendido las habilidades de :bois: Simpatía y Carisma.
 
-## J'ai fini les missions de Papy Joe, comment puis-je en avoir d'autres ?
+## Terminé las misiones de Papy Jose, ¿cómo puedo conseguir más?
 
-Aux îles Atlantéinées, M. Bao Bob (Chez Bao Bob) vous proposera une nouvelle liste de missions. Au Grand Tout Chaud, c'est le Shaman mou (Fosselave) qui a besoin de vos services.
+En las Islas Atlanteidas, Don Bao Bob (en la Casa de Don Bao Bob) te ofrecerá una nueva lista de misiones. En el Gran Señor Todo-Quema, el Chamán Lacio (Fosalava) también te ofrecerá misiones.
 
-## Comment accéder aux Steppes Magnétiques ?
+## ¿Cómo puedo acceder a las Estepas Magnéticas?
 
-Vous, ou les personnes de votre clan si vous en avez un, devez faire concentrer 7 Dinoz chez Bao Bob (équipés des Palmes de korgon, c'est obligatoire).
+Tú o las personas de tu clan, si tienes uno, deben concentrar **7 Dinos** en Casa de Don Bao Bob. Estos dinos deben tener, obligatoriamente, las **Aletas de Korgones** en sus estatus.
 
-Une fois les 7 Dinoz en concentration, vous aurez accès à un portail qui vous mènera vers un monde dans lequel, après un petit périple et un gros gardien à abattre, vous obtiendrez une clé.
+Una vez concentrados los 7 Dinos, tendrás acceso a un portal que te conducirá a un mundo en el que, tras un corto viaje y un gran guardián al que matar, obtendrás una llave.
 
-Cette clé, celle de la Porte de Sylvenoire, vous donnera accès aux Steppes Magnétiques... Accessible à partir de la forêt de Grumhel.
+Esta llave de la **Puerta de Sylvanegra** te dará acceso a las Estepas Magnéticas, accesible desde la Jungla de Grumhel.
 
-Conseil : destiné avant tout aux Dinoz de haut LVL, genre 30 et +... Les Dinoz à Élement Majeur d'Eau sont défavorisés.
+Consejo: recomendado principalmente para Dinos con un nivel alto, de 30 hacia arriba. Adicionalmente, los Dinos cuyo elemento principal sea agua estarán en desventaja.
 
-## Où trouve-t-on Yakuzi ?
+## ¿Dónde se encuentra Yakuzi?
 
-Yakuzi apparait de manière aléatoire au Port de Prêche.
+Yakuzi aparece de manera aleatoria en el Puerto de Santa Moría.
 
-## Quelles sont les conditions pour créer/adhérer à un clan ?
+## ¿Cuáles son las condiciones para crear/unirse a un clan?
 
-Pour créer un clan : avoir 20.000:gold: et 15 points minimum.
+Para crear un clan: tener 20.000 :gold: y 15 puntos como mínimo.
 
-Pour adhérer à un clan : avoir 1.000:gold: et 4 points minimum.
+Para unirte a un clan: tener 1,000 :gold: y 4 puntos como mínimo.
 
-## Comment obtenir le Gant des Zors ? Comment accéder à la forêt de Gruhmel ?
+## ¿Cómo conseguir el Guante de Zors? ¿Cómo acceder a la Jungla de Grumhel?
 
-Il vous faudra tout d'abord la Bouée, le Matériel d'escalade, la Pelle et l'Appeau à Rascaphandre.
-Avec la Pelle, creusez aux Pentes de Basalte (Mont Tout Chaud), au Marais Collant (Îles Atlantéinées) et à la Fontaine de Jouvence (Royaume de Dinoville). Vous devriez obtenir les statuts 'boue du Marais', 'éclat de Granit' et 'Eau Pure'.
+Primero, necesitarás el Salvavidas, el Material de Escalada, la Pala y la Flauta de Rascafandro. Con la Pala, excava en las Pendientes de Basalto (Gran Señor Todo-Quema), en el Pantano Pegajoso (Islas Atlanteidas) y en la Fuente de la Juventud (Reino de Dinovilla). Deberías obtener los estatus 'Fango del Pantano', 'Trozo de Basalto' y 'Agua Pura'.
 
-Allez ensuite au Dôme Soulaflotte parler à l'Archisage, et donnez-lui vos objets récoltés. Après avoir combattu l'Élementaire de bois, vous obtiendrez le Gant des Zors. Rendez-vous maintenant aux Chutes Mutantes.
+Luego, dirígete al Estadio de Sulaflota para hablar con el Archisabio y entrégale los objetos que has recolectado. Después de derrotar al **Elemental de Tierra**, obtendrás el Guante de los Zors. Ahora dirígete a las Caídas Mutantes.
 
-J'ignore si vous devez déjà avoir la Perle de la Fontaine, mais c'est préférable. Parlez à Maître Hydargol et acceptez de lui prêter le Gant des Zors. Vous obtiendrez une Feuille de Nénuphar. A présent, vous pouvez accéder à la forêt de Grumhel à partir des Chutes Mutantes.
+Habla con el Maestro Hydargol y acepta prestarle el Guante de los Zors, con lo que obtendrás las **Hojas de Nenúfar**. Ahora puedes acceder a la Jungla de Grumhel desde las Caídas Mutantes.
 
-## Où utiliser la pelle pour creuser ?
+## ¿Dónde debo excavar con la pala?
 
-Une fois la Pelle obtenue, et sachant qu'après chaque utilisation il faudra retourner la faire réparer aux Mines de Corail, il existe 4 endroits où creuser :
+Una vez que hayas obtenido la Pala, hay 4 lugares para excavar:
 
-1. Au Marais Collant.
+1. En el Pantano Pegajoso.
 
-2. A la Fontaine de Jouvence.
+2. En la Fuente de la Juventud.
 
-3. Aux Pentes de Basaltes.
+3. En las Pendientes de Basalto.
 
-4. Aux Ruines Ashpouk.
+4. En las Ruinas Ashpuk.
 
-## Où trouver le colis disparu ?
+Ten en cuenta que, cada vez que uses la pala, tendrás que volver a las Minas de Coral para repararla.
 
-Parler au type qui a perdu le colis aux Forges du Grand Tout Chaud. Il faut pour cela descendre aux Pentes de Basalte. Il faut tuer 4 Gobelins.
+## ¿Dónde puedo encontrar el paquete desaparecido?
 
-Ensuite, remonter au Tunnel sous la Branche. 6 Gobelins à tuer.
+Habla con el tipo que perdió el paquete en las Fraguas del Gran Señor Todo-Quema. Para ello hay que bajar hasta las Pendientes de Basalto. Debes matar a 4 Goblins.
 
-Retourner valider la Mission à Fosselave.
+Luego regresa al Túnel bajo la Rama y mata 6 Goblins.
 
-## Comment accéder au Dome Soulaflotte ?
+Finalmente, regresa para validar la Misión en Fosalava.
 
-Avec l'Appeau à Rascaphandre à partir des Chutes Mutantes.
+## ¿Cómo puedo acceder al Estadio de Sulaflota?
 
-Pour obtenir l'appeau, il vous faudra la Bouée et un Dinoz assez fort. Rendez-vous aux Îles Atlantéinées à partir du Port de Prêche, et allez aux Chutes Mutantes. Parlez au Garde Atlante, il vous parlera d'un ami pêcheur se trouvant au Port de Prêche. Retournez donc au Port de Prêche et parlez à Jovébozé.
+Con la **Flauta de Rascafandro**, desde las Caídas Mutantes.
 
-Ce dernier vous emmènera combattre un Rascaphandre, et si vous réussissez à le tuer, il vous donnera un appeau à rascaphandre.
+Para obtener la flauta, necesitarás el Salvavidas y un Dino bastante fuerte. Ve a las Islas Atlanteidas desde el Puerto de Santa Moría y luego ve a las Caídas Mutantes. Habla con la Guardia Atlanteido, y él te contará sobre un amigo pescador ubicado en el Puerto de Santa Moría. Así que regresa al Puerto de Santa Moría y habla con Jovebozé.
 
-## Où trouver les Étoiles Magiques ?
+Este último te llevará a luchar contra un Rascafandro y, si logras matarlo, te dará la Flaute de Rascafandro.
 
-Suivez bien les instructions données par l'Être Étrange que vous rencontrerez aléatoirement à la Fontaine de Jouvence.
+## ¿Dónde puedo encontrar las Estrellas Mágicas?
 
-Indices supplémentaires
+Sigue las instrucciones dadas por el **Ser Extraño** que encontrarás al azar en la Fuente de la Juventud.
 
-Première étoile : la Capitale n'est autre que Dinoville. Il vous faudra une nouvelle action pour combattre le Megaloup.
-Deuxième étoile : le Graisseux enthousiaste est le Vendeur de Merguez qui se trouve aux Ruines Ashpouk.
-Troisième étoile : l'énigme parle d'elle-même.
-Quatrième étoile : l'appel... la Pelle...
-Cinquième étoile : le capsicum est un végétal connu plus fréquemment sous le nom de poivron.
-Sixième étoile : l'Homme-dieu est Bao Bob.
-Septième étoile : Saru veut dire 'singe'. Attention, vous devez déjà être dans la Jungle Sauvage avant d'y laisser mourir votre Dinoz.
+Pistas adicionales:
 
-## Comment fait on pour avoir une relique ?
+**Primera estrella:** la Capital no es otra que Dinovilla. Necesitarás una nueva acción para luchar contra un Megalobo.
+**Segunda estrella:** el tipo grasiento es el Vendedor de Salchichas ubicado en las Ruinas Ashpuk.
+**Tercera estrella:** el acertijo habla por sí solo.
+**Cuarta estrella:** el agujero... la Pala...
+**Quinta estrella:** el capsicum es un vegetal más conocido con el nombre de pimiento.
+**Sexta estrella:** el hombre-dios es Bao Bob.
+**Séptima estrella:** Saru significa 'mono'. Ojo, ya debes estar en la Jungla Salvaje antes de dejar morir allí a tu Dino.
 
-Pour avoir une relique, il faut creuser aux Ruines Ashpouk (Grand Tout Chaud) et se rendre ensuite à l'université pour authentifier la relique.
+## ¿Cómo puedo conseguir una reliquia?
 
-Pour l'obtenir, il faut d'abord : la Bouée, le Matériel d'escalade et la Pelle. Niveaux minimum pour la Bouée et le Matériel d'Escalade : 5 et 6.
+Para obtener una reliquia, debes excavar en las Ruinas Ashpuk (Gran Señor Todo-Quema) y luego ir a la universidad para autentificar la reliquia.
 
-La relique permet d'accéder au tournoi de Forcebrut.
+Para obtenerlo primero necesitas: el Salvavidas, el Material de Escalada y la Pala. Niveles mínimos para obtener el Salvavidas y el Material de Escalada: 5 y 6.
 
-## Comment accéder à la forêt de Grumhel à partir des Gorges Profondes ou comment accéder à la seconde partie de la forêt de Grumhel ?
+La reliquia permite el acceso al torneo de Fuerzabruta.
 
-Il vous faudra le Gant des Zors, une Feuille de Nénuphar et la Bouée. Rendez-vous aux chutes Mutantes, et déplacez-vous à la forêt de Grumhel (Lieu 'Contourner les Chutes Mutantes'). À partir de là, rendez-vous aux Collines hantées. Parlez à l'homme Bizarre et ignorez-le. Il vous parlera alors d'un horrible monstre, et demandez à le combattre. Vous entrerez alors en combat avec un Korgon Farceur. Si vous réussissez à la vaincre (ce qui est fort possible), l'Homme Bizarre s'enfuira, vous laissant sa lanterne. A présent, quittez la Forêt de Grumhel, quittez les Îles Atlantéinées, quittez dinoLand et rendez vous au Mont Tout Chaud, au Tunnel sous la Branche. À partir de là, accédez aux Gorges Profondes (action Se déplacer). À partir des Gorges Profondes, accéder au Camp des Korgons (action Se Déplacer). Vous êtes maintenant au camp des Korgons, dans la seconde partie de la forêt de Grumehl. Pour rallier les deux parties, faites les missions de Dian Korgsey, et obtenez les Palmes de Korgon. À présent, vous avez la possibilité de vous déplacer du Camp des Korgons au Fleuve Jumin, et vice-versa.
+## ¿Cómo acceder a la Jungla de Grumhel desde las Gargantas Profundas o cómo acceder a la segunda parte de la Jungla de Grumhel?
 
-## Comment obtenir la Pelle (Creuser) ?
+Necesitarás el Guante de los Zors, las Hojas de Nenúfar y el Salvavidas. Dirígete a las Caídas Mutantes y muévete hacia la Jungla de Grumhel (a través de la acción \"Rodear las Caídas Mutantes\"). Desde allí, ve a las **Colinas Encantadas**. Habla con el **Hombre Raro** e ignóralo. Luego te hablará de un horrible monstruo, y debes pedirle enfrentarlo. Entrarás en combate con un Korgon Bromista. Si logras vencerlo (lo cual es muy probable), el Hombre Raro huirá, dejándote su **linterna**. Ahora, sal de la Jungla de Grumhel, pasa por las Islas Atlanteidas, pasa por Dinoland y dirígete al Volcán del Gran Señor Todo-Quema, específicamente al Túnel bajo la Rama. Desde allí, accede a las Gargantas Profundas (a través de la acción Desplazarse). Desde las Gargantas Profundas, accede al **Campamento Korgon** (a través de la acción Desplazarse), y ya estarás ubicado en la segunda parte de la Jungla de Grumhel. Para unir ambas partes, realiza las misiones de **Dian Korgsey** y obtén las **Aletas de Korgones**. Ahora tienes la posibilidad de moverte del Campamento Korgon al Río Jumin, y viceversa.
 
-Il vous faudra tout d'abord la Bouée. À partir du port de Prêche, accédez aux Îles Atlantéinées, puis déplacez-vous aux Mines de Corail. Parlez au Mineur Coralien, et répondez-lui oui.
-Il vous donnera la pelle, mais à chaque fois que vous creuserez, elle se cassera, et vous devrez revenir le voir pour qu'il vous la répare.
+## ¿Cómo conseguir la Pala (Excavar)?
 
-## Dinoz sombres et Trophées Hippoclamp, Pteroz et Rocky
+Primero necesitarás el Salvavidas. Desde el Puerto de Santa Moría, accede a las Islas Atlanteidas y luego muévete hacia las **Minas de Coral**. Habla con el **Minero Coraliano** y respóndele que sí.
+Te dará la pala, pero cada vez que caves, se romperá y tendrás que volver a verlo para que la repare.
 
-L'Hippoclamp Sombre se trouve sur l'île Waïkiki, accessible depuis le Port de Prêche grâce à la Bouée. Le vaincre vous rapportera le Trophée des Hippoclamps. Et il faut au minimum être au niveau 8 pour le voir.
+## Dinos Sombra y los Trofeos de los Hippoclamps, Teroz, Rokkys
 
-Le Ptéroz Sombre se trouve aux Pentes de Basalte, accessible depuis les Collines Escarpées avec le Matériel d'Escalade. Vous obtiendrez le Trophée des Pteroz en le battant.
+El **Hippoclamp sombra** se encuentra en la **Isla Waïkiki**, a la que se puede acceder desde el Puerto de Santa Moría con el Salvavidas. Tienes que tener nivel 8 para verlo, y, al derrotarlo, te otorgará el Trofeo de los Hippoclamps.
 
-Le Rocky se trouve à Forcebrut. Il n'est pas visible avant le niveau 13 et difficile à vaincre avant le niveau 15 mais vous rapportera le Trophée des Rocky.
+El **Teroz sombra** está ubicado en las **Pendientes de Basalto**, accesible desde las Colinas Escarpadas con el Material de Escalada. Tienes que tener nivel 8 para verlo, y, al derrotarlo, te otorgará el Trofeo de los Teroz.
 
-Les Trophées sont des objets épiques visibles sur votre compte. Ils vous permettent d'acheter dans l'Enclos le Dinoz correspondant au Trophée : Hippoclamp si vous avez le Trophée Hippoclamp, etc.
+El **Rokky sombra** se encuentra en Fuerzabruta. No es visible antes del nivel 13 y es difícil de derrotar antes del nivel 15, pero te otorgará el **Trofeo de los Rokkys** al derrotarlo.
 
-## Comment fait-on pour congeler un Dinoz ?
+Los trofeos son elementos épicos visibles en tu cuenta. Te permiten comprar el Dino correspondiente a cada trofeo: Hippoclamp si tienes el Trofeo de los Hippoclamps, etc.
 
-Rendez vous aux Gorges Profondes puis parlez avec le Spéléléologue. Il vous proposera de congeler votre Dinoz.
-Ceci vous permettra d'élever un Dinoz supplémentaire à la place.
+## ¿Cómo congelar un Dino?
 
-Il vous faudra bien évidemment la lanterne pour accéder aux gorges.
+Dirígete a las Gargantas Profundas y luego habla con el Pelele-ólogo. Él te sugerirá que congeles tu Dino.
+Esto te permitirá comprar un Dino adicional.
 
-## Comment obtenir un Kabuki ?
+Necesitarás la linterna para acceder a las Gargantas."
 
-Pour obtenir ce précieux Dinoz, il vous faudra l'aura Kabuki, qui s'obtient grâce à la quête de Yakuzi !
+## ¿Cómo obtener un Kabuki?
 
-Dans un premier temps, vous aurez besoin de rencontrer Yakuzi au Port de Prêche (rencontre aléatoire), et d'accepter ses deux paris.
-Il disparaitra ensuite, et vous pourrez de nouveau le rencontrer, tout d'abord aux Forges, ensuite aux Gorges Profondes.
-Lors de cette dernière rencontre, vous obtiendrez un parchemin, que vous devrez faire traduire à l'Université par un professeur.
-Ce dernier vous apprendra qu'il faudra lui donner plusieurs ingrédients pour avancer dans votre quête.
-Une fois ces ingrédients donnés, et après un délai d'attente de quelques jours, vous devrez vous rendre aux Mines de Corail (il se peut que vous deviez attendre un peu, le temps qu'un onglet apparaisse, comme pour une étape de mission).
-Pour terminer cette quête, vous devrez poursuivre votre assaillant sur l'Île du Totem, qui n'est pas accessible avant.
+Para obtener este precioso Dino, necesitarás el Aura Kabuki, que se obtiene a través de la búsqueda de Yakuzi!
 
-Vous obtiendrez aisni un Oeuf de Kabuki, et l'aura kabuki, qui vous permettra de vous rendre sur ce lieu aussi souvent que vous le voudrez.
+Primero, deberás encontrarte con Yakuzi (Punk Misterioso) en el Puerto de Santa Moría (encuentro aleatorio) y aceptar sus dos apuestas. && Luego desaparecerá y podrás encontrarlo nuevamente, primero en las Fraguas y luego en las Gargantas Profundas.
+Durante este último encuentro, obtendrás un pergamino, que tendrás que hacer traducir en la Universidad por un profesor.
+Este último te informará que necesitas darle varios ingredientes para avanzar en tu búsqueda.
+Una vez dados estos ingredientes, y después de un periodo de espera de unos días, tendrás que dirigirte a las Minas de Coral (puede que debas esperar un poco hasta que aparezca una pestaña, como en una etapa de misión).
+Para completar esta misión, tendrás que perseguir a tu atacante hasta la isla del Tótem, a la que antes no se podía acceder.
 
-## Comment vendre son Dinoz ?
+Obtendrás así un huevo Kabuki y el aura Kabuki, que te permitirá acudir a este lugar tantas veces como quieras.
 
-Pour pouvoir vendre son Dinoz, il faut déjà que vous en possédiez deux (vous ne pouvez pas rester sans Dinoz). Ensuite, allez à la Place du Marché, cliquez sur Marché des Eleveurs, et sur Vendre.
-ATTENTION : cette opération est irréversible.
+## ¿Cómo puedo vender mi Dino?
 
-## Anguilloz au vinaigre
+Para poder vender tu Dino, debes tener por lo menos dos Dinos (no puedes quedarte sin Dino). A continuación, dirígete a la **Plaza del Mercado**, haga clic en **Mercado de los Maestros** y haga clic en Vender.
+ADVERTENCIA: esta operación es irreversible.
 
-Trouver le bon lieu...c'est ça qui est difficile et qui nous fait tourner en rond hein ?
+## Anguilos en vinagre
 
-Allez, un petit coup de main :
+Encontrar el lugar correcto... eso es lo difícil y lo que nos mantiene dando vueltas, ¿verdad?
 
--> Il faut aller à Dinoville.
+Vamos, un poco de ayuda:
 
-## Comment récupérer la vie de mon Dinoz ?
+-> Tenemos que ir a **Dinovilla**.
 
-Il y a 4 possibilités :
+## ¿Cómo recuperar la vida de mi Dino?
 
-En achetant et en utilisant les objets de santé disponibles dans le magasin.
-En utilisant l'option de repos.
-Lorsque le Dinoz est à la Fontaine de Jouvence avec la Perle de Jouvence à minuit.
-En équipant l'un de vos Dinoz du Bracelet Tik et en attendant minuit.
+Hay 4 posibilidades:
 
-## Où dois-je redémarrer lorsque mon Dinoz est mort ?
+1. Comprando y utilizando objetos de salud disponibles en la tienda.
 
-Si vous n'utilisez pas de Potion d'Ange, vous redémarrez à Dinoville avec 1 point de vie et vous perdez la moitié de votre Expérience.
+2. Usando la opción de descansar.
 
-Si vous utilisez une Potion d'Ange, vous redémarrez là où vous êtes avec 1 point de vie.
+3. Cuando el Dino está en la Fuente de la Juventud con la Perla de la Juventud a medianoche.
+
+4. Equipando a uno de tus Dinos con el Brazalete de Tik y esperar la medianoche.
+
+## ¿Dónde resucitará mi Dino cuando muera?
+
+Si no usas una poción de ángel, resucitará en Dinovilla con 1 punto de vida y perderás la mitad de tu experiencia.
+
+Si usas una Poción de Ángel, resucitará y permanecerá en el mismo lugar donde estaba, con 1 punto de vida.
