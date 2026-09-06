@@ -1,210 +1,208 @@
-## Pourquoi les deux dernières missions de Papy Joe ne se débloquent pas ?
+## Warum werden die letzten beiden Missionen von Papy Joe nicht freigeschaltet?
 
-La mission 'Les Géants' se débloquera quand votre Dinoz aura atteint le niveau 11 et 'L'exploit du mois' quand il sera au niveau 18.
+Die Mission „Die Riesen“ wird freigeschaltet, sobald dein Dinoz die Stufe 11 erreicht hat, während „Heldentat des Monats“ ab Stufe 18 freigeschaltet wird.
 
-## Où se trouve le chien de Mme Ducraft ?
+## Wo kann man den Hund von Jacqueline Ducraft finden?
 
-Le Chien de Mme Ducraft se trouve au Port de Prêche, accessible depuis la Fontaine de Jouvence. La fontaine de Jouvence est accessible depuis Dinoville, Forcebrut, ou Chez Papy Joe.
+Der Hund von Jacqueline Ducraft befindet sich am Predigerhafen, der über den Jungbrunnen erreicht werden kann. Zum Jungbrunnen gelangt man von Dinoville, Rohkraft oder Papy Joe aus.
 
-## Où se trouve le marché des îles Atlantéinées où je dois échanger une banane contre un porte-manteau (deuxième mission de Bao Bob, 'Le troc des îles Atlantéinées' ?
+## Wo findet man den Markt der Atlantinischen Inseln, wo ich eine Banane gegen einen Kleiderständer tauschen muss? (zweite Mission von Bao Bob, „Der Atlantinische Tauschhandel“)
 
-Cette mission se fait par étape. Vous devrez vous rendre au Mines de Corail, puis aux Iles Waikiki, puis au Chutes Mutantes, puis au Marais Collant, à nouveau aux Mines de Corail et enfin chez M. Bao Bob.
+Diese Mission ist in Abschnitte unterteilt. Du musst zu den Korallenminen gehen, dann zu der Waïkiki-Insel, dann zu den Mutierenden Sturzfluten, dann zum Klebrigen Sumpf, dann zurück zu den Korallenminen und anschließend zum Haus von Bao Bob.
 
-Dans chacun de ces lieux, vous devez discuter avec un personnage et effectuer l'échange qu'il vous propose.
+An jedem dieser Orte musst du mit einer Person sprechen und den jeweiligen Tauschhandel vollziehen.
 
-## Comment avoir plus de 18 Dinoz ?
+## Wie erhält man mehr als 18 Dinoz?
 
-La compétence U Leader :bois: permet d’avoir 3 Dinoz de plus sur votre compte.
-Il en va de même pour Messie :air: sur le nouvel arbre de compétences 50+.
+Die U-Fähigkeit „Anführer“ :bois: ermöglicht es, drei zusätzliche Dinoz zu besitzen.&&Das Gleiche gilt für „Messias“ :air: im neuen Fähigkeitenbaum für Stufe 50+.
 
-Les compétences U (unique) ne fonctionnent qu'une seule fois par compte.
-Après, il est possible d’en avoir beaucoup plus en congelant certains de vos Dinoz.
+Fähigkeiten des Typs „U“ (ungewöhnlich) wirken nur einmalig pro Konto.&& &&Darüber hinaus gibt es die Möglichkeit, bestimmte Dinoz einzufrieren, um noch mehr von ihnen zu besitzen.
 
-## Que choisir au jeu du Pile-ou-face face à Yakuzi ?
+## Was soll man bei „Kopf oder Zahl?“ nehmen, wenn man es mit Yakuzi spielt?
 
-Peu importe le choix, le premier pari sera forcément perdu alors que le second sera forcément gagné.
+Welche Wahl man auch trifft, die erste Runde verliert man und die zweite wird gewonnen.
 
-## Comment fonctionne la Perle de Fontaine ?
+## Wie funktioniert die Perle aus dem Brunnen?
 
-Tout Dinoz qui se trouve à la Fontaine de Jouvence à minuit gagnera 5 :pv: par jour lors de votre connexion quotidienne. L’effet n’est pas cumulatif.
+Alle Dinoz, die sich um Mitternacht am Jungbrunnen befinden, erhalten beim täglichen Einloggen 5 :pv:. Der Effekt ist nicht kumulativ.
 
-## Comment obtenir la Perle de la Fontaine ?
+## Wie erhält man die Perle aus dem Brunnen?
 
-Il vous faudra la Bouée.
-A partir du Port de Prêche, accédez à l'Île Waïkiki (Îles Atantéinées), puis accédez aux chutes Mutantes (accessibles depuis le Dôme Soulaflotte, Chez Bao Bob, et depuis le Marais Collant).
+Hierzu wird der Schwimmreifen benötigt.&& &&Reise vom Predigerhafen aus zu der Waïkiki-Insel (Atlantinische Inseln), um dann die Mutierenden Sturzfluten zu erreichen (über den Klebrigen Sumpf, das Haus von Bao Bob oder von der Unterwasserkuppel aus).
 
-Discutez avec Maître Hydargol, et suivez ses instructions. Si vous menez à bien la mission qu'il vous donnera, vous obtiendrez la Perle de la Fontaine.
+Spreche nun mit Meister Hydargol und folge seinen Anweisungen. Wenn du die Mission, die er dir gibt, erfolgreich abschließt, erhältst du die Perle aus dem Brunnen.
 
-## Comment enlever une compétence à un Dinoz ?
+## Wie kann ein Dinoz eine Fähigkeit verlernen?
 
-Les compétences apprises ne peuvent être supprimées mais vous pouvez en désactiver certaines grâce au Guide de Stratégie en 130 leçons que vous obtiendrez en accomplissant la seconde mission du Shaman mou, 'L'épouvantarchélion'.
+Erlernte Fähigkeiten können nicht wieder entfernt werden, aber einige von ihnen können mithilfe des Handbuchs „Strategie in 130 Lektionen“ deaktiviert werden. Du erhältst es, sobald du die zweite Mission vom Lässigen Schamanen: „Die Archelöwenscheuche“ abgeschlossen hast.
 
-En règle générale, il faut éviter de choisir des attaques (compétences A) dans les éléments mineurs de votre Dinoz.
-Ex : Canon à eau est déconseillé pour un pigmou.
+Als Faustregel sollte vermieden werden, Angriffe (Fähigkeiten des Typs „A“) schwächerer Elemente eines Dinoz aktiviert zu lassen. Zum Beispiel wäre Wasserkannone für ein Färkel nicht empfehlenswert.
 
-## Comment obtenir la Lanterne ?
+## Wie erhält man die Laterne?
 
-Tout d'abord, vous devez avoir le Gant des Zors afin d'accéder à la forêt de Grumhel par les Îles Atlantéinées.
+Um den Grumhel-Wald über die Atlantinischen Inseln betreten zu können, benötigst du zunächst den Handschuh der Zors.
 
-Allez sur les Collines Hantées et parlez à L'Homme Bizarre. Ignorez-le et combattez un monstre.
-La Lanterne permet d'aller aux Gorges Profondes et faire la mission Hiéroglyphes du Shaman Mou.
+Gehe dann zu den Verwunschenen Hügeln und sprich mit dem Sonderbaren Mann. Ignoriere ihn und kämpfe gegen ein Monster.
+Mit der Laterne können dann die Tiefen Schluchten betreten und beim Lässigen Schamanen die Mission „Hieroglyphen“ abgeschlossen werden.
 
-## Où se trouve le dictionnaire demandé dans la première mission du Shaman mou, 'La mise à l'épreuve' ?
+## Wo findet man das Wörterbuch, das in der ersten Mission „Die Bewährungsprobe“ vom Lässigen Schamanen benötigt wird?
 
-Le dictionnaire est à l'Université.
+Das Wörterbuch ist an der Universität.
 
-## Est-ce que je peux faire combattre mes Dinoz ensemble ?
+## Ist es möglich, meine Dinoz gemeinsam kämpfen zu lassen?
 
-Vous ne pouvez pas les faire s'affronter mais vous pouvez les faire se battre les uns aux cotés des autres. Pour grouper vos Dinoz, ils doivent se trouver aux même endroit et posséder chacun une action disponible.
+Sie können zwar nicht gegeneinander Kämpfen, aber dafür Seite an Seite. Um deine Dinoz zu gruppieren, müssen sie sich am selben Ort befinden und je über eine Aktion verfügen. Nutze die Aktion „Folgen“ und wähle dann einen Dinoz aus: Deine Dinoz agieren nun als Gruppe.
 
-Sélectionnez l'action 'Faire suivre' : vos Dinoz sont désormais en équipe. Vous pouvez grouper jusqu'à trois Dinoz, la limite peut passer à cinq si le Dinoz chef de groupe a appris les compétences :bois: Sympathie et Charisme.
+Es können bis zu drei Dinoz eine Gruppe bilden, aber die Begrenzung kann auf fünf erhöht werden, falls der Gruppenführer über die :bois:-Fähigkeiten „Sympathisch“ und „Charisma“ verfügt.
 
-## J'ai fini les missions de Papy Joe, comment puis-je en avoir d'autres ?
+## Ich habe die Missionen von Papy Joe abgeschlossen. Wo gibt es weitere?
 
-Aux îles Atlantéinées, M. Bao Bob (Chez Bao Bob) vous proposera une nouvelle liste de missions. Au Grand Tout Chaud, c'est le Shaman mou (Fosselave) qui a besoin de vos services.
+Auf den Atlantinischen Inseln kann Herr Bao Bob (Haus von Bao Bob) dir neue Missionen anbieten. Auf dem Großen Immerhitzus ist es der Lässige Schamane (Lavagrube), der deine Dienste benötigt.
 
-## Comment accéder aux Steppes Magnétiques ?
+## Wie erreicht man die Magnetischen Steppen?
 
-Vous, ou les personnes de votre clan si vous en avez un, devez faire concentrer 7 Dinoz chez Bao Bob (équipés des Palmes de korgon, c'est obligatoire).
+Du oder deine Klanmitglieder, falls du einem angehörst, müssen 7 Dinoz bei Bao Bob versammeln (zwingend ausgestattet mit Korgonenflossen).
 
-Une fois les 7 Dinoz en concentration, vous aurez accès à un portail qui vous mènera vers un monde dans lequel, après un petit périple et un gros gardien à abattre, vous obtiendrez une clé.
+Sobald die 7 Dinoz sich konzentrieren, erhältst du Zugang zu einem Portal, das in eine andere Welt führt. Dort wirst du nach einer kurzen Reise und einem Kampf mit einem Wächter einen Schlüssel erhalten.
 
-Cette clé, celle de la Porte de Sylvenoire, vous donnera accès aux Steppes Magnétiques... Accessible à partir de la forêt de Grumhel.
+Dieser Schüssel zum Tor von Waldenacht wird dir vom Grumhel-Wald aus Zugang zu den Magnetischen Steppen gewähren.
 
-Conseil : destiné avant tout aux Dinoz de haut LVL, genre 30 et +... Les Dinoz à Élement Majeur d'Eau sont défavorisés.
+Tipp: Geeignet für Dinoz hoher Stufen, ca. 30+. Dinoz mit Wasser als ihr Hauptelement sind dabei im Nachteil.
 
-## Où trouve-t-on Yakuzi ?
+## Wo findet man Yakuzi?
 
-Yakuzi apparait de manière aléatoire au Port de Prêche.
+Yakuzi erscheint zufällig am Predigerhafen.
 
-## Quelles sont les conditions pour créer/adhérer à un clan ?
+## Was sind die Bedingungen, um einen Klan zu gründen / einem beizutreten?
 
-Pour créer un clan : avoir 20.000:gold: et 15 points minimum.
+Um einen Klan zu gründen, musst du 20.000 :gold: und mindestens 15 Rangpunkte besitzen.
 
-Pour adhérer à un clan : avoir 1.000:gold: et 4 points minimum.
+Um einem Klan beizutreten, brauchst du 1.000 :gold: und mindestens 4 Punkte."
 
-## Comment obtenir le Gant des Zors ? Comment accéder à la forêt de Gruhmel ?
+## Wie erhält man den Handschuh der Zors? Wie kann man den Grumhel-Wald betreten?
 
-Il vous faudra tout d'abord la Bouée, le Matériel d'escalade, la Pelle et l'Appeau à Rascaphandre.
-Avec la Pelle, creusez aux Pentes de Basalte (Mont Tout Chaud), au Marais Collant (Îles Atlantéinées) et à la Fontaine de Jouvence (Royaume de Dinoville). Vous devriez obtenir les statuts 'boue du Marais', 'éclat de Granit' et 'Eau Pure'.
+Zunächst benötigst du einen Schwimmreifen, Kletterausrüstung, eine Schaufel und eine Tiefseeskorp-Lockflöte.
 
-Allez ensuite au Dôme Soulaflotte parler à l'Archisage, et donnez-lui vos objets récoltés. Après avoir combattu l'Élementaire de bois, vous obtiendrez le Gant des Zors. Rendez-vous maintenant aux Chutes Mutantes.
+Grabe mit der Schaufel auf den Basalthängen (Der Große Immerhitzus), am Klebrigen Sumpf (Atlantinische Inseln) und beim Jungbrunnen (Dinoville-Königreich). Dabei solltest du die Status „Sumpfschlamm“, „Basaltsplitter“ und „Reines Wasser“ erhalten.
 
-J'ignore si vous devez déjà avoir la Perle de la Fontaine, mais c'est préférable. Parlez à Maître Hydargol et acceptez de lui prêter le Gant des Zors. Vous obtiendrez une Feuille de Nénuphar. A présent, vous pouvez accéder à la forêt de Grumhel à partir des Chutes Mutantes.
+Gehe als nächstes zur Unterwasserkuppel, um mit dem Erzweisen zu sprechen und ihm die gesammelten Dinge zu geben. Nach dem Kampf mit dem Erdelementar, erhältst du den Handschuh der Zors.
 
-## Où utiliser la pelle pour creuser ?
+Gehe nun zu den Mutierenden Sturzfluten. Es ist nicht sicher, ob hierzu die Perle aus dem Brunnen benötigt wird, aber es wäre von Vorteil. Sprich mit Meister Hydargol und erlaube ihm, sich den Handschuh der Zors auszuleihen. Du erhältst ein Seerosenblatt. Von nun an, kannst du den Grumhel-Wald von den Mutierenden Sturzfluten aus betreten.
 
-Une fois la Pelle obtenue, et sachant qu'après chaque utilisation il faudra retourner la faire réparer aux Mines de Corail, il existe 4 endroits où creuser :
+## Wo sollte man mit der Schaufel graben?
 
-1. Au Marais Collant.
+Sobald du die Schaufel erhalten hast und unter Berücksichtigung, dass du nach jeder Benutzung zu den Korallenminen zurückkehren müssen wirst, um sie reparieren zu lassen, sollte man an vier Orten graben:
 
-2. A la Fontaine de Jouvence.
+1. Im Klebrigen Sumpf.
 
-3. Aux Pentes de Basaltes.
+2. Beim Jungbrunnen.
 
-4. Aux Ruines Ashpouk.
+3. Auf den Basalthängen.
 
-## Où trouver le colis disparu ?
+4. In den Aschpuckruinen.
 
-Parler au type qui a perdu le colis aux Forges du Grand Tout Chaud. Il faut pour cela descendre aux Pentes de Basalte. Il faut tuer 4 Gobelins.
+## Wo findet man das verschwundene Paket?
 
-Ensuite, remonter au Tunnel sous la Branche. 6 Gobelins à tuer.
+Sprich zunächst bei den Schmieden des Großen Immerhitzus mit dem Boten, der das Paket verloren hat. Für diesen musst du zu den Basalthängen hinuntersteigen und vier Goblins töten. Steige anschließend wieder zum Tunnel unter dem Ast hinauf und töte sechs weitere.
 
-Retourner valider la Mission à Fosselave.
+Kehre nun zur Lavagrube zurück, um die Mission abzuschließen.
 
-## Comment accéder au Dome Soulaflotte ?
+## Wie erreicht man die Unterwasserkuppel?
 
-Avec l'Appeau à Rascaphandre à partir des Chutes Mutantes.
+Von den Mutierenden Sturzfluten aus mithilfe der Tiefseeskorp-Lockflöte.&& &&Um die Lockflöte zu erhalten, benötigst du den Schwimmreifen und einen recht starken Dinoz. Schwimme vom Predigerhafen aus zu den Atlantinischen Inseln und reise dann zu den Mutierenden Sturzfluten. Sprich mit dem Atlantinischen Wächter, der dir von einem befreundeten Fischer vom Predigerhafen erzählen sollte. Kehre also nun zum Predigerhafen zurück und sprich mit Jové Bozé.
 
-Pour obtenir l'appeau, il vous faudra la Bouée et un Dinoz assez fort. Rendez-vous aux Îles Atlantéinées à partir du Port de Prêche, et allez aux Chutes Mutantes. Parlez au Garde Atlante, il vous parlera d'un ami pêcheur se trouvant au Port de Prêche. Retournez donc au Port de Prêche et parlez à Jovébozé.
+Er wird dich zu einem Kampf mit einem Tiefseeskorp mitnehmen und wenn es dir gelingt, diesen zu besiegen, wird der Fischer dir eine Tiefseeskorp-Lockflöte schenken.
 
-Ce dernier vous emmènera combattre un Rascaphandre, et si vous réussissez à le tuer, il vous donnera un appeau à rascaphandre.
+## Wo finde ich die Zaubersterne?
 
-## Où trouver les Étoiles Magiques ?
+Befolge die Anweisungen des Seltsamen Wesens, das man am Jungbrunnen treffen kann.
+**Zusatztipps:**
+Erster Stern: Bei der Hauptstadt handelt es sich um Dinoville. Du brauchst eine neue Aktion, um gegen den Megawolf zu kämpfen.
+Zweiter Stern: Der schmierige Enthusiast ist der Merguez-Verkäufer, der sich bei den Aschpuckruinen befindet.
+Dritter Stern: Das Rätsel ist selbsterklärend.
+Vierter Stern: Umschau fällt... umschaufelt...
+Fünfter Stern: „Capiscum“ ist ein Gemüse, das auch als Paprika bekannt ist.
+Sechster Stern: Der Halbgott ist Bao Bob.
+Siebter Stern: Der „Saru“ ist ein Affe. Vorsicht, denn du musst bereits im Wilden Dschungel gewesen sein, bevor du deinen Dinoz dort sterben lässt.
 
-Suivez bien les instructions données par l'Être Étrange que vous rencontrerez aléatoirement à la Fontaine de Jouvence.
+## Wie erhält man ein uraltes Relikt?
 
-Indices supplémentaires
+Für das Relikt benötigst du zunächst den Schwimmreifen, Kletterausrüstung und die Schaufel. Die Mindeststufen für den Schwimmreifen und Kletterausrüstung sind 5 und 6.
 
-Première étoile : la Capitale n'est autre que Dinoville. Il vous faudra une nouvelle action pour combattre le Megaloup.
-Deuxième étoile : le Graisseux enthousiaste est le Vendeur de Merguez qui se trouve aux Ruines Ashpouk.
-Troisième étoile : l'énigme parle d'elle-même.
-Quatrième étoile : l'appel... la Pelle...
-Cinquième étoile : le capsicum est un végétal connu plus fréquemment sous le nom de poivron.
-Sixième étoile : l'Homme-dieu est Bao Bob.
-Septième étoile : Saru veut dire 'singe'. Attention, vous devez déjà être dans la Jungle Sauvage avant d'y laisser mourir votre Dinoz.
+Um das Relikt zu finden, musst du in den Aschpuckruinen (Der Große Immerhitzus) graben und dann zur Universität gehen, um es identifizieren zu lassen. Nun gewährt das Aschpucken-Totem Zugang zum Rohkraft-Turnier.
 
-## Comment fait on pour avoir une relique ?
+## Wie gelangt man durch die Tiefen Schluchten zum Grumhel-Wald und wie erreicht man den zweiten Teil des Grumhel-Waldes?
 
-Pour avoir une relique, il faut creuser aux Ruines Ashpouk (Grand Tout Chaud) et se rendre ensuite à l'université pour authentifier la relique.
+Hierzu benötigst du den Handschuh der Zors, das Seerosenblatt und den Schwimmreifen.
 
-Pour l'obtenir, il faut d'abord : la Bouée, le Matériel d'escalade et la Pelle. Niveaux minimum pour la Bouée et le Matériel d'Escalade : 5 et 6.
+Finde dich bei den Mutierenden Sturzfluten ein und betritt den Grumhel-Wald („Sturzfluten umfahren“ auf der Karte). Reise weiter zu den Verwunschenen Hügeln. Sprich mit dem Sonderbaren Mann und ignoriere ihn. Er wird dir von einem schrecklichen Monster erzählen und verlangt von dir, es zu bekämpfen. Tritt also den Kampf mit einem Korgonen-Witzbold an. Falls du ihn besiegen solltest (was sehr wahrscheinlich ist), wird der Sonderbare Mann geflohen sein und seine Laterne hinterlassen haben.
 
-La relique permet d'accéder au tournoi de Forcebrut.
+Verlasse nun den Grumhel-Wald und reise durch die Atlantinischen Inseln und das Dinoland zum Großen Immerhitzus, zum Tunnel unter dem Ast. Gehe von dort aus in die Tiefen Schluchten hinein (Bewegungsaktion). Verlasse anschließend die Tiefen Schluchten Richtung Korgonenlager (Bewegungsaktion) und du erreichst den zweiten Teil des Grumhel-Waldes.
 
-## Comment accéder à la forêt de Grumhel à partir des Gorges Profondes ou comment accéder à la seconde partie de la forêt de Grumhel ?
+Um nun eine Verbindung zwischen den zwei Bereichen herzustellen, musst du die Missionen von Dian Korgsey abschließen und die Korgonenflossen erhalten. Dann wird es dir möglich sein, dich zwischen dem Korgonenlager und dem Jumin-Fluss fortzubewegen.
 
-Il vous faudra le Gant des Zors, une Feuille de Nénuphar et la Bouée. Rendez-vous aux chutes Mutantes, et déplacez-vous à la forêt de Grumhel (Lieu 'Contourner les Chutes Mutantes'). À partir de là, rendez-vous aux Collines hantées. Parlez à l'homme Bizarre et ignorez-le. Il vous parlera alors d'un horrible monstre, et demandez à le combattre. Vous entrerez alors en combat avec un Korgon Farceur. Si vous réussissez à la vaincre (ce qui est fort possible), l'Homme Bizarre s'enfuira, vous laissant sa lanterne. A présent, quittez la Forêt de Grumhel, quittez les Îles Atlantéinées, quittez dinoLand et rendez vous au Mont Tout Chaud, au Tunnel sous la Branche. À partir de là, accédez aux Gorges Profondes (action Se déplacer). À partir des Gorges Profondes, accéder au Camp des Korgons (action Se Déplacer). Vous êtes maintenant au camp des Korgons, dans la seconde partie de la forêt de Grumehl. Pour rallier les deux parties, faites les missions de Dian Korgsey, et obtenez les Palmes de Korgon. À présent, vous avez la possibilité de vous déplacer du Camp des Korgons au Fleuve Jumin, et vice-versa.
+## Wie erhält man eine Schaufel (zum Graben)?
 
-## Comment obtenir la Pelle (Creuser) ?
+Hierfür benötigst du zunächst den Schwimmreifen.
 
-Il vous faudra tout d'abord la Bouée. À partir du port de Prêche, accédez aux Îles Atlantéinées, puis déplacez-vous aux Mines de Corail. Parlez au Mineur Coralien, et répondez-lui oui.
-Il vous donnera la pelle, mais à chaque fois que vous creuserez, elle se cassera, et vous devrez revenir le voir pour qu'il vous la répare.
+Vom Predigerhafen aus erreichst du die Atlantinischen Inseln, um dort zu den Korallenminen zu gelangen. Sprich mit dem Korallenschürfer und stimme ihm zu.
+Er wird dir daraufhin die Schaufel geben, allerdings wird sie jedes Mal, wenn du damit gräbst, kaputtgehen und du musst dann zu ihm zurückkehren, um sie reparieren zu lassen.
 
-## Dinoz sombres et Trophées Hippoclamp, Pteroz et Rocky
+## Was hat es mit den dunklen Dinoz und den Trophäen der Hippoklampen, Pteros und Rockys auf sich?
 
-L'Hippoclamp Sombre se trouve sur l'île Waïkiki, accessible depuis le Port de Prêche grâce à la Bouée. Le vaincre vous rapportera le Trophée des Hippoclamps. Et il faut au minimum être au niveau 8 pour le voir.
+Der Dunkle Hippoklamp befindet sich auf der Waïkiki-Insel, die man mithilfe des Schwimmreifens vom Predigerhafen aus erreichen kann. Solltest du ihn besiegen, erhältst du die Trophäe der Hippoklampen. Dein Dinoz muss mindestens Stufe 8 sein, um ihn sehen zu können.
 
-Le Ptéroz Sombre se trouve aux Pentes de Basalte, accessible depuis les Collines Escarpées avec le Matériel d'Escalade. Vous obtiendrez le Trophée des Pteroz en le battant.
+Der Dunkle Ptero befindet sich auf den Basalthängen, die man mithilfe der Kletterausrüstung von den Zerklüfteten Hügeln aus erreichen kann. Solltest du ihn besiegen, erhältst du die Trophäe der Pteros.
 
-Le Rocky se trouve à Forcebrut. Il n'est pas visible avant le niveau 13 et difficile à vaincre avant le niveau 15 mais vous rapportera le Trophée des Rocky.
+Der Dunkle Rocky befindet sich in Rohkraft. Er ist vor Stufe 15 schwer zu besiegen, aber solltest du es schaffen, erhältst du die Trophäe der Rockys. Dein Dinoz muss mindestens Stufe 13 sein, um ihn zu sehen.
 
-Les Trophées sont des objets épiques visibles sur votre compte. Ils vous permettent d'acheter dans l'Enclos le Dinoz correspondant au Trophée : Hippoclamp si vous avez le Trophée Hippoclamp, etc.
+Tropäen sind epische Belohnungen, die im Konto-Profil angezeigt werden. Sie ermöglichen es, im Dinoz-Gehege den ihnen entsprechenden Dinoz zu kaufen: Einen Hippoklampen, wenn du die Trophäe der Hippoklampen hast usw."
 
-## Comment fait-on pour congeler un Dinoz ?
+## Wie kann man einen Dinoz einfrieren?
 
-Rendez vous aux Gorges Profondes puis parlez avec le Spéléléologue. Il vous proposera de congeler votre Dinoz.
-Ceci vous permettra d'élever un Dinoz supplémentaire à la place.
+Hierzu benötigst du die Laterne.
 
-Il vous faudra bien évidemment la lanterne pour accéder aux gorges.
+Reise zu den Tiefen Schluchten und sprich mit dem Höhöhöhlenforscher. Er wird dir anbieten, deinen Dinoz einzufrieren.
 
-## Comment obtenir un Kabuki ?
+An seiner statt wirst du einen zusätzlichen Dinoz hochzüchten können.
 
-Pour obtenir ce précieux Dinoz, il vous faudra l'aura Kabuki, qui s'obtient grâce à la quête de Yakuzi !
+## Wie erhält man einen Kabuki?
 
-Dans un premier temps, vous aurez besoin de rencontrer Yakuzi au Port de Prêche (rencontre aléatoire), et d'accepter ses deux paris.
-Il disparaitra ensuite, et vous pourrez de nouveau le rencontrer, tout d'abord aux Forges, ensuite aux Gorges Profondes.
-Lors de cette dernière rencontre, vous obtiendrez un parchemin, que vous devrez faire traduire à l'Université par un professeur.
-Ce dernier vous apprendra qu'il faudra lui donner plusieurs ingrédients pour avancer dans votre quête.
-Une fois ces ingrédients donnés, et après un délai d'attente de quelques jours, vous devrez vous rendre aux Mines de Corail (il se peut que vous deviez attendre un peu, le temps qu'un onglet apparaisse, comme pour une étape de mission).
-Pour terminer cette quête, vous devrez poursuivre votre assaillant sur l'Île du Totem, qui n'est pas accessible avant.
+Um diesen kostbaren Dinoz zu erhalten, benötigst du die Kabuki-Aura, welche man durch Yakuzis Mission erhalten kann!
 
-Vous obtiendrez aisni un Oeuf de Kabuki, et l'aura kabuki, qui vous permettra de vous rendre sur ce lieu aussi souvent que vous le voudrez.
+Zunächst musst du Yakuzi am Predigerhafen treffen (zufällige Begegnung) und seine beiden Wetten annehmen.
+Dann wird er verschwinden, wonach du ihn erst bei den Schmieden und dann bei den Tiefen Schluchten erneut treffen kannst.
+Beim letzteren Treffen erhältst du ein Pergament, das du an der Universität von einem Professor übersetzen lassen musst.
+Dieser wird dir zu verstehen geben, dass er mehrere Zutaten benötigt, um bei deiner Mission voranzukommen.
+Nach dem Überreichen der Zutaten und einigen Tagen Wartezeit musst du die Korallenminen besuchen (du müsstest möglicherweise einen Moment warten, bis eine Registerkarte angezeigt wird, wie bei einem Missionsschritt).
+Um die Mission abzuschließen, musst du daraufhin deinen Angreifer bis zur Totem-Insel verfolgen, die zuvor nicht zugänglich gewesen ist.
 
-## Comment vendre son Dinoz ?
+Du erhältst dann ein Kabuki-Ei sowie die Kabuki-Aura, mit der du diesen Ort so oft besuchen kannst, wie es dir gefällt.
 
-Pour pouvoir vendre son Dinoz, il faut déjà que vous en possédiez deux (vous ne pouvez pas rester sans Dinoz). Ensuite, allez à la Place du Marché, cliquez sur Marché des Eleveurs, et sur Vendre.
-ATTENTION : cette opération est irréversible.
+## Wie kann man seine Dinoz verkaufen?
 
-## Anguilloz au vinaigre
+Um Dinoz verkaufen zu können, musst du mindestens zwei von ihnen besitzen (man kann nicht ohne Dinoz sein). Damit kannst du dann zum Marktplatz (im Dinoland) gehen, auf den Züchtermarkt klicken und dann auf „verkaufen“.
 
-Trouver le bon lieu...c'est ça qui est difficile et qui nous fait tourner en rond hein ?
+ACHTUNG: Dieser Vorgang ist unumkehrbar.
 
-Allez, un petit coup de main :
+## Wo muss man bei der Mission „Aalos in Essig“ hin?
 
--> Il faut aller à Dinoville.
+Den richtigen Ort finden... das ist daran die Schwierigkeit, die einen im Kreis laufen lässt, was?
 
-## Comment récupérer la vie de mon Dinoz ?
+Hier ist eine kleine Hilfe:
+-> Du musst nach Dinoville.
 
-Il y a 4 possibilités :
+## Wie stellt man Dinoz die Lebenspunkte wieder her?
 
-En achetant et en utilisant les objets de santé disponibles dans le magasin.
-En utilisant l'option de repos.
-Lorsque le Dinoz est à la Fontaine de Jouvence avec la Perle de Jouvence à minuit.
-En équipant l'un de vos Dinoz du Bracelet Tik et en attendant minuit.
+Es gibt vier Möglichkeiten:
 
-## Où dois-je redémarrer lorsque mon Dinoz est mort ?
+In Geschäften verfügbare Gesundheitsgegenstände kaufen und benutzen.
+Die Aktion: „Ausruhen“ verwenden (erscheint nur, wenn ein Dinoz weniger als 50% seiner Lebenspunkte hat).
+Dinoz über Mitternacht am Jungbrunnen lassen, wenn man die Perle aus dem Brunnen besitzt.
+Dinoz mit dem Tik-Armreif ausrüsten und bis Mitternacht warten.
 
-Si vous n'utilisez pas de Potion d'Ange, vous redémarrez à Dinoville avec 1 point de vie et vous perdez la moitié de votre Expérience.
+## Wo kann man neu starten, wenn ein Dinoz stirbt?
 
-Si vous utilisez une Potion d'Ange, vous redémarrez là où vous êtes avec 1 point de vie.
+Wenn du einen Engelstrank verwendest, startet der Dinoz mit 1 Lebenspunkt in Dinoville und verliert die Hälfte seiner Erfahrung.
+
+Wenn du einen Engelstrank verwendest, startet der Dinoz mit 1 Lebenspunkt dort, wo er sich befindet.
