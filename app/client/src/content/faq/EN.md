@@ -96,13 +96,13 @@ I'm unsure if you already need to have the Fountain Pearl, but it's preferable. 
 
 Once you've obtained the Shovel, and knowing that after each use you'll need to return it for repair at the Coral Mines, there are 4 places to dig:
 
-1.At the Sticky Swamp.
+1. At the Sticky Swamp.
 
-2.At the Fountain of Youth.
+2. At the Fountain of Youth.
 
-3.At the Basalt Slopes.
+3. At the Basalt Slopes.
 
-4.At the Ashpouk Ruins.
+4. At the Ashpouk Ruins.
 
 ## Where to find the missing package?
 
