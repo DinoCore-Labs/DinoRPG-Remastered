@@ -70,6 +70,10 @@ export async function dojoTest(req: FastifyRequest, reply: FastifyReply) {
 	const body = fightTestSchema.parse(req.body);
 	const fightCost = (body.leftTeam.length + body.rightTeam.length) * DOJO_FIGHT_FRIENDS_DINOZ_COST;
 
+	if (body.leftTeam.some(id => body.rightTeam.includes(id))) {
+		throw new ExpectedError('dojo.challengeFriend.doubleDinoz');
+	}
+
 	const leftUser = await getDojoFightPreparationRequest(userId);
 	if (!leftUser || !body.leftTeam.every(id => availableDinozIds(leftUser.dinoz).includes(id))) {
 		throw new ExpectedError('dojo.dinozNotUser');

@@ -19,11 +19,26 @@
 		<DZDisclaimer round help :content="$t('dojo.challengeFriend.selectYourDinoz')" />
 		<SelectDinoz :dinozList="myDinoz" :selectLimit="6" @validate="composeMyTeam"></SelectDinoz>
 		<DZDisclaimer round help :content="$t('dojo.challengeFriend.selectOpponentDinoz')" />
-		<DZButton v-for="friend in clanMembers" :key="friend.user.id" @click="selectPlayer(friend.user.id)">
-			{{ friend.user.name }}</DZButton
-		>
+		<div class="opponent-list">
+			<DZButton :class="{ selected: opponentId === userStore.id }" @click="selectMyself()">
+				{{ userStore.name }}
+			</DZButton>
+			<DZButton
+				v-for="friend in otherClanMembers"
+				:key="friend.user.id"
+				:class="{ selected: opponentId === friend.user.id }"
+				@click="selectPlayer(friend.user.id)"
+			>
+				{{ friend.user.name }}
+			</DZButton>
+		</div>
 		<template v-if="opponentDinoz.length > 0">
-			<SelectDinoz :dinozList="opponentDinoz" :selectLimit="6" @validate="composeEnnemyTeam"></SelectDinoz>
+			<SelectDinoz
+				:key="opponentId"
+				:dinozList="opponentDinoz"
+				:selectLimit="6"
+				@validate="composeEnnemyTeam"
+			></SelectDinoz>
 		</template>
 		<div class="fight-options" v-if="myTeam.length > 0 && opponentTeam.length > 0">
 			<DZButton :class="{ active: enablePoison }" @click="enablePoison = !enablePoison">
@@ -62,6 +77,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
 import TitleHeader from '../utils/TitleHeader.vue';
+import Loading from '../utils/Loading.vue';
 import { userStore } from '../../store/userStore.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import { errorHandler } from '../../utils/errorHandler.js';
@@ -87,6 +103,7 @@ export default defineComponent({
 		DZButton,
 		DZDisclaimer,
 		DZInput,
+		Loading,
 		TitleHeader,
 		SelectDinoz,
 		FightersHeader,
@@ -115,10 +132,25 @@ export default defineComponent({
 			dojoStore: dojoStore()
 		};
 	},
+	computed: {
+		otherClanMembers(): ClanMember[] {
+			return this.clanMembers.filter(friend => friend.user.id !== this.userStore.id);
+		}
+	},
 	methods: {
+		selectMyself() {
+			if (this.userStore.id) {
+				this.selectPlayer(this.userStore.id);
+			}
+		},
 		async selectPlayer(playerId: string) {
 			this.opponentDinoz = [];
 			this.opponentTeam = [];
+			if (playerId === this.userStore.id) {
+				this.opponentDinoz = [...this.myDinoz];
+				this.opponentId = playerId;
+				return;
+			}
 			try {
 				const player = await UserService.getPublicProfile(playerId);
 				this.opponentDinoz = player.dinoz
@@ -208,11 +240,6 @@ export default defineComponent({
 		}
 	},
 	async mounted() {
-		const myClan = this.userStore.getClanId;
-		if (!myClan) {
-			this.$router.push({ path: '/dojo' });
-			return;
-		}
 		this.myDinoz = dinozStore()
 			.getDinozList.filter(d => d.state !== DINOZ_STATE.frozen)
 			.map(d => {
@@ -225,10 +252,13 @@ export default defineComponent({
 			})
 			.sort((a, b) => b.level - a.level);
 
-		try {
-			this.clanMembers = await ClanService.getClanMembersList(myClan);
-		} catch (e) {
-			errorHandler.handle(e, this.$toast);
+		const myClan = this.userStore.getClanId;
+		if (myClan) {
+			try {
+				this.clanMembers = await ClanService.getClanMembersList(myClan);
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
 		}
 	}
 });
@@ -268,6 +298,23 @@ export default defineComponent({
 	flex-direction: column;
 	align-items: center;
 	gap: 6px;
+}
+.opponent-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 6px;
+	max-width: 530px;
+}
+.fight-options {
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+}
+.button.active,
+.button.selected {
+	background-image: url('../../assets/button/button_hover.webp');
+	color: white;
 }
 .wrapper {
 	display: flex;
