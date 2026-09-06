@@ -139,10 +139,9 @@ export async function pickOpponentIds(team: { id: number; level: number }[], use
 	const opponentLevels = team.sort((a, b) => b.level - a.level).slice(0, 5);
 	const parsedIds = opponentLevels.map(o => o.id);
 	const opponentIds: number[] = [];
-	console.log('Opponent levels:', opponentLevels);
 
 	for (const dinoz of opponentLevels) {
-		const enemy = await prisma.dinoz.findFirst({
+		let candidates = await prisma.dinoz.findMany({
 			where: {
 				userId: { not: userId },
 				id: { notIn: parsedIds },
@@ -151,12 +150,37 @@ export async function pickOpponentIds(team: { id: number; level: number }[], use
 			select: { id: true }
 		});
 
-		if (enemy) {
+		// If no candidate within +-3 levels, expand range to +-6
+		if (candidates.length === 0) {
+			candidates = await prisma.dinoz.findMany({
+				where: {
+					userId: { not: userId },
+					id: { notIn: parsedIds },
+					level: { gte: Math.max(1, dinoz.level - 6), lte: dinoz.level + 6 }
+				},
+				select: { id: true }
+			});
+		}
+
+		// If still no candidate, search for any available dinoz
+		if (candidates.length === 0) {
+			candidates = await prisma.dinoz.findMany({
+				where: {
+					userId: { not: userId },
+					id: { notIn: parsedIds }
+				},
+				select: { id: true }
+			});
+		}
+
+		if (candidates.length > 0) {
+			const randomIndex = Math.floor(Math.random() * candidates.length);
+			const enemy = candidates[randomIndex];
 			parsedIds.push(enemy.id);
 			opponentIds.push(enemy.id);
 		}
 	}
-	console.log('Picked opponent IDs:', opponentIds);
+
 	return opponentIds;
 }
 
