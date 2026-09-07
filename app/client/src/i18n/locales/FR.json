@@ -3434,9 +3434,6 @@
 	"gameRules": {
 		"title": "Règlement de DinoRPG Remastered",
 		"version": "Version : {version}",
-		"footer": {
-			"title": "Règles et sécurité"
-		},
 		"registration": {
 			"label": "J’ai lu et j’accepte le {rules} dans sa version {version}.",
 			"link": "règlement du jeu"
