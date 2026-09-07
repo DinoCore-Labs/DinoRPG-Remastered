@@ -1422,7 +1422,8 @@
 			"Flee": "Flee",
 			"Stinger": "Dard",
 			"PoisonedPicks": "Poisoned Spikes",
-			"Contamination": "Contamination"
+			"Contamination": "Contamination",
+			"WormCall": "Appel"
 		},
 		"description": {
 			"GriffesEnflammees": "Increase the strength of all Fire **assaults** by 7",
@@ -1721,7 +1722,8 @@
 			"Leader": "Increase the number of maximum active Dinoz by 3 (non-cumulative)",
 			"GrosDormeur": "Allow the Dinoz to recover an additional action each day.",
 			"Veilleuse": "Allow all followers to recover an extra daily action as well.",
-			"Matelasseur": "All your active Dinoz recover an additional daily action (non-cumulative)."
+			"Matelasseur": "All your active Dinoz recover an additional daily action (non-cumulative).",
+			"WormCall": "Appelle un bébé worm"
 		}
 	},
 	"status": {
@@ -3434,9 +3436,6 @@
 	"gameRules": {
 		"title": "DinoRPG Remastered Rules",
 		"version": "Version: {version}",
-		"footer": {
-			"title": "Rules and Safety"
-		},
 		"registration": {
 			"label": "I have read and accept the {rules}, version {version}.",
 			"link": "game rules"
@@ -6319,6 +6318,9 @@
 		},
 		"jeromeTrader": {
 			"name": "L'affaire Warp Street"
+		},
+		"dojo": {
+			"name": "Dojo"
 		}
 	},
 	"reportModal": {
