@@ -13,12 +13,12 @@
 		"dinoz": "Dinoz",
 		"dojo": "Dojo",
 		"gains": "Gains",
-		"gameRules": "Règlement du jeu",
+		"gameRules": "Spielregeln",
 		"goldCoins": "Pièces d'or",
 		"ingredients": "Ingrédients",
 		"inventory": "Inventaire",
 		"items": "Objets",
-		"lastUpdated": "Dernière mise à jour : {date}",
+		"lastUpdated": "Zuletzt aktualisiert: {date}",
 		"legalNotices": "Mentions légales",
 		"loading": "Chargement...",
 		"master": "Maître",
@@ -1422,7 +1422,8 @@
 			"Flee": "Fuite",
 			"Stinger": "Dard",
 			"PoisonedPicks": "Pics empoisonnées",
-			"Contamination": "Contamination"
+			"Contamination": "Contamination",
+			"WormCall": "Appel"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les **assauts** de Feu de 7",
@@ -1721,7 +1722,8 @@
 			"Leader": "Augmente le nombre maximum de Dinoz actifs de 3 (non cumulable)",
 			"GrosDormeur": "Permet à votre Dinoz de récupérer une action supplémentaire chaque jour.",
 			"Veilleuse": "Permet à tous les Dinoz suivant votre Dinoz de récupérer également une action supplémentaire chaque jour.",
-			"Matelasseur": "Tous vos Dinoz récupèrent une action supplémentaire chaque jour (non cumulable)."
+			"Matelasseur": "Tous vos Dinoz récupèrent une action supplémentaire chaque jour (non cumulable).",
+			"WormCall": "Appelle un bébé worm"
 		}
 	},
 	"status": {
@@ -3432,23 +3434,20 @@
 		}
 	},
 	"gameRules": {
-		"title": "Règlement de DinoRPG Remastered",
-		"version": "Version : {version}",
-		"footer": {
-			"title": "Règles et sécurité"
-		},
+		"title": "Spielregeln von DinoRPG Remastered",
+		"version": "Version: {version}",
 		"registration": {
-			"label": "J’ai lu et j’accepte le {rules} dans sa version {version}.",
-			"link": "règlement du jeu"
+			"label": "Ich habe die {rules} in Version {version} gelesen und akzeptiere sie.",
+			"link": "Spielregeln"
 		},
 		"acceptance": {
-			"title": "Acceptation du règlement requise",
-			"description": "Le règlement du jeu a été ajouté ou mis à jour. Vous devez le lire et l’accepter avant de continuer à jouer.",
-			"checkbox": "J’ai lu et j’accepte le règlement du jeu dans sa version {version}.",
-			"button": "Accepter le règlement",
-			"submitting": "Enregistrement...",
-			"success": "Le règlement du jeu a bien été accepté.",
-			"error": "L’acceptation du règlement n’a pas pu être enregistrée."
+			"title": "Zustimmung zu den Spielregeln erforderlich",
+			"description": "Die Spielregeln wurden hinzugefügt oder aktualisiert. Du musst sie lesen und akzeptieren, bevor du weiterspielen kannst.",
+			"checkbox": "Ich habe die Spielregeln in Version {version} gelesen und akzeptiere sie.",
+			"button": "Spielregeln akzeptieren",
+			"submitting": "Wird gespeichert...",
+			"success": "Die Spielregeln wurden erfolgreich akzeptiert.",
+			"error": "Die Zustimmung zu den Spielregeln konnte nicht gespeichert werden."
 		}
 	},
 	"trainingCenter": {
@@ -6319,6 +6318,9 @@
 		},
 		"jeromeTrader": {
 			"name": "L'affaire Warp Street"
+		},
+		"dojo": {
+			"name": "Dojo"
 		}
 	},
 	"reportModal": {
