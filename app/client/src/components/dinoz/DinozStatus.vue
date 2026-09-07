@@ -14,7 +14,7 @@
 <template>
 	<div class="fx" @click="displayStatus = !displayStatus">
 		<p>{{ $t('dinozPage.fx') }}</p>
-		<div class="status" :class="displayStatus ? 'displayMe' : ''">
+		<div class="status">
 			<template v-for="status in dinozStatus" :key="status.statusId">
 				<Tippy theme="normal" v-if="statusList.displayed[status.statusId]">
 					<img
@@ -93,15 +93,7 @@ export default defineComponent({
 }
 @media (max-width: 539px) {
 	.fx {
-		width: calc(100% - 2px);
-		cursor: pointer;
-		.status {
-			display: none;
-			width: 100%;
-		}
-		.displayMe {
-			display: flex;
-		}
+		width: calc(100% - 1px);
 	}
 }
 </style>
