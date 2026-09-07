@@ -1,6 +1,6 @@
-export const GAME_RULES_VERSION = '1.1' as const;
+export const GAME_RULES_VERSION = '1.2' as const;
 
-export const GAME_RULES_UPDATED_AT = '2026-08-22' as const;
+export const GAME_RULES_UPDATED_AT = '2026-09-07' as const;
 
 export const GAME_RULES_ACCEPTANCE_REQUIRED_CODE = 'RULES_ACCEPTANCE_REQUIRED' as const;
 
