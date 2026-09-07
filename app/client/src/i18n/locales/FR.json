@@ -1422,7 +1422,8 @@
 			"Flee": "Fuite",
 			"Stinger": "Dard",
 			"PoisonedPicks": "Pics empoisonnées",
-			"Contamination": "Contamination"
+			"Contamination": "Contamination",
+			"WormCall": "Appel"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les **assauts** de Feu de 7",
@@ -1721,7 +1722,8 @@
 			"Leader": "Augmente le nombre maximum de Dinoz actifs de 3 (non cumulable)",
 			"GrosDormeur": "Permet à votre Dinoz de récupérer une action supplémentaire chaque jour.",
 			"Veilleuse": "Permet à tous les Dinoz suivant votre Dinoz de récupérer également une action supplémentaire chaque jour.",
-			"Matelasseur": "Tous vos Dinoz récupèrent une action supplémentaire chaque jour (non cumulable)."
+			"Matelasseur": "Tous vos Dinoz récupèrent une action supplémentaire chaque jour (non cumulable).",
+			"WormCall": "Appelle un bébé worm"
 		}
 	},
 	"status": {
