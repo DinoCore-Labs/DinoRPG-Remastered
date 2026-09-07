@@ -717,8 +717,8 @@ const startFight = (fightData: DetailedFight) => {
 
 					// Weakest element is the last in the array
 					opponent.element = opponent.elements[opponent.elements.length - 1];
-					// Lock opponent for 4 cycles on that element
-					opponent.locked = 4 * CYCLE;
+					// Lock opponent for 3 cycles on that element
+					opponent.locked = 3 * CYCLE;
 
 					// Add fx for locked
 					fightData.steps.push({
