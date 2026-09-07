@@ -4445,8 +4445,30 @@ const checkAfterDefenseEffects = (
 	isCloseCombat: boolean,
 	isInvocation: boolean
 ) => {
-	// Objet: voleur de vie
-	// TODO
+	// Objet: voleur de vie (passive trigger: hp < 20 but still alive)
+	if (
+		damage > 0 &&
+		target.hp > 0 &&
+		target.hp < 20 &&
+		!hasStatus(target, FightStatus.STOLE_LIFE) &&
+		target.items.some(item => item.itemId === Item.LIFE_STEALER)
+	) {
+		const opponents = getOpponents(fightData, target, AllFighterTypeExceptBoss);
+		if (opponents.length > 0) {
+			const randomOpponent = chooseRandomOpponent(opponents, fightData.rng);
+			if (randomOpponent) {
+				fightData.steps.push({
+					action: 'itemUse',
+					fighter: stepFighter(target),
+					itemId: Item.LIFE_STEALER
+				});
+				const hpToSteal = Math.min(30, randomOpponent.hp);
+				loseHp(fightData, randomOpponent, hpToSteal, LifeEffect.Normal);
+				heal(fightData, target, hpToSteal);
+				addStatus(fightData, target, FightStatus.STOLE_LIFE);
+			}
+		}
+	}
 
 	// Check breakable costume
 	if (target.costume && target.costume.breakable && damage > 0 && elements.includes(ElementType.FIRE)) {
@@ -4704,8 +4726,32 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				hasUnprocessedDeaths = true;
 				let canceledDeath = false;
 
+				// 0. LIFE_STEALER — must trigger before any other survival mechanism
+				if (
+					!hasStatus(fighter, FightStatus.STOLE_LIFE) &&
+					fighter.items.some(item => item.itemId === Item.LIFE_STEALER)
+				) {
+					const opponents = getOpponents(fightData, fighter, AllFighterTypeExceptBoss);
+					if (opponents.length > 0) {
+						const randomOpponent = chooseRandomOpponent(opponents, fightData.rng);
+						if (randomOpponent) {
+							canceledDeath = true;
+							fightData.steps.push({
+								action: 'itemUse',
+								fighter: stepFighter(fighter),
+								itemId: Item.LIFE_STEALER
+							});
+							const hpToSteal = Math.min(30, randomOpponent.hp);
+							loseHp(fightData, randomOpponent, hpToSteal, LifeEffect.Normal);
+							fighter.hp = 0; // Reset to 0 before healing so Dinoz gets exactly hpToSteal HP max
+							heal(fightData, fighter, hpToSteal);
+							addStatus(fightData, fighter, FightStatus.STOLE_LIFE);
+						}
+					}
+				}
+
 				// 1. SURVIE (Survival)
-				if (fighter.canSurvive) {
+				if (!canceledDeath && fighter.canSurvive) {
 					fighter.canSurvive = false;
 					canceledDeath = true;
 
