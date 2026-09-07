@@ -6399,6 +6399,9 @@
 		},
 		"jeromeTrader": {
 			"name": "L'affaire Warp Street"
+		},
+		"dojo": {
+			"name": "Dojo"
 		}
 	},
 	"reportModal": {
