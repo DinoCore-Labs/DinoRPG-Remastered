@@ -149,7 +149,7 @@ export default defineComponent({
 		},
 		goToItemShop() {
 			this.$router.push({
-				name: 'ItemShopPage',
+				name: 'ShopItems',
 				params: { name: 'flying' }
 			});
 		},

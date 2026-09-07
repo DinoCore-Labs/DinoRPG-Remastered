@@ -87,7 +87,6 @@
 						<img :src="getImgURL('background', `shop_arrow`)" alt="arrow" class="arrow" />
 						<p v-html="formatContent($t('shop.item.help'))" />
 					</div>
-
 					<div class="ad" v-html="formatContent($t('shop.item.advice') + $t('shop.item.advice_1'))" />
 				</div>
 				<div
@@ -491,6 +490,9 @@ export default defineComponent({
 		},
 		async loadPage() {
 			this.selectedItem = undefined;
+			this.fullItems = [];
+			this.itemList = [];
+			this.ingredientList = [];
 			// Get shop and its items to display
 			try {
 				this.fullItems = await ShopService.getItemsFromItemShop(this.actualShop?.shopId ?? 0);
