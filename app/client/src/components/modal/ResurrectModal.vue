@@ -40,9 +40,7 @@
 					<p>
 						<i18n-t keypath="resurrection.choice2.explanation" tag="div" class="text">
 							<template v-slot:boutique>
-								<a class="link" @click="$router.push({ name: 'ItemShopPage', params: { name: 'flying' } })">
-									boutique
-								</a>
+								<a class="link" @click="$router.push({ name: 'ShopItems', params: { name: 'flying' } })"> boutique </a>
 							</template>
 						</i18n-t>
 					</p>

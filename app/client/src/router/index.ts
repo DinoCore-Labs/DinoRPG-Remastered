@@ -264,7 +264,7 @@ const routes: RouteRecord[] = [
 			},
 			{
 				path: '/shop/:name',
-				name: 'ItemShopPage',
+				name: 'ShopItems',
 				component: ShopItems,
 				meta: { auth: true }
 			},

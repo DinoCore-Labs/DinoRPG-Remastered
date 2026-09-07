@@ -417,7 +417,7 @@ export default defineComponent({
 					const name = this.getShopNameFromAction(action);
 					if (!name) return;
 					this.$router.push({
-						name: 'ItemShopPage',
+						name: 'ShopItems',
 						params: { name }
 					});
 					break;
