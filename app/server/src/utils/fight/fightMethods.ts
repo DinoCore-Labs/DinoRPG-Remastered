@@ -4726,30 +4726,6 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				hasUnprocessedDeaths = true;
 				let canceledDeath = false;
 
-				// 0. LIFE_STEALER — must trigger before any other survival mechanism
-				if (
-					!hasStatus(fighter, FightStatus.STOLE_LIFE) &&
-					fighter.items.some(item => item.itemId === Item.LIFE_STEALER)
-				) {
-					const opponents = getOpponents(fightData, fighter, AllFighterTypeExceptBoss);
-					if (opponents.length > 0) {
-						const randomOpponent = chooseRandomOpponent(opponents, fightData.rng);
-						if (randomOpponent) {
-							canceledDeath = true;
-							fightData.steps.push({
-								action: 'itemUse',
-								fighter: stepFighter(fighter),
-								itemId: Item.LIFE_STEALER
-							});
-							const hpToSteal = Math.min(30, randomOpponent.hp);
-							loseHp(fightData, randomOpponent, hpToSteal, LifeEffect.Normal);
-							fighter.hp = 0; // Reset to 0 before healing so Dinoz gets exactly hpToSteal HP max
-							heal(fightData, fighter, hpToSteal);
-							addStatus(fightData, fighter, FightStatus.STOLE_LIFE);
-						}
-					}
-				}
-
 				// 1. SURVIE (Survival)
 				if (!canceledDeath && fighter.canSurvive) {
 					fighter.canSurvive = false;
