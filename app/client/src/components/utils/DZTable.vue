@@ -56,7 +56,7 @@ table {
 			background-position: left bottom;
 			padding-left: 4px;
 			padding-right: 4px;
-			padding-bottom: 8px;
+			padding-bottom: 14px;
 		}
 		td {
 			font-size: 9pt;
