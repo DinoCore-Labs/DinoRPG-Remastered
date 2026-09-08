@@ -129,6 +129,7 @@
 			"full": "Almacén lleno",
 			"sortBy": "Ordenar por",
 			"confirmUse": "¿Confirmas el uso del objeto {name} en tu Dino?",
+			"confirmEquipMagicItem": "Etes vous sur de vouloir équiper cette objet ?",
 			"sort": {
 				"default": "Por defecto",
 				"nameAsc": "Nombre (A → Z)",
@@ -764,6 +765,7 @@
 		"resurrect": "Tu Dino ha resucitado.",
 		"egg": "Has abierto un huevo de {value}.",
 		"dinozAlreadySelling": "Tu Dino ya está a la venta.",
+		"cannotEquipSellingDinoz": "Vous ne pouvez pas équiper d'objet sur un dinoz en vente",
 		"noPDA": "Necesitas la Piedra en Diamantito Aglomerado para acceder a esta página.",
 		"noPMI": "Necesitas el Pequeño Misionario Ilustrado para acceder a esta página.",
 		"noPAC": "Necesitas el Pergamino de Competencias Compiladas para acceder a esta página.",
@@ -845,10 +847,11 @@
 		"notEnoughIngredients": "Vous n'avez pas assez d'ingrédients.",
 		"itemNotFound": "Cet objet est introuvable.",
 		"itemNotEquipped": "Ce Dinoz n'a pas équipé cet objet.",
-		"itemCannotBeEquipped": "Cet objet ne peut pas être équipé.",
+		"itemCannotBeEquipped": "Cet objet ne peut pas être équipé sur un Dinoz.",
+		"magicItemHomesick": "Cet Objet Magique souffre du mal du pays. Il doit encore s'habituer à son porteur avant de pouvoir être retiré !",
+		"tooManyMagicItemEquiped": "Tu Dino no puede equiparse con más objetos mágicos.",
 		"notEnoughItems": "No tienes suficiente cantidad de este objeto.",
 		"notEnoughMoney": "No tienes suficiente oro.",
-		"tooManyMagicItemEquiped": "Tu Dino no puede equiparse con más objetos mágicos.",
 		"maxQuantityInventory": "Ya tienes lo máximo permitido de este objeto en tu inventario",
 		"missingStatus": "Uno de tus Dinos no cumple con las condiciones necesarias para realizar esta acción.",
 		"noFight": "Hoy la marea está perdida en la bruma... Seguramente no encontrarás ningún monstruo a combatir.",
@@ -897,8 +900,11 @@
 		"concentrationFull": "Les sept places de cette concentration sont déjà occupées.",
 		"concentrationCannotStopAfterOpening": "La concentration est terminée : le Dinoz doit maintenant entrer dans le portail.",
 		"concentrationNotCompleted": "Sept Dinoz doivent terminer leur concentration avant que le portail puisse être franchi.",
-		"maxFollowers": "Vous ne pouvez avoir plus de {maxFollowers} Dinoz dans votre groupe.",
-		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée."
+		"maxFollowers": "Vous ne pouvez pas avoir plus de {maxFollowers} Dinoz dans votre groupe.",
+		"dinozCannotFollowBrave": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause de la compétence Brave.",
+		"dinozCannotFollowSharedElement": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause d'une mauvaise affinité élémentaire entre vos dinoz.",
+		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée.",
+		"fearFactorDesequip": "Vous ne pouvez pas déséquiper le Trouillomètre tant que ce Dinoz est dans un groupe."
 	},
 	"tooltip": {
 		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
@@ -2134,7 +2140,8 @@
 			"empty": "Il n'y a aucun objet dans cette case.",
 			"undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
 		},
-		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//"
+		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//",
+		"magicItemHomesickTooltip": "//Cet Objet Magique souffre du mal du pays. Il doit encore s'habituer à son porteur avant de pouvoir être retiré.//&&**Temps restant : {time}**"
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
