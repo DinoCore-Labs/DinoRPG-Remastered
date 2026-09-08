@@ -129,6 +129,7 @@
 			"full": "Vorrat gefüllt",
 			"sortBy": "Sortieren nach",
 			"confirmUse": "Möchtest du wirklich {name} auf deinen Dinoz anwenden?",
+			"confirmEquipMagicItem": "Etes vous sur de vouloir équiper cette objet ?",
 			"sort": {
 				"default": "Standard",
 				"nameAsc": "Name (A → Z)",
@@ -764,6 +765,7 @@
 		"resurrect": "Dein Dinoz wurde wiederbelebt.",
 		"egg": "Ein {value} ist aus dem Ei geschlüpft!",
 		"dinozAlreadySelling": "Votre Dinoz est déjà en vente.",
+		"cannotEquipSellingDinoz": "Vous ne pouvez pas équiper d'objet sur un dinoz en vente",
 		"noPDA": "Tu as besoin de la Pierre en Diamantite Agglomérée pour accéder à cette page.",
 		"noPMI": "Tu as besoin du Petit Missionnaire Illustré pour accéder à cette page.",
 		"noPAC": "Tu as besoin du Parchemin des Aptitudes Compilées pour accéder à cette page.",
@@ -845,10 +847,11 @@
 		"notEnoughIngredients": "Vous n'avez pas assez d'ingrédients.",
 		"itemNotFound": "Cet objet est introuvable.",
 		"itemNotEquipped": "Ce Dinoz n'a pas équipé cet objet.",
-		"itemCannotBeEquipped": "Cet objet ne peut pas être équipé.",
+		"itemCannotBeEquipped": "Cet objet ne peut pas être équipé sur un Dinoz.",
+		"magicItemHomesick": "Cet Objet Magique souffre du mal du pays. Il doit encore s'habituer à son porteur avant de pouvoir être retiré !",
+		"tooManyMagicItemEquiped": "Ce dinoz ne peut pas équiper autant d'objets magiques.",
 		"notEnoughItems": "Vous n'avez pas la quantité attendue pour l'item requis.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or.",
-		"tooManyMagicItemEquiped": "Votre Dinoz ne peut pas équiper plus d'objets magiques.",
 		"maxQuantityInventory": "Vous avez déjà trop de cet objet dans votre inventaire",
 		"missingStatus": "L'un de vos Dinoz ne remplit pas les conditions pour faire cette action.",
 		"noFight": "Aujourd'hui, le marais est perdu dans la brume... Vous ne trouverez aucun monstre à combattre.",
@@ -897,8 +900,11 @@
 		"concentrationFull": "Les sept places de cette concentration sont déjà occupées.",
 		"concentrationCannotStopAfterOpening": "La concentration est terminée : le Dinoz doit maintenant entrer dans le portail.",
 		"concentrationNotCompleted": "Sept Dinoz doivent terminer leur concentration avant que le portail puisse être franchi.",
-		"maxFollowers": "Vous ne pouvez avoir plus de {maxFollowers} Dinoz dans votre groupe.",
-		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée."
+		"maxFollowers": "Vous ne pouvez pas avoir plus de {maxFollowers} Dinoz dans votre groupe.",
+		"dinozCannotFollowBrave": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause de la compétence Brave.",
+		"dinozCannotFollowSharedElement": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause d'une mauvaise affinité élémentaire entre vos dinoz.",
+		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée.",
+		"fearFactorDesequip": "Vous ne pouvez pas déséquiper le Trouillomètre tant que ce Dinoz est dans un groupe."
 	},
 	"tooltip": {
 		"gold": "Mit Gold kann man neue **Dinoz** oder **Gegenstände** in der Boutique kaufen.",
@@ -2134,7 +2140,8 @@
 			"empty": "Il n'y a aucun objet dans cette case.",
 			"undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
 		},
-		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//"
+		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//",
+		"magicItemHomesickTooltip": "//Cet Objet Magique souffre du mal du pays. Il doit encore s'habituer à son porteur avant de pouvoir être retiré.//&&**Temps restant : {time}**"
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
