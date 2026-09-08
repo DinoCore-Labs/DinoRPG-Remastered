@@ -130,6 +130,10 @@ function shouldRefreshDinozAfterEquip(input: {
 	if (!input.equip) {
 		return false;
 	}
+	const item = itemList[input.itemId as Item];
+	if (item?.itemType === ItemType.MAGICAL) {
+		return true;
+	}
 	return SCENARIO_EQUIP_REFRESH_RULES.some(rule => {
 		const scenario = input.scenarios.find(s => s.scenarioKey === rule.scenarioKey);
 
