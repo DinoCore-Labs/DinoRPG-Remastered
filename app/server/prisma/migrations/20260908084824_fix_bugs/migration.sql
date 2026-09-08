@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "dinoz_item" ADD COLUMN     "equippedAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;
