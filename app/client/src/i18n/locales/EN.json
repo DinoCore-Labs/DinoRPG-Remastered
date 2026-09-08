@@ -129,6 +129,7 @@
 			"full": "Stock full",
 			"sortBy": "Sort By",
 			"confirmUse": "Do you confirm the use of {name} on your Dinoz?",
+			"confirmEquipMagicItem": "Etes vous sur de vouloir équiper cette objet ?",
 			"sort": {
 				"default": "By Default",
 				"nameAsc": "Name (A → Z)",
@@ -764,6 +765,7 @@
 		"resurrect": "Your Dinoz is resurrected.",
 		"egg": "You opened a {value}'s Egg.",
 		"dinozAlreadySelling": "Your Dinoz is already for sale.",
+		"cannotEquipSellingDinoz": "Vous ne pouvez pas équiper d'objet sur un dinoz en vente",
 		"noPDA": "You need the Diamantite Pebble to access this page.",
 		"noPMI": "You need the Illustrated Mission Guidebook to access this page.",
 		"noPAC": "You need the Scroll of Compiled Abilities to access this page.",
@@ -846,9 +848,10 @@
 		"itemNotFound": "This item could not be found.",
 		"itemNotEquipped": "This Dinoz does not have this item equipped.",
 		"itemCannotBeEquipped": "This item cannot be equipped.",
+		"magicItemHomesick": "Cet Objet Magique souffre du mal du pays. Il doit encore s'habituer à son porteur avant de pouvoir être retiré !",
+		"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
 		"notEnoughItems": "You don't have enough of this item.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or",
-		"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
 		"maxQuantityInventory": "You already too many of this item in your inventory.",
 		"missingStatus": "One of your Dinoz doesn't fulfill the requirements to do this action.",
 		"noFight": "Today, the swamp is surrounded by a thick fog. You won't find any monsters to fight.",
@@ -898,7 +901,10 @@
 		"concentrationCannotStopAfterOpening": "The concentration is complete: the Dinoz must now enter the portal.",
 		"concentrationNotCompleted": "Seven Dinoz must complete their concentration before the portal can be entered.",
 		"maxFollowers": "You cannot have more than {maxFollowers} Dinoz in your group.",
-		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée."
+		"dinozCannotFollowBrave": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause de la compétence Brave.",
+		"dinozCannotFollowSharedElement": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause d'une mauvaise affinité élémentaire entre vos dinoz.",
+		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée.",
+		"fearFactorDesequip": "Vous ne pouvez pas déséquiper le Trouillomètre tant que ce Dinoz est dans un groupe."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -2134,7 +2140,8 @@
 			"empty": "There is no item at this spot.",
 			"undefined": "This object is unknown, it is rare and it will strongly make developers curious about its existence."
 		},
-		"empty": "This slot is empty, choose an item from the inventory to equip.&&//The equipped items can be used by your Dinoz in combat.//"
+		"empty": "This slot is empty, choose an item from the inventory to equip.&&//The equipped items can be used by your Dinoz in combat.//",
+		"magicItemHomesickTooltip": "//Cet Objet Magique souffre du mal du pays. Il doit encore s'habituer à son porteur avant de pouvoir être retiré.//&&**Temps restant : {time}**"
 	},
 	"ingredients": {
 		"disclaimer": "This page lists the ingredients you have found using the \"Collect\" action.",
