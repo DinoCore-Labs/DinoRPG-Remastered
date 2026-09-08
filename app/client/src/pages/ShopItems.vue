@@ -387,12 +387,15 @@ export default defineComponent({
 			if (
 				this.actualShop.type === ShopType.CLASSIC ||
 				this.actualShop.type === ShopType.CURSED ||
-				this.actualShop.type === ShopType.ITINERANT
+				this.actualShop.type === ShopType.ITINERANT ||
+				this.actualShop.type === ShopType.MAGICAL
 			) {
 				// Update the new quantity
 				// Both values are forced to number to avoid them somehow being treated as a string
 				this.selectedItem.quantity = (this.selectedItem.quantity ?? 0) + quantity;
-				await this.$refreshGold();
+				if (this.actualShop.type !== ShopType.MAGICAL) {
+					await this.$refreshGold();
+				}
 			} else if (this.actualShop.type === ShopType.FILOU) {
 				this.selectedItem = undefined;
 				await this.$refreshTreasureTicket();
