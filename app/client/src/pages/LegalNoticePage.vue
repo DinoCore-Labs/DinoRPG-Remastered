@@ -45,10 +45,7 @@ import { useI18n } from 'vue-i18n';
 
 import MarkdownRenderer from '../components/common/MarkdownRenderer.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import {
-	parseLegalNoticesMarkdown,
-	type LegalNoticesSection
-} from '../utils/parseLegalNoticesMarkdown';
+import { parseLegalNoticesMarkdown, type LegalNoticesSection } from '../utils/parseLegalNoticesMarkdown';
 import { getImgURL } from '../utils/getImgURL';
 
 const LEGAL_NOTICES_UPDATED_AT = '2026-07-05';
