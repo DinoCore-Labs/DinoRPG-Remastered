@@ -754,9 +754,11 @@ export default defineComponent({
 		border-radius: 10px;
 		padding: 1px 0;
 		margin-bottom: 2px;
+		margin: 6px;
 		.subtitle {
 			display: flex;
 			align-items: center;
+			margin: 3px;
 			color: #f8efa4;
 			font-variant: small-caps;
 			border-bottom: 1px solid #f8efa4;
@@ -775,6 +777,7 @@ export default defineComponent({
 		}
 		.stat-values {
 			list-style-type: none;
+			margin: 3px;
 			padding: 1px 2px;
 			padding-bottom: 0;
 			li {
