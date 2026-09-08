@@ -13,12 +13,12 @@
 		"dinoz": "Dinoz",
 		"dojo": "Dojo",
 		"gains": "Gains",
-		"gameRules": "Règlement du jeu",
+		"gameRules": "Spielregeln",
 		"goldCoins": "Pièces d'or",
 		"ingredients": "Ingrédients",
 		"inventory": "Inventaire",
 		"items": "Objets",
-		"lastUpdated": "Dernière mise à jour : {date}",
+		"lastUpdated": "Zuletzt aktualisiert: {date}",
 		"legalNotices": "Mentions légales",
 		"loading": "Chargement...",
 		"master": "Maître",
@@ -1422,7 +1422,8 @@
 			"Flee": "Fuite",
 			"Stinger": "Dard",
 			"PoisonedPicks": "Pics empoisonnées",
-			"Contamination": "Contamination"
+			"Contamination": "Contamination",
+			"WormCall": "Appel"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les **assauts** de Feu de 7",
@@ -1721,7 +1722,8 @@
 			"Leader": "Augmente le nombre maximum de Dinoz actifs de 3 (non cumulable)",
 			"GrosDormeur": "Permet à votre Dinoz de récupérer une action supplémentaire chaque jour.",
 			"Veilleuse": "Permet à tous les Dinoz suivant votre Dinoz de récupérer également une action supplémentaire chaque jour.",
-			"Matelasseur": "Tous vos Dinoz récupèrent une action supplémentaire chaque jour (non cumulable)."
+			"Matelasseur": "Tous vos Dinoz récupèrent une action supplémentaire chaque jour (non cumulable).",
+			"WormCall": "Appelle un bébé worm"
 		}
 	},
 	"status": {
@@ -3432,88 +3434,20 @@
 		}
 	},
 	"gameRules": {
-		"title": "Règlement de DinoRPG Remastered",
-		"version": "Version : {version}",
-		"footer": {
-			"title": "Règles et sécurité"
-		},
+		"title": "Spielregeln von DinoRPG Remastered",
+		"version": "Version: {version}",
 		"registration": {
-			"label": "J’ai lu et j’accepte le {rules} dans sa version {version}.",
-			"link": "règlement du jeu"
+			"label": "Ich habe die {rules} in Version {version} gelesen und akzeptiere sie.",
+			"link": "Spielregeln"
 		},
 		"acceptance": {
-			"title": "Acceptation du règlement requise",
-			"description": "Le règlement du jeu a été ajouté ou mis à jour. Vous devez le lire et l’accepter avant de continuer à jouer.",
-			"checkbox": "J’ai lu et j’accepte le règlement du jeu dans sa version {version}.",
-			"button": "Accepter le règlement",
-			"submitting": "Enregistrement...",
-			"success": "Le règlement du jeu a bien été accepté.",
-			"error": "L’acceptation du règlement n’a pas pu être enregistrée."
-		},
-		"sections": {
-			"general": {
-				"title": "1. Respect et comportement",
-				"intro": "DinoRPG Remastered doit être utilisé de manière loyale et respectueuse.",
-				"forbiddenIntro": "Sont notamment interdits :",
-				"forbidden": {
-					"harassment": "les insultes, menaces, comportements de harcèlement ou propos discriminatoires ;",
-					"illegal": "les contenus inappropriés ou manifestement illicites ;",
-					"spam": "le spam et la publicité abusive ;",
-					"impersonation": "l’usurpation de l’identité d’un joueur ou d’un membre de l’équipe ;",
-					"personalData": "la divulgation des informations personnelles d’un tiers ;",
-					"links": "les liens dangereux, frauduleux ou trompeurs."
-				},
-				"outro": "Tout comportement abusif ou portant volontairement atteinte au jeu ou à ses utilisateurs peut être sanctionné."
-			},
-			"accounts": {
-				"title": "2. Comptes",
-				"intro": "Un compte est personnel. Il est interdit de le partager, le vendre, le donner ou d’utiliser le compte d’une autre personne.",
-				"password": "Ne communiquez jamais votre mot de passe et ne demandez jamais celui d’un autre joueur.",
-				"singleAccount": "Une même personne ne peut normalement utiliser qu’un seul compte joueur.",
-				"household": "Plusieurs personnes d’un même foyer peuvent chacune disposer de leur propre compte, à condition de ne pas les utiliser pour obtenir un avantage artificiel ou contourner une limitation."
-			},
-			"cheating": {
-				"title": "3. Triche, bugs et sécurité",
-				"intro": "Toute méthode permettant d’obtenir un avantage anormal ou de contourner le fonctionnement prévu du jeu est interdite.",
-				"forbiddenIntro": "Il est notamment interdit :",
-				"forbidden": {
-					"automation": "d’utiliser un bot, script, clic automatique, macro ou autre outil jouant à la place de l’utilisateur ;",
-					"exploit": "d’exploiter volontairement un bug ou une faille ;",
-					"duplicate": "de dupliquer ou d’obtenir anormalement des objets, ressources, monnaies ou récompenses ;",
-					"requests": "de falsifier des requêtes ou de modifier artificiellement des données envoyées au serveur ;",
-					"authorization": "de contourner une autorisation ou d’accéder à une fonctionnalité normalement inaccessible ;",
-					"account": "de tenter d’accéder au compte ou aux données d’un autre utilisateur ;",
-					"disruption": "de perturber, attaquer ou saturer le service."
-				},
-				"report": "Lorsqu’un bug ou une faille est découvert, le joueur doit cesser de l’exploiter et le signaler.",
-				"devTools": "Les outils de développement du navigateur sont autorisés tant qu’ils ne sont pas utilisés pour tricher, contourner une règle ou compromettre le service."
-			},
-			"market": {
-				"title": "4. Marché et échanges",
-				"intro": "Les échanges entre joueurs doivent rester loyaux.",
-				"forbidden": "Il est interdit de manipuler artificiellement les prix, d’utiliser plusieurs comptes pour transférer des ressources ou enchérir sur ses propres offres, et d’exploiter une erreur ou une faille du marché.",
-				"outro": "Une transaction obtenue de manière irrégulière peut être annulée ou corrigée."
-			},
-			"reporting": {
-				"title": "5. Signalement",
-				"intro": "Un bug, une faille ou un comportement interdit peut être signalé à :",
-				"details": "Merci d’indiquer autant que possible le pseudonyme concerné, la date, une description du problème et les éventuelles preuves ou étapes permettant de le reproduire.",
-				"disclosure": "Une faille non corrigée ne doit pas être publiée ou exploitée.",
-				"goodFaith": "Un signalement effectué de bonne foi ne sera pas considéré comme une tentative de triche."
-			},
-			"sanctions": {
-				"title": "6. Sanctions et contestation",
-				"intro": "Selon la gravité des faits, une infraction peut entraîner un avertissement, l’annulation d’un avantage ou d’une transaction, une restriction, une suspension ou la fermeture définitive du compte.",
-				"proportionality": "La sanction tient notamment compte de la gravité, de la répétition et du caractère volontaire des faits.",
-				"circumvention": "Il est interdit de contourner une sanction à l’aide d’un autre compte, d’un autre joueur ou de tout autre moyen.",
-				"appeal": "Une sanction peut être contestée de manière respectueuse et factuelle à l’adresse contact{'@'}dinorpg.fr."
-			},
-			"changes": {
-				"title": "7. Modification du règlement",
-				"intro": "Le règlement peut évoluer en fonction du jeu, de nouvelles fonctionnalités, de nouveaux abus ou de besoins de sécurité.",
-				"version": "La version et la date de dernière mise à jour sont indiquées en haut de cette page.",
-				"acceptance": "Une nouvelle acceptation peut être demandée lorsqu’une modification importante est apportée."
-			}
+			"title": "Zustimmung zu den Spielregeln erforderlich",
+			"description": "Die Spielregeln wurden hinzugefügt oder aktualisiert. Du musst sie lesen und akzeptieren, bevor du weiterspielen kannst.",
+			"checkbox": "Ich habe die Spielregeln in Version {version} gelesen und akzeptiere sie.",
+			"button": "Spielregeln akzeptieren",
+			"submitting": "Wird gespeichert...",
+			"success": "Die Spielregeln wurden erfolgreich akzeptiert.",
+			"error": "Die Zustimmung zu den Spielregeln konnte nicht gespeichert werden."
 		}
 	},
 	"trainingCenter": {
@@ -6384,6 +6318,9 @@
 		},
 		"jeromeTrader": {
 			"name": "L'affaire Warp Street"
+		},
+		"dojo": {
+			"name": "Dojo"
 		}
 	},
 	"reportModal": {
