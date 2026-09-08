@@ -29,6 +29,13 @@
 			<p class="shopText" v-html="formatContent($t(`shop.item.${actualShop.name}.description`))" />
 		</div>
 		<div class="shopShop">
+			<div v-if="actualShop.type === 'magical'" class="dz-box napo-box">
+				<div class="napo-box-inner">
+					<span class="label">{{ $t('common.stock') }} :</span>
+					<span class="value">{{ napodinoStock }}</span>
+					<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
+				</div>
+			</div>
 			<div class="background">
 				<div class="list">
 					<template v-if="itemList.length > 0">
@@ -305,6 +312,7 @@ import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { ShopService } from '../services/shop.service.js';
+import { InventoryService } from '../services/inventory.service.js';
 import { dinozStore } from '../store/dinozStore.js';
 import { userStore } from '../store/userStore.js';
 import { formatText } from '../utils/formatText.js';
@@ -323,7 +331,8 @@ export default defineComponent({
 			shopList: shopListV2,
 			selectedItem: undefined as ItemShopFiche | undefined,
 			selectedQuantity: 1,
-			ItemShopType: ItemShopType
+			ItemShopType: ItemShopType,
+			napodinoStock: 0
 		};
 	},
 	components: {
@@ -395,6 +404,8 @@ export default defineComponent({
 				this.selectedItem.quantity = (this.selectedItem.quantity ?? 0) + quantity;
 				if (this.actualShop.type !== ShopType.MAGICAL) {
 					await this.$refreshGold();
+				} else {
+					this.napodinoStock -= quantity * this.selectedItem.price;
 				}
 			} else if (this.actualShop.type === ShopType.FILOU) {
 				this.selectedItem = undefined;
@@ -498,6 +509,11 @@ export default defineComponent({
 			this.ingredientList = [];
 			// Get shop and its items to display
 			try {
+				if (this.actualShop?.type === ShopType.MAGICAL) {
+					const allItems = await InventoryService.getAllItemsData();
+					const napo = allItems.find(i => i.id === 111);
+					this.napodinoStock = napo ? (napo.quantity ?? 0) : 0;
+				}
 				this.fullItems = await ShopService.getItemsFromItemShop(this.actualShop?.shopId ?? 0);
 				this.itemList = this.fullItems
 					.filter(i => i.type === ItemShopType.ITEM)
@@ -578,8 +594,29 @@ export default defineComponent({
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
+		align-items: flex-start;
 		max-width: 95%;
 		align-self: center;
+		.napo-box {
+			height: max-content;
+			margin-top: 70px;
+			margin-right: 15px;
+			padding: 8px;
+			color: #ffee92;
+			font-weight: bold;
+			font-size: 11pt;
+			.napo-box-inner {
+				background-color: #b46843;
+				padding: 5px 10px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 5px;
+				img {
+					vertical-align: middle;
+				}
+			}
+		}
 		.background {
 			background: url('../assets/background/shop_bg_items.webp');
 			width: 162px;
