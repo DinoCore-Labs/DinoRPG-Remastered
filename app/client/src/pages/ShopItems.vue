@@ -27,15 +27,12 @@
 			</h3>
 			<img class="art" :src="getImgURL('shop', `shop_${actualShop.name}`)" :alt="actualShop.name" />
 			<p class="shopText" v-html="formatContent($t(`shop.item.${actualShop.name}.description`))" />
+			<p v-if="actualShop.type === 'magical'" class="napo-stock">
+				{{ $t('common.stock') }} : {{ napodinoStock }}
+				<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
+			</p>
 		</div>
 		<div class="shopShop">
-			<div v-if="actualShop.type === 'magical'" class="dz-box napo-box">
-				<div class="napo-box-inner">
-					<span class="label">{{ $t('common.stock') }} :</span>
-					<span class="value">{{ napodinoStock }}</span>
-					<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
-				</div>
-			</div>
 			<div class="background">
 				<div class="list">
 					<template v-if="itemList.length > 0">
@@ -404,8 +401,6 @@ export default defineComponent({
 				this.selectedItem.quantity = (this.selectedItem.quantity ?? 0) + quantity;
 				if (this.actualShop.type !== ShopType.MAGICAL) {
 					await this.$refreshGold();
-				} else {
-					this.napodinoStock -= quantity * this.selectedItem.price;
 				}
 			} else if (this.actualShop.type === ShopType.FILOU) {
 				this.selectedItem = undefined;
@@ -589,35 +584,32 @@ export default defineComponent({
 			justify-self: center;
 			margin-top: 15px;
 		}
+		.napo-stock {
+			grid-area: center;
+			align-self: end;
+			margin: 0;
+			padding-top: 8px;
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			font-style: normal;
+			font-weight: bold;
+			color: #ffb822;
+			text-shadow: 1px 1px 2px #5a1e09;
+			img {
+				vertical-align: middle;
+				height: 22px;
+			}
+		}
 	}
 	.shopShop {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
-		align-items: flex-start;
 		max-width: 95%;
 		align-self: center;
-		.napo-box {
-			height: max-content;
-			margin-top: 70px;
-			margin-right: 15px;
-			padding: 8px;
-			color: #ffee92;
-			font-weight: bold;
-			font-size: 11pt;
-			.napo-box-inner {
-				background-color: #b46843;
-				padding: 5px 10px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				gap: 5px;
-				img {
-					vertical-align: middle;
-				}
-			}
-		}
 		.background {
+			margin-top: 5px;
 			background: url('../assets/background/shop_bg_items.webp');
 			width: 162px;
 			height: 193px;
@@ -975,7 +967,7 @@ export default defineComponent({
 		&:first-letter {
 			font-weight: bold;
 			font-size: 115%;
-			color: white;
+			color: inherit;
 		}
 	}
 	.full {
