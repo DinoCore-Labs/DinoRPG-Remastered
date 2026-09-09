@@ -29,6 +29,8 @@ import { calculateFightVsMonsters, rewardFightVsMonsters } from './fight.service
 
 const MAGNETITE_FINAL_ASSAULT_DIALOG_ID = 'magnetite_citadel_guard_assault';
 
+const INTRO_FIGHT_DIALOG_IDS = new Set(['intro_port', 'intro_waikiki', 'intro_swamp', 'intro_falls_taurus']);
+
 function getDialogFightPhase(dialog: RuntimeDialog, phaseId: string): RuntimeDialogPhase {
 	const phase = dialog.phases[phaseId];
 	if (!phase) {
@@ -95,6 +97,7 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 		throw new ExpectedError(`Dialog "${dialog.id}" is not available`);
 	}
 	const { monsters, allies, rewardStatusKey } = extractDialogFightData(phase);
+	const isIntroFight = INTRO_FIGHT_DIALOG_IDS.has(dialogId);
 	const isMagnetiteFinalAssault = dialogId === MAGNETITE_FINAL_ASSAULT_DIALOG_ID && phaseId === 'fight';
 	/**
 	 * Le combat final Magnétite ne possède volontairement
@@ -181,6 +184,13 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 	const team = [dinozData];
 	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters, undefined, allies);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, dinozData.placeId, user);
+	const activeDinozResult = fightResult.attackers.find(attacker => attacker.dinozId === dinozId);
+	const dinozDied = activeDinozResult ? activeDinozResult.hpLost >= dinozData.life : false;
+	if (isIntroFight && dinozDied) {
+		await updateDinoz(dinozId, {
+			life: dinozData.maxLife
+		});
+	}
 	const winner = fightResult.outcome === FightOutcome.AttackerWin;
 	if (winner && returnPhase) {
 		await prisma.$transaction(async tx => {
