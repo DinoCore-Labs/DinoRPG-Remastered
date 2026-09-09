@@ -1,21 +1,21 @@
-# L'Expérience
+# Erfahrung
 
-À la fin de chaque combat, votre Dinoz va gagner des **points d'expérience** :xp:. Une fois que la barre d'expérience présente sur la fiche du Dinoz est remplie, votre Dinoz pourra **augmenter son niveau**.
+Am Ende jedes Kampfes erhält dein Dinoz **Erfahrungspunkte** :xp:. Sobald der Erfahrungsbalken im Dinoz-Profil gefüllt ist, kann dein Dinoz **eine Stufe aufsteigen**.
 
-Tout d'abord, un **élément** est tiré au hasard. Votre Dinoz verra donc la valeur de cet élément augmentée. Voici un exemple :
+Zunächst wird durch Zufallsprinzip ein **Element** ermittelt, was dazu führt, dass sich bei deinem Dinoz der entsprechende Wert erhöht. Hier ist ein Beispiel:
 
 ![L'Expérience](asset://guide/exp)
 
-## Compétences
+## Fähigkeiten
 
-Ensuite, il vous est demandé **d'apprendre une compétence**, dont la liste est déterminée en fonction de l'élément qui a été choisi. Suivant la description de la compétence, choisissez celle qui vous convient le mieux.
+Dann wird erforderlich, dass **eine Fähigkeit erlernt wird** und zwar aus einer Liste, welche durch das ermittelte Element bestimmt wird. Wähle eine Fähigkeit aus, deren Beschreibung dir am meisten zusagt.
 
-Vous pouvez retrouver la liste des compétences que votre Dinoz a appris à partir de l'onglet **Détails** sur sa fiche.
+Die Liste der Fähigkeiten, die dein Dinoz bereits erlernt hat, findest du auf seinem Profil unter dem Reiter **„Details“**.
 
-En fonction de la **race** de votre Dinoz, les probabilités d'augmenter un **élément** donné ne sont pas les mêmes, et donc les choix de compétences et les possibilités de développement de votre Dinoz vont varier.
+Abhängig von der **Rasse** deines Dinoz unterscheiden sich die Wahrscheinlichkeiten, ein bestimmtes **Element** zu steigern, weshalb sowohl die Auswahl ihrer Fähigekiten, als auch ihre Entwicklungmöglichkeiten variieren können.
 
-## Débloquer des Compétences
+## Fähigkeiten freischalten
 
-Chaque compétence que votre Dinoz apprend peut lui permettre d'accéder à d'autres compétences plus puissantes. Cependant, avant de pouvoir les apprendre, il faudra les **débloquer**. Cette option vous est proposée quand votre Dinoz change de niveau si cela est possible.
+Jede Fähigkeit, die dein Dinoz erlernt, kann ihm Zugriff zu anderen, mächtigeren Fähigkeiten gewähren. Bevor diese jedoch erlernt werden können, müssen sie zunächst **freigeschaltet** werden. Falls möglich, wird diese Option beim Stufenaufstieg angeboten.
 
-Il vous faudra donc choisir entre apprendre plus de compétences pour pouvoir en débloquer plusieurs d'un coup ou débloquer plus rapidement les compétences les plus puissantes.
+Du musst also entscheiden, ob du weitere Fähigkeiten hinzulernen möchtest, um danach mehrere auf einmal freizuschalten, oder ob du lieber an die mächtigsten Fähigkeiten schneller gelangst.

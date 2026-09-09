@@ -1,19 +1,19 @@
-# Les Clans
+# Klane
 
-Les **Clans** sont des groupes de joueurs de DinoRPG. Appartenir à un Clan vous permet de discuter avec d'autres joueurs, d'échanger des techniques et des astuces, et de vous entraider. Vous pouvez rejoindre un Clan ou créer votre propre Clan à partir du menu de droite **Clans**.
+**Klane** sind Gemeinschaften von DinoRPG-Spielern. Als Teil eines Klans kann man sich mit anderen Mitgliedern unterhalten, Techniken und Tipps austauschen und sich gegenseitig helfen. Du kannst einem Klan beitreten oder über **„Klane“** rechts im Menü einen eigenen Klan erstellen.
 
-## Rejoindre un Clan
+## Klanbeitritt
 
-Tout d'abord, sachez que vous ne pouvez faire parti que d'un seul Clan.
+Zunächst musst du wissen, dass man gleichzeitig nur einem Klan angehören kann.
 
-Pour rejoindre un Clan, il vous faudra d'abord en trouver un qui vous convient. La description donnée par le créateur du Clan, la présence d'amis dans ce Clan, la réputation du Clan auprès des autres joueurs... Tous ces points vous aideront à faire votre choix.
+Um einem Klan beizutreten, müsst du zunächst einen finden, der zu dir passt. Ob Beschreibung des Klangründers, Präsenz von Freunden im Klan oder Ruf des Klans bei anderen Spielern... all das kann bei der Auswahl weiterhelfen.
 
-Une fois votre Clan sélectionné, vous pouvez déposer une demande d'adhésion. Pour éviter les demandes non sérieuses, cette action coûte **1.000** pièces d'or :gold:. Ces pièces seront perdues si votre demande est acceptée par le créateur du Clan. Par contre, si votre demande est refusée ou si vous l'annulez, vous récupérez vos pièces.
+Sobald du einen Klan ausgesucht hast, kannst du eine Mitgliedschaftsanfrage einreichen. Um unseriöse Anfragen zu vermeiden, kostet diese Aktion **1.000** Goldmünzen :gold:. Sollte die Anfrage vom Klangründer akzeptiert werden, gehen diese Münzen verloren, während sie dir beim Abbruch oder einer Ablehnung zurückerstattet werden.
 
-Vous pouvez d'ailleurs à tout moment annuler votre demande, pour pouvoir effectuer une nouvelle demande d'adhésion à un autre Clan par exemple.
+Du kannst deine Anfrage jederzeit widerrufen, um beispielsweise einen neuen Mitgliedschaftsantrag bei einem anderen Klan einreichen zu können.
 
-## Créer et gérer son Clan
+## Klan erstellen und verwalten
 
-De façon à éviter un trop grand nombre de Clans vides ou inactifs, la création de Clans coûte des pièces d'or et nécessite d'obtenir 15 points au Classement, soit l'équivalent d'un Dinoz niveau 15 ou de trois Dinoz niveau 5.
+Um zu viele verlassene oder inaktive Klane zu vermeiden, kostet die Gründung Goldmünzen und erfordert das Erreichen von mindestens 15 Punkten in der Rangliste, was einem Dinoz der Stufe 15 oder drei Dinoz der Stufe 5 entspricht.
 
-Une fois votre Clan créé, vous pourrez modifier sa bannière et sa description, accepter de nouveaux membres dans le Clan, leurs déléguer les différents droits de gestion du Clan, etc...
+Sobald dein Klan erstellt wurde, kannst du dessen Banner und Beschreibung anpassen, neue Mitglieder aufnehmen, ihnen verschiedene Verwaltungsrechte des Klans erteilen usw.
