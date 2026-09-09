@@ -1,13 +1,15 @@
-# Adopter un Dinoz
+# Adoptar un Dino
 
-La première chose que vous devez faire sur DinoRPG est d'adopter un Dinoz. Pour cela vous disposez de **100.000** :gold: (pièces d'or) obtenues lors de la création de votre compte.
+Una vez inscrito, dispones de **100.000** :gold: (monedas de oro) para comprar tu primer Dino.
 
-En cliquant sur **ACHETER UN DINOZ** dans le Menu de gauche, vous pourrez accéder à la Boutique des Dinoz. Chaque Dinoz est unique et chaque jour cette boutique vous proposera une sélection de Dinoz parmi lesquels vous pourrez choisir celui qui vous plaît le plus.
+Haz clic en **Comprar un Dino** en el Menú de la izquierda y podrás acceder a la Tienda de Dinos. Cada Dino es único y todos los días la Tienda pone a tu disposición una selección diferente de Dinos.
 
-Chaque Dinoz est présenté de la façon suivante :
+Cada Dino es presentado de la siguiente manera:
 
 ![Adopter un Dinoz](asset://guide/adopt)
 
-Vous pouvez voir une image du Dinoz, sa **Race** et son Prix. Il existe différentes races de Dinoz, chacune ayant ses propres spécificités. En particulier, les valeurs des **5 éléments** indiquées lors de l'achat dépendent de la race du Dinoz, et certaines races disposent d'une **compétence supplémentaire**. Ces deux points influencent le **combat** comme nous le verrons plus tard. Le prix varie aussi en fonction de la race du Dinoz, certaines races étant plus rares et donc plus chères.
+Puedes ver en la imagen el Dino, la **Raza** y su precio. Hay diferentes razas de Dinos y cada una tiene sus características propias.
 
-Dans un premier temps, choisissez le Dinoz que vous préférez et achetez-le.
+Los valores de los **5 elementos** dependen de la raza del Dino. Algunas razas tienen una **competencia suplementaria**. Estos dos aspectos influyen directamente en el **combate**. El precio varía en función de la raza del Dino, ya que algunas son más raras que otras.
+
+¡Elige el Dino que más te guste y cómpralo!

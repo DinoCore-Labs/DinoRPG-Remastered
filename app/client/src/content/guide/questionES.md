@@ -1,10 +1,10 @@
-# Des Questions ?
+# ¿Preguntas?
 
-Si vous avez des questions, des problèmes ou des suggestions à faire à l'équipe de DinoRPG, merci tout d'abord de prendre le temps de lire les différentes réponses proposées ci-dessous :
+Si tienes preguntas, problemas o sugerencias para el equipo de DinoRPG, por favor consulta en primer lugar lo siguiente:
 
-- ![](asset://icons/info_button) **Qui a créé DinoRPG ?** Motion Twin ! Le studio indépendant a été fondé en 2001 et a créé plus de 150 jeux Web. Aujourd'hui Motion Twin doit son renouveau à Dead Cells, jeu sorti en 2017 sur PC, consoles et smartphones.
-- ![](asset://icons/info_button) **Pourquoi le jeu a-t-il été arrêté par Motion Twin ?** Motion Twin a arrêté de développer leurs jeux en ligne lorsqu'Adobe a cessé de mettre à jour Flash Player en 2020. Motion Twin a arrêté l'intégralité de ses jeux web et de Twinoid en Novembre 2023.
-- ![](asset://icons/info_button) **Mais DinoRPG est toujours là ?** Oui, grâce à quelques joueurs qui ont décidé de sauvegarder ce jeu, et d'éviter la disparition complète de cet héritage vidéoludique commun.
-- ![](asset://icons/info_button) **DinoRPG est-t-il gratuit ?** Oui, DinoRPG est un jeu gratuit.
-- ![](asset://icons/info_button) **Comment obtenir plus de pièces d'or ?** Vos Dinoz pourront récupérer des pièces d'or chaque jour en combattant, ou en validant leurs missions. De plus, chaque jour vous obtiendrez un Ticket Quotidien qui vous permettra de récupérer de l'or ou une Boîte contenant divers objets, oeufs de Dinoz. Ou tout simplement vendre vos ingrédients au Marchand Ambulant.
-- ![](asset://icons/info_button) **Comment recommencer le jeu ?** En cas de problème, vous pouvez recommencer le jeu depuis le début. Pour cela il vous suffit d'aller dans la section **Mon Compte / Modifier mes Infos** de façon à effectuer une remise à zéro de votre compte.
+- ![](asset://icons/info_button) **¿Quién creó DinoRPG?** ¡Motion Twin! El estudio independiente fue fundado en 2001 y ha creado más de 150 juegos web. Hoy Motion Twin debe su resurgimiento a Dead Cells, un juego lanzado en 2017 para PC, consolas y teléfonos inteligentes.
+- ![](asset://icons/info_button) **¿Por qué Motion Twin detuvo el juego?** Motion Twin dejó de desarrollar sus juegos en línea cuando Adobe dejó de actualizar Flash Player en el 2020. Motion Twin cerró todos sus juegos web y Twinoid en noviembre de 2023.
+- ![](asset://icons/info_button) **¿Pero DinoRPG sigue existiendo?** Sí. Este proyecto, impulsado por unos cuantos jugadores, decidió conservar estos juegos y evitar la desaparición completa de este legado de videojuegos en común.
+- ![](asset://icons/info_button) **¿DinoRPG es gratuito?** Sí, DinoRPG es un juego gratuito.
+- ![](asset://icons/info_button) **¿Cómo puedo obtener más monedas de oro?** Tus Dinos podrán conseguir monedas de oro cada día al combatir o al completar sus misiones. Además, cada día recibirás un Ticket Diario que te permitirá obtener oro o una Caja que contiene diversos objetos o huevos de Dinos. O simplemente puedes vender tus ingredientes al Mercader Ambulante.
+- ![](asset://icons/info_button) **¿Cómo reiniciar el juego?** En caso de problemas, puedes reiniciar el juego desde el principio. Para hacerlo, solo debes ir a la sección **Mi Cuenta / Editar mi Cuenta** para reiniciar tu cuenta.

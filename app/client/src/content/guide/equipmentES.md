@@ -1,11 +1,11 @@
-# Equipements
+# Equipamiento
 
-Sur sa fiche, votre Dinoz d'un certain nombre d'emplacements disponibles pour des **équipements de combat**. Certains peuvent en effet être **équipés** dans un de ces emplacements et ils seront alors utilisables en combat.
+En su ficha tu Dino dispone de un cierto número de emplazamientos disponibles para los **equipamientos de combate**. Algunos objetos pueden **equiparse** en una de las casillas, lo que permitirá usarlos en combate.
 
-Pour équiper un objet de combat, utilisez l'onglet **Inventaire**. L'action **équiper** n'est disponible que pour certains objets. Une fois un objet équipé, vous pouvez à tout moment l'enlever en cliquant sur son emplacement dans l'équipement. Voici un exemple :
+Para equipar un objeto de combate, pincha en la pestaña **Inventario**. La acción **equipar** está disponible en función del objeto. Una vez que un objeto está equipado, puedes quitarlo cuando quieras. A continuación se muestra un ejemplo:
 
 ![Equipements](asset://guide/equipment)
 
-La plupart des objets de combat ne sont utilisables qu'une seule fois. Cela veut dire que lorsque votre Dinoz l'utilisera lors d'un combat, il sera détruit et un nouvel objet pourra alors être équipé à sa place.
+La mayoría de los objetos de combate solo se pueden usar una vez.
 
-Les équipements de combat permettent d'adapter votre **stratégie** en fonction des monstres que vous rencontrez, faites-en bon usage.
+Los equipamientos de combate permiten adaptar tu **estrategia** en función de los monstruos con los que vayas a luchar. Haz un buen uso de ellos.
