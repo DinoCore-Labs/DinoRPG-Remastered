@@ -1,15 +1,15 @@
-# Se Soigner
+# Curación
 
-Une fois un **combat** fini, votre Dinoz peut avoir perdu des **points de vie**. Il est donc nécessaire de le soigner de façon à éviter qu'il ne meure. Pour cela, vous pouvez acheter avec vos pièces d'or :gold: différents objets dans la **Boutique**.
+Cuando un **combate** termina, tu Dino puede haber perdido **puntos de vida**. Como buen Maestro debes curarlo para que no muera. Para ello, con las Monedas :gold: que ganas puedes comprar diferentes objetos en la **Tienda**.
 
-Accédez à l'onglet **Inventaire** depuis la fiche de votre Dinoz pour voir la liste des objets que vous possédez et pour pouvoir les utiliser. Par exemple un **Nuage Burger** va rendre 10 points de vie à votre Dinoz.
+Ve a la sección **Inventario** desde la ficha de tu Dino para ver la lista de objetos que posees y que puedes usar. Por ejemplo, una **Nube-Hamburguesa** le dará 10 puntos de vida a tu Dino.
 
 ![Se Soigner](asset://guide/heal)
 
-## Se Reposer
+## Descansar
 
-Si votre Dinoz a peu de points de vie, il peut **Se Reposer**. Cela lui permet de récupérer automatiquement des points de vie au fur et à mesure que le temps s'écoule. En contrepartie, il ne peut plus effectuer aucune action pendant qu'il se repose.
+Si tu Dino ha perdido puntos de vida, puede Descansar. Esto le permitirá recuperar automáticamente puntos de vida a medida que pase el tiempo. En contrapartida, no puede realizar ninguna otra acción mientras descansa.
 
-Au début, votre Dinoz se reposera au rythme d'**1** PV par heure, mais cela pourra être amélioré par certaines compétences.
+Al principio tu Dino descansará a un ritmo de 1 punto de vida por hora, pero esto podrá cambiar gracias al aprendizaje de ciertas competencias.
 
-Vous pouvez arrêter le repos de votre Dinoz à tout moment mais votre Dinoz ne peut pas regagner plus de **la moitié** de ses points de vie en se reposant.
+Puedes hacer que tu Dino deje de descansar en cualquier momento pero tu Dino no puede ganar más de la mitad de sus puntos de vida por medio del descanso.

@@ -1,7 +1,7 @@
-# Les Statuts
+# Los Estatus
 
-En complétant différentes **Missions / Quêtes**, votre Dinoz va pouvoir obtenir de nombreux **statuts** qui seront répertoriés sur sa fiche. Placez la souris sur une de ces statuts pour obtenir de l'aide sur son effet.
+Al completar diferentes Misiones o Búsquedas, tu Dino podrá obtener numerosos **estatus** que serán clasificados en su ficha. Pon el cursor del ratón en uno de sus estatus para obtener más información sobre su efecto.
 
-En général, les statuts sont permanents. Cela veut dire qu'une fois obtenus, vous ne pourrez pas les perdre. Cependant, certains statuts sont temporaires et peuvent donc être perdus.
+En general los estatus son permanentes. Esto quiere decir que una vez obtenidos, no podrás perderlos. Sin embargo, algunos estatus son temporales y desaparecen al cabo de un tiempo.
 
-Les statuts sont affichés quand vous consultez les Dinozs d'un autre joueur : saurez-vous en consulter le maximum ?
+Los estatus se muestran cuando consultas las fichas de los Dinos de otro jugador. ¿Llegarás a verlos todos?

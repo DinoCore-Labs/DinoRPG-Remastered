@@ -1,15 +1,13 @@
-# Se Déplacer
+# Desplazarse
 
-L'Univers de Dinoland est constitué de nombreux endroits à découvrir. Cest différents lieux sont reliés par des chemins que votre Dinoz peut emprunter en se déplaçant. Pour **déplacer** votre Dinoz, il suffit de cliquer sur le point suivant de la Carte. La Carte de Dinoland est affichée de cette manière :
+El Universo de Dinoland está constituido por numerosos lugares a descubrir. Estos diferentes lugares están comunicados por caminos que tu Dino utilizará para desplazarse. Para desplazar tu Dino, es suficiente con cliquear en el algún punto del mapa. El mapa de Dinoland se muestra así:
 
 ![Se Déplacer](asset://guide/move)
 
-Les chemins partant du lieu où se trouve actuellement votre Dinoz s'affichent et les lieux sur lesquels vous pouvez vous rendre se mettront à clignoter. Cliquez sur le lieu où vous désirez déplacer votre Dinoz pour qu'il s'y rende.
+Aquí se muestran los diferentes caminos que tu Dino puede tomar y los destinos. Haz clic sobre el lugar que te interese para que tu Dino vaya allí. && && Tu Dino puede moverse al menos dos veces al día. Existe un ciclo de recuperación de acciones, que es el siguiente:
 
-Votre Dinoz peut se déplacer au minimum deux fois par jour. Il existe un cycle de récupération des actions, qui est le suivant :
+- ![](asset://icons/info_button) Tu Dino recupera sus nuevas acciones todos los días a **medianoche** (hora del servidor).
 
-- ![](asset://icons/info_button) Votre Dinoz récupère ses nouvelles actions **chaque jour à minuit** (heure serveur).
+Para que vuelva a desplazarse inmediatamente y sin tener que esperar al final del ciclo, basta con usar una **poción de la Bruja Lola**. Las pociones se ganan en eventos o están a la venta en la tienda de DinoRPG.
 
-**Mais il suffit** qu'il utilise une **potion de Madame Irma** pour pouvoir à nouveau se déplacer le même jour, sans que vous ayez à attendre la fin du cycle.
-
-Lors d'un déplacement entre deux lieux, des monstres attaquent votre Dinoz et un **combat** est donc lancé.
+Durante un desplazamiento entre dos lugares, tu Dino se enfrentará en combate a diversos monstruos y ganarás Experiencia. ¡Buena suerte!

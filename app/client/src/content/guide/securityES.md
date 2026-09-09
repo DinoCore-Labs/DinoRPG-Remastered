@@ -1,7 +1,7 @@
-# Sécurité
+# Seguridad
 
-## Sécurité de mon compte
+## Seguridad de mi cuenta
 
-**Peu importe qui vous le demande**...
+**No importa quién te lo pregunte**...
 
-Ne communiquez jamais vos identifiants et mots de passe !
+¡**Nunca** compartas tu nombre de usuario y contraseñas!

@@ -1,19 +1,17 @@
-# Les Clans
+# Clanes
 
-Les **Clans** sont des groupes de joueurs de DinoRPG. Appartenir à un Clan vous permet de discuter avec d'autres joueurs, d'échanger des techniques et des astuces, et de vous entraider. Vous pouvez rejoindre un Clan ou créer votre propre Clan à partir du menu de droite **Clans**.
+**Los Clanes** son grupos de jugadores. Pertenecer a un clan te permite discutir con otros jugadores, intercambiar técnicas y ayudarse mutuamente. Puedes unirte a un clan o crear el tuyo propio desde el menú Clanes.
 
-## Rejoindre un Clan
+## Unirse a un clan
 
-Tout d'abord, sachez que vous ne pouvez faire parti que d'un seul Clan.
+Recuerda que solo puedes pertenecer a un clan al mismo tiempo.
 
-Pour rejoindre un Clan, il vous faudra d'abord en trouver un qui vous convient. La description donnée par le créateur du Clan, la présence d'amis dans ce Clan, la réputation du Clan auprès des autres joueurs... Tous ces points vous aideront à faire votre choix.
+Elige tu clan tomando en cuenta su presentación en página, los miembros y toda la información que brindan para hacer tu pedido de adhesión. Para evitar los pedidos poco serios, esta acción cuesta **1 000** :gold: monedas. Estas monedas de oro serán retiradas de tu cuenta si el creador del clan te acepta. Si la solicitud es rechazada o anulada, recuperarás tu monedas.
 
-Une fois votre Clan sélectionné, vous pouvez déposer une demande d'adhésion. Pour éviter les demandes non sérieuses, cette action coûte **1.000** pièces d'or :gold:. Ces pièces seront perdues si votre demande est acceptée par le créateur du Clan. Par contre, si votre demande est refusée ou si vous l'annulez, vous récupérez vos pièces.
+En todo momento puedes anular tu demanda. Para ello ve a la página del clan donde solicitaste unirte.
 
-Vous pouvez d'ailleurs à tout moment annuler votre demande, pour pouvoir effectuer une nouvelle demande d'adhésion à un autre Clan par exemple.
+## Crear y gestionar tu Clan
 
-## Créer et gérer son Clan
+Para evitar un gran número de clanes vacíos o inactivos, la creación de clanes tiene un precio y es necesario tener al menos 15 puntos en la clasificación (es decir el equivalente a un Dino de nivel 15 o 3 de nivel 5).
 
-De façon à éviter un trop grand nombre de Clans vides ou inactifs, la création de Clans coûte des pièces d'or et nécessite d'obtenir 15 points au Classement, soit l'équivalent d'un Dinoz niveau 15 ou de trois Dinoz niveau 5.
-
-Une fois votre Clan créé, vous pourrez modifier sa bannière et sa description, accepter de nouveaux membres dans le Clan, leurs déléguer les différents droits de gestion du Clan, etc...
+Cuando tu clan es creado, puedes modificar su imagen y su descripción, aceptar nuevos miembros en el clan, dar privilegios de gestión a otros jugadores, etc.

@@ -1,9 +1,10 @@
-# Introduction
+# Introducción
 
-Bienvenue sur **DinoRPG** !
+¡Bienvenido a DinoRPG!
 
-Sur ce site, vous jouez un **Maître Éleveur** et vous pouvez adopter une ou plusieurs petites créatures sauvages nommées les **Dinoz**. Vous pouvez ainsi parcourir le monde de Dinoland, faire combattre et évoluer vos Dinoz, accomplir des Missions et remplir les nombreuses Quêtes que vous rencontrerez au cours de votre aventure.
+**En este juego eres un Maestro de Dinos, criaturas salvajes con instinto guerrero**. Explora con ellas el mundo de Dinoland, ponlas a combatir, cumple misiones y descubre los numerosos misterios ocultos de este mundo de aventuras en constante evolución.
 
-Si vous avez besoin d'aide, vous pouvez à tout moment accéder à ce **Guide du Jeu** en cliquant sur le bouton dans le Menu de droite.
+Tu objetivo será entrenarlo y darle las habilidades necesarias para que se convierta en un poderoso y fiel guerrero.
+Si necesitas ayuda, puedes acceder a esta Guía del juego en cualquier momento haciendo clic en el botón en el menú derecho.
 
-Pour découvrir la suite du Guide, merci de cliquer sur le bouton ci-dessous.
+La aventura empieza ahora, adoptando tu primer Dino... ¡gratis!

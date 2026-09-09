@@ -1,13 +1,13 @@
-# Les Groupes
+# Grupos
 
-Lorsque vous avez plusieurs Dinoz, il est possible de les faire se déplacer et combattre en **groupe**. Pour cela, amenez d'abord vos deux Dinoz sur le même lieu et utilisez l'action **Suivre** sur l'un des deux.
+Cuando tienes varios Dinos, los puedes desplazar y hacer combatir en grupo. Para ello, lleva a tus Dinos al mismo lugar y usa la acción **Seguir** en uno de ellos.
 
-Une fois votre groupe constitué, vous pouvez vous déplacer et combattre ensemble :
+Cuando tu grupo ha sido constituido, puedes desplazar a todos los Dinos de una sola vez:
 
 ![Les Groupes](asset://guide/group)
 
-Cependant, certains déplacements nécessitant des statuts particuliers, les Dinoz ne les possédant pas seront automatiquement détachés du groupe lors d'un déplacement.
+Sin embargo, algunos desplazamientos requieren estatus particulares y los Dinos que no los tengan serán separados automáticamente del grupo.
 
-Un groupe peut contenir jusqu'à 3 Dinoz, mais certaines compétences ou objets permettent d'augmenter ce nombre.
+Por defecto, un grupo puede contener hasta 3 Dinos, pero ciertas competencias te permiten aumentar este número.
 
-Vous pouvez à tout moment arrêter de suivre un Dinoz en utilisant l'action correspondante.
+Puedes dejar de seguir a un Dino en cualquier momento mediante la acción correspondiente.
