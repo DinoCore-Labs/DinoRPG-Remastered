@@ -31,7 +31,9 @@
 			<div class="titleContent">
 				<h3>{{ selectedItem.name }}</h3>
 			</div>
-			<MarkdownRenderer class="guideMarkdown" :source="selectedMarkdown" game-icons />
+			<div class="guideMarkdown">
+				<MarkdownRenderer :source="selectedMarkdown" game-icons />
+			</div>
 			<DZButton v-if="selectedItemIndex > 0" class="next" @click="showPrevItem">
 				<img :src="getImgURL('icons', 'small_page_up')" alt="" />
 				{{ prevItemName }}
@@ -331,10 +333,11 @@ watch(
 				}
 				h2 {
 					background-image: url('../assets/design/title/title_h2.webp');
-					background-position: left bottom;
+					background-position: left center;
 					background-repeat: no-repeat;
 					color: #fff1ad;
-					padding-left: 5px;
+					padding-left: 8px;
+					font-variant: small-caps;
 				}
 				p {
 					margin: 0 0 10px;
