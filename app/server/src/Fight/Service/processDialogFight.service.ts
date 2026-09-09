@@ -183,7 +183,9 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 	 */
 	const team = [dinozData];
 	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters, undefined, allies);
-	const result = await rewardFightVsMonsters(team, monsters, fightResult, dinozData.placeId, user);
+	const result = await rewardFightVsMonsters(team, monsters, fightResult, dinozData.placeId, user, {
+		xpMultiplier: isIntroFight ? 0 : 1
+	});
 	const activeDinozResult = fightResult.attackers.find(attacker => attacker.dinozId === dinozId);
 	const dinozDied = activeDinozResult ? activeDinozResult.hpLost >= dinozData.life : false;
 	if (isIntroFight && dinozDied) {
