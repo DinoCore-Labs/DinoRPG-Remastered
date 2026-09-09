@@ -37,18 +37,18 @@
 				<h3>{{ selectedItem.name }}</h3>
 			</div>
 			<MarkdownRenderer class="guideMarkdown" :source="selectedMarkdown" game-icons />
-			<button v-if="selectedItemIndex > 0" class="next" @click="showPrevItem">
+			<DZButton v-if="selectedItemIndex > 0" class="next" @click="showPrevItem">
 				<img :src="getImgURL('icons', 'small_page_up')" alt="" />
 				{{ prevItemName }}
-			</button>
-			<button v-if="selectedItemIndex < items.length - 1" class="next" @click="showNextItem">
+			</DZButton>
+			<DZButton v-if="selectedItemIndex < items.length - 1" class="next" @click="showNextItem">
 				<img :src="getImgURL('icons', 'small_page_down')" alt="" />
 				{{ nextItemName }}
-			</button>
-			<button class="next" @click="goToNews">
+			</DZButton>
+			<DZButton class="next" @click="goToNews">
 				<img :src="getImgURL('icons', 'small_delete')" alt="" />
 				{{ t('guide.stop') }}
-			</button>
+			</DZButton>
 		</div>
 	</div>
 </template>
@@ -61,6 +61,7 @@ import { useRouter } from 'vue-router';
 import MarkdownRenderer from '../components/common/MarkdownRenderer.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { getImgURL } from '../utils/getImgURL';
+import DZButton from '../components/utils/DZButton.vue';
 
 type GuideIcon = {
 	path: string;
