@@ -261,10 +261,8 @@ const showNextItem = (): void => {
 	}
 };
 
-const goToNews = (): void => {
-	void router.push({
-		name: 'News'
-	});
+const goToNews = () => {
+	void router.push({ name: 'NewsPage' });
 };
 
 watch(
