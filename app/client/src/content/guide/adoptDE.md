@@ -1,6 +1,6 @@
 # Adopter un Dinoz
 
-La première chose que vous devez faire sur DinoRPG est d'adopter un Dinoz. Pour cela vous disposez de **200.000** :gold: (pièces d'or) obtenues lors de la création de votre compte.
+La première chose que vous devez faire sur DinoRPG est d'adopter un Dinoz. Pour cela vous disposez de **100.000** :gold: (pièces d'or) obtenues lors de la création de votre compte.
 
 En cliquant sur **ACHETER UN DINOZ** dans le Menu de gauche, vous pourrez accéder à la Boutique des Dinoz. Chaque Dinoz est unique et chaque jour cette boutique vous proposera une sélection de Dinoz parmi lesquels vous pourrez choisir celui qui vous plaît le plus.
 
