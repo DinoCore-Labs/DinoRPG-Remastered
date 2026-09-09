@@ -1,23 +1,23 @@
-# Support Technique
+# Technischer Support
 
-## Vider son cache
+## Cache leeren
 
-Avant toute autre chose, pensez à essayer de **vider le cache** de votre navigateur Internet ! Cette opération simple peut solutionner bon nombre de problèmes techniques.
+Vor allen Dingen, denk bitte daran, den **Browser-Cache zu leeren**! Dieser Vorgang ist simpel, kann aber eine Vielzahl technischer Probleme lösen.
 
-Sur Microsoft Edge :
+In Microsoft Edge:
 
-- ![](asset://icons/info_button) Appuyer en même temps sur les touches [Ctrl], [Maj] et [Suppr]
-- ![](asset://icons/info_button) Une nouvelle fenêtre s'ouvre. Dans l'onglet, sélectionnez 'Images et fichiers en cache'
-- ![](asset://icons/info_button) Confirmez votre choix en cliquant sur le bouton 'Effacer'
+- ![](asset://icons/info_button) Drücke gleichzeitig [Strg], [Umschalt] und [Entf]
+- ![](asset://icons/info_button) Es öffnet sich ein neues Fenster, in dessen Reiter du „Gecachte Bilder und Daten“ auswählen musst
+- ![](asset://icons/info_button) Bestätige deine Auswahl, indem du auf „Leeren“ drückst
 
-Sur Mozilla Firefox :
+In Mozilla Firefox:
 
-- ![](asset://icons/info_button) Cliquez sur le bouton de menu et sélectionnez les Paramètres
-- ![](asset://icons/info_button) Sélectionnez le panneau Vie privée et sécurité
-- ![](asset://icons/info_button) Dans la section Cookies et données de sites, cliquez sur le bouton 'Effacer les données...'
-- ![](asset://icons/info_button) Cochez la case 'Contenu web en cache', puis cliquez sur le bouton 'Effacer'
+- ![](asset://icons/info_button) Klicke oben im Menü auf „Extras“ und dann „Einstellungen“
+- ![](asset://icons/info_button) Wähle den Abschnitt „Datenschutz und Sicherheit“ aus
+- ![](asset://icons/info_button) Weiter unten bei „Cookies und Website-Daten“, klicke auf die Schaltfläche „Daten entfernen...“
+- ![](asset://icons/info_button) Setze das Häkchen bei „Temporäre Dateien und Seiten im Cache“ und bestätige mit „Löschen“
 
-Sur Google Chrome :
+In Google Chrome:
 
-- ![](asset://icons/info_button) Cliquez sur 'Plus', et choisissez 'Effacer les données de navigation'
-- ![](asset://icons/info_button) Sélectionnez 'Images et fichiers en cache' et cliquez sur 'Effacer les données'
+- ![](asset://icons/info_button) Klicke auf „Mehr“ und wähle „Browser-Daten leeren“
+- ![](asset://icons/info_button) Wähle „Bilder und Daten im Cache“ und klicke dann auf „Daten löschen“

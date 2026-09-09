@@ -1,10 +1,10 @@
-# La Mort
+# Tod
 
-Il peut arriver qu'en combattant un monstre trop fort ou parce qu'il n'avait pas assez de vie, votre Dinoz meure au cours d'un combat. Pendant qu'il est mort, votre Dinoz ne peut alors plus effectuer **aucune action**. Il est donc immobilisé jusqu'à ce qu'il soit ressuscité.
+Bei unzureichendem Vorrat an Lebenspunkten oder falls ein Monster sich als zu stark erweist, kann es vorkommen, dass dein Dinoz im Kampf stirbt. Während er tot ist, ist dein Dinoz nicht in der Lage, **jegliche Aktionen** auszuführen. Er ist daher bis zu seiner Wiederbelebung vollkommen bewegungsunfähig.
 
-Vous avez 2 possibilités pour **ressusciter** votre Dinoz :
+Du hast zwei Möglichkeiten, deinen Dinoz **wiederzubeleben**:
 
-- ![](asset://icons/info_button) **Gratuitement** : votre Dinoz retournera à Dinoville et il perdra la moitié de ses points d'expérience accumulés depuis son dernier niveau.
-- ![](asset://icons/info_button) Avec une **potion d'ange** : votre Dinoz restera où il est et ne perdra pas de points d'expérience.
+- ![](asset://icons/info_button) **Kostenlos**: Dein Dinoz kehrt nach Dinoville zurück und verliert die Hälfte seiner gesammelten Erfahrungspunkte seit dem letzten Stufenaufstieg.
+- ![](asset://icons/info_button) Mit einem **Engelstrank**: Dein Dinoz bleibt, wo er ist und verliert keine Erfahrungspunkte.
 
-Selon la façon dont vous préférez gérer vos pièces d'or :gold:, l'une comme l'autre des solutions peut être intéressante.
+Abhängig davon wie du deine Goldmünzen :gold: handhaben möchtest, können beide Varianten interessant sein.

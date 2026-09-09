@@ -1,7 +1,7 @@
-# Sécurité
+# Sicherheit
 
-## Sécurité de mon compte
+## Kontosicherheit
 
-**Peu importe qui vous le demande**...
+**Egal, wer fragt**...
 
-Ne communiquez jamais vos identifiants et mots de passe !
+**Niemals** deine Einlogdaten oder Passwörter weitergeben!

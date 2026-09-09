@@ -1,15 +1,15 @@
-# Se Déplacer
+# Fortbewegung
 
-L'Univers de Dinoland est constitué de nombreux endroits à découvrir. Cest différents lieux sont reliés par des chemins que votre Dinoz peut emprunter en se déplaçant. Pour **déplacer** votre Dinoz, il suffit de cliquer sur le point suivant de la Carte. La Carte de Dinoland est affichée de cette manière :
+Die Welt von Dinoland ist voller Schauplätze zum Entdecken. Diese unterschiedlichen Orte sind durch Wege verbunden, auf denen sich dein Dinoz fortbewegen kann. Um deinen Dinoz zu **bewegen**, mussst du auf der Karte lediglich einen nahegelegenen Punkt anklicken. Die Karte des Dinolandes sieht folgendermaßen aus:
 
 ![Se Déplacer](asset://guide/move)
 
-Les chemins partant du lieu où se trouve actuellement votre Dinoz s'affichent et les lieux sur lesquels vous pouvez vous rendre se mettront à clignoter. Cliquez sur le lieu où vous désirez déplacer votre Dinoz pour qu'il s'y rende.
+Vom Ort aus, an dem dein Dinoz sich derzeit befindet, tauchen Pfade auf, die zu den Orten führen, wohin du deinen Dinoz bewegen kannst. Klicken auf einen solchen Ort, um deinen Dinoz dorthin fortzubewegen.
 
-Votre Dinoz peut se déplacer au minimum deux fois par jour. Il existe un cycle de récupération des actions, qui est le suivant :
+Dein Dinoz kann sich täglich mindestens zwei Mal fortbewegen. Es gibt für Aktionen einen Wiederherstellungszyklus, der folgendermaßen aussieht:
 
-- ![](asset://icons/info_button) Votre Dinoz récupère ses nouvelles actions **chaque jour à minuit** (heure serveur).
+- ![](asset://icons/info_button) Deine Dinoz erhalten **täglich um Mitternacht** (Serverzeit) neue Aktionen.
 
-**Mais il suffit** qu'il utilise une **potion de Madame Irma** pour pouvoir à nouveau se déplacer le même jour, sans que vous ayez à attendre la fin du cycle.
+**Allerdings**, wenn er einen **Trank von Madame Irma** verwendet, wird er sich noch am selben Tag nochmals fortbewegen können, ohne dass du auf das Ende des Zyklus warten musst.
 
-Lors d'un déplacement entre deux lieux, des monstres attaquent votre Dinoz et un **combat** est donc lancé.
+Bei Fortbewegung zwischen zwei Orten greifen deinen Dinoz Monster an und es kommt zu einem **Kampf**.

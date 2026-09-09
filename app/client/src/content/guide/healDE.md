@@ -1,15 +1,15 @@
-# Se Soigner
+# Heilung
 
-Une fois un **combat** fini, votre Dinoz peut avoir perdu des **points de vie**. Il est donc nécessaire de le soigner de façon à éviter qu'il ne meure. Pour cela, vous pouvez acheter avec vos pièces d'or :gold: différents objets dans la **Boutique**.
+Zum Ende eines **Kampfes** wird dein Dinoz wahrscheinlich **Lebenspunkte** verloren haben. Um seinen Tod zu verhindern, sollte dieser daher geheilt werden. Hierzu kannst du in der **Boutique** mit deinen Goldmünzen :gold: verschiedene Gegenstände kaufen.
 
-Accédez à l'onglet **Inventaire** depuis la fiche de votre Dinoz pour voir la liste des objets que vous possédez et pour pouvoir les utiliser. Par exemple un **Nuage Burger** va rendre 10 points de vie à votre Dinoz.
+Im Dinoz-Profil kannst du unter dem Reiter **„Inventar“** auf die Liste an Gegenständen in deinem Besitz zugreifen, um sie benutzen zu können. Beispielsweise stellt ein **Wolkenburger** dinem Dinoz 10 Lebenspunkte wieder her.
 
 ![Se Soigner](asset://guide/heal)
 
-## Se Reposer
+## Erholung
 
-Si votre Dinoz a peu de points de vie, il peut **Se Reposer**. Cela lui permet de récupérer automatiquement des points de vie au fur et à mesure que le temps s'écoule. En contrepartie, il ne peut plus effectuer aucune action pendant qu'il se repose.
+Wenn dein Dinoz zu wenig Lebenspunkte hat, kann er **sich ausruhen**. Dadurch stellt er im Laufe der Zeit automatisch Lebenspunkte wieder her. Dafür kann er, während er sich erholt, keine weiteren Aktionen ausführen.
 
-Au début, votre Dinoz se reposera au rythme d'**1** PV par heure, mais cela pourra être amélioré par certaines compétences.
+Anfangs stellt dein Dinoz pro Stunde **1** LP wieder her, was jedoch durch bestimmte Fähigkeiten verbessert werden kann.
 
-Vous pouvez arrêter le repos de votre Dinoz à tout moment mais votre Dinoz ne peut pas regagner plus de **la moitié** de ses points de vie en se reposant.
+Das Ausruhen deines Dinoz kann jederzeit unterbrochen werden und er kann dabei nicht mehr als **die Hälfte** seiner Lebenspunkte wiederherstellen.

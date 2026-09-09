@@ -1,13 +1,13 @@
-# Adopter un Dinoz
+# Einen Dinoz adoptieren
 
-La première chose que vous devez faire sur DinoRPG est d'adopter un Dinoz. Pour cela vous disposez de **100.000** :gold: (pièces d'or) obtenues lors de la création de votre compte.
+Als Erstes solltest du in DinoRPG einen Dinoz adoptieren. Hierfür hast du bei der Kontoerstellung **100.000** :gold: (Goldmünzen) erhalten.
 
-En cliquant sur **ACHETER UN DINOZ** dans le Menu de gauche, vous pourrez accéder à la Boutique des Dinoz. Chaque Dinoz est unique et chaque jour cette boutique vous proposera une sélection de Dinoz parmi lesquels vous pourrez choisir celui qui vous plaît le plus.
+Klicke links im Menü auf **Kaufe Dinoz!**, um das Dinoz-Gehege zu betreten. Jeder Dinoz ist einzigartig und jeden Tag wird im Gehege eine neue Auswahl an Dinoz angeboten, aus der du aussuchen kannst was dir am besten gefällt.
 
-Chaque Dinoz est présenté de la façon suivante :
+Jeder Dinoz wird wie folgt dargestellt:
 
 ![Adopter un Dinoz](asset://guide/adopt)
 
-Vous pouvez voir une image du Dinoz, sa **Race** et son Prix. Il existe différentes races de Dinoz, chacune ayant ses propres spécificités. En particulier, les valeurs des **5 éléments** indiquées lors de l'achat dépendent de la race du Dinoz, et certaines races disposent d'une **compétence supplémentaire**. Ces deux points influencent le **combat** comme nous le verrons plus tard. Le prix varie aussi en fonction de la race du Dinoz, certaines races étant plus rares et donc plus chères.
+Der Dinoz hat ein Aussehen, eine **Rasse** und einen Preis. Es gibt unterschiedliche Rassen von Dinoz, die jeweils über eigene Besonderheiten verfügen. Vor allem die Verteilung der **5 Elemente** hängt beim Kauf von der Rasse des Dinoz ab und manche Rassen verfügen sogar über eine **zusätzliche Fähigkeit**. Beide Aspekte haben Einfluss auf den **Kampf**, worauf später eingegangen wird. Auch der Preis kann von Dinoz zu Dinoz variieren, denn seltenere Rassen sind teurer.
 
-Dans un premier temps, choisissez le Dinoz que vous préférez et achetez-le.
+Suche zunächst einen passenen Dinoz aus und dann kannst du ihn kaufen.

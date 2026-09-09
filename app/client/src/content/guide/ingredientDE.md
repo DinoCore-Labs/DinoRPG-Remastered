@@ -1,13 +1,13 @@
-# Les ingrédients
+# Zutaten
 
-Certaines compétences permettent à votre Dinoz de **collecter des ingrédients** dans les différents lieux de Dinoland.
+Manche Fähigkeiten ermöglichen es deinen Dinoz, an verschiedenen Orten des Dinolandes **Zutaten zu sammeln**.
 
-Quand vous avez une de ces compétences et que vous êtes sur le bon lieu, une action de collecte apparaît parmi les actions de votre Dinoz. Lorsque vous effectuez cette action, une grille s'affiche :
+Wenn du über eine solche Fähigkeit verfügst und dich am richtigen Ort befindest, taucht bei den Aktionen deines Dinoz eine zum Sammeln auf. Bei Benutzung erscheint dann ein Raster:
 
 ![Les ingrédients](asset://guide/gather)
 
-Vous devez sélectionner la ou les cases que vous désirez examiner. Avec un peu de chance, vous trouverez de nombreux ingrédients dont les plus rares vous rapporteront plusieurs milliers de pièces d'or.
+Hier geht es darum, Kästchen zu selektieren, die untersucht werden sollen. Mit etwas Glück findest du viele Zutaten, von denen die seltensten mehrere tausend Goldmünzen einbringen können.
 
-Pour vendre vos ingrédients, vous devez trouvez le **Marchand Ambulant** qui se déplace chaque semaine dans un nouveau lieu. En fonction du **jour de la semaine**, il pourra vous acheter différents types d'ingrédients pour un très bon prix, alors soyez attentifs.
+Um deine Zutaten zu verkaufen, musst du den **Fliegenden Händler** ausfindig machen, der sich jede Woche an einem anderen Ort aufhält. Abhängig vom **Wochentag** kann er dir verschiedene Arten von Zutaten zu einem sehr guten Preis abkaufen. Sei also auf der Hut!
 
-Vous avez une quantité maximum d'ingrédients que vous pouvez transporter, il vous faudra donc les vendre de façon régulière.
+Da die Menge an Zutaten, die du transportieren kannst, begrenzt ist, ist es empfehlenswert, diese regelmäßig zu verkaufen.
