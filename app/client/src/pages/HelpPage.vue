@@ -1,15 +1,10 @@
 <!--
-  This file contains code derived from or adapted from:
-  Eternaltwin DinoRPG
-  Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/3a73bbc6d751e4916cc5fd2e5f23bc2cfd42fc6d/ed-ui/src/pages/HelpPage.vue
-
-  Copyright in the original contributions remains with the respective
-  authors and contributors.
-
-  Modified by DinoRPG Remastered contributors from 2026-01-25 through 2026-09-08.
-  See NOTICE.md and the Git history for provenance and modification details.
-
   SPDX-License-Identifier: AGPL-3.0-or-later
+
+  This file contains code adapted from Eternaltwin DinoRPG.
+  Substantially refactored by DinoRPG Remastered contributors.
+
+  See NOTICE.md and Git history for provenance and modification details.
 -->
 <template>
 	<TitleHeader :title="t('pageTitle.guide')" :header="t('guide.title')" :sub-header="selectedItem?.name ?? ''" />
