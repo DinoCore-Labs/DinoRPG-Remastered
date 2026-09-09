@@ -1,10 +1,10 @@
-# La Mort
+# Muerte
 
-Il peut arriver qu'en combattant un monstre trop fort ou parce qu'il n'avait pas assez de vie, votre Dinoz meure au cours d'un combat. Pendant qu'il est mort, votre Dinoz ne peut alors plus effectuer **aucune action**. Il est donc immobilisé jusqu'à ce qu'il soit ressuscité.
+Ya sea porque el adversario fuera muy fuerte, o porque tuviera pocos puntos de vida, tu Dino puede morir en una batalla. Cuando muere, **no puede realizar ninguna acción**. Queda inmovilizado hasta que resucita.
 
-Vous avez 2 possibilités pour **ressusciter** votre Dinoz :
+Tienes dos posibilidades para **resucitar** a tu Dino:
 
-- ![](asset://icons/info_button) **Gratuitement** : votre Dinoz retournera à Dinoville et il perdra la moitié de ses points d'expérience accumulés depuis son dernier niveau.
-- ![](asset://icons/info_button) Avec une **potion d'ange** : votre Dinoz restera où il est et ne perdra pas de points d'expérience.
+- ![](asset://icons/info_button) **Gratuitamente**: tu Dino volverá a Dinovilla y perderá la mitad de sus puntos de experiencia acumulados desde su último nivel.
+- ![](asset://icons/info_button) Con una **Poción de Ángel**: tu Dino se quedará donde estaba y no perderá puntos de experiencia.
 
-Selon la façon dont vous préférez gérer vos pièces d'or :gold:, l'une comme l'autre des solutions peut être intéressante.
+Según la forma en que gestiones tus Monedas :gold:, podrás actuar en estas ocasiones.

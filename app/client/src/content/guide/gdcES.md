@@ -1,64 +1,64 @@
-# La Guerre des Clans
+# Guerra de Clanes
 
-Les Clans peuvent aussi s'affronter les uns aux autres lors de la Guerre des Clans ! En voici les principes et les règles :
+¡Los clanes también pueden enfrentarse entre sí en la Guerra de Clanes! Aquí están los principios y reglas:
 
-## Le Trésor du Clan
+## El Tesoro del Clan
 
-Chaque Clan possède un Trésor qui correspond à la valeur des ingrédients à disposition dans le Clan.
+Cada Clan tiene un Tesoro que corresponde al valor de los ingredientes disponibles en el Clan.
 
-Pour remplir le Trésor du Clan, chaque membre peut donner tout ou partie de ses ingrédients recueillis lors de ses actions de collecte. À partir de la page Ingrédients dans le menu de droite, vous aurez accès à un bouton permettant de 'Donner au Clan'.
+Para llenar el Tesoro del Clan, cada miembro puede donar todo o parte de sus ingredientes recolectados durante sus acciones de recolección. Desde la página de Ingredientes en el menú de la derecha, tendrás acceso a un botón para \"Donar al clan\".
 
-Le trésor a différentes utilités, les voici :
+El tesoro tiene diferentes usos, aquí los tienes:
 
-- ![](asset://icons/info_button) _La construction/reconstruction du Château_
-- ![](asset://icons/info_button) _La déclaration de guerre contre un autre Clan_
-- ![](asset://icons/info_button) _Le paiement du percepteur_
+- ![](asset://icons/info_button) _La construcción/reconstrucción del castillo_
+- ![](asset://icons/info_button) _Declarar la guerra a otro clan_
+- ![](asset://icons/info_button) _El pago al recaudador de impuestos_
 
-## ...Le Château du Clan :
+## El castillo del Clan
 
-Chaque Clan peut construire son propre Château à partir de l'onglet **'Château'**. Pour le construire, vous avez besoin d'**ingrédients** qui seront retirés de votre Trésor. Seul le leader du Clan peut lancer la première construction du Château.
+Cada Clan puede construir su propio Castillo desde la pestaña **Castillo**. Para construirlo, necesitas ingredientes que se tomarán de tu Tesoro. Sólo el líder del Clan puede iniciar la primera construcción del Castillo.
 
-Une fois le château construit, il est possible de lui assigner des défenseurs qui assureront la protection du château lors des attaques ennemies. Pour assigner un de vos Dinoz à la défense du château, il vous faut vous rendre à l'emplacement de votre château et faire l'action **'Défendre le château'**.
+Una vez construido el castillo, es posible asignar defensores que garantizarán la protección del castillo durante los ataques enemigos. Para asignar a uno de tus dinos para defender el castillo, debes ir a la ubicación de tu castillo y realizar la acción **Defender el castillo**.
 
-Si tous les défenseurs se font tuer lors d'un combat ou qu'il n'y a plus de défenseurs, le château subira des dégâts et sera donc endommagé.
+Si todos los defensores mueren durante una pelea o no hay más defensores, el castillo sufrirá daños y, por lo tanto, quedará dañado.
 
-Voici un exemple de l'onglet Château :
+Aquí hay un ejemplo de la pestaña Castillo:
 
 ![La Guerre des Clans](asset://guide/castle)
 
-La page du Château résume ce qui suit :
+La página del Castillo resume lo siguiente:
 
-- ![](asset://icons/info_button) _L'emplacement du Château_
-- ![](asset://icons/info_button) _Son état : les points de vie, comme indiqué sur l'image ci-dessus. De base, le Château possède 300:pv: points de vie._
+- ![](asset://icons/info_button) _La localización del Castillo_
+- ![](asset://icons/info_button) _Su estado: los puntos de vida, como se muestra en la imagen de arriba. Como base, el castillo tiene 300 :pv: puntos de vida._
 
-## ...Déclarer une guerre :
+## Declarar una guerra
 
-Cet onglet vous permet de consulter toutes les informations à propos des guerres comme les clans que vous attaquer, les clans qui vous attaques et les batailles que vous avez déjà remportés contre des clans adverses.
+Esta pestaña te permite ver toda la información sobre las guerras, como los clanes que estás atacando, los clanes que te están atacando y las guerras que ya has ganado contra clanes adversarios.
 
-Pour lancer une guerre, il vous est nécessaire de disposer des ingrédients suffisants dans votre trésor. Une guerre dure 100 heures au maximum et ne peut être annulée. Pour remporter la guerre, il vous faudra détruire le château ennemi.
+Para iniciar una guerra, necesitas tener suficientes ingredientes en tu tesoro. Una guerra dura un máximo de **100 horas** y no se puede cancelar. Para ganar la guerra, tendrás que destruir el castillo enemigo.
 
-## ...Les Attaques :
+## Los Ataques
 
-Pour attaquer un château, vous aurez besoin de le localiser, vous devrez donc déplacer votre Dinoz jusqu'à ce que vous trouviez le château ennemi, après quoi vous appuyez simplement sur le bouton 'Attaquer' et vous verrez votre groupe de Dinoz défier les défenseurs du château, ou en l'absence de ces derniers, attaquera le château directement.
+Para atacar un castillo, primero necesitarás localizarlo, por lo que necesitarás mover tus Dinos hasta encontrar el castillo enemigo. Luego simplemente presionas el botón **Atacar** y verás a tu grupo de Dinos peleando contra los defensores del castillo o, en caso no hayan, atacando directamente el castillo.
 
-Ces assauts ont une limite de temps pour se battre, si vous vainquez les défenseurs dans ce délai, tous vos Dinoz attaqueront le château adversaire.
+Estos combates tienen un límite de tiempo. Si derrotas a los defensores dentro de este tiempo, todos tus Dinos atacarán el castillo del oponente.
 
-En détruisant le château ennemi, vous gagnerez la guerre, tandis que si votre château est détruit, vous perdrez.
+Al destruir el castillo enemigo ganarás la guerra, mientras que, si tu castillo es destruido, perderás.
 
-Voici un exemple d'une attaque de Château :
+Aquí hay un ejemplo de un ataque a un castillo:
 
 ![La Guerre des Clans](asset://guide/attack_castle)
 
-## La Défense
+## La Defensa
 
-Lorsque votre Clan est attaqué, il est important de préparer une bonne défense afin de ne pas perdre la Guerre lancée par un clan adverse ou lorsque vous déclarez la guerre.
+Cuando tu Clan es atacado, es importante preparar una buena defensa para no perder la Guerra lanzada por un clan enemigo o cuando tu mismo clan declara la guerra.
 
-Le leader du Clan, ainsi que les membres ayant les droits nécessaires pourront ajuster la défense en déplaçant les Dinoz afin d'adapter la meilleure stratégie pour ne pas que votre Château soit touché.
+El líder del Clan, así como los miembros con los derechos necesarios, podrán ajustar la defensa moviendo los Dinos para adaptar la mejor estrategia para que tu Castillo no sea dañado.
 
-Voici un exemple d'une défense de Château :
+Aquí hay un ejemplo de la defensa de un castillo:
 
 ![La Guerre des Clans](asset://guide/def_castle)
 
-## Le Percepteur
+## El Recaudador
 
-Le percepteur doit être payé avant de déclarer une attaque. Il passe toujours dans la demi-heure qui suis l'heure qu'il propose ! Par exemple, s'il dit qu'il passera de 16h24 à 17h50, vous pourrez payer de 16h à 16h30.
+Se debe pagar al recaudador de impuestos antes de declarar una guerra. ¡Siempre pasa en la media hora que sigue a la hora que propone! Por ejemplo, si dice que pasará de 16:24 a 17:50, puedes pagar de 16:00 a 16:30.

@@ -1,23 +1,23 @@
-# Support Technique
+# Soporte Técnico
 
-## Vider son cache
+## Limpiar la caché
 
-Avant toute autre chose, pensez à essayer de **vider le cache** de votre navigateur Internet ! Cette opération simple peut solutionner bon nombre de problèmes techniques.
+Antes que nada, ¡considere intentar **borrar la caché** de su navegador de Internet! Esta sencilla operación puede resolver muchos problemas técnicos.
 
-Sur Microsoft Edge :
+En Microsoft Edge:
 
-- ![](asset://icons/info_button) Appuyer en même temps sur les touches [Ctrl], [Maj] et [Suppr]
-- ![](asset://icons/info_button) Une nouvelle fenêtre s'ouvre. Dans l'onglet, sélectionnez 'Images et fichiers en cache'
-- ![](asset://icons/info_button) Confirmez votre choix en cliquant sur le bouton 'Effacer'
+- ![](asset://icons/info_button) Presione las teclas [Ctrl], [Shift] y [Supr] al mismo tiempo.
+- ![](asset://icons/info_button) Se abre una nueva ventana. En la pestaña, seleccione 'Caché de imágenes y archivos'
+- ![](asset://icons/info_button) Confirme su elección haciendo clic en el botón 'Eliminar'
 
-Sur Mozilla Firefox :
+En Mozilla Firefox:
 
-- ![](asset://icons/info_button) Cliquez sur le bouton de menu et sélectionnez les Paramètres
-- ![](asset://icons/info_button) Sélectionnez le panneau Vie privée et sécurité
-- ![](asset://icons/info_button) Dans la section Cookies et données de sites, cliquez sur le bouton 'Effacer les données...'
-- ![](asset://icons/info_button) Cochez la case 'Contenu web en cache', puis cliquez sur le bouton 'Effacer'
+- ![](asset://icons/info_button) Haga clic en el botón de menú y seleccione Configuración
+- ![](asset://icons/info_button) Seleccione el panel Privacidad y seguridad
+- ![](asset://icons/info_button) En la sección Cookies y datos del sitio, haga clic en el botón 'Borrar datos...'
+- ![](asset://icons/info_button) En la sección Cookies y datos del sitio, haga clic en el botón 'Borrar datos...'
 
-Sur Google Chrome :
+En Google Chrome:
 
-- ![](asset://icons/info_button) Cliquez sur 'Plus', et choisissez 'Effacer les données de navigation'
-- ![](asset://icons/info_button) Sélectionnez 'Images et fichiers en cache' et cliquez sur 'Effacer les données'
+- ![](asset://icons/info_button) Haga clic en \"Más\" y elija \"Borrar datos de navegación\".
+- ![](asset://icons/info_button) Seleccione \"Caché de imágenes y archivos\" y haga clic en \"Borrar datos\".

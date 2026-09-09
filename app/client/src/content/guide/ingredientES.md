@@ -1,13 +1,13 @@
-# Les ingrédients
+# Ingredientes
 
-Certaines compétences permettent à votre Dinoz de **collecter des ingrédients** dans les différents lieux de Dinoland.
+Algunas competencias permiten a tu Dino **obtener ingredientes** en los diferentes lugares de Dinoland.
 
-Quand vous avez une de ces compétences et que vous êtes sur le bon lieu, une action de collecte apparaît parmi les actions de votre Dinoz. Lorsque vous effectuez cette action, une grille s'affiche :
+Cuando tienes la competencia necesaria y te encuentras en el lugar correcto, la acción para obtener un ingrediente aparece entre las acciones disponibles para tu Dino. Cuando realizas esta acción, aparece una cuadrícula:
 
 ![Les ingrédients](asset://guide/gather)
 
-Vous devez sélectionner la ou les cases que vous désirez examiner. Avec un peu de chance, vous trouverez de nombreux ingrédients dont les plus rares vous rapporteront plusieurs milliers de pièces d'or.
+Debes seleccionar la o las casillas que desees examinar. Con un poco de suerte, encontrarás numerosos ingredientes. Los más raros podrán incluso darte miles de monedas de oro.
 
-Pour vendre vos ingrédients, vous devez trouvez le **Marchand Ambulant** qui se déplace chaque semaine dans un nouveau lieu. En fonction du **jour de la semaine**, il pourra vous acheter différents types d'ingrédients pour un très bon prix, alors soyez attentifs.
+Para vender tus ingredientes debes encontrar el **Mercader Ambulante** que se desplaza cada semana por diferentes lugares. En función del **día de la semana**, podrá comprarte diferentes tipos de ingredientes por un precio interesante.
 
-Vous avez une quantité maximum d'ingrédients que vous pouvez transporter, il vous faudra donc les vendre de façon régulière.
+Tienes una cantidad máxima de ingredientes que puedes transportar. Tendrás que venderlos de forma regular cuando necesites espacio.

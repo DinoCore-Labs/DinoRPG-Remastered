@@ -1,21 +1,21 @@
-# L'Expérience
+# Experiencia
 
-À la fin de chaque combat, votre Dinoz va gagner des **points d'expérience** :xp:. Une fois que la barre d'expérience présente sur la fiche du Dinoz est remplie, votre Dinoz pourra **augmenter son niveau**.
+Al final de cada combate, tu Dino ganará **puntos de experiencia** :xp:. Cuando la barra de experiencia de la ficha esté llena, tu Dino podrá **aumentar su nivel**.
 
-Tout d'abord, un **élément** est tiré au hasard. Votre Dinoz verra donc la valeur de cet élément augmentée. Voici un exemple :
+Entonces, un **elemento** será elegido al azar y el valor de este elemento aumentará. A continuación se muestra un ejemplo:
 
 ![L'Expérience](asset://guide/exp)
 
-## Compétences
+## Competencias
 
-Ensuite, il vous est demandé **d'apprendre une compétence**, dont la liste est déterminée en fonction de l'élément qui a été choisi. Suivant la description de la compétence, choisissez celle qui vous convient le mieux.
+Deberás elegir una competencia a aprender para tu Dino. La lista es determinada en función del elemento obtenido. Elige la competencia que quieras en función de su descripción.
 
-Vous pouvez retrouver la liste des compétences que votre Dinoz a appris à partir de l'onglet **Détails** sur sa fiche.
+Puedes ver la lista de las competencias que tu Dino ha aprendido en la pestaña Detalles en su ficha.
 
-En fonction de la **race** de votre Dinoz, les probabilités d'augmenter un **élément** donné ne sont pas les mêmes, et donc les choix de compétences et les possibilités de développement de votre Dinoz vont varier.
+En función de la raza de tu Dino, las probabilidades de aumentar un elemento dado no son las mismas, y por tanto las posibilidades de elección y desarrollo de las competencias pueden variar.
 
-## Débloquer des Compétences
+## Desbloquear competencias
 
-Chaque compétence que votre Dinoz apprend peut lui permettre d'accéder à d'autres compétences plus puissantes. Cependant, avant de pouvoir les apprendre, il faudra les **débloquer**. Cette option vous est proposée quand votre Dinoz change de niveau si cela est possible.
+Cada competencia que tu Dino aprenda puede darle acceso a otras competencias más poderosas. Sin embargo, antes de poder aprender estas nuevas competencias, tendrá que **desbloquearlas**. Si es posible verás esta opción cuando tu Dino suba de nivel.
 
-Il vous faudra donc choisir entre apprendre plus de compétences pour pouvoir en débloquer plusieurs d'un coup ou débloquer plus rapidement les compétences les plus puissantes.
+Tendrás que elegir entre aprender más competencias para desbloquear más de una sola vez o desbloquear rápidamente las competencias más interesantes.
