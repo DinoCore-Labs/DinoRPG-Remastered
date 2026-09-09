@@ -699,7 +699,8 @@ const launchAssault = (
 	power?: [ElementType, number][],
 	target?: DetailedFighter | null,
 	goto?: boolean,
-	isWhistleAssault: boolean = false
+	isWhistleAssault: boolean = false,
+	disableWhistle: boolean = false
 ) => {
 	// Unless specified, this method will add to the history the move to and move back steps by default
 	goto = goto ?? true;
@@ -745,7 +746,12 @@ const launchAssault = (
 	}
 
 	// Friendly Whistle
-	if (!isWhistleAssault && attacker.items.some(item => item.itemId === Item.FRIENDLY_WHISTLE) && target.hp > 0) {
+	if (
+		!isWhistleAssault &&
+		!disableWhistle &&
+		attacker.items.some(item => item.itemId === Item.FRIENDLY_WHISTLE) &&
+		target.hp > 0
+	) {
 		// Announce the item if it's the first time
 		if (!attacker.hasWhistled) {
 			attacker.hasWhistled = true;
@@ -2539,7 +2545,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					Skill.DANSE_FOUDROYANTE,
 					getElementalAttack(fighter, ElementType.LIGHTNING, 3),
 					opponent,
-					false
+					false,
+					false,
+					i !== 4
 				);
 			}
 
