@@ -1447,7 +1447,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		id: Boss.TAURUS,
 		boss: true,
 		name: 'taurus',
-		hp: 2000,
+		hp: 1000,
 		elements: {
 			fire: 60,
 			wood: 20,
