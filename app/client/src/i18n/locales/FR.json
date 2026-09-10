@@ -129,7 +129,7 @@
 			"full": "Stock plein",
 			"sortBy": "Trier par",
 			"confirmUse": "Confirmez-vous l'utilisation de {name} sur votre Dinoz ?",
-			"confirmEquipMagicItem": "Etes vous sur de vouloir équiper cette objet ?",
+			"confirmEquipMagicItem": "Êtes vous sur de vouloir équiper cet objet ?",
 			"sort": {
 				"default": "Par défaut",
 				"nameAsc": "Nom (A → Z)",
