@@ -749,6 +749,7 @@ const launchAssault = (
 	if (
 		!isWhistleAssault &&
 		!disableWhistle &&
+		attacker.hp > 0 &&
 		attacker.items.some(item => item.itemId === Item.FRIENDLY_WHISTLE) &&
 		target.hp > 0
 	) {
