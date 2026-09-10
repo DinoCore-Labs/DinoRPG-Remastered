@@ -361,8 +361,11 @@ export async function getAvailableActions(
 		}
 		return availableActions;
 	}
+	const currentContext = getContext(dinoz.id);
+	const canGatherHere = normalGatherEntries.some(gatherFound => checkCondition(gatherFound.condition, currentContext));
+
 	// New action
-	if ((!dinoz.leaderId && !dinoz.fight) || !dinoz.gather) {
+	if ((!dinoz.leaderId && (!dinoz.fight || !dinoz.gather)) || (dinoz.leaderId && !dinoz.gather && canGatherHere)) {
 		if (dinoz.remaining > 0) {
 			availableActions.push(actionList[Action.ACTION]);
 		} else {
@@ -397,7 +400,6 @@ export async function getAvailableActions(
 	if (dinoz.life < Math.round(dinoz.maxLife / 2) && dinoz.fight) {
 		availableActions.push(actionList[Action.REST]);
 	}
-	const currentContext = getContext(dinoz.id);
 	// Normal gather
 	if (dinoz.gather) {
 		for (const gatherFound of normalGatherEntries) {
