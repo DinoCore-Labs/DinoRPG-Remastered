@@ -45,6 +45,7 @@ import {
 	hasSkill,
 	hasStatus,
 	heal,
+	modifyInitiative,
 	playFighterTurn,
 	stepFighter,
 	updateStat
@@ -691,7 +692,10 @@ const startFight = (fightData: DetailedFight) => {
 		fightData.fighters.forEach(fighter => {
 			// Insert use step for all magic items with passive effects - visual only
 			fighter.items.forEach(item => {
-				if (item.itemType === ItemType.MAGICAL && item.passiveEffect) {
+				if (
+					item.itemType === ItemType.MAGICAL &&
+					(item.passiveEffect || item.itemId === Item.BEER || item.itemId === Item.EMBER)
+				) {
 					fightData.steps.push({
 						action: 'itemUse',
 						fighter: stepFighter(fighter),
@@ -699,15 +703,6 @@ const startFight = (fightData: DetailedFight) => {
 					});
 				}
 			});
-
-			// Temporal reduction - effect already applied at this point
-			if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
-				fightData.steps.push({
-					action: 'itemUse',
-					fighter: stepFighter(fighter),
-					itemId: Item.TEMPORAL_REDUCTION
-				});
-			}
 
 			// Curse locker
 			if (fighter.items.some(item => item.itemId === Item.CURSE_LOCKER)) {
@@ -722,8 +717,8 @@ const startFight = (fightData: DetailedFight) => {
 
 					// Weakest element is the last in the array
 					opponent.element = opponent.elements[opponent.elements.length - 1];
-					// Lock opponent for 4 cycles on that element
-					opponent.locked = 4 * CYCLE;
+					// Lock opponent for 3 cycles on that element
+					opponent.locked = 3 * CYCLE;
 
 					// Add fx for locked
 					fightData.steps.push({
@@ -778,7 +773,7 @@ const startFight = (fightData: DetailedFight) => {
 
 		if (hasSkill(fighter, Skill.DOUBLE_FACE)) {
 			// 50% chance to get positive / negative time
-			fighter.time += (fightData.rng() > 0.5 ? 10 : -10) * TIME_FACTOR;
+			modifyInitiative(fighter, (fightData.rng() > 0.5 ? 10 : -10) * TIME_FACTOR);
 
 			// Add skill step
 			fightData.steps.push({

@@ -6,16 +6,35 @@
 import markdownit from 'markdown-it';
 import { defineComponent } from 'vue';
 
-const md = new markdownit({
-	breaks: true,
-	linkify: true,
-	html: false
-});
+import { helpers } from '../../utils/formatText';
 
-md.linkify.set({
-	fuzzyLink: true,
-	fuzzyEmail: true
-});
+function createMarkdownRenderer(gameIcons = false) {
+	const md = new markdownit({
+		breaks: true,
+		linkify: true,
+		html: false
+	});
+	md.linkify.set({
+		fuzzyLink: true,
+		fuzzyEmail: true
+	});
+	if (gameIcons) {
+		md.renderer.rules.text = (tokens, idx) => {
+			const content = md.utils.escapeHtml(tokens[idx].content);
+			return content.replace(/:(\w+):/g, (match, iconKey: string) => {
+				try {
+					return helpers.computeImageHtml(iconKey);
+				} catch {
+					return match;
+				}
+			});
+		};
+	}
+	return md;
+}
+
+const markdownRenderer = createMarkdownRenderer();
+const gameMarkdownRenderer = createMarkdownRenderer(true);
 
 export default defineComponent({
 	name: 'MarkdownRenderer',
@@ -23,11 +42,16 @@ export default defineComponent({
 		source: {
 			type: String,
 			required: true
+		},
+		gameIcons: {
+			type: Boolean,
+			default: false
 		}
 	},
 	computed: {
 		renderedHtml(): string {
-			return md.render(this.source ?? '');
+			const renderer = this.gameIcons ? gameMarkdownRenderer : markdownRenderer;
+			return renderer.render(this.source ?? '');
 		}
 	}
 });

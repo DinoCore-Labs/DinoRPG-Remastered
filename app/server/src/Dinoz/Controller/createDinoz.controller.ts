@@ -5,6 +5,7 @@ import { GameLogType, Prisma } from '../../../../prisma/index.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
+import { handleTutorialEvent } from '../../Tutorial/Controller/tutorial.controller.js';
 
 export async function createDinoz(dinoz: Prisma.DinozCreateInput) {
 	const userId = dinoz.user?.connect?.id;
@@ -14,6 +15,12 @@ export async function createDinoz(dinoz: Prisma.DinozCreateInput) {
 	});
 	// Stat player
 	await incrementUserStat(StatTracking.GET_DINOZ, userId, 1);
+	// Tutorial
+	await handleTutorialEvent({
+		userId,
+		dinozId: newDinoz.id,
+		event: 'DINOZ_ADOPTED'
+	});
 	// Log
 	safeCreateGameLog({
 		type: GameLogType.CreateDinoz,

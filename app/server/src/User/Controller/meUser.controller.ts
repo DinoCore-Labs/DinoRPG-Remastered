@@ -7,6 +7,7 @@ import { getMaxXp, orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { GameLogType } from '../../../../prisma/index.js';
+import { ACCESS_TOKEN_COOKIE, authCookieOptions } from '../../config/cookie.js';
 import { getUserMaxDinoz } from '../../Dinoz/Controller/getActiveDinoz.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
@@ -171,6 +172,27 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				req.log
 			);
 		}
+
+		if (
+			user.gameRulesAcceptedVersion === GAME_RULES_VERSION &&
+			(req.user as any).gameRulesAcceptedVersion !== GAME_RULES_VERSION
+		) {
+			const token = req.jwt.sign(
+				{
+					id: user.id,
+					name: user.name,
+					role: user.role,
+					gameRulesAcceptedVersion: user.gameRulesAcceptedVersion
+				},
+				{
+					expiresIn: '7d'
+				}
+			);
+			reply.setCookie(ACCESS_TOKEN_COOKIE, token, {
+				...authCookieOptions
+			});
+		}
+
 		const gold = user.wallets.find(w => w.type === 'GOLD')?.amount ?? 0;
 		const treasureTicket = user.wallets.find(w => w.type === 'TREASURE_TICKET')?.amount ?? 0;
 		const maxDinoz = getUserMaxDinoz({

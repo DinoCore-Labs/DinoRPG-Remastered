@@ -24,6 +24,8 @@ type EquipItemBody = {
 	equip: boolean;
 };
 
+const MAGIC_ITEM_COOLDOWN_HOURS = 119;
+
 export async function equipItem(
 	req: FastifyRequest<{ Params: EquipItemParams; Body: EquipItemBody }>
 ): Promise<EquipItemResponse> {
@@ -37,7 +39,7 @@ export async function equipItem(
 		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 	}
 	if (dinoz.state === DinozState.selling) {
-		throw new ExpectedError(`dinoz.stateReason.${dinoz.state}`);
+		throw new ExpectedError('cannotEquipSellingDinoz');
 	}
 	const itemId = Number(req.body.itemId);
 	const equip = Boolean(req.body.equip);
@@ -82,6 +84,20 @@ export async function equipItem(
 		if (!dinozItem) {
 			throw new ExpectedError('itemNotEquipped');
 		}
+
+		if (itemToEquip.itemType === ItemType.MAGICAL) {
+			const hoursSinceEquip = (Date.now() - dinozItem.equippedAt.getTime()) / (1000 * 60 * 60);
+			if (hoursSinceEquip < MAGIC_ITEM_COOLDOWN_HOURS) {
+				throw new ExpectedError('magicItemHomesick');
+			}
+		}
+
+		if (itemToEquip.itemId === Item.FEAR_FACTOR && dinoz.skills.some(s => s.skillId === Skill.BRAVE)) {
+			if (dinoz.leaderId !== null || dinoz.followers.length > 0) {
+				throw new ExpectedError('fearFactorDesequip');
+			}
+		}
+
 		const itemMaxQuantity = getItemMaxQuantity(dinoz.user, itemToEquip);
 		if (playerItemQuantity >= itemMaxQuantity) {
 			throw new ExpectedError('maxQuantityInventory');
@@ -108,8 +124,15 @@ function shouldRefreshDinozAfterEquip(input: {
 	placeId: PlaceEnum;
 	scenarios: Array<{ scenarioKey: string; progression: number }>;
 }) {
+	if (input.itemId === Item.FEAR_FACTOR) {
+		return true;
+	}
 	if (!input.equip) {
 		return false;
+	}
+	const item = itemList[input.itemId as Item];
+	if (item?.itemType === ItemType.MAGICAL) {
+		return true;
 	}
 	return SCENARIO_EQUIP_REFRESH_RULES.some(rule => {
 		const scenario = input.scenarios.find(s => s.scenarioKey === rule.scenarioKey);

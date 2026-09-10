@@ -971,7 +971,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		maxQuantity: 5,
 		sellable: false,
 		price: 5, // TODO double check
-		display: 'mbraise'
+		display: 'mbrais'
 	},
 	// Scale: an enemy dinoz will be killed if your dinoz dies during a fight
 	[Item.SCALE]: {
@@ -1117,7 +1117,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		maxQuantity: 5,
 		sellable: false,
 		price: 5, // TODO double check
-		display: 'dampt'
+		display: 'dampt',
+		passiveEffect: {
+			[Stat.INITIATIVE]: { operator: MathOperator.MULTIPLY, value: 0.5 }
+		}
 	},
 	// Tear of Life: gives clones 10% of the life of the casting Dinoz
 	[Item.TEAR_OF_LIFE]: {
@@ -1171,7 +1174,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 6, // TODO double check
 		display: 'stero'
 	},
-	// Curse Locker: restricts a random enemy to using their weakest element for 4 cycles
+	// Curse Locker: restricts a random enemy to using their weakest element for 3 cycles
 	[Item.CURSE_LOCKER]: {
 		itemId: 53,
 		name: 'curse_locker',

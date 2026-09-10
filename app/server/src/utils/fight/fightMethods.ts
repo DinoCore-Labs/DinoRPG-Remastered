@@ -33,7 +33,7 @@ import {
 	SkillActivateStep,
 	StepFighter
 } from '@dinorpg/core/models/fight/fightStep.js';
-import { LifeEffect, NotificationList } from '@dinorpg/core/models/fight/transpiler.js';
+import { AuraFxType, LifeEffect, NotificationList } from '@dinorpg/core/models/fight/transpiler.js';
 import { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { bossList } from '@dinorpg/core/models/monster/bossList.js';
@@ -375,9 +375,6 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 	// No event if NO_EVENT
 	if (hasStatus(fighter, FightStatus.NO_EVENT)) return null;
 
-	// Check if a time manipulator is present
-	if (fightData.timeManipulatorUsed && !fightData.temporalStabilityUsed) return null;
-
 	// Check if a fighter has Item.TIME_MANIPULATOR
 	if (!fightData.timeManipulatorUsed) {
 		const timeManipulator = getFighters(fightData).find(f =>
@@ -405,7 +402,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 				// Add item use step
 				fightData.steps.push({
 					action: 'itemUse',
-					fighter: stepFighter(timeManipulator),
+					fighter: stepFighter(temporalStabiliser),
 					itemId: Item.TEMPORAL_STABILISER
 				});
 
@@ -417,15 +414,14 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 
 				// Remove from items
 				temporalStabiliser.items.splice(itemIndex, 1);
-			} else {
-				// Cancel all events
-				return null;
 			}
 		}
 	}
 
+	const isTimeManipulatorActive = fightData.timeManipulatorUsed && !fightData.temporalStabilityUsed;
+
 	const events: (SkillDetails | ItemFiche)[] = fighter.skills.filter(
-		skill => skill.probability && skill.type === SkillType.E
+		skill => skill.probability && skill.type === SkillType.E && !isTimeManipulatorActive
 	);
 
 	events.push(...fighter.items.filter(item => item.probability));
@@ -611,34 +607,6 @@ export const initStepFighter = (
 // 			});
 // 		}
 
-// 		// Dimensional powder item
-
-// 		// Check if any fighter has Item.DIMENSIONAL_POWDER
-// 		const dimensionalPowderUser = getFighters(fightData).find(f =>
-// 			f.items.some(item => item.itemId === Item.DIMENSIONAL_POWDER)
-// 		);
-
-// 		if (dimensionalPowderUser) {
-// 			// Add item use step
-// 			fightData.steps.push({
-// 				action: 'itemUse',
-// 				fighter: stepFighter(dimensionalPowderUser),
-// 				itemId: Item.DIMENSIONAL_POWDER
-// 			});
-
-// 			// Escape opponent if HP requirement is met
-// 			if (opponent.startingHp > 10 && opponent.hp > 0 && opponent.hp < 10) {
-// 				// Add leave step
-// 				fightData.steps.push({
-// 					action: 'leave',
-// 					fighter: stepFighter(opponent),
-// 					animation: LeaveAnimation.BLACKHOLE
-// 				});
-
-// 				opponent.escaped = true;
-// 			}
-// 		}
-
 // 		// LIFE_STEALER
 // 		if (
 // 			actualDamage[opponent.id] &&
@@ -730,7 +698,8 @@ const launchAssault = (
 	skill?: Skill,
 	power?: [ElementType, number][],
 	target?: DetailedFighter | null,
-	goto?: boolean
+	goto?: boolean,
+	isWhistleAssault: boolean = false
 ) => {
 	// Unless specified, this method will add to the history the move to and move back steps by default
 	goto = goto ?? true;
@@ -775,7 +744,53 @@ const launchAssault = (
 		});
 	}
 
-	// Add moveBack step if attacker is still alive
+	// Friendly Whistle
+	if (!isWhistleAssault && attacker.items.some(item => item.itemId === Item.FRIENDLY_WHISTLE) && target.hp > 0) {
+		// Announce the item if it's the first time
+		if (!attacker.hasWhistled) {
+			attacker.hasWhistled = true;
+			fightData.steps.push({
+				action: 'itemUse',
+				fighter: stepFighter(attacker),
+				itemId: Item.FRIENDLY_WHISTLE
+			});
+		}
+
+		// Get all allies (including summons) excluding the ones with the Whistle, and that are alive
+		const allies = getAllies(fightData, attacker).filter(
+			ally => ally.id !== attacker.id && ally.hp > 0 && !ally.items.some(item => item.itemId === Item.FRIENDLY_WHISTLE)
+		);
+
+		if (allies.length > 0) {
+			// Make them assault the SAME target
+			allies.forEach(ally => {
+				// Target must still be alive for each assist
+				if (target && target.hp > 0) {
+					// Move the ally to the target manually
+					fightData.steps.push({
+						action: 'moveTo',
+						fid: ally.id,
+						tid: target.id
+					});
+
+					// Launch assault with goto = false (so they don't move back immediately) and isWhistleAssault = true
+					launchAssault(fightData, ally, true, undefined, undefined, target, false, true);
+				}
+			});
+
+			// Move all allies back at the same time
+			allies.forEach(ally => {
+				if (ally.hp > 0) {
+					fightData.steps.push({
+						action: 'moveBack',
+						fid: ally.id
+					});
+				}
+			});
+		}
+	}
+
+	// Add moveBack step for the bearer if they are still alive
 	if (goto && attacker.hp > 0) {
 		fightData.steps.push({
 			action: 'moveBack',
@@ -1334,7 +1349,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				if (!hasStatus(opponent, FightStatus.FLYING)) {
 					// Increase the opponent's time
-					opponent.time += 15 * TIME_FACTOR;
+					modifyInitiative(opponent, 15 * TIME_FACTOR);
 					// Add fx for loss of init
 					fightData.steps.push({
 						action: 'notify',
@@ -1680,8 +1695,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const allies: number[] = [];
 				getAllies(fightData, fighter).forEach(ally => {
 					allies.push(ally.id);
-					ally.time -= 5 * TIME_FACTOR;
-					fighter.time += 3 * TIME_FACTOR;
+					modifyInitiative(ally, -5 * TIME_FACTOR);
+					modifyInitiative(fighter, 3 * TIME_FACTOR);
 				});
 				addSkillFx(fightData, fighter.id, event.id, allies);
 				break;
@@ -2322,7 +2337,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			if (hit && hit.hpLost > 0) {
 				// Increase time
-				fighter.time += 15 * TIME_FACTOR;
+				modifyInitiative(fighter, 15 * TIME_FACTOR);
 				// Add fx for loss of init
 				fightData.steps.push({
 					action: 'notify',
@@ -2337,14 +2352,16 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			// Prevent if item.ANTI_GRAVE_SUIT from target
-			const opponentWithSuit = opponent.items.some(item => item.itemId === Item.ANTI_GRAVE_SUIT);
+			// Prevent if item.ANTI_GRAVE_SUIT from target's team
+			const suitAlly = getAllies(fightData, opponent).find(ally =>
+				ally.items.some(item => item.itemId === Item.ANTI_GRAVE_SUIT)
+			);
 
-			if (opponentWithSuit) {
+			if (suitAlly) {
 				// Add item use step
 				fightData.steps.push({
 					action: 'itemUse',
-					fighter: stepFighter(opponent),
+					fighter: stepFighter(suitAlly),
 					itemId: Item.ANTI_GRAVE_SUIT
 				});
 
@@ -2362,6 +2379,11 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// If the target is not a boss or the skill was not evaded, remove the opponent
 			if (opponent.type !== FighterType.BOSS && !result.evasion) {
 				opponent.escaped = true;
+				// Add leave step
+				fightData.steps.push({
+					action: 'leave',
+					fighter: stepFighter(opponent)
+				});
 			}
 
 			break;
@@ -2441,7 +2463,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		case Skill.PAUME_CHALUMEAU: {
 			// Increase time of the attacker
-			fighter.time += 15 * TIME_FACTOR;
+			modifyInitiative(fighter, 15 * TIME_FACTOR);
 			// This skill cannot combo but is an assault
 			launchAssault(
 				fightData,
@@ -2604,7 +2626,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			fightData.steps.push(activate_step);
 			loseHp(fightData, opponent, 0, LifeEffect.Water);
 
-			opponent.time += 25 * TIME_FACTOR;
+			modifyInitiative(opponent, 25 * TIME_FACTOR);
 
 			// Add fx for gain of init
 			fightData.steps.push({
@@ -2663,7 +2685,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				notification: NotificationList.InitDown
 			} as NotifyStep;
 			opponents.forEach(opponent => {
-				opponent.time += 8 * TIME_FACTOR;
+				modifyInitiative(opponent, 8 * TIME_FACTOR);
 				init_down_notify.fids.push(opponent.id);
 			});
 			fightData.steps.push(init_down_notify);
@@ -2935,7 +2957,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			getOpponents(fightData, fighter).forEach(opponent => {
 				// Increase time
-				opponent.time += 10 * TIME_FACTOR;
+				modifyInitiative(opponent, 10 * TIME_FACTOR);
 			});
 			break;
 		}
@@ -3618,12 +3640,11 @@ const counterTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
  * Test if a fighter succeeds a multihit roll.
  * @param fightData Fight data used for seeded random.
  * @param fighter The fighter to roll the multihit for.
- * @param multiHitCounter Number of multihits
  * @returns {bool} True if the fighter has succeeded its multihit roll.
  */
-const multiHitTest = (fightData: DetailedFight, fighter: DetailedFighter, multiHitCounter: number) => {
+const multiHitTest = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	const random = fightData.rng();
-	return random < getFighterMultihit(fighter, multiHitCounter);
+	return random < getFighterMultihit(fighter);
 };
 
 /**
@@ -3686,6 +3707,24 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 	updateStat(fightData, fighter, 'hpLost', hp_lost);
 
 	return hp_lost;
+};
+
+// Modifies the fighter's initiative modification during fight
+export const modifyInitiative = (fighter: DetailedFighter, amount: number) => {
+	// If the amount is infinite, do not reduce it
+	if (Math.abs(amount) >= FIGHT_INFINITE) {
+		fighter.time += amount;
+		return;
+	}
+
+	let finalAmount = amount;
+
+	// Temporal Reduction item reduces initiative bonuses and penalties by 50%
+	if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
+		finalAmount *= 0.5;
+	}
+
+	fighter.time += finalAmount;
 };
 
 const poison = (
@@ -3806,8 +3845,15 @@ export const heal = (
 	isItem?: boolean
 ) => {
 	// No heal if BEER
-	// TODO add fx for no healing
-	if (hasStatus(fighter, FightStatus.BEER)) return;
+	if (hasStatus(fighter, FightStatus.BEER)) {
+		fightData.steps.push({
+			action: 'aura',
+			fid: fighter.id,
+			type: AuraFxType.Spiral,
+			color: '0xFF3366'
+		});
+		return;
+	}
 
 	const hpBeforeHeal = fighter.hp;
 
@@ -4112,7 +4158,7 @@ const attackTarget = (
 			attacker.hp > 0 &&
 			!isIncapacitated(attacker) &&
 			attacker.energy > totalEnergyCost + energyCost + 1 &&
-			multiHitTest(fightData, attacker, multiHitCounter)
+			multiHitTest(fightData, attacker)
 		) {
 			// If the fighter succeeds to multihit, increase the energy cost and repeat the loop
 			energyCost++;
@@ -4399,8 +4445,30 @@ const checkAfterDefenseEffects = (
 	isCloseCombat: boolean,
 	isInvocation: boolean
 ) => {
-	// Objet: voleur de vie
-	// TODO
+	// Objet: voleur de vie (passive trigger: hp < 20 but still alive)
+	if (
+		damage > 0 &&
+		target.hp > 0 &&
+		target.hp < 20 &&
+		!hasStatus(target, FightStatus.STOLE_LIFE) &&
+		target.items.some(item => item.itemId === Item.LIFE_STEALER)
+	) {
+		const opponents = getOpponents(fightData, target, AllFighterTypeExceptBoss);
+		if (opponents.length > 0) {
+			const randomOpponent = chooseRandomOpponent(opponents, fightData.rng);
+			if (randomOpponent) {
+				fightData.steps.push({
+					action: 'itemUse',
+					fighter: stepFighter(target),
+					itemId: Item.LIFE_STEALER
+				});
+				const hpToSteal = Math.min(30, randomOpponent.hp);
+				loseHp(fightData, randomOpponent, hpToSteal, LifeEffect.Normal);
+				heal(fightData, target, hpToSteal);
+				addStatus(fightData, target, FightStatus.STOLE_LIFE);
+			}
+		}
+	}
 
 	// Check breakable costume
 	if (target.costume && target.costume.breakable && damage > 0 && elements.includes(ElementType.FIRE)) {
@@ -4642,198 +4710,200 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 };
 
 export const checkDeaths = (fightData: DetailedFight) => {
+	let hasUnprocessedDeaths = true;
+
+	while (hasUnprocessedDeaths) {
+		hasUnprocessedDeaths = false;
+
+		for (let i = 0; i < fightData.fighters.length; i++) {
+			const fighter = fightData.fighters[i];
+
+			// Skip escaped fighters
+			if (fighter.escaped) continue;
+
+			// Only process if fighter is dead and hasn't died yet
+			if (fighter.hp <= 0 && fightData.deads.filter(fid => fid === fighter.id).length === 0) {
+				hasUnprocessedDeaths = true;
+				let canceledDeath = false;
+
+				// 1. SURVIE (Survival)
+				if (!canceledDeath && fighter.canSurvive) {
+					fighter.canSurvive = false;
+					canceledDeath = true;
+
+					// Update history & heal
+					fightData.steps.push({
+						action: 'skillAnnounce',
+						fid: fighter.id,
+						skill: Skill.SURVIE
+					});
+					fightData.steps.push({
+						action: 'skillActivate',
+						fid: fighter.id,
+						skill: Skill.SURVIE,
+						targets: []
+					});
+					heal(fightData, fighter, 12, undefined, LifeEffect.Heal);
+				}
+
+				// 2. PLUMES DE PHOENIX
+				if (!canceledDeath && fighter.canPhoenix) {
+					fighter.canPhoenix = false;
+					canceledDeath = true;
+
+					fightData.steps.push({
+						action: 'skillAnnounce',
+						fid: fighter.id,
+						skill: Skill.PLUMES_DE_PHOENIX
+					});
+
+					// Add skillActivate step
+					fightData.steps.push({
+						action: 'skillActivate',
+						fid: fighter.id,
+						skill: Skill.PLUMES_DE_PHOENIX,
+						targets: []
+					});
+
+					// Heal to 12 HP
+					heal(fightData, fighter, 12 - fighter.hp, undefined, LifeEffect.Heal);
+
+					// Increase other fighters time by 10 * speed
+					getFighters(fightData).forEach(f => {
+						if (f.id !== fighter.id) {
+							modifyInitiative(f, 10 * TIME_FACTOR * fighter.stats.speed.global);
+						}
+					});
+
+					// TODO add init up notification for resurrected fighter
+				}
+
+				if (canceledDeath) {
+					continue;
+				}
+
+				// 3. SCALE (Balance)
+				if (fighter.items.some(item => item.itemId === Item.SCALE)) {
+					// Get random opponent
+					const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
+
+					if (opponent) {
+						// Add item use step
+						fightData.steps.push({
+							action: 'itemUse',
+							fighter: stepFighter(fighter),
+							itemId: Item.SCALE
+						});
+
+						// Kill opponent
+						loseHp(fightData, opponent, opponent.hp, LifeEffect.Skull);
+					}
+				}
+
+				// 4. NO_DEATH
+				if (hasStatus(fighter, FightStatus.NO_DEATH)) {
+					// Add leave step
+					fightData.steps.push({
+						action: 'leave',
+						fighter: stepFighter(fighter)
+					});
+
+					fighter.escaped = true;
+					continue;
+				}
+
+				// 5. DEMYOM
+				if (fighter.skills.some(skill => skill.id === Skill.M_DEMYOM_ATTACK)) {
+					const opponentDinoz = getOpponents(fightData, fighter, [FighterType.DINOZ]);
+
+					// Curse dinoz
+					if (opponentDinoz.length) {
+						opponentDinoz.forEach(opponent => {
+							// Add curse step
+							fightData.steps.push({
+								action: 'cursed',
+								fighter: stepFighter(opponent)
+							});
+
+							opponent.permanentStatusGained.push(DinozStatusId.CUSCOUZ_MALEDICTION);
+
+							// Add costume step
+							fightData.steps.push({
+								action: 'setCostume',
+								fighter: stepFighter(opponent),
+								costume: monsterList.FRUTOX_DEFENDER.name
+							});
+						});
+					} else {
+						// Heal boss
+						heal(fightData, fighter, 50, undefined, LifeEffect.Heal);
+					}
+				}
+
+				// Remove catches from combat
+				getAllies(fightData, fighter)
+					.filter(ally => ally.catcher === fighter.id)
+					.forEach(monster => {
+						// Add leave step
+						fightData.steps.push({
+							action: 'leave',
+							fighter: stepFighter(monster)
+						});
+
+						monster.escaped = true;
+					});
+
+				// Cancel environment if the caster died
+				if (fightData.environment && fighter.id === fightData.environment.caster.id) {
+					cancelEnvironment(fightData);
+				}
+
+				// Add death step
+				fightData.steps.push({
+					action: 'death',
+					fighter: stepFighter(fighter)
+				});
+				fightData.deads.push(fighter.id);
+
+				// Reset stolen gold
+				fighter.goldStolen = undefined;
+
+				// M_INFINITE_REINFORCEMENTS
+				if (fighter.skills.some(skill => skill.id === Skill.M_INFINITE_REINFORCEMENTS)) {
+					// Add skillActivate step
+					fightData.steps.push({
+						action: 'skillActivate',
+						fid: fighter.id,
+						skill: Skill.M_INFINITE_REINFORCEMENTS,
+						targets: []
+					});
+
+					// Create a new monster
+					const monsterDetails = Object.values(monsterList).find(monster => monster.name === fighter.name);
+
+					if (!monsterDetails) {
+						throw new Error(`Monster ${fighter.name} not found`);
+					}
+
+					const alliesCount = getAllies(fightData, fighter).length;
+
+					if (alliesCount < 6) {
+						createMonster(fightData, fighter, monsterDetails);
+					}
+					if (alliesCount < 5) {
+						createMonster(fightData, fighter, monsterDetails);
+					}
+				}
+			}
+		}
+	}
+
 	let attackersAlive = 0;
 	let defendersAlive = 0;
 
 	for (let i = 0; i < fightData.fighters.length; i++) {
 		const fighter = fightData.fighters[i];
-
-		// Skip escaped fighters
-		if (fighter.escaped) continue;
-
-		// Only add death step if fighter is dead and hasn't died yet
-		if (fighter.hp <= 0 && fightData.deads.filter(fid => fid === fighter.id).length === 0) {
-			// Check if dinoz can survive
-			if (fighter.canSurvive) {
-				fighter.canSurvive = false;
-
-				// Update history & heal
-				fightData.steps.push({
-					action: 'skillAnnounce',
-					fid: fighter.id,
-					skill: Skill.SURVIE
-				});
-				fightData.steps.push({
-					action: 'skillActivate',
-					fid: fighter.id,
-					skill: Skill.SURVIE,
-					targets: []
-				});
-				heal(fightData, fighter, 12, undefined, LifeEffect.Heal);
-
-				// Make sure the fighter is counted as alive
-				if (fighter.attacker) {
-					attackersAlive++;
-				} else {
-					defendersAlive++;
-				}
-				continue;
-			}
-
-			// Check if dinoz has SCALE
-			if (fighter.items.some(item => item.itemId === Item.SCALE)) {
-				// Get random opponent
-				const opponent = getRandomOpponent(fightData, fighter);
-
-				if (opponent) {
-					// Add item use step
-					fightData.steps.push({
-						action: 'itemUse',
-						fighter: stepFighter(fighter),
-						itemId: Item.SCALE
-					});
-
-					// Kill opponent
-					loseHp(fightData, fighter, opponent.hp, LifeEffect.Skull);
-				}
-			}
-
-			// NO_DEATH
-			if (hasStatus(fighter, FightStatus.NO_DEATH)) {
-				// Add leave step
-				fightData.steps.push({
-					action: 'leave',
-					fighter: stepFighter(fighter)
-				});
-
-				fighter.escaped = true;
-
-				continue;
-			}
-
-			// Phoenix Feather
-			if (fighter.skills.some(skill => skill.id === Skill.PLUMES_DE_PHOENIX)) {
-				// Add skillActivate step
-				const res_step: SkillActivateStep = {
-					action: 'skillActivate',
-					fid: fighter.id,
-					skill: Skill.PLUMES_DE_PHOENIX,
-					targets: []
-				};
-
-				// Heal to 12 HP
-				// TODO swap for resurrect method
-				heal(fightData, fighter, 12 - fighter.hp, res_step);
-				// TODO add heal affect?
-
-				// Increase other fighters time by 10 * speed
-				getFighters(fightData).forEach(f => {
-					if (f.id !== fighter.id) {
-						f.time += 10 * TIME_FACTOR * fighter.stats.speed.global;
-					}
-				});
-
-				// TODO add init up notification for resurrected fighter
-			}
-
-			// Add death step
-			fightData.steps.push({
-				action: 'death',
-				fighter: stepFighter(fighter)
-			});
-			fightData.deads.push(fighter.id);
-
-			// Reset stolen gold
-			fighter.goldStolen = undefined;
-
-			// M_INFINITE_REINFORCEMENTS
-			if (fighter.skills.some(skill => skill.id === Skill.M_INFINITE_REINFORCEMENTS)) {
-				// Add skillActivate step
-				fightData.steps.push({
-					action: 'skillActivate',
-					fid: fighter.id,
-					skill: Skill.M_INFINITE_REINFORCEMENTS,
-					targets: []
-				});
-
-				// Create a new monster
-				const monsterDetails = Object.values(monsterList).find(monster => monster.name === fighter.name);
-
-				if (!monsterDetails) {
-					throw new Error(`Monster ${fighter.name} not found`);
-				}
-
-				const alliesCount = getAllies(fightData, fighter).length;
-
-				if (alliesCount < 6) {
-					createMonster(fightData, fighter, monsterDetails);
-
-					if (fighter.attacker) {
-						attackersAlive++;
-					} else {
-						defendersAlive++;
-					}
-				}
-				if (alliesCount < 5) {
-					createMonster(fightData, fighter, monsterDetails);
-
-					if (fighter.attacker) {
-						attackersAlive++;
-					} else {
-						defendersAlive++;
-					}
-				}
-			}
-
-			// DEMYOM
-			if (fighter.skills.some(skill => skill.id === Skill.M_DEMYOM_ATTACK)) {
-				const opponentDinoz = getOpponents(fightData, fighter, [FighterType.DINOZ]);
-
-				// Curse dinoz
-				if (opponentDinoz.length) {
-					opponentDinoz.forEach(opponent => {
-						// Add curse step
-						fightData.steps.push({
-							action: 'cursed',
-							fighter: stepFighter(opponent)
-						});
-
-						opponent.permanentStatusGained.push(DinozStatusId.CUSCOUZ_MALEDICTION);
-
-						// Add costume step
-						fightData.steps.push({
-							action: 'setCostume',
-							fighter: stepFighter(opponent),
-							costume: monsterList.FRUTOX_DEFENDER.name
-						});
-					});
-				} else {
-					// Heal boss
-					heal(fightData, fighter, 50, undefined, LifeEffect.Heal);
-				}
-			}
-
-			// Remove catches from combat
-			getAllies(fightData, fighter)
-				.filter(ally => ally.catcher === fighter.id)
-				.forEach(monster => {
-					// Add leave step
-					fightData.steps.push({
-						action: 'leave',
-						fighter: stepFighter(monster)
-					});
-
-					monster.escaped = true;
-				});
-		}
-
-		// Cancel environment if the caster died
-		if (fightData.environment && fighter.id === fightData.environment.caster.id) {
-			cancelEnvironment(fightData);
-		}
-
-		// Count alive fighters
-		if (fighter.hp > 0) {
+		if (!fighter.escaped && fighter.hp > 0) {
 			if (fighter.attacker) {
 				attackersAlive++;
 			} else {
@@ -4994,6 +5064,60 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		}
 	}
 
+	// 3.5 - Dimensional Powder
+	if (fightData.rules.canUseEquipment) {
+		const powderFighters = getFighters(fightData).filter(f =>
+			f.items.some(item => item.itemId === Item.DIMENSIONAL_POWDER)
+		);
+
+		if (powderFighters.length > 0) {
+			const powderFighter = powderFighters[0];
+			const fightersToSuck = getFighters(fightData).filter(
+				f => f.type === FighterType.DINOZ && f.hp > 0 && f.hp < 10 && f.startingHp > 10 && !f.powderResisted
+			);
+
+			if (fightersToSuck.length > 0) {
+				let first = true;
+				fightersToSuck.forEach(target => {
+					// Show powder use if not already
+					if (first) {
+						fightData.steps.push({
+							action: 'itemUse',
+							fighter: stepFighter(powderFighter),
+							itemId: Item.DIMENSIONAL_POWDER
+						});
+						first = false;
+					}
+
+					// Check ANTI_GRAVE_SUIT on target's team (wearer must be alive)
+					const suitAlly = getAllies(fightData, target).find(ally =>
+						ally.items.some(item => item.itemId === Item.ANTI_GRAVE_SUIT)
+					);
+
+					if (suitAlly) {
+						target.powderResisted = true;
+						// Display suit
+						fightData.steps.push({
+							action: 'itemUse',
+							fighter: stepFighter(suitAlly),
+							itemId: Item.ANTI_GRAVE_SUIT
+						});
+						return;
+					}
+
+					// Suck target
+					target.escaped = true;
+					fightData.steps.push({
+						action: 'leave',
+						fighter: stepFighter(target),
+						animation: LeaveAnimation.BLACKHOLE,
+						attackerId: powderFighter.id
+					});
+				});
+			}
+		}
+	}
+
 	// 4th - Activate the active environment if it's its caster turn
 	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
 		// Decrease turns left
@@ -5057,16 +5181,36 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		}
 	}
 
-	// TODO rework
-	// // Sorceror's Wand replaces attacks
-	// if (attacker.items.some(item => item.itemId === Item.SORCERERS_STICK)) {
-	// 	attackSingleOpponent(fightData, attacker, itemList.SORCERERS_STICK, null);
-	// 	endTurnChecks(fightData, attacker);
-	// 	return;
-	// }
-
 	// No assaults for NO_ASSAULT
 	if (hasStatus(attacker, FightStatus.NO_ASSAULT)) {
+		endTurnChecks(fightData, attacker);
+		return;
+	}
+
+	// Sorceror's Wand replaces attacks
+	if (attacker.items.some(item => item.itemId === Item.SORCERERS_STICK)) {
+		// Find all Dinoz in the fight (allies and opponents)
+		const allDinoz = fightData.fighters.filter(f => f.hp > 0 && !f.escaped && f.type === FighterType.DINOZ);
+
+		if (allDinoz.length > 0) {
+			// Randomly select one
+			const target = allDinoz[randomBetweenSeeded(fightData.rng, 0, allDinoz.length - 1)];
+
+			// Show item use step
+			fightData.steps.push({
+				action: 'itemUse',
+				fighter: stepFighter(attacker),
+				itemId: Item.SORCERERS_STICK
+			});
+
+			// Take 30% of current HP (minimum 1)
+			const hpLost = Math.max(1, Math.floor(target.hp * 0.3));
+
+			if (hpLost > 0) {
+				loseHp(fightData, target, hpLost, LifeEffect.Skull);
+			}
+		}
+
 		endTurnChecks(fightData, attacker);
 		return;
 	}

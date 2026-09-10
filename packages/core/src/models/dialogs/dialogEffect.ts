@@ -1,4 +1,5 @@
 import { PlaceEnum } from '../enums/PlaceEnum.js';
+import { TutorialEvent } from '../tutorial/tutorial.js';
 
 export type DialogMoneyType = 'GOLD' | 'TREASURE_TICKET';
 
@@ -11,6 +12,8 @@ export type DialogEffect =
 	| { type: 'url'; url: string }
 	| { type: 'scenario'; scenario: string; phase: number }
 	| { type: 'scenarioDelta'; scenario: string; delta: number }
+	| { type: 'tutorialEvent'; event: TutorialEvent }
+	| { type: 'tutorialRefresh' }
 	| { type: 'giveItem'; itemId: number; count: number }
 	| { type: 'giveRandomItem'; itemIds: number[] }
 	| { type: 'unlockMission'; mission: string }

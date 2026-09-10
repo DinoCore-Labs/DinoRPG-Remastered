@@ -44,6 +44,8 @@ import { MissionService } from '../../services/mission.service.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { formatText } from '../../utils/formatText.js';
 
+import { useTutorialStore } from '../../store/tutorialStore.js';
+
 type MissionStatusView = 'available' | 'unavailable' | 'ongoing' | 'finished';
 
 type MissionListView = {
@@ -71,7 +73,8 @@ export default defineComponent({
 	data() {
 		return {
 			detail: null as DinozMissionDetailResponse | null,
-			loading: false as boolean
+			loading: false as boolean,
+			tutorialStore: useTutorialStore()
 		};
 	},
 	computed: {
@@ -127,6 +130,11 @@ export default defineComponent({
 			}
 			try {
 				await MissionService.startDinozMission(this.dinozId, this.mission.missionKey);
+				try {
+					await this.tutorialStore.load();
+				} catch (err) {
+					console.error('[tutorial] Failed to refresh tutorial after mission start', err);
+				}
 				this.$emit('reload');
 				this.$router.push({
 					name: 'DinozPage',

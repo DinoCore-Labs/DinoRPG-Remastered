@@ -2,28 +2,28 @@
   This file contains code derived from or adapted from:
   Eternaltwin DinoRPG
   Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/3a73bbc6d751e4916cc5fd2e5f23bc2cfd42fc6d/ed-ui/src/pages/FAQPage.vue
-  
   Copyright in the original contributions remains with the respective
   authors and contributors.
-  
-  Modified by DinoRPG Remastered contributors on 2026-01-25.
+  Modified by DinoRPG Remastered contributors on 2026-09-06.
   See NOTICE.md and the Git history for provenance and modification details.
-  
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
+
 <template>
-	<TitleHeader :title="`${$t('pageTitle.faq')}`" :header="$t(`topBar.userMenu.faq`)" />
+	<TitleHeader :title="`${$t('pageTitle.faq')}`" :header="$t('topBar.userMenu.faq')" />
 	<DZDisclaimer help round content="faq.intro" />
 	<div class="search">
-		<form @submit.prevent="e => e.preventDefault()">
+		<form @submit.prevent>
 			<table>
 				<tbody>
 					<tr>
 						<td>
-							<DZInput name="search" v-model="searchQuery" />
+							<DZInput v-model="searchQuery" name="search" />
 						</td>
 						<td>
-							<DZButton type="submit">{{ $t(`button.search`) }}</DZButton>
+							<DZButton type="submit">
+								{{ $t('button.search') }}
+							</DZButton>
 						</td>
 					</tr>
 				</tbody>
@@ -31,108 +31,105 @@
 		</form>
 	</div>
 	<div class="faq">
-		<h3 class="titleSection">{{ $t('faq.qa') }}</h3>
+		<h3 class="titleSection">
+			{{ $t('faq.qa') }}
+		</h3>
 		<dl class="results">
 			<template v-for="pair in filteredPairs" :key="pair.id">
 				<dt @click="toggleCollapsed(pair.id)">
-					<span><img :src="getImgURL('icons', 'small_follow')" /></span>
-					<p v-html="formatContent(pair.question)" />
+					<span>
+						<img :src="getImgURL('icons', 'small_follow')" />
+					</span>
+					<p>{{ pair.question }}</p>
 				</dt>
-				<dd v-show="!isCollapsed(pair.id)" v-html="formatContent(pair.answer)" />
+				<dd v-show="!isCollapsed(pair.id)">
+					<MarkdownRenderer :source="pair.answer" game-icons />
+				</dd>
 			</template>
 		</dl>
 	</div>
 </template>
-<script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
-import TitleHeader from '../components/utils/TitleHeader.vue';
-import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
+
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+import MarkdownRenderer from '../components/common/MarkdownRenderer.vue';
 import DZButton from '../components/utils/DZButton.vue';
+import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
 import DZInput from '../components/utils/DZInput.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import { getImgURL } from '../utils/getImgURL';
+import { parseFaqMarkdown } from '../utils/parseFaqMarkdown';
 
-interface FaqPair {
-	id: number;
-	question: string;
-	answer: string;
-	collapsed: boolean;
-}
+const { locale } = useI18n();
 
-export default defineComponent({
-	name: 'FAQ',
-	components: {
-		DZButton,
-		DZDisclaimer,
-		DZInput,
-		TitleHeader
-	},
-	data() {
-		const faqPairs = computed<FaqPair[]>(() => [
-			{ id: 1, question: this.$t('faq.faq1.question'), answer: this.$t('faq.faq1.answer'), collapsed: true },
-			{ id: 2, question: this.$t('faq.faq2.question'), answer: this.$t('faq.faq2.answer'), collapsed: true },
-			{ id: 3, question: this.$t('faq.faq8.question'), answer: this.$t('faq.faq8.answer'), collapsed: true },
-			{ id: 4, question: this.$t('faq.faq3.question'), answer: this.$t('faq.faq3.answer'), collapsed: true },
-			{ id: 5, question: this.$t('faq.faq9.question'), answer: this.$t('faq.faq9.answer'), collapsed: true },
-			{ id: 6, question: this.$t('faq.faq10.question'), answer: this.$t('faq.faq10.answer'), collapsed: true },
-			{ id: 7, question: this.$t('faq.faq4.question'), answer: this.$t('faq.faq4.answer'), collapsed: true },
-			{ id: 8, question: this.$t('faq.faq5.question'), answer: this.$t('faq.faq5.answer'), collapsed: true },
-			{ id: 9, question: this.$t('faq.faq6.question'), answer: this.$t('faq.faq6.answer'), collapsed: true },
-			{ id: 10, question: this.$t('faq.faq11.question'), answer: this.$t('faq.faq11.answer'), collapsed: true },
-			{ id: 11, question: this.$t('faq.faq12.question'), answer: this.$t('faq.faq12.answer'), collapsed: true },
-			{ id: 12, question: this.$t('faq.faq13.question'), answer: this.$t('faq.faq13.answer'), collapsed: true },
-			{ id: 13, question: this.$t('faq.faq14.question'), answer: this.$t('faq.faq14.answer'), collapsed: true },
-			{ id: 14, question: this.$t('faq.faq15.question'), answer: this.$t('faq.faq15.answer'), collapsed: true },
-			{ id: 15, question: this.$t('faq.faq16.question'), answer: this.$t('faq.faq16.answer'), collapsed: true },
-			{ id: 16, question: this.$t('faq.faq7.question'), answer: this.$t('faq.faq7.answer'), collapsed: true },
-			{ id: 17, question: this.$t('faq.faq17.question'), answer: this.$t('faq.faq17.answer'), collapsed: true },
-			{ id: 18, question: this.$t('faq.faq18.question'), answer: this.$t('faq.faq18.answer'), collapsed: true },
-			{ id: 19, question: this.$t('faq.faq19.question'), answer: this.$t('faq.faq19.answer'), collapsed: true },
-			{ id: 20, question: this.$t('faq.faq20.question'), answer: this.$t('faq.faq20.answer'), collapsed: true },
-			{ id: 21, question: this.$t('faq.faq21.question'), answer: this.$t('faq.faq21.answer'), collapsed: true },
-			{ id: 22, question: this.$t('faq.faq22.question'), answer: this.$t('faq.faq22.answer'), collapsed: true },
-			{ id: 23, question: this.$t('faq.faq23.question'), answer: this.$t('faq.faq23.answer'), collapsed: true },
-			{ id: 24, question: this.$t('faq.faq24.question'), answer: this.$t('faq.faq24.answer'), collapsed: true },
-			{ id: 25, question: this.$t('faq.faq25.question'), answer: this.$t('faq.faq25.answer'), collapsed: true },
-			{ id: 26, question: this.$t('faq.faq26.question'), answer: this.$t('faq.faq26.answer'), collapsed: true },
-			{ id: 27, question: this.$t('faq.faq27.question'), answer: this.$t('faq.faq27.answer'), collapsed: true },
-			{ id: 28, question: this.$t('faq.faq28.question'), answer: this.$t('faq.faq28.answer'), collapsed: true },
-			{ id: 29, question: this.$t('faq.faq29.question'), answer: this.$t('faq.faq29.answer'), collapsed: true },
-			{ id: 30, question: this.$t('faq.faq30.question'), answer: this.$t('faq.faq30.answer'), collapsed: true }
-		]);
-
-		const searchQuery = ref<string>('');
-		const filteredPairs = computed(() => {
-			const searchTerm = searchQuery.value.toLowerCase();
-			return faqPairs.value.filter(pair => pair.question.toLowerCase().includes(searchTerm));
-		});
-		const collapsedPairs = new Map<number, boolean>();
-
-		return {
-			faqPairs,
-			searchQuery,
-			filteredPairs,
-			collapsedPairs
-		};
-	},
-	methods: {
-		toggleCollapsed(id: number) {
-			this.collapsedPairs.set(id, !this.isCollapsed(id));
-		},
-		isCollapsed(id: number): boolean {
-			return this.collapsedPairs.get(id) ?? true;
-		}
-	}
+const faqSources = import.meta.glob<string>('../content/faq/*.md', {
+	query: '?raw',
+	import: 'default'
 });
+
+const markdownSource = ref('');
+const searchQuery = ref('');
+const openedPairs = ref<Set<number>>(new Set());
+
+const faqPairs = computed(() => parseFaqMarkdown(markdownSource.value));
+
+const normalizeText = (value: string): string => {
+	return value
+		.normalize('NFD')
+		.replace(/\p{Diacritic}/gu, '')
+		.toLowerCase();
+};
+
+const filteredPairs = computed(() => {
+	const search = normalizeText(searchQuery.value.trim());
+	if (!search) {
+		return faqPairs.value;
+	}
+	return faqPairs.value.filter(pair => {
+		return normalizeText(pair.question).includes(search) || normalizeText(pair.answer).includes(search);
+	});
+});
+
+const loadFaq = async (language: string): Promise<void> => {
+	const languagePath = `../content/faq/${language.toUpperCase()}.md`;
+	const fallbackPath = '../content/faq/FR.md';
+	const loader = faqSources[languagePath] ?? faqSources[fallbackPath];
+	if (!loader) {
+		console.error(`[FAQ] Markdown file not found for language "${language}"`);
+		markdownSource.value = '';
+		return;
+	}
+	markdownSource.value = await loader();
+	openedPairs.value = new Set();
+};
+
+const toggleCollapsed = (id: number): void => {
+	const opened = new Set(openedPairs.value);
+	if (opened.has(id)) {
+		opened.delete(id);
+	} else {
+		opened.add(id);
+	}
+	openedPairs.value = opened;
+};
+
+const isCollapsed = (id: number): boolean => {
+	return !openedPairs.value.has(id);
+};
+watch(
+	locale,
+	language => {
+		void loadFaq(String(language));
+	},
+	{
+		immediate: true
+	}
+);
 </script>
+
 <style lang="scss" scoped>
-.intro {
-	align-items: first baseline;
-	background-color: #bc683c;
-	color: #fce3bc;
-	display: flex;
-	font-size: 10pt;
-	gap: 6px;
-	padding: 5px;
-}
 .search {
 	display: flex;
 	align-items: center;
@@ -152,7 +149,7 @@ export default defineComponent({
 		flex-direction: column;
 		gap: 10px;
 		margin-top: 10px;
-		& dt {
+		dt {
 			color: #8e3e26;
 			cursor: pointer;
 			display: flex;
@@ -162,12 +159,15 @@ export default defineComponent({
 			gap: 6px;
 			margin-top: 10px;
 			padding-left: 20px;
+			p {
+				margin: 0;
+			}
 			&:hover {
 				background-color: #8e3e26;
 				color: #fff1ad;
 			}
 		}
-		& dd {
+		dd {
 			background-color: #f3ca92;
 			border: 1px solid #fcf9d1;
 			display: block;
@@ -175,12 +175,25 @@ export default defineComponent({
 			outline: 2px solid #f8d39c;
 			padding: 5px;
 			max-width: calc(100% - 52px);
-		}
-		:deep(strong) {
-			color: rgb(142, 62, 38);
-		}
-		:deep(i) {
-			color: rgb(142, 62, 38);
+			:deep(.markdown-body) {
+				p:first-child {
+					margin-top: 0;
+				}
+				p:last-child {
+					margin-bottom: 0;
+				}
+				ul,
+				ol {
+					padding-left: 25px;
+				}
+				img {
+					vertical-align: middle;
+				}
+				strong,
+				em {
+					color: rgb(142, 62, 38);
+				}
+			}
 		}
 	}
 }

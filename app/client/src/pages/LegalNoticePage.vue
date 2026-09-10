@@ -1,15 +1,15 @@
 <template>
-	<TitleHeader :title="$t('legalNotices.pageTitle')" :header="$t('common.legalNotices')" />
+	<TitleHeader :title="$t('common.legalNotices')" :header="$t('common.legalNotices')" />
 	<div class="intro">
-		<div class="menu">
+		<div v-if="sections.length" class="menu">
 			<ul class="list">
 				<li
-					v-for="(item, index) in items"
-					:key="item.id"
-					:class="{ selected: selectedItemIndex === index }"
-					@click="showContent(item, index)"
+					v-for="(section, index) in sections"
+					:key="section.id"
+					:class="{ selected: selectedSectionIndex === index }"
+					@click="showContent(section, index)"
 				>
-					{{ item.name }}
+					{{ section.title }}
 				</li>
 			</ul>
 		</div>
@@ -19,344 +19,90 @@
 	</div>
 	<div class="showContent">
 		<div class="content">
-			<div class="rulesMetadata">
+			<div class="legalMetadata">
 				<span>
-					{{
-						$t('common.lastUpdated', {
-							date: formattedUpdatedAt
-						})
-					}}
+					{{ $t('common.lastUpdated', { date: formattedUpdatedAt }) }}
 				</span>
 			</div>
 			<section
-				v-for="(item, sectionIndex) in items"
-				:id="`legal-notices-section-${item.id}`"
-				:key="item.id"
+				v-for="section in sections"
+				:id="`legal-notices-section-${section.id}`"
+				:key="section.id"
 				class="sectionContent"
-				:class="{ activeSection: selectedItemIndex === sectionIndex }"
 			>
 				<h3 class="titleSection">
-					{{ item.name }}
+					{{ section.title }}
 				</h3>
-				<template v-for="(block, blockIndex) in item.blocks" :key="`${item.id}-${blockIndex}`">
-					<ul v-if="block.type === 'paragraph'" class="textContent">
-						<li>
-							<p>{{ $t(block.key) }}</p>
-						</li>
-					</ul>
-					<ul v-else-if="block.type === 'list'" class="listItemsContent">
-						<li v-for="key in block.keys" :key="key">
-							<img :src="getImgURL('icons', 'info_button')" alt="" />
-							<span>{{ $t(key) }}</span>
-						</li>
-					</ul>
-					<ul v-else-if="block.type === 'email'" class="textContent">
-						<li>
-							<p>
-								{{ $t(block.introKey) }}
-								<a :href="`mailto:${$t(block.emailKey)}`">
-									{{ $t(block.emailKey) }}
-								</a>
-							</p>
-						</li>
-					</ul>
-					<ul v-else-if="block.type === 'link'" class="textContent">
-						<li>
-							<p>
-								<span v-if="block.introKey">{{ $t(block.introKey) }} </span>
-								<a :href="block.href" target="_blank" rel="noopener noreferrer">
-									{{ $t(block.labelKey) }}
-								</a>
-							</p>
-						</li>
-					</ul>
-				</template>
+				<MarkdownRenderer class="legalMarkdown" :source="section.content" />
 			</section>
 		</div>
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { computed, nextTick, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+import MarkdownRenderer from '../components/common/MarkdownRenderer.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
+import { parseLegalNoticesMarkdown, type LegalNoticesSection } from '../utils/parseLegalNoticesMarkdown';
 import { getImgURL } from '../utils/getImgURL';
 
 const LEGAL_NOTICES_UPDATED_AT = '2026-07-05';
 
-type LegalNoticesBlock =
-	| {
-			type: 'paragraph';
-			key: string;
-	  }
-	| {
-			type: 'list';
-			keys: string[];
-	  }
-	| {
-			type: 'email';
-			introKey: string;
-			emailKey: string;
-	  }
-	| {
-			type: 'link';
-			introKey?: string;
-			labelKey: string;
-			href: string;
-	  };
+const { locale } = useI18n();
 
-type LegalNoticesItem = {
-	id: string;
-	name: string;
-	blocks: LegalNoticesBlock[];
+const legalNoticesSources = import.meta.glob<string>('../content/legal-notices/*.md', {
+	query: '?raw',
+	import: 'default'
+});
+
+const markdownSource = ref('');
+const selectedSectionIndex = ref(0);
+
+const sections = computed(() => parseLegalNoticesMarkdown(markdownSource.value));
+
+const formattedUpdatedAt = computed(() => {
+	return new Intl.DateTimeFormat(String(locale.value), {
+		dateStyle: 'long',
+		timeZone: 'UTC'
+	}).format(new Date(`${LEGAL_NOTICES_UPDATED_AT}T12:00:00.000Z`));
+});
+
+const loadLegalNotices = async (language: string): Promise<void> => {
+	const languagePath = `../content/legal-notices/${language.toUpperCase()}.md`;
+	const fallbackPath = '../content/legal-notices/FR.md';
+	const loader = legalNoticesSources[languagePath] ?? legalNoticesSources[fallbackPath];
+
+	if (!loader) {
+		console.error(`[Legal notices] Markdown file not found for language "${language}"`);
+		markdownSource.value = '';
+		return;
+	}
+
+	markdownSource.value = await loader();
+	selectedSectionIndex.value = 0;
 };
 
-export default defineComponent({
-	name: 'LegalNoticesPage',
-	components: {
-		TitleHeader
+const showContent = (section: LegalNoticesSection, index: number): void => {
+	selectedSectionIndex.value = index;
+	void nextTick(() => {
+		document.getElementById(`legal-notices-section-${section.id}`)?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start'
+		});
+	});
+};
+
+watch(
+	locale,
+	language => {
+		void loadLegalNotices(String(language));
 	},
-	data() {
-		return {
-			selectedItemIndex: 0
-		};
-	},
-	computed: {
-		items(): LegalNoticesItem[] {
-			return [
-				{
-					id: 'publisher',
-					name: this.$t('legalNotices.sections.publisher.title'),
-					blocks: [
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.publisher.description'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.publisher.anonymity'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.publisher.director'
-						},
-						{
-							type: 'email',
-							introKey: 'legalNotices.sections.publisher.contactIntro',
-							emailKey: 'common.contactEmail'
-						}
-					]
-				},
-				{
-					id: 'hosting',
-					name: this.$t('legalNotices.sections.hosting.title'),
-					blocks: [
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.hosting.intro'
-						},
-						{
-							type: 'list',
-							keys: [
-								'legalNotices.sections.hosting.provider',
-								'legalNotices.sections.hosting.addressLine1',
-								'legalNotices.sections.hosting.addressLine2',
-								'legalNotices.sections.hosting.addressLine3',
-								'legalNotices.sections.hosting.country',
-								'legalNotices.sections.hosting.phone'
-							]
-						},
-						{
-							type: 'link',
-							introKey: 'legalNotices.sections.hosting.websiteIntro',
-							labelKey: 'legalNotices.sections.hosting.websiteLabel',
-							href: 'https://www.ionos.fr'
-						}
-					]
-				},
-				{
-					id: 'project',
-					name: this.$t('legalNotices.sections.project.title'),
-					blocks: [
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.project.independent'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.project.nonCommercial'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.project.attribution'
-						}
-					]
-				},
-				{
-					id: 'intellectual-property',
-					name: this.$t('legalNotices.sections.intellectualProperty.title'),
-					blocks: [
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.intellectualProperty.rights'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.intellectualProperty.code'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.intellectualProperty.assets'
-						},
-						{
-							type: 'link',
-							introKey: 'legalNotices.sections.intellectualProperty.repositoryIntro',
-							labelKey: 'legalNotices.sections.intellectualProperty.repositoryLabel',
-							href: 'https://github.com/DinoCore-Labs/DinoRPG-Remastered'
-						}
-					]
-				},
-				{
-					id: 'personal-data-and-cookies',
-					name: this.$t('legalNotices.sections.personalData.title'),
-					blocks: [
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.personalData.controller'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.personalData.introduction'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.personalData.optionalData'
-						},
-						{
-							type: 'list',
-							keys: [
-								'legalNotices.sections.personalData.data.account',
-								'legalNotices.sections.personalData.data.game',
-								'legalNotices.sections.personalData.data.messages',
-								'legalNotices.sections.personalData.data.technical'
-							]
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.personalData.purposes'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.personalData.legalBases'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.personalData.recipients'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.personalData.retention'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.personalData.cookiesIntroduction'
-						},
-						{
-							type: 'list',
-							keys: [
-								'legalNotices.sections.personalData.cookies.authentication',
-								'legalNotices.sections.personalData.cookies.language',
-								'legalNotices.sections.personalData.cookies.preferences'
-							]
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.personalData.cookiesConsent'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.personalData.cookiesRemoval'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.personalData.rights'
-						},
-						{
-							type: 'email',
-							introKey: 'legalNotices.sections.personalData.rightsContact',
-							emailKey: 'common.contactEmail'
-						},
-						{
-							type: 'link',
-							introKey: 'legalNotices.sections.personalData.cnilIntro',
-							labelKey: 'legalNotices.sections.personalData.cnilLabel',
-							href: 'https://www.cnil.fr'
-						}
-					]
-				},
-				{
-					id: 'liability',
-					name: this.$t('legalNotices.sections.liability.title'),
-					blocks: [
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.liability.availability'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.liability.use'
-						},
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.liability.externalLinks'
-						}
-					]
-				},
-				{
-					id: 'contact',
-					name: this.$t('legalNotices.sections.contact.title'),
-					blocks: [
-						{
-							type: 'paragraph',
-							key: 'legalNotices.sections.contact.description'
-						},
-						{
-							type: 'email',
-							introKey: 'legalNotices.sections.contact.emailIntro',
-							emailKey: 'common.contactEmail'
-						},
-						{
-							type: 'list',
-							keys: [
-								'legalNotices.sections.contact.details.url',
-								'legalNotices.sections.contact.details.content',
-								'legalNotices.sections.contact.details.reason',
-								'legalNotices.sections.contact.details.identity'
-							]
-						}
-					]
-				}
-			];
-		},
-		formattedUpdatedAt(): string {
-			return new Intl.DateTimeFormat(String(this.$i18n.locale), {
-				dateStyle: 'long',
-				timeZone: 'UTC'
-			}).format(new Date(`${LEGAL_NOTICES_UPDATED_AT}T12:00:00.000Z`));
-		}
-	},
-	methods: {
-		getImgURL,
-		showContent(item: LegalNoticesItem, index: number) {
-			this.selectedItemIndex = index;
-			this.$nextTick(() => {
-				document.getElementById(`legal-notices-section-${item.id}`)?.scrollIntoView({
-					behavior: 'smooth',
-					block: 'start'
-				});
-			});
-		}
+	{
+		immediate: true
 	}
-});
+);
 </script>
 
 <style lang="scss" scoped>
@@ -388,9 +134,6 @@ export default defineComponent({
 				color: #fce3bc;
 				background-color: rgb(142, 62, 38);
 			}
-			img {
-				flex-shrink: 0;
-			}
 		}
 	}
 	.image {
@@ -406,13 +149,7 @@ export default defineComponent({
 	align-self: center;
 	.content {
 		margin-top: 10px;
-		:deep(strong) {
-			color: rgb(142, 62, 38);
-		}
-		:deep(i) {
-			color: rgb(142, 62, 38);
-		}
-		.rulesMetadata {
+		.legalMetadata {
 			display: flex;
 			flex-direction: column;
 			gap: 3px;
@@ -428,39 +165,29 @@ export default defineComponent({
 				color: #fff1ad;
 				padding-left: 5px;
 			}
-			.textContent {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-				list-style: none;
-				margin-left: -35px;
-				p {
-					margin: 0;
-				}
-				a {
-					color: rgb(142, 62, 38);
-					font-weight: bold;
-					text-decoration: underline;
-					text-underline-offset: 2px;
-					&:hover {
-						color: #71b703;
-					}
-				}
+		}
+		.legalMarkdown {
+			:deep(p) {
+				line-height: 1.45;
 			}
-			.listItemsContent {
-				list-style: none;
-				margin-top: 12px;
-				margin-bottom: 15px;
-				li {
-					display: flex;
-					align-items: flex-start;
-					margin-top: 10px;
-					margin-left: 10px;
-					img {
-						flex-shrink: 0;
-						margin-top: 2px;
-						margin-right: 8px;
-					}
+			:deep(ul) {
+				padding-left: 30px;
+			}
+			:deep(li) {
+				margin: 8px 0;
+				line-height: 1.4;
+			}
+			:deep(strong) {
+				color: rgb(142, 62, 38);
+			}
+			:deep(a) {
+				color: rgb(142, 62, 38);
+				font-weight: bold;
+				text-decoration: underline;
+				text-underline-offset: 2px;
+
+				&:hover {
+					color: #71b703;
 				}
 			}
 		}

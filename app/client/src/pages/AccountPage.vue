@@ -1,6 +1,6 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.account')}`" :header="accountTitle"></TitleHeader>
-	<div class="wrapper" v-if="dataLoaded && profile">
+	<div id="account_page" class="wrapper" v-if="dataLoaded && profile">
 		<div class="profile">
 			<ProfileCard :profile="profile" :isOwner="isOwner" @updated="onProfileUpdated" />
 		</div>
@@ -42,13 +42,15 @@ import { userStore } from '../store/userStore';
 import { sessionStore } from '../store/sessionStore';
 import type { UserProfile } from '@dinorpg/core/models/user/userProfile.js';
 import { getImgURL } from '../utils/getImgURL';
+import { useTutorialStore } from '../store/tutorialStore';
 
 export default defineComponent({
 	name: 'AccountPage',
 	setup() {
 		const uStore = userStore();
 		const sStore = sessionStore();
-		return { sStore, uStore };
+		const tutorialStore = useTutorialStore();
+		return { sStore, uStore, tutorialStore };
 	},
 	data() {
 		return {
@@ -95,9 +97,29 @@ export default defineComponent({
 			//console.log(this.uStore.id);
 			//console.log(this.isOwner);
 			this.dataLoaded = true;
+			/*
+			 * Seulement /user.
+			 *
+			 * /user/:id ne doit pas valider l'objectif,
+			 * même s'il s'agit du profil public du joueur.
+			 */
+			if (!routeId) {
+				await this.notifyTutorialAccountVisit();
+			}
 		},
 		async onProfileUpdated() {
 			await this.loadProfile();
+		},
+		async notifyTutorialAccountVisit(): Promise<void> {
+			try {
+				await this.tutorialStore.sendEvent('ACCOUNT_PAGE_VISITED');
+				/*
+				 * L'objectif user donne également 500 pièces d'or.
+				 */
+				await this.$refreshGold();
+			} catch (err) {
+				console.error('[tutorial] Failed to validate account page visit', err);
+			}
 		}
 	},
 	watch: {

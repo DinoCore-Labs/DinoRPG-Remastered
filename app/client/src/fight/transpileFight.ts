@@ -18,7 +18,7 @@ import type { FightText } from '@dinorpg/core/models/fight/fightDialog.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import type { FighterRecap } from '@dinorpg/core/models/fight/fightResult.js';
 import { FightStatus } from '@dinorpg/core/models/fight/fightStatus.js';
-import type { FightStep } from '@dinorpg/core/models/fight/fightStep.js';
+import { type FightStep, LeaveAnimation } from '@dinorpg/core/models/fight/fightStep.js';
 import {
 	DamagesEffect,
 	DinoAction,
@@ -32,7 +32,7 @@ import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { Boss, bossList } from '@dinorpg/core/models/monster/bossList.js';
 import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
-import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
+import { skillList } from '@dinorpg/core/models/skills/skillList.js';
 import {
 	BASE_ASSAULT_ENERGY_COST,
 	BASE_ENERGY_COST,
@@ -452,7 +452,10 @@ export function transpileFight(
 					action: DinoAction.DEAD,
 					fid: step.fighter.id
 				});
-				activeFighters.filter(f => f.id != step.fighter.id);
+				const deathIndex = activeFighters.findIndex(f => f.id === step.fighter.id);
+				if (deathIndex !== -1) {
+					activeFighters.splice(deathIndex, 1);
+				}
 				myFighter = undefined;
 				break;
 			case 'disabledItems':
@@ -576,6 +579,17 @@ export function transpileFight(
 				});
 				break;
 			case 'leave': {
+				if (step.animation === LeaveAnimation.BLACKHOLE) {
+					history.push({
+						action: DinoAction.SKILL,
+						skill: SkillVisualEffect.HOLE,
+						details: {
+							fid: step.attackerId ?? step.fighter.id,
+							targets: [{ id: step.fighter.id, life: 0 }]
+						}
+					});
+				}
+
 				history.push({
 					action: DinoAction.ESCAPE,
 					fid: step.fighter.id
@@ -790,10 +804,6 @@ export function transpileFight(
 						}
 					});
 				}
-				// Black hole and sylphide extract the fighter from the fight so extract it from the list of actives too
-				if (step.skill && (step.skill == Skill.TROU_NOIR || step.skill == Skill.SYLPHIDES)) {
-					activeFighters.filter(f => f.id != step.fid);
-				}
 				myFighter = undefined;
 				break;
 			case 'skillExpire':
@@ -813,6 +823,18 @@ export function transpileFight(
 					details: {
 						fid: step.fid,
 						anim: step.anim
+					}
+				});
+				break;
+			}
+			case 'aura': {
+				history.push({
+					action: DinoAction.SKILL,
+					skill: SkillVisualEffect.AURA,
+					details: {
+						fid: step.fid,
+						type: step.type,
+						color: step.color
 					}
 				});
 				break;

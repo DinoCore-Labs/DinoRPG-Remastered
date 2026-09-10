@@ -27,6 +27,10 @@
 			</h3>
 			<img class="art" :src="getImgURL('shop', `shop_${actualShop.name}`)" :alt="actualShop.name" />
 			<p class="shopText" v-html="formatContent($t(`shop.item.${actualShop.name}.description`))" />
+			<p v-if="actualShop.type === 'magical'" class="napo-stock">
+				{{ $t('common.stock') }} : {{ napodinoStock }}
+				<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
+			</p>
 		</div>
 		<div class="shopShop">
 			<div class="background">
@@ -87,7 +91,6 @@
 						<img :src="getImgURL('background', `shop_arrow`)" alt="arrow" class="arrow" />
 						<p v-html="formatContent($t('shop.item.help'))" />
 					</div>
-
 					<div class="ad" v-html="formatContent($t('shop.item.advice') + $t('shop.item.advice_1'))" />
 				</div>
 				<div
@@ -306,11 +309,13 @@ import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { ShopService } from '../services/shop.service.js';
+import { InventoryService } from '../services/inventory.service.js';
 import { dinozStore } from '../store/dinozStore.js';
 import { userStore } from '../store/userStore.js';
 import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/errorHandler.js';
 import DZInput from '../components/utils/DZInput.vue';
+import { useTutorialStore } from '../store/tutorialStore.js';
 
 export default defineComponent({
 	name: 'ShopItems',
@@ -318,13 +323,15 @@ export default defineComponent({
 		return {
 			userStore: userStore(),
 			dinozStore: dinozStore(),
+			tutorialStore: useTutorialStore(),
 			itemList: [] as Array<ItemFiche>,
 			ingredientList: [] as IngredientFiche[],
 			fullItems: [] as ItemShopFiche[],
 			shopList: shopListV2,
 			selectedItem: undefined as ItemShopFiche | undefined,
 			selectedQuantity: 1,
-			ItemShopType: ItemShopType
+			ItemShopType: ItemShopType,
+			napodinoStock: 0
 		};
 	},
 	components: {
@@ -366,6 +373,11 @@ export default defineComponent({
 			if (!this.actualShop || !this.selectedItem) return;
 			try {
 				const bought = await ShopService.buyItem(this.actualShop.shopId, itemId, quantity);
+				try {
+					await this.tutorialStore.load();
+				} catch (err) {
+					console.error('[tutorial] Failed to refresh tutorial after shop purchase', err);
+				}
 				let message = this.$t(`toast.itemBought`, {
 					quantity: bought.quantity,
 					itemName: this.$t(`items.name.${this.resolveItem(this.selectedItem).name}`)
@@ -388,12 +400,15 @@ export default defineComponent({
 			if (
 				this.actualShop.type === ShopType.CLASSIC ||
 				this.actualShop.type === ShopType.CURSED ||
-				this.actualShop.type === ShopType.ITINERANT
+				this.actualShop.type === ShopType.ITINERANT ||
+				this.actualShop.type === ShopType.MAGICAL
 			) {
 				// Update the new quantity
 				// Both values are forced to number to avoid them somehow being treated as a string
 				this.selectedItem.quantity = (this.selectedItem.quantity ?? 0) + quantity;
-				await this.$refreshGold();
+				if (this.actualShop.type !== ShopType.MAGICAL) {
+					await this.$refreshGold();
+				}
 			} else if (this.actualShop.type === ShopType.FILOU) {
 				this.selectedItem = undefined;
 				await this.$refreshTreasureTicket();
@@ -491,8 +506,16 @@ export default defineComponent({
 		},
 		async loadPage() {
 			this.selectedItem = undefined;
+			this.fullItems = [];
+			this.itemList = [];
+			this.ingredientList = [];
 			// Get shop and its items to display
 			try {
+				if (this.actualShop?.type === ShopType.MAGICAL) {
+					const allItems = await InventoryService.getAllItemsData();
+					const napo = allItems.find(i => i.id === 111);
+					this.napodinoStock = napo ? (napo.quantity ?? 0) : 0;
+				}
 				this.fullItems = await ShopService.getItemsFromItemShop(this.actualShop?.shopId ?? 0);
 				this.itemList = this.fullItems
 					.filter(i => i.type === ItemShopType.ITEM)
@@ -568,6 +591,23 @@ export default defineComponent({
 			justify-self: center;
 			margin-top: 15px;
 		}
+		.napo-stock {
+			grid-area: center;
+			align-self: end;
+			margin: 0;
+			padding-top: 8px;
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			font-style: normal;
+			font-weight: bold;
+			color: #ffb822;
+			text-shadow: 1px 1px 2px #5a1e09;
+			img {
+				vertical-align: middle;
+				height: 22px;
+			}
+		}
 	}
 	.shopShop {
 		display: flex;
@@ -576,6 +616,7 @@ export default defineComponent({
 		max-width: 95%;
 		align-self: center;
 		.background {
+			margin-top: 5px;
 			background: url('../assets/background/shop_bg_items.webp');
 			width: 162px;
 			height: 193px;
@@ -933,7 +974,7 @@ export default defineComponent({
 		&:first-letter {
 			font-weight: bold;
 			font-size: 115%;
-			color: white;
+			color: inherit;
 		}
 	}
 	.full {

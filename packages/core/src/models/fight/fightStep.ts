@@ -19,7 +19,7 @@ import { Skill } from '../skills/skillList.js';
 import { FightText } from './fightDialog.js';
 import { FighterType } from './fighterType.js';
 import { FightStatus } from './fightStatus.js';
-import { EntranceEffect, LifeEffect, NotificationList } from './transpiler.js';
+import { AuraFxType, EntranceEffect, LifeEffect, NotificationList } from './transpiler.js';
 
 export interface StepFighter {
 	id: number;
@@ -79,6 +79,7 @@ export interface LeaveStep {
 	action: 'leave';
 	fighter: StepFighter;
 	animation?: LeaveAnimation;
+	attackerId?: number;
 }
 
 export interface ResistStep {
@@ -317,6 +318,13 @@ export interface FightTextStep {
 	text: FightText;
 }
 
+export interface AuraAntiHealStep {
+	action: 'aura';
+	fid: number;
+	type: AuraFxType;
+	color: string;
+}
+
 export type FightStep =
 	| TimeLimitStep
 	| TimeoutStep
@@ -360,4 +368,5 @@ export type FightStep =
 	| AnimationStep
 	| AttachStep
 	| LoseCostumeStep
-	| FightTextStep;
+	| FightTextStep
+	| AuraAntiHealStep;

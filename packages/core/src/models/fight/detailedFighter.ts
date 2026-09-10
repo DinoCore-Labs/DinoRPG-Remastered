@@ -109,6 +109,7 @@ export interface DetailedFighter {
 	cancelAssaultDodge: boolean;
 	// Survival
 	canSurvive?: boolean;
+	canPhoenix?: boolean;
 	// Costume
 	costume?: {
 		skin: MonsterFiche;
@@ -136,9 +137,13 @@ export interface DetailedFighter {
 	permanentStatusGained: DinozStatusId[];
 	// Previous target - only used for concentration
 	previousTarget?: number;
+	// Has used the friendly whistle item visually
+	hasWhistled?: boolean;
 	// Caught by
 	catcher?: number;
 	catchId?: number;
+	// Dimensional Powder resisted
+	powderResisted?: boolean;
 }
 
 export interface FighterResultFiche {

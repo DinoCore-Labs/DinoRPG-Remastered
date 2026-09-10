@@ -148,6 +148,16 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 					dinozs: { connect: team.map(d => ({ id: d.id })) }
 				}
 			});
+		} else {
+			// Tie or timeout: Check if all defenders died
+			const anyDefenderAlive = fightResult.defenders.some(f => {
+				const dinoz = defenders.find(d => d.id === f.dinozId);
+				return dinoz && dinoz.life - f.hpLost > 0;
+			});
+
+			if (!anyDefenderAlive) {
+				await tx.devourerControl.delete({ where: { placeId } });
+			}
 		}
 	});
 
