@@ -946,7 +946,16 @@ export default defineComponent({
 	},
 	watch: {
 		dinoz: {
-			handler() {
+			handler(newVal, oldVal) {
+				if (newVal?.id !== oldVal?.id) {
+					this.missionTalkTextKey = null;
+					this.missionTalkNameKey = null;
+					this.missionReward = null;
+					this.reincarnate = false;
+					this.resurrect = false;
+					this.fastGatherOver = false;
+					this.fastGatherResult = null;
+				}
 				this.dinozId = this.dinoz.id;
 				this.updateRestCountdown();
 				this.updateUnfreezeCountdown();
