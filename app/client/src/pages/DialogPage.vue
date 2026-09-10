@@ -162,7 +162,9 @@ async function handlePhaseActions(phase: DialogPhaseResponse) {
 	if (phase.actions.startFight) {
 		const fight = await FightService.processDialogFight(dinozId.value, phase.dialogId, phase.phaseId);
 		sStore.setFightResult(fight);
-		await router.push({
+		// Use replace instead of push so DialogPage is not kept in browser history.
+		// This prevents Cmd+Left (Mac back) from re-opening the NPC dialog after a combat.
+		await router.replace({
 			name: 'FightPage',
 			params: { dinozId: String(dinozId.value) }
 		});
