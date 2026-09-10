@@ -275,12 +275,14 @@ export default defineComponent({
 			return index % 2 === 1;
 		},
 		isFinalFlipped(index: number): boolean {
-			// Right side of bracket (bottom half): indices 16-31 (R0), 40-47 (R1), 52-55 (R2), 58-59 (R3)
-			if (index >= 16 && index <= 31) return true; // Round 0 bottom half
-			if (index >= 40 && index <= 47) return true; // Round 1 bottom half
-			if (index >= 52 && index <= 55) return true; // Round 2 bottom half
-			if (index >= 58 && index <= 59) return true; // Round 3 semifinal 2
-			if (index === 61) return true; // Final - right side
+			if (index >= 8 && index <= 15) return true;
+			if (index >= 24 && index <= 31) return true;
+			if (index >= 36 && index <= 39) return true;
+			if (index >= 44 && index <= 47) return true;
+			if (index >= 50 && index <= 51) return true;
+			if (index >= 54 && index <= 55) return true;
+			if (index === 57 || index === 59 || index === 60) return true;
+
 			return false;
 		},
 		async loadPage() {
@@ -460,7 +462,7 @@ export default defineComponent({
 }
 
 .tournament {
-	background-image: url('../../assets/design/dojo/dojo_tournament_bg.webp');
+	background-image: url('../../assets/design/dojo/dojo_tournament_bg_poule.webp');
 	background-repeat: repeat-y;
 	background-size: 100% 100%;
 
@@ -475,7 +477,7 @@ export default defineComponent({
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			flex-direction: column;
+			flex-direction: column-reverse;
 			background-image: url('../../assets/design/dojo/dojo_dino_available.webp');
 			background-size: cover;
 			cursor: pointer;
@@ -494,11 +496,13 @@ export default defineComponent({
 			.name {
 				text-shadow: #000000 0px 0px 5px;
 				color: white;
-				font-size: 9px;
+				font-size: 10px;
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				max-width: 100%;
+				padding-bottom: 2px;
+				padding-top: 3px;
 			}
 
 			/* =========================================================
@@ -575,7 +579,7 @@ export default defineComponent({
 }
 
 .final {
-	background-image: url('../../assets/design/dojo/dojo_tournament_bg.webp');
+	background-image: url('../../assets/design/dojo/dojo_tournament_final.webp');
 	background-repeat: repeat-y;
 	background-size: 100% 100%;
 
@@ -591,7 +595,7 @@ export default defineComponent({
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			flex-direction: column;
+			flex-direction: column-reverse;
 			background-image: url('../../assets/design/dojo/dojo_dino_available.webp');
 			background-size: cover;
 			cursor: pointer;
@@ -610,289 +614,285 @@ export default defineComponent({
 			.name {
 				text-shadow: #000000 0px 0px 5px;
 				color: white;
-				font-size: 9px;
+				font-size: 10px;
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				max-width: 100%;
+				padding-bottom: 2px;
+				padding-top: 3px;
 			}
 
-			/* Round 0 - left */
+			/* Round 0 */
 			&:nth-child(1) {
-				top: 20px;
+				top: 488px;
 				left: 10px;
 			}
 			&:nth-child(2) {
-				top: 75px;
+				top: 543px;
 				left: 10px;
 			}
 
 			&:nth-child(3) {
-				top: 137px;
+				top: 605px;
 				left: 10px;
 			}
 			&:nth-child(4) {
-				top: 192px;
+				top: 660px;
 				left: 10px;
 			}
 
 			&:nth-child(5) {
-				top: 254px;
+				top: 722px;
 				left: 10px;
 			}
 			&:nth-child(6) {
-				top: 309px;
+				top: 777px;
 				left: 10px;
 			}
 
 			&:nth-child(7) {
-				top: 371px;
+				top: 839px;
 				left: 10px;
 			}
 			&:nth-child(8) {
-				top: 426px;
+				top: 894px;
 				left: 10px;
 			}
 
 			&:nth-child(9) {
 				top: 488px;
-				left: 10px;
+				left: 640px;
 			}
 			&:nth-child(10) {
 				top: 543px;
-				left: 10px;
+				left: 640px;
 			}
 
 			&:nth-child(11) {
 				top: 605px;
-				left: 10px;
+				left: 640px;
 			}
 			&:nth-child(12) {
 				top: 660px;
-				left: 10px;
+				left: 640px;
 			}
 
 			&:nth-child(13) {
 				top: 722px;
-				left: 10px;
+				left: 640px;
 			}
 			&:nth-child(14) {
 				top: 777px;
-				left: 10px;
+				left: 640px;
 			}
 
 			&:nth-child(15) {
 				top: 839px;
-				left: 10px;
+				left: 640px;
 			}
 			&:nth-child(16) {
 				top: 894px;
-				left: 10px;
+				left: 640px;
 			}
 
-			/* Round 0 - right */
 			&:nth-child(17) {
 				top: 20px;
-				left: 560px;
+				left: 10px;
 			}
 			&:nth-child(18) {
 				top: 75px;
-				left: 560px;
+				left: 10px;
 			}
 
 			&:nth-child(19) {
 				top: 137px;
-				left: 560px;
+				left: 10px;
 			}
 			&:nth-child(20) {
 				top: 192px;
-				left: 560px;
+				left: 10px;
 			}
 
 			&:nth-child(21) {
 				top: 254px;
-				left: 560px;
+				left: 10px;
 			}
 			&:nth-child(22) {
 				top: 309px;
-				left: 560px;
+				left: 10px;
 			}
 
 			&:nth-child(23) {
 				top: 371px;
-				left: 560px;
+				left: 10px;
 			}
 			&:nth-child(24) {
 				top: 426px;
-				left: 560px;
+				left: 10px;
 			}
-
 			&:nth-child(25) {
-				top: 488px;
-				left: 560px;
+				top: 20px;
+				left: 640px;
 			}
 			&:nth-child(26) {
-				top: 543px;
-				left: 560px;
+				top: 75px;
+				left: 640px;
 			}
 
 			&:nth-child(27) {
-				top: 605px;
-				left: 560px;
+				top: 137px;
+				left: 640px;
 			}
 			&:nth-child(28) {
-				top: 660px;
-				left: 560px;
+				top: 192px;
+				left: 640px;
 			}
 
 			&:nth-child(29) {
-				top: 722px;
-				left: 560px;
+				top: 254px;
+				left: 640px;
 			}
 			&:nth-child(30) {
-				top: 777px;
-				left: 560px;
+				top: 309px;
+				left: 640px;
 			}
 
 			&:nth-child(31) {
-				top: 839px;
-				left: 560px;
+				top: 371px;
+				left: 640px;
 			}
 			&:nth-child(32) {
-				top: 894px;
-				left: 560px;
+				top: 426px;
+				left: 640px;
 			}
 
-			/* Round 1 - left */
+			/* Round 1 */
 			&:nth-child(33) {
-				top: 47px;
+				top: 515px;
 				left: 100px;
 			}
 			&:nth-child(34) {
-				top: 164px;
+				top: 632px;
 				left: 100px;
 			}
 			&:nth-child(35) {
-				top: 281px;
+				top: 749px;
 				left: 100px;
 			}
 			&:nth-child(36) {
-				top: 398px;
+				top: 866px;
 				left: 100px;
 			}
 			&:nth-child(37) {
 				top: 515px;
-				left: 100px;
+				left: 550px;
 			}
 			&:nth-child(38) {
 				top: 632px;
-				left: 100px;
+				left: 550px;
 			}
 			&:nth-child(39) {
 				top: 749px;
-				left: 100px;
+				left: 550px;
 			}
 			&:nth-child(40) {
 				top: 866px;
-				left: 100px;
+				left: 550px;
 			}
 
-			/* Round 1 - right */
 			&:nth-child(41) {
 				top: 47px;
-				left: 470px;
+				left: 100px;
 			}
 			&:nth-child(42) {
 				top: 164px;
-				left: 470px;
+				left: 100px;
 			}
 			&:nth-child(43) {
 				top: 281px;
-				left: 470px;
+				left: 100px;
 			}
 			&:nth-child(44) {
 				top: 398px;
-				left: 470px;
+				left: 100px;
 			}
 			&:nth-child(45) {
-				top: 515px;
-				left: 470px;
+				top: 47px;
+				left: 550px;
 			}
 			&:nth-child(46) {
-				top: 632px;
-				left: 470px;
+				top: 164px;
+				left: 550px;
 			}
 			&:nth-child(47) {
-				top: 749px;
-				left: 470px;
+				top: 281px;
+				left: 550px;
 			}
 			&:nth-child(48) {
-				top: 866px;
-				left: 470px;
+				top: 398px;
+				left: 550px;
 			}
-
-			/* Round 2 - left */
+			/* Round 2 - 1/4 */
 			&:nth-child(49) {
-				top: 105px;
+				top: 573px;
 				left: 190px;
 			}
 			&:nth-child(50) {
-				top: 339px;
+				top: 807px;
 				left: 190px;
 			}
 			&:nth-child(51) {
 				top: 573px;
-				left: 190px;
+				left: 460px;
 			}
 			&:nth-child(52) {
 				top: 807px;
-				left: 190px;
+				left: 460px;
 			}
-
-			/* Round 2 - Right */
 			&:nth-child(53) {
 				top: 105px;
-				left: 380px;
+				left: 190px;
 			}
 			&:nth-child(54) {
 				top: 339px;
-				left: 380px;
+				left: 190px;
 			}
 			&:nth-child(55) {
-				top: 573px;
-				left: 380px;
+				top: 105px;
+				left: 460px;
 			}
 			&:nth-child(56) {
-				top: 807px;
-				left: 380px;
+				top: 339px;
+				left: 460px;
 			}
 
 			/* Round 3 - 1/2 */
 			&:nth-child(57) {
-				top: 222px;
+				top: 690px;
 				left: 250px;
 			}
 			&:nth-child(58) {
 				top: 690px;
-				left: 250px;
+				left: 400px;
 			}
 			&:nth-child(59) {
 				top: 222px;
-				left: 320px;
+				left: 250px;
 			}
 			&:nth-child(60) {
-				top: 690px;
-				left: 320px;
+				top: 222px;
+				left: 400px;
 			}
 
 			/* Round 4 - Final */
 			&:nth-child(61) {
-				top: 398px;
-				left: 285px;
+				top: 573px;
+				left: 325px;
 			}
 			&:nth-child(62) {
-				top: 515px;
-				left: 285px;
+				top: 339px;
+				left: 325px;
 			}
 		}
 	}
