@@ -103,6 +103,7 @@ export default defineComponent({
 				await DojoService.skipOpponent(dinozId);
 				await this.$refreshGold();
 				dojoStore().incrementCashPrice(DOJO_FIGHT_COST);
+				await dojoStore().update();
 				this.$emit('refresh');
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
