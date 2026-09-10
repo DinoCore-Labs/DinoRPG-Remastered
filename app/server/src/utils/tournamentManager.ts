@@ -344,6 +344,7 @@ export class TournamentManager {
 					prismaClient
 				);
 			}
+			return;
 		}
 
 		// -------------------------------------------------------------------------
@@ -352,20 +353,34 @@ export class TournamentManager {
 		const previousStep = FINALS_STEP_OFFSET + finalsRound - 1;
 		const previousFights = await prismaClient.fightArchive.findMany({
 			where: { tournamentId: tournament.id, tournamentStep: previousStep },
-			select: { result: true, tournamentTeamLeftId: true, tournamentTeamRightId: true }
+			select: { result: true, tournamentTeamLeftId: true, tournamentTeamRightId: true, metadata: true }
 		});
 
 		if (previousFights.length === 0) return;
 
-		// Extract the winners in the order of the matches
-		const winners = previousFights.map(f => (f.result ? f.tournamentTeamLeftId! : f.tournamentTeamRightId!));
+		const numMatches = 16 / Math.pow(2, finalsRound);
+
+		const getWinnerOfPrevMatch = (prevMatchNumber: number): string | null => {
+			const fight = previousFights.find(f => {
+				if (!f.metadata) return false;
+				try {
+					const meta = JSON.parse(f.metadata as string) as MetaData;
+					return meta.matchNumber === prevMatchNumber;
+				} catch {
+					return false;
+				}
+			});
+			if (!fight) return null;
+			return fight.result ? fight.tournamentTeamLeftId : fight.tournamentTeamRightId;
+		};
 
 		const scheduledFor = new Date();
 
-		for (let i = 0; i < winners.length; i += 2) {
-			const left = winners[i];
-			const right = winners[i + 1];
-			if (!left || !right) continue;
+		for (let i = 0; i < numMatches; i++) {
+			const left = getWinnerOfPrevMatch(2 * i);
+			const right = getWinnerOfPrevMatch(2 * i + 1);
+
+			if (!left && !right) continue;
 
 			await TournamentManager.generateAndSaveFight(
 				dbTournament,
@@ -375,7 +390,7 @@ export class TournamentManager {
 				tournamentStep,
 				scheduledFor,
 				-1,
-				i / 2,
+				i,
 				tournament.id,
 				prismaClient
 			);
@@ -479,17 +494,30 @@ export class TournamentManager {
 			where: { id: tournamentId },
 			select: { poison: true, itemsAllowed: true }
 		});
-		const shuffled: (string | null)[] = selectedTeams.sort(() => Math.random() - 0.5).map(t => t.id);
 
-		while (shuffled.length < maxTeamsCount) shuffled.push(null);
+		const shuffledTeamIds: string[] = selectedTeams.map(t => t.id).sort(() => Math.random() - 0.5);
+
+		const poolOrder = Array.from({ length: POOL_COUNT }, (_, i) => i).sort(() => Math.random() - 0.5);
+
+		const SLOT_PRIORITY = [0, 2, 1, 3];
+		const pools: (string | null)[][] = Array.from({ length: POOL_COUNT }, () => [null, null, null, null]);
+
+		shuffledTeamIds.forEach((teamId, index) => {
+			const wave = Math.floor(index / POOL_COUNT);
+			const poolIndex = poolOrder[index % POOL_COUNT];
+			const slotIndex = SLOT_PRIORITY[wave];
+			pools[poolIndex][slotIndex] = teamId;
+		});
 
 		const scheduledFor = new Date(poolsStart);
 
 		for (let poolNumber = 0; poolNumber < POOL_COUNT; poolNumber++) {
-			const [seedA, seedB, seedC, seedD] = shuffled.slice(
-				poolNumber * POOL_SIZE,
-				poolNumber * POOL_SIZE + POOL_SIZE
-			) as [string | null, string | null, string | null, string | null];
+			const [seedA, seedB, seedC, seedD] = pools[poolNumber] as [
+				string | null,
+				string | null,
+				string | null,
+				string | null
+			];
 
 			const realTeams = [seedA, seedB, seedC, seedD].filter((id): id is string => id !== null);
 			await Promise.all(
@@ -499,6 +527,8 @@ export class TournamentManager {
 			for (const plan of POOL_MATCH_PLAN.filter(p => p.round === 0)) {
 				const leftId = plan.matchNumber === 1 ? seedA : seedC;
 				const rightId = plan.matchNumber === 1 ? seedB : seedD;
+
+				if (!leftId && !rightId) continue;
 
 				await TournamentManager.generateAndSaveFight(
 					tournament,
@@ -540,6 +570,8 @@ export class TournamentManager {
 				const leftTeamId = TournamentManager.resolveDependent(plan.leftFrom!, winners, losers, poolNumber);
 				const rightTeamId = TournamentManager.resolveDependent(plan.rightFrom!, winners, losers, poolNumber);
 
+				if (!leftTeamId && !rightTeamId) continue;
+
 				await TournamentManager.generateAndSaveFight(
 					dbTournament,
 					leftTeamId,
@@ -580,27 +612,19 @@ export class TournamentManager {
 		const twoZeroShuffled = shuffle(twoZero);
 		const twoOneShuffled = shuffle(twoOne);
 
-		const updates: Promise<any>[] = [];
-		twoZeroShuffled.forEach((team, i) => {
-			if (i < 16) {
-				updates.push(
-					prismaClient.tournamentTeam.update({
-						where: { id: team.id },
-						data: { finalSeed: i + 1 }
-					})
-				);
-			}
-		});
-		twoOneShuffled.forEach((team, i) => {
-			if (i < 16) {
-				updates.push(
-					prismaClient.tournamentTeam.update({
-						where: { id: team.id },
-						data: { finalSeed: 32 - i }
-					})
-				);
-			}
-		});
+		const MATCH_DISTRIBUTION_ORDER = [0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15];
+		const LEFT_SEEDS = MATCH_DISTRIBUTION_ORDER.map(m => m + 1);
+		const RIGHT_SEEDS = MATCH_DISTRIBUTION_ORDER.map(m => 32 - (15 - m));
+		const FINAL_SEED_ORDER = [...LEFT_SEEDS, ...RIGHT_SEEDS];
+
+		const allTeams = [...twoZeroShuffled, ...twoOneShuffled].slice(0, 32);
+
+		const updates: Promise<any>[] = allTeams.map((team, i) =>
+			prismaClient.tournamentTeam.update({
+				where: { id: team.id },
+				data: { finalSeed: FINAL_SEED_ORDER[i] }
+			})
+		);
 
 		await Promise.all(updates);
 	}
