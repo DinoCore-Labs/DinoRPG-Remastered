@@ -1903,8 +1903,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					tid: opponentDefender.id
 				});
 
-				// Trigger a normal close combat attack but that's not an assault
-				attackTarget(fightData, opponentAttacker, opponentDefender, false);
+				// Trigger a close combat assault (isAssault=true so Bulle doesn't wrongly apply)
+				attackTarget(fightData, opponentAttacker, opponentDefender, true);
 
 				// Check if fighter is not dead
 				if (opponentAttacker.hp > 0) {
