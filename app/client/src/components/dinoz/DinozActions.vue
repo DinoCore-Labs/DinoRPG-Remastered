@@ -75,8 +75,9 @@
 				tag="div"
 				theme="normal"
 				class="action"
+				:class="{ 'long-text': isLongAction(action) }"
 				v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW && a.name !== Action.DEFENDING_DEVOURER)"
-				:key="action"
+				:key="action.imgName || action.name"
 				:id="action.imgName"
 				:data-tutorial-action="getTutorialActionKey(action)"
 				@click="launch(action)"
@@ -282,6 +283,23 @@ export default defineComponent({
 				return this.translateI18nText(action.label).toString();
 			}
 			return this.$t('action.name.mission').toString();
+		},
+		getActionLabel(action: ActionFiche): string {
+			if (action.name === 'shop') {
+				const shopName = this.getShopNameFromAction(action);
+				return shopName ? this.$t(`shop.item.${shopName}.name`).toString() : '';
+			}
+			if (action.name === Action.NPC) {
+				return this.getNpcActionName(action);
+			}
+			if (action.name === Action.MISSION) {
+				return this.getMissionActionName(action);
+			}
+			const follower = action.forDinoz ? `${this.dinoz.followers?.find(f => f.id === action.forDinoz)?.name}: ` : '';
+			return `${follower}${this.$t(`action.name.${action.name}`)}`;
+		},
+		isLongAction(action: ActionFiche): boolean {
+			return this.getActionLabel(action).length >= 20;
 		},
 		getMissionActionDescription(): string {
 			const goal = this.dinoz.currentMission?.currentGoal;
@@ -1041,9 +1059,16 @@ export default defineComponent({
 			font-weight: 700;
 			width: 100%;
 			height: 35px;
+			img {
+				flex-shrink: 0;
+			}
 			&:hover {
 				background-color: #9a4029;
 				cursor: pointer;
+			}
+			&.long-text {
+				font-size: 8.5pt;
+				line-height: 1.05;
 			}
 		}
 	}
@@ -1059,10 +1084,16 @@ export default defineComponent({
 			flex-wrap: wrap;
 			.action {
 				width: 48%;
+				margin-right: 0;
 				overflow: hidden;
+				gap: 0.35rem;
 				p {
 					white-space: normal;
 					word-break: break-word;
+				}
+				&.long-text {
+					font-size: 8pt;
+					line-height: 1;
 				}
 			}
 			.follow {
