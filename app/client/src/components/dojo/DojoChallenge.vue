@@ -108,6 +108,7 @@ import { errorHandler } from '../../utils/errorHandler.js';
 import { dojoStore } from '../../store/dojoStore.js';
 import { userStore } from '../../store/userStore.js';
 import { dinozStore } from '../../store/dinozStore.js';
+import { localStore } from '../../store/localStore.js';
 import SelectDinoz from './SelectDinoz.vue';
 import DZDisclaimer from '../utils/DZDisclaimer.vue';
 import CarousselDinoz from './CarousselDinoz.vue';
@@ -185,6 +186,7 @@ export default defineComponent({
 			this.opponent = {} as Pick<DinozFiche, 'id' | 'name' | 'level' | 'display'>;
 			this.myFighter = {} as Pick<DinozFiche, 'id' | 'name' | 'level' | 'display'>;
 			await this.refresh();
+			await this.dojoStore.update();
 		},
 		calculateMissedGoal(challenge: Challenge) {
 			if (!this.fightStat) return 0;
@@ -231,11 +233,12 @@ export default defineComponent({
 				this.leftPlayer = fightResult.leftPlayer;
 				this.rightPlayer = fightResult.rightPlayer;
 				this.loaded = true;
-				// if (this.userStore.getPlayerOptions.skipFight) {
-				// 	this.fightAnimationEnded = true;
-				// }
+				if (localStore().getSkipFightAnimation) {
+					this.fightAnimationEnded = true;
+				}
 				await this.$refreshGold();
 				dojoStore().incrementCashPrice(DOJO_FIGHT_COST);
+				await this.dojoStore.update();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -262,6 +265,7 @@ export default defineComponent({
 					this.dailyReset = dojo.dailyReset;
 				}
 				if (dojo.activeChallenge) this.activeChallenge = dojo.activeChallenge;
+				await this.dojoStore.update();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -287,8 +291,10 @@ export default defineComponent({
 		await this.refresh();
 	},
 	watch: {
-		fightAnimationEnded() {
-			this.dojoStore.update();
+		fightAnimationEnded(val: boolean) {
+			if (val) {
+				this.dojoStore.update();
+			}
 		}
 	}
 });
@@ -386,6 +392,7 @@ $b: 3px;
 	align-self: center;
 	display: flex;
 	justify-content: space-around;
+	transition: filter 0.3s ease;
 	p {
 		color: white;
 		align-self: center;
@@ -393,6 +400,9 @@ $b: 3px;
 		text-align: center;
 		padding-top: 5px;
 		padding-bottom: 5px;
+		text-shadow:
+			0 0 3px #000,
+			0 0 5px #000;
 	}
 }
 .versus {
@@ -493,10 +503,10 @@ progress {
 	justify-content: center;
 }
 .won {
-	filter: hue-rotate(90deg);
+	filter: sepia(1) hue-rotate(80deg) saturate(3.5) brightness(0.95);
 }
 .lost {
-	filter: hue-rotate(-90deg);
+	filter: sepia(1) hue-rotate(320deg) saturate(4.5) brightness(0.9);
 }
 .bounce-enter-active {
 	animation: bounce2 1s;
