@@ -129,6 +129,7 @@
 			"full": "Stock full",
 			"sortBy": "Sort By",
 			"confirmUse": "Do you confirm the use of {name} on your Dinoz?",
+			"confirmEquipMagicItem": "Etes vous sur de vouloir équiper cette objet ?",
 			"sort": {
 				"default": "By Default",
 				"nameAsc": "Name (A → Z)",
@@ -764,6 +765,7 @@
 		"resurrect": "Your Dinoz is resurrected.",
 		"egg": "You opened a {value}'s Egg.",
 		"dinozAlreadySelling": "Your Dinoz is already for sale.",
+		"cannotEquipSellingDinoz": "Vous ne pouvez pas équiper d'objet sur un dinoz en vente",
 		"noPDA": "You need the Diamantite Pebble to access this page.",
 		"noPMI": "You need the Illustrated Mission Guidebook to access this page.",
 		"noPAC": "You need the Scroll of Compiled Abilities to access this page.",
@@ -846,9 +848,10 @@
 		"itemNotFound": "This item could not be found.",
 		"itemNotEquipped": "This Dinoz does not have this item equipped.",
 		"itemCannotBeEquipped": "This item cannot be equipped.",
+		"magicItemHomesick": "Cet Objet Magique souffre du mal du pays. Il doit encore s'habituer à son porteur avant de pouvoir être retiré !",
+		"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
 		"notEnoughItems": "You don't have enough of this item.",
 		"notEnoughMoney": "Vous n'avez pas assez d'or",
-		"tooManyMagicItemEquiped": "Your Dinoz cannot equip more magical items.",
 		"maxQuantityInventory": "You already too many of this item in your inventory.",
 		"missingStatus": "One of your Dinoz doesn't fulfill the requirements to do this action.",
 		"noFight": "Today, the swamp is surrounded by a thick fog. You won't find any monsters to fight.",
@@ -898,7 +901,11 @@
 		"concentrationCannotStopAfterOpening": "The concentration is complete: the Dinoz must now enter the portal.",
 		"concentrationNotCompleted": "Seven Dinoz must complete their concentration before the portal can be entered.",
 		"maxFollowers": "You cannot have more than {maxFollowers} Dinoz in your group.",
-		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée."
+		"dinozCannotFollowBrave": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause de la compétence Brave.",
+		"dinozCannotFollowSharedElement": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause d'une mauvaise affinité élémentaire entre vos dinoz.",
+		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée.",
+		"fearFactorDesequip": "Vous ne pouvez pas déséquiper le Trouillomètre tant que ce Dinoz est dans un groupe.",
+		"tutorialMovementRestricted": "Le tutoriel vous demande de suivre un autre chemin pour le moment."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -2134,7 +2141,8 @@
 			"empty": "There is no item at this spot.",
 			"undefined": "This object is unknown, it is rare and it will strongly make developers curious about its existence."
 		},
-		"empty": "This slot is empty, choose an item from the inventory to equip.&&//The equipped items can be used by your Dinoz in combat.//"
+		"empty": "This slot is empty, choose an item from the inventory to equip.&&//The equipped items can be used by your Dinoz in combat.//",
+		"magicItemHomesickTooltip": "//Cet Objet Magique souffre du mal du pays. Il doit encore s'habituer à son porteur avant de pouvoir être retiré.//&&**Temps restant : {time}**"
 	},
 	"ingredients": {
 		"disclaimer": "This page lists the ingredients you have found using the \"Collect\" action.",
@@ -3139,7 +3147,15 @@
 			"cowar2": "Brigand Emmema",
 			"boukan": "Boukané l'intuable",
 			"cervel": "Cervelah l'empoisonneur",
-			"buildr": "Ouvrier de Caravoies"
+			"buildr": "Ouvrier de Caravoies",
+			"darki1": "Moueffe Sombre",
+			"darki2": "Pigmou Sombre",
+			"darki3": "Winks Sombre",
+			"taurus": "Taurus",
+			"bao": "Baobob",
+			"gropi": "Gropignon",
+			"mimic": "Mimic",
+			"earth2": "Elémental jambes"
 		},
 		"status": {
 			"asleep": "Asleep",
@@ -3235,203 +3251,7 @@
 	},
 	"guide": {
 		"title": "Game Guide:",
-		"sections": {
-			"intro": "Introduction",
-			"adopt": "Adopting a Dinoz",
-			"name": "Naming your Dinoz",
-			"card": "Dinoz Profile",
-			"move": "Moving Around",
-			"fight": "Fights",
-			"heal": "Healing",
-			"death": "Death",
-			"exp": "Experience",
-			"missions": "The Missions",
-			"status": "Statuses",
-			"equipment": "Equipment",
-			"epic": "Epic Items",
-			"group": "Groups",
-			"ingredient": "Ingredients",
-			"clans": "The Clans",
-			"dojo": "Dojos",
-			"gdc": "Clan Wars",
-			"cdc": "Clan Championship",
-			"question": "Questions?",
-			"support": "Technical Support",
-			"security": "Security"
-		},
-		"text": {
-			"stop": "Stop Guide",
-			"intro": "Welcome to **DinoRPG** ! && && Here, you play as a **Dinoz Master**, you can adopt and plays multiple wild creatures named **Dinoz**. You can explore the world of Dinoland, battle and evolve your Dinoz, complete Missions, and fulfill the numerous Quests you encounter during your adventure. && && If you need assistance, you can access this Game Guide at any time by clicking the button in the right Menu. && && To continue reading the Guide, please click the button below.",
-			"adopt": "The first thing you need to do on DinoRPG is to adopt a Dinoz. For this, you have **200,000** :gold: (gold coins) obtained when creating your account. && && By clicking on **BUY A DINOZ** in the left Menu, you can access the Dinoz Shop. Each Dinoz is unique, and every day, this shop will offer you a selection of Dinoz among which you can choose the one that suits you the most. && && Each Dinoz is presented as follows :",
-			"adopt2": "You can see the look of the Dinoz, its **Race** and its Price. There are different breeds of Dinoz, each with its own properties. In particular, the values of the **5 elements** indicated during the purchase depend on the breed of the Dinoz, and some breeds have an **additional skill**. These two points influence the **fight** as we will see later. The price also varies depending on the breed of the Dinoz, some breeds being rarer and therefore more expensive. && && First, choose the Dinoz you prefer and buy it.",
-			"name": "Once you've purchased your Dinoz, you will be asked to give it a Name, as shown here :",
-			"name2": "Choose the name you prefer for your Dinoz, and your Dinoz will be added to the left Menu. By clicking on it, you can access its **Profile**.",
-			"card": "The **Profile** of your Dinoz is where you can both see the **state** of your Dinoz and perform a number of **actions**. It is presented as follows:",
-			"card2": "You can observe the following information :",
-			"card2-1": "At the top right, the **elements** and **race** of your Dinoz.",
-			"card2-2": "Below the image, in the red circle, its **level**, indicating its current power. In the bar marked :pv: (HP), its **hit points**: this is your Dinoz's health. When the bar is completely empty, your Dinoz **dies**. In the bar marked :xp: (XP), its **experience points**: you gain them after each battle. When the bar is full, your Dinoz can progress to the next level.",
-			"card2-3": "Below, the different **actions** your Dinoz can perform, such as Fighting.",
-			"card3": "We will now discuss the various actions your Dinoz can perform.",
-			"move": "The world of Dinoland consists of many places to discover. These different locations are connected by paths that your Dinoz can traverse by moving. To **move** your Dinoz, simply click on the next point on the Map. The Dinoland Map is displayed as follows :",
-			"move2": "Paths starting from the current location of your Dinoz are displayed, and the locations you can travel to will begin to blink. Click on the location where you want to move your Dinoz to send it there. && && Your Dinoz can move a minimum of two times per day. There is a recovery cycle for actions, which is as follows :",
-			"move2-1": "Your Dino regains its new actions **every day at midnight** (server time).",
-			"move3": "**However**, using a **potion from Madame Irma** allows it to move again on the same day without having to wait for the end of the cycle. && && During movement between two locations, monsters attack your Dinoz, initiating a **battle**.",
-			"fight": "A battle occurs when your Dinoz is attacked or attacks one or more monsters. The different participants then join the battle, which unfolds automatically :",
-			"fight2": "Monsters and your Dinoz take turns attacking, based on their **initiative**, **speed**, and **energy**. With each hit, the opponent loses **health points**, which are displayed. Your Dinoz must defeat all the monsters to win the battle. && && During its turn, your Dinoz can perform one or more of the following actions based on its energy :",
-			"fight2-1": "Launch an **assault**, meaning a normal attack",
-			"fight2-2": "Execute a **special attack**, which then replaces the assault",
-			"fight2-3": "Use an **event** type skill",
-			"fight2-4": "Use **combat equipment**",
-			"fight3": "The Elements",
-			"fight3-1": "A Dinoz has 5 **elemental** values that are indicated on its profile:",
-			"fight3-1-1": "Fire",
-			"fight3-1-2": "Wood",
-			"fight3-1-3": "Water",
-			"fight3-1-4": "Lightning",
-			"fight3-1-5": "Air",
-			"fight3-2": "These elements are organized according to **the Grand Cycle of elements**:",
-			"fight3-3": "An element is strong against the two that follow it and weak against the two that precede it. Thus, for example, Fire is very strong against Wood and quite strong against Water, but is very weak against Air and rather weak against Thunder.",
-			"fight4": "The Attacks",
-			"fight4-1": "Assaults always occur in a specific order, determined by the elemental values, with a random draw in case of a tie.",
-			"fight4-2": "Thus, a Dinoz with the above elements will perform its assaults in the following order :",
-			"fight4-2-1": ":water: Water first",
-			"fight4-2-2": "then :wood: Wood",
-			"fight4-2-3": "then :foudre: Thunder and :air: Air in an undetermined order",
-			"fight4-2-4": "and finally :feu: Fire",
-			"fight4-3": "Once the 5 assaults are completed, the Dinoz will start the cycle again. && && Based on its **elements** and **skills**, the Dinoz has a certain **assault power** and **defense** for each element. These characteristics are visible in the Details tab of the **Dinoz's profile**. && && The stronger **the assault power** of an element, the more hit points the Dinoz will deduct from its opponents when performing an assault of that element. The stronger **the defense** against an element, the more protected the Dinoz will be against attacks from opponents using that element.",
-			"fight5": "The Monsters",
-			"fight5-1": "Many monsters perform Void element assaults. This means that all your elements are taken into account during defense. However, some monsters are capable of performing assaults or special attacks of a particular element.",
-			"fight6-1": "At the end of the battle, your Dinoz earns **gold coins** :gold: that will allow it to heal, and **experience points** that will enable it to level up.",
-			"fight7": "The Energy",
-			"fight7-1": "Each Dinoz has a blue energy bar next to its health bar. This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. Like the health bar, it depends on the maximum energy called **endurance** that the Dinoz possesses. _The endurance of a Dinoz can vary depending on certain learned skills. Bonuses can also increase endurance._ && && Each skill has an energy cost. With each skill used, the energy bar decreases. Once empty, the Dinoz must pass its turn. Some extraordinarily powerful skills require much more energy than others. && && This energy bar gradually fills up during the battle, referred to as **recovery**. _The recovery of a Dinoz can vary depending on certain learned skills._ && && The Dinoz must therefore wait until it has replenished its energy before using a skill.",
-			"fight8": "The Statuses in Combats",
-			"fight8-1": "During the battle, different statuses will affect your Dinoz, either as a bonus or a penalty. You can find the list of these statuses below :",
-			"fight8-1-1": "_The Dinoz is asleep, it cannot move_",
-			"fight8-1-2": "_The Dinoz cannot be hit by a standard assault_",
-			"fight8-1-3": "_The Dinoz is slowed down_",
-			"fight8-1-4": "_The Dinoz is faster_",
-			"fight8-1-5": "_The Dinoz is petrified, it cannot attack anymore_",
-			"fight8-1-6": "_The Dinoz has a bonus on its assaults_",
-			"fight8-1-7": "_The Dinoz is poisoned and takes damage every turn_",
-			"fight8-1-8": "_The Dinoz is not free to use all its elements_",
-			"fight8-1-9": "_The Dinoz is dazzled, it can miss its attack on an opposing Dinoz_",
-			"fight8-1-10": "_The Dinoz is protected by a member of its team_",
-			"fight8-1-11": "_The Dinoz is mute, it cannot summon its summoning_",
-			"fight8-1-12": "_The Dinoz can copy the techniques of its opponents_",
-			"fight8-1-13": "_The Dinoz cannot use the content of its inventory anymore_",
-			"fight8-1-14": "_The Dinoz has an energy penalty_",
-			"fight8-1-15": "_The Dinoz has an energy bonus_",
-			"fight8-1-16": "_The Dinoz has a Fire defense bonus_",
-			"fight8-1-17": "_The Dinoz has a Wood defense bonus_",
-			"fight8-1-18": "_The Dinoz has a defense bonus in water._",
-			"fight8-1-19": "_The Dinoz has a defense bonus in Lightning_",
-			"fight8-1-20": "_The Dinoz has a defense bonus in Air_",
-			"fight8-1-21": "_The Dinoz has an initiative bonus._",
-			"fight8-1-22": "_The Dinoz has an initiative penalty._",
-			"fight8-1-23": "_The Dinoz has a dodge bonus_",
-			"fight8-1-24": "_The Dinoz has a defense bonus._",
-			"heal": "Once a **battle** is finished, your Dinoz may have lost some **hit points**. Therefore, it is necessary to heal it to prevent it from dying. You can purchase various items from the **Shop** with your gold coins :gold: for this purpose. && && Access the **Inventory tab** from your Dinoz's profile to see the list of items you possess and to be able to use them. For example, a **Cloud Burger** will restore 10 hit points to your Dinoz.",
-			"heal2": "...Resting :",
-			"heal2-1": "If your Dinoz has low hit points, it can **Rest**. This allows it to automatically recover hit points over time. However, it cannot perform any actions while resting. && && Initially, your Dinoz will recover at a rate of **1** hit point per hour, but this can be improved by certain skills. && && You can stop your Dinoz's rest at any time, but your Dinoz cannot regain more than **half** of its hit points while resting.",
-			"death": "It can happen that while fighting a monster that is too strong or because it did not have enough life, your Dinoz dies during a battle. While it is dead, your Dinoz cannot perform **any actions**. It is therefore immobilized until it is resurrected. && && You have 2 options to **resurrect** your Dinoz :",
-			"death-1": "**For free**: your Dinoz will return to Dinotown and will lose half of its accumulated experience points since its last level.",
-			"death-2": "With an **angel potion**: your Dinoz will remain where it is and will not lose any experience points.",
-			"death2": "Depending on how you prefer to manage your gold coins :gold:, either solution can be interesting.",
-			"exp": "At the end of each battle, your Dinoz will earn **experience points** :xp:. Once the experience bar on your Dinoz's profile is filled, your Dinoz **will be able to level up**. && && First, an **element** is randomly drawn. Your Dinoz will then see the value of this element increased. Here is an example :",
-			"exp2": "...Skills :",
-			"exp2-1": "Then, you will be asked **to learn a skill**, the list of which is determined based on the element that has been chosen. According to the description of the skill, choose the one that suits you best. && && You can find the list of skills that your Dinoz has learned from the **Details tab** on its profile. && && Depending on your **Dinoz' race**, the probabilities of increasing a given **element** are not the same, and thus the choices of skills and the possibilities of your Dinoz' development will vary.",
-			"exp3": "...Unlocking Skills :",
-			"exp3-1": "Each skill your Dinoz learns can allow it to access other more powerful skills. However, before they can be learned, they must be **unlocked**. This option is presented to you when your Dinoz levels up if it is possible. && && Therefore, you will need to choose between learning more skills to potentially unlock several at once or unlocking the most powerful skills more quickly.",
-			"missions": "During your adventures in Dinoland, you will encounter many characters. Some of these characters, like **GrandPa Joe**, will grant you access to a list of **Missions**. && && Each Mission has a specific objective :",
-			"missions2": "Your Dinoz can only undertake one mission at a time, so choose carefully which one you want to undertake and then complete it. Once the mission's objective is fulfilled, you can return to the character who assigned the mission to your Dinoz to claim a reward. && && Some missions are initially locked. To unlock them, you will need to complete other missions first, increase your Dinoz's level, or finish certain **Quests** given by other characters. && && Once a mission is completed by one Dinoz, it can be undertaken again by another of your Dinoz.",
-			"status": "By completing various **Missions/Quests**, your Dinoz will be able to obtain numerous **statuses** that will be listed on its profile. Hover over one of these statuses to get help on its effect. && && Generally, statuses are permanent. This means that once obtained, you cannot lose them. However, some statuses are temporary and can therefore be lost. && && The statuses are displayed when you view another player's Dinoz: will you be able to view the maximum of them?",
-			"equipment": "On its profile, your Dinoz has a certain number of slots available for **combat equipment**. Some can indeed **be equipped** in one of these slots, and they will then be usable in battle. && && To equip a combat item, use the **Inventory tab**. The **'equip' action** is only available for certain items. Once an item is equipped, you can remove it at any time by clicking on its slot in the equipment. Here is an example :",
-			"equipment2": "Most combat items can only be used once. This means that when your Dinoz uses it in battle, it will be destroyed, and a new item can then be equipped in its place. && && Combat equipment allows you to adapt your **strategy** based on the monsters you encounter, so make good use of it.",
-			"epic": "On your Master Dinoz' profile, accessible from the **'My Account'** link in the right menu, you can find the list of your epic rewards. && && These items can be obtained in different ways, either by completing **Quests** or by participating in **events** that punctuate the life of the site. You can only own one copy of each, and they are visible to other DinoRPG players.",
-			"group": "When you have multiple Dinoz, it's possible to have them move and fight **as a group**. To do this, first bring both of your Dinoz to the same location and use the **'Follow' action** on one of them. && && Once your group is formed, you can move and fight together:",
-			"group2": "However, some movements require specific statuses, and Dinoz that do not possess them will automatically detach from the group during movement. && && A group can contain up to 3 Dinoz, but certain skills or items allow you to increase this number. && && You can stop following a Dinoz at any time by using the corresponding action.",
-			"ingredient": "Some skills allow your Dinoz **to collect ingredients** from various locations in Dinoland. && && When you have one of these skills and you are in the right location, a collection action appears among your Dinoz's actions. When you perform this action, a grid appears:",
-			"ingredient2": "You must select the tile(s) you wish to examine. With a bit of luck, you will find numerous ingredients, with the rarest ones going for several thousand gold coins. && && To sell your ingredients, you need to find the **Wandering Merchant** who moves to a new location every week. Depending on **the day of the week**, he may buy different types of ingredients for a very good price, so be attentive. && && You have a maximum quantity of ingredients you can carry, so you will need to sell them regularly.",
-			"clans": "**Clans** are groups of DinoRPG players. Belonging to a Clan allows you to chat with other players, exchange techniques and tips, and help each other out. You can join a Clan or create your own Clan from the **Clans section** in the right menu.",
-			"clans1": "...Joining a Clan :",
-			"clans1-1": "Firstly, know that you can only be a member of one Clan. && && To join a Clan, you will first need to find one that suits you. The description provided by the Clan creator, the presence of friends in the Clan, the reputation of the Clan among other players... All these points will help you make your choice. && && Once you have selected your Clan, you can submit a membership request. To avoid non-serious requests, this action costs **1,000** gold coins :gold:. These coins will be lost if your request is accepted by the Clan creator. However, if your request is rejected or if you cancel it, you will get your coins back. && && You can also cancel your request at any time, for example, to submit a new membership request to another Clan.",
-			"clans2": "...Creating and managing your Clan :",
-			"clans2-1": "To avoid too many empty or inactive Clans, creating Clans costs gold coins and requires obtaining 15 points in the Ranking, which is equivalent to having a Dinoz at level 15 or three Dinoz at level 5. && && Once your Clan is created, you can modify its banner and description, accept new members into the Clan, delegate various management rights to them, etc.",
-			"dojos": "**Dojos** are places where you can train your Dinoz against each other in single combat.",
-			"dojos-1": "You can have your Dinoz fight each other there, but also challenge the Dinoz of other clan members.",
-			"dojos-2": "You are offered a maximum of 50 challenges every day, in sets of 5, and it's up to you to win them to raise your Dojo in the rankings. && && If you win or cancel the 5 challenges offered, a new list of 5 challenges will immediately be proposed to you (within the limit of remaining challenges).",
-			"dojos1": "...Creating your Dojo :",
-			"dojos1-1": "To create your Dojo, you will need to meet Master Zenit who is often found at Forcebrut. He will explain how to build your Dojo and how it works. You will need to choose a location and click on the Dojo button in the left menu. Once the Dojo is built, you can access it from anywhere.",
-			"dojos2": "...Challenges :",
-			"dojos2-1": "Challenges are battles in which you will fight against another player's Dinoz. You will be asked to defeat this opponent, whether or not you aim to achieve a pre-set objective.",
-			"dojos2-2": "This button allows access to the Dojo challenges. Choose an opponent from the list of proposed challenges! Then select the Dinoz you deem most suitable to win while fulfilling the objective.",
-			"dojos3": "...Inter-Dojo Tournament :",
-			"dojos3-1": "The Tournament is a monthly event in DinoRPG, bringing together 256 dojos that qualified during the elimination phases into 16 groups. They will battle each other until determining the best player in Dinoland!",
-			"dojos3-2": "This button allows access to the Tournament page. For over a week, players will compete in 16 groups of 16 players. Once the first round is over, the 16 finalists will compete in the final group. The best Master Dinoz will be determined after this challenge. _As with challenges, during the final phases, Dinoz do not lose their health points. But this time, the battles will be more varied, with or without magical items, 1-on-1 or in teams: 3-on-3, 5-on-5. This will vary depending on the editions!_",
-			"dojos3-3": "On the Tournament page, you can select the Dinoz that will participate in the Tournament; you cannot change them between matches in the final phases. The tournament begins when the elimination phases end. && && Players who qualify for a tournament cannot participate in the next tournament. However, they can try their luck in the following edition.",
-			"dojos4": "...Combat History :",
-			"dojos4-1": "This button allows access to the challenges you have completed, so you can review these battles at your leisure.",
-			"dojos5": "...Miscellaneous Questions :",
-			"dojos5-1": "**Is creating a Dojo free?** No, creating your Dojo will cost you a certain amount of gold coins. But don't worry, your daily battles earning you gold, it won't take you long to be able to create your Master buildings.",
-			"dojos5-2": "**How to customize your Dojo?** Did you notice the button? Then you must have noticed it's not active at the moment... Indeed, we are working on this feature, so a little patience.",
-			"dojos5-3": "**What is the frequency of the Inter-Dojo Tournaments?** Every month, following the previous tournament's final, a new qualification phase begins. It always ends on the last day of the month at midnight, followed by the elimination phases for the 256 qualified dojos in the following days.",
-			"dojos5-4": "**How to participate in the Inter-Dojo Tournament?** To participate in the Tournament, you must be one of the top 256 Dojos of the month. The ranking lets you know the level of your opponents. Players who qualify for the final phases will receive a reward.",
-			"dojos5-5": "**How to win a Toufufu egg?** Your Dojo must be among the top 50 in the Dojo rankings at the end of the month to win this reward.",
-			"dojos5-6": "**I'm not here every day, how do I complete all my challenges?** If you don't do your 50 daily fights, they will carry over to the next day without limit.",
-			"gdc": "Clans can also clash with each other during the Clan War! Here are the principles and rules :",
-			"gdc1": "...The Clan's Treasury :",
-			"gdc1-1": "Each Clan has a Treasury that corresponds to the value of the available ingredients in the Clan. && && To fill the Clan's Treasury, each member can donate all or part of their collected ingredients during their gathering actions. From the Ingredients page in the right menu, you will have access to a button allowing you to 'Give to the Clan'. && && The treasury has different uses, here they are :",
-			"gdc1-2": "_Building/rebuilding the Castle_",
-			"gdc1-3": "_Declaring war against another Clan_",
-			"gdc1-4": "_Paying the tax collector_",
-			"gdc2": "...The Clan's Castle :",
-			"gdc2-1": "Each Clan can build its own Castle from the **'Castle** tab. To build it, you need ingredients that will be withdrawn from your Treasury. Only the Clan leader can initiate the first construction of the Castle. && && Once the castle is built, it is possible to assign defenders to it who will ensure the protection of the castle during enemy attacks. To assign one of your dinoz to defend the castle, you need to go to the location of your castle and perform the action **'Defend the castle'**. && && If all defenders are killed in combat or if there are no more defenders, the castle will suffer damage and will therefore be damaged. && && Here is an example of the Castle tab:",
-			"gdc2-2": "The Castle page summarizes the following :",
-			"gdc2-2-1": "_The location of the Castle_",
-			"gdc2-2-2": "_Its status: the hit points, as shown in the image above. By default, the Castle has 300:pv: hit points._",
-			"gdc3": "...Declaring war :",
-			"gdc3-1": "This tab allows you to consult all information about wars such as the clans you are attacking, the clans attacking you, and the battles you have already won against opposing clans. && && To start a war, you need to have sufficient ingredients in your treasury. A war lasts a maximum of 100 hours and cannot be canceled. To win the war, you will need to destroy the enemy castle.",
-			"gdc4": "...Attacks :",
-			"gdc4-1": "To attack a castle, you will need to locate it, so you will need to move your Dinoz until you find the enemy castle, after which you simply press the 'Attack' button and you will see your group of Dinoz challenge the defenders of the castle, or in their absence, attack the castle directly. && && These assaults have a time limit to fight, if you defeat the defenders within this time frame, all your Dinoz will attack the enemy castle. && && By destroying the enemy castle, you will win the war, while if your castle is destroyed, you will lose. && && Here is an example of a Castle attack :",
-			"gdc5": "...Defense :",
-			"gdc5-1": "When your Clan is attacked, it is important to prepare a good defense in order not to lose the War launched by an opposing clan or when you declare war. && && The Clan leader, as well as members with the necessary rights, will be able to adjust the defense by moving the Dinoz to adapt the best strategy to prevent your Castle from being hit. && && Here is an example of Castle defense :",
-			"gdc6": "...The Tax Collector :",
-			"gdc6-1": "The tax collector must be paid before declaring an attack. He always passes within the half-hour following the hour he proposes! For example, if he says he will pass from 16:24 to 17:50, you can pay from 16:00 to 16:30.",
-			"cdc": "**Clans** can also compete against each other during the Clan Championship! Here are the principles and rules:",
-			"cdc1": "...The Championship :",
-			"cdc1-1": "Once a championship has started, no Clan can join a ranking or change its ranking until the end of this Championship. && && It is not possible to have a tie score during the final phase: if this were to happen, one of the two Clans would be declared the winner by drawing lots.",
-			"cdc2": "...Battle :",
-			"cdc2-1": "A Battle is launched when two clans face each other. A battle lasts for _3 days_, and at the end, the Clan with the highest **score** wins. && && A Battle takes place at a specific location. You will need to move your Dinoz to this location for them to participate. A player can have up to _3 Dinoz_ in a Battle, and in any case, a Clan cannot have more than _45 Dinoz_ in a Battle. && && Here is a simplified Battle view:",
-			"cdc2-2": "At the top, you can see the current **score** of the Battle, and at the bottom, the remaining time before the end of the Battle. && && Dinoz that have joined the Battle can move one square, then they must wait for a certain number of minutes before they can move again. It is possible to accumulate actions if you do not use them immediately. && && You can click on a Dinoz to move it or to know who it belongs to. Only the owner of a Dinoz can move it. && && _We remind you that sharing accounts between players is prohibited, and in case of violation of the rules, all involved accounts will be permanently blocked._ && && Good organization among Clan members is therefore necessary to win the victory.",
-			"cdc3": "Rating",
-			"cdc3-1": "As you can see on the Battle display, each Clan has **a score line**, blue for the Clan on the left and red for the Clan on the right. && && Every _15 minutes_, each Clan scores as many points as the advancement of its score line. Thus, in the example above, the Clan on the left (blue line) will score 2 points and the Clan on the right (red line) 4 points. && && The score line is positioned as follows: it indicates the position of the first Dinoz of the Clan that has not been surpassed by a Dinoz of the opposing Clan. && && **Warning!** An opposing Dinoz can thus make a breakthrough that will push back your score line, preventing you from scoring points in the next calculation. && && Reminder: a Battle lasts for _3 days_, and at the end, the Clan with the highest **score** wins.",
-			"cdc4": "...Fights :",
-			"cdc4-1": "If a Dinoz tries to move to the location occupied by an enemy Dinoz, a fight ensues. All Dinoz within 10 squares around the two combatants participate in the fight, according to the following scheme :",
-			"cdc4-2": "The placement of Dinoz is therefore extremely important if you do not want to find yourself at a numerical disadvantage during a fight. && && If a Dinoz attacks an opponent from behind, it does so alone, the opponent will be taken by surprise and will not be able to call for reinforcements. The fight will then be a 1 versus 1. && && If a Dinoz dies during a fight, it is removed from the Battle and cannot rejoin. A Dinoz can also voluntarily leave the Battle by returning to their Clan's sidelines; they can then heal and return to battle.",
-			"questions": "If you have questions, issues, or suggestions for the DinoRPG team, please take the time to read the different responses offered below :",
-			"questions1": "**Who created DinoRPG ?** Motion Twin! The independent studio was founded in 2001 and has created over 150 web games. Today, Motion Twin owes its resurgence to Dead Cells, a game released in 2017 on PC, consoles, and smartphones.",
-			"questions2": "**Why was the game stopped by Motion Twin ?** Motion Twin stopped developing their online games when Adobe discontinued updates for Flash Player in 2020. Motion Twin ceased all of its web games and Twinoid in November 2023.",
-			"questions3": "**But is DinoRPG still here ?** Yes, thanks to Eternaltwin. This project, launched by a few players, decided to preserve these games and prevent the complete disappearance of this common video game heritage.",
-			"questions4": "**Is DinoRPG free ?** Yes, DinoRPG is a free game.",
-			"questions5": "**How can I get more gold coins?** Your Dinoz can earn gold coins every day by battling or completing missions. In addition, every day, you will obtain a Daily Ticket that will either give you gold or a Box that contains various objects. Or simply, gather ingredients and sell them to the Wandering Merchant.",
-			"questions6": "**How to restart the game?** In case of a problem, you can restart the game from the beginning. To do this, simply go to the **My Account / Edit my Info** section to reset your account.",
-			"support": "...Clearing your cache :",
-			"support-1": "Before anything else, consider trying **to clear the cache* of your web browser! This simple operation can solve many technical problems.",
-			"support1": "On Microsoft Edge :",
-			"support1-1": "Press the [Ctrl], [Shift] and [Del] keys at the same time",
-			"support1-2": "A new window will open. In the tab, select 'Cached images and files'.",
-			"support1-3": "Confirm your choice by clicking on the 'Clear' button.",
-			"support2": "On Mozilla Firefox :",
-			"support2-1": "Click on the menu button and select Settings.",
-			"support2-2": "Select the Privacy & Security panel.",
-			"support2-3": "In the Cookies and Site Data section, click on the 'Clear Data...'",
-			"support2-4": "Check the 'Cached Web Content' box, then click on the 'Clear' button.",
-			"support3": "On Google Chrome :",
-			"support3-1": "Click on 'More', and choose 'Clear browsing data'.",
-			"support3-2": "Select 'Cached images and files' and click on 'Clear data'.",
-			"security": "...Account Security :",
-			"security-1": "**No matter who asks for it**... && && **Never** disclose your login credentials and passwords !"
-		}
+		"stop": "Arrêter le guide"
 	},
 	"gameRules": {
 		"title": "DinoRPG Remastered Rules",
@@ -4624,6 +4444,156 @@
 			},
 			"choice": {
 				"missions": "Consulter les annonces"
+			}
+		},
+		"guideMichel": {
+			"name": "Leguide Michel",
+			"dialog": {
+				"begin": "Michel raconte qu'il a été embauché par le Royaume de Dinoville pour guider les jeunes Maîtres Dinoz dans leurs aventures, mais on ne sait pas trop si c'est vrai ou s'il aime juste aider les gens qui viennent le voir... En tout cas, on peut se fier à ses conseils !",
+				"pub": "Je vois que tu as envie de parcourir le monde.\nJe te conseille d'aller au port de prêche en passant par la fontaine de jouvence en partant d'ici.\nTu entendras surement des choses intéressantes sur le monde de Dinoland...",
+				"p1": "Bonjour Maitre-Dinoz ! Oooh : je vois que ton Dinoz est encore jeune... Le mieux pour l'instant, c'est de te rendre au Nord-Est et d'aller parler à Papy Joe pour obtenir quelques missions et gagner de l'experience...",
+				"p1b": "Ces missions te permettront de découvrir le Royaume de Dinoville, mais de nombreux autres mondes te seront ensuite accessibles... Reviens me voir dès que ton Dinoz aura atteint le Niveau 5 et je t'en dirai plus à ce moment !",
+				"p2": "Félicitations ! Ton Dinoz a atteint le Niveau 5 ! Tu devrais aller parler au Professeur Eugène à l'Université, il te proposera un défi... Mais fait bien attention, c'est assez dangereux... Si ton Dinoz n'est pas en pleine forme, je te conseille d'attendre un peu avant de relever ce défi !",
+				"p2b": "Une fois que tu auras remporté une victoire et obtenu l'une des deux récompenses du Professeur Eugène, reviens me voir pour que je t'explique comment t'en servir... Bonne chance !",
+				"p3": "Oh ! Bravo ! Ton Dinoz a obtenu la Bouée... C'est un objet qui va te permettre d'accéder aux Iles Atlantéinées ! Pour t'en servir c'est très simple : rends toi au Port de Prêche au sud, et au moment de se déplacer ton Dinoz pourra nager jusqu'aux Iles Atlantéinées.",
+				"p3b": "Tu verras, les Iles sont magnifiques, c'est un nouveau monde à découvrir ! Mais n'oublie pas, quand ton Dinoz aura atteint le Niveau 7, de retourner voir le Professeur Eugène à l'Université pour un deuxième défi...",
+				"p4": "Oh ! Bravo ! Ton Dinoz a obtenu le Matériel d'Escalade... C'est un objet qui va te permettre d'accéder au Grand Tout Chaud ! Pour t'en servir c'est très simple : rends toi aux Collines Escarpées au nord, et au moment de se déplacer, ton Dinoz pourra escalader jusqu'au Grand Tout Chaud.",
+				"p4b": "Tu verras, le Grand Tout Chaud est... chaleureux, c'est un nouveau monde à découvrir ! Mais n'oublie pas, quand ton Dinoz aura atteint le Niveau 7, de retourner voir le Professeur Eugène à l'Université pour un deuxième défi...",
+				"p5": "Oh ! Je vois que ton Dinoz possède déjà la Bouée et le Materiel d'Escalade. Ces deux objets te permettent d'accéder aux Iles Atlantéinées à partir du Port de Prêche et au Grand Tout Chaud à partir des Collines Escarpées. As-tu visité ces deux nouveaux mondes ?",
+				"p5n": "Vraiment ? Tu ne sais pas ce que tu perds... Essaye de nager à partir du Port de Prêche ou d'Escalader à partir des Collines Escarpées pour pouvoir te rendre dans ces nouveaux endroits : tu pourras y trouver de nombreuses missions pour ton Dinoz !",
+				"p5y": "Vraiment ? Je reconnais en toi l'âme des Grands Aventuriers ! Mais il existe à mon avis de nombreux secrets que tu ne connais pas encore...",
+				"secret": "Voyons voir... Savais-tu par exemple qu'en passant par les petites rues du quartier antique de Dinoville, on peut accéder à la seconde partie du Royaume ? Il s'agit d'un quartier encore peu habité, mais en plein développement ces derniers temps... Dinoplaza !",
+				"secret2": "Je t'avais bien dit qu'il te restait plein de choses à découvrir ! Va visiter Dinoplaza, et reviens me voir plus tard quand tu auras le temps !",
+				"p6": "Tu commences à t'ennuyer ? Dans ce cas, je te conseille d'aller à la chasse au Rascaphandre. Tu trouveras des indices dans les Iles Atlantéinées, et cela te permettra d'accéder au Dôme Soulaflotte, ou la prochaine énigme t'attend !",
+				"p7": "Félicitations pour avoir tué le Rascaphandre ! Pour pouvoir traversé les Chutes Mutantes, il te faudra obtenir un objet particulier. Peut-être que l'ArchiSage du Dôme Soulaflotte pourra t'en dire plus à ce sujet...",
+				"p8": "Oh ! Tu as obtenu le Gant des Zors ! Félicitations ! Mais il te manque encore quelque chose pour pouvoir traverser les Chutes Mutantes. Un Moine ZenZen pourrait t'être utile si je me rappelle bien.",
+				"p9": "Tu peux désormais accéder à la Forêt de Grumhel. J'espère que tu y vivras de nombreuses aventures. Reviens me voir un peu plus tard quand tu auras obtenu l'objet des Korgons.",
+				"p10": "Les palmes Korgons vont te permettre de relever le défi de Bao Bob. Mais je te conseille d'être bien préparé car ça ne sera pas du gâteau !",
+				"p11": "Maintenant que tu as obtenu la clé de la porte de Sylvenoire, tu vas enfin pouvoir accéder aux Steppes Magnétiques ! De nombreux dangers t'y attendent, j'espère que tu y survivras...",
+				"p12": "Tu fais désormais parti des Grands Aventuriers. Il existe sûrement encore de nombreux secrets cachés de Dinoland, mais je n'ai plus rien à te conseiller pour l'instant. Reviens me voir à l'occasion, peut-être que j'aurai de nouvelles informations à ce moment-là !",
+				"p13": "Bonjour Maitre-Dinoz ! Oulala, on est perdu ?\nEt si tu allais voir le forum pour demander de l'aide ?\nDes centaines de maîtres Dinoz sont passés avant toi, leur expérience te sera fortement utile. D'ailleurs un jour ce sera à ton tour de partager ta grande connaissance de l'Univers DinoRPG !"
+			},
+			"choice": {
+				"pub": "J'ai soif d'aventure !",
+				"talk": "Parler avec Michel",
+				"continue": "(suite)",
+				"p5n": "Non, pas encore",
+				"p5y": "Oui j'en ai déjà fait le tour",
+				"secret": "Ah ? Et quoi par exemple ?",
+				"secret2": "Woaahh !",
+				"lost": "Je ne sais plus quoi faire !",
+				"missions": "Consulter les missions"
+			}
+		},
+		"intro": {
+			"names": {
+				"barPatron": "Pilier de comptoir",
+				"baoBobFormal": "M. Baobob",
+				"baoBob": "Baobob",
+				"taurus": "Taurus",
+				"unknown": "???"
+			},
+			"port": {
+				"dialog": {
+					"begin": "Qu'est ce qui nous veut l'marmot ?\nIl veut pas nous laisser tranquillement boire un petit coup ?",
+					"poivrot": "Hahaha, si c'est pas mignon !\nOn en voit beaucoup des comme toi, plein de fougue, plein d'espoir, ça me fait bien marrer.\nPas vrai Bao ?",
+					"bao": "Tout le monde a droit à sa chance dans notre monde de Dinoland.\nIl y a suffisamment de place pour tous les maîtres dinoz, surtout les plus valeureux d'entre eux.\nOn ne sait jamais quand sera déclaré la prochaine grande guerre contre les monstres sombres...!",
+					"guerre": "Effectivement, les terres de Dinoland ont beau être magnifiques, elles n'en restent pas moins dangeureuses.",
+					"boit": "Oula, ce que t'es sérieux, je préfère quand t'es completement défait, t'es plus rigolo hic !",
+					"glop": "Non, c'est évident, il ne faut pas !\n...\n...\n_(cache sa chope)_\nAlors, maître dinoz, qu'attends-tu pour partir à l'aventure ?",
+					"raison": "T'as bien raison, moi aussi je l'attends héhé, d'ailleurs ça fait bien 10 ans que je l'attends, c'est ma régulière qui doit pas être contente, huhuhu !",
+					"gloups": "L'aventure arrive toujours au moment où on l'attend le moins !\n...\n_(CLassssH KABOUMmmmm, FOUIIiiiicshhhhhhHHHH, VRacccc...)_",
+					"explo": "Oh, ça ?\nC'est juste la brêche des chutes mutantes qui a sauté...\nHa, mais au fait, c'est moi qui suis sensé surveiller cette brêche !\nMême pas le temps de boire un petit coup, c'est bien triste, je retiens mon maître, lui et son cadeau empoisonné...",
+					"fight": "",
+					"fightWin": "Voilà qui est facheux, les monstres sombres ne sont pas supposés être si puissant...\nJ'espère qu'un des anciens n'a pas décidé de mettre le nez dans notre monde, ce serait gravissime...",
+					"fin": "En avant, je vais te conduire aux îles atlantéinées, tu verras comment on botte les fesses des monstres par ici !"
+				},
+				"choice": {
+					"poivrot": "Je veux devenir le plus puissant maître dinoz !",
+					"bao": "Bao ? Vous voulez dire LE Baobob ?",
+					"guerre": "J'ai remarqué qu'il y avait beaucoup de monstres dans les environs.",
+					"boit": "Je n'ai pas peur !",
+					"glop": "On peut vraiment dire ça sur un site de jeu ?",
+					"raison": "j'attends l'appel du souffle épique !",
+					"gloups": "Je vais peut-être pas attendre aussi longtemps...",
+					"explo": "D'où viens ce flash ? et ce tremblement ?",
+					"fight": "Un monstre sème le trouble au port de prêche !",
+					"fin": "Il faut intervenir !"
+				}
+			},
+			"portEscort": {
+				"dialog": {
+					"begin": "Hé bien, tu t'es perdu, suis-moi jusqu'aux chutes mutantes, il faut absolument refermer cette brêche !",
+					"go": "Les chutes mutantes se trouvent à l'ouest des îles atlantéinées, courage !"
+				},
+				"choice": {
+					"go": "Je viens !"
+				}
+			},
+			"waikiki": {
+				"dialog": {
+					"begin": "Nous y voilà !",
+					"pop": "Vers l'ouest, en passant par le marail collant !\nAttention, voilà un autre dinoz sombre !",
+					"fight": "",
+					"fightWin": "Bien joué, tu me rappelles ma prime jeunesse...\nEnfin, je ne suis pas encore aussi vieux que Papy joe...Tu le connais ?",
+					"papy": "C'est un ancien champion de surf sur Anguilloz et grand séducteur de ces dames, il ne conserve plus que ses lunettes en mémoire de ce glorieux passé.\nIl a fait la promesse de ne plus jamais se raser il y a 40 ans, décision forcée puisque d'après la légende, il aurait perdu le pari d'être capable de s'arracher un poil de nez sans pleurer.\nIl reste néanmoins un personnage important de Dinoville et il te sera utile de le consulter régulièrement.",
+					"papy2": "Continuons notre périple, nous sommes bientôt arrivés !"
+				},
+				"choice": {
+					"pop": "Par où doit-on passer ?",
+					"combat": "Je suis prêt !",
+					"papy": "Je ne me rappelle plus...",
+					"papy2": "J'irai lui rendre visite !"
+				}
+			},
+			"swamp": {
+				"dialog": {
+					"begin": "Je te vois m'observer avec attention, tu dois te poser des questions sur les combats !",
+					"baston": "Tous les assauts de ton dinoz font des dégats élémentaires, à chaque fois, l'élément change, si ton dinoz est fort en feu, il frappera au maximum de sa force à son premier assaut.\nFeu, bois, eau, foudre, et enfin air, chaque élément y passe, il est donc tout à fait normal que tu ne frappes pas à chaque fois avec la même puissance.\nSeuls les montres ne possédant pas d'affinité élémentaire frappe toujours de la même puissance.",
+					"battle": "Maintenant que tu as compris, essaie de battre le dinoz sombre derrière toi...",
+					"fight": "",
+					"fightWin": "Haha, heureusement que je suis là !\nA ton retour à Dinoville, je te conseille d'aller voir Maître Zenith.",
+					"zenith": "Personnage au style vestimentaire encore plus étrange que son affreuse habitude à boire des breuvages à base de feuilles infusées..\nIl hérita de sa mère une technique martiale certes douloureuse mais *unique*, la *capilotraction* !\nIl essaie de promouvoir l'art et la rigueur de l'entrainement au combat aux maîtres Dinoz, il t'aidera à te créer ton Dojo.",
+					"zenith2": "Continuons notre chemin."
+				},
+				"choice": {
+					"baston": "Mon dinoz ne frappe pas toujours avec la même force !",
+					"battle": "Je comprends un peu mieux.",
+					"fight": "Mais je n'ai pas le niveau ! Gloups !",
+					"zenith": "Je ne l'ai pas encore rencontré.",
+					"zenith2": "Un sacré numéro, on dirait..."
+				}
+			},
+			"fallsBao": {
+				"dialog": {
+					"begin": "Ca va ? Tu arrives à suivre ?\nPrend la vie du bon côté, je suis sûr que le shaman Mou pourra te montrer comment économiser tes forces.\nC'est un grand spécialiste...",
+					"shaman": "Héritier de l'ancienne tribu des \"Flemaches\", le shaman possède des pouvoirs uniques.\nSeulement pour pouvoir prétendre à obtenir son aide, il te faudra être très fort psychologiquement pour venir à bout de son célèbre sortilège du \"langage assommant\".",
+					"gard": "Tu n'imagines pas tous les olibrius qui habitent ce monde.\nEnfin, nous voilà tout proche de la faille, en temps normal, un sceau empêche les monstres sombres de parvenir à la surface. En revanche, il est possible qu'un puissant démon réussisse à forcer cette barrière.\nDans ces cas là, je dois intervenir en ma qualité de gardien de Dinoland !",
+					"aura": "Oui, prépare-toi, une pression de cette intensité ne peut provenir que d'un monstre terriblement puissant."
+				},
+				"choice": {
+					"shaman": "Le shaman Mou ?",
+					"gard": "Il y a de nombreuses personnes à aller voir !",
+					"aura": "Je sens une aura monstrueuse !"
+				}
+			},
+			"fallsTaurus": {
+				"dialog": {
+					"begin": "Un monstre gigantesque, ressemblant à un énorme Moueffe infernal surgit des chutes, une aura malsaine entoure son corps sombre.",
+					"taurus": "Enfin le soleil, rien ne vaut la lumière du monde de la surface...\nGufufufu....",
+					"vade": "Laisse moi faire, celui-là, il est coriace !",
+					"fight": "",
+					"fightWin": "Keuf... Groumph...\nNe pense pas t'être débarassé du grand Taurus, le moueffe infernal, je reviendrais... et à ce moment là...\nVotre monde sera plongé dans un cauchemar permanent.\nJe me retire pour le moment...",
+					"ouf": "Bon débarras !...\nIl te reste encore bien du chemin à parcourir, mais un jour, je n'en doute pas, tu seras plus fort que moi,\net à ce moment, ce seras toi qui sauvera le monde de Dinoland, en attendant, deviens plus fort !",
+					"move": "Vous vous écroulez, exténué par tous ces combats. Bao vous transporte jusqu'à Dinoville.\nTout est redevenu comme avant, comme si rien n'était arrivé..."
+				},
+				"choice": {
+					"taurus": "Je ne peux pas bouger, sa force est trop écrasante !",
+					"vade": "Il faut faire quelque chose...ARGH...",
+					"demon": "Je ne veux pas être inutile ! WAAAAAHHHH !",
+					"ouf": "Retourne dans le monde sombre, et ne reviens jamais !",
+					"move": "Je...je me sens fatigué..."
+				}
 			}
 		},
 		"dialog": {
@@ -6268,6 +6238,32 @@
 				},
 				"end": "Le Consortium des Filous Associés vous remercie pour votre aide précieuse. Voilà une belle prime pour votre efficacité."
 			}
+		},
+		"michel": {
+			"move": {
+				"name": "Découvert bucolique",
+				"begin": "Bienvenue à Dinoland, je vais t'apprendre à parcourir les vertes contrées de notre monde, tiens-toi prêt... Essaie d'aller à l'université et parle moi là-bas !",
+				"end": "LeGuide Michel semble satisfait, il te donne une potion d'irma en cadeau, tu pourras te déplacer une fois de plus !",
+				"guideMichel": {
+					"text": "Bravo, tu as réussi à venir jusqu'ici, il ne te reste plus qu'à valider la mission en revenant me voir à Dinoville"
+				},
+				"madameSeyche": {
+					"name": "Madam Squyd",
+					"text": "Bien joué ! On peut passer à la suite."
+				}
+			},
+			"atk": {
+				"name": "Bataille dangeureuse",
+				"begin": "Tu as du combattre précédemment pour atteindre l'Université, maintenant, tu vas déclencher un combat ici-même !",
+				"kill": "Monstres sauvages",
+				"end": "Bravo, tu as battu des monstres à toi seul ! Tu feras de nombreuses rencontres lors de tes aventures, plus tu combattras, plus tu deviendras fort !"
+			},
+			"boutik": {
+				"name": "Prenons de l'altitude",
+				"begin": "Tu vas maintenant acheter une potion d'ange à la boutique volante, elle sert à ressuciter ton dinoz s'il vient à succomber aux blessures infligés par les monstres !\nPour ce faire, il faut que tu cliques sur le bouton \"Boutique\" en haut à gauche de l'interface, tu pourras ensuite me donner l'objet que tu auras acheté !",
+				"angel": "Angel Potion",
+				"end": "Félicitations ! Tu as su te servir correctement de la boutique, elle est accessible à n'importe quel endroit du jeu, n'hésite pas à l'utiliser en cas de besoin !"
+			}
 		}
 	},
 	"scenarios": {
@@ -6321,6 +6317,9 @@
 		},
 		"dojo": {
 			"name": "Dojo"
+		},
+		"intro": {
+			"name": "Taurus le Magnifique"
 		}
 	},
 	"reportModal": {
@@ -6347,5 +6346,120 @@
 		"reportUser": "Report this player",
 		"reportClan": "Report this clan",
 		"reportDinoz": "Report this Dinoz"
+	},
+	"tutorial": {
+		"objective": "Objectif : {title}",
+		"close": "Masquer",
+		"finish": "Terminer le tutoriel",
+		"objectives": {
+			"dinoz": {
+				"title": "Adopting a Dinoz",
+				"begin": "Bienvenue sur DinoRPG. Je serai ton guide pour ces premières étapes. Tout d'abord, il te faut adopter un Dinoz ! Prends ton temps pour le choisir, il sera ton compagnon pour un bon moment.",
+				"end": "Félicitations, vous voilà maintenant plongé dans un immense univers que nous allons continuer à vous présenter !",
+				"helpers": {
+					"compare": "Compare les caractéristiques de chaque race !",
+					"name": "Très bon choix ! Maintenant, donne un nom à ce Dinoz !"
+				}
+			},
+			"speak": {
+				"title": "Discussion enflammée",
+				"begin": "Bienvenue à Dinoland, je vais t'apprendre à parler avec les personnages du jeu ! <strong>Si tu es bloqué, appuie sur le bouton Nouvelle Action !</strong><br>Appuie sur <strong>Leguide Michel</strong> (c'est moi !) dans la partie <strong>actions</strong>, que tu trouveras en dessous de ton Dinoz.",
+				"end": "Tu viens de parler à l'un des premiers habitants de Dinoland. Tu rencontreras encore beaucoup de personnages tout au long de ton aventure !",
+				"helpers": {
+					"dinoz": "C'est par ici !",
+					"answers": "C'est par ici !",
+					"michel": "C'est par ici !"
+				}
+			},
+			"move": {
+				"title": "À l'aube d'une grande aventure",
+				"begin": "Il est temps maintenant de découvrir les autres lieux. <strong>Si tu es bloqué, appuie sur le bouton Nouvelle Action !</strong><br>Dans la section <strong>Carte</strong>, appuie sur la destination de ton choix en cliquant sur un <strong>des lieux clignotants</strong>, et pars à l'aventure !<br>Je te conseille de te diriger vers la Fontaine de Jouvence dans un premier temps.",
+				"end": "Félicitations, te voilà arrivé dans un nouveau lieu de Dinoland ! Il existe de nombreux lieux à découvrir, tu les verras tous un jour, l'âme d'un aventurier sommeille en toi !",
+				"helpers": {
+					"map": "Direction : La Fontaine de Jouvence !",
+					"combat": "Lorsque tu te déplaces, tu rencontreras différents monstres. Ton Dinoz va combattre seul, ton but sera de le dresser pour lui faire apprendre des techniques plus puissantes !"
+				}
+			},
+			"port": {
+				"title": "Aller au Port de Prêche",
+				"begin": "Ton Dinoz a retrouvé ses forces, et il va lui en falloir pour traverser les terres du Royaume de Dinoville. Dirige-toi vers le Port de Prêche. Tu pourras discuter avec les autochtones locaux et peut-être en savoir plus sur le monde dans lequel tu viens d'arriver !",
+				"end": "Te voilà arrivé à bon port ! (oui oui...)",
+				"helpers": {
+					"map": "Direction : Le Port de Prêche !"
+				}
+			},
+			"pub": {
+				"title": "Vivre une aventure",
+				"begin": "Discute avec les autochtones locaux pour peut-être en savoir plus sur le monde dans lequel tu viens d'arriver !",
+				"end": "Suis Baobob vers cette nouvelle aventure, il t'apprendra sûrement beaucoup de choses...",
+				"helpers": {
+					"pilier": "C'est lui !"
+				}
+			},
+			"baobob": {
+				"title": "Suivez Bao Bob",
+				"begin": "",
+				"end": "Suis Baobob vers cette nouvelle aventure, il t'apprendra sûrement beaucoup de choses...",
+				"helpers": {
+					"intro4": "C'est ici !",
+					"intro5": "C'est ici !",
+					"intro6": "C'est ici !",
+					"intro7": "Gloups...",
+					"levelup": "Félicitations !",
+					"skill": "Tu viens de gagner un niveau ! Il est maintenant temps de choisir une compétence à faire apprendre à ton Dinoz. Choisis bien ! Ces choix caractérisent le futur de ton compagnon.",
+					"heal": "Utilise un Nuage Burger avant d'être à bout de force pour continuer ton aventure."
+				}
+			},
+			"papy": {
+				"title": "Rendre service pour un monde meilleur",
+				"begin": "L'heure est venue de réaliser ta première mission. Va voir Papy Joe dans sa maison en passant par l'Université, il aura sûrement des missions à te proposer.<br>Rejoins la maison de Papy Joe et accepte ta première mission ! Au-dessus de tes actions, tu retrouveras les étapes de ta mission pour ne pas oublier où tu en es !",
+				"end": "Félicitations, tu as accepté ta première mission. Réaliser des missions est important pour progresser dans le jeu.<br>En plus des missions, certains personnages t'entraîneront dans leurs aventures : des <strong>quêtes</strong> incroyables qui te feront visiter de nouveaux lieux et combattre des monstres terrifiants !",
+				"helpers": {
+					"dinoz": "C'est par ici !",
+					"map": "Direction : Chez Papy Joe !",
+					"papy": "Parler à Papy Joe !",
+					"mission": "Choisis une mission parmi celles disponibles."
+				}
+			},
+			"shop": {
+				"title": "L'excitation de l'achat",
+				"begin": "Une fois tous tes objets consommés, il faudra en racheter dans la boutique grâce à l'or que tu auras gagné lors des combats !<br>Appuie sur le bouton <strong>Boutique</strong> en haut à gauche, juste en dessous de ta réserve d'or. Tu découvriras la boutique, il ne te reste plus qu'à choisir <strong>un Nuage Burger</strong> par exemple !",
+				"end": "Bien, ton achat figure désormais dans ton inventaire !",
+				"helpers": {
+					"shop": "C'est par ici !",
+					"burger": "C'est par ici !"
+				}
+			},
+			"burger": {
+				"title": "Un petit creux",
+				"begin": "Durant les combats, ton Dinoz perd des points de vie. Pour le guérir, il te faut utiliser des objets. Utilise par exemple un <strong>Nuage Burger</strong> sur ton Dinoz pour lui redonner de la vie.",
+				"end": "Bien, tu as redonné de la vie à ton Dinoz, ton périple peut continuer.",
+				"helpers": {
+					"burger": "Clique ici pour utiliser l'objet."
+				}
+			},
+			"clan": {
+				"title": "Les clans surpuissants",
+				"begin": "Tu es bientôt prêt à partir à l'aventure. Si tu te sens seul et ne sais pas trop où aller, je te conseille de rejoindre un clan pour discuter et échanger des astuces avec d'autres Maîtres Dinoz.<br>Dans le menu, tu trouveras un bouton <strong>Clans</strong> qui te permettra de découvrir les clans de Dinoland.",
+				"end": "Tu trouveras de nombreux Maîtres Dinoz dans les clans qui se livrent des batailles farouches lors des terrifiantes Guerres de Clans et autres Championnats.",
+				"helpers": {
+					"clan": "C'est ici !"
+				}
+			},
+			"user": {
+				"title": "Se connaître soi-même",
+				"begin": "Sais-tu que tu peux accéder aux informations de ton compte à travers la page <strong>Mon Compte</strong> ? Tu pourras y voir tes informations publiques, tes Dinoz, tes titres et tes récompenses épiques !",
+				"end": "N'oublie pas que tu peux éditer tes informations personnelles depuis cette page !",
+				"helpers": {
+					"account": "C'est ici !"
+				}
+			},
+			"end": {
+				"title": "Fin",
+				"begin": "Voilà, je vais maintenant te laisser partir à l'aventure. Si tu as encore besoin de moi, tu peux venir me parler à Dinoville, je serai toujours là pour te conseiller.",
+				"end": "Nous te souhaitons une excellente et longue aventure sur les terres de Dinoland ! Bon courage Maître Dinoz !",
+				"helpers": {}
+			}
+		}
 	}
 }
