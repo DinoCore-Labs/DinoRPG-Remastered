@@ -129,7 +129,7 @@
 			"full": "Almacén lleno",
 			"sortBy": "Ordenar por",
 			"confirmUse": "¿Confirmas el uso del objeto {name} en tu Dino?",
-			"confirmEquipMagicItem": "Etes vous sur de vouloir équiper cette objet ?",
+			"confirmEquipMagicItem": "Êtes vous sur de vouloir équiper cet objet ?",
 			"sort": {
 				"default": "Por defecto",
 				"nameAsc": "Nombre (A → Z)",
