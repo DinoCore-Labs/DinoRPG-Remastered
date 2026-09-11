@@ -28,7 +28,8 @@ export async function startTrainingCenter(
 ) {
 	const dinozId = req.params.id;
 	const authed = req.user;
-	const program = trainingCenterPrograms[req.body.program];
+	const { program: programKey, autoReequip = false } = req.body;
+	const program = trainingCenterPrograms[programKey];
 
 	if (!program) {
 		throw new ExpectedError('trainingCenter.errors.invalidProgram');
@@ -101,7 +102,8 @@ export async function startTrainingCenter(
 
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, TRAINING_CENTER_PLACE, user, {
 		disableGoldReward: true,
-		xpMultiplier: program.xpMultiplier
+		xpMultiplier: program.xpMultiplier,
+		autoReequip
 	});
 
 	return reply.send({

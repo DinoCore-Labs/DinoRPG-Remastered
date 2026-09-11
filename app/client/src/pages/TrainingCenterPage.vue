@@ -74,6 +74,7 @@ import { TrainingCenterService } from '../services/trainingCenter.service';
 import { getImgURL } from '../utils/getImgURL';
 import { errorHandler } from '../utils/errorHandler';
 import { resolveFightingPlace, transpileFight } from '../fight/transpileFight';
+import { localStore as useLocalStore } from '../store/localStore';
 
 export default defineComponent({
 	name: 'TrainingCenterPage',
@@ -94,6 +95,7 @@ export default defineComponent({
 		const fight = ref<FightResult | undefined>();
 		const fightTransformed = ref<preFightLoader | undefined>();
 		const selectedProgram = ref<TrainingCenterProgramKey | undefined>();
+		const lStore = useLocalStore();
 
 		const dinozId = computed(() => Number(route.params.id));
 		const programs = Object.values(trainingCenterPrograms);
@@ -110,7 +112,11 @@ export default defineComponent({
 				fight.value = undefined;
 				fightTransformed.value = undefined;
 				selectedProgram.value = program;
-				const result = await TrainingCenterService.startTrainingCenterFight(dinozId.value, program);
+				const result = await TrainingCenterService.startTrainingCenterFight(
+					dinozId.value,
+					program,
+					lStore.getAutoReequipItems
+				);
 				fight.value = result;
 				const fightSteps = result.history as FightStep[];
 				const fighters = result.fighters as FighterRecap[];

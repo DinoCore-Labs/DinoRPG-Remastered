@@ -9,11 +9,12 @@ export const FightService = {
 			autoReequip
 		});
 	},
-	processDialogFight(dinozId: number, dialogId: string, phaseId: string): Promise<FightResult> {
+	processDialogFight(dinozId: number, dialogId: string, phaseId: string, autoReequip = false): Promise<FightResult> {
 		return api.put<FightResult>('/fight/dialog', {
 			dinozId,
 			dialogId,
-			phaseId
+			phaseId,
+			autoReequip
 		});
 	}
 };

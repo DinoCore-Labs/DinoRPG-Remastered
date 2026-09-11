@@ -6,13 +6,17 @@ import { completeMissionInteraction, startMissionInteraction } from '../Controll
 const paramsSchema = z.object({
 	id: z.coerce.number()
 });
+const startBodySchema = z.object({
+	autoReequip: z.boolean().optional()
+});
 const completeBodySchema = z.object({
 	trigger: z.enum(['manual', 'fight_victory']).default('manual')
 });
 
 export async function startMissionInteractionController(req: FastifyRequest, reply: FastifyReply) {
 	const { id } = paramsSchema.parse(req.params);
-	const result = await startMissionInteraction(req.user.id, id);
+	const body = startBodySchema.parse(req.body ?? {});
+	const result = await startMissionInteraction(req.user.id, id, body.autoReequip);
 	return reply.send(result);
 }
 

@@ -269,7 +269,8 @@ async function advanceMissionStateOnce(
 
 export async function startMissionInteraction(
 	userId: string,
-	dinozId: number
+	dinozId: number,
+	autoReequip?: boolean
 ): Promise<MissionInteractionStartResponse> {
 	const currentMission = await getActiveMissionState(userId, dinozId);
 	if (!currentMission) {
@@ -321,7 +322,8 @@ export async function startMissionInteraction(
 			const fight = await processMissionFight({
 				userId,
 				dinozId,
-				goal
+				goal,
+				autoReequip
 			});
 			const completion = fight.result ? await advanceMissionStateOnce(currentMission, dinozId) : null;
 			return {
@@ -357,7 +359,8 @@ export async function startMissionInteraction(
 			const fight = await processMissionFight({
 				userId,
 				dinozId,
-				goal
+				goal,
+				autoReequip
 			});
 			const completion = fight.result ? await advanceMissionStateOnce(currentMission, dinozId) : null;
 			return {

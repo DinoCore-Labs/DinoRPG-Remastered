@@ -43,6 +43,7 @@ import { MissionService } from '../services/mission.service.js';
 import { sessionStore } from '../store/sessionStore';
 import { userStore } from '../store/userStore';
 import { useTutorialStore } from '../store/tutorialStore';
+import { localStore as useLocalStore } from '../store/localStore';
 
 const route = useRoute();
 const router = useRouter();
@@ -57,6 +58,7 @@ const missionCompleted = ref(false);
 const sStore = sessionStore();
 const uStore = userStore();
 const tutorialStore = useTutorialStore();
+const lStore = useLocalStore();
 
 const dinozId = computed(() => Number(route.params.id));
 const dialogId = computed(() => String(route.params.dialogId));
@@ -160,7 +162,12 @@ async function completeMissionIfNeeded() {
 
 async function handlePhaseActions(phase: DialogPhaseResponse) {
 	if (phase.actions.startFight) {
-		const fight = await FightService.processDialogFight(dinozId.value, phase.dialogId, phase.phaseId);
+		const fight = await FightService.processDialogFight(
+			dinozId.value,
+			phase.dialogId,
+			phase.phaseId,
+			lStore.getAutoReequipItems
+		);
 		sStore.setFightResult(fight);
 		// Use replace instead of push so DialogPage is not kept in browser history.
 		// This prevents Cmd+Left (Mac back) from re-opening the NPC dialog after a combat.
