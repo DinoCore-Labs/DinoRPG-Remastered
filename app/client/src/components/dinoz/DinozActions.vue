@@ -363,7 +363,7 @@ export default defineComponent({
 							return;
 						}
 						if (!completion.completed) {
-							const nextResult = await MissionService.startAction(this.dinozId);
+							const nextResult = await MissionService.startAction(this.dinozId, this.localStore.getAutoReequipItems);
 							await this.handleMissionInteractionResult(nextResult);
 						}
 						return;
@@ -495,7 +495,7 @@ export default defineComponent({
 					break;
 				case Action.MISSION:
 					try {
-						const result = await MissionService.startAction(this.dinozId);
+						const result = await MissionService.startAction(this.dinozId, this.localStore.getAutoReequipItems);
 						await this.handleMissionInteractionResult(result);
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);

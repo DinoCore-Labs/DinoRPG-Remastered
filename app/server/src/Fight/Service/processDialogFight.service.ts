@@ -79,7 +79,7 @@ function extractDialogFightData(phase: RuntimeDialogPhase): {
 }
 
 export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDialogFightInput }>, reply: FastifyReply) {
-	const { dinozId, dialogId, phaseId } = req.body;
+	const { dinozId, dialogId, phaseId, autoReequip = false } = req.body;
 	const authed = req.user;
 	const dialog = getDialogById(dialogId);
 	const phase = getDialogFightPhase(dialog, phaseId);
@@ -165,7 +165,7 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 			fromPlace: dinozData.placeId,
 			triggerPlace: dinozData.placeId,
 			toPlace: dinozData.placeId,
-			autoReequip: false
+			autoReequip: autoReequip
 		});
 		if (result.result && (result.monsterKillCount ?? 0) > 0) {
 			await incrementUserStat(StatTracking.KILL_M, user.id, result.monsterKillCount ?? 0);
@@ -184,7 +184,8 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 	const team = [dinozData];
 	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters, undefined, allies);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, dinozData.placeId, user, {
-		xpMultiplier: isIntroFight ? 0 : 1
+		xpMultiplier: isIntroFight ? 0 : 1,
+		autoReequip: autoReequip
 	});
 	const activeDinozResult = fightResult.attackers.find(attacker => attacker.dinozId === dinozId);
 	const dinozDied = activeDinozResult ? activeDinozResult.hpLost >= dinozData.life : false;

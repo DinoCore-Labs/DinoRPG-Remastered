@@ -4,7 +4,11 @@ import type { TrainingCenterProgramKey } from '@dinorpg/core/models/trainingCent
 import { api } from '../utils/http';
 
 export const TrainingCenterService = {
-	startTrainingCenterFight(dinozId: number, program: TrainingCenterProgramKey): Promise<FightResult> {
-		return api.post<FightResult>(`/cef/${dinozId}/training-center/start`, { program });
+	startTrainingCenterFight(
+		dinozId: number,
+		program: TrainingCenterProgramKey,
+		autoReequip = false
+	): Promise<FightResult> {
+		return api.post<FightResult>(`/cef/${dinozId}/training-center/start`, { program, autoReequip });
 	}
 };
