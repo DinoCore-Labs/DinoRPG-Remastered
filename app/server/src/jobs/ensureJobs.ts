@@ -161,11 +161,11 @@ export async function ensureJobsExist() {
 	});
 
 	const tournamentJobs = [
-		{ key: TOURNAMENT_INIT_JOB_KEY, name: 'Tournament — init qualifications', dayOfWeek: 0, hour: 0, minute: 0 },
+		{ key: TOURNAMENT_INIT_JOB_KEY, name: 'Tournament — init qualifications', dayOfWeek: 1, hour: 0, minute: 0 },
 		{
 			key: TOURNAMENT_POOLS_START_JOB_KEY,
 			name: 'Tournament — pools start + round 0',
-			dayOfWeek: 0,
+			dayOfWeek: 1,
 			hour: 0,
 			minute: 0
 		},
@@ -173,8 +173,8 @@ export async function ensureJobsExist() {
 		{
 			key: TOURNAMENT_POOLS_R2_JOB_KEY,
 			name: 'Tournament — pool round 2 + bracket',
-			dayOfWeek: 1,
-			hour: 22,
+			dayOfWeek: 2,
+			hour: 12,
 			minute: 0
 		},
 		{ key: TOURNAMENT_FINALS_R0_JOB_KEY, name: 'Tournament — finals 1/16', dayOfWeek: 3, hour: 12, minute: 0 },
