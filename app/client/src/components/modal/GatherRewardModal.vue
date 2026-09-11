@@ -196,13 +196,13 @@ export default defineComponent({
 <style lang="scss" scoped>
 @use 'sass:color';
 .modal-background {
-	position: absolute;
+	position: fixed;
 	background: color.adjust(#09092d, $alpha: -0.4);
 	top: 0;
 	right: 0;
 	bottom: 0;
 	left: 0;
-	z-index: 999;
+	z-index: 9999;
 	transition: all 0.3s;
 	display: flex;
 	justify-content: center;
