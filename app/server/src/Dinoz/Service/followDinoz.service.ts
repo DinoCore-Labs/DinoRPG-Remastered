@@ -1,6 +1,7 @@
+import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
-import { getMaxFollowers } from '@dinorpg/core/utils/dinozUtils.js';
+import { getMaxFollowers, haveElementAffinity } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { ownsDinoz } from '../../User/Controller/ownsDinoz.controller.js';
@@ -43,15 +44,32 @@ export async function followDinoz(req: FastifyRequest<{ Params: Params }>, _repl
 		throw new ExpectedError(`Dinoz has to be named.`);
 	}
 	//Check if leader is not at max followers
-	const max = getMaxFollowers(toDinozFiche(user_leader, leader.id));
+	const leaderFiche = toDinozFiche(user_leader, leader.id);
+	const leaderHasFearFactor = leaderFiche.items.includes(Item.FEAR_FACTOR);
+	const max = getMaxFollowers(leaderFiche, leaderHasFearFactor);
 	if (leader.followers.length >= max) {
 		throw new ExpectedError('maxFollowers');
 	}
 	if (dinoz.leaderId || dinoz.followers.length > 0) {
 		throw new ExpectedError('Dinoz is already following another dinoz.');
 	}
-	if (dinoz.skills.some(s => s.skillId === Skill.BRAVE) || leader.skills.some(s => s.skillId === Skill.BRAVE)) {
-		throw new ExpectedError('Dinoz cannot follow any dinoz');
+	const dinozHasBrave = dinoz.skills.some(s => s.skillId === Skill.BRAVE);
+	const dinozHasTrouillometre = dinoz.items.some(i => i.itemId === Item.FEAR_FACTOR);
+	const leaderHasBrave = leader.skills.some(s => s.skillId === Skill.BRAVE);
+	const leaderHasTrouillometre = leader.items.some(i => i.itemId === Item.FEAR_FACTOR);
+
+	if (dinozHasBrave || leaderHasBrave) {
+		const sharedElement = haveElementAffinity(dinoz.raceId, leader.raceId);
+
+		if (dinozHasBrave && !dinozHasTrouillometre) {
+			throw new ExpectedError('dinozCannotFollowBrave');
+		}
+		if (leaderHasBrave && !leaderHasTrouillometre) {
+			throw new ExpectedError('dinozCannotFollowBrave');
+		}
+		if (!sharedElement) {
+			throw new ExpectedError('dinozCannotFollowSharedElement');
+		}
 	}
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(authed.id, dinozId, dinozToFollowId))) {

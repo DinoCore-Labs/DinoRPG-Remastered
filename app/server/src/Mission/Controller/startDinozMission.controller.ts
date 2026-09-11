@@ -2,6 +2,7 @@ import type { StartDinozMissionResponse } from '@dinorpg/core/models/missions/mi
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import type { Prisma } from '../../../../prisma/index.js';
+import { refreshTutorialProgressTx } from '../../Tutorial/Controller/tutorial.controller.js';
 import { assertOwnedDinoz } from './mission.access.js';
 import { getMissionDefinitionByKey } from './mission.registry.js';
 import { assertMissionStartCondition } from './mission.startConditions.js';
@@ -18,7 +19,6 @@ export async function startDinozMissionService(
 ): Promise<StartDinozMissionResponse> {
 	const dinoz = await assertOwnedDinoz(tx, params.userId, params.dinozId);
 	const missionDefinition = getMissionDefinitionByKey(params.missionKey);
-
 	const existingMission = await tx.dinozMissions.findUnique({
 		where: {
 			missionKey_dinozId: {
@@ -33,12 +33,10 @@ export async function startDinozMissionService(
 			isCompleted: true
 		}
 	});
-
 	if (existingMission) {
 		if (existingMission.isCompleted) {
 			throw new ExpectedError(`Mission "${params.missionKey}" is already completed for this dinoz`);
 		}
-
 		throw new ExpectedError(`Mission "${params.missionKey}" is already active for this dinoz`);
 	}
 
@@ -51,16 +49,13 @@ export async function startDinozMissionService(
 			missionKey: true
 		}
 	});
-
 	if (activeMission) {
 		throw new ExpectedError(`Dinoz "${params.dinozId}" already has an active mission "${activeMission.missionKey}"`);
 	}
-
 	await assertMissionStartCondition(tx, {
 		dinoz,
 		condition: missionDefinition.condition
 	});
-
 	const createdMission = await tx.dinozMissions.create({
 		data: {
 			dinozId: params.dinozId,
@@ -76,7 +71,22 @@ export async function startDinozMissionService(
 			isCompleted: true
 		}
 	});
-
+	/*
+	 * Le tutoriel peut attendre une mission courante.
+	 *
+	 * L'objectif "papy" est validé lorsque le Dinoz vient
+	 * d'accepter :
+	 * - fish
+	 * OU
+	 * - dog
+	 * On reste dans la même transaction afin que la mission,
+	 * la progression du tutoriel et sa récompense soient
+	 * atomiques.
+	 */
+	await refreshTutorialProgressTx(tx, {
+		userId: params.userId,
+		dinozId: params.dinozId
+	});
 	return {
 		success: true,
 		missionKey: createdMission.missionKey,

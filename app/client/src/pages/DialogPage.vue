@@ -42,6 +42,7 @@ import { FightService, UserService } from '../services';
 import { MissionService } from '../services/mission.service.js';
 import { sessionStore } from '../store/sessionStore';
 import { userStore } from '../store/userStore';
+import { useTutorialStore } from '../store/tutorialStore';
 
 const route = useRoute();
 const router = useRouter();
@@ -55,6 +56,7 @@ const missionCompleted = ref(false);
 
 const sStore = sessionStore();
 const uStore = userStore();
+const tutorialStore = useTutorialStore();
 
 const dinozId = computed(() => Number(route.params.id));
 const dialogId = computed(() => String(route.params.dialogId));
@@ -203,6 +205,13 @@ async function loadDialog() {
 			? await DialogService.resumeDialog(dinozId.value, dialogId.value, phaseId.value)
 			: await DialogService.startDialog(dinozId.value, dialogId.value);
 		loaded.value = true;
+		/*
+		 * Un retour fight_win peut avoir fait progresser
+		 * intro, et donc validé pub / baobob.
+		 */
+		if (phaseId.value) {
+			await refreshTutorialState();
+		}
 		if (dialogState.value) {
 			await handlePhaseActions(dialogState.value);
 		}
@@ -210,6 +219,14 @@ async function loadDialog() {
 		error.value = err instanceof Error ? err.message : 'Impossible de charger le dialogue';
 	} finally {
 		loading.value = false;
+	}
+}
+
+async function refreshTutorialState(): Promise<void> {
+	try {
+		await tutorialStore.load();
+	} catch (err) {
+		console.error('[tutorial] Failed to refresh tutorial after dialog', err);
 	}
 }
 
@@ -229,6 +246,11 @@ async function chooseStep(linkId: string, confirmChoice: boolean) {
 			linkId,
 			dialogState.value.phaseId
 		);
+		/*
+		 * Le dialogue peut avoir modifié la progression
+		 * du tutoriel côté serveur.
+		 */
+		await refreshTutorialState();
 		if (dialogState.value) {
 			await handlePhaseActions(dialogState.value);
 		}

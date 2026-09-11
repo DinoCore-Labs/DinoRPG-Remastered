@@ -21,10 +21,17 @@
 				:src="getImgURL('item', `item_${itemNameList[item]}`)"
 				:alt="itemNameList[item]"
 				@click="unequip(item)"
+				:class="{ locked: isLocked(item) }"
 			>
 				<template #content>
 					<h1 v-html="formatContent($t(`items.name.${itemNameList[item]}`))" />
 					<p v-html="formatContent($t(`items.description.${itemNameList[item]}`))" />
+					<br v-if="isLocked(item)" />
+					<p
+						v-if="isLocked(item)"
+						class="locked-text"
+						v-html="formatContent($t(`items.magicItemHomesickTooltip`, { time: getRemainingTimeText(item) }))"
+					/>
 				</template>
 			</Tippy>
 			<Tippy theme="small" tag="img" v-else :src="getImgURL('item', `item_empty`)" alt="empty">
@@ -88,6 +95,28 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		getRemainingTimeText(itemId: number | undefined) {
+			if (!itemId) return '';
+			const lockedItem = this.dinozData.lockedMagicItems?.find(i => i.itemId === itemId);
+			if (!lockedItem) return '';
+			const hoursSinceEquip = (Date.now() - new Date(lockedItem.equippedAt).getTime()) / (1000 * 60 * 60);
+			const remainingHours = Math.ceil(119 - hoursSinceEquip);
+			if (remainingHours <= 0) return '';
+
+			if (remainingHours > 24) {
+				const days = Math.floor(remainingHours / 24);
+				const hrs = remainingHours % 24;
+				return `${days}j ${hrs}h`;
+			}
+			return `${remainingHours}h`;
+		},
+		isLocked(itemId: number | undefined) {
+			if (!itemId) return false;
+			const lockedItem = this.dinozData.lockedMagicItems?.find(i => i.itemId === itemId);
+			if (!lockedItem) return false;
+			const hoursSinceEquip = (Date.now() - new Date(lockedItem.equippedAt).getTime()) / (1000 * 60 * 60);
+			return hoursSinceEquip < 119;
+		},
 		applyEquippedItems(backPack: Array<DinozItems>) {
 			if (!this.dinozData?.maxItems) return;
 
@@ -107,6 +136,9 @@ export default defineComponent({
 				const backPack = await InventoryService.equipInventoryItem(dinozId, item, false);
 				this.items = new Array(this.dinozData.maxItems);
 				backPack.items.forEach((item, index) => (this.items[index] = item.itemId));
+				if (backPack.refreshDinoz) {
+					eventBus.emit('refreshDinoz', true);
+				}
 				eventBus.emit('refreshDinozStats', true);
 				eventBus.emit('refreshInventory', true);
 			} catch (error) {
@@ -160,6 +192,17 @@ export default defineComponent({
 			outline: 1px solid white;
 			cursor: pointer;
 		}
+		&.locked {
+			filter: grayscale(100%);
+			opacity: 0.95;
+			&:hover {
+				outline: 1px solid red;
+				cursor: not-allowed;
+			}
+		}
 	}
+}
+.locked-text {
+	color: #ffaa00;
 }
 </style>

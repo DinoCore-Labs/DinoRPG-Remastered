@@ -61,7 +61,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'The Pteroz Trophy is awarded to players who have defeated the strange Pteroz. It also unlocks the Pteroz, making it available to buy in the Dinoz Shop.',
 			FR: 'Le Trophée des Pteroz récompense les joueurs ayant vaincu le Ptéroz étrange, et donne accès aux Pteroz parmi les Dinoz disponibles dans la Boutique.',
 			DE: 'Die Trophäe der Pteroz ist eine Belohung für Spieler, die den seltsamen Pteroz besiegt haben. Damit habt ihr im Geschäft die Möglichkeit, Pteroz als neue Dinogattung zu kaufen.',
-			ES: 'El Trofeo DE los Teroz recompensa a los jugadores que hayan vencido al Teroz extraño. Asimismo, este objeto da acceso a la compra de los Dinos Teroz en la Tienda.'
+			ES: 'El Trofeo de los Teroz recompensa a los jugadores que hayan vencido al Teroz extraño. Asimismo, este objeto da acceso a la compra de los Dinos Teroz en la Tienda.'
 		}
 	},
 	[StatTracking.HIPPO]: {
@@ -541,7 +541,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Grilled to perfection and stamped by the Merguez Vendor himself, this sacred card rewards the toughest stomachs. After devouring an indecent number of merguez sausages, you’ve now been promoted to the rank of Official Grand Gourmet. From now on, your purchases will blow the counters sky-high: x100 merguez at once, because x5 is for amateurs.',
 			FR: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.',
 			DE: 'Perfekt gegrillt und vom Merguez-Verkäufer höchstpersönlich abgestempelt, belohnt diese heilige Karte die ausdauerndsten Mägen. Nachdem ihr eine unanständige Menge Merguez verschlungen habt, wurdet ihr nun in den Rang des Offiziellen Großen Feinschmeckers erhoben. Von nun an sprengen eure Einkäufe alle Zähler: x100 Merguez auf einmal, denn x5 ist etwas für Amateure.',
-			ES: 'Asada a la perfección y sellada por el Vendedor de Salchichas en persona. Esta carta sagrada recompensa a los estómagos más resistentes. Después DE haber devorado una cantidad indecente DE salchichas, ahora has sido ascendido al rango DE Gran Glotón Oficial.'
+			ES: 'Asada a la perfección y sellada por el Vendedor de Salchichas en persona. Esta carta sagrada recompensa a los estómagos más resistentes. Después de haber devorado una cantidad indecente de salchichas, ahora has sido ascendido al rango de Gran Glotón Oficial.'
 		}
 	},
 	[StatTracking.PAC]: {
@@ -1026,7 +1026,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'How many times have you died in combat?',
 					FR: 'Combien de fois êtes-vous mort au combat ?',
 					DE: 'So oft bist du im Kampf gefallen',
-					ES: 'Cantidad de veces que has muerto EN combate'
+					ES: 'Cantidad de veces que has muerto en combate'
 				}
 			},
 			{
@@ -1471,9 +1471,9 @@ export const goals: Record<StatTracking, Goal> = {
 		id: StatTracking.HEAL_PV,
 		name: {
 			EN: 'Health Points Recovered',
-			FR: 'Point DE vie récupérés',
+			FR: 'Point de vie récupérés',
 			DE: 'Wiedergewonnene Lebenspunkte',
-			ES: 'Puntos DE vida recuperados'
+			ES: 'Puntos de vida recuperados'
 		},
 		rare: 0,
 		unlocks: [
@@ -2846,7 +2846,7 @@ export const goals: Record<StatTracking, Goal> = {
 				icon: 'r_attack.gif',
 				title: {
 					EN: 'Battlefield dwarf',
-					FR: 'Nain des champs DE bataille',
+					FR: 'Nain des champs de bataille',
 					DE: 'Kampfzwerg',
 					ES: 'Duende'
 				},
@@ -3046,7 +3046,7 @@ export const goals: Record<StatTracking, Goal> = {
 			EN: 'Dinoland Community',
 			FR: 'Médaille cool',
 			DE: 'Dinoland Community',
-			ES: 'Heraldo DE Dinoland'
+			ES: 'Heraldo de Dinoland'
 		},
 		rare: 1,
 		unlocks: [
@@ -3281,9 +3281,9 @@ export const goals: Record<StatTracking, Goal> = {
 		id: StatTracking.MEDAL_4,
 		name: {
 			EN: 'Participation Medal',
-			FR: 'Médaille DE participation',
+			FR: 'Médaille de participation',
 			DE: 'Teilnahmemedaille',
-			ES: 'Medalla dinolímpica DE vidrio'
+			ES: 'Medalla dinolímpica de vidrio'
 		},
 		rare: 1,
 		unlocks: [
@@ -3301,7 +3301,7 @@ export const goals: Record<StatTracking, Goal> = {
 					EN: 'Dinolympic Athlete - be proud of your achievements!',
 					FR: 'Vous avez réussi à vous classer parmi les meilleurs participants !',
 					DE: 'Ihr gehört zu den besten Teilnehmern!!',
-					ES: '¡Te colocaste en el Top 10 DE nuestro servidor en los 1ros. Juegos Dinolímpicos!'
+					ES: '¡Te colocaste en el Top 10 de nuestro servidor en los 1ros. Juegos Dinolímpicos!'
 				}
 			}
 		],

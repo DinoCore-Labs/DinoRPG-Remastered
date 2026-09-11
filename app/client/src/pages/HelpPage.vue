@@ -1,34 +1,29 @@
 <!--
-  This file contains code derived from or adapted from:
-  Eternaltwin DinoRPG
-  Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/3a73bbc6d751e4916cc5fd2e5f23bc2cfd42fc6d/ed-ui/src/pages/HelpPage.vue
-
-  Copyright in the original contributions remains with the respective
-  authors and contributors.
-
-  Modified by DinoRPG Remastered contributors from 2026-01-25 through 2026-07-01.
-  See NOTICE.md and the Git history for provenance and modification details.
-
   SPDX-License-Identifier: AGPL-3.0-or-later
+
+  This file contains code adapted from Eternaltwin DinoRPG.
+  Substantially refactored by DinoRPG Remastered contributors.
+
+  See NOTICE.md and Git history for provenance and modification details.
 -->
 <template>
-	<TitleHeader :title="`${$t('pageTitle.guide')}`" :header="$t('guide.title')" :sub-header="selectedItem?.name ?? ''" />
+	<TitleHeader :title="t('pageTitle.guide')" :header="t('guide.title')" :sub-header="selectedItem?.name ?? ''" />
 	<div class="intro">
 		<div class="menu">
 			<ul class="list">
 				<li
 					v-for="(item, index) in items"
-					:key="index"
-					@click="showContent(item)"
+					:key="item.slug"
 					:class="{ selected: selectedItemIndex === index }"
+					@click="selectedItemIndex = index"
 				>
-					<img v-if="item.nameImageUrl" :src="getImgURL(item.nameImageUrl.path, item.nameImageUrl.name)" alt="Image" />
+					<img :src="getImgURL(item.icon.path, item.icon.name)" alt="" />
 					{{ item.name }}
 				</li>
 			</ul>
 		</div>
 		<div class="image">
-			<img :src="getImgURL('design', 'rocky_01')" />
+			<img :src="getImgURL('design', 'rocky_01')" alt="" />
 		</div>
 	</div>
 	<div class="showContent">
@@ -36,544 +31,247 @@
 			<div class="titleContent">
 				<h3>{{ selectedItem.name }}</h3>
 			</div>
-			<div v-for="(section, index) in selectedItem.contentSections" :key="index" class="sectionContent">
-				<h3 class="titleSection">{{ section.name }}</h3>
-				<ul v-if="section.texts" class="textContent">
-					<li v-for="(text, i) in section.texts" :key="i">
-						<p v-html="formatContent(text)" />
-					</li>
-				</ul>
-				<img
-					v-if="section.ImageUrl"
-					:src="getImgURL(section.ImageUrl.path, section.ImageUrl.name)"
-					alt="Image"
-					class="imageContent"
-				/>
-				<ul v-if="section.listItems" class="listItemsContent">
-					<li v-for="(item, i) in section.listItems" :key="i">
-						<img v-if="item.imageUrl" :src="getImgURL(item.imageUrl.path, item.imageUrl.name)" alt="Image" />
-						<span v-html="formatContent(item.text)" />
-					</li>
-				</ul>
+			<div class="guideMarkdown">
+				<MarkdownRenderer :source="selectedMarkdown" game-icons />
 			</div>
-			<button @click="showPrevItem" v-if="selectedItem?.prevItem !== undefined" class="next">
-				<img :src="getImgURL('icons', 'small_page_up')" />
+			<DZButton v-if="selectedItemIndex > 0" class="next" @click="showPrevItem">
+				<img :src="getImgURL('icons', 'small_page_up')" alt="" />
 				{{ prevItemName }}
-			</button>
-			<button @click="showNextItem" v-if="selectedItem?.nextItem !== undefined" class="next">
-				<img :src="getImgURL('icons', 'small_page_down')" />
+			</DZButton>
+			<DZButton v-if="selectedItemIndex < items.length - 1" class="next" @click="showNextItem">
+				<img :src="getImgURL('icons', 'small_page_down')" alt="" />
 				{{ nextItemName }}
-			</button>
-			<button @click="goToPage('News')" class="next">
-				<img :src="getImgURL('icons', 'small_delete')" />
-				{{ $t(`guide.text.stop`) }}
-			</button>
+			</DZButton>
+			<DZButton class="next" @click="goToNews">
+				<img :src="getImgURL('icons', 'small_delete')" alt="" />
+				{{ t('guide.stop') }}
+			</DZButton>
 		</div>
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import TitleHeader from '../components/utils/TitleHeader.vue';
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
-type HelpPageImage = {
+import MarkdownRenderer from '../components/common/MarkdownRenderer.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import { getImgURL } from '../utils/getImgURL';
+import DZButton from '../components/utils/DZButton.vue';
+
+type GuideIcon = {
 	path: string;
 	name: string;
 };
 
-type HelpPageListItem = {
-	imageUrl?: HelpPageImage;
-	text: string;
+type GuideDefinition = {
+	slug: string;
+	icon: GuideIcon;
 };
 
-type HelpPageContentSection = {
-	name?: string;
-	texts?: string[];
-	ImageUrl?: HelpPageImage;
-	listItems?: HelpPageListItem[];
-};
-
-type HelpPageItem = {
+type GuideItem = GuideDefinition & {
 	name: string;
-	nameImageUrl?: HelpPageImage;
-	contentSections: HelpPageContentSection[];
-	nextItem?: number;
-	prevItem?: number;
+	source: string;
 };
 
-export default defineComponent({
-	name: 'Help',
-	components: {
-		TitleHeader
+const SUPPORTED_LANGUAGES = ['FR', 'EN', 'ES', 'DE'] as const;
+
+const GUIDE_DEFINITIONS: GuideDefinition[] = [
+	{
+		slug: 'intro',
+		icon: { path: 'icons', name: 'small_home' }
 	},
-	data() {
-		return {
-			selectedItemIndex: 0
-		};
+	{
+		slug: 'adopt',
+		icon: { path: 'icons', name: 'small_member' }
 	},
-	computed: {
-		items(): HelpPageItem[] {
-			return [
-				{
-					name: this.$t('guide.sections.intro'),
-					nameImageUrl: { path: 'icons', name: 'small_home' },
-					contentSections: [{ texts: [this.$t('guide.text.intro')] }],
-					nextItem: 1
-				},
-				{
-					name: this.$t('guide.sections.adopt'),
-					nameImageUrl: { path: 'icons', name: 'small_member' },
-					contentSections: [
-						{
-							texts: [this.$t('guide.text.adopt')],
-							ImageUrl: { path: 'guide', name: 'adopt' }
-						},
-						{ texts: [this.$t('guide.text.adopt2')] }
-					],
-					nextItem: 2,
-					prevItem: 0
-				},
-				{
-					name: this.$t('guide.sections.name'),
-					nameImageUrl: { path: 'icons', name: 'small_question' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.name')], ImageUrl: { path: 'guide', name: 'name' } },
-						{ texts: [this.$t('guide.text.name2')] }
-					],
-					nextItem: 3,
-					prevItem: 1
-				},
-				{
-					name: this.$t('guide.sections.card'),
-					nameImageUrl: { path: 'status', name: 'fx_ccard' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.card')], ImageUrl: { path: 'guide', name: 'card' } },
-						{
-							texts: [this.$t('guide.text.card2')],
-							listItems: [
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.card2-1') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.card2-2') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.card2-3') }
-							]
-						},
-						{ texts: [this.$t('guide.text.card3')] }
-					],
-					nextItem: 4,
-					prevItem: 2
-				},
-				{
-					name: this.$t('guide.sections.move'),
-					nameImageUrl: { path: 'icons', name: 'small_follow' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.move')], ImageUrl: { path: 'guide', name: 'move' } },
-						{
-							texts: [this.$t('guide.text.move2')],
-							listItems: [{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.move2-1') }]
-						},
-						{ texts: [this.$t('guide.text.move3')] }
-					],
-					nextItem: 5,
-					prevItem: 3
-				},
-				{
-					name: this.$t('guide.sections.fight'),
-					nameImageUrl: { path: 'icons', name: 'small_fire' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.fight')], ImageUrl: { path: 'guide', name: 'fight' } },
-						{
-							texts: [this.$t('guide.text.fight2')],
-							listItems: [
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.fight2-1') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.fight2-2') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.fight2-3') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.fight2-4') }
-							]
-						},
-						{
-							name: this.$t('guide.text.fight3'),
-							texts: [this.$t('guide.text.fight3-1')],
-							listItems: [
-								{ imageUrl: { path: 'elements', name: 'elem_fire' }, text: this.$t('guide.text.fight3-1-1') },
-								{ imageUrl: { path: 'elements', name: 'elem_wood' }, text: this.$t('guide.text.fight3-1-2') },
-								{ imageUrl: { path: 'elements', name: 'elem_water' }, text: this.$t('guide.text.fight3-1-3') },
-								{ imageUrl: { path: 'elements', name: 'elem_lightning' }, text: this.$t('guide.text.fight3-1-4') },
-								{ imageUrl: { path: 'elements', name: 'elem_air' }, text: this.$t('guide.text.fight3-1-5') }
-							]
-						},
-						{
-							texts: [this.$t('guide.text.fight3-2')],
-							ImageUrl: { path: 'guide', name: 'elements' }
-						},
-						{ texts: [this.$t('guide.text.fight3-3')] },
-						{
-							name: this.$t('guide.text.fight4'),
-							texts: [this.$t('guide.text.fight4-1')],
-							ImageUrl: { path: 'guide', name: 'assault' }
-						},
-						{
-							texts: [this.$t('guide.text.fight4-2')],
-							listItems: [
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.fight4-2-1') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.fight4-2-2') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.fight4-2-3') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.fight4-2-4') }
-							]
-						},
-						{ texts: [this.$t('guide.text.fight4-3')] },
-						{ name: this.$t('guide.text.fight5'), texts: [this.$t('guide.text.fight5-1')] },
-						{ name: this.$t('common.gains'), texts: [this.$t('guide.text.fight6-1')] },
-						{ name: this.$t('guide.text.fight7'), ImageUrl: { path: 'guide', name: 'energy' } },
-						{ texts: [this.$t('guide.text.fight7-1')] },
-						{
-							name: this.$t('guide.text.fight8'),
-							texts: [this.$t('guide.text.fight8-1')],
-							listItems: [
-								{ imageUrl: { path: 'guide', name: 'status_sleep' }, text: this.$t('guide.text.fight8-1-1') },
-								{ imageUrl: { path: 'guide', name: 'status_untouchable' }, text: this.$t('guide.text.fight8-1-2') },
-								{ imageUrl: { path: 'guide', name: 'status_slow_down' }, text: this.$t('guide.text.fight8-1-3') },
-								{ imageUrl: { path: 'guide', name: 'status_faster' }, text: this.$t('guide.text.fight8-1-4') },
-								{ imageUrl: { path: 'guide', name: 'status_petrified' }, text: this.$t('guide.text.fight8-1-5') },
-								{ imageUrl: { path: 'guide', name: 'status_assault_bonus' }, text: this.$t('guide.text.fight8-1-6') },
-								{ imageUrl: { path: 'guide', name: 'status_poisoned' }, text: this.$t('guide.text.fight8-1-7') },
-								{ imageUrl: { path: 'guide', name: 'status_locked' }, text: this.$t('guide.text.fight8-1-8') },
-								{ imageUrl: { path: 'guide', name: 'status_dazzled' }, text: this.$t('guide.text.fight8-1-9') },
-								{ imageUrl: { path: 'guide', name: 'status_protected' }, text: this.$t('guide.text.fight8-1-10') },
-								{ imageUrl: { path: 'guide', name: 'status_mute' }, text: this.$t('guide.text.fight8-1-11') },
-								{ imageUrl: { path: 'guide', name: 'status_sharingan' }, text: this.$t('guide.text.fight8-1-12') },
-								{
-									imageUrl: { path: 'guide', name: 'status_blocked_inventory' },
-									text: this.$t('guide.text.fight8-1-13')
-								},
-								{ imageUrl: { path: 'guide', name: 'status_energy_penalty' }, text: this.$t('guide.text.fight8-1-14') },
-								{ imageUrl: { path: 'guide', name: 'status_energy_bonus' }, text: this.$t('guide.text.fight8-1-15') },
-								{ imageUrl: { path: 'guide', name: 'status_bonus_def_fire' }, text: this.$t('guide.text.fight8-1-16') },
-								{ imageUrl: { path: 'guide', name: 'status_bonus_def_wood' }, text: this.$t('guide.text.fight8-1-17') },
-								{
-									imageUrl: { path: 'guide', name: 'status_bonus_def_water' },
-									text: this.$t('guide.text.fight8-1-18')
-								},
-								{
-									imageUrl: { path: 'guide', name: 'status_bonus_def_lightning' },
-									text: this.$t('guide.text.fight8-1-19')
-								},
-								{ imageUrl: { path: 'guide', name: 'status_bonus_def_air' }, text: this.$t('guide.text.fight8-1-20') },
-								{
-									imageUrl: { path: 'guide', name: 'status_initiative_bonus' },
-									text: this.$t('guide.text.fight8-1-21')
-								},
-								{
-									imageUrl: { path: 'guide', name: 'status_initiative_penalty' },
-									text: this.$t('guide.text.fight8-1-22')
-								},
-								{ imageUrl: { path: 'guide', name: 'status_dodge_bonus' }, text: this.$t('guide.text.fight8-1-23') },
-								{ imageUrl: { path: 'guide', name: 'status_def_bonus' }, text: this.$t('guide.text.fight8-1-24') }
-							]
-						}
-					],
-					nextItem: 6,
-					prevItem: 4
-				},
-				{
-					name: this.$t('guide.sections.heal'),
-					nameImageUrl: { path: 'icons', name: 'small_use' },
-					contentSections: [
-						{
-							texts: [this.$t('guide.text.heal')],
-							ImageUrl: { path: 'guide', name: 'heal' }
-						},
-						{ name: this.$t('guide.text.heal2'), texts: [this.$t('guide.text.heal2-1')] }
-					],
-					nextItem: 7,
-					prevItem: 5
-				},
-				{
-					name: this.$t('guide.sections.death'),
-					nameImageUrl: { path: 'icons', name: 'small_delete' },
-					contentSections: [
-						{
-							texts: [this.$t('guide.text.death')],
-							listItems: [
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.death-1') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.death-2') }
-							]
-						},
-						{ texts: [this.$t('guide.text.death2')] }
-					],
-					nextItem: 8,
-					prevItem: 6
-				},
-				{
-					name: this.$t('guide.sections.exp'),
-					nameImageUrl: { path: 'icons', name: 'small_xp' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.exp')], ImageUrl: { path: 'guide', name: 'exp' } },
-						{ name: this.$t('guide.text.exp2'), texts: [this.$t('guide.text.exp2-1')] },
-						{ name: this.$t('guide.text.exp3'), texts: [this.$t('guide.text.exp3-1')] }
-					],
-					nextItem: 9,
-					prevItem: 7
-				},
-				{
-					name: this.$t('guide.sections.missions'),
-					nameImageUrl: { path: 'icons', name: 'small_gold' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.missions')], ImageUrl: { path: 'guide', name: 'missions' } },
-						{ texts: [this.$t('guide.text.missions2')] }
-					],
-					nextItem: 10,
-					prevItem: 8
-				},
-				{
-					name: this.$t('guide.sections.status'),
-					nameImageUrl: { path: 'icons', name: 'small_edit' },
-					contentSections: [{ texts: [this.$t('guide.text.status')] }],
-					nextItem: 11,
-					prevItem: 9
-				},
-				{
-					name: this.$t('guide.sections.equipment'),
-					nameImageUrl: { path: 'status', name: 'fx_bckpck' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.equipment')], ImageUrl: { path: 'guide', name: 'equipment' } },
-						{ texts: [this.$t('guide.text.equipment2')] }
-					],
-					nextItem: 12,
-					prevItem: 10
-				},
-				{
-					name: this.$t('guide.sections.epic'),
-					nameImageUrl: { path: 'icons', name: 'small_mode' },
-					contentSections: [{ texts: [this.$t('guide.text.epic')] }],
-					nextItem: 13,
-					prevItem: 11
-				},
-				{
-					name: this.$t('guide.sections.group'),
-					nameImageUrl: { path: 'icons', name: 'small_leader' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.group')], ImageUrl: { path: 'guide', name: 'group' } },
-						{ texts: [this.$t('guide.text.group2')] }
-					],
-					nextItem: 14,
-					prevItem: 12
-				},
-				{
-					name: this.$t('guide.sections.ingredient'),
-					nameImageUrl: { path: 'status', name: 'fx_pelle' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.ingredient')], ImageUrl: { path: 'guide', name: 'gather' } },
-						{ texts: [this.$t('guide.text.ingredient2')] }
-					],
-					nextItem: 15,
-					prevItem: 13
-				},
-				{
-					name: this.$t('guide.sections.clans'),
-					nameImageUrl: { path: 'icons', name: 'small_leader' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.clans')] },
-						{ name: this.$t('guide.text.clans1'), texts: [this.$t('guide.text.clans1-1')] },
-						{ name: this.$t('guide.text.clans2'), texts: [this.$t('guide.text.clans2-1')] }
-					],
-					nextItem: 16,
-					prevItem: 14
-				},
-				{
-					name: this.$t('guide.sections.dojo'),
-					nameImageUrl: { path: 'icons', name: 'small_dojo' },
-					contentSections: [
-						{
-							texts: [this.$t('guide.text.dojos')],
-							listItems: [{ imageUrl: { path: 'act', name: 'act_train' }, text: this.$t('guide.text.dojos-1') }]
-						},
-						{ texts: [this.$t('guide.text.dojos-2')] },
-						{ name: this.$t('guide.text.dojos1'), texts: [this.$t('guide.text.dojos1-1')] },
-						{
-							name: this.$t('guide.text.dojos2'),
-							texts: [this.$t('guide.text.dojos2-1')],
-							listItems: [{ imageUrl: { path: 'act', name: 'act_defi' }, text: this.$t('guide.text.dojos2-2') }]
-						},
-						{
-							name: this.$t('guide.text.dojos3'),
-							texts: [this.$t('guide.text.dojos3-1')],
-							listItems: [{ imageUrl: { path: 'act', name: 'act_tournament' }, text: this.$t('guide.text.dojos3-2') }]
-						},
-						{ texts: [this.$t('guide.text.dojos3-3')] },
-						{
-							name: this.$t('guide.text.dojos4'),
-							listItems: [{ imageUrl: { path: 'act', name: 'act_history' }, text: this.$t('guide.text.dojos4-1') }]
-						},
-						{
-							name: this.$t('guide.text.dojos5'),
-							listItems: [
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.dojos5-1') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.dojos5-2') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.dojos5-3') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.dojos5-4') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.dojos5-5') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.dojos5-6') }
-							]
-						}
-					],
-					nextItem: 17,
-					prevItem: 15
-				},
-				{
-					name: this.$t('guide.sections.gdc'),
-					nameImageUrl: { path: 'icons', name: 'small_attack' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.gdc')] },
-						{
-							name: this.$t('guide.text.gdc1'),
-							texts: [this.$t('guide.text.gdc1-1')],
-							listItems: [
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.gdc1-2') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.gdc1-3') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.gdc1-4') }
-							]
-						},
-						{
-							name: this.$t('guide.text.gdc2'),
-							texts: [this.$t('guide.text.gdc2-1')],
-							ImageUrl: { path: 'guide', name: 'castle' }
-						},
-						{
-							texts: [this.$t('guide.text.gdc2-2')],
-							listItems: [
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.gdc2-2-1') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.gdc2-2-2') }
-							]
-						},
-						{ name: this.$t('guide.text.gdc3'), texts: [this.$t('guide.text.gdc3-1')] },
-						{
-							name: this.$t('guide.text.gdc4'),
-							texts: [this.$t('guide.text.gdc4-1')],
-							ImageUrl: { path: 'guide', name: 'attack_castle' }
-						},
-						{
-							name: this.$t('guide.text.gdc5'),
-							texts: [this.$t('guide.text.gdc5-1')],
-							ImageUrl: { path: 'guide', name: 'def_castle' }
-						},
-						{ name: this.$t('guide.text.gdc6'), texts: [this.$t('guide.text.gdc6-1')] }
-					],
-					nextItem: 18,
-					prevItem: 16
-				},
-				{
-					name: this.$t('guide.sections.cdc'),
-					nameImageUrl: { path: 'icons', name: 'small_attack' },
-					contentSections: [
-						{ texts: [this.$t('guide.text.cdc')] },
-						{ name: this.$t('guide.text.cdc1'), texts: [this.$t('guide.text.cdc1-1')] },
-						{
-							name: this.$t('guide.text.cdc2'),
-							texts: [this.$t('guide.text.cdc2-1')],
-							ImageUrl: { path: 'guide', name: 'battle_cdc' }
-						},
-						{ texts: [this.$t('guide.text.cdc2-2')] },
-						{ name: this.$t('guide.text.cdc3'), texts: [this.$t('guide.text.cdc3-1')] },
-						{
-							name: this.$t('guide.text.cdc4'),
-							texts: [this.$t('guide.text.cdc4-1')],
-							ImageUrl: { path: 'guide', name: 'position_cdc' }
-						},
-						{ texts: [this.$t('guide.text.cdc4-2')] }
-					],
-					nextItem: 19,
-					prevItem: 17
-				},
-				{
-					name: this.$t('guide.sections.question'),
-					nameImageUrl: { path: 'icons', name: 'small_mail' },
-					contentSections: [
-						{
-							texts: [this.$t('guide.text.questions')],
-							listItems: [
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions1') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions2') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions3') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions4') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions5') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.questions6') }
-							]
-						}
-					],
-					nextItem: 20,
-					prevItem: 18
-				},
-				{
-					name: this.$t('guide.sections.support'),
-					nameImageUrl: { path: 'icons', name: 'small_browse_next' },
-					contentSections: [
-						{ name: this.$t('guide.text.support'), texts: [this.$t('guide.text.support-1')] },
-						{
-							texts: [this.$t('guide.text.support1')],
-							listItems: [
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.support1-1') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.support1-2') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.support1-3') }
-							]
-						},
-						{
-							texts: [this.$t('guide.text.support2')],
-							listItems: [
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.support2-1') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.support2-2') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.support2-3') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.support2-4') }
-							]
-						},
-						{
-							texts: [this.$t('guide.text.support3')],
-							listItems: [
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.support3-1') },
-								{ imageUrl: { path: 'icons', name: 'info_button' }, text: this.$t('guide.text.support3-2') }
-							]
-						}
-					],
-					nextItem: 21,
-					prevItem: 19
-				},
-				{
-					name: this.$t('guide.sections.security'),
-					nameImageUrl: { path: 'icons', name: 'small_lock' },
-					contentSections: [{ name: this.$t('guide.text.security'), texts: [this.$t('guide.text.security-1')] }],
-					prevItem: 20
-				}
-			];
-		},
-		selectedItem() {
-			return this.items[this.selectedItemIndex] || null;
-		},
-		prevItemName(): string {
-			const idx = this.selectedItem?.prevItem;
-			return idx !== undefined ? (this.items[idx]?.name ?? '') : '';
-		},
-		nextItemName(): string {
-			const idx = this.selectedItem?.nextItem;
-			return idx !== undefined ? (this.items[idx]?.name ?? '') : '';
-		}
+	{
+		slug: 'name',
+		icon: { path: 'icons', name: 'small_question' }
 	},
-	methods: {
-		showContent(item: HelpPageItem) {
-			this.selectedItemIndex = this.items.indexOf(item);
-		},
-		showNextItem() {
-			if (this.selectedItem && this.selectedItem.nextItem !== undefined) {
-				this.selectedItemIndex = this.selectedItem.nextItem;
-			}
-		},
-		showPrevItem() {
-			if (this.selectedItem && this.selectedItem.prevItem !== undefined) {
-				this.selectedItemIndex = this.selectedItem.prevItem;
-			}
-		},
-		goToPage(pageName: string) {
-			this.$router.push({ name: pageName });
-		}
+	{
+		slug: 'card',
+		icon: { path: 'status', name: 'fx_ccard' }
+	},
+	{
+		slug: 'move',
+		icon: { path: 'icons', name: 'small_follow' }
+	},
+	{
+		slug: 'fight',
+		icon: { path: 'icons', name: 'small_fire' }
+	},
+	{
+		slug: 'heal',
+		icon: { path: 'icons', name: 'small_use' }
+	},
+	{
+		slug: 'death',
+		icon: { path: 'icons', name: 'small_delete' }
+	},
+	{
+		slug: 'exp',
+		icon: { path: 'icons', name: 'small_xp' }
+	},
+	{
+		slug: 'missions',
+		icon: { path: 'icons', name: 'small_gold' }
+	},
+	{
+		slug: 'status',
+		icon: { path: 'icons', name: 'small_edit' }
+	},
+	{
+		slug: 'equipment',
+		icon: { path: 'status', name: 'fx_bckpck' }
+	},
+	{
+		slug: 'epic',
+		icon: { path: 'icons', name: 'small_mode' }
+	},
+	{
+		slug: 'group',
+		icon: { path: 'icons', name: 'small_leader' }
+	},
+	{
+		slug: 'ingredient',
+		icon: { path: 'status', name: 'fx_pelle' }
+	},
+	{
+		slug: 'clans',
+		icon: { path: 'icons', name: 'small_leader' }
+	},
+	{
+		slug: 'dojo',
+		icon: { path: 'icons', name: 'small_dojo' }
+	},
+	{
+		slug: 'gdc',
+		icon: { path: 'icons', name: 'small_attack' }
+	},
+	{
+		slug: 'cdc',
+		icon: { path: 'icons', name: 'small_attack' }
+	},
+	{
+		slug: 'question',
+		icon: { path: 'icons', name: 'small_mail' }
+	},
+	{
+		slug: 'support',
+		icon: { path: 'icons', name: 'small_browse_next' }
+	},
+	{
+		slug: 'security',
+		icon: { path: 'icons', name: 'small_lock' }
 	}
+];
+
+const guideSources = import.meta.glob<string>('../content/guide/*.md', {
+	query: '?raw',
+	import: 'default'
 });
+
+const { locale, t } = useI18n();
+const router = useRouter();
+
+const items = ref<GuideItem[]>([]);
+const selectedItemIndex = ref(0);
+
+let loadSequence = 0;
+
+const normalizeLanguage = (language: string): (typeof SUPPORTED_LANGUAGES)[number] => {
+	const normalized = language.toUpperCase().split(/[-_]/)[0];
+	return SUPPORTED_LANGUAGES.includes(normalized as (typeof SUPPORTED_LANGUAGES)[number])
+		? (normalized as (typeof SUPPORTED_LANGUAGES)[number])
+		: 'FR';
+};
+
+const parseGuideSource = (source: string, filename: string): Pick<GuideItem, 'name' | 'source'> => {
+	const titleMatch = source.match(/^#\s+(.+?)(?:\r?\n|$)/);
+	if (!titleMatch) {
+		throw new Error(`[Guide] Missing H1 title in ${filename}`);
+	}
+	return {
+		name: titleMatch[1].trim(),
+		source: source.slice(titleMatch[0].length).trim()
+	};
+};
+
+const loadGuide = async (languageValue: string): Promise<void> => {
+	const language = normalizeLanguage(languageValue);
+	const currentLoad = ++loadSequence;
+	try {
+		const loadedItems = await Promise.all(
+			GUIDE_DEFINITIONS.map(async definition => {
+				const filename = `${definition.slug}${language}.md`;
+				const requestedPath = `../content/guide/${filename}`;
+				const fallbackFilename = `${definition.slug}FR.md`;
+				const fallbackPath = `../content/guide/${fallbackFilename}`;
+				const loader = guideSources[requestedPath] ?? guideSources[fallbackPath];
+				if (!loader) {
+					throw new Error(`[Guide] Markdown file not found: ${filename}`);
+				}
+				const source = await loader();
+				const parsed = parseGuideSource(source, filename);
+				return {
+					...definition,
+					...parsed
+				};
+			})
+		);
+		if (currentLoad === loadSequence) {
+			items.value = loadedItems;
+		}
+	} catch (error) {
+		if (currentLoad === loadSequence) {
+			items.value = [];
+		}
+		console.error(error);
+	}
+};
+
+const resolveAssetUrls = (source: string): string => {
+	return source.replace(/\(asset:\/\/([a-zA-Z0-9_-]+)\/([a-zA-Z0-9_-]+)\)/g, (match, path: string, name: string) => {
+		const url = getImgURL(path, name);
+		return url ? `(${url})` : match;
+	});
+};
+
+const selectedItem = computed(() => items.value[selectedItemIndex.value] ?? null);
+
+const selectedMarkdown = computed(() => resolveAssetUrls(selectedItem.value?.source ?? ''));
+
+const prevItemName = computed(() => items.value[selectedItemIndex.value - 1]?.name ?? '');
+
+const nextItemName = computed(() => items.value[selectedItemIndex.value + 1]?.name ?? '');
+
+const showPrevItem = (): void => {
+	if (selectedItemIndex.value > 0) {
+		selectedItemIndex.value -= 1;
+	}
+};
+
+const showNextItem = (): void => {
+	if (selectedItemIndex.value < items.value.length - 1) {
+		selectedItemIndex.value += 1;
+	}
+};
+
+const goToNews = () => {
+	void router.push({ name: 'NewsPage' });
+};
+
+watch(
+	locale,
+	language => {
+		void loadGuide(String(language));
+	},
+	{
+		immediate: true
+	}
+);
 </script>
 
 <style lang="scss" scoped>
@@ -626,44 +324,41 @@ export default defineComponent({
 				font-variant: small-caps;
 			}
 		}
-		:deep(strong) {
-			color: rgb(142, 62, 38);
-		}
-		:deep(i) {
-			color: rgb(142, 62, 38);
-		}
-		.sectionContent {
+		.guideMarkdown {
 			margin-top: 15px;
-			.titleSection {
-				background-image: url('../assets/design/title/title_h2.webp');
-				background-position: left bottom;
-				background-repeat: no-repeat;
-				color: #fff1ad;
-				padding-left: 5px;
-			}
-			.textContent {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-				list-style: none;
-				margin-left: -35px;
-			}
-			.imageContent {
-				margin-bottom: 10px;
-				margin-top: 10px;
-				max-width: -moz-available;
-				max-width: -webkit-fill-available;
-				max-width: stretch;
-			}
-			.listItemsContent {
-				list-style: none;
-				margin-top: 12px;
-				& li {
-					margin-top: 10px;
-					margin-left: 10px;
-					& img {
-						margin-right: 8px;
+			:deep(.markdown-body) {
+				strong,
+				em {
+					color: rgb(142, 62, 38);
+				}
+				h2 {
+					background-image: url('../assets/design/title/title_h2.webp');
+					background-position: left center;
+					background-repeat: no-repeat;
+					color: #fff1ad;
+					padding-left: 8px;
+					font-variant: small-caps;
+				}
+				p {
+					margin: 0 0 10px;
+				}
+				ul {
+					list-style: none;
+					margin: 12px 0;
+					padding-left: 10px;
+					li {
+						margin-top: 10px;
+						img {
+							margin-right: 8px;
+							vertical-align: middle;
+						}
 					}
+				}
+				> p > img {
+					display: block;
+					height: auto;
+					margin: 10px 0;
+					max-width: 100%;
 				}
 			}
 		}

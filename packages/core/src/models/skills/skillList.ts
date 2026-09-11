@@ -793,6 +793,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'boudda'
 	},
 	[Skill.GRIFFES_INFERNALES]: {
@@ -964,6 +965,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'salama'
 	},
 	[Skill.VULCAIN]: {
@@ -983,6 +985,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'vulcan'
 	},
 	[Skill.ARMURE_DIFRIT]: {
@@ -1002,6 +1005,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'ifrit'
 	},
 	[Skill.BRAVE]: {
@@ -1194,7 +1198,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.ETHER,
 		unlockedFrom: [Skill.BENEDICTION_DARTEMIS],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		visualEffect: SkillVisualEffect.RESURRECT
 	},
 	[Skill.ACCLAMATION_FRATERNELLE]: {
 		id: Skill.ACCLAMATION_FRATERNELLE,
@@ -1680,6 +1685,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'fairy'
 	},
 	[Skill.CHOC]: {
@@ -1723,6 +1729,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'louga'
 	},
 	[Skill.COLOSSE]: {
@@ -2531,6 +2538,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'ondine'
 	},
 	[Skill.MAITRE_NAGEUR]: {
@@ -2565,6 +2573,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'leviat'
 	},
 	[Skill.EAU_DIVINE]: {
@@ -3286,6 +3295,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'golem'
 	},
 	[Skill.RAIJIN]: {
@@ -3305,6 +3315,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'raijin'
 	},
 	[Skill.QUETZACOATL]: {
@@ -3324,6 +3335,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'quetza'
 	},
 	[Skill.ROI_DES_SINGES]: {
@@ -3343,6 +3355,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'goku'
 	},
 	[Skill.ARCHANGE_CORROSIF]: {
@@ -4064,6 +4077,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'totem'
 	},
 	[Skill.FUJIN]: {
@@ -4086,6 +4100,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 				{ [Operator.NOT]: { [SkillFightConditionEnum.TEAM_STATUS]: FightStatus.USED_FUJIN } }
 			]
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'fujin'
 	},
 	[Skill.MEDITATION_TRANSCENDANTALE]: {
@@ -4123,6 +4138,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'djinn'
 	},
 	[Skill.HADES]: {
@@ -4142,6 +4158,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'hades'
 	},
 	[Skill.FORME_ETHERALE]: {
@@ -4703,6 +4720,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'herco'
 	},
 	[Skill.REINE_DE_LA_RUCHE]: {
@@ -4722,6 +4740,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'reiruc'
 	},
 	[Skill.BIG_MAMA]: {
@@ -4741,6 +4760,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'bigma'
 	},
 	[Skill.YGGDRASIL]: {
@@ -4760,6 +4780,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'yggdra'
 	},
 	[Skill.BALEINE_BLANCHE]: {
@@ -4779,6 +4800,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
 		},
+		visualEffect: SkillVisualEffect.INVOC,
 		anim: 'bluewh'
 	},
 	[Skill.GROS_DORMEUR]: {

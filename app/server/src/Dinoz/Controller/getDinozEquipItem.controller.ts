@@ -23,10 +23,12 @@ export async function getDinozEquipItemRequest(dinozId: number) {
 					}
 				}
 			},
-			items: { select: { id: true, itemId: true } },
+			items: { select: { id: true, itemId: true, equippedAt: true } },
 			status: { select: { statusId: true } },
 			skills: { select: { skillId: true } },
-			state: true
+			state: true,
+			leaderId: true,
+			followers: { select: { id: true } }
 		}
 	});
 

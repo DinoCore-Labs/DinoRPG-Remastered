@@ -54,6 +54,7 @@
 						<a
 							class="on"
 							v-if="item.canBeUsedNow"
+							:data-tutorial-item-use="item.name"
 							v-tippy="{
 								content: formatContent($t('tooltip.item.use')),
 								theme: 'small'
@@ -114,6 +115,8 @@ import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import DZSelect from '../utils/DZSelect.vue';
 import { formatText } from '../../utils/formatText.js';
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
+import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
+import { useTutorialStore } from '../../store/tutorialStore.js';
 
 export default defineComponent({
 	name: 'InventoryTab',
@@ -123,6 +126,7 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
+			tutorialStore: useTutorialStore(),
 			allItemsData: [] as Array<ItemFiche>,
 			itemNameList: itemNameList,
 			userStore: userStore(),
@@ -149,7 +153,7 @@ export default defineComponent({
 		},
 		goToItemShop() {
 			this.$router.push({
-				name: 'ItemShopPage',
+				name: 'ShopItems',
 				params: { name: 'flying' }
 			});
 		},
@@ -179,6 +183,18 @@ export default defineComponent({
 					this.dinozStore.setDinozList(dinozList);
 				}
 				if (categories.includes(ItemEffect.GOLD)) {
+					await this.$refreshGold();
+				}
+				if (categories.includes(ItemEffect.HEAL)) {
+					try {
+						await this.tutorialStore.load();
+					} catch (err) {
+						console.error('[tutorial] Failed to refresh tutorial after healing', err);
+					}
+					/*
+					 * L'objectif burger donne 500 pièces d'or.
+					 * On actualise donc également le wallet.
+					 */
 					await this.$refreshGold();
 				}
 				if (
@@ -246,6 +262,16 @@ export default defineComponent({
 		},
 		async equipItem(item: ItemFiche): Promise<void> {
 			if ((item.quantity ?? 0) > 0) {
+				if (item.itemType === ItemType.MAGICAL) {
+					const res = await this.$confirm({
+						message: this.$t(`dinozPage.inventory.confirmEquipMagicItem`),
+						header: this.$t('popup.attention'),
+						acceptLabel: this.$t('popup.accept'),
+						rejectLabel: this.$t('popup.reject'),
+						icon: 'pi pi-exclamation-triangle'
+					}).catch(() => false);
+					if (!res) return;
+				}
 				const dinozId = parseInt(this.$route.params.id as string);
 				try {
 					const result = await InventoryService.equipInventoryItem(dinozId, item.itemId, true);
@@ -255,6 +281,7 @@ export default defineComponent({
 						eventBus.emit('refreshDinoz', true);
 					}
 				} catch (error) {
+					console.error('[equipItem] Erreur backend :', error);
 					errorHandler.handle(error, this.$toast);
 					return;
 				}
@@ -349,7 +376,7 @@ export default defineComponent({
 			}
 		}
 		td {
-			vertical-align: top;
+			vertical-align: middle;
 			height: 34.5px;
 		}
 	}
@@ -400,12 +427,17 @@ export default defineComponent({
 	line-height: 11pt;
 	font-variant: small-caps;
 	cursor: help;
+	vertical-align: middle;
 	img {
-		float: left;
-		position: relative;
+		display: inline-block;
 		margin-right: 5px;
 		border: 1px solid #ae6733;
-		vertical-align: bottom;
+		vertical-align: middle;
+	}
+	p {
+		display: inline-block;
+		margin: 1px;
+		vertical-align: middle;
 	}
 }
 .type {
@@ -419,16 +451,20 @@ export default defineComponent({
 }
 .act {
 	padding-left: 5px;
-	display: flex;
-	justify-content: center;
-	align-content: space-evenly;
-	align-items: center;
+	text-align: center;
+	vertical-align: middle;
 	a {
-		height: fit-content;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		vertical-align: middle;
+		padding: 4px;
+		margin: 0 2px;
+		border-radius: 4px;
+		transition: background-color 0.2s;
 	}
 	img {
-		padding-left: 5px;
-		padding-right: 5px;
+		display: block;
 	}
 }
 .qty {
@@ -437,7 +473,7 @@ export default defineComponent({
 	text-align: center;
 	padding-left: 4px;
 	padding-right: 4px;
-	vertical-align: center;
+	vertical-align: middle;
 	& > div {
 		height: 100%;
 		display: flex;
@@ -450,5 +486,6 @@ export default defineComponent({
 }
 .on:hover {
 	cursor: pointer;
+	background-color: rgba(255, 255, 255, 0.15);
 }
 </style>

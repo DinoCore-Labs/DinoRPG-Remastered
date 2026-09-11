@@ -371,16 +371,16 @@ export const getSpecialStat = (
 		if (!item.passiveEffect) return;
 
 		const effect = item.passiveEffect[stat];
-		const isAddition = typeof effect === 'number';
 
-		if (effect) {
-			// let effectValue = 0;
-			let effectValue = operatorProcess(0, effect);
+		if (effect && effect.operator !== MathOperator.ADD_ASSAULT) {
+			const isMultiplier = effect.operator === MathOperator.MULTIPLY;
+			const effectValue = effect.value;
+
 			if (effect.operator === MathOperator.ADD) {
-				value += effect.value;
+				value += effectValue;
 			}
 			if (effect.operator === MathOperator.MULTIPLY) {
-				multiplier *= effect.value;
+				multiplier *= effectValue;
 			}
 
 			const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());
@@ -393,7 +393,7 @@ export const getSpecialStat = (
 				// Other use the effect value
 				finalValue = effectValue;
 			}
-			if (base_stat > 0 && !isAddition) {
+			if (base_stat > 0 && isMultiplier) {
 				// For multipliers, add 1 to the final value so it shows as "x 1.20" (for example)
 				finalValue += 1;
 			}
@@ -402,7 +402,7 @@ export const getSpecialStat = (
 				type: 'item',
 				name: item.name,
 				percent,
-				multiplier: !isAddition,
+				multiplier: isMultiplier,
 				elements: [],
 				value: finalValue
 			});

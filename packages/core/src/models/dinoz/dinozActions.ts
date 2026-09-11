@@ -85,7 +85,8 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.DISBAND]: {
 		name: Action.DISBAND,
-		imgName: 'act_follow_stop'
+		imgName: 'act_follow_stop',
+		confirm: true
 	},
 	[Action.SHOP]: {
 		name: Action.SHOP,
@@ -116,7 +117,6 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 		imgName: 'act_dig',
 		confirm: true
 	},
-	//TODO: display text for front
 	[Action.CONCENTRATE]: {
 		name: Action.CONCENTRATE,
 		imgName: 'act_default'

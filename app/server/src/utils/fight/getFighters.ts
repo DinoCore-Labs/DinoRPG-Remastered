@@ -63,6 +63,13 @@ export const initializeDinoz = (
 			throw new Error(`Item ${item.itemId} not found`);
 		}
 
+		if (team && item.itemId === Item.EMBER) {
+			team[Item.EMBER] = true;
+		}
+		if (team && item.itemId === Item.BEER) {
+			team[Item.BEER] = true;
+		}
+
 		return { ...itemFiche };
 	});
 
@@ -252,12 +259,6 @@ export const initializeDinoz = (
 
 	// Time
 	let initiative = fighter.stats.special.initiative;
-
-	// Temporal reduction
-	if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
-		// Reduce by 50%
-		initiative *= 0.5;
-	}
 
 	// Deduct the time from the fighter's initial time
 	fighter.time -= initiative * TIME_FACTOR;
@@ -716,6 +717,10 @@ const handleSkills = (random: SeededRandom, team: Team | null, fighter: Detailed
 		team[Skill.CHEF_DE_GUERRE] = true;
 	}
 
+	if (fighterHas[Skill.PLUMES_DE_PHOENIX]) {
+		fighter.canPhoenix = true;
+	}
+
 	// WOOD
 	if (fighterHas[Skill.TENACITE]) {
 		fighter.minDamage += 1;
@@ -1054,17 +1059,12 @@ export const getFighterCounter = (fighter: DetailedFighter) => {
 /**
  * Determine the multihit chance of the fighter.
  * The multihit chance minimum is 0% and maximum is 90%.
- * The chance is reduced by half for each multihit previously landed in the same attack.
  * @param fighter The fighter to get the multihit stat from.
- * @param multiHitCounter Optional argument to get the chance of multihit chance after a certain number of multihits. Do not provide to get base chance.
  * @returns {number} Returns the % chance of the fighter to land a multihit between 0 an 0.9.
  */
-export const getFighterMultihit = (fighter: DetailedFighter, multiHitCounter?: number) => {
-	// Reduce the combo chance by 1/2 for every combo.
-	const multiHitFactor = Math.pow(0.5, multiHitCounter ?? 0);
-
+export const getFighterMultihit = (fighter: DetailedFighter) => {
 	// Remove 1 to recenter the value at 0.
-	const multihitTotal = (fighter.stats.special.multihit - 1) * multiHitFactor;
+	const multihitTotal = fighter.stats.special.multihit - 1;
 
 	return Math.min(0.9, Math.max(0, multihitTotal));
 };

@@ -52,12 +52,19 @@ export async function getDinozMenu(req: FastifyRequest, reply: FastifyReply) {
 	const itinerantPlaceId = await getItinerantPlaceId();
 	const followableDinozCandidates = playerData.dinoz.map(dinoz => ({
 		id: dinoz.id,
+		raceId: dinoz.raceId,
 		placeId: dinoz.placeId,
 		leaderId: dinoz.leaderId,
 		state: dinoz.state,
 		life: dinoz.life,
 		followers: dinoz.followers,
-		skills: dinoz.skills
+		skills: dinoz.skills,
+		items: dinoz.items,
+		nbrUpFire: dinoz.nbrUpFire,
+		nbrUpWood: dinoz.nbrUpWood,
+		nbrUpWater: dinoz.nbrUpWater,
+		nbrUpLightning: dinoz.nbrUpLightning,
+		nbrUpAir: dinoz.nbrUpAir
 	}));
 	const dinozList: DinozFiche[] = [];
 	for (const dinoz of playerData.dinoz) {

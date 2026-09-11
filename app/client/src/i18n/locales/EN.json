@@ -22,14 +22,14 @@
 		"legalNotices": "Legal notice",
 		"loading": "Loading...",
 		"master": "Master",
-		"myTeam": "Mon équipe",
+		"myTeam": "My team",
 		"name": "Name",
-		"newMessage": "New Message",
+		"newMessage": "New message",
 		"page": "Page",
 		"quantity": "Quantity",
 		"race": "Race:",
 		"ranking": "Ranking:",
-		"skills": "Skills",
+		"skills": "...Skills :",
 		"stock": "Stock",
 		"title": "Title",
 		"treasureNotes": "Your Treasure Coupons",
@@ -38,7 +38,7 @@
 	},
 	"notifications": {
 		"title": "Notifications",
-		"newClanJoinRequest": "Le joueur {name} a demandé à rejoindre le clan.",
+		"newClanJoinRequest": "Player {name} requested to join the clan.",
 		"newReward": "Vous avez reçu une récompense : {rewards}",
 		"marketOfferWin": "Vous avez remporté une enchère pour un montant de {price} bons !",
 		"marketOfferSold": "Votre enchère a été vendue ! Vous avez gagné {price} pièces d'or.",
@@ -99,7 +99,6 @@
 	},
 	"leftPanel": {
 		"wallets": {
-			"gold": "Gold coins",
 			"treasureTicket": "Treasury Note"
 		},
 		"dinozCapacity": "Dinoz: {current}/{max}"
@@ -118,8 +117,7 @@
 		"level": "This level reflects the strength of your Dinoz.",
 		"slot": "This slot is empty, choose an item from the inventory to equip.&&//The equipped items can be used by your Dinoz in combat.//",
 		"tabs": {
-			"map": "Map",
-			"inventory": "Inventory"
+			"map": "Map"
 		},
 		"chooseDinoz": {
 			"information": "Before taking control of your Dinoz, you must first give it a name.",
@@ -128,8 +126,6 @@
 		},
 		"inventory": {
 			"itemName": "Object name",
-			"stock": "Stock",
-			"actions": "Actions",
 			"full": "Stock full",
 			"sortBy": "Sort By",
 			"confirmUse": "Do you confirm the use of {name} on your Dinoz?",
@@ -178,7 +174,6 @@
 			"sort": {
 				"default": "Default",
 				"energy": "Energy",
-				"type": "Type",
 				"state": "Status",
 				"title": "Sort skills"
 			},
@@ -275,7 +270,6 @@
 		"minimumPrice": "Minimum price",
 		"highestBid": "Current bid",
 		"by": "by",
-		"details": "Details",
 		"time": "{days}d {hours}h {minutes}m {seconds}s",
 		"currency": "**Treasure Coupons** needed for purchases at the Tamer Market can be obtained for the equivalent of **1** :ticket: **= 1000** :gold: from the **Dinoland Bank**.",
 		"bid": "Bid",
@@ -302,7 +296,6 @@
 			"claim": "Collect my winnings",
 			"bid": "Bids",
 			"noBidYet": "No bet yet.",
-			"cancel": "Cancel",
 			"yourActiveBids": "Your active bids",
 			"noActiveBid": "You haven't bid on any offer yet."
 		},
@@ -342,9 +335,7 @@
 				"content": "Content",
 				"public": "Public page?",
 				"action": {
-					"create": "Create",
-					"edit": "Edit",
-					"cancel": "Cancel"
+					"edit": "Edit"
 				}
 			}
 		},
@@ -352,7 +343,6 @@
 			"th": {
 				"donation": "Donations",
 				"stats": "Stats",
-				"actions": "Actions",
 				"event": "Event Score"
 			},
 			"edit": {
@@ -393,17 +383,12 @@
 			"confirm": "Are you sure you want to give the Clan these ingredients worth {gold} Gold?"
 		},
 		"discussion": {
-			"action": {
-				"create": "New Message",
-				"send": "Send"
-			},
 			"delete": "Delete message",
 			"pagination": {
 				"go_to": "Go to page"
 			}
 		},
 		"history": {
-			"page": "Page",
 			"type": {
 				"CLAN_CREATED": "The Clan has been created.",
 				"PLAYER_JOIN": "A player has joined the clan.",
@@ -443,7 +428,6 @@
 			"create": "Create clan"
 		},
 		"th": {
-			"name": "Clan",
 			"leader": "Creator",
 			"members": "Members",
 			"date": "Creation date"
@@ -458,15 +442,12 @@
 		"information": "Please fill out the information below to create your Clan. Creating a Clan will cost you **{cost}** :gold:",
 		"clan_name": "Name",
 		"clan_langs": "Languages",
-		"clan_description": "Description",
-		"go_back_button": "Cancel",
-		"create_button": "Create"
+		"clan_description": "Description"
 	},
 	"dojo": {
-		"welcome": "Bienvenue dans votre Dojo",
+		"welcome": "Welcome to your Dojo",
 		"markAsRead": "Marquer comme vus",
 		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournoi, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
-		"return": "Return",
 		"accessTournament": "Accéder au tournoi",
 		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis !",
 		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",
@@ -487,6 +468,9 @@
 		"soon": "Bientôt",
 		"seeFight": "Voir le combat entre {playerA} et {playerB}",
 		"deleteTeam": "Supprimer mon équipe",
+		"poison": "Poison",
+		"on": "Activé",
+		"off": "Désactivé",
 		"timer": {
 			"qualification": ":chrono: Il reste encore {day} jours, {hours} heures et {minutes} minutes avant la fin des qualifications.",
 			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
@@ -560,7 +544,6 @@
 			"assaultVoid": "Nombre d'assauts :void: réalisés",
 			"hpRemaining": "Vie restante",
 			"times_poisoned": "Nombre de fois qu'un Dinoz est empoisonné",
-			"myTeam": "Mon équipe",
 			"enemyTeam": "Équipe adverse"
 		},
 		"challenge": {
@@ -605,7 +588,6 @@
 	"manageDinoz": {
 		"title": "My Dinoz management",
 		"disclaimer": "This management module is accessible thanks to your **Diamantite Pebble**: a real concentrate of technology!",
-		"dinoz": "Dinoz",
 		"elements": "Elements"
 	},
 	"news": {
@@ -638,31 +620,9 @@
 		"roadmap": {
 			"title": "Discover the upcoming events on DinoRPG!",
 			"small": "Irma's Prediction",
-			"strong": {
-				"title1": "Alpha 0.13.0 (Bientôt)",
-				"title2": "Alpha 0.14.0",
-				"title3": "Alpha 0.15.0",
-				"title4": "Alpha 0.16.0"
-			},
 			"help": "Click on an update above to get more information!",
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
-			"futurTitle": "Dinolandian Future",
-			"futureInfo1": {
-				"text1": "Master Zenith and the Dojo",
-				"text2": "The Inter-Dojo Tournament (PVP)",
-				"text3": "Correction de bugs"
-			},
-			"futureInfo2": {
-				"text1": "Le scénario tutoriel et le guide Michel",
-				"text2": "Correction de bugs"
-			},
-			"futureInfo3": {
-				"text1": "Monster Hunt (PVE)",
-				"text2": "Bug fixes"
-			},
-			"futureInfo4": {
-				"text1": "Coming soon"
-			}
+			"futurTitle": "Dinolandian Future"
 		}
 	},
 	"button": {
@@ -670,17 +630,14 @@
 		"chose": "Buy",
 		"name": "Confirm !",
 		"shop": "Shop",
-		"bank": "Bank",
 		"search": "Search",
-		"cancel": "Cancel",
-		"continue": "Continue",
-		"create": "Create",
-		"send": "Send",
+		"cancel": "Annuler",
+		"continue": "Continuer",
+		"create": "Créer",
+		"send": "Envoyer",
 		"noResults": "No result",
 		"sortDinoz": "Manage my Dinoz",
-		"skills": "Skills",
-		"unavailable": "Unavailable",
-		"clan": "Clan"
+		"unavailable": "Unavailable"
 	},
 	"popup": {
 		"dojoConfirmMessage": "Voulez-vous construire votre Dojo ? cela coutera 50.000 :gold: ",
@@ -723,7 +680,6 @@
 			"name": "Choice 2: <br/>New Destiny",
 			"action": "Change destiny",
 			"explanation": "You can reincarnate your Dinoz and change its destiny:",
-			"list1": "Will return to level 1",
 			"list2": "All its levels will be randomized again."
 		},
 		"finalWarning": "Are you sure you want to reincarnate this Dinoz? Warning: a Dinoz can only be reincarnated once!"
@@ -732,9 +688,7 @@
 		"messagerie": {
 			"system": "System",
 			"locked": "You must unlock the messaging system first.",
-			"actions": "Actions",
 			"create": "Write",
-			"research": "Search",
 			"search": "Search for a conversation...",
 			"conversations": "Conversations",
 			"disclaimer": "Make sure to select a conversation.",
@@ -770,15 +724,12 @@
 		"confirmAction": {
 			"label": "Veuillez entrer votre mot de passe pour confirmer :",
 			"passwordPlaceholder": "Mot de passe",
-			"loading": "Loading...",
 			"confirm": "Confirmer",
-			"cancel": "Cancel",
 			"passwordRequired": "Veuillez entrer votre mot de passe pour confirmer."
 		},
 		"modif": "Modify...",
 		"valid": "Validate",
-		"close": "Close",
-		"continue": "Continue"
+		"close": "Close"
 	},
 	"richTextEditor": {
 		"boldButtonTitle": "B",
@@ -971,18 +922,13 @@
 	"ranking": {
 		"tabs": {
 			"players": "Players",
-			"average": "Average",
-			"clans": "Clans",
-			"treasure": "Treasure value"
+			"average": "Average"
 		},
 		"th": {
 			"pos": "Pos.",
-			"dinoz": "Dinoz",
 			"points": "Pts",
 			"average": "Avg.",
-			"completion": "Comp.",
-			"clans": "Clans",
-			"treasure": "Clan Treasure"
+			"completion": "Comp."
 		},
 		"disclaimer": {
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
@@ -1001,7 +947,6 @@
 		}
 	},
 	"accountPage": {
-		"title": "My Account",
 		"userTitle": "Player: {name}",
 		"noDescription": "No description on this profile...",
 		"editProfile": "Edit my profile",
@@ -1010,11 +955,8 @@
 			"mdp": "Modify Password",
 			"reset": "Recommencer le compte",
 			"delete": "Supprimer le compte",
-			"resetTitle": "Recommencer le compte",
 			"resetDescription": "Êtes-vous sûr de vouloir tout recommencer ? Vous conserverez votre nom, votre description, votre avatar et votre messagerie. Cependant, TOUS VOS DINOZ, VOTRE INVENTAIRE ET VOTRE ARGENT SERONT DÉFINITIVEMENT PERDUS. Vous recommencerez l'aventure à zéro avec 100 000 pièces d'or.",
-			"deleteTitle": "Supprimer le compte",
-			"deleteDescription": "ATTENTION : Êtes-vous absolument sûr de vouloir supprimer votre compte ? Cette action effacera DÉFINITIVEMENT votre progression, vos dinoz, votre inventaire et votre profil. CETTE ACTION EST IRRÉVERSIBLE.",
-			"retour": "Return"
+			"deleteDescription": "ATTENTION : Êtes-vous absolument sûr de vouloir supprimer votre compte ? Cette action effacera DÉFINITIVEMENT votre progression, vos dinoz, votre inventaire et votre profil. CETTE ACTION EST IRRÉVERSIBLE."
 		},
 		"changeAvatar": "Change avatar",
 		"save": "Save Profile",
@@ -1025,10 +967,8 @@
 		"profil": "DinoRPG Profile",
 		"player": "Player:",
 		"dinoz": "Dinoz:",
-		"ranking": "Ranking:",
 		"inscription": "Registered on",
 		"clan": "Clan:",
-		"completion": "Completion",
 		"rewards": "Epic rewards",
 		"editAccount": "Edit Profile",
 		"edit": "Edit",
@@ -1052,7 +992,6 @@
 		},
 		"level": "Level",
 		"dinozFilters": {
-			"race": "Race:",
 			"level": "Level:",
 			"state": "State:",
 			"allRaces": "All races",
@@ -1483,7 +1422,8 @@
 			"Flee": "Flee",
 			"Stinger": "Dard",
 			"PoisonedPicks": "Poisoned Spikes",
-			"Contamination": "Contamination"
+			"Contamination": "Contamination",
+			"WormCall": "Appel"
 		},
 		"description": {
 			"GriffesEnflammees": "Increase the strength of all Fire **assaults** by 7",
@@ -1782,7 +1722,8 @@
 			"Leader": "Increase the number of maximum active Dinoz by 3 (non-cumulative)",
 			"GrosDormeur": "Allow the Dinoz to recover an additional action each day.",
 			"Veilleuse": "Allow all followers to recover an extra daily action as well.",
-			"Matelasseur": "All your active Dinoz recover an additional daily action (non-cumulative)."
+			"Matelasseur": "All your active Dinoz recover an additional daily action (non-cumulative).",
+			"WormCall": "Appelle un bébé worm"
 		}
 	},
 	"status": {
@@ -1920,7 +1861,6 @@
 	},
 	"items": {
 		"disclaimer": "All the items you have obtained during your adventures are gathered here.",
-		"tname": "Name",
 		"name": {
 			"gold": "Gold coins",
 			"potion_irma": "Madam Irma's Potion",
@@ -2198,9 +2138,6 @@
 	},
 	"ingredients": {
 		"disclaimer": "This page lists the ingredients you have found using the \"Collect\" action.",
-		"tname": "Ingredients",
-		"tstock": "Stock",
-		"tquantity": "Quantity",
 		"name": {
 			"merou_lujidane": "Lujidanee Grouper",
 			"poisson_vengeur": "Avenger-Fish",
@@ -3102,7 +3039,6 @@
 		"lose": "You have **lost**...",
 		"lvlup": "A Dinoz gained a **new level**!",
 		"showAnimation": "Show battle",
-		"continue": "Continue",
 		"history": {
 			"display": "Display History",
 			"hide": "Hide History"
@@ -3260,7 +3196,6 @@
 		"event": {
 			"christmas_ticket": "It seems that this monster had a Christmas ticket on him. What a bargain!"
 		},
-		"player": "Master",
 		"vs": "VS"
 	},
 	"gather": {
@@ -3296,128 +3231,7 @@
 	},
 	"faq": {
 		"intro": "Here you can find all the answers to your questions about the game. Try not to use this section too much, though, as many secrets are more fun if you discover them on your own by doing a bit of digging.",
-		"search": "Search",
-		"qa": "Questions / Answers :",
-		"faq1": {
-			"question": "Why can't Grandpa Joe's last two missions be unlocked?",
-			"answer": "The 'Giants' mission will be unlocked when your Dino reaches level 11 and the 'Achievement of the Month' when he reaches level 18."
-		},
-		"faq2": {
-			"question": "Where's Mrs Ducraft's dog?",
-			"answer": "Mrs. Ducraft's Dog is located at the Preaching Port, accessible from the Fountain of Youth. The Fountain of Youth is accessible from Dinotown, Brutforce, or Papy Joe's."
-		},
-		"faq3": {
-			"question": "How to get more than 18 Dinoz?",
-			"answer": "The U Leader skill :bois: allows you to have 3 more Dinoz on your account. && The same goes for :air: Messiah on the new 50+ skills tree. && && U (unique) skills only work once per account. && After that, it's possible to have many more by freezing some of your Dinoz."
-		},
-		"faq4": {
-			"question": "How to obtain the Fountain Pearl?",
-			"answer": "You will need the Buoy. && A partir du Port de Prêche, accédez à l'Île Waïkiki (Îles Atantéinées), puis accédez aux chutes Mutantes (accessibles depuis le Dôme Soulaflotte, Chez Bao Bob, et depuis le Marais Collant). && && Talk to Master Hydargol, and follow his instructions. If you successfully complete the mission he gives you, you will obtain the Fountain Pearl."
-		},
-		"faq5": {
-			"question": "How to remove a skill from a Dinoz?",
-			"answer": "Learned skills cannot be removed, but you can disable certain ones using the 130-lesson Strategy Guide you will obtain by completing \"The Archelionscarer\" - the second mission of the Soft Shaman. && && As a general rule, avoid choosing attacks (A skills) in the minor elements of your Dinoz. && For example, Water Cannon is not recommended for a softpig."
-		},
-		"faq6": {
-			"question": "How to obtain the Lantern?",
-			"answer": "Tout d'abord, vous devez avoir le Gant des Zors afin d'accéder à la forêt de Grumhel par les Îles Atlantéinées. && && Go to the Haunted Hills and talk to the Strange Man. Ignore him and fight a monster. && The Lantern allows you to go to the Deep Gorges and complete the Hieroglyphs mission of the Soft Shaman."
-		},
-		"faq7": {
-			"question": "How to obtain the Zors Glove? How do I get to the Gruhmel Forest?",
-			"answer": "Firstly, you'll need the Buoy, Climbing Gear, Shovel, and Diver's Mask. && With the Shovel, dig at the Basalt Slopes (Hot Mounts), the Sticky Marsh (Atlantean Islands), and the Fountain of Youth (Dinotown). You should obtain the statuses 'Marsh Mud', 'Granite Shard', and 'Pure Water'. && && Next, go to the Underwater Dome and talk to the Archisage, then give him your collected items. Après avoir combattu l'Élementaire de bois, vous obtiendrez le Gant des Zors. Now head to the Mutant Falls. && && I'm unsure if you already need to have the Fountain Pearl, but it's preferable. Talk to Master Hydargol at the Mutant Falls and agree to lend him the Zors Glove. You will receive a Lily Pad Leaf. Now, you can access the Grumhel forest from the Mutant Falls."
-		},
-		"faq8": {
-			"question": "Where is the market of the Atlantean Islands where I need to exchange a banana for a coat rack (second mission of Bao Bob, 'The barter of the Atlantean Islands')?",
-			"answer": "This mission is done in stages. You will need to go to the Coral Mines, then to the Waikiki Islands, then to the Mutant Falls, then to the Sticky Swamp, back to the Coral Mines, and finally to Mr. Bao Bob's. && && In each of these places, you must talk to a character and make the exchange they propose."
-		},
-		"faq9": {
-			"question": "What to choose in the game of Heads or Tails against Yakuzi?",
-			"answer": "Regardless of the choice, the first bet will inevitably be lost while the second will inevitably be won."
-		},
-		"faq10": {
-			"question": "How does the Fountain Pearl work?",
-			"answer": "Any Dinoz at the Fountain of Youth at midnight will gain 5 :pv: per day upon your daily login. The effect is not cumulative."
-		},
-		"faq11": {
-			"question": "Where can I find the dictionary I asked for in Soft Shaman's first mission, 'The trial'?",
-			"answer": "The dictionary is at the University."
-		},
-		"faq12": {
-			"question": "Can I have my Dinoz fight together?",
-			"answer": "You cannot have them fight against each other, but you can have them fight alongside each other. To group your Dinoz, they must be in the same location and each have an available action. && && Select the action 'Follow': your Dinoz are now in a team. You can group up to three Dinoz; the limit can increase to five if the leading Dinoz of the group has learned the skills :bois: Sympathy and Charisma."
-		},
-		"faq13": {
-			"question": "I've completed Grandpa Joe's missions, how can I get more?",
-			"answer": "At the Atlantean Islands, Mr. Bao Bob (At Mr. Bao Bob's) will offer you a new list of missions. Au Grand Tout Chaud, c'est le Shaman mou (Fosselave) qui a besoin de vos services."
-		},
-		"faq14": {
-			"question": "How to access the Magnetic Steppes?",
-			"answer": "You or the members of your clan, if you have one, must gather 7 Dinoz at Bao Bob's (in posession of the Korgon Fins which is mandatory). && && Once the 7 Dinoz are concentrating, you will be granted access to a portal that will take you to a world where, after a little journey and defeating a big guardian, you will obtain a key. && && This is the key to the Blacksylva Gate and it will grant you access to the Magnetic Steppes... Accessible from the Grumhel forest. && && Advice: primarily intended for high-level Dinoz, around level 30 and above... Dinoz with Water as their main element are at disadvantage."
-		},
-		"faq15": {
-			"question": "Where can you find Yakuzi?",
-			"answer": "Yakuzi appears at random in the Frish Port."
-		},
-		"faq16": {
-			"question": "What are the conditions for creating/joining a clan?",
-			"answer": "To create a clan: you must have at least 20,000:gold: and 15 points. && && To join a clan: you must have 1,000:gold: and a minimum of 4 points."
-		},
-		"faq17": {
-			"question": "Where to use the shovel for digging?",
-			"answer": "Once you've obtained the Shovel, and knowing that after each use you'll need to return it for repair at the Coral Mines, there are 4 places to dig: && && 1.At the Sticky Swamp. && && 2.At the Fountain of Youth. && && 3.At the Basalt Slopes. && && 4.At the Ashpouk Ruins."
-		},
-		"faq18": {
-			"question": "Where to find the missing package?",
-			"answer": "Talk to the guy who lost the package at the Grand Hot Forge. To do this, go down to the Basalt Slopes. You need to kill 4 Goblins. && && Then, go back up to the Tunnel under the Branch. 6 Goblins to kill. && && Return to validate the mission at Lavapit."
-		},
-		"faq19": {
-			"question": "How to access the Underwater Dome?",
-			"answer": "With the Scorpscuba Caller from the Mutant Falls. && && To obtain the mask, you will need the Buoy and a fairly strong Dinoz. Go to the Atlantean Islands from the Preach Port, and head to the Mutant Falls. Talk to the Atlantean Guard, he will tell you about a fisherman friend at the Preach Port. So, return to the Frish Port and talk to Jovébozé. && && He will take you to fight a Diver, and if you manage to kill it, he will give you a Scorpscuba Caller."
-		},
-		"faq20": {
-			"question": "Where to find the Magic Stars?",
-			"answer": "Follow the instructions given by the Strange Being you will randomly encounter at the Fountain of Youth. && && Additional hints: && && First star: The Capital is none other than Dinotown. You will need a new action to fight the Megawolf. && Second star: The Enthusiastic Fatty is the Sausage Vendor found at the Ashpouk Ruins. && Third star: The riddle speaks for itself. && Fourth star: the call... the Shovel... && Fifth star: Capsicum is a vegetable more commonly known as a pepper. && Sixth star: The God-Man is Bao Bob. && Seventh star: Saru means 'monkey'. Be careful, you must already be in the Wild Jungle before letting your Dinoz die there."
-		},
-		"faq21": {
-			"question": "How do you obtain a relic?",
-			"answer": "To obtain a relic, you need to dig at the Ashpouk Ruins and then go to the university to authenticate the relic. && && Pour l'obtenir, il faut d'abord : la Bouée, le Matériel d'escalade et la Pelle. Minimum levels for the Buoy and Climbing Gear: 5 and 6. && && The relic allows access to the BrutForce tournament."
-		},
-		"faq22": {
-			"question": "How to access the Grumhel forest from the Deep Gorges or how to access the second part of the Grumhel forest?",
-			"answer": "You will need the Zors Glove, the Lily Pad, and the Buoy. Go to the Mutant Falls, and move to the Grumhel Forest (Location 'Go pass the Mutant Falls'). From there, go to the Haunted Hills. Talk to the Weird Man and ignore him. He will then tell you about a horrible monster, and ask to fight it. You will then enter into combat with a Korgon Prankster. If you manage to defeat it (which is quite possible), the Weird Man will flee, leaving you with his lantern. Now, leave the Grumhel Forest, leave the Atlantean Isles, leave Dinoland and go to the Big All-Hot Mountain, to the Tunnel under the Branch. From there, access the Deep Gorges (Move action). From the Deep Gorges, access the Korgon Camp (Move action). You are now at the Korgon Camp, in the second part of the Grumehl Forest. To join the two sides, do Dian Korgsey's missions, and obtain the Korgon Fins. Now, you have the possibility to move from the Korgon Camp to the Jumin River, and vice versa."
-		},
-		"faq23": {
-			"question": "How to get the Shovel (to dig)?",
-			"answer": "First you need the Buoy. À partir du port de Prêche, accédez aux Îles Atlantéinées, puis déplacez-vous aux Mines de Corail. Talk to the Coral Miner and say yes. && He'll give you the shovel, but every time you dig it will break, and you'll have to come back to him to get it fixed."
-		},
-		"faq24": {
-			"question": "Dark Dinoz and Hippoclamp, Pteroz and Rocky trophies",
-			"answer": "The Dark Hippoclamp can be found on Waikiki Island, accessible from the Frish Port via the Buoy. Defeating it will earn you the Seahorse Trophy. And you need to be at least level 8 to see it. && && The Dark Pteroz can be found on the Basalt Slopes, accessible from the Climbing Hills with the Climbing Equipment. You'll get the Pteroz Trophy by beating it. && && The Rocky is in BrutForce. It isn't visible until level 13 and is difficult to defeat until level 15, but it will earn you the Rocky Trophy. && && Trophies are epic items that can be seen on your account. Ils vous permettent d'acheter dans l'Enclos le dinoz correspondant au Trophée : Hippoclamp si vous avez le Trophée Hippoclamp, etc."
-		},
-		"faq25": {
-			"question": "How do you freeze a Dinoz?",
-			"answer": "Go to Deep Gorges and talk to the spelunker. He'll offer to freeze your Dinoz. && This will allow you to raise an extra Dinoz. && && Of course, you'll need the lantern to access the gorges."
-		},
-		"faq26": {
-			"question": "How do I get a Kabuki?",
-			"answer": "To obtain this precious dinoz, you'll need the Kabuki aura, which you can get by completing Yakuzi's quest! && && To begin with, you'll need to meet Yakuzi at the Frish Port (a random encounter), and accept his two bets. && He will then disappear, and you can meet him again, first at the Forges, then at Deep Gorges. && During the latter encounter, you will obtain a parchment, which you will have to have translated at the University by a professor. && The professor will tell you that you need to give him a number of ingredients to advance your quest. && Once you've been given these ingredients, and after waiting a few days, you'll have to go to the Coral Mines (you may have to wait a little while for a tab to appear, like for a mission stage). && Pour terminer cette quête, vous devrez poursuivre votre assaillant sur l'Île du Totem, qui n'est pas accessible avant. && && You'll also get a Kabuki Egg, and the Kabuki Aura, which will allow you to visit this place as often as you like."
-		},
-		"faq27": {
-			"question": "How do I sell my Dinoz?",
-			"answer": "To be able to sell your Dinoz, you must already own two (you can't stay without a Dinoz). Then go to the Market Place, click on Breeders' Market and then on Sell. && WARNING: this operation is irreversible."
-		},
-		"faq28": {
-			"question": "Anguilloz in vinegar",
-			"answer": "Finding the right place... that's what's so difficult and keeps us going round in circles, isn't it? && && Here's a little help: && && -> You have to go to Dinotown."
-		},
-		"faq29": {
-			"question": "How do I retrieve my Dinoz´s life?",
-			"answer": "There are 4 ways: && && Buying and using the health objects available in the store. && Using the rest option. && When the Dinoz is at the Fountain of Youth with the Pearl of Youth at midnight. && By equipping the Tik Bracelet on one of your Dinoz and and waiting until Midnight."
-		},
-		"faq30": {
-			"question": "Where do I restart when my Dinoz is Dead?",
-			"answer": "If you do not use an Angel Potion, You will restart at DinoTown with 1 health point and you will lose half of your Experience. && && If you use an Angel Potion, You restart where you are with 1 health point."
-		}
+		"qa": "Questions / Answers :"
 	},
 	"guide": {
 		"title": "Game Guide:",
@@ -3487,7 +3301,6 @@
 			"fight4-3": "Once the 5 assaults are completed, the Dinoz will start the cycle again. && && Based on its **elements** and **skills**, the Dinoz has a certain **assault power** and **defense** for each element. These characteristics are visible in the Details tab of the **Dinoz's profile**. && && The stronger **the assault power** of an element, the more hit points the Dinoz will deduct from its opponents when performing an assault of that element. The stronger **the defense** against an element, the more protected the Dinoz will be against attacks from opponents using that element.",
 			"fight5": "The Monsters",
 			"fight5-1": "Many monsters perform Void element assaults. This means that all your elements are taken into account during defense. However, some monsters are capable of performing assaults or special attacks of a particular element.",
-			"fight6": "Gains",
 			"fight6-1": "At the end of the battle, your Dinoz earns **gold coins** :gold: that will allow it to heal, and **experience points** that will enable it to level up.",
 			"fight7": "The Energy",
 			"fight7-1": "Each Dinoz has a blue energy bar next to its health bar. This bar represents the **energy** that the Dinoz possesses, and it is halfway filled at the beginning of the battle. Like the health bar, it depends on the maximum energy called **endurance** that the Dinoz possesses. _The endurance of a Dinoz can vary depending on certain learned skills. Bonuses can also increase endurance._ && && Each skill has an energy cost. With each skill used, the energy bar decreases. Once empty, the Dinoz must pass its turn. Some extraordinarily powerful skills require much more energy than others. && && This energy bar gradually fills up during the battle, referred to as **recovery**. _The recovery of a Dinoz can vary depending on certain learned skills._ && && The Dinoz must therefore wait until it has replenished its energy before using a skill.",
@@ -3623,10 +3436,6 @@
 	"gameRules": {
 		"title": "DinoRPG Remastered Rules",
 		"version": "Version: {version}",
-		"footer": {
-			"title": "Rules and Safety",
-			"link": "Game Rules"
-		},
 		"registration": {
 			"label": "I have read and accept the {rules}, version {version}.",
 			"link": "game rules"
@@ -3639,159 +3448,6 @@
 			"submitting": "Saving….",
 			"success": "The game rules have been accepted successfully.",
 			"error": "Your acceptance of the rules could not be recorded."
-		},
-		"sections": {
-			"general": {
-				"title": "1. Respect et comportement",
-				"intro": "DinoRPG Remastered must be used fairly and respectfully.",
-				"forbiddenIntro": "Sont notamment interdits :",
-				"forbidden": {
-					"harassment": "les insultes, menaces, comportements de harcèlement ou propos discriminatoires ;",
-					"illegal": "les contenus inappropriés ou manifestement illicites ;",
-					"spam": "le spam et la publicité abusive ;",
-					"impersonation": "l’usurpation de l’identité d’un joueur ou d’un membre de l’équipe ;",
-					"personalData": "la divulgation des informations personnelles d’un tiers ;",
-					"links": "les liens dangereux, frauduleux ou trompeurs."
-				},
-				"outro": "Tout comportement abusif ou portant volontairement atteinte au jeu ou à ses utilisateurs peut être sanctionné."
-			},
-			"accounts": {
-				"title": "2. Comptes",
-				"intro": "Un compte est personnel. Il est interdit de le partager, le vendre, le donner ou d’utiliser le compte d’une autre personne.",
-				"password": "Ne communiquez jamais votre mot de passe et ne demandez jamais celui d’un autre joueur.",
-				"singleAccount": "A single person may normally use only one player account.",
-				"household": "Plusieurs personnes d’un même foyer peuvent chacune disposer de leur propre compte, à condition de ne pas les utiliser pour obtenir un avantage artificiel ou contourner une limitation."
-			},
-			"cheating": {
-				"title": "3. Triche, bugs et sécurité",
-				"intro": "Toute méthode permettant d’obtenir un avantage anormal ou de contourner le fonctionnement prévu du jeu est interdite.",
-				"forbiddenIntro": "Il est notamment interdit :",
-				"forbidden": {
-					"automation": "d’utiliser un bot, script, clic automatique, macro ou autre outil jouant à la place de l’utilisateur ;",
-					"exploit": "d’exploiter volontairement un bug ou une faille ;",
-					"duplicate": "de dupliquer ou d’obtenir anormalement des objets, ressources, monnaies ou récompenses ;",
-					"requests": "de falsifier des requêtes ou de modifier artificiellement des données envoyées au serveur ;",
-					"authorization": "de contourner une autorisation ou d’accéder à une fonctionnalité normalement inaccessible ;",
-					"account": "de tenter d’accéder au compte ou aux données d’un autre utilisateur ;",
-					"disruption": "de perturber, attaquer ou saturer le service."
-				},
-				"report": "Lorsqu’un bug ou une faille est découvert, le joueur doit cesser de l’exploiter et le signaler.",
-				"devTools": "Les outils de développement du navigateur sont autorisés tant qu’ils ne sont pas utilisés pour tricher, contourner une règle ou compromettre le service."
-			},
-			"market": {
-				"title": "4. Marché et échanges",
-				"intro": "Les échanges entre joueurs doivent rester loyaux.",
-				"forbidden": "Il est interdit de manipuler artificiellement les prix, d’utiliser plusieurs comptes pour transférer des ressources ou enchérir sur ses propres offres, et d’exploiter une erreur ou une faille du marché.",
-				"outro": "Une transaction obtenue de manière irrégulière peut être annulée ou corrigée."
-			},
-			"reporting": {
-				"title": "5. Signalement",
-				"intro": "Un bug, une faille ou un comportement interdit peut être signalé à :",
-				"email": "contact{'@'}dinorpg.fr",
-				"details": "Merci d’indiquer autant que possible le pseudonyme concerné, la date, une description du problème et les éventuelles preuves ou étapes permettant de le reproduire.",
-				"disclosure": "Une faille non corrigée ne doit pas être publiée ou exploitée.",
-				"goodFaith": "A report made in good faith will not be considered an attempt to cheat."
-			},
-			"sanctions": {
-				"title": "6. Sanctions et contestation",
-				"intro": "Selon la gravité des faits, une infraction peut entraîner un avertissement, l’annulation d’un avantage ou d’une transaction, une restriction, une suspension ou la fermeture définitive du compte.",
-				"proportionality": "La sanction tient notamment compte de la gravité, de la répétition et du caractère volontaire des faits.",
-				"circumvention": "Il est interdit de contourner une sanction à l’aide d’un autre compte, d’un autre joueur ou de tout autre moyen.",
-				"appeal": "Une sanction peut être contestée de manière respectueuse et factuelle à l’adresse contact{'@'}dinorpg.fr."
-			},
-			"changes": {
-				"title": "7. Modification du règlement",
-				"intro": "Le règlement peut évoluer en fonction du jeu, de nouvelles fonctionnalités, de nouveaux abus ou de besoins de sécurité.",
-				"version": "La version et la date de dernière mise à jour sont indiquées en haut de cette page.",
-				"acceptance": "A new acceptance may be required when a significant change is made."
-			}
-		}
-	},
-	"legalNotices": {
-		"pageTitle": "Legal information",
-		"updatedAt": "Last updated: {date}",
-		"footer": {
-			"link": "Legal notice"
-		},
-		"sections": {
-			"publisher": {
-				"title": "1. Website Publisher",
-				"description": "DinoRPG Remastered is an online public communication service published on a non-professional basis by an individual. It is a personal and community project.",
-				"anonymity": "In accordance with II of Article 1-1 of French Law No. 2004-575 of June 21, 2004 on confidence in the digital economy, the publisher has chosen to preserve their anonymity. The information required to identify the publisher has been provided to the hosting provider as part of the hosting agreement.",
-				"director": "The publication director is the website publisher.",
-				"contactIntro": "To contact the publisher:"
-			},
-			"hosting": {
-				"title": "2. Hosting",
-				"intro": "The website and the data required for its operation are hosted by:",
-				"provider": "IONOS SARL",
-				"addressLine1": "7, place de la Gare",
-				"addressLine2": "BP 70109",
-				"addressLine3": "57200 Sarreguemines Cedex",
-				"country": "France",
-				"phone": "Phone: 09.70.80.89.11",
-				"websiteIntro": "Hosting provider website:",
-				"websiteLabel": "IONOS"
-			},
-			"project": {
-				"title": "3. Nature of the Project",
-				"independent": "DinoRPG Remastered is an open-source recreation and an independent fan project. The project is not affiliated with, endorsed by, or sponsored by Motion Twin or Eternaltwin.",
-				"nonCommercial": "Access to the game is free. The project is operated without advertising, subscriptions, in-app purchases, content sales, monetization, or donation collection.",
-				"attribution": "The original DinoRPG game was created by Motion Twin. Certain parts of the code, models, data, and game logic are derived or adapted from Motion Twin archives and the open-source Eternaltwin DinoRPG project. Detailed attributions are provided in the project repository."
-			},
-			"intellectualProperty": {
-				"title": "4. Intellectual Property",
-				"rights": "The trademarks, names, universe, characters, texts, illustrations, sounds, and other elements from the original DinoRPG game remain the property of their respective rights holders, including Motion Twin where applicable. Their presence in this project does not constitute any transfer of rights.",
-				"code": "The source code of DinoRPG Remastered is made available under the GNU Affero General Public License version 3 (AGPL-3.0), in accordance with the terms specified in the project repository.",
-				"assets": "Certain graphical assets and original content from DinoRPG are made available under the conditions indicated in the repository, notably under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International license (CC BY-NC-SA 4.0).",
-				"repositoryIntro": "The source code, licenses, and attributions are available in the",
-				"repositoryLabel": "DinoRPG Remastered GitHub repository"
-			},
-			"personalData": {
-				"title": "5. Personal Data and Cookies",
-				"controller": "The data controller is the non-professional publisher of DinoRPG Remastered. They can be contacted at the email address indicated below.",
-				"introduction": "DinoRPG Remastered processes only the data necessary for account creation and management, game operation, progress saving, messaging, moderation, security, and support.",
-				"optionalData": "The username and password are required to create and secure the account. The email address is optional when it is not required by the registration form. Without an email address, certain features, particularly password recovery and account-related communications, may be unavailable.",
-				"data": {
-					"account": "Account data: username, email address when provided, internal identifier, password stored in hashed form, role, and account creation and login dates.",
-					"game": "Game data: progress, Dinoz, inventory, virtual currencies, missions, scenarios, rankings, profile, and history of actions performed in the game.",
-					"messages": "Communication data: private messages, participants, sending dates, read status, and any reports required for moderation.",
-					"technical": "Technical data: IP address, connection information, server logs, technical errors, and actions required for service security."
-				},
-				"purposes": "This data is used to provide the requested service, authenticate players, save their progress, enable communications, provide support, enforce the rules, and protect the website against errors, abuse, and unauthorized access.",
-				"legalBases": "Processing necessary for the account, game, and messaging is based on the performance of the service requested by the player. Processing related to security, abuse prevention, and moderation is based on the publisher's legitimate interest in protecting the project and its users.",
-				"recipients": "Data may be accessible to the publisher and authorized administrators when their intervention is necessary, as well as to technical service providers strictly necessary for hosting, security, and operation of the project. The main data is hosted on IONOS infrastructure. It is neither sold nor used for advertising purposes.",
-				"retention": "Account data, progress, and messages are retained for the lifetime of the account. After a deletion request, data is removed from the active database within a maximum of 30 days and progressively disappears from backups within a maximum of 90 days. Technical and security logs are retained for a maximum of 12 months. Support and moderation data is retained for a maximum of 12 months after the request or case is closed.",
-				"cookiesIntroduction": "The website exclusively uses cookies and local storage necessary for its operation or for features expressly requested by the player:",
-				"cookies": {
-					"authentication": "Authentication cookie: it keeps the player's session active and secures access to their account. Its maximum lifetime is seven days.",
-					"language": "Language preference: it stores the selected language on the device being used.",
-					"preferences": "Local game preferences: they store certain interface and animation settings selected by the player."
-				},
-				"cookiesConsent": "These trackers are not used for advertising, audience measurement, or tracking browsing on other websites. As they are strictly necessary for the service or requested preferences, they are not subject to prior consent.",
-				"cookiesRemoval": "The player can delete cookies and local data from their browser settings. Doing so may log them out and reset their preferences.",
-				"rights": "Each player may request access to, rectification of, or deletion of their data, as well as restriction of certain processing, data portability where applicable, or object to certain processing where permitted by law. The request must make it possible to identify the account concerned, for example using the username and associated email address.",
-				"rightsContact": "To exercise these rights or ask a question about personal data:",
-				"cnilIntro": "A complaint may also be submitted to the",
-				"cnilLabel": "Commission nationale de l'informatique et des libéertés (CNIL)"
-			},
-			"liability": {
-				"title": "6. Liability",
-				"availability": "The publisher endeavors to keep the service accessible and the published information accurate. However, they do not guarantee continuous availability, absence of errors, or absence of interruptions, particularly during maintenance, updates, or in the event of a technical incident.",
-				"use": "The user remains responsible for their equipment, Internet connection, and use of the service. The service is provided free of charge and as is, within the limits permitted by applicable law.",
-				"externalLinks": "The website may contain links to external services. The publisher does not control their content, availability, or any changes made to them."
-			},
-			"contact": {
-				"title": "7. Contact and Reporting",
-				"description": "Any legal question, rights-related request, complaint, or report concerning content may be addressed to the publisher.",
-				"emailIntro": "Contact address:",
-				"details": {
-					"url": "Provide the exact address of the page concerned.",
-					"content": "Clearly describe the reported content or behavior.",
-					"reason": "Specify the reason for the request and, where useful, attach any necessary supporting documents.",
-					"identity": "Provide contact details so that a response can be sent."
-				}
-			}
 		}
 	},
 	"trainingCenter": {
@@ -3843,7 +3499,6 @@
 			"title": "Treasury Note Exchange",
 			"dailyRate": "Today's exchange rate",
 			"rateValue": "1 :ticket: = **{gold}** :gold: (rate x{rate})",
-			"yourTickets": "Your Treasure Coupons",
 			"quantity": "Amount to exchange",
 			"max": "Max",
 			"youWillReceive": "You will receive **{gold}** :gold:",
@@ -3870,7 +3525,6 @@
 		"description": "You can talk to this person.",
 		"leave": "Stop chatting",
 		"openLink": "Open link",
-		"continue": "Continue",
 		"eugene": {
 			"name": "Professor Eugene",
 			"dialog": {
@@ -4834,7 +4488,7 @@
 				"magnet7": {
 					"next": "Ah euh... oui...",
 					"talk": "Raconter",
-					"cont": "Continue",
+					"cont": "Continuer",
 					"serv": "Un service ?",
 					"sehd": "De... quoi ?",
 					"control": "Prendre le contrôle ?",
@@ -4886,7 +4540,7 @@
 				}
 			},
 			"choice": {
-				"continue": "Continue",
+				"continue": "Continuer",
 				"magnet6": {
 					"who": "Qui êtes-vous ?",
 					"dont": "Ne rien raconter",
@@ -4980,7 +4634,6 @@
 	"missions": {
 		"header": "Missions list",
 		"th": {
-			"title": "Title",
 			"status": "Status"
 		},
 		"status": {
@@ -6665,6 +6318,9 @@
 		},
 		"jeromeTrader": {
 			"name": "L'affaire Warp Street"
+		},
+		"dojo": {
+			"name": "Dojo"
 		}
 	},
 	"reportModal": {
@@ -6674,8 +6330,6 @@
 		"reportingClan": "Reporting clan:",
 		"reason": "Reason:",
 		"comment": "Comment:",
-		"cancel": "Cancel",
-		"send": "Send",
 		"success": "Report sent.",
 		"error": "Error while sending the report.",
 		"reasons": {

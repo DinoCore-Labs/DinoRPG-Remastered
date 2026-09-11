@@ -78,6 +78,7 @@
 				v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW && a.name !== Action.DEFENDING_DEVOURER)"
 				:key="action"
 				:id="action.imgName"
+				:data-tutorial-action="getTutorialActionKey(action)"
 				@click="launch(action)"
 			>
 				<img :src="getImgURL('act', action.imgName)" :alt="action.imgName" />
@@ -310,6 +311,12 @@ export default defineComponent({
 		closeMissionRewardModal() {
 			this.missionReward = null;
 		},
+		getTutorialActionKey(action: ActionFiche): string | undefined {
+			if (action.name !== Action.NPC || typeof action.prop !== 'string') {
+				return undefined;
+			}
+			return `dialog:${action.prop}`;
+		},
 		async handleMissionInteractionResult(result: MissionInteractionStartResponse) {
 			switch (result.mode) {
 				case 'modal': {
@@ -417,7 +424,7 @@ export default defineComponent({
 					const name = this.getShopNameFromAction(action);
 					if (!name) return;
 					this.$router.push({
-						name: 'ItemShopPage',
+						name: 'ShopItems',
 						params: { name }
 					});
 					break;

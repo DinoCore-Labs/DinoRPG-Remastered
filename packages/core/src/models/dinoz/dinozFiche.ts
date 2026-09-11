@@ -37,6 +37,7 @@ export interface DinozFiche {
 	placeId: number;
 	actions: ActionFiche[];
 	items: number[];
+	lockedMagicItems?: { itemId: number; equippedAt: string }[];
 	maxItems: number;
 	skills: DinozSkillsDTO[];
 	status: DinozStatusDTO[];

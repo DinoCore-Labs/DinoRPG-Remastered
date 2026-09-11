@@ -2,4 +2,4 @@ if [ -n "$CI" ]; then
   exit 0
 fi
 
-pnpm lint-staged
+pnpm lint-staged --max-arg-length 6000

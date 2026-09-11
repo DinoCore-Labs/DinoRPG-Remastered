@@ -3,7 +3,8 @@ import { defaultConditionKeyMaps } from '@dinorpg/core/models/conditions/default
 import { DinozFiche, DinozFicheLite, DinozPublicFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { DinozRestInfos } from '@dinorpg/core/models/dinoz/dinozRest.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
-import { Item } from '@dinorpg/core/models/items/itemList.js';
+import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { DinozCurrentMission } from '@dinorpg/core/models/missions/missionCurrent.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
@@ -66,7 +67,7 @@ export const toDinozFiche = (
 			| 'gather'
 		> & {
 			missions?: Pick<DinozMissions, 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
-			items: Pick<DinozItems, 'itemId'>[];
+			items: Pick<DinozItems, 'itemId' | 'equippedAt'>[];
 			status: Pick<DinozStatus, 'statusId'>[];
 			skills: Pick<DinozSkills, 'skillId' | 'state'>[];
 			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
@@ -103,6 +104,12 @@ export const toDinozFiche = (
 		race: getRace(dinoz.raceId),
 		placeId: dinoz.placeId,
 		items: dinoz.items?.map(item => item.itemId),
+		lockedMagicItems: dinoz.items
+			?.filter(item => {
+				const fiche = itemList[item.itemId as Item];
+				return fiche?.itemType === ItemType.MAGICAL;
+			})
+			.map(item => ({ itemId: item.itemId, equippedAt: item.equippedAt.toISOString() })),
 		maxItems: backpackSlot(user.engineer, dinoz),
 		status: dinoz.status?.sort((a, b) => a.statusId - b.statusId),
 		borderPlace:

@@ -674,7 +674,7 @@ export default defineComponent({
 .details {
 	margin: 5px;
 	table {
-		margin-bottom: 10px;
+		margin-bottom: 5px;
 		border: 2px solid #bc683c;
 		border-collapse: collapse;
 		background-color: transparent;
@@ -697,12 +697,15 @@ export default defineComponent({
 					background-position: 0px 0px;
 					padding-left: 15px;
 					max-width: 222px;
+					p {
+						margin: 0;
+						font-size: 8.5pt;
+						display: inline-block;
+						vertical-align: middle;
+					}
 					img {
-						float: left;
-						position: relative;
-						margin-top: 6px;
 						margin-right: 5px;
-						vertical-align: bottom;
+						vertical-align: middle;
 					}
 				}
 				&.type {
@@ -720,7 +723,7 @@ export default defineComponent({
 						float: left;
 						position: relative;
 						left: 14px;
-						top: 13px;
+						top: 7px;
 						cursor: help;
 					}
 					background-image: url('../../assets/background/table_cell.webp');
@@ -742,25 +745,27 @@ export default defineComponent({
 	.title {
 		color: #f8efa4;
 		background-color: #bc683c;
-		padding: 4px 8px;
+		padding: 2px 8px;
 		font-variant: small-caps;
-		margin-bottom: 4px;
+		margin-bottom: 2px;
 	}
 	.stats {
 		border: 1px solid #f8efa4;
 		border-radius: 10px;
-		padding: 2px 0;
-		margin-bottom: 6px;
+		padding: 1px 0;
+		margin-bottom: 2px;
+		margin: 6px;
 		.subtitle {
 			display: flex;
 			align-items: center;
+			margin: 3px;
 			color: #f8efa4;
 			font-variant: small-caps;
 			border-bottom: 1px solid #f8efa4;
 			font-size: 9pt;
 			padding-left: 4px;
 			padding-right: 4px;
-			padding-bottom: 2px;
+			padding-bottom: 1px;
 			.help {
 				border: 1px solid #bc683c;
 				cursor: help;
@@ -772,7 +777,8 @@ export default defineComponent({
 		}
 		.stat-values {
 			list-style-type: none;
-			padding: 2px 4px;
+			margin: 3px;
+			padding: 1px 2px;
 			padding-bottom: 0;
 			li {
 				position: relative;
