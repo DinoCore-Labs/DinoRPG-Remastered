@@ -364,12 +364,16 @@ function getFightReturnCompletionState(
 	 * après une victoire.
 	 */
 	for (const effect of returnPhase.effects) {
-		if (effect.type !== 'scenario') {
-			continue;
-		}
-		hasCompletionProof = true;
-		if (getScenarioProgress(context, effect.scenario) !== effect.phase) {
-			return false;
+		if (effect.type === 'scenario') {
+			hasCompletionProof = true;
+			if (getScenarioProgress(context, effect.scenario) !== effect.phase) {
+				return false;
+			}
+		} else if (effect.type === 'collection') {
+			hasCompletionProof = true;
+			if (!context.user.collections.has(effect.collection)) {
+				return false;
+			}
 		}
 	}
 	return hasCompletionProof ? true : null;
