@@ -14,6 +14,7 @@ type StartMissionGoalFightInput = {
 	userId: string;
 	dinozId: number;
 	goal: MissionFightGoal | MissionFightActionGoal;
+	autoReequip?: boolean;
 };
 
 function getMissionMonsterKeys(goal: MissionFightGoal | MissionFightActionGoal) {
@@ -104,7 +105,8 @@ export async function processMissionFight(input: StartMissionGoalFightInput): Pr
 	const place = getMissionFightPlace(input.goal, dinozData.placeId);
 	const fightResult = calculateFightVsMonsters(team, user, place, monsters, undefined, allies);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, place, user, {
-		disableGoldReward: false
+		disableGoldReward: false,
+		autoReequip: input.autoReequip
 	});
 
 	if (input.goal.type === 'FIGHT_ACTION') {

@@ -24,8 +24,10 @@ export const MissionService = {
 	stopDinozMission(dinozId: number, missionKey: string): Promise<StopDinozMissionResponse> {
 		return api.post<StopDinozMissionResponse>(`/missions/dinoz/${dinozId}/mission/${missionKey}/stop`);
 	},
-	startAction(dinozId: number): Promise<MissionInteractionStartResponse> {
-		return api.post<MissionInteractionStartResponse>(`/missions/dinoz/${dinozId}/mission/action/start`);
+	startAction(dinozId: number, autoReequip = false): Promise<MissionInteractionStartResponse> {
+		return api.post<MissionInteractionStartResponse>(`/missions/dinoz/${dinozId}/mission/action/start`, {
+			autoReequip
+		});
 	},
 	completeAction(
 		dinozId: number,
