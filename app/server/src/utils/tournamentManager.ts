@@ -52,10 +52,10 @@ import type { FightRules } from '../utils/fight/fight.mapper.js';
 //
 
 //
-//   Sun 00:00  TOURNAMENT_INIT_JOB_KEY      — create tournament, open qualifications
-//   Sun 00:00  TOURNAMENT_POOLS_START_JOB_KEY — (1 week later) close qualifications, assign pools, play round 0
+//   Mon 00:00  TOURNAMENT_INIT_JOB_KEY      — create tournament, open qualifications
+//   Mon 00:00  TOURNAMENT_POOLS_START_JOB_KEY — (1 week later) close qualifications, assign pools, play round 0
 //   Mon 12:00  TOURNAMENT_POOLS_R1_JOB_KEY  — round 1 pool
-//   Mon 22:00  TOURNAMENT_POOLS_R2_JOB_KEY  — round 2 pool
+//   Tue 12:00  TOURNAMENT_POOLS_R2_JOB_KEY  — round 2 pool
 //   Wed 12:00  TOURNAMENT_FINALS_R0_JOB_KEY — 1/16 (32→16)
 //   Thu 12:00  TOURNAMENT_FINALS_R1_JOB_KEY — 1/8 (16→8)
 //   Fri 12:00  TOURNAMENT_FINALS_R2_JOB_KEY — 1/4 (8→4)
@@ -63,10 +63,10 @@ import type { FightRules } from '../utils/fight/fight.mapper.js';
 //   Sun 12:00  TOURNAMENT_FINALS_R4_JOB_KEY — final (2→1)
 //
 
-export const TOURNAMENT_INIT_JOB_KEY = 'tournament-init'; // sun 00:00
-export const TOURNAMENT_POOLS_START_JOB_KEY = 'tournament-pools-start'; // sun 00:00 (next week)
+export const TOURNAMENT_INIT_JOB_KEY = 'tournament-init'; // mon 00:00
+export const TOURNAMENT_POOLS_START_JOB_KEY = 'tournament-pools-start'; // mon 00:00 (next week)
 export const TOURNAMENT_POOLS_R1_JOB_KEY = 'tournament-pools-round-1'; // mon 12:00
-export const TOURNAMENT_POOLS_R2_JOB_KEY = 'tournament-pools-round-2'; // mon 22:00
+export const TOURNAMENT_POOLS_R2_JOB_KEY = 'tournament-pools-round-2'; // tue 12:00
 export const TOURNAMENT_FINALS_R0_JOB_KEY = 'tournament-finals-r0'; // wed 12:00
 export const TOURNAMENT_FINALS_R1_JOB_KEY = 'tournament-finals-r1'; // thu 12:00
 export const TOURNAMENT_FINALS_R2_JOB_KEY = 'tournament-finals-r2'; // fri 12:00
@@ -144,7 +144,7 @@ export class TournamentManager {
 		qualificationEnd.setDate(qualificationEnd.getDate() + 7);
 		const poolsStart = new Date(qualificationEnd);
 		const finalsStart = new Date(poolsStart);
-		finalsStart.setDate(finalsStart.getDate() + 2); // tuesday 00:00
+		finalsStart.setDate(finalsStart.getDate() + 2); // wednesday 00:00
 
 		const PHASE_TOLERANCE_MS = 60_000;
 
@@ -265,7 +265,7 @@ export class TournamentManager {
 	 */
 	static async poolsStartJob(prismaClient = prisma): Promise<void> {
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
-		if (!tournament || tournament.phase !== TournamentPhase.POOLS) return;
+		if (!tournament) return;
 
 		await TournamentManager.rewardQualification();
 		await TournamentManager.generatePoolBrackets(tournament.id, tournament.schedule.poolsStart, prismaClient);
@@ -552,7 +552,7 @@ export class TournamentManager {
 	 */
 	private static async schedulePoolRound(round: number, prismaClient = prisma): Promise<void> {
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
-		if (!tournament || tournament.phase !== TournamentPhase.POOLS) return;
+		if (!tournament) return;
 
 		const dbTournament = await prismaClient.tournament.findUniqueOrThrow({
 			where: { id: tournament.id },
