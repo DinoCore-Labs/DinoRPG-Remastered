@@ -17,7 +17,8 @@
 		"test:unit:watch": "vitest --config vitest.unit.config.ts",
 		"test:coverage": "vitest run --config vitest.unit.config.ts --coverage",
 		"test:integration": "pnpm prisma:generate && vitest run --config vitest.integration.config.ts",
-		"test:integration:watch": "vitest --config vitest.integration.config.ts"
+		"test:integration:watch": "vitest --config vitest.integration.config.ts",
+		"test:e2e:server": "pnpm prisma:generate && tsx test/e2e-server.ts"
 	},
 	"packageManager": "pnpm@10.12.1",
 	"dependencies": {
