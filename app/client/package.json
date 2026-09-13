@@ -6,7 +6,10 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc -b && vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"test:unit": "vitest run --passWithNoTests",
+		"test:unit:watch": "vitest",
+		"test:coverage": "vitest run --coverage"
 	},
 	"dependencies": {
 		"@eternaltwin/dinorpg_animations": "^1.0.8",
@@ -30,10 +33,14 @@
 		"@dinorpg/core": "workspace:^*",
 		"@types/sanitize-html": "^2.16.1",
 		"@vitejs/plugin-vue": "^6.0.5",
+		"@vitest/coverage-v8": "^5.0.0",
+		"@vue/test-utils": "^2.5.0",
 		"@vue/tsconfig": "^0.9.1",
+		"jsdom": "^30.0.1",
 		"sass": "^1.103.1",
 		"vite": "^8.2.2",
 		"vite-plugin-vue-devtools": "^8.2.1",
+		"vitest": "^5.0.0",
 		"vue-tsc": "^3.3.11"
 	}
 }
