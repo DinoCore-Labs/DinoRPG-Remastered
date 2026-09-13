@@ -73,12 +73,16 @@ const cfg = loadConfig();
 
 const GAME_RULES_EXEMPT_PATHS = new Set(['/api/users/me', '/api/users/me/rules/accept']);
 
-async function buildServer() {
+export interface BuildServerOptions {
+	startBackgroundJobs?: boolean;
+}
+
+async function buildServer(options: BuildServerOptions = {}) {
+	const { startBackgroundJobs = true } = options;
 	const server = Fastify({
 		logger: true,
 		trustProxy: true
 	}).withTypeProvider<ZodTypeProvider>();
-
 	//-------------------------------------------------------
 	// Zod compilers
 	//-------------------------------------------------------
@@ -94,7 +98,6 @@ async function buildServer() {
 		methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 		allowedHeaders: ['Content-Type', 'Authorization']
 	});
-
 	//-------------------------------------------------------
 	// Rate limiting
 	//-------------------------------------------------------
@@ -118,7 +121,6 @@ async function buildServer() {
 			});
 		}
 	});
-
 	//------------------------------------------------------
 	// 2. Cookies (avant JWT)
 	//------------------------------------------------------
@@ -141,7 +143,6 @@ async function buildServer() {
 		}
 		(req as any).deviceId = deviceId;
 	});
-
 	//------------------------------------------------------
 	// 3. JWT
 	//------------------------------------------------------
@@ -152,7 +153,6 @@ async function buildServer() {
 			signed: false
 		}
 	});
-
 	//------------------------------------------------------
 	// 4. Hook pour req.jwt
 	//------------------------------------------------------
@@ -160,7 +160,6 @@ async function buildServer() {
 		req.jwt = server.jwt;
 		next();
 	});
-
 	//------------------------------------------------------
 	// 5. Décorateur d’authentification
 	//------------------------------------------------------
@@ -174,7 +173,6 @@ async function buildServer() {
 			req.user = decoded;
 			const requestPath = req.url.split('?')[0];
 			const isGameRulesExempt = GAME_RULES_EXEMPT_PATHS.has(requestPath);
-
 			const dbUser = await prisma.user.findUnique({
 				where: {
 					id: decoded.id
@@ -233,14 +231,12 @@ async function buildServer() {
 			return reply.code(403).send({ message: 'Forbidden' });
 		}
 	});
-
 	server.decorate('moderator', async (req: FastifyRequest, reply: FastifyReply) => {
 		const role = (req.user as any)?.role as UserRole;
 		if (role !== 'MODERATOR' && role !== 'ADMIN' && role !== 'SUPER_ADMIN') {
 			return reply.code(403).send({ message: 'Forbidden' });
 		}
 	});
-
 	//------------------------------------------------------
 	// 5.bis Maintenance mode
 	//------------------------------------------------------
@@ -297,7 +293,6 @@ async function buildServer() {
 			fileSize: 1_000_000 // 1MB max
 		}
 	});
-
 	//------------------------------------------------------
 	// 6. Swagger
 	//------------------------------------------------------
@@ -329,7 +324,6 @@ async function buildServer() {
 		transform: jsonSchemaTransform,
 		transformObject: jsonSchemaTransformObject
 	});
-
 	await server.register(swaggerUI, {
 		routePrefix: '/docs',
 		uiConfig: {
@@ -339,7 +333,6 @@ async function buildServer() {
 		staticCSP: true,
 		transformStaticCSP: header => header
 	});
-
 	//------------------------------------------------------
 	// 7. Healthcheck
 	//------------------------------------------------------
@@ -358,7 +351,6 @@ async function buildServer() {
 	// 8. Dialog registry
 	//------------------------------------------------------
 	loadDialogs();
-
 	//------------------------------------------------------
 	// 9. Routes
 	//------------------------------------------------------
@@ -389,33 +381,38 @@ async function buildServer() {
 	server.register(tutorialRoutes, { prefix: 'api/tutorial' });
 	server.register(maintenanceRoutes, { prefix: 'api/maintenance' });
 	server.register(versionRoutes, { prefix: 'api' });
-
 	//------------------------------------------------------
 	// 10. Scheduler
 	//------------------------------------------------------
-	await ensureJobsExist();
-	await ensureSecretsExist(server.log);
-	const stopScheduler = startScheduler(
-		{
-			'reset-dinoz-shop': resetDinozShopAtMidnight,
-			'devourer-midnight-reset': devourerMidnightResetJob,
-			'itinerant-merchant-move': () => itinerantMerchantMoveJob(server.log),
-			'heal-fountain-pearl-dinoz': async () => {
-				const result = await healFountainPearlDinozJob();
-				server.log.info({ healedCount: result.healedCount }, '[jobs] heal-fountain-pearl-dinoz processed');
+	if (startBackgroundJobs) {
+		await ensureJobsExist();
+		await ensureSecretsExist(server.log);
+		const stopScheduler = startScheduler(
+			{
+				'reset-dinoz-shop': resetDinozShopAtMidnight,
+				'devourer-midnight-reset': devourerMidnightResetJob,
+				'itinerant-merchant-move': () => itinerantMerchantMoveJob(server.log),
+				'heal-fountain-pearl-dinoz': async () => {
+					const result = await healFountainPearlDinozJob();
+					server.log.info(
+						{
+							healedCount: result.healedCount
+						},
+						'[jobs] heal-fountain-pearl-dinoz processed'
+					);
+				},
+				[MARKET_EXPIRATION_JOB_KEY]: () => expireDueMarketOffersJob(server.log),
+				[GAME_LOG_MAINTENANCE_JOB_KEY]: () => gameLogMaintenanceJob(server.log),
+				[BANK_EXCHANGE_RATE_JOB_KEY]: () => refreshBankExchangeRateJob(server.log),
+				'reset-dojo-challenge': () => resetDojoChallenge(),
+				...TournamentManager.HANDLERS
 			},
-			[MARKET_EXPIRATION_JOB_KEY]: () => expireDueMarketOffersJob(server.log),
-			[GAME_LOG_MAINTENANCE_JOB_KEY]: () => gameLogMaintenanceJob(server.log),
-			[BANK_EXCHANGE_RATE_JOB_KEY]: () => refreshBankExchangeRateJob(server.log),
-			'reset-dojo-challenge': () => resetDojoChallenge(),
-			...TournamentManager.HANDLERS
-		},
-		server.log
-	);
-
-	server.addHook('onClose', async () => {
-		stopScheduler();
-	});
+			server.log
+		);
+		server.addHook('onClose', async () => {
+			stopScheduler();
+		});
+	}
 	//------------------------------------------------------
 	// EXTRA: Tests
 	//------------------------------------------------------
@@ -435,7 +432,6 @@ async function buildServer() {
 			ip: req.ip
 		};
 	});
-
 	//------------------------------------------------------
 	// EXTRA: Errors
 	//------------------------------------------------------
@@ -471,7 +467,6 @@ async function buildServer() {
 			errorId
 		});
 	});
-
 	return server;
 }
 
