@@ -43,6 +43,7 @@ describe('Fastify server', () => {
 		expect(cookie).toContain('HttpOnly');
 		expect(cookie).toContain('SameSite=Lax');
 	});
+
 	it('rejects access to an authenticated route without a token', async () => {
 		const response = await server.inject({
 			method: 'GET',
@@ -53,6 +54,7 @@ describe('Fastify server', () => {
 			message: 'Authentication required'
 		});
 	});
+
 	it('validates the login payload', async () => {
 		const response = await server.inject({
 			method: 'POST',
