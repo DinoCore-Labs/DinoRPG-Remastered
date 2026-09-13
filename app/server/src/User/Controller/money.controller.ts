@@ -109,11 +109,9 @@ export async function removeTreasureTicket(userId: string, money: number) {
 		if (!wallet) {
 			throw new Error('Wallet not found');
 		}
-
 		if (wallet.amount < money) {
-			throw new Error('Not enough gold');
+			throw new Error('Not enough treasure tickets');
 		}
-
 		return tx.userWallet.update({
 			where: { id: wallet.id },
 			data: {
