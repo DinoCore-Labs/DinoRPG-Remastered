@@ -11,7 +11,7 @@
 	},
 	"type": "module",
 	"engines": {
-		"node": ">=22"
+		"node": ">=22.12.0"
 	},
 	"scripts": {
 		"client:dev": "pnpm --filter @dinorpg/client run dev",
@@ -25,7 +25,9 @@
 		"changeset": "changeset",
 		"version-packages": "changeset version",
 		"prepare": "husky",
-		"build-changelog": "node scripts/generate-root-changelog.js"
+		"build-changelog": "node scripts/generate-root-changelog.js",
+		"test:unit": "pnpm --filter @dinorpg/core test:unit && pnpm --filter @dinorpg/server test:unit && pnpm --filter @dinorpg/client test:unit",
+		"test:coverage": "pnpm --filter @dinorpg/core test:coverage && pnpm --filter @dinorpg/server test:coverage && pnpm --filter @dinorpg/client test:coverage"
 	},
 	"lint-staged": {
 		"*.{ts,tsx,vue,js,json,css,md}": [

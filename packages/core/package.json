@@ -15,7 +15,14 @@
 	],
 	"scripts": {
 		"dev": "tsc --build ./tsconfig.json --watch",
-		"build": "tsc --build ./tsconfig.json"
+		"build": "tsc --build ./tsconfig.json",
+		"test:unit": "vitest run --passWithNoTests",
+		"test:unit:watch": "vitest",
+		"test:coverage": "vitest run --coverage"
 	},
-	"packageManager": "pnpm@10.12.1"
+	"packageManager": "pnpm@10.12.1",
+	"devDependencies": {
+		"@vitest/coverage-v8": "^5.0.0",
+		"vitest": "^5.0.0"
+	}
 }
