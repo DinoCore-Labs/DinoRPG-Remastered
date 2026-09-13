@@ -6,8 +6,6 @@ export default defineConfig({
 	description: 'Encyclopédie, guides et documentation du projet DinoRPG Remastered.',
 	cleanUrls: true,
 	lastUpdated: true,
-	// Utiliser "/" avec un domaine personnalisé comme wiki.example.fr.
-	// Utiliser "/DinoRPG-Remastered/" avec les GitHub Pages du dépôt.
 	base: process.env.WIKI_BASE ?? '/',
 	head: [
 		['meta', { name: 'theme-color', content: '#5d8239' }],
