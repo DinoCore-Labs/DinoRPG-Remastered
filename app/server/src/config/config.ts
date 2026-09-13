@@ -97,7 +97,7 @@ export function config(env: Record<string, string | undefined>): Config {
 			isProduction,
 			'dev_cookie_secret'
 		),
-		deviceCookie: env.DEVICE_COOKIE ?? 'dz_device_cookie'
+		deviceCookie: env.DEVICE_COOKIE ?? 'dz_device'
 	};
 
 	const discord: DiscordConfig = {
