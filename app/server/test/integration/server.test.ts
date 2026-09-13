@@ -5,9 +5,12 @@ let server: FastifyInstance;
 
 beforeAll(async () => {
 	process.env.NODE_ENV = 'test';
-	process.env.DATABASE_URL ??= 'postgresql://postgres:postgres@127.0.0.1:5432/dinorpg_test';
+	process.env.DATABASE_URL = 'postgresql://postgres:postgres@127.0.0.1:5432/dinorpg_test';
 	process.env.API_URL = 'http://127.0.0.1:8081';
 	process.env.SELF_URL = 'http://127.0.0.1:8080';
+	process.env.DEVICE_COOKIE = 'dz_device';
+	process.env.DINORPG_SECRET_KEY_JWT = 'test_jwt_secret';
+	process.env.DINORPG_SECRET_KEY_COOKIE = 'test_cookie_secret';
 	const { default: buildServer } = await import('../../src/server.js');
 	server = await buildServer({
 		startBackgroundJobs: false
@@ -36,7 +39,9 @@ describe('Fastify server', () => {
 			url: '/healthcheck'
 		});
 		const cookie = String(response.headers['set-cookie']);
-		expect(cookie).toContain('dz_device_cookie=');
+		expect(cookie).toContain('dz_device=');
+		expect(cookie).toContain('HttpOnly');
+		expect(cookie).toContain('SameSite=Lax');
 	});
 	it('rejects access to an authenticated route without a token', async () => {
 		const response = await server.inject({
