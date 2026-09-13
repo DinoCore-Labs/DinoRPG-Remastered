@@ -24,7 +24,8 @@ function getFlyingShopTestItem() {
 	return {
 		shopId: shop.shopId,
 		itemId: item.itemId,
-		price: soldItem.price
+		price: soldItem.price,
+		maxQuantity: item.maxQuantity
 	};
 }
 
@@ -180,6 +181,128 @@ describe('shop purchases', () => {
 			}
 		});
 		expect(inventoryItem).toBeNull();
+	});
+
+	it('allows reaching the inventory limit but rejects purchases beyond it without debiting gold', async () => {
+		const user = await createTestUser({
+			name: 'InventoryLimitBuyer'
+		});
+		const { shopId, itemId, price, maxQuantity } = getFlyingShopTestItem();
+		const initialGold = price * 2 + 500;
+		await prisma.userWallet.update({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			},
+			data: {
+				amount: initialGold
+			}
+		});
+		await prisma.userItems.create({
+			data: {
+				userId: user.id,
+				itemId,
+				quantity: maxQuantity - 1
+			}
+		});
+		const cookie = createAuthCookie(server, user);
+		/*
+		 * First purchase:
+		 * maxQuantity - 1 → maxQuantity
+		 */
+		const allowedResponse = await server.inject({
+			method: 'PUT',
+			url: `/api/shop/buyitem/${shopId}`,
+			headers: {
+				cookie
+			},
+			payload: {
+				itemId,
+				quantity: 1
+			}
+		});
+		expect(allowedResponse.statusCode).toBe(200);
+		const inventoryAtMaximum = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId
+				}
+			}
+		});
+		expect(inventoryAtMaximum.quantity).toBe(maxQuantity);
+		const walletAfterAllowedPurchase = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		expect(walletAfterAllowedPurchase.amount).toBe(initialGold - price);
+		await waitForPurchaseLogs(user.id);
+
+		/*
+		 * Second purchase:
+		 * maxQuantity → maxQuantity + 1
+		 *
+		 * Must be rejected.
+		 */
+		const rejectedResponse = await server.inject({
+			method: 'PUT',
+			url: `/api/shop/buyitem/${shopId}`,
+			headers: {
+				cookie
+			},
+			payload: {
+				itemId,
+				quantity: 1
+			}
+		});
+		expect(rejectedResponse.statusCode).toBe(400);
+		expect(rejectedResponse.json()).toEqual({
+			error: 'maxQuantityInventory'
+		});
+		/*
+		 * Inventory must remain exactly at the maximum.
+		 */
+		const inventoryAfterRejectedPurchase = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId
+				}
+			}
+		});
+		expect(inventoryAfterRejectedPurchase.quantity).toBe(maxQuantity);
+		/*
+		 * Most important assertion:
+		 * failed purchase must not cost anything.
+		 */
+		const walletAfterRejectedPurchase = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		expect(walletAfterRejectedPurchase.amount).toBe(walletAfterAllowedPurchase.amount);
+		/*
+		 * Only the successful purchase should have generated
+		 * GoldLost + ItemBought.
+		 */
+		const purchaseLogCount = await prisma.gameLog.count({
+			where: {
+				userId: user.id,
+				type: {
+					in: [GameLogType.GoldLost, GameLogType.ItemBought]
+				}
+			}
+		});
+		expect(purchaseLogCount).toBe(2);
 	});
 });
 
