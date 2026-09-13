@@ -36,7 +36,7 @@ export type LoginUserInput = z.infer<typeof loginSchema>;
 
 // Response schema for login
 export const loginResponseSchema = z.object({
-	accessToken: z.string()
+	success: z.literal(true)
 });
 
 export type LoginResponse = z.infer<typeof loginResponseSchema>;
