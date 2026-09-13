@@ -1,4 +1,4 @@
-import { GAME_RULES_VERSION } from '@dinorpg/core/src/models/game/gameRules.js';
+import { GAME_RULES_VERSION } from '@dinorpg/core/models/game/gameRules.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
