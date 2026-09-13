@@ -16,8 +16,8 @@ export const UserService = {
 			gameRulesVersion
 		});
 	},
-	login(name: string, password: string): Promise<UserData> {
-		return api.post<UserData>('/users/login', {
+	login(name: string, password: string): Promise<{ success: true }> {
+		return api.post<{ success: true }>('/users/login', {
 			name,
 			password
 		});
