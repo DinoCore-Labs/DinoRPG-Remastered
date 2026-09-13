@@ -48,6 +48,10 @@ Thumbs.db
 coverage/
 **/coverage/
 
+# Test environment
+.env.test
+**/.env.test
+
 # Playwright
 playwright-report/
 test-results/
