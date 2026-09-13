@@ -4,9 +4,9 @@ import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { GameLogType } from '../../../prisma/index.js';
-import { ACCESS_TOKEN_COOKIE } from '../../src/config/cookie.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
+import { createAuthCookie } from '../helpers/auth.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestUser, TEST_USER_PASSWORD } from '../helpers/factories/user.factory.js';
 
@@ -19,19 +19,6 @@ function extractCookie(rawHeader: string | string[] | number | undefined, name: 
 		throw new Error(`Cookie "${name}" was not found in response.`);
 	}
 	return cookie.split(';')[0];
-}
-
-async function loginPlayer(name: string, password = TEST_USER_PASSWORD): Promise<string> {
-	const response = await server.inject({
-		method: 'POST',
-		url: '/api/users/login',
-		payload: {
-			name,
-			password
-		}
-	});
-	expect(response.statusCode).toBe(200);
-	return extractCookie(response.headers['set-cookie'], ACCESS_TOKEN_COOKIE);
 }
 
 function getFlyingShopTestItem() {
@@ -96,7 +83,7 @@ describe('shop purchases', () => {
 				amount: initialGold
 			}
 		});
-		const cookie = await loginPlayer(user.name);
+		const cookie = createAuthCookie(server, user);
 		const response = await server.inject({
 			method: 'PUT',
 			url: `/api/shop/buyitem/${shopId}`,
@@ -152,7 +139,7 @@ describe('shop purchases', () => {
 				amount: initialGold
 			}
 		});
-		const cookie = await loginPlayer(user.name);
+		const cookie = createAuthCookie(server, user);
 		const response = await server.inject({
 			method: 'PUT',
 			url: `/api/shop/buyitem/${shopId}`,
