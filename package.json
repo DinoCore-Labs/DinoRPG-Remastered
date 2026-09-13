@@ -27,7 +27,9 @@
 		"prepare": "husky",
 		"build-changelog": "node scripts/generate-root-changelog.js",
 		"test:unit": "pnpm --filter @dinorpg/core test:unit && pnpm --filter @dinorpg/server test:unit && pnpm --filter @dinorpg/client test:unit",
-		"test:coverage": "pnpm --filter @dinorpg/core test:coverage && pnpm --filter @dinorpg/server test:coverage && pnpm --filter @dinorpg/client test:coverage"
+		"test:coverage": "pnpm --filter @dinorpg/core test:coverage && pnpm --filter @dinorpg/server test:coverage && pnpm --filter @dinorpg/client test:coverage",
+		"test:integration": "pnpm --filter @dinorpg/server test:integration",
+		"test": "pnpm test:unit && pnpm test:integration"
 	},
 	"lint-staged": {
 		"*.{ts,tsx,vue,js,json,css,md}": [
