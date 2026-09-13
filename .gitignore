@@ -44,6 +44,11 @@ Thumbs.db
 .env.*.local
 .env.production
 
-# Optional: test coverage
+# Test coverage
 coverage/
 **/coverage/
+
+# Playwright
+playwright-report/
+test-results/
+blob-report/

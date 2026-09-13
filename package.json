@@ -29,7 +29,11 @@
 		"test:unit": "pnpm --filter @dinorpg/core test:unit && pnpm --filter @dinorpg/server test:unit && pnpm --filter @dinorpg/client test:unit",
 		"test:coverage": "pnpm --filter @dinorpg/core test:coverage && pnpm --filter @dinorpg/server test:coverage && pnpm --filter @dinorpg/client test:coverage",
 		"test:integration": "pnpm --filter @dinorpg/server test:integration",
-		"test": "pnpm test:unit && pnpm test:integration"
+		"test": "pnpm test:unit && pnpm test:integration",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui",
+		"test:e2e:debug": "playwright test --debug",
+		"test:all": "pnpm test && pnpm test:e2e"
 	},
 	"lint-staged": {
 		"*.{ts,tsx,vue,js,json,css,md}": [
@@ -43,6 +47,7 @@
 		"@changesets/cli": "^2.31.1",
 		"@commitlint/cli": "^21.2.2",
 		"@commitlint/config-conventional": "^21.2.2",
+		"@playwright/test": "^1.63.0",
 		"@types/node": "^25.6.0",
 		"@typescript-eslint/eslint-plugin": "^8.69.0",
 		"@typescript-eslint/parser": "^8.69.0",
