@@ -77,7 +77,6 @@ export async function userRoutes(app: FastifyInstance) {
 		},
 		changeUserPassword
 	);
-
 	app.delete(
 		'/me/delete',
 		{
@@ -89,7 +88,6 @@ export async function userRoutes(app: FastifyInstance) {
 		},
 		deleteUser
 	);
-
 	app.post(
 		'/me/reset',
 		{
@@ -176,7 +174,7 @@ export async function userRoutes(app: FastifyInstance) {
 				tags: ['Users'],
 				body: loginSchema,
 				response: {
-					201: loginResponseSchema
+					200: loginResponseSchema
 				}
 			}
 		},
