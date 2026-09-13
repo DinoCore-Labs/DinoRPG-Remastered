@@ -64,6 +64,13 @@ describe('integration factories', () => {
 		it('exports a valid default test password', () => {
 			expect(TEST_USER_PASSWORD.length).toBeGreaterThanOrEqual(6);
 		});
+
+		it('creates a ShopKeeper player when requested', async () => {
+			const user = await createTestUser({
+				shopKeeper: true
+			});
+			expect(user.shopKeeper).toBe(true);
+		});
 	});
 
 	describe('dinoz factory', () => {

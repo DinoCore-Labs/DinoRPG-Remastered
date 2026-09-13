@@ -19,6 +19,7 @@ export interface CreateTestUserOptions {
 	withRanking?: boolean;
 	withWallets?: boolean;
 	withTutorial?: boolean;
+	shopKeeper?: boolean;
 }
 
 let userSequence = 0;
@@ -30,6 +31,7 @@ export async function createTestUser(options: CreateTestUserOptions = {}) {
 		name = `TestPlayer${userSequence}`,
 		password = TEST_USER_PASSWORD,
 		role = 'PLAYER',
+		shopKeeper = false,
 		gameRulesAcceptedVersion = GAME_RULES_VERSION,
 		gameRulesAcceptedAt = new Date(),
 		withProfile = true,
@@ -45,6 +47,7 @@ export async function createTestUser(options: CreateTestUserOptions = {}) {
 			name,
 			password: passwordHash,
 			role,
+			shopKeeper,
 			gameRulesAcceptedVersion,
 			gameRulesAcceptedAt,
 			...(withProfile
