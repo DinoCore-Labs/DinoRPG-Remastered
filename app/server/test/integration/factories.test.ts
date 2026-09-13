@@ -35,12 +35,14 @@ describe('integration factories', () => {
 			])
 		);
 	});
+
 	it('creates unique users by default', async () => {
 		const firstUser = await createTestUser();
 		const secondUser = await createTestUser();
 		expect(firstUser.id).not.toBe(secondUser.id);
 		expect(firstUser.name).not.toBe(secondUser.name);
 	});
+
 	it('allows optional relations to be disabled', async () => {
 		const user = await createTestUser({
 			withProfile: false,
@@ -53,6 +55,7 @@ describe('integration factories', () => {
 		expect(user.wallets).toEqual([]);
 		expect(user.scenarios).toEqual([]);
 	});
+
 	it('exports a valid default test password', () => {
 		expect(TEST_USER_PASSWORD.length).toBeGreaterThanOrEqual(6);
 	});
