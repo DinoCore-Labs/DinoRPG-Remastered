@@ -13,18 +13,10 @@
 -->
 
 <template>
-	<DZDisclaimer
-		v-if="state.round === 8"
-		round
-		:content="$t(`dojo.timer.nextQualif`, calculateTimeRemaining(state.nextScheduledMatch))"
-	/>
-	<DZDisclaimer
-		v-else
-		round
-		:content="$t(`dojo.timer.${state.phase}`, calculateTimeRemaining(state.nextScheduledMatch))"
-	/>
+	<DZDisclaimer v-if="isFinished" round :content="$t(`dojo.timer.nextQualif`, timeRemaining)" />
+	<DZDisclaimer v-else round :content="$t(`dojo.timer.${state.phase}`, timeRemaining)" />
 	<DZDisclaimer round :content="$t(`dojo.timer.cashPrice`, { cashPrice: beautifulNumber(state.cashPrice) })" />
-	<DZDisclaimer v-if="!tournamentTeam && tournamentState" round help :content="$t(`dojo.timer.noTeam`)" />
+	<DZDisclaimer v-if="!tournamentTeam && state" round help :content="$t(`dojo.timer.noTeam`)" />
 </template>
 
 <script lang="ts">
@@ -38,34 +30,26 @@ export default defineComponent({
 	name: 'DojoTimer',
 	data() {
 		return {
-			beautifulNumber
+			beautifulNumber,
+			now: new Date(),
+			timer: null as ReturnType<typeof setInterval> | null
 		};
 	},
 	computed: {
 		tournamentTeam() {
-			if (!dojoStore().TournamentTeam) {
-				return;
-			}
 			return dojoStore().TournamentTeam;
 		},
-		tournamentState() {
-			if (!dojoStore().getState) {
-				return;
+		isFinished(): boolean {
+			// Round 15 = lastFight.tournamentStep 14 + 1 (finale jouée)
+			return this.state.round >= 15;
+		},
+		timeRemaining(): { day: number; hours: number; minutes: number } {
+			if (!this.state.nextScheduledMatch) {
+				return { day: 0, hours: 0, minutes: 0 };
 			}
-			return dojoStore().getState;
-		}
-	},
-	props: {
-		state: {
-			type: Object as PropType<TournamentState>,
-			required: true
-		}
-	},
-	methods: {
-		calculateTimeRemaining(targetDate: Date): { day: number; hours: number; minutes: number } {
-			const now = new Date();
-			const targetedDate = new Date(targetDate);
-			const difference = targetedDate.getTime() - now.getTime();
+
+			const targetedDate = new Date(this.state.nextScheduledMatch);
+			const difference = targetedDate.getTime() - this.now.getTime();
 
 			if (difference <= 0) {
 				return {
@@ -88,6 +72,23 @@ export default defineComponent({
 				hours: remainingHours,
 				minutes: remainingMinutes
 			};
+		}
+	},
+	props: {
+		state: {
+			type: Object as PropType<TournamentState>,
+			required: true
+		}
+	},
+	mounted() {
+		this.timer = setInterval(() => {
+			this.now = new Date();
+		}, 1000);
+	},
+	beforeUnmount() {
+		if (this.timer) {
+			clearInterval(this.timer);
+			this.timer = null;
 		}
 	},
 	components: { DZDisclaimer }
