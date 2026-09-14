@@ -125,7 +125,7 @@ export default defineComponent({
 						params.poisonStatus = this.$t(poisonKey);
 					}
 					if (typeof params.itemsAllowed === 'boolean') {
-						const itemKey = params.items ? 'news.tournament.items.enabled' : 'news.tournament.items.disabled';
+						const itemKey = params.itemsAllowed ? 'news.tournament.items.enabled' : 'news.tournament.items.disabled';
 						params.itemsStatus = this.$t(itemKey);
 					}
 
