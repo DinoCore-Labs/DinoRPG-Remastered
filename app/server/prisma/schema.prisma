@@ -649,7 +649,7 @@ model Ranking {
   dinozCount Int    @default(0)
   points     Int    @default(0)
   average    Int    @default(0)
-  completion Int    @default(0)
+  completion Float  @default(0)
   dojo       Int    @default(0)
 
   userId     String @unique @db.Uuid

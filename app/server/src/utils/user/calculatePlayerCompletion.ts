@@ -12,18 +12,40 @@
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
+import { convertToUserStats, getUnlockedGoals } from '@dinorpg/core/utils/goals.js';
 
 import gameConfig from '../../config/game.config.js';
+import { prisma } from '../../prisma.js';
 import { getBoxHandlerInformations } from '../../User/Controller/getBoxHandlerInfo.controller.js';
 
 /**
  * Calculate a player completion, an approximate score of its progress in the game and its content
- * The completion score depends on the epic rewards of the player, the average level of its active dinoz and
- * their average mission completion rate.
- * @param playerId {number} id of the player
- * @returns Completion score
+ * The completion score is calculated from the Twinoid Goals stats (max score = 1000).
+ * It returns a percentage (score / 10).
+ * @param playerId {string} id of the player
+ * @returns Completion score (0 - 100)
  */
 export async function calculatePlayerCompletion(playerId: string) {
+	const user = await prisma.user.findUnique({
+		where: { id: playerId },
+		select: { statsTracking: true }
+	});
+	if (!user) throw new ExpectedError(`Player doesn't exist`);
+
+	const userStats = convertToUserStats(user.statsTracking);
+	let totalScore = 0;
+
+	for (const stat of userStats) {
+		const unlocked = getUnlockedGoals(stat);
+		for (const unlock of unlocked) {
+			totalScore += unlock.points;
+		}
+	}
+
+	return totalScore / 10;
+
+	/*
+	// --- ANCIEN CALCUL DE COMPLETION (Sauvegardé pour référence) ---
 	const boxInfo = await getBoxHandlerInformations(playerId);
 	if (!boxInfo) throw new ExpectedError(`Player doesn't exist`);
 	const dinozCount = boxInfo._count.dinoz;
@@ -66,4 +88,5 @@ export async function calculatePlayerCompletion(playerId: string) {
 		100;
 
 	return completion;
+	*/
 }
