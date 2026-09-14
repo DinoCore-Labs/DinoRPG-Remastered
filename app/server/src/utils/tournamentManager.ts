@@ -130,6 +130,56 @@ const FINALS_STEP_OFFSET = 10;
 // ---------------------------------------------------------------------------
 
 export class TournamentManager {
+	static calculateNextScheduledMatch(
+		tournamentDate: Date,
+		lastFightStep: number | null,
+		currentDate = new Date()
+	): Date {
+		const qualificationStart = new Date(tournamentDate);
+		const qualificationEnd = new Date(tournamentDate);
+		qualificationEnd.setDate(qualificationEnd.getDate() + 7);
+		const poolsStart = new Date(qualificationEnd);
+
+		const poolsR1Date = new Date(poolsStart.getTime() + 12 * 3600 * 1000); // Mon 12:00
+		const poolsR2Date = new Date(poolsStart.getTime() + 36 * 3600 * 1000); // Tue 12:00
+		const finalsR0Date = new Date(poolsStart.getTime() + 60 * 3600 * 1000); // Wed 12:00
+		const finalsR1Date = new Date(poolsStart.getTime() + 84 * 3600 * 1000); // Thu 12:00
+		const finalsR2Date = new Date(poolsStart.getTime() + 108 * 3600 * 1000); // Fri 12:00
+		const finalsR3Date = new Date(poolsStart.getTime() + 132 * 3600 * 1000); // Sat 12:00
+		const finalsR4Date = new Date(poolsStart.getTime() + 156 * 3600 * 1000); // Sun 12:00
+		const nextTournamentDate = new Date(qualificationStart.getTime() + 14 * 24 * 3600 * 1000); // Mon 00:00
+
+		if (lastFightStep !== null && lastFightStep !== undefined) {
+			if (lastFightStep >= FINALS_STEP_OFFSET + 4) return nextTournamentDate; // Finale played -> next tournament
+			if (lastFightStep >= FINALS_STEP_OFFSET + 3) return finalsR4Date; // 1/2 played -> Finale
+			if (lastFightStep >= FINALS_STEP_OFFSET + 2) return finalsR3Date; // 1/4 played -> 1/2
+			if (lastFightStep >= FINALS_STEP_OFFSET + 1) return finalsR2Date; // 1/8 played -> 1/4
+			if (lastFightStep >= FINALS_STEP_OFFSET) return finalsR1Date; // 1/16 played -> 1/8
+			if (lastFightStep >= 2) return finalsR0Date; // Pools R2 played -> 1/16
+			if (lastFightStep >= 1) return poolsR2Date; // Pools R1 played -> Pools R2
+			if (lastFightStep >= 0) return poolsR1Date; // Pools R0 played -> Pools R1
+		}
+
+		if (currentDate < qualificationEnd) {
+			return qualificationEnd;
+		}
+
+		const milestones = [
+			qualificationEnd,
+			poolsR1Date,
+			poolsR2Date,
+			finalsR0Date,
+			finalsR1Date,
+			finalsR2Date,
+			finalsR3Date,
+			finalsR4Date,
+			nextTournamentDate
+		];
+
+		const upcoming = milestones.find(date => date > currentDate);
+		return upcoming ?? nextTournamentDate;
+	}
+
 	static async getCurrentTournamentState(prismaClient = prisma): Promise<TournamentState | null> {
 		return TournamentManager.getCurrentTournament(prismaClient);
 	}
@@ -158,11 +208,17 @@ export class TournamentManager {
 			orderBy: { tournamentStep: 'desc' }
 		});
 
+		const nextScheduledMatch = TournamentManager.calculateNextScheduledMatch(
+			tournament.date,
+			lastFight ? lastFight.tournamentStep : null,
+			currentDate
+		);
+
 		return {
 			id: tournament.id,
 			phase,
 			round: lastFight ? lastFight.tournamentStep + 1 : 0,
-			nextScheduledMatch: tournament.nextRound,
+			nextScheduledMatch,
 			schedule: { qualificationStart, qualificationEnd, poolsStart, finalsStart },
 			cashPrice: tournament.cashPrice,
 			levelLimit: tournament.levelLimit,
@@ -265,29 +321,52 @@ export class TournamentManager {
 	 */
 	static async poolsStartJob(prismaClient = prisma): Promise<void> {
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
-		if (!tournament) return;
+		if (!tournament || tournament.phase !== TournamentPhase.POOLS) return;
 
 		await TournamentManager.rewardQualification();
 		await TournamentManager.generatePoolBrackets(tournament.id, tournament.schedule.poolsStart, prismaClient);
+
+		const poolsR1Date = new Date(tournament.schedule.poolsStart.getTime() + 12 * 3600 * 1000);
+		await prismaClient.tournament.update({
+			where: { id: tournament.id },
+			data: { nextRound: poolsR1Date }
+		});
 	}
 
 	/**
 	 * Monday 12:00 UTC — round 1 of the pools (M3 winners, M4 losers).
 	 */
 	static async poolsRound1Job(prismaClient = prisma): Promise<void> {
+		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
+		if (!tournament || tournament.phase !== TournamentPhase.POOLS) return;
+
 		await TournamentManager.schedulePoolRound(1, prismaClient);
+
+		const poolsR2Date = new Date(tournament.schedule.poolsStart.getTime() + 36 * 3600 * 1000);
+		await prismaClient.tournament.update({
+			where: { id: tournament.id },
+			data: { nextRound: poolsR2Date }
+		});
 	}
 
 	/**
 	 * Monday 22:00 UTC — round 2 of the pools (M5 decider).
 	 */
 	static async poolsRound2Job(prismaClient = prisma): Promise<void> {
+		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
+		if (!tournament || tournament.phase !== TournamentPhase.POOLS) return;
+
 		await TournamentManager.schedulePoolRound(2, prismaClient);
 
 		// After round 2, all pools are completed → final bracket
-		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
 		if (tournament) {
 			await TournamentManager.generateFinalBracket(tournament.id, prismaClient);
+
+			const finalsR0Date = new Date(tournament.schedule.poolsStart.getTime() + 60 * 3600 * 1000);
+			await prismaClient.tournament.update({
+				where: { id: tournament.id },
+				data: { nextRound: finalsR0Date }
+			});
 		}
 	}
 
@@ -344,6 +423,12 @@ export class TournamentManager {
 					prismaClient
 				);
 			}
+
+			const finalsR1Date = new Date(tournament.schedule.poolsStart.getTime() + 84 * 3600 * 1000);
+			await prismaClient.tournament.update({
+				where: { id: tournament.id },
+				data: { nextRound: finalsR1Date }
+			});
 			return;
 		}
 
@@ -398,6 +483,20 @@ export class TournamentManager {
 
 		if (finalsRound === 4) {
 			await TournamentManager.rewardTournament(tournament.id, prismaClient);
+			const nextTournamentDate = new Date(tournament.schedule.qualificationStart.getTime() + 14 * 24 * 3600 * 1000);
+			await prismaClient.tournament.update({
+				where: { id: tournament.id },
+				data: { nextRound: nextTournamentDate }
+			});
+		} else {
+			const nextFinalsOffsets = [84, 108, 132, 156]; // R1, R2, R3, R4 in hours from poolsStart
+			const nextDate = new Date(
+				tournament.schedule.poolsStart.getTime() + nextFinalsOffsets[finalsRound] * 3600 * 1000
+			);
+			await prismaClient.tournament.update({
+				where: { id: tournament.id },
+				data: { nextRound: nextDate }
+			});
 		}
 	}
 
