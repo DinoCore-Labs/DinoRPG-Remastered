@@ -34,6 +34,7 @@ import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
 import { dojoRoutes } from './Dojo/Routes/dojo.routes.js';
 import { fightRoutes } from './Fight/Routes/fight.routes.js';
 import { forcebrutRoutes } from './Forcebrut/Routes/forcebrutTournament.routes.js';
+import { forumRoutes } from './Forum/Routes/forum.routes.js';
 import { gatherRoutes } from './Gather/Routes/gather.routes.js';
 import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
 import { ensureJobsExist } from './jobs/ensureJobs.js';
@@ -302,6 +303,7 @@ async function buildServer() {
 				{ name: 'Shop', description: 'Shops and purchases' },
 				{ name: 'Ranking', description: 'Player rankings and leaderboard' },
 				{ name: 'News', description: 'News endpoints' },
+				{ name: 'Forum', description: 'Forum topics, messages and moderation' },
 				{ name: 'Roadmap', description: 'Public roadmap endpoints' },
 				{ name: 'CEF', description: 'Fosselave training center' },
 				{ name: 'Admin', description: 'Administration endpoints' }
@@ -365,6 +367,7 @@ async function buildServer() {
 	server.register(clanRoutes, { prefix: 'api/clan' });
 	server.register(devourerRoutes, { prefix: 'api/devourer' });
 	server.register(dojoRoutes, { prefix: 'api/dojo' });
+	server.register(forumRoutes, { prefix: 'api/forum' });
 	server.register(notificationRoutes, { prefix: 'api/notifications' });
 	server.register(tutorialRoutes, { prefix: 'api/tutorial' });
 	server.register(maintenanceRoutes, { prefix: 'api/maintenance' });
