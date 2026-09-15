@@ -40,7 +40,23 @@
 						</RouterLink>
 					</td>
 					<td class="forum-topic-author">
-						{{ topic.authorName }}
+						<div class="forum-topic-author__name">
+							<span>{{ topic.authorName }}</span>
+							<img
+								v-if="topic.authorRole === 'MODERATOR'"
+								class="forum-staff-badge forum-staff-badge--moderator"
+								:src="getImgURL('icons', 'small_mode')"
+								:title="$t('forum.roles.moderator')"
+								:aria-label="$t('forum.roles.moderator')"
+							/>
+							<img
+								v-else-if="topic.authorRole === 'ADMIN' || topic.authorRole === 'SUPER_ADMIN'"
+								class="forum-staff-badge forum-staff-badge--admin"
+								:src="getImgURL('icons', 'crown', true)"
+								:alt="$t('forum.roles.admin')"
+								:title="$t('forum.roles.admin')"
+							/>
+						</div>
 					</td>
 					<td class="forum-topic-replies">
 						{{ topic.replyCount }}
