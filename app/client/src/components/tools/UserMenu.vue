@@ -163,28 +163,6 @@
 						</svg>
 						<span>Modération</span>
 					</RouterLink>
-					<!--
-					<RouterLink class="link" to="/events">
-						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
-							<path d="M4 10v7h3v-7zm6 0v7h3v-7zM2 22h19v-3H2zm14-12v7h3v-7zm-4.5-9L2 6v2h19V6z"></path>
-						</svg>
-						<span>{{ $t('topBar.rightMenu.events') }}</span>
-					</RouterLink>
-					<RouterLink v-if="playerStore.isAdmin" class="link" to="/forum">
-						<svg
-							class="svgLinkIcon admin"
-							focusable="false"
-							aria-hidden="true"
-							viewBox="0 0 24 24"
-							data-testid="InfoIcon"
-						>
-							<path
-								d="m21 5-9-4-9 4v6c0 5.55 3.84 10.74 9 12 2.3-.56 4.33-1.9 5.88-3.71l-3.12-3.12c-1.94 1.29-4.58 1.07-6.29-.64-1.95-1.95-1.95-5.12 0-7.07 1.95-1.95 5.12-1.95 7.07 0 1.71 1.71 1.92 4.35.64 6.29l2.9 2.9C20.29 15.69 21 13.38 21 11z"
-							></path>
-							<circle cx="12" cy="12" r="3"></circle>
-						</svg>
-						<span>Forum</span>
-					</RouterLink>-->
 					<RouterLink class="link" to="/" @click="logOff()">
 						<svg
 							class="svgLinkIcon logout"
@@ -278,7 +256,6 @@
 						<span>{{ $t('notifications.title') }}</span>
 					</span>
 				</div>
-
 				<div class="notification" v-for="notification in notifications" :key="notification.id">
 					<div class="element">
 						<span>{{ formatNotificationText(notification) }}</span>
@@ -419,16 +396,13 @@ export default defineComponent({
 			if (!item) {
 				return `Item #${itemId}`;
 			}
-
 			const translationKey = `items.name.${item.name}`;
 			const translated = this.$t(translationKey);
-
 			// vue-i18n renvoie la clé elle-même si la traduction n'existe pas
 			if (translated === translationKey) {
 				console.warn(`Missing translation for item: ${item.name} (id: ${itemId})`);
 				return item.name; // fallback sur le nom technique
 			}
-
 			return translated;
 		},
 		formatNotificationText(notification: NotificationItem): string {
@@ -452,7 +426,6 @@ export default defineComponent({
 					})
 					.filter(Boolean)
 					.join(' + ');
-
 				return this.$t('notifications.newReward', { rewards: formattedRewards });
 			}
 			if (notification.type === 'marketOfferWin') {
@@ -471,7 +444,6 @@ export default defineComponent({
 			}
 			return '';
 		},
-
 		parseContent(content: any) {
 			if (typeof content !== 'string') return content;
 			try {
