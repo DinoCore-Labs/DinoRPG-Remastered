@@ -431,6 +431,24 @@ const routes: RouteRecord[] = [
 				]
 			},
 			{
+				path: '/forum',
+				name: 'ForumHome',
+				component: () => import('../pages/Forum/ForumHomePage.vue'),
+				meta: {
+					public: true,
+					showLeftPanel: false
+				}
+			},
+			{
+				path: '/forum/:category',
+				name: 'ForumCategory',
+				component: () => import('../pages/Forum/ForumCategoryPage.vue'),
+				meta: {
+					public: true,
+					showLeftPanel: false
+				}
+			},
+			{
 				path: '/faq',
 				name: 'FAQPage',
 				component: FAQPage,
