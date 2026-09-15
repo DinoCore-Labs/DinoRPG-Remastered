@@ -449,6 +449,24 @@ const routes: RouteRecord[] = [
 				}
 			},
 			{
+				path: '/forum/favorites',
+				name: 'ForumFavorites',
+				component: () => import('../pages/Forum/ForumFavoritesPage.vue'),
+				meta: {
+					auth: true,
+					showLeftPanel: false
+				}
+			},
+			{
+				path: '/forum/topic/:topicId',
+				name: 'ForumTopic',
+				component: () => import('../pages/Forum/ForumTopicPage.vue'),
+				meta: {
+					public: true,
+					showLeftPanel: false
+				}
+			},
+			{
 				path: '/faq',
 				name: 'FAQPage',
 				component: FAQPage,
