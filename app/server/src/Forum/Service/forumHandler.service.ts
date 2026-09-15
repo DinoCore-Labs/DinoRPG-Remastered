@@ -5,10 +5,12 @@ import {
 	createForumMessageBodySchema,
 	createForumTopicBodySchema,
 	forumCategoryParamSchema,
+	forumMessageParamSchema,
 	forumPageQuerySchema,
 	forumSearchQuerySchema,
 	forumTopicParamSchema,
 	updateForumClosedBodySchema,
+	updateForumMessageBodySchema,
 	updateForumPinnedBodySchema
 } from '../Schema/forum.schema.js';
 
@@ -76,4 +78,10 @@ export async function updateForumClosedHandler(req: FastifyRequest, reply: Fasti
 export async function searchForumTopicsHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { q, page } = forumSearchQuerySchema.parse(req.query);
 	return reply.send(await forumService.searchTopics(q, page, optionalUserId(req)));
+}
+
+export async function updateForumMessageHandler(req: FastifyRequest, reply: FastifyReply) {
+	const { topicId, messageId } = forumMessageParamSchema.parse(req.params);
+	const body = updateForumMessageBodySchema.parse(req.body);
+	return reply.send(await forumService.updateMessage(topicId, messageId, body, userId(req)));
 }

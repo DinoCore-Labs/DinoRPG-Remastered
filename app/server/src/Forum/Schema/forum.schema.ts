@@ -9,6 +9,10 @@ export const forumTopicParamSchema = z.object({
 	topicId: z.coerce.number().int().positive()
 });
 
+export const forumMessageParamSchema = forumTopicParamSchema.extend({
+	messageId: z.coerce.number().int().positive()
+});
+
 export const forumPageQuerySchema = z.object({
 	page: z.coerce.number().int().positive().default(1)
 });
@@ -37,3 +41,7 @@ export const forumSearchQuerySchema = forumPageQuerySchema.extend({
 export type CreateForumTopicBody = z.infer<typeof createForumTopicBodySchema>;
 
 export type CreateForumMessageBody = z.infer<typeof createForumMessageBodySchema>;
+
+export const updateForumMessageBodySchema = createForumMessageBodySchema;
+
+export type UpdateForumMessageBody = z.infer<typeof updateForumMessageBodySchema>;

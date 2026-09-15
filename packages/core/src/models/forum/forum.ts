@@ -66,6 +66,10 @@ export interface CreateForumMessageInput {
 	content: string;
 }
 
+export interface UpdateForumMessageInput {
+	content: string;
+}
+
 export interface ForumMessageCreatedResponse {
 	message: ForumMessageView;
 	topic: {
