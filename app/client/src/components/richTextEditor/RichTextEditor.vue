@@ -12,7 +12,7 @@
 						@click="executeRichEditorAction(button)"
 					/>
 				</div>
-				<div class="toolbar-dialog-buttons">
+				<div v-if="showDialogButtons" class="toolbar-dialog-buttons">
 					<button class="format-button" :title="$t('richTextEditor.cleanButtonDescription')" @click="cancel">X</button>
 					<button
 						type="button"
@@ -25,12 +25,13 @@
 				</div>
 			</div>
 			<textarea
+				ref="textEditor"
 				v-model="editedText"
 				class="edit-area"
+				:maxlength="maxLength"
 				@select="selectHighlightedText"
 				@keydown.esc.exact.prevent="cancel"
-				@keydown.enter.exact.prevent="confirm"
-				ref="textEditor"
+				@keydown.enter.exact="handleEnter"
 			></textarea>
 			<ul class="emote-tabs">
 				<RichTextEditorEmoteButton
@@ -86,6 +87,22 @@ export default defineComponent({
 		visible: {
 			type: Boolean,
 			default: false
+		},
+		showDialogButtons: {
+			type: Boolean,
+			default: true
+		},
+		submitOnEnter: {
+			type: Boolean,
+			default: true
+		},
+		clearOnConfirm: {
+			type: Boolean,
+			default: true
+		},
+		maxLength: {
+			type: Number,
+			default: undefined
 		}
 	},
 	data() {
@@ -189,7 +206,9 @@ export default defineComponent({
 			this.$emit('update:modelValue', this.editedText);
 			this.$emit('send', this.editedText);
 			this.showCharacterGrid = false;
-			this.editedText = '';
+			if (this.clearOnConfirm) {
+				this.editedText = '';
+			}
 		},
 		toggleCharacterGrid(): void {
 			this.showCharacterGrid = !this.showCharacterGrid;
@@ -235,6 +254,13 @@ export default defineComponent({
 		},
 		closeCharacterGrid(): void {
 			this.showCharacterGrid = false;
+		},
+		handleEnter(event: KeyboardEvent): void {
+			if (!this.submitOnEnter) {
+				return;
+			}
+			event.preventDefault();
+			this.confirm();
 		}
 	}
 });
