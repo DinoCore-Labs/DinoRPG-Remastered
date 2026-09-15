@@ -4,10 +4,12 @@ import {
 	createForumMessageBodySchema,
 	createForumTopicBodySchema,
 	forumCategoryParamSchema,
+	forumMessageParamSchema,
 	forumPageQuerySchema,
 	forumSearchQuerySchema,
 	forumTopicParamSchema,
 	updateForumClosedBodySchema,
+	updateForumMessageBodySchema,
 	updateForumPinnedBodySchema
 } from '../Schema/forum.schema.js';
 import {
@@ -19,6 +21,7 @@ import {
 	searchForumTopicsHandler,
 	toggleForumFavoriteHandler,
 	updateForumClosedHandler,
+	updateForumMessageHandler,
 	updateForumPinnedHandler
 } from '../Service/forumHandler.service.js';
 
@@ -81,6 +84,18 @@ export async function forumRoutes(app: FastifyInstance) {
 			}
 		},
 		createForumMessageHandler
+	);
+	app.patch(
+		'/topics/:topicId/messages/:messageId',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				tags: ['Forum'],
+				params: forumMessageParamSchema,
+				body: updateForumMessageBodySchema
+			}
+		},
+		updateForumMessageHandler
 	);
 	app.post(
 		'/topics/:topicId/favorite',
