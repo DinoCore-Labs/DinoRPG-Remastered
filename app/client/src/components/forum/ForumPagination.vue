@@ -1,28 +1,22 @@
 <template>
 	<nav v-if="pageCount > 1" class="forum-pagination" aria-label="Pagination du forum">
-		<button type="button" :disabled="page <= 1" aria-label="Première page" @click="$emit('change', 1)">«</button>
-		<button type="button" :disabled="page <= 1" aria-label="Page précédente" @click="$emit('change', page - 1)">
-			‹
-		</button>
-		<span> Page {{ page }} / {{ pageCount }} </span>
-
-		<button type="button" :disabled="page >= pageCount" aria-label="Page suivante" @click="$emit('change', page + 1)">
-			›
-		</button>
-
-		<button type="button" :disabled="page >= pageCount" aria-label="Dernière page" @click="$emit('change', pageCount)">
-			»
-		</button>
+		<DZButton size="small" :disabled="page <= 1" @click="emit('change', 1)"> « </DZButton>
+		<DZButton size="small" :disabled="page <= 1" @click="emit('change', page - 1)"> ‹ </DZButton>
+		<span class="forum-pagination__label">Page {{ page }} / {{ pageCount }}</span>
+		<DZButton size="small" :disabled="page >= pageCount" @click="emit('change', page + 1)"> › </DZButton>
+		<DZButton size="small" :disabled="page >= pageCount" @click="emit('change', pageCount)"> » </DZButton>
 	</nav>
 </template>
 
 <script setup lang="ts">
+import DZButton from '../utils/DZButton.vue';
+
 defineProps<{
 	page: number;
 	pageCount: number;
 }>();
 
-defineEmits<{
+const emit = defineEmits<{
 	change: [page: number];
 }>();
 </script>
