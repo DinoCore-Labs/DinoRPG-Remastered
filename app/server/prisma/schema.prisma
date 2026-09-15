@@ -236,6 +236,70 @@ model ForcebrutTournamentOpponent {
   @@map("forcebrut_tournament_opponent")
 }
 
+model ForumTopic {
+  id             Int           @id @default(autoincrement())
+  category       ForumCategory
+  title          String        @db.VarChar(120)
+
+  isPinned       Boolean       @default(false)
+  isClosed       Boolean       @default(false)
+
+  messageCount   Int           @default(1)
+
+  authorId       String?       @db.Uuid
+  author         User?         @relation("ForumTopicAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  authorName     String
+
+  createdAt      DateTime      @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime      @default(now()) @updatedAt @db.Timestamptz(3)
+  lastActivityAt DateTime      @default(now()) @db.Timestamptz(3)
+
+  messages       ForumMessage[]
+  favorites      ForumFavorite[]
+
+  @@index([category, isPinned, lastActivityAt])
+  @@index([lastActivityAt])
+
+  @@map("forum_topic")
+}
+
+model ForumMessage {
+  id         Int        @id @default(autoincrement())
+
+  topicId    Int
+  topic      ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  authorId   String?    @db.Uuid
+  author     User?      @relation("ForumMessageAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  authorName String
+
+  content    String     @db.Text
+
+  createdAt  DateTime   @default(now()) @db.Timestamptz(3)
+  updatedAt  DateTime   @default(now()) @updatedAt @db.Timestamptz(3)
+
+  @@index([topicId, createdAt, id])
+  @@index([authorId])
+
+  @@map("forum_message")
+}
+
+model ForumFavorite {
+  userId    String     @db.Uuid
+  topicId   Int
+
+  createdAt DateTime   @default(now()) @db.Timestamptz(3)
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  topic     ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([userId, topicId])
+  @@index([topicId])
+
+  @@map("forum_favorite")
+}
+
 model GameLog {
   id                BigInt           @id @default(autoincrement())
   type              GameLogType
@@ -669,6 +733,10 @@ model User {
   reports     Report[] @relation("ReportReportedUser")
 
   notifications Notification[]
+
+  forumTopics    ForumTopic[]    @relation("ForumTopicAuthor")
+  forumMessages  ForumMessage[]  @relation("ForumMessageAuthor")
+  forumFavorites ForumFavorite[]
 
   dojo               Dojo?
   FightArchive       FightArchive[] @relation("UserRelation")
@@ -1138,6 +1206,13 @@ enum DinozState {
   superdom
   resting
   unfreezing
+}
+
+enum ForumCategory {
+  QUESTIONS
+  GAME
+  CLANS
+  CHAOS
 }
 
 enum GameLogRetention {
