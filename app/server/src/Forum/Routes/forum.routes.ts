@@ -15,6 +15,7 @@ import {
 import {
 	createForumMessageHandler,
 	createForumTopicHandler,
+	deleteForumMessageHandler,
 	getForumTopicHandler,
 	listForumFavoritesHandler,
 	listForumTopicsHandler,
@@ -96,6 +97,17 @@ export async function forumRoutes(app: FastifyInstance) {
 			}
 		},
 		updateForumMessageHandler
+	);
+	app.delete(
+		'/topics/:topicId/messages/:messageId',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				tags: ['Forum'],
+				params: forumMessageParamSchema
+			}
+		},
+		deleteForumMessageHandler
 	);
 	app.post(
 		'/topics/:topicId/favorite',

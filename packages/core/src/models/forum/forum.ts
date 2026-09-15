@@ -70,6 +70,12 @@ export interface UpdateForumMessageInput {
 	content: string;
 }
 
+export interface DeleteForumMessageResponse {
+	topicDeleted: boolean;
+	messageCount: number;
+	pageCount: number;
+}
+
 export interface ForumMessageCreatedResponse {
 	message: ForumMessageView;
 	topic: {

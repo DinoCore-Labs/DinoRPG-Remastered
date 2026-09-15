@@ -1,5 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
+import { Role } from '../../../../prisma/index.js';
 import { forumService } from '../Controller/forum.controller.js';
 import {
 	createForumMessageBodySchema,
@@ -15,12 +16,21 @@ import {
 } from '../Schema/forum.schema.js';
 
 type RequestUser = {
-	id: string;
-	name: string;
+	id?: string;
+	name?: string;
+	role?: Role;
 };
 
+function optionalUserRole(req: FastifyRequest): Role | undefined {
+	return (req.user as RequestUser | undefined)?.role;
+}
+
 function userId(req: FastifyRequest): string {
-	return (req.user as RequestUser).id;
+	const id = (req.user as RequestUser | undefined)?.id;
+	if (!id) {
+		throw new Error('Authenticated user is required');
+	}
+	return id;
 }
 
 function optionalUserId(req: FastifyRequest): string | undefined {
@@ -84,4 +94,9 @@ export async function updateForumMessageHandler(req: FastifyRequest, reply: Fast
 	const { topicId, messageId } = forumMessageParamSchema.parse(req.params);
 	const body = updateForumMessageBodySchema.parse(req.body);
 	return reply.send(await forumService.updateMessage(topicId, messageId, body, userId(req)));
+}
+
+export async function deleteForumMessageHandler(req: FastifyRequest, reply: FastifyReply) {
+	const { topicId, messageId } = forumMessageParamSchema.parse(req.params);
+	return reply.send(await forumService.deleteMessage(topicId, messageId, userId(req), optionalUserRole(req)));
 }
