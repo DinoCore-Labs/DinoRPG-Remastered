@@ -440,9 +440,9 @@ const routes: RouteRecord[] = [
 				}
 			},
 			{
-				path: '/forum/:category',
-				name: 'ForumCategory',
-				component: () => import('../pages/Forum/ForumCategoryPage.vue'),
+				path: '/forum/search',
+				name: 'ForumSearch',
+				component: () => import('../pages/Forum/ForumSearchPage.vue'),
 				meta: {
 					public: true,
 					showLeftPanel: false
@@ -454,6 +454,15 @@ const routes: RouteRecord[] = [
 				component: () => import('../pages/Forum/ForumFavoritesPage.vue'),
 				meta: {
 					auth: true,
+					showLeftPanel: false
+				}
+			},
+			{
+				path: '/forum/:category',
+				name: 'ForumCategory',
+				component: () => import('../pages/Forum/ForumCategoryPage.vue'),
+				meta: {
+					public: true,
 					showLeftPanel: false
 				}
 			},
