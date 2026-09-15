@@ -16,6 +16,7 @@ export * from './dinoz.service.js';
 export * from './dojo.service.js';
 export * from './fight.service.js';
 export * from './forcebrutTournament.service.js';
+export * from './forum.services.js';
 export * from './gather.service.js';
 export * from './inventory.service.js';
 export * from './level.service.js';
