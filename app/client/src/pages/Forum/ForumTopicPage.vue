@@ -3,21 +3,25 @@
 		<div class="forum-frame">
 			<template v-if="result">
 				<header class="forum-banner">
-					<DZButton back :to="`/forum/${result.topic.category}`">Liste des sujets</DZButton>
+					<DZButton back :to="`/forum/${result.topic.category}`">
+						{{ $t('forum.backTopics') }}
+					</DZButton>
 					<h1>{{ categoryTitle }}</h1>
 				</header>
 				<div class="forum-toolbar">
-					<DZButton to="/forum">Accueil</DZButton>
+					<DZButton to="/forum">
+						{{ $t('forum.actions.home') }}
+					</DZButton>
 					<DZButton v-if="user.isLogged" @click="toggleFavorite">
-						{{ result.topic.isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris' }}
+						{{ result.topic.isFavorite ? $t('forum.actions.removeFavorite') : $t('forum.actions.addFavorite') }}
 					</DZButton>
 					<span class="forum-spacer"></span>
 					<template v-if="user.isModerator">
 						<DZButton @click="togglePinned">
-							{{ result.topic.isPinned ? 'Retirer le Post-It' : 'Mettre en Post-It' }}
+							{{ result.topic.isPinned ? $t('forum.actions.unpin') : $t('forum.actions.pin') }}
 						</DZButton>
 						<DZButton v-if="!result.topic.isClosed || result.topic.messageCount < maxMessages" @click="toggleClosed">
-							{{ result.topic.isClosed ? 'Rouvrir' : 'Fermer' }}
+							{{ result.topic.isClosed ? $t('forum.actions.reopen') : $t('forum.actions.close') }}
 						</DZButton>
 					</template>
 				</div>
@@ -27,7 +31,7 @@
 						v-if="result.topic.isClosed"
 						class="forum-topic-title-lock"
 						:src="getImgURL('icons', 'small_lock')"
-						alt="Sujet fermé"
+						:alt="$t('forum.table.closed')"
 					/>
 					{{ result.topic.title }}
 				</h2>
@@ -55,13 +59,15 @@
 				</section>
 				<ForumPagination :page="result.page" :page-count="result.pageCount" @change="changePage" />
 				<p v-if="result.topic.isClosed" class="forum-notice">
-					Sujet fermé
-					<span v-if="result.topic.messageCount >= maxMessages"> automatiquement après {{ maxMessages }} messages </span
-					>.
+					{{
+						result.topic.messageCount >= maxMessages
+							? $t('forum.closed.automatic', { count: maxMessages })
+							: $t('forum.closed.manual')
+					}}
 				</p>
 				<div v-else-if="user.isLogged" class="forum-composer">
 					<div class="forum-composer-label">
-						<span>Répondre</span>
+						<span>{{ $t('forum.actions.reply') }}</span>
 						<RichTextEditor
 							ref="replyEditorRef"
 							v-model="content"
@@ -73,10 +79,14 @@
 						/>
 					</div>
 					<div class="forum-composer-actions">
-						<DZButton :disabled="submitting" @click="submitReply">Répondre</DZButton>
+						<DZButton :disabled="submitting" @click="submitReply">
+							{{ $t('forum.actions.reply') }}
+						</DZButton>
 					</div>
 				</div>
-				<p v-else class="forum-notice">Connectez-vous pour répondre à ce sujet.</p>
+				<p v-else class="forum-notice">
+					{{ $t('forum.loginToReply') }}
+				</p>
 			</template>
 			<p v-if="error" class="forum-error">
 				{{ error }}
@@ -95,6 +105,7 @@ import {
 
 import { computed, ref, useTemplateRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 import ForumPagination from '../../components/forum/ForumPagination.vue';
 import RichTextEditor from '../../components/richTextEditor/RichTextEditor.vue';
@@ -106,6 +117,8 @@ import { richFormatText } from '../../utils/richFormatText';
 
 const route = useRoute();
 const router = useRouter();
+
+const { t, locale } = useI18n();
 
 const user = userStore();
 
@@ -119,14 +132,12 @@ const replyEditorRef = useTemplateRef<InstanceType<typeof RichTextEditor>>('repl
 
 const maxMessages = FORUM_MAX_MESSAGES;
 
-const categoryTitles: Record<ForumCategory, string> = {
-	QUESTIONS: 'Questions / Réponses',
-	GAME: 'Discussions autour du jeu',
-	CLANS: 'Clans',
-	CHAOS: 'Auberge du chaos'
-};
-
-const categoryTitle = computed(() => (result.value ? categoryTitles[result.value.topic.category] : 'Forum'));
+const categoryTitle = computed(() => {
+	if (!result.value) {
+		return t('forum.title');
+	}
+	return t(`forum.categories.${result.value.topic.category}.title`);
+});
 
 function topicId(): number {
 	return Number(route.params.topicId);
@@ -149,7 +160,7 @@ async function load(): Promise<void> {
 	try {
 		result.value = await ForumService.getTopic(id, currentPage());
 	} catch (err) {
-		error.value = err instanceof Error ? err.message : 'Impossible de charger ce sujet.';
+		error.value = t('forum.errors.loadTopic');
 	}
 }
 
@@ -171,7 +182,7 @@ async function reply(message: string): Promise<void> {
 	const trimmedMessage = message.trim();
 	if (!trimmedMessage || submitting.value) {
 		if (!trimmedMessage) {
-			error.value = 'Le message ne peut pas être vide.';
+			error.value = t('forum.errors.messageEmpty');
 		}
 		return;
 	}
@@ -195,7 +206,7 @@ async function reply(message: string): Promise<void> {
 		}
 	} catch (err) {
 		content.value = message;
-		error.value = err instanceof Error ? err.message : 'Impossible de répondre.';
+		error.value = t('forum.errors.reply');
 		await load();
 	} finally {
 		submitting.value = false;
@@ -231,7 +242,7 @@ function initial(name: string): string {
 }
 
 function formatDate(value: string): string {
-	return new Intl.DateTimeFormat('fr-FR', {
+	return new Intl.DateTimeFormat(String(locale.value).toLowerCase(), {
 		day: '2-digit',
 		month: '2-digit',
 		year: 'numeric',
