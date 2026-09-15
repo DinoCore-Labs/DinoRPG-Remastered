@@ -71,11 +71,6 @@ import { versionRoutes } from './Version/Routes/version.routes.js';
 
 const cfg = loadConfig();
 
-type AuthenticatedUser = FastifyJWT['user'] & {
-	role?: UserRole;
-	gameRulesAcceptedVersion?: string | null;
-};
-
 const GAME_RULES_EXEMPT_PATHS = new Set(['/api/users/me', '/api/users/me/rules/accept']);
 
 async function buildServer() {
@@ -175,18 +170,40 @@ async function buildServer() {
 			return reply.status(401).send({ message: 'Authentication required' });
 		}
 		try {
-			const decoded = req.jwt.verify<AuthenticatedUser>(token);
+			const decoded = req.jwt.verify<FastifyJWT['user']>(token);
 			req.user = decoded;
 			const requestPath = req.url.split('?')[0];
 			const isGameRulesExempt = GAME_RULES_EXEMPT_PATHS.has(requestPath);
 
 			const dbUser = await prisma.user.findUnique({
-				where: { id: decoded.id },
-				select: { bannedUntil: true }
+				where: {
+					id: decoded.id
+				},
+				select: {
+					role: true,
+					bannedUntil: true
+				}
 			});
-			if (dbUser?.bannedUntil && dbUser.bannedUntil > new Date()) {
-				return reply.status(403).send({ message: 'Account is banned' });
+			if (!dbUser) {
+				return reply.status(401).send({
+					message: 'Invalid token'
+				});
 			}
+			if (dbUser.bannedUntil && dbUser.bannedUntil > new Date()) {
+				return reply.status(403).send({
+					message: 'Account is banned'
+				});
+			}
+			/*
+			 * Le rôle peut avoir changé depuis la création du JWT.
+			 *
+			 * On utilise donc toujours le rôle actuel provenant
+			 * de la base pour les contrôles d'autorisation.
+			 */
+			req.user = {
+				...decoded,
+				role: dbUser.role
+			};
 
 			if (!isGameRulesExempt && decoded.gameRulesAcceptedVersion !== GAME_RULES_VERSION) {
 				return reply.status(403).send({
@@ -246,7 +263,7 @@ async function buildServer() {
 			return false;
 		}
 		try {
-			const decoded = req.jwt.verify<AuthenticatedUser>(token);
+			const decoded = req.jwt.verify<FastifyJWT['user']>(token);
 			return decoded.role === Role.ADMIN || decoded.role === Role.SUPER_ADMIN;
 		} catch {
 			return false;
@@ -378,7 +395,6 @@ async function buildServer() {
 	//------------------------------------------------------
 	await ensureJobsExist();
 	await ensureSecretsExist(server.log);
-
 	const stopScheduler = startScheduler(
 		{
 			'reset-dinoz-shop': resetDinozShopAtMidnight,
