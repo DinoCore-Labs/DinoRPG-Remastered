@@ -4,7 +4,9 @@
 		<div class="forum-frame forum-home-frame">
 			<form class="forum-home-search" @submit.prevent="submitSearch">
 				<img class="forum-search-icon" :src="getImgURL('icons', 'search')" alt="" />
-				<label class="forum-visually-hidden" for="forum-home-search"> Rechercher dans les forums </label>
+				<label class="forum-visually-hidden" for="forum-home-search">
+					{{ $t('forum.search.label') }}
+				</label>
 				<DZInput
 					id="forum-home-search"
 					v-model="search"
@@ -13,7 +15,7 @@
 					:maxlength="FORUM_SEARCH_MAX_LENGTH"
 				/>
 				<DZButton type="submit" size="small" :disabled="search.trim().length < FORUM_SEARCH_MIN_LENGTH">
-					Rechercher
+					{{ $t('forum.search.button') }}
 				</DZButton>
 			</form>
 			<div class="forum-menu">
@@ -36,8 +38,8 @@
 						<img :src="getImgURL('act', entry.icon)" alt="" />
 					</span>
 					<span class="forum-menu-content">
-						<strong>{{ entry.title }}</strong>
-						<em>{{ entry.description }}</em>
+						<strong>{{ $t(entry.titleKey) }}</strong>
+						<em>{{ $t(entry.descriptionKey) }}</em>
 					</span>
 				</RouterLink>
 				<RouterLink
@@ -51,8 +53,8 @@
 						<img :src="getImgURL('act', 'act_fav')" alt="" />
 					</span>
 					<span class="forum-menu-content">
-						<strong>Mes favoris</strong>
-						<em>La liste de vos sujets de discussion préférés.</em>
+						<strong>{{ $t('forum.favorites.title') }}</strong>
+						<em>{{ $t('forum.favorites.description') }}</em>
 					</span>
 				</RouterLink>
 			</div>
@@ -103,32 +105,32 @@ async function submitSearch(): Promise<void> {
 const categories: Array<{
 	category: ForumCategory;
 	icon: string;
-	title: string;
-	description: string;
+	titleKey: string;
+	descriptionKey: string;
 }> = [
 	{
 		category: 'QUESTIONS',
 		icon: 'act_help',
-		title: 'Questions / Réponses',
-		description: 'Trouvez ici toutes les réponses à vos questions !'
+		titleKey: 'forum.categories.QUESTIONS.title',
+		descriptionKey: 'forum.categories.QUESTIONS.description'
 	},
 	{
 		category: 'GAME',
 		icon: 'act_explore',
-		title: 'Discussions autour du jeu',
-		description: 'Discutez du monde de DinoRPG : dinoz, lieux, missions, etc...'
+		titleKey: 'forum.categories.GAME.title',
+		descriptionKey: 'forum.categories.GAME.description'
 	},
 	{
 		category: 'CLANS',
 		icon: 'act_castle',
-		title: 'Clans',
-		description: 'Discutez entre Clans, ou venez recruter ici vos futurs membres !'
+		titleKey: 'forum.categories.CLANS.title',
+		descriptionKey: 'forum.categories.CLANS.description'
 	},
 	{
 		category: 'CHAOS',
 		icon: 'act_talk',
-		title: 'Auberge du Chaos',
-		description: 'Les discussions sans rapport avec DinoRPG sont à écrire ici.'
+		titleKey: 'forum.categories.CHAOS.title',
+		descriptionKey: 'forum.categories.CHAOS.description'
 	}
 ];
 </script>

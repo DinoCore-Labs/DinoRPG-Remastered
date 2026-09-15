@@ -1,24 +1,23 @@
 <template>
 	<div class="forum-page">
 		<div class="forum-frame">
-			<ForumHeader :category="category" :title="categoryTitle" back-to="/forum" back-label="Accueil des forums" />
+			<ForumHeader :category="category" :title="categoryTitle" back-to="/forum" :back-label="$t('forum.backHome')" />
 			<div class="forum-toolbar">
 				<DZButton v-if="user.isLogged" @click="toggleComposer">
-					{{ showComposer ? 'Annuler' : 'Écrire un message' }}
+					{{ showComposer ? $t('forum.actions.cancel') : $t('forum.actions.writeMessage') }}
 				</DZButton>
 				<span class="forum-spacer"></span>
 				<span class="forum-toolbar-count">
-					{{ result?.total ?? 0 }}
-					sujet(s)
+					{{ $t('forum.topicCount', { count: result?.total ?? 0 }) }}
 				</span>
 			</div>
 			<div v-if="showComposer" class="forum-composer">
 				<label class="forum-composer-label">
-					<span>Sujet</span>
+					<span>{{ $t('forum.composer.subject') }}</span>
 					<input v-model="title" maxlength="120" required />
 				</label>
 				<div class="forum-composer-label">
-					<span>Message</span>
+					<span>{{ $t('forum.composer.message') }}</span>
 					<RichTextEditor
 						ref="editorRef"
 						v-model="content"
@@ -30,8 +29,12 @@
 					/>
 				</div>
 				<div class="forum-composer-actions">
-					<DZButton @click="cancelComposer">Annuler</DZButton>
-					<DZButton :disabled="submitting || title.trim().length < 3" @click="submitTopic"> Créer le sujet </DZButton>
+					<DZButton @click="cancelComposer">
+						{{ $t('forum.actions.cancel') }}
+					</DZButton>
+					<DZButton :disabled="submitting || title.trim().length < 3" @click="submitTopic">
+						{{ $t('forum.actions.createTopic') }}
+					</DZButton>
 				</div>
 			</div>
 			<p v-if="error" class="forum-error">
@@ -48,6 +51,7 @@ import { isForumCategory, type ForumCategory, type ForumTopicListResponse } from
 
 import { computed, ref, useTemplateRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 import ForumPagination from '../../components/forum/ForumPagination.vue';
 import ForumTopicTable from '../../components/forum/ForumTopicTable.vue';
@@ -57,6 +61,7 @@ import DZButton from '../../components/utils/DZButton.vue';
 import { ForumService } from '../../services/forum.services.ts';
 import { userStore } from '../../store/userStore';
 
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -78,14 +83,12 @@ const category = computed<ForumCategory | null>(() => {
 	return isForumCategory(value) ? value : null;
 });
 
-const categoryTitles: Record<ForumCategory, string> = {
-	QUESTIONS: 'Questions / Réponses',
-	GAME: 'Discussions autour du jeu',
-	CLANS: 'Clans',
-	CHAOS: 'Auberge du chaos'
-};
-
-const categoryTitle = computed(() => (category.value ? categoryTitles[category.value] : 'Forum'));
+const categoryTitle = computed(() => {
+	if (!category.value) {
+		return t('forum.title');
+	}
+	return t(`forum.categories.${category.value}.title`);
+});
 
 function currentPage(): number {
 	const value = Number(route.query.page ?? 1);
@@ -103,7 +106,7 @@ async function load(): Promise<void> {
 	try {
 		result.value = await ForumService.listTopics(category.value, currentPage());
 	} catch (err) {
-		error.value = err instanceof Error ? err.message : 'Impossible de charger le forum.';
+		error.value = t('forum.errors.loadForum');
 	}
 }
 
@@ -135,7 +138,7 @@ function cancelComposer(): void {
 
 function submitTopic(): void {
 	if (title.value.trim().length < 3) {
-		error.value = 'Le titre doit contenir au moins 3 caractères.';
+		error.value = t('forum.errors.titleMin');
 		return;
 	}
 	error.value = '';
@@ -148,7 +151,7 @@ async function createTopic(message: string): Promise<void> {
 	}
 	const trimmedMessage = message.trim();
 	if (!trimmedMessage) {
-		error.value = 'Le message ne peut pas être vide.';
+		error.value = t('forum.errors.messageEmpty');
 		return;
 	}
 	submitting.value = true;
@@ -168,7 +171,7 @@ async function createTopic(message: string): Promise<void> {
 			}
 		});
 	} catch (err) {
-		error.value = err instanceof Error ? err.message : 'Impossible de créer le sujet.';
+		error.value = t('forum.errors.createTopic');
 	} finally {
 		submitting.value = false;
 	}
