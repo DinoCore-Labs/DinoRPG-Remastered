@@ -1,10 +1,7 @@
 <template>
 	<div class="forum-page">
 		<div class="forum-frame">
-			<header class="forum-banner">
-				<DZButton back to="/forum">Accueil des forums</DZButton>
-				<h1>{{ categoryTitle }}</h1>
-			</header>
+			<ForumHeader :category="category" :title="categoryTitle" back-to="/forum" back-label="Accueil des forums" />
 			<div class="forum-toolbar">
 				<DZButton v-if="user.isLogged" @click="toggleComposer">
 					{{ showComposer ? 'Annuler' : 'Écrire un message' }}
@@ -54,6 +51,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 import ForumPagination from '../../components/forum/ForumPagination.vue';
 import ForumTopicTable from '../../components/forum/ForumTopicTable.vue';
+import ForumHeader from '../../components/forum/ForumHeader.vue';
 import RichTextEditor from '../../components/richTextEditor/RichTextEditor.vue';
 import DZButton from '../../components/utils/DZButton.vue';
 import { ForumService } from '../../services/forum.services.ts';

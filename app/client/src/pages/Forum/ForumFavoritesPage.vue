@@ -1,17 +1,7 @@
 <template>
 	<div class="forum-page">
 		<div class="forum-frame">
-			<header class="forum-banner">
-				<RouterLink
-					class="forum-home-link"
-					:to="{
-						name: 'ForumHome'
-					}"
-				>
-					Accueil des forums
-				</RouterLink>
-				<h1>Mes favoris</h1>
-			</header>
+			<ForumHeader title="Mes favoris" back-to="/forum" back-label="Accueil des forums" />
 			<p v-if="error" class="forum-error">
 				{{ error }}
 			</p>
@@ -25,19 +15,17 @@
 import type { ForumTopicListResponse } from '@dinorpg/core/models/forum/forum.js';
 
 import { ref, watch } from 'vue';
-
 import { useRoute, useRouter } from 'vue-router';
 
+import ForumHeader from '../../components/forum/ForumHeader.vue';
 import ForumPagination from '../../components/forum/ForumPagination.vue';
 import ForumTopicTable from '../../components/forum/ForumTopicTable.vue';
 import { ForumService } from '../../services/index.ts';
 
 const route = useRoute();
-
 const router = useRouter();
 
 const result = ref<ForumTopicListResponse | null>(null);
-
 const error = ref('');
 
 function currentPage(): number {
@@ -67,9 +55,7 @@ async function changePage(page: number): Promise<void> {
 
 watch(
 	() => route.query.page,
-
 	() => void load(),
-
 	{
 		immediate: true
 	}
