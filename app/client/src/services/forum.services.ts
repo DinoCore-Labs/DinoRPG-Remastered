@@ -51,5 +51,13 @@ export const ForumService = {
 		return api.patch<{ success: true }, { isClosed: boolean }>(`/forum/topics/${topicId}/closed`, {
 			isClosed
 		});
+	},
+	searchTopics(query: string, page = 1): Promise<ForumTopicListResponse> {
+		return api.get<ForumTopicListResponse>('/forum/search', {
+			params: {
+				q: query,
+				page
+			}
+		});
 	}
 };
