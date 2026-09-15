@@ -1,12 +1,15 @@
 import type {
 	CreateForumMessageInput,
 	CreateForumTopicInput,
+	DeleteForumMessageResponse,
 	ForumCategory,
 	ForumMessageCreatedResponse,
+	ForumMessageView,
 	ForumTopicListResponse,
 	ForumTopicSummary,
 	ForumTopicViewResponse,
-	ToggleForumFavoriteResponse
+	ToggleForumFavoriteResponse,
+	UpdateForumMessageInput
 } from '@dinorpg/core/models/forum/forum.js';
 
 import { api } from '../utils/http';
@@ -38,6 +41,15 @@ export const ForumService = {
 	},
 	createMessage(topicId: number, input: CreateForumMessageInput): Promise<ForumMessageCreatedResponse> {
 		return api.post<ForumMessageCreatedResponse, CreateForumMessageInput>(`/forum/topics/${topicId}/messages`, input);
+	},
+	updateMessage(topicId: number, messageId: number, input: UpdateForumMessageInput): Promise<ForumMessageView> {
+		return api.patch<ForumMessageView, UpdateForumMessageInput>(
+			`/forum/topics/${topicId}/messages/${messageId}`,
+			input
+		);
+	},
+	deleteMessage(topicId: number, messageId: number): Promise<DeleteForumMessageResponse> {
+		return api.delete<DeleteForumMessageResponse>(`/forum/topics/${topicId}/messages/${messageId}`);
 	},
 	toggleFavorite(topicId: number): Promise<ToggleForumFavoriteResponse> {
 		return api.post<ToggleForumFavoriteResponse>(`/forum/topics/${topicId}/favorite`);

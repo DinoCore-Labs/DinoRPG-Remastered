@@ -70,7 +70,57 @@
 								</time>
 							</div>
 						</aside>
-						<div class="forum-post-content" v-html="richFormatText(message.content)"></div>
+						<div class="forum-post-content">
+							<div
+								v-if="editingMessageId !== message.id && (canEditMessage(message) || canDeleteMessage(message))"
+								class="forum-post-actions"
+							>
+								<DZButton
+									v-if="canEditMessage(message)"
+									class="forum-post-action-button"
+									size="small"
+									:title="$t('forum.actions.edit')"
+									:aria-label="$t('forum.actions.edit')"
+									@click="startEdit(message)"
+								>
+									<img :src="getImgURL('icons', 'small_edit')" alt="" />
+								</DZButton>
+								<DZButton
+									v-if="canDeleteMessage(message)"
+									class="forum-post-action-button"
+									size="small"
+									:disabled="deletingMessageId !== null"
+									:title="$t('forum.actions.delete')"
+									:aria-label="$t('forum.actions.delete')"
+									@click="deleteMessage(message)"
+								>
+									<img :src="getImgURL('icons', 'small_delete')" alt="" />
+								</DZButton>
+							</div>
+							<template v-if="editingMessageId === message.id">
+								<div class="forum-post-editor">
+									<RichTextEditor
+										:ref="setEditEditorRef"
+										v-model="editingContent"
+										:submit-on-enter="false"
+										:show-dialog-buttons="false"
+										:clear-on-confirm="false"
+										:max-length="10000"
+										@send="saveEdit(message.id, $event)"
+									/>
+									<div class="forum-post-edit-actions">
+										<DZButton size="small" :disabled="savingEdit" @click="cancelEdit">
+											{{ $t('forum.actions.cancel') }}
+										</DZButton>
+										<DZButton size="small" :disabled="savingEdit" @click="submitEdit">
+											{{ $t('forum.actions.save') }}
+										</DZButton>
+									</div>
+								</div>
+							</template>
+
+							<div v-else class="forum-post-message" v-html="richFormatText(message.content)"></div>
+						</div>
 					</article>
 				</section>
 				<ForumPagination :page="result.page" :page-count="result.pageCount" @change="changePage" />
@@ -115,6 +165,7 @@
 import {
 	FORUM_MAX_MESSAGES,
 	FORUM_MESSAGES_PER_PAGE,
+	type ForumMessageView,
 	type ForumTopicViewResponse
 } from '@dinorpg/core/models/forum/forum.js';
 
@@ -143,6 +194,14 @@ const error = ref('');
 const content = ref('');
 const submitting = ref(false);
 
+const editingMessageId = ref<number | null>(null);
+const editingContent = ref('');
+const savingEdit = ref(false);
+
+const deletingMessageId = ref<number | null>(null);
+
+const editEditorRef = ref<InstanceType<typeof RichTextEditor> | null>(null);
+
 const replyEditorRef = useTemplateRef<InstanceType<typeof RichTextEditor>>('replyEditorRef');
 
 const maxMessages = FORUM_MAX_MESSAGES;
@@ -161,6 +220,134 @@ function topicId(): number {
 function currentPage(): number {
 	const value = Number(route.query.page ?? 1);
 	return Number.isInteger(value) && value > 0 ? value : 1;
+}
+
+function setEditEditorRef(instance: unknown): void {
+	editEditorRef.value = instance as InstanceType<typeof RichTextEditor> | null;
+}
+
+function canEditMessage(message: ForumMessageView): boolean {
+	return user.id !== null && message.authorId === user.id;
+}
+
+function canDeleteMessage(message: ForumMessageView): boolean {
+	if (user.id === null) {
+		return false;
+	}
+	return message.authorId === user.id || user.isModerator;
+}
+
+function startEdit(message: ForumMessageView): void {
+	if (!canEditMessage(message) || savingEdit.value) {
+		return;
+	}
+	if (editingMessageId.value !== null) {
+		cancelEdit();
+	}
+	error.value = '';
+	editingMessageId.value = message.id;
+	editingContent.value = message.content;
+}
+
+function cancelEdit(): void {
+	editEditorRef.value?.cancel();
+	editingMessageId.value = null;
+	editingContent.value = '';
+	editEditorRef.value = null;
+}
+
+function submitEdit(): void {
+	error.value = '';
+	editEditorRef.value?.confirm();
+}
+
+async function saveEdit(messageId: number, message: string): Promise<void> {
+	const trimmedMessage = message.trim();
+	if (!trimmedMessage) {
+		error.value = t('forum.errors.messageEmpty');
+		return;
+	}
+	if (savingEdit.value) {
+		return;
+	}
+	savingEdit.value = true;
+	error.value = '';
+	try {
+		const updatedMessage = await ForumService.updateMessage(topicId(), messageId, {
+			content: trimmedMessage
+		});
+		if (result.value) {
+			const index = result.value.messages.findIndex(currentMessage => currentMessage.id === messageId);
+			if (index !== -1) {
+				result.value.messages[index] = updatedMessage;
+			}
+		}
+		editingMessageId.value = null;
+		editingContent.value = '';
+		editEditorRef.value = null;
+	} catch {
+		editingContent.value = message;
+		error.value = t('forum.errors.editMessage');
+	} finally {
+		savingEdit.value = false;
+	}
+}
+
+async function deleteMessage(message: ForumMessageView): Promise<void> {
+	if (!canDeleteMessage(message) || !result.value || deletingMessageId.value !== null) {
+		return;
+	}
+	const isLastMessage = result.value.topic.messageCount === 1;
+	const confirmed = window.confirm(
+		t(isLastMessage ? 'forum.confirm.deleteLastMessage' : 'forum.confirm.deleteMessage')
+	);
+	if (!confirmed) {
+		return;
+	}
+	if (editingMessageId.value === message.id) {
+		cancelEdit();
+	}
+	deletingMessageId.value = message.id;
+	error.value = '';
+	const category = result.value.topic.category;
+	try {
+		const deleted = await ForumService.deleteMessage(topicId(), message.id);
+		/*
+		 * Dernier message supprimé :
+		 * le backend a également supprimé le sujet.
+		 */
+		if (deleted.topicDeleted) {
+			await router.push({
+				name: 'ForumCategory',
+				params: {
+					category
+				}
+			});
+			return;
+		}
+		/*
+		 * Exemple :
+		 *
+		 * page 3 contient uniquement le message #51.
+		 * On le supprime → il ne reste plus que 2 pages.
+		 *
+		 * On revient alors automatiquement à la page 2.
+		 */
+		if (currentPage() > deleted.pageCount) {
+			await router.push({
+				query: {
+					...route.query,
+					page: String(deleted.pageCount)
+				}
+			});
+			return;
+		}
+		await load();
+	} catch {
+		error.value = t('forum.errors.deleteMessage');
+	} finally {
+		deletingMessageId.value = null;
+	}
 }
 
 async function load(): Promise<void> {
