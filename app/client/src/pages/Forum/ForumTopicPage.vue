@@ -43,12 +43,28 @@
 								{{ initial(message.authorName) }}
 							</div>
 							<div class="forum-post-author__info">
-								<RouterLink v-if="message.authorId" :to="`/user/${message.authorId}`">
-									<strong>{{ message.authorName }}</strong>
-								</RouterLink>
-								<strong v-else>
-									{{ message.authorName }}
-								</strong>
+								<div class="forum-post-author__name">
+									<RouterLink v-if="message.authorId" :to="`/user/${message.authorId}`">
+										<strong>{{ message.authorName }}</strong>
+									</RouterLink>
+									<strong v-else>
+										{{ message.authorName }}
+									</strong>
+									<img
+										v-if="message.authorRole === 'MODERATOR'"
+										class="forum-staff-badge forum-staff-badge--moderator"
+										:src="getImgURL('icons', 'small_mode')"
+										:title="$t('forum.roles.moderator')"
+										:aria-label="$t('forum.roles.moderator')"
+									/>
+									<img
+										v-else-if="message.authorRole === 'ADMIN' || message.authorRole === 'SUPER_ADMIN'"
+										class="forum-staff-badge forum-staff-badge--admin"
+										:src="getImgURL('icons', 'crown', true)"
+										:alt="$t('forum.roles.admin')"
+										:title="$t('forum.roles.admin')"
+									/>
+								</div>
 								<time :datetime="message.createdAt">
 									{{ formatDate(message.createdAt) }}
 								</time>
@@ -99,7 +115,6 @@
 import {
 	FORUM_MAX_MESSAGES,
 	FORUM_MESSAGES_PER_PAGE,
-	type ForumCategory,
 	type ForumTopicViewResponse
 } from '@dinorpg/core/models/forum/forum.js';
 

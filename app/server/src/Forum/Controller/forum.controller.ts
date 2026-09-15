@@ -104,6 +104,7 @@ function mapMessage(message: {
 	createdAt: Date;
 	updatedAt: Date;
 	author: {
+		role: 'PLAYER' | 'MODERATOR' | 'ADMIN' | 'SUPER_ADMIN';
 		profile: {
 			avatar: Uint8Array | Buffer | null;
 			avatarType: string | null;
@@ -118,6 +119,7 @@ function mapMessage(message: {
 		content: message.content,
 		authorId: message.authorId,
 		authorName: message.authorName,
+		authorRole: message.author?.role ?? null,
 		avatarUrl: avatar ? `data:${avatarType ?? 'image/webp'};base64,${Buffer.from(avatar).toString('base64')}` : null,
 		createdAt: message.createdAt.toISOString(),
 		updatedAt: message.updatedAt.toISOString()
@@ -127,6 +129,7 @@ function mapMessage(message: {
 const messageAuthorInclude = {
 	author: {
 		select: {
+			role: true,
 			profile: {
 				select: {
 					avatar: true,

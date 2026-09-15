@@ -694,6 +694,10 @@
 			"manual": "Sujet fermé.",
 			"automatic": "Sujet fermé automatiquement après {count} messages."
 		},
+		"roles": {
+			"moderator": "Modérateur",
+			"admin": "Administrateur"
+		},
 		"loginToReply": "Connectez-vous pour répondre à ce sujet.",
 		"errors": {
 			"loadForum": "Impossible de charger le forum.",
