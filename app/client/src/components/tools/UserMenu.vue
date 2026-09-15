@@ -56,22 +56,6 @@
 						</svg>
 						<span>{{ $t('topBar.userMenu.messagerie') }}</span>
 					</div>
-					<!--<RouterLink v-if="playerStore.getClanId" class="link" :to="`/clan/${playerStore.getClanId}`">
-						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
-							<path
-								d="M21 9v2h-2V3h-2v2h-2V3h-2v2h-2V3H9v2H7V3H5v8H3V9H1v12h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9V9zm-10 3H9V9h2zm4 0h-2V9h2z"
-							></path>
-						</svg>
-						<span>{{ $t('topBar.rightMenu.clan') }}</span>
-					</RouterLink>
-					<RouterLink v-else class="link" to="/clans">
-						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
-							<path
-								d="M21 9v2h-2V3h-2v2h-2V3h-2v2h-2V3H9v2H7V3H5v8H3V9H1v12h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9V9zm-10 3H9V9h2zm4 0h-2V9h2z"
-							></path>
-						</svg>
-						<span>{{ $t('topBar.rightMenu.clans') }}</span>
-					</RouterLink>-->
 					<RouterLink class="link" to="/ingredients">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
 							<path
@@ -123,6 +107,14 @@
 							></path>
 						</svg>
 						<span>{{ $t('topBar.userMenu.news') }}</span>
+					</RouterLink>
+					<RouterLink class="link" to="/forum">
+						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+							<path
+								d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H8l-4 4v-4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm2 4v2h12V8H6zm0 4v2h8v-2H6z"
+							></path>
+						</svg>
+						<span> Forum </span>
 					</RouterLink>
 					<RouterLink class="link" to="/faq">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
