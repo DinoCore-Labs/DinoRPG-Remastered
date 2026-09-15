@@ -4,7 +4,6 @@
 			<header class="forum-banner">
 				<h1>Forums DinoRPG</h1>
 			</header>
-
 			<div class="forum-menu">
 				<RouterLink
 					v-for="entry in categories"
@@ -20,18 +19,15 @@
 					<span class="forum-menu-icon">
 						{{ entry.icon }}
 					</span>
-
 					<span>
 						<strong>
 							{{ entry.title }}
 						</strong>
-
 						<em>
 							{{ entry.description }}
 						</em>
 					</span>
 				</RouterLink>
-
 				<RouterLink
 					v-if="user.isLogged"
 					class="forum-menu-entry"
@@ -40,10 +36,8 @@
 					}"
 				>
 					<span class="forum-menu-icon"> ★ </span>
-
 					<span>
 						<strong> Mes favoris </strong>
-
 						<em> La liste de vos sujets de discussion préférés. </em>
 					</span>
 				</RouterLink>
@@ -105,5 +99,5 @@ const categories: Array<{
 </script>
 
 <style lang="scss">
-@use '../styles/forum';
+@use '../../style/forum';
 </style>
