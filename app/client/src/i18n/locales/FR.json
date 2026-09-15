@@ -248,7 +248,8 @@
 		"clan": "DinoRPG [ Clan : {clan} ]",
 		"createClan": "DinoRPG [ Créer un Clan ]",
 		"clansList": "DinoRPG [ Clans ]",
-		"dojo": "DinoRPG [ Dojo ]"
+		"dojo": "DinoRPG [ Dojo ]",
+		"forum": "DinoRPG [ Forum ]"
 	},
 	"adminPage": {
 		"news": {
@@ -625,6 +626,9 @@
 			"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
 			"futurTitle": "Avenir Dinolandien"
 		}
+	},
+	"forum": {
+		"title": "Forum"
 	},
 	"button": {
 		"buyDinoz": "Acheter un Dinoz !",
