@@ -1,4 +1,7 @@
+import { UserRole } from '@dinorpg/core/models/user/userRole.js';
 import { JWT } from '@fastify/jwt';
+
+import { Role } from '../../../prisma/index.js';
 
 declare module 'fastify' {
 	interface FastifyRequest {
@@ -15,6 +18,8 @@ declare module 'fastify' {
 type UserPayload = {
 	id: string;
 	name: string;
+	role?: Role;
+	gameRulesAcceptedVersion?: string | null;
 };
 
 declare module '@fastify/jwt' {

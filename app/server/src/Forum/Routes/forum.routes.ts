@@ -105,7 +105,7 @@ export async function forumRoutes(app: FastifyInstance) {
 	app.patch(
 		'/topics/:topicId/pin',
 		{
-			preHandler: [app.authenticate, app.moderator, app.admin],
+			preHandler: [app.authenticate, app.moderator],
 			schema: {
 				tags: ['Forum'],
 				params: forumTopicParamSchema,
