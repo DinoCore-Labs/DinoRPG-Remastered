@@ -8,6 +8,7 @@ import {
 } from '@dinorpg/core/models/forum/forum.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
+import { Role } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 import type { CreateForumMessageBody, CreateForumTopicBody } from '../Schema/forum.schema.js';
 
@@ -74,6 +75,9 @@ function mapTopic(
 		messageCount: number;
 		authorId: string | null;
 		authorName: string;
+		author: {
+			role: Role;
+		} | null;
 		createdAt: Date;
 		lastActivityAt: Date;
 	},
@@ -89,6 +93,7 @@ function mapTopic(
 		replyCount: Math.max(0, topic.messageCount - 1),
 		authorId: topic.authorId,
 		authorName: topic.authorName,
+		authorRole: topic.author?.role ?? null,
 		createdAt: topic.createdAt.toISOString(),
 		lastActivityAt: topic.lastActivityAt.toISOString(),
 		isFavorite: favoriteIds.has(topic.id)
@@ -104,7 +109,7 @@ function mapMessage(message: {
 	createdAt: Date;
 	updatedAt: Date;
 	author: {
-		role: 'PLAYER' | 'MODERATOR' | 'ADMIN' | 'SUPER_ADMIN';
+		role: Role;
 		profile: {
 			avatar: Uint8Array | Buffer | null;
 			avatarType: string | null;
@@ -140,6 +145,14 @@ const messageAuthorInclude = {
 	}
 } as const;
 
+const topicAuthorInclude = {
+	author: {
+		select: {
+			role: true
+		}
+	}
+} as const;
+
 export const forumService = {
 	async listTopics(category: ForumCategory, page: number, userId?: string) {
 		const skip = (page - 1) * FORUM_TOPICS_PER_PAGE;
@@ -160,7 +173,8 @@ export const forumService = {
 					}
 				],
 				skip,
-				take: FORUM_TOPICS_PER_PAGE
+				take: FORUM_TOPICS_PER_PAGE,
+				include: topicAuthorInclude
 			}),
 			prisma.forumTopic.count({
 				where: {
@@ -232,7 +246,8 @@ export const forumService = {
 					}
 				],
 				skip,
-				take: FORUM_TOPICS_PER_PAGE
+				take: FORUM_TOPICS_PER_PAGE,
+				include: topicAuthorInclude
 			}),
 			prisma.forumTopic.count({
 				where
@@ -273,7 +288,8 @@ export const forumService = {
 					}
 				],
 				skip,
-				take: FORUM_TOPICS_PER_PAGE
+				take: FORUM_TOPICS_PER_PAGE,
+				include: topicAuthorInclude
 			}),
 			prisma.forumTopic.count({
 				where
@@ -291,7 +307,8 @@ export const forumService = {
 		const topic = await prisma.forumTopic.findUnique({
 			where: {
 				id: topicId
-			}
+			},
+			include: topicAuthorInclude
 		});
 		if (!topic) {
 			throw forumError('forum.topic.notFound', 404);
@@ -340,7 +357,8 @@ export const forumService = {
 						content: input.content
 					}
 				}
-			}
+			},
+			include: topicAuthorInclude
 		});
 		return mapTopic(topic, new Set());
 	},

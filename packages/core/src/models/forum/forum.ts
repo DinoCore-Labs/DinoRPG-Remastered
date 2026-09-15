@@ -24,6 +24,7 @@ export interface ForumTopicSummary {
 	replyCount: number;
 	authorId: string | null;
 	authorName: string;
+	authorRole: UserRole | null;
 	createdAt: string;
 	lastActivityAt: string;
 	isFavorite: boolean;
