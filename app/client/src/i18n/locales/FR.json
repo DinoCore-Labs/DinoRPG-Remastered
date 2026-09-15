@@ -665,7 +665,10 @@
 			"unpin": "Retirer le Post-It",
 			"close": "Fermer",
 			"reopen": "Rouvrir",
-			"reply": "Répondre"
+			"reply": "Répondre",
+			"edit": "Modifier",
+			"delete": "Supprimer",
+			"save": "Enregistrer"
 		},
 		"table": {
 			"subject": "Sujet",
@@ -697,6 +700,10 @@
 		"roles": {
 			"moderator": "Modérateur",
 			"admin": "Administrateur"
+		},
+		"confirm": {
+			"deleteMessage": "Supprimer ce message ?",
+			"deleteLastMessage": "Ce message est le dernier du sujet. Sa suppression supprimera également le sujet. Continuer ?"
 		},
 		"loginToReply": "Connectez-vous pour répondre à ce sujet.",
 		"errors": {
