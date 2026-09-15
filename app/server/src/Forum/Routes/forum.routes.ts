@@ -5,6 +5,7 @@ import {
 	createForumTopicBodySchema,
 	forumCategoryParamSchema,
 	forumPageQuerySchema,
+	forumSearchQuerySchema,
 	forumTopicParamSchema,
 	updateForumClosedBodySchema,
 	updateForumPinnedBodySchema
@@ -15,6 +16,7 @@ import {
 	getForumTopicHandler,
 	listForumFavoritesHandler,
 	listForumTopicsHandler,
+	searchForumTopicsHandler,
 	toggleForumFavoriteHandler,
 	updateForumClosedHandler,
 	updateForumPinnedHandler
@@ -123,5 +125,16 @@ export async function forumRoutes(app: FastifyInstance) {
 			}
 		},
 		updateForumClosedHandler
+	);
+	app.get(
+		'/search',
+		{
+			preHandler: [app.noAuth],
+			schema: {
+				tags: ['Forum'],
+				querystring: forumSearchQuerySchema
+			}
+		},
+		searchForumTopicsHandler
 	);
 }
