@@ -72,32 +72,25 @@ export async function forumRoutes(app: FastifyInstance) {
 		'/topics/:topicId/messages',
 		{
 			preHandler: [app.authenticate],
-
 			schema: {
 				tags: ['Forum'],
-
 				params: forumTopicParamSchema,
-
 				body: createForumMessageBodySchema
 			}
 		},
 		createForumMessageHandler
 	);
-
 	app.post(
 		'/topics/:topicId/favorite',
 		{
 			preHandler: [app.authenticate],
-
 			schema: {
 				tags: ['Forum'],
-
 				params: forumTopicParamSchema
 			}
 		},
 		toggleForumFavoriteHandler
 	);
-
 	/*
 	 * Seuls :
 	 *
@@ -110,29 +103,22 @@ export async function forumRoutes(app: FastifyInstance) {
 	app.patch(
 		'/topics/:topicId/pin',
 		{
-			preHandler: [app.authenticate, app.moderator],
-
+			preHandler: [app.authenticate, app.moderator, app.admin],
 			schema: {
 				tags: ['Forum'],
-
 				params: forumTopicParamSchema,
-
 				body: updateForumPinnedBodySchema
 			}
 		},
 		updateForumPinnedHandler
 	);
-
 	app.patch(
 		'/topics/:topicId/closed',
 		{
 			preHandler: [app.authenticate, app.moderator],
-
 			schema: {
 				tags: ['Forum'],
-
 				params: forumTopicParamSchema,
-
 				body: updateForumClosedBodySchema
 			}
 		},
