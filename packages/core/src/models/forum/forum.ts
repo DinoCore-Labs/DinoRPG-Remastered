@@ -1,3 +1,5 @@
+import { UserRole } from '../user/userRole.js';
+
 export const ForumCategories = ['QUESTIONS', 'GAME', 'CLANS', 'CHAOS'] as const;
 
 export type ForumCategory = (typeof ForumCategories)[number];
@@ -16,25 +18,19 @@ export interface ForumTopicSummary {
 	id: number;
 	category: ForumCategory;
 	title: string;
-
 	isPinned: boolean;
 	isClosed: boolean;
-
 	messageCount: number;
 	replyCount: number;
-
 	authorId: string | null;
 	authorName: string;
-
 	createdAt: string;
 	lastActivityAt: string;
-
 	isFavorite: boolean;
 }
 
 export interface ForumTopicListResponse {
 	topics: ForumTopicSummary[];
-
 	page: number;
 	pageCount: number;
 	total: number;
@@ -43,22 +39,18 @@ export interface ForumTopicListResponse {
 export interface ForumMessageView {
 	id: number;
 	topicId: number;
-
 	content: string;
-
 	authorId: string | null;
 	authorName: string;
 	avatarUrl: string | null;
-
+	authorRole: UserRole | null;
 	createdAt: string;
 	updatedAt: string;
 }
 
 export interface ForumTopicViewResponse {
 	topic: ForumTopicSummary;
-
 	messages: ForumMessageView[];
-
 	page: number;
 	pageCount: number;
 	totalMessages: number;
@@ -75,7 +67,6 @@ export interface CreateForumMessageInput {
 
 export interface ForumMessageCreatedResponse {
 	message: ForumMessageView;
-
 	topic: {
 		id: number;
 		isClosed: boolean;
