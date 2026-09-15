@@ -10,16 +10,12 @@
 				>
 					Accueil des forums
 				</RouterLink>
-
 				<h1>Mes favoris</h1>
 			</header>
-
 			<p v-if="error" class="forum-error">
 				{{ error }}
 			</p>
-
 			<ForumTopicTable :topics="result?.topics ?? []" />
-
 			<ForumPagination v-if="result" :page="result.page" :page-count="result.pageCount" @change="changePage" />
 		</div>
 	</div>
@@ -81,5 +77,5 @@ watch(
 </script>
 
 <style lang="scss">
-@use '../styles/forum';
+@use '../../style/forum';
 </style>

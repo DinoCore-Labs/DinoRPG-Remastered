@@ -187,5 +187,5 @@ watch(
 </script>
 
 <style lang="scss">
-@use '../styles/forum';
+@use '../../style/forum';
 </style>

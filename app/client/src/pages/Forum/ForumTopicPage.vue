@@ -7,7 +7,6 @@
 						class="forum-home-link"
 						:to="{
 							name: 'ForumCategory',
-
 							params: {
 								category: result.topic.category
 							}
@@ -15,12 +14,10 @@
 					>
 						Liste des sujets
 					</RouterLink>
-
 					<h1>
 						{{ categoryTitle }}
 					</h1>
 				</header>
-
 				<div class="forum-toolbar">
 					<RouterLink
 						class="forum-action"
@@ -30,18 +27,14 @@
 					>
 						Accueil
 					</RouterLink>
-
 					<button v-if="user.isLogged" class="forum-action" type="button" @click="toggleFavorite">
 						{{ result.topic.isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris' }}
 					</button>
-
 					<span class="forum-spacer"></span>
-
 					<template v-if="user.isModerator">
 						<button class="forum-action" type="button" @click="togglePinned">
 							{{ result.topic.isPinned ? 'Retirer le Post-It' : 'Mettre en Post-It' }}
 						</button>
-
 						<button
 							v-if="!result.topic.isClosed || result.topic.messageCount < maxMessages"
 							class="forum-action"
@@ -52,72 +45,55 @@
 						</button>
 					</template>
 				</div>
-
 				<ForumPagination :page="result.page" :page-count="result.pageCount" @change="changePage" />
-
 				<h2 class="forum-topic-title">
 					<span v-if="result.topic.isClosed" class="forum-lock" aria-label="Sujet fermé"> 🔒 </span>
-
 					{{ result.topic.title }}
 				</h2>
-
 				<section class="forum-posts">
 					<article v-for="message in result.messages" :key="message.id" class="forum-post">
 						<aside class="forum-post-author">
 							<img v-if="message.avatarUrl" class="forum-avatar" :src="message.avatarUrl" alt="" />
-
 							<div v-else class="forum-avatar forum-avatar-placeholder">
 								{{ initial(message.authorName) }}
 							</div>
-
 							<div>
 								<RouterLink v-if="message.authorId" :to="`/user/${message.authorId}`">
 									<strong>
 										{{ message.authorName }}
 									</strong>
 								</RouterLink>
-
 								<strong v-else>
 									{{ message.authorName }}
 								</strong>
-
 								<time :datetime="message.createdAt">
 									{{ formatDate(message.createdAt) }}
 								</time>
 							</div>
 						</aside>
-
 						<div class="forum-post-content">
 							{{ message.content }}
 						</div>
 					</article>
 				</section>
-
 				<ForumPagination :page="result.page" :page-count="result.pageCount" @change="changePage" />
-
 				<p v-if="result.topic.isClosed" class="forum-notice">
 					Sujet fermé
-
 					<span v-if="result.topic.messageCount >= maxMessages">
 						automatiquement après
 						{{ maxMessages }}
 						messages </span
 					>.
 				</p>
-
 				<form v-else-if="user.isLogged" class="forum-composer" @submit.prevent="reply">
 					<label>
 						Répondre
-
 						<textarea v-model="content" maxlength="10000" required></textarea>
 					</label>
-
 					<button class="forum-action" type="submit" :disabled="submitting || !content.trim()">Répondre</button>
 				</form>
-
 				<p v-else class="forum-notice">Connectez-vous pour répondre à ce sujet.</p>
 			</template>
-
 			<p v-if="error" class="forum-error">
 				{{ error }}
 			</p>
@@ -304,5 +280,5 @@ watch(
 </script>
 
 <style lang="scss">
-@use '../styles/forum';
+@use '../../style/forum';
 </style>
