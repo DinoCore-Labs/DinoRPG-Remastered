@@ -61,7 +61,6 @@ async function getFavoriteIds(userId: string | undefined, topicIds: number[]): P
 			topicId: true
 		}
 	});
-
 	return new Set(favorites.map(favorite => favorite.topicId));
 }
 
@@ -129,6 +128,10 @@ function mapMessage(message: {
 		createdAt: message.createdAt.toISOString(),
 		updatedAt: message.updatedAt.toISOString()
 	};
+}
+
+function isForumModerator(role: Role | undefined): boolean {
+	return role === 'MODERATOR' || role === 'ADMIN' || role === 'SUPER_ADMIN';
 }
 
 const messageAuthorInclude = {
@@ -502,6 +505,93 @@ export const forumService = {
 			include: messageAuthorInclude
 		});
 		return mapMessage(message);
+	},
+	async deleteMessage(topicId: number, messageId: number, userId: string, userRole?: Role) {
+		return prisma.$transaction(async tx => {
+			const message = await tx.forumMessage.findFirst({
+				where: {
+					id: messageId,
+					topicId
+				},
+				select: {
+					id: true,
+					authorId: true
+				}
+			});
+			if (!message) {
+				throw forumError('forum.message.notFound', 404);
+			}
+			const isAuthor = message.authorId === userId;
+			if (!isAuthor && !isForumModerator(userRole)) {
+				throw forumError('forum.message.forbidden', 403);
+			}
+			await tx.forumMessage.delete({
+				where: {
+					id: messageId
+				}
+			});
+			/*
+			 * On recompte réellement les messages au lieu de faire -1.
+			 * Cela permet aussi de réparer un éventuel compteur désynchronisé.
+			 */
+			const messageCount = await tx.forumMessage.count({
+				where: {
+					topicId
+				}
+			});
+			/*
+			 * Plus aucun message :
+			 * le sujet entier n'a plus de raison d'exister.
+			 *
+			 * Les favoris seront supprimés par cascade.
+			 */
+			if (messageCount === 0) {
+				await tx.forumTopic.delete({
+					where: {
+						id: topicId
+					}
+				});
+				return {
+					topicDeleted: true,
+					messageCount: 0,
+					pageCount: 0
+				};
+			}
+			/*
+			 * On récupère le dernier message restant afin de recalculer
+			 * correctement l'activité du sujet.
+			 */
+			const lastMessage = await tx.forumMessage.findFirstOrThrow({
+				where: {
+					topicId
+				},
+				orderBy: [
+					{
+						createdAt: 'desc'
+					},
+					{
+						id: 'desc'
+					}
+				],
+				select: {
+					createdAt: true
+				}
+			});
+			await tx.forumTopic.update({
+				where: {
+					id: topicId
+				},
+				data: {
+					messageCount,
+					lastActivityAt: lastMessage.createdAt
+				}
+			});
+			return {
+				topicDeleted: false,
+				messageCount,
+				pageCount: Math.max(1, Math.ceil(messageCount / FORUM_MESSAGES_PER_PAGE))
+			};
+		});
 	},
 	async toggleFavorite(topicId: number, userId: string) {
 		const topic = await prisma.forumTopic.findUnique({
