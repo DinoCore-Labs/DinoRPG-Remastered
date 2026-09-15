@@ -1,7 +1,7 @@
 <template>
+	<TitleHeader :title="$t('pageTitle.forum')" :header="$t('forum.title')" />
 	<div class="forum-page forum-home-page">
 		<div class="forum-frame forum-home-frame">
-			<div class="forum-home-ornament" aria-hidden="true"></div>
 			<form class="forum-home-search" @submit.prevent="submitSearch">
 				<img class="forum-search-icon" :src="getImgURL('icons', 'search')" alt="" />
 				<label class="forum-visually-hidden" for="forum-home-search"> Rechercher dans les forums </label>
@@ -21,12 +21,16 @@
 					v-for="entry in categories"
 					:key="entry.category"
 					class="forum-menu-entry"
-					:to="{
-						name: 'ForumCategory',
-						params: {
-							category: entry.category
-						}
-					}"
+					:to="
+						entry.category === 'QUESTIONS'
+							? { name: 'FAQPage' }
+							: {
+									name: 'ForumCategory',
+									params: {
+										category: entry.category
+									}
+								}
+					"
 				>
 					<span class="forum-menu-icon">
 						<img :src="getImgURL('act', entry.icon)" alt="" />
@@ -72,6 +76,7 @@ import { useRouter } from 'vue-router';
 
 import DZButton from '../../components/utils/DZButton.vue';
 import DZInput from '../../components/utils/DZInput.vue';
+import TitleHeader from '../../components/utils/TitleHeader.vue';
 import { userStore } from '../../store/userStore';
 import { getImgURL } from '../../utils/getImgURL';
 
