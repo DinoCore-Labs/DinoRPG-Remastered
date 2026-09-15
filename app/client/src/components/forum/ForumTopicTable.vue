@@ -2,9 +2,9 @@
 	<div class="forum-table-wrap">
 		<DZTable class="forum-topic-table">
 			<tr class="forum-topic-table__header">
-				<th>Sujet</th>
-				<th>Auteur</th>
-				<th>Réponses</th>
+				<th>{{ $t('forum.table.subject') }}</th>
+				<th>{{ $t('forum.table.author') }}</th>
+				<th>{{ $t('forum.table.replies') }}</th>
 			</tr>
 			<template v-for="(topic, index) in topics" :key="topic.id">
 				<tr v-if="needsSection(topic, index)" class="forum-section-row">
@@ -19,14 +19,14 @@
 							class="forum-topic-state-icon forum-topic-state-icon--pin"
 							:src="getImgURL('icons', 'pin')"
 							alt=""
-							title="Post-It"
+							:title="$t('forum.table.postIt')"
 						/>
 						<img
 							v-if="topic.isClosed"
 							class="forum-topic-state-icon"
 							:src="getImgURL('icons', 'small_lock')"
-							alt="Sujet fermé"
-							title="Sujet fermé"
+							:alt="$t('forum.table.closed')"
+							:title="$t('forum.table.closed')"
 						/>
 						<RouterLink
 							:to="{
@@ -48,7 +48,9 @@
 				</tr>
 			</template>
 			<tr v-if="topics.length === 0" class="forum-empty-row">
-				<td colspan="3">Aucun sujet pour le moment.</td>
+				<td colspan="3">
+					{{ $t('forum.table.empty') }}
+				</td>
 			</tr>
 		</DZTable>
 	</div>
@@ -59,6 +61,10 @@ import type { ForumTopicSummary } from '@dinorpg/core/models/forum/forum.js';
 
 import { getImgURL } from '../../utils/getImgURL';
 import DZTable from '../utils/DZTable.vue';
+
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps<{
 	topics: ForumTopicSummary[];
@@ -85,7 +91,7 @@ function needsSection(topic: ForumTopicSummary, index: number): boolean {
 
 function sectionLabel(topic: ForumTopicSummary): string {
 	if (topic.isPinned) {
-		return 'POST-IT';
+		return t('forum.table.postIt');
 	}
 	const date = new Date(topic.lastActivityAt);
 	const year = date.getFullYear();

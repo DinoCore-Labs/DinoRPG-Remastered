@@ -9,7 +9,7 @@
 	>
 		<div class="forum-category-header__back">
 			<DZButton back :to="backTo">
-				{{ backLabel }}
+				{{ resolvedBackLabel }}
 			</DZButton>
 		</div>
 		<h1 :class="{ 'forum-visually-hidden': bannerUrl }">
@@ -22,9 +22,12 @@
 import type { ForumCategory } from '@dinorpg/core/models/forum/forum.js';
 
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { getImgURL } from '../../utils/getImgURL';
 import DZButton from '../utils/DZButton.vue';
+
+const { t } = useI18n();
 
 const props = withDefaults(
 	defineProps<{
@@ -34,10 +37,11 @@ const props = withDefaults(
 		backLabel?: string;
 	}>(),
 	{
-		category: null,
-		backLabel: 'Accueil des forums'
+		category: null
 	}
 );
+
+const resolvedBackLabel = computed(() => props.backLabel ?? t('forum.backHome'));
 
 const bannerNames: Partial<Record<ForumCategory, string>> = {
 	GAME: 'forum_banner_talk',

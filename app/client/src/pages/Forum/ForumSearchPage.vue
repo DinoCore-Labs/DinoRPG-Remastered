@@ -1,10 +1,12 @@
 <template>
 	<div class="forum-page">
 		<div class="forum-frame">
-			<ForumHeader title="Recherche" back-to="/forum" back-label="Accueil des forums" />
+			<ForumHeader :title="$t('forum.search.title')" back-to="/forum" :back-label="$t('forum.backHome')" />
 			<form class="forum-search-form" @submit.prevent="submitSearch">
 				<img class="forum-search-icon" :src="getImgURL('icons', 'search')" alt="" />
-				<label class="forum-visually-hidden" for="forum-search-input"> Rechercher dans le forum </label>
+				<label class="forum-visually-hidden" for="forum-search-input">
+					{{ $t('forum.search.label') }}
+				</label>
 				<DZInput
 					id="forum-search-input"
 					v-model="search"
@@ -12,16 +14,22 @@
 					type="text"
 					:maxlength="FORUM_SEARCH_MAX_LENGTH"
 				/>
-				<DZButton type="submit" :disabled="search.trim().length < FORUM_SEARCH_MIN_LENGTH"> Rechercher </DZButton>
+				<DZButton type="submit" :disabled="search.trim().length < FORUM_SEARCH_MIN_LENGTH">
+					{{ $t('forum.search.button') }}
+				</DZButton>
 			</form>
 			<p v-if="error" class="forum-error">
 				{{ error }}
 			</p>
 			<template v-if="result">
 				<div class="forum-toolbar">
-					<strong class="forum-search-query"> Résultats pour « {{ activeQuery }} » </strong>
+					<strong class="forum-search-query">
+						{{ $t('forum.search.results', { query: activeQuery }) }}
+					</strong>
 					<span class="forum-spacer"></span>
-					<span class="forum-toolbar-count"> {{ result.total }} sujet(s) </span>
+					<span class="forum-toolbar-count">
+						{{ $t('forum.topicCount', { count: result.total }) }}
+					</span>
 				</div>
 				<ForumTopicTable :topics="result.topics" />
 				<ForumPagination :page="result.page" :page-count="result.pageCount" @change="changePage" />
@@ -39,6 +47,7 @@ import {
 
 import { computed, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 import ForumHeader from '../../components/forum/ForumHeader.vue';
 import ForumPagination from '../../components/forum/ForumPagination.vue';
@@ -47,6 +56,8 @@ import DZButton from '../../components/utils/DZButton.vue';
 import DZInput from '../../components/utils/DZInput.vue';
 import { ForumService } from '../../services/forum.services.ts';
 import { getImgURL } from '../../utils/getImgURL';
+
+const { t } = useI18n();
 
 const route = useRoute();
 const router = useRouter();
@@ -79,14 +90,16 @@ async function load(): Promise<void> {
 		result.value = await ForumService.searchTopics(query, currentPage());
 	} catch (err) {
 		result.value = null;
-		error.value = err instanceof Error ? err.message : 'Impossible d’effectuer la recherche.';
+		error.value = t('forum.errors.search');
 	}
 }
 
 async function submitSearch(): Promise<void> {
 	const query = search.value.trim();
 	if (query.length < FORUM_SEARCH_MIN_LENGTH) {
-		error.value = `La recherche doit contenir au moins ${FORUM_SEARCH_MIN_LENGTH} caractères.`;
+		error.value = t('forum.errors.searchMin', {
+			count: FORUM_SEARCH_MIN_LENGTH
+		});
 		return;
 	}
 	error.value = '';

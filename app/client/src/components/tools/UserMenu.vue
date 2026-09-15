@@ -114,7 +114,7 @@
 								d="M4 4h16c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H8l-4 4v-4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm2 4v2h12V8H6zm0 4v2h8v-2H6z"
 							></path>
 						</svg>
-						<span> Forum </span>
+						<span>{{ $t('topBar.userMenu.forum') }}</span>
 					</RouterLink>
 					<RouterLink class="link" to="/faq">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
