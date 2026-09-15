@@ -630,95 +630,95 @@
 	},
 	"forum": {
 		"title": "Forum",
-		"backHome": "Accueil des forums",
-		"backTopics": "Liste des sujets",
+		"backHome": "Forum home",
+		"backTopics": "Topic list",
 		"categories": {
 			"QUESTIONS": {
-				"title": "Questions / Réponses",
-				"description": "Trouvez ici toutes les réponses à vos questions !"
+				"title": "Questions / Answers",
+				"description": "Find answers to all your questions here!"
 			},
 			"GAME": {
-				"title": "Discussions autour du jeu",
-				"description": "Discutez du monde de DinoRPG : dinoz, lieux, missions, etc..."
+				"title": "Discussions about the game",
+				"description": "Discuss the world of DinoRPG: Dinoz, locations, missions, and more..."
 			},
 			"CLANS": {
 				"title": "Clans",
-				"description": "Discutez entre Clans, ou venez recruter ici vos futurs membres !"
+				"description": "Chat between Clans or recruit your future members here!"
 			},
 			"CHAOS": {
-				"title": "Auberge du Chaos",
-				"description": "Les discussions sans rapport avec DinoRPG sont à écrire ici."
+				"title": "Chaos Inn",
+				"description": "Discussions unrelated to DinoRPG belong here."
 			}
 		},
 		"favorites": {
-			"title": "Mes favoris",
-			"description": "La liste de vos sujets de discussion préférés."
+			"title": "My favorites",
+			"description": "Your list of favorite discussion topics."
 		},
 		"actions": {
-			"cancel": "Annuler",
-			"writeMessage": "Écrire un message",
-			"createTopic": "Créer le sujet",
-			"home": "Accueil",
-			"addFavorite": "Ajouter aux favoris",
-			"removeFavorite": "Retirer des favoris",
-			"pin": "Mettre en Post-It",
-			"unpin": "Retirer le Post-It",
+			"cancel": "Cancel",
+			"writeMessage": "Write a message",
+			"createTopic": "Create topic",
+			"home": "Home",
+			"addFavorite": "Add to favorites",
+			"removeFavorite": "Remove from favorites",
+			"pin": "Pin topic",
+			"unpin": "Unpin topic",
 			"close": "Close",
-			"reopen": "Rouvrir",
+			"reopen": "Reopen",
 			"reply": "Reply",
 			"edit": "Edit",
 			"delete": "Delete",
 			"save": "Save"
 		},
 		"table": {
-			"subject": "Sujet",
-			"author": "Auteur",
-			"replies": "Réponses",
+			"subject": "Subject",
+			"author": "Author",
+			"replies": "Replies",
 			"postIt": "POST-IT",
-			"closed": "Sujet fermé",
-			"empty": "Aucun sujet pour le moment."
+			"closed": "Closed topic",
+			"empty": "No topics yet."
 		},
 		"pagination": {
-			"ariaLabel": "Pagination du forum",
+			"ariaLabel": "Forum Pagination",
 			"page": "Page {page} / {pageCount}"
 		},
 		"composer": {
-			"subject": "Sujet",
+			"subject": "Subject",
 			"message": "Message",
-			"subjectPlaceholder": "[FR] Titre de votre sujet",
-			"languagePrefixHelp": "Le titre doit commencer par [FR], [EN], [ES] ou [DE]."
+			"subjectPlaceholder": "[EN] Title of your topic",
+			"languagePrefixHelp": "Title must start with [FR], [EN], [ES] or [DE]."
 		},
 		"search": {
-			"title": "Recherche",
-			"label": "Rechercher dans les forums",
+			"title": "Search",
+			"label": "Search the forums",
 			"button": "Search",
-			"results": "Résultats pour « {query} »"
+			"results": "Results for \"{query}\""
 		},
-		"topicCount": "{count} sujet(s)",
+		"topicCount": "{count} topic(s)",
 		"closed": {
-			"manual": "Sujet fermé.",
-			"automatic": "Sujet fermé automatiquement après {count} messages."
+			"manual": "Topic closed.",
+			"automatic": "Topic automatically closed after {count} messages."
 		},
 		"roles": {
-			"moderator": "Modérateur",
-			"admin": "Administrateur"
+			"moderator": "Moderator",
+			"admin": "Administrator"
 		},
 		"confirm": {
 			"deleteMessage": "Supprimer ce message ?",
 			"deleteLastMessage": "Ce message est le dernier du sujet. Sa suppression supprimera également le sujet. Continuer ?"
 		},
-		"loginToReply": "Connectez-vous pour répondre à ce sujet.",
+		"loginToReply": "Log in to reply to this topic.",
 		"errors": {
-			"loadForum": "Impossible de charger le forum.",
-			"titleMin": "Le titre doit contenir au moins 3 caractères.",
-			"messageEmpty": "Le message ne peut pas être vide.",
-			"createTopic": "Impossible de créer le sujet.",
-			"loadFavorites": "Impossible de charger vos favoris.",
-			"search": "Impossible d’effectuer la recherche.",
-			"searchMin": "La recherche doit contenir au moins {count} caractères.",
-			"loadTopic": "Impossible de charger ce sujet.",
-			"reply": "Impossible de répondre.",
-			"titleLanguagePrefix": "Le titre doit commencer par [FR], [EN], [ES] ou [DE]."
+			"loadForum": "Unable to load forum.",
+			"titleMin": "Title must contain at least 3 characters.",
+			"messageEmpty": "The message cannot be empty.",
+			"createTopic": "Unable to create the topic.",
+			"loadFavorites": "Unable to load your favorites.",
+			"search": "Unable to perform the search.",
+			"searchMin": "Search must contain at least {count} characters.",
+			"loadTopic": "Unable to load this topic.",
+			"reply": "Unable to reply.",
+			"titleLanguagePrefix": "Title must start with [FR], [EN], [ES] or [DE]."
 		}
 	},
 	"button": {
