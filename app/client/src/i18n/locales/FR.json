@@ -684,7 +684,9 @@
 		},
 		"composer": {
 			"subject": "Sujet",
-			"message": "Message"
+			"message": "Message",
+			"subjectPlaceholder": "[FR] Titre de votre sujet",
+			"languagePrefixHelp": "Le titre doit commencer par [FR], [EN], [ES] ou [DE]."
 		},
 		"search": {
 			"title": "Recherche",
@@ -715,7 +717,8 @@
 			"search": "Impossible d’effectuer la recherche.",
 			"searchMin": "La recherche doit contenir au moins {count} caractères.",
 			"loadTopic": "Impossible de charger ce sujet.",
-			"reply": "Impossible de répondre."
+			"reply": "Impossible de répondre.",
+			"titleLanguagePrefix": "Le titre doit commencer par [FR], [EN], [ES] ou [DE]."
 		}
 	},
 	"button": {

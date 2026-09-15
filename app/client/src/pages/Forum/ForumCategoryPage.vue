@@ -14,7 +14,10 @@
 			<div v-if="showComposer" class="forum-composer">
 				<label class="forum-composer-label">
 					<span>{{ $t('forum.composer.subject') }}</span>
-					<input v-model="title" maxlength="120" required />
+					<input v-model="title" :placeholder="$t('forum.composer.subjectPlaceholder')" maxlength="120" required />
+					<small class="forum-composer-help">
+						{{ $t('forum.composer.languagePrefixHelp') }}
+					</small>
 				</label>
 				<div class="forum-composer-label">
 					<span>{{ $t('forum.composer.message') }}</span>
@@ -32,7 +35,10 @@
 					<DZButton @click="cancelComposer">
 						{{ $t('forum.actions.cancel') }}
 					</DZButton>
-					<DZButton :disabled="submitting || title.trim().length < 3" @click="submitTopic">
+					<DZButton
+						:disabled="submitting || title.trim().length < 3 || !hasForumTopicLanguagePrefix(title)"
+						@click="submitTopic"
+					>
 						{{ $t('forum.actions.createTopic') }}
 					</DZButton>
 				</div>
@@ -47,7 +53,12 @@
 </template>
 
 <script setup lang="ts">
-import { isForumCategory, type ForumCategory, type ForumTopicListResponse } from '@dinorpg/core/models/forum/forum.js';
+import {
+	hasForumTopicLanguagePrefix,
+	isForumCategory,
+	type ForumCategory,
+	type ForumTopicListResponse
+} from '@dinorpg/core/models/forum/forum.js';
 
 import { computed, ref, useTemplateRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -137,8 +148,13 @@ function cancelComposer(): void {
 }
 
 function submitTopic(): void {
-	if (title.value.trim().length < 3) {
+	const trimmedTitle = title.value.trim();
+	if (trimmedTitle.length < 3) {
 		error.value = t('forum.errors.titleMin');
+		return;
+	}
+	if (!hasForumTopicLanguagePrefix(trimmedTitle)) {
+		error.value = t('forum.errors.titleLanguagePrefix');
 		return;
 	}
 	error.value = '';

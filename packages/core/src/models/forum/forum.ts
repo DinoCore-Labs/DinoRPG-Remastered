@@ -9,6 +9,14 @@ export const FORUM_TOPICS_PER_PAGE = 25;
 export const FORUM_MESSAGES_PER_PAGE = 25;
 export const FORUM_SEARCH_MIN_LENGTH = 2;
 export const FORUM_SEARCH_MAX_LENGTH = 80;
+export const FORUM_TOPIC_LANGUAGE_PREFIXES = ['[FR]', '[EN]', '[ES]', '[DE]'] as const;
+
+export function hasForumTopicLanguagePrefix(title: string): boolean {
+	const trimmedTitle = title.trim();
+	return FORUM_TOPIC_LANGUAGE_PREFIXES.some(
+		prefix => trimmedTitle.startsWith(`${prefix} `) && trimmedTitle.length > prefix.length + 1
+	);
+}
 
 export function isForumCategory(value: unknown): value is ForumCategory {
 	return typeof value === 'string' && (ForumCategories as readonly string[]).includes(value);

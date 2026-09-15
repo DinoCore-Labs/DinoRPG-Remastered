@@ -77,8 +77,7 @@
 							>
 								<DZButton
 									v-if="canEditMessage(message)"
-									class="forum-post-action-button"
-									size="small"
+									class="forum-post-action-button bSmall"
 									:title="$t('forum.actions.edit')"
 									:aria-label="$t('forum.actions.edit')"
 									@click="startEdit(message)"
@@ -87,8 +86,7 @@
 								</DZButton>
 								<DZButton
 									v-if="canDeleteMessage(message)"
-									class="forum-post-action-button"
-									size="small"
+									class="forum-post-action-button bSmall"
 									:disabled="deletingMessageId !== null"
 									:title="$t('forum.actions.delete')"
 									:aria-label="$t('forum.actions.delete')"
