@@ -1,4 +1,4 @@
-import { ForumCategories } from '@dinorpg/core/models/forum/forum.js';
+import { FORUM_SEARCH_MAX_LENGTH, FORUM_SEARCH_MIN_LENGTH, ForumCategories } from '@dinorpg/core/models/forum/forum.js';
 import { z } from 'zod';
 
 export const forumCategoryParamSchema = z.object({
@@ -28,6 +28,10 @@ export const updateForumPinnedBodySchema = z.object({
 
 export const updateForumClosedBodySchema = z.object({
 	isClosed: z.boolean()
+});
+
+export const forumSearchQuerySchema = forumPageQuerySchema.extend({
+	q: z.string().trim().min(FORUM_SEARCH_MIN_LENGTH).max(FORUM_SEARCH_MAX_LENGTH)
 });
 
 export type CreateForumTopicBody = z.infer<typeof createForumTopicBodySchema>;

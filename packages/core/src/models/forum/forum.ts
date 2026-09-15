@@ -5,6 +5,8 @@ export type ForumCategory = (typeof ForumCategories)[number];
 export const FORUM_MAX_MESSAGES = 500;
 export const FORUM_TOPICS_PER_PAGE = 25;
 export const FORUM_MESSAGES_PER_PAGE = 25;
+export const FORUM_SEARCH_MIN_LENGTH = 2;
+export const FORUM_SEARCH_MAX_LENGTH = 80;
 
 export function isForumCategory(value: unknown): value is ForumCategory {
 	return typeof value === 'string' && (ForumCategories as readonly string[]).includes(value);
