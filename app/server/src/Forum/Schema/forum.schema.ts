@@ -1,4 +1,9 @@
-import { FORUM_SEARCH_MAX_LENGTH, FORUM_SEARCH_MIN_LENGTH, ForumCategories } from '@dinorpg/core/models/forum/forum.js';
+import {
+	FORUM_SEARCH_MAX_LENGTH,
+	FORUM_SEARCH_MIN_LENGTH,
+	ForumCategories,
+	hasForumTopicLanguagePrefix
+} from '@dinorpg/core/models/forum/forum.js';
 import { z } from 'zod';
 
 export const forumCategoryParamSchema = z.object({
@@ -18,7 +23,9 @@ export const forumPageQuerySchema = z.object({
 });
 
 export const createForumTopicBodySchema = z.object({
-	title: z.string().trim().min(3).max(120),
+	title: z.string().trim().min(3).max(120).refine(hasForumTopicLanguagePrefix, {
+		message: 'forum.topic.languagePrefixRequired'
+	}),
 	content: z.string().trim().min(1).max(10_000)
 });
 
