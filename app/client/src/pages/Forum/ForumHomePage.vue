@@ -1,9 +1,7 @@
 <template>
-	<div class="forum-page">
-		<div class="forum-frame">
-			<header class="forum-banner">
-				<h1>Forums DinoRPG</h1>
-			</header>
+	<div class="forum-page forum-home-page">
+		<div class="forum-frame forum-home-frame">
+			<div class="forum-home-ornament" aria-hidden="true"></div>
 			<div class="forum-menu">
 				<RouterLink
 					v-for="entry in categories"
@@ -17,15 +15,11 @@
 					}"
 				>
 					<span class="forum-menu-icon">
-						{{ entry.icon }}
+						<img :src="getImgURL('act', entry.icon)" alt="" />
 					</span>
-					<span>
-						<strong>
-							{{ entry.title }}
-						</strong>
-						<em>
-							{{ entry.description }}
-						</em>
+					<span class="forum-menu-content">
+						<strong>{{ entry.title }}</strong>
+						<em>{{ entry.description }}</em>
 					</span>
 				</RouterLink>
 				<RouterLink
@@ -35,12 +29,19 @@
 						name: 'ForumFavorites'
 					}"
 				>
-					<span class="forum-menu-icon"> ★ </span>
-					<span>
-						<strong> Mes favoris </strong>
-						<em> La liste de vos sujets de discussion préférés. </em>
+					<span class="forum-menu-icon">
+						<img :src="getImgURL('act', 'act_fav')" alt="" />
+					</span>
+					<span class="forum-menu-content">
+						<strong>Mes favoris</strong>
+						<em>La liste de vos sujets de discussion préférés.</em>
 					</span>
 				</RouterLink>
+			</div>
+			<div class="forum-goupis" aria-hidden="true">
+				<img class="forum-goupi forum-goupi--one" :src="getImgURL('design/forum', 'goupi_01')" alt="" />
+				<img class="forum-goupi forum-goupi--two" :src="getImgURL('design/forum', 'goupi_02')" alt="" />
+				<img class="forum-goupi forum-goupi--three" :src="getImgURL('design/forum', 'goupi_03')" alt="" />
 			</div>
 		</div>
 	</div>
@@ -50,6 +51,7 @@
 import type { ForumCategory } from '@dinorpg/core/models/forum/forum.js';
 
 import { userStore } from '../../store/userStore';
+import { getImgURL } from '../../utils/getImgURL';
 
 const user = userStore();
 
@@ -61,39 +63,27 @@ const categories: Array<{
 }> = [
 	{
 		category: 'QUESTIONS',
-
-		icon: '?',
-
+		icon: 'act_help',
 		title: 'Questions / Réponses',
-
 		description: 'Trouvez ici toutes les réponses à vos questions !'
 	},
 	{
 		category: 'GAME',
-
-		icon: '✦',
-
+		icon: 'act_explore',
 		title: 'Discussions autour du jeu',
-
-		description: 'Discutez du monde de DinoRPG : dinoz, lieux, missions, etc.'
+		description: 'Discutez du monde de DinoRPG : dinoz, lieux, missions, etc...'
 	},
 	{
 		category: 'CLANS',
-
-		icon: '⚔',
-
+		icon: 'act_castle',
 		title: 'Clans',
-
-		description: 'Discutez entre clans, ou venez recruter ici vos futurs membres !'
+		description: 'Discutez entre Clans, ou venez recruter ici vos futurs membres !'
 	},
 	{
 		category: 'CHAOS',
-
-		icon: '☵',
-
-		title: 'Auberge du chaos',
-
-		description: 'Discussions sans rapport avec DinoRPG. Publicités, MSN et insultes interdites !'
+		icon: 'act_talk',
+		title: 'Auberge du Chaos',
+		description: 'Les discussions sans rapport avec DinoRPG sont à écrire ici.'
 	}
 ];
 </script>
