@@ -10,7 +10,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Role } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
-import type { CreateForumMessageBody, CreateForumTopicBody } from '../Schema/forum.schema.js';
+import type { CreateForumMessageBody, CreateForumTopicBody, UpdateForumMessageBody } from '../Schema/forum.schema.js';
 
 function forumError(code: string, statusCode = 400): ExpectedError {
 	return new ExpectedError(code, {
@@ -454,6 +454,54 @@ export const forumService = {
 				}
 			};
 		});
+	},
+	async updateMessage(
+		topicId: number,
+		messageId: number,
+		input: UpdateForumMessageBody,
+		userId: string
+	): Promise<ForumMessageView> {
+		/*
+		 * On applique les mêmes restrictions de mute que pour
+		 * l'envoi d'un nouveau message.
+		 */
+		await getPostingUser(userId);
+		/*
+		 * updateMany nous permet d'effectuer le contrôle
+		 * d'appartenance et la modification en une seule opération.
+		 */
+		const updated = await prisma.forumMessage.updateMany({
+			where: {
+				id: messageId,
+				topicId,
+				authorId: userId
+			},
+			data: {
+				content: input.content
+			}
+		});
+		if (updated.count === 0) {
+			const existing = await prisma.forumMessage.findFirst({
+				where: {
+					id: messageId,
+					topicId
+				},
+				select: {
+					id: true
+				}
+			});
+			if (!existing) {
+				throw forumError('forum.message.notFound', 404);
+			}
+			throw forumError('forum.message.forbidden', 403);
+		}
+		const message = await prisma.forumMessage.findUniqueOrThrow({
+			where: {
+				id: messageId
+			},
+			include: messageAuthorInclude
+		});
+		return mapMessage(message);
 	},
 	async toggleFavorite(topicId: number, userId: string) {
 		const topic = await prisma.forumTopic.findUnique({
