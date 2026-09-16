@@ -36,7 +36,7 @@
 		</div>
 	</div>
 	<div v-if="answerMode" class="answer">
-		<RichTextEditor v-model="answer" @send="sendMessageFromEditor" />
+		<RichTextEditor v-model="answer" :submit-on-enter="false" @send="sendMessageFromEditor" />
 	</div>
 	<div v-if="myThread && myThread.pinnedMessage">
 		<Message :message="myThread.pinnedMessage" />
