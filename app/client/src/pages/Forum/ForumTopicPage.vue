@@ -72,9 +72,21 @@
 						</aside>
 						<div class="forum-post-content">
 							<div
-								v-if="editingMessageId !== message.id && (canEditMessage(message) || canDeleteMessage(message))"
+								v-if="
+									editingMessageId !== message.id &&
+									(canQuoteMessage() || canEditMessage(message) || canDeleteMessage(message))
+								"
 								class="forum-post-actions"
 							>
+								<DZButton
+									v-if="canQuoteMessage()"
+									class="forum-post-action-button bSmall"
+									:title="$t('forum.actions.quote')"
+									:aria-label="$t('forum.actions.quote')"
+									@click="quoteMessage(message)"
+								>
+									<img class="forum-post-action-img" :src="getImgURL('icons', 'thread')" alt="" />
+								</DZButton>
 								<DZButton
 									v-if="canEditMessage(message)"
 									class="forum-post-action-button bSmall"
@@ -82,7 +94,7 @@
 									:aria-label="$t('forum.actions.edit')"
 									@click="startEdit(message)"
 								>
-									<img :src="getImgURL('icons', 'small_edit')" alt="" />
+									<img class="forum-post-action-img" :src="getImgURL('icons', 'small_edit')" alt="" />
 								</DZButton>
 								<DZButton
 									v-if="canDeleteMessage(message)"
@@ -92,7 +104,7 @@
 									:aria-label="$t('forum.actions.delete')"
 									@click="deleteMessage(message)"
 								>
-									<img :src="getImgURL('icons', 'small_delete')" alt="" />
+									<img class="forum-post-action-img" :src="getImgURL('icons', 'small_delete')" alt="" />
 								</DZButton>
 							</div>
 							<template v-if="editingMessageId === message.id">
@@ -116,7 +128,6 @@
 									</div>
 								</div>
 							</template>
-
 							<div v-else class="forum-post-message" v-html="richFormatText(message.content)"></div>
 						</div>
 					</article>
@@ -129,7 +140,7 @@
 							: $t('forum.closed.manual')
 					}}
 				</p>
-				<div v-else-if="user.isLogged" class="forum-composer">
+				<div v-else-if="user.isLogged" ref="replyComposerRef" class="forum-composer">
 					<div class="forum-composer-label">
 						<span>{{ $t('forum.actions.reply') }}</span>
 						<RichTextEditor
@@ -201,6 +212,7 @@ const deletingMessageId = ref<number | null>(null);
 const editEditorRef = ref<InstanceType<typeof RichTextEditor> | null>(null);
 
 const replyEditorRef = useTemplateRef<InstanceType<typeof RichTextEditor>>('replyEditorRef');
+const replyComposerRef = useTemplateRef<HTMLElement>('replyComposerRef');
 
 const maxMessages = FORUM_MAX_MESSAGES;
 
@@ -222,6 +234,10 @@ function currentPage(): number {
 
 function setEditEditorRef(instance: unknown): void {
 	editEditorRef.value = instance as InstanceType<typeof RichTextEditor> | null;
+}
+
+function canQuoteMessage(): boolean {
+	return user.isLogged && result.value !== null && !result.value.topic.isClosed;
 }
 
 function canEditMessage(message: ForumMessageView): boolean {
@@ -346,6 +362,25 @@ async function deleteMessage(message: ForumMessageView): Promise<void> {
 	} finally {
 		deletingMessageId.value = null;
 	}
+}
+
+function quoteMessage(message: ForumMessageView): void {
+	if (!canQuoteMessage()) {
+		return;
+	}
+	const quotedContent = message.content
+		.split(/\r?\n/)
+		.map(line => `> ${line}`)
+		.join('\n');
+	const quote = [`> ${message.authorName} · #${message.id}`, quotedContent].join('\n');
+	const currentContent = content.value.trimEnd();
+	content.value = currentContent ? `${currentContent}\n\n${quote}\n\n` : `${quote}\n\n`;
+	requestAnimationFrame(() => {
+		replyComposerRef.value?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'center'
+		});
+	});
 }
 
 async function load(): Promise<void> {
