@@ -3,5 +3,6 @@ export enum NotificationType {
 	NEW_REWARD = 'newReward',
 	MARKET_OFFER_WIN = 'marketOfferWin',
 	MARKET_OFFER_SOLD = 'marketOfferSold',
-	MARKET_OFFER_UNSOLD = 'marketOfferUnsold'
+	MARKET_OFFER_UNSOLD = 'marketOfferUnsold',
+	FORUM_TOPIC_REPLY = 'forumTopicReply'
 }

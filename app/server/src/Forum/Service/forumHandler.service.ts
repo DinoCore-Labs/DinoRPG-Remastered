@@ -112,3 +112,8 @@ export async function markForumTopicReadHandler(req: FastifyRequest, reply: Fast
 	const { messageId } = markForumTopicReadBodySchema.parse(req.body);
 	return reply.send(await forumService.markTopicRead(topicId, messageId, userId(req)));
 }
+
+export async function toggleForumSubscriptionHandler(req: FastifyRequest, reply: FastifyReply) {
+	const { topicId } = forumTopicParamSchema.parse(req.params);
+	return reply.send(await forumService.toggleSubscription(topicId, userId(req)));
+}

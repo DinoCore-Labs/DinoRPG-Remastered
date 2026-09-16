@@ -61,9 +61,14 @@ export interface ForumMessageView {
 export interface ForumTopicViewResponse {
 	topic: ForumTopicSummary;
 	messages: ForumMessageView[];
+	isSubscribed: boolean;
 	page: number;
 	pageCount: number;
 	totalMessages: number;
+}
+
+export interface ToggleForumSubscriptionResponse {
+	subscribed: boolean;
 }
 
 export interface CreateForumTopicInput {
