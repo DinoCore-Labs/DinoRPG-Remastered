@@ -326,7 +326,7 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 			},
 			{
 				id: 'burger',
-				selector: '#burger',
+				selector: '#cloud_burger',
 				url: 'shop/*'
 			}
 		],
@@ -354,7 +354,7 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'burger',
-				selector: '[data-tutorial-item-use="burger"]',
+				selector: '[data-tutorial-item-use="cloud_burger"]',
 				url: 'dinoz/*'
 			}
 		],
