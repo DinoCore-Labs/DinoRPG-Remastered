@@ -14,6 +14,11 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		end: {},
 		helpers: [
 			{
+				id: 'shopDinoz',
+				selector: '#shopDinoz',
+				url: '/news'
+			},
+			{
 				id: 'compare',
 				selector: '#detail_0',
 				url: 'shop/dinoz'
