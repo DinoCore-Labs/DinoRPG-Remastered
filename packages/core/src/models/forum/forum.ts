@@ -36,6 +36,7 @@ export interface ForumTopicSummary {
 	createdAt: string;
 	lastActivityAt: string;
 	isFavorite: boolean;
+	hasUnreadMessages: boolean;
 }
 
 export interface ForumTopicListResponse {
@@ -103,4 +104,13 @@ export interface UpdateForumPinnedInput {
 
 export interface UpdateForumClosedInput {
 	isClosed: boolean;
+}
+
+export interface ForumFirstUnreadResponse {
+	messageId: number | null;
+	page: number | null;
+}
+
+export interface MarkForumTopicReadInput {
+	messageId: number;
 }

@@ -64,6 +64,50 @@ async function getFavoriteIds(userId: string | undefined, topicIds: number[]): P
 	return new Set(favorites.map(favorite => favorite.topicId));
 }
 
+async function getUnreadTopicIds(userId: string | undefined, topicIds: number[]): Promise<Set<number>> {
+	if (!userId || topicIds.length === 0) {
+		return new Set();
+	}
+	const [reads, latestMessages] = await Promise.all([
+		prisma.forumTopicRead.findMany({
+			where: {
+				userId,
+				topicId: {
+					in: topicIds
+				}
+			},
+			select: {
+				topicId: true,
+				lastReadMessageId: true
+			}
+		}),
+		prisma.forumMessage.groupBy({
+			by: ['topicId'],
+			where: {
+				topicId: {
+					in: topicIds
+				}
+			},
+			_max: {
+				id: true
+			}
+		})
+	]);
+	const lastReadByTopic = new Map(reads.map(read => [read.topicId, read.lastReadMessageId]));
+	const unreadTopicIds = new Set<number>();
+	for (const latest of latestMessages) {
+		const latestMessageId = latest._max.id;
+		if (latestMessageId === null) {
+			continue;
+		}
+		const lastReadMessageId = lastReadByTopic.get(latest.topicId);
+		if (lastReadMessageId === undefined || latestMessageId > lastReadMessageId) {
+			unreadTopicIds.add(latest.topicId);
+		}
+	}
+	return unreadTopicIds;
+}
+
 function mapTopic(
 	topic: {
 		id: number;
@@ -80,7 +124,8 @@ function mapTopic(
 		createdAt: Date;
 		lastActivityAt: Date;
 	},
-	favoriteIds: Set<number>
+	favoriteIds: Set<number>,
+	unreadTopicIds: Set<number> = new Set()
 ): ForumTopicSummary {
 	return {
 		id: topic.id,
@@ -95,7 +140,8 @@ function mapTopic(
 		authorRole: topic.author?.role ?? null,
 		createdAt: topic.createdAt.toISOString(),
 		lastActivityAt: topic.lastActivityAt.toISOString(),
-		isFavorite: favoriteIds.has(topic.id)
+		isFavorite: favoriteIds.has(topic.id),
+		hasUnreadMessages: unreadTopicIds.has(topic.id)
 	};
 }
 
@@ -185,12 +231,13 @@ export const forumService = {
 				}
 			})
 		]);
-		const favoriteIds = await getFavoriteIds(
-			userId,
-			topics.map(topic => topic.id)
-		);
+		const topicIds = topics.map(topic => topic.id);
+		const [favoriteIds, unreadTopicIds] = await Promise.all([
+			getFavoriteIds(userId, topicIds),
+			getUnreadTopicIds(userId, topicIds)
+		]);
 		return {
-			topics: topics.map(topic => mapTopic(topic, favoriteIds)),
+			topics: topics.map(topic => mapTopic(topic, favoriteIds, unreadTopicIds)),
 			page,
 			pageCount: Math.max(1, Math.ceil(total / FORUM_TOPICS_PER_PAGE)),
 			total
@@ -298,9 +345,11 @@ export const forumService = {
 				where
 			})
 		]);
-		const favoriteIds = new Set(topics.map(topic => topic.id));
+		const topicIds = topics.map(topic => topic.id);
+		const favoriteIds = new Set(topicIds);
+		const unreadTopicIds = await getUnreadTopicIds(userId, topicIds);
 		return {
-			topics: topics.map(topic => mapTopic(topic, favoriteIds)),
+			topics: topics.map(topic => mapTopic(topic, favoriteIds, unreadTopicIds)),
 			page,
 			pageCount: Math.max(1, Math.ceil(total / FORUM_TOPICS_PER_PAGE)),
 			total
@@ -336,8 +385,9 @@ export const forumService = {
 			}),
 			getFavoriteIds(userId, [topicId])
 		]);
+		const unreadTopicIds = await getUnreadTopicIds(userId, [topicId]);
 		return {
-			topic: mapTopic(topic, favoriteIds),
+			topic: mapTopic(topic, favoriteIds, unreadTopicIds),
 			messages: messages.map(mapMessage),
 			page,
 			pageCount: Math.max(1, Math.ceil(topic.messageCount / FORUM_MESSAGES_PER_PAGE)),
@@ -687,6 +737,139 @@ export const forumService = {
 		});
 		return {
 			success: true
+		};
+	},
+	async getFirstUnread(topicId: number, userId: string) {
+		const topic = await prisma.forumTopic.findUnique({
+			where: {
+				id: topicId
+			},
+			select: {
+				id: true
+			}
+		});
+		if (!topic) {
+			throw forumError('forum.topic.notFound', 404);
+		}
+		const read = await prisma.forumTopicRead.findUnique({
+			where: {
+				userId_topicId: {
+					userId,
+					topicId
+				}
+			},
+			select: {
+				lastReadMessageId: true
+			}
+		});
+		const firstUnread = await prisma.forumMessage.findFirst({
+			where: {
+				topicId,
+				...(read
+					? {
+							id: {
+								gt: read.lastReadMessageId
+							}
+						}
+					: {})
+			},
+			orderBy: [
+				{
+					createdAt: 'asc'
+				},
+				{
+					id: 'asc'
+				}
+			],
+			select: {
+				id: true,
+				createdAt: true
+			}
+		});
+		if (!firstUnread) {
+			return {
+				messageId: null,
+				page: null
+			};
+		}
+		/*
+		 * On calcule combien de messages se trouvent avant lui
+		 * en respectant exactement le même ordre que getTopic().
+		 */
+		const messagesBefore = await prisma.forumMessage.count({
+			where: {
+				topicId,
+				OR: [
+					{
+						createdAt: {
+							lt: firstUnread.createdAt
+						}
+					},
+					{
+						createdAt: firstUnread.createdAt,
+						id: {
+							lt: firstUnread.id
+						}
+					}
+				]
+			}
+		});
+		return {
+			messageId: firstUnread.id,
+			page: Math.floor(messagesBefore / FORUM_MESSAGES_PER_PAGE) + 1
+		};
+	},
+	async markTopicRead(topicId: number, messageId: number, userId: string) {
+		const message = await prisma.forumMessage.findFirst({
+			where: {
+				id: messageId,
+				topicId
+			},
+			select: {
+				id: true
+			}
+		});
+		if (!message) {
+			throw forumError('forum.message.notFound', 404);
+		}
+		const existing = await prisma.forumTopicRead.findUnique({
+			where: {
+				userId_topicId: {
+					userId,
+					topicId
+				}
+			},
+			select: {
+				lastReadMessageId: true
+			}
+		});
+		/*
+		 * Si l'utilisateur revient sur une ancienne page,
+		 * on ne doit JAMAIS faire reculer son curseur.
+		 */
+		if (existing && existing.lastReadMessageId >= message.id) {
+			return {
+				success: true as const
+			};
+		}
+		await prisma.forumTopicRead.upsert({
+			where: {
+				userId_topicId: {
+					userId,
+					topicId
+				}
+			},
+			create: {
+				userId,
+				topicId,
+				lastReadMessageId: message.id
+			},
+			update: {
+				lastReadMessageId: message.id
+			}
+		});
+		return {
+			success: true as const
 		};
 	}
 };
