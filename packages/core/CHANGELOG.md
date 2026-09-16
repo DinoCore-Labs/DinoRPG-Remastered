@@ -1,5 +1,11 @@
 # @dinorpg/core
 
+## 0.40.0
+
+### Minor Changes
+
+- 2311934: Add the forum system with topics, messages, moderation, favorites, search, multilingual support, pagination, staff badges and forum rules.
+
 ## 0.39.0
 
 ### Minor Changes
