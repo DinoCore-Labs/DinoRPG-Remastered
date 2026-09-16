@@ -86,6 +86,7 @@
 			"messagerie": "Nachrichten",
 			"news": "Neuigkeiten",
 			"cinema": "Kino",
+			"forum": "Forum",
 			"faq": "FAQ",
 			"guide": "Spielhandbuch",
 			"disconnect": "Ausloggen",
@@ -129,7 +130,7 @@
 			"full": "Vorrat gefüllt",
 			"sortBy": "Sortieren nach",
 			"confirmUse": "Möchtest du wirklich {name} auf deinen Dinoz anwenden?",
-			"confirmEquipMagicItem": "Etes vous sur de vouloir équiper cette objet ?",
+			"confirmEquipMagicItem": "Êtes vous sur de vouloir équiper cet objet ?",
 			"sort": {
 				"default": "Standard",
 				"nameAsc": "Name (A → Z)",
@@ -248,7 +249,8 @@
 		"clan": "DinoRPG [ Clan : {clan} ]",
 		"createClan": "DinoRPG [ Créer un Clan ]",
 		"clansList": "DinoRPG [ Clans ]",
-		"dojo": "DinoRPG [ Dojo ]"
+		"dojo": "DinoRPG [ Dojo ]",
+		"forum": "DinoRPG [ Forum ]"
 	},
 	"adminPage": {
 		"news": {
@@ -624,6 +626,99 @@
 			"help": "Klicke auf ein Update oben, um weitere Informationen zu erhalten!",
 			"disclaimer": "Madame Irmas Vorhersagen sind nicht unfehlbar, daher ist für keine dieser Neuerungen ein Veröffentlichungsdatum verfügbar. Jedes Ereignis wird jedoch zu gegebener Zeit offiziell auf der Website angekündigt.",
 			"futurTitle": "Dinolandische Zukunft"
+		}
+	},
+	"forum": {
+		"title": "Forum",
+		"backHome": "Accueil des forums",
+		"backTopics": "Liste des sujets",
+		"categories": {
+			"QUESTIONS": {
+				"title": "Questions / Réponses",
+				"description": "Trouvez ici toutes les réponses à vos questions !"
+			},
+			"GAME": {
+				"title": "Discussions autour du jeu",
+				"description": "Discutez du monde de DinoRPG : dinoz, lieux, missions, etc..."
+			},
+			"CLANS": {
+				"title": "Clans",
+				"description": "Discutez entre Clans, ou venez recruter ici vos futurs membres !"
+			},
+			"CHAOS": {
+				"title": "Auberge du Chaos",
+				"description": "Les discussions sans rapport avec DinoRPG sont à écrire ici."
+			}
+		},
+		"favorites": {
+			"title": "Mes favoris",
+			"description": "La liste de vos sujets de discussion préférés."
+		},
+		"actions": {
+			"cancel": "Annuler",
+			"writeMessage": "Écrire un message",
+			"createTopic": "Créer le sujet",
+			"home": "Accueil",
+			"addFavorite": "Ajouter aux favoris",
+			"removeFavorite": "Retirer des favoris",
+			"pin": "Mettre en Post-It",
+			"unpin": "Retirer le Post-It",
+			"close": "Schließen",
+			"reopen": "Rouvrir",
+			"reply": "Antworten",
+			"edit": "Modifier",
+			"delete": "Löschen",
+			"save": "Enregistrer"
+		},
+		"table": {
+			"subject": "Sujet",
+			"author": "Auteur",
+			"replies": "Réponses",
+			"postIt": "POST-IT",
+			"closed": "Sujet fermé",
+			"empty": "Aucun sujet pour le moment."
+		},
+		"pagination": {
+			"ariaLabel": "Pagination du forum",
+			"page": "Page {page} / {pageCount}"
+		},
+		"composer": {
+			"subject": "Sujet",
+			"message": "Message",
+			"subjectPlaceholder": "[FR] Titre de votre sujet",
+			"languagePrefixHelp": "Le titre doit commencer par [FR], [EN], [ES] ou [DE]."
+		},
+		"search": {
+			"title": "Recherche",
+			"label": "Rechercher dans les forums",
+			"button": "Suche",
+			"results": "Résultats pour « {query} »"
+		},
+		"topicCount": "{count} sujet(s)",
+		"closed": {
+			"manual": "Sujet fermé.",
+			"automatic": "Sujet fermé automatiquement après {count} messages."
+		},
+		"roles": {
+			"moderator": "Modérateur",
+			"admin": "Administrateur"
+		},
+		"confirm": {
+			"deleteMessage": "Supprimer ce message ?",
+			"deleteLastMessage": "Ce message est le dernier du sujet. Sa suppression supprimera également le sujet. Continuer ?"
+		},
+		"loginToReply": "Connectez-vous pour répondre à ce sujet.",
+		"errors": {
+			"loadForum": "Impossible de charger le forum.",
+			"titleMin": "Le titre doit contenir au moins 3 caractères.",
+			"messageEmpty": "Le message ne peut pas être vide.",
+			"createTopic": "Impossible de créer le sujet.",
+			"loadFavorites": "Impossible de charger vos favoris.",
+			"search": "Impossible d’effectuer la recherche.",
+			"searchMin": "La recherche doit contenir au moins {count} caractères.",
+			"loadTopic": "Impossible de charger ce sujet.",
+			"reply": "Impossible de répondre.",
+			"titleLanguagePrefix": "Le titre doit commencer par [FR], [EN], [ES] ou [DE]."
 		}
 	},
 	"button": {
