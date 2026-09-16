@@ -250,13 +250,13 @@
 					</label>
 				</div>
 			</div>
-			<div class="notifications" v-if="notifications.length > 0">
+			<div class="notifications" v-if="nStore.notifications.length > 0">
 				<div class="section">
 					<span class="title">
 						<span>{{ $t('notifications.title') }}</span>
 					</span>
 				</div>
-				<div class="notification" v-for="notification in notifications" :key="notification.id">
+				<div class="notification" v-for="notification in nStore.notifications" :key="notification.id">
 					<div class="element">
 						<span>{{ formatNotificationText(notification) }}</span>
 					</div>
@@ -288,9 +288,9 @@ import eventBus from '../../events/index.js';
 import { clearClientSession, startLogoutSession, stopLogoutSession } from '../../utils/clearSession.js';
 import { messagingStore } from '../../store/messagingStore.js';
 import { localStore } from '../../store/localStore.js';
-import { NotificationService } from '../../services/notification.service.js';
 import type { NotificationItem } from '../../services/notification.service.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { notificationStore } from '../../store/notificationStore.js';
 
 interface ForumTopicReplyNotificationContent {
 	topicId: number;
@@ -311,6 +311,7 @@ export default defineComponent({
 			dStore: dinozStore(),
 			mStore: messagingStore(),
 			localStore: localStore(),
+			nStore: notificationStore(),
 			notifications: [] as NotificationItem[]
 		};
 	},
@@ -394,16 +395,11 @@ export default defineComponent({
 			this.localStore.setBypassGatheringGrid(target.checked);
 		},
 		async fetchNotifications() {
-			try {
-				this.notifications = await NotificationService.getNotifications();
-			} catch (e) {
-				console.error(e);
-			}
+			await this.nStore.refreshNotifications();
 		},
 		async cleanNotif(id: string) {
 			try {
-				await NotificationService.deleteNotification(id);
-				this.notifications = this.notifications.filter(n => n.id !== id);
+				await this.nStore.deleteNotification(id);
 			} catch (e) {
 				console.error(e);
 			}
@@ -743,7 +739,7 @@ export default defineComponent({
 		font-family: arial, sans-serif;
 		font-weight: 400;
 		line-height: 1.43;
-		font-size: 1.2rem;
+		font-size: 0.8rem;
 		background-color: transparent;
 		display: flex;
 		padding: 6px 12px;
@@ -758,7 +754,7 @@ export default defineComponent({
 			padding: 8px 0px;
 			min-width: 0px;
 			overflow: auto;
-			max-width: 70%;
+			max-width: 60%;
 			align-items: center;
 			.go {
 				display: inline-flex;
@@ -777,11 +773,11 @@ export default defineComponent({
 				appearance: none;
 				text-decoration: none;
 				font-family: arial, sans-serif;
-				font-weight: 500;
-				font-size: 1rem;
-				line-height: 1.75;
+				font-weight: 400;
+				font-size: 0.8rem;
+				line-height: 1.43;
 				text-transform: uppercase;
-				min-width: 64px;
+				min-width: 48px;
 				padding: 3px 9px;
 				border-radius: 4px;
 				transition:
