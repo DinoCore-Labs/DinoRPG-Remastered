@@ -40,10 +40,12 @@
 			<div class="boxRoot">
 				<DZLocale />
 				<hr class="separator" />
-				<button @click="openUserMenu" class="playerBadge">{{ $t('topBar.menu') }}</button>
-				<!--
-				span class="notifications" v-if="notification > 0">{{ notification }}</span>
-    	-->
+				<button @click="openUserMenu" class="playerBadge">
+					{{ $t('topBar.menu') }}
+					<span v-if="nStore.hasNotifications" class="notifications">
+						{{ nStore.badgeLabel }}
+					</span>
+				</button>
 			</div>
 		</template>
 	</div>
@@ -54,6 +56,8 @@ import { defineComponent } from 'vue';
 import eventBus from '../../events';
 import { userStore } from '../../store/userStore';
 import DZLocale from '../utils/DZLocale.vue';
+import { notificationStore } from '../../store/notificationStore';
+
 export default defineComponent({
 	name: 'TopBar',
 	components: {
@@ -61,7 +65,8 @@ export default defineComponent({
 	},
 	setup() {
 		const uStore = userStore();
-		return { uStore };
+		const nStore = notificationStore();
+		return { uStore, nStore };
 	},
 	data() {
 		return {
@@ -91,6 +96,14 @@ export default defineComponent({
 		getTime(): void {
 			const day = new Date();
 			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'GMT' });
+		},
+		syncNotificationPolling(): void {
+			if (this.uStore.isLogged) {
+				this.nStore.startPolling();
+				return;
+			}
+			this.nStore.stopPolling();
+			this.nStore.clear();
 		}
 	},
 	mounted() {
@@ -104,6 +117,15 @@ export default defineComponent({
 	beforeUnmount() {
 		if (this.timer) {
 			clearInterval(this.timer);
+		}
+		this.nStore.stopPolling();
+	},
+	watch: {
+		'uStore.id': {
+			immediate: true,
+			handler() {
+				this.syncNotificationPolling();
+			}
 		}
 	}
 });
