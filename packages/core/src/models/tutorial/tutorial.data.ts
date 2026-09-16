@@ -163,7 +163,7 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'pilier',
-				selector: '[data-tutorial-action="dialog:intro__2"]',
+				selector: '[data-tutorial-action="dialog:intro_port"]',
 				url: 'dinoz/*'
 			}
 		],
@@ -202,22 +202,22 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 		helpers: [
 			{
 				id: 'intro4',
-				selector: '[data-tutorial-action="dialog:intro__4"]',
+				selector: '[data-tutorial-action="dialog:intro_waikiki"]',
 				url: 'dinoz/*'
 			},
 			{
 				id: 'intro5',
-				selector: '[data-tutorial-action="dialog:intro__5"]',
+				selector: '[data-tutorial-action="dialog:intro_swamp"]',
 				url: 'dinoz/*'
 			},
 			{
 				id: 'intro6',
-				selector: '[data-tutorial-action="dialog:intro__6"]',
+				selector: '[data-tutorial-action="dialog:intro_falls_bao"]',
 				url: 'dinoz/*'
 			},
 			{
 				id: 'intro7',
-				selector: '[data-tutorial-action="dialog:intro__7"]',
+				selector: '[data-tutorial-action="dialog:intro_falls_taurus"]',
 				url: 'dinoz/*'
 			},
 			{
