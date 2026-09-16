@@ -260,8 +260,17 @@
 					<div class="element">
 						<span>{{ formatNotificationText(notification) }}</span>
 					</div>
-					<div class="element">
-						<a @click="cleanNotif(notification.id)" class="go">{{ $t('notifications.ok') }}</a>
+					<div class="element notification-actions">
+						<a
+							v-if="isForumTopicReplyNotification(notification)"
+							class="go"
+							@click="openForumNotification(notification)"
+						>
+							{{ $t('notifications.view') }}
+						</a>
+						<a class="go" @click="cleanNotif(notification.id)">
+							{{ $t('notifications.ok') }}
+						</a>
 					</div>
 				</div>
 			</div>
@@ -282,6 +291,14 @@ import { localStore } from '../../store/localStore.js';
 import { NotificationService } from '../../services/notification.service.js';
 import type { NotificationItem } from '../../services/notification.service.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+
+interface ForumTopicReplyNotificationContent {
+	topicId: number;
+	topicTitle: string;
+	messageId: number;
+	page: number;
+	authorName: string;
+}
 
 export default defineComponent({
 	name: 'UserMenu',
@@ -406,6 +423,13 @@ export default defineComponent({
 			return translated;
 		},
 		formatNotificationText(notification: NotificationItem): string {
+			if (notification.type === 'forumTopicReply') {
+				const content = this.getForumTopicReplyContent(notification);
+				return this.$t('notifications.forumTopicReply', {
+					name: content?.authorName ?? '',
+					topic: content?.topicTitle ?? ''
+				});
+			}
 			if (notification.type === 'newClanJoinRequest') {
 				const content = this.parseContent(notification.content);
 				return this.$t('notifications.newClanJoinRequest', { name: content?.playerName || '' });
@@ -452,6 +476,53 @@ export default defineComponent({
 				console.error('Failed to parse notification content', e);
 				return null;
 			}
+		},
+		isForumTopicReplyNotification(notification: NotificationItem): boolean {
+			return notification.type === 'forumTopicReply';
+		},
+		getForumTopicReplyContent(notification: NotificationItem): ForumTopicReplyNotificationContent | null {
+			const content = this.parseContent(notification.content);
+			if (!content || typeof content !== 'object') {
+				return null;
+			}
+			const topicId = Number(content.topicId);
+			const messageId = Number(content.messageId);
+			const page = Number(content.page);
+			if (
+				!Number.isInteger(topicId) ||
+				topicId <= 0 ||
+				!Number.isInteger(messageId) ||
+				messageId <= 0 ||
+				!Number.isInteger(page) ||
+				page <= 0
+			) {
+				return null;
+			}
+			return {
+				topicId,
+				messageId,
+				page,
+				topicTitle: String(content.topicTitle ?? ''),
+				authorName: String(content.authorName ?? '')
+			};
+		},
+		async openForumNotification(notification: NotificationItem): Promise<void> {
+			const content = this.getForumTopicReplyContent(notification);
+			if (!content) {
+				return;
+			}
+			this.menuCalled = false;
+			await this.$router.push({
+				name: 'ForumTopic',
+				params: {
+					topicId: content.topicId
+				},
+				query: {
+					page: String(content.page)
+				},
+				hash: `#forum-message-${content.messageId}`
+			});
+			await this.cleanNotif(notification.id);
 		}
 	},
 	beforeUnmount() {
