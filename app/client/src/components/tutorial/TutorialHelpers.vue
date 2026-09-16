@@ -198,7 +198,7 @@ watch(
 
 onMounted(() => {
 	scheduleRefresh();
-	const root = document.querySelector('.mainpage') ?? document.body;
+	const root = document.body;
 	observer = new MutationObserver(() => {
 		scheduleRefresh();
 	});
