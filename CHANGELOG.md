@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.40.0
+
+### Minor Changes
+
+- 2311934: Add the forum system with topics, messages, moderation, favorites, search, multilingual support, pagination, staff badges and forum rules.
+
 ## 0.39.0
 
 ### Minor Changes
@@ -699,6 +705,17 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.42.0
+
+### Minor Changes
+
+- 2311934: Add the forum system with topics, messages, moderation, favorites, search, multilingual support, pagination, staff badges and forum rules.
+
+### Patch Changes
+
+- Updated dependencies [2311934]
+  - @dinorpg/core@0.40.0
 
 ## 0.41.0
 
@@ -1627,6 +1644,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.41.0
+
+### Minor Changes
+
+- 2311934: Add the forum system with topics, messages, moderation, favorites, search, multilingual support, pagination, staff badges and forum rules.
 
 ## 0.40.0
 
