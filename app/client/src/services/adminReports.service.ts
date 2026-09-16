@@ -10,6 +10,12 @@ export interface AdminReport {
 	reportedDinoz: { id: number; name: string; userId: string | null } | null;
 	reportedClanId: number | null;
 	reportedClan: { id: number; name: string } | null;
+	reportedForumMessageId: number | null;
+	reportedForumAuthorId: string | null;
+	reportedForumAuthorName: string | null;
+	reportedForumContent: string | null;
+	reportedForumTopicId: number | null;
+	reportedForumTopicTitle: string | null;
 	reason: string;
 	comment: string | null;
 	status: 'PENDING' | 'RESOLVED' | 'REJECTED';

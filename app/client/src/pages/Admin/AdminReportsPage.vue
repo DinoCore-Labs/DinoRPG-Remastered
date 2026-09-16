@@ -1,12 +1,10 @@
 <template>
 	<div class="admin-reports-page">
 		<TitleHeader title="Admin" header="Signalements" />
-
 		<p v-if="loading">Chargement...</p>
 		<p v-else-if="error" class="red">{{ error }}</p>
 		<div v-else class="reports-list">
 			<div v-if="reports.length === 0">Aucun signalement.</div>
-
 			<div class="report-card" v-for="report in reports" :key="report.id">
 				<div class="header">
 					<span><strong>ID:</strong> {{ report.id }}</span>
@@ -20,7 +18,6 @@
 							report.reporter.name
 						}}</router-link>
 					</p>
-
 					<p v-if="report.reportedUserId">
 						<strong>Joueur signalé:</strong>
 						<router-link :to="{ path: '/admin/user', query: { userId: report.reportedUserId } }">{{
@@ -33,12 +30,27 @@
 					<p v-if="report.reportedClanId">
 						<strong>Clan signalé:</strong> {{ report.reportedClan?.name }} (ID: {{ report.reportedClanId }})
 					</p>
-
+					<template v-if="report.reportedForumTopicId && report.reportedForumAuthorName">
+						<p>
+							<strong>Auteur :</strong>
+							{{ report.reportedForumAuthorName }}
+						</p>
+						<p>
+							<strong>Sujet :</strong>
+							{{ report.reportedForumTopicTitle }}
+						</p>
+						<div class="forum-report-content">
+							<strong>Message signalé :</strong>
+							<blockquote>
+								{{ report.reportedForumContent }}
+							</blockquote>
+						</div>
+						<DZButton size="small" :to="`/forum/topic/${report.reportedForumTopicId}`">Voir le sujet</DZButton>
+					</template>
 					<p><strong>Raison:</strong> {{ report.reason }}</p>
 					<p v-if="report.comment"><strong>Commentaire:</strong> {{ report.comment }}</p>
-
 					<div
-						v-if="report.reportedUserId"
+						v-if="report.reportedUserId || report.reportedForumAuthorId"
 						class="sanction-controls"
 						style="margin-top: 10px; display: flex; gap: 15px"
 					>
@@ -77,21 +89,18 @@
 						<DZButton size="small" v-if="report.status !== 'RESOLVED'" @click="updateStatus(report.id, 'RESOLVED')"
 							>Marquer Résolu</DZButton
 						>
-
 						<DZButton
 							size="small"
 							v-if="report.reportedClanId"
 							:to="`${routePrefix}/clan?clanId=${report.reportedClanId}`"
 							>Edit Clan</DZButton
 						>
-
 						<DZButton
 							size="small"
 							v-if="report.reportedDinozId"
 							:to="`${routePrefix}/dinoz?playerId=${report.reportedUserId || report.reportedDinoz?.userId}&dinozId=${report.reportedDinozId}`"
 							>Edit Dinoz</DZButton
 						>
-
 						<DZButton
 							size="small"
 							v-if="!report.reportedDinozId && !report.reportedClanId && report.reportedUserId"
@@ -99,7 +108,6 @@
 							>Edit Player</DZButton
 						>
 					</template>
-
 					<DZButton size="small" v-if="report.status !== 'REJECTED'" @click="updateStatus(report.id, 'REJECTED')"
 						>Rejeter</DZButton
 					>
@@ -108,7 +116,6 @@
 					>
 				</div>
 			</div>
-
 			<div class="pagination" v-if="totalPages > 1">
 				<DZButton size="small" :disabled="currentPage === 1" @click="prevPage()">Précédent</DZButton>
 				<span>Page {{ currentPage }} sur {{ totalPages }}</span>
@@ -216,7 +223,6 @@ onMounted(() => {
 	border: 1px solid #c9b49b;
 	padding: 10px;
 	border-radius: 4px;
-
 	.header {
 		display: flex;
 		justify-content: space-between;
@@ -224,7 +230,6 @@ onMounted(() => {
 		padding-bottom: 5px;
 		margin-bottom: 5px;
 		font-size: 0.9em;
-
 		.status {
 			font-weight: bold;
 			&.pending {
@@ -249,7 +254,6 @@ onMounted(() => {
 		gap: 10px;
 	}
 }
-
 .pagination {
 	display: flex;
 	justify-content: center;
@@ -279,6 +283,16 @@ onMounted(() => {
 			opacity: 0.5;
 			cursor: not-allowed;
 		}
+	}
+}
+.forum-report-content {
+	margin: 8px 0;
+	blockquote {
+		margin: 5px 0;
+		padding: 8px 10px;
+		white-space: pre-wrap;
+		background: rgba(0, 0, 0, 0.05);
+		border-left: 3px solid #c9b49b;
 	}
 }
 </style>
