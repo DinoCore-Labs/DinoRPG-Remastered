@@ -86,6 +86,7 @@
 			"messagerie": "Messaging",
 			"news": "News",
 			"cinema": "Theater",
+			"forum": "Forum",
 			"faq": "FAQ",
 			"guide": "Game Guide",
 			"disconnect": "Log out",
@@ -129,7 +130,7 @@
 			"full": "Stock full",
 			"sortBy": "Sort By",
 			"confirmUse": "Do you confirm the use of {name} on your Dinoz?",
-			"confirmEquipMagicItem": "Etes vous sur de vouloir équiper cette objet ?",
+			"confirmEquipMagicItem": "Êtes vous sur de vouloir équiper cet objet ?",
 			"sort": {
 				"default": "By Default",
 				"nameAsc": "Name (A → Z)",
@@ -248,7 +249,8 @@
 		"clan": "DinoRPG [ Clan: {clan}]",
 		"createClan": "DinoRPG [ Create a Clan ]",
 		"clansList": "DinoRPG [ Clan: ]",
-		"dojo": "DinoRPG [ Dojo ]"
+		"dojo": "DinoRPG [ Dojo ]",
+		"forum": "DinoRPG [ Forum ]"
 	},
 	"adminPage": {
 		"news": {
@@ -624,6 +626,99 @@
 			"help": "Click on an update above to get more information!",
 			"disclaimer": "Madame Irma's predictions are not infallible, so no release date is available for any of these new features. However, each event will be officially announced on the website when the time comes.",
 			"futurTitle": "Dinolandian Future"
+		}
+	},
+	"forum": {
+		"title": "Forum",
+		"backHome": "Forum home",
+		"backTopics": "Topic list",
+		"categories": {
+			"QUESTIONS": {
+				"title": "Questions / Answers",
+				"description": "Find answers to all your questions here!"
+			},
+			"GAME": {
+				"title": "Discussions about the game",
+				"description": "Discuss the world of DinoRPG: Dinoz, locations, missions, and more..."
+			},
+			"CLANS": {
+				"title": "Clans",
+				"description": "Chat between Clans or recruit your future members here!"
+			},
+			"CHAOS": {
+				"title": "Chaos Inn",
+				"description": "Discussions unrelated to DinoRPG belong here."
+			}
+		},
+		"favorites": {
+			"title": "My favorites",
+			"description": "Your list of favorite discussion topics."
+		},
+		"actions": {
+			"cancel": "Cancel",
+			"writeMessage": "Write a message",
+			"createTopic": "Create topic",
+			"home": "Home",
+			"addFavorite": "Add to favorites",
+			"removeFavorite": "Remove from favorites",
+			"pin": "Pin topic",
+			"unpin": "Unpin topic",
+			"close": "Close",
+			"reopen": "Reopen",
+			"reply": "Reply",
+			"edit": "Edit",
+			"delete": "Delete",
+			"save": "Save"
+		},
+		"table": {
+			"subject": "Subject",
+			"author": "Author",
+			"replies": "Replies",
+			"postIt": "POST-IT",
+			"closed": "Closed topic",
+			"empty": "No topics yet."
+		},
+		"pagination": {
+			"ariaLabel": "Forum Pagination",
+			"page": "Page {page} / {pageCount}"
+		},
+		"composer": {
+			"subject": "Subject",
+			"message": "Message",
+			"subjectPlaceholder": "[EN] Title of your topic",
+			"languagePrefixHelp": "Title must start with [FR], [EN], [ES] or [DE]."
+		},
+		"search": {
+			"title": "Search",
+			"label": "Search the forums",
+			"button": "Search",
+			"results": "Results for \"{query}\""
+		},
+		"topicCount": "{count} topic(s)",
+		"closed": {
+			"manual": "Topic closed.",
+			"automatic": "Topic automatically closed after {count} messages."
+		},
+		"roles": {
+			"moderator": "Moderator",
+			"admin": "Administrator"
+		},
+		"confirm": {
+			"deleteMessage": "Supprimer ce message ?",
+			"deleteLastMessage": "Ce message est le dernier du sujet. Sa suppression supprimera également le sujet. Continuer ?"
+		},
+		"loginToReply": "Log in to reply to this topic.",
+		"errors": {
+			"loadForum": "Unable to load forum.",
+			"titleMin": "Title must contain at least 3 characters.",
+			"messageEmpty": "The message cannot be empty.",
+			"createTopic": "Unable to create the topic.",
+			"loadFavorites": "Unable to load your favorites.",
+			"search": "Unable to perform the search.",
+			"searchMin": "Search must contain at least {count} characters.",
+			"loadTopic": "Unable to load this topic.",
+			"reply": "Unable to reply.",
+			"titleLanguagePrefix": "Title must start with [FR], [EN], [ES] or [DE]."
 		}
 	},
 	"button": {
