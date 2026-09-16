@@ -26,7 +26,7 @@
 					<th class="qty">{{ $t('common.stock') }}</th>
 					<th class="act">{{ $t('common.actions') }}</th>
 				</tr>
-				<tr v-for="(item, index) in allItemsData" :class="index % 2 === 1 ? 'even' : ''" :key="index">
+				<tr v-for="(item, index) in allItemsData" :class="index % 2 === 1 ? 'even' : ''" :key="item.itemId">
 					<Tippy class="name" tag="td" theme="normal">
 						<img :src="getImgURL('item', `item_${getItemIconName(item.itemId)}`)" :alt="itemNameList[item.itemId]" />
 						<p v-html="$t(`items.name.${itemNameList[item.itemId]}`)" />
