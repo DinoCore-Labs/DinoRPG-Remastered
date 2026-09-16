@@ -96,6 +96,15 @@
 	font-size: 12px;
 	font-weight: bold;
 }
+.forum-toolbar-action-icon {
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+	margin-right: 3px;
+	vertical-align: -2px;
+	object-fit: contain;
+	image-rendering: pixelated;
+}
 //
 // Recherche
 //

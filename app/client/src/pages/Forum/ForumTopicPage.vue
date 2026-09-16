@@ -15,6 +15,10 @@
 					<DZButton v-if="user.isLogged" @click="toggleFavorite">
 						{{ result.topic.isFavorite ? $t('forum.actions.removeFavorite') : $t('forum.actions.addFavorite') }}
 					</DZButton>
+					<DZButton v-if="user.isLogged" @click="toggleSubscription">
+						<img class="forum-toolbar-action-icon" :src="getImgURL('icons', 'small_notif')" alt="" />
+						{{ result.isSubscribed ? $t('forum.actions.unfollow') : $t('forum.actions.follow') }}
+					</DZButton>
 					<span class="forum-spacer"></span>
 					<template v-if="user.isModerator">
 						<DZButton @click="togglePinned">
@@ -386,6 +390,19 @@ function quoteMessage(message: ForumMessageView): void {
 			block: 'center'
 		});
 	});
+}
+
+async function toggleSubscription(): Promise<void> {
+	if (!result.value) {
+		return;
+	}
+	error.value = '';
+	try {
+		const toggled = await ForumService.toggleSubscription(topicId());
+		result.value.isSubscribed = toggled.subscribed;
+	} catch {
+		error.value = t('forum.errors.subscription');
+	}
 }
 
 async function load(): Promise<void> {

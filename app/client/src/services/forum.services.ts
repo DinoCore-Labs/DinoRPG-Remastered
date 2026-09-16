@@ -11,6 +11,7 @@ import type {
 	ForumTopicViewResponse,
 	MarkForumTopicReadInput,
 	ToggleForumFavoriteResponse,
+	ToggleForumSubscriptionResponse,
 	UpdateForumMessageInput
 } from '@dinorpg/core/models/forum/forum.js';
 
@@ -81,5 +82,8 @@ export const ForumService = {
 		return api.post<{ success: true }, MarkForumTopicReadInput>(`/forum/topics/${topicId}/read`, {
 			messageId
 		});
+	},
+	toggleSubscription(topicId: number): Promise<ToggleForumSubscriptionResponse> {
+		return api.post<ToggleForumSubscriptionResponse>(`/forum/topics/${topicId}/subscription`);
 	}
 };

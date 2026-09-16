@@ -43,7 +43,9 @@
 		"marketOfferWin": "Vous avez remporté une enchère pour un montant de {price} bons !",
 		"marketOfferSold": "Votre enchère a été vendue ! Vous avez gagné {price} pièces d'or.",
 		"marketOfferUnsold": "Votre enchère est terminée sans trouver d'acheteur.",
-		"ok": "OK"
+		"ok": "OK",
+		"forumTopicReply": "{name} a répondu au sujet « {topic} ».",
+		"view": "Voir"
 	},
 	"homepage": {
 		"connexion": "Connexion",
@@ -668,7 +670,9 @@
 			"reply": "Répondre",
 			"edit": "Modifier",
 			"delete": "Supprimer",
-			"save": "Enregistrer"
+			"save": "Enregistrer",
+			"follow": "Suivre",
+			"unfollow": "Ne plus suivre"
 		},
 		"table": {
 			"subject": "Sujet",
@@ -721,7 +725,8 @@
 			"searchMin": "La recherche doit contenir au moins {count} caractères.",
 			"loadTopic": "Impossible de charger ce sujet.",
 			"reply": "Impossible de répondre.",
-			"titleLanguagePrefix": "Le titre doit commencer par [FR], [EN], [ES] ou [DE]."
+			"titleLanguagePrefix": "Le titre doit commencer par [FR], [EN], [ES] ou [DE].",
+			"subscription": "Impossible de modifier le suivi de ce sujet."
 		}
 	},
 	"button": {
