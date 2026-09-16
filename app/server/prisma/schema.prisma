@@ -294,6 +294,8 @@ model ForumMessage {
 
   content    String     @db.Text
 
+  reports    Report[]   @relation("ReportReportedForumMessage")
+
   createdAt  DateTime   @default(now()) @db.Timestamptz(3)
   updatedAt  DateTime   @default(now()) @updatedAt @db.Timestamptz(3)
 
@@ -1042,6 +1044,13 @@ model Report {
   reportedDinoz   Dinoz?       @relation("ReportReportedDinoz", fields: [reportedDinozId], references: [id], onDelete: Cascade)
   reportedClanId  Int?
   reportedClan    Clan?        @relation("ReportReportedClan", fields: [reportedClanId], references: [id], onDelete: Cascade)
+  reportedForumMessageId Int?
+  reportedForumMessage   ForumMessage? @relation("ReportReportedForumMessage", fields: [reportedForumMessageId], references: [id], onDelete: SetNull)
+  reportedForumAuthorId   String? @db.Uuid
+  reportedForumAuthorName String?
+  reportedForumContent    String? @db.Text
+  reportedForumTopicId    Int?
+  reportedForumTopicTitle String?
   reason          String
   comment         String?
   status          ReportStatus @default(PENDING)
