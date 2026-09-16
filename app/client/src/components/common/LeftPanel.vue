@@ -66,7 +66,7 @@
 			<img :src="getImgURL('icons', `small_right`)" alt="missions" />
 			<span>{{ $t('button.dinozMissions') }}</span>
 		</a>-->
-		<DZButton @click="goToPage('ShopDinoz')">
+		<DZButton id="shopDinoz" @click="goToPage('ShopDinoz')">
 			{{ $t('button.buyDinoz') }}
 		</DZButton>
 	</div>
