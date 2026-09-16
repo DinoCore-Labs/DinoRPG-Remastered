@@ -6,6 +6,7 @@ import {
 	type ForumMessageView,
 	type ForumTopicSummary
 } from '@dinorpg/core/models/forum/forum.js';
+import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Role } from '../../../../prisma/index.js';
@@ -178,6 +179,24 @@ function mapMessage(message: {
 
 function isForumModerator(role: Role | undefined): boolean {
 	return role === 'MODERATOR' || role === 'ADMIN' || role === 'SUPER_ADMIN';
+}
+
+async function isTopicSubscribed(userId: string | undefined, topicId: number): Promise<boolean> {
+	if (!userId) {
+		return false;
+	}
+	const subscription = await prisma.forumSubscription.findUnique({
+		where: {
+			userId_topicId: {
+				userId,
+				topicId
+			}
+		},
+		select: {
+			userId: true
+		}
+	});
+	return subscription !== null;
 }
 
 const messageAuthorInclude = {
@@ -366,7 +385,7 @@ export const forumService = {
 			throw forumError('forum.topic.notFound', 404);
 		}
 		const skip = (page - 1) * FORUM_MESSAGES_PER_PAGE;
-		const [messages, favoriteIds] = await Promise.all([
+		const [messages, favoriteIds, isSubscribed] = await Promise.all([
 			prisma.forumMessage.findMany({
 				where: {
 					topicId
@@ -383,12 +402,14 @@ export const forumService = {
 				take: FORUM_MESSAGES_PER_PAGE,
 				include: messageAuthorInclude
 			}),
-			getFavoriteIds(userId, [topicId])
+			getFavoriteIds(userId, [topicId]),
+			isTopicSubscribed(userId, topicId)
 		]);
 		const unreadTopicIds = await getUnreadTopicIds(userId, [topicId]);
 		return {
 			topic: mapTopic(topic, favoriteIds, unreadTopicIds),
 			messages: messages.map(mapMessage),
+			isSubscribed,
 			page,
 			pageCount: Math.max(1, Math.ceil(topic.messageCount / FORUM_MESSAGES_PER_PAGE)),
 			totalMessages: topic.messageCount
@@ -408,6 +429,15 @@ export const forumService = {
 						authorId: user.id,
 						authorName: user.name,
 						content: input.content
+					}
+				},
+				subscriptions: {
+					create: {
+						user: {
+							connect: {
+								id: user.id
+							}
+						}
 					}
 				}
 			},
@@ -470,6 +500,7 @@ export const forumService = {
 				},
 				select: {
 					id: true,
+					title: true,
 					messageCount: true,
 					isClosed: true
 				}
@@ -483,6 +514,37 @@ export const forumService = {
 				},
 				include: messageAuthorInclude
 			});
+			const subscriptions = await tx.forumSubscription.findMany({
+				where: {
+					topicId,
+					/*
+					 * L'auteur de la réponse ne doit évidemment
+					 * pas recevoir sa propre notification.
+					 */
+					userId: {
+						not: user.id
+					}
+				},
+				select: {
+					userId: true
+				}
+			});
+			if (subscriptions.length > 0) {
+				const page = Math.max(1, Math.ceil(topic.messageCount / FORUM_MESSAGES_PER_PAGE));
+				await tx.notification.createMany({
+					data: subscriptions.map(subscription => ({
+						userId: subscription.userId,
+						type: NotificationType.FORUM_TOPIC_REPLY,
+						content: {
+							topicId: topic.id,
+							topicTitle: topic.title,
+							messageId: message.id,
+							page,
+							authorName: user.name
+						}
+					}))
+				});
+			}
 			const reachedLimit = topic.messageCount >= FORUM_MAX_MESSAGES;
 			/*
 			 * Le 500e message est accepté,
@@ -870,6 +932,45 @@ export const forumService = {
 		});
 		return {
 			success: true as const
+		};
+	},
+	async toggleSubscription(topicId: number, userId: string) {
+		const topic = await prisma.forumTopic.findUnique({
+			where: {
+				id: topicId
+			},
+			select: {
+				id: true
+			}
+		});
+		if (!topic) {
+			throw forumError('forum.topic.notFound', 404);
+		}
+		const key = {
+			userId_topicId: {
+				userId,
+				topicId
+			}
+		};
+		const subscription = await prisma.forumSubscription.findUnique({
+			where: key
+		});
+		if (subscription) {
+			await prisma.forumSubscription.delete({
+				where: key
+			});
+			return {
+				subscribed: false
+			};
+		}
+		await prisma.forumSubscription.create({
+			data: {
+				userId,
+				topicId
+			}
+		});
+		return {
+			subscribed: true
 		};
 	}
 };
