@@ -256,11 +256,29 @@ model ForumTopic {
 
   messages       ForumMessage[]
   favorites      ForumFavorite[]
+  reads          ForumTopicRead[]
 
   @@index([category, isPinned, lastActivityAt])
   @@index([lastActivityAt])
 
   @@map("forum_topic")
+}
+
+model ForumTopicRead {
+	userId String @db.Uuid
+	topicId Int
+
+	lastReadMessageId Int
+
+	readAt DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+
+	user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+	topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+	@@id([userId, topicId])
+	@@index([topicId])
+
+	@@map("forum_topic_read")
 }
 
 model ForumMessage {
@@ -734,9 +752,10 @@ model User {
 
   notifications Notification[]
 
-  forumTopics    ForumTopic[]    @relation("ForumTopicAuthor")
-  forumMessages  ForumMessage[]  @relation("ForumMessageAuthor")
-  forumFavorites ForumFavorite[]
+  forumTopics     ForumTopic[]    @relation("ForumTopicAuthor")
+  forumMessages   ForumMessage[]  @relation("ForumMessageAuthor")
+  forumFavorites  ForumFavorite[]
+  forumTopicReads ForumTopicRead[]
 
   dojo               Dojo?
   FightArchive       FightArchive[] @relation("UserRelation")
