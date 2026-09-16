@@ -695,6 +695,9 @@
 			"results": "Résultats pour « {query} »"
 		},
 		"topicCount": "{count} sujet(s)",
+		"unread": {
+			"firstUnread": "Aller au premier message non lu"
+		},
 		"closed": {
 			"manual": "Sujet fermé.",
 			"automatic": "Sujet fermé automatiquement après {count} messages."

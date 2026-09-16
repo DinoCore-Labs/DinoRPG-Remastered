@@ -12,7 +12,12 @@
 						{{ sectionLabel(topic) }}
 					</td>
 				</tr>
-				<tr class="forum-topic-row">
+				<tr
+					class="forum-topic-row"
+					:class="{
+						'forum-topic-row--unread': topic.hasUnreadMessages
+					}"
+				>
 					<td class="forum-topic-subject">
 						<img
 							v-if="topic.isPinned"
@@ -28,6 +33,17 @@
 							:alt="$t('forum.table.closed')"
 							:title="$t('forum.table.closed')"
 						/>
+						<button
+							v-if="topic.hasUnreadMessages"
+							type="button"
+							class="forum-topic-unread"
+							:disabled="openingUnreadTopicId === topic.id"
+							:title="$t('forum.unread.firstUnread')"
+							:aria-label="$t('forum.unread.firstUnread')"
+							@click="goToFirstUnread(topic.id)"
+						>
+							<img :src="getImgURL('icons', 'small_mail')" alt="" />
+						</button>
 						<RouterLink
 							:to="{
 								name: 'ForumTopic',
@@ -77,8 +93,15 @@ import type { ForumTopicSummary } from '@dinorpg/core/models/forum/forum.js';
 
 import { getImgURL } from '../../utils/getImgURL';
 import DZTable from '../utils/DZTable.vue';
+import { ForumService } from '../../services/index.ts';
 
 import { useI18n } from 'vue-i18n';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const openingUnreadTopicId = ref<number | null>(null);
 
 const { t } = useI18n();
 
@@ -114,5 +137,36 @@ function sectionLabel(topic: ForumTopicSummary): string {
 	const month = String(date.getMonth() + 1).padStart(2, '0');
 	const day = String(date.getDate()).padStart(2, '0');
 	return `${year}-${month}-${day}`;
+}
+
+async function goToFirstUnread(topicId: number): Promise<void> {
+	if (openingUnreadTopicId.value !== null) {
+		return;
+	}
+	openingUnreadTopicId.value = topicId;
+	try {
+		const target = await ForumService.getFirstUnread(topicId);
+		if (target.messageId === null || target.page === null) {
+			await router.push({
+				name: 'ForumTopic',
+				params: {
+					topicId
+				}
+			});
+			return;
+		}
+		await router.push({
+			name: 'ForumTopic',
+			params: {
+				topicId
+			},
+			query: {
+				page: String(target.page)
+			},
+			hash: `#forum-message-${target.messageId}`
+		});
+	} finally {
+		openingUnreadTopicId.value = null;
+	}
 }
 </script>

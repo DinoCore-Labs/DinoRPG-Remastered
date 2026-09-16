@@ -36,7 +36,12 @@
 					{{ result.topic.title }}
 				</h2>
 				<section class="forum-posts">
-					<article v-for="message in result.messages" :key="message.id" class="forum-post">
+					<article
+						v-for="message in result.messages"
+						:id="`forum-message-${message.id}`"
+						:key="message.id"
+						class="forum-post"
+					>
 						<aside class="forum-post-author">
 							<img v-if="message.avatarUrl" class="forum-avatar" :src="message.avatarUrl" alt="" />
 							<div v-else class="forum-avatar forum-avatar-placeholder">
@@ -178,7 +183,7 @@ import {
 	type ForumTopicViewResponse
 } from '@dinorpg/core/models/forum/forum.js';
 
-import { computed, ref, useTemplateRef, watch } from 'vue';
+import { computed, nextTick, ref, useTemplateRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
@@ -393,10 +398,47 @@ async function load(): Promise<void> {
 	}
 	error.value = '';
 	try {
-		result.value = await ForumService.getTopic(id, currentPage());
+		const loaded = await ForumService.getTopic(id, currentPage());
+		result.value = loaded;
+		/*
+		 * Une page chargée est considérée comme lue
+		 * jusqu'à son dernier message.
+		 */
+		if (user.isLogged && loaded.messages.length > 0) {
+			const lastMessage = loaded.messages[loaded.messages.length - 1];
+			try {
+				await ForumService.markTopicRead(id, lastMessage.id);
+				/*
+				 * Si c'est la dernière page, le topic
+				 * vient forcément d'être entièrement lu.
+				 */
+				if (loaded.page === loaded.pageCount) {
+					loaded.topic.hasUnreadMessages = false;
+				}
+			} catch {
+				/*
+				 * Le suivi lu/non-lu ne doit jamais
+				 * empêcher l'affichage du topic.
+				 */
+			}
+		}
+		await nextTick();
+		scrollToMessageHash();
 	} catch (err) {
 		error.value = t('forum.errors.loadTopic');
 	}
+}
+
+function scrollToMessageHash(): void {
+	const match = /^#forum-message-(\d+)$/.exec(route.hash);
+	if (!match) {
+		return;
+	}
+	const element = document.getElementById(`forum-message-${match[1]}`);
+	element?.scrollIntoView({
+		behavior: 'smooth',
+		block: 'center'
+	});
 }
 
 async function changePage(page: number): Promise<void> {
@@ -487,7 +529,7 @@ function formatDate(value: string): string {
 }
 
 watch(
-	() => [route.params.topicId, route.query.page],
+	() => [route.params.topicId, route.query.page, route.hash],
 	() => void load(),
 	{
 		immediate: true
