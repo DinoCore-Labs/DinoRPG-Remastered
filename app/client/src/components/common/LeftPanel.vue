@@ -19,10 +19,10 @@
 		</div>
 		<DZSelect id="wallet-select" class="moneySelect" v-model="selectedWallet" :options="walletOptions" />
 		<div class="iconMenu">
-			<RouterLink to="/bank" class="link" :title="$t('button.bank')" data-tutorial="shop">
+			<RouterLink to="/bank" class="link" :title="$t('button.bank')">
 				<img :src="getImgURL('act', 'act_shop')" alt="shop" />
 			</RouterLink>
-			<RouterLink to="/shop/flying" class="link" :title="$t('button.shop')">
+			<RouterLink to="/shop/flying" class="link" :title="$t('button.shop')" data-tutorial="shop">
 				<img :src="getImgURL('act', 'act_boutique')" alt="shop" />
 			</RouterLink>
 			<RouterLink
