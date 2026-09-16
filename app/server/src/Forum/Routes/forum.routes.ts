@@ -24,6 +24,7 @@ import {
 	markForumTopicReadHandler,
 	searchForumTopicsHandler,
 	toggleForumFavoriteHandler,
+	toggleForumSubscriptionHandler,
 	updateForumClosedHandler,
 	updateForumMessageHandler,
 	updateForumPinnedHandler
@@ -189,5 +190,16 @@ export async function forumRoutes(app: FastifyInstance) {
 			}
 		},
 		markForumTopicReadHandler
+	);
+	app.post(
+		'/topics/:topicId/subscription',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				tags: ['Forum'],
+				params: forumTopicParamSchema
+			}
+		},
+		toggleForumSubscriptionHandler
 	);
 }
