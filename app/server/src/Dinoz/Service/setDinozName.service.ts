@@ -1,6 +1,7 @@
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { handleTutorialEvent } from '../../Tutorial/Controller/tutorial.controller.js';
 import { canDinozRename } from '../Controller/canDinozRename.js';
 import { updateDinoz } from '../Controller/updateDinoz.controller.js';
 
@@ -41,6 +42,12 @@ export async function setDinozName(req: FastifyRequest<{ Params: Params; Body: B
 	await updateDinoz(+req.params.id, {
 		name: req.body.name,
 		canRename: false
+	});
+	// Tutorial
+	await handleTutorialEvent({
+		userId: authedUserId,
+		dinozId,
+		event: 'DINOZ_ADOPTED'
 	});
 	return reply.send({ ok: true });
 }

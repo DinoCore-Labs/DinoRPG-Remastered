@@ -25,7 +25,7 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 			},
 			{
 				id: 'name',
-				selector: '.naming input',
+				selector: '#namingDinoz',
 				url: 'dinoz/*'
 			}
 		],

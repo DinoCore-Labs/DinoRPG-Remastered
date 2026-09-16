@@ -29,7 +29,7 @@
 		</div>
 		<div class="naming">
 			<p class="name">{{ $t('dinozPage.chooseDinoz.nomDuDinoz') }}</p>
-			<DZInput type="text" v-model="dinozName" />
+			<DZInput id="namingDinoz" type="text" v-model="dinozName" />
 			<DZButton @click="nameDinoz()">{{ $t('button.name') }}</DZButton>
 		</div>
 	</div>
@@ -45,6 +45,7 @@ import TitleHeader from '../../components/utils/TitleHeader.vue';
 import DZDisclaimer from '../utils/DZDisclaimer.vue';
 import DZButton from '../utils/DZButton.vue';
 import DZInput from '../utils/DZInput.vue';
+import { useTutorialStore } from '../../store/tutorialStore';
 
 export default defineComponent({
 	name: 'ChooseDinozName',
@@ -58,6 +59,7 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
+			tutorialStore: useTutorialStore(),
 			dinozName: undefined as string | undefined,
 			regexName: /^(?=.{1,32}$)[A-Za-zÀ-ÿ0-9]+( [A-Za-zÀ-ÿ0-9]+)*$/
 		};
@@ -90,6 +92,11 @@ export default defineComponent({
 				this.dinozStore.setDinozList(dinozList);
 				// Set parent's data to display dinoz page
 				this.$emit('setNameChoosen', this.dinozName);
+				try {
+					await this.tutorialStore.load();
+				} catch (err) {
+					console.error('[tutorial] Failed to refresh tutorial after Dinoz naming', err);
+				}
 			}
 		}
 	},
