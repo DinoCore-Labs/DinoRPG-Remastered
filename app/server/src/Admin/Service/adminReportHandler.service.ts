@@ -48,7 +48,12 @@ export async function updateAdminReportHandler(request: FastifyRequest, reply: F
 	}
 
 	let targetUserId: string | null = null;
-	if (report.reportedUserId) targetUserId = report.reportedUserId;
+
+	if (report.reportedUserId) {
+		targetUserId = report.reportedUserId;
+	} else if (report.reportedForumAuthorId) {
+		targetUserId = report.reportedForumAuthorId;
+	}
 
 	if (targetUserId && (body.data.banDuration !== undefined || body.data.muteDuration !== undefined)) {
 		const updateData: any = {};
