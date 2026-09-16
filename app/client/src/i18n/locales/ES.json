@@ -6453,6 +6453,7 @@
 				"begin": "Bienvenue sur DinoRPG. Je serai ton guide pour ces premières étapes. Tout d'abord, il te faut adopter un Dinoz ! Prends ton temps pour le choisir, il sera ton compagnon pour un bon moment.",
 				"end": "Félicitations, vous voilà maintenant plongé dans un immense univers que nous allons continuer à vous présenter !",
 				"helpers": {
+					"shopDinoz": "C'est par ici !",
 					"compare": "Compare les caractéristiques de chaque race !",
 					"name": "Très bon choix ! Maintenant, donne un nom à ce Dinoz !"
 				}
