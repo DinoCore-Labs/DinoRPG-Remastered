@@ -3,11 +3,13 @@ import type {
 	CreateForumTopicInput,
 	DeleteForumMessageResponse,
 	ForumCategory,
+	ForumFirstUnreadResponse,
 	ForumMessageCreatedResponse,
 	ForumMessageView,
 	ForumTopicListResponse,
 	ForumTopicSummary,
 	ForumTopicViewResponse,
+	MarkForumTopicReadInput,
 	ToggleForumFavoriteResponse,
 	UpdateForumMessageInput
 } from '@dinorpg/core/models/forum/forum.js';
@@ -70,6 +72,14 @@ export const ForumService = {
 				q: query,
 				page
 			}
+		});
+	},
+	getFirstUnread(topicId: number): Promise<ForumFirstUnreadResponse> {
+		return api.get<ForumFirstUnreadResponse>(`/forum/topics/${topicId}/first-unread`);
+	},
+	markTopicRead(topicId: number, messageId: number): Promise<{ success: true }> {
+		return api.post<{ success: true }, MarkForumTopicReadInput>(`/forum/topics/${topicId}/read`, {
+			messageId
 		});
 	}
 };
