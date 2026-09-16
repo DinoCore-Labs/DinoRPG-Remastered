@@ -672,7 +672,8 @@
 			"delete": "Supprimer",
 			"save": "Enregistrer",
 			"follow": "Suivre",
-			"unfollow": "Ne plus suivre"
+			"unfollow": "Ne plus suivre",
+			"report": "Signaler"
 		},
 		"table": {
 			"subject": "Sujet",
@@ -6444,11 +6445,16 @@
 			"clanName": "Nom de clan inapproprié",
 			"banner": "Bannière inappropriée",
 			"clanPages": "Description / Pages inappropriées",
-			"other": "Autre"
+			"other": "Autre",
+			"forumSpam": "Spam ou flood",
+			"forumAbuse": "Insultes ou harcèlement",
+			"forumOffTopic": "Hors-sujet",
+			"forumInappropriate": "Contenu inapproprié"
 		},
 		"reportUser": "Signaler ce joueur",
 		"reportClan": "Signaler ce clan",
-		"reportDinoz": "Signaler ce dinoz"
+		"reportDinoz": "Signaler ce dinoz",
+		"reportingForumMessage": "Vous signalez un message de "
 	},
 	"tutorial": {
 		"objective": "Objectif : {title}",

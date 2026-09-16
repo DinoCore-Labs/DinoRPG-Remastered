@@ -83,7 +83,7 @@
 							<div
 								v-if="
 									editingMessageId !== message.id &&
-									(canQuoteMessage() || canEditMessage(message) || canDeleteMessage(message))
+									(canReportMessage(message) || canEditMessage(message) || canDeleteMessage(message))
 								"
 								class="forum-post-actions"
 							>
@@ -114,6 +114,16 @@
 									@click="deleteMessage(message)"
 								>
 									<img class="forum-post-action-img" :src="getImgURL('icons', 'small_delete')" alt="" />
+								</DZButton>
+								<DZButton
+									v-if="canReportMessage(message)"
+									size="small"
+									class="forum-post-action-button"
+									:title="$t('forum.actions.report')"
+									:aria-label="$t('forum.actions.report')"
+									@click="startReport(message)"
+								>
+									{{ $t('forum.actions.report') }}
 								</DZButton>
 							</div>
 							<template v-if="editingMessageId === message.id">
@@ -177,6 +187,13 @@
 			</p>
 		</div>
 	</div>
+	<ReportModal
+		v-if="reportingMessage"
+		:show="true"
+		:reported-forum-message-id="reportingMessage.id"
+		:reported-forum-author-name="reportingMessage.authorName"
+		@close="closeReport"
+	/>
 </template>
 
 <script setup lang="ts">
@@ -194,6 +211,7 @@ import { useI18n } from 'vue-i18n';
 import ForumPagination from '../../components/forum/ForumPagination.vue';
 import RichTextEditor from '../../components/richTextEditor/RichTextEditor.vue';
 import DZButton from '../../components/utils/DZButton.vue';
+import ReportModal from '../../components/modal/ReportModal.vue';
 import { ForumService } from '../../services/index.ts';
 import { userStore } from '../../store/userStore';
 import { getImgURL } from '../../utils/getImgURL';
@@ -222,6 +240,8 @@ const editEditorRef = ref<InstanceType<typeof RichTextEditor> | null>(null);
 
 const replyEditorRef = useTemplateRef<InstanceType<typeof RichTextEditor>>('replyEditorRef');
 const replyComposerRef = useTemplateRef<HTMLElement>('replyComposerRef');
+
+const reportingMessage = ref<ForumMessageView | null>(null);
 
 const maxMessages = FORUM_MAX_MESSAGES;
 
@@ -403,6 +423,21 @@ async function toggleSubscription(): Promise<void> {
 	} catch {
 		error.value = t('forum.errors.subscription');
 	}
+}
+
+function canReportMessage(message: ForumMessageView): boolean {
+	return user.id !== null && message.authorId !== null && message.authorId !== user.id;
+}
+
+function startReport(message: ForumMessageView): void {
+	if (!canReportMessage(message)) {
+		return;
+	}
+	reportingMessage.value = message;
+}
+
+function closeReport(): void {
+	reportingMessage.value = null;
 }
 
 async function load(): Promise<void> {
