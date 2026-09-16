@@ -8,6 +8,7 @@ import {
 	forumPageQuerySchema,
 	forumSearchQuerySchema,
 	forumTopicParamSchema,
+	markForumTopicReadBodySchema,
 	updateForumClosedBodySchema,
 	updateForumMessageBodySchema,
 	updateForumPinnedBodySchema
@@ -16,9 +17,11 @@ import {
 	createForumMessageHandler,
 	createForumTopicHandler,
 	deleteForumMessageHandler,
+	getForumFirstUnreadHandler,
 	getForumTopicHandler,
 	listForumFavoritesHandler,
 	listForumTopicsHandler,
+	markForumTopicReadHandler,
 	searchForumTopicsHandler,
 	toggleForumFavoriteHandler,
 	updateForumClosedHandler,
@@ -163,5 +166,28 @@ export async function forumRoutes(app: FastifyInstance) {
 			}
 		},
 		searchForumTopicsHandler
+	);
+	app.get(
+		'/topics/:topicId/first-unread',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				tags: ['Forum'],
+				params: forumTopicParamSchema
+			}
+		},
+		getForumFirstUnreadHandler
+	);
+	app.post(
+		'/topics/:topicId/read',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				tags: ['Forum'],
+				params: forumTopicParamSchema,
+				body: markForumTopicReadBodySchema
+			}
+		},
+		markForumTopicReadHandler
 	);
 }

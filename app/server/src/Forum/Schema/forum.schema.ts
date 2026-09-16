@@ -52,3 +52,9 @@ export type CreateForumMessageBody = z.infer<typeof createForumMessageBodySchema
 export const updateForumMessageBodySchema = createForumMessageBodySchema;
 
 export type UpdateForumMessageBody = z.infer<typeof updateForumMessageBodySchema>;
+
+export const markForumTopicReadBodySchema = z.object({
+	messageId: z.coerce.number().int().positive()
+});
+
+export type MarkForumTopicReadBody = z.infer<typeof markForumTopicReadBodySchema>;
