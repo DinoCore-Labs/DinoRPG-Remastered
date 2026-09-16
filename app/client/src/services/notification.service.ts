@@ -11,7 +11,9 @@ export interface NotificationItem {
 
 export const NotificationService = {
 	getNotifications(): Promise<NotificationItem[]> {
-		return api.get<NotificationItem[]>('/notifications');
+		return api.get<NotificationItem[]>('/notifications/', {
+			silent: true
+		});
 	},
 	deleteNotification(id: string): Promise<{ message: string }> {
 		return api.delete<{ message: string }>(`/notifications/${id}`);
