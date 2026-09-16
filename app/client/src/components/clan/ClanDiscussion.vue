@@ -20,7 +20,7 @@
 		</template>
 		<template v-if="showEditor">
 			<div>
-				<RichTextEditor ref="editorRef" v-model="newMessage" />
+				<RichTextEditor ref="editorRef" v-model="newMessage" :submit-on-enter="false" />
 			</div>
 			<div class="button-land">
 				<DZButton class="button" @click="submitMessage()">{{ t('button.send') }}</DZButton>
