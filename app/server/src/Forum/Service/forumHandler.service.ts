@@ -10,6 +10,7 @@ import {
 	forumPageQuerySchema,
 	forumSearchQuerySchema,
 	forumTopicParamSchema,
+	markForumTopicReadBodySchema,
 	updateForumClosedBodySchema,
 	updateForumMessageBodySchema,
 	updateForumPinnedBodySchema
@@ -99,4 +100,15 @@ export async function updateForumMessageHandler(req: FastifyRequest, reply: Fast
 export async function deleteForumMessageHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { topicId, messageId } = forumMessageParamSchema.parse(req.params);
 	return reply.send(await forumService.deleteMessage(topicId, messageId, userId(req), optionalUserRole(req)));
+}
+
+export async function getForumFirstUnreadHandler(req: FastifyRequest, reply: FastifyReply) {
+	const { topicId } = forumTopicParamSchema.parse(req.params);
+	return reply.send(await forumService.getFirstUnread(topicId, userId(req)));
+}
+
+export async function markForumTopicReadHandler(req: FastifyRequest, reply: FastifyReply) {
+	const { topicId } = forumTopicParamSchema.parse(req.params);
+	const { messageId } = markForumTopicReadBodySchema.parse(req.body);
+	return reply.send(await forumService.markTopicRead(topicId, messageId, userId(req)));
 }
