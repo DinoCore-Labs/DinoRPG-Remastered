@@ -256,6 +256,7 @@ model ForumTopic {
 
   messages       ForumMessage[]
   favorites      ForumFavorite[]
+  subscriptions  ForumSubscription[]
   reads          ForumTopicRead[]
 
   @@index([category, isPinned, lastActivityAt])
@@ -316,6 +317,21 @@ model ForumFavorite {
   @@index([topicId])
 
   @@map("forum_favorite")
+}
+
+model ForumSubscription {
+  userId  String @db.Uuid
+  topicId Int
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([userId, topicId])
+  @@index([topicId])
+
+  @@map("forum_subscription")
 }
 
 model GameLog {
@@ -752,10 +768,11 @@ model User {
 
   notifications Notification[]
 
-  forumTopics     ForumTopic[]    @relation("ForumTopicAuthor")
-  forumMessages   ForumMessage[]  @relation("ForumMessageAuthor")
-  forumFavorites  ForumFavorite[]
-  forumTopicReads ForumTopicRead[]
+  forumTopics        ForumTopic[]    @relation("ForumTopicAuthor")
+  forumMessages      ForumMessage[]  @relation("ForumMessageAuthor")
+  forumFavorites     ForumFavorite[]
+  forumTopicReads    ForumTopicRead[]
+  forumSubscriptions ForumSubscription[]
 
   dojo               Dojo?
   FightArchive       FightArchive[] @relation("UserRelation")
