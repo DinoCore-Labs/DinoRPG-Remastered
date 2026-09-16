@@ -16,7 +16,12 @@
 					<p v-else-if="reportedClanName">
 						{{ $t('reportModal.reportingClan') }}<strong>{{ reportedClanName }}</strong>
 					</p>
-
+					<p v-else-if="reportedForumMessageId">
+						{{ $t('reportModal.reportingForumMessage') }}
+						<strong>
+							{{ reportedForumAuthorName }}
+						</strong>
+					</p>
 					<div class="field">
 						<label>{{ $t('reportModal.reason') }}</label>
 						<div class="radio-group">
@@ -64,6 +69,8 @@ const props = defineProps<{
 	reportedDinozName?: string;
 	reportedClanId?: number;
 	reportedClanName?: string;
+	reportedForumMessageId?: number;
+	reportedForumAuthorName?: string;
 }>();
 
 const emit = defineEmits<{
@@ -78,7 +85,30 @@ const form = ref({
 const loading = ref(false);
 
 const availableReasons = computed(() => {
-	if (props.reportedUserId) {
+	if (props.reportedForumMessageId) {
+		return [
+			{
+				value: 'Spam',
+				key: 'forumSpam'
+			},
+			{
+				value: 'Insultes / Harcèlement',
+				key: 'forumAbuse'
+			},
+			{
+				value: 'Hors-sujet',
+				key: 'forumOffTopic'
+			},
+			{
+				value: 'Contenu inapproprié',
+				key: 'forumInappropriate'
+			},
+			{
+				value: 'Autre',
+				key: 'other'
+			}
+		];
+	} else if (props.reportedUserId) {
 		return [
 			{ value: 'Multicomptes', key: 'multiAccounts' },
 			{ value: 'Pseudo', key: 'pseudo' },

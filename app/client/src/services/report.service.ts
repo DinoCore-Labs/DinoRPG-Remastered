@@ -6,10 +6,11 @@ export interface CreateReportPayload {
 	reportedUserId?: string;
 	reportedDinozId?: number;
 	reportedClanId?: number;
+	reportedForumMessageId?: number;
 }
 
 export class ReportService {
 	static async createReport(payload: CreateReportPayload): Promise<void> {
-		await api.post('/reports', payload);
+		await api.post('/reports/', payload);
 	}
 }
