@@ -248,6 +248,25 @@ export default defineComponent({
 						console.warn('Dino finale non mappé (round/matchNumber inattendu) :', d);
 					}
 				});
+
+				const roundOffsets = [
+					{ round: 0, count: 16, nextBase: 32 },
+					{ round: 1, count: 8, nextBase: 48 },
+					{ round: 2, count: 4, nextBase: 56 },
+					{ round: 3, count: 2, nextBase: 60 }
+				];
+
+				for (const { round, count, nextBase } of roundOffsets) {
+					for (let m = 0; m < count; m++) {
+						const winner = this.dinozInFights.find(d => d.round === round && d.matchNumber === m && d.won);
+						if (winner && winner.watched) {
+							const targetIdx = nextBase + m;
+							if (!this.final[targetIdx]) {
+								this.final[targetIdx] = { ...winner, show: true };
+							}
+						}
+					}
+				}
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -338,12 +357,40 @@ export default defineComponent({
 					}
 				});
 
-				// Place qualified winners in dedicated slots at the far right
+				// Place qualified winners in dedicated slots at the far right and advance winners/losers
+				const match1Winner = this.dinozInFights.find(d => d.round === 0 && d.matchNumber === 1 && d.won);
+				if (match1Winner && match1Winner.watched && !this.pool[4]) {
+					this.pool[4] = { ...match1Winner, show: true };
+				}
+				const match1Loser = this.dinozInFights.find(d => d.round === 0 && d.matchNumber === 1 && !d.won);
+				if (match1Loser && match1Loser.watched && !this.pool[6]) {
+					this.pool[6] = { ...match1Loser, show: true, won: true };
+				}
+
+				const match2Winner = this.dinozInFights.find(d => d.round === 0 && d.matchNumber === 2 && d.won);
+				if (match2Winner && match2Winner.watched && !this.pool[5]) {
+					this.pool[5] = { ...match2Winner, show: true };
+				}
+				const match2Loser = this.dinozInFights.find(d => d.round === 0 && d.matchNumber === 2 && !d.won);
+				if (match2Loser && match2Loser.watched && !this.pool[7]) {
+					this.pool[7] = { ...match2Loser, show: true, won: true };
+				}
+
 				// Match 3 winner (2-0) -> index 10
 				const match3Winner = this.dinozInFights.find(d => d.round === 1 && d.matchNumber === 3 && d.won);
 				if (match3Winner && match3Winner.watched) {
 					this.pool[10] = { ...match3Winner, show: true };
 				}
+				const match3Loser = this.dinozInFights.find(d => d.round === 1 && d.matchNumber === 3 && !d.won);
+				if (match3Loser && match3Loser.watched && !this.pool[8]) {
+					this.pool[8] = { ...match3Loser, show: true, won: true };
+				}
+
+				const match4Winner = this.dinozInFights.find(d => d.round === 1 && d.matchNumber === 4 && d.won);
+				if (match4Winner && match4Winner.watched && !this.pool[9]) {
+					this.pool[9] = { ...match4Winner, show: true };
+				}
+
 				// Match 5 winner (2-1) -> index 11
 				const match5Winner = this.dinozInFights.find(d => d.round === 2 && d.matchNumber === 5 && d.won);
 				if (match5Winner && match5Winner.watched) {
