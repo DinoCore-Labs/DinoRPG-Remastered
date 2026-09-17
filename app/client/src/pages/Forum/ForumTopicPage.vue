@@ -112,12 +112,16 @@
 							<div
 								v-if="
 									editingMessageId !== message.id &&
-									(canReportMessage(message) || canEditMessage(message) || canDeleteMessage(message))
+									(canQuoteMessage(message) ||
+										canReportMessage(message) ||
+										canEditMessage(message) ||
+										canDeleteMessage(message) ||
+										canModerateMessage(message))
 								"
 								class="forum-post-actions"
 							>
 								<DZButton
-									v-if="canQuoteMessage()"
+									v-if="canQuoteMessage(message)"
 									class="forum-post-action-button bSmall"
 									:title="$t('forum.actions.quote')"
 									:aria-label="$t('forum.actions.quote')"
@@ -153,6 +157,15 @@
 									@click="startReport(message)"
 								>
 									{{ $t('forum.actions.report') }}
+								</DZButton>
+								<DZButton
+									v-if="canModerateMessage(message)"
+									class="forum-post-action-button bSmall"
+									:title="$t('forum.moderation.delete')"
+									:aria-label="$t('forum.moderation.delete')"
+									@click="startModerationDelete(message)"
+								>
+									<img class="forum-post-action-img" :src="getImgURL('icons', 'small_delete')" alt="" />
 								</DZButton>
 							</div>
 							<template v-if="editingMessageId === message.id">
@@ -235,6 +248,13 @@
 			</p>
 		</div>
 	</div>
+	<ForumModerationDeleteModal
+		v-if="moderatingMessage"
+		:author-name="moderatingMessage.authorName"
+		:loading="moderationDeleting"
+		@close="moderatingMessage = null"
+		@confirm="confirmModerationDelete"
+	/>
 	<ReportModal
 		v-if="reportingMessage"
 		:show="true"
@@ -261,6 +281,7 @@ import ForumPagination from '../../components/forum/ForumPagination.vue';
 import RichTextEditor from '../../components/richTextEditor/RichTextEditor.vue';
 import DZButton from '../../components/utils/DZButton.vue';
 import ReportModal from '../../components/modal/ReportModal.vue';
+import ForumModerationDeleteModal from '../../components/forum/ForumModerationDeleteModal.vue';
 import { ForumService } from '../../services/index.ts';
 import { userStore } from '../../store/userStore';
 import { getImgURL } from '../../utils/getImgURL';
@@ -324,8 +345,8 @@ function setEditEditorRef(instance: unknown): void {
 	editEditorRef.value = instance as InstanceType<typeof RichTextEditor> | null;
 }
 
-function canQuoteMessage(): boolean {
-	return user.isLogged && result.value !== null && !result.value.topic.isClosed;
+function canQuoteMessage(message: ForumMessageView): boolean {
+	return !message.isDeleted && user.isLogged && result.value !== null && !result.value.topic.isClosed;
 }
 
 function canEditMessage(message: ForumMessageView): boolean {
@@ -404,10 +425,11 @@ async function saveEdit(messageId: number, message: string): Promise<void> {
 }
 
 async function confirmModerationDelete(reason: string): Promise<void> {
-	if (!moderatingMessage.value) {
+	if (!moderatingMessage.value || moderationDeleting.value) {
 		return;
 	}
 	moderationDeleting.value = true;
+	error.value = '';
 	try {
 		await ForumService.setMessageModeration(topicId(), moderatingMessage.value.id, {
 			isDeleted: true,
@@ -415,8 +437,38 @@ async function confirmModerationDelete(reason: string): Promise<void> {
 		});
 		moderatingMessage.value = null;
 		await load();
+		if (moderationHistoryVisible.value) {
+			const response = await ForumService.getModerationHistory(topicId());
+			moderationHistory.value = response.actions;
+		}
+	} catch {
+		error.value = t('forum.errors.moderateMessage');
 	} finally {
 		moderationDeleting.value = false;
+	}
+}
+
+async function restoreMessage(message: ForumMessageView): Promise<void> {
+	if (!user.isModerator || message.deletionKind !== 'MODERATION') {
+		return;
+	}
+	error.value = '';
+	try {
+		await ForumService.setMessageModeration(topicId(), message.id, {
+			isDeleted: false
+		});
+		await load();
+		/*
+		 * Si l'historique est actuellement affiché,
+		 * on le recharge pour faire apparaître
+		 * immédiatement MESSAGE_RESTORE.
+		 */
+		if (moderationHistoryVisible.value) {
+			const response = await ForumService.getModerationHistory(topicId());
+			moderationHistory.value = response.actions;
+		}
+	} catch {
+		error.value = t('forum.errors.restoreMessage');
 	}
 }
 
@@ -424,10 +476,7 @@ async function deleteMessage(message: ForumMessageView): Promise<void> {
 	if (!canDeleteMessage(message) || !result.value || deletingMessageId.value !== null) {
 		return;
 	}
-	const isLastMessage = result.value.topic.messageCount === 1;
-	const confirmed = window.confirm(
-		t(isLastMessage ? 'forum.confirm.deleteLastMessage' : 'forum.confirm.deleteMessage')
-	);
+	const confirmed = window.confirm(t('forum.confirm.deleteMessage'));
 	if (!confirmed) {
 		return;
 	}
@@ -436,39 +485,20 @@ async function deleteMessage(message: ForumMessageView): Promise<void> {
 	}
 	deletingMessageId.value = message.id;
 	error.value = '';
-	const category = result.value.topic.category;
 	try {
-		const deleted = await ForumService.deleteMessage(topicId(), message.id);
+		await ForumService.deleteMessage(topicId(), message.id);
 		/*
-		 * Dernier message supprimé :
-		 * le backend a également supprimé le sujet.
-		 */
-		if (deleted.topicDeleted) {
-			await router.push({
-				name: 'ForumCategory',
-				params: {
-					category
-				}
-			});
-			return;
-		}
-		/*
-		 * Exemple :
+		 * Le message n'a pas été physiquement supprimé.
 		 *
-		 * page 3 contient uniquement le message #51.
-		 * On le supprime → il ne reste plus que 2 pages.
+		 * On recharge simplement la page :
 		 *
-		 * On revient alors automatiquement à la page 2.
+		 * message normal
+		 *       ↓
+		 * [message supprimé par son auteur]
+		 *
+		 * La page et le nombre de messages
+		 * restent identiques.
 		 */
-		if (currentPage() > deleted.pageCount) {
-			await router.push({
-				query: {
-					...route.query,
-					page: String(deleted.pageCount)
-				}
-			});
-			return;
-		}
 		await load();
 	} catch {
 		error.value = t('forum.errors.deleteMessage');
@@ -478,7 +508,7 @@ async function deleteMessage(message: ForumMessageView): Promise<void> {
 }
 
 function quoteMessage(message: ForumMessageView): void {
-	if (!canQuoteMessage()) {
+	if (!canQuoteMessage(message)) {
 		return;
 	}
 	const quotedContent = message.content
@@ -524,7 +554,7 @@ async function toggleModerationHistory(): Promise<void> {
 }
 
 function canReportMessage(message: ForumMessageView): boolean {
-	return user.id !== null && message.authorId !== null && message.authorId !== user.id;
+	return !message.isDeleted && user.id !== null && message.authorId !== null && message.authorId !== user.id;
 }
 
 function startReport(message: ForumMessageView): void {
