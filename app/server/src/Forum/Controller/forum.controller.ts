@@ -623,7 +623,8 @@ export const forumService = {
 			where: {
 				id: messageId,
 				topicId,
-				authorId: userId
+				authorId: userId,
+				deletedAt: null
 			},
 			data: {
 				content: input.content

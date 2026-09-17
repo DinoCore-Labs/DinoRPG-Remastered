@@ -718,7 +718,8 @@
 			"searchMin": "La recherche doit contenir au moins {count} caractères.",
 			"loadTopic": "Impossible de charger ce sujet.",
 			"reply": "Impossible de répondre.",
-			"titleLanguagePrefix": "Le titre doit commencer par [FR], [EN], [ES] ou [DE]."
+			"titleLanguagePrefix": "Le titre doit commencer par [FR], [EN], [ES] ou [DE].",
+			"moderateMessage": "Impossible de modérer ce message."
 		}
 	},
 	"button": {

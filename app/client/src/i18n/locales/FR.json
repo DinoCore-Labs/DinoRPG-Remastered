@@ -712,8 +712,7 @@
 			"admin": "Administrateur"
 		},
 		"confirm": {
-			"deleteMessage": "Supprimer ce message ?",
-			"deleteLastMessage": "Ce message est le dernier du sujet. Sa suppression supprimera également le sujet. Continuer ?"
+			"deleteMessage": "Supprimer ce message ?"
 		},
 		"loginToReply": "Connectez-vous pour répondre à ce sujet.",
 		"deleted": {
@@ -751,7 +750,8 @@
 			"loadTopic": "Impossible de charger ce sujet.",
 			"reply": "Impossible de répondre.",
 			"titleLanguagePrefix": "Le titre doit commencer par [FR], [EN], [ES] ou [DE].",
-			"subscription": "Impossible de modifier le suivi de ce sujet."
+			"subscription": "Impossible de modifier le suivi de ce sujet.",
+			"restoreMessage": "Impossible de restaurer ce message."
 		}
 	},
 	"button": {
