@@ -43,7 +43,9 @@
 		"marketOfferWin": "Vous avez remporté une enchère pour un montant de {price} bons !",
 		"marketOfferSold": "Votre enchère a été vendue ! Vous avez gagné {price} pièces d'or.",
 		"marketOfferUnsold": "Votre enchère est terminée sans trouver d'acheteur.",
-		"ok": "OK"
+		"ok": "OK",
+		"forumTopicReply": "{name} a répondu au sujet « {topic} ».",
+		"view": "Voir"
 	},
 	"homepage": {
 		"connexion": "Login",
@@ -668,7 +670,11 @@
 			"reply": "Reply",
 			"edit": "Edit",
 			"delete": "Delete",
-			"save": "Save"
+			"save": "Save",
+			"follow": "Follow",
+			"unfollow": "Stop following",
+			"report": "Signaler",
+			"quote": "Citer"
 		},
 		"table": {
 			"subject": "Subject",
@@ -695,6 +701,9 @@
 			"results": "Results for \"{query}\""
 		},
 		"topicCount": "{count} topic(s)",
+		"unread": {
+			"firstUnread": "Aller au premier message non lu"
+		},
 		"closed": {
 			"manual": "Topic closed.",
 			"automatic": "Topic automatically closed after {count} messages."
@@ -704,10 +713,34 @@
 			"admin": "Administrator"
 		},
 		"confirm": {
-			"deleteMessage": "Supprimer ce message ?",
-			"deleteLastMessage": "Ce message est le dernier du sujet. Sa suppression supprimera également le sujet. Continuer ?"
+			"deleteMessage": "Supprimer ce message ?"
 		},
 		"loginToReply": "Log in to reply to this topic.",
+		"deleted": {
+			"author": "Ce message a été supprimé par son auteur.",
+			"moderation": "Ce message a été supprimé par la modération."
+		},
+		"moderation": {
+			"delete": "Delete",
+			"restore": "Restaurer",
+			"history": "Historique de modération",
+			"historyShort": "History",
+			"loading": "Chargement de l'historique...",
+			"empty": "Aucune action de modération pour ce sujet.",
+			"reason": "Reason:",
+			"reasonRequired": "Une raison est obligatoire.",
+			"reasonPlaceholder": "Indiquez la raison de la suppression...",
+			"deleteTitle": "Supprimer ce message",
+			"deleteDescription": "Vous allez supprimer le message de {name}.",
+			"actions": {
+				"MESSAGE_DELETE": "a supprimé le message",
+				"MESSAGE_RESTORE": "a restauré le message",
+				"TOPIC_PIN": "a épinglé le sujet",
+				"TOPIC_UNPIN": "a retiré le sujet des post-it",
+				"TOPIC_CLOSE": "a fermé le sujet",
+				"TOPIC_REOPEN": "a rouvert le sujet"
+			}
+		},
 		"errors": {
 			"loadForum": "Unable to load forum.",
 			"titleMin": "Title must contain at least 3 characters.",
@@ -718,7 +751,10 @@
 			"searchMin": "Search must contain at least {count} characters.",
 			"loadTopic": "Unable to load this topic.",
 			"reply": "Unable to reply.",
-			"titleLanguagePrefix": "Title must start with [FR], [EN], [ES] or [DE]."
+			"titleLanguagePrefix": "Title must start with [FR], [EN], [ES] or [DE].",
+			"subscription": "Impossible de modifier le suivi de ce sujet.",
+			"restoreMessage": "Impossible de restaurer ce message.",
+			"moderateMessage": "Impossible de modérer ce message."
 		}
 	},
 	"button": {
@@ -6436,11 +6472,16 @@
 			"clanName": "Inappropriate clan name",
 			"banner": "Inappropriate banner",
 			"clanPages": "Inappropriate description / pages",
-			"other": "Other"
+			"other": "Other",
+			"forumSpam": "Spam ou flood",
+			"forumAbuse": "Insultes ou harcèlement",
+			"forumOffTopic": "Hors-sujet",
+			"forumInappropriate": "Contenu inapproprié"
 		},
 		"reportUser": "Report this player",
 		"reportClan": "Report this clan",
-		"reportDinoz": "Report this Dinoz"
+		"reportDinoz": "Report this Dinoz",
+		"reportingForumMessage": "Vous signalez un message de "
 	},
 	"tutorial": {
 		"objective": "Objectif : {title}",
