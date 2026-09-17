@@ -6,13 +6,15 @@ import type {
 	ForumFirstUnreadResponse,
 	ForumMessageCreatedResponse,
 	ForumMessageView,
+	ForumModerationHistoryResponse,
 	ForumTopicListResponse,
 	ForumTopicSummary,
 	ForumTopicViewResponse,
 	MarkForumTopicReadInput,
 	ToggleForumFavoriteResponse,
 	ToggleForumSubscriptionResponse,
-	UpdateForumMessageInput
+	UpdateForumMessageInput,
+	UpdateForumMessageModerationInput
 } from '@dinorpg/core/models/forum/forum.js';
 
 import { api } from '../utils/http';
@@ -85,5 +87,18 @@ export const ForumService = {
 	},
 	toggleSubscription(topicId: number): Promise<ToggleForumSubscriptionResponse> {
 		return api.post<ToggleForumSubscriptionResponse>(`/forum/topics/${topicId}/subscription`);
+	},
+	setMessageModeration(
+		topicId: number,
+		messageId: number,
+		input: UpdateForumMessageModerationInput
+	): Promise<{ success: true }> {
+		return api.patch<{ success: true }, UpdateForumMessageModerationInput>(
+			`/forum/topics/${topicId}/messages/${messageId}/moderation`,
+			input
+		);
+	},
+	getModerationHistory(topicId: number): Promise<ForumModerationHistoryResponse> {
+		return api.get<ForumModerationHistoryResponse>(`/forum/topics/${topicId}/moderation-history`);
 	}
 };

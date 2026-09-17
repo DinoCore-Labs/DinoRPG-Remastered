@@ -124,3 +124,8 @@ export async function updateForumMessageModerationHandler(req: FastifyRequest, r
 	const { isDeleted, reason } = updateForumMessageModerationBodySchema.parse(req.body);
 	return reply.send(await forumService.setMessageModeration(topicId, messageId, isDeleted, reason, userId(req)));
 }
+
+export async function getForumModerationHistoryHandler(req: FastifyRequest, reply: FastifyReply) {
+	const { topicId } = forumTopicParamSchema.parse(req.params);
+	return reply.send(await forumService.getModerationHistory(topicId));
+}

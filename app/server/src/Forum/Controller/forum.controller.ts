@@ -1087,5 +1087,43 @@ export const forumService = {
 				success: true as const
 			};
 		});
+	},
+	async getModerationHistory(topicId: number) {
+		const topic = await prisma.forumTopic.findUnique({
+			where: {
+				id: topicId
+			},
+			select: {
+				id: true
+			}
+		});
+		if (!topic) {
+			throw forumError('forum.topic.notFound', 404);
+		}
+		const actions = await prisma.forumModerationAction.findMany({
+			where: {
+				topicId
+			},
+			orderBy: [
+				{
+					createdAt: 'desc'
+				},
+				{
+					id: 'desc'
+				}
+			],
+			take: 100
+		});
+		return {
+			actions: actions.map(action => ({
+				id: action.id,
+				topicId: action.topicId,
+				messageId: action.messageId,
+				actorName: action.actorName,
+				action: action.action,
+				reason: action.reason,
+				createdAt: action.createdAt.toISOString()
+			}))
+		};
 	}
 };
