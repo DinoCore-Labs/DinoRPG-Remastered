@@ -1,7 +1,8 @@
 import { defaultConditionKeyMaps } from '@dinorpg/core/models/conditions/defaultConditionKeyMaps.js';
+import { GatherType } from '@dinorpg/core/models/enums/GatherType.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { GRID_FINISHED_GOLD_REWARD } from '@dinorpg/core/models/gather/gatherRewards.js';
-import { Item } from '@dinorpg/core/models/items/itemList.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -203,6 +204,25 @@ export async function gatherWithDinozHandler(
 			returnGrid.isGridComplete = true;
 			returnGrid.gridCompletionGoldReward = GRID_FINISHED_GOLD_REWARD;
 			await addMoney(user.id, GRID_FINISHED_GOLD_REWARD);
+
+			if (gather.type === GatherType.DAILY) {
+				const voidSphereItem = itemList[Item.VOID_SPHERE];
+				const existingItem = user.items.find(item => item.itemId === voidSphereItem.itemId);
+				if (existingItem && existingItem.quantity < voidSphereItem.maxQuantity) {
+					await addItemToInventory(user.id, voidSphereItem.itemId, 1);
+					existingItem.quantity += 1;
+				} else if (!existingItem) {
+					user.items.push(await addItemToInventory(user.id, voidSphereItem.itemId, 1));
+				}
+
+				returnGrid.rewards.item.push({
+					id: voidSphereItem.itemId,
+					price: voidSphereItem.price,
+					quantity: 1,
+					maxQuantity: voidSphereItem.maxQuantity
+				});
+			}
+
 			safeCreateGameLog(
 				{
 					type: GameLogType.GridFinished,
