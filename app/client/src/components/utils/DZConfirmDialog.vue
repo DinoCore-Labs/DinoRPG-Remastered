@@ -140,7 +140,8 @@ export default {
 	padding: 1rem;
 	display: flex;
 	justify-content: center;
-	gap: 2rem;
+	gap: 1rem;
+	flex-wrap: wrap;
 }
 .btn-content {
 	display: flex;
