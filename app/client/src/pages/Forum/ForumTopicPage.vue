@@ -9,28 +9,33 @@
 					<h1>{{ categoryTitle }}</h1>
 				</header>
 				<div class="forum-toolbar">
-					<DZButton to="/forum">
-						{{ $t('forum.actions.home') }}
-					</DZButton>
-					<DZButton v-if="user.isLogged" @click="toggleFavorite">
-						{{ result.topic.isFavorite ? $t('forum.actions.removeFavorite') : $t('forum.actions.addFavorite') }}
-					</DZButton>
-					<DZButton v-if="user.isLogged" @click="toggleSubscription">
-						<img class="forum-toolbar-action-icon" :src="getImgURL('icons', 'small_notif')" alt="" />
-						{{ result.isSubscribed ? $t('forum.actions.unfollow') : $t('forum.actions.follow') }}
-					</DZButton>
-					<span class="forum-spacer"></span>
-					<template v-if="user.isModerator">
+					<div class="forum-toolbar__group">
+						<DZButton class="bSmall" to="/forum">
+							{{ $t('forum.actions.home') }}
+						</DZButton>
+						<DZButton v-if="user.isLogged" @click="toggleFavorite">
+							{{ result.topic.isFavorite ? $t('forum.actions.removeFavorite') : $t('forum.actions.addFavorite') }}
+						</DZButton>
+						<DZButton v-if="user.isLogged" @click="toggleSubscription">
+							<img class="forum-toolbar-action-icon" :src="getImgURL('icons', 'small_notif')" alt="" />
+							{{ result.isSubscribed ? $t('forum.actions.unfollow') : $t('forum.actions.follow') }}
+						</DZButton>
+					</div>
+					<div v-if="user.isModerator" class="forum-toolbar__group forum-toolbar__group--moderation">
 						<DZButton @click="togglePinned">
 							{{ result.topic.isPinned ? $t('forum.actions.unpin') : $t('forum.actions.pin') }}
 						</DZButton>
-						<DZButton v-if="!result.topic.isClosed || result.topic.messageCount < maxMessages" @click="toggleClosed">
+						<DZButton
+							class="bSmall"
+							v-if="!result.topic.isClosed || result.topic.messageCount < maxMessages"
+							@click="toggleClosed"
+						>
 							{{ result.topic.isClosed ? $t('forum.actions.reopen') : $t('forum.actions.close') }}
 						</DZButton>
-						<DZButton v-if="user.isModerator" @click="toggleModerationHistory">
-							{{ $t('forum.moderation.history') }}
+						<DZButton class="forum-toolbar__history bSmall" @click="toggleModerationHistory">
+							{{ $t('forum.moderation.historyShort') }}
 						</DZButton>
-					</template>
+					</div>
 				</div>
 				<section v-if="user.isModerator && moderationHistoryVisible" class="forum-moderation-history">
 					<h3>
