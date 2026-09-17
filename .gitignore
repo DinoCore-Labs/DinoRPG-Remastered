@@ -18,6 +18,10 @@ build/
 .vite/
 **/.vite/
 
+# VitePress
+app/wiki/.vitepress/cache/
+app/wiki/.vitepress/dist/
+
 # TypeScript
 *.tsbuildinfo
 **/*.tsbuildinfo

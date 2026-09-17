@@ -21,6 +21,7 @@ export default defineConfig([
 			'**/node_modules/**',
 			'node_modules/**',
 			'app/client/public/ruffle/**',
+			'**/.vitepress/cache/**',
 			'app/prisma/**'
 		]
 	},
