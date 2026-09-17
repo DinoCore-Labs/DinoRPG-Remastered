@@ -13,6 +13,7 @@ import {
 	markForumTopicReadBodySchema,
 	updateForumClosedBodySchema,
 	updateForumMessageBodySchema,
+	updateForumMessageModerationBodySchema,
 	updateForumPinnedBodySchema
 } from '../Schema/forum.schema.js';
 
@@ -52,7 +53,7 @@ export async function listForumFavoritesHandler(req: FastifyRequest, reply: Fast
 export async function getForumTopicHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { topicId } = forumTopicParamSchema.parse(req.params);
 	const { page } = forumPageQuerySchema.parse(req.query);
-	return reply.send(await forumService.getTopic(topicId, page, optionalUserId(req)));
+	return reply.send(await forumService.getTopic(topicId, page, optionalUserId(req), optionalUserRole(req)));
 }
 
 export async function createForumTopicHandler(req: FastifyRequest, reply: FastifyReply) {
@@ -77,13 +78,13 @@ export async function toggleForumFavoriteHandler(req: FastifyRequest, reply: Fas
 export async function updateForumPinnedHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { topicId } = forumTopicParamSchema.parse(req.params);
 	const { isPinned } = updateForumPinnedBodySchema.parse(req.body);
-	return reply.send(await forumService.setPinned(topicId, isPinned));
+	return reply.send(await forumService.setPinned(topicId, isPinned, userId(req)));
 }
 
 export async function updateForumClosedHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { topicId } = forumTopicParamSchema.parse(req.params);
 	const { isClosed } = updateForumClosedBodySchema.parse(req.body);
-	return reply.send(await forumService.setClosed(topicId, isClosed));
+	return reply.send(await forumService.setClosed(topicId, isClosed, userId(req)));
 }
 
 export async function searchForumTopicsHandler(req: FastifyRequest, reply: FastifyReply) {
@@ -99,7 +100,7 @@ export async function updateForumMessageHandler(req: FastifyRequest, reply: Fast
 
 export async function deleteForumMessageHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { topicId, messageId } = forumMessageParamSchema.parse(req.params);
-	return reply.send(await forumService.deleteMessage(topicId, messageId, userId(req), optionalUserRole(req)));
+	return reply.send(await forumService.deleteMessage(topicId, messageId, userId(req)));
 }
 
 export async function getForumFirstUnreadHandler(req: FastifyRequest, reply: FastifyReply) {
@@ -116,4 +117,10 @@ export async function markForumTopicReadHandler(req: FastifyRequest, reply: Fast
 export async function toggleForumSubscriptionHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { topicId } = forumTopicParamSchema.parse(req.params);
 	return reply.send(await forumService.toggleSubscription(topicId, userId(req)));
+}
+
+export async function updateForumMessageModerationHandler(req: FastifyRequest, reply: FastifyReply) {
+	const { topicId, messageId } = forumMessageParamSchema.parse(req.params);
+	const { isDeleted, reason } = updateForumMessageModerationBodySchema.parse(req.body);
+	return reply.send(await forumService.setMessageModeration(topicId, messageId, isDeleted, reason, userId(req)));
 }

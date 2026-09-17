@@ -54,6 +54,13 @@ export interface ForumMessageView {
 	authorName: string;
 	avatarUrl: string | null;
 	authorRole: UserRole | null;
+	isDeleted: boolean;
+	deletedAt: string | null;
+	deletionKind: ForumMessageDeletionKind | null;
+	/*
+	 * Renvoyé uniquement aux modérateurs.
+	 */
+	deletionReason: string | null;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -85,9 +92,7 @@ export interface UpdateForumMessageInput {
 }
 
 export interface DeleteForumMessageResponse {
-	topicDeleted: boolean;
-	messageCount: number;
-	pageCount: number;
+	success: true;
 }
 
 export interface ForumMessageCreatedResponse {
@@ -118,4 +123,38 @@ export interface ForumFirstUnreadResponse {
 
 export interface MarkForumTopicReadInput {
 	messageId: number;
+}
+
+export const ForumMessageDeletionKinds = ['AUTHOR', 'MODERATION'] as const;
+
+export type ForumMessageDeletionKind = (typeof ForumMessageDeletionKinds)[number];
+
+export const ForumModerationActionTypes = [
+	'MESSAGE_DELETE',
+	'MESSAGE_RESTORE',
+	'TOPIC_PIN',
+	'TOPIC_UNPIN',
+	'TOPIC_CLOSE',
+	'TOPIC_REOPEN'
+] as const;
+
+export type ForumModerationActionType = (typeof ForumModerationActionTypes)[number];
+
+export interface UpdateForumMessageModerationInput {
+	isDeleted: boolean;
+	reason?: string;
+}
+
+export interface ForumModerationActionView {
+	id: number;
+	topicId: number;
+	messageId: number | null;
+	actorName: string;
+	action: ForumModerationActionType;
+	reason: string | null;
+	createdAt: string;
+}
+
+export interface ForumModerationHistoryResponse {
+	actions: ForumModerationActionView[];
 }

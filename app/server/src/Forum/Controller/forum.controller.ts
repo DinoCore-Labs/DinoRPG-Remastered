@@ -146,32 +146,45 @@ function mapTopic(
 	};
 }
 
-function mapMessage(message: {
-	id: number;
-	topicId: number;
-	content: string;
-	authorId: string | null;
-	authorName: string;
-	createdAt: Date;
-	updatedAt: Date;
-	author: {
-		role: Role;
-		profile: {
-			avatar: Uint8Array | Buffer | null;
-			avatarType: string | null;
+function mapMessage(
+	message: {
+		id: number;
+		topicId: number;
+		content: string;
+		authorId: string | null;
+		authorName: string;
+		deletedAt: Date | null;
+		deletionKind: 'AUTHOR' | 'MODERATION' | null;
+		deletionReason: string | null;
+		createdAt: Date;
+		updatedAt: Date;
+		author: {
+			role: Role;
+
+			profile: {
+				avatar: Uint8Array | Buffer | null;
+
+				avatarType: string | null;
+			} | null;
 		} | null;
-	} | null;
-}): ForumMessageView {
+	},
+	canViewDeletedContent = false
+): ForumMessageView {
 	const avatar = message.author?.profile?.avatar;
 	const avatarType = message.author?.profile?.avatarType;
+	const isDeleted = message.deletedAt !== null;
 	return {
 		id: message.id,
 		topicId: message.topicId,
-		content: message.content,
+		content: isDeleted && !canViewDeletedContent ? '' : message.content,
 		authorId: message.authorId,
 		authorName: message.authorName,
 		authorRole: message.author?.role ?? null,
 		avatarUrl: avatar ? `data:${avatarType ?? 'image/webp'};base64,${Buffer.from(avatar).toString('base64')}` : null,
+		isDeleted,
+		deletedAt: message.deletedAt?.toISOString() ?? null,
+		deletionKind: message.deletionKind,
+		deletionReason: canViewDeletedContent ? message.deletionReason : null,
 		createdAt: message.createdAt.toISOString(),
 		updatedAt: message.updatedAt.toISOString()
 	};
@@ -197,6 +210,25 @@ async function isTopicSubscribed(userId: string | undefined, topicId: number): P
 		}
 	});
 	return subscription !== null;
+}
+
+async function getForumActor(userId: string): Promise<{
+	id: string;
+	name: string;
+}> {
+	const actor = await prisma.user.findUnique({
+		where: {
+			id: userId
+		},
+		select: {
+			id: true,
+			name: true
+		}
+	});
+	if (!actor) {
+		throw forumError('forum.user.notFound', 404);
+	}
+	return actor;
 }
 
 const messageAuthorInclude = {
@@ -281,6 +313,7 @@ export const forumService = {
 				{
 					messages: {
 						some: {
+							deletedAt: null,
 							OR: [
 								{
 									content: {
@@ -374,7 +407,7 @@ export const forumService = {
 			total
 		};
 	},
-	async getTopic(topicId: number, page: number, userId?: string) {
+	async getTopic(topicId: number, page: number, userId?: string, userRole?: Role) {
 		const topic = await prisma.forumTopic.findUnique({
 			where: {
 				id: topicId
@@ -406,9 +439,10 @@ export const forumService = {
 			isTopicSubscribed(userId, topicId)
 		]);
 		const unreadTopicIds = await getUnreadTopicIds(userId, [topicId]);
+		const canViewDeletedContent = isForumModerator(userRole);
 		return {
 			topic: mapTopic(topic, favoriteIds, unreadTopicIds),
-			messages: messages.map(mapMessage),
+			messages: messages.map(message => mapMessage(message, canViewDeletedContent)),
 			isSubscribed,
 			page,
 			pageCount: Math.max(1, Math.ceil(topic.messageCount / FORUM_MESSAGES_PER_PAGE)),
@@ -618,92 +652,45 @@ export const forumService = {
 		});
 		return mapMessage(message);
 	},
-	async deleteMessage(topicId: number, messageId: number, userId: string, userRole?: Role) {
-		return prisma.$transaction(async tx => {
-			const message = await tx.forumMessage.findFirst({
-				where: {
-					id: messageId,
-					topicId
-				},
-				select: {
-					id: true,
-					authorId: true
-				}
-			});
-			if (!message) {
-				throw forumError('forum.message.notFound', 404);
+	async deleteMessage(topicId: number, messageId: number, userId: string) {
+		const message = await prisma.forumMessage.findFirst({
+			where: {
+				id: messageId,
+				topicId
+			},
+			select: {
+				id: true,
+				authorId: true,
+				authorName: true,
+				deletedAt: true
 			}
-			const isAuthor = message.authorId === userId;
-			if (!isAuthor && !isForumModerator(userRole)) {
-				throw forumError('forum.message.forbidden', 403);
-			}
-			await tx.forumMessage.delete({
-				where: {
-					id: messageId
-				}
-			});
-			/*
-			 * On recompte réellement les messages au lieu de faire -1.
-			 * Cela permet aussi de réparer un éventuel compteur désynchronisé.
-			 */
-			const messageCount = await tx.forumMessage.count({
-				where: {
-					topicId
-				}
-			});
-			/*
-			 * Plus aucun message :
-			 * le sujet entier n'a plus de raison d'exister.
-			 *
-			 * Les favoris seront supprimés par cascade.
-			 */
-			if (messageCount === 0) {
-				await tx.forumTopic.delete({
-					where: {
-						id: topicId
-					}
-				});
-				return {
-					topicDeleted: true,
-					messageCount: 0,
-					pageCount: 0
-				};
-			}
-			/*
-			 * On récupère le dernier message restant afin de recalculer
-			 * correctement l'activité du sujet.
-			 */
-			const lastMessage = await tx.forumMessage.findFirstOrThrow({
-				where: {
-					topicId
-				},
-				orderBy: [
-					{
-						createdAt: 'desc'
-					},
-					{
-						id: 'desc'
-					}
-				],
-				select: {
-					createdAt: true
-				}
-			});
-			await tx.forumTopic.update({
-				where: {
-					id: topicId
-				},
-				data: {
-					messageCount,
-					lastActivityAt: lastMessage.createdAt
-				}
-			});
-			return {
-				topicDeleted: false,
-				messageCount,
-				pageCount: Math.max(1, Math.ceil(messageCount / FORUM_MESSAGES_PER_PAGE))
-			};
 		});
+		if (!message) {
+			throw forumError('forum.message.notFound', 404);
+		}
+		if (message.authorId !== userId) {
+			throw forumError('forum.message.forbidden', 403);
+		}
+		if (message.deletedAt) {
+			return {
+				success: true as const
+			};
+		}
+		await prisma.forumMessage.update({
+			where: {
+				id: message.id
+			},
+			data: {
+				deletedAt: new Date(),
+				deletedById: userId,
+				deletedByName: message.authorName,
+				deletionKind: 'AUTHOR',
+				deletionReason: null
+			}
+		});
+		return {
+			success: true as const
+		};
 	},
 	async toggleFavorite(topicId: number, userId: string) {
 		const topic = await prisma.forumTopic.findUnique({
@@ -744,62 +731,104 @@ export const forumService = {
 			favorite: true
 		};
 	},
-	async setPinned(topicId: number, isPinned: boolean) {
-		const existing = await prisma.forumTopic.findUnique({
-			where: {
-				id: topicId
-			},
-			select: {
-				id: true
+	async setPinned(topicId: number, isPinned: boolean, actorId: string) {
+		const actor = await getForumActor(actorId);
+		return prisma.$transaction(async tx => {
+			const existing = await tx.forumTopic.findUnique({
+				where: {
+					id: topicId
+				},
+				select: {
+					id: true,
+					isPinned: true
+				}
+			});
+			if (!existing) {
+				throw forumError('forum.topic.notFound', 404);
 			}
-		});
-		if (!existing) {
-			throw forumError('forum.topic.notFound', 404);
-		}
-		await prisma.forumTopic.update({
-			where: {
-				id: topicId
-			},
-			data: {
-				isPinned
+			/*
+			 * Si l'état demandé est déjà appliqué,
+			 * on ne modifie rien et surtout on ne crée
+			 * pas une fausse entrée dans l'historique.
+			 */
+			if (existing.isPinned === isPinned) {
+				return {
+					success: true as const
+				};
 			}
+			await tx.forumTopic.update({
+				where: {
+					id: topicId
+				},
+				data: {
+					isPinned
+				}
+			});
+			await tx.forumModerationAction.create({
+				data: {
+					topicId,
+					actorId: actor.id,
+					actorName: actor.name,
+					action: isPinned ? 'TOPIC_PIN' : 'TOPIC_UNPIN'
+				}
+			});
+			return {
+				success: true as const
+			};
 		});
-		return {
-			success: true
-		};
 	},
-	async setClosed(topicId: number, isClosed: boolean) {
-		const existing = await prisma.forumTopic.findUnique({
-			where: {
-				id: topicId
-			},
-			select: {
-				id: true,
-				messageCount: true
+	async setClosed(topicId: number, isClosed: boolean, actorId: string) {
+		const actor = await getForumActor(actorId);
+		return prisma.$transaction(async tx => {
+			const existing = await tx.forumTopic.findUnique({
+				where: {
+					id: topicId
+				},
+				select: {
+					id: true,
+					isClosed: true,
+					messageCount: true
+				}
+			});
+			if (!existing) {
+				throw forumError('forum.topic.notFound', 404);
 			}
-		});
-		if (!existing) {
-			throw forumError('forum.topic.notFound', 404);
-		}
-		/*
-		 * Une fois la limite de 500 atteinte,
-		 * même un modérateur ne peut pas
-		 * rouvrir le topic.
-		 */
-		if (!isClosed && existing.messageCount >= FORUM_MAX_MESSAGES) {
-			throw forumError('forum.topic.full', 409);
-		}
-		await prisma.forumTopic.update({
-			where: {
-				id: topicId
-			},
-			data: {
-				isClosed
+			/*
+			 * Une fois les 500 messages atteints,
+			 * le topic ne peut pas être rouvert.
+			 */
+			if (!isClosed && existing.messageCount >= FORUM_MAX_MESSAGES) {
+				throw forumError('forum.topic.full', 409);
 			}
+			/*
+			 * Même principe que pour le pin :
+			 * pas de doublon dans l'historique.
+			 */
+			if (existing.isClosed === isClosed) {
+				return {
+					success: true as const
+				};
+			}
+			await tx.forumTopic.update({
+				where: {
+					id: topicId
+				},
+				data: {
+					isClosed
+				}
+			});
+			await tx.forumModerationAction.create({
+				data: {
+					topicId,
+					actorId: actor.id,
+					actorName: actor.name,
+					action: isClosed ? 'TOPIC_CLOSE' : 'TOPIC_REOPEN'
+				}
+			});
+			return {
+				success: true as const
+			};
 		});
-		return {
-			success: true
-		};
 	},
 	async getFirstUnread(topicId: number, userId: string) {
 		const topic = await prisma.forumTopic.findUnique({
@@ -972,5 +1001,91 @@ export const forumService = {
 		return {
 			subscribed: true
 		};
+	},
+	async setMessageModeration(
+		topicId: number,
+		messageId: number,
+		isDeleted: boolean,
+		reason: string | undefined,
+		actorId: string
+	) {
+		const actor = await getForumActor(actorId);
+		return prisma.$transaction(async tx => {
+			const message = await tx.forumMessage.findFirst({
+				where: {
+					id: messageId,
+					topicId
+				},
+				select: {
+					id: true,
+					deletedAt: true,
+					deletionKind: true
+				}
+			});
+			if (!message) {
+				throw forumError('forum.message.notFound', 404);
+			}
+			if (isDeleted) {
+				if (message.deletedAt) {
+					throw forumError('forum.message.alreadyDeleted', 409);
+				}
+				await tx.forumMessage.update({
+					where: {
+						id: messageId
+					},
+					data: {
+						deletedAt: new Date(),
+						deletedById: actor.id,
+						deletedByName: actor.name,
+						deletionKind: 'MODERATION',
+						deletionReason: reason?.trim()
+					}
+				});
+				await tx.forumModerationAction.create({
+					data: {
+						topicId,
+						messageId,
+						actorId: actor.id,
+						actorName: actor.name,
+						action: 'MESSAGE_DELETE',
+						reason: reason?.trim()
+					}
+				});
+				return {
+					success: true as const
+				};
+			}
+			/*
+			 * Empêche l'auteur
+			 * de restaurer un message supprimé
+			 */
+			if (message.deletionKind !== 'MODERATION') {
+				throw forumError('forum.message.notRestorable', 409);
+			}
+			await tx.forumMessage.update({
+				where: {
+					id: messageId
+				},
+				data: {
+					deletedAt: null,
+					deletedById: null,
+					deletedByName: null,
+					deletionKind: null,
+					deletionReason: null
+				}
+			});
+			await tx.forumModerationAction.create({
+				data: {
+					topicId,
+					messageId,
+					actorId: actor.id,
+					actorName: actor.name,
+					action: 'MESSAGE_RESTORE'
+				}
+			});
+			return {
+				success: true as const
+			};
+		});
 	}
 };
