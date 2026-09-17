@@ -9,22 +9,52 @@ import weightedRandom from '../fight/weightedRandom.js';
  * @returns Box type
  */
 export function selectBox(completion: number) {
-	const boxOdds = [
-		{ tier: 1, type: Item.BOX_COMMON, odds: 900 },
-		{ tier: 2, type: Item.BOX_RARE, odds: 75 },
-		{ tier: 3, type: Item.BOX_EPIC, odds: 24 },
-		{ tier: 4, type: Item.BOX_LEGENDARY, odds: 1 }
-	];
-	const maxRolls = Math.floor(completion / 10) + 1;
-	let reward = boxOdds[0]; // Pick common box as initial reward.
-	let currentRoll = 0;
-	while (currentRoll < maxRolls) {
-		currentRoll++;
-		const boxRoll = weightedRandom(boxOdds);
-		// Use the rank to make this ID-agnostic
-		if (boxRoll.tier > reward.tier) {
-			reward = boxRoll;
-		}
+	let boxOdds = [];
+
+	if (completion < 15) {
+		boxOdds = [{ type: Item.BOX_COMMON, odds: 10 }];
+	} else if (completion < 30) {
+		boxOdds = [
+			{ type: Item.BOX_COMMON, odds: 8 },
+			{ type: Item.BOX_RARE, odds: 2 }
+		];
+	} else if (completion < 45) {
+		boxOdds = [
+			{ type: Item.BOX_COMMON, odds: 5 },
+			{ type: Item.BOX_RARE, odds: 5 }
+		];
+	} else if (completion < 60) {
+		boxOdds = [
+			{ type: Item.BOX_COMMON, odds: 3 },
+			{ type: Item.BOX_RARE, odds: 5 },
+			{ type: Item.BOX_EPIC, odds: 2 }
+		];
+	} else if (completion < 70) {
+		boxOdds = [
+			{ type: Item.BOX_RARE, odds: 4 },
+			{ type: Item.BOX_EPIC, odds: 5 },
+			{ type: Item.BOX_LEGENDARY, odds: 1 }
+		];
+	} else if (completion < 80) {
+		boxOdds = [
+			{ type: Item.BOX_RARE, odds: 3 },
+			{ type: Item.BOX_EPIC, odds: 6 },
+			{ type: Item.BOX_LEGENDARY, odds: 1 }
+		];
+	} else if (completion < 90) {
+		boxOdds = [
+			{ type: Item.BOX_RARE, odds: 2 },
+			{ type: Item.BOX_EPIC, odds: 6 },
+			{ type: Item.BOX_LEGENDARY, odds: 2 }
+		];
+	} else {
+		// 90 to 100%
+		boxOdds = [
+			{ type: Item.BOX_EPIC, odds: 7 },
+			{ type: Item.BOX_LEGENDARY, odds: 3 }
+		];
 	}
-	return itemList[reward.type];
+
+	const boxRoll = weightedRandom(boxOdds);
+	return itemList[boxRoll.type];
 }
