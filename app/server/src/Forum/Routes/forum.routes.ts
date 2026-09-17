@@ -11,6 +11,7 @@ import {
 	markForumTopicReadBodySchema,
 	updateForumClosedBodySchema,
 	updateForumMessageBodySchema,
+	updateForumMessageModerationBodySchema,
 	updateForumPinnedBodySchema
 } from '../Schema/forum.schema.js';
 import {
@@ -27,6 +28,7 @@ import {
 	toggleForumSubscriptionHandler,
 	updateForumClosedHandler,
 	updateForumMessageHandler,
+	updateForumMessageModerationHandler,
 	updateForumPinnedHandler
 } from '../Service/forumHandler.service.js';
 
@@ -201,5 +203,17 @@ export async function forumRoutes(app: FastifyInstance) {
 			}
 		},
 		toggleForumSubscriptionHandler
+	);
+	app.patch(
+		'/topics/:topicId/messages/:messageId/moderation',
+		{
+			preHandler: [app.authenticate, app.moderator],
+			schema: {
+				tags: ['Forum'],
+				params: forumMessageParamSchema,
+				body: updateForumMessageModerationBodySchema
+			}
+		},
+		updateForumMessageModerationHandler
 	);
 }

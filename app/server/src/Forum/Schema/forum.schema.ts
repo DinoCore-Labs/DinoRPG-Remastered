@@ -58,3 +58,14 @@ export const markForumTopicReadBodySchema = z.object({
 });
 
 export type MarkForumTopicReadBody = z.infer<typeof markForumTopicReadBodySchema>;
+
+export const updateForumMessageModerationBodySchema = z
+	.object({
+		isDeleted: z.boolean(),
+		reason: z.string().trim().max(500).optional()
+	})
+	.refine(data => !data.isDeleted || Boolean(data.reason?.length), {
+		message: 'forum.moderation.reasonRequired'
+	});
+
+export type UpdateForumMessageModerationBody = z.infer<typeof updateForumMessageModerationBodySchema>;
