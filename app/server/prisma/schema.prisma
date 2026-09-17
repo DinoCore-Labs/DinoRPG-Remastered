@@ -296,11 +296,18 @@ model ForumMessage {
 
   reports    Report[]   @relation("ReportReportedForumMessage")
 
+  deletedAt      DateTime?                 @db.Timestamptz(3)
+  deletedById    String?                   @db.Uuid
+  deletedByName  String?
+  deletionKind   ForumMessageDeletionKind?
+  deletionReason String?                   @db.VarChar(500)
+
   createdAt  DateTime   @default(now()) @db.Timestamptz(3)
   updatedAt  DateTime   @default(now()) @updatedAt @db.Timestamptz(3)
 
   @@index([topicId, createdAt, id])
   @@index([authorId])
+  @@index([topicId, deletedAt])
 
   @@map("forum_message")
 }
@@ -334,6 +341,29 @@ model ForumSubscription {
   @@index([topicId])
 
   @@map("forum_subscription")
+}
+
+model ForumModerationAction {
+  id Int @id @default(autoincrement())
+
+  topicId   Int
+  messageId Int?
+
+  actorId   String? @db.Uuid
+  actorName String
+
+  action ForumModerationActionType
+
+  reason String? @db.VarChar(500)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@index([topicId, createdAt])
+  @@index([messageId])
+  @@index([actorId, createdAt])
+  @@index([action, createdAt])
+
+  @@map("forum_moderation_action")
 }
 
 model GameLog {
@@ -1258,6 +1288,20 @@ enum ForumCategory {
   GAME
   CLANS
   CHAOS
+}
+
+enum ForumMessageDeletionKind {
+  AUTHOR
+  MODERATION
+}
+
+enum ForumModerationActionType {
+  MESSAGE_DELETE
+  MESSAGE_RESTORE
+  TOPIC_PIN
+  TOPIC_UNPIN
+  TOPIC_CLOSE
+  TOPIC_REOPEN
 }
 
 enum GameLogRetention {
