@@ -27,8 +27,37 @@
 						<DZButton v-if="!result.topic.isClosed || result.topic.messageCount < maxMessages" @click="toggleClosed">
 							{{ result.topic.isClosed ? $t('forum.actions.reopen') : $t('forum.actions.close') }}
 						</DZButton>
+						<DZButton v-if="user.isModerator" @click="toggleModerationHistory">
+							{{ $t('forum.moderation.history') }}
+						</DZButton>
 					</template>
 				</div>
+				<section v-if="user.isModerator && moderationHistoryVisible" class="forum-moderation-history">
+					<h3>
+						{{ $t('forum.moderation.history') }}
+					</h3>
+					<p v-if="moderationHistoryLoading">
+						{{ $t('forum.moderation.loading') }}
+					</p>
+					<p v-else-if="moderationHistory.length === 0">
+						{{ $t('forum.moderation.empty') }}
+					</p>
+					<div v-for="action in moderationHistory" :key="action.id" class="forum-moderation-history__entry">
+						<strong>
+							{{ action.actorName }}
+						</strong>
+						<span>
+							{{ $t(`forum.moderation.actions.${action.action}`) }}
+						</span>
+						<span v-if="action.messageId"> #{{ action.messageId }} </span>
+						<time :datetime="action.createdAt">
+							{{ formatDate(action.createdAt) }}
+						</time>
+						<p v-if="action.reason">
+							{{ action.reason }}
+						</p>
+					</div>
+				</section>
 				<ForumPagination :page="result.page" :page-count="result.pageCount" @change="changePage" />
 				<h2 class="forum-topic-title">
 					<img
@@ -147,6 +176,25 @@
 									</div>
 								</div>
 							</template>
+							<div v-else-if="message.isDeleted" class="forum-post-deleted">
+								<p class="forum-post-deleted__notice">
+									{{
+										message.deletionKind === 'MODERATION' ? $t('forum.deleted.moderation') : $t('forum.deleted.author')
+									}}
+								</p>
+								<template v-if="user.isModerator && message.content">
+									<div class="forum-post-deleted__original" v-html="richFormatText(message.content)"></div>
+									<p v-if="message.deletionReason" class="forum-post-deleted__reason">
+										<strong>
+											{{ $t('forum.moderation.reason') }}
+										</strong>
+										{{ message.deletionReason }}
+									</p>
+									<DZButton v-if="message.deletionKind === 'MODERATION'" size="small" @click="restoreMessage(message)">
+										{{ $t('forum.moderation.restore') }}
+									</DZButton>
+								</template>
+							</div>
 							<div v-else class="forum-post-message" v-html="richFormatText(message.content)"></div>
 						</div>
 					</article>
@@ -201,6 +249,7 @@ import {
 	FORUM_MAX_MESSAGES,
 	FORUM_MESSAGES_PER_PAGE,
 	type ForumMessageView,
+	type ForumModerationActionView,
 	type ForumTopicViewResponse
 } from '@dinorpg/core/models/forum/forum.js';
 
@@ -243,6 +292,16 @@ const replyComposerRef = useTemplateRef<HTMLElement>('replyComposerRef');
 
 const reportingMessage = ref<ForumMessageView | null>(null);
 
+const moderatingMessage = ref<ForumMessageView | null>(null);
+
+const moderationDeleting = ref(false);
+
+const moderationHistory = ref<ForumModerationActionView[]>([]);
+
+const moderationHistoryVisible = ref(false);
+
+const moderationHistoryLoading = ref(false);
+
 const maxMessages = FORUM_MAX_MESSAGES;
 
 const categoryTitle = computed(() => {
@@ -270,14 +329,22 @@ function canQuoteMessage(): boolean {
 }
 
 function canEditMessage(message: ForumMessageView): boolean {
-	return user.id !== null && message.authorId === user.id;
+	return !message.isDeleted && user.id !== null && message.authorId === user.id;
 }
 
 function canDeleteMessage(message: ForumMessageView): boolean {
-	if (user.id === null) {
-		return false;
+	return !message.isDeleted && user.id !== null && message.authorId === user.id;
+}
+
+function canModerateMessage(message: ForumMessageView): boolean {
+	return !message.isDeleted && user.isModerator && user.id !== null && message.authorId !== user.id;
+}
+
+function startModerationDelete(message: ForumMessageView): void {
+	if (!canModerateMessage(message)) {
+		return;
 	}
-	return message.authorId === user.id || user.isModerator;
+	moderatingMessage.value = message;
 }
 
 function startEdit(message: ForumMessageView): void {
@@ -333,6 +400,23 @@ async function saveEdit(messageId: number, message: string): Promise<void> {
 		error.value = t('forum.errors.editMessage');
 	} finally {
 		savingEdit.value = false;
+	}
+}
+
+async function confirmModerationDelete(reason: string): Promise<void> {
+	if (!moderatingMessage.value) {
+		return;
+	}
+	moderationDeleting.value = true;
+	try {
+		await ForumService.setMessageModeration(topicId(), moderatingMessage.value.id, {
+			isDeleted: true,
+			reason
+		});
+		moderatingMessage.value = null;
+		await load();
+	} finally {
+		moderationDeleting.value = false;
 	}
 }
 
@@ -422,6 +506,20 @@ async function toggleSubscription(): Promise<void> {
 		result.value.isSubscribed = toggled.subscribed;
 	} catch {
 		error.value = t('forum.errors.subscription');
+	}
+}
+
+async function toggleModerationHistory(): Promise<void> {
+	moderationHistoryVisible.value = !moderationHistoryVisible.value;
+	if (!moderationHistoryVisible.value) {
+		return;
+	}
+	moderationHistoryLoading.value = true;
+	try {
+		const response = await ForumService.getModerationHistory(topicId());
+		moderationHistory.value = response.actions;
+	} finally {
+		moderationHistoryLoading.value = false;
 	}
 }
 

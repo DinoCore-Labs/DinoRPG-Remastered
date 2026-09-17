@@ -19,6 +19,7 @@ import {
 	createForumTopicHandler,
 	deleteForumMessageHandler,
 	getForumFirstUnreadHandler,
+	getForumModerationHistoryHandler,
 	getForumTopicHandler,
 	listForumFavoritesHandler,
 	listForumTopicsHandler,
@@ -215,5 +216,16 @@ export async function forumRoutes(app: FastifyInstance) {
 			}
 		},
 		updateForumMessageModerationHandler
+	);
+	app.get(
+		'/topics/:topicId/moderation-history',
+		{
+			preHandler: [app.authenticate, app.moderator],
+			schema: {
+				tags: ['Forum'],
+				params: forumTopicParamSchema
+			}
+		},
+		getForumModerationHistoryHandler
 	);
 }
