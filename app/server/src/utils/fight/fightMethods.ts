@@ -5126,6 +5126,10 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 			}
 		}
 	}
+	// Return early if the attacker that was just picked escaped from dimensional powder
+	if (attacker.escaped || attacker.hp <= 0) {
+		return;
+	}
 
 	// 4th - Activate the active environment if it's its caster turn
 	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
