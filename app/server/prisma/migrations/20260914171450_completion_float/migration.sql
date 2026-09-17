@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Ranking" ALTER COLUMN "completion" SET DEFAULT 0,
+ALTER COLUMN "completion" SET DATA TYPE DOUBLE PRECISION;
