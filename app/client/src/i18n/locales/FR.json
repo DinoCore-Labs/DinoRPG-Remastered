@@ -716,6 +716,30 @@
 			"deleteLastMessage": "Ce message est le dernier du sujet. Sa suppression supprimera également le sujet. Continuer ?"
 		},
 		"loginToReply": "Connectez-vous pour répondre à ce sujet.",
+		"deleted": {
+			"author": "Ce message a été supprimé par son auteur.",
+			"moderation": "Ce message a été supprimé par la modération."
+		},
+		"moderation": {
+			"delete": "Supprimer",
+			"restore": "Restaurer",
+			"history": "Historique de modération",
+			"loading": "Chargement de l'historique...",
+			"empty": "Aucune action de modération pour ce sujet.",
+			"reason": "Raison :",
+			"reasonRequired": "Une raison est obligatoire.",
+			"reasonPlaceholder": "Indiquez la raison de la suppression...",
+			"deleteTitle": "Supprimer ce message",
+			"deleteDescription": "Vous allez supprimer le message de {name}.",
+			"actions": {
+				"MESSAGE_DELETE": "a supprimé le message",
+				"MESSAGE_RESTORE": "a restauré le message",
+				"TOPIC_PIN": "a épinglé le sujet",
+				"TOPIC_UNPIN": "a retiré le sujet des post-it",
+				"TOPIC_CLOSE": "a fermé le sujet",
+				"TOPIC_REOPEN": "a rouvert le sujet"
+			}
+		},
 		"errors": {
 			"loadForum": "Impossible de charger le forum.",
 			"titleMin": "Le titre doit contenir au moins 3 caractères.",
