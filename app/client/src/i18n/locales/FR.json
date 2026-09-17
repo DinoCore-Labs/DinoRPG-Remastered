@@ -661,9 +661,9 @@
 			"writeMessage": "Écrire un message",
 			"createTopic": "Créer le sujet",
 			"home": "Accueil",
-			"addFavorite": "Ajouter aux favoris",
+			"addFavorite": "Favoris",
 			"removeFavorite": "Retirer des favoris",
-			"pin": "Mettre en Post-It",
+			"pin": "Post-It",
 			"unpin": "Retirer le Post-It",
 			"close": "Fermer",
 			"reopen": "Rouvrir",
@@ -673,7 +673,8 @@
 			"save": "Enregistrer",
 			"follow": "Suivre",
 			"unfollow": "Ne plus suivre",
-			"report": "Signaler"
+			"report": "Signaler",
+			"quote": "Citer"
 		},
 		"table": {
 			"subject": "Sujet",
@@ -723,6 +724,7 @@
 			"delete": "Supprimer",
 			"restore": "Restaurer",
 			"history": "Historique de modération",
+			"historyShort": "Historique",
 			"loading": "Chargement de l'historique...",
 			"empty": "Aucune action de modération pour ce sujet.",
 			"reason": "Raison :",
@@ -751,7 +753,8 @@
 			"reply": "Impossible de répondre.",
 			"titleLanguagePrefix": "Le titre doit commencer par [FR], [EN], [ES] ou [DE].",
 			"subscription": "Impossible de modifier le suivi de ce sujet.",
-			"restoreMessage": "Impossible de restaurer ce message."
+			"restoreMessage": "Impossible de restaurer ce message.",
+			"moderateMessage": "Impossible de modérer ce message."
 		}
 	},
 	"button": {
