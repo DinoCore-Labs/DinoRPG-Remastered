@@ -2,6 +2,23 @@
 
 ## 🔹 Core
 
+## 0.41.0
+
+### Minor Changes
+
+- f2bf7f0: Forum V2
+
+  - Added message quoting.
+  - Added read and unread topic tracking with navigation to the first unread message.
+  - Added topic subscriptions and notifications for new replies.
+  - Added a notification indicator to the top bar.
+  - Added forum message reporting.
+  - Added soft deletion for forum messages.
+  - Added restoration of messages deleted by moderators.
+  - Added moderation action history.
+  - Added tracking for topic pinning, unpinning, closing, and reopening.
+  - Improved permissions and safeguards around deleted messages.
+
 ## 0.40.0
 
 ### Minor Changes
@@ -705,6 +722,28 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.43.0
+
+### Minor Changes
+
+- f2bf7f0: Forum V2
+
+  - Added message quoting.
+  - Added read and unread topic tracking with navigation to the first unread message.
+  - Added topic subscriptions and notifications for new replies.
+  - Added a notification indicator to the top bar.
+  - Added forum message reporting.
+  - Added soft deletion for forum messages.
+  - Added restoration of messages deleted by moderators.
+  - Added moderation action history.
+  - Added tracking for topic pinning, unpinning, closing, and reopening.
+  - Improved permissions and safeguards around deleted messages.
+
+### Patch Changes
+
+- Updated dependencies [f2bf7f0]
+  - @dinorpg/core@0.41.0
 
 ## 0.42.0
 
@@ -1644,6 +1683,23 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.42.0
+
+### Minor Changes
+
+- f2bf7f0: Forum V2
+
+  - Added message quoting.
+  - Added read and unread topic tracking with navigation to the first unread message.
+  - Added topic subscriptions and notifications for new replies.
+  - Added a notification indicator to the top bar.
+  - Added forum message reporting.
+  - Added soft deletion for forum messages.
+  - Added restoration of messages deleted by moderators.
+  - Added moderation action history.
+  - Added tracking for topic pinning, unpinning, closing, and reopening.
+  - Improved permissions and safeguards around deleted messages.
 
 ## 0.41.0
 
