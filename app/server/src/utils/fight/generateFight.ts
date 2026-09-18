@@ -91,6 +91,7 @@ export type DetailedFight = {
 		attack: FightStats;
 		defense: FightStats;
 	};
+	cursedWandTargets: number[];
 };
 
 const orderFighters = (fightData: DetailedFight) => {
@@ -140,6 +141,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		},
 		rules: config.rules,
 		protectedFighters: [],
+		cursedWandTargets: [],
 		time: 0,
 		nextStatusTrigger: FIGHT_INFINITE,
 		nextCycleTrigger: FIGHT_INFINITE,
@@ -469,10 +471,10 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 	});
 
 	if (fightOutcome === FightOutcome.AttackerWin) {
-		// Curse if any M_CURSED_WAND
-		if (fightData.fighters.some(fighter => fighter.skills.some(skill => skill.id === Skill.M_CURSED_WAND))) {
+		// Curse if any targets were hit by M_CURSED_WAND
+		if (fightData.cursedWandTargets.length > 0) {
 			fightData.fighters.forEach(f => {
-				if (!f.attacker || f.initiallyCursed) return;
+				if (!fightData.cursedWandTargets.includes(f.id) || f.initiallyCursed) return;
 				if (hasStatus(f, FightStatus.NO_CURSE)) return;
 
 				f.permanentStatusGained.push(DinozStatusId.CURSED);
