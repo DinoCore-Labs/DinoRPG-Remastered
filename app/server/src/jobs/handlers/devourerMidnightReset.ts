@@ -36,4 +36,13 @@ export async function devourerMidnightResetJob() {
 			await addIngredientToInventory(control.userId, Ingredient.GRAINE_DE_DEVOREUSE, amountToAdd);
 		}
 	}
+
+	// 3. Clean up Devourer history older than 48 hours
+	const twoDaysAgo = new Date(Date.now() - 48 * 60 * 60 * 1000);
+	await prisma.fightArchive.deleteMany({
+		where: {
+			devourerPlaceId: { not: null },
+			createdDate: { lt: twoDaysAgo }
+		}
+	});
 }
