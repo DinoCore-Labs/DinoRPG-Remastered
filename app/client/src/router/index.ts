@@ -381,6 +381,11 @@ const routes: RouteRecord[] = [
 				meta: { auth: true }
 			},
 			{
+				path: '/devourer/share/:archive',
+				name: 'DevourerShareFight',
+				component: () => import('../components/devourer/DevourerShareFight.vue')
+			},
+			{
 				path: '/dojo',
 				name: 'DojoPage',
 				component: DojoPage,

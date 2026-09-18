@@ -185,6 +185,37 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 		place: placeId,
 		endText: victory ? { type: 'message', text: 'scenarios.devourer.texts.tower_won' } : undefined
 	};
+
+	// Save fight to archive
+	await prisma.fightArchive.create({
+		data: {
+			fighters: JSON.stringify(
+				fightResult.fighters.map(f => ({
+					id: f.id,
+					type: f.type,
+					name: f.name,
+					display: f.display,
+					attacker: f.attacker,
+					maxHp: f.maxHp,
+					startingHp: f.startingHp,
+					energy: f.energy,
+					maxEnergy: f.maxEnergy,
+					energyRecovery: f.energyRecovery,
+					dark: f.dark,
+					size: f.size,
+					entrance: f.entrance
+				}))
+			),
+			steps: JSON.stringify(fightResult.steps),
+			seed: fightResult.seed,
+			result: victory,
+			user: { connect: { id: userId } },
+			leftUser: { connect: { id: userId } },
+			...(currentControl ? { rightUser: { connect: { id: currentControl.userId } } } : {}),
+			devourerPlaceId: placeId
+		}
+	});
+
 	return reply.send({ success: true, fight: clientFightResult, victory });
 }
 
@@ -259,5 +290,34 @@ export async function devourerGetDefendersHandler(
 				}))
 		},
 		attacksLeft: user?.devourerAttacksLeft || 0
+	});
+}
+
+export async function devourerGetHistoryHandler(
+	req: FastifyRequest<{ Params: { placeId: string }; Querystring: { page?: string } }>,
+	reply: FastifyReply
+) {
+	const placeId = Number(req.params.placeId);
+	const page = Number(req.query.page || 1);
+	if (!DEVOURER_PLACES.includes(placeId)) throw new ExpectedError('Not on a Devourer place');
+
+	const total = await prisma.fightArchive.count({ where: { devourerPlaceId: placeId } });
+	const archive = await prisma.fightArchive.findMany({
+		take: 10,
+		skip: 10 * page - 10,
+		where: { devourerPlaceId: placeId },
+		select: {
+			id: true,
+			createdDate: true,
+			result: true,
+			leftUser: { select: { id: true, name: true } },
+			rightUser: { select: { id: true, name: true } }
+		},
+		orderBy: { createdDate: 'desc' }
+	});
+
+	return reply.send({
+		fights: archive,
+		total
 	});
 }

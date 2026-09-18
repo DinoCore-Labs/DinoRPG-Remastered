@@ -80,7 +80,8 @@ export async function getArchivedFight(req: FastifyRequest, reply: FastifyReply)
 			result: true,
 			leftUser: userSelect,
 			rightUser: userSelect,
-			metadata: true
+			metadata: true,
+			devourerPlaceId: true
 		}
 	});
 
@@ -92,7 +93,9 @@ export async function getArchivedFight(req: FastifyRequest, reply: FastifyReply)
 
 	let place = 996; // PlaceEnum.DOJO
 	let background: string | undefined;
-	if (fight.metadata) {
+	if (fight.devourerPlaceId) {
+		place = fight.devourerPlaceId;
+	} else if (fight.metadata) {
 		try {
 			const meta = JSON.parse(fight.metadata as string);
 			if (meta.placeId) place = meta.placeId;

@@ -1214,10 +1214,12 @@ model FightArchive {
   tournamentTeamRightId String?         @db.Uuid
   tournamentTeamRight   TournamentTeam? @relation("RightTeamRelation", fields: [tournamentTeamRightId], references: [id])
   tournamentId          String?         @db.Uuid
+  devourerPlaceId       Int?
   metadata              String?         @db.Text
   FightWatched          FightWatched[]
 
   @@index([tournamentId, tournamentStep])
+  @@index([devourerPlaceId, createdDate])
 }
 
 model FightWatched {
