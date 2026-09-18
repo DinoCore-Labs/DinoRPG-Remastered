@@ -46,8 +46,15 @@ const DINOZ_PREFIX = 'dinoz:';
 export function resolveFightingPlace(placeId: number, background?: string) {
 	const place = Object.values(placeListv2).find(p => p.placeId === placeId);
 	if (!place) return;
+
+	let bg = background ?? place.background;
+	// Backward compatibility: map specific devoreuse backgrounds to the one bundled in the animation library
+	if (bg && ['stowr1', 'stowr2', 'stowr3'].includes(bg)) {
+		bg = 's_devor';
+	}
+
 	return {
-		bg: background ?? place.background,
+		bg: bg,
 		top: place.top ?? 120,
 		bottom: place.bottom ?? 0,
 		right: 0,

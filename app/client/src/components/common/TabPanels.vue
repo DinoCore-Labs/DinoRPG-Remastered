@@ -23,10 +23,17 @@
 			<li :class="tabSelected === 3 ? 'active' : ''">
 				<a @click="sessionStore.setTabDinoz(3)">{{ $t('common.details') }}</a>
 			</li>
+			<li v-if="[62, 63, 64].indexOf(dinozData.placeId) !== -1" :class="tabSelected === 4 ? 'active' : ''">
+				<a @click="sessionStore.setTabDinoz(4)">{{ $t('scenarios.devourer.journal.tabLabel') }}</a>
+			</li>
 		</ul>
 		<MapTab v-if="tabSelected === 1" :dinozData="dinozData" />
 		<InventoryTab v-if="tabSelected === 2" />
 		<DetailsTab v-if="tabSelected === 3" :dinozData="dinozData" />
+		<DevourerHistoryTab
+			v-if="tabSelected === 4 && [62, 63, 64].indexOf(dinozData.placeId) !== -1"
+			:dinozData="dinozData"
+		/>
 	</div>
 </template>
 
@@ -37,6 +44,7 @@ import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import InventoryTab from './InventoryTab.vue';
 import DetailsTab from './DetailsTab.vue';
 import MapTab from './MapTab.vue';
+import DevourerHistoryTab from './DevourerHistoryTab.vue';
 
 export default defineComponent({
 	name: 'TabPanels',
@@ -44,7 +52,8 @@ export default defineComponent({
 	components: {
 		InventoryTab,
 		DetailsTab,
-		MapTab
+		MapTab,
+		DevourerHistoryTab
 	},
 	data() {
 		return {
