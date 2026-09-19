@@ -45,6 +45,8 @@
 		"marketOfferUnsold": "Votre enchère est terminée sans trouver d'acheteur.",
 		"ok": "OK",
 		"forumTopicReply": "{name} a répondu au sujet « {topic} ».",
+		"devourerAttacked": "Quelqu'un tente de vous prendre le contrôle de la dévoreuse !",
+		"devourerSeedsGathered": "Vous avez récolté {amount} graine(s) de dévoreuse !",
 		"view": "Voir"
 	},
 	"homepage": {

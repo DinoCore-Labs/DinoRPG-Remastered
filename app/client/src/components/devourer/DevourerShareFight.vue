@@ -1,0 +1,122 @@
+<!--
+  This file contains code derived from or adapted from:
+  Eternaltwin DinoRPG
+  Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/staging/ed-ui/src/components/dojo/ShareFight.vue
+  
+  Copyright in the original contributions remains with the respective
+  authors and contributors.
+  
+  Modified by DinoRPG Remastered contributors on 2026-08-31.
+  See NOTICE.md and the Git history for provenance and modification details.
+  
+  SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<template>
+	<div id="shareFight">
+		<TitleHeader :title="$t('scenarios.devourer.shareFight.title')" />
+		<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
+		<template v-if="fightTransformed">
+			<div v-show="loaded" class="content">
+				<Suspense>
+					<FullFightAnimation :fight="fightTransformed" />
+					<template #fallback> <Loading /> </template>
+				</Suspense>
+			</div>
+		</template>
+	</div>
+</template>
+
+<script lang="ts">
+import { defineAsyncComponent, defineComponent, toRaw } from 'vue';
+import TitleHeader from '../utils/TitleHeader.vue';
+import { errorHandler } from '../../utils/errorHandler.js';
+import { DojoService } from '../../services/dojo.service.js';
+import { resolveFightingPlace, transpileFight } from '../../fight/transpileFight.js';
+import FightersHeader from '../fight/FightHeader.vue';
+import type { preFightLoader } from '@dinorpg/core/models/fight/transpiler.js';
+import type { FightStep } from '@dinorpg/core/models/fight/fightStep.js';
+import type { FighterRecap } from '@dinorpg/core/models/fight/fightResult.js';
+
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+
+export default defineComponent({
+	name: 'DevourerShareFight',
+	components: {
+		TitleHeader,
+		FightersHeader,
+		FullFightAnimation: defineAsyncComponent(() => import('../fight/FightAnimation.vue'))
+	},
+	data() {
+		return {
+			fightTransformed: undefined as undefined | preFightLoader,
+			loaded: false,
+			leftPlayer: null as null | { id: string; name: string },
+			rightPlayer: null as null | { id: string; name: string }
+		};
+	},
+	methods: {},
+	async mounted() {
+		const archiveId = this.$route.params.archive.toString();
+
+		try {
+			const fightResult = await DojoService.getSharedFight(archiveId);
+			const fightSteps = fightResult.fight.history as FightStep[];
+			const fighters = fightResult.fight.fighters as FighterRecap[];
+			if (!fightSteps || !fighters) return;
+
+			const nexFight = transpileFight(
+				structuredClone(toRaw(fighters)),
+				fightSteps,
+				this.$t,
+				fightResult.fight.result,
+				undefined,
+				undefined,
+				true
+			);
+			if (!nexFight) {
+				return;
+			}
+			const placeId = fightResult.fight.place ?? PlaceEnum.DOJO;
+			const initPlace = resolveFightingPlace(placeId, fightResult.fight.background);
+			this.fightTransformed = {
+				...initPlace,
+				history: nexFight.filter(n => n != undefined)
+				// lang: this.lang
+			};
+			this.leftPlayer = fightResult.fight.leftPlayer;
+			this.rightPlayer = fightResult.fight.rightPlayer;
+			this.loaded = true;
+		} catch (e) {
+			errorHandler.handle(e, this.$toast);
+		}
+	}
+});
+</script>
+
+<style lang="scss" scoped>
+#shareFight {
+	align-self: center;
+	padding-top: 40px;
+}
+.subtitle {
+	text-transform: uppercase;
+	font-weight: bold;
+	text-align: center;
+}
+.preparation {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+}
+.wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.content {
+	display: flex;
+	justify-content: center;
+}
+</style>
