@@ -462,6 +462,13 @@ export default defineComponent({
 			if (notification.type === 'marketOfferUnsold') {
 				return this.$t('notifications.marketOfferUnsold');
 			}
+			if (notification.type === 'devourerAttacked') {
+				return this.$t('notifications.devourerAttacked');
+			}
+			if (notification.type === 'devourerSeedsGathered') {
+				const content = this.parseContent(notification.content);
+				return this.$t('notifications.devourerSeedsGathered', { amount: content?.amount || 3 });
+			}
 			return '';
 		},
 		parseContent(content: any) {
