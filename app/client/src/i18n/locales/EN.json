@@ -45,6 +45,8 @@
 		"marketOfferUnsold": "Votre enchère est terminée sans trouver d'acheteur.",
 		"ok": "OK",
 		"forumTopicReply": "{name} a répondu au sujet « {topic} ».",
+		"devourerAttacked": "Quelqu'un tente de vous prendre le contrôle de la dévoreuse !",
+		"devourerSeedsGathered": "Vous avez récolté {amount} graine(s) de dévoreuse !",
 		"view": "Voir"
 	},
 	"homepage": {
@@ -6420,6 +6422,19 @@
 				"tower_won": "Vous avez remporté le contrôle de la Dévoreuse ! Gardez-le jusqu'à minuit pour obtenir ses précieuses graînes !",
 				"grains_credited": "Félicitations ! Votre contrôle des Dévoreuses vous rapporte <b>::count::</b> graîne(s) qui ont été rajoutées à vos Ingrédients.",
 				"stop_defend_tower": "Vous avez relaché le contrôle de la Dévoreuse."
+			},
+			"journal": {
+				"tabLabel": "Journal",
+				"date": "Date",
+				"defense": "Défense",
+				"attack": "Attack",
+				"action": "Action",
+				"watchFight": "Voir le combat",
+				"copyLink": "Copier le lien",
+				"linkCopied": "Le lien du replay a été copié dans le presse-papier."
+			},
+			"shareFight": {
+				"title": "Replay Dévoreuse"
 			}
 		},
 		"magnet": {
