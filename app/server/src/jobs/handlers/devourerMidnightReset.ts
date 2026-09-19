@@ -1,6 +1,8 @@
 import { Ingredient, ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
+import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 
 import { addIngredientToInventory } from '../../Inventory/Controller/addIngredient.controller.js';
+import { newNotif } from '../../Notification/Service/notification.service.js';
 import { prisma } from '../../prisma.js';
 
 export async function devourerMidnightResetJob() {
@@ -13,6 +15,7 @@ export async function devourerMidnightResetJob() {
 
 	// 2. Give 3 Graînes de Dévoreuse to current controllers
 	const controllers = await prisma.devourerControl.findMany();
+	const userSeedGains = new Map<string, number>();
 
 	for (const control of controllers) {
 		const user = await prisma.user.findUnique({
@@ -34,7 +37,12 @@ export async function devourerMidnightResetJob() {
 
 		if (amountToAdd > 0) {
 			await addIngredientToInventory(control.userId, Ingredient.GRAINE_DE_DEVOREUSE, amountToAdd);
+			userSeedGains.set(control.userId, (userSeedGains.get(control.userId) || 0) + amountToAdd);
 		}
+	}
+
+	for (const [userId, totalAmount] of userSeedGains.entries()) {
+		await newNotif(userId, NotificationType.DEVOURER_SEEDS_GATHERED, JSON.stringify({ amount: totalAmount }));
 	}
 
 	// 3. Clean up Devourer history older than 48 hours
