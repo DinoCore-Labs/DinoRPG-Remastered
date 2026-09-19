@@ -1652,11 +1652,21 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.M_CURSED_WAND: {
-				// TODO rework
-				// // Get all opponent dinoz
-				// const opponents = getOpponents(fightData, fighter, [FighterType.DINOZ]);
+				const opponents = getOpponents(fightData, fighter, [FighterType.DINOZ]);
+				const validTargets = opponents.filter(o => !fightData.cursedWandTargets.includes(o.id));
 
-				// attackMultipleOpponents(fightData, fighter, opponents, event, step);
+				if (validTargets.length === 0) {
+					break;
+				}
+
+				const target = chooseRandomOpponent(validTargets, fightData.rng);
+				const damage = Math.max(1, Math.ceil(target.hp / 2));
+
+				addSkillFx(fightData, fighter.id, event.id, [target.id]);
+
+				loseHp(fightData, target, damage, LifeEffect.Skull);
+
+				fightData.cursedWandTargets.push(target.id);
 				break;
 			}
 			case Skill.M_HEAL_GROUP: {
