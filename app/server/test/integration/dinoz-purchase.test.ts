@@ -6,10 +6,12 @@ import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { GameLogType } from '../../../prisma/index.js';
+import { getUserMaxDinoz } from '../../src/Dinoz/Controller/getActiveDinoz.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
 import { createAuthCookie } from '../helpers/auth.js';
 import { cleanDatabase } from '../helpers/database.js';
+import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
 import { createTestUser } from '../helpers/factories/user.factory.js';
 
 let server: FastifyInstance;
@@ -23,6 +25,14 @@ async function createTestShopDinoz(userId: string, raceId = RaceEnum.MOUEFFE) {
 			display: `${race.swfLetter}00000000000000`
 		}
 	});
+}
+
+async function createActiveDinoz(userId: string, quantity: number) {
+	for (let index = 0; index < quantity; index++) {
+		await createTestDinoz({
+			userId
+		});
+	}
 }
 
 beforeAll(async () => {
@@ -280,5 +290,194 @@ describe('Dinoz shop purchases', () => {
 				}
 			})
 		).toBe(0);
+	});
+
+	it('rejects the purchase at the active Dinoz limit without debiting gold', async () => {
+		const user = await createTestUser({
+			name: 'FullDinozBuyer'
+		});
+		const maxDinoz = getUserMaxDinoz({
+			leader: false,
+			messie: false
+		});
+		await createActiveDinoz(user.id, maxDinoz);
+		expect(
+			await prisma.dinoz.count({
+				where: {
+					userId: user.id
+				}
+			})
+		).toBe(maxDinoz);
+		const race = raceList[RaceEnum.MOUEFFE];
+		const shopDinoz = await createTestShopDinoz(user.id, race.raceId);
+		const initialGold = race.price + 500;
+		await prisma.userWallet.update({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			},
+			data: {
+				amount: initialGold
+			}
+		});
+		const cookie = createAuthCookie(server, user);
+		const response = await server.inject({
+			method: 'POST',
+			url: `/api/shop/dinoz/buydinoz/${shopDinoz.id}`,
+			headers: {
+				cookie
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'tooManyActiveDinoz'
+		});
+		/*
+		 * No additional Dinoz.
+		 */
+		expect(
+			await prisma.dinoz.count({
+				where: {
+					userId: user.id
+				}
+			})
+		).toBe(maxDinoz);
+		/*
+		 * Critical assertion:
+		 * Gold debit performed inside the transaction
+		 * must have been rolled back.
+		 */
+		const wallet = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		expect(wallet.amount).toBe(initialGold);
+		/*
+		 * The shop Dinoz must still exist because
+		 * the entire transaction failed.
+		 */
+		const shopDinozAfter = await prisma.userDinozShop.findUnique({
+			where: {
+				id: shopDinoz.id
+			}
+		});
+		expect(shopDinozAfter).not.toBeNull();
+		/*
+		 * Failed purchase must generate no economic
+		 * or Dinoz creation log.
+		 */
+		const logs = await prisma.gameLog.count({
+			where: {
+				userId: user.id,
+				type: {
+					in: [GameLogType.GoldLost, GameLogType.CreateDinoz]
+				}
+			}
+		});
+		expect(logs).toBe(0);
+	});
+
+	it('allows a Leader to buy beyond the normal Dinoz limit', async () => {
+		const user = await createTestUser({
+			name: 'LeaderDinozBuyer'
+		});
+		await prisma.user.update({
+			where: {
+				id: user.id
+			},
+			data: {
+				leader: true
+			}
+		});
+		const normalLimit = getUserMaxDinoz({
+			leader: false,
+			messie: false
+		});
+		const leaderLimit = getUserMaxDinoz({
+			leader: true,
+			messie: false
+		});
+		expect(leaderLimit).toBe(normalLimit + 3);
+		/*
+		 * A normal player would already be full here.
+		 */
+		await createActiveDinoz(user.id, normalLimit);
+		const race = raceList[RaceEnum.MOUEFFE];
+		const shopDinoz = await createTestShopDinoz(user.id, race.raceId);
+		const initialGold = race.price + 500;
+		await prisma.userWallet.update({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			},
+			data: {
+				amount: initialGold
+			}
+		});
+		const cookie = createAuthCookie(server, user);
+		const response = await server.inject({
+			method: 'POST',
+			url: `/api/shop/dinoz/buydinoz/${shopDinoz.id}`,
+			headers: {
+				cookie
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		/*
+		 * The Leader may exceed the normal limit.
+		 */
+		expect(
+			await prisma.dinoz.count({
+				where: {
+					userId: user.id
+				}
+			})
+		).toBe(normalLimit + 1);
+		const wallet = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		expect(wallet.amount).toBe(initialGold - race.price);
+		expect(
+			await prisma.userDinozShop.count({
+				where: {
+					userId: user.id
+				}
+			})
+		).toBe(0);
+	});
+
+	it('combines Leader and Messie Dinoz capacity bonuses', () => {
+		const normalLimit = getUserMaxDinoz({
+			leader: false,
+			messie: false
+		});
+		const leaderLimit = getUserMaxDinoz({
+			leader: true,
+			messie: false
+		});
+		const messieLimit = getUserMaxDinoz({
+			leader: false,
+			messie: true
+		});
+		const combinedLimit = getUserMaxDinoz({
+			leader: true,
+			messie: true
+		});
+		expect(leaderLimit).toBe(normalLimit + 3);
+		expect(messieLimit).toBe(normalLimit + 3);
+		expect(combinedLimit).toBe(normalLimit + 6);
 	});
 });
