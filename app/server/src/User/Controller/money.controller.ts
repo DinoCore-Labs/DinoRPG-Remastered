@@ -1,6 +1,6 @@
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { GameLogType, MoneyType } from '../../../../prisma/index.js';
+import { GameLogType, MoneyType, Prisma } from '../../../../prisma/index.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 
@@ -53,57 +53,50 @@ export async function addTreasureTicket(userId: string, money: number) {
 	});
 }
 
-export async function removeMoney(userId: string, money: number) {
-	const wallet = await prisma.$transaction(async tx => {
-		/*
-		 * Atomic debit:
-		 *
-		 * PostgreSQL only decrements the wallet if the balance is
-		 * still sufficient at the exact moment the UPDATE runs.
-		 *
-		 * This prevents two concurrent requests from spending the
-		 * same gold.
-		 */
-		const result = await tx.userWallet.updateMany({
-			where: {
-				userId,
-				type: MoneyType.GOLD,
-				amount: {
-					gte: money
-				}
-			},
-			data: {
-				amount: {
-					decrement: money
-				}
+export async function removeMoneyTx(tx: Prisma.TransactionClient, userId: string, money: number) {
+	const removedGold = await tx.userWallet.updateMany({
+		where: {
+			userId,
+			type: MoneyType.GOLD,
+			amount: {
+				gte: money
 			}
-		});
-		if (result.count !== 1) {
-			const existingWallet = await tx.userWallet.findUnique({
-				where: {
-					userId_type: {
-						userId,
-						type: MoneyType.GOLD
-					}
-				},
-				select: {
-					id: true
-				}
-			});
-			if (!existingWallet) {
-				throw new Error('Wallet not found');
+		},
+		data: {
+			amount: {
+				decrement: money
 			}
-			throw new ExpectedError('notEnoughMoney');
 		}
-		return tx.userWallet.findUniqueOrThrow({
+	});
+	if (removedGold.count !== 1) {
+		const wallet = await tx.userWallet.findUnique({
 			where: {
 				userId_type: {
 					userId,
 					type: MoneyType.GOLD
 				}
+			},
+			select: {
+				id: true
 			}
 		});
+		if (!wallet) {
+			throw new Error('Wallet not found');
+		}
+		throw new ExpectedError('notEnoughMoney');
+	}
+	return tx.userWallet.findUniqueOrThrow({
+		where: {
+			userId_type: {
+				userId,
+				type: MoneyType.GOLD
+			}
+		}
 	});
+}
+
+export async function removeMoney(userId: string, money: number) {
+	const wallet = await prisma.$transaction(tx => removeMoneyTx(tx, userId, money));
 	safeCreateGameLog({
 		type: GameLogType.GoldLost,
 		userId,
