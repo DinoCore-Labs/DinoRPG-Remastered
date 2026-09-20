@@ -43,6 +43,21 @@ function getForgeShopTestItem() {
 	};
 }
 
+function getMagicShopTestItem() {
+	const shop = shopListV2.MAGIC_SHOP;
+	const item = itemList[Item.BANISHMENT];
+	const soldItem = shop.listItemsSold.find(sold => sold.id === item.itemId);
+	if (!soldItem) {
+		throw new Error('BANISHMENT is expected to be sold in MAGIC_SHOP');
+	}
+	return {
+		shopId: shop.shopId,
+		itemId: item.itemId,
+		price: soldItem.price,
+		maxQuantity: item.maxQuantity
+	};
+}
+
 async function waitForPurchaseLogs(userId: string): Promise<void> {
 	await expect
 		.poll(async () => {
@@ -51,6 +66,21 @@ async function waitForPurchaseLogs(userId: string): Promise<void> {
 					userId,
 					type: {
 						in: [GameLogType.GoldLost, GameLogType.ItemBought]
+					}
+				}
+			});
+		})
+		.toBe(2);
+}
+
+async function waitForMagicPurchaseLogs(userId: string): Promise<void> {
+	await expect
+		.poll(async () => {
+			return prisma.gameLog.count({
+				where: {
+					userId,
+					type: {
+						in: [GameLogType.ItemUsed, GameLogType.ItemBought]
 					}
 				}
 			});
@@ -599,5 +629,218 @@ describe('ShopKeeper inventory capacity', () => {
 			}
 		});
 		expect(purchaseLogCount).toBe(2);
+	});
+});
+
+describe('magic shop purchases', () => {
+	it('buys a magical item using golden napodinos without spending gold', async () => {
+		const user = await createTestUser({
+			name: 'MagicShopBuyer'
+		});
+		await createTestDinoz({
+			userId: user.id,
+			placeId: PlaceEnum.DINOVILLE
+		});
+		const { shopId, itemId, price } = getMagicShopTestItem();
+		const napodinoItemId = itemList[Item.GOLDEN_NAPODINO].itemId;
+		await prisma.userItems.create({
+			data: {
+				userId: user.id,
+				itemId: napodinoItemId,
+				quantity: 5
+			}
+		});
+		const goldBefore = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		const cookie = createAuthCookie(server, user);
+		const response = await server.inject({
+			method: 'PUT',
+			url: `/api/shop/buyitem/${shopId}`,
+			headers: {
+				cookie
+			},
+			payload: {
+				itemId,
+				quantity: 1
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		expect(response.json()).toMatchObject({
+			itemId,
+			quantity: 1
+		});
+		const napodinos = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId: napodinoItemId
+				}
+			}
+		});
+		expect(napodinos.quantity).toBe(5 - price);
+		const magicalItem = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId
+				}
+			}
+		});
+		expect(magicalItem.quantity).toBe(1);
+		const goldAfter = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		expect(goldAfter.amount).toBe(goldBefore.amount);
+		await waitForMagicPurchaseLogs(user.id);
+	});
+
+	it('rejects a magical purchase when the player does not have enough golden napodinos', async () => {
+		const user = await createTestUser({
+			name: 'PoorMagicBuyer'
+		});
+		await createTestDinoz({
+			userId: user.id,
+			placeId: PlaceEnum.DINOVILLE
+		});
+		const { shopId, itemId, price } = getMagicShopTestItem();
+		const napodinoItemId = itemList[Item.GOLDEN_NAPODINO].itemId;
+		const initialNapodinos = price - 1;
+		await prisma.userItems.create({
+			data: {
+				userId: user.id,
+				itemId: napodinoItemId,
+				quantity: initialNapodinos
+			}
+		});
+		const goldBefore = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		const cookie = createAuthCookie(server, user);
+		const response = await server.inject({
+			method: 'PUT',
+			url: `/api/shop/buyitem/${shopId}`,
+			headers: {
+				cookie
+			},
+			payload: {
+				itemId,
+				quantity: 1
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toEqual({
+			error: 'notEnoughItems'
+		});
+		const napodinos = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId: napodinoItemId
+				}
+			}
+		});
+		expect(napodinos.quantity).toBe(initialNapodinos);
+		const magicalItem = await prisma.userItems.findUnique({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId
+				}
+			}
+		});
+		expect(magicalItem).toBeNull();
+		const goldAfter = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		expect(goldAfter.amount).toBe(goldBefore.amount);
+	});
+
+	it('does not increase magical item capacity for a shopkeeper', async () => {
+		const user = await createTestUser({
+			name: 'MagicShopKeeper'
+		});
+		await prisma.user.update({
+			where: {
+				id: user.id
+			},
+			data: {
+				shopKeeper: true
+			}
+		});
+		await createTestDinoz({
+			userId: user.id,
+			placeId: PlaceEnum.DINOVILLE
+		});
+		const { shopId, itemId, price, maxQuantity } = getMagicShopTestItem();
+		const napodinoItemId = itemList[Item.GOLDEN_NAPODINO].itemId;
+		await prisma.userItems.createMany({
+			data: [
+				{
+					userId: user.id,
+					itemId: napodinoItemId,
+					quantity: price + 10
+				},
+				{
+					userId: user.id,
+					itemId,
+					quantity: maxQuantity
+				}
+			]
+		});
+		const cookie = createAuthCookie(server, user);
+		const response = await server.inject({
+			method: 'PUT',
+			url: `/api/shop/buyitem/${shopId}`,
+			headers: {
+				cookie
+			},
+			payload: {
+				itemId,
+				quantity: 1
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toEqual({
+			error: 'maxQuantityInventory'
+		});
+		const magicalItem = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId
+				}
+			}
+		});
+		expect(magicalItem.quantity).toBe(maxQuantity);
+		const napodinos = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId: napodinoItemId
+				}
+			}
+		});
+		expect(napodinos.quantity).toBe(price + 10);
 	});
 });
