@@ -13,9 +13,9 @@ import { addItemToInventory } from '../../Inventory/Controller/addItem.controlle
 import { getItemMaxQuantity } from '../../Inventory/Service/getAllItemsData.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { refreshTutorialProgress } from '../../Tutorial/Controller/tutorial.controller.js';
-import { removeMoney } from '../../User/Controller/money.controller.js';
 import { exchangeFilouIngredients } from '../Controller/exchangeFilou.controller.js';
 import { getUserShopOneItemDataRequest } from '../Controller/getUserShopOneItemData.controller.js';
+import { purchaseItemWithGold } from '../Controller/purchaseItemWithGold.controller.js';
 import { buyMagicItem } from './buyMagicItem.service.js';
 
 type BuyItemParams = {
@@ -120,23 +120,17 @@ export async function buyItemHandler(
 				currentQuantity: itemReference.quantity,
 				log: req.log
 			});
+			await addItemToInventory(userId, itemReference.itemId, quantityBought);
+			// Cas shop classique
+		} else {
+			await purchaseItemWithGold({
+				userId,
+				itemId: itemReference.itemId,
+				quantity: quantityBought,
+				unitPrice: itemReference.price,
+				maxQuantity: itemReference.maxQuantity
+			});
 		}
-		// Cas shop normal
-		else {
-			// Gold check
-			const goldWallet = playerShopData.wallets.find(w => w.type === 'GOLD');
-			const currentGold = goldWallet?.amount ?? 0;
-			if (currentGold < itemReference.price * quantityBought) {
-				throw new ExpectedError('notEnoughMoney');
-			}
-			// Storage check
-			if (itemReference.quantity + quantityBought > itemReference.maxQuantity) {
-				throw new ExpectedError('maxQuantityInventory');
-			}
-			await removeMoney(userId, itemReference.price * quantityBought);
-		}
-		// Ajout item (commun normal/magique)
-		await addItemToInventory(userId, itemReference.itemId, quantityBought);
 		await incrementUserStat(StatTracking.S_BUYER, userId, quantityBought);
 		if (tutorialDinozId !== undefined) {
 			await refreshTutorialProgress({
