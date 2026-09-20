@@ -1,9 +1,11 @@
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
+import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import type { MissionDefinition } from '@dinorpg/core/models/missions/mission.js';
 import type {
 	MissionCollectionKey,
 	MissionEffectKey,
+	MissionIngredientKey,
 	MissionItemKey
 } from '@dinorpg/core/models/missions/missionKey.js';
 import { rewardIdByKey, statTrackingByCollectionKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
@@ -22,6 +24,14 @@ function resolveItemIdFromKey(itemKey: MissionItemKey): number {
 		throw new ExpectedError(`Unknown mission item key "${itemKey}"`);
 	}
 	return item.itemId;
+}
+
+function resolveIngredientIdFromKey(ingredientKey: MissionIngredientKey): number {
+	const ingredient = Object.values(ingredientList).find(entry => entry.name === ingredientKey);
+	if (!ingredient) {
+		throw new ExpectedError(`Unknown mission ingredient key "${ingredientKey}"`);
+	}
+	return ingredient.ingredientId;
 }
 
 function resolveStatusIdFromEffectKey(effectKey: MissionEffectKey): number {
@@ -94,6 +104,37 @@ async function applyMissionItemReward(
 	});
 }
 
+async function applyMissionIngredientReward(
+	tx: MissionTransaction,
+	userId: string,
+	ingredientKey: MissionIngredientKey,
+	quantity: number
+) {
+	if (!Number.isInteger(quantity) || quantity <= 0) {
+		throw new ExpectedError(`Invalid mission ingredient quantity "${quantity}"`);
+	}
+	const ingredientId = resolveIngredientIdFromKey(ingredientKey);
+	await tx.userIngredients.upsert({
+		where: {
+			ingredientId_userId: {
+				ingredientId,
+				userId
+			}
+		},
+		create: {
+			userId,
+			ingredientId,
+			quantity
+		},
+		update: {
+			quantity: {
+				increment: quantity
+			}
+		}
+	});
+	return ingredientId;
+}
+
 async function applyMissionCollectionReward(
 	tx: MissionTransaction,
 	userId: string,
@@ -151,6 +192,11 @@ export async function applyMissionRewards(
 		xp: 0,
 		gold: 0,
 		items: [] as { itemKey: string; itemId: number; quantity: number }[],
+		ingredients: [] as {
+			ingredientKey: string;
+			ingredientId: number;
+			quantity: number;
+		}[],
 		collections: [] as { collectionKey: string; rewardId: number; created: boolean }[],
 		effects: [] as { effectKey: string; statusId: number; action: 'add' | 'remove' }[]
 	};
@@ -212,6 +258,20 @@ export async function applyMissionRewards(
 				});
 				break;
 			}
+			case 'INGREDIENT': {
+				const ingredientId = await applyMissionIngredientReward(
+					tx,
+					dinoz.userId,
+					reward.ingredientKey,
+					reward.quantity
+				);
+				rewardSummary.ingredients.push({
+					ingredientKey: reward.ingredientKey,
+					ingredientId,
+					quantity: reward.quantity
+				});
+				break;
+			}
 			case 'COLLECTION': {
 				const result = await applyMissionCollectionReward(tx, dinoz.userId, reward.collectionKey);
 				if (result.created) {
@@ -247,6 +307,10 @@ export async function applyMissionRewards(
 				});
 				break;
 			}
+			case 'USER_VAR':
+				throw new ExpectedError('Mission reward type "USER_VAR" is not implemented yet');
+			case 'GAME_VAR':
+				throw new ExpectedError('Mission reward type "GAME_VAR" is not implemented yet');
 			default: {
 				throw new ExpectedError(`Unsupported mission reward type "${(reward as { type: string }).type}"`);
 			}
