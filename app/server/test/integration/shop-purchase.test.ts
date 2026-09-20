@@ -442,6 +442,111 @@ describe('shop purchases', () => {
 			})
 			.toBe(2);
 	});
+
+	it('atomically prevents concurrent purchases from exceeding the inventory limit', async () => {
+		const user = await createTestUser({
+			name: 'ConcurrentInventoryBuyer'
+		});
+		const { shopId, itemId, price, maxQuantity } = getFlyingShopTestItem();
+		/*
+		 * Enough Gold for TWO purchases.
+		 *
+		 * Gold must therefore NOT be the reason
+		 * the second request fails.
+		 */
+		const initialGold = price * 2;
+		await prisma.userWallet.update({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			},
+			data: {
+				amount: initialGold
+			}
+		});
+		/*
+		 * Only ONE inventory slot remains.
+		 */
+		await prisma.userItems.create({
+			data: {
+				userId: user.id,
+				itemId,
+				quantity: maxQuantity - 1
+			}
+		});
+		const cookie = createAuthCookie(server, user);
+		const [firstResponse, secondResponse] = await Promise.all([
+			server.inject({
+				method: 'PUT',
+				url: `/api/shop/buyitem/${shopId}`,
+				headers: {
+					cookie
+				},
+				payload: {
+					itemId,
+					quantity: 1
+				}
+			}),
+			server.inject({
+				method: 'PUT',
+				url: `/api/shop/buyitem/${shopId}`,
+				headers: {
+					cookie
+				},
+				payload: {
+					itemId,
+					quantity: 1
+				}
+			})
+		]);
+		const responses = [firstResponse, secondResponse];
+		const successfulResponses = responses.filter(response => response.statusCode === 200);
+		const rejectedResponses = responses.filter(response => response.statusCode === 400);
+		expect(successfulResponses).toHaveLength(1);
+		expect(rejectedResponses).toHaveLength(1);
+		expect(rejectedResponses[0].json()).toEqual({
+			error: 'maxQuantityInventory'
+		});
+		const inventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId
+				}
+			}
+		});
+		expect(inventory.quantity).toBe(maxQuantity);
+		/*
+		 * The failed second transaction rolled
+		 * its Gold debit back.
+		 */
+		const wallet = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		expect(wallet.amount).toBe(initialGold - price);
+		/*
+		 * Exactly ONE successful purchase.
+		 */
+		await expect
+			.poll(async () => {
+				return prisma.gameLog.count({
+					where: {
+						userId: user.id,
+						type: {
+							in: [GameLogType.GoldLost, GameLogType.ItemBought]
+						}
+					}
+				});
+			})
+			.toBe(2);
+	});
 });
 
 describe('location-restricted shop purchases', () => {
