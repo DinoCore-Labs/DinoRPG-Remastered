@@ -214,6 +214,11 @@ function assertMissionGoalCanBeUsedAtPlace(goal: MissionGoal, placeId: number) {
 				throw new ExpectedError(`Mission action is not available at place "${placeId}".`);
 			}
 			break;
+		case 'FIGHT_ACTION':
+			if (goal.fightAction.place != null && goal.fightAction.place !== placeId) {
+				throw new ExpectedError(`Mission action is not available at place "${placeId}".`);
+			}
+			break;
 	}
 }
 
