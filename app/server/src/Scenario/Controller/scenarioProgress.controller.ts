@@ -69,11 +69,18 @@ export async function incrementUserScenarioProgression(
 		delta: number;
 	}
 ) {
-	const current = await getUserScenarioProgression(tx, input.userId, input.scenarioKey);
-	return setUserScenarioProgression(tx, {
-		userId: input.userId,
-		scenarioKey: input.scenarioKey,
-		progression: current.progression + input.delta,
-		tracking: current.tracking
+	return tx.userScenario.upsert({
+		where: getUserScenarioWhere(input.userId, input.scenarioKey),
+		create: {
+			userId: input.userId,
+			scenarioKey: input.scenarioKey,
+			progression: input.delta,
+			tracking: 0
+		},
+		update: {
+			progression: {
+				increment: input.delta
+			}
+		}
 	});
 }
