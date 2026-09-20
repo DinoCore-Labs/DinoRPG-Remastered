@@ -1015,4 +1015,105 @@ describe('Filou shop exchanges', () => {
 		});
 		expect(ticketWalletAfter.amount).toBe(ticketWalletBefore.amount);
 	});
+
+	it('prevents concurrent exchanges from spending the same ingredients twice', async () => {
+		const user = await createTestUser({
+			name: 'ConcurrentFilouBuyer'
+		});
+		await createTestDinoz({
+			userId: user.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const { shopId, ingredientId, exchangeRate } = getFilouTestIngredient();
+		/*
+		 * Exactly enough ingredients for ONE ticket.
+		 */
+		await prisma.userIngredients.create({
+			data: {
+				userId: user.id,
+				ingredientId,
+				quantity: exchangeRate
+			}
+		});
+		const ticketWalletBefore = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'TREASURE_TICKET'
+				}
+			}
+		});
+		const cookie = createAuthCookie(server, user);
+		/*
+		 * Two requests hit the server at the same time.
+		 *
+		 * There are only enough ingredients for one.
+		 */
+		const [firstResponse, secondResponse] = await Promise.all([
+			server.inject({
+				method: 'PUT',
+				url: `/api/shop/buyitem/${shopId}`,
+				headers: {
+					cookie
+				},
+				payload: {
+					itemId: ingredientId,
+					quantity: 1
+				}
+			}),
+			server.inject({
+				method: 'PUT',
+				url: `/api/shop/buyitem/${shopId}`,
+				headers: {
+					cookie
+				},
+				payload: {
+					itemId: ingredientId,
+					quantity: 1
+				}
+			})
+		]);
+		const responses = [firstResponse, secondResponse];
+		const successfulResponses = responses.filter(response => response.statusCode === 200);
+		const rejectedResponses = responses.filter(response => response.statusCode === 400);
+		expect(successfulResponses).toHaveLength(1);
+		expect(rejectedResponses).toHaveLength(1);
+		expect(rejectedResponses[0].json()).toEqual({
+			error: 'notEnoughIngredients'
+		});
+		/*
+		 * Ingredients must have been consumed exactly once.
+		 */
+		const ingredientAfter = await prisma.userIngredients.findUniqueOrThrow({
+			where: {
+				ingredientId_userId: {
+					userId: user.id,
+					ingredientId
+				}
+			}
+		});
+		expect(ingredientAfter.quantity).toBe(0);
+		/*
+		 * And exactly ONE ticket must have been credited.
+		 */
+		const ticketWalletAfter = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'TREASURE_TICKET'
+				}
+			}
+		});
+		expect(ticketWalletAfter.amount).toBe(ticketWalletBefore.amount + 1);
+		await expect
+			.poll(async () => {
+				return prisma.gameLog.count({
+					where: {
+						userId: user.id,
+						type: GameLogType.IngredientSold
+					}
+				});
+			})
+			.toBe(1);
+	});
 });

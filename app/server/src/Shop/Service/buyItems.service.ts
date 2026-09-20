@@ -1,4 +1,3 @@
-import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
@@ -10,12 +9,12 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { GameLogType } from '../../../../prisma/index.js';
 import { checkDinozPlace } from '../../Dinoz/Service/checkDinozPlace.service.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
-import { decreaseIngredientQuantity } from '../../Inventory/Controller/addIngredient.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { getItemMaxQuantity } from '../../Inventory/Service/getAllItemsData.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { refreshTutorialProgress } from '../../Tutorial/Controller/tutorial.controller.js';
-import { addTreasureTicket, removeMoney } from '../../User/Controller/money.controller.js';
+import { removeMoney } from '../../User/Controller/money.controller.js';
+import { exchangeFilouIngredients } from '../Controller/exchangeFilou.controller.js';
 import { getUserShopOneItemDataRequest } from '../Controller/getUserShopOneItemData.controller.js';
 import { buyMagicItem } from './buyMagicItem.service.js';
 
@@ -58,16 +57,12 @@ export async function buyItemHandler(
 		if (theShop.type === ShopType.FILOU) {
 			const ingredientId = itemSold.id;
 			const ingredientQuantityUsed = itemSold.price * quantityBought;
-			const playerIngredient = playerShopData.ingredients.find(ingredient => ingredient.ingredientId === ingredientId);
-			const currentIngredientQuantity = playerIngredient?.quantity ?? 0;
-			if (currentIngredientQuantity < ingredientQuantityUsed) {
-				throw new ExpectedError('notEnoughIngredients');
-			}
-			const ticketWallet = playerShopData.wallets.find(wallet => wallet.type === 'TREASURE_TICKET');
-			const before = ticketWallet?.amount ?? 0;
-			const after = before + quantityBought;
-			await decreaseIngredientQuantity(userId, ingredientId, ingredientQuantityUsed);
-			await addTreasureTicket(userId, quantityBought);
+			const exchange = await exchangeFilouIngredients({
+				userId,
+				ingredientId,
+				ingredientQuantity: ingredientQuantityUsed,
+				ticketQuantity: quantityBought
+			});
 			await incrementUserStat(StatTracking.S_BUYER, userId, quantityBought);
 			if (tutorialDinozId !== undefined) {
 				await refreshTutorialProgress({
@@ -79,27 +74,27 @@ export async function buyItemHandler(
 				{
 					type: GameLogType.IngredientSold,
 					userId,
-					values: [String(ingredientQuantityUsed), String(ingredientId), String(quantityBought)],
+					values: [String(exchange.ingredientQuantityUsed), String(ingredientId), String(exchange.ticketQuantity)],
 					metadata: {
 						ingredientId,
-						ingredientQuantity: ingredientQuantityUsed,
+						ingredientQuantity: exchange.ingredientQuantityUsed,
 						shopId: theShop.shopId,
 						shopType: theShop.type,
 						reason: 'FILOU_SHOP_EXCHANGE',
 						wallet: 'TREASURE_TICKET',
-						treasureTicketQuantity: quantityBought,
-						treasureTicketBefore: before,
-						treasureTicketAfter: after,
+						treasureTicketQuantity: exchange.ticketQuantity,
+						treasureTicketBefore: exchange.ticketBefore,
+						treasureTicketAfter: exchange.ticketAfter,
 						unitPrice: itemSold.price,
-						totalPrice: ingredientQuantityUsed
+						totalPrice: exchange.ingredientQuantityUsed
 					}
 				},
 				req.log
 			);
 			return reply.status(200).send({
 				wallet: 'TREASURE_TICKET',
-				quantity: quantityBought,
-				total: after
+				quantity: exchange.ticketQuantity,
+				total: exchange.ticketAfter
 			});
 		}
 		// Récup item référence
