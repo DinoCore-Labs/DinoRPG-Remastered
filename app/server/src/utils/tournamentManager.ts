@@ -6,21 +6,15 @@
  * Copyright in the original contributions remains with the respective
  * authors and contributors.
  *
- * Modified by DinoRPG Remastered contributors on 2026-08-31.
+ * Modified by DinoRPG Remastered contributors from 2026-08-31 through 2026-09-20.
  * See NOTICE.md and the Git history for provenance and modification details.
  *
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
 import { Language } from '@dinorpg/core/models/config/language.js';
-import {
-	FINAL_BRACKET_SIZE,
-	POOL_COUNT,
-	POOL_LOSS_COUNT,
-	POOL_SIZE,
-	POOL_WIN_COUNT
-} from '@dinorpg/core/models/dojo/constants.js';
-import { formatName, formatTID } from '@dinorpg/core/models/dojo/teamFormat.js';
+import { POOL_COUNT, POOL_LOSS_COUNT, POOL_SIZE, POOL_WIN_COUNT } from '@dinorpg/core/models/dojo/constants.js';
+import { COMMON_TOURNAMENT_RACES, RARE_TOURNAMENT_RACES } from '@dinorpg/core/models/dojo/teamFormat.js';
 import {
 	type MetaData,
 	type RawTournamentMatch,
@@ -30,6 +24,7 @@ import {
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { RewardEnum } from '@dinorpg/core/models/enums/Parser.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { RaceEnum } from '@dinorpg/core/models/enums/Race.js';
 import { FightOutcome } from '@dinorpg/core/models/fight/fightResult.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { NewsType } from '@dinorpg/core/models/news/news.js';
@@ -45,6 +40,37 @@ import { newNotif } from '../Notification/Service/notification.service.js';
 import { prisma } from '../prisma.js';
 import { addMoney } from '../User/Controller/money.controller.js';
 import type { FightRules } from '../utils/fight/fight.mapper.js';
+
+export function generateTournamentFormat(): {
+	teamSize: number;
+	raceMinimum: number;
+	teamRace: RaceEnum[];
+} {
+	const teamSize = Math.floor(Math.random() * 5) + 2;
+	const raceMinimum = teamSize;
+
+	const minRaces = 1.5 * teamSize;
+	const maxRaces = 4 * teamSize;
+	const totalAllowedRacesCount = Math.floor(Math.random() * (maxRaces - minRaces + 1)) + minRaces;
+
+	// races are selected randomly from the common pool first, then from the remaining common and rare pool
+	const shuffledCommon = [...COMMON_TOURNAMENT_RACES].sort(() => Math.random() - 0.5);
+	const selectedCommon = shuffledCommon.slice(0, teamSize);
+
+	const remainingCommon = shuffledCommon.slice(teamSize);
+	const remainingPool = [...remainingCommon, ...RARE_TOURNAMENT_RACES].sort(() => Math.random() - 0.5);
+
+	const remainingCountToSelect = totalAllowedRacesCount - teamSize;
+	const selectedRemaining = remainingPool.slice(0, remainingCountToSelect);
+
+	const selectedRaces = [...selectedCommon, ...selectedRemaining].sort((a, b) => a - b);
+
+	return {
+		teamSize,
+		raceMinimum,
+		teamRace: selectedRaces
+	};
+}
 
 // ---------------------------------------------------------------------------
 // Job keys
@@ -242,18 +268,18 @@ export class TournamentManager {
 		const now = new Date();
 		const qualificationEnd = new Date(now.getTime() + 7 * 24 * 3600 * 1000);
 
-		//fixed FFA format for now.
-		const format = formatTID[formatName.FFA];
+		const { teamSize, raceMinimum, teamRace } = generateTournamentFormat();
 
 		const itemsAllowed = Math.random() < 0.5;
 		const poison = Math.random() < 0.5;
 		const tournament = await prismaClient.tournament.create({
 			data: {
 				date: now,
-				levelLimit: 35,
-				raceMinimum: format.raceMinimum,
-				teamRace: format.teamRace.join(','),
-				teamSize: format.teamSize || 4,
+				formatName: 'custom',
+				levelLimit: 50,
+				raceMinimum,
+				teamRace: teamRace.join(','),
+				teamSize,
 				cashPrice: 0,
 				poison,
 				itemsAllowed,
@@ -282,7 +308,7 @@ export class TournamentManager {
 		// Paramètres dynamiques injectés dans la traduction
 		const params = JSON.stringify({
 			edition: tournament.id, // Ou dynamique selon l'ID
-			formatName: format.name,
+			formatName: tournament.formatName,
 			endDate: qualificationEnd.toISOString(),
 			teamSize: tournament.teamSize,
 			raceMinimum: tournament.raceMinimum,
