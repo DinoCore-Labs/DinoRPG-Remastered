@@ -2,7 +2,6 @@ import { ConditionsContext } from '@dinorpg/core/models/conditions/conditionsCon
 import { ConditionKeyMaps } from '@dinorpg/core/models/conditions/defaultConditionKeyMaps.js';
 import { dinozStatusKeyById } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
-import { tr } from 'zod/locales';
 
 import { UserForConditionCheck } from '../user/userConditionCheck.js';
 
@@ -11,23 +10,19 @@ export type BuildConditionContextOptions = {
 	dialogSeed?: number;
 	sessionTags?: string[];
 	currentTab?: string;
-
 	activeFeatures?: string[];
 	activeEvent?: string;
 	activePromo?: string;
 	activeWar?: string;
 	activeConfigs?: string[];
-
 	completedDungeonKeys?: string[];
 	completedClanActionKeys?: string[];
 	canFightMonsterKeys?: string[];
-
 	rockDirectionIndex?: number;
 };
 
 function mapIdsToKeys(ids: number[], map?: Partial<Record<number, string>>): Set<string> {
 	if (!map) return new Set();
-
 	return new Set(ids.map(id => map[id]).filter((value): value is string => Boolean(value)));
 }
 
@@ -35,17 +30,14 @@ function recordValue(
 	source: Record<string, number> | { key: string; value: number }[] | undefined
 ): Record<string, number> {
 	if (!source) return {};
-
 	if (Array.isArray(source)) {
 		return Object.fromEntries(source.map(entry => [entry.key, entry.value]));
 	}
-
 	return source;
 }
 
 function trackingToRecord(source: { stat: string; quantity: number }[] | undefined): Record<string, number> {
 	if (!source) return {};
-
 	return Object.fromEntries(source.map(entry => [entry.stat, entry.quantity]));
 }
 
@@ -56,38 +48,32 @@ export function buildConditionContext(
 	options: BuildConditionContextOptions = {}
 ): ConditionsContext {
 	const activeDinoz = player.dinoz.find(dinoz => dinoz.id === activeDinozId);
-
 	if (!activeDinoz) {
 		throw new ExpectedError(`No dinoz ${activeDinozId} found for condition context.`);
 	}
-
 	const statusIds = new Set(activeDinoz.status.map(status => status.statusId));
+	const allDinozStatusIds = new Set(player.dinoz.flatMap(dinoz => dinoz.status.map(status => status.statusId)));
 	const effectKeys = new Set(
 		Array.from(statusIds)
 			.map(id => dinozStatusKeyById[id])
 			.filter((value): value is string => Boolean(value))
 	);
-
 	const skillKeys = mapIdsToKeys(
 		activeDinoz.skills.map(skill => skill.skillId),
 		maps.skillKeyById
 	);
-
 	const equipKeys = mapIdsToKeys(
 		activeDinoz.items.map(item => item.itemId),
 		maps.itemKeyById
 	);
-
 	const objectKeys = mapIdsToKeys(
 		[...player.items.map(item => item.itemId), ...player.dinoz.flatMap(dinoz => dinoz.items.map(item => item.itemId))],
 		maps.itemKeyById
 	);
-
 	const collectionKeys = mapIdsToKeys(
 		player.rewards.map(reward => reward.rewardId),
 		maps.rewardKeyById
 	);
-
 	const ingredientQuantities = Object.fromEntries(
 		(player.ingredients ?? [])
 			.map(ingredient => {
@@ -96,7 +82,6 @@ export function buildConditionContext(
 			})
 			.filter((entry): entry is readonly [string, number] => Boolean(entry))
 	);
-
 	const scenarios = Object.fromEntries(
 		(player.scenarios ?? []).map(scenario => [
 			scenario.scenarioKey,
@@ -107,27 +92,21 @@ export function buildConditionContext(
 			}
 		])
 	);
-
 	const dinozMissions = activeDinoz.missions ?? [];
-
 	const currentMission = dinozMissions.find(mission => !mission.isCompleted);
-
 	const finishedMissionKeys = new Set(
 		dinozMissions
 			.filter(mission => mission.isCompleted)
 			.map(mission => mission.missionKey)
 			.filter((value): value is string => Boolean(value))
 	);
-
 	return {
 		now: options.now ?? new Date(),
-
 		session: {
 			dialogSeed: options.dialogSeed ?? 0,
 			tags: new Set(options.sessionTags ?? player.sessionTags ?? []),
 			currentTab: options.currentTab ?? player.currentTab
 		},
-
 		dinoz: {
 			id: activeDinoz.id,
 			userId: player.id,
@@ -141,7 +120,6 @@ export function buildConditionContext(
 			raceKey: maps.getRaceKey?.(activeDinoz.raceId),
 			friendKey: maps.getFriendKey?.(activeDinoz.friendId) ?? null
 		},
-
 		user: {
 			id: player.id,
 			isAdmin: player.isAdmin ?? false,
@@ -149,18 +127,17 @@ export function buildConditionContext(
 			ingredientQuantities,
 			collectionKeys,
 			scenarios,
+			allDinozStatusIds,
 			uvars: trackingToRecord(player.tracking),
 			gvars: recordValue(player.gvars),
 			dinozCount: player.ranking?.dinozCount ?? player.dinoz.length,
 			points: player.ranking?.points ?? 0
 		},
-
 		missions: {
 			currentMissionKey: currentMission?.missionKey,
 			currentMissionStep: currentMission?.progression,
 			finishedMissionKeys
 		},
-
 		world: {
 			activeFeatures: new Set((options.activeFeatures ?? []).map(value => value.toLowerCase())),
 			activeEvent: options.activeEvent,
