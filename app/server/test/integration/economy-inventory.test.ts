@@ -142,7 +142,9 @@ describe('economy', () => {
 				amount: 2
 			}
 		});
-		await expect(removeTreasureTicket(user.id, 3)).rejects.toThrow('Not enough treasure tickets');
+		await expect(removeTreasureTicket(user.id, 3)).rejects.toMatchObject({
+			code: 'notEnoughMoney'
+		});
 		const wallet = await prisma.userWallet.findUniqueOrThrow({
 			where: {
 				userId_type: {
