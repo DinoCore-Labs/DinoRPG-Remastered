@@ -643,4 +643,71 @@ describe('Dinoz shop lifecycle', () => {
 		});
 		expect(wallet.amount).toBe(initialGold - selectedRace.price);
 	});
+
+	it('generates the Dinoz shop only once when opened concurrently', async () => {
+		const user = await createTestUser({
+			name: 'ConcurrentDinozShopViewer'
+		});
+		const cookie = createAuthCookie(server, user);
+		/*
+		 * Several browser requests arrive while
+		 * the shop is still empty.
+		 *
+		 * Using more than two requests makes the
+		 * concurrency scenario a little stronger.
+		 */
+		const responses = await Promise.all(
+			Array.from({ length: 5 }, () =>
+				server.inject({
+					method: 'GET',
+					url: '/api/shop/dinoz',
+					headers: {
+						cookie
+					}
+				})
+			)
+		);
+		for (const response of responses) {
+			expect(response.statusCode).toBe(200);
+		}
+		const shops = responses.map(response => response.json() as DinozShopEntry[]);
+		/*
+		 * Every request receives exactly one
+		 * complete shop.
+		 */
+		for (const shop of shops) {
+			expect(shop).toHaveLength(gameConfig.shop.dinozNumber);
+		}
+		const firstShop = shops[0];
+		if (!firstShop) {
+			throw new Error('Expected at least one Dinoz shop response');
+		}
+		/*
+		 * All concurrent callers must receive
+		 * the exact same persisted selection.
+		 */
+		for (const shop of shops.slice(1)) {
+			expect(shop).toEqual(firstShop);
+		}
+		/*
+		 * Most important assertion:
+		 *
+		 * 5 concurrent requests must NOT produce
+		 * 5 × 30 database rows.
+		 */
+		const databaseShop = await prisma.userDinozShop.findMany({
+			where: {
+				userId: user.id
+			},
+			orderBy: {
+				id: 'asc'
+			}
+		});
+		expect(databaseShop).toHaveLength(gameConfig.shop.dinozNumber);
+		/*
+		 * Responses correspond exactly to what
+		 * PostgreSQL persisted.
+		 */
+		expect(firstShop.map(dinoz => dinoz.id)).toEqual(databaseShop.map(dinoz => dinoz.id.toString()));
+	});
 });

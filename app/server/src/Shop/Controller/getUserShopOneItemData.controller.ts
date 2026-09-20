@@ -40,6 +40,5 @@ export async function getUserShopOneItemDataRequest(userId: string, itemId: numb
 			rewards: true
 		}
 	});
-
 	return user;
 }
