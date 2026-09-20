@@ -217,7 +217,7 @@ export async function applyMissionRewards(
 				if (result.created) {
 					const statTracking = statTrackingByCollectionKey[reward.collectionKey];
 					if (statTracking !== undefined) {
-						await incrementUserStat(statTracking, dinoz.userId, 1);
+						await incrementUserStat(statTracking, dinoz.userId, 1, tx);
 					}
 				}
 				rewardSummary.collections.push({
@@ -229,7 +229,7 @@ export async function applyMissionRewards(
 			}
 			case 'EFFECT': {
 				const statusId = resolveStatusIdFromEffectKey(reward.effectKey);
-				await addStatusToDinoz(params.dinozId, statusId);
+				await addStatusToDinoz(params.dinozId, statusId, tx);
 				rewardSummary.effects.push({
 					effectKey: reward.effectKey,
 					statusId,
@@ -239,7 +239,7 @@ export async function applyMissionRewards(
 			}
 			case 'REMOVE_EFFECT': {
 				const statusId = resolveStatusIdFromEffectKey(reward.effectKey);
-				await removeStatusFromDinoz(params.dinozId, statusId);
+				await removeStatusFromDinoz(params.dinozId, statusId, tx);
 				rewardSummary.effects.push({
 					effectKey: reward.effectKey,
 					statusId,
