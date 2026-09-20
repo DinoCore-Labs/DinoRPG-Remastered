@@ -94,7 +94,7 @@ jobs:
         run: pnpm install
 
       - name: Run integration tests
-        run: pnpm --filter @dinorpg/server test:integration:ci
+        run: pnpm test:integration:ci
 
   e2e-tests:
     name: E2E Tests
