@@ -9,14 +9,13 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { GameLogType } from '../../../../prisma/index.js';
 import { checkDinozPlace } from '../../Dinoz/Service/checkDinozPlace.service.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
-import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { getItemMaxQuantity } from '../../Inventory/Service/getAllItemsData.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { refreshTutorialProgress } from '../../Tutorial/Controller/tutorial.controller.js';
 import { exchangeFilouIngredients } from '../Controller/exchangeFilou.controller.js';
 import { getUserShopOneItemDataRequest } from '../Controller/getUserShopOneItemData.controller.js';
 import { purchaseItemWithGold } from '../Controller/purchaseItemWithGold.controller.js';
-import { buyMagicItem } from './buyMagicItem.service.js';
+import { purchaseMagicItemWithNapo } from '../Controller/purchaseMagicItemWithNapo.controller.js';
 
 type BuyItemParams = {
 	shopId: string;
@@ -44,7 +43,6 @@ export async function buyItemHandler(
 		const playerShopData = await getUserShopOneItemDataRequest(userId, itemId);
 		if (!playerShopData) throw new ExpectedError(`Player ${userId} doesn't exist.`);
 		const tutorialDinozId = playerShopData.dinoz[0]?.id;
-		const playerItemData = playerShopData.items.find(i => i.itemId === itemId);
 		if (quantityBought <= 0) {
 			throw new ExpectedError('Wrong quantity');
 		}
@@ -107,20 +105,16 @@ export async function buyItemHandler(
 			playerShopData.merchant && theShop.shopId === shopListV2.FLYING_SHOP.shopId
 				? Math.round(itemSold.price * 0.9)
 				: itemSold.price;
-		itemReference.quantity = playerItemData ? playerItemData.quantity : 0;
 		// ShopKeeper : +50% hors MAGICAL
 		itemReference.maxQuantity = getItemMaxQuantity(playerShopData, itemReference);
 		// Cas boutique magique
 		if (theShop.type === ShopType.MAGICAL) {
-			await buyMagicItem({
+			await purchaseMagicItemWithNapo({
 				userId,
-				playerItems: playerShopData.items,
 				itemReference,
 				quantityBought,
-				currentQuantity: itemReference.quantity,
 				log: req.log
 			});
-			await addItemToInventory(userId, itemReference.itemId, quantityBought);
 			// Cas shop classique
 		} else {
 			await purchaseItemWithGold({
