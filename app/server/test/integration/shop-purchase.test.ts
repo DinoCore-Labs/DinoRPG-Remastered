@@ -1056,6 +1056,116 @@ describe('magic shop purchases', () => {
 		});
 		expect(napodinos.quantity).toBe(price + 10);
 	});
+
+	it('atomically prevents concurrent magical purchases from exceeding the inventory limit', async () => {
+		const user = await createTestUser({
+			name: 'ConcurrentMagicBuyer'
+		});
+		await createTestDinoz({
+			userId: user.id,
+			placeId: PlaceEnum.DINOVILLE
+		});
+		const { shopId, itemId, price, maxQuantity } = getMagicShopTestItem();
+		const napodinoItemId = itemList[Item.GOLDEN_NAPODINO].itemId;
+		/*
+		 * Enough currency for TWO purchases.
+		 *
+		 * The second request must therefore fail because
+		 * of inventory capacity, not because of currency.
+		 */
+		const initialNapodinos = price * 2;
+		await prisma.userItems.createMany({
+			data: [
+				{
+					userId: user.id,
+					itemId: napodinoItemId,
+					quantity: initialNapodinos
+				},
+				{
+					userId: user.id,
+					itemId,
+					quantity: maxQuantity - 1
+				}
+			]
+		});
+		const cookie = createAuthCookie(server, user);
+		const [firstResponse, secondResponse] = await Promise.all([
+			server.inject({
+				method: 'PUT',
+				url: `/api/shop/buyitem/${shopId}`,
+				headers: {
+					cookie
+				},
+				payload: {
+					itemId,
+					quantity: 1
+				}
+			}),
+			server.inject({
+				method: 'PUT',
+				url: `/api/shop/buyitem/${shopId}`,
+				headers: {
+					cookie
+				},
+				payload: {
+					itemId,
+					quantity: 1
+				}
+			})
+		]);
+		const responses = [firstResponse, secondResponse];
+		const successfulResponses = responses.filter(response => response.statusCode === 200);
+		const rejectedResponses = responses.filter(response => response.statusCode === 400);
+		expect(successfulResponses).toHaveLength(1);
+		expect(rejectedResponses).toHaveLength(1);
+		expect(rejectedResponses[0].json()).toEqual({
+			error: 'maxQuantityInventory'
+		});
+		/*
+		 * Exactly ONE magical item was purchased.
+		 */
+		const magicalItem = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId
+				}
+			}
+		});
+		expect(magicalItem.quantity).toBe(maxQuantity);
+		/*
+		 * The rejected transaction rolled back its payment.
+		 *
+		 * Only ONE purchase price was consumed.
+		 */
+		const napodinos = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId: napodinoItemId
+				}
+			}
+		});
+		expect(napodinos.quantity).toBe(initialNapodinos - price);
+		/*
+		 * Only the successful transaction generates:
+		 *
+		 * - ItemUsed      (Golden Napodino)
+		 * - ItemBought    (magical item)
+		 */
+		await expect
+			.poll(async () => {
+				return prisma.gameLog.count({
+					where: {
+						userId: user.id,
+						type: {
+							in: [GameLogType.ItemUsed, GameLogType.ItemBought]
+						}
+					}
+				});
+			})
+			.toBe(2);
+	});
 });
 
 describe('Filou shop exchanges', () => {
