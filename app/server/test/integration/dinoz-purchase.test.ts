@@ -2,10 +2,12 @@ import { raceList } from '@dinorpg/core/models/dinoz/raceList.js';
 import { RaceEnum } from '@dinorpg/core/models/enums/Race.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { skillList } from '@dinorpg/core/models/skills/skillList.js';
+import { getRace } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { GameLogType } from '../../../prisma/index.js';
+import gameConfig from '../../src/config/game.config.js';
 import { getUserMaxDinoz } from '../../src/Dinoz/Controller/getActiveDinoz.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
@@ -15,6 +17,12 @@ import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
 import { createTestUser } from '../helpers/factories/user.factory.js';
 
 let server: FastifyInstance;
+
+type DinozShopEntry = {
+	id: string;
+	race: number;
+	display: string;
+};
 
 async function createTestShopDinoz(userId: string, raceId = RaceEnum.MOUEFFE) {
 	const race = raceList[raceId];
@@ -479,5 +487,160 @@ describe('Dinoz shop purchases', () => {
 		expect(leaderLimit).toBe(normalLimit + 3);
 		expect(messieLimit).toBe(normalLimit + 3);
 		expect(combinedLimit).toBe(normalLimit + 6);
+	});
+});
+
+describe('Dinoz shop lifecycle', () => {
+	it('keeps the same Dinoz selection until a purchase is made', async () => {
+		const user = await createTestUser({
+			name: 'StableDinozShopBuyer'
+		});
+		const cookie = createAuthCookie(server, user);
+		const firstResponse = await server.inject({
+			method: 'GET',
+			url: '/api/shop/dinoz',
+			headers: {
+				cookie
+			}
+		});
+		expect(firstResponse.statusCode).toBe(200);
+		const firstShop = firstResponse.json() as DinozShopEntry[];
+		expect(firstShop).toHaveLength(gameConfig.shop.dinozNumber);
+		expect(
+			await prisma.userDinozShop.count({
+				where: {
+					userId: user.id
+				}
+			})
+		).toBe(gameConfig.shop.dinozNumber);
+		/*
+		 * Opening the shop again must NOT reroll it.
+		 */
+		const secondResponse = await server.inject({
+			method: 'GET',
+			url: '/api/shop/dinoz',
+			headers: {
+				cookie
+			}
+		});
+		expect(secondResponse.statusCode).toBe(200);
+		const secondShop = secondResponse.json() as DinozShopEntry[];
+		expect(secondShop).toEqual(firstShop);
+		expect(
+			await prisma.userDinozShop.count({
+				where: {
+					userId: user.id
+				}
+			})
+		).toBe(gameConfig.shop.dinozNumber);
+	});
+
+	it('generates a completely new Dinoz shop after a purchase', async () => {
+		const user = await createTestUser({
+			name: 'RefreshingDinozShopBuyer'
+		});
+		const cookie = createAuthCookie(server, user);
+		/*
+		 * First opening generates the shop.
+		 */
+		const initialResponse = await server.inject({
+			method: 'GET',
+			url: '/api/shop/dinoz',
+			headers: {
+				cookie
+			}
+		});
+		expect(initialResponse.statusCode).toBe(200);
+		const initialShop = initialResponse.json() as DinozShopEntry[];
+		expect(initialShop).toHaveLength(gameConfig.shop.dinozNumber);
+		const selectedDinoz = initialShop[0];
+		expect(selectedDinoz).toBeDefined();
+		if (!selectedDinoz) {
+			throw new Error('Dinoz shop is unexpectedly empty');
+		}
+		const selectedRace = getRace(selectedDinoz.race);
+		const initialGold = selectedRace.price + 500;
+		await prisma.userWallet.update({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			},
+			data: {
+				amount: initialGold
+			}
+		});
+		/*
+		 * Buy one candidate.
+		 */
+		const buyResponse = await server.inject({
+			method: 'POST',
+			url: `/api/shop/dinoz/buydinoz/${selectedDinoz.id}`,
+			headers: {
+				cookie
+			}
+		});
+		expect(buyResponse.statusCode).toBe(200);
+		/*
+		 * Successful purchase clears ALL previous
+		 * shop candidates.
+		 */
+		expect(
+			await prisma.userDinozShop.count({
+				where: {
+					userId: user.id
+				}
+			})
+		).toBe(0);
+		/*
+		 * Make sure the selected candidate became
+		 * a real Dinoz belonging to the player.
+		 */
+		const purchasedDinoz = await prisma.dinoz.findFirstOrThrow({
+			where: {
+				userId: user.id,
+				display: selectedDinoz.display
+			}
+		});
+		expect(purchasedDinoz.raceId).toBe(selectedDinoz.race);
+		/*
+		 * Opening the shop again must generate
+		 * a complete new selection.
+		 */
+		const refreshedResponse = await server.inject({
+			method: 'GET',
+			url: '/api/shop/dinoz',
+			headers: {
+				cookie
+			}
+		});
+		expect(refreshedResponse.statusCode).toBe(200);
+		const refreshedShop = refreshedResponse.json() as DinozShopEntry[];
+		expect(refreshedShop).toHaveLength(gameConfig.shop.dinozNumber);
+		expect(
+			await prisma.userDinozShop.count({
+				where: {
+					userId: user.id
+				}
+			})
+		).toBe(gameConfig.shop.dinozNumber);
+		/*
+		 * None of the old database entries may survive.
+		 */
+		const initialIds = new Set(initialShop.map(dinoz => dinoz.id));
+		expect(refreshedShop.every(dinoz => !initialIds.has(dinoz.id))).toBe(true);
+		/*
+		 * Wallet charged exactly once.
+		 */
+		const wallet = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		expect(wallet.amount).toBe(initialGold - selectedRace.price);
 	});
 });
