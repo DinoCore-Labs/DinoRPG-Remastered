@@ -1,6 +1,7 @@
 import { raceList } from '@dinorpg/core/models/dinoz/raceList.js';
 import { RaceEnum } from '@dinorpg/core/models/enums/Race.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
+import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import { skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { getRace } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyInstance } from 'fastify';
@@ -11,6 +12,7 @@ import gameConfig from '../../src/config/game.config.js';
 import { getUserMaxDinoz } from '../../src/Dinoz/Controller/getActiveDinoz.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
+import { getAvailableDinozShopRaces } from '../../src/Shop/Controller/getOrCreateDinozShop.controller.js';
 import { createAuthCookie } from '../helpers/auth.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
@@ -709,5 +711,60 @@ describe('Dinoz shop lifecycle', () => {
 		 * PostgreSQL persisted.
 		 */
 		expect(firstShop.map(dinoz => dinoz.id)).toEqual(databaseShop.map(dinoz => dinoz.id.toString()));
+	});
+});
+
+describe('Dinoz shop race eligibility', () => {
+	const getRaceIds = (rewards: readonly number[]) => getAvailableDinozShopRaces(rewards).map(race => race.raceId);
+	it('only exposes the base races without rewards', () => {
+		const raceIds = getRaceIds([]);
+		expect(raceIds).toEqual(
+			expect.arrayContaining([
+				RaceEnum.WINKS,
+				RaceEnum.SIRAIN,
+				RaceEnum.CASTIVORE,
+				RaceEnum.NUAGOZ,
+				RaceEnum.GORILLOZ,
+				RaceEnum.WANWAN,
+				RaceEnum.PLANAILLE,
+				RaceEnum.MOUEFFE,
+				RaceEnum.PIGMOU
+			])
+		);
+		expect(raceIds).toHaveLength(9);
+		expect(raceIds).not.toContain(RaceEnum.ROCKY);
+		expect(raceIds).not.toContain(RaceEnum.HIPPOCLAMP);
+		expect(raceIds).not.toContain(RaceEnum.PTEROZ);
+		expect(raceIds).not.toContain(RaceEnum.QUETZU);
+	});
+	it.each([
+		[Reward.ROCKY, RaceEnum.ROCKY],
+		[Reward.HIPPO, RaceEnum.HIPPOCLAMP],
+		[Reward.PTEROZ, RaceEnum.PTEROZ],
+		[Reward.QUETZU, RaceEnum.QUETZU]
+	])('unlocks race %s with reward %s', (rewardId, raceId) => {
+		const raceIds = getRaceIds([rewardId]);
+		expect(raceIds).toContain(raceId);
+		expect(raceIds).toHaveLength(10);
+	});
+
+	it('combines all Dinoz shop race rewards', () => {
+		const raceIds = getRaceIds([Reward.ROCKY, Reward.HIPPO, Reward.PTEROZ, Reward.QUETZU]);
+		expect(raceIds).toEqual(
+			expect.arrayContaining([RaceEnum.ROCKY, RaceEnum.HIPPOCLAMP, RaceEnum.PTEROZ, RaceEnum.QUETZU])
+		);
+		expect(raceIds).toHaveLength(13);
+	});
+
+	it('ignores unrelated rewards', () => {
+		const withoutReward = getRaceIds([]);
+		const withUnrelatedReward = getRaceIds([Reward.PERLE, Reward.MERGUEZ_CARD, Reward.PAC]);
+		expect(withUnrelatedReward).toEqual(withoutReward);
+	});
+
+	it('does not duplicate races when reward ids are repeated', () => {
+		const raceIds = getRaceIds([Reward.ROCKY, Reward.ROCKY]);
+		expect(raceIds.filter(raceId => raceId === RaceEnum.ROCKY)).toHaveLength(1);
+		expect(raceIds).toHaveLength(10);
 	});
 });
