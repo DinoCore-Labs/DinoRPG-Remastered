@@ -1,4 +1,5 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { Ingredient } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import type { FastifyInstance } from 'fastify';
@@ -55,6 +56,20 @@ function getMagicShopTestItem() {
 		itemId: item.itemId,
 		price: soldItem.price,
 		maxQuantity: item.maxQuantity
+	};
+}
+
+function getFilouTestIngredient() {
+	const shop = shopListV2.FILOU;
+	const ingredientId = Ingredient.MEROU_LUJIDANE;
+	const soldIngredient = shop.listItemsSold.find(item => item.id === ingredientId);
+	if (!soldIngredient) {
+		throw new Error('MEROU_LUJIDANE is expected to be accepted by FILOU');
+	}
+	return {
+		shopId: shop.shopId,
+		ingredientId,
+		exchangeRate: soldIngredient.price
 	};
 }
 
@@ -842,5 +857,162 @@ describe('magic shop purchases', () => {
 			}
 		});
 		expect(napodinos.quantity).toBe(price + 10);
+	});
+});
+
+describe('Filou shop exchanges', () => {
+	it('exchanges ingredients for treasure tickets', async () => {
+		const user = await createTestUser({
+			name: 'FilouBuyer'
+		});
+		await createTestDinoz({
+			userId: user.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const { shopId, ingredientId, exchangeRate } = getFilouTestIngredient();
+		const ticketQuantity = 2;
+		const ingredientCost = exchangeRate * ticketQuantity;
+		const initialIngredientQuantity = ingredientCost + 5;
+		await prisma.userIngredients.create({
+			data: {
+				userId: user.id,
+				ingredientId,
+				quantity: initialIngredientQuantity
+			}
+		});
+		const ticketWalletBefore = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'TREASURE_TICKET'
+				}
+			}
+		});
+		const goldWalletBefore = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		const cookie = createAuthCookie(server, user);
+		const response = await server.inject({
+			method: 'PUT',
+			url: `/api/shop/buyitem/${shopId}`,
+			headers: {
+				cookie
+			},
+			payload: {
+				itemId: ingredientId,
+				quantity: ticketQuantity
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		expect(response.json()).toEqual({
+			wallet: 'TREASURE_TICKET',
+			quantity: ticketQuantity,
+			total: ticketWalletBefore.amount + ticketQuantity
+		});
+		const ingredientAfter = await prisma.userIngredients.findUniqueOrThrow({
+			where: {
+				ingredientId_userId: {
+					userId: user.id,
+					ingredientId
+				}
+			}
+		});
+		expect(ingredientAfter.quantity).toBe(initialIngredientQuantity - ingredientCost);
+		const ticketWalletAfter = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'TREASURE_TICKET'
+				}
+			}
+		});
+		expect(ticketWalletAfter.amount).toBe(ticketWalletBefore.amount + ticketQuantity);
+		const goldWalletAfter = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		expect(goldWalletAfter.amount).toBe(goldWalletBefore.amount);
+		await expect
+			.poll(async () => {
+				return prisma.gameLog.count({
+					where: {
+						userId: user.id,
+						type: GameLogType.IngredientSold
+					}
+				});
+			})
+			.toBe(1);
+	});
+
+	it('rejects the exchange when the player does not have enough ingredients', async () => {
+		const user = await createTestUser({
+			name: 'PoorFilouBuyer'
+		});
+		await createTestDinoz({
+			userId: user.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const { shopId, ingredientId, exchangeRate } = getFilouTestIngredient();
+		const ticketQuantity = 2;
+		const requiredIngredients = exchangeRate * ticketQuantity;
+		const initialIngredientQuantity = requiredIngredients - 1;
+		await prisma.userIngredients.create({
+			data: {
+				userId: user.id,
+				ingredientId,
+				quantity: initialIngredientQuantity
+			}
+		});
+		const ticketWalletBefore = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'TREASURE_TICKET'
+				}
+			}
+		});
+		const cookie = createAuthCookie(server, user);
+		const response = await server.inject({
+			method: 'PUT',
+			url: `/api/shop/buyitem/${shopId}`,
+			headers: {
+				cookie
+			},
+			payload: {
+				itemId: ingredientId,
+				quantity: ticketQuantity
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toEqual({
+			error: 'notEnoughIngredients'
+		});
+		const ingredientAfter = await prisma.userIngredients.findUniqueOrThrow({
+			where: {
+				ingredientId_userId: {
+					userId: user.id,
+					ingredientId
+				}
+			}
+		});
+		expect(ingredientAfter.quantity).toBe(initialIngredientQuantity);
+		const ticketWalletAfter = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'TREASURE_TICKET'
+				}
+			}
+		});
+		expect(ticketWalletAfter.amount).toBe(ticketWalletBefore.amount);
 	});
 });
