@@ -768,3 +768,56 @@ describe('Dinoz shop race eligibility', () => {
 		expect(raceIds).toHaveLength(10);
 	});
 });
+
+describe('Dinoz shop display generation', () => {
+	it('generates a valid display matching each Dinoz race', async () => {
+		const user = await createTestUser({
+			name: 'DinozDisplayViewer'
+		});
+		const cookie = createAuthCookie(server, user);
+		const response = await server.inject({
+			method: 'GET',
+			url: '/api/shop/dinoz',
+			headers: {
+				cookie
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const shop = response.json() as DinozShopEntry[];
+		expect(shop).toHaveLength(gameConfig.shop.dinozNumber);
+		for (const dinoz of shop) {
+			const race = getRace(dinoz.race);
+			/*
+			 * Complete Dinoz display:
+			 *
+			 * 2 race chars
+			 * + 11 visual chars
+			 * + palette
+			 * + rare_1
+			 * + rare_2
+			 *
+			 * = 16 chars
+			 */
+			expect(dinoz.display).toHaveLength(16);
+			/*
+			 * First two characters identify
+			 * the Dinoz race.
+			 */
+			expect(dinoz.display.startsWith(race.swfLetter)).toBe(true);
+			/*
+			 * Shop-generated Dinoz currently use:
+			 *
+			 * palette = 0
+			 * rare_1  = 0
+			 * rare_2  = 0
+			 */
+			expect(dinoz.display.endsWith('000')).toBe(true);
+			/*
+			 * The 11 randomly generated visual
+			 * characters must use Base62.
+			 */
+			const randomPart = dinoz.display.slice(2, 13);
+			expect(randomPart).toMatch(/^[0-9A-Za-z]{11}$/);
+		}
+	});
+});

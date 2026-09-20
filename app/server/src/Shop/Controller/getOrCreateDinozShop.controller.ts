@@ -7,7 +7,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { Prisma } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { prisma } from '../../prisma.js';
-import { getRandomLetter, getRandomNumber } from '../../utils/dinoz/displayDinoz.js';
+import { generateDinozDisplay, getRandomNumber } from '../../utils/dinoz/displayDinoz.js';
 
 type DinozShopEntry = {
 	id: string;
@@ -65,15 +65,10 @@ function createDinozShopData(userId: string, availableRaces: DinozRace[]): Prism
 	const dinozArray: Prisma.UserDinozShopCreateManyInput[] = [];
 	for (let index = 0; index < gameConfig.shop.dinozNumber; index++) {
 		const randomRace = availableRaces[getRandomNumber(0, availableRaces.length)];
-		let randomDisplay = randomRace.swfLetter;
-		for (let letterIndex = 0; letterIndex < 11; letterIndex++) {
-			randomDisplay += getRandomLetter('z');
-		}
-		randomDisplay += '000';
 		dinozArray.push({
 			userId,
 			raceId: randomRace.raceId,
-			display: randomDisplay
+			display: generateDinozDisplay(randomRace, '0', '0', '0')
 		});
 	}
 	return dinozArray;
