@@ -31,31 +31,34 @@ function formatDinozShop(
 		.sort((a, b) => Number(a.id) - Number(b.id));
 }
 
-function getAvailableRaces(rewardIds: number[]): DinozRace[] {
-	const availableRaces: DinozRace[] = [
-		raceList[RaceEnum.WINKS],
-		raceList[RaceEnum.SIRAIN],
-		raceList[RaceEnum.CASTIVORE],
-		raceList[RaceEnum.NUAGOZ],
-		raceList[RaceEnum.GORILLOZ],
-		raceList[RaceEnum.WANWAN],
-		raceList[RaceEnum.PLANAILLE],
-		raceList[RaceEnum.MOUEFFE],
-		raceList[RaceEnum.PIGMOU]
-	];
-	if (rewardIds.includes(Reward.ROCKY)) {
-		availableRaces.push(raceList[RaceEnum.ROCKY]);
+const BASE_DINOZ_SHOP_RACES: RaceEnum[] = [
+	RaceEnum.WINKS,
+	RaceEnum.SIRAIN,
+	RaceEnum.CASTIVORE,
+	RaceEnum.NUAGOZ,
+	RaceEnum.GORILLOZ,
+	RaceEnum.WANWAN,
+	RaceEnum.PLANAILLE,
+	RaceEnum.MOUEFFE,
+	RaceEnum.PIGMOU
+];
+
+const REWARD_DINOZ_SHOP_RACES: Partial<Record<Reward, RaceEnum>> = {
+	[Reward.ROCKY]: RaceEnum.ROCKY,
+	[Reward.HIPPO]: RaceEnum.HIPPOCLAMP,
+	[Reward.PTEROZ]: RaceEnum.PTEROZ,
+	[Reward.QUETZU]: RaceEnum.QUETZU
+};
+
+export function getAvailableDinozShopRaces(rewardIds: readonly number[]): DinozRace[] {
+	const raceIds = new Set<RaceEnum>(BASE_DINOZ_SHOP_RACES);
+	for (const rewardId of rewardIds) {
+		const raceId = REWARD_DINOZ_SHOP_RACES[rewardId as Reward];
+		if (raceId !== undefined) {
+			raceIds.add(raceId);
+		}
 	}
-	if (rewardIds.includes(Reward.HIPPO)) {
-		availableRaces.push(raceList[RaceEnum.HIPPOCLAMP]);
-	}
-	if (rewardIds.includes(Reward.PTEROZ)) {
-		availableRaces.push(raceList[RaceEnum.PTEROZ]);
-	}
-	if (rewardIds.includes(Reward.QUETZU)) {
-		availableRaces.push(raceList[RaceEnum.QUETZU]);
-	}
-	return availableRaces;
+	return [...raceIds].map(raceId => raceList[raceId]);
 }
 
 function createDinozShopData(userId: string, availableRaces: DinozRace[]): Prisma.UserDinozShopCreateManyInput[] {
@@ -130,7 +133,7 @@ export async function getOrCreateDinozShop(userId: string): Promise<DinozShopEnt
 		if (user.dinozShop.length > 0) {
 			return formatDinozShop(user.dinozShop);
 		}
-		const availableRaces = getAvailableRaces(user.rewards.map(reward => reward.rewardId));
+		const availableRaces = getAvailableDinozShopRaces(user.rewards.map(reward => reward.rewardId));
 		const dinozArray = createDinozShopData(userId, availableRaces);
 		await tx.userDinozShop.createMany({
 			data: dinozArray
