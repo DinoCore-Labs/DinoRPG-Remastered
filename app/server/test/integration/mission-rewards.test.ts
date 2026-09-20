@@ -1,8 +1,13 @@
+import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import { missionList } from '@dinorpg/core/models/missions/data/index.js';
+import { rewardIdByKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
+import { applyMissionRewards } from '../../src/Mission/Controller/mission.rewards.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
 import { createAuthCookie } from '../helpers/auth.js';
@@ -50,6 +55,14 @@ async function createMissionAtFinalGoal(params: { dinozId: number; missionKey: s
 			isCompleted: false
 		}
 	});
+}
+
+function getMissionDefinition(missionKey: string) {
+	const definition = missionList.find(mission => mission.key === missionKey);
+	if (!definition) {
+		throw new Error(`Mission "${missionKey}" not found`);
+	}
+	return definition;
 }
 
 describe('mission completion and rewards', () => {
@@ -254,5 +267,132 @@ describe('mission completion and rewards', () => {
 			}
 		});
 		expect(updatedDinoz.experience).toBe(30);
+	});
+});
+
+describe('mission reward atomicity', () => {
+	it('rolls back collection, tracking and XP rewards together', async () => {
+		const user = await createTestUser({
+			name: 'CollectionRollback',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			experience: 0
+		});
+		const definition = getMissionDefinition('msg');
+		await expect(
+			prisma.$transaction(async tx => {
+				await applyMissionRewards(tx, {
+					dinozId: dinoz.id,
+					definition
+				});
+				throw new Error('force rollback');
+			})
+		).rejects.toThrow('force rollback');
+		const rewardId = rewardIdByKey.msg;
+		const collection = await prisma.userRewards.findUnique({
+			where: {
+				rewardId_userId: {
+					rewardId,
+					userId: user.id
+				}
+			}
+		});
+		expect(collection).toBeNull();
+		const tracking = await prisma.userTracking.findUnique({
+			where: {
+				stat_userId: {
+					stat: StatTracking.MSG,
+					userId: user.id
+				}
+			}
+		});
+		expect(tracking).toBeNull();
+		const updatedDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: dinoz.id
+			}
+		});
+		expect(updatedDinoz.experience).toBe(0);
+	});
+
+	it('rolls back effect and XP rewards together', async () => {
+		const user = await createTestUser({
+			name: 'EffectRollback',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			experience: 0
+		});
+		const definition = getMissionDefinition('bckpck');
+		const statusId = dinozStatusIdByKey.bckpck;
+		expect(statusId).toBeDefined();
+		if (statusId === undefined) {
+			throw new Error('bckpck status not found');
+		}
+		await expect(
+			prisma.$transaction(async tx => {
+				await applyMissionRewards(tx, {
+					dinozId: dinoz.id,
+					definition
+				});
+				throw new Error('force rollback');
+			})
+		).rejects.toThrow('force rollback');
+		const status = await prisma.dinozStatus.findUnique({
+			where: {
+				statusId_dinozId: {
+					statusId,
+					dinozId: dinoz.id
+				}
+			}
+		});
+		expect(status).toBeNull();
+		const updatedDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: dinoz.id
+			}
+		});
+		expect(updatedDinoz.experience).toBe(0);
+	});
+
+	it('commits effect rewards when the transaction succeeds', async () => {
+		const user = await createTestUser({
+			name: 'EffectCommit',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			experience: 0
+		});
+		const definition = getMissionDefinition('bckpck');
+		const statusId = dinozStatusIdByKey.bckpck;
+		expect(statusId).toBeDefined();
+		if (statusId === undefined) {
+			throw new Error('bckpck status not found');
+		}
+		await prisma.$transaction(tx =>
+			applyMissionRewards(tx, {
+				dinozId: dinoz.id,
+				definition
+			})
+		);
+		const status = await prisma.dinozStatus.findUnique({
+			where: {
+				statusId_dinozId: {
+					statusId,
+					dinozId: dinoz.id
+				}
+			}
+		});
+		expect(status).not.toBeNull();
+		const updatedDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: dinoz.id
+			}
+		});
+		expect(updatedDinoz.experience).toBe(40);
 	});
 });
