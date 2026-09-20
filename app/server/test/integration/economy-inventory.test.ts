@@ -1,6 +1,7 @@
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import { GameLogType } from '../../../prisma/index.js';
 import { addItemToInventory } from '../../src/Inventory/Controller/addItem.controller.js';
 import { removeItem } from '../../src/Inventory/Controller/removeItem.controller.js';
 import { prisma } from '../../src/prisma.js';
@@ -92,7 +93,9 @@ describe('economy', () => {
 				amount: 100
 			}
 		});
-		await expect(removeMoney(user.id, 101)).rejects.toThrow('Not enough gold');
+		await expect(removeMoney(user.id, 101)).rejects.toMatchObject({
+			code: 'notEnoughMoney'
+		});
 		const wallet = await prisma.userWallet.findUniqueOrThrow({
 			where: {
 				userId_type: {
@@ -149,6 +152,50 @@ describe('economy', () => {
 			}
 		});
 		expect(wallet.amount).toBe(2);
+	});
+
+	it('prevents concurrent gold debits from spending the same balance twice', async () => {
+		const user = await createTestUser();
+		await prisma.userWallet.update({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			},
+			data: {
+				amount: 100
+			}
+		});
+		const results = await Promise.allSettled([removeMoney(user.id, 100), removeMoney(user.id, 100)]);
+		const successfulOperations = results.filter(result => result.status === 'fulfilled');
+		const rejectedOperations = results.filter(result => result.status === 'rejected');
+		expect(successfulOperations).toHaveLength(1);
+		expect(rejectedOperations).toHaveLength(1);
+		if (rejectedOperations[0].status === 'rejected') {
+			expect(rejectedOperations[0].reason).toMatchObject({
+				code: 'notEnoughMoney'
+			});
+		}
+		const wallet = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		expect(wallet.amount).toBe(0);
+		await expect
+			.poll(async () => {
+				return prisma.gameLog.count({
+					where: {
+						userId: user.id,
+						type: GameLogType.GoldLost
+					}
+				});
+			})
+			.toBe(1);
 	});
 });
 

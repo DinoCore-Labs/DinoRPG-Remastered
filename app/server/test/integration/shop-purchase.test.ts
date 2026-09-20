@@ -349,6 +349,99 @@ describe('shop purchases', () => {
 		});
 		expect(purchaseLogCount).toBe(2);
 	});
+
+	it('prevents concurrent purchases from spending the same gold twice', async () => {
+		const user = await createTestUser({
+			name: 'ConcurrentShopBuyer'
+		});
+		const { shopId, itemId, price } = getFlyingShopTestItem();
+		/*
+		 * Exactly enough gold for ONE purchase.
+		 */
+		await prisma.userWallet.update({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			},
+			data: {
+				amount: price
+			}
+		});
+		const cookie = createAuthCookie(server, user);
+		const [firstResponse, secondResponse] = await Promise.all([
+			server.inject({
+				method: 'PUT',
+				url: `/api/shop/buyitem/${shopId}`,
+				headers: {
+					cookie
+				},
+				payload: {
+					itemId,
+					quantity: 1
+				}
+			}),
+			server.inject({
+				method: 'PUT',
+				url: `/api/shop/buyitem/${shopId}`,
+				headers: {
+					cookie
+				},
+				payload: {
+					itemId,
+					quantity: 1
+				}
+			})
+		]);
+		const responses = [firstResponse, secondResponse];
+		const successfulResponses = responses.filter(response => response.statusCode === 200);
+		const rejectedResponses = responses.filter(response => response.statusCode === 400);
+		expect(successfulResponses).toHaveLength(1);
+		expect(rejectedResponses).toHaveLength(1);
+		expect(rejectedResponses[0].json()).toEqual({
+			error: 'notEnoughMoney'
+		});
+		/*
+		 * Gold was spent exactly once.
+		 */
+		const wallet = await prisma.userWallet.findUniqueOrThrow({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			}
+		});
+		expect(wallet.amount).toBe(0);
+		/*
+		 * Item was also obtained exactly once.
+		 */
+		const inventoryItem = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId
+				}
+			}
+		});
+		expect(inventoryItem.quantity).toBe(1);
+		/*
+		 * Only the successful purchase generated logs.
+		 */
+		await expect
+			.poll(async () => {
+				return prisma.gameLog.count({
+					where: {
+						userId: user.id,
+						type: {
+							in: [GameLogType.GoldLost, GameLogType.ItemBought]
+						}
+					}
+				});
+			})
+			.toBe(2);
+	});
 });
 
 describe('location-restricted shop purchases', () => {
