@@ -1,8 +1,11 @@
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
+import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { missionList } from '@dinorpg/core/models/missions/data/index.js';
+import { MissionDefinition } from '@dinorpg/core/models/missions/mission.js';
+import { MissionReward } from '@dinorpg/core/models/missions/missionReward.js';
 import { rewardIdByKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
@@ -55,6 +58,19 @@ async function createMissionAtFinalGoal(params: { dinozId: number; missionKey: s
 			isCompleted: false
 		}
 	});
+}
+
+function createTestMissionDefinition(rewards: MissionReward[]): MissionDefinition {
+	return {
+		key: 'test_reward_mission',
+		group: 'test',
+		nameKey: 'test.name',
+		beginKey: 'test.begin',
+		endKey: 'test.end',
+		goals: [],
+		rewards,
+		labels: {}
+	};
 }
 
 function getMissionDefinition(missionKey: string) {
@@ -394,5 +410,147 @@ describe('mission reward atomicity', () => {
 			}
 		});
 		expect(updatedDinoz.experience).toBe(40);
+	});
+
+	it('grants ingredient rewards transactionally', async () => {
+		const user = await createTestUser({
+			name: 'IngredientReward',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id
+		});
+		const ingredient = Object.values(ingredientList).find(entry => entry.name === 'merou_lujidane');
+		expect(ingredient).toBeDefined();
+		if (!ingredient) {
+			throw new Error('merou_lujidane not found');
+		}
+		await prisma.userIngredients.create({
+			data: {
+				userId: user.id,
+				ingredientId: ingredient.ingredientId,
+				quantity: 2
+			}
+		});
+		const definition = createTestMissionDefinition([
+			{
+				type: 'INGREDIENT',
+				ingredientKey: 'merou_lujidane',
+				quantity: 3
+			}
+		]);
+		await prisma.$transaction(tx =>
+			applyMissionRewards(tx, {
+				dinozId: dinoz.id,
+				definition
+			})
+		);
+		const stored = await prisma.userIngredients.findUniqueOrThrow({
+			where: {
+				ingredientId_userId: {
+					ingredientId: ingredient.ingredientId,
+					userId: user.id
+				}
+			}
+		});
+		expect(stored.quantity).toBe(5);
+	});
+
+	it('rolls back ingredient rewards when the transaction fails', async () => {
+		const user = await createTestUser({
+			name: 'IngredientRollback',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			experience: 0
+		});
+		const ingredient = Object.values(ingredientList).find(entry => entry.name === 'merou_lujidane');
+		expect(ingredient).toBeDefined();
+		if (!ingredient) {
+			throw new Error('merou_lujidane not found');
+		}
+		const definition = createTestMissionDefinition([
+			{
+				type: 'INGREDIENT',
+				ingredientKey: 'merou_lujidane',
+				quantity: 3
+			},
+			{
+				type: 'XP',
+				value: 25
+			}
+		]);
+		await expect(
+			prisma.$transaction(async tx => {
+				await applyMissionRewards(tx, {
+					dinozId: dinoz.id,
+					definition
+				});
+
+				throw new Error('force rollback');
+			})
+		).rejects.toThrow('force rollback');
+		const storedIngredient = await prisma.userIngredients.findUnique({
+			where: {
+				ingredientId_userId: {
+					ingredientId: ingredient.ingredientId,
+					userId: user.id
+				}
+			}
+		});
+		expect(storedIngredient).toBeNull();
+		const updatedDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: dinoz.id
+			}
+		});
+		expect(updatedDinoz.experience).toBe(0);
+	});
+
+	it.each([
+		{
+			reward: {
+				type: 'USER_VAR',
+				userVarKey: 'test_var'
+			} as const,
+			expected: 'Mission reward type "USER_VAR" is not implemented yet'
+		},
+		{
+			reward: {
+				type: 'GAME_VAR',
+				gameVarKey: 'test_var'
+			} as const,
+			expected: 'Mission reward type "GAME_VAR" is not implemented yet'
+		}
+	])('rolls back previous rewards when $reward.type is unsupported', async ({ reward, expected }) => {
+		const user = await createTestUser({
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			experience: 0
+		});
+		const definition = createTestMissionDefinition([
+			{
+				type: 'XP',
+				value: 100
+			},
+			reward
+		]);
+		await expect(
+			prisma.$transaction(tx =>
+				applyMissionRewards(tx, {
+					dinozId: dinoz.id,
+					definition
+				})
+			)
+		).rejects.toThrow(expected);
+		const updatedDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: dinoz.id
+			}
+		});
+		expect(updatedDinoz.experience).toBe(0);
 	});
 });
