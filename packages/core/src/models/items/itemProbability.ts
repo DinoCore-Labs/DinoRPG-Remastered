@@ -259,8 +259,8 @@ export const boxProbabilities: BoxOpening[] = [
 				odds: 1
 			},
 			{
-				item: itemList[Item.DEMON_TICKET],
-				quantity: 150,
+				item: itemList[Item.COUPONS_TREASURE_HANDLER],
+				quantity: 100,
 				odds: 1
 			}
 		]
