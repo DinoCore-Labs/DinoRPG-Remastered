@@ -106,6 +106,7 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 			eventBus.emit('refreshDinoz', true);
+			eventBus.emit('refreshInventory', true);
 			this.$emit('close');
 		}
 	}

@@ -6,6 +6,8 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { Role } from '../../../../prisma/client.js';
 import gameConfig from '../../config/game.config.js';
+import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
+import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { computeUSkillsForUser } from '../../Level/Controller/applySkillEffect.controller.js';
 import { prisma } from '../../prisma.js';
 import { updatePoints } from '../../Ranking/Controller/updatePoints.js';
@@ -46,10 +48,13 @@ export async function reincarnate(
 	) {
 		throw new ExpectedError('reincarnationNotPossible', { params: { id: dinozId } });
 	}
-	// 🔎 Check if the dinoz has any equipped items before reincarnation and prevent reincarnation if it has any
+	// 🔎 Automatically unequip all items before reincarnation
 	const equippedItems = dinoz.items.filter(i => i.itemId);
 	if (equippedItems && equippedItems.length > 0) {
-		throw new ExpectedError('reincarnationWithEquippedItems', { params: { id: dinozId } });
+		for (const item of equippedItems) {
+			await removeItemFromDinoz(dinoz.id, item.itemId);
+			await addItemToInventory(authed.id, item.itemId, 1);
+		}
 	}
 	const race = getRace(dinoz.raceId);
 	const user = await prisma.user.findUnique({
