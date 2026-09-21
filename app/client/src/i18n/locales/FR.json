@@ -1990,9 +1990,9 @@
 		"level": "Niv.",
 		"learn": "Apprendre",
 		"confirmSkill": "Désirez-vous apprendre {skill} pour votre passage au niveau {level} ?",
-		"confirmUnlock": "Désirez-vous débloquer {quantity} nouvelles compétences ?",
-		"unlockSkills": "Débloquer {count} compétences supplémentaires",
-		"unlock": "Une fois débloquée, cette compétence pourra être choisie dès le prochain niveau",
+		"confirmUnlock": "Désirez-vous débloquer {quantity} nouvelle(s) compétence(s) ?",
+		"unlockSkills": "Débloquer {count} compétence(s) supplémentaire(s)",
+		"unlock": "Une fois débloquée(s), cette(ces) compétence(s) pourra(ont) être choisie(s) dès le prochain niveau",
 		"small": "Ce Dinoz a gagné un niveau !",
 		"pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre deux possibilités de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
 		"helperUnlock": {
