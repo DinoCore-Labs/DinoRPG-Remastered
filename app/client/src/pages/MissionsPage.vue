@@ -12,7 +12,7 @@
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<TitleHeader :title="`${$t('pageTitle.missions')}`" :header="formatContent($t(`missions.header`))" />
+	<TitleHeader :title="`${$t('pageTitle.missions')} - ${npcName}`" :header="formatContent($t(`missions.header`))" />
 	<DZTable>
 		<tr>
 			<th class="name">{{ $t('common.title') }}</th>
@@ -155,6 +155,25 @@ export default defineComponent({
 		},
 		group(): string {
 			return this.$route.params.group.toString();
+		},
+		npcName(): string {
+			const groupLower = this.group.toLowerCase();
+			const groupToNpcKey: Record<string, string> = {
+				bob: 'baoBob',
+				dian: 'dian',
+				elmaster: 'elMaster',
+				arbre: 'forestGuardian',
+				michel: 'guideMichel',
+				hulot: 'nicolasHulot',
+				mmex: 'madameX',
+				papy_joe: 'papyJoe',
+				dquest: 'requestOffice',
+				rodeur: 'rodeur',
+				shaman: 'shamanMou',
+				skull: 'skully'
+			};
+			const npcKey = groupToNpcKey[groupLower] || groupLower;
+			return this.$t(`npc.${npcKey}.name`);
 		}
 	},
 	async mounted(): Promise<void> {
