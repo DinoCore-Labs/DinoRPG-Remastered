@@ -3122,7 +3122,7 @@
 			"rest": "Votre Dinoz peut **se reposer** pour regagner des points de vie. Pendant ce temps, il ne pourra effectuer aucune autre action !",
 			"stop_rest": "Votre Dinoz se repose actuellement. Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre.",
 			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant.",
-			"reincarnation": "Votre Dinoz peut se réincarner ! Il conservera la même destinée des éléments.",
+			"reincarnation": "Votre Dinoz peut se réincarner ! Choisissez de conserver votre destinée élémentaire actuelle ou d'en tirer une nouvelle au hasard.",
 			"change_leader": "Votre Dinoz peut devenir le nouveau leader du groupe.",
 			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
 			"CEF": "Cher client, bienvenue au Centre d'Entraînement de Fosselave !",
