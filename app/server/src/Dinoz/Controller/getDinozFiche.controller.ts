@@ -47,9 +47,9 @@ export async function getDinozFicheRequest(dinozId: number, userId: string) {
 					status: { select: { statusId: true } },
 					missions: true,
 					skills: { select: { skillId: true, state: true } },
-					followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } }
+					followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
 					//concentration: true,
-					//TournamentTeam: { select: { tournamentId: true } },
+					TournamentTeam: { select: { tournamentId: true } }
 					//build: true
 				},
 				where: {
