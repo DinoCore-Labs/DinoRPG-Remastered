@@ -76,8 +76,10 @@
 				theme="normal"
 				class="action"
 				:class="{ 'long-text': isLongAction(action) }"
-				v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW && a.name !== Action.DEFENDING_DEVOURER)"
-				:key="action.imgName || action.name"
+				v-for="(action, index) in dinoz.actions?.filter(
+					a => a.name !== Action.FOLLOW && a.name !== Action.DEFENDING_DEVOURER
+				)"
+				:key="(action.imgName || action.name) + '_' + index"
 				:id="action.imgName"
 				:data-tutorial-action="getTutorialActionKey(action)"
 				@click="launch(action)"
