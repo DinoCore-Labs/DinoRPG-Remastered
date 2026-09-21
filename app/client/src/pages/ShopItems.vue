@@ -573,9 +573,9 @@ export default defineComponent({
 		color: #ffee92;
 		font-size: 10pt;
 		display: grid;
-		grid-template-rows: 17px auto;
+		grid-template-rows: 17px auto auto;
 		grid-template-columns: 180px auto;
-		grid-template-areas: 'top top ' 'left center';
+		grid-template-areas: 'top top ' 'left center' 'left bottom';
 		min-height: 160px;
 		max-width: 95%;
 		padding-right: 10px;
@@ -592,7 +592,7 @@ export default defineComponent({
 			margin-top: 15px;
 		}
 		.napo-stock {
-			grid-area: center;
+			grid-area: bottom;
 			align-self: end;
 			margin: 0;
 			padding-top: 8px;
