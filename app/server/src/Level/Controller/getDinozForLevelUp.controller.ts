@@ -32,7 +32,8 @@ export async function getDinozForLevelUp(dinozId: number) {
 			items: { select: { itemId: true } },
 			skills: { select: { skillId: true } },
 			unlockableSkills: { select: { skillId: true } },
-			status: { select: { statusId: true } }
+			status: { select: { statusId: true } },
+			TournamentTeam: { select: { tournamentId: true } }
 		}
 	});
 

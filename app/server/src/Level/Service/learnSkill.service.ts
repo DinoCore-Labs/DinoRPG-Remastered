@@ -18,6 +18,7 @@ import { prisma } from '../../prisma.js';
 import { updatePoints } from '../../Ranking/Controller/updatePoints.js';
 import { discoverUserSkillsTx } from '../../Skill/Controller/discoveredUserSkills.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
+import TournamentManager from '../../utils/tournamentManager.js';
 import { applySkillEffect } from '../Controller/applySkillEffect.controller.js';
 import { getDinozForLevelUp } from '../Controller/getDinozForLevelUp.controller.js';
 import { removeUnlockableSkillsFromDinoz } from '../Controller/removeUnlockableSkillsFromDinoz.js';
@@ -58,12 +59,13 @@ export async function learnSkill(req: LearnSkillReq, _reply: FastifyReply): Prom
 	}
 	// --- Tournament / canLevelUp ---
 	let canLevelUp = false;
-	/*
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
-	const dinozTournament = await isDinozInTournament(dinozId);
-	canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
-	*/
-	canLevelUp = dinozSkills.level < gameConfig.dinoz.maxLevel; /*+ 1 <= tournament.levelLimit*/
+	const dinozTournament =
+		tournament && dinozSkills.TournamentTeam?.find(team => team.tournamentId === tournament.id) ? tournament : null;
+	canLevelUp = dinozSkills.level < gameConfig.dinoz.maxLevel;
+	if (dinozTournament && dinozSkills.level >= dinozTournament.levelLimit) {
+		throw new ExpectedError('tournamentMaxLevelLimitReached');
+	}
 	if (!canLevelUp) {
 		throw new ExpectedError('dinozCannotLvlUp', { params: { id: dinozId } });
 	}
