@@ -254,7 +254,8 @@
 		"createClan": "DinoRPG [ Créer un Clan ]",
 		"clansList": "DinoRPG [ Clans ]",
 		"dojo": "DinoRPG [ Dojo ]",
-		"forum": "DinoRPG [ Forum ]"
+		"forum": "DinoRPG [ Forum ]",
+		"missions": "Missions"
 	},
 	"adminPage": {
 		"news": {
