@@ -47,10 +47,9 @@
 					{{ $t(`dinoz.hud.follow`, { leader: leaderDinoz.name }) }}
 				</template>
 			</Tippy>
-			<!--
-			<p class="follow" v-if="dinoz.tournament && dinoz.level >= dinoz.tournament.levelLimit">
-				{{ $t('dinoz.hud.dojoTeam', { max: dinoz.tournament.levelLimit }) }}
-			</p>-->
+			<p class="follow" v-if="dinoz.tournament" style="cursor: default">
+				{{ $t('dinoz.hud.registeredTID') }}
+			</p>
 			<DZDisclaimer
 				v-if="dinoz.state === DINOZ_STATE.unfreezing"
 				:content="$t('dinoz.hud.unfreezeCountdown', { time: unfreezeCountdown })"
@@ -435,6 +434,10 @@ export default defineComponent({
 					await this.refreshDinoz();
 					break;
 				case Action.LEVEL_UP:
+					if (this.dinoz?.tournament && this.dinoz.level >= this.dinoz.tournament.levelLimit) {
+						this.$toast.error(this.$t('toast.tournamentMaxLevelLimitReached').toString());
+						break;
+					}
 					this.$router.push({
 						name: 'Leveling',
 						params: { id: this.dinozId.toString() }

@@ -1039,7 +1039,8 @@
 		"dinozCannotFollowSharedElement": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause d'une mauvaise affinité élémentaire entre vos dinoz.",
 		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée.",
 		"fearFactorDesequip": "Vous ne pouvez pas déséquiper le Trouillomètre tant que ce Dinoz est dans un groupe.",
-		"tutorialMovementRestricted": "Le tutoriel vous demande de suivre un autre chemin pour le moment."
+		"tutorialMovementRestricted": "Le tutoriel vous demande de suivre un autre chemin pour le moment.",
+		"tournamentMaxLevelLimitReached": "Votre dinoz ne peut pas dépasser le niveau maximum autorisé pour le tournoi."
 	},
 	"tooltip": {
 		"gold": "L'or permet d'acheter de nouveaux **Dinoz** ou des **objets** en boutique.",
@@ -1159,7 +1160,8 @@
 			"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 			"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
 			"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}",
-			"defendingDevourer": "Votre Dinoz est occupé à défendre la Dévoreuse."
+			"defendingDevourer": "Votre Dinoz est occupé à défendre la Dévoreuse.",
+			"registeredTID": "Votre dinoz est inscrit pour le prochain TID."
 		},
 		"stateReason": {
 			"frozen": "Votre Dinoz est congelé",
@@ -6614,5 +6616,6 @@
 				"helpers": {}
 			}
 		}
-	}
+	},
+	"errors": {}
 }

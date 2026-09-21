@@ -54,7 +54,7 @@ export interface DinozFiche {
 	rest?: DinozRestInfos | null;
 	stateTimer?: string;
 	//concentration: Concentration | null;
-	//tournament: Pick<TournamentState, 'id' | 'levelLimit'> | null;
+	tournament: { id: string; levelLimit: number } | null;
 	/*npcAwait?: {
 		npcSpeech: string;
 		npcName: string;

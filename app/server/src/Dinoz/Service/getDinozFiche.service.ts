@@ -4,12 +4,11 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 import { advanceDinozMissionOnWait } from '../../Mission/Controller/mission.progress.js';
 import { prisma } from '../../prisma.js';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
+import TournamentManager from '../../utils/tournamentManager.js';
 import { getDinozFicheRequest } from '../Controller/getDinozFiche.controller.js';
 import { applyRestIfNeeded } from '../Controller/getRestDinoz.controller.js';
 import { applyUnfreezeIfNeeded } from '../Controller/getUnfreezeDinoz.controller.js';
 import { getAvailableActions } from './getDinozActions.service.js';
-
-// import { TournamentManager } from '../../tournament/TournamentManager.js';
 // import { isDinozInTournament } from '../../tournament/isDinozInTournament.js';
 
 type Params = { id: string };
@@ -47,8 +46,9 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 			}
 		});
 	}
+	const currentTournament = await TournamentManager.getCurrentTournamentState(prisma);
 	// Create the answer that will be sent back
-	const ret = toDinozFiche(playerData, dinozId, ficheRest);
+	const ret = toDinozFiche(playerData, dinozId, ficheRest, currentTournament);
 	ret.actions = await getAvailableActions(myDinoz, playerData);
 	return reply.send(ret);
 }

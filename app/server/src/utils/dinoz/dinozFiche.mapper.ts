@@ -72,13 +72,13 @@ export const toDinozFiche = (
 			skills: Pick<DinozSkills, 'skillId' | 'state'>[];
 			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
 			//concentration: Concentration | null;
-			//TournamentTeam: Pick<TournamentTeam, 'tournamentId'>[];
+			TournamentTeam?: { tournamentId: string | null }[];
 			//build: DinozBuild | null;
 		})[];
 	},
 	activeDinoz: number,
-	restInfos?: DinozRestInfos | null
-	//currentTournament: TournamentState | null
+	restInfos?: DinozRestInfos | null,
+	currentTournament?: { id: string; levelLimit: number } | null
 ): DinozFiche => {
 	const userForCondition = structuredClone(user);
 	const dinoz = user.dinoz.find(d => d.id === activeDinoz);
@@ -139,12 +139,13 @@ export const toDinozFiche = (
 		remaining: dinoz.remaining,
 		fight: dinoz.fight,
 		gather: dinoz.gather,
-		rest: restInfos ?? null
+		rest: restInfos ?? null,
 		//missions: dinoz.missions,
 		//concentration: dinoz.concentration,
-		/*tournament: dinoz.TournamentTeam.find(team => team.tournamentId === currentTournament?.id)
-			? currentTournament
-			: null,*/
+		tournament:
+			currentTournament && dinoz.TournamentTeam?.find(team => team.tournamentId === currentTournament.id)
+				? { id: currentTournament.id, levelLimit: currentTournament.levelLimit }
+				: null
 		//build: dinoz.build ?? undefined
 	};
 };
@@ -215,7 +216,10 @@ export const remainingXPToLevelUp = (
 export const isMaxLevel = (dinoz: Pick<Dinoz, 'level'>, config: Config) => dinoz.level >= config.dinoz.maxLevel;
 
 export const canLevelUp = (
-	dinoz: Pick<Dinoz, 'level' | 'experience'> & { status: Pick<DinozStatus, 'statusId'>[] },
+	dinoz: Pick<Dinoz, 'level' | 'experience'> & {
+		status: Pick<DinozStatus, 'statusId'>[];
+		tournament?: { levelLimit: number } | null;
+	},
 	config: Config
 ) => {
 	const maxExperience = getMaxXp(dinoz);
