@@ -127,10 +127,13 @@ function shouldRefreshDinozAfterEquip(input: {
 	if (input.itemId === Item.FEAR_FACTOR) {
 		return true;
 	}
+	const item = itemList[input.itemId as Item];
+	if (item?.passiveEffect) {
+		return true;
+	}
 	if (!input.equip) {
 		return false;
 	}
-	const item = itemList[input.itemId as Item];
 	if (item?.itemType === ItemType.MAGICAL) {
 		return true;
 	}
