@@ -1,6 +1,7 @@
 import { CompareMode, Condition, MissionConditionStatus } from '@dinorpg/core/models/conditions/conditions.js';
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
+import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { resolveItemIdFromKey } from '@dinorpg/core/models/items/itemIdByKey.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { UserRole } from '@dinorpg/core/models/user/userRole.js';
@@ -40,6 +41,15 @@ function getGameHour(date: Date) {
 function resolvePlaceIdFromKey(key: string): number | null {
 	const place = Object.values(placeListv2).find(place => place.name === key);
 	return place?.placeId ?? null;
+}
+
+function resolveIngredientIdFromKey(key: string): number | null {
+	const numericId = Number(key);
+	if (!Number.isNaN(numericId)) {
+		return numericId;
+	}
+	const ingredient = Object.values(ingredientList).find(entry => entry.name === key);
+	return ingredient?.ingredientId ?? null;
 }
 
 export function checkDialogCondition(condition: Condition | null | undefined, context: DialogContext): boolean {
@@ -83,8 +93,13 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 			return context.user.collections.has(condition.key);
 		case 'tag':
 			return context.user.tags.has(condition.key);
-		case 'hasingredient':
-			return compareNumber(getUserIngredientQuantity(context, Number(condition.key)), condition.qty, condition.compare);
+		case 'hasingredient': {
+			const ingredientId = resolveIngredientIdFromKey(condition.key);
+			if (ingredientId == null) {
+				throw new Error(`Unknown ingredient key "${condition.key}" in dialog condition`);
+			}
+			return compareNumber(getUserIngredientQuantity(context, ingredientId), condition.qty, condition.compare);
+		}
 		case 'level':
 			return context.dinoz.level >= condition.value;
 		case 'dinoz':
@@ -131,7 +146,7 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'active':
 			return context.world.activeFeatures.has(condition.key);
 		case 'hour':
-			return getGameHour(context.now) === condition.value;
+			return compareNumber(getGameHour(context.now), condition.value, condition.compare);
 		case 'date':
 		case 'day':
 		case 'caushrock':
