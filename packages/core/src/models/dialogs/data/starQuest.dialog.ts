@@ -1,5 +1,6 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
 import { Item } from '../../items/itemList.js';
+import { STAR_MAGIC_STAR_COUNT, STAR_SCENARIO_KEY, STAR_SCENARIO_STEPS } from '../../scenarios/data/starScenario.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { DialogDefinition } from '../dialog.js';
 
@@ -14,7 +15,9 @@ export const starquestIntroDialog: DialogDefinition = {
 	id: 'starquest_intro',
 	name: 'npc.strangeBeing.name',
 	place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
-	cond: parseCondition('scenario(star,0)+(admin()|time(30))+active(starquest)'),
+	cond: parseCondition(
+		`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.NOT_STARTED})+(admin()|time(30))+active(starquest)`
+	),
 	pnj: strangeBeingPnj,
 	phases: {
 		begin: {
@@ -58,8 +61,8 @@ export const starquestIntroDialog: DialogDefinition = {
 			effects: [
 				{
 					type: 'scenario',
-					scenario: 'star',
-					phase: 1
+					scenario: STAR_SCENARIO_KEY,
+					phase: STAR_SCENARIO_STEPS.MEGAWOLF
 				}
 			]
 		}
@@ -100,7 +103,7 @@ export const starquestMegawolfHintDialog: DialogDefinition = {
 	id: 'starquest_megawolf_hint',
 	name: 'npc.strangeBeing.name',
 	place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
-	cond: parseCondition('scenario(star,1)'),
+	cond: parseCondition(`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.MEGAWOLF})`),
 	pnj: strangeBeingPnj,
 	phases: {
 		begin: {
@@ -125,7 +128,9 @@ export const starquestProgressHintDialog: DialogDefinition = {
 	id: 'starquest_progress_hint',
 	name: 'npc.strangeBeing.name',
 	place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
-	cond: parseCondition('scenario(star,2+)+!scenario(star,8+)'),
+	cond: parseCondition(
+		`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.MERGUEZ_SELLER}+)+!scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.FINAL}+)`
+	),
 	pnj: strangeBeingPnj,
 	phases: {
 		begin: {
@@ -172,32 +177,32 @@ export const starquestProgressHintDialog: DialogDefinition = {
 		star2: {
 			id: 'star2',
 			text: 'npc.strangeBeing.choice.listen',
-			cond: parseCondition('scenario(star,2)')
+			cond: parseCondition(`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.MERGUEZ_SELLER})`)
 		},
 		star3: {
 			id: 'star3',
 			text: 'npc.strangeBeing.choice.listen',
-			cond: parseCondition('scenario(star,3)')
+			cond: parseCondition(`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.MEAT_PIE})`)
 		},
 		star4: {
 			id: 'star4',
 			text: 'npc.strangeBeing.choice.listen',
-			cond: parseCondition('scenario(star,4)')
+			cond: parseCondition(`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.DIG})`)
 		},
 		star5: {
 			id: 'star5',
 			text: 'npc.strangeBeing.choice.listen',
-			cond: parseCondition('scenario(star,5)')
+			cond: parseCondition(`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.SKULLY})`)
 		},
 		star6: {
 			id: 'star6',
 			text: 'npc.strangeBeing.choice.listen',
-			cond: parseCondition('scenario(star,6)')
+			cond: parseCondition(`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.BAO_BOB})`)
 		},
 		star7: {
 			id: 'star7',
 			text: 'npc.strangeBeing.choice.listen',
-			cond: parseCondition('scenario(star,7)')
+			cond: parseCondition(`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.NATURAL_RESURRECT})`)
 		},
 		end: {
 			id: 'end',
@@ -210,7 +215,7 @@ export const starquestFinalDialog: DialogDefinition = {
 	id: 'starquest_final',
 	name: 'npc.strangeBeing.name',
 	place: PlaceEnum.FOUTAINE_DE_JOUVENCE,
-	cond: parseCondition('scenario(star,8)'),
+	cond: parseCondition(`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.FINAL})`),
 	pnj: strangeBeingPnj,
 	phases: {
 		begin: {
@@ -231,7 +236,7 @@ export const starquestFinalDialog: DialogDefinition = {
 				{
 					type: 'useItem',
 					itemId: Item.MAGIC_STAR,
-					count: 7
+					count: STAR_MAGIC_STAR_COUNT
 				}
 			],
 			effects: [
@@ -246,8 +251,8 @@ export const starquestFinalDialog: DialogDefinition = {
 				},
 				{
 					type: 'scenario',
-					scenario: 'star',
-					phase: 9
+					scenario: STAR_SCENARIO_KEY,
+					phase: STAR_SCENARIO_STEPS.COMPLETED
 				}
 			]
 		}
@@ -268,7 +273,7 @@ export const starquestMerguezSellerDialog: DialogDefinition = {
 	id: 'starquest_merguez_seller',
 	name: 'npc.merguezSellerQuest.name',
 	place: PlaceEnum.RUINES_ASHPOUK,
-	cond: parseCondition('scenario(star,2)+equip(burger)'),
+	cond: parseCondition(`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.MERGUEZ_SELLER})+equip(burger)`),
 	pnj: {
 		image: false,
 		gfx: 'merguez',
@@ -298,8 +303,8 @@ export const starquestMerguezSellerDialog: DialogDefinition = {
 				},
 				{
 					type: 'scenario',
-					scenario: 'star',
-					phase: 3
+					scenario: STAR_SCENARIO_KEY,
+					phase: STAR_SCENARIO_STEPS.MEAT_PIE
 				}
 			]
 		}
@@ -320,7 +325,7 @@ export const starquestSkullyDialog: DialogDefinition = {
 	id: 'starquest_skully',
 	name: 'npc.skullyQuest.name',
 	place: PlaceEnum.CIMETIERE,
-	cond: parseCondition('scenario(star,5)+equip(ppoiv)'),
+	cond: parseCondition(`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.SKULLY})+equip(ppoiv)`),
 	pnj: {
 		image: false,
 		gfx: 'skully',
@@ -350,8 +355,8 @@ export const starquestSkullyDialog: DialogDefinition = {
 				},
 				{
 					type: 'scenario',
-					scenario: 'star',
-					phase: 6
+					scenario: STAR_SCENARIO_KEY,
+					phase: STAR_SCENARIO_STEPS.BAO_BOB
 				}
 			]
 		}
@@ -372,7 +377,9 @@ export const starquestBaoBobDialog: DialogDefinition = {
 	id: 'starquest_bao_bob',
 	name: 'npc.baobobQuest.name',
 	place: PlaceEnum.BAO_BOB,
-	cond: parseCondition('scenario(star,6)+(admin()|hour(5)|hour(6)|hour(7))'),
+	cond: parseCondition(
+		`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.BAO_BOB})+(admin()|hour(5)|hour(6)|hour(7))`
+	),
 	pnj: {
 		image: false,
 		gfx: 'bob',
@@ -402,8 +409,8 @@ export const starquestBaoBobDialog: DialogDefinition = {
 				},
 				{
 					type: 'scenario',
-					scenario: 'star',
-					phase: 7
+					scenario: STAR_SCENARIO_KEY,
+					phase: STAR_SCENARIO_STEPS.NATURAL_RESURRECT
 				}
 			]
 		}

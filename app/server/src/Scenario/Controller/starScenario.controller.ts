@@ -3,17 +3,17 @@ import { FightOutcome, FightResult } from '@dinorpg/core/models/fight/fightResul
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
 import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
+import { STAR_SCENARIO_KEY, STAR_SCENARIO_STEPS } from '@dinorpg/core/models/scenarios/data/starScenario.js';
 
 import type { Prisma } from '../../../../prisma/index.js';
 import { updateMultipleDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../Fight/Service/fight.service.js';
 import { prisma } from '../../prisma.js';
 import { ScenarioMoveFightInput } from '../Service/scenarioMoveFight.service.js';
-import { getUserScenarioProgression, setUserScenarioProgression } from './scenarioProgress.controller.js';
+import { getUserScenarioProgression } from './scenarioProgress.controller.js';
 
 type ScenarioTransaction = Prisma.TransactionClient;
 
-const STAR_SCENARIO_KEY = 'star';
 const STAR_MEGAWOLF_KEY: MonsterKey = 'megawolf';
 
 const STAR_MEGAWOLF_FROM_PLACES = [PlaceEnum.FOUTAINE_DE_JOUVENCE, PlaceEnum.UNIVERSITE];
@@ -39,6 +39,16 @@ async function addMagicStarTx(tx: ScenarioTransaction, userId: string) {
 	});
 }
 
+/**
+ * Fait progresser Star uniquement si le joueur
+ * se trouve encore exactement à l'étape attendue.
+ *
+ * Le claim de progression et la récompense sont
+ * réalisés dans la même transaction.
+ *
+ * Deux requêtes concurrentes ne peuvent donc pas
+ * obtenir deux MAGIC_STAR pour la même étape.
+ */
 export async function advanceStarScenarioWithRewardTx(
 	tx: ScenarioTransaction,
 	input: {
@@ -47,17 +57,20 @@ export async function advanceStarScenarioWithRewardTx(
 		nextProgression: number;
 	}
 ) {
-	const current = await getUserScenarioProgression(tx, input.userId, STAR_SCENARIO_KEY);
-	if (current.progression !== input.expectedProgression) {
+	const claim = await tx.userScenario.updateMany({
+		where: {
+			userId: input.userId,
+			scenarioKey: STAR_SCENARIO_KEY,
+			progression: input.expectedProgression
+		},
+		data: {
+			progression: input.nextProgression
+		}
+	});
+	if (claim.count !== 1) {
 		return false;
 	}
 	await addMagicStarTx(tx, input.userId);
-	await setUserScenarioProgression(tx, {
-		userId: input.userId,
-		scenarioKey: STAR_SCENARIO_KEY,
-		progression: input.nextProgression,
-		tracking: current.tracking
-	});
 	return true;
 }
 
@@ -77,14 +90,11 @@ export async function advanceStarScenarioOnNaturalResurrectTx(
 	}
 	return advanceStarScenarioWithRewardTx(tx, {
 		userId: input.userId,
-		expectedProgression: 7,
-		nextProgression: 8
+		expectedProgression: STAR_SCENARIO_STEPS.NATURAL_RESURRECT,
+		nextProgression: STAR_SCENARIO_STEPS.FINAL
 	});
 }
 
-/**
- * Vérifie si le déplacement doit déclencher le Megaloup du scénario Star.
- */
 async function shouldStartStarMegawolfFight(input: ScenarioMoveFightInput): Promise<boolean> {
 	if (input.toPlace !== PlaceEnum.DINOVILLE) {
 		return false;
@@ -93,36 +103,9 @@ async function shouldStartStarMegawolfFight(input: ScenarioMoveFightInput): Prom
 		return false;
 	}
 	const scenario = await prisma.$transaction(tx => getUserScenarioProgression(tx, input.user.id, STAR_SCENARIO_KEY));
-	return scenario.progression === 1;
+	return scenario.progression === STAR_SCENARIO_STEPS.MEGAWOLF;
 }
 
-/**
- * Ajoute un objet à l'inventaire dans la transaction du scénario.
- */
-async function addUserItemTx(tx: ScenarioTransaction, userId: string, itemId: Item, quantity: number): Promise<void> {
-	await tx.userItems.upsert({
-		where: {
-			itemId_userId: {
-				itemId,
-				userId
-			}
-		},
-		create: {
-			userId,
-			itemId,
-			quantity
-		},
-		update: {
-			quantity: {
-				increment: quantity
-			}
-		}
-	});
-}
-
-/**
- * Traite les combats de déplacement du scénario Star.
- */
 export async function processStarScenarioMoveFight(input: ScenarioMoveFightInput): Promise<FightResult | false> {
 	const shouldStartMegawolf = await shouldStartStarMegawolfFight(input);
 	if (!shouldStartMegawolf) {
@@ -134,23 +117,15 @@ export async function processStarScenarioMoveFight(input: ScenarioMoveFightInput
 		autoReequip: input.autoReequip
 	});
 	const winner = fightProcess.outcome === FightOutcome.AttackerWin;
+	let progressed = false;
 	if (winner) {
-		await prisma.$transaction(async tx => {
-			const currentScenario = await getUserScenarioProgression(tx, input.user.id, STAR_SCENARIO_KEY);
-			/**
-			 * La progression peut avoir changé entre le déclenchement
-			 * et la résolution du combat.
-			 */
-			if (currentScenario.progression !== 1) {
-				return;
-			}
-			await addUserItemTx(tx, input.user.id, Item.MAGIC_STAR, 1);
-			await setUserScenarioProgression(tx, {
+		progressed = await prisma.$transaction(tx =>
+			advanceStarScenarioWithRewardTx(tx, {
 				userId: input.user.id,
-				scenarioKey: STAR_SCENARIO_KEY,
-				progression: 2
-			});
-		});
+				expectedProgression: STAR_SCENARIO_STEPS.MEGAWOLF,
+				nextProgression: STAR_SCENARIO_STEPS.MERGUEZ_SELLER
+			})
+		);
 		await updateMultipleDinoz(
 			input.team.map(dinoz => dinoz.id),
 			{
@@ -164,8 +139,8 @@ export async function processStarScenarioMoveFight(input: ScenarioMoveFightInput
 		scenario: {
 			key: STAR_SCENARIO_KEY,
 			fightKey: 'star_megawolf',
-			progressed: winner,
-			progression: winner ? 2 : 1
+			progressed,
+			progression: winner ? STAR_SCENARIO_STEPS.MERGUEZ_SELLER : STAR_SCENARIO_STEPS.MEGAWOLF
 		},
 		startText: {
 			type: 'message',
