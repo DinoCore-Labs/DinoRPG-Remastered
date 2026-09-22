@@ -4757,7 +4757,7 @@
 		"already": "Une mission est déjà en cours, il vous faudra la terminer avant d'en accepter une autre.",
 		"lastDialog": "Dernière étape validée",
 		"goals": {
-			"atPlace": "Se rendre à {place}",
+			"atPlace": "Se rendre à : {place}",
 			"atHidden": "Trouver le bon lieu",
 			"talk": "Parler à {nameKey}",
 			"named": "{nameKey}",
