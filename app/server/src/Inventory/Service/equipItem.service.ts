@@ -85,7 +85,7 @@ export async function equipItem(
 			throw new ExpectedError('itemNotEquipped');
 		}
 
-		if (itemToEquip.itemType === ItemType.MAGICAL) {
+		if (itemToEquip.itemType === ItemType.MAGICAL && itemToEquip.itemId !== Item.GOLDEN_NAPODINO) {
 			const hoursSinceEquip = (Date.now() - dinozItem.equippedAt.getTime()) / (1000 * 60 * 60);
 			if (hoursSinceEquip < MAGIC_ITEM_COOLDOWN_HOURS) {
 				throw new ExpectedError('magicItemHomesick');
