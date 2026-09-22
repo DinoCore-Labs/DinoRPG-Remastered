@@ -59,6 +59,7 @@ type BuildDialogContextParams = {
 	userId: string;
 	dinozId: number;
 	dialog: Pick<RuntimeDialog, 'id' | 'place'>;
+	now?: Date;
 };
 
 function buildQuantityMap<T>(
@@ -358,6 +359,6 @@ export async function buildDialogContext(
 		world: {
 			activeFeatures: new Set(gameConfig.world.activeFeatures)
 		},
-		now: new Date()
+		now: params.now ?? new Date()
 	};
 }

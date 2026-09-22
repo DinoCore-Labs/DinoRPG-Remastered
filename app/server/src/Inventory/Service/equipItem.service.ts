@@ -2,6 +2,7 @@ import { EquipItemResponse } from '@dinorpg/core/models/dinoz/dinozItems.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { STAR_SCENARIO_KEY, STAR_SCENARIO_STEPS } from '@dinorpg/core/models/scenarios/data/starScenario.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyRequest } from 'fastify';
@@ -146,14 +147,14 @@ function shouldRefreshDinozAfterEquip(input: {
 
 const SCENARIO_EQUIP_REFRESH_RULES = [
 	{
-		scenarioKey: 'star',
-		progression: 2,
+		scenarioKey: STAR_SCENARIO_KEY,
+		progression: STAR_SCENARIO_STEPS.MERGUEZ_SELLER,
 		itemId: Item.CLOUD_BURGER,
 		placeId: PlaceEnum.RUINES_ASHPOUK
 	},
 	{
-		scenarioKey: 'star',
-		progression: 5,
+		scenarioKey: STAR_SCENARIO_KEY,
+		progression: STAR_SCENARIO_STEPS.SKULLY,
 		itemId: Item.LITTLE_PEPPER,
 		placeId: PlaceEnum.CIMETIERE
 	}

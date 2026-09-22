@@ -3,6 +3,7 @@ import { DigTreasure } from '@dinorpg/core/models/dinoz/digTreasure.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { STAR_SCENARIO_KEY, STAR_SCENARIO_STEPS } from '@dinorpg/core/models/scenarios/data/starScenario.js';
 import { parseCondition } from '@dinorpg/core/models/utils/conditions/parseConditions.js';
 
 const c = (source: string): Condition => parseCondition(source);
@@ -35,15 +36,19 @@ export const digTreasures: DigTreasure[] = [
 	{
 		id: 'fourth_star',
 		place: PlaceEnum.TUNNEL_SOUS_LA_BRANCHE,
-		cond: c('scenario(star,4)'),
+		cond: c(`scenario(${STAR_SCENARIO_KEY},${STAR_SCENARIO_STEPS.DIG})`),
 		rewards: [
 			{
 				type: 'scenario',
-				scenarioKey: 'star',
-				progression: 5,
+				scenarioKey: STAR_SCENARIO_KEY,
+				progression: STAR_SCENARIO_STEPS.SKULLY,
 				messageKey: 'scenarios.star.texts.digStarFound'
 			},
-			{ type: 'item', itemId: itemList[Item.MAGIC_STAR].itemId, quantity: 1 }
+			{
+				type: 'item',
+				itemId: itemList[Item.MAGIC_STAR].itemId,
+				quantity: 1
+			}
 		]
 	}
 ];
