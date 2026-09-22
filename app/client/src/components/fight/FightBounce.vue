@@ -132,7 +132,7 @@ export default defineComponent({
 		},
 		returnToDinoz() {
 			if (this.fight.result && this.fight.dialogReturn) {
-				this.$router.push({
+				this.$router.replace({
 					name: 'DialogPage',
 					params: {
 						id: this.dinozId.toString(),
@@ -144,7 +144,7 @@ export default defineComponent({
 				});
 				return;
 			}
-			this.$router.push({
+			this.$router.replace({
 				name: 'DinozPage',
 				params: { id: this.dinozId.toString() }
 			});

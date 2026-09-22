@@ -94,7 +94,7 @@ export default defineComponent({
 				type: 'error'
 			});
 
-			this.$router.push({
+			this.$router.replace({
 				name: 'DinozPage',
 				params: { id: this.dinozId }
 			});
@@ -110,7 +110,7 @@ export default defineComponent({
 				type: 'error'
 			});
 
-			this.$router.push({
+			this.$router.replace({
 				name: 'DinozPage',
 				params: { id: this.dinozId }
 			});
@@ -129,7 +129,7 @@ export default defineComponent({
 				message: this.$t('toast.viewFight'),
 				type: 'error'
 			});
-			this.$router.push({
+			this.$router.replace({
 				name: 'DinozPage',
 				params: { id: this.dinozId }
 			});
