@@ -254,7 +254,8 @@
 		"createClan": "DinoRPG [ Create a Clan ]",
 		"clansList": "DinoRPG [ Clan: ]",
 		"dojo": "DinoRPG [ Dojo ]",
-		"forum": "DinoRPG [ Forum ]"
+		"forum": "DinoRPG [ Forum ]",
+		"missions": "Missions"
 	},
 	"adminPage": {
 		"news": {
@@ -1038,7 +1039,8 @@
 		"dinozCannotFollowSharedElement": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause d'une mauvaise affinité élémentaire entre vos dinoz.",
 		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée.",
 		"fearFactorDesequip": "Vous ne pouvez pas déséquiper le Trouillomètre tant que ce Dinoz est dans un groupe.",
-		"tutorialMovementRestricted": "Le tutoriel vous demande de suivre un autre chemin pour le moment."
+		"tutorialMovementRestricted": "Le tutoriel vous demande de suivre un autre chemin pour le moment.",
+		"tournamentMaxLevelLimitReached": "Votre dinoz ne peut pas dépasser le niveau maximum autorisé pour le tournoi."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",
@@ -1158,7 +1160,8 @@
 			"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
 			"dojoTeam": "This Dinoz is registered to a tournament. It cannot surpass the level {max} until this tournament is finished.",
 			"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}",
-			"defendingDevourer": "Your Dinoz is busy defending the Devourer."
+			"defendingDevourer": "Your Dinoz is busy defending the Devourer.",
+			"registeredTID": "Votre dinoz est inscrit pour le prochain TID."
 		},
 		"stateReason": {
 			"frozen": "You Dinoz is frozen",
@@ -5618,7 +5621,7 @@
 				},
 				"fisherman": {
 					"name": "Pêcheur",
-					"text": "Ca mord bien dans l'coin : les poissons viennent voir les moines qui lévitent... Un gars qui s'appelle Mouldeur ? J'le connais bien : il est parti pêcher dans la baie aux Piranhoz. Fait gaffe mon gars, ça mordille ces saletés...",
+					"text": "Ça mord bien dans l'coin : les poissons viennent voir les moines qui lévitent... Un gars qui s'appelle Mouldeur ? J'le connais bien : il est parti pêcher dans la baie aux Piranhoz. Fais gaffe mon gars, ça mordille ces saletés...",
 					"text2": "Mouldeur ? Il a dit qu'il retournait attendre sa femme au Marais... Pauv'gars, ça fait des années qu'il ne l'a pas revu... Remarquez à sa place je serais plutôt content..."
 				},
 				"piranhozBay": {
@@ -5637,7 +5640,7 @@
 				"begin": "Oh oh oh ! J'ai pensé à quelque chose de... problématique. Même si je retrouve Mouldeur, il va oublier à nouveau nos retrouvailles et repartir m'attendre quelque part. Il faut absolument que tu trouves une solution à ce problème avant d'aller voir Mouldeur. Va trouver cette chère Mademoiselle Bao, elle aura certainement une solution !",
 				"baoBob": {
 					"name": "Mademoiselle Bao ???",
-					"text": "Quoi ??? Mademoiselle Bao ?? Non mais... tu me prends pour qui au juste ? .......... Si tu cherches ma soeur, et bien elle se trouve en ce moment auprès du petit fils de l'ArchiDorogon : \"le Vénérable\" comme il aime se faire appeller maintenant... D'ailleurs si un jour son père l'apprend, il va passer un sale quart-d'heure..."
+					"text": "Quoi ??? Mademoiselle Bao ?? Non mais... tu me prends pour qui au juste ? .......... Si tu cherches ma soeur, et bien elle se trouve en ce moment auprès du petit fils de l'ArchiDorogon : \"le Vénérable\" comme il aime se faire appeler maintenant... D'ailleurs si un jour son père l'apprend, il va passer un sale quart-d'heure..."
 				},
 				"baoBabe": {
 					"name": "Miss Bao",
@@ -5663,7 +5666,7 @@
 				"visitRuins": {
 					"name": "Visiter les Ruines",
 					"begin": "Que le pouvoir du Bambooz soit avec moi ! Sus aux infidèles !",
-					"win": "Avant de s'écrouler, Barababor vous souffle les mots suivants : \"Nous avons capturé votre ami : il sera emmené en bateau dans nos steppes natales où il serra vendu comme esclave !\""
+					"win": "Avant de s'écrouler, Barababor vous souffle les mots suivants : \"Nous avons capturé votre ami : il sera emmené en bateau dans nos steppes natales où il sera vendu comme esclave !\""
 				},
 				"suspiciousBoat": {
 					"name": "Chercher un Bateau louche",
@@ -5682,7 +5685,7 @@
 			},
 			"skul5": {
 				"name": "Napalm Shrimp",
-				"begin": "Des \"Crevettes au Napalm\" ? Oh oh oh oh ! Quel doux souvenir que ce plat délicieux ! Bien, il va falloir que tu me rapportes un certain nombre d'ingrédients pour que je puisse préparer tout celà...",
+				"begin": "Des \"Crevettes au Napalm\" ? Oh oh oh oh ! Quel doux souvenir que ce plat délicieux ! Bien, il va falloir que tu me rapportes un certain nombre d'ingrédients pour que je puisse préparer tout cela...",
 				"skully": {
 					"text": "Bien, tout d'abord, il me faut bien entendu de bonnes crevettes. Tu pourras en trouver au Marché du Dôme Soulaflotte ! Fais-vite !",
 					"text2": "Oh oh oh ! Ma-gni-fi-que ! Ces crevettes sont d'une fraicheur incomparable ! Bon, passons à la suite. Deuxième ingrédient indispensable : du Napalm. Pour en fabriquer il nous faut de la lave de bonne qualité...",
@@ -6613,5 +6616,6 @@
 				"helpers": {}
 			}
 		}
-	}
+	},
+	"errors": {}
 }
