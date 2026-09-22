@@ -163,11 +163,11 @@ function withDialogContext(
 export async function listAvailableDialogs(params: {
 	userId: string;
 	dinozId: number;
+	now?: Date;
 }): Promise<AvailableDialogSummary[]> {
 	return prisma.$transaction(async tx => {
 		const availableDialogs: AvailableDialogSummary[] = [];
 		const dialogs = getDialogs();
-
 		if (dialogs.length === 0) {
 			return availableDialogs;
 		}
@@ -177,7 +177,8 @@ export async function listAvailableDialogs(params: {
 			dialog: {
 				id: dialogs[0].id,
 				place: dialogs[0].place
-			}
+			},
+			now: params.now
 		});
 		for (const dialog of dialogs) {
 			if (baseContext.dinoz.placeId !== dialog.place) {
