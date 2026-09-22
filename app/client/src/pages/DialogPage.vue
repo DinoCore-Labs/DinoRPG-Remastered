@@ -146,7 +146,7 @@ function buildInlineMissionDialogState(): DialogPhaseResponse {
 }
 
 async function navigateBackToDinoz() {
-	await router.push({
+	await router.replace({
 		name: 'DinozPage',
 		params: { id: String(dinozId.value) }
 	});
