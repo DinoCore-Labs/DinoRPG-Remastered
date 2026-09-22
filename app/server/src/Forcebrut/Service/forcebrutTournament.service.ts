@@ -369,7 +369,8 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 		for (const itemUsed of fighter.itemsUsed) {
 			const itemRef = itemList[itemUsed];
 
-			if (itemRef.itemType === ItemType.CLASSIC) {
+			const isPermanentItem = itemUsed === Item.GOLDEN_NAPODINO || itemUsed === Item.BAMBOO_FRIEND;
+			if (itemRef.itemType === ItemType.CLASSIC && !isPermanentItem) {
 				await removeItemFromDinoz(fighter.dinozId, itemUsed);
 			}
 
