@@ -787,10 +787,17 @@ const startFight = (fightData: DetailedFight) => {
 	});
 
 	// Finally process all consumables items used only at start of the fight
-	if (fightData.rules.canUseEquipment && !fightData.rules.canUsePermanentEquipmentOnly) {
+	if (fightData.rules.canUseEquipment) {
 		fightData.fighters.forEach(fighter => {
 			// Insert use step for all items with passive effects and consume them - visual only.
-			fighter.items.forEach((item, index) => {
+			for (let index = fighter.items.length - 1; index >= 0; index--) {
+				const item = fighter.items[index];
+				const isPermanentItem = item.itemId === Item.GOLDEN_NAPODINO || item.itemId === Item.BAMBOO_FRIEND;
+
+				if (fightData.rules.canUsePermanentEquipmentOnly && !isPermanentItem) {
+					continue;
+				}
+
 				if (item.itemType === ItemType.CLASSIC && item.passiveEffect) {
 					fightData.steps.push({
 						action: 'itemUse',
@@ -802,7 +809,7 @@ const startFight = (fightData: DetailedFight) => {
 					// Remove from items
 					fighter.items.splice(index, 1);
 				}
-			});
+			}
 			// TODO check items in MT's code
 		});
 	}
