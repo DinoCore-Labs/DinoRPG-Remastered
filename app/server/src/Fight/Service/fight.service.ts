@@ -37,6 +37,7 @@ import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
+import { incrementUserEventProgression } from '../../Events/Service/eventTracking.service.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { addItemToDinoz } from '../../Inventory/Controller/addItemToDinoz.controller.js';
@@ -173,7 +174,9 @@ type FightMonstersAtPlaceOptions = FightRewardOptions & {
 export async function fightMonstersAtPlace(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum,
-	user: Pick<User, 'id' | 'teacher' | 'cooker'> & { items: { itemId: number; quantity: number }[] },
+	user: Pick<User, 'id' | 'teacher' | 'cooker'> & { clanId?: number | null } & {
+		items: { itemId: number; quantity: number }[];
+	},
 	options: FightMonstersAtPlaceOptions = {}
 ) {
 	const dayOfWeek = new Date().getDay();
@@ -239,7 +242,7 @@ export async function fightMonstersAtPlace(
  **/
 export function calculateFightVsMonsters(
 	team: DinozToGetFighter[],
-	user: Pick<User, 'id' | 'cooker'>,
+	user: Pick<User, 'id' | 'cooker'> & { clanId?: number | null },
 	place: PlaceEnum,
 	monsters?: MonsterFiche[],
 	seed?: string,
@@ -355,7 +358,7 @@ export async function rewardFightVsMonsters(
 	monsters: MonsterFiche[],
 	fightResult: FightProcessResult,
 	place: PlaceEnum,
-	user: Pick<User, 'id' | 'teacher'> & { items: { itemId: number; quantity: number }[] },
+	user: Pick<User, 'id' | 'teacher'> & { clanId?: number | null } & { items: { itemId: number; quantity: number }[] },
 	options: FightRewardOptions = {}
 ) {
 	if (!team.length) {
@@ -544,6 +547,8 @@ export async function rewardFightVsMonsters(
 			getActiveGameEvents().some(active => active.event === event)
 		);
 		for (const event of activeMonsterEvents) {
+			await incrementUserEventProgression(userId, event, 1);
+
 			switch (event) {
 				case GameEvent.CHRISTMAS:
 					if (Math.floor(Math.random() * 100) <= 100) {

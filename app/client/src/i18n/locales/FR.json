@@ -1064,13 +1064,18 @@
 	"ranking": {
 		"tabs": {
 			"players": "Joueurs",
-			"average": "Moyenne"
+			"average": "Moyenne",
+			"event": "Événement",
+			"eventPlayers": "Événement - Joueurs",
+			"eventClans": "Événement - Clans"
 		},
 		"th": {
 			"pos": "Pos.",
 			"points": "Pts",
 			"average": "Moy.",
-			"completion": "Comp."
+			"completion": "Comp.",
+			"totalKills": "Total",
+			"dailyKills": "Jour"
 		},
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",

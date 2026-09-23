@@ -241,6 +241,26 @@ const routes: RouteRecord[] = [
 							pageLoaded: Number(route.params.pageLoaded)
 						}),
 						meta: { public: true, showLeftPanel: false }
+					},
+					{
+						path: 'event/players/:pageLoaded',
+						name: 'RankingEventPlayers',
+						component: () => import('../components/rankings/EventPlayersRanking.vue'),
+						props: route => ({
+							eventId: 'CHRISTMAS',
+							pageLoaded: Number(route.params.pageLoaded)
+						}),
+						meta: { public: true, showLeftPanel: false }
+					},
+					{
+						path: 'event/clans/:pageLoaded',
+						name: 'RankingEventClans',
+						component: () => import('../components/rankings/EventClansRanking.vue'),
+						props: route => ({
+							eventId: 'CHRISTMAS',
+							pageLoaded: Number(route.params.pageLoaded)
+						}),
+						meta: { public: true, showLeftPanel: false }
 					}
 				]
 			},

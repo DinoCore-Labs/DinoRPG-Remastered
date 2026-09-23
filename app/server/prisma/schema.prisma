@@ -26,33 +26,33 @@ datasource db {
 }
 
 model BankSaving {
-	id String @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
-	amount Int
-	durationDays Int
-	interestRateBps Int
-	unlockAt DateTime @db.Timestamptz(3)
-	claimedAt DateTime? @db.Timestamptz(3)
+  amount          Int
+  durationDays    Int
+  interestRateBps Int
+  unlockAt        DateTime  @db.Timestamptz(3)
+  claimedAt       DateTime? @db.Timestamptz(3)
 
-	userId String @db.Uuid
-	user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-	createdAt DateTime @default(now()) @db.Timestamptz(3)
-	updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
 
-	@@index([userId])
-	@@index([userId, claimedAt])
-	@@index([unlockAt])
-	@@map("bank_saving")
+  @@index([userId])
+  @@index([userId, claimedAt])
+  @@index([unlockAt])
+  @@map("bank_saving")
 }
 
 model Dinoz {
-  id                 Int                    @id @default(autoincrement())
-  name               String                 @db.VarChar(32)
-  canRename          Boolean                @default(false)
+  id                 Int         @id @default(autoincrement())
+  name               String      @db.VarChar(32)
+  canRename          Boolean     @default(false)
   raceId             Int
-  display            String                 @db.VarChar
-  level              Int                    @default(1)
+  display            String      @db.VarChar
+  level              Int         @default(1)
   life               Int
   maxLife            Int
   experience         Int
@@ -64,44 +64,44 @@ model Dinoz {
   nextUpElementId    Int
   nextUpAltElementId Int
   placeId            Int
-  remaining          Int                    @default(3)
-  order              Int?      
-  createdDate        DateTime               @default(now())   @db.Timestamptz(3)
-  updatedDate        DateTime               @updatedAt        @db.Timestamptz(3)
-  seed               String                 @db.Uuid
+  remaining          Int         @default(3)
+  order              Int?
+  createdDate        DateTime    @default(now()) @db.Timestamptz(3)
+  updatedDate        DateTime    @updatedAt @db.Timestamptz(3)
+  seed               String      @db.Uuid
   state              DinozState?
-  stateTimer         DateTime?              @db.Timestamptz(3)
+  stateTimer         DateTime?   @db.Timestamptz(3)
 
-  catches            DinozCatch[]
-  concentration      DinozConcentration?
-  fight              Boolean                @default(true)
-  gather             Boolean                @default(true)
-  leaderId           Int?                   @map("following")
-  leader             Dinoz?                 @relation("DinozFollowers", fields: [leaderId], references: [id])
-  followers          Dinoz[]                @relation("DinozFollowers")
-  items              DinozItems[] 
-  skills             DinozSkills[] 
-  unlockableSkills   DinozSkillsUnlockable[] 
-  status             DinozStatus[]
-  missions           DinozMissions[]
-  marketOffers       Offer[]                @relation("OfferDinoz")
-  FBTournamentStep   Int                    @default(0)
+  catches          DinozCatch[]
+  concentration    DinozConcentration?
+  fight            Boolean                 @default(true)
+  gather           Boolean                 @default(true)
+  leaderId         Int?                    @map("following")
+  leader           Dinoz?                  @relation("DinozFollowers", fields: [leaderId], references: [id])
+  followers        Dinoz[]                 @relation("DinozFollowers")
+  items            DinozItems[]
+  skills           DinozSkills[]
+  unlockableSkills DinozSkillsUnlockable[]
+  status           DinozStatus[]
+  missions         DinozMissions[]
+  marketOffers     Offer[]                 @relation("OfferDinoz")
+  FBTournamentStep Int                     @default(0)
 
   DojoOpponents  DojoOpponents[]
   DojoTeam       DojoTeam[]
   TournamentTeam TournamentTeam[]
 
-  userId             String                 @db.Uuid
-  user               User                   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)  
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   devourerDefendedId Int?
-  devourerDefended   DevourerControl?       @relation("DevourerDinoz", fields: [devourerDefendedId], references: [id], onDelete: SetNull)
+  devourerDefended   DevourerControl? @relation("DevourerDinoz", fields: [devourerDefendedId], references: [id], onDelete: SetNull)
 
-  logs              GameLog[]               @relation("GameLogDinoz")
-  reports           Report[]                @relation("ReportReportedDinoz")
+  logs    GameLog[] @relation("GameLogDinoz")
+  reports Report[]  @relation("ReportReportedDinoz")
 
   @@index([userId])
-  @@index([leaderId])  
+  @@index([leaderId])
 }
 
 model DinozCatch {
@@ -113,18 +113,18 @@ model DinozCatch {
 }
 
 model DinozItems {
-  id               Int                @id() @default(autoincrement())
-  itemId           Int
-  equippedAt       DateTime           @default(now()) @db.Timestamptz(3)
-  dinozId          Int?
-  dinoz            Dinoz?             @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id         Int      @id() @default(autoincrement())
+  itemId     Int
+  equippedAt DateTime @default(now()) @db.Timestamptz(3)
+  dinozId    Int?
+  dinoz      Dinoz?   @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([dinozId])
   @@map("dinoz_item")
 }
 
 model DinozConcentration {
-  dinozId   Int      @id
+  dinozId   Int @id
   sessionId Int
 
   startedAt DateTime @default(now()) @db.Timestamptz(3)
@@ -137,13 +137,13 @@ model DinozConcentration {
 }
 
 model DinozConcentrationSession {
-  id        Int                     @id @default(autoincrement())
-  scopeKey  String                  @db.VarChar(64)
-  state     DinozConcentrationState @default(GATHERING)
+  id       Int                     @id @default(autoincrement())
+  scopeKey String                  @db.VarChar(64)
+  state    DinozConcentrationState @default(GATHERING)
 
-  createdAt DateTime                @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime                @updatedAt @db.Timestamptz(3)
-  openedAt  DateTime?               @db.Timestamptz(3)
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(3)
+  openedAt  DateTime? @db.Timestamptz(3)
 
   participants DinozConcentration[]
 
@@ -152,20 +152,20 @@ model DinozConcentrationSession {
 }
 
 model DinozMissions {
-  id          Int      @id @default(autoincrement())
+  id          Int    @id @default(autoincrement())
   missionKey  String
-  progression Int      @default(0)
-  tracking    Int      @default(0)
+  progression Int    @default(0)
+  tracking    Int    @default(0)
   state       Json?
 
-  isCompleted Boolean  @default(false)
+  isCompleted Boolean @default(false)
 
-  startedAt   DateTime @default(now())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  startedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  dinozId     Int
-  dinoz       Dinoz    @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  dinozId Int
+  dinoz   Dinoz @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([missionKey, dinozId])
   @@index([dinozId])
@@ -175,11 +175,11 @@ model DinozMissions {
 }
 
 model DinozSkills {
-  id        Int          @id  @default(autoincrement())
-  skillId   Int
-  state     Boolean      @default(true)
-  dinozId   Int?
-  dinoz     Dinoz?       @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id      Int     @id @default(autoincrement())
+  skillId Int
+  state   Boolean @default(true)
+  dinozId Int?
+  dinoz   Dinoz?  @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([skillId, dinozId])
   @@index([dinozId])
@@ -187,19 +187,19 @@ model DinozSkills {
 }
 
 model DinozSkillsUnlockable {
-  id          Int        @id  @default(autoincrement())
-  skillId     Int
-  dinozId     Int?
-  dinoz       Dinoz?     @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id      Int    @id @default(autoincrement())
+  skillId Int
+  dinozId Int?
+  dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("dinoz_skill_unlockable")
 }
 
 model DinozStatus {
-  id          Int        @id  @default(autoincrement())
-  statusId    Int
-  dinozId     Int?
-  dinoz       Dinoz?     @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id       Int    @id @default(autoincrement())
+  statusId Int
+  dinozId  Int?
+  dinoz    Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([statusId, dinozId])
   @@index([dinozId])
@@ -211,19 +211,19 @@ model ForcebrutTournamentOpponent {
 
   step Int @unique
 
-  name String @db.VarChar()
-  raceId Int
+  name    String @db.VarChar()
+  raceId  Int
   display String @db.VarChar
 
-  level Int
-  life Int @default(100)
+  level   Int
+  life    Int @default(100)
   maxLife Int @default(100)
 
-  nbrUpFire Int @default(0)
-  nbrUpWood Int @default(0)
-  nbrUpWater Int @default(0)
+  nbrUpFire      Int @default(0)
+  nbrUpWood      Int @default(0)
+  nbrUpWater     Int @default(0)
   nbrUpLightning Int @default(0)
-  nbrUpAir Int @default(0)
+  nbrUpAir       Int @default(0)
 
   skillIds Int[] @default([])
 
@@ -237,64 +237,62 @@ model ForcebrutTournamentOpponent {
 }
 
 model ForumTopic {
-  id             Int           @id @default(autoincrement())
-  category       ForumCategory
-  title          String        @db.VarChar(120)
+  id       Int           @id @default(autoincrement())
+  category ForumCategory
+  title    String        @db.VarChar(120)
 
-  isPinned       Boolean       @default(false)
-  isClosed       Boolean       @default(false)
+  isPinned Boolean @default(false)
+  isClosed Boolean @default(false)
 
-  messageCount   Int           @default(1)
+  messageCount Int @default(1)
 
-  authorId       String?       @db.Uuid
-  author         User?         @relation("ForumTopicAuthor", fields: [authorId], references: [id], onDelete: SetNull)
-  authorName     String
+  authorId   String? @db.Uuid
+  author     User?   @relation("ForumTopicAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  authorName String
 
-  createdAt      DateTime      @default(now()) @db.Timestamptz(3)
-  updatedAt      DateTime      @default(now()) @updatedAt @db.Timestamptz(3)
-  lastActivityAt DateTime      @default(now()) @db.Timestamptz(3)
+  createdAt      DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+  lastActivityAt DateTime @default(now()) @db.Timestamptz(3)
 
-  messages       ForumMessage[]
-  favorites      ForumFavorite[]
-  subscriptions  ForumSubscription[]
-  reads          ForumTopicRead[]
+  messages      ForumMessage[]
+  favorites     ForumFavorite[]
+  subscriptions ForumSubscription[]
+  reads         ForumTopicRead[]
 
   @@index([category, isPinned, lastActivityAt])
   @@index([lastActivityAt])
-
   @@map("forum_topic")
 }
 
 model ForumTopicRead {
-	userId String @db.Uuid
-	topicId Int
+  userId  String @db.Uuid
+  topicId Int
 
-	lastReadMessageId Int
+  lastReadMessageId Int
 
-	readAt DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+  readAt DateTime @default(now()) @updatedAt @db.Timestamptz(3)
 
-	user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-	topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
-	@@id([userId, topicId])
-	@@index([topicId])
-
-	@@map("forum_topic_read")
+  @@id([userId, topicId])
+  @@index([topicId])
+  @@map("forum_topic_read")
 }
 
 model ForumMessage {
-  id         Int        @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  topicId    Int
-  topic      ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topicId Int
+  topic   ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
-  authorId   String?    @db.Uuid
-  author     User?      @relation("ForumMessageAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  authorId   String? @db.Uuid
+  author     User?   @relation("ForumMessageAuthor", fields: [authorId], references: [id], onDelete: SetNull)
   authorName String
 
-  content    String     @db.Text
+  content String @db.Text
 
-  reports    Report[]   @relation("ReportReportedForumMessage")
+  reports Report[] @relation("ReportReportedForumMessage")
 
   deletedAt      DateTime?                 @db.Timestamptz(3)
   deletedById    String?                   @db.Uuid
@@ -302,29 +300,27 @@ model ForumMessage {
   deletionKind   ForumMessageDeletionKind?
   deletionReason String?                   @db.VarChar(500)
 
-  createdAt  DateTime   @default(now()) @db.Timestamptz(3)
-  updatedAt  DateTime   @default(now()) @updatedAt @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(3)
 
   @@index([topicId, createdAt, id])
   @@index([authorId])
   @@index([topicId, deletedAt])
-
   @@map("forum_message")
 }
 
 model ForumFavorite {
-  userId    String     @db.Uuid
-  topicId   Int
+  userId  String @db.Uuid
+  topicId Int
 
-  createdAt DateTime   @default(now()) @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
 
-  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  topic     ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
   @@id([userId, topicId])
   @@index([topicId])
-
   @@map("forum_favorite")
 }
 
@@ -339,7 +335,6 @@ model ForumSubscription {
 
   @@id([userId, topicId])
   @@index([topicId])
-
   @@map("forum_subscription")
 }
 
@@ -362,32 +357,31 @@ model ForumModerationAction {
   @@index([messageId])
   @@index([actorId, createdAt])
   @@index([action, createdAt])
-
   @@map("forum_moderation_action")
 }
 
 model GameLog {
-  id                BigInt           @id @default(autoincrement())
-  type              GameLogType
-  retention         GameLogRetention @default(TEMPORARY)
+  id        BigInt           @id @default(autoincrement())
+  type      GameLogType
+  retention GameLogRetention @default(TEMPORARY)
 
-  values            String[]         @default([])
-  metadata          Json?
+  values   String[] @default([])
+  metadata Json?
 
-  userId            String?          @db.Uuid
-  user              User?            @relation("GameLogUser", fields: [userId], references: [id], onDelete: SetNull)
+  userId String? @db.Uuid
+  user   User?   @relation("GameLogUser", fields: [userId], references: [id], onDelete: SetNull)
 
-  dinozId           Int?
-  dinoz             Dinoz?           @relation("GameLogDinoz", fields: [dinozId], references: [id], onDelete: SetNull)
+  dinozId Int?
+  dinoz   Dinoz? @relation("GameLogDinoz", fields: [dinozId], references: [id], onDelete: SetNull)
 
-  actorUserId       String?          @db.Uuid
-  actorUser         User?            @relation("GameLogActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+  actorUserId String? @db.Uuid
+  actorUser   User?   @relation("GameLogActor", fields: [actorUserId], references: [id], onDelete: SetNull)
 
   userNameSnapshot  String?
   dinozNameSnapshot String?
   actorNameSnapshot String?
 
-  createdAt         DateTime         @default(now()) @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
 
   @@index([userId, dinozId, type])
   @@index([type, createdAt])
@@ -428,70 +422,70 @@ model GameLogDaily {
 }
 
 model JobDefinition {
-  id           String    @id @default(cuid())
-  key          String    @unique // ex: "reset-dinoz-shop"
-  name         String
-  type         JobType
-  enabled      Boolean   @default(true)
+  id      String  @id @default(cuid())
+  key     String  @unique // ex: "reset-dinoz-shop"
+  name    String
+  type    JobType
+  enabled Boolean @default(true)
 
   // Scheduling
-  timezone     String    @default("UTC")
-  dailyHour    Int?
-  dailyMinute  Int?
-  intervalMs   Int?
+  timezone    String @default("UTC")
+  dailyHour   Int?
+  dailyMinute Int?
+  intervalMs  Int?
 
   // State
-  status       JobStatus @default(IDLE)
-  lastRunAt    DateTime? @db.Timestamptz(3)
-  nextRunAt    DateTime? @db.Timestamptz(3)
-  lastError    String?
+  status    JobStatus @default(IDLE)
+  lastRunAt DateTime? @db.Timestamptz(3)
+  nextRunAt DateTime? @db.Timestamptz(3)
+  lastError String?
 
   // Locking (multi-instance safe)
   lockedAt     DateTime? @db.Timestamptz(3)
   lockedBy     String?
   lockTimeoutS Int       @default(300)
 
-  runs         JobRun[]
+  runs JobRun[]
 
-  createdAt    DateTime  @default(now()) @db.Timestamptz(3)
-  updatedAt    DateTime  @updatedAt      @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
 
   @@index([enabled, nextRunAt])
   @@map("job_definition")
 }
 
 model JobRun {
-  id          String   @id @default(cuid())
-  jobId       String
-  job         JobDefinition @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  id    String        @id @default(cuid())
+  jobId String
+  job   JobDefinition @relation(fields: [jobId], references: [id], onDelete: Cascade)
 
-  startedAt   DateTime @default(now()) @db.Timestamptz(3)
+  startedAt   DateTime  @default(now()) @db.Timestamptz(3)
   endedAt     DateTime? @db.Timestamptz(3)
   success     Boolean?
   error       String?
-  triggeredBy String? 
+  triggeredBy String?
 
   @@index([jobId, startedAt])
   @@map("job_run")
 }
 
 model News {
-  id            Int               @id @default(autoincrement())
-  slug          String            @unique @db.VarChar
-  type          NewsType          @default(update)
+  id   Int      @id @default(autoincrement())
+  slug String   @unique @db.VarChar
+  type NewsType @default(update)
 
   image         Bytes?
-  imageMimeType String?           @db.VarChar
+  imageMimeType String? @db.VarChar
 
-  isPublished   Boolean           @default(false)
-  publishedAt   DateTime?
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
 
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  translations  NewsTranslation[]
-  poll          Poll?
-  likedBy       NewsLike[]
+  translations NewsTranslation[]
+  poll         Poll?
+  likedBy      NewsLike[]
 
   @@index([type])
   @@index([isPublished, publishedAt])
@@ -500,17 +494,17 @@ model News {
 }
 
 model NewsTranslation {
-  id        Int       @id @default(autoincrement())
-  newsId    Int
-  lang      Language
-  title     String    @db.VarChar
-  excerpt   String?   @db.VarChar
-  content   String    @db.Text
+  id      Int      @id @default(autoincrement())
+  newsId  Int
+  lang    Language
+  title   String   @db.VarChar
+  excerpt String?  @db.VarChar
+  content String   @db.Text
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  news      News      @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
 
   @@unique([newsId, lang])
   @@index([lang])
@@ -565,48 +559,48 @@ model OfferBid {
 }
 
 model Poll {
-  id        Int          @id @default(autoincrement())
-  newsId    Int          @unique
-  isActive  Boolean      @default(true)
-  endAt     DateTime
+  id       Int      @id @default(autoincrement())
+  newsId   Int      @unique
+  isActive Boolean  @default(true)
+  endAt    DateTime
 
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  news      News         @relation(fields: [newsId], references: [id], onDelete: Cascade)
-  options   PollOption[]
-  votes     PollVote[]
+  news    News         @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  options PollOption[]
+  votes   PollVote[]
 
   @@index([isActive, endAt])
   @@map("polls")
 }
 
 model PollOption {
-  id           Int                     @id @default(autoincrement())
-  pollId       Int
-  sortOrder    Int                     @default(0)
+  id        Int @id @default(autoincrement())
+  pollId    Int
+  sortOrder Int @default(0)
 
-  createdAt    DateTime                @default(now())
+  createdAt DateTime @default(now())
 
   poll         Poll                    @relation(fields: [pollId], references: [id], onDelete: Cascade)
   translations PollOptionTranslation[]
   votes        PollVote[]
 
-  @@index([pollId])
   @@unique([pollId, sortOrder])
+  @@index([pollId])
   @@map("poll_options")
 }
 
 model PollOptionTranslation {
-  id           Int         @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   pollOptionId Int
   lang         Language
-  label        String      @db.VarChar
+  label        String   @db.VarChar
 
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  pollOption   PollOption  @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
+  pollOption PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
 
   @@unique([pollOptionId, lang])
   @@index([lang])
@@ -614,15 +608,15 @@ model PollOptionTranslation {
 }
 
 model PollVote {
-  id           Int        @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   pollId       Int
   pollOptionId Int
-  userId       String     @db.Uuid
-  votedAt      DateTime   @default(now())
+  userId       String   @db.Uuid
+  votedAt      DateTime @default(now())
 
-  poll         Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
-  pollOption   PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  poll       Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollOption PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([pollId, userId], name: "unique_user_vote_per_poll")
   @@index([pollId])
@@ -636,8 +630,8 @@ model NewsLike {
   userId    String   @db.Uuid
   createdAt DateTime @default(now())
 
-  news      News     @relation(fields: [newsId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([newsId, userId])
   @@index([userId])
@@ -645,15 +639,15 @@ model NewsLike {
 }
 
 model Ranking {
-  id         Int    @id @default(autoincrement())
-  dinozCount Int    @default(0)
-  points     Int    @default(0)
-  average    Int    @default(0)
-  completion Float  @default(0)
-  dojo       Int    @default(0)
+  id         Int   @id @default(autoincrement())
+  dinozCount Int   @default(0)
+  points     Int   @default(0)
+  average    Int   @default(0)
+  completion Float @default(0)
+  dojo       Int   @default(0)
 
-  userId     String @unique @db.Uuid
-  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -702,9 +696,9 @@ model SignupDeviceMonthCounter {
   monthKey    String
   deviceToken String
   count       Int      @default(0)
-  expiresAt   DateTime                    @db.Timestamptz(3)
-  createdAt   DateTime @default(now())    @db.Timestamptz(3)
-  updatedAt   DateTime @updatedAt         @db.Timestamptz(3)
+  expiresAt   DateTime @db.Timestamptz(3)
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
 
   @@unique([monthKey, deviceToken])
   @@index([monthKey])
@@ -716,9 +710,9 @@ model SignupIpMonthCounter {
   monthKey  String
   ipToken   String
   count     Int      @default(0)
-  expiresAt DateTime                    @db.Timestamptz(3)
-  createdAt DateTime @default(now())    @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt         @db.Timestamptz(3)
+  expiresAt DateTime @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
 
   @@unique([monthKey, ipToken])
   @@index([monthKey])
@@ -726,27 +720,27 @@ model SignupIpMonthCounter {
 }
 
 model User {
-  id            String    @id @default(uuid()) @db.Uuid
-  name          String    @unique
-  password      String
-  role          Role      @default(PLAYER)
-  createdDate   DateTime  @default(now())      @db.Timestamptz(3)
-  updatedAt     DateTime? @updatedAt           @db.Timestamptz(3)
-  lastLogin     DateTime  @default(now())      @db.Timestamptz(3)
+  id          String    @id @default(uuid()) @db.Uuid
+  name        String    @unique
+  password    String
+  role        Role      @default(PLAYER)
+  createdDate DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime? @updatedAt @db.Timestamptz(3)
+  lastLogin   DateTime  @default(now()) @db.Timestamptz(3)
 
   gameRulesAcceptedVersion String?
   gameRulesAcceptedAt      DateTime?
 
-  clanId                 Int?
-  clan                   Clan?              @relation(fields: [clanId], references: [id], onDelete: SetNull)
-  leaderOf               Clan?              @relation("leader")
-  ClanHistory            ClanHistory[]
-  ClanJoinRequest        ClanJoinRequest?   @relation("clanRequest")
-  ClanMember             ClanMember?
-  ClanMessage            ClanMessage[]
+  clanId          Int?
+  clan            Clan?            @relation(fields: [clanId], references: [id], onDelete: SetNull)
+  leaderOf        Clan?            @relation("leader")
+  ClanHistory     ClanHistory[]
+  ClanJoinRequest ClanJoinRequest? @relation("clanRequest")
+  ClanMember      ClanMember?
+  ClanMessage     ClanMessage[]
 
-  devourerAttacksLeft  Int                @default(3)
-  devourerControls      DevourerControl[]
+  devourerAttacksLeft Int               @default(3)
+  devourerControls    DevourerControl[]
 
   gathers       UserGather[]
   ingredients   UserIngredients[]
@@ -758,33 +752,33 @@ model User {
   statsTracking UserTracking[]
   wallets       UserWallet[]
 
-  marketOffers Offer[]            @relation("OfferSeller")
+  marketOffers Offer[]    @relation("OfferSeller")
   marketBids   OfferBid[]
 
-  dinoz         Dinoz[]
-  dinozShop     UserDinozShop[]
+  dinoz     Dinoz[]
+  dinozShop UserDinozShop[]
 
-  leader        Boolean            @default(false)
-  engineer      Boolean            @default(false)
-  cooker        Boolean            @default(false)
-  shopKeeper    Boolean            @default(false)
-  merchant      Boolean            @default(false)
-  priest        Boolean            @default(false)
-  teacher       Boolean            @default(false)
-  matelasseur   Boolean            @default(false)
-  messie        Boolean            @default(false)
+  leader      Boolean @default(false)
+  engineer    Boolean @default(false)
+  cooker      Boolean @default(false)
+  shopKeeper  Boolean @default(false)
+  merchant    Boolean @default(false)
+  priest      Boolean @default(false)
+  teacher     Boolean @default(false)
+  matelasseur Boolean @default(false)
+  messie      Boolean @default(false)
 
-  keepSeedReincarnationCount Int   @default(0)
+  keepSeedReincarnationCount Int @default(0)
 
-  newsLikes     NewsLike[]
-  pollVotes     PollVote[]
+  newsLikes NewsLike[]
+  pollVotes PollVote[]
 
   createdConversations Conversation[] @relation("CreatedConversations")
   conversationLinks    Participant[]
   sentMessages         Message[]
 
-  logs            GameLog[] @relation("GameLogUser")
-  actedLogs       GameLog[] @relation("GameLogActor")
+  logs      GameLog[] @relation("GameLogUser")
+  actedLogs GameLog[] @relation("GameLogActor")
 
   discoveredSkills Int[] @default([])
 
@@ -800,33 +794,33 @@ model User {
 
   notifications Notification[]
 
-  forumTopics        ForumTopic[]    @relation("ForumTopicAuthor")
-  forumMessages      ForumMessage[]  @relation("ForumMessageAuthor")
+  forumTopics        ForumTopic[]        @relation("ForumTopicAuthor")
+  forumMessages      ForumMessage[]      @relation("ForumMessageAuthor")
   forumFavorites     ForumFavorite[]
   forumTopicReads    ForumTopicRead[]
   forumSubscriptions ForumSubscription[]
 
   dojo               Dojo?
-  FightArchive       FightArchive[] @relation("UserRelation")
-  LeftFightArchives  FightArchive[] @relation("LeftUserRelation")
-  RightFightArchives FightArchive[] @relation("RightUserRelation")
+  FightArchive       FightArchive[]      @relation("UserRelation")
+  LeftFightArchives  FightArchive[]      @relation("LeftUserRelation")
+  RightFightArchives FightArchive[]      @relation("RightUserRelation")
   FightWatched       FightWatched[]
+  userEventTrackings UserEventTracking[]
 }
 
 model Notification {
   id      String @id @default(uuid()) @db.Uuid
   userId  String @db.Uuid
   user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type    String 
-  content Json?  
+  type    String
+  content Json?
 
   @@index([userId])
   @@map("notification")
 }
 
-
 model UserDinozShop {
-  id      Int     @id  @default(autoincrement())
+  id      Int     @id @default(autoincrement())
   raceId  Int
   display String  @db.VarChar
   userId  String? @db.Uuid
@@ -836,23 +830,23 @@ model UserDinozShop {
 }
 
 model UserGather {
-  id       Int     @id @default(autoincrement())
-  place    Int
-  type     Int
-  grid     Int[]
-  userId   String? @db.Uuid
-  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id     Int     @id @default(autoincrement())
+  place  Int
+  type   Int
+  grid   Int[]
+  userId String? @db.Uuid
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@index([userId])
   @@map("user_gather")
 }
 
 model UserIngredients {
-  id            Int     @default(autoincrement())
-  ingredientId  Int
-  quantity      Int
-  userId        String  @db.Uuid
-  user          User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id           Int    @default(autoincrement())
+  ingredientId Int
+  quantity     Int
+  userId       String @db.Uuid
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([ingredientId, userId])
   @@index([userId])
@@ -860,11 +854,11 @@ model UserIngredients {
 }
 
 model UserItems {
-  id        Int     @default(autoincrement())
-  itemId    Int
-  quantity  Int
-  userId    String  @db.Uuid
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id       Int    @default(autoincrement())
+  itemId   Int
+  quantity Int
+  userId   String @db.Uuid
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([itemId, userId])
   @@index([userId])
@@ -872,24 +866,24 @@ model UserItems {
 }
 
 model UserProfile {
-  id          String    @id @default(cuid())
-  userId      String    @unique @db.Uuid
-  user        User      @relation(fields: [userId], references: [id])
+  id     String @id @default(cuid())
+  userId String @unique @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
 
   avatar      Bytes?
   avatarType  String?
-  language    Language? @default(FR)  
-  gender      Gender?   
+  language    Language? @default(FR)
+  gender      Gender?
   age         Int?
   description String?
   customText  String?
 }
 
 model UserRewards {
-  id       Int      @id @default(autoincrement())
+  id       Int     @id @default(autoincrement())
   rewardId Int
-  userId   String?  @db.Uuid
-  user     User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String? @db.Uuid
+  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([rewardId, userId])
   @@index([userId])
@@ -899,16 +893,16 @@ model UserScenario {
   id Int @id @default(autoincrement())
 
   scenarioKey String
-  progression Int @default(0)
-  tracking Int @default(0)
-  state Json?
+  progression Int    @default(0)
+  tracking    Int    @default(0)
+  state       Json?
 
   startedAt DateTime @default(now())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   userId String @db.Uuid
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([scenarioKey, userId])
   @@index([userId])
@@ -930,11 +924,11 @@ model UserTracking {
 }
 
 model UserWallet {
-  id          String    @id @default(uuid()) @db.Uuid
-  type        MoneyType
-  amount      Int       @default(0)
-  userId      String    @db.Uuid
-  user        User      @relation(fields: [userId], references: [id])
+  id     String    @id @default(uuid()) @db.Uuid
+  type   MoneyType
+  amount Int       @default(0)
+  userId String    @db.Uuid
+  user   User      @relation(fields: [userId], references: [id])
 
   @@unique([userId, type])
 }
@@ -946,18 +940,18 @@ enum ConversationType {
 }
 
 model Conversation {
-  id              String            @id @default(uuid()) @db.Uuid
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  type            ConversationType  @default(DIRECT)
+  id              String           @id @default(uuid()) @db.Uuid
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  type            ConversationType @default(DIRECT)
   title           String?
-  createdById     String?           @db.Uuid
-  pinnedMessageId Int?              @unique
+  createdById     String?          @db.Uuid
+  pinnedMessageId Int?             @unique
 
-  createdBy       User?             @relation("CreatedConversations", fields: [createdById], references: [id], onDelete: SetNull)
-  pinnedMessage   Message?          @relation("PinnedMessage", fields: [pinnedMessageId], references: [id], onDelete: SetNull)
-  participants    Participant[]
-  messages        Message[]
+  createdBy     User?         @relation("CreatedConversations", fields: [createdById], references: [id], onDelete: SetNull)
+  pinnedMessage Message?      @relation("PinnedMessage", fields: [pinnedMessageId], references: [id], onDelete: SetNull)
+  participants  Participant[]
+  messages      Message[]
 
   @@index([createdAt])
   @@index([updatedAt])
@@ -965,18 +959,18 @@ model Conversation {
 }
 
 model Participant {
-  id               Int          @id @default(autoincrement())
-  conversationId   String       @db.Uuid
-  userId           String?      @db.Uuid
-  joinedAt         DateTime     @default(now())
+  id               Int       @id @default(autoincrement())
+  conversationId   String    @db.Uuid
+  userId           String?   @db.Uuid
+  joinedAt         DateTime  @default(now())
   leftAt           DateTime?
   userNameSnapshot String
   lastReadAt       DateTime?
-  isArchived       Boolean      @default(false)
-  isMuted          Boolean      @default(false)
+  isArchived       Boolean   @default(false)
+  isMuted          Boolean   @default(false)
 
-  conversation     Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  user             User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user         User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@unique([conversationId, userId])
   @@index([userId])
@@ -985,18 +979,18 @@ model Participant {
 }
 
 model Message {
-  id                 Int           @id @default(autoincrement())
-  conversationId     String        @db.Uuid
-  senderId           String?       @db.Uuid
+  id                 Int       @id @default(autoincrement())
+  conversationId     String    @db.Uuid
+  senderId           String?   @db.Uuid
   content            String
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
   deletedAt          DateTime?
   senderNameSnapshot String
 
-  conversation       Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  sender             User?         @relation(fields: [senderId], references: [id], onDelete: SetNull)
-  pinnedIn           Conversation? @relation("PinnedMessage")
+  conversation Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User?         @relation(fields: [senderId], references: [id], onDelete: SetNull)
+  pinnedIn     Conversation? @relation("PinnedMessage")
 
   @@index([conversationId, createdAt])
   @@index([senderId])
@@ -1004,32 +998,32 @@ model Message {
 }
 
 model Clan {
-  id             Int               @id @default(autoincrement())
-  name           String            @unique
-  treasureValue  Int               @default(0)
-  creationDate   DateTime          @default(now()) @db.Timestamp(6)
-  banner         Bytes?
-  leaderId       String            @unique @db.Uuid
-  langs          Language[]        
-  leader         User              @relation("leader", fields: [leaderId], references: [id])
-  history        ClanHistory[]
-  joinRequests   ClanJoinRequest[]
-  members        ClanMember[]      @relation("member")
-  pages          ClanPage[]
-  ingredients    ClanIngredient[]
-  discussion     ClanMessage[]
-  users          User[]
+  id            Int               @id @default(autoincrement())
+  name          String            @unique
+  treasureValue Int               @default(0)
+  creationDate  DateTime          @default(now()) @db.Timestamp(6)
+  banner        Bytes?
+  leaderId      String            @unique @db.Uuid
+  langs         Language[]
+  leader        User              @relation("leader", fields: [leaderId], references: [id])
+  history       ClanHistory[]
+  joinRequests  ClanJoinRequest[]
+  members       ClanMember[]      @relation("member")
+  pages         ClanPage[]
+  ingredients   ClanIngredient[]
+  discussion    ClanMessage[]
+  users         User[]
 
-  reports        Report[]          @relation("ReportReportedClan")
+  reports            Report[]            @relation("ReportReportedClan")
 }
 
 model ClanJoinRequest {
-  id       Int      @id @default(autoincrement())
-  clanId   Int
-  date     DateTime @default(now()) @db.Timestamp(6)
-  userId String     @unique @db.Uuid
-  clan     Clan     @relation(fields: [clanId], references: [id])
-  user     User     @relation("clanRequest", fields: [userId], references: [id], onDelete: Cascade)
+  id     Int      @id @default(autoincrement())
+  clanId Int
+  date   DateTime @default(now()) @db.Timestamp(6)
+  userId String   @unique @db.Uuid
+  clan   Clan     @relation(fields: [clanId], references: [id])
+  user   User     @relation("clanRequest", fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model ClanIngredient {
@@ -1065,27 +1059,27 @@ enum ReportStatus {
 }
 
 model Report {
-  id              Int          @id @default(autoincrement())
-  reporterId      String       @db.Uuid
-  reporter        User         @relation("ReportReporter", fields: [reporterId], references: [id], onDelete: Cascade)
-  reportedUserId  String?      @db.Uuid
-  reportedUser    User?        @relation("ReportReportedUser", fields: [reportedUserId], references: [id], onDelete: Cascade)
-  reportedDinozId Int?
-  reportedDinoz   Dinoz?       @relation("ReportReportedDinoz", fields: [reportedDinozId], references: [id], onDelete: Cascade)
-  reportedClanId  Int?
-  reportedClan    Clan?        @relation("ReportReportedClan", fields: [reportedClanId], references: [id], onDelete: Cascade)
-  reportedForumMessageId Int?
-  reportedForumMessage   ForumMessage? @relation("ReportReportedForumMessage", fields: [reportedForumMessageId], references: [id], onDelete: SetNull)
-  reportedForumAuthorId   String? @db.Uuid
+  id                      Int           @id @default(autoincrement())
+  reporterId              String        @db.Uuid
+  reporter                User          @relation("ReportReporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  reportedUserId          String?       @db.Uuid
+  reportedUser            User?         @relation("ReportReportedUser", fields: [reportedUserId], references: [id], onDelete: Cascade)
+  reportedDinozId         Int?
+  reportedDinoz           Dinoz?        @relation("ReportReportedDinoz", fields: [reportedDinozId], references: [id], onDelete: Cascade)
+  reportedClanId          Int?
+  reportedClan            Clan?         @relation("ReportReportedClan", fields: [reportedClanId], references: [id], onDelete: Cascade)
+  reportedForumMessageId  Int?
+  reportedForumMessage    ForumMessage? @relation("ReportReportedForumMessage", fields: [reportedForumMessageId], references: [id], onDelete: SetNull)
+  reportedForumAuthorId   String?       @db.Uuid
   reportedForumAuthorName String?
-  reportedForumContent    String? @db.Text
+  reportedForumContent    String?       @db.Text
   reportedForumTopicId    Int?
   reportedForumTopicTitle String?
-  reason          String
-  comment         String?
-  status          ReportStatus @default(PENDING)
-  createdAt       DateTime     @default(now()) @db.Timestamptz(3)
-  updatedAt       DateTime     @updatedAt @db.Timestamptz(3)
+  reason                  String
+  comment                 String?
+  status                  ReportStatus  @default(PENDING)
+  createdAt               DateTime      @default(now()) @db.Timestamptz(3)
+  updatedAt               DateTime      @updatedAt @db.Timestamptz(3)
 
   @@index([reporterId])
   @@index([reportedUserId])
@@ -1112,7 +1106,7 @@ model ClanMember {
   nickname String?
   rights   String[] @default([])
   donation Int      @default(0)
-  userId String     @unique @db.Uuid
+  userId   String   @unique @db.Uuid
   clan     Clan     @relation("member", fields: [clanId], references: [id])
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -1171,7 +1165,7 @@ model DojoOpponents {
   dojoId   String  @db.Uuid
   dojo     Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   dinozId  Int
-  dinoz   Dinoz   @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+  dinoz    Dinoz   @relation(fields: [dinozId], references: [id], onDelete: Cascade)
   fighted  Boolean @default(false)
   achieved Boolean @default(false)
 
@@ -1264,12 +1258,12 @@ model TournamentTeam {
   FightArchiveRight FightArchive[] @relation("RightTeamRelation")
 
   // --- Inter-dojo tournament pool phase state ---
-  poolNumber        Int?           // 0-15, assigned once qualification ends
-  poolWins          Int            @default(0)
-  poolLosses        Int            @default(0)
-  poolQualified     Boolean        @default(false) // true once poolWins reaches POOL_WIN_COUNT
-  poolEliminated    Boolean        @default(false) // true once poolLosses reaches POOL_LOSS_COUNT
-  finalSeed         Int?           // 1..32, computed from pool performance for the final bracket
+  poolNumber     Int? // 0-15, assigned once qualification ends
+  poolWins       Int     @default(0)
+  poolLosses     Int     @default(0)
+  poolQualified  Boolean @default(false) // true once poolWins reaches POOL_WIN_COUNT
+  poolEliminated Boolean @default(false) // true once poolLosses reaches POOL_LOSS_COUNT
+  finalSeed      Int? // 1..32, computed from pool performance for the final bracket
 
   @@unique([dojoId, tournamentId])
   @@index([dojoId])
@@ -1427,6 +1421,7 @@ enum Role {
   ADMIN
   SUPER_ADMIN
 }
+
 model DevourerControl {
   id        Int      @id @default(autoincrement())
   placeId   Int      @unique
@@ -1437,3 +1432,19 @@ model DevourerControl {
 
   @@index([userId])
 }
+
+model UserEventTracking {
+  id        Int      @id @default(autoincrement())
+  eventId   String
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  daily     Int      @default(0)
+  total     Int      @default(0)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([eventId, userId])
+  @@index([userId])
+  @@index([eventId])
+  @@map("user_event_tracking")
+}
+

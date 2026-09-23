@@ -19,5 +19,11 @@ export const RankingService = {
 	},
 	getDojoRanking(sort: string, page: number): Promise<DojoRankingEntry[]> {
 		return api.get<DojoRankingEntry[]>(`/ranking/list/${sort}/${page}`);
+	},
+	getEventPlayersRanking(eventId: string, page: number): Promise<any> {
+		return api.get<any>(`/ranking/event/players/${eventId}/${page}`);
+	},
+	getEventClansRanking(eventId: string, page: number): Promise<any> {
+		return api.get<any>(`/ranking/event/clans/${eventId}/${page}`);
 	}
 };
