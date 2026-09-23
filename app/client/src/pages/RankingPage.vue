@@ -12,6 +12,11 @@
 				{{ $t('common.clans') }}
 			</RouterLink>
 		</li>
+		<li :class="{ active: isEventTab }">
+			<RouterLink :to="{ name: 'RankingEventClans', params: { pageLoaded: 1 } }">
+				{{ $t('ranking.tabs.event') }}
+			</RouterLink>
+		</li>
 	</ul>
 
 	<ul class="onglets sub-tabs" v-if="isPlayerTab">
@@ -41,6 +46,19 @@
 		<li :class="{ active: $route.name === 'RankingTreasure' }">
 			<RouterLink :to="{ name: 'RankingTreasure', params: { pageLoaded: 1 } }">
 				{{ $t('common.treasureValue') }}
+			</RouterLink>
+		</li>
+	</ul>
+
+	<ul class="onglets sub-tabs" v-if="isEventTab">
+		<li :class="{ active: $route.name === 'RankingEventClans' }">
+			<RouterLink :to="{ name: 'RankingEventClans', params: { pageLoaded: 1 } }">
+				{{ $t('common.clans') }}
+			</RouterLink>
+		</li>
+		<li :class="{ active: $route.name === 'RankingEventPlayers' }">
+			<RouterLink :to="{ name: 'RankingEventPlayers', params: { pageLoaded: 1 } }">
+				{{ $t('ranking.tabs.players') }}
 			</RouterLink>
 		</li>
 	</ul>
@@ -96,6 +114,8 @@ export default defineComponent({
 
 		const isClanTab = computed(() => ['RankingClans', 'RankingTreasure'].includes(route.name as string));
 
+		const isEventTab = computed(() => ['RankingEventPlayers', 'RankingEventClans'].includes(route.name as string));
+
 		const subHeader = computed(() => {
 			switch (route.name) {
 				case 'RankingPlayers':
@@ -108,12 +128,16 @@ export default defineComponent({
 					return 'common.clans';
 				case 'RankingTreasure':
 					return 'common.treasureValue';
+				case 'RankingEventPlayers':
+					return 'ranking.tabs.eventPlayers';
+				case 'RankingEventClans':
+					return 'ranking.tabs.eventClans';
 				default:
 					return 'ranking.tabs.players';
 			}
 		});
 
-		return { subHeader, isPlayerTab, isClanTab };
+		return { subHeader, isPlayerTab, isClanTab, isEventTab };
 	},
 	methods: {
 		getImgURL,
