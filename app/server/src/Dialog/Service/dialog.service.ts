@@ -87,6 +87,20 @@ function resolveVisibleLinks(
 	return visibleLinks;
 }
 
+async function lockDialogInteraction(
+	tx: DialogTransaction,
+	userId: string,
+	dinozId: number,
+	dialogId: string
+): Promise<void> {
+	const lockKey = `${userId}:${dinozId}:${dialogId}`;
+	await tx.$executeRaw`
+		SELECT pg_advisory_xact_lock(
+			hashtextextended(${lockKey}, 0::bigint)
+		)
+	`;
+}
+
 export async function enterDialogPhase(
 	tx: DialogTransaction,
 	dialog: RuntimeDialog,
@@ -202,6 +216,7 @@ export async function listAvailableDialogs(params: {
 export async function startDialog(params: OpenDialogParams): Promise<DialogPhaseResponse> {
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
+		await lockDialogInteraction(tx, params.userId, params.dinozId, dialog.id);
 		await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
 		const phase = getDialogPhase(dialog, dialog.first);
 		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId);
@@ -211,6 +226,7 @@ export async function startDialog(params: OpenDialogParams): Promise<DialogPhase
 export async function selectDialogLink(params: SelectDialogLinkParams): Promise<DialogPhaseResponse> {
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
+		await lockDialogInteraction(tx, params.userId, params.dinozId, dialog.id);
 		const currentPhase = getDialogPhase(dialog, params.phaseId);
 		const currentContext = await buildDialogContext(tx, {
 			userId: params.userId,
@@ -380,10 +396,6 @@ function getFightReturnCompletionState(
 	return hasCompletionProof ? true : null;
 }
 
-function isDialogFightReturnPhase(phaseId: string): boolean {
-	return ['fight_win', 'attack_win', 'show_win', 'water_win', 'fire_win', 'comb_win'].includes(phaseId);
-}
-
 export async function resumeDialogPhase(params: {
 	userId: string;
 	dinozId: number;
@@ -405,19 +417,10 @@ export async function resumeDialogPhase(params: {
 		if (postFightState !== true) {
 			await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
 		}
-		const isFightReturnPhase = isDialogFightReturnPhase(phase.id);
-		/*
-		 * Lors d'un resume d'une continuation post-combat,
-		 * les effets ont déjà été appliqués lors de l'entrée
-		 * réelle dans la phase.
-		 *
-		 * On ne les rejoue donc jamais.
-		 */
-		const isPostFightContinuation = postFightState === true;
 		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId, {
-			applySpecials: !isFightReturnPhase && !isPostFightContinuation,
-			applyEffects: !isFightReturnPhase && !isPostFightContinuation,
-			advanceTalkMission: !isFightReturnPhase && !isPostFightContinuation
+			applySpecials: false,
+			applyEffects: false,
+			advanceTalkMission: false
 		});
 	});
 }
