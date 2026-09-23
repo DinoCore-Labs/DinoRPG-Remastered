@@ -69,11 +69,6 @@ function assertPositiveCount(count: number, label: string) {
 	}
 }
 
-function assertEnoughQuantity(currentQuantity: number, requiredQuantity: number, resourceLabel: string) {
-	if (currentQuantity < requiredQuantity) {
-		throw new ExpectedError(`Not enough ${resourceLabel}: required ${requiredQuantity}, current ${currentQuantity}`);
-	}
-}
 const dialogItemsById = new Map(Object.values(itemList).map(item => [item.itemId, item]));
 
 function getDialogItemMaxQuantity(context: DialogContext, itemId: number) {
@@ -125,21 +120,49 @@ async function addUserItem(tx: DialogTransaction, context: DialogContext, itemId
 
 async function removeUserItem(tx: DialogTransaction, context: DialogContext, itemId: number, count: number) {
 	assertPositiveCount(count, 'Item count');
-	const currentQuantity = context.user.items.get(itemId) ?? 0;
-	assertEnoughQuantity(currentQuantity, count, `item ${itemId}`);
-	const remainingQuantity = currentQuantity - count;
-	if (remainingQuantity <= 0) {
-		await tx.userItems.delete({
-			where: getUserItemWhere(context.user.id, itemId)
-		});
-		return;
-	}
-	await tx.userItems.update({
-		where: getUserItemWhere(context.user.id, itemId),
+	const consumed = await tx.userItems.updateMany({
+		where: {
+			userId: context.user.id,
+			itemId,
+			quantity: {
+				gte: count
+			}
+		},
 		data: {
-			quantity: remainingQuantity
+			quantity: {
+				decrement: count
+			}
 		}
 	});
+
+	if (consumed.count !== 1) {
+		const current = await tx.userItems.findUnique({
+			where: getUserItemWhere(context.user.id, itemId),
+			select: {
+				quantity: true
+			}
+		});
+		throw new ExpectedError(`Not enough item ${itemId}: required ${count}, current ${current?.quantity ?? 0}`);
+	}
+	const updated = await tx.userItems.findUnique({
+		where: getUserItemWhere(context.user.id, itemId),
+		select: {
+			quantity: true
+		}
+	});
+	const remainingQuantity = updated?.quantity ?? 0;
+	if (remainingQuantity === 0) {
+		await tx.userItems.deleteMany({
+			where: {
+				userId: context.user.id,
+				itemId,
+				quantity: 0
+			}
+		});
+		context.user.items.delete(itemId);
+		return;
+	}
+	context.user.items.set(itemId, remainingQuantity);
 }
 
 async function addUserIngredient(tx: DialogTransaction, userId: string, ingredientId: number, count: number) {
@@ -166,21 +189,50 @@ async function removeUserIngredient(
 	count: number
 ) {
 	assertPositiveCount(count, 'Ingredient count');
-	const currentQuantity = context.user.ingredients.get(ingredientId) ?? 0;
-	assertEnoughQuantity(currentQuantity, count, `ingredient ${ingredientId}`);
-	const remainingQuantity = currentQuantity - count;
-	if (remainingQuantity <= 0) {
-		await tx.userIngredients.delete({
-			where: getUserIngredientWhere(context.user.id, ingredientId)
-		});
-		return;
-	}
-	await tx.userIngredients.update({
-		where: getUserIngredientWhere(context.user.id, ingredientId),
+	const consumed = await tx.userIngredients.updateMany({
+		where: {
+			userId: context.user.id,
+			ingredientId,
+			quantity: {
+				gte: count
+			}
+		},
 		data: {
-			quantity: remainingQuantity
+			quantity: {
+				decrement: count
+			}
 		}
 	});
+	if (consumed.count !== 1) {
+		const current = await tx.userIngredients.findUnique({
+			where: getUserIngredientWhere(context.user.id, ingredientId),
+			select: {
+				quantity: true
+			}
+		});
+		throw new ExpectedError(
+			`Not enough ingredient ${ingredientId}: required ${count}, current ${current?.quantity ?? 0}`
+		);
+	}
+	const updated = await tx.userIngredients.findUnique({
+		where: getUserIngredientWhere(context.user.id, ingredientId),
+		select: {
+			quantity: true
+		}
+	});
+	const remainingQuantity = updated?.quantity ?? 0;
+	if (remainingQuantity === 0) {
+		await tx.userIngredients.deleteMany({
+			where: {
+				userId: context.user.id,
+				ingredientId,
+				quantity: 0
+			}
+		});
+		context.user.ingredients.delete(ingredientId);
+		return;
+	}
+	context.user.ingredients.set(ingredientId, remainingQuantity);
 }
 
 async function addUserMoney(tx: DialogTransaction, context: DialogContext, moneyType: DialogMoneyType, amount: number) {
@@ -210,15 +262,46 @@ async function addUserMoney(tx: DialogTransaction, context: DialogContext, money
 
 async function removeUserGold(tx: DialogTransaction, context: DialogContext, amount: number) {
 	assertPositiveCount(amount, 'Gold amount');
-	assertEnoughQuantity(context.user.gold, amount, 'gold');
-	await tx.userWallet.update({
-		where: { id: context.user.id, type: 'GOLD' },
+	const consumed = await tx.userWallet.updateMany({
+		where: {
+			userId: context.user.id,
+			type: 'GOLD',
+			amount: {
+				gte: amount
+			}
+		},
 		data: {
 			amount: {
 				decrement: amount
 			}
 		}
 	});
+	if (consumed.count !== 1) {
+		const wallet = await tx.userWallet.findUnique({
+			where: {
+				userId_type: {
+					userId: context.user.id,
+					type: 'GOLD'
+				}
+			},
+			select: {
+				amount: true
+			}
+		});
+		throw new ExpectedError(`Not enough gold: required ${amount}, current ${wallet?.amount ?? 0}`);
+	}
+	const wallet = await tx.userWallet.findUniqueOrThrow({
+		where: {
+			userId_type: {
+				userId: context.user.id,
+				type: 'GOLD'
+			}
+		},
+		select: {
+			amount: true
+		}
+	});
+	context.user.gold = wallet.amount;
 }
 
 async function healDinoz(tx: DialogTransaction, context: DialogContext, amount: number) {
@@ -271,27 +354,18 @@ async function addUserCollection(
 	collectionKey: string
 ): Promise<AddUserCollectionResult> {
 	const rewardId = getDialogRewardId(collectionKey);
-	const existingReward = await tx.userRewards.findUnique({
-		where: getUserRewardWhere(userId, rewardId),
-		select: {
-			userId: true
-		}
-	});
-	if (existingReward) {
-		return {
-			rewardId,
-			created: false
-		};
-	}
-	await tx.userRewards.create({
-		data: {
-			userId,
-			rewardId
-		}
+	const result = await tx.userRewards.createMany({
+		data: [
+			{
+				userId,
+				rewardId
+			}
+		],
+		skipDuplicates: true
 	});
 	return {
 		rewardId,
-		created: true
+		created: result.count === 1
 	};
 }
 
@@ -452,18 +526,18 @@ async function applyDialogEffect(
 			actions.url = effect.url;
 			return;
 		case 'effect': {
-			await addStatusToDinoz(context.dinoz.id, getDialogStatusId(effect.effect));
+			await addStatusToDinoz(context.dinoz.id, getDialogStatusId(effect.effect), tx);
 			return;
 		}
 		case 'noEffect':
-			await removeStatusFromDinoz(context.dinoz.id, getDialogStatusId(effect.effect));
+			await removeStatusFromDinoz(context.dinoz.id, getDialogStatusId(effect.effect), tx);
 			return;
 		case 'collection': {
 			const result = await addUserCollection(tx, context.user.id, effect.collection);
 			if (result.created) {
 				const statTracking = statTrackingByCollectionKey[effect.collection];
 				if (statTracking !== undefined) {
-					await incrementUserStat(statTracking, context.user.id, 1);
+					await incrementUserStat(statTracking, context.user.id, 1, tx);
 				}
 			}
 			return;
@@ -478,9 +552,9 @@ async function applyDialogEffect(
 			});
 			return;
 		case 'skill':
-			await addSkillToDinoz(context.dinoz.id, effect.skillid);
+			await addSkillToDinoz(context.dinoz.id, effect.skillid, true, tx);
 			if (effect.skillid === skillList[Skill.COMPETENCE_DOUBLE].id) {
-				await unlockDoubleSkills(context.dinoz.id);
+				await unlockDoubleSkills(context.dinoz.id, tx);
 			}
 			return;
 		case 'startConcentration':

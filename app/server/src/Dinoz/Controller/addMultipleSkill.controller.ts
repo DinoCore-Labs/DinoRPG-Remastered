@@ -1,6 +1,8 @@
 import { Prisma } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
+type UnlockableSkillDb = Pick<typeof prisma, 'dinozSkillsUnlockable'>;
+
 export async function addMultipleSkillToDinoz(dinozId: number, skillIds: number[] /*, event?: GameDinozUsage*/) {
 	await prisma.dinozSkills.createMany({
 		data: skillIds.map(skillId => ({
@@ -10,8 +12,11 @@ export async function addMultipleSkillToDinoz(dinozId: number, skillIds: number[
 	});
 }
 
-export async function addMultipleUnlockableSkills(skills: Prisma.DinozSkillsUnlockableCreateManyInput[]) {
-	await prisma.dinozSkillsUnlockable.createMany({
+export async function addMultipleUnlockableSkills(
+	skills: Prisma.DinozSkillsUnlockableCreateManyInput[],
+	db: UnlockableSkillDb = prisma
+) {
+	await db.dinozSkillsUnlockable.createMany({
 		data: skills
 	});
 }

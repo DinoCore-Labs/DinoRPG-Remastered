@@ -1,24 +1,31 @@
 import { prisma } from '../../prisma.js';
 
-export async function addSkillToDinoz(dinozId: number, skillId: number, state = true) {
-	await prisma.dinozSkills.upsert({
+type DinozSkillDb = Pick<typeof prisma, 'dinozSkills'>;
+
+export async function addSkillToDinoz(dinozId: number, skillId: number, state = true, db: DinozSkillDb = prisma) {
+	await db.dinozSkills.upsert({
 		where: {
 			skillId_dinozId: {
-				dinozId: dinozId,
-				skillId: skillId
+				dinozId,
+				skillId
 			}
 		},
 		create: {
-			dinozId: dinozId,
-			skillId: skillId,
-			state: state
+			dinozId,
+			skillId,
+			state
 		},
 		update: {}
 	});
 }
 
-export async function removeSkillFromDinoz(dinozId: number, skillId: number) {
-	await prisma.dinozSkills.delete({
-		where: { skillId_dinozId: { dinozId, skillId } }
+export async function removeSkillFromDinoz(dinozId: number, skillId: number, db: DinozSkillDb = prisma) {
+	await db.dinozSkills.delete({
+		where: {
+			skillId_dinozId: {
+				dinozId,
+				skillId
+			}
+		}
 	});
 }
