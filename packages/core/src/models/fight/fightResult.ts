@@ -57,6 +57,7 @@ export interface FightResult {
 	startText?: FightText;
 	endText?: FightText;
 	itemWon?: number;
+	itemWonQuantity?: number;
 	statusReward?: DinozStatusId;
 	dialogReturn?: FightDialogReturn;
 	source?: FightSource;

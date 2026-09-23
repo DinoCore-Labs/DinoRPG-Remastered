@@ -66,12 +66,29 @@
 							{{ fight.goldEarned }}
 						</span>
 					</div>
-					<img v-if="!wonItemImgSrc" :src="getImgURL('design/fight', `large_empty`)" alt="empty" />
-					<Tippy theme="small" tag="img" v-else :src="wonItemImgSrc" :alt="wonItem!.name">
-						<template #content>
-							<p v-html="formatContent($t(`fight.event.${wonItem!.name}`))" />
-						</template>
-					</Tippy>
+					<div class="resultItem">
+						<img v-if="!wonItemImgSrc" :src="getImgURL('design/fight', `large_empty`)" alt="empty" />
+						<div v-else class="result" style="display: flex; justify-content: center; align-items: center; gap: 2px">
+							<span
+								class="data"
+								v-if="fight.itemWonQuantity && fight.itemWonQuantity > 1"
+								style="font-size: 16px; margin: 0; padding: 0"
+							>
+								{{ fight.itemWonQuantity }} x
+							</span>
+							<Tippy
+								theme="small"
+								tag="img"
+								:src="wonItemImgSrc"
+								:alt="wonItem!.name"
+								style="width: 25px; height: 25px; margin: 0"
+							>
+								<template #content>
+									<p v-html="formatContent($t(`fight.event.${wonItem!.name}`))" />
+								</template>
+							</Tippy>
+						</div>
+					</div>
 				</div>
 			</div>
 			<DZButton :disabled="loadingContinue" @click="returnToDinoz()">{{ $t(`button.continue`) }}</DZButton>
@@ -108,7 +125,7 @@ export default defineComponent({
 			return this.wonItem ? `item_${this.wonItem.name}` : null;
 		},
 		wonItemImgSrc(): string | null {
-			return this.wonItemImgKey ? this.getImgURL('items', this.wonItemImgKey) : null;
+			return this.wonItemImgKey ? this.getImgURL('item', this.wonItemImgKey) : null;
 		}
 	},
 	components: { DZButton },
@@ -184,7 +201,7 @@ export default defineComponent({
 		text-align: left;
 		overflow: auto;
 		height: 0;
-		margin-right: 3px;
+		margin: 0;
 		padding: 0;
 		transition:
 			height 0.5s ease-in-out,
@@ -213,6 +230,7 @@ export default defineComponent({
 		width: 100%;
 		justify-content: space-around;
 		align-items: center;
+		gap: 10px;
 		img {
 			flex-shrink: 0;
 			align-self: center;

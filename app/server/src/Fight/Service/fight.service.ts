@@ -534,6 +534,7 @@ export async function rewardFightVsMonsters(
 	// Check events monsters
 	const eventMonsters = monsters.filter(m => m.events && m.events.length > 0);
 	let itemWon = undefined;
+	let itemWonQuantity = 0;
 
 	for (const monster of eventMonsters) {
 		if (!victory || !monster.events?.length) {
@@ -545,8 +546,9 @@ export async function rewardFightVsMonsters(
 		for (const event of activeMonsterEvents) {
 			switch (event) {
 				case GameEvent.CHRISTMAS:
-					if (Math.floor(Math.random() * 100) <= 5) {
+					if (Math.floor(Math.random() * 100) <= 100) {
 						itemWon = Item.CHRISTMAS_TICKET;
+						itemWonQuantity++;
 						await addItemToInventory(userId, Item.CHRISTMAS_TICKET, 1);
 					}
 					break;
@@ -682,6 +684,7 @@ export async function rewardFightVsMonsters(
 		})),
 		place: place,
 		itemWon: itemWon,
+		itemWonQuantity: itemWonQuantity,
 		autoReequipped: Object.entries(autoReequippedItems).map(([id, count]) => ({ itemId: Number(id), count })),
 		missingReequip: Object.entries(missingReequipItems).map(([id, count]) => ({ itemId: Number(id), count }))
 	};
