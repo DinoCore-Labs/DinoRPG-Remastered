@@ -43,7 +43,11 @@
 		"marketOfferWin": "Vous avez remporté une enchère pour un montant de {price} bons !",
 		"marketOfferSold": "Votre enchère a été vendue ! Vous avez gagné {price} pièces d'or.",
 		"marketOfferUnsold": "Votre enchère est terminée sans trouver d'acheteur.",
-		"ok": "OK"
+		"ok": "OK",
+		"forumTopicReply": "{name} a répondu au sujet « {topic} ».",
+		"devourerAttacked": "Quelqu'un tente de vous prendre le contrôle de la dévoreuse !",
+		"devourerSeedsGathered": "Vous avez récolté {amount} graine(s) de dévoreuse !",
+		"view": "Voir"
 	},
 	"homepage": {
 		"connexion": "Conexión",
@@ -250,7 +254,8 @@
 		"createClan": "DinoRPG [ Crear Clan ]",
 		"clansList": "DinoRPG [ Clanes ]",
 		"dojo": "DinoRPG [ Dojo ]",
-		"forum": "DinoRPG [ Forum ]"
+		"forum": "DinoRPG [ Forum ]",
+		"missions": "Missions"
 	},
 	"adminPage": {
 		"news": {
@@ -659,16 +664,20 @@
 			"writeMessage": "Écrire un message",
 			"createTopic": "Créer le sujet",
 			"home": "Accueil",
-			"addFavorite": "Ajouter aux favoris",
+			"addFavorite": "Favoris",
 			"removeFavorite": "Retirer des favoris",
-			"pin": "Mettre en Post-It",
+			"pin": "Post-It",
 			"unpin": "Retirer le Post-It",
 			"close": "Cerrar",
 			"reopen": "Rouvrir",
 			"reply": "Responder",
 			"edit": "Editar",
 			"delete": "Eliminar",
-			"save": "Guardar"
+			"save": "Guardar",
+			"follow": "Suivre",
+			"unfollow": "Ne plus suivre",
+			"report": "Signaler",
+			"quote": "Citer"
 		},
 		"table": {
 			"subject": "Sujet",
@@ -695,6 +704,9 @@
 			"results": "Résultats pour « {query} »"
 		},
 		"topicCount": "{count} sujet(s)",
+		"unread": {
+			"firstUnread": "Aller au premier message non lu"
+		},
 		"closed": {
 			"manual": "Sujet fermé.",
 			"automatic": "Sujet fermé automatiquement après {count} messages."
@@ -704,10 +716,34 @@
 			"admin": "Administrateur"
 		},
 		"confirm": {
-			"deleteMessage": "Supprimer ce message ?",
-			"deleteLastMessage": "Ce message est le dernier du sujet. Sa suppression supprimera également le sujet. Continuer ?"
+			"deleteMessage": "Supprimer ce message ?"
 		},
 		"loginToReply": "Connectez-vous pour répondre à ce sujet.",
+		"deleted": {
+			"author": "Ce message a été supprimé par son auteur.",
+			"moderation": "Ce message a été supprimé par la modération."
+		},
+		"moderation": {
+			"delete": "Eliminar",
+			"restore": "Restaurer",
+			"history": "Historique de modération",
+			"historyShort": "Historial",
+			"loading": "Chargement de l'historique...",
+			"empty": "Aucune action de modération pour ce sujet.",
+			"reason": "Raison :",
+			"reasonRequired": "Une raison est obligatoire.",
+			"reasonPlaceholder": "Indiquez la raison de la suppression...",
+			"deleteTitle": "Supprimer ce message",
+			"deleteDescription": "Vous allez supprimer le message de {name}.",
+			"actions": {
+				"MESSAGE_DELETE": "a supprimé le message",
+				"MESSAGE_RESTORE": "a restauré le message",
+				"TOPIC_PIN": "a épinglé le sujet",
+				"TOPIC_UNPIN": "a retiré le sujet des post-it",
+				"TOPIC_CLOSE": "a fermé le sujet",
+				"TOPIC_REOPEN": "a rouvert le sujet"
+			}
+		},
 		"errors": {
 			"loadForum": "Impossible de charger le forum.",
 			"titleMin": "Le titre doit contenir au moins 3 caractères.",
@@ -719,6 +755,8 @@
 			"loadTopic": "Impossible de charger ce sujet.",
 			"reply": "Impossible de répondre.",
 			"titleLanguagePrefix": "Le titre doit commencer par [FR], [EN], [ES] ou [DE].",
+			"subscription": "Impossible de modifier le suivi de ce sujet.",
+			"restoreMessage": "Impossible de restaurer ce message.",
 			"moderateMessage": "Impossible de modérer ce message."
 		}
 	},
@@ -1001,7 +1039,8 @@
 		"dinozCannotFollowSharedElement": "Vous ne pouvez pas grouper ce dinoz ou diriger le groupe à cause d'une mauvaise affinité élémentaire entre vos dinoz.",
 		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée.",
 		"fearFactorDesequip": "Vous ne pouvez pas déséquiper le Trouillomètre tant que ce Dinoz est dans un groupe.",
-		"tutorialMovementRestricted": "Le tutoriel vous demande de suivre un autre chemin pour le moment."
+		"tutorialMovementRestricted": "Le tutoriel vous demande de suivre un autre chemin pour le moment.",
+		"tournamentMaxLevelLimitReached": "Votre dinoz ne peut pas dépasser le niveau maximum autorisé pour le tournoi."
 	},
 	"tooltip": {
 		"gold": "El oro permite comprar nuevos **Dinos** u **objetos** en la tienda.",
@@ -1121,7 +1160,8 @@
 			"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando.",
 			"dojoTeam": "Este Dino está inscrito en un Torneo Inter-Dojo. No puede superar el nivel {max} mientras el torneo en curso no haya terminado.",
 			"unfreezeCountdown": "Tu Dino se está descongelando y estará disponible en {time}",
-			"defendingDevourer": "Votre Dinoz est occupé à défendre la Dévoreuse."
+			"defendingDevourer": "Votre Dinoz est occupé à défendre la Dévoreuse.",
+			"registeredTID": "Votre dinoz est inscrit pour le prochain TID."
 		},
 		"stateReason": {
 			"frozen": "Tu Dino está congelado",
@@ -1952,9 +1992,9 @@
 		"level": "Niv.",
 		"learn": "Apprendre",
 		"confirmSkill": "Désirez-vous apprendre {skill} pour votre passage au niveau {level} ?",
-		"confirmUnlock": "Désirez-vous débloquer {quantity} nouvelles compétences ?",
-		"unlockSkills": "Débloquer {count} compétences supplémentaires",
-		"unlock": "Une fois débloquée, cette compétence pourra être choisie dès le prochain niveau",
+		"confirmUnlock": "Désirez-vous débloquer {quantity} nouvelle(s) compétence(s) ?",
+		"unlockSkills": "Débloquer {count} compétence(s) supplémentaire(s)",
+		"unlock": "Une fois débloquée(s), cette(ces) compétence(s) pourra(ont) être choisie(s) dès le prochain niveau",
 		"small": "Ce Dinoz a gagné un niveau !",
 		"pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre deux possibilités de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
 		"helperUnlock": {
@@ -3085,7 +3125,7 @@
 			"rest": "Votre Dinoz peut **se reposer** pour regagner des points de vie. Pendant ce temps, il ne pourra effectuer aucune autre action !",
 			"stop_rest": "Votre Dinoz se repose actuellement. Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre.",
 			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant.",
-			"reincarnation": "Votre Dinoz peut se réincarner ! Il conservera la même destinée des éléments.",
+			"reincarnation": "Votre Dinoz peut se réincarner ! Choisissez de conserver votre destinée élémentaire actuelle ou d'en tirer une nouvelle au hasard.",
 			"change_leader": "Votre Dinoz peut devenir le nouveau leader du groupe.",
 			"fb_tournament": "Accéder au Tournoi de Forcebrut.",
 			"CEF": "Cher client, bienvenue au Centre d'Entraînement de Fosselave !",
@@ -4023,7 +4063,7 @@
 				"begin": "Oh oh oh oh oh oh oh ! Ton Dinoz m'a l'air très mal en point !!",
 				"arg": "Un FANTOMEE ?!!??? Aaaahh !! Où ça !! où ça ??",
 				"arg2": "QUOI ?? Moi ??? Mais mais mais mais mais... Un peu de respect voyons ! Sinon vous ne ferez pas de vieux os ici, croyez-moi !&&Je suis une S.Q.U.E.L.E.T.T.E ! Une squelette oui ! Peut-être un peu décoiffée, mais pas un fantôme !!!",
-				"diff": "Tout d'abord, un fantôme est mort, et moi je suis juste... un peu fatiguée, je dois avoir des cernes, voilà tout...&&Et un fantôme, ça hante toujours quelque chose ou quelqu'un, alors que moi, je suis libre !!!&&... enfin presque.",
+				"diff": "Tout d'abord, un fantôme est mort, et moi je suis juste... un peu fatiguée, je dois avoir des cernes, voilà tout...Et un fantôme, ça hante toujours quelque chose ou quelqu'un, alors que moi, je suis libre !!! ... enfin presque.",
 				"free": "C'est un peu... uhmmm... compliqué... Disons que j'ai deux petits pépins techniques à régler.&&D'une part, seuls les Dinoz au bord de la mort et leurs maîtres peuvent me voir, d'autre part je ne peux pas quitter cet endroit lugubre...",
 				"haunt": "Hanter cet endroit ?!? Non mais vous RIGOLEZ ?!? Oh oh oh oh oh oh oh ! Rien que d'y penser j'en ai la chair de poule ! J'ai bien mieux à faire MOI oh oh !",
 				"do": "Uhm... C'est... INDISCRET ! Oh oh oh oh ! ..... Mais je vais quand même te raconter, une fois de plus si ça se trouve ! oh oh..... J'ai, vois-tu... un AMOUREUX ! On ne dirait pas comme ça, mais quand j'étais plus jeune j'avais de superbes tibias !",
@@ -4717,7 +4757,7 @@
 		"already": "Une mission est déjà en cours, il vous faudra la terminer avant d'en accepter une autre.",
 		"lastDialog": "Dernière étape validée",
 		"goals": {
-			"atPlace": "Se rendre à {place}",
+			"atPlace": "Se rendre à : {place}",
 			"atHidden": "Trouver le bon lieu",
 			"talk": "Parler à {nameKey}",
 			"named": "{nameKey}",
@@ -5568,7 +5608,7 @@
 				"end": "Merci, ce sont de précieuses informations que tu m'as rapporté là ! Mon Mouldeur chéri ne doit pas être très loin, nous serons bientôt réunis !"
 			},
 			"skul2": {
-				"name": "Sur les trâces de Mouldeur",
+				"name": "Sur les traces de Mouldeur",
 				"begin": "\"Je t'attendrai sur le lieu de notre rencontre\" Oh oh oh oh ! Comme c'est roooomantique mon Mouldeur chéri ! J'espère en tout cas qu'il m'attend encore là-bas ! Vite, rends toi dans ce magnifique lieu aux douces odeurs de nénuphars où nous nous sommes rencontrés, et ramène-moi mon amour !",
 				"stuckTourist": {
 					"name": "Un Touriste Enlisé",
@@ -5581,7 +5621,7 @@
 				},
 				"fisherman": {
 					"name": "Pêcheur",
-					"text": "Ca mord bien dans l'coin : les poissons viennent voir les moines qui lévitent... Un gars qui s'appelle Mouldeur ? J'le connais bien : il est parti pêcher dans la baie aux Piranhoz. Fait gaffe mon gars, ça mordille ces saletés...",
+					"text": "Ça mord bien dans l'coin : les poissons viennent voir les moines qui lévitent... Un gars qui s'appelle Mouldeur ? J'le connais bien : il est parti pêcher dans la baie aux Piranhoz. Fais gaffe mon gars, ça mordille ces saletés...",
 					"text2": "Mouldeur ? Il a dit qu'il retournait attendre sa femme au Marais... Pauv'gars, ça fait des années qu'il ne l'a pas revu... Remarquez à sa place je serais plutôt content..."
 				},
 				"piranhozBay": {
@@ -5600,7 +5640,7 @@
 				"begin": "Oh oh oh ! J'ai pensé à quelque chose de... problématique. Même si je retrouve Mouldeur, il va oublier à nouveau nos retrouvailles et repartir m'attendre quelque part. Il faut absolument que tu trouves une solution à ce problème avant d'aller voir Mouldeur. Va trouver cette chère Mademoiselle Bao, elle aura certainement une solution !",
 				"baoBob": {
 					"name": "Mademoiselle Bao ???",
-					"text": "Quoi ??? Mademoiselle Bao ?? Non mais... tu me prends pour qui au juste ? .......... Si tu cherches ma soeur, et bien elle se trouve en ce moment auprès du petit fils de l'ArchiDorogon : \"le Vénérable\" comme il aime se faire appeller maintenant... D'ailleurs si un jour son père l'apprend, il va passer un sale quart-d'heure..."
+					"text": "Quoi ??? Mademoiselle Bao ?? Non mais... tu me prends pour qui au juste ? .......... Si tu cherches ma soeur, et bien elle se trouve en ce moment auprès du petit fils de l'ArchiDorogon : \"le Vénérable\" comme il aime se faire appeler maintenant... D'ailleurs si un jour son père l'apprend, il va passer un sale quart-d'heure..."
 				},
 				"baoBabe": {
 					"name": "Mademoiselle Bao",
@@ -5616,7 +5656,7 @@
 				"end": "Oh oh oh oh oh ! En voilà une bonne solution pour ma bonnédiction ! Tiens, prends ça, de cette façon tu n'oublieras plus ni le chemin du Cimetière, ni ta chère Skully oh oh oh !"
 			},
 			"skul4": {
-				"name": "Les touristes génants",
+				"name": "Les touristes gênants",
 				"begin": "\"Rejoins moi là où je t'ai déclaré ma flamme\" Oh oh oh oh ! Mon Mouldeur a vraiment un coeur en oooor ! Je n'oublierai jamais ce lieu délicieux où il nous avait emmenés, alors que nos os étaient encore tous jeunes... Et ce moment où il m'a tendu une merguez bien grillée et m'a demandé de l'épouser !",
 				"merguezSeller": {
 					"name": "Vendeur de Merguez",
@@ -5626,7 +5666,7 @@
 				"visitRuins": {
 					"name": "Visiter les Ruines",
 					"begin": "Que le pouvoir du Bambooz soit avec moi ! Sus aux infidèles !",
-					"win": "Avant de s'écrouler, Barababor vous souffle les mots suivants : \"Nous avons capturé votre ami : il sera emmené en bateau dans nos steppes natales où il serra vendu comme esclave !\""
+					"win": "Avant de s'écrouler, Barababor vous souffle les mots suivants : \"Nous avons capturé votre ami : il sera emmené en bateau dans nos steppes natales où il sera vendu comme esclave !\""
 				},
 				"suspiciousBoat": {
 					"name": "Chercher un Bateau louche",
@@ -5645,7 +5685,7 @@
 			},
 			"skul5": {
 				"name": "Des crevettes au Napalm",
-				"begin": "Des \"Crevettes au Napalm\" ? Oh oh oh oh ! Quel doux souvenir que ce plat délicieux ! Bien, il va falloir que tu me rapportes un certain nombre d'ingrédients pour que je puisse préparer tout celà...",
+				"begin": "Des \"Crevettes au Napalm\" ? Oh oh oh oh ! Quel doux souvenir que ce plat délicieux ! Bien, il va falloir que tu me rapportes un certain nombre d'ingrédients pour que je puisse préparer tout cela...",
 				"skully": {
 					"text": "Bien, tout d'abord, il me faut bien entendu de bonnes crevettes. Tu pourras en trouver au Marché du Dôme Soulaflotte ! Fais-vite !",
 					"text2": "Oh oh oh ! Ma-gni-fi-que ! Ces crevettes sont d'une fraicheur incomparable ! Bon, passons à la suite. Deuxième ingrédient indispensable : du Napalm. Pour en fabriquer il nous faut de la lave de bonne qualité...",
@@ -6385,6 +6425,19 @@
 				"tower_won": "Vous avez remporté le contrôle de la Dévoreuse ! Gardez-le jusqu'à minuit pour obtenir ses précieuses graînes !",
 				"grains_credited": "Félicitations ! Votre contrôle des Dévoreuses vous rapporte <b>::count::</b> graîne(s) qui ont été rajoutées à vos Ingrédients.",
 				"stop_defend_tower": "Vous avez relaché le contrôle de la Dévoreuse."
+			},
+			"journal": {
+				"tabLabel": "Journal",
+				"date": "Date",
+				"defense": "Défense",
+				"attack": "Ataque",
+				"action": "Action",
+				"watchFight": "Voir le combat",
+				"copyLink": "Copier le lien",
+				"linkCopied": "Le lien du replay a été copié dans le presse-papier."
+			},
+			"shareFight": {
+				"title": "Replay Dévoreuse"
 			}
 		},
 		"magnet": {
@@ -6437,11 +6490,16 @@
 			"clanName": "Nom de clan inapproprié",
 			"banner": "Bannière inappropriée",
 			"clanPages": "Description / Pages inappropriées",
-			"other": "Autre"
+			"other": "Autre",
+			"forumSpam": "Spam ou flood",
+			"forumAbuse": "Insultes ou harcèlement",
+			"forumOffTopic": "Hors-sujet",
+			"forumInappropriate": "Contenu inapproprié"
 		},
 		"reportUser": "Reportar al jugador",
 		"reportClan": "Signaler ce clan",
-		"reportDinoz": "Signaler ce dinoz"
+		"reportDinoz": "Signaler ce dinoz",
+		"reportingForumMessage": "Vous signalez un message de "
 	},
 	"tutorial": {
 		"objective": "Objectif : {title}",
@@ -6453,6 +6511,7 @@
 				"begin": "Bienvenue sur DinoRPG. Je serai ton guide pour ces premières étapes. Tout d'abord, il te faut adopter un Dinoz ! Prends ton temps pour le choisir, il sera ton compagnon pour un bon moment.",
 				"end": "Félicitations, vous voilà maintenant plongé dans un immense univers que nous allons continuer à vous présenter !",
 				"helpers": {
+					"shopDinoz": "C'est par ici !",
 					"compare": "Compare les caractéristiques de chaque race !",
 					"name": "Très bon choix ! Maintenant, donne un nom à ce Dinoz !"
 				}
@@ -6557,5 +6616,6 @@
 				"helpers": {}
 			}
 		}
-	}
+	},
+	"errors": {}
 }
