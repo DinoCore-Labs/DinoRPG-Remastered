@@ -23,6 +23,7 @@ import { prisma } from '../../prisma.js';
 import { processMagnetiteFinalAssault } from '../../Scenario/Controller/magnetiteScenario.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { checkDialogCondition } from '../../utils/conditions/checkDialogCondition.js';
+import { withUserGameplayLock } from '../../utils/database/userGameplayLock.js';
 import { isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { ProcessDialogFightInput } from '../Schema/fightDialog.schema.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from './fight.service.js';
@@ -78,7 +79,10 @@ function extractDialogFightData(phase: RuntimeDialogPhase): {
 	};
 }
 
-export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDialogFightInput }>, reply: FastifyReply) {
+export async function processDialogFightUnlocked(
+	req: FastifyRequest<{ Body: ProcessDialogFightInput }>,
+	reply: FastifyReply
+) {
 	const { dinozId, dialogId, phaseId, autoReequip = false } = req.body;
 	const authed = req.user;
 	const dialog = getDialogById(dialogId);
@@ -236,4 +240,13 @@ export async function processDialogFight(req: FastifyRequest<{ Body: ProcessDial
 					}
 				: undefined
 	});
+}
+
+export async function processDialogFight(
+	req: FastifyRequest<{
+		Body: ProcessDialogFightInput;
+	}>,
+	reply: FastifyReply
+) {
+	return withUserGameplayLock(req.user.id, () => processDialogFightUnlocked(req, reply));
 }

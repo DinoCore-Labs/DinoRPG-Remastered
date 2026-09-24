@@ -17,6 +17,7 @@ import { processScenarioMoveFight } from '../../Scenario/Service/scenarioMoveFig
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { refreshTutorialProgress } from '../../Tutorial/Controller/tutorial.controller.js';
 import { assertTutorialMovementAllowed } from '../../Tutorial/Controller/tutorial.movement.js';
+import { withUserGameplayLock } from '../../utils/database/userGameplayLock.js';
 import { canGoToThisPlace, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
 import { addStatusToDinoz } from '../Controller/dinozStatus.controller.js';
@@ -26,7 +27,7 @@ import type { MoveDinozInput } from '../Schema/dinoz.schema.js';
 
 type Req = FastifyRequest<{ Body: MoveDinozInput }>;
 
-export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
+export async function moveDinozUnlocked(req: Req, _reply: FastifyReply) {
 	const { dinozId, placeId, autoReequip } = req.body;
 	const authedId = req.user.id;
 	const dayOfWeek = new Date().getDay();
@@ -296,4 +297,8 @@ export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
 		req.log
 	);
 	return fight;
+}
+
+export async function moveDinozHandler(req: Req, reply: FastifyReply) {
+	return withUserGameplayLock(req.user.id, () => moveDinozUnlocked(req, reply));
 }

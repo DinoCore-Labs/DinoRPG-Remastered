@@ -1,5 +1,7 @@
 import { defineScenario } from '../scenario.js';
 
+export const MAGNETITE_SCENARIO_KEY = 'magnet';
+
 export const MagnetiteProgression = {
 	INITIAL_AMBUSH: 0,
 	TALK_TO_KING: 1,
@@ -18,7 +20,7 @@ export const MagnetiteProgression = {
 } as const;
 
 export const magnetiteScenario = defineScenario({
-	key: 'magnet',
+	key: MAGNETITE_SCENARIO_KEY,
 	sid: 4,
 	nameKey: 'scenarios.magnet.name',
 	maxProgression: MagnetiteProgression.COMPLETED

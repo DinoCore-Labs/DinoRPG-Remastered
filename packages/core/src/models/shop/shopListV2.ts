@@ -16,6 +16,7 @@ import { PlaceEnum } from '../enums/PlaceEnum.js';
 import { ShopType } from '../enums/ShopType.js';
 import { Ingredient } from '../ingredients/ingredientList.js';
 import { Item, itemList } from '../items/itemList.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '../scenarios/data/magnetiteScenario.js';
 import { parseCondition } from '../utils/conditions/parseConditions.js';
 import { ItemShopType, ShopFiche } from './shopFiche.js';
 
@@ -354,7 +355,7 @@ export const shopListV2: Readonly<Record<string, ShopFiche>> = {
 				type: ItemShopType.ITEM
 			}
 		],
-		condition: c('scenario(magnet,12+)')
+		condition: c(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.CLAIM_REWARD})`)
 	},
 	// Elite Camp
 	ELITE_CAMP: {

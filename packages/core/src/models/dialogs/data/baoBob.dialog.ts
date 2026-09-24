@@ -1,4 +1,5 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '../../scenarios/data/magnetiteScenario.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { defineDialog } from '../defineDialog.js';
 
@@ -142,7 +143,7 @@ export const baoBobDialog = defineDialog({
 		quest4: {
 			id: 'quest4',
 			text: 'npc.baoBob.choice.questQuestion',
-			cond: condition('scenario(magnet,8)')
+			cond: condition(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.PREPARE_POTION})`)
 		},
 		bye: {
 			id: 'bye',

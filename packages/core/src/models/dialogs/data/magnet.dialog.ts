@@ -1,6 +1,7 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
 import { Item } from '../../items/itemList.js';
 import { monsterByKey } from '../../monster/monsterKeyMap.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '../../scenarios/data/magnetiteScenario.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { defineDialog } from '../defineDialog.js';
 
@@ -23,7 +24,7 @@ export const sGardeMagnetFirstDialog = defineDialog({
 		frame: 'speak',
 		background: '1'
 	},
-	cond: condition('scenario(magnet,0)'),
+	cond: condition(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.INITIAL_AMBUSH})`),
 	first: 'begin',
 	phases: {
 		begin: {
@@ -51,7 +52,7 @@ export const rockyKingMagnetiteIntroDialog = defineDialog({
 	id: 'rocky_king_magnet1',
 	place: PlaceEnum.CITADELLE_DU_ROI,
 	name: 'npc.rockyKing.name',
-	cond: condition('scenario(magnet,1)'),
+	cond: condition(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.TALK_TO_KING})`),
 	first: 'begin',
 	pnj: {
 		image: false,
@@ -126,8 +127,8 @@ export const rockyKingMagnetiteIntroDialog = defineDialog({
 			effects: [
 				{
 					type: 'scenario',
-					scenario: 'magnet',
-					phase: 2
+					scenario: MAGNETITE_SCENARIO_KEY,
+					phase: MagnetiteProgression.HUNT_DESTROYER
 				}
 			]
 		}
@@ -211,7 +212,7 @@ export const magnetiteStrangeRangerDialog = defineDialog({
 	id: 'magnetite_strange_ranger',
 	place: PlaceEnum.SYPHON_SIFFLEUR,
 	name: 'npc.rodeur.name',
-	cond: condition('scenario(magnet,2)+!fx(rodtmp)'),
+	cond: condition(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.HUNT_DESTROYER})+!fx(rodtmp)`),
 	first: 'begin',
 	pnj: {
 		image: false,
@@ -250,7 +251,7 @@ export const magnetiteTeamWCaptainDialog = defineDialog({
 	id: 'magnetite_team_w_captain',
 	place: PlaceEnum.REPAIRE_DE_LA_TEAM_W,
 	name: 'npc.teamWCaptain.name',
-	cond: condition('scenario(magnet,6)'),
+	cond: condition(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.TALK_TO_CAPTAIN})`),
 	first: 'begin',
 	pnj: {
 		image: false,
@@ -327,8 +328,8 @@ export const magnetiteTeamWCaptainDialog = defineDialog({
 			effects: [
 				{
 					type: 'scenario',
-					scenario: 'magnet',
-					phase: 7
+					scenario: MAGNETITE_SCENARIO_KEY,
+					phase: MagnetiteProgression.RETURN_TO_KING
 				}
 			]
 		}
@@ -394,7 +395,7 @@ export const magnetiteTeamWCaptainWaitingDialog = defineDialog({
 	id: 'magnetite_team_w_captain_waiting',
 	place: PlaceEnum.REPAIRE_DE_LA_TEAM_W,
 	name: 'npc.teamWCaptain.name',
-	cond: condition('scenario(magnet,7)'),
+	cond: condition(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.RETURN_TO_KING})`),
 	first: 'begin',
 	pnj: {
 		image: false,
@@ -431,7 +432,9 @@ export const rockyKingMagnetiteSehdDialog = defineDialog({
 	id: 'rocky_king_magnet7',
 	place: PlaceEnum.CITADELLE_DU_ROI,
 	name: 'npc.rockyKing.name',
-	cond: condition('scenario(magnet,7)|scenario(magnet,8)'),
+	cond: condition(
+		`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.RETURN_TO_KING})|scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.PREPARE_POTION})`
+	),
 	first: 'begin',
 	pnj: {
 		image: false,
@@ -508,8 +511,8 @@ export const rockyKingMagnetiteSehdDialog = defineDialog({
 			effects: [
 				{
 					type: 'scenario',
-					scenario: 'magnet',
-					phase: 8
+					scenario: MAGNETITE_SCENARIO_KEY,
+					phase: MagnetiteProgression.PREPARE_POTION
 				}
 			]
 		}
@@ -579,7 +582,7 @@ export const magnetiteCitadelGuardAssaultDialog = defineDialog({
 	id: 'magnetite_citadel_guard_assault',
 	place: PlaceEnum.CITADELLE_DU_ROI,
 	name: 'npc.sGarde.name',
-	cond: condition('scenario(magnet,10)'),
+	cond: condition(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.FINAL_ASSAULT})`),
 	first: 'begin',
 	pnj: {
 		image: false,
@@ -643,7 +646,7 @@ export const magnetiteTeamWCaptainDebriefDialog = defineDialog({
 	id: 'magnetite_team_w_captain_debrief',
 	place: PlaceEnum.CITADELLE_DU_ROI,
 	name: 'npc.teamWCaptain.name',
-	cond: condition('scenario(magnet,11)'),
+	cond: condition(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.FINAL_ASSAULT_WON})`),
 	first: 'begin',
 	pnj: {
 		image: false,
@@ -684,8 +687,8 @@ export const magnetiteTeamWCaptainDebriefDialog = defineDialog({
 			effects: [
 				{
 					type: 'scenario',
-					scenario: 'magnet',
-					phase: 12
+					scenario: MAGNETITE_SCENARIO_KEY,
+					phase: MagnetiteProgression.CLAIM_REWARD
 				}
 			]
 		}
@@ -729,7 +732,7 @@ export const rockyKingMagnetiteRewardDialog = defineDialog({
 	id: 'rocky_king_magnet12',
 	place: PlaceEnum.CITADELLE_DU_ROI,
 	name: 'npc.rockyKing.name',
-	cond: condition('scenario(magnet,12)+!collec(magnet)'),
+	cond: condition(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.CLAIM_REWARD})+!collec(magnet)`),
 	first: 'begin',
 	pnj: {
 		image: false,
@@ -827,7 +830,7 @@ export const magnetiteStrangeRangerEpilogueDialog = defineDialog({
 	id: 'magnetite_strange_ranger_epilogue',
 	place: PlaceEnum.CONFINS_DES_STEPPES,
 	name: 'npc.rodeur.name',
-	cond: condition('scenario(magnet,12)'),
+	cond: condition(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.CLAIM_REWARD})+collec(magnet)`),
 	first: 'begin',
 	pnj: {
 		image: false,
@@ -858,8 +861,8 @@ export const magnetiteStrangeRangerEpilogueDialog = defineDialog({
 			effects: [
 				{
 					type: 'scenario',
-					scenario: 'magnet',
-					phase: 13
+					scenario: MAGNETITE_SCENARIO_KEY,
+					phase: MagnetiteProgression.COMPLETED
 				}
 			]
 		}
