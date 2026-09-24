@@ -53,6 +53,28 @@ export const helpers = {
 				return `<img src="${getImgURL('icons', 'small_xp')}" alt="xp">`;
 			case 'irma':
 				return `<img class="text-icon" src="${getImgURL('item', 'item_irma')}" alt="irma">`;
+			case 'napo':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_golden_napodino')}" alt="napo">`;
+			case 'xmas_ticket':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_christmas_ticket')}" alt="xmas_ticket">`;
+			case 'demon_ticket':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_demon_ticket')}" alt="demon_ticket">`;
+			case 'xmas_egg':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_christmas_egg')}" alt="xmas_egg">`;
+			case 'santaz_egg':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_santaz_egg')}" alt="santaz_egg">`;
+			case 'feross_egg':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_feross_egg')}" alt="feross_egg">`;
+			case 'kabuki_egg':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_kabuki_egg')}" alt="kabuki_egg">`;
+			case 'mahamuti_egg':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_mahamuti_egg')}" alt="mahamuti_egg">`;
+			case 'quetzu_egg':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_quetzu_egg')}" alt="quetzu_egg">`;
+			case 'smog_egg':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_smog_egg')}" alt="smog_egg">`;
+			case 'easter_egg':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_easter_egg')}" alt="easter_egg">`;
 			default:
 				throw Error(`Unexpected key for replaced image: ${key}`);
 		}
@@ -95,7 +117,18 @@ export function formatText(text: string): string {
 				'hp',
 				'pv',
 				'xp',
-				'irma'
+				'irma',
+				'napo',
+				'xmas_ticket',
+				'demon_ticket',
+				'xmas_egg',
+				'santaz_egg',
+				'feross_egg',
+				'kabuki_egg',
+				'mahamuti_egg',
+				'quetzu_egg',
+				'smog_egg',
+				'easter_egg'
 			];
 			if (validKeys.includes(iconKey)) {
 				return helpers.computeImageHtml(iconKey);
