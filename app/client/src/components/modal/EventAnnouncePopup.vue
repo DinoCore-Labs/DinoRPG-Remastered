@@ -110,7 +110,8 @@ export default defineComponent({
 			const isChristmas = events.some(e => e.name === GameEvent.CHRISTMAS);
 
 			if (isChristmas) {
-				const hasSeenPopup = localStorage.getItem('seen_christmas_event_2026');
+				const currentYear = new Date().getFullYear();
+				const hasSeenPopup = localStorage.getItem(`seen_christmas_event_${currentYear}`);
 				if (!hasSeenPopup) {
 					display.value = true;
 					runAnimation();
@@ -119,7 +120,8 @@ export default defineComponent({
 		});
 
 		const goToEvent = () => {
-			localStorage.setItem('seen_christmas_event_2026', 'true');
+			const currentYear = new Date().getFullYear();
+			localStorage.setItem(`seen_christmas_event_${currentYear}`, 'true');
 
 			display.value = false;
 			router.push('/news');
