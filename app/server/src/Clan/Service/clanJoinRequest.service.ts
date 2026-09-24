@@ -1,6 +1,7 @@
 import { CLAN_JOIN_MONEY, CLAN_MAX_MEMBERS_AMOUNT } from '@dinorpg/core/models/clan/constants.js';
 import { ClanHistoryType } from '@dinorpg/core/models/enums/ClanHistoryType.js';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
+import { isEventEndingInDays } from '@dinorpg/core/models/events/events.js';
 import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -33,6 +34,10 @@ export async function getJoinRequestslist(req: FastifyRequest, reply: FastifyRep
 }
 
 export async function acceptJoinClanRequest(req: FastifyRequest, reply: FastifyReply) {
+	if (isEventEndingInDays(10)) {
+		throw new ExpectedError('eventLock');
+	}
+
 	const params = joinRequestIdParamSchema.parse(req.params);
 
 	const clanRequest = await prisma.clanJoinRequest.findUnique({
@@ -158,6 +163,10 @@ export async function denyJoinClanRequest(req: FastifyRequest, reply: FastifyRep
 }
 
 export async function joinClan(req: FastifyRequest, reply: FastifyReply) {
+	if (isEventEndingInDays(10)) {
+		throw new ExpectedError('eventLock');
+	}
+
 	const params = clanIdParamSchema.parse(req.params);
 	const userId = req.user.id;
 
