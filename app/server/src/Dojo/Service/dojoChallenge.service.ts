@@ -30,7 +30,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { calculateFightBetweenPlayers } from '../../Fight/Service/fight.service.js';
 import { prisma } from '../../prisma.js';
-import { addTreasureTicket, removeMoney } from '../../User/Controller/money.controller.js';
+import { addTreasureTicket, removeMoneyTx } from '../../User/Controller/money.controller.js';
 import { DOJO_CHALLENGE_RULES } from '../../utils/fight/fight.mapper.js';
 import { TournamentManager } from '../../utils/tournamentManager.js';
 import { getDojo } from '../Controller/dojo.controller.js';
@@ -84,7 +84,7 @@ export async function skipOpponent(req: FastifyRequest, reply: FastifyReply) {
 	const worth = victory / (ranking.DojoChallengeHistory.length + 1);
 
 	await prisma.$transaction(async tx => {
-		removeMoney(userId, DOJO_FIGHT_COST);
+		await removeMoneyTx(tx, userId, DOJO_FIGHT_COST);
 
 		await tx.tournament.update({
 			where: { id: tournament.id },
@@ -219,8 +219,7 @@ export async function fightChallenge(req: FastifyRequest, reply: FastifyReply) {
 			include: { DojoChallengeHistory: true }
 		});
 
-		// Atomic charge: fails if the money dropped below the cost since the initial check
-		removeMoney(userId, DOJO_FIGHT_COST);
+		await removeMoneyTx(tx, userId, DOJO_FIGHT_COST);
 
 		await tx.tournament.update({
 			where: {
