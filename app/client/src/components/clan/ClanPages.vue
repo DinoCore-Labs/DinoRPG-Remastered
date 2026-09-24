@@ -82,6 +82,7 @@ import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
 import { CLAN_JOIN_MONEY } from '@dinorpg/core/models/clan/constants.js';
 import { formatNumber } from '../../utils/formatText';
 import { formatText } from '../../utils/formatText.js';
+import { isEventEndingInDays } from '@dinorpg/core/models/events/events.js';
 import type { ClanPage } from '@dinorpg/core/models/clan/clanPage.js';
 import type { JoinClanResponse } from '@dinorpg/core/models/clan/clanJoinRequest.js';
 import axios from 'axios';
@@ -112,6 +113,10 @@ export default defineComponent({
 	},
 	methods: {
 		async joinClan() {
+			if (isEventEndingInDays(10)) {
+				this.$toast.open({ message: this.$t('toast.eventLock'), type: 'error' });
+				return;
+			}
 			try {
 				this.joinRequest = await ClanService.joinClan(Number(this.$route.params.id));
 			} catch (err) {

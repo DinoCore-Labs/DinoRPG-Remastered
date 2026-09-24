@@ -140,6 +140,7 @@ import { ClanService } from '../../services/clan.service.js';
 import { userStore } from '../../store/userStore.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { beautifulNumber } from '../../utils/beautifulNumber.js';
+import { isEventEndingInDays } from '@dinorpg/core/models/events/events.js';
 import DZButton from '../utils/DZButton.vue';
 import DZUser from '../utils/DZUser.vue';
 
@@ -195,6 +196,10 @@ export default defineComponent({
 			}
 		},
 		async acceptRequest(id: number): Promise<void> {
+			if (isEventEndingInDays(10)) {
+				this.$toast.open({ message: this.$t('toast.eventLock'), type: 'error' });
+				return;
+			}
 			try {
 				const newMember = await ClanService.acceptJoinClanRequest(id);
 				this.addClanMember(newMember);

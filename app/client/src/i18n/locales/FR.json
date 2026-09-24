@@ -887,6 +887,7 @@
 		"buttonValidateAdvEditor": "Valider et envoyer le message"
 	},
 	"toast": {
+		"eventLock": "Vous ne pouvez pas faire cela avant la fin de l'événement en cours.",
 		"Account_banned_until": "Votre compte est banni jusqu'au {date} à {time} à cause de : {reason}.",
 		"Account_muted_until": "Vous êtes rendu muet jusqu'au {date} à {time} à cause de : {reason}.",
 		"Account_banned": "Votre compte est banni.",
