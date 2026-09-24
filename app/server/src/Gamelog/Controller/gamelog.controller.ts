@@ -55,6 +55,8 @@ const AUDIT_LOG_TYPES = new Set<GameLogType>([
 	GameLogType.AdminUpdateSecret
 ]);
 
+const pendingGameLogs = new Set<Promise<unknown>>();
+
 export function resolveGameLogRetention(type: GameLogType) {
 	return AUDIT_LOG_TYPES.has(type) ? GameLogRetention.AUDIT : GameLogRetention.TEMPORARY;
 }
@@ -101,7 +103,32 @@ export async function createGameLog(input: CreateGameLogInput, db: GameLogDb = p
 }
 
 export function safeCreateGameLog(input: CreateGameLogInput, log?: { error: Function }) {
-	return createGameLog(input).catch(error => {
-		log?.error?.({ error, gameLogType: input.type }, '[game-log] failed to create log');
-	});
+	let task: Promise<unknown>;
+	task = createGameLog(input)
+		.catch(error => {
+			log?.error?.(
+				{
+					error,
+					gameLogType: input.type
+				},
+				'[game-log] failed to create log'
+			);
+		})
+		.finally(() => {
+			pendingGameLogs.delete(task);
+		});
+	pendingGameLogs.add(task);
+	return task;
+}
+/**
+ * Attend que tous les GameLogs asynchrones
+ * actuellement en cours soient terminés.
+ *
+ * Principalement utile pour garantir l'isolation
+ * des tests d'intégration avant un nettoyage DB.
+ */
+export async function waitForPendingGameLogs(): Promise<void> {
+	while (pendingGameLogs.size > 0) {
+		await Promise.allSettled([...pendingGameLogs]);
+	}
 }
