@@ -37,7 +37,7 @@ import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
-import { incrementUserEventProgression } from '../../Events/Service/eventTracking.service.js';
+import { getUserEventTracking, incrementUserEventProgression } from '../../Events/Service/eventTracking.service.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { addItemToDinoz } from '../../Inventory/Controller/addItemToDinoz.controller.js';
@@ -752,6 +752,7 @@ function getMonsterActiveEvent(monster: MonsterFiche, activeEvents: ActiveGameEv
  */
 export async function generateMonsterList(
 	team: (Pick<Dinoz, 'id' | 'level' | 'placeId'> & {
+		userId?: string | null;
 		missions?: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
 	})[],
 	placeOfFight: PlaceEnum,
@@ -774,9 +775,9 @@ export async function generateMonsterList(
 	}
 	const activeEvents = getActiveGameEvents();
 	let eventMonsterKilled = 0;
-	if (activeEvents.length > 0) {
-		// const playerEvent = await getPlayerEventProgression(team[0].playerId, events[0].name);
-		// eventMonsterKilled = playerEvent?.dailyProgression ?? 0;
+	if (activeEvents.length > 0 && team[0].userId) {
+		const playerEvent = await getUserEventTracking(team[0].userId, activeEvents[0].event);
+		eventMonsterKilled = playerEvent?.daily ?? 0;
 	}
 	const missionSourceDinoz =
 		missionSourceDinozId != null ? team.find(dinoz => dinoz.id === missionSourceDinozId) : team[0];
