@@ -1,9 +1,16 @@
 import { defineScenario } from '../scenario.js';
 
+export const DOJO_SCENARIO_KEY = 'dojo';
+
+export const DOJO_SCENARIO_STEPS = {
+	NOT_STARTED: 0,
+	UNLOCKED: 1,
+	BUILT: 2
+} as const;
+
 export const dojoScenario = defineScenario({
-	key: 'dojo',
+	key: DOJO_SCENARIO_KEY,
 	sid: 6,
 	nameKey: 'scenarios.dojo.name',
-	maxProgression: 2
+	maxProgression: DOJO_SCENARIO_STEPS.BUILT
 });
-export const DOJO_SCENARIO_KEY = 'dojo';

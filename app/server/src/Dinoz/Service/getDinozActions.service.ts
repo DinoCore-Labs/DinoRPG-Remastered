@@ -6,6 +6,7 @@ import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { ShopType } from '@dinorpg/core/models/enums/ShopType.js';
 import { MissionGoal } from '@dinorpg/core/models/missions/missionGoal.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
+import { DOJO_SCENARIO_KEY, DOJO_SCENARIO_STEPS } from '@dinorpg/core/models/scenarios/data/dojoScenario.js';
 import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import {
@@ -534,7 +535,12 @@ export async function getAvailableActions(
 	const currentPlaceDef = placeListv2[dinoz.placeId as PlaceEnum];
 	if (currentPlaceDef?.map === MapZone.DINOLAND) {
 		const isDojoUnlocked = checkCondition(
-			{ type: 'scenario', key: 'dojo', progression: 1, compare: 'eq' },
+			{
+				type: 'scenario',
+				key: DOJO_SCENARIO_KEY,
+				progression: DOJO_SCENARIO_STEPS.UNLOCKED,
+				compare: 'eq'
+			},
 			currentContext
 		);
 		if (isDojoUnlocked) {
