@@ -12,7 +12,7 @@
 				{{ $t('common.clans') }}
 			</RouterLink>
 		</li>
-		<li :class="{ active: isEventTab }">
+		<li :class="{ active: isEventTab }" v-if="isEventActive">
 			<RouterLink :to="{ name: 'RankingEventClans', params: { pageLoaded: 1 } }">
 				{{ $t('ranking.tabs.event') }}
 			</RouterLink>
@@ -93,6 +93,7 @@
 
 <script lang="ts">
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
+import { currentEvents } from '@dinorpg/core/models/events/events.js';
 import { defineComponent, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { RouterView } from 'vue-router';
@@ -116,6 +117,8 @@ export default defineComponent({
 
 		const isEventTab = computed(() => ['RankingEventPlayers', 'RankingEventClans'].includes(route.name as string));
 
+		const isEventActive = computed(() => currentEvents().length > 0);
+
 		const subHeader = computed(() => {
 			switch (route.name) {
 				case 'RankingPlayers':
@@ -137,7 +140,7 @@ export default defineComponent({
 			}
 		});
 
-		return { subHeader, isPlayerTab, isClanTab, isEventTab };
+		return { subHeader, isPlayerTab, isClanTab, isEventTab, isEventActive };
 	},
 	methods: {
 		getImgURL,
