@@ -1,3 +1,4 @@
+import { waitForPendingGameLogs } from '../../src/Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../src/prisma.js';
 import { assertTestDatabase } from './assert-test-database.js';
 
@@ -10,21 +11,16 @@ function quoteIdentifier(identifier: string): string {
 }
 
 export async function cleanDatabase(): Promise<void> {
-	/**
-	 * CRITIQUE :
-	 *
-	 * On vérifie la base RÉELLEMENT utilisée
-	 * par la connexion Prisma avant tout TRUNCATE.
-	 *
-	 * Même si :
-	 * - .env.test est oublié ;
-	 * - DATABASE_URL est incorrect ;
-	 * - Vitest est lancé directement ;
-	 * - NODE_ENV est incorrect ;
-	 *
-	 * drpg_remastered ne pourra pas être nettoyée.
-	 */
 	await assertTestDatabase();
+	/**
+	 * Certains GameLogs sont volontairement créés
+	 * en arrière-plan.
+	 *
+	 * On attend leur terminaison avant de TRUNCATE
+	 * afin d'éviter un deadlock PostgreSQL entre
+	 * une insertion encore en cours et le nettoyage.
+	 */
+	await waitForPendingGameLogs();
 	const tables = await prisma.$queryRaw<PostgreSQLTable[]>`
 			SELECT tablename
 			FROM pg_tables
