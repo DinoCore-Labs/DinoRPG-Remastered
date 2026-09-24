@@ -1,4 +1,5 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '../../scenarios/data/magnetiteScenario.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { DialogDefinition } from '../dialog.js';
 
@@ -130,7 +131,7 @@ export const coralMinerDialog: DialogDefinition = {
 		give: {
 			id: 'give',
 			text: 'npc.coralMiner.choice.give',
-			cond: c('scenario(magnet,8)+!fx(corail)')
+			cond: c(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.PREPARE_POTION})+!fx(corail)`)
 		},
 		no: {
 			id: 'no',

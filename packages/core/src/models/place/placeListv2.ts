@@ -15,6 +15,7 @@ import { GatherType } from '../enums/GatherType.js';
 import { GroundEnum } from '../enums/GroundEnum.js';
 import { MapZone } from '../enums/MapZone.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '../scenarios/data/magnetiteScenario.js';
 import { definePlaces } from './definePlaces.js';
 import { PlaceDefinitionInput } from './placeDefinition.js';
 
@@ -853,7 +854,11 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.PYLONES_DE_MAGNETITES },
 			{ target: PlaceEnum.SENTIER_DE_TOUTEMBA },
 			{ target: PlaceEnum.DEVOREUSE_DE_L_OUEST },
-			{ target: PlaceEnum.TAUDIS_DES_ZAXA, condition: 'scenario(magnet,2+)', difficulty: 2 },
+			{
+				target: PlaceEnum.TAUDIS_DES_ZAXA,
+				condition: `scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.HUNT_DESTROYER}+)`,
+				difficulty: 2
+			},
 			{ target: PlaceEnum.APPROCHER_SYPHON, condition: '!collec(magnet)' },
 			{ target: PlaceEnum.APPROCHER_SYPHON2, condition: 'collec(magnet)' }
 		],
@@ -925,7 +930,10 @@ export const placeListv2 = definePlaces({
 		moves: [
 			{ target: PlaceEnum.TAUDIS_DES_ZAXA, difficulty: 3 },
 			{ target: PlaceEnum.CAMP_DES_EMMEMMA },
-			{ target: PlaceEnum.REPAIRE_DE_LA_TEAM_W, condition: 'scenario(magnet,5+)' }
+			{
+				target: PlaceEnum.REPAIRE_DE_LA_TEAM_W,
+				condition: `scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.ENTER_TEAM_W_CAMP}+)`
+			}
 		],
 		background: 's_campRogues'
 	},

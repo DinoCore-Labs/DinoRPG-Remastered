@@ -1,4 +1,5 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '../../scenarios/data/magnetiteScenario.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { DialogDefinition } from '../dialog.js';
 
@@ -139,7 +140,9 @@ export const speleleologueIceDialog: DialogDefinition = {
 	id: 'speleleologue_ice',
 	name: 'npc.speleleologue.name',
 	place: PlaceEnum.GORGES_PROFONDES,
-	cond: parseCondition('scenario(magnet,8)+fx(fspele)+!fx(ice)'),
+	cond: parseCondition(
+		`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.PREPARE_POTION})+fx(fspele)+!fx(ice)`
+	),
 	pnj: {
 		image: false,
 		gfx: 'spelele',

@@ -10,14 +10,16 @@ import {
 import type { FightStep, StepFighter } from '@dinorpg/core/models/fight/fightStep.js';
 import { EntranceEffect, LifeEffect } from '@dinorpg/core/models/fight/transpiler.js';
 import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
-import { MagnetiteProgression } from '@dinorpg/core/models/scenarios/data/magnetiteScenario.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '@dinorpg/core/models/scenarios/data/magnetiteScenario.js';
+import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
+import { Prisma } from '../../../../prisma/index.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../Fight/Service/fight.service.js';
 import { prisma } from '../../prisma.js';
 import { getUserScenarioProgression, setUserScenarioProgression } from '../Controller/scenarioProgress.controller.js';
 import { ScenarioMoveFightInput } from '../Service/scenarioMoveFight.service.js';
 
-const MAGNETITE_SCENARIO_KEY = 'magnet';
+type MagnetiteTransaction = Prisma.TransactionClient;
 
 const INITIAL_AMBUSH_PLACE = PlaceEnum.SYPHON_SIFFLEUR;
 
@@ -136,6 +138,51 @@ type DarkGoupignonReviveState = {
 	 */
 	wasDead: boolean;
 };
+
+export async function advanceMagnetiteScenarioTx(
+	tx: MagnetiteTransaction,
+	input: {
+		userId: string;
+		expectedProgression: number;
+		nextProgression: number;
+	}
+): Promise<boolean> {
+	/*
+	 * Magnetite démarre implicitement à 0.
+	 *
+	 * Comme getUserScenarioProgression() considère
+	 * l'absence de ligne comme progression 0,
+	 * on matérialise la ligne uniquement pour
+	 * la première transition.
+	 */
+	if (input.expectedProgression === MagnetiteProgression.INITIAL_AMBUSH) {
+		await tx.userScenario.upsert({
+			where: {
+				scenarioKey_userId: {
+					userId: input.userId,
+					scenarioKey: MAGNETITE_SCENARIO_KEY
+				}
+			},
+			create: {
+				userId: input.userId,
+				scenarioKey: MAGNETITE_SCENARIO_KEY,
+				progression: MagnetiteProgression.INITIAL_AMBUSH
+			},
+			update: {}
+		});
+	}
+	const claim = await tx.userScenario.updateMany({
+		where: {
+			userId: input.userId,
+			scenarioKey: MAGNETITE_SCENARIO_KEY,
+			progression: input.expectedProgression
+		},
+		data: {
+			progression: input.nextProgression
+		}
+	});
+	return claim.count === 1;
+}
 
 /**
  * Vérifie si l'arrivée au Syphon doit déclencher
@@ -530,8 +577,12 @@ async function processInitialAmbush(input: ScenarioMoveFightInput): Promise<Figh
 	 * du scénario.
 	 */
 	const progressed = await prisma.$transaction(async tx => {
-		const currentScenario = await getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY);
-		if (currentScenario.progression !== MagnetiteProgression.INITIAL_AMBUSH) {
+		const claimed = await advanceMagnetiteScenarioTx(tx, {
+			userId: input.user.id,
+			expectedProgression: MagnetiteProgression.INITIAL_AMBUSH,
+			nextProgression: MagnetiteProgression.TALK_TO_KING
+		});
+		if (!claimed) {
 			return false;
 		}
 		await tx.dinoz.updateMany({
@@ -543,11 +594,6 @@ async function processInitialAmbush(input: ScenarioMoveFightInput): Promise<Figh
 			data: {
 				placeId: input.toPlace
 			}
-		});
-		await setUserScenarioProgression(tx, {
-			userId: input.user.id,
-			scenarioKey: MAGNETITE_SCENARIO_KEY,
-			progression: MagnetiteProgression.TALK_TO_KING
 		});
 		return true;
 	});
@@ -621,8 +667,12 @@ async function processTeamWEncounter(input: ScenarioMoveFightInput, encounter: T
 	 */
 	if (won) {
 		progressed = await prisma.$transaction(async tx => {
-			const currentScenario = await getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY);
-			if (currentScenario.progression !== encounter.progression) {
+			const claimed = await advanceMagnetiteScenarioTx(tx, {
+				userId: input.user.id,
+				expectedProgression: encounter.progression,
+				nextProgression: encounter.nextProgression
+			});
+			if (!claimed) {
 				return false;
 			}
 			await tx.dinoz.updateMany({
@@ -734,11 +784,12 @@ async function processFirstGroubourinEncounter(input: ScenarioMoveFightInput): P
 	 * du scénario.
 	 */
 	const progressed = await prisma.$transaction(async tx => {
-		const currentScenario = await getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY);
-		/**
-		 * Protection contre une double résolution.
-		 */
-		if (currentScenario.progression !== MagnetiteProgression.ENTER_TEAM_W_CAMP) {
+		const claimed = await advanceMagnetiteScenarioTx(tx, {
+			userId: input.user.id,
+			expectedProgression: MagnetiteProgression.ENTER_TEAM_W_CAMP,
+			nextProgression: MagnetiteProgression.TALK_TO_CAPTAIN
+		});
+		if (!claimed) {
 			return false;
 		}
 		/**
@@ -946,11 +997,12 @@ async function processDarkGoupignonAmbush(input: ScenarioMoveFightInput): Promis
 	 * 6. Vol de la potion, déplacement et progression.
 	 */
 	const progressed = await prisma.$transaction(async tx => {
-		const currentScenario = await getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY);
-		/**
-		 * Protection contre une double résolution.
-		 */
-		if (currentScenario.progression !== MagnetiteProgression.POTION_READY) {
+		const claimed = await advanceMagnetiteScenarioTx(tx, {
+			userId: input.user.id,
+			expectedProgression: MagnetiteProgression.POTION_READY,
+			nextProgression: MagnetiteProgression.FINAL_ASSAULT
+		});
+		if (!claimed) {
 			return false;
 		}
 		const teamIds = input.team.map(dinoz => dinoz.id);
@@ -1240,6 +1292,26 @@ function buildFinalAssaultReinforcementSteps(
  */
 export async function processMagnetiteFinalAssault(input: ScenarioMoveFightInput): Promise<FightResult> {
 	/**
+	 * Protection supplémentaire contre une résolution
+	 * du combat final depuis une mauvaise progression.
+	 *
+	 * Cette vérification est effectuée AVANT :
+	 * - le calcul du combat ;
+	 * - les dégâts ;
+	 * - les récompenses ;
+	 * - la consommation éventuelle d'objets.
+	 *
+	 * Le combat final n'est valide qu'à magnet = 10.
+	 */
+	const currentScenario = await prisma.$transaction(tx =>
+		getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY)
+	);
+
+	if (currentScenario.progression !== MagnetiteProgression.FINAL_ASSAULT) {
+		throw new ExpectedError('dialogNotAvailable');
+	}
+
+	/**
 	 * Le code original ajoute :
 	 * - un premier darkgp ;
 	 * - puis un darkgp par Dinoz.
@@ -1347,42 +1419,57 @@ export async function processMagnetiteFinalAssault(input: ScenarioMoveFightInput
 	const result = await rewardFightVsMonsters(input.team, enemies, fightProcess, input.toPlace, input.user, {
 		autoReequip: input.autoReequip
 	});
+
 	let progressed = false;
+
 	if (won) {
-		progressed = await prisma.$transaction(async tx => {
-			const currentScenario = await getUserScenarioProgression(tx, input.user.id, MAGNETITE_SCENARIO_KEY);
-			/**
-			 * Protection contre une double résolution.
-			 */
-			if (currentScenario.progression !== MagnetiteProgression.FINAL_ASSAULT) {
-				return false;
-			}
-			await setUserScenarioProgression(tx, {
+		/**
+		 * Transition atomique :
+		 *
+		 * FINAL_ASSAULT (10)
+		 *        ↓
+		 * FINAL_ASSAULT_WON (11)
+		 *
+		 * updateMany dans
+		 * advanceMagnetiteScenarioTx()
+		 * garantit qu'une seule résolution
+		 * peut faire cette transition.
+		 */
+		progressed = await prisma.$transaction(tx =>
+			advanceMagnetiteScenarioTx(tx, {
 				userId: input.user.id,
-				scenarioKey: MAGNETITE_SCENARIO_KEY,
-				progression: MagnetiteProgression.FINAL_ASSAULT_WON
-			});
-			return true;
-		});
+				expectedProgression: MagnetiteProgression.FINAL_ASSAULT,
+				nextProgression: MagnetiteProgression.FINAL_ASSAULT_WON
+			})
+		);
 	}
+
 	return {
 		...result,
+
 		/**
 		 * Seuls les Goupignons sont considérés
 		 * comme des monstres réellement vaincus.
 		 */
 		monsterKillCount: won ? darkGoupignons.length : 0,
+
 		source: 'scenario',
+
 		scenario: {
 			key: MAGNETITE_SCENARIO_KEY,
+
 			fightKey: 'magnet_final_assault',
+
 			progressed,
+
 			progression: progressed ? MagnetiteProgression.FINAL_ASSAULT_WON : MagnetiteProgression.FINAL_ASSAULT
 		},
+
 		startText: {
 			type: 'message',
 			text: FINAL_ASSAULT_START_TEXT_KEY
 		},
+
 		endText: won
 			? {
 					type: 'message',
