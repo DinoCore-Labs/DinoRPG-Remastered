@@ -1,3 +1,4 @@
+import { currentEvents } from '@dinorpg/core/models/events/events.js';
 import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import type { RouteRecord } from '@dinorpg/core/models/router/router.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
@@ -250,7 +251,14 @@ const routes: RouteRecord[] = [
 							eventId: 'CHRISTMAS',
 							pageLoaded: Number(route.params.pageLoaded)
 						}),
-						meta: { public: true, showLeftPanel: false }
+						meta: { public: true, showLeftPanel: false },
+						beforeEnter: (_to, _from, next) => {
+							if (currentEvents().length === 0) {
+								next({ name: 'RankingPlayers', params: { pageLoaded: 1 } });
+							} else {
+								next();
+							}
+						}
 					},
 					{
 						path: 'event/clans/:pageLoaded',
@@ -260,7 +268,14 @@ const routes: RouteRecord[] = [
 							eventId: 'CHRISTMAS',
 							pageLoaded: Number(route.params.pageLoaded)
 						}),
-						meta: { public: true, showLeftPanel: false }
+						meta: { public: true, showLeftPanel: false },
+						beforeEnter: (_to, _from, next) => {
+							if (currentEvents().length === 0) {
+								next({ name: 'RankingPlayers', params: { pageLoaded: 1 } });
+							} else {
+								next();
+							}
+						}
 					}
 				]
 			},
