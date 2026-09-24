@@ -1,16 +1,17 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
 import { Ingredient } from '../../ingredients/ingredientList.js';
 import { Item } from '../../items/itemList.js';
-import { JEROME_TRADER_SCENARIO_KEY, JEROME_TRADER_SCENARIO_STEPS } from '../../scenarios/data/jeromeTraderScenario.js';
+import {
+	JEROME_TRADER_REQUIRED_DEVOURER_SEEDS,
+	JEROME_TRADER_SCENARIO_KEY,
+	JEROME_TRADER_SCENARIO_STEPS,
+	JEROME_TRADER_TREASURE_TICKET_REWARD
+} from '../../scenarios/data/jeromeTraderScenario.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { defineDialog } from '../defineDialog.js';
 
-const REQUIRED_DEVOURER_SEEDS = 100;
-const TREASURE_TICKET_REWARD = 800;
-
 /**
  * Premier dialogue de Jérôme K.
- *
  */
 export const jeromeKSteppesDialog = defineDialog({
 	id: 'jerome_k_steppes',
@@ -115,7 +116,7 @@ export const jeromeKSteppesDialog = defineDialog({
 				{
 					type: 'useIngredient',
 					ingredientId: Ingredient.GRAINE_DE_DEVOREUSE,
-					count: REQUIRED_DEVOURER_SEEDS
+					count: JEROME_TRADER_REQUIRED_DEVOURER_SEEDS
 				}
 			],
 			effects: [
@@ -212,7 +213,7 @@ export const jeromeKSteppesDialog = defineDialog({
 			id: 'ok',
 			text: 'npc.jeromeK.choice.steppes.ok',
 			target: 'ok',
-			cond: parseCondition(`hasingr(${Ingredient.GRAINE_DE_DEVOREUSE},${REQUIRED_DEVOURER_SEEDS}+)`)
+			cond: parseCondition(`hasingr(${Ingredient.GRAINE_DE_DEVOREUSE},${JEROME_TRADER_REQUIRED_DEVOURER_SEEDS}+)`)
 		}
 	}
 });
@@ -265,7 +266,7 @@ export const jeromeKDinovilleDialog = defineDialog({
 				{
 					type: 'giveMoney',
 					moneyType: 'TREASURE_TICKET',
-					amount: TREASURE_TICKET_REWARD
+					amount: JEROME_TRADER_TREASURE_TICKET_REWARD
 				},
 				{
 					type: 'scenario',
