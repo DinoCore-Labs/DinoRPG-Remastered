@@ -10,6 +10,7 @@
 	<RouterView />
 	<Footer />
 	<Toast />
+	<EventAnnouncePopup />
 </template>
 
 <script lang="ts">
@@ -23,6 +24,7 @@ import LeftUserMenu from './components/tools/LeftUserMenu.vue';
 import Toast from './components/utils/Toast.vue';
 import Messaging from './components/modal/Messaging.vue';
 import Spinner from './components/utils/Spinner.vue';
+import EventAnnouncePopup from './components/modal/EventAnnouncePopup.vue';
 
 export default defineComponent({
 	name: 'App',
@@ -34,7 +36,8 @@ export default defineComponent({
 		Messaging,
 		Footer,
 		Toast,
-		Spinner
+		Spinner,
+		EventAnnouncePopup
 	}
 });
 </script>
