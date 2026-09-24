@@ -1,4 +1,5 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
+import { DOJO_SCENARIO_KEY, DOJO_SCENARIO_STEPS } from '../../scenarios/data/dojoScenario.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { defineDialog } from '../defineDialog.js';
 import type { DialogPnj } from '../dialog.js';
@@ -61,7 +62,13 @@ export const maitrZenitDialog = defineDialog({
 			id: 'bien',
 			text: 'npc.maitrZenit.dialog.bien',
 			fast: true,
-			effects: [{ type: 'scenario', scenario: 'dojo', phase: 1 }]
+			effects: [
+				{
+					type: 'scenario',
+					scenario: DOJO_SCENARIO_KEY,
+					phase: DOJO_SCENARIO_STEPS.UNLOCKED
+				}
+			]
 		},
 		aide: {
 			id: 'aide',
@@ -102,12 +109,12 @@ export const maitrZenitDialog = defineDialog({
 		talk: {
 			id: 'talk',
 			text: 'npc.maitrZenit.choice.talk',
-			cond: parseCondition('scenario(dojo,0)')
+			cond: parseCondition(`scenario(${DOJO_SCENARIO_KEY},${DOJO_SCENARIO_STEPS.NOT_STARTED})`)
 		},
 		talk2: {
 			id: 'talk2',
 			text: 'npc.maitrZenit.choice.talk2',
-			cond: parseCondition('scenario(dojo,0)')
+			cond: parseCondition(`scenario(${DOJO_SCENARIO_KEY},${DOJO_SCENARIO_STEPS.NOT_STARTED})`)
 		},
 		ouep: {
 			id: 'ouep',
@@ -142,7 +149,7 @@ export const maitrZenitDialog = defineDialog({
 		aide: {
 			id: 'aide',
 			text: 'npc.maitrZenit.choice.aide',
-			cond: parseCondition('scenario(dojo,2)')
+			cond: parseCondition(`scenario(${DOJO_SCENARIO_KEY},${DOJO_SCENARIO_STEPS.BUILT})`)
 		},
 		aideurl: {
 			id: 'aideurl',
