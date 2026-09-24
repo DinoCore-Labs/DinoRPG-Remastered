@@ -6,7 +6,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import sharp from 'sharp';
 
 import { prisma } from '../../prisma.js';
-import { removeMoney } from '../../User/Controller/money.controller.js';
+import { removeMoney, removeMoneyTx } from '../../User/Controller/money.controller.js';
 import { memberHasRight } from '../Controller/memberHasRight.controller.js';
 import {
 	clanIdParamSchema,
@@ -37,7 +37,7 @@ export async function createClan(req: FastifyRequest, reply: FastifyReply) {
 		if (existingClan) {
 			throw new ExpectedError('clanNameTaken');
 		}
-		removeMoney(userId, CLAN_CREATE_MONEY);
+		await removeMoneyTx(tx, userId, CLAN_CREATE_MONEY);
 
 		const clan = await tx.clan.create({
 			data: {
