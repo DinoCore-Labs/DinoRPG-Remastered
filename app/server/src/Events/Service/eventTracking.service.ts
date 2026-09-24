@@ -34,3 +34,9 @@ export async function incrementUserEventProgression(userId: string, eventId: str
 		}
 	});
 }
+
+export async function getUserEventTracking(userId: string, eventId: string) {
+	return prisma.userEventTracking.findUnique({
+		where: { eventId_userId: { eventId, userId } }
+	});
+}
