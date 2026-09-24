@@ -40,7 +40,7 @@
 			@error="hideBrokenImage"
 		/>
 		<div class="markdown" v-if="news.content">
-			<MarkdownRenderer :source="translateNewsContent(news.content)" />
+			<MarkdownRenderer :source="translateNewsContent(news.content)" game-icons />
 		</div>
 		<div class="missingText" v-else>
 			{{ $t('newsPage.noTranslation') }}
