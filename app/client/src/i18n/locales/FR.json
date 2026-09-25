@@ -6637,5 +6637,13 @@
 			}
 		}
 	},
-	"errors": {}
+	"errors": {},
+	"event": {
+		"christmas": {
+			"reward": {
+				"title": "Récompenses de Noël",
+				"content": "Félicitations pour votre participation à l'événement de Noël ! En guise de remerciement pour vos exploits face aux Piglous, vous avez reçu vos récompenses directement dans votre inventaire.\n\n{items}\n\nMerci de votre bravoure, l'équipe DinoRPG."
+			}
+		}
+	}
 }
