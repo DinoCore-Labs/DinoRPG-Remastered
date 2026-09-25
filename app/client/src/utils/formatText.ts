@@ -38,19 +38,19 @@ export const helpers = {
 			case 'gold':
 				return `<img src="${getImgURL('icons', 'gold')}" alt="gold">`;
 			case 'ticket':
-				return `<img src="${getImgURL('icons', 'ticket')}" alt="ticket">`;
+				return `<img class="text-icon" src="${getImgURL('icons', 'ticket')}" alt="ticket">`;
 			case 'chrono':
-				return `<img src="${getImgURL('icons', 'small_chrono')}" alt="chrono">`;
+				return `<img class="text-icon" src="${getImgURL('icons', 'small_chrono')}" alt="chrono">`;
 			case 'attack':
-				return `<img src="${getImgURL('specialStats', 'counter')}" alt="attack">`;
+				return `<img class="text-icon" src="${getImgURL('specialStats', 'counter')}" alt="attack">`;
 			case 'defense':
-				return `<img src="${getImgURL('specialStats', 'armor')}" alt="defense">`;
+				return `<img class="text-icon" src="${getImgURL('specialStats', 'armor')}" alt="defense">`;
 			case 'hp':
-				return `<img src="${getImgURL('specialStats', 'hpRegen')}" alt="hp">`;
+				return `<img class="text-icon" src="${getImgURL('specialStats', 'hpRegen')}" alt="hp">`;
 			case 'pv':
-				return `<img src="${getImgURL('icons', 'small_pv')}" alt="pv">`;
+				return `<img class="text-icon" src="${getImgURL('icons', 'small_pv')}" alt="pv">`;
 			case 'xp':
-				return `<img src="${getImgURL('icons', 'small_xp')}" alt="xp">`;
+				return `<img class="text-icon" src="${getImgURL('icons', 'small_xp')}" alt="xp">`;
 			case 'irma':
 				return `<img class="text-icon" src="${getImgURL('item', 'item_irma')}" alt="irma">`;
 			case 'napo':
@@ -63,8 +63,12 @@ export const helpers = {
 				return `<img class="text-icon" src="${getImgURL('item', 'item_christmas_egg')}" alt="xmas_egg">`;
 			case 'santaz_egg':
 				return `<img class="text-icon" src="${getImgURL('item', 'item_santaz_egg')}" alt="santaz_egg">`;
+			case 'santaz_rare_egg':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_santaz_egg_rare')}" alt="santaz_rare_egg">`;
 			case 'feross_egg':
 				return `<img class="text-icon" src="${getImgURL('item', 'item_feross_egg')}" alt="feross_egg">`;
+			case 'feross_xmas_egg':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_feross_egg_christmas')}" alt="feross_xmas_egg">`;
 			case 'kabuki_egg':
 				return `<img class="text-icon" src="${getImgURL('item', 'item_kabuki_egg')}" alt="kabuki_egg">`;
 			case 'mahamuti_egg':
@@ -123,7 +127,9 @@ export function formatText(text: string): string {
 				'demon_ticket',
 				'xmas_egg',
 				'santaz_egg',
+				'santaz_rare_egg',
 				'feross_egg',
+				'feross_xmas_egg',
 				'kabuki_egg',
 				'mahamuti_egg',
 				'quetzu_egg',

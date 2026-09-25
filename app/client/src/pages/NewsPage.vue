@@ -374,7 +374,7 @@ export default defineComponent({
 
 		:deep(li) {
 			margin: 8px 0;
-			font-size: 1.1rem;
+			font-size: 1rem;
 		}
 
 		:deep(img) {

@@ -159,6 +159,21 @@ export async function ensureJobsExist() {
 		},
 		update: {}
 	});
+	// Xmas Events News
+	await prisma.jobDefinition.upsert({
+		where: { key: 'check-event-news' },
+		create: {
+			key: 'check-event-news',
+			name: 'Check Event News',
+			type: 'DAILY_AT',
+			timezone: 'UTC',
+			dailyHour: 0,
+			dailyMinute: 0,
+			nextRunAt: nextDailyAtUtc(0, 0),
+			enabled: true
+		},
+		update: {}
+	});
 
 	const tournamentJobs = [
 		{ key: TOURNAMENT_INIT_JOB_KEY, name: 'Tournament — init qualifications', dayOfWeek: 1, hour: 0, minute: 0 },
