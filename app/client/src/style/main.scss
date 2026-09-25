@@ -10,3 +10,13 @@ body {
 	text-align: left;
 	color: #52646b;
 }
+
+.text-icon {
+	width: 22px;
+	height: 22px;
+	display: inline-block;
+	vertical-align: middle;
+	margin: -2px 2px !important;
+	border-radius: 0 !important;
+	object-fit: contain;
+}
