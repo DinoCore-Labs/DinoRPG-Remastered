@@ -79,6 +79,10 @@ export const helpers = {
 				return `<img class="text-icon" src="${getImgURL('item', 'item_smog_egg')}" alt="smog_egg">`;
 			case 'easter_egg':
 				return `<img class="text-icon" src="${getImgURL('item', 'item_easter_egg')}" alt="easter_egg">`;
+			case 'cup1':
+				return `<img class="text-icon" src="${getImgURL('status', 'fx_cup1')}" alt="cup1">`;
+			case 'conts1':
+				return `<img class="text-icon" src="${getImgURL('status', 'fx_conts1')}" alt="conts1">`;
 			default:
 				throw Error(`Unexpected key for replaced image: ${key}`);
 		}
@@ -134,7 +138,9 @@ export function formatText(text: string): string {
 				'mahamuti_egg',
 				'quetzu_egg',
 				'smog_egg',
-				'easter_egg'
+				'easter_egg',
+				'cup1',
+				'conts1'
 			];
 			if (validKeys.includes(iconKey)) {
 				return helpers.computeImageHtml(iconKey);
