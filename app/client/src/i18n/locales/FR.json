@@ -623,7 +623,7 @@
 				"end": {
 					"title": "Fin de l'événement de Noël !",
 					"excerpt": "Les Piglous ont tous été chassés, il est l'heure de distribuer les récompenses !",
-					"content": "La grande chasse aux Piglous est officiellement terminée !\n\nGrâce à vos efforts conjoints, la menace des Piglous a été repoussée (pour l'instant...). Les récompenses individuelles et de clan ont été distribuées automatiquement et ajoutées dans vos inventaires. Vous devriez avoir reçu une notification détaillant vos gains lors de votre connexion.\n\nFélicitations à tous les participants, et merci pour votre incroyable engouement ! À très bientôt pour de prochaines aventures !"
+					"content": "La grande chasse aux Piglous est officiellement terminée !\n\nGrâce à vos efforts conjoints, la menace des Piglous a été repoussée (pour l'instant...). Les récompenses individuelles et de clan ont été distribuées automatiquement et ajoutées dans vos inventaires. Vous devriez avoir reçu une notification détaillant vos gains lors de votre connexion.\n\n### :conts1: Top 10 Joueurs\n{topPlayers}\n\n### :cup1: Top 10 Clans\n{topClans}\n\nFélicitations à tous les participants, et merci pour votre incroyable engouement ! À très bientôt pour de prochaines aventures !"
 				}
 			}
 		}
