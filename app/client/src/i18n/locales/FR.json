@@ -1080,9 +1080,9 @@
 		"tabs": {
 			"players": "Joueurs",
 			"average": "Moyenne",
-			"event": "Événement",
-			"eventPlayers": "Événement - Joueurs",
-			"eventClans": "Événement - Clans"
+			"event": "Événement - Noël",
+			"eventPlayers": "Événement de Noël - Joueurs",
+			"eventClans": "Événement de Noël - Clans"
 		},
 		"th": {
 			"pos": "Pos.",
