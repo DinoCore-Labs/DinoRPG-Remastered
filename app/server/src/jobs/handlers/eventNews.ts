@@ -32,6 +32,17 @@ export async function checkEventNews() {
 					]
 				});
 				console.log(`[Events] Automaticaly created start news for ${event.name}`);
+
+				// Reset the scores for this event
+				try {
+					const { prisma } = await import('../../prisma.js');
+					await prisma.userEventTracking.deleteMany({
+						where: { eventId: event.name }
+					});
+					console.log(`[Events] Cleared previous tracking for ${event.name}`);
+				} catch (e) {
+					console.error(`Failed to clear tracking for event ${event.name}:`, e);
+				}
 			} catch (e) {
 				if ((e as Error).message && !(e as Error).message.includes('Unique constraint failed')) {
 					console.error(`Failed to create start news for event ${event.name}:`, e);
