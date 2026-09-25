@@ -41,6 +41,7 @@ import { inventoryRoutes } from './Inventory/Routes/inventory.routes.js';
 import { ensureJobsExist } from './jobs/ensureJobs.js';
 import { ensureSecretsExist } from './jobs/ensureSecrets.js';
 import { devourerMidnightResetJob } from './jobs/handlers/devourerMidnightReset.js';
+import { checkEventNews } from './jobs/handlers/eventNews.js';
 import { expireDueMarketOffersJob } from './jobs/handlers/expireMarketOffers.js';
 import { gameLogMaintenanceJob } from './jobs/handlers/gameLogMaintenance.js';
 import { healFountainPearlDinozJob } from './jobs/handlers/healFountainPearlDinoz.js';
@@ -407,6 +408,7 @@ async function buildServer(options: BuildServerOptions = {}) {
 				[GAME_LOG_MAINTENANCE_JOB_KEY]: () => gameLogMaintenanceJob(server.log),
 				[BANK_EXCHANGE_RATE_JOB_KEY]: () => refreshBankExchangeRateJob(server.log),
 				'reset-dojo-challenge': () => resetDojoChallenge(),
+				'check-event-news': () => checkEventNews(),
 				...TournamentManager.HANDLERS
 			},
 			server.log
