@@ -45,14 +45,33 @@ export async function checkEventNews() {
 			const slug = `event-end-${eventNameLower}-${now.getFullYear()}`;
 
 			try {
+				let params = '{}';
+				try {
+					const { getPlayerEventRanking, getClanEventRanking } =
+						await import('../../Ranking/Controller/getEventRanking.controller.js');
+					const userRanking = await getPlayerEventRanking(event.name, 1, 10);
+					const clanRanking = await getClanEventRanking(event.name, 1, 10);
+
+					const topPlayers = userRanking.ranking
+						.map((u: any) => `${u.position}. **${u.user.name}** (${u.total} monstres)`)
+						.join('\\n');
+					const topClans = clanRanking.ranking
+						.map((c: any) => `${c.position}. **${c.clanName}** (${c.totalKills} monstres)`)
+						.join('\\n');
+
+					params = JSON.stringify({ topPlayers, topClans });
+				} catch (e) {
+					console.error('Failed to get rankings for news', e);
+				}
+
 				await newsService.createAdminNews({
 					slug,
 					type: newsType,
 					isPublished: true,
 					publishedAt: now,
 					translations: [
-						{ lang: Language.FR, title: titleKey, excerpt: excerptKey, content: contentKey },
-						{ lang: Language.EN, title: titleKey, excerpt: excerptKey, content: contentKey }
+						{ lang: Language.FR, title: titleKey, excerpt: excerptKey, content: `${contentKey}|${params}` },
+						{ lang: Language.EN, title: titleKey, excerpt: excerptKey, content: `${contentKey}|${params}` }
 					]
 				});
 				console.log(`[Events] Automaticaly created end news for ${event.name}`);
