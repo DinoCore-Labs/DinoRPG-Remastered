@@ -1,10 +1,14 @@
+import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
+import { getUserMaxDinoz } from '../../src/Dinoz/Controller/getActiveDinoz.js';
+import { applyUnfreezeIfNeeded } from '../../src/Dinoz/Controller/getUnfreezeDinoz.controller.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
+import { UNFREEZE_DURATION_IN_MS } from '../../src/utils/dinoz/canFreezeDinozAction.js';
 import { createAuthCookie } from '../helpers/auth.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
@@ -26,6 +30,15 @@ beforeEach(async () => {
 afterAll(async () => {
 	await server.close();
 });
+
+async function addDinozStatus(dinozId: number, statusId: DinozStatusId): Promise<void> {
+	await prisma.dinozStatus.create({
+		data: {
+			dinozId,
+			statusId
+		}
+	});
+}
 
 describe('Dinoz lifecycle', () => {
 	describe('naming', () => {
@@ -664,6 +677,467 @@ describe('Dinoz lifecycle', () => {
 				}
 			});
 			expect(deathTracking.quantity).toBe(1);
+		});
+	});
+
+	describe('freeze and unfreeze', () => {
+		it('freezes an eligible Dinoz at Gorges Profondes', async () => {
+			const user = await createTestUser({
+				name: 'FreezeOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.GORGES_PROFONDES
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.FSPELE);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${dinoz.id}/freeze`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			expect(response.json()).toEqual({
+				success: true
+			});
+			const frozen = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(frozen.state).toBe('frozen');
+			expect(frozen.stateTimer).toBeNull();
+		});
+
+		it('detaches a Dinoz and all its followers when freezing it', async () => {
+			const user = await createTestUser({
+				name: 'FreezeGroupOwner',
+				withTutorial: false
+			});
+			const leader = await createTestDinoz({
+				userId: user.id,
+				name: 'FreezeLeader',
+				canRename: false,
+				placeId: PlaceEnum.GORGES_PROFONDES
+			});
+			const frozenDinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'FreezeMiddle',
+				canRename: false,
+				placeId: PlaceEnum.GORGES_PROFONDES
+			});
+			const follower = await createTestDinoz({
+				userId: user.id,
+				name: 'FreezeFollower',
+				canRename: false,
+				placeId: PlaceEnum.GORGES_PROFONDES
+			});
+			await addDinozStatus(frozenDinoz.id, DinozStatusId.FSPELE);
+			/*
+			 * Leader
+			 *   ↓
+			 * FreezeMiddle
+			 *   ↓
+			 * Follower
+			 */
+			await prisma.dinoz.update({
+				where: {
+					id: frozenDinoz.id
+				},
+				data: {
+					leaderId: leader.id
+				}
+			});
+			await prisma.dinoz.update({
+				where: {
+					id: follower.id
+				},
+				data: {
+					leaderId: frozenDinoz.id
+				}
+			});
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${frozenDinoz.id}/freeze`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			const [updatedFrozen, updatedFollower] = await Promise.all([
+				prisma.dinoz.findUniqueOrThrow({
+					where: {
+						id: frozenDinoz.id
+					}
+				}),
+				prisma.dinoz.findUniqueOrThrow({
+					where: {
+						id: follower.id
+					}
+				})
+			]);
+			expect(updatedFrozen.state).toBe('frozen');
+			/*
+			 * Le Dinoz gelé ne suit plus
+			 * son ancien leader.
+			 */
+			expect(updatedFrozen.leaderId).toBeNull();
+			/*
+			 * Et ses followers sont
+			 * également détachés.
+			 */
+			expect(updatedFollower.leaderId).toBeNull();
+			/*
+			 * L'ancien leader reste
+			 * évidemment intact.
+			 */
+			const unchangedLeader = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: leader.id
+				}
+			});
+			expect(unchangedLeader.state).toBeNull();
+		});
+
+		it('refuses to freeze a Dinoz outside Gorges Profondes', async () => {
+			const user = await createTestUser({
+				name: 'WrongFreezePlaceOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.DINOVILLE
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.FSPELE);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${dinoz.id}/freeze`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			const unchanged = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(unchanged.state).toBeNull();
+			expect(unchanged.stateTimer).toBeNull();
+		});
+
+		it('refuses to freeze a Dinoz without the required FSPELE status', async () => {
+			const user = await createTestUser({
+				name: 'NoFreezeStatusOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.GORGES_PROFONDES
+			});
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${dinoz.id}/freeze`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+
+			expect(response.statusCode).toBe(400);
+			const unchanged = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(unchanged.state).toBeNull();
+		});
+
+		it('refuses to freeze a dead Dinoz', async () => {
+			const user = await createTestUser({
+				name: 'DeadFreezeOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				life: 0,
+				placeId: PlaceEnum.GORGES_PROFONDES
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.FSPELE);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${dinoz.id}/freeze`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			const unchanged = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(unchanged.life).toBe(0);
+			expect(unchanged.state).toBeNull();
+		});
+
+		it('prevents a player from freezing another player Dinoz', async () => {
+			const owner = await createTestUser({
+				name: 'FreezeRealOwner',
+				withTutorial: false
+			});
+			const attacker = await createTestUser({
+				name: 'FreezeAttacker',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: owner.id,
+				canRename: false,
+				placeId: PlaceEnum.GORGES_PROFONDES
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.FSPELE);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${dinoz.id}/freeze`,
+				headers: {
+					cookie: createAuthCookie(server, attacker)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dinozDoesNotBelongToUser'
+			});
+			const unchanged = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(unchanged.state).toBeNull();
+		});
+
+		it('starts a 24 hour unfreeze timer for a frozen Dinoz', async () => {
+			const user = await createTestUser({
+				name: 'UnfreezeOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false
+			});
+			await prisma.dinoz.update({
+				where: {
+					id: dinoz.id
+				},
+				data: {
+					state: 'frozen',
+					stateTimer: null
+				}
+			});
+			const beforeRequest = Date.now();
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${dinoz.id}/unfreeze`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			const afterRequest = Date.now();
+			expect(response.statusCode).toBe(200);
+			const body = response.json() as {
+				success: boolean;
+				unfreezeAt: string;
+			};
+			expect(body.success).toBe(true);
+			const unfreezeAt = new Date(body.unfreezeAt).getTime();
+			/*
+			 * Le timer doit correspondre
+			 * à environ 24 heures.
+			 *
+			 * On encadre avec les timestamps
+			 * avant/après la requête pour
+			 * éviter un test fragile.
+			 */
+			expect(unfreezeAt).toBeGreaterThanOrEqual(beforeRequest + UNFREEZE_DURATION_IN_MS);
+			expect(unfreezeAt).toBeLessThanOrEqual(afterRequest + UNFREEZE_DURATION_IN_MS);
+			const unfreezing = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(unfreezing.state).toBe('unfreezing');
+			expect(unfreezing.stateTimer?.getTime()).toBe(unfreezeAt);
+		});
+
+		it('refuses to unfreeze when the active Dinoz limit is already reached', async () => {
+			const user = await createTestUser({
+				name: 'FullUnfreezeOwner',
+				withTutorial: false
+			});
+			const frozenDinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'FrozenExtraDinoz',
+				canRename: false
+			});
+			await prisma.dinoz.update({
+				where: {
+					id: frozenDinoz.id
+				},
+				data: {
+					state: 'frozen'
+				}
+			});
+			const maxDinoz = getUserMaxDinoz({
+				leader: false,
+				messie: false
+			});
+			/*
+			 * Le Dinoz gelé n'est pas compté
+			 * parmi les Dinoz actifs.
+			 *
+			 * On crée donc exactement la
+			 * capacité maximale en plus.
+			 */
+			for (let index = 0; index < maxDinoz; index++) {
+				await createTestDinoz({
+					userId: user.id,
+					name: `ActiveDinoz${index}`,
+					canRename: false
+				});
+			}
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${frozenDinoz.id}/unfreeze`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			const unchanged = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: frozenDinoz.id
+				}
+			});
+			expect(unchanged.state).toBe('frozen');
+			expect(unchanged.stateTimer).toBeNull();
+		});
+
+		it('prevents a player from unfreezing another player Dinoz', async () => {
+			const owner = await createTestUser({
+				name: 'UnfreezeRealOwner',
+				withTutorial: false
+			});
+			const attacker = await createTestUser({
+				name: 'UnfreezeAttacker',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: owner.id,
+				canRename: false
+			});
+			await prisma.dinoz.update({
+				where: {
+					id: dinoz.id
+				},
+				data: {
+					state: 'frozen'
+				}
+			});
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${dinoz.id}/unfreeze`,
+				headers: {
+					cookie: createAuthCookie(server, attacker)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dinozDoesNotBelongToUser'
+			});
+			const unchanged = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(unchanged.state).toBe('frozen');
+		});
+
+		it('completes unfreezing when the timer has expired', async () => {
+			const user = await createTestUser({
+				name: 'FinishedUnfreezeOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false
+			});
+			await prisma.dinoz.update({
+				where: {
+					id: dinoz.id
+				},
+				data: {
+					state: 'unfreezing',
+					stateTimer: new Date(Date.now() - 1000)
+				}
+			});
+			/*
+			 * Le dégel est appliqué paresseusement.
+			 *
+			 * C'est cette fonction que le chargement
+			 * du menu utilise pour vérifier si les
+			 * 24 heures sont écoulées.
+			 */
+			const result = await prisma.$transaction(tx => applyUnfreezeIfNeeded(tx, dinoz.id));
+			expect(result).toMatchObject({
+				id: dinoz.id,
+				state: null,
+				stateTimer: null
+			});
+			const unfrozen = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(unfrozen.state).toBeNull();
+			expect(unfrozen.stateTimer).toBeNull();
+		});
+
+		it('keeps the Dinoz unfreezing while the timer has not expired', async () => {
+			const user = await createTestUser({
+				name: 'PendingUnfreezeOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false
+			});
+			const futureTimer = new Date(Date.now() + 60 * 60 * 1000);
+			await prisma.dinoz.update({
+				where: {
+					id: dinoz.id
+				},
+				data: {
+					state: 'unfreezing',
+					stateTimer: futureTimer
+				}
+			});
+			const result = await prisma.$transaction(tx => applyUnfreezeIfNeeded(tx, dinoz.id));
+			expect(result).toMatchObject({
+				id: dinoz.id,
+				state: 'unfreezing'
+			});
+			expect(result?.stateTimer?.getTime()).toBe(futureTimer.getTime());
+			const stillUnfreezing = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(stillUnfreezing.state).toBe('unfreezing');
+			expect(stillUnfreezing.stateTimer?.getTime()).toBe(futureTimer.getTime());
 		});
 	});
 });
