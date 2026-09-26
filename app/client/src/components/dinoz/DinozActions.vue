@@ -464,7 +464,12 @@ export default defineComponent({
 						params: {
 							id: this.dinozId.toString(),
 							dialogId: action.prop
-						}
+						},
+						query: action.dialogPhaseId
+							? {
+									phaseId: action.dialogPhaseId
+								}
+							: undefined
 					});
 					break;
 				case Action.FIGHT: {
