@@ -5,6 +5,7 @@ import { getMaxFollowers, haveElementAffinity } from '@dinorpg/core/utils/dinozU
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { ownsDinoz } from '../../User/Controller/ownsDinoz.controller.js';
+import { assertDinozAvailableForGroup } from '../../utils/dinoz/assertDinozAvailableForGroup.js';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { assertDinozNotConcentrating } from '../Controller/concentrationDinoz.controller.js';
 import { getDinozFicheRequest } from '../Controller/getDinozFiche.controller.js';
@@ -43,6 +44,8 @@ export async function followDinoz(req: FastifyRequest<{ Params: Params }>, _repl
 	if (dinoz.canRename || leader.canRename) {
 		throw new ExpectedError(`Dinoz has to be named.`);
 	}
+	assertDinozAvailableForGroup(dinoz);
+	assertDinozAvailableForGroup(leader);
 	//Check if leader is not at max followers
 	const leaderFiche = toDinozFiche(user_leader, leader.id);
 	const leaderHasFearFactor = leaderFiche.items.includes(Item.FEAR_FACTOR);

@@ -313,8 +313,189 @@ describe('Dinoz groups', () => {
 					id: attackerFollower.id
 				}
 			});
-
 			expect(unchanged.leaderId).toBeNull();
+		});
+
+		it('prevents a dead Dinoz from joining a group', async () => {
+			const user = await createTestUser({
+				name: 'DeadFollowerOwner',
+				withTutorial: false
+			});
+			const leader = await createTestDinoz({
+				userId: user.id,
+				name: 'AliveLeader',
+				canRename: false,
+				life: 100
+			});
+			const follower = await createTestDinoz({
+				userId: user.id,
+				name: 'DeadFollower',
+				canRename: false,
+				life: 0
+			});
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${follower.id}/follow/${leader.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dinozGroupDead',
+				params: {
+					dinozId: follower.id
+				}
+			});
+			expect(
+				(
+					await prisma.dinoz.findUniqueOrThrow({
+						where: {
+							id: follower.id
+						}
+					})
+				).leaderId
+			).toBeNull();
+		});
+
+		it('prevents following a dead Dinoz', async () => {
+			const user = await createTestUser({
+				name: 'DeadLeaderOwner',
+				withTutorial: false
+			});
+			const leader = await createTestDinoz({
+				userId: user.id,
+				name: 'DeadLeader',
+				canRename: false,
+				life: 0
+			});
+			const follower = await createTestDinoz({
+				userId: user.id,
+				name: 'AliveFollower',
+				canRename: false
+			});
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${follower.id}/follow/${leader.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dinozGroupDead',
+				params: {
+					dinozId: leader.id
+				}
+			});
+			expect(
+				(
+					await prisma.dinoz.findUniqueOrThrow({
+						where: {
+							id: follower.id
+						}
+					})
+				).leaderId
+			).toBeNull();
+		});
+
+		it('prevents an unavailable Dinoz from joining a group', async () => {
+			const user = await createTestUser({
+				name: 'UnavailableFollowerOwner',
+				withTutorial: false
+			});
+			const leader = await createTestDinoz({
+				userId: user.id,
+				name: 'AvailableLeader',
+				canRename: false
+			});
+			const follower = await createTestDinoz({
+				userId: user.id,
+				name: 'UnavailableFollower',
+				canRename: false
+			});
+			await prisma.dinoz.update({
+				where: {
+					id: follower.id
+				},
+				data: {
+					state: 'resting',
+					stateTimer: new Date()
+				}
+			});
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${follower.id}/follow/${leader.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dinozGroupUnavailable',
+				params: {
+					dinozId: follower.id,
+					state: 'resting'
+				}
+			});
+			expect(
+				(
+					await prisma.dinoz.findUniqueOrThrow({
+						where: {
+							id: follower.id
+						}
+					})
+				).leaderId
+			).toBeNull();
+		});
+
+		it('prevents following an unavailable Dinoz', async () => {
+			const user = await createTestUser({
+				name: 'UnavailableLeaderOwner',
+				withTutorial: false
+			});
+			const leader = await createTestDinoz({
+				userId: user.id,
+				name: 'UnavailableLeader',
+				canRename: false
+			});
+			const follower = await createTestDinoz({
+				userId: user.id,
+				name: 'AvailableFollower',
+				canRename: false
+			});
+			await prisma.dinoz.update({
+				where: {
+					id: leader.id
+				},
+				data: {
+					state: 'frozen'
+				}
+			});
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${follower.id}/follow/${leader.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dinozGroupUnavailable',
+				params: {
+					dinozId: leader.id,
+					state: 'frozen'
+				}
+			});
+			expect(
+				(
+					await prisma.dinoz.findUniqueOrThrow({
+						where: {
+							id: follower.id
+						}
+					})
+				).leaderId
+			).toBeNull();
 		});
 	});
 
@@ -800,5 +981,86 @@ describe('Dinoz groups', () => {
 				).leaderId
 			).toBeNull();
 		});
+	});
+
+	it('rejects a targetId that is not the current group leader', async () => {
+		const user = await createTestUser({
+			name: 'LeaderMismatchOwner',
+			withTutorial: false
+		});
+		const currentLeader = await createTestDinoz({
+			userId: user.id,
+			name: 'RealCurrentLeader',
+			canRename: false
+		});
+		const futureLeader = await createTestDinoz({
+			userId: user.id,
+			name: 'FutureLeaderMismatch',
+			canRename: false
+		});
+		const unrelatedDinoz = await createTestDinoz({
+			userId: user.id,
+			name: 'UnrelatedTarget',
+			canRename: false
+		});
+		await prisma.dinoz.update({
+			where: {
+				id: futureLeader.id
+			},
+			data: {
+				leaderId: currentLeader.id
+			}
+		});
+		/*
+		 * Le client affirme volontairement que
+		 * unrelatedDinoz est le leader courant.
+		 */
+		const response = await server.inject({
+			method: 'POST',
+			url: `/api/dinoz/${futureLeader.id}/change/${unrelatedDinoz.id}`,
+			headers: {
+				cookie: createAuthCookie(server, user)
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'dinozGroupLeaderMismatch',
+			params: {
+				dinozId: futureLeader.id,
+				expectedLeaderId: currentLeader.id,
+				receivedLeaderId: unrelatedDinoz.id
+			}
+		});
+		/*
+		 * Absolument aucune relation
+		 * ne doit avoir changé.
+		 */
+		expect(
+			(
+				await prisma.dinoz.findUniqueOrThrow({
+					where: {
+						id: futureLeader.id
+					}
+				})
+			).leaderId
+		).toBe(currentLeader.id);
+		expect(
+			(
+				await prisma.dinoz.findUniqueOrThrow({
+					where: {
+						id: currentLeader.id
+					}
+				})
+			).leaderId
+		).toBeNull();
+		expect(
+			(
+				await prisma.dinoz.findUniqueOrThrow({
+					where: {
+						id: unrelatedDinoz.id
+					}
+				})
+			).leaderId
+		).toBeNull();
 	});
 });
