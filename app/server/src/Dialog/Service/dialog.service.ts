@@ -36,6 +36,7 @@ export type AvailableDialogSummary = {
 	name: string;
 	place: RuntimeDialog['place'];
 	pnj: RuntimeDialog['pnj'];
+	resumePhaseId?: string;
 };
 
 type EnterDialogPhaseOptions = {
@@ -199,14 +200,36 @@ export async function listAvailableDialogs(params: {
 				continue;
 			}
 			const context = withDialogContext(baseContext, dialog);
-			if (dialog.cond && !checkDialogCondition(dialog.cond, context)) {
+			const isNormallyAvailable = !dialog.cond || checkDialogCondition(dialog.cond, context);
+			if (isNormallyAvailable) {
+				availableDialogs.push({
+					id: dialog.id,
+					name: dialog.name,
+					place: dialog.place,
+					pnj: dialog.pnj
+				});
+				continue;
+			}
+			/*
+			 * Le cond global peut avoir volontairement été
+			 * invalidé par la victoire du combat.
+			 * Exemple Taurus :
+			 * scenario(intro, 5)
+			 *       ↓ victoire
+			 * scenario(intro, 6)
+			 * Dans ce cas on permet uniquement la reprise
+			 * de la continuation post-combat.
+			 */
+			const resumePhase = findAvailablePostFightResumePhase(dialog, context);
+			if (!resumePhase) {
 				continue;
 			}
 			availableDialogs.push({
 				id: dialog.id,
 				name: dialog.name,
 				place: dialog.place,
-				pnj: dialog.pnj
+				pnj: dialog.pnj,
+				resumePhaseId: resumePhase.id
 			});
 		}
 		return availableDialogs;
@@ -289,6 +312,43 @@ function isPhaseReachableFrom(dialog: RuntimeDialog, fromPhaseId: string, target
 		}
 	}
 	return false;
+}
+
+function doesPostFightContinuationLeaveDialogPlace(dialog: RuntimeDialog, returnPhase: RuntimeDialogPhase): boolean {
+	const visited = new Set<string>();
+	const pending = [returnPhase.id];
+	const terminalPhases: RuntimeDialogPhase[] = [];
+	while (pending.length > 0) {
+		const phaseId = pending.shift();
+		if (!phaseId || visited.has(phaseId)) {
+			continue;
+		}
+		visited.add(phaseId);
+		const phase = dialog.phases[phaseId];
+		if (!phase) {
+			continue;
+		}
+		if (phase.next.length === 0) {
+			terminalPhases.push(phase);
+			continue;
+		}
+		for (const linkId of phase.next) {
+			const link = dialog.links[linkId];
+			if (!link || visited.has(link.target)) {
+				continue;
+			}
+			pending.push(link.target);
+		}
+	}
+	if (terminalPhases.length === 0) {
+		return false;
+	}
+	return terminalPhases.every(phase =>
+		phase.effects.some(
+			effect =>
+				effect.type === 'moveRandom' && effect.places.length > 0 && effect.places.every(place => place !== dialog.place)
+		)
+	);
 }
 
 /**
@@ -394,6 +454,37 @@ function getFightReturnCompletionState(
 		}
 	}
 	return hasCompletionProof ? true : null;
+}
+
+function findAvailablePostFightResumePhase(
+	dialog: RuntimeDialog,
+	context: Awaited<ReturnType<typeof buildDialogContext>>
+): RuntimeDialogPhase | undefined {
+	for (const returnPhase of Object.values(dialog.phases)) {
+		const fightPhase = findDialogFightPhaseByReturnPhase(dialog, returnPhase.id);
+		if (!fightPhase) {
+			continue;
+		}
+		/*
+		 * Il faut une preuve serveur que le combat
+		 * a réellement été remporté.
+		 */
+		if (getFightReturnCompletionState(dialog, returnPhase, context) !== true) {
+			continue;
+		}
+		/*
+		 * On n'expose automatiquement une reprise
+		 * que lorsque terminer cette continuation
+		 * fait quitter le lieu du dialogue.
+		 * Cela empêche un dialogue terminé de rester
+		 * disponible indéfiniment.
+		 */
+		if (!doesPostFightContinuationLeaveDialogPlace(dialog, returnPhase)) {
+			continue;
+		}
+		return returnPhase;
+	}
+	return undefined;
 }
 
 export async function resumeDialogPhase(params: {
