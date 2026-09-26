@@ -1,9 +1,12 @@
+import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
+import { startDinozConcentration } from '../../src/Dinoz/Controller/concentrationDinoz.controller.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
 import { createAuthCookie } from '../helpers/auth.js';
@@ -71,6 +74,30 @@ async function getItemUsedStat(userId: string): Promise<number> {
 		}
 	});
 	return tracking?.quantity ?? 0;
+}
+
+async function addDinozStatus(dinozId: number, statusId: DinozStatusId): Promise<void> {
+	await prisma.dinozStatus.create({
+		data: {
+			dinozId,
+			statusId
+		}
+	});
+}
+
+async function createConcentrationReadyDinoz(userId: string, name: string) {
+	const dinoz = await createTestDinoz({
+		userId,
+		name,
+		canRename: false,
+		placeId: PlaceEnum.BAO_BOB
+	});
+	await addDinozStatus(dinoz.id, DinozStatusId.FLIPPERS);
+	return dinoz;
+}
+
+async function startConcentration(userId: string, dinozId: number) {
+	return prisma.$transaction(tx => startDinozConcentration(tx, userId, dinozId));
 }
 
 describe('Dinoz actions', () => {
@@ -472,6 +499,435 @@ describe('Dinoz actions', () => {
 			 * pas sa potion.
 			 */
 			expect(await getIrmaQuantity(attacker.id)).toBe(1);
+		});
+	});
+
+	describe('concentration', () => {
+		it('starts concentration at Bao Bob with Flippers', async () => {
+			const user = await createTestUser({
+				name: 'ConcentrationOwner',
+				withTutorial: false
+			});
+			const dinoz = await createConcentrationReadyDinoz(user.id, 'ConcentratingDinoz');
+			const result = await startConcentration(user.id, dinoz.id);
+			expect(result).toMatchObject({
+				participantCount: 1,
+				portalOpened: false
+			});
+			const participation = await prisma.dinozConcentration.findUniqueOrThrow({
+				where: {
+					dinozId: dinoz.id
+				},
+				include: {
+					session: true
+				}
+			});
+			expect(participation.sessionId).toBe(result.sessionId);
+			expect(participation.session.scopeKey).toBe(`user:${user.id}`);
+			expect(participation.session.state).toBe('GATHERING');
+			expect(participation.session.openedAt).toBeNull();
+		});
+
+		it('requires Bao Bob and Flippers to start concentration', async () => {
+			const user = await createTestUser({
+				name: 'InvalidConcentrationOwner',
+				withTutorial: false
+			});
+			const wrongPlace = await createTestDinoz({
+				userId: user.id,
+				name: 'WrongPlace',
+				canRename: false,
+				placeId: PlaceEnum.DINOVILLE
+			});
+			await addDinozStatus(wrongPlace.id, DinozStatusId.FLIPPERS);
+			await expect(startConcentration(user.id, wrongPlace.id)).rejects.toMatchObject({
+				code: 'concentrationInvalidPlace'
+			});
+			const missingFlippers = await createTestDinoz({
+				userId: user.id,
+				name: 'MissingFlippers',
+				canRename: false,
+				placeId: PlaceEnum.BAO_BOB
+			});
+			await expect(startConcentration(user.id, missingFlippers.id)).rejects.toMatchObject({
+				code: 'concentrationMissingFlippers'
+			});
+			expect(await prisma.dinozConcentration.count()).toBe(0);
+			expect(await prisma.dinozConcentrationSession.count()).toBe(0);
+		});
+
+		it('detaches the Dinoz and its followers from their group when concentration starts', async () => {
+			const user = await createTestUser({
+				name: 'ConcentrationGroupOwner',
+				withTutorial: false
+			});
+			const leader = await createTestDinoz({
+				userId: user.id,
+				name: 'GroupLeader',
+				canRename: false,
+				placeId: PlaceEnum.BAO_BOB
+			});
+			const concentrating = await createConcentrationReadyDinoz(user.id, 'GroupMiddle');
+			const follower = await createTestDinoz({
+				userId: user.id,
+				name: 'GroupFollower',
+				canRename: false,
+				placeId: PlaceEnum.BAO_BOB
+			});
+			/*
+			 * Leader
+			 *   ↓
+			 * GroupMiddle
+			 *   ↓
+			 * GroupFollower
+			 */
+			await prisma.dinoz.update({
+				where: {
+					id: concentrating.id
+				},
+				data: {
+					leaderId: leader.id
+				}
+			});
+			await prisma.dinoz.update({
+				where: {
+					id: follower.id
+				},
+				data: {
+					leaderId: concentrating.id
+				}
+			});
+			await startConcentration(user.id, concentrating.id);
+			const [updatedConcentrating, updatedFollower] = await Promise.all([
+				prisma.dinoz.findUniqueOrThrow({
+					where: {
+						id: concentrating.id
+					}
+				}),
+				prisma.dinoz.findUniqueOrThrow({
+					where: {
+						id: follower.id
+					}
+				})
+			]);
+			expect(updatedConcentrating.leaderId).toBeNull();
+			expect(updatedFollower.leaderId).toBeNull();
+			expect(
+				await prisma.dinozConcentration.count({
+					where: {
+						dinozId: concentrating.id
+					}
+				})
+			).toBe(1);
+		});
+
+		it('reuses the same gathering session for Dinoz in the same scope', async () => {
+			const user = await createTestUser({
+				name: 'SharedConcentrationOwner',
+				withTutorial: false
+			});
+			const first = await createConcentrationReadyDinoz(user.id, 'FirstConcentrator');
+			const second = await createConcentrationReadyDinoz(user.id, 'SecondConcentrator');
+			const firstResult = await startConcentration(user.id, first.id);
+			const secondResult = await startConcentration(user.id, second.id);
+			expect(firstResult.sessionId).toBe(secondResult.sessionId);
+			expect(firstResult.participantCount).toBe(1);
+			expect(secondResult.participantCount).toBe(2);
+			expect(await prisma.dinozConcentrationSession.count()).toBe(1);
+			expect(
+				await prisma.dinozConcentration.count({
+					where: {
+						sessionId: firstResult.sessionId
+					}
+				})
+			).toBe(2);
+		});
+
+		it('serializes concurrent concentration starts and opens the portal exactly at seven Dinoz', async () => {
+			const user = await createTestUser({
+				name: 'PortalOpeningOwner',
+				withTutorial: false
+			});
+			const dinozList = await Promise.all(
+				Array.from({ length: 7 }, (_, index) => createConcentrationReadyDinoz(user.id, `PortalDinoz${index}`))
+			);
+			/*
+			 * Toutes les requêtes arrivent
+			 * en même temps.
+			 *
+			 * Le pg_advisory_xact_lock doit
+			 * sérialiser les modifications
+			 * d'une même scope.
+			 */
+			const results = await Promise.all(dinozList.map(dinoz => startConcentration(user.id, dinoz.id)));
+			/*
+			 * Il ne doit exister qu'une
+			 * seule session.
+			 */
+			const sessions = await prisma.dinozConcentrationSession.findMany();
+			expect(sessions).toHaveLength(1);
+			const session = sessions[0];
+			expect(session).toBeDefined();
+			if (!session) {
+				throw new Error('Concentration session missing');
+			}
+			expect(session.scopeKey).toBe(`user:${user.id}`);
+			expect(session.state).toBe('OPEN');
+			expect(session.openedAt).not.toBeNull();
+			expect(
+				await prisma.dinozConcentration.count({
+					where: {
+						sessionId: session.id
+					}
+				})
+			).toBe(7);
+			/*
+			 * Les compteurs retournés doivent
+			 * couvrir exactement 1 → 7.
+			 */
+			expect(results.map(result => result.participantCount).sort((a, b) => a - b)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+			/*
+			 * Une seule transaction est celle
+			 * qui ouvre réellement le portail.
+			 */
+			expect(results.filter(result => result.portalOpened)).toHaveLength(1);
+			expect(results.find(result => result.portalOpened)?.participantCount).toBe(7);
+		});
+
+		it('allows a Dinoz to stop concentrating before the portal opens', async () => {
+			const user = await createTestUser({
+				name: 'StopConcentrationOwner',
+				withTutorial: false
+			});
+			const first = await createConcentrationReadyDinoz(user.id, 'StopFirst');
+			const second = await createConcentrationReadyDinoz(user.id, 'StopSecond');
+			const firstResult = await startConcentration(user.id, first.id);
+			await startConcentration(user.id, second.id);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${first.id}/stop-concentration`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			expect(response.json()).toEqual({
+				ok: true
+			});
+			expect(
+				await prisma.dinozConcentration.findUnique({
+					where: {
+						dinozId: first.id
+					}
+				})
+			).toBeNull();
+			/*
+			 * Le second participant reste
+			 * dans la session.
+			 */
+			expect(
+				await prisma.dinozConcentration.count({
+					where: {
+						sessionId: firstResult.sessionId
+					}
+				})
+			).toBe(1);
+			expect(
+				await prisma.dinozConcentrationSession.count({
+					where: {
+						id: firstResult.sessionId
+					}
+				})
+			).toBe(1);
+			/*
+			 * Lorsque le dernier participant
+			 * quitte à son tour, la session
+			 * GATHERING est supprimée.
+			 */
+			const secondResponse = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${second.id}/stop-concentration`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(secondResponse.statusCode).toBe(200);
+			expect(
+				await prisma.dinozConcentrationSession.count({
+					where: {
+						id: firstResult.sessionId
+					}
+				})
+			).toBe(0);
+		});
+
+		it('refuses to enter the portal before seven Dinoz are concentrating', async () => {
+			const user = await createTestUser({
+				name: 'EarlyPortalOwner',
+				withTutorial: false
+			});
+			const dinoz = await createConcentrationReadyDinoz(user.id, 'EarlyPortalDinoz');
+			await startConcentration(user.id, dinoz.id);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${dinoz.id}/enter-portal`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'concentrationNotCompleted'
+			});
+			const unchanged = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(unchanged.placeId).toBe(PlaceEnum.BAO_BOB);
+			expect(
+				await prisma.dinozConcentration.count({
+					where: {
+						dinozId: dinoz.id
+					}
+				})
+			).toBe(1);
+		});
+
+		it('refuses to stop concentration after the portal has opened', async () => {
+			const user = await createTestUser({
+				name: 'OpenedPortalStopOwner',
+				withTutorial: false
+			});
+			const dinozList = await Promise.all(
+				Array.from({ length: 7 }, (_, index) => createConcentrationReadyDinoz(user.id, `OpenedPortal${index}`))
+			);
+			for (const dinoz of dinozList) {
+				await startConcentration(user.id, dinoz.id);
+			}
+			const selected = dinozList[0];
+			if (!selected) {
+				throw new Error('Expected concentration Dinoz');
+			}
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${selected.id}/stop-concentration`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'concentrationCannotStopAfterOpening'
+			});
+			expect(await prisma.dinozConcentration.count()).toBe(7);
+			const session = await prisma.dinozConcentrationSession.findFirstOrThrow();
+			expect(session.state).toBe('OPEN');
+		});
+
+		it('teleports Dinoz through an open portal and removes the concentration session after the last participant', async () => {
+			const user = await createTestUser({
+				name: 'PortalTravelOwner',
+				withTutorial: false
+			});
+			const dinozList = await Promise.all(
+				Array.from({ length: 7 }, (_, index) => createConcentrationReadyDinoz(user.id, `Traveler${index}`))
+			);
+			for (const dinoz of dinozList) {
+				await startConcentration(user.id, dinoz.id);
+			}
+			const session = await prisma.dinozConcentrationSession.findFirstOrThrow();
+			expect(session.state).toBe('OPEN');
+			const cookie = createAuthCookie(server, user);
+			for (let index = 0; index < dinozList.length; index++) {
+				const dinoz = dinozList[index];
+				if (!dinoz) {
+					throw new Error('Expected portal participant');
+				}
+				const response = await server.inject({
+					method: 'POST',
+					url: `/api/dinoz/${dinoz.id}/enter-portal`,
+					headers: {
+						cookie
+					}
+				});
+				expect(response.statusCode).toBe(200);
+				expect(response.json()).toEqual({
+					ok: true,
+					placeId: PlaceEnum.PORTAIL
+				});
+				const teleported = await prisma.dinoz.findUniqueOrThrow({
+					where: {
+						id: dinoz.id
+					}
+				});
+				expect(teleported.placeId).toBe(PlaceEnum.PORTAIL);
+				/*
+				 * Le Dinoz quitte immédiatement
+				 * les participants.
+				 */
+				expect(
+					await prisma.dinozConcentration.findUnique({
+						where: {
+							dinozId: dinoz.id
+						}
+					})
+				).toBeNull();
+				const remaining = dinozList.length - index - 1;
+				expect(
+					await prisma.dinozConcentration.count({
+						where: {
+							sessionId: session.id
+						}
+					})
+				).toBe(remaining);
+			}
+			/*
+			 * Le dernier passage détruit
+			 * la session désormais vide.
+			 */
+			expect(
+				await prisma.dinozConcentrationSession.findUnique({
+					where: {
+						id: session.id
+					}
+				})
+			).toBeNull();
+		});
+
+		it('prevents another player from stopping a Dinoz concentration', async () => {
+			const owner = await createTestUser({
+				name: 'ConcentrationRealOwner',
+				withTutorial: false
+			});
+			const attacker = await createTestUser({
+				name: 'ConcentrationAttacker',
+				withTutorial: false
+			});
+			const dinoz = await createConcentrationReadyDinoz(owner.id, 'ProtectedConcentrator');
+			await startConcentration(owner.id, dinoz.id);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${dinoz.id}/stop-concentration`,
+				headers: {
+					cookie: createAuthCookie(server, attacker)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dinozDoesNotBelongToUser'
+			});
+			/*
+			 * La participation du propriétaire
+			 * reste intacte.
+			 */
+			expect(
+				await prisma.dinozConcentration.count({
+					where: {
+						dinozId: dinoz.id
+					}
+				})
+			).toBe(1);
 		});
 	});
 });
