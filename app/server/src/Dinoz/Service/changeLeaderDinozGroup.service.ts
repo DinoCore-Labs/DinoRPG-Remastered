@@ -6,11 +6,13 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { prisma } from '../../prisma.js';
 import { ownsDinoz } from '../../User/Controller/ownsDinoz.controller.js';
+import { assertDinozAvailableForGroup } from '../../utils/dinoz/assertDinozAvailableForGroup.js';
 import { getLeaderWithFollowers } from '../Controller/getLeaderWithFollowers.controller.js';
 import { updateDinoz } from '../Controller/updateDinoz.controller.js';
 
 type Params = {
 	id: string;
+	targetId: string;
 };
 
 export async function changeLeaderDinozGroup(
@@ -21,6 +23,7 @@ export async function changeLeaderDinozGroup(
 ) {
 	const authed = req.user;
 	const dinozId = +req.params.id;
+	const currentLeaderId = +req.params.targetId;
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(authed.id, dinozId))) {
 		throw new ExpectedError('dinozDoesNotBelongToUser', {
@@ -35,11 +38,40 @@ export async function changeLeaderDinozGroup(
 	if (!currentLeader) {
 		throw new ExpectedError('No leader found for this dinoz');
 	}
+	/*
+	 * targetId représente le leader courant
+	 * envoyé par le client.
+	 *
+	 * Jusqu'ici cette valeur était complètement
+	 * ignorée par le serveur.
+	 */
+	if (currentLeader.id !== currentLeaderId) {
+		throw new ExpectedError('dinozGroupLeaderMismatch', {
+			params: {
+				dinozId,
+				expectedLeaderId: currentLeader.id,
+				receivedLeaderId: currentLeaderId
+			}
+		});
+	}
+	/*
+	 * Le leader courant doit lui aussi
+	 * appartenir au joueur.
+	 */
+	if (!(await ownsDinoz(authed.id, currentLeaderId))) {
+		throw new ExpectedError('dinozDoesNotBelongToUser', {
+			params: {
+				dinozId: currentLeaderId,
+				userId: authed.id
+			}
+		});
+	}
 	// Retrieve the follower who will become the new leader directly from currentLeader.followers
 	const newLeader = currentLeader.followers.find(f => f.id === dinozId);
 	if (!newLeader) {
 		throw new ExpectedError('Dinoz not found as a follower of the current leader');
 	}
+	assertDinozAvailableForGroup(newLeader);
 	// Check if the new leader can have this many followers
 	const newLeaderHasFearFactor = newLeader.items.some(i => i.itemId === Item.FEAR_FACTOR);
 	const newLeaderHasBrave = newLeader.skills.some(s => s.skillId === Skill.BRAVE);
