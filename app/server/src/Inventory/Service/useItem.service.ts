@@ -8,6 +8,7 @@ import { ItemFeedBack, SpecialItemResult, UseItemResult } from '@dinorpg/core/mo
 import { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { SWAMP_FLOODED_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
+import { STAR_SCENARIO_STEPS } from '@dinorpg/core/models/scenarios/data/starScenario.js';
 import { SkillDetails } from '@dinorpg/core/models/skills/skillDetails.js';
 import { skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
@@ -101,8 +102,8 @@ export async function useItemHandler(
 				const progressed = await prisma.$transaction(tx =>
 					advanceStarScenarioWithRewardTx(tx, {
 						userId: dinoz.user!.id,
-						expectedProgression: 3,
-						nextProgression: 4
+						expectedProgression: STAR_SCENARIO_STEPS.MEAT_PIE,
+						nextProgression: STAR_SCENARIO_STEPS.DIG
 					})
 				);
 				if (progressed) {

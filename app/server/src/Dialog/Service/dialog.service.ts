@@ -36,6 +36,7 @@ export type AvailableDialogSummary = {
 	name: string;
 	place: RuntimeDialog['place'];
 	pnj: RuntimeDialog['pnj'];
+	resumePhaseId?: string;
 };
 
 type EnterDialogPhaseOptions = {
@@ -85,6 +86,20 @@ function resolveVisibleLinks(
 		});
 	}
 	return visibleLinks;
+}
+
+async function lockDialogInteraction(
+	tx: DialogTransaction,
+	userId: string,
+	dinozId: number,
+	dialogId: string
+): Promise<void> {
+	const lockKey = `${userId}:${dinozId}:${dialogId}`;
+	await tx.$executeRaw`
+		SELECT pg_advisory_xact_lock(
+			hashtextextended(${lockKey}, 0::bigint)
+		)
+	`;
 }
 
 export async function enterDialogPhase(
@@ -163,11 +178,11 @@ function withDialogContext(
 export async function listAvailableDialogs(params: {
 	userId: string;
 	dinozId: number;
+	now?: Date;
 }): Promise<AvailableDialogSummary[]> {
 	return prisma.$transaction(async tx => {
 		const availableDialogs: AvailableDialogSummary[] = [];
 		const dialogs = getDialogs();
-
 		if (dialogs.length === 0) {
 			return availableDialogs;
 		}
@@ -177,21 +192,44 @@ export async function listAvailableDialogs(params: {
 			dialog: {
 				id: dialogs[0].id,
 				place: dialogs[0].place
-			}
+			},
+			now: params.now
 		});
 		for (const dialog of dialogs) {
 			if (baseContext.dinoz.placeId !== dialog.place) {
 				continue;
 			}
 			const context = withDialogContext(baseContext, dialog);
-			if (dialog.cond && !checkDialogCondition(dialog.cond, context)) {
+			const isNormallyAvailable = !dialog.cond || checkDialogCondition(dialog.cond, context);
+			if (isNormallyAvailable) {
+				availableDialogs.push({
+					id: dialog.id,
+					name: dialog.name,
+					place: dialog.place,
+					pnj: dialog.pnj
+				});
+				continue;
+			}
+			/*
+			 * Le cond global peut avoir volontairement été
+			 * invalidé par la victoire du combat.
+			 * Exemple Taurus :
+			 * scenario(intro, 5)
+			 *       ↓ victoire
+			 * scenario(intro, 6)
+			 * Dans ce cas on permet uniquement la reprise
+			 * de la continuation post-combat.
+			 */
+			const resumePhase = findAvailablePostFightResumePhase(dialog, context);
+			if (!resumePhase) {
 				continue;
 			}
 			availableDialogs.push({
 				id: dialog.id,
 				name: dialog.name,
 				place: dialog.place,
-				pnj: dialog.pnj
+				pnj: dialog.pnj,
+				resumePhaseId: resumePhase.id
 			});
 		}
 		return availableDialogs;
@@ -201,6 +239,7 @@ export async function listAvailableDialogs(params: {
 export async function startDialog(params: OpenDialogParams): Promise<DialogPhaseResponse> {
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
+		await lockDialogInteraction(tx, params.userId, params.dinozId, dialog.id);
 		await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
 		const phase = getDialogPhase(dialog, dialog.first);
 		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId);
@@ -210,6 +249,7 @@ export async function startDialog(params: OpenDialogParams): Promise<DialogPhase
 export async function selectDialogLink(params: SelectDialogLinkParams): Promise<DialogPhaseResponse> {
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
+		await lockDialogInteraction(tx, params.userId, params.dinozId, dialog.id);
 		const currentPhase = getDialogPhase(dialog, params.phaseId);
 		const currentContext = await buildDialogContext(tx, {
 			userId: params.userId,
@@ -272,6 +312,43 @@ function isPhaseReachableFrom(dialog: RuntimeDialog, fromPhaseId: string, target
 		}
 	}
 	return false;
+}
+
+function doesPostFightContinuationLeaveDialogPlace(dialog: RuntimeDialog, returnPhase: RuntimeDialogPhase): boolean {
+	const visited = new Set<string>();
+	const pending = [returnPhase.id];
+	const terminalPhases: RuntimeDialogPhase[] = [];
+	while (pending.length > 0) {
+		const phaseId = pending.shift();
+		if (!phaseId || visited.has(phaseId)) {
+			continue;
+		}
+		visited.add(phaseId);
+		const phase = dialog.phases[phaseId];
+		if (!phase) {
+			continue;
+		}
+		if (phase.next.length === 0) {
+			terminalPhases.push(phase);
+			continue;
+		}
+		for (const linkId of phase.next) {
+			const link = dialog.links[linkId];
+			if (!link || visited.has(link.target)) {
+				continue;
+			}
+			pending.push(link.target);
+		}
+	}
+	if (terminalPhases.length === 0) {
+		return false;
+	}
+	return terminalPhases.every(phase =>
+		phase.effects.some(
+			effect =>
+				effect.type === 'moveRandom' && effect.places.length > 0 && effect.places.every(place => place !== dialog.place)
+		)
+	);
 }
 
 /**
@@ -379,8 +456,35 @@ function getFightReturnCompletionState(
 	return hasCompletionProof ? true : null;
 }
 
-function isDialogFightReturnPhase(phaseId: string): boolean {
-	return ['fight_win', 'attack_win', 'show_win', 'water_win', 'fire_win', 'comb_win'].includes(phaseId);
+function findAvailablePostFightResumePhase(
+	dialog: RuntimeDialog,
+	context: Awaited<ReturnType<typeof buildDialogContext>>
+): RuntimeDialogPhase | undefined {
+	for (const returnPhase of Object.values(dialog.phases)) {
+		const fightPhase = findDialogFightPhaseByReturnPhase(dialog, returnPhase.id);
+		if (!fightPhase) {
+			continue;
+		}
+		/*
+		 * Il faut une preuve serveur que le combat
+		 * a réellement été remporté.
+		 */
+		if (getFightReturnCompletionState(dialog, returnPhase, context) !== true) {
+			continue;
+		}
+		/*
+		 * On n'expose automatiquement une reprise
+		 * que lorsque terminer cette continuation
+		 * fait quitter le lieu du dialogue.
+		 * Cela empêche un dialogue terminé de rester
+		 * disponible indéfiniment.
+		 */
+		if (!doesPostFightContinuationLeaveDialogPlace(dialog, returnPhase)) {
+			continue;
+		}
+		return returnPhase;
+	}
+	return undefined;
 }
 
 export async function resumeDialogPhase(params: {
@@ -404,19 +508,10 @@ export async function resumeDialogPhase(params: {
 		if (postFightState !== true) {
 			await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
 		}
-		const isFightReturnPhase = isDialogFightReturnPhase(phase.id);
-		/*
-		 * Lors d'un resume d'une continuation post-combat,
-		 * les effets ont déjà été appliqués lors de l'entrée
-		 * réelle dans la phase.
-		 *
-		 * On ne les rejoue donc jamais.
-		 */
-		const isPostFightContinuation = postFightState === true;
 		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId, {
-			applySpecials: !isFightReturnPhase && !isPostFightContinuation,
-			applyEffects: !isFightReturnPhase && !isPostFightContinuation,
-			advanceTalkMission: !isFightReturnPhase && !isPostFightContinuation
+			applySpecials: false,
+			applyEffects: false,
+			advanceTalkMission: false
 		});
 	});
 }

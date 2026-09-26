@@ -1,5 +1,8 @@
 import { MissionDefinition } from '@dinorpg/core/models/missions/mission.js';
+import type { MissionGoal } from '@dinorpg/core/models/missions/missionGoal.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
+
+const unsupportedGoalTypes = new Set<MissionGoal['type']>(['COMPLETE_GROUP', 'REQUIRE_EFFECT', 'BRANCH', 'DIG']);
 
 export function validateMissionDefinition(mission: MissionDefinition) {
 	if (!mission.key) {
@@ -30,8 +33,14 @@ export function validateMissionDefinition(mission: MissionDefinition) {
 		if (goal.type === 'USE_ITEM' && goal.quantity <= 0) {
 			throw new ExpectedError(`Mission "${mission.key}" has invalid USE_ITEM quantity`);
 		}
+		if (goal.type === 'USE_INGREDIENT' && goal.quantity <= 0) {
+			throw new ExpectedError(`Mission "${mission.key}" has invalid USE_INGREDIENT quantity`);
+		}
 		if (goal.type === 'USE_MONEY' && goal.quantity <= 0) {
 			throw new ExpectedError(`Mission "${mission.key}" has invalid USE_MONEY quantity`);
+		}
+		if (unsupportedGoalTypes.has(goal.type)) {
+			throw new ExpectedError(`Mission "${mission.key}" uses unsupported goal type "${goal.type}"`);
 		}
 	}
 }

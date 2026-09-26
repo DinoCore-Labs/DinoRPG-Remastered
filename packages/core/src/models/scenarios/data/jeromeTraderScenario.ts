@@ -8,6 +8,10 @@ export const JEROME_TRADER_SCENARIO_STEPS = {
 	COMPLETED: 2
 } as const;
 
+export const JEROME_TRADER_REQUIRED_DEVOURER_SEEDS = 100;
+
+export const JEROME_TRADER_TREASURE_TICKET_REWARD = 800;
+
 export const jeromeTraderScenario = defineScenario({
 	key: JEROME_TRADER_SCENARIO_KEY,
 	sid: 5,

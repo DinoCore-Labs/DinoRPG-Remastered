@@ -15,9 +15,10 @@ import type {
 } from '@dinorpg/core/models/missions/missionInteraction.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
+import type { Prisma } from '../../../../prisma/index.js';
 import { processMissionFight } from '../../Fight/Service/processMissionFight.service.js';
 import { prisma } from '../../prisma.js';
-import { removeMoney, removeTreasureTicket } from '../../User/Controller/money.controller.js';
+import { removeMoneyTx, removeTreasureTicketTx } from '../../User/Controller/money.controller.js';
 import { applyMissionRewards } from './mission.rewards.js';
 
 type MissionStateRow = {
@@ -42,51 +43,47 @@ function resolveItemIdFromKey(itemKey: string): number {
 	return item.itemId;
 }
 
-async function consumeMissionItemGoal(userId: string, goal: MissionUseItemGoal) {
+async function consumeMissionItemGoal(tx: Prisma.TransactionClient, userId: string, goal: MissionUseItemGoal) {
 	const itemId = resolveItemIdFromKey(goal.itemKey);
-	const userItem = await prisma.userItems.findUnique({
+	const consumed = await tx.userItems.updateMany({
 		where: {
-			itemId_userId: {
-				itemId,
-				userId
-			}
-		},
-		select: {
-			quantity: true
-		}
-	});
-	const currentQuantity = userItem?.quantity ?? 0;
-	if (currentQuantity < goal.quantity) {
-		throw new ExpectedError('notEnoughItems', {
-			params: {
-				itemKey: goal.itemKey,
-				required: goal.quantity,
-				current: currentQuantity
-			}
-		});
-	}
-	if (currentQuantity === goal.quantity) {
-		await prisma.userItems.delete({
-			where: {
-				itemId_userId: {
-					itemId,
-					userId
-				}
-			}
-		});
-		return;
-	}
-	await prisma.userItems.update({
-		where: {
-			itemId_userId: {
-				itemId,
-				userId
+			userId,
+			itemId,
+			quantity: {
+				gte: goal.quantity
 			}
 		},
 		data: {
 			quantity: {
 				decrement: goal.quantity
 			}
+		}
+	});
+	if (consumed.count !== 1) {
+		const item = await tx.userItems.findUnique({
+			where: {
+				itemId_userId: {
+					itemId,
+					userId
+				}
+			},
+			select: {
+				quantity: true
+			}
+		});
+		throw new ExpectedError('notEnoughItems', {
+			params: {
+				itemKey: goal.itemKey,
+				required: goal.quantity,
+				current: item?.quantity ?? 0
+			}
+		});
+	}
+	await tx.userItems.deleteMany({
+		where: {
+			userId,
+			itemId,
+			quantity: 0
 		}
 	});
 }
@@ -99,45 +96,18 @@ function resolveIngredientIdFromKey(ingredientKey: string): number {
 	return ingredient.ingredientId;
 }
 
-async function consumeMissionIngredientGoal(userId: string, goal: MissionUseIngredientGoal) {
+async function consumeMissionIngredientGoal(
+	tx: Prisma.TransactionClient,
+	userId: string,
+	goal: MissionUseIngredientGoal
+) {
 	const ingredientId = resolveIngredientIdFromKey(goal.ingredientKey);
-	const userIngredient = await prisma.userIngredients.findUnique({
+	const consumed = await tx.userIngredients.updateMany({
 		where: {
-			ingredientId_userId: {
-				ingredientId,
-				userId
-			}
-		},
-		select: {
-			quantity: true
-		}
-	});
-	const currentQuantity = userIngredient?.quantity ?? 0;
-	if (currentQuantity < goal.quantity) {
-		throw new ExpectedError('notEnoughItems', {
-			params: {
-				ingredientKey: goal.ingredientKey,
-				required: goal.quantity,
-				current: currentQuantity
-			}
-		});
-	}
-	if (currentQuantity === goal.quantity) {
-		await prisma.userIngredients.delete({
-			where: {
-				ingredientId_userId: {
-					ingredientId,
-					userId
-				}
-			}
-		});
-		return;
-	}
-	await prisma.userIngredients.update({
-		where: {
-			ingredientId_userId: {
-				ingredientId,
-				userId
+			userId,
+			ingredientId,
+			quantity: {
+				gte: goal.quantity
 			}
 		},
 		data: {
@@ -146,18 +116,44 @@ async function consumeMissionIngredientGoal(userId: string, goal: MissionUseIngr
 			}
 		}
 	});
+	if (consumed.count !== 1) {
+		const ingredient = await tx.userIngredients.findUnique({
+			where: {
+				ingredientId_userId: {
+					ingredientId,
+					userId
+				}
+			},
+			select: {
+				quantity: true
+			}
+		});
+		throw new ExpectedError('notEnoughItems', {
+			params: {
+				ingredientKey: goal.ingredientKey,
+				required: goal.quantity,
+				current: ingredient?.quantity ?? 0
+			}
+		});
+	}
+	await tx.userIngredients.deleteMany({
+		where: {
+			userId,
+			ingredientId,
+			quantity: 0
+		}
+	});
 }
 
-async function consumeMissionMoneyGoal(userId: string, goal: MissionUseMoneyGoal) {
-	if (goal.moneyType === 'GOLD') {
-		await removeMoney(userId, goal.quantity);
-		return;
+async function consumeMissionMoneyGoal(tx: Prisma.TransactionClient, userId: string, goal: MissionUseMoneyGoal) {
+	switch (goal.moneyType) {
+		case 'GOLD':
+			await removeMoneyTx(tx, userId, goal.quantity);
+			return;
+		case 'TREASURE_TICKET':
+			await removeTreasureTicketTx(tx, userId, goal.quantity);
+			return;
 	}
-	if (goal.moneyType === 'TREASURE_TICKET') {
-		await removeTreasureTicket(userId, goal.quantity);
-		return;
-	}
-	throw new ExpectedError(`Unsupported mission money type "${goal.moneyType}".`);
 }
 
 async function getActiveMissionState(userId: string, dinozId: number): Promise<ActiveMissionState | null> {
@@ -218,53 +214,58 @@ function assertMissionGoalCanBeUsedAtPlace(goal: MissionGoal, placeId: number) {
 				throw new ExpectedError(`Mission action is not available at place "${placeId}".`);
 			}
 			break;
+		case 'FIGHT_ACTION':
+			if (goal.fightAction.place != null && goal.fightAction.place !== placeId) {
+				throw new ExpectedError(`Mission action is not available at place "${placeId}".`);
+			}
+			break;
 	}
 }
 
-async function advanceMissionStateOnce(
+async function advanceMissionStateOnceTx(
+	tx: Prisma.TransactionClient,
 	currentMission: ActiveMissionState,
 	dinozId: number
 ): Promise<MissionInteractionCompleteResponse> {
 	const nextProgression = currentMission.state.progression + 1;
 	const isCompleted = nextProgression >= currentMission.definition.goals.length;
-	return prisma.$transaction(async tx => {
-		const updated = await tx.dinozMissions.updateMany({
-			where: {
-				id: currentMission.state.id,
-				progression: currentMission.state.progression,
-				isCompleted: false
-			},
-			data: {
-				progression: nextProgression,
-				tracking: 0,
-				isCompleted
-			}
-		});
-
-		if (updated.count !== 1) {
-			throw new ExpectedError('Mission fight has already been completed.');
+	const updated = await tx.dinozMissions.updateMany({
+		where: {
+			id: currentMission.state.id,
+			progression: currentMission.state.progression,
+			isCompleted: false
+		},
+		data: {
+			progression: nextProgression,
+			tracking: 0,
+			isCompleted
 		}
-
-		if (isCompleted) {
-			await applyMissionRewards(tx, {
-				dinozId,
-				definition: currentMission.definition
-			});
-		}
-
-		return {
-			ok: true,
-			completed: isCompleted,
-			rewardModal: isCompleted
-				? {
-						missionKey: currentMission.definition.key,
-						missionNameKey: currentMission.definition.nameKey,
-						endKey: currentMission.definition.endKey,
-						rewards: currentMission.definition.rewards
-					}
-				: null
-		};
 	});
+	if (updated.count !== 1) {
+		throw new ExpectedError('Mission has already progressed.');
+	}
+	if (isCompleted) {
+		await applyMissionRewards(tx, {
+			dinozId,
+			definition: currentMission.definition
+		});
+	}
+	return {
+		ok: true,
+		completed: isCompleted,
+		rewardModal: isCompleted
+			? {
+					missionKey: currentMission.definition.key,
+					missionNameKey: currentMission.definition.nameKey,
+					endKey: currentMission.definition.endKey,
+					rewards: currentMission.definition.rewards
+				}
+			: null
+	};
+}
+
+function advanceMissionStateOnce(currentMission: ActiveMissionState, dinozId: number) {
+	return prisma.$transaction(tx => advanceMissionStateOnceTx(tx, currentMission, dinozId));
 }
 
 export async function startMissionInteraction(
@@ -380,38 +381,38 @@ export async function startMissionInteraction(
 export async function completeMissionInteraction(
 	input: CompleteMissionInteractionInput
 ): Promise<MissionInteractionCompleteResponse> {
-	const currentMission = await getActiveMissionState(input.userId, input.dinozId);
-	if (!currentMission) {
-		throw new ExpectedError('No active mission for this dinoz.');
-	}
-	const goal = currentMission.goal;
-	assertMissionGoalCanBeUsedAtPlace(goal, currentMission.state.dinozPlaceId);
-	switch (input.trigger) {
-		case 'manual':
-			if (
-				goal.type !== 'TALK' &&
-				goal.type !== 'ACTION' &&
-				goal.type !== 'VALIDATE' &&
-				goal.type !== 'USE_ITEM' &&
-				goal.type !== 'USE_MONEY' &&
-				goal.type !== 'USE_INGREDIENT'
-			) {
-				throw new ExpectedError(`Mission goal "${goal.type}" cannot be completed manually.`);
-			}
-			if (goal.type === 'USE_ITEM') {
-				await consumeMissionItemGoal(input.userId, goal);
-			}
-			if (goal.type === 'USE_MONEY') {
-				await consumeMissionMoneyGoal(input.userId, goal);
-			}
-			if (goal.type === 'USE_INGREDIENT') {
-				await consumeMissionIngredientGoal(input.userId, goal);
-			}
-			break;
-		case 'fight_victory':
-			throw new ExpectedError('fight_victory is deprecated. Fight goals are completed by the fight result.');
-		default:
-			throw new ExpectedError('Unknown mission completion trigger.');
-	}
-	return advanceMissionStateOnce(currentMission, input.dinozId);
+	return prisma.$transaction(async tx => {
+		const currentMission = await getActiveMissionState(input.userId, input.dinozId);
+		if (!currentMission) {
+			throw new ExpectedError('No active mission for this dinoz.');
+		}
+		const goal = currentMission.goal;
+		assertMissionGoalCanBeUsedAtPlace(goal, currentMission.state.dinozPlaceId);
+		switch (input.trigger) {
+			case 'manual':
+				if (
+					goal.type !== 'TALK' &&
+					goal.type !== 'ACTION' &&
+					goal.type !== 'VALIDATE' &&
+					goal.type !== 'USE_ITEM' &&
+					goal.type !== 'USE_MONEY' &&
+					goal.type !== 'USE_INGREDIENT'
+				) {
+					throw new ExpectedError(`Mission goal "${goal.type}" cannot be completed manually.`);
+				}
+				if (goal.type === 'USE_ITEM') {
+					await consumeMissionItemGoal(tx, input.userId, goal);
+				}
+				if (goal.type === 'USE_INGREDIENT') {
+					await consumeMissionIngredientGoal(tx, input.userId, goal);
+				}
+				if (goal.type === 'USE_MONEY') {
+					await consumeMissionMoneyGoal(tx, input.userId, goal);
+				}
+				break;
+			case 'fight_victory':
+				throw new ExpectedError('fight_victory is deprecated. Fight goals are completed by the fight result.');
+		}
+		return advanceMissionStateOnceTx(tx, currentMission, input.dinozId);
+	});
 }
