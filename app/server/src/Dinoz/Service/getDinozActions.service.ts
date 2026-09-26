@@ -94,11 +94,12 @@ function getGatherActionFiche(gather: GatherEntry): ActionFiche {
 	} as ActionFiche;
 }
 
-function getDialogActionFiche(dialog: { id: string; name: string }): ActionFiche {
+function getDialogActionFiche(dialog: { id: string; name: string; resumePhaseId?: string }): ActionFiche {
 	return {
 		...actionList[Action.NPC],
 		prop: dialog.id,
-		label: dialog.name
+		label: dialog.name,
+		dialogPhaseId: dialog.resumePhaseId
 	};
 }
 

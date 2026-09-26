@@ -64,6 +64,12 @@ export interface ActionFiche {
 	label?: string;
 	special?: boolean;
 	forDinoz?: number;
+	/**
+	 * Phase depuis laquelle reprendre un dialogue.
+	 * Utilisé notamment pour les continuations
+	 * post-combat.
+	 */
+	dialogPhaseId?: string;
 }
 
 export const actionList: Readonly<Record<Action, ActionFiche>> = {
