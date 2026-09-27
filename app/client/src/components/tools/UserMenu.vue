@@ -430,7 +430,7 @@ export default defineComponent({
 				const content = this.parseContent(notification.content);
 				return this.$t('notifications.newClanJoinRequest', { name: content?.playerName || '' });
 			}
-			if (notification.type === 'newReward') {
+			if (notification.type === 'newReward' || notification.type === 'xmasReward') {
 				const rewardsList = this.parseContent(notification.content) || [];
 				const formattedRewards = rewardsList
 					.map((r: any) => {
@@ -446,7 +446,9 @@ export default defineComponent({
 					})
 					.filter(Boolean)
 					.join(' + ');
-				return this.$t('notifications.newReward', { rewards: formattedRewards });
+
+				const tKey = notification.type === 'xmasReward' ? 'notifications.xmasReward' : 'notifications.newReward';
+				return this.$t(tKey, { rewards: formattedRewards });
 			}
 			if (notification.type === 'marketOfferWin') {
 				const content = this.parseContent(notification.content);
@@ -856,7 +858,7 @@ export default defineComponent({
 			border-radius: 3px;
 			text-decoration: none;
 			cursor: pointer;
-			width: 31%;
+			width: calc((100% - 20px) / 3);
 			span {
 				margin: 0px;
 				font-family: arial, sans-serif;
