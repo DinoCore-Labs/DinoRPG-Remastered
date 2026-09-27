@@ -70,7 +70,7 @@ export async function distributeChristmasRewards() {
 		}
 
 		if (promises.length > 0) {
-			promises.push(newNotif(userId, NotificationType.NEW_REWARD, JSON.stringify(rewards)));
+			promises.push(newNotif(userId, NotificationType.XMAS_REWARD, JSON.stringify(rewards)));
 			await Promise.all(promises);
 		}
 
@@ -95,24 +95,30 @@ export async function distributeChristmasRewards() {
 
 			if (clanRank === 1) {
 				promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 2));
+				promises.push(addItemToInventory(userId, Item.TRICERAGNON_BABY, 1));
 				promises.push(addTreasureTicket(userId, 150));
 				promises.push(addItemToInventory(userId, Item.MAHAMUTI_EGG, 1));
 
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 2 });
+				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.TRICERAGNON_BABY, quantity: 1 });
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.MAHAMUTI_EGG, quantity: 1 });
 			} else if (clanRank === 2 || clanRank === 3) {
 				promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 1));
+				promises.push(addItemToInventory(userId, Item.TRICERAGNON_BABY, 1));
 				promises.push(addTreasureTicket(userId, 100));
 				promises.push(addItemToInventory(userId, Item.MAHAMUTI_EGG, 1));
 
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 1 });
+				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.TRICERAGNON_BABY, quantity: 1 });
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.MAHAMUTI_EGG, quantity: 1 });
 			} else if (clanRank >= 4 && clanRank <= 10) {
 				promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 1));
+				promises.push(addItemToInventory(userId, Item.TRICERAGNON_BABY, 1));
 				promises.push(addTreasureTicket(userId, 50));
 				promises.push(addItemToInventory(userId, Item.SMOG_EGG, 1));
 
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 1 });
+				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.TRICERAGNON_BABY, quantity: 1 });
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.SMOG_EGG, quantity: 1 });
 			} else if (clanRank >= 11 && clanRank <= 20) {
 				promises.push(addTreasureTicket(userId, 25));
@@ -122,7 +128,7 @@ export async function distributeChristmasRewards() {
 			}
 
 			if (promises.length > 0) {
-				promises.push(newNotif(userId, NotificationType.NEW_REWARD, JSON.stringify(rewards)));
+				promises.push(newNotif(userId, NotificationType.XMAS_REWARD, JSON.stringify(rewards)));
 				await Promise.all(promises);
 			}
 		}

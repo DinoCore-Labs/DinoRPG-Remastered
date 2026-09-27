@@ -32,21 +32,21 @@ export async function checkEventNews() {
 					]
 				});
 				console.log(`[Events] Automaticaly created start news for ${event.name}`);
-
-				// Reset the scores for this event
-				try {
-					const { prisma } = await import('../../prisma.js');
-					await prisma.userEventTracking.deleteMany({
-						where: { eventId: event.name }
-					});
-					console.log(`[Events] Cleared previous tracking for ${event.name}`);
-				} catch (e) {
-					console.error(`Failed to clear tracking for event ${event.name}:`, e);
-				}
 			} catch (e) {
 				if ((e as Error).message && !(e as Error).message.includes('Unique constraint failed')) {
 					console.error(`Failed to create start news for event ${event.name}:`, e);
 				}
+			}
+
+			// Reset the scores for this event (runs even if news already existed)
+			try {
+				const { prisma } = await import('../../prisma.js');
+				await prisma.userEventTracking.deleteMany({
+					where: { eventId: event.name }
+				});
+				console.log(`[Events] Cleared previous tracking for ${event.name}`);
+			} catch (e) {
+				console.error(`Failed to clear tracking for event ${event.name}:`, e);
 			}
 		} else if (event.end.month === month && event.end.day === day) {
 			const newsType = (NewsType as any)[`EVENT_${event.name}`] || NewsType.ANNOUNCE;
@@ -60,32 +60,38 @@ export async function checkEventNews() {
 				try {
 					const { getPlayerEventRanking, getClanEventRanking } =
 						await import('../../Ranking/Controller/getEventRanking.controller.js');
-					const userRanking = await getPlayerEventRanking(event.name, 1, 10);
-					const clanRanking = await getClanEventRanking(event.name, 1, 10);
+					const userRanking = await getPlayerEventRanking(event.name, 1, 3);
+					const clanRanking = await getClanEventRanking(event.name, 1, 3);
 
 					const topPlayers = userRanking.ranking
-						.map((u: any) => `${u.position}. **${u.user.name}** (${u.total} monstres)`)
-						.join('\\n');
+						.map((u: any) => `${u.position}. **${u.user.name}** (${u.totalKills} monstres)`)
+						.join('\n\n');
 					const topClans = clanRanking.ranking
 						.map((c: any) => `${c.position}. **${c.clanName}** (${c.totalKills} monstres)`)
-						.join('\\n');
+						.join('\n\n');
 
 					params = JSON.stringify({ topPlayers, topClans });
 				} catch (e) {
 					console.error('Failed to get rankings for news', e);
 				}
 
-				await newsService.createAdminNews({
-					slug,
-					type: newsType,
-					isPublished: true,
-					publishedAt: now,
-					translations: [
-						{ lang: Language.FR, title: titleKey, excerpt: excerptKey, content: `${contentKey}|${params}` },
-						{ lang: Language.EN, title: titleKey, excerpt: excerptKey, content: `${contentKey}|${params}` }
-					]
-				});
-				console.log(`[Events] Automaticaly created end news for ${event.name}`);
+				try {
+					await newsService.createAdminNews({
+						slug,
+						type: newsType,
+						isPublished: true,
+						publishedAt: now,
+						translations: [
+							{ lang: Language.FR, title: titleKey, excerpt: excerptKey, content: `${contentKey}|${params}` },
+							{ lang: Language.EN, title: titleKey, excerpt: excerptKey, content: `${contentKey}|${params}` }
+						]
+					});
+					console.log(`[Events] Automaticaly created end news for ${event.name}`);
+				} catch (e) {
+					if ((e as Error).message && !(e as Error).message.includes('Unique constraint failed')) {
+						console.error(`Failed to create end news for event ${event.name}:`, e);
+					}
+				}
 
 				// Routeur de récompenses pour n'importe quel event
 				if (event.name === GameEvent.CHRISTMAS) {
