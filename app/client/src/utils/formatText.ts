@@ -79,6 +79,8 @@ export const helpers = {
 				return `<img class="text-icon" src="${getImgURL('item', 'item_smog_egg')}" alt="smog_egg">`;
 			case 'easter_egg':
 				return `<img class="text-icon" src="${getImgURL('item', 'item_easter_egg')}" alt="easter_egg">`;
+			case 'triceragnon_baby':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_triceragnon_baby')}" alt="triceragnon_baby">`;
 			case 'cup1':
 				return `<img class="text-icon" src="${getImgURL('status', 'fx_cup1')}" alt="cup1">`;
 			case 'conts1':
@@ -139,6 +141,7 @@ export function formatText(text: string): string {
 				'quetzu_egg',
 				'smog_egg',
 				'easter_egg',
+				'triceragnon_baby',
 				'cup1',
 				'conts1'
 			];
