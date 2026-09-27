@@ -35,35 +35,37 @@ export async function distributeChristmasRewards() {
 		if (rank >= 1 && rank <= 5) {
 			promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 2));
 			promises.push(addItemToInventory(userId, Item.FEROSS_EGG_CHRISTMAS, 1));
-			promises.push(addItemToInventory(userId, Item.SANTAZ_EGG_RARE, 1));
+			promises.push(addItemToInventory(userId, Item.CHRISTMAS_EGG, 1));
+			promises.push(addItemToInventory(userId, Item.CHRISTMAS_TICKET, 15));
 			promises.push(addTreasureTicket(userId, 100));
-			promises.push(addItemToInventory(userId, Item.SMOG_EGG, 1));
 
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 2 });
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.FEROSS_EGG_CHRISTMAS, quantity: 1 });
-			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.SANTAZ_EGG_RARE, quantity: 1 });
-			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.SMOG_EGG, quantity: 1 });
+			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_EGG, quantity: 1 });
+			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_TICKET, quantity: 15 });
 		} else if (rank >= 6 && rank <= 20) {
 			promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 1));
-			promises.push(addItemToInventory(userId, Item.SANTAZ_EGG, 1));
-			promises.push(addTreasureTicket(userId, 75));
-			promises.push(addItemToInventory(userId, Item.SMOG_EGG, 1));
-
-			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 1 });
-			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.SANTAZ_EGG, quantity: 1 });
-			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.SMOG_EGG, quantity: 1 });
-		} else if (rank >= 21 && rank <= 50) {
-			promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 1));
-			promises.push(addTreasureTicket(userId, 50));
 			promises.push(addItemToInventory(userId, Item.CHRISTMAS_EGG, 1));
+			promises.push(addItemToInventory(userId, Item.CHRISTMAS_TICKET, 10));
+			promises.push(addTreasureTicket(userId, 75));
 
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 1 });
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_EGG, quantity: 1 });
-		} else if (rank >= 51 && rank <= 100) {
-			promises.push(addTreasureTicket(userId, 25));
-			promises.push(addItemToInventory(userId, Item.CHRISTMAS_TICKET, 5));
+			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_TICKET, quantity: 10 });
+		} else if (rank >= 21 && rank <= 50) {
+			promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 1));
+			promises.push(addItemToInventory(userId, Item.CHRISTMAS_EGG, 1));
+			promises.push(addItemToInventory(userId, Item.CHRISTMAS_TICKET, 10));
+			promises.push(addTreasureTicket(userId, 50));
 
-			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_TICKET, quantity: 5 });
+			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 1 });
+			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_EGG, quantity: 1 });
+			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_TICKET, quantity: 10 });
+		} else if (rank >= 51 && rank <= 100) {
+			promises.push(addItemToInventory(userId, Item.CHRISTMAS_TICKET, 10));
+			promises.push(addTreasureTicket(userId, 25));
+
+			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_TICKET, quantity: 10 });
 		} else if (kills >= 500) {
 			promises.push(addItemToInventory(userId, Item.CHRISTMAS_TICKET, 10));
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_TICKET, quantity: 10 });
