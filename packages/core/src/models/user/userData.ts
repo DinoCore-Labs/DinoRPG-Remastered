@@ -15,4 +15,6 @@ export interface UserData {
 	clanId: number | null;
 	dojoId: string | null;
 	gameRules: GameRulesAcceptance;
+	lastLogin?: Date | string;
+	userEventTrackings?: { total: number; daily: number }[];
 }
