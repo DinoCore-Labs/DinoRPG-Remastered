@@ -44,6 +44,17 @@
 			<div class="top-info-element">
 				<Flag v-for="lang in clanStore.getClan?.languages" :key="lang" :lang="lang.toLocaleLowerCase()" />
 			</div>
+			<div class="top-info-element" v-if="clanStore.getClan?.eventRank">
+				<img
+					:src="getImgURL('icons', 'small_rank')"
+					alt="eventRank"
+					v-tippy="{
+						content: formatContent($t('clan.icons.eventRank')),
+						theme: 'small'
+					}"
+				/>
+				{{ clanStore.getClan.eventRank }}
+			</div>
 		</div>
 		<div class="banner" v-if="bannerDataUrl">
 			<img class="banner-img" :src="bannerDataUrl" alt="banner" />

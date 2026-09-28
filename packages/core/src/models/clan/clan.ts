@@ -38,6 +38,7 @@ export interface Clan {
 	ingredients?: ClanIngredient[];
 	// discussion?: ClanMessage[];
 	users?: UserData[];
+	eventRank?: number | null;
 }
 
 export type treasureIngredient = {
@@ -50,4 +51,5 @@ export type ClanLite = Pick<Clan, 'id' | 'name' | 'treasureValue' | 'creationDat
 	leader: Pick<UserData, 'id' | 'name'>;
 	banner?: string;
 	ingredients?: treasureIngredient[];
+	eventRank?: number | null;
 };

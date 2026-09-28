@@ -1,11 +1,13 @@
 import { CLAN_CREATE_MONEY } from '@dinorpg/core/models/clan/constants.js';
 import { ClanHistoryType } from '@dinorpg/core/models/enums/ClanHistoryType.js';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
+import { currentEvents } from '@dinorpg/core/models/events/events.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import sharp from 'sharp';
 
 import { prisma } from '../../prisma.js';
+import { getSpecificClanEventRank } from '../../Ranking/Controller/getEventRanking.controller.js';
 import { removeMoney, removeMoneyTx } from '../../User/Controller/money.controller.js';
 import { memberHasRight } from '../Controller/memberHasRight.controller.js';
 import {
@@ -124,6 +126,12 @@ export async function getClan(req: FastifyRequest, reply: FastifyReply) {
 			return reply.status(404).send({ error: 'Clan not found' });
 		}
 
+		let eventRank: number | null = null;
+		const activeEvents = currentEvents();
+		if (activeEvents.length > 0) {
+			eventRank = await getSpecificClanEventRank(activeEvents[0].name, clanData.id);
+		}
+
 		return reply.send({
 			id: clanData.id,
 			name: clanData.name,
@@ -133,7 +141,8 @@ export async function getClan(req: FastifyRequest, reply: FastifyReply) {
 			members: clanData.members,
 			leader: clanData.leader,
 			banner: clanData.banner ?? undefined,
-			ingredients: clanData.ingredients
+			ingredients: clanData.ingredients,
+			eventRank
 		});
 	} catch (err) {
 		throw new ExpectedError('Invalid Request');
