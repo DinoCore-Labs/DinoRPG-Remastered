@@ -62,3 +62,19 @@ export function getCurrentGameTheme(date = new Date()): GameTheme {
 	const eventWithTheme = getActiveGameEvents(date).find(event => event.theme !== undefined);
 	return eventWithTheme?.theme ?? GameTheme.DEFAULT;
 }
+
+export function isEventEndingInDays(days: number, date = new Date()): boolean {
+	const currentDate = getCalendarDate(date, gameConfig.general.gameTimeZone);
+	const activeEvents = gameConfig.events.filter(event => isGameEventActive(event, currentDate));
+	if (activeEvents.length === 0) return false;
+
+	for (const event of activeEvents) {
+		const futureDate = new Date(date);
+		futureDate.setDate(futureDate.getDate() + days);
+		const futureCalendarDate = getCalendarDate(futureDate, gameConfig.general.gameTimeZone);
+		if (!isGameEventActive(event, futureCalendarDate)) {
+			return true;
+		}
+	}
+	return false;
+}

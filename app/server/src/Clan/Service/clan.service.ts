@@ -1,11 +1,11 @@
 import { CLAN_CREATE_MONEY } from '@dinorpg/core/models/clan/constants.js';
 import { ClanHistoryType } from '@dinorpg/core/models/enums/ClanHistoryType.js';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
-import { currentEvents } from '@dinorpg/core/models/events/events.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import sharp from 'sharp';
 
+import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 import { prisma } from '../../prisma.js';
 import { getSpecificClanEventRank } from '../../Ranking/Controller/getEventRanking.controller.js';
 import { removeMoney, removeMoneyTx } from '../../User/Controller/money.controller.js';
@@ -127,9 +127,9 @@ export async function getClan(req: FastifyRequest, reply: FastifyReply) {
 		}
 
 		let eventRank: number | null = null;
-		const activeEvents = currentEvents();
+		const activeEvents = getActiveGameEvents();
 		if (activeEvents.length > 0) {
-			eventRank = await getSpecificClanEventRank(activeEvents[0].name, clanData.id);
+			eventRank = await getSpecificClanEventRank(activeEvents[0].event, clanData.id);
 		}
 
 		return reply.send({
