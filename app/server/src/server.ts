@@ -27,6 +27,7 @@ import { bankRoutes } from './Bank/Routes/bank.routes.js';
 import { clanRoutes } from './Clan/Routes/clan.routes.js';
 import { loadConfig } from './config/config.js';
 import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
+import { configRoutes } from './config/Routes/config.routes.js';
 import { devourerRoutes } from './Devourer/Routes/devourer.routes.js';
 import { loadDialogs } from './Dialog/Controller/dialog.registry.js';
 import { dialogRoutes } from './Dialog/Routes/dialog.routes.js';
@@ -354,6 +355,7 @@ async function buildServer(options: BuildServerOptions = {}) {
 	//------------------------------------------------------
 	// 9. Routes
 	//------------------------------------------------------
+	server.register(configRoutes, { prefix: 'api' });
 	server.register(userRoutes, { prefix: 'api/users' });
 	server.register(rankingRoutes, { prefix: 'api/ranking' });
 	server.register(inventoryRoutes, { prefix: 'api/inventory' });
