@@ -65,6 +65,7 @@
 				<tr>
 					<th class="name">{{ $t('common.name') }}</th>
 					<th class="donations">{{ $t('clan.members.th.donation') }}</th>
+					<th class="piglous" v-if="selfMember && hasActiveEvent">{{ $t('clan.members.th.piglous') }}</th>
 					<th class="stats" v-if="selfMember">{{ $t('clan.members.th.stats') }}</th>
 					<th class="actions" v-if="selfMember">{{ $t('common.actions') }}</th>
 				</tr>
@@ -85,6 +86,15 @@
 								theme: 'small'
 							}"
 						/>
+					</td>
+					<td class="piglous other" v-if="selfMember && hasActiveEvent">
+						<span v-if="member.user?.userEventTrackings?.[0]">
+							{{ member.user.userEventTrackings[0].total }}
+							<span style="font-size: 0.8em; opacity: 0.8" v-tippy="{ content: 'Aujourd\'hui', theme: 'small' }"
+								>(+{{ member.user.userEventTrackings[0].daily }})</span
+							>
+						</span>
+						<span v-else>0</span>
 					</td>
 					<td class="stats other" v-if="selfMember">
 						<img
@@ -140,7 +150,7 @@ import { ClanService } from '../../services/clan.service.js';
 import { userStore } from '../../store/userStore.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { beautifulNumber } from '../../utils/beautifulNumber.js';
-import { isEventEndingInDays } from '@dinorpg/core/models/events/events.js';
+import { currentEvents, isEventEndingInDays } from '@dinorpg/core/models/events/events.js';
 import DZButton from '../utils/DZButton.vue';
 import DZUser from '../utils/DZUser.vue';
 
@@ -158,6 +168,11 @@ export default defineComponent({
 			selfMember: undefined as ClanMember | undefined,
 			maxMembers: CLAN_MAX_MEMBERS_AMOUNT
 		};
+	},
+	computed: {
+		hasActiveEvent(): boolean {
+			return currentEvents().length > 0;
+		}
 	},
 	methods: {
 		moneyLint(quantity: number): string {
@@ -301,9 +316,8 @@ export default defineComponent({
 				text-shadow: 1px 1px 0px #356847;
 				padding-left: 4px;
 				padding-right: 4px;
-				padding-bottom: 8px;
 				height: 41px;
-				vertical-align: bottom;
+				vertical-align: middle;
 				color: #fffdba;
 				text-transform: uppercase;
 				font-weight: bold;
@@ -316,16 +330,19 @@ export default defineComponent({
 				background-position: left bottom;
 				max-width: 222px;
 				&.name {
-					width: 50%;
+					width: 30%;
 				}
 				&.donations {
-					width: 15%;
+					width: 8%;
 				}
 				&.stats {
-					width: 10%;
+					width: 8%;
+				}
+				&.piglous {
+					width: 12%;
 				}
 				&.actions {
-					width: 25%;
+					width: 12%;
 				}
 			}
 			td {
