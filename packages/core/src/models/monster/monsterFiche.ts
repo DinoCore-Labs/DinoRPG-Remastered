@@ -15,6 +15,7 @@ import { Condition } from '../conditions/conditions.js';
 import { MapZone } from '../enums/MapZone.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
 import { EntranceEffect } from '../fight/transpiler.js';
+import { GameEvent } from '../game/gameEvents.js';
 import { Skill } from '../skills/skillList.js';
 import { Boss } from './bossList.js';
 import { Monster } from './monsterList.js';
@@ -56,6 +57,7 @@ export type MonsterFiche = {
 	// Specifies an entrance effet for the monster.
 	entrance?: EntranceEffect;
 	condition?: Condition;
+	events?: GameEvent[];
 };
 
 export type groupMonster = {

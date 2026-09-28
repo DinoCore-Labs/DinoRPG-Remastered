@@ -6,7 +6,8 @@ export enum GameEvent {
 
 export enum GameTheme {
 	DEFAULT = 'default',
-	APRIL_FOOLS = 'april_fools'
+	APRIL_FOOLS = 'april_fools',
+	CHRISTMAS = 'christmas'
 }
 
 export interface GameEventDate {
