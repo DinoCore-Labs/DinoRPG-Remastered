@@ -168,11 +168,14 @@ export async function ensureJobsExist() {
 			type: 'DAILY_AT',
 			timezone: 'UTC',
 			dailyHour: 0,
-			dailyMinute: 0,
-			nextRunAt: nextDailyAtUtc(0, 0),
+			dailyMinute: 1,
+			nextRunAt: nextDailyAtUtc(0, 1),
 			enabled: true
 		},
-		update: {}
+		update: {
+			dailyMinute: 1,
+			nextRunAt: nextDailyAtUtc(0, 1)
+		}
 	});
 
 	const tournamentJobs = [
