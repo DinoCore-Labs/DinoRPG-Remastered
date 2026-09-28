@@ -317,7 +317,8 @@
 	"clan": {
 		"icons": {
 			"members": "Nombre de membres",
-			"crown": "Chef du Clan"
+			"crown": "Chef du Clan",
+			"eventRank": "Classement à l'événement"
 		},
 		"header": {
 			"title": "Clan: {name}",
