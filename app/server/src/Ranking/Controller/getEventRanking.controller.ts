@@ -109,3 +109,24 @@ export async function getClanEventRanking(eventId: string, page: number = 1, pag
 		}))
 	};
 }
+
+export async function getSpecificClanEventRank(eventId: string, targetClanId: number): Promise<number | null> {
+	const trackings = await prisma.userEventTracking.findMany({
+		where: { eventId, user: { clanId: { not: null } } },
+		select: { total: true, user: { select: { clanId: true } } }
+	});
+
+	const clanTotals = new Map<number, number>();
+
+	for (const t of trackings) {
+		const clanId = t.user.clanId;
+		if (!clanId) continue;
+		clanTotals.set(clanId, (clanTotals.get(clanId) || 0) + t.total);
+	}
+
+	const sortedClans = Array.from(clanTotals.entries()).sort((a, b) => b[1] - a[1]);
+
+	const rankIndex = sortedClans.findIndex(c => c[0] === targetClanId);
+	if (rankIndex === -1) return null; // Not participating or 0 kills
+	return rankIndex + 1;
+}
