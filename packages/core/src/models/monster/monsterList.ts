@@ -13,7 +13,6 @@
  */
 import { MapZone } from '../enums/MapZone.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
-import { GameEvent } from '../events/events.js';
 import { EntranceEffect } from '../fight/transpiler.js';
 import { Skill } from '../skills/skillList.js';
 import { MonsterFiche } from './monsterFiche.js';
@@ -1080,7 +1079,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS],
 		display: 'piglou'
 	},
 	[Monster.PIGLOUBI]: {
@@ -1103,7 +1101,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS],
 		display: 'piglou'
 	},
 	[Monster.PIGLOUGLOU]: {
@@ -1126,7 +1123,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS],
 		display: 'piglou'
 	},
 	[Monster.SUPER_PIGLOU]: {
@@ -1149,7 +1145,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS],
 		display: 'piglou'
 	},
 	[Monster.ULTRA_PIGLOU]: {
@@ -1172,7 +1167,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS],
 		display: 'piglou'
 	},
 	[Monster.FEBREZA]: {
@@ -1194,8 +1188,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		hp: 30,
 		xp: 100,
 		skills: [Skill.M_FEBREZ],
-		canBeCaptured: false,
-		events: [GameEvent.VALENTINE]
+		canBeCaptured: false
 	},
 	[Monster.PIRHANOS]: {
 		id: Monster.PIRHANOS,
