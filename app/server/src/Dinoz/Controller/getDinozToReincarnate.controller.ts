@@ -6,6 +6,7 @@ export async function getDinozToReincarnate(dinozId: number) {
 			id: dinozId
 		},
 		select: {
+			userId: true,
 			skills: {
 				select: { skillId: true }
 			},
