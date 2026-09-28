@@ -29,7 +29,8 @@ const events = [
 			month: 12,
 			day: 26
 		},
-		softCap: 100
+		softCap: 100,
+		theme: GameTheme.CHRISTMAS
 	},
 	{
 		event: GameEvent.VALENTINE,

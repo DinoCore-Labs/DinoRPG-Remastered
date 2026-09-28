@@ -187,8 +187,6 @@ export default defineComponent({
 	}
 }
 .dinoz {
-	background-image: url('../assets/background/dinoz_bg_cut.webp');
-	background-repeat: no-repeat;
 	display: grid;
 	padding-top: 15px;
 	height: 250px;

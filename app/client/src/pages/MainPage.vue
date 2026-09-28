@@ -33,7 +33,7 @@ import { defineComponent } from 'vue';
 import LeftPanel from '../components/common/LeftPanel.vue';
 import TutorialObjective from '../components/common/TutorialObjective.vue';
 import TutorialHelpers from '../components/tutorial/TutorialHelpers.vue';
-import { GAME_THEMES, DEFAULT_GAME_THEME } from '../config/gameTheme.config';
+import { GAME_THEMES, DEFAULT_GAME_THEME, getGameTheme } from '../config/gameTheme.config';
 import { gameConfigStore } from '../store/gameConfigStore';
 import { userStore } from '../store/userStore';
 
@@ -52,7 +52,7 @@ export default defineComponent({
 		},
 		themeStyle(): StyleValue {
 			const config = gameConfigStore();
-			const theme = GAME_THEMES[config.theme] ?? DEFAULT_GAME_THEME;
+			const theme = getGameTheme(config.theme);
 			return {
 				'--main-bg-sky': `url("${theme.sky}")`,
 				'--main-bg-header': `url("${theme.header}")`,
