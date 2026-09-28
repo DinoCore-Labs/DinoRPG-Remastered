@@ -33,7 +33,7 @@ import { defineComponent } from 'vue';
 import LeftPanel from '../components/common/LeftPanel.vue';
 import TutorialObjective from '../components/common/TutorialObjective.vue';
 import TutorialHelpers from '../components/tutorial/TutorialHelpers.vue';
-import { GAME_THEMES, DEFAULT_GAME_THEME, getGameTheme } from '../config/gameTheme.config';
+import { getGameTheme } from '../config/gameTheme.config';
 import { gameConfigStore } from '../store/gameConfigStore';
 import { userStore } from '../store/userStore';
 
