@@ -23,6 +23,7 @@ import Loading from './components/utils/Loading.vue';
 import { initI18n } from './i18n';
 import { mixins } from './mixins/mixins';
 import router from './router';
+import { gameConfigStore } from './store/gameConfigStore';
 import { clickOutside } from './utils/clickOutside';
 import ConfirmPlugin from './utils/confirmPlugin';
 import { createToastPlugin } from './utils/toast';
@@ -46,6 +47,7 @@ const pinia = createPinia().use(piniaPersist);
 const app = createApp(App);
 
 app.use(pinia);
+const gameConfig = gameConfigStore();
 app.use(await initI18n());
 app.use(router);
 app.use(ConfirmPlugin);
@@ -59,7 +61,7 @@ app.use(VueTippy, vueTippyProps);
 app.mixin(mixins);
 app.directive('click-outside', clickOutside);
 app.component('Loading', Loading);
-
+await gameConfig.load();
 app.mount('#app');
 
 startVersionChecker();
