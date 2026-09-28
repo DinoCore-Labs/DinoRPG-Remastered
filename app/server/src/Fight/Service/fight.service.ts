@@ -20,6 +20,7 @@ import { currentEvents, EventDetails, GameEvent } from '@dinorpg/core/models/eve
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import { FightOutcome, FightProcessResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { FightRewardOptions } from '@dinorpg/core/models/fight/fightReward.js';
+import { ActiveGameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { getMonsterKeyById } from '@dinorpg/core/models/monster/monsterKeyMap.js';
@@ -36,6 +37,7 @@ import { createCatch, removeCatch, updateCatch } from '../../Dinoz/Controller/di
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
+import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { addItemToDinoz } from '../../Inventory/Controller/addItemToDinoz.controller.js';
@@ -531,31 +533,34 @@ export async function rewardFightVsMonsters(
 	}
 
 	// Check events monsters
-	//const eventMonsters = monsters.filter(m => m.events && m.events.length > 0);
+	const eventMonsters = monsters.filter(m => m.events && m.events.length > 0);
 	let itemWon = undefined;
 
-	/*for (const m of eventMonsters) {
-		if (m.events && m.events.length > 0 && victory) {
-			//await increasePlayerEventProgression(playerId, m.events[0]);
-			switch (m.events[0]) {
+	for (const monster of eventMonsters) {
+		if (!victory || !monster.events?.length) {
+			continue;
+		}
+		const activeMonsterEvents = monster.events.filter(event =>
+			getActiveGameEvents().some(active => active.event === event)
+		);
+		for (const event of activeMonsterEvents) {
+			switch (event) {
 				case GameEvent.CHRISTMAS:
 					if (Math.floor(Math.random() * 100) <= 5) {
 						itemWon = Item.CHRISTMAS_TICKET;
 						await addItemToInventory(userId, Item.CHRISTMAS_TICKET, 1);
-						//await createLog(LogType.ItemFound, playerId, fightResult.attackers[0].dinozId, Item.CHRISTMAS_TICKET);
 					}
 					break;
 				case GameEvent.VALENTINE:
 					if (Math.floor(Math.random() * 100) <= 15) {
-						// itemsWon = Item.CHRISTMAS_TICKET;
-						// await increaseItemQuantity(playerId, Item.CHRISTMAS_TICKET, 1);
+						// Future reward
 					}
 					break;
 				default:
 					break;
 			}
 		}
-	}*/
+	}
 
 	// If attackers won
 	if (!options.disableGoldReward) {
@@ -706,7 +711,7 @@ function eventMonsterProba(
 	dinozLevel: number,
 	p: number,
 	monsterLvl: number,
-	event: EventDetails,
+	event: ActiveGameEvent,
 	eventMonsterKilled: number
 ) {
 	let eventFactor = 1;
@@ -714,15 +719,22 @@ function eventMonsterProba(
 		eventFactor = 0.3 * Math.exp(-0.069 * (eventMonsterKilled - event.softCap));
 	}
 	let delta = dinozLevel - monsterLvl;
-	// If monster level is higher than dinoz level
 	if (delta < 0) {
-		// If monster is too high level p = 0
-		if (delta < -3) return 0;
+		if (delta < -3) {
+			return 0;
+		}
 		delta = -delta * 3;
 	}
 	delta = Math.pow(delta, 1.5);
-	delta = Math.round((p * 1000) / (3 + delta));
-	return Math.round(delta * eventFactor);
+	const probability = Math.round((p * 1000) / (3 + delta));
+	return Math.round(probability * eventFactor);
+}
+
+function getMonsterActiveEvent(monster: MonsterFiche, activeEvents: ActiveGameEvent[]): ActiveGameEvent | undefined {
+	if (!monster.events?.length) {
+		return undefined;
+	}
+	return activeEvents.find(activeEvent => monster.events?.includes(activeEvent.event));
 }
 
 /**
@@ -753,9 +765,9 @@ export async function generateMonsterList(
 	if (!place) {
 		throw new ExpectedError(`This place doesn't exist.`);
 	}
-	const events = currentEvents();
+	const activeEvents = getActiveGameEvents();
 	let eventMonsterKilled = 0;
-	if (events.length > 0) {
+	if (activeEvents.length > 0) {
 		// const playerEvent = await getPlayerEventProgression(team[0].playerId, events[0].name);
 		// eventMonsterKilled = playerEvent?.dailyProgression ?? 0;
 	}
@@ -774,18 +786,14 @@ export async function generateMonsterList(
 		const monsterKey = getMonsterKeyById(monster.id);
 		return monsterKey !== null && missionKillMonsterKeys.has(monsterKey);
 	}
+	const activeEventNames = new Set(activeEvents.map(event => event.event));
 	const availableMonsters = Object.values(monsterList).filter(monster => {
 		if (monster.places && !monster.places.includes(place.placeId)) {
 			return false;
 		}
-		/*if (monster.events && monster.events.length > 0) {
-			if (events.length === 0) {
-				return false;
-			}
-			if (!monster.events.some(event => events.map(e => e.name).includes(event))) {
-				return false;
-			}
-		}*/
+		if (monster.events && monster.events.length > 0 && !monster.events.some(event => activeEventNames.has(event))) {
+			return false;
+		}
 		return monster.zones.includes(place.map);
 	});
 	const forcedMissionMonsterPool = availableMonsters.filter(monster => isLeaderMissionMonster(monster));
@@ -803,12 +811,13 @@ export async function generateMonsterList(
 				p: monsterLevelProba(greatestFighterLevel, display ? 100 : 0, monster.level)
 			};
 		}
-		/*if (monster.events) {
+		const monsterEvent = getMonsterActiveEvent(monster, activeEvents);
+		if (monsterEvent) {
 			return {
 				monster,
-				p: eventMonsterProba(greatestFighterLevel, monster.odds, monster.level, events[0], eventMonsterKilled)
+				p: eventMonsterProba(greatestFighterLevel, monster.odds, monster.level, monsterEvent, eventMonsterKilled)
 			};
-		}*/
+		}
 		return {
 			monster,
 			p: monsterLevelProba(greatestFighterLevel, monster.odds, monster.level)
