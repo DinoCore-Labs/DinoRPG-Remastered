@@ -24,7 +24,8 @@ export enum RewardEnum {
 	EPIC = 'epic',
 	SCENARIO = 'scenario',
 	TELEPORT = 'teleport',
-	REDIRECT = 'redirect'
+	REDIRECT = 'redirect',
+	TREASURE_TICKET = 'treasureTicket'
 }
 
 export enum Operator {
