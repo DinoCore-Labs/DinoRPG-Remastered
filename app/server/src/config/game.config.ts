@@ -1,43 +1,49 @@
+import { GameConfig } from '@dinorpg/core/models/game/gameConfig.js';
+import { GameEvent, GameTheme } from '@dinorpg/core/models/game/gameEvents.js';
+
 import { GLOBAL } from '../context.js';
 
 type GameEnv = 'development' | 'production';
 
-interface DinozConfig {
-	maxLevel: number;
-	maxQuantity: number;
-	initialMaxLevel: number;
-	maxKeepSeedReincarnations: number;
-}
-
-interface ShopConfig {
-	dinozNumber: number;
-	//buyableQuetzu: number;
-}
-
-interface WorldConfig {
-	disableSwampMovementBlock: boolean;
-	disableSwampFightRules: boolean;
-	activeFeatures: string[];
-}
-
-interface GeneralConfig {
-	initialMoney: number;
-	initialTreasureTicket: number;
-	starterPack: StarterItem[];
-	gameTimeZone?: string;
-}
-
-interface StarterItem {
-	itemId: number;
-	quantity: number;
-}
-
-export interface GameConfig {
-	dinoz: DinozConfig;
-	shop: ShopConfig;
-	world: WorldConfig;
-	general: GeneralConfig;
-}
+const events = [
+	{
+		event: GameEvent.APRIL_FOOLS,
+		start: {
+			month: 4,
+			day: 1
+		},
+		end: {
+			month: 4,
+			day: 1
+		},
+		softCap: 100,
+		theme: GameTheme.APRIL_FOOLS
+	},
+	{
+		event: GameEvent.CHRISTMAS,
+		start: {
+			month: 12,
+			day: 1
+		},
+		end: {
+			month: 12,
+			day: 26
+		},
+		softCap: 100
+	},
+	{
+		event: GameEvent.VALENTINE,
+		start: {
+			month: 2,
+			day: 13
+		},
+		end: {
+			month: 2,
+			day: 15
+		},
+		softCap: 100
+	}
+] satisfies GameConfig['events'];
 
 const gameConfig: Record<GameEnv, GameConfig> = {
 	development: {
@@ -68,7 +74,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 				{ itemId: 997, quantity: 50 } // daily ticket
 			],
 			gameTimeZone: 'Europe/Paris'
-		}
+		},
+		events
 	},
 	production: {
 		dinoz: {
@@ -98,7 +105,8 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 				{ itemId: 997, quantity: 2 } // daily ticket
 			],
 			gameTimeZone: 'UTC'
-		}
+		},
+		events
 	}
 };
 
