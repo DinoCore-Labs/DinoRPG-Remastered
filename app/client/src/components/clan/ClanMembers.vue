@@ -150,7 +150,7 @@ import { ClanService } from '../../services/clan.service.js';
 import { userStore } from '../../store/userStore.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { beautifulNumber } from '../../utils/beautifulNumber.js';
-import { currentEvents, isEventEndingInDays } from '@dinorpg/core/models/events/events.js';
+import { gameConfigStore } from '../../store/gameConfigStore.js';
 import DZButton from '../utils/DZButton.vue';
 import DZUser from '../utils/DZUser.vue';
 
@@ -171,7 +171,7 @@ export default defineComponent({
 	},
 	computed: {
 		hasActiveEvent(): boolean {
-			return currentEvents().length > 0;
+			return gameConfigStore().activeEvents.length > 0;
 		}
 	},
 	methods: {
@@ -211,7 +211,7 @@ export default defineComponent({
 			}
 		},
 		async acceptRequest(id: number): Promise<void> {
-			if (isEventEndingInDays(10)) {
+			if (gameConfigStore().isEventLockActive) {
 				this.$toast.open({ message: this.$t('toast.eventLock'), type: 'error' });
 				return;
 			}

@@ -1,4 +1,4 @@
-import { GameTheme } from './gameEvents.js';
+import { type ActiveGameEvent, GameTheme } from './gameEvents.js';
 
 export interface PublicGameAppearanceConfig {
 	theme: GameTheme;
@@ -6,4 +6,6 @@ export interface PublicGameAppearanceConfig {
 
 export interface PublicGameConfig {
 	appearance: PublicGameAppearanceConfig;
+	activeEvents: ActiveGameEvent[];
+	isEventLockActive: boolean;
 }

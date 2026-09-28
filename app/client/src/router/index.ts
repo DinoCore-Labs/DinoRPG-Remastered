@@ -1,4 +1,3 @@
-import { currentEvents } from '@dinorpg/core/models/events/events.js';
 import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import type { RouteRecord } from '@dinorpg/core/models/router/router.js';
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
@@ -50,6 +49,7 @@ import SkillTreesPage from '../pages/SkillTreesPage.vue';
 import TrainingCenterPage from '../pages/TrainingCenterPage.vue';
 import { UserService } from '../services/user.service.js';
 import { dinozStore } from '../store/dinozStore';
+import { gameConfigStore } from '../store/gameConfigStore.js';
 import { userStore } from '../store/userStore';
 import { clearClientSession, isLogoutSessionInProgress } from '../utils/clearSession';
 import { is_granted } from '../utils/permission';
@@ -253,7 +253,7 @@ const routes: RouteRecord[] = [
 						}),
 						meta: { public: true, showLeftPanel: false },
 						beforeEnter: (_to, _from, next) => {
-							if (currentEvents().length === 0) {
+							if (gameConfigStore().activeEvents.length === 0) {
 								next({ name: 'RankingPlayers', params: { pageLoaded: 1 } });
 							} else {
 								next();
@@ -270,7 +270,7 @@ const routes: RouteRecord[] = [
 						}),
 						meta: { public: true, showLeftPanel: false },
 						beforeEnter: (_to, _from, next) => {
-							if (currentEvents().length === 0) {
+							if (gameConfigStore().activeEvents.length === 0) {
 								next({ name: 'RankingPlayers', params: { pageLoaded: 1 } });
 							} else {
 								next();

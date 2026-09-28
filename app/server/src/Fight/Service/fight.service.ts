@@ -36,8 +36,8 @@ import { createCatch, removeCatch, updateCatch } from '../../Dinoz/Controller/di
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
-import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 import { getUserEventTracking, incrementUserEventProgression } from '../../Events/Service/eventTracking.service.js';
+import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { addItemToDinoz } from '../../Inventory/Controller/addItemToDinoz.controller.js';

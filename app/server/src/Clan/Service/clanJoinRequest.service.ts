@@ -1,11 +1,11 @@
 import { CLAN_JOIN_MONEY, CLAN_MAX_MEMBERS_AMOUNT } from '@dinorpg/core/models/clan/constants.js';
 import { ClanHistoryType } from '@dinorpg/core/models/enums/ClanHistoryType.js';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
-import { isEventEndingInDays } from '@dinorpg/core/models/events/events.js';
 import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { isEventEndingInDays } from '../../GameEvent/Service/gameEvent.service.js';
 import { newNotif } from '../../Notification/Service/notification.service.js';
 import { prisma } from '../../prisma.js';
 import { removeMoney } from '../../User/Controller/money.controller.js';

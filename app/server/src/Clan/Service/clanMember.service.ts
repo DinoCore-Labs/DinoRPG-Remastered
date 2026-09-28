@@ -1,9 +1,9 @@
 import { ClanHistoryType } from '@dinorpg/core/models/enums/ClanHistoryType.js';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
-import { currentEvents } from '@dinorpg/core/models/events/events.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
+import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 import { prisma } from '../../prisma.js';
 import { isLeader } from '../Controller/isLeader.controller.js';
 import { isMember } from '../Controller/isMember.controller.js';
@@ -154,8 +154,8 @@ export async function leaveClanSelf(req: FastifyRequest, reply: FastifyReply) {
 
 export async function getClanMembersList(req: FastifyRequest, reply: FastifyReply) {
 	const params = clanIdParamSchema.parse(req.params);
-	const activeEvents = currentEvents();
-	const currentEventId = activeEvents.length > 0 ? activeEvents[0].name : undefined;
+	const activeEvents = getActiveGameEvents();
+	const currentEventId = activeEvents.length > 0 ? activeEvents[0].event : undefined;
 
 	const membersList = await prisma.clanMember.findMany({
 		where: {
