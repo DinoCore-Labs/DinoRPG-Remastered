@@ -7,6 +7,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { MoneyType } from '../../../../prisma/index.js';
+import { readUrl } from '../../config/config.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { prisma } from '../../prisma.js';
 import { setUserScenarioProgression } from '../../Scenario/Controller/scenarioProgress.controller.js';
@@ -14,6 +15,7 @@ import { incrementUserStat } from '../../Stats/stats.service.js';
 import { addMoney } from '../../User/Controller/money.controller.js';
 import { buildConditionContext } from '../../utils/conditions/buildConditionContext.js';
 import { checkCondition } from '../../utils/conditions/checkCondition.js';
+import { withUserGameplayLock } from '../../utils/database/userGameplayLock.js';
 import { assertDinozNotConcentrating } from '../Controller/concentrationDinoz.controller.js';
 import { digTreasures } from '../Controller/digTreasures.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../Controller/dinozStatus.controller.js';
@@ -46,19 +48,21 @@ async function applyDigReward(userId: string, dinozId: number, reward: DigReward
 	}
 }
 
-async function breakShovel(dinozId: number, statusIds: Set<number>) {
+async function breakShovel(dinozId: number, statusIds: Set<number>): Promise<boolean> {
 	if (hasStatus(statusIds, DinozStatusId.SHOVEL)) {
 		await removeStatusFromDinoz(dinozId, DinozStatusId.SHOVEL);
 		await addStatusToDinoz(dinozId, DinozStatusId.BROKEN_SHOVEL);
-		return;
+		return true;
 	}
 	if (hasStatus(statusIds, DinozStatusId.ENHANCED_SHOVEL)) {
 		const shouldBreak = Math.random() < 0.25;
 		if (shouldBreak) {
 			await removeStatusFromDinoz(dinozId, DinozStatusId.ENHANCED_SHOVEL);
 			await addStatusToDinoz(dinozId, DinozStatusId.BROKEN_ENHANCED_SHOVEL);
+			return true;
 		}
 	}
+	return false;
 }
 
 export async function digWithDinoz(userId: string, dinozId: number) {
@@ -111,6 +115,7 @@ export async function digWithDinoz(userId: string, dinozId: number) {
 					life: true,
 					placeId: true,
 					raceId: true,
+					state: true,
 					status: {
 						select: {
 							statusId: true
@@ -138,6 +143,9 @@ export async function digWithDinoz(userId: string, dinozId: number) {
 		throw new ExpectedError(`Dinoz ${dinozId} not found`);
 	}
 	await assertDinozNotConcentrating(dinozId);
+	if (activeDinoz.state !== null) {
+		throw new ExpectedError('Dinoz is unavailable');
+	}
 	const statusIds = new Set(activeDinoz.status.map(status => status.statusId));
 	if (!hasStatus(statusIds, DinozStatusId.SHOVEL) && !hasStatus(statusIds, DinozStatusId.ENHANCED_SHOVEL)) {
 		throw new ExpectedError(`Dinoz ${dinozId} cannot dig`);
@@ -165,8 +173,10 @@ export async function digWithDinoz(userId: string, dinozId: number) {
 			await addMoney(player.id, gold);
 			rewards.push({ type: 'gold', amount: gold });
 		}
-		await breakShovel(activeDinoz.id, statusIds);
-		await incrementUserStat(StatTracking.BROKEN_SHOVEL, player.id, 1);
+		const shovelBroken = await breakShovel(activeDinoz.id, statusIds);
+		if (shovelBroken) {
+			await incrementUserStat(StatTracking.BROKEN_SHOVEL, player.id, 1);
+		}
 		return {
 			treasureId: treasure?.id ?? null,
 			rewards
@@ -183,6 +193,8 @@ type DigWithDinozRequest = FastifyRequest<{
 export async function digWithDinozHandler(req: DigWithDinozRequest, reply: FastifyReply) {
 	const userId = req.user.id;
 	const dinozId = req.params.id;
-	const result = await digWithDinoz(userId, dinozId);
-	return reply.send(result);
+	return withUserGameplayLock(userId, async () => {
+		const result = await digWithDinoz(userId, dinozId);
+		return reply.send(result);
+	});
 }
