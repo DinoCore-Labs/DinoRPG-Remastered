@@ -93,7 +93,7 @@
 
 <script lang="ts">
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
-import { currentEvents } from '@dinorpg/core/models/events/events.js';
+import { gameConfigStore } from '../store/gameConfigStore.js';
 import { defineComponent, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { RouterView } from 'vue-router';
@@ -117,11 +117,11 @@ export default defineComponent({
 
 		const isEventTab = computed(() => ['RankingEventPlayers', 'RankingEventClans'].includes(route.name as string));
 
-		const isEventActive = computed(() => currentEvents().length > 0);
+		const isEventActive = computed(() => gameConfigStore().activeEvents.length > 0);
 
 		const currentEventId = computed(() => {
-			const events = currentEvents();
-			return events.length > 0 ? events[0].name : '';
+			const events = gameConfigStore().activeEvents;
+			return events.length > 0 ? events[0].event : '';
 		});
 
 		const subHeader = computed(() => {

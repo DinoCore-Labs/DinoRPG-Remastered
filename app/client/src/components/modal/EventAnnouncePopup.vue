@@ -42,7 +42,8 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { currentEvents, GameEvent } from '@dinorpg/core/models/events/events.js';
+import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
+import { gameConfigStore } from '../../store/gameConfigStore.js';
 import DZButton from '../utils/DZButton.vue';
 
 export default defineComponent({
@@ -106,8 +107,8 @@ export default defineComponent({
 		};
 
 		onMounted(() => {
-			const events = currentEvents();
-			const isChristmas = events.some(e => e.name === GameEvent.CHRISTMAS);
+			const events = gameConfigStore().activeEvents;
+			const isChristmas = events.some(e => e.event === GameEvent.CHRISTMAS);
 
 			if (isChristmas) {
 				const currentYear = new Date().getFullYear();
