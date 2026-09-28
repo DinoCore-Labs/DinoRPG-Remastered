@@ -4,7 +4,7 @@ import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import type { FastifyInstance } from 'fastify';
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { startDinozConcentration } from '../../src/Dinoz/Controller/concentrationDinoz.controller.js';
 import { prisma } from '../../src/prisma.js';
@@ -27,6 +27,10 @@ beforeAll(async () => {
 
 beforeEach(async () => {
 	await cleanDatabase();
+});
+
+afterEach(() => {
+	vi.restoreAllMocks();
 });
 
 afterAll(async () => {
@@ -83,6 +87,29 @@ async function addDinozStatus(dinozId: number, statusId: DinozStatusId): Promise
 			statusId
 		}
 	});
+}
+
+async function getTrackingQuantity(userId: string, stat: StatTracking): Promise<number> {
+	const tracking = await prisma.userTracking.findUnique({
+		where: {
+			stat_userId: {
+				userId,
+				stat
+			}
+		}
+	});
+	return tracking?.quantity ?? 0;
+}
+
+async function hasDinozStatus(dinozId: number, statusId: DinozStatusId): Promise<boolean> {
+	return (
+		(await prisma.dinozStatus.count({
+			where: {
+				dinozId,
+				statusId
+			}
+		})) === 1
+	);
 }
 
 async function createConcentrationReadyDinoz(userId: string, name: string) {
@@ -928,6 +955,370 @@ describe('Dinoz actions', () => {
 					}
 				})
 			).toBe(1);
+		});
+	});
+
+	describe('dig', () => {
+		it('finds a place treasure and always breaks a normal shovel', async () => {
+			const user = await createTestUser({
+				name: 'NormalShovelOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.PENTES_DE_BASALTE
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.SHOVEL);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/dinoz/dig/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			expect(response.json()).toEqual({
+				treasureId: 'basalt',
+				rewards: [
+					{
+						type: 'status',
+						statusId: DinozStatusId.BASALT_SHARD
+					}
+				]
+			});
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.BASALT_SHARD)).toBe(true);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.SHOVEL)).toBe(false);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.BROKEN_SHOVEL)).toBe(true);
+			expect(await getTrackingQuantity(user.id, StatTracking.BROKEN_SHOVEL)).toBe(1);
+		});
+
+		it('keeps an enhanced shovel when its break roll fails', async () => {
+			const user = await createTestUser({
+				name: 'EnhancedShovelOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.PENTES_DE_BASALTE
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.ENHANCED_SHOVEL);
+			/*
+			 * La pelle améliorée casse si :
+			 *
+			 * Math.random() < 0.25
+			 *
+			 * 0.50 => elle survit.
+			 */
+			vi.spyOn(Math, 'random').mockReturnValue(0.5);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/dinoz/dig/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			expect(response.json().treasureId).toBe('basalt');
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.ENHANCED_SHOVEL)).toBe(true);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.BROKEN_ENHANCED_SHOVEL)).toBe(false);
+			/*
+			 * Important :
+			 * aucune pelle n'a cassé.
+			 */
+			expect(await getTrackingQuantity(user.id, StatTracking.BROKEN_SHOVEL)).toBe(0);
+		});
+
+		it('breaks an enhanced shovel when its break roll succeeds', async () => {
+			const user = await createTestUser({
+				name: 'BrokenEnhancedShovelOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.PENTES_DE_BASALTE
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.ENHANCED_SHOVEL);
+			vi.spyOn(Math, 'random').mockReturnValue(0.1);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/dinoz/dig/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.ENHANCED_SHOVEL)).toBe(false);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.BROKEN_ENHANCED_SHOVEL)).toBe(true);
+			expect(await getTrackingQuantity(user.id, StatTracking.BROKEN_SHOVEL)).toBe(1);
+		});
+
+		it('finds random gold when no specific treasure exists at the place', async () => {
+			const user = await createTestUser({
+				name: 'RandomDigOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.DINOVILLE
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.SHOVEL);
+			const walletBefore = await prisma.userWallet.findUniqueOrThrow({
+				where: {
+					userId_type: {
+						userId: user.id,
+						type: 'GOLD'
+					}
+				}
+			});
+
+			/*
+			 * getRandomGold():
+			 *
+			 * floor(0.5 * 1001) = 500
+			 */
+			vi.spyOn(Math, 'random').mockReturnValue(0.5);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/dinoz/dig/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			expect(response.json()).toEqual({
+				treasureId: null,
+				rewards: [
+					{
+						type: 'gold',
+						amount: 500
+					}
+				]
+			});
+			const walletAfter = await prisma.userWallet.findUniqueOrThrow({
+				where: {
+					userId_type: {
+						userId: user.id,
+						type: 'GOLD'
+					}
+				}
+			});
+			expect(walletAfter.amount).toBe(walletBefore.amount + 500);
+			expect(await getTrackingQuantity(user.id, StatTracking.BROKEN_SHOVEL)).toBe(1);
+		});
+
+		it('requires a shovel', async () => {
+			const user = await createTestUser({
+				name: 'NoShovelOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.PENTES_DE_BASALTE
+			});
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/dinoz/dig/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.BASALT_SHARD)).toBe(false);
+			expect(await getTrackingQuantity(user.id, StatTracking.BROKEN_SHOVEL)).toBe(0);
+		});
+
+		it('prevents digging with a shovel in the Coral Mines', async () => {
+			const user = await createTestUser({
+				name: 'CoralMineDigOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.MINES_DE_CORAIL
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.SHOVEL);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/dinoz/dig/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'shovelMine'
+			});
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.SHOVEL)).toBe(true);
+			expect(await getTrackingQuantity(user.id, StatTracking.BROKEN_SHOVEL)).toBe(0);
+		});
+
+		it('prevents a dead Dinoz from digging', async () => {
+			const user = await createTestUser({
+				name: 'DeadDigOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.PENTES_DE_BASALTE,
+				life: 0
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.SHOVEL);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/dinoz/dig/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dead'
+			});
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.SHOVEL)).toBe(true);
+			expect(await getTrackingQuantity(user.id, StatTracking.BROKEN_SHOVEL)).toBe(0);
+		});
+
+		it('prevents an unavailable Dinoz from digging', async () => {
+			const user = await createTestUser({
+				name: 'UnavailableDigOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.PENTES_DE_BASALTE
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.SHOVEL);
+			await prisma.dinoz.update({
+				where: {
+					id: dinoz.id
+				},
+				data: {
+					state: 'resting',
+					stateTimer: new Date()
+				}
+			});
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/dinoz/dig/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.SHOVEL)).toBe(true);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.BASALT_SHARD)).toBe(false);
+		});
+
+		it('prevents digging while concentrating', async () => {
+			const user = await createTestUser({
+				name: 'ConcentratingDigOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.PENTES_DE_BASALTE
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.SHOVEL);
+			const session = await prisma.dinozConcentrationSession.create({
+				data: {
+					scopeKey: `user:${user.id}`
+				}
+			});
+			await prisma.dinozConcentration.create({
+				data: {
+					dinozId: dinoz.id,
+					sessionId: session.id
+				}
+			});
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/dinoz/dig/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dinozConcentrating'
+			});
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.SHOVEL)).toBe(true);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.BASALT_SHARD)).toBe(false);
+		});
+
+		it('prevents a player from digging with another player Dinoz', async () => {
+			const owner = await createTestUser({
+				name: 'DigRealOwner',
+				withTutorial: false
+			});
+			const attacker = await createTestUser({
+				name: 'DigAttacker',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: owner.id,
+				canRename: false,
+				placeId: PlaceEnum.PENTES_DE_BASALTE
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.SHOVEL);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/dinoz/dig/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, attacker)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.SHOVEL)).toBe(true);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.BASALT_SHARD)).toBe(false);
+			expect(await getTrackingQuantity(attacker.id, StatTracking.BROKEN_SHOVEL)).toBe(0);
+		});
+
+		it('serializes concurrent digs so a normal shovel can only be used once', async () => {
+			const user = await createTestUser({
+				name: 'ConcurrentDigOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: false,
+				placeId: PlaceEnum.PENTES_DE_BASALTE
+			});
+			await addDinozStatus(dinoz.id, DinozStatusId.SHOVEL);
+			const cookie = createAuthCookie(server, user);
+			const dig = () =>
+				server.inject({
+					method: 'GET',
+					url: `/api/dinoz/dig/${dinoz.id}`,
+					headers: {
+						cookie
+					}
+				});
+			const responses = await Promise.all([dig(), dig()]);
+			expect(responses.filter(response => response.statusCode === 200)).toHaveLength(1);
+			expect(responses.filter(response => response.statusCode === 400)).toHaveLength(1);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.SHOVEL)).toBe(false);
+			expect(await hasDinozStatus(dinoz.id, DinozStatusId.BROKEN_SHOVEL)).toBe(true);
+			/*
+			 * Le trésor n'est accordé qu'une fois.
+			 */
+			expect(
+				await prisma.dinozStatus.count({
+					where: {
+						dinozId: dinoz.id,
+						statusId: DinozStatusId.BASALT_SHARD
+					}
+				})
+			).toBe(1);
+			expect(await getTrackingQuantity(user.id, StatTracking.BROKEN_SHOVEL)).toBe(1);
 		});
 	});
 });
