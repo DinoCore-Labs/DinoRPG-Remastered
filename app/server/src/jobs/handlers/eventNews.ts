@@ -1,7 +1,8 @@
 import { Language } from '@dinorpg/core/models/config/language.js';
-import { Events, GameEvent } from '@dinorpg/core/models/events/events.js';
+import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 import { NewsType } from '@dinorpg/core/models/news/news.js';
 
+import gameConfig from '../../config/game.config.js';
 import { distributeChristmasRewards } from '../../Events/Service/eventChristmasRewards.service.js';
 import { newsService } from '../../News/Service/news.service.js';
 
@@ -10,15 +11,19 @@ export async function checkEventNews() {
 	const month = now.getMonth() + 1;
 	const day = now.getDate();
 
-	for (const event of Object.values(Events)) {
-		const eventNameLower = event.name.toLowerCase();
+	for (const event of gameConfig.events) {
+		const eventNameLower = event.event.toLowerCase();
 
 		if (event.start.month === month && event.start.day === day) {
-			const newsType = (NewsType as any)[`EVENT_${event.name}`] || NewsType.ANNOUNCE;
+			const newsType = (NewsType as any)[`EVENT_${event.event}`] || NewsType.ANNOUNCE;
 			const titleKey = `news.event.${eventNameLower}.start.title`;
 			const excerptKey = `news.event.${eventNameLower}.start.excerpt`;
 			const contentKey = `news.event.${eventNameLower}.start.content`;
 			const slug = `event-${eventNameLower}-${now.getFullYear()}`;
+
+			const endMonthStr = event.end.month.toString().padStart(2, '0');
+			const endDayStr = event.end.day.toString().padStart(2, '0');
+			const params = JSON.stringify({ endDate: `${endDayStr}/${endMonthStr}` });
 
 			try {
 				await newsService.createAdminNews({
@@ -27,14 +32,14 @@ export async function checkEventNews() {
 					isPublished: true,
 					publishedAt: now,
 					translations: [
-						{ lang: Language.FR, title: titleKey, excerpt: excerptKey, content: contentKey },
-						{ lang: Language.EN, title: titleKey, excerpt: excerptKey, content: contentKey }
+						{ lang: Language.FR, title: titleKey, excerpt: excerptKey, content: `${contentKey}|${params}` },
+						{ lang: Language.EN, title: titleKey, excerpt: excerptKey, content: `${contentKey}|${params}` }
 					]
 				});
-				console.log(`[Events] Automaticaly created start news for ${event.name}`);
+				console.log(`[Events] Automaticaly created start news for ${event.event}`);
 			} catch (e) {
 				if ((e as Error).message && !(e as Error).message.includes('Unique constraint failed')) {
-					console.error(`Failed to create start news for event ${event.name}:`, e);
+					console.error(`Failed to create start news for event ${event.event}:`, e);
 				}
 			}
 
@@ -42,14 +47,14 @@ export async function checkEventNews() {
 			try {
 				const { prisma } = await import('../../prisma.js');
 				await prisma.userEventTracking.deleteMany({
-					where: { eventId: event.name }
+					where: { eventId: event.event }
 				});
-				console.log(`[Events] Cleared previous tracking for ${event.name}`);
+				console.log(`[Events] Cleared previous tracking for ${event.event}`);
 			} catch (e) {
-				console.error(`Failed to clear tracking for event ${event.name}:`, e);
+				console.error(`Failed to clear tracking for event ${event.event}:`, e);
 			}
 		} else if (event.end.month === month && event.end.day === day) {
-			const newsType = (NewsType as any)[`EVENT_${event.name}`] || NewsType.ANNOUNCE;
+			const newsType = (NewsType as any)[`EVENT_${event.event}`] || NewsType.ANNOUNCE;
 			const titleKey = `news.event.${eventNameLower}.end.title`;
 			const excerptKey = `news.event.${eventNameLower}.end.excerpt`;
 			const contentKey = `news.event.${eventNameLower}.end.content`;
@@ -60,8 +65,8 @@ export async function checkEventNews() {
 				try {
 					const { getPlayerEventRanking, getClanEventRanking } =
 						await import('../../Ranking/Controller/getEventRanking.controller.js');
-					const userRanking = await getPlayerEventRanking(event.name, 1, 3);
-					const clanRanking = await getClanEventRanking(event.name, 1, 3);
+					const userRanking = await getPlayerEventRanking(event.event, 1, 3);
+					const clanRanking = await getClanEventRanking(event.event, 1, 3);
 
 					const topPlayers = userRanking.ranking
 						.map((u: any) => `${u.position}. **${u.user.name}** (${u.totalKills} monstres)`)
@@ -86,21 +91,21 @@ export async function checkEventNews() {
 							{ lang: Language.EN, title: titleKey, excerpt: excerptKey, content: `${contentKey}|${params}` }
 						]
 					});
-					console.log(`[Events] Automaticaly created end news for ${event.name}`);
+					console.log(`[Events] Automaticaly created end news for ${event.event}`);
 				} catch (e) {
 					if ((e as Error).message && !(e as Error).message.includes('Unique constraint failed')) {
-						console.error(`Failed to create end news for event ${event.name}:`, e);
+						console.error(`Failed to create end news for event ${event.event}:`, e);
 					}
 				}
 
 				// Routeur de récompenses pour n'importe quel event
-				if (event.name === GameEvent.CHRISTMAS) {
+				if (event.event === GameEvent.CHRISTMAS) {
 					await distributeChristmasRewards();
 				}
-				// else if (event.name === GameEvent.VALENTINE) { ... }
+				// else if (event.event === GameEvent.VALENTINE) { ... }
 			} catch (e) {
 				if ((e as Error).message && !(e as Error).message.includes('Unique constraint failed')) {
-					console.error(`Failed to create end news for event ${event.name}:`, e);
+					console.error(`Failed to create end news for event ${event.event}:`, e);
 				}
 			}
 		}
