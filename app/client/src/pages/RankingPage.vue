@@ -13,7 +13,7 @@
 			</RouterLink>
 		</li>
 		<li :class="{ active: isEventTab }" v-if="isEventActive">
-			<RouterLink :to="{ name: 'RankingEventClans', params: { pageLoaded: 1 } }">
+			<RouterLink :to="{ name: 'RankingEventClans', params: { eventId: currentEventId, pageLoaded: 1 } }">
 				{{ $t('ranking.tabs.event') }}
 			</RouterLink>
 		</li>
@@ -52,12 +52,12 @@
 
 	<ul class="onglets sub-tabs" v-if="isEventTab">
 		<li :class="{ active: $route.name === 'RankingEventClans' }">
-			<RouterLink :to="{ name: 'RankingEventClans', params: { pageLoaded: 1 } }">
+			<RouterLink :to="{ name: 'RankingEventClans', params: { eventId: currentEventId, pageLoaded: 1 } }">
 				{{ $t('common.clans') }}
 			</RouterLink>
 		</li>
 		<li :class="{ active: $route.name === 'RankingEventPlayers' }">
-			<RouterLink :to="{ name: 'RankingEventPlayers', params: { pageLoaded: 1 } }">
+			<RouterLink :to="{ name: 'RankingEventPlayers', params: { eventId: currentEventId, pageLoaded: 1 } }">
 				{{ $t('ranking.tabs.players') }}
 			</RouterLink>
 		</li>
@@ -119,6 +119,11 @@ export default defineComponent({
 
 		const isEventActive = computed(() => currentEvents().length > 0);
 
+		const currentEventId = computed(() => {
+			const events = currentEvents();
+			return events.length > 0 ? events[0].name : '';
+		});
+
 		const subHeader = computed(() => {
 			switch (route.name) {
 				case 'RankingPlayers':
@@ -140,7 +145,7 @@ export default defineComponent({
 			}
 		});
 
-		return { subHeader, isPlayerTab, isClanTab, isEventTab, isEventActive };
+		return { subHeader, isPlayerTab, isClanTab, isEventTab, isEventActive, currentEventId };
 	},
 	methods: {
 		getImgURL,
