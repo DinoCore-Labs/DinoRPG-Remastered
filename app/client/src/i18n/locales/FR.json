@@ -353,7 +353,8 @@
 			"th": {
 				"donation": "Dons",
 				"stats": "Stats",
-				"event": "Score d'événement"
+				"event": "Score d'événement",
+				"piglous": "Piglous"
 			},
 			"edit": {
 				"disclaimer": "Cette page vous permet de modifier les droits du joueur <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> dans le Clan.",
