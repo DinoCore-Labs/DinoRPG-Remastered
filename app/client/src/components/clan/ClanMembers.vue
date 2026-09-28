@@ -65,7 +65,7 @@
 				<tr>
 					<th class="name">{{ $t('common.name') }}</th>
 					<th class="donations">{{ $t('clan.members.th.donation') }}</th>
-					<th class="piglous" v-if="selfMember && hasActiveEvent">{{ $t('clan.members.th.piglous') }}</th>
+					<th class="piglous" v-if="hasActiveEvent">{{ $t('clan.members.th.piglous') }}</th>
 					<th class="stats" v-if="selfMember">{{ $t('clan.members.th.stats') }}</th>
 					<th class="actions" v-if="selfMember">{{ $t('common.actions') }}</th>
 				</tr>
@@ -87,7 +87,7 @@
 							}"
 						/>
 					</td>
-					<td class="piglous other" v-if="selfMember && hasActiveEvent">
+					<td class="piglous other" v-if="hasActiveEvent">
 						<span v-if="member.user?.userEventTrackings?.[0]">
 							{{ member.user.userEventTrackings[0].total }}
 							<span style="font-size: 0.8em; opacity: 0.8" v-tippy="{ content: 'Aujourd\'hui', theme: 'small' }"
