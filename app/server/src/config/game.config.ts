@@ -7,6 +7,18 @@ type GameEnv = 'development' | 'production';
 
 const events = [
 	{
+		event: GameEvent.VALENTINE,
+		start: {
+			month: 2,
+			day: 13
+		},
+		end: {
+			month: 2,
+			day: 15
+		},
+		softCap: 100
+	},
+	{
 		event: GameEvent.APRIL_FOOLS,
 		start: {
 			month: 4,
@@ -20,6 +32,19 @@ const events = [
 		theme: GameTheme.APRIL_FOOLS
 	},
 	{
+		event: GameEvent.HALLOWEEN,
+		start: {
+			month: 10,
+			day: 31
+		},
+		end: {
+			month: 10,
+			day: 31
+		},
+		softCap: 100,
+		theme: GameTheme.HALLOWEEN
+	},
+	{
 		event: GameEvent.CHRISTMAS,
 		start: {
 			month: 12,
@@ -31,18 +56,6 @@ const events = [
 		},
 		softCap: 100,
 		theme: GameTheme.CHRISTMAS
-	},
-	{
-		event: GameEvent.VALENTINE,
-		start: {
-			month: 2,
-			day: 13
-		},
-		end: {
-			month: 2,
-			day: 15
-		},
-		softCap: 100
 	}
 ] satisfies GameConfig['events'];
 
