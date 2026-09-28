@@ -789,33 +789,31 @@ export async function generateMonsterList(
 		return monster.zones.includes(place.map);
 	});
 	const forcedMissionMonsterPool = availableMonsters.filter(monster => isLeaderMissionMonster(monster));
-	const monsters = availableMonsters
-		.map(monster => {
-			if (isLeaderMissionMonster(monster)) {
-				return {
-					monster,
-					p: monsterLevelProba(greatestFighterLevel, monster.odds * MISSION_MONSTER_ODDS_MULTIPLIER, monster.level)
-				};
-			}
-			if (monster.special) {
-				const display = monster.odds >= specialProb;
-				return {
-					monster,
-					p: monsterLevelProba(greatestFighterLevel, display ? 100 : 0, monster.level)
-				};
-			}
-			if (monster.events) {
-				return {
-					monster,
-					p: eventMonsterProba(greatestFighterLevel, monster.odds, monster.level, events[0], eventMonsterKilled)
-				};
-			}
+	const monsters = availableMonsters.map(monster => {
+		if (isLeaderMissionMonster(monster)) {
 			return {
 				monster,
-				p: monsterLevelProba(greatestFighterLevel, monster.odds, monster.level)
+				p: monsterLevelProba(greatestFighterLevel, monster.odds * MISSION_MONSTER_ODDS_MULTIPLIER, monster.level)
 			};
-		})
-		.filter(entry => entry.p > 0);
+		}
+		if (monster.special) {
+			const display = monster.odds >= specialProb;
+			return {
+				monster,
+				p: monsterLevelProba(greatestFighterLevel, display ? 100 : 0, monster.level)
+			};
+		}
+		if (monster.events) {
+			return {
+				monster,
+				p: eventMonsterProba(greatestFighterLevel, monster.odds, monster.level, events[0], eventMonsterKilled)
+			};
+		}
+		return {
+			monster,
+			p: monsterLevelProba(greatestFighterLevel, monster.odds, monster.level)
+		};
+	});
 	let monsterLevel = 0;
 	const monsterArray: MonsterFiche[] = [];
 	let total = 0;
@@ -833,10 +831,12 @@ export async function generateMonsterList(
 		}
 	}
 	const mdelta = Math.max(Math.round(teamPowerLevel / 4), 2);
-	const ml = monsters.map(entry => ({
-		monster: entry.monster,
-		odds: entry.p
-	}));
+	const ml = monsters
+		.filter(entry => entry.p > 0)
+		.map(entry => ({
+			monster: entry.monster,
+			odds: entry.p
+		}));
 	if (
 		missionKillForce &&
 		forcedMissionMonsterPool.length > 0 &&
