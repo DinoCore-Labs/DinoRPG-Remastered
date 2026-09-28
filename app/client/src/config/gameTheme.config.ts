@@ -12,6 +12,6 @@ export const DEFAULT_GAME_THEME = {
 	footer: bgFooter
 };
 
-export const GAME_THEMES = {
+export const GAME_THEMES: Partial<Record<GameTheme, typeof DEFAULT_GAME_THEME>> = {
 	[GameTheme.DEFAULT]: DEFAULT_GAME_THEME
 };

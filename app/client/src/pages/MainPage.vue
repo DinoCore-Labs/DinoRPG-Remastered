@@ -12,7 +12,7 @@
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<div class="mainpage">
+	<div class="mainpage" :style="themeStyle">
 		<div class="mainpage-header">
 			<a @click="goToNewsPage()" class="linkHome"></a>
 			<LeftPanel v-if="showLeftPanel" />
@@ -27,20 +27,38 @@
 </template>
 
 <script lang="ts">
+import type { StyleValue } from 'vue';
 import { defineComponent } from 'vue';
+
 import LeftPanel from '../components/common/LeftPanel.vue';
 import TutorialObjective from '../components/common/TutorialObjective.vue';
 import TutorialHelpers from '../components/tutorial/TutorialHelpers.vue';
+import { GAME_THEMES, DEFAULT_GAME_THEME } from '../config/gameTheme.config';
+import { gameConfigStore } from '../store/gameConfigStore';
 import { userStore } from '../store/userStore';
 
 export default defineComponent({
 	name: 'MainPage',
-	components: { LeftPanel, TutorialObjective, TutorialHelpers },
+	components: {
+		LeftPanel,
+		TutorialObjective,
+		TutorialHelpers
+	},
 	computed: {
 		showLeftPanel(): boolean {
 			const user = userStore();
 			const hide = this.$route.matched.some(r => r.meta.showLeftPanel === false);
 			return user.isLogged ? true : !hide;
+		},
+		themeStyle(): StyleValue {
+			const config = gameConfigStore();
+			const theme = GAME_THEMES[config.theme] ?? DEFAULT_GAME_THEME;
+			return {
+				'--main-bg-sky': `url("${theme.sky}")`,
+				'--main-bg-header': `url("${theme.header}")`,
+				'--main-bg-core': `url("${theme.core}")`,
+				'--main-bg-footer': `url("${theme.footer}")`
+			};
 		}
 	},
 	methods: {
@@ -55,13 +73,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .mainpage {
-	background-image: url('../assets/background/bg_ciel.webp');
+	background-image: var(--main-bg-sky);
 	background-repeat: repeat-x;
 	&-header {
 		min-height: 100%;
 		background:
-			url('../assets/background/full_bg.webp') no-repeat,
-			url('../assets/background/full_core_bg.webp') repeat-y;
+			var(--main-bg-header) no-repeat,
+			var(--main-bg-core) repeat-y;
 		background-position-x: calc(50% + 247px);
 		background-position-y: top;
 		padding-bottom: 50px;
@@ -83,7 +101,7 @@ export default defineComponent({
 		margin-top: -15px;
 	}
 	&-footer {
-		background-image: url('../assets/background/full_footer.webp');
+		background-image: var(--main-bg-footer);
 		background-color: white;
 		background-repeat: no-repeat;
 		background-position-x: calc(50% + 248px);
