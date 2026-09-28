@@ -38,7 +38,7 @@ export const helpers = {
 			case 'gold':
 				return `<img src="${getImgURL('icons', 'gold')}" alt="gold">`;
 			case 'ticket':
-				return `<img class="text-icon" src="${getImgURL('icons', 'ticket')}" alt="ticket">`;
+				return `<img class="text-icon" style="height: 15px; width: auto;" src="${getImgURL('icons', 'ticket')}" alt="ticket">`;
 			case 'chrono':
 				return `<img class="text-icon" src="${getImgURL('icons', 'small_chrono')}" alt="chrono">`;
 			case 'attack':

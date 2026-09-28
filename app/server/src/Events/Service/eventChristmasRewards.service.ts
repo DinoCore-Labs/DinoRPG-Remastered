@@ -43,6 +43,7 @@ export async function distributeChristmasRewards() {
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.FEROSS_EGG_CHRISTMAS, quantity: 1 });
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_EGG, quantity: 1 });
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_TICKET, quantity: 15 });
+			rewards.push({ rewardType: RewardEnum.TREASURE_TICKET, value: 100, quantity: 100 });
 		} else if (rank >= 6 && rank <= 20) {
 			promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 1));
 			promises.push(addItemToInventory(userId, Item.CHRISTMAS_EGG, 1));
@@ -52,6 +53,7 @@ export async function distributeChristmasRewards() {
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 1 });
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_EGG, quantity: 1 });
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_TICKET, quantity: 10 });
+			rewards.push({ rewardType: RewardEnum.TREASURE_TICKET, value: 75, quantity: 75 });
 		} else if (rank >= 21 && rank <= 50) {
 			promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 1));
 			promises.push(addItemToInventory(userId, Item.CHRISTMAS_EGG, 1));
@@ -61,11 +63,13 @@ export async function distributeChristmasRewards() {
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 1 });
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_EGG, quantity: 1 });
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_TICKET, quantity: 10 });
+			rewards.push({ rewardType: RewardEnum.TREASURE_TICKET, value: 50, quantity: 50 });
 		} else if (rank >= 51 && rank <= 100) {
 			promises.push(addItemToInventory(userId, Item.CHRISTMAS_TICKET, 10));
 			promises.push(addTreasureTicket(userId, 25));
 
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_TICKET, quantity: 10 });
+			rewards.push({ rewardType: RewardEnum.TREASURE_TICKET, value: 25, quantity: 25 });
 		} else if (kills >= 500) {
 			promises.push(addItemToInventory(userId, Item.CHRISTMAS_TICKET, 10));
 			rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_TICKET, quantity: 10 });
@@ -104,6 +108,7 @@ export async function distributeChristmasRewards() {
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 2 });
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.TRICERAGNON_BABY, quantity: 1 });
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.MAHAMUTI_EGG, quantity: 1 });
+				rewards.push({ rewardType: RewardEnum.TREASURE_TICKET, value: 150, quantity: 150 });
 			} else if (clanRank === 2 || clanRank === 3) {
 				promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 1));
 				promises.push(addItemToInventory(userId, Item.TRICERAGNON_BABY, 1));
@@ -113,6 +118,7 @@ export async function distributeChristmasRewards() {
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 1 });
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.TRICERAGNON_BABY, quantity: 1 });
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.MAHAMUTI_EGG, quantity: 1 });
+				rewards.push({ rewardType: RewardEnum.TREASURE_TICKET, value: 100, quantity: 100 });
 			} else if (clanRank >= 4 && clanRank <= 10) {
 				promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 1));
 				promises.push(addItemToInventory(userId, Item.TRICERAGNON_BABY, 1));
@@ -122,11 +128,13 @@ export async function distributeChristmasRewards() {
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.GOLDEN_NAPODINO, quantity: 1 });
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.TRICERAGNON_BABY, quantity: 1 });
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.SMOG_EGG, quantity: 1 });
+				rewards.push({ rewardType: RewardEnum.TREASURE_TICKET, value: 50, quantity: 50 });
 			} else if (clanRank >= 11 && clanRank <= 20) {
 				promises.push(addTreasureTicket(userId, 25));
 				promises.push(addItemToInventory(userId, Item.CHRISTMAS_EGG, 1));
 
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_EGG, quantity: 1 });
+				rewards.push({ rewardType: RewardEnum.TREASURE_TICKET, value: 25, quantity: 25 });
 			}
 
 			if (promises.length > 0) {

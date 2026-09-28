@@ -258,7 +258,7 @@
 				</div>
 				<div class="notification" v-for="notification in nStore.notifications" :key="notification.id">
 					<div class="element">
-						<span>{{ formatNotificationText(notification) }}</span>
+						<span v-html="formatText(formatNotificationText(notification))"></span>
 					</div>
 					<div class="element notification-actions">
 						<a
@@ -280,6 +280,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { formatText } from '../../utils/formatText.js';
 import EventBus from '../../events/index.js';
 import { userStore } from '../../store/userStore.js';
 import { UserService } from '../../services/user.service.js';
@@ -316,6 +317,7 @@ export default defineComponent({
 		};
 	},
 	methods: {
+		formatText,
 		async logOff() {
 			const userName = this.uStore.getUserName;
 			startLogoutSession();
@@ -437,15 +439,30 @@ export default defineComponent({
 						if (r.rewardType === 'gold') {
 							return `${r.value} or`;
 						}
+						if (r.rewardType === 'treasureTicket') {
+							return `${r.value} :ticket:`;
+						}
 						if (r.rewardType === 'item') {
 							const itemName = this.getItemName(r.value);
-							const qty = r.quantity > 1 ? ` x${r.quantity}` : '';
-							return `${itemName}${qty}`;
+							const qty = r.quantity || 1;
+
+							let iconStr = '';
+							if (r.value === Item.GOLDEN_NAPODINO) iconStr = ':napo:';
+							else if (r.value === Item.CHRISTMAS_TICKET) iconStr = ':xmas_ticket:';
+							else if (r.value === Item.CHRISTMAS_EGG) iconStr = ':xmas_egg:';
+							else if (r.value === Item.FEROSS_EGG_CHRISTMAS) iconStr = ':feross_xmas_egg:';
+							else if (r.value === Item.MAHAMUTI_EGG) iconStr = ':mahamuti_egg:';
+							else if (r.value === Item.TRICERAGNON_BABY) iconStr = ':triceragnon_baby:';
+							else if (r.value === Item.SMOG_EGG) iconStr = ':smog_egg:';
+							else if (r.value === Item.DEMON_TICKET) iconStr = ':demon_ticket:';
+
+							return iconStr ? `${qty} ${iconStr}` : `${qty} ${itemName}`;
 						}
 						return '';
 					})
 					.filter(Boolean)
-					.join(' + ');
+					.map((text: string) => `- ${text}`)
+					.join('<br><br>');
 
 				const tKey = notification.type === 'xmasReward' ? 'notifications.xmasReward' : 'notifications.newReward';
 				return this.$t(tKey, { rewards: formattedRewards });

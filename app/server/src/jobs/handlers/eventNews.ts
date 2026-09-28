@@ -23,7 +23,7 @@ export async function checkEventNews() {
 
 			const endMonthStr = event.end.month.toString().padStart(2, '0');
 			const endDayStr = event.end.day.toString().padStart(2, '0');
-			const params = JSON.stringify({ endDate: `${endDayStr}/${endMonthStr}` });
+			const params = JSON.stringify({ eventEndDate: `${endDayStr}/${endMonthStr}` });
 
 			try {
 				await newsService.createAdminNews({
@@ -69,10 +69,10 @@ export async function checkEventNews() {
 					const clanRanking = await getClanEventRanking(event.event, 1, 3);
 
 					const topPlayers = userRanking.ranking
-						.map((u: any) => `${u.position}. **${u.user.name}** (${u.totalKills} monstres)`)
+						.map((u: any) => `${u.position}. ${u.user.name} (${u.totalKills} monstres)`)
 						.join('\n\n');
 					const topClans = clanRanking.ranking
-						.map((c: any) => `${c.position}. **${c.clanName}** (${c.totalKills} monstres)`)
+						.map((c: any) => `${c.position}. ${c.clanName} (${c.totalKills} monstres)`)
 						.join('\n\n');
 
 					params = JSON.stringify({ topPlayers, topClans });
