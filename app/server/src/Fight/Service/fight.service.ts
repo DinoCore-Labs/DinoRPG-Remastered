@@ -531,10 +531,10 @@ export async function rewardFightVsMonsters(
 	}
 
 	// Check events monsters
-	const eventMonsters = monsters.filter(m => m.events && m.events.length > 0);
+	//const eventMonsters = monsters.filter(m => m.events && m.events.length > 0);
 	let itemWon = undefined;
 
-	for (const m of eventMonsters) {
+	/*for (const m of eventMonsters) {
 		if (m.events && m.events.length > 0 && victory) {
 			//await increasePlayerEventProgression(playerId, m.events[0]);
 			switch (m.events[0]) {
@@ -555,7 +555,7 @@ export async function rewardFightVsMonsters(
 					break;
 			}
 		}
-	}
+	}*/
 
 	// If attackers won
 	if (!options.disableGoldReward) {
@@ -778,14 +778,14 @@ export async function generateMonsterList(
 		if (monster.places && !monster.places.includes(place.placeId)) {
 			return false;
 		}
-		if (monster.events && monster.events.length > 0) {
+		/*if (monster.events && monster.events.length > 0) {
 			if (events.length === 0) {
 				return false;
 			}
 			if (!monster.events.some(event => events.map(e => e.name).includes(event))) {
 				return false;
 			}
-		}
+		}*/
 		return monster.zones.includes(place.map);
 	});
 	const forcedMissionMonsterPool = availableMonsters.filter(monster => isLeaderMissionMonster(monster));
@@ -803,12 +803,12 @@ export async function generateMonsterList(
 				p: monsterLevelProba(greatestFighterLevel, display ? 100 : 0, monster.level)
 			};
 		}
-		if (monster.events) {
+		/*if (monster.events) {
 			return {
 				monster,
 				p: eventMonsterProba(greatestFighterLevel, monster.odds, monster.level, events[0], eventMonsterKilled)
 			};
-		}
+		}*/
 		return {
 			monster,
 			p: monsterLevelProba(greatestFighterLevel, monster.odds, monster.level)

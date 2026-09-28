@@ -14,7 +14,6 @@
 import { Condition } from '../conditions/conditions.js';
 import { MapZone } from '../enums/MapZone.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
-import { GameEvent } from '../events/events.js';
 import { EntranceEffect } from '../fight/transpiler.js';
 import { Skill } from '../skills/skillList.js';
 import { Boss } from './bossList.js';
@@ -48,7 +47,6 @@ export type MonsterFiche = {
 	special?: boolean;
 	skills?: Skill[];
 	canBeCaptured: boolean;
-	events?: GameEvent[];
 	noMove?: boolean;
 	display?: string;
 	// Changes the size of the monster sprite. 100 means unchanged.
