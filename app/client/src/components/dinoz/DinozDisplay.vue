@@ -12,7 +12,7 @@
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<div class="dinoz">
+	<div class="dinoz" :style="themeStyle">
 		<TitleHeader :title="$t('pageTitle.dinoz', { dinoz: dinozData.name })" />
 		<div class="navigation">
 			<router-link v-if="prevId" :to="{ name: 'DinozPage', params: { id: prevId } }" class="see-button">
@@ -53,6 +53,7 @@
 
 <script lang="ts">
 import { defineAsyncComponent, defineComponent, type PropType } from 'vue';
+import type { StyleValue } from 'vue';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { dinozPlacement } from '../../constants/dinozPlacement.js';
 import { raceList } from '../../constants/race.js';
@@ -65,6 +66,8 @@ import TitleHeader from '../utils/TitleHeader.vue';
 import type DinozAnimation from './DinozAnimation.vue';
 import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
+import { gameConfigStore } from '../../store/gameConfigStore.ts';
+import { getGameTheme } from '../../config/gameTheme.config.ts';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -112,6 +115,13 @@ export default defineComponent({
 				dinoz => dinoz.state !== DINOZ_STATE.frozen
 			);
 			return orderDinozList(activeDinoz, { keepFollowersAfterLeader: true });
+		},
+		themeStyle(): StyleValue {
+			const config = gameConfigStore();
+			const theme = getGameTheme(config.theme);
+			return {
+				'--dinoz-bg': `url("${theme.dinoz}")`
+			};
 		}
 	},
 	methods: {
@@ -149,7 +159,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dinoz {
-	background-image: url('../../assets/background/dinoz_bg_cut.webp');
+	background-image: var(--dinoz-bg);
 	background-repeat: no-repeat;
 	display: grid;
 	padding-top: 15px;
