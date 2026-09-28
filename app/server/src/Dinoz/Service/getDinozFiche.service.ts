@@ -9,7 +9,6 @@ import { getDinozFicheRequest } from '../Controller/getDinozFiche.controller.js'
 import { applyRestIfNeeded } from '../Controller/getRestDinoz.controller.js';
 import { applyUnfreezeIfNeeded } from '../Controller/getUnfreezeDinoz.controller.js';
 import { getAvailableActions } from './getDinozActions.service.js';
-// import { isDinozInTournament } from '../../tournament/isDinozInTournament.js';
 
 type Params = { id: string };
 
@@ -19,6 +18,37 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 		throw new ExpectedError('invalidId');
 	}
 	const authedId = req.user.id;
+	const targetDinoz = await prisma.dinoz.findUnique({
+		where: {
+			id: dinozId
+		},
+		select: {
+			userId: true
+		}
+	});
+	/*
+	 * Vérifier l'existence et l'ownership
+	 * AVANT tout traitement lazy.
+	 *
+	 * Sans cela, un autre joueur pourrait
+	 * déclencher repos/dégel/mission WAIT
+	 * simplement en connaissant l'id.
+	 */
+	if (!targetDinoz) {
+		throw new ExpectedError('dinozNotFound', {
+			params: {
+				dinozId
+			}
+		});
+	}
+	if (targetDinoz.userId !== authedId) {
+		throw new ExpectedError('dinozDoesNotBelongToUser', {
+			params: {
+				dinozId,
+				userId: authedId
+			}
+		});
+	}
 	// 1) apply resting and check if mission wait time is over
 	const restInfos = await prisma.$transaction(async tx => {
 		await applyUnfreezeIfNeeded(tx, dinozId);
