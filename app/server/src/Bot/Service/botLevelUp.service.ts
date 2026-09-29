@@ -4,7 +4,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { BotStrategy } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
-import { getMissingBotUniqueSkills, getUniqueProgressionWeight } from './botUniqueSkill.service.js';
+import { assignBotUniqueSkillTargets, getMissingBotUniqueSkills, getUniqueProgressionWeight } from './botUniqueSkill.service.js';
 import { getDinozForLevelUp } from '../../Level/Controller/getDinozForLevelUp.controller.js';
 import { getDinozLearnableSkills } from '../../Level/Service/getDinozLearnableSkills.service.js';
 
@@ -108,10 +108,25 @@ export async function chooseBotLevelUp(
 		}
 	});
 	const missingUniqueSkills = user ? getMissingBotUniqueSkills(user) : [];
+	const firstDinoz = await prisma.dinoz.findMany({
+		where: { userId: dinoz.user.id },
+		orderBy: { id: 'asc' },
+		take: 3,
+		select: {
+			id: true,
+			nbrUpFire: true,
+			nbrUpWood: true,
+			nbrUpWater: true,
+			nbrUpLightning: true,
+			nbrUpAir: true
+		}
+	});
+	const assignments = assignBotUniqueSkillTargets(firstDinoz, missingUniqueSkills);
+	const assignedUniqueSkills = assignments.get(dinozId) ?? [];
 	const uniqueProgressionWeights = new Map<number, number>(
 		choices.learnableSkills.map(skill => [
 			skill.skillId,
-			getUniqueProgressionWeight(skill.skillId, missingUniqueSkills)
+			getUniqueProgressionWeight(skill.skillId, assignedUniqueSkills)
 		])
 	);
 
