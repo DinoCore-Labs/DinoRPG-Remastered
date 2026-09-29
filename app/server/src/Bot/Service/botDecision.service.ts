@@ -15,6 +15,8 @@ import { getBotShopPurchase } from './botShop.service.js';
 import { getBotDinozActivityScore } from './botDinozSelector.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
 import { getBotLanternProgressionStep } from './botProgressionPlanner.service.js';
+import { getBotShamanProgressionStep } from './botShamanProgression.service.js';
+import { shouldBotDigOldStone } from './botProgressionOpportunity.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
@@ -130,6 +132,44 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	for (const dinoz of playerData.dinoz.slice(0, 3)) {
 		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
 
+		const shamanStep = await getBotShamanProgressionStep(userId, dinoz.id);
+		if (!shamanStep) continue;
+
+		if (shamanStep.type === 'move') {
+			const nextHop = await findBotMissionNextHop(
+				userId,
+				dinoz.id,
+				dinoz.placeId,
+				shamanStep.placeId
+			);
+			if (nextHop != null) {
+				candidates.push({
+					value: {
+						dinozId: dinoz.id,
+						action: 'move',
+						targetPlaceId: nextHop
+					},
+					weight: 255
+				});
+			}
+		}
+
+		if (shamanStep.type === 'dialog') {
+			candidates.push({
+				value: {
+					dinozId: dinoz.id,
+					action: 'progression_dialog',
+					dialogId: shamanStep.dialogId,
+					preferredLinkIds: shamanStep.preferredLinkIds
+				},
+				weight: 265
+			});
+		}
+	}
+
+	for (const dinoz of playerData.dinoz.slice(0, 3)) {
+		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
+
 		const progressionStep = await getBotLanternProgressionStep(userId, dinoz.id);
 		if (!progressionStep) continue;
 
@@ -192,6 +232,16 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	};
 
 	for (const dinoz of playerData.dinoz) {
+		if (await shouldBotDigOldStone(userId, dinoz.id)) {
+			candidates.push({
+				value: {
+					dinozId: dinoz.id,
+					action: 'progression_dig'
+				},
+				weight: 320
+			});
+		}
+
 		const actions = await getAvailableActions(
 			dinoz,
 			playerData,
@@ -369,6 +419,17 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	const healDecision = candidates.find(candidate => candidate.value.action === 'heal');
 	if (healDecision) {
 		return healDecision.value;
+	}
+
+	const progressionDecision = candidates.find(
+		candidate =>
+			candidate.weight >= 230 &&
+			(candidate.value.action === 'progression_dialog' ||
+				candidate.value.action === 'progression_dig' ||
+				candidate.value.action === 'move')
+	);
+	if (progressionDecision) {
+		return progressionDecision.value;
 	}
 
 	const restDecision = candidates.find(candidate => candidate.value.action === Action.REST);
