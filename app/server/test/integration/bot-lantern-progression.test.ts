@@ -80,4 +80,35 @@ describe('bot lantern progression planner', () => {
 			placeId: PlaceEnum.MINES_DE_CORAIL
 		});
 	});
+
+	it('resumes with the next missing treasure after the shovel is repaired', async () => {
+		const user = await createTestUser({
+			name: 'RepairedShovelBot',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			level: 10,
+			placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
+			canRename: false
+		});
+
+		for (const statusId of [
+			DinozStatusId.BUOY,
+			DinozStatusId.CLIMBING_GEAR,
+			DinozStatusId.SHOVEL,
+			DinozStatusId.RASCAPHANDRE_DECOY,
+			DinozStatusId.BASALT_SHARD
+		]) {
+			await addStatus(dinoz.id, statusId);
+		}
+
+		const step = await getBotLanternProgressionStep(user.id, dinoz.id);
+
+		expect(step).toEqual({
+			type: 'dig',
+			placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
+			treasureId: 'pure_water'
+		});
+	});
 });
