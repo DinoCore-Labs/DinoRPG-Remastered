@@ -47,12 +47,12 @@ const events = [
 	{
 		event: GameEvent.CHRISTMAS,
 		start: {
-			month: 9,
-			day: 28
+			month: 12,
+			day: 1
 		},
 		end: {
-			month: 9,
-			day: 29
+			month: 12,
+			day: 25
 		},
 		softCap: 100,
 		theme: GameTheme.CHRISTMAS
