@@ -43,11 +43,21 @@ type LearnSkillReq = FastifyRequest<{
  *
  * @returns LearnSkillData
  */
-export async function learnSkillUnlocked(req: LearnSkillReq, _reply: FastifyReply): Promise<LearnSkillData> {
-	const authed = req.user;
-	const dinozId = Number(req.params.id);
-	const skillIdList = req.body.skillIdList ?? [];
-	const tryNumber = Number(req.body.tryNumber);
+type ResolveDinozLevelUpInput = {
+	userId: string;
+	dinozId: number;
+	skillIdList: number[];
+	tryNumber: number;
+	log?: { error: Function };
+};
+
+export async function resolveDinozLevelUp({
+	userId,
+	dinozId,
+	skillIdList,
+	tryNumber,
+	log
+}: ResolveDinozLevelUpInput): Promise<LearnSkillData> {
 	const result: LearnSkillData = { newMaxExperience: 0 };
 	// --- Fetch dinoz for level up ---
 	let dinozSkills = await getDinozForLevelUp(dinozId);
@@ -55,8 +65,8 @@ export async function learnSkillUnlocked(req: LearnSkillReq, _reply: FastifyRepl
 		throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
 	}
 	// ownership
-	if (!dinozSkills.user || dinozSkills.user.id !== authed.id) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${authed.id}`, { statusCode: 403 });
+	if (!dinozSkills.user || dinozSkills.user.id !== userId) {
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${userId}`, { statusCode: 403 });
 	}
 	// --- Tournament / canLevelUp ---
 	let canLevelUp = false;
@@ -101,14 +111,14 @@ export async function learnSkillUnlocked(req: LearnSkillReq, _reply: FastifyRepl
 		}
 		dinozSkills = await addSkillToDinozWithEffects({
 			dinozId,
-			userId: authed.id,
+			userId: userId,
 			skillId: wantedSkillId,
 			state: true,
 			computeUnlockables: true
 		});
 		const discovery = await prisma.$transaction(tx =>
 			discoverUserSkillsTx(tx, {
-				userId: authed.id,
+				userId: userId,
 				skillIds: [wantedSkillId]
 			})
 		);
@@ -140,7 +150,7 @@ export async function learnSkillUnlocked(req: LearnSkillReq, _reply: FastifyRepl
 				element: skills.element
 			}
 		},
-		req.log
+		log
 	);
 	result.newMaxExperience = getMaxXp({
 		level: newDinozData.level,
@@ -168,6 +178,18 @@ export async function learnSkillUnlocked(req: LearnSkillReq, _reply: FastifyRepl
 			break;
 	}
 	return result;
+}
+
+export async function learnSkill(req: LearnSkillReq, _reply: FastifyReply): Promise<LearnSkillData> {
+	return withUserGameplayLock(req.user.id, () =>
+		resolveDinozLevelUp({
+			userId: req.user.id,
+			dinozId: Number(req.params.id),
+			skillIdList: req.body.skillIdList ?? [],
+			tryNumber: Number(req.body.tryNumber),
+			log: req.log
+		})
+	);
 }
 
 type DinozForLevelUp = NonNullable<Awaited<ReturnType<typeof getDinozForLevelUp>>>;
@@ -229,8 +251,4 @@ export async function addSkillToDinozWithEffects(params: {
 		}
 	}
 	return updatedDinozSkills;
-}
-
-export async function learnSkill(req: LearnSkillReq, reply: FastifyReply): Promise<LearnSkillData> {
-	return withUserGameplayLock(req.user.id, () => learnSkillUnlocked(req, reply));
 }
