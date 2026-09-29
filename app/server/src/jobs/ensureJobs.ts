@@ -154,13 +154,13 @@ export async function ensureJobsExist() {
 			timezone: 'UTC',
 			intervalMs: 30_000,
 			nextRunAt: new Date(Date.now() + 30_000),
-			lockTimeoutS: 25,
+			lockTimeoutS: 120,
 			enabled: true
 		},
 		update: {
 			type: 'INTERVAL',
 			intervalMs: 30_000,
-			lockTimeoutS: 25,
+			lockTimeoutS: 120,
 			enabled: true
 		}
 	});
