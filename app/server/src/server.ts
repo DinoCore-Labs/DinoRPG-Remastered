@@ -24,6 +24,7 @@ import {
 import { Role } from '../../prisma/index.js';
 import { adminRoutes } from './Admin/Routes/admin.routes.js';
 import { bankRoutes } from './Bank/Routes/bank.routes.js';
+import { botRoutes } from './Bot/Routes/bot.routes.js';
 import { clanRoutes } from './Clan/Routes/clan.routes.js';
 import { loadConfig } from './config/config.js';
 import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
@@ -370,6 +371,7 @@ async function buildServer(options: BuildServerOptions = {}) {
 	server.register(roadmapRoutes, { prefix: 'api/roadmap' });
 	server.register(dialogRoutes, { prefix: 'api/dialog' });
 	server.register(adminRoutes, { prefix: 'api/admin' });
+	server.register(botRoutes, { prefix: 'api/admin/bots' });
 	server.register(missionsRoutes, { prefix: 'api/missions' });
 	server.register(messagingRoutes, { prefix: 'api/messaging' });
 	server.register(reportRoutes, { prefix: 'api/reports' });
