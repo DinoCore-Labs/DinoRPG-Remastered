@@ -502,22 +502,6 @@
 			"startFight": "{gold} :gold:",
 			"doubleDinoz": "Vous ne pouvez pas faire combattre le même Dinoz avec lui-même."
 		},
-		"tournamentFormats": {
-			"uncommon": "Dinoz non communs",
-			"common": "Dinoz communs",
-			"fire": "Dinoz feu",
-			"water": "Dinoz eau",
-			"wood": "Dinoz bois",
-			"air": "Dinoz air",
-			"lightning": "Dinoz foudre",
-			"ffa": "Free for All",
-			"bipede": "Bipèdes",
-			"quadrupede": "Quadrupèdes",
-			"flying": "Volants et rampants",
-			"anti_poison": "Anti poisons",
-			"hippo": "Hippoclamp",
-			"demons": "Dinoz démoniaques"
-		},
 		"history": {
 			"myDinoz": "Mes combattants",
 			"ennemis": "Adversaires",
