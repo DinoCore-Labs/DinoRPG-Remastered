@@ -16,8 +16,14 @@ import { executeBotMissionInteraction, executeBotMissionWait } from './botMissio
 import { healBotDinoz } from './botHealing.service.js';
 import { buyBotDinoz } from './botEconomy.service.js';
 import { createBotGroup } from './botGroup.service.js';
+import { equipBotDinoz } from './botEquipment.service.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
+	if (decision.action === 'equip') {
+		await equipBotDinoz(userId, decision.dinozId);
+		return;
+	}
+
 	if (decision.action === 'group') {
 		await createBotGroup(userId);
 		return;
