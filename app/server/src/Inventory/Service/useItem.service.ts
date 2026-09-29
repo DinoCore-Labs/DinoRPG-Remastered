@@ -53,13 +53,20 @@ type Params = {
 	itemId: string;
 };
 
-export async function useItemHandler(
-	req: FastifyRequest<{ Params: Params }>,
-	_reply: FastifyReply
-): Promise<UseItemResult> {
-	const authed = req.user;
-	const dinozId = +req.params.dinozId;
-	const itemId = +req.params.itemId;
+type UseItemCommand = {
+	userId: string;
+	userName?: string;
+	dinozId: number;
+	itemId: number;
+};
+
+export async function useItem({
+	userId,
+	userName,
+	dinozId,
+	itemId
+}: UseItemCommand): Promise<UseItemResult> {
+	const authed = { id: userId, name: userName ?? 'Bot' };
 	const dinoz = await getDinozFicheItemRequest(dinozId);
 	const dayOfWeek = new Date().getDay();
 	if (!dinoz || !dinoz.user) {
@@ -191,6 +198,18 @@ export async function useItemHandler(
 		effects,
 		createdDinoz
 	};
+}
+
+export async function useItemHandler(
+	req: FastifyRequest<{ Params: Params }>,
+	_reply: FastifyReply
+): Promise<UseItemResult> {
+	return useItem({
+		userId: req.user.id,
+		userName: req.user.name,
+		dinozId: Number(req.params.dinozId),
+		itemId: Number(req.params.itemId)
+	});
 }
 
 async function hatchEgg(item: ItemFiche, authed: Pick<User, 'id'>) {
