@@ -10,22 +10,26 @@ export type BotDecision = {
 	action: Action;
 };
 
-const SUPPORTED_ACTIONS = new Set<Action>([Action.REST, Action.FIGHT]);
+const SUPPORTED_ACTIONS = new Set<Action>([Action.REST, Action.FIGHT, Action.ACTION]);
 
 const ACTION_WEIGHTS: Record<BotStrategy, Partial<Record<Action, number>>> = {
 	[BotStrategy.BALANCED]: {
+		[Action.ACTION]: 80,
 		[Action.FIGHT]: 50,
 		[Action.REST]: 100
 	},
 	[BotStrategy.FIGHTER]: {
+		[Action.ACTION]: 80,
 		[Action.FIGHT]: 90,
 		[Action.REST]: 100
 	},
 	[BotStrategy.GATHERER]: {
+		[Action.ACTION]: 80,
 		[Action.FIGHT]: 25,
 		[Action.REST]: 100
 	},
 	[BotStrategy.EXPLORER]: {
+		[Action.ACTION]: 80,
 		[Action.FIGHT]: 35,
 		[Action.REST]: 100
 	}
