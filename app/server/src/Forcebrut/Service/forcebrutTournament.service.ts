@@ -190,9 +190,7 @@ export async function getForcebrutOpponent(req: FastifyRequest<{ Params: Forcebr
 	throw new ExpectedError('forcebrut.noOpponent', { statusCode: 404 });
 }
 
-export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: ForcebrutParams }>, reply: FastifyReply) {
-	const dinozId = Number(req.params.id);
-	const userId = req.user.id;
+export async function fightForcebrutOpponentForUser(userId: string, dinozId: number) {
 	const dinoz = await prisma.dinoz.findFirst({
 		where: {
 			id: dinozId,
@@ -402,7 +400,7 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 		entrance: fighter.entrance
 	}));
 
-	return reply.send({
+	return {
 		fighters,
 		goldEarned: victory ? goldEarned : 0,
 		xpEarned: victory ? xpEarned : 0,
@@ -425,5 +423,13 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 		place: PlaceEnum.FORCEBRUT,
 		statusReward,
 		opponentStep: opponent.step
-	});
+	};
+}
+
+export async function fightForcebrutOpponent(
+	req: FastifyRequest<{ Params: ForcebrutParams }>,
+	reply: FastifyReply
+) {
+	const result = await fightForcebrutOpponentForUser(req.user.id, Number(req.params.id));
+	return reply.send(result);
 }
