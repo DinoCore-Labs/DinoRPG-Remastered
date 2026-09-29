@@ -8,7 +8,7 @@ import { processFightForUser } from '../../Fight/Service/fight.service.js';
 import { resolveDinozLevelUp } from '../../Level/Service/learnSkill.service.js';
 import { BotStrategy } from '../../../../prisma/index.js';
 import type { BotDecision } from './botDecision.service.js';
-import { BOT_GATHER_ACTIONS, executeBotGather } from './botGather.service.js';
+import { executeBotGather, isBotGatherAction } from './botGather.service.js';
 import { chooseBotLevelUp } from './botLevelUp.service.js';
 import { executeBotTutorialAction } from './botTutorial.service.js';
 import { executeBotDialog } from './botDialog.service.js';
@@ -46,7 +46,7 @@ export async function executeBotDecision(userId: string, strategy: BotStrategy, 
 		return;
 	}
 
-	if (decision.action !== 'move' && BOT_GATHER_ACTIONS.has(decision.action)) {
+	if (isBotGatherAction(decision.action)) {
 		await executeBotGather(userId, decision.dinozId, decision.action);
 		return;
 	}

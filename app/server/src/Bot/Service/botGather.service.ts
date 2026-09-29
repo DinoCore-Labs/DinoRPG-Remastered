@@ -11,6 +11,10 @@ export const BOT_GATHER_ACTIONS = new Set<Action>([
 	Action.SEEK
 ]);
 
+export function isBotGatherAction(action: unknown): action is Action {
+	return typeof action === 'string' && BOT_GATHER_ACTIONS.has(action as Action);
+}
+
 function shuffle<T>(values: T[]): T[] {
 	const result = [...values];
 	for (let index = result.length - 1; index > 0; index -= 1) {
