@@ -19,7 +19,7 @@ export async function executeBotDecision(userId: string, strategy: BotStrategy, 
 		if (!decision.dialogId) {
 			throw new ExpectedError('missingBotDialogId');
 		}
-		await executeBotDialog(userId, decision.dinozId, decision.dialogId);
+		await executeBotDialog(userId, decision.dinozId, decision.dialogId, strategy);
 		return;
 	}
 
@@ -27,12 +27,12 @@ export async function executeBotDecision(userId: string, strategy: BotStrategy, 
 		if (!decision.dialogId) {
 			throw new ExpectedError('missingBotDialogId');
 		}
-		await executeBotDialog(userId, decision.dinozId, decision.dialogId);
+		await executeBotDialog(userId, decision.dinozId, decision.dialogId, strategy);
 		return;
 	}
 
 	if (decision.action === 'mission_interact') {
-		await executeBotMissionInteraction(userId, decision.dinozId);
+		await executeBotMissionInteraction(userId, decision.dinozId, strategy);
 		return;
 	}
 
