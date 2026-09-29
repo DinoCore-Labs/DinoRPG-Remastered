@@ -1,5 +1,6 @@
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { rewardIdByKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { getBotLanternProgressionStep } from '../../src/Bot/Service/botProgressionPlanner.service.js';
@@ -109,6 +110,44 @@ describe('bot lantern progression planner', () => {
 			type: 'dig',
 			placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
 			treasureId: 'pure_water'
+		});
+	});
+
+	it('requires a second lily leaf after the first one is consumed for the pearl', async () => {
+		const user = await createTestUser({
+			name: 'SecondLilyLeafBot',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			level: 12,
+			placeId: PlaceEnum.CHUTES_MUTANTES,
+			canRename: false
+		});
+
+		for (const statusId of [
+			DinozStatusId.BUOY,
+			DinozStatusId.CLIMBING_GEAR,
+			DinozStatusId.RASCAPHANDRE_DECOY,
+			DinozStatusId.ZORS_GLOVE
+		]) {
+			await addStatus(dinoz.id, statusId);
+		}
+
+		await prisma.userRewards.create({
+			data: {
+				userId: user.id,
+				rewardId: rewardIdByKey.perle
+			}
+		});
+
+		const step = await getBotLanternProgressionStep(user.id, dinoz.id);
+
+		expect(step).toEqual({
+			type: 'dialog',
+			dialogId: 'master_hydargol',
+			placeId: PlaceEnum.CHUTES_MUTANTES,
+			preferredLinkIds: ['talk', 'act', 'gant', 'why', 'super', 'ok']
 		});
 	});
 });
