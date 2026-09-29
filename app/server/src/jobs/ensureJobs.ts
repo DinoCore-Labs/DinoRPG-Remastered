@@ -144,6 +144,26 @@ export async function ensureJobsExist() {
 			enabled: true
 		}
 	});
+	// Player bots
+	await prisma.jobDefinition.upsert({
+		where: { key: 'player-bots' },
+		create: {
+			key: 'player-bots',
+			name: 'Run player bots',
+			type: 'INTERVAL',
+			timezone: 'UTC',
+			intervalMs: 30_000,
+			nextRunAt: new Date(Date.now() + 30_000),
+			lockTimeoutS: 25,
+			enabled: true
+		},
+		update: {
+			type: 'INTERVAL',
+			intervalMs: 30_000,
+			lockTimeoutS: 25,
+			enabled: true
+		}
+	});
 	//TID
 	await prisma.jobDefinition.upsert({
 		where: { key: 'reset-dojo-challenge' },
