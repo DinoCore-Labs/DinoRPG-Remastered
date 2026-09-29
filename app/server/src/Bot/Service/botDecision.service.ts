@@ -17,6 +17,7 @@ import { findBotMissionNextHop } from './botPathfinding.service.js';
 import { getBotLanternProgressionStep } from './botProgressionPlanner.service.js';
 import { getBotShamanProgressionStep } from './botShamanProgression.service.js';
 import { shouldBotDigOldStone } from './botProgressionOpportunity.service.js';
+import { getBotForcebrutUnlockStep } from './botForcebrutProgression.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
@@ -131,6 +132,38 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 
 	for (const dinoz of playerData.dinoz.slice(0, 3)) {
 		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
+
+		const forcebrutUnlock = await getBotForcebrutUnlockStep(userId, dinoz.id);
+		if (forcebrutUnlock) {
+			if (forcebrutUnlock.type === 'move') {
+				const nextHop = await findBotMissionNextHop(
+					userId,
+					dinoz.id,
+					dinoz.placeId,
+					forcebrutUnlock.placeId
+				);
+				if (nextHop != null) {
+					candidates.push({
+						value: {
+							dinozId: dinoz.id,
+							action: 'move',
+							targetPlaceId: nextHop
+						},
+						weight: 275
+					});
+				}
+			} else {
+				candidates.push({
+					value: {
+						dinozId: dinoz.id,
+						action: 'progression_dialog',
+						dialogId: forcebrutUnlock.dialogId,
+						preferredLinkIds: forcebrutUnlock.preferredLinkIds
+					},
+					weight: 285
+				});
+			}
+		}
 
 		const shamanStep = await getBotShamanProgressionStep(userId, dinoz.id);
 		if (!shamanStep) continue;
