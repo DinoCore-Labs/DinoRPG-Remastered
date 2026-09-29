@@ -8,8 +8,11 @@ import { newsService } from '../../News/Service/news.service.js';
 
 export async function checkEventNews() {
 	const now = new Date();
-	const month = now.getMonth() + 1;
-	const day = now.getDate();
+	const tz = gameConfig.general.gameTimeZone ?? 'UTC';
+	const formatter = new Intl.DateTimeFormat('en-US', { timeZone: tz, month: 'numeric', day: 'numeric' });
+	const parts = formatter.formatToParts(now);
+	const month = parseInt(parts.find(p => p.type === 'month')!.value, 10);
+	const day = parseInt(parts.find(p => p.type === 'day')!.value, 10);
 
 	for (const event of gameConfig.events) {
 		const eventNameLower = event.event.toLowerCase();
