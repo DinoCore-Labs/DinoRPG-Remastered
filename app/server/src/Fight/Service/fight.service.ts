@@ -551,7 +551,8 @@ export async function rewardFightVsMonsters(
 
 			switch (event) {
 				case GameEvent.CHRISTMAS:
-					if (Math.floor(Math.random() * 100) <= 100) {
+					if (Math.floor(Math.random() * 100) < 5) {
+						// 5% chance to get a ticket from a pigloo
 						itemWon = Item.CHRISTMAS_TICKET;
 						itemWonQuantity++;
 						await addItemToInventory(userId, Item.CHRISTMAS_TICKET, 1);
