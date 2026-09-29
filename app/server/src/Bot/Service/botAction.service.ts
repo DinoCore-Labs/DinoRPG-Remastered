@@ -11,8 +11,28 @@ import type { BotDecision } from './botDecision.service.js';
 import { BOT_GATHER_ACTIONS, executeBotGather } from './botGather.service.js';
 import { chooseBotLevelUp } from './botLevelUp.service.js';
 import { executeBotTutorialAction } from './botTutorial.service.js';
+import { executeBotDialog } from './botDialog.service.js';
+import { executeBotMissionInteraction, executeBotMissionWait } from './botMissionAction.service.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
+	if (decision.action === 'mission_dialog') {
+		if (!decision.dialogId) {
+			throw new ExpectedError('missingBotDialogId');
+		}
+		await executeBotDialog(userId, decision.dinozId, decision.dialogId);
+		return;
+	}
+
+	if (decision.action === 'mission_interact') {
+		await executeBotMissionInteraction(userId, decision.dinozId);
+		return;
+	}
+
+	if (decision.action === 'mission_wait') {
+		await executeBotMissionWait(decision.dinozId);
+		return;
+	}
+
 	if (decision.action === 'tutorial_speak') {
 		await executeBotTutorialAction(userId, decision.dinozId, decision.action);
 		return;
