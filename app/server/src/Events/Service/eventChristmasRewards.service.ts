@@ -1,5 +1,5 @@
 import { RewardEnum } from '@dinorpg/core/models/enums/Parser.js';
-import { GameEvent } from '@dinorpg/core/models/events/events.js';
+import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 
