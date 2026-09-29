@@ -9,7 +9,7 @@ import { getBotMoveTargets } from './botMovement.service.js';
 import { getBotTutorialAction, type BotTutorialAction } from './botTutorial.service.js';
 import { getBotMissionIntent } from './botMission.service.js';
 import { canBotBuyAnotherDinoz } from './botEconomy.service.js';
-import { getBotGroupPlan } from './botGroup.service.js';
+import { getBotGroupPlan, getBotUngroupPlan } from './botGroup.service.js';
 import { findBotEquipCandidate } from './botEquipment.service.js';
 import { getBotShopPurchase } from './botShop.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
@@ -17,7 +17,7 @@ import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'equip' | 'shop' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	shopId?: number;
 	dialogId?: string;
 	targetPlaceId?: number;
@@ -280,6 +280,14 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				weight: strategy === BotStrategy.FIGHTER ? 45 : 25
 			});
 		}
+	}
+
+	const ungroupDinozId = await getBotUngroupPlan(userId);
+	if (ungroupDinozId != null) {
+		candidates.push({
+			value: { dinozId: ungroupDinozId, action: 'ungroup' },
+			weight: 190
+		});
 	}
 
 	const groupPlan = await getBotGroupPlan(userId);
