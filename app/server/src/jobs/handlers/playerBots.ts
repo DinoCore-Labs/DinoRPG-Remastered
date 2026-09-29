@@ -47,7 +47,7 @@ export async function playerBotsJob(log: BotJobLogger) {
 			const decision = await chooseBotDecision(bot.userId, bot.strategy);
 
 			if (decision) {
-				await executeBotDecision(bot.userId, decision);
+				await executeBotDecision(bot.userId, bot.strategy, decision);
 				executed++;
 				log.info(
 					{
