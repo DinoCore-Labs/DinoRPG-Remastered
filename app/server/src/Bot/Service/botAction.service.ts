@@ -15,7 +15,7 @@ import { executeBotDialog } from './botDialog.service.js';
 import { executeBotMissionInteraction, executeBotMissionWait } from './botMissionAction.service.js';
 import { healBotDinoz } from './botHealing.service.js';
 import { buyBotDinoz } from './botEconomy.service.js';
-import { createBotGroup } from './botGroup.service.js';
+import { createBotGroup, ungroupBotDinoz } from './botGroup.service.js';
 import { equipBotDinoz } from './botEquipment.service.js';
 import { buyBotUsefulItem } from './botShop.service.js';
 
@@ -30,6 +30,11 @@ export async function executeBotDecision(userId: string, strategy: BotStrategy, 
 
 	if (decision.action === 'equip') {
 		await equipBotDinoz(userId, decision.dinozId);
+		return;
+	}
+
+	if (decision.action === 'ungroup') {
+		await ungroupBotDinoz(userId);
 		return;
 	}
 
