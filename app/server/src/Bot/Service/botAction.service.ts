@@ -18,6 +18,7 @@ import { buyBotDinoz } from './botEconomy.service.js';
 import { createBotGroup, ungroupBotDinoz } from './botGroup.service.js';
 import { equipBotDinoz } from './botEquipment.service.js';
 import { buyBotUsefulItem } from './botShop.service.js';
+import { digWithDinoz } from '../../Dinoz/Service/dig.service.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
 	if (decision.action === 'shop') {
@@ -53,6 +54,25 @@ export async function executeBotDecision(userId: string, strategy: BotStrategy, 
 		if (!healed) {
 			await restDinoz(userId, decision.dinozId);
 		}
+		return;
+	}
+
+	if (decision.action === 'progression_dig') {
+		await digWithDinoz(userId, decision.dinozId);
+		return;
+	}
+
+	if (decision.action === 'progression_dialog') {
+		if (!decision.dialogId) {
+			throw new ExpectedError('missingBotDialogId');
+		}
+		await executeBotDialog(
+			userId,
+			decision.dinozId,
+			decision.dialogId,
+			strategy,
+			decision.preferredLinkIds ?? []
+		);
 		return;
 	}
 
