@@ -7,9 +7,7 @@ import { startRest } from '../Controller/getRestDinoz.controller.js';
 
 type Params = { id: string };
 
-export async function startResting(req: FastifyRequest<{ Params: Params }>, reply: FastifyReply) {
-	const dinozId = Number(req.params.id);
-	const userId = (req.user as any).id;
+export async function restDinoz(userId: string, dinozId: number) {
 	await prisma.$transaction(async tx => {
 		const d = await tx.dinoz.findUnique({
 			where: { id: dinozId },
@@ -43,5 +41,10 @@ export async function startResting(req: FastifyRequest<{ Params: Params }>, repl
 		if (d.life >= Math.round(d.maxLife / 2)) throw new ExpectedError('Dinoz does not need to rest');
 		await startRest(tx, dinozId);
 	});
+}
+
+export async function startResting(req: FastifyRequest<{ Params: Params }>, reply: FastifyReply) {
+	const dinozId = Number(req.params.id);
+	await restDinoz(req.user.id, dinozId);
 	return reply.send({ ok: true });
 }
