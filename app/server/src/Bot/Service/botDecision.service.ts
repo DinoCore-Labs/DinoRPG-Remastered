@@ -8,12 +8,17 @@ import { BOT_GATHER_ACTIONS, isBotGatherAction } from './botGather.service.js';
 import { getBotMoveTargets } from './botMovement.service.js';
 import { getBotTutorialAction, type BotTutorialAction } from './botTutorial.service.js';
 import { getBotMissionIntent } from './botMission.service.js';
+import { canBotBuyAnotherDinoz } from './botEconomy.service.js';
+import { getBotGroupPlan } from './botGroup.service.js';
+import { findBotEquipCandidate } from './botEquipment.service.js';
+import { getBotShopPurchase } from './botShop.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'equip' | 'shop' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	shopId?: number;
 	dialogId?: string;
 	targetPlaceId?: number;
 };
@@ -217,6 +222,19 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		}
 
 		for (const action of actions) {
+			if (action.name === Action.SHOP && typeof action.prop === 'number') {
+				if (await getBotShopPurchase(userId, action.prop)) {
+					candidates.push({
+						value: {
+							dinozId: dinoz.id,
+							action: 'shop',
+							shopId: action.prop
+						},
+						weight: 30
+					});
+				}
+				continue;
+			}
 			if (!SUPPORTED_ACTIONS.has(action.name as Action)) continue;
 			const actionName = action.name as Action;
 
@@ -244,6 +262,39 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					: ACTION_WEIGHTS[strategy][actionName] ?? 1
 			});
 		}
+	}
+
+	for (const dinoz of playerData.dinoz) {
+		if (dinoz.life > 0 && dinoz.life < Math.round(dinoz.maxLife * 0.35)) {
+			candidates.unshift({
+				value: { dinozId: dinoz.id, action: 'heal' },
+				weight: 200
+			});
+		}
+	}
+
+	for (const dinoz of playerData.dinoz) {
+		if (await findBotEquipCandidate(dinoz.id)) {
+			candidates.push({
+				value: { dinozId: dinoz.id, action: 'equip' },
+				weight: strategy === BotStrategy.FIGHTER ? 45 : 25
+			});
+		}
+	}
+
+	const groupPlan = await getBotGroupPlan(userId);
+	if (groupPlan) {
+		candidates.push({
+			value: { dinozId: groupPlan.leaderId, action: 'group' },
+			weight: strategy === BotStrategy.FIGHTER ? 60 : 35
+		});
+	}
+
+	if (await canBotBuyAnotherDinoz(userId)) {
+		candidates.push({
+			value: { dinozId: playerData.dinoz[0]?.id ?? 0, action: 'buy_dinoz' },
+			weight: 35
+		});
 	}
 
 	const levelUpDecision = candidates.find(candidate => candidate.value.action === Action.LEVEL_UP);

@@ -16,16 +16,13 @@ type Params = {
 	targetId: string;
 };
 
-export async function followDinoz(req: FastifyRequest<{ Params: Params }>, _reply: FastifyReply) {
-	const authed = req.user;
-	const dinozId = +req.params.id;
-	const dinozToFollowId = +req.params.targetId;
-	const user_dinoz = await getDinozFicheRequest(dinozId, authed.id);
-	const user_leader = await getDinozFicheRequest(dinozToFollowId, authed.id);
+export async function makeDinozFollow(userId: string, dinozId: number, dinozToFollowId: number) {
+	const user_dinoz = await getDinozFicheRequest(dinozId, userId);
+	const user_leader = await getDinozFicheRequest(dinozToFollowId, userId);
 	if (!user_dinoz || !user_leader) {
 		throw new ExpectedError('userNotFound', {
 			params: {
-				userId: authed.id
+				userId: userId
 			}
 		});
 	}
@@ -75,7 +72,7 @@ export async function followDinoz(req: FastifyRequest<{ Params: Params }>, _repl
 		}
 	}
 	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(authed.id, dinozId, dinozToFollowId))) {
+	if (!(await ownsDinoz(userId, dinozId, dinozToFollowId))) {
 		throw new ExpectedError('Player does not own this dinoz');
 	}
 	await assertDinozNotConcentrating(dinozId);
@@ -85,4 +82,8 @@ export async function followDinoz(req: FastifyRequest<{ Params: Params }>, _repl
 	}
 	// Update dinoz
 	await updateDinoz(dinozId, { leader: { connect: { id: dinozToFollowId } } });
+}
+
+export async function followDinoz(req: FastifyRequest<{ Params: Params }>, _reply: FastifyReply) {
+	return makeDinozFollow(req.user.id, Number(req.params.id), Number(req.params.targetId));
 }

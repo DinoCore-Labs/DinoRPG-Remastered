@@ -27,26 +27,32 @@ type EquipItemBody = {
 
 const MAGIC_ITEM_COOLDOWN_HOURS = 119;
 
-export async function equipItem(
-	req: FastifyRequest<{ Params: EquipItemParams; Body: EquipItemBody }>
-): Promise<EquipItemResponse> {
-	const dinozId = Number(req.params.dinozId);
+type EquipItemCommand = {
+	userId: string;
+	dinozId: number;
+	itemId: number;
+	equip: boolean;
+};
+
+export async function equipDinozItem({
+	userId,
+	dinozId,
+	itemId,
+	equip
+}: EquipItemCommand): Promise<EquipItemResponse> {
 	if (!Number.isFinite(dinozId)) {
 		throw new ExpectedError('invalidId');
 	}
-	const authed = req.user;
-	const dinoz = await getDinozEquipItemRequest(dinozId);
+		const dinoz = await getDinozEquipItemRequest(dinozId);
 	if (!dinoz) {
 		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 	}
 	if (dinoz.state === DinozState.selling) {
 		throw new ExpectedError('cannotEquipSellingDinoz');
 	}
-	const itemId = Number(req.body.itemId);
-	const equip = Boolean(req.body.equip);
-	const itemToEquip = Object.values(itemList).find(i => i.itemId === itemId);
-	if (!dinoz.user || dinoz.user.id !== authed.id) {
-		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${authed.id}`);
+		const itemToEquip = Object.values(itemList).find(i => i.itemId === itemId);
+	if (!dinoz.user || dinoz.user.id !== userId) {
+		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${userId}`);
 	}
 	if (!itemToEquip) {
 		throw new ExpectedError('itemNotFound');
@@ -117,6 +123,17 @@ export async function equipItem(
 			scenarios: dinoz.user.scenarios
 		})
 	};
+}
+
+export async function equipItem(
+	req: FastifyRequest<{ Params: EquipItemParams; Body: EquipItemBody }>
+): Promise<EquipItemResponse> {
+	return equipDinozItem({
+		userId: req.user.id,
+		dinozId: Number(req.params.dinozId),
+		itemId: Number(req.body.itemId),
+		equip: Boolean(req.body.equip)
+	});
 }
 
 function shouldRefreshDinozAfterEquip(input: {
