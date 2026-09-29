@@ -6,10 +6,11 @@ import { getDinozMenuRequest } from '../../Dinoz/Controller/getDinozMenu.control
 import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/getDinozActions.service.js';
 import { BOT_GATHER_ACTIONS } from './botGather.service.js';
 import { getBotMoveTargets } from './botMovement.service.js';
+import { getBotTutorialAction, type BotTutorialAction } from './botTutorial.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move';
+	action: Action | 'move' | BotTutorialAction;
 	targetPlaceId?: number;
 };
 
@@ -98,6 +99,14 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		nbrUpLightning: dinoz.nbrUpLightning,
 		nbrUpAir: dinoz.nbrUpAir
 	}));
+
+	const tutorialAction = await getBotTutorialAction(userId);
+	if (tutorialAction && playerData.dinoz.length > 0) {
+		return {
+			dinozId: playerData.dinoz[0].id,
+			action: tutorialAction
+		};
+	}
 
 	const candidates: { value: BotDecision; weight: number }[] = [];
 	const movementWeight: Record<BotStrategy, number> = {

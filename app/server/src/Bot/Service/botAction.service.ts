@@ -10,8 +10,14 @@ import { BotStrategy } from '../../../../prisma/index.js';
 import type { BotDecision } from './botDecision.service.js';
 import { BOT_GATHER_ACTIONS, executeBotGather } from './botGather.service.js';
 import { chooseBotLevelUp } from './botLevelUp.service.js';
+import { executeBotTutorialAction } from './botTutorial.service.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
+	if (decision.action === 'tutorial_speak') {
+		await executeBotTutorialAction(userId, decision.dinozId, decision.action);
+		return;
+	}
+
 	if (decision.action !== 'move' && BOT_GATHER_ACTIONS.has(decision.action)) {
 		await executeBotGather(userId, decision.dinozId, decision.action);
 		return;
