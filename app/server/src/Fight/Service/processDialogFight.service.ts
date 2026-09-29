@@ -79,12 +79,18 @@ function extractDialogFightData(phase: RuntimeDialogPhase): {
 	};
 }
 
-export async function processDialogFightUnlocked(
-	req: FastifyRequest<{ Body: ProcessDialogFightInput }>,
-	reply: FastifyReply
-) {
-	const { dinozId, dialogId, phaseId, autoReequip = false } = req.body;
-	const authed = req.user;
+type ProcessDialogFightCommand = ProcessDialogFightInput & {
+	userId: string;
+};
+
+export async function processDialogFightForUserUnlocked({
+	userId,
+	dinozId,
+	dialogId,
+	phaseId,
+	autoReequip = false
+}: ProcessDialogFightCommand) {
+	const authed = { id: userId };
 	const dialog = getDialogById(dialogId);
 	const phase = getDialogFightPhase(dialog, phaseId);
 	const context = await prisma.$transaction(tx =>
@@ -180,7 +186,7 @@ export async function processDialogFightUnlocked(
 		 * Après une victoire, le scénario passe à magnet = 11.
 		 * Le joueur devra ensuite parler manuellement au Capitaine.
 		 */
-		return reply.send(result);
+		return result;
 	}
 	/**
 	 * Traitement générique des autres combats de dialogue.
@@ -230,7 +236,7 @@ export async function processDialogFightUnlocked(
 		user.id,
 		fightResult.fighters.filter(f => !f.attacker && f.type === FighterType.MONSTER).length
 	);
-	return reply.send({
+	return {
 		...result,
 		dialogReturn:
 			winner && returnPhaseId
@@ -239,7 +245,11 @@ export async function processDialogFightUnlocked(
 						phaseId: returnPhaseId
 					}
 				: undefined
-	});
+	};
+}
+
+export function processDialogFightForUser(input: ProcessDialogFightCommand) {
+	return withUserGameplayLock(input.userId, () => processDialogFightForUserUnlocked(input));
 }
 
 export async function processDialogFight(
@@ -248,5 +258,9 @@ export async function processDialogFight(
 	}>,
 	reply: FastifyReply
 ) {
-	return withUserGameplayLock(req.user.id, () => processDialogFightUnlocked(req, reply));
+	const result = await processDialogFightForUser({
+		userId: req.user.id,
+		...req.body
+	});
+	return reply.send(result);
 }
