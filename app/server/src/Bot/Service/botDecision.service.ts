@@ -4,10 +4,12 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { BotStrategy, DinozState } from '../../../../prisma/index.js';
 import { getDinozMenuRequest } from '../../Dinoz/Controller/getDinozMenu.controller.js';
 import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/getDinozActions.service.js';
+import { getBotMoveTargets } from './botMovement.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action;
+	action: Action | 'move';
+	targetPlaceId?: number;
 };
 
 const SUPPORTED_ACTIONS = new Set<Action>([Action.REST, Action.FIGHT, Action.ACTION, Action.IRMA, Action.IRMAS, Action.LEVEL_UP]);
@@ -89,6 +91,12 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}));
 
 	const candidates: { value: BotDecision; weight: number }[] = [];
+	const movementWeight: Record<BotStrategy, number> = {
+		[BotStrategy.BALANCED]: 25,
+		[BotStrategy.FIGHTER]: 10,
+		[BotStrategy.GATHERER]: 20,
+		[BotStrategy.EXPLORER]: 80
+	};
 
 	for (const dinoz of playerData.dinoz) {
 		const actions = await getAvailableActions(
@@ -101,6 +109,14 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				itinerantPlaceId
 			}
 		);
+
+		const moveTargets = await getBotMoveTargets(userId, dinoz.id);
+		for (const targetPlaceId of moveTargets) {
+			candidates.push({
+				value: { dinozId: dinoz.id, action: 'move', targetPlaceId },
+				weight: movementWeight[strategy]
+			});
+		}
 
 		for (const action of actions) {
 			if (!SUPPORTED_ACTIONS.has(action.name as Action)) continue;
