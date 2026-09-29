@@ -17,8 +17,17 @@ import { healBotDinoz } from './botHealing.service.js';
 import { buyBotDinoz } from './botEconomy.service.js';
 import { createBotGroup } from './botGroup.service.js';
 import { equipBotDinoz } from './botEquipment.service.js';
+import { buyBotUsefulItem } from './botShop.service.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
+	if (decision.action === 'shop') {
+		if (decision.shopId === undefined) {
+			throw new ExpectedError('missingBotShopId');
+		}
+		await buyBotUsefulItem(userId, decision.shopId);
+		return;
+	}
+
 	if (decision.action === 'equip') {
 		await equipBotDinoz(userId, decision.dinozId);
 		return;
