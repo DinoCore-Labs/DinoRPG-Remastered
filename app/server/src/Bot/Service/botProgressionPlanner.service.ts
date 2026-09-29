@@ -91,13 +91,21 @@ function resolveRequirement(
 	);
 
 	for (const provider of providers) {
+		let providerBlocked = false;
+
 		for (const dependency of provider.requires) {
 			if (isRequirementSatisfied(state, dependency)) continue;
+
 			const dependencyStep = resolveRequirement(state, graph, dependency, new Set(visited));
 			if (dependencyStep) return dependencyStep;
+
+			providerBlocked = true;
+			break;
 		}
 
-		return provider.action;
+		if (!providerBlocked) {
+			return provider.action;
+		}
 	}
 
 	return null;
