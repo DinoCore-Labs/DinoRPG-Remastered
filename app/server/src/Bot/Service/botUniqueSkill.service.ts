@@ -1,3 +1,4 @@
+import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
 import { Skill, skillList, uSkillsToPlayerFieldMap } from '@dinorpg/core/models/skills/skillList.js';
 
 import type { User } from '../../../../prisma/index.js';
@@ -71,4 +72,64 @@ export function getUniqueProgressionWeight(skillId: number, missingUniqueSkills:
 	}
 
 	return 0;
+}
+
+
+export type BotUniqueSkillDinozProfile = {
+	id: number;
+	nbrUpFire: number;
+	nbrUpWood: number;
+	nbrUpWater: number;
+	nbrUpLightning: number;
+	nbrUpAir: number;
+};
+
+function getElementAffinity(dinoz: BotUniqueSkillDinozProfile, skillId: Skill): number {
+	const element = skillList[skillId]?.element?.[0];
+	switch (element) {
+		case ElementType.WOOD:
+			return dinoz.nbrUpWood;
+		case ElementType.WATER:
+			return dinoz.nbrUpWater;
+		case ElementType.LIGHTNING:
+			return dinoz.nbrUpLightning;
+		case ElementType.AIR:
+			return dinoz.nbrUpAir;
+		case ElementType.FIRE:
+			return dinoz.nbrUpFire;
+		default:
+			return 0;
+	}
+}
+
+export function assignBotUniqueSkillTargets(
+	dinozList: BotUniqueSkillDinozProfile[],
+	missingUniqueSkills: Skill[]
+): Map<number, Skill[]> {
+	const cohort = [...dinozList].sort((a, b) => a.id - b.id).slice(0, 3);
+	const assignments = new Map<number, Skill[]>(cohort.map(dinoz => [dinoz.id, []]));
+
+	for (const targetSkillId of missingUniqueSkills) {
+		let bestDinoz: BotUniqueSkillDinozProfile | null = null;
+		let bestScore = Number.NEGATIVE_INFINITY;
+
+		for (const dinoz of cohort) {
+			const assignedCount = assignments.get(dinoz.id)?.length ?? 0;
+			const affinity = getElementAffinity(dinoz, targetSkillId);
+
+			// Strongly prefer the Dinoz already progressing in the target element,
+			// but spread account roles instead of stacking every unique skill on one Dinoz.
+			const score = affinity * 12 - assignedCount * 18 - dinoz.id * 0.000001;
+			if (score > bestScore) {
+				bestScore = score;
+				bestDinoz = dinoz;
+			}
+		}
+
+		if (bestDinoz) {
+			assignments.get(bestDinoz.id)?.push(targetSkillId);
+		}
+	}
+
+	return assignments;
 }
