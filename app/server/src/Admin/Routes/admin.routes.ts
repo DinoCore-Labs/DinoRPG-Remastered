@@ -57,6 +57,12 @@ import {
 	updateAdminDinozStatsHandler
 } from '../Service/adminDinozHandler.service.js';
 import {
+	adminDistributeRewardsHandler,
+	adminPublishEndNewsHandler,
+	adminPublishStartNewsHandler,
+	adminResetScoresHandler
+} from '../Service/adminEventHandler.service.js';
+import {
 	createAdminForcebrutOpponentHandler,
 	deleteAdminForcebrutOpponentHandler,
 	getAdminForcebrutOpponentDetailsHandler,
@@ -591,5 +597,14 @@ export async function adminRoutes(app: FastifyInstance) {
 			const body = req.body as z.infer<typeof updateMaintenanceBodySchema>;
 			return setMaintenanceMode(body.enabled);
 		}
+	);
+	// --- Event Management ---
+	app.post('/events/:eventId/news/start', { preHandler: [app.authenticate, app.admin] }, adminPublishStartNewsHandler);
+	app.post('/events/:eventId/news/end', { preHandler: [app.authenticate, app.admin] }, adminPublishEndNewsHandler);
+	app.post('/events/:eventId/scores/reset', { preHandler: [app.authenticate, app.admin] }, adminResetScoresHandler);
+	app.post(
+		'/events/:eventId/rewards/distribute',
+		{ preHandler: [app.authenticate, app.admin] },
+		adminDistributeRewardsHandler
 	);
 }
