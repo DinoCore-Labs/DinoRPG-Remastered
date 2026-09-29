@@ -10,12 +10,13 @@ import { getBotTutorialAction, type BotTutorialAction } from './botTutorial.serv
 import { getBotMissionIntent } from './botMission.service.js';
 import { canBotBuyAnotherDinoz } from './botEconomy.service.js';
 import { getBotGroupPlan } from './botGroup.service.js';
+import { findBotEquipCandidate } from './botEquipment.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'equip' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	dialogId?: string;
 	targetPlaceId?: number;
 };
@@ -253,6 +254,15 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 			candidates.unshift({
 				value: { dinozId: dinoz.id, action: 'heal' },
 				weight: 200
+			});
+		}
+	}
+
+	for (const dinoz of playerData.dinoz) {
+		if (await findBotEquipCandidate(dinoz.id)) {
+			candidates.push({
+				value: { dinozId: dinoz.id, action: 'equip' },
+				weight: strategy === BotStrategy.FIGHTER ? 45 : 25
 			});
 		}
 	}
