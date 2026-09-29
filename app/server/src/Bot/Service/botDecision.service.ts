@@ -9,12 +9,13 @@ import { getBotMoveTargets } from './botMovement.service.js';
 import { getBotTutorialAction, type BotTutorialAction } from './botTutorial.service.js';
 import { getBotMissionIntent } from './botMission.service.js';
 import { canBotBuyAnotherDinoz } from './botEconomy.service.js';
+import { getBotGroupPlan } from './botGroup.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	dialogId?: string;
 	targetPlaceId?: number;
 };
@@ -254,6 +255,14 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				weight: 200
 			});
 		}
+	}
+
+	const groupPlan = await getBotGroupPlan(userId);
+	if (groupPlan) {
+		candidates.push({
+			value: { dinozId: groupPlan.leaderId, action: 'group' },
+			weight: strategy === BotStrategy.FIGHTER ? 60 : 35
+		});
 	}
 
 	if (await canBotBuyAnotherDinoz(userId)) {

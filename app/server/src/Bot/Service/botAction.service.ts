@@ -15,8 +15,14 @@ import { executeBotDialog } from './botDialog.service.js';
 import { executeBotMissionInteraction, executeBotMissionWait } from './botMissionAction.service.js';
 import { healBotDinoz } from './botHealing.service.js';
 import { buyBotDinoz } from './botEconomy.service.js';
+import { createBotGroup } from './botGroup.service.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
+	if (decision.action === 'group') {
+		await createBotGroup(userId);
+		return;
+	}
+
 	if (decision.action === 'buy_dinoz') {
 		await buyBotDinoz(userId);
 		return;
