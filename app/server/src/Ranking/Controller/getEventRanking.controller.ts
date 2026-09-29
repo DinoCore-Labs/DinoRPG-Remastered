@@ -1,9 +1,10 @@
-import { Events, GameEvent } from '@dinorpg/core/models/events/events.js';
+import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 
+import gameConfig from '../../config/game.config.js';
 import { prisma } from '../../prisma.js';
 
 function getDaysSinceEventStart(eventId: string): number {
-	const eventDetails = Events[eventId as GameEvent];
+	const eventDetails = gameConfig.events.find((e: any) => e.event === eventId);
 	if (!eventDetails) return 1;
 	const now = new Date();
 	const startDate = new Date(now.getFullYear(), eventDetails.start.month - 1, eventDetails.start.day);
