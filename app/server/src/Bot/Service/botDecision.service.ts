@@ -421,6 +421,17 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		return healDecision.value;
 	}
 
+	const progressionDecision = candidates.find(
+		candidate =>
+			candidate.weight >= 230 &&
+			(candidate.value.action === 'progression_dialog' ||
+				candidate.value.action === 'progression_dig' ||
+				candidate.value.action === 'move')
+	);
+	if (progressionDecision) {
+		return progressionDecision.value;
+	}
+
 	const restDecision = candidates.find(candidate => candidate.value.action === Action.REST);
 	if (restDecision) {
 		return restDecision.value;
