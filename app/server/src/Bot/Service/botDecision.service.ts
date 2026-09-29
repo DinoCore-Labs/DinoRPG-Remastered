@@ -7,10 +7,14 @@ import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/ge
 import { BOT_GATHER_ACTIONS } from './botGather.service.js';
 import { getBotMoveTargets } from './botMovement.service.js';
 import { getBotTutorialAction, type BotTutorialAction } from './botTutorial.service.js';
+import { getBotMissionIntent } from './botMission.service.js';
+import { findBotMissionNextHop } from './botPathfinding.service.js';
+import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | BotTutorialAction;
+	action: Action | 'move' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	dialogId?: string;
 	targetPlaceId?: number;
 };
 
@@ -134,6 +138,70 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				itinerantPlaceId
 			}
 		);
+
+		const missionIntent = await getBotMissionIntent(dinoz.id);
+		if (missionIntent) {
+			switch (missionIntent.type) {
+				case 'move': {
+					const nextHop = await findBotMissionNextHop(
+						userId,
+						dinoz.id,
+						dinoz.placeId,
+						missionIntent.placeId
+					);
+					if (nextHop != null) {
+						candidates.push({
+							value: {
+								dinozId: dinoz.id,
+								action: 'move',
+								targetPlaceId: nextHop
+							},
+							weight: 160
+						});
+					}
+					break;
+				}
+				case 'fight':
+					if (actions.some(action => action.name === Action.FIGHT)) {
+						candidates.push({
+							value: { dinozId: dinoz.id, action: Action.FIGHT },
+							weight: 170
+						});
+					}
+					break;
+				case 'dialog': {
+					const dialogs = await listAvailableDialogs({
+						userId,
+						dinozId: dinoz.id
+					});
+					if (dialogs.some(dialog => dialog.id === missionIntent.dialogId)) {
+						candidates.push({
+							value: {
+								dinozId: dinoz.id,
+								action: 'mission_dialog',
+								dialogId: missionIntent.dialogId
+							},
+							weight: 180
+						});
+					}
+					break;
+				}
+				case 'interact':
+					if (actions.some(action => action.name === Action.MISSION)) {
+						candidates.push({
+							value: { dinozId: dinoz.id, action: 'mission_interact' },
+							weight: 180
+						});
+					}
+					break;
+				case 'wait':
+					candidates.push({
+						value: { dinozId: dinoz.id, action: 'mission_wait' },
+						weight: 150
+					});
+					break;
+			}
+		}
 
 		const moveTargets = await getBotMoveTargets(userId, dinoz.id);
 		for (const targetPlaceId of moveTargets) {
