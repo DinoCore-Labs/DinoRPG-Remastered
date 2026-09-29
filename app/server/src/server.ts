@@ -47,6 +47,7 @@ import { expireDueMarketOffersJob } from './jobs/handlers/expireMarketOffers.js'
 import { gameLogMaintenanceJob } from './jobs/handlers/gameLogMaintenance.js';
 import { healFountainPearlDinozJob } from './jobs/handlers/healFountainPearlDinoz.js';
 import { itinerantMerchantMoveJob } from './jobs/handlers/itinerantMerchantMove.js';
+import { playerBotsJob } from './jobs/handlers/playerBots.js';
 import { refreshBankExchangeRateJob } from './jobs/handlers/refreshBankExchangeRate.js';
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
 import { resetDojoChallenge } from './jobs/handlers/resetDojoChallenge.js';
@@ -411,6 +412,9 @@ async function buildServer(options: BuildServerOptions = {}) {
 				[BANK_EXCHANGE_RATE_JOB_KEY]: () => refreshBankExchangeRateJob(server.log),
 				'reset-dojo-challenge': () => resetDojoChallenge(),
 				'check-event-news': () => checkEventNews(),
+				'player-bots': async () => {
+					await playerBotsJob(server.log);
+				},
 				...TournamentManager.HANDLERS
 			},
 			server.log
