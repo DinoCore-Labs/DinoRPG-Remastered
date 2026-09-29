@@ -11,12 +11,14 @@ import { getBotMissionIntent } from './botMission.service.js';
 import { canBotBuyAnotherDinoz } from './botEconomy.service.js';
 import { getBotGroupPlan } from './botGroup.service.js';
 import { findBotEquipCandidate } from './botEquipment.service.js';
+import { getBotShopPurchase } from './botShop.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'equip' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'equip' | 'shop' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	shopId?: number;
 	dialogId?: string;
 	targetPlaceId?: number;
 };
@@ -220,6 +222,19 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		}
 
 		for (const action of actions) {
+			if (action.name === Action.SHOP && typeof action.prop === 'number') {
+				if (await getBotShopPurchase(userId, action.prop)) {
+					candidates.push({
+						value: {
+							dinozId: dinoz.id,
+							action: 'shop',
+							shopId: action.prop
+						},
+						weight: 30
+					});
+				}
+				continue;
+			}
 			if (!SUPPORTED_ACTIONS.has(action.name as Action)) continue;
 			const actionName = action.name as Action;
 
