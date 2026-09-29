@@ -18,19 +18,19 @@
 				</div>
 
 				<div class="title-container">
-					<div class="title-placeholder">Les Piglous sont de retour dans Dinoville !</div>
+					<div class="title-placeholder">{{ $t('events.announcePopup.title') }}</div>
 					<transition name="bounce">
-						<div v-show="step >= 5" class="big-title-animated">Les Piglous sont de retour dans Dinoville !</div>
+						<div v-show="step >= 5" class="big-title-animated">{{ $t('events.announcePopup.title') }}</div>
 					</transition>
 				</div>
 
 				<div class="button-wrapper">
 					<div class="button-placeholder">
-						<DZButton class="no-first-letter">Voir l'Event</DZButton>
+						<DZButton class="no-first-letter">{{ $t('events.announcePopup.viewEvent') }}</DZButton>
 					</div>
 					<transition name="fade">
 						<div v-show="step >= 6" class="button-animated">
-							<DZButton class="no-first-letter" @click="goToEvent">Voir l'Event</DZButton>
+							<DZButton class="no-first-letter" @click="goToEvent">{{ $t('events.announcePopup.viewEvent') }}</DZButton>
 						</div>
 					</transition>
 				</div>
@@ -45,6 +45,7 @@ import { useRouter } from 'vue-router';
 import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 import { gameConfigStore } from '../../store/gameConfigStore.js';
 import DZButton from '../utils/DZButton.vue';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
 	name: 'EventAnnouncePopup',
@@ -59,11 +60,13 @@ export default defineComponent({
 		const typedText3 = ref('');
 		const typedText4 = ref('');
 
+		const { t } = useI18n();
+
 		const textsToType = [
-			'Brrr... ',
-			'Le vent se lève, ',
-			'les neiges éternelles descendent de la montagne et de petites boules de poils blanches font leur apparition dans certaines ruelles... ',
-			'Ça y est !'
+			t('events.announcePopup.text1'),
+			t('events.announcePopup.text2'),
+			t('events.announcePopup.text3'),
+			t('events.announcePopup.text4')
 		];
 
 		const fullText = textsToType.join('');
