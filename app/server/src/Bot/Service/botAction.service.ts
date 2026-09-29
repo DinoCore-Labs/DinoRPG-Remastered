@@ -13,8 +13,17 @@ import { chooseBotLevelUp } from './botLevelUp.service.js';
 import { executeBotTutorialAction } from './botTutorial.service.js';
 import { executeBotDialog } from './botDialog.service.js';
 import { executeBotMissionInteraction, executeBotMissionWait } from './botMissionAction.service.js';
+import { healBotDinoz } from './botHealing.service.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
+	if (decision.action === 'heal') {
+		const healed = await healBotDinoz(userId, decision.dinozId);
+		if (!healed) {
+			await restDinoz(userId, decision.dinozId);
+		}
+		return;
+	}
+
 	if (decision.action === 'dialog') {
 		if (!decision.dialogId) {
 			throw new ExpectedError('missingBotDialogId');

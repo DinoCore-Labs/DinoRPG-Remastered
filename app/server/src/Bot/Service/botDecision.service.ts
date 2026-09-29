@@ -13,7 +13,7 @@ import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	dialogId?: string;
 	targetPlaceId?: number;
 };
@@ -242,6 +242,15 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				weight: isBotGatherAction(actionName)
 					? gatherWeight[strategy]
 					: ACTION_WEIGHTS[strategy][actionName] ?? 1
+			});
+		}
+	}
+
+	for (const dinoz of playerData.dinoz) {
+		if (dinoz.life > 0 && dinoz.life < Math.round(dinoz.maxLife * 0.35)) {
+			candidates.unshift({
+				value: { dinozId: dinoz.id, action: 'heal' },
+				weight: 200
 			});
 		}
 	}
