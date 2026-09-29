@@ -17,6 +17,8 @@ export async function executeBotDecision(userId: string, decision: BotDecision) 
 			return;
 
 		case Action.ACTION:
+		case Action.IRMA:
+		case Action.IRMAS:
 			await restoreDinozAction(userId, decision.dinozId);
 			return;
 
