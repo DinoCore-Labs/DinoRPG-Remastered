@@ -313,6 +313,11 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		return levelUpDecision.value;
 	}
 
+	const healDecision = candidates.find(candidate => candidate.value.action === 'heal');
+	if (healDecision) {
+		return healDecision.value;
+	}
+
 	const restDecision = candidates.find(candidate => candidate.value.action === Action.REST);
 	if (restDecision) {
 		return restDecision.value;
