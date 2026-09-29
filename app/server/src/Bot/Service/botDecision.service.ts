@@ -4,7 +4,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { BotStrategy, DinozState } from '../../../../prisma/index.js';
 import { getDinozMenuRequest } from '../../Dinoz/Controller/getDinozMenu.controller.js';
 import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/getDinozActions.service.js';
-import { BOT_GATHER_ACTIONS } from './botGather.service.js';
+import { BOT_GATHER_ACTIONS, isBotGatherAction } from './botGather.service.js';
 import { getBotMoveTargets } from './botMovement.service.js';
 import { getBotTutorialAction, type BotTutorialAction } from './botTutorial.service.js';
 import { getBotMissionIntent } from './botMission.service.js';
@@ -239,7 +239,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					dinozId: dinoz.id,
 					action: actionName
 				},
-				weight: BOT_GATHER_ACTIONS.has(actionName)
+				weight: isBotGatherAction(actionName)
 					? gatherWeight[strategy]
 					: ACTION_WEIGHTS[strategy][actionName] ?? 1
 			});
