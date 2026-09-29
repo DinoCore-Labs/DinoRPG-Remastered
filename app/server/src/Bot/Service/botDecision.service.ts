@@ -14,13 +14,15 @@ import { findBotEquipCandidate } from './botEquipment.service.js';
 import { getBotShopPurchase } from './botShop.service.js';
 import { getBotDinozActivityScore } from './botDinozSelector.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
+import { getBotLanternProgressionStep } from './botProgressionPlanner.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'progression_dialog' | 'progression_dig' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	shopId?: number;
 	dialogId?: string;
+	preferredLinkIds?: string[];
 	targetPlaceId?: number;
 };
 
@@ -124,6 +126,57 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}
 
 	const candidates: { value: BotDecision; weight: number }[] = [];
+
+	for (const dinoz of playerData.dinoz.slice(0, 3)) {
+		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
+
+		const progressionStep = await getBotLanternProgressionStep(userId, dinoz.id);
+		if (!progressionStep) continue;
+
+		switch (progressionStep.type) {
+			case 'move': {
+				const nextHop = await findBotMissionNextHop(
+					userId,
+					dinoz.id,
+					dinoz.placeId,
+					progressionStep.placeId
+				);
+				if (nextHop != null) {
+					candidates.push({
+						value: {
+							dinozId: dinoz.id,
+							action: 'move',
+							targetPlaceId: nextHop
+						},
+						weight: 230
+					});
+				}
+				break;
+			}
+			case 'dialog':
+				candidates.push({
+					value: {
+						dinozId: dinoz.id,
+						action: 'progression_dialog',
+						dialogId: progressionStep.dialogId,
+						preferredLinkIds: progressionStep.preferredLinkIds
+					},
+					weight: 240
+				});
+				break;
+			case 'dig':
+				candidates.push({
+					value: {
+						dinozId: dinoz.id,
+						action: 'progression_dig'
+					},
+					weight: 240
+				});
+				break;
+			case 'level':
+				break;
+		}
+	}
 	const movementWeight: Record<BotStrategy, number> = {
 		[BotStrategy.BALANCED]: 25,
 		[BotStrategy.FIGHTER]: 10,
