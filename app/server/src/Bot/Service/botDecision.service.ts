@@ -9,15 +9,16 @@ import { getBotMoveTargets } from './botMovement.service.js';
 import { getBotTutorialAction, type BotTutorialAction } from './botTutorial.service.js';
 import { getBotMissionIntent } from './botMission.service.js';
 import { canBotBuyAnotherDinoz } from './botEconomy.service.js';
-import { getBotGroupPlan } from './botGroup.service.js';
+import { getBotGroupPlan, getBotUngroupPlan } from './botGroup.service.js';
 import { findBotEquipCandidate } from './botEquipment.service.js';
 import { getBotShopPurchase } from './botShop.service.js';
+import { getBotDinozActivityScore } from './botDinozSelector.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'equip' | 'shop' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	shopId?: number;
 	dialogId?: string;
 	targetPlaceId?: number;
@@ -166,7 +167,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 								action: 'move',
 								targetPlaceId: nextHop
 							},
-							weight: 160
+							weight: 160 + getBotDinozActivityScore(dinoz, 'mission')
 						});
 					}
 					break;
@@ -175,7 +176,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					if (actions.some(action => action.name === Action.FIGHT)) {
 						candidates.push({
 							value: { dinozId: dinoz.id, action: Action.FIGHT },
-							weight: 170
+							weight: 170 + getBotDinozActivityScore(dinoz, Action.FIGHT)
 						});
 					}
 					break;
@@ -191,7 +192,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 								action: 'mission_dialog',
 								dialogId: missionIntent.dialogId
 							},
-							weight: 180
+							weight: 180 + getBotDinozActivityScore(dinoz, 'mission')
 						});
 					}
 					break;
@@ -258,8 +259,10 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					action: actionName
 				},
 				weight: isBotGatherAction(actionName)
-					? gatherWeight[strategy]
-					: ACTION_WEIGHTS[strategy][actionName] ?? 1
+					? gatherWeight[strategy] + getBotDinozActivityScore(dinoz, actionName)
+					: actionName === Action.FIGHT
+						? (ACTION_WEIGHTS[strategy][actionName] ?? 1) + getBotDinozActivityScore(dinoz, actionName)
+						: ACTION_WEIGHTS[strategy][actionName] ?? 1
 			});
 		}
 	}
@@ -282,6 +285,14 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		}
 	}
 
+	const ungroupDinozId = await getBotUngroupPlan(userId);
+	if (ungroupDinozId != null) {
+		candidates.push({
+			value: { dinozId: ungroupDinozId, action: 'ungroup' },
+			weight: 190
+		});
+	}
+
 	const groupPlan = await getBotGroupPlan(userId);
 	if (groupPlan) {
 		candidates.push({
@@ -300,6 +311,11 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	const levelUpDecision = candidates.find(candidate => candidate.value.action === Action.LEVEL_UP);
 	if (levelUpDecision) {
 		return levelUpDecision.value;
+	}
+
+	const healDecision = candidates.find(candidate => candidate.value.action === 'heal');
+	if (healDecision) {
+		return healDecision.value;
 	}
 
 	const restDecision = candidates.find(candidate => candidate.value.action === Action.REST);

@@ -7,8 +7,14 @@ import { prisma } from '../../prisma.js';
 import { getOrCreateDinozShop } from '../../Shop/Controller/getOrCreateDinozShop.controller.js';
 import { purchaseDinoz } from '../../Shop/Controller/purchaseDinoz.controller.js';
 
-const BOT_GOLD_RESERVE = 1500;
-const BOT_TARGET_DINOZ_COUNT = 2;
+const BOT_SECOND_DINOZ_GOLD_RESERVE = 1500;
+const BOT_THIRD_DINOZ_GOLD_RESERVE = 8000;
+
+function getBotDinozPurchaseReserve(currentDinozCount: number): number | null {
+	if (currentDinozCount < 2) return BOT_SECOND_DINOZ_GOLD_RESERVE;
+	if (currentDinozCount < 3) return BOT_THIRD_DINOZ_GOLD_RESERVE;
+	return null;
+}
 
 export async function canBotBuyAnotherDinoz(userId: string): Promise<boolean> {
 	const user = await prisma.user.findUnique({
@@ -32,15 +38,17 @@ export async function canBotBuyAnotherDinoz(userId: string): Promise<boolean> {
 		}
 	});
 	if (!user) return false;
-	if (user.dinoz.length >= BOT_TARGET_DINOZ_COUNT) return false;
 	if (user.dinoz.length >= getUserMaxDinoz(user)) return false;
+
+	const reserve = getBotDinozPurchaseReserve(user.dinoz.length);
+	if (reserve == null) return false;
 
 	const gold = user.wallets[0]?.amount ?? 0;
 	const shop = await getOrCreateDinozShop(userId);
 	if (shop.length === 0) return false;
 
 	const cheapest = Math.min(...shop.map(entry => getRace(entry.race).price));
-	return gold - cheapest >= BOT_GOLD_RESERVE;
+	return gold - cheapest >= reserve;
 }
 
 export async function buyBotDinoz(userId: string) {
@@ -54,6 +62,18 @@ export async function buyBotDinoz(userId: string) {
 
 	if (candidates.length === 0) return null;
 
+	const currentDinozCount = await prisma.dinoz.count({
+		where: {
+			userId,
+			OR: [
+				{ state: null },
+				{ state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }
+			]
+		}
+	});
+	const reserve = getBotDinozPurchaseReserve(currentDinozCount);
+	if (reserve == null) return null;
+
 	const wallet = await prisma.userWallet.findUnique({
 		where: {
 			userId_type: {
@@ -64,7 +84,7 @@ export async function buyBotDinoz(userId: string) {
 	});
 	if (!wallet) return null;
 
-	const affordable = candidates.filter(candidate => wallet.amount - candidate.price >= BOT_GOLD_RESERVE);
+	const affordable = candidates.filter(candidate => wallet.amount - candidate.price >= reserve);
 	if (affordable.length === 0) return null;
 
 	const selected = affordable[Math.floor(Math.random() * affordable.length)];

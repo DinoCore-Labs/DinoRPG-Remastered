@@ -1,5 +1,7 @@
 import { prisma } from '../../prisma.js';
 import { makeDinozFollow } from '../../Dinoz/Service/followDinoz.service.js';
+import { makeDinozUnfollow } from '../../Dinoz/Service/unfollowDinoz.service.js';
+import { getBotMissionIntent } from './botMission.service.js';
 
 export async function getBotGroupPlan(userId: string): Promise<{ leaderId: number; followerId: number } | null> {
 	const dinoz = await prisma.dinoz.findMany({
@@ -54,5 +56,45 @@ export async function createBotGroup(userId: string): Promise<boolean> {
 	if (!plan) return false;
 
 	await makeDinozFollow(userId, plan.followerId, plan.leaderId);
+	return true;
+}
+
+
+export async function getBotUngroupPlan(userId: string): Promise<number | null> {
+	const followers = await prisma.dinoz.findMany({
+		where: {
+			userId,
+			leaderId: { not: null },
+			state: null
+		},
+		select: {
+			id: true,
+			placeId: true,
+			leaderId: true
+		}
+	});
+
+	for (const follower of followers) {
+		const intent = await getBotMissionIntent(follower.id);
+		if (!intent) continue;
+
+		if (
+			intent.type === 'move' ||
+			intent.type === 'dialog' ||
+			intent.type === 'interact' ||
+			intent.type === 'wait'
+		) {
+			return follower.id;
+		}
+	}
+
+	return null;
+}
+
+export async function ungroupBotDinoz(userId: string): Promise<boolean> {
+	const dinozId = await getBotUngroupPlan(userId);
+	if (dinozId == null) return false;
+
+	await makeDinozUnfollow(userId, dinozId);
 	return true;
 }
