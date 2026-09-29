@@ -8,12 +8,13 @@ import { BOT_GATHER_ACTIONS, isBotGatherAction } from './botGather.service.js';
 import { getBotMoveTargets } from './botMovement.service.js';
 import { getBotTutorialAction, type BotTutorialAction } from './botTutorial.service.js';
 import { getBotMissionIntent } from './botMission.service.js';
+import { canBotBuyAnotherDinoz } from './botEconomy.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	dialogId?: string;
 	targetPlaceId?: number;
 };
@@ -253,6 +254,13 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				weight: 200
 			});
 		}
+	}
+
+	if (await canBotBuyAnotherDinoz(userId)) {
+		candidates.push({
+			value: { dinozId: playerData.dinoz[0]?.id ?? 0, action: 'buy_dinoz' },
+			weight: 35
+		});
 	}
 
 	const levelUpDecision = candidates.find(candidate => candidate.value.action === Action.LEVEL_UP);

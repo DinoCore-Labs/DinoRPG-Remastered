@@ -14,8 +14,14 @@ import { executeBotTutorialAction } from './botTutorial.service.js';
 import { executeBotDialog } from './botDialog.service.js';
 import { executeBotMissionInteraction, executeBotMissionWait } from './botMissionAction.service.js';
 import { healBotDinoz } from './botHealing.service.js';
+import { buyBotDinoz } from './botEconomy.service.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
+	if (decision.action === 'buy_dinoz') {
+		await buyBotDinoz(userId);
+		return;
+	}
+
 	if (decision.action === 'heal') {
 		const healed = await healBotDinoz(userId, decision.dinozId);
 		if (!healed) {
