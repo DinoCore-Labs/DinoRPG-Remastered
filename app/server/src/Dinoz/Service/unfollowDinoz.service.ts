@@ -8,18 +8,18 @@ type Params = {
 	id: string;
 };
 
-export async function unfollowDinoz(req: FastifyRequest<{ Params: Params }>, _reply: FastifyReply) {
-	const authed = req.user;
-	const dinozId = +req.params.id;
-	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(authed.id, dinozId))) {
+export async function makeDinozUnfollow(userId: string, dinozId: number) {
+	if (!(await ownsDinoz(userId, dinozId))) {
 		throw new ExpectedError('dinozDoesNotBelongToUser', {
 			params: {
 				dinozId,
-				userId: authed.id
+				userId
 			}
 		});
 	}
-	// Update dinoz
 	await updateDinoz(dinozId, { leader: { disconnect: true } });
+}
+
+export async function unfollowDinoz(req: FastifyRequest<{ Params: Params }>, _reply: FastifyReply) {
+	return makeDinozUnfollow(req.user.id, Number(req.params.id));
 }
