@@ -3,6 +3,8 @@ import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { BotStrategy } from '../../../../prisma/index.js';
+import { prisma } from '../../prisma.js';
+import { getMissingBotUniqueSkills, getUniqueProgressionWeight } from './botUniqueSkill.service.js';
 import { getDinozForLevelUp } from '../../Level/Controller/getDinozForLevelUp.controller.js';
 import { getDinozLearnableSkills } from '../../Level/Service/getDinozLearnableSkills.service.js';
 
@@ -27,11 +29,11 @@ const EXPLORER_SKILLS = new Set<number>([
 	Skill.VITALITE
 ]);
 
-function getSkillWeight(skillId: number, strategy: BotStrategy): number {
+function getSkillWeight(skillId: number, strategy: BotStrategy, uniqueProgressionWeight = 0): number {
 	const skill = skillList[skillId as Skill];
 	if (!skill) return 1;
 
-	let weight = 10;
+	let weight = 10 + uniqueProgressionWeight;
 
 	switch (strategy) {
 		case BotStrategy.FIGHTER:
@@ -54,10 +56,14 @@ function getSkillWeight(skillId: number, strategy: BotStrategy): number {
 	return weight;
 }
 
-function weightedPick(skillIds: number[], strategy: BotStrategy): number {
+function weightedPick(
+	skillIds: number[],
+	strategy: BotStrategy,
+	uniqueProgressionWeights: Map<number, number>
+): number {
 	const entries = skillIds.map(skillId => ({
 		skillId,
-		weight: getSkillWeight(skillId, strategy)
+		weight: getSkillWeight(skillId, strategy, uniqueProgressionWeights.get(skillId) ?? 0)
 	}));
 	const total = entries.reduce((sum, entry) => sum + entry.weight, 0);
 	let cursor = Math.random() * total;
@@ -87,9 +93,31 @@ export async function chooseBotLevelUp(
 	const tryNumber = 1;
 	const choices = getDinozLearnableSkills(dinoz, race, dinozId, tryNumber);
 
+	const user = await prisma.user.findUnique({
+		where: { id: dinoz.user.id },
+		select: {
+			leader: true,
+			engineer: true,
+			shopKeeper: true,
+			cooker: true,
+			merchant: true,
+			priest: true,
+			teacher: true,
+			messie: true,
+			matelasseur: true
+		}
+	});
+	const missingUniqueSkills = user ? getMissingBotUniqueSkills(user) : [];
+	const uniqueProgressionWeights = new Map<number, number>(
+		choices.learnableSkills.map(skill => [
+			skill.skillId,
+			getUniqueProgressionWeight(skill.skillId, missingUniqueSkills)
+		])
+	);
+
 	if (choices.learnableSkills.length > 0) {
 		return {
-			skillIdList: [weightedPick(choices.learnableSkills.map(skill => skill.skillId), strategy)],
+			skillIdList: [weightedPick(choices.learnableSkills.map(skill => skill.skillId), strategy, uniqueProgressionWeights)],
 			tryNumber
 		};
 	}
