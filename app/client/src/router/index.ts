@@ -6,6 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import AccountPage from '../pages/AccountPage.vue';
 import AdminClanPage from '../pages/Admin/AdminClanPage.vue';
 import AdminDinozPage from '../pages/Admin/AdminDinozPage.vue';
+import AdminEventPage from '../pages/Admin/AdminEventPage.vue';
 import AdminForcebrutPage from '../pages/Admin/AdminForcebrutPage.vue';
 import AdminJobsPage from '../pages/Admin/AdminJobsPage.vue';
 import AdminLogsPage from '../pages/Admin/AdminLogsPage.vue';
@@ -606,6 +607,12 @@ const routes: RouteRecord[] = [
 						path: '/admin/clan',
 						name: 'AdminClan',
 						component: AdminClanPage,
+						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
+					},
+					{
+						path: '/admin/events',
+						name: 'AdminEvents',
+						component: AdminEventPage,
 						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
 					}
 				]
