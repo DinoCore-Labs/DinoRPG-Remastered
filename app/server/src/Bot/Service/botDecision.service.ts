@@ -13,7 +13,7 @@ import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	dialogId?: string;
 	targetPlaceId?: number;
 };
@@ -25,11 +25,13 @@ const SUPPORTED_ACTIONS = new Set<Action>([
 	Action.IRMA,
 	Action.IRMAS,
 	Action.LEVEL_UP,
+	Action.NPC,
 	...BOT_GATHER_ACTIONS
 ]);
 
 const ACTION_WEIGHTS: Record<BotStrategy, Partial<Record<Action, number>>> = {
 	[BotStrategy.BALANCED]: {
+		[Action.NPC]: 30,
 		[Action.LEVEL_UP]: 120,
 		[Action.IRMA]: 70,
 		[Action.IRMAS]: 70,
@@ -38,6 +40,7 @@ const ACTION_WEIGHTS: Record<BotStrategy, Partial<Record<Action, number>>> = {
 		[Action.REST]: 100
 	},
 	[BotStrategy.FIGHTER]: {
+		[Action.NPC]: 20,
 		[Action.LEVEL_UP]: 120,
 		[Action.IRMA]: 70,
 		[Action.IRMAS]: 70,
@@ -46,6 +49,7 @@ const ACTION_WEIGHTS: Record<BotStrategy, Partial<Record<Action, number>>> = {
 		[Action.REST]: 100
 	},
 	[BotStrategy.GATHERER]: {
+		[Action.NPC]: 20,
 		[Action.LEVEL_UP]: 120,
 		[Action.IRMA]: 70,
 		[Action.IRMAS]: 70,
@@ -54,6 +58,7 @@ const ACTION_WEIGHTS: Record<BotStrategy, Partial<Record<Action, number>>> = {
 		[Action.REST]: 100
 	},
 	[BotStrategy.EXPLORER]: {
+		[Action.NPC]: 45,
 		[Action.LEVEL_UP]: 120,
 		[Action.IRMA]: 70,
 		[Action.IRMAS]: 70,
@@ -214,6 +219,21 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		for (const action of actions) {
 			if (!SUPPORTED_ACTIONS.has(action.name as Action)) continue;
 			const actionName = action.name as Action;
+
+			if (actionName === Action.NPC) {
+				if (typeof action.prop === 'string') {
+					candidates.push({
+						value: {
+							dinozId: dinoz.id,
+							action: 'dialog',
+							dialogId: action.prop
+						},
+						weight: ACTION_WEIGHTS[strategy][Action.NPC] ?? 20
+					});
+				}
+				continue;
+			}
+
 			candidates.push({
 				value: {
 					dinozId: dinoz.id,
