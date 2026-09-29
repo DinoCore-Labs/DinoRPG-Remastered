@@ -3,6 +3,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { randomBytes } from 'crypto';
 
 import { BotStrategy } from '../../../../prisma/index.js';
+import { renameDinoz } from '../../Dinoz/Service/setDinozName.service.js';
 import { prisma } from '../../prisma.js';
 import { getOrCreateDinozShop } from '../../Shop/Controller/getOrCreateDinozShop.controller.js';
 import { purchaseDinoz } from '../../Shop/Controller/purchaseDinoz.controller.js';
@@ -62,9 +63,19 @@ export async function createBotPlayer({
 		shopDinozId: Number(shopDinoz.id)
 	});
 
+	await renameDinoz({
+		userId: user.id,
+		dinozId: dinoz.id,
+		name: `Dinoz-${dinoz.id}`
+	});
+
 	return {
 		user,
 		botProfile,
-		dinoz
+		dinoz: {
+			...dinoz,
+			name: `Dinoz-${dinoz.id}`,
+			canRename: false
+		}
 	};
 }
