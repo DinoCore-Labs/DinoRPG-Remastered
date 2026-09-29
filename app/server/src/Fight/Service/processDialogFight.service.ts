@@ -79,12 +79,22 @@ function extractDialogFightData(phase: RuntimeDialogPhase): {
 	};
 }
 
-export async function processDialogFightUnlocked(
-	req: FastifyRequest<{ Body: ProcessDialogFightInput }>,
-	reply: FastifyReply
-) {
-	const { dinozId, dialogId, phaseId, autoReequip = false } = req.body;
-	const authed = req.user;
+type ProcessDialogFightCommand = ProcessDialogFightInput & {
+	userId: string;
+	log?: FastifyRequest['log'];
+	requestId?: string;
+};
+
+export async function processDialogFightForUserUnlocked({
+	userId,
+	dinozId,
+	dialogId,
+	phaseId,
+	autoReequip = false,
+	log,
+	requestId
+}: ProcessDialogFightCommand) {
+	const authed = { id: userId };
 	const dialog = getDialogById(dialogId);
 	const phase = getDialogFightPhase(dialog, phaseId);
 	const context = await prisma.$transaction(tx =>
@@ -174,28 +184,28 @@ export async function processDialogFightUnlocked(
 		if (result.result && (result.monsterKillCount ?? 0) > 0) {
 			await incrementUserStat(StatTracking.KILL_M, user.id, result.monsterKillCount ?? 0);
 		}
+		log?.info(
+			{
+				category: 'fight',
+				action: 'fight_completed',
+				source: 'dialog',
+				userId,
+				dinozId,
+				dialogId,
+				phaseId,
+				teamSize: team.length,
+				won: result.result,
+				requestId
+			},
+			'Dialog fight completed'
+		);
 		/**
 		 * Aucun dialogReturn.
 		 *
 		 * Après une victoire, le scénario passe à magnet = 11.
 		 * Le joueur devra ensuite parler manuellement au Capitaine.
 		 */
-		req.log.info(
-			{
-				category: 'fight',
-				action: 'fight_completed',
-				source: 'dialog',
-				userId: authed.id,
-				dinozId,
-				dialogId,
-				phaseId,
-				teamSize: team.length,
-				won: result.result,
-				requestId: req.id
-			},
-			'Dialog fight completed'
-		);
-		return reply.send(result);
+		return result;
 	}
 	/**
 	 * Traitement générique des autres combats de dialogue.
@@ -240,27 +250,29 @@ export async function processDialogFightUnlocked(
 			await addStatusToDinoz(dinozId, rewardStatusId);
 		}
 	}
-	await incrementUserStat(
-		StatTracking.KILL_M,
-		user.id,
-		fightResult.fighters.filter(f => !f.attacker && f.type === FighterType.MONSTER).length
-	);
-	req.log.info(
+	const monsterKillCount = fightResult.fighters.filter(
+		fighter => !fighter.attacker && fighter.type === FighterType.MONSTER
+	).length;
+
+	await incrementUserStat(StatTracking.KILL_M, user.id, monsterKillCount);
+
+	log?.info(
 		{
 			category: 'fight',
 			action: 'fight_completed',
 			source: 'dialog',
-			userId: authed.id,
+			userId,
 			dinozId,
 			dialogId,
 			phaseId,
 			teamSize: team.length,
 			won: result.result,
-			requestId: req.id
+			requestId
 		},
 		'Dialog fight completed'
 	);
-	return reply.send({
+
+	return {
 		...result,
 		dialogReturn:
 			winner && returnPhaseId
@@ -269,14 +281,34 @@ export async function processDialogFightUnlocked(
 						phaseId: returnPhaseId
 					}
 				: undefined
-	});
+	};
 }
 
+/**
+ * Point d'entrée réutilisable par les bots.
+ *
+ * Le verrou joueur est conservé exactement comme
+ * pour l'appel HTTP.
+ */
+export function processDialogFightForUser(input: ProcessDialogFightCommand): Promise<FightResult> {
+	return withUserGameplayLock(input.userId, () => processDialogFightForUserUnlocked(input));
+}
+
+/**
+ * Handler HTTP.
+ */
 export async function processDialogFight(
 	req: FastifyRequest<{
 		Body: ProcessDialogFightInput;
 	}>,
 	reply: FastifyReply
 ) {
-	return withUserGameplayLock(req.user.id, () => processDialogFightUnlocked(req, reply));
+	const result = await processDialogFightForUser({
+		userId: req.user.id,
+		...req.body,
+		log: req.log,
+		requestId: req.id
+	});
+
+	return reply.send(result);
 }

@@ -4,6 +4,7 @@ import { getMissionDefinitionByKey } from '../../Mission/Controller/mission.regi
 import { startDinozMissionService } from '../../Mission/Controller/startDinozMission.controller.js';
 import { prisma } from '../../prisma.js';
 import { selectDialogLink, startDialog } from '../../Dialog/Service/dialog.service.js';
+import { processDialogFightForUser } from '../../Fight/Service/processDialogFight.service.js';
 
 const MAX_DIALOG_STEPS = 12;
 
@@ -70,7 +71,8 @@ export async function executeBotDialog(
 	userId: string,
 	dinozId: number,
 	dialogId: string,
-	strategy: BotStrategy = BotStrategy.BALANCED
+	strategy: BotStrategy = BotStrategy.BALANCED,
+	preferredLinkIds: string[] = []
 ) {
 	let phase = await startDialog({
 		userId,
@@ -85,6 +87,13 @@ export async function executeBotDialog(
 		}
 
 		if (phase.actions.startFight) {
+			await processDialogFightForUser({
+				userId,
+				dinozId,
+				dialogId,
+				phaseId: phase.phaseId,
+				autoReequip: false
+			});
 			return phase;
 		}
 
@@ -92,7 +101,10 @@ export async function executeBotDialog(
 			return phase;
 		}
 
-		const link = phase.links[Math.floor(Math.random() * phase.links.length)];
+		const preferredLink = preferredLinkIds
+			.map(linkId => phase.links.find(link => link.id === linkId))
+			.find((link): link is NonNullable<typeof link> => Boolean(link));
+		const link = preferredLink ?? phase.links[Math.floor(Math.random() * phase.links.length)];
 		phase = await selectDialogLink({
 			userId,
 			dinozId,
