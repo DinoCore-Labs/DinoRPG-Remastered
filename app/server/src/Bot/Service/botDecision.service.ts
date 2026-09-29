@@ -15,6 +15,7 @@ import { getBotShopPurchase } from './botShop.service.js';
 import { getBotDinozActivityScore } from './botDinozSelector.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
 import { getBotLanternProgressionStep } from './botProgressionPlanner.service.js';
+import { getBotShamanProgressionStep } from './botShamanProgression.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
@@ -126,6 +127,44 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}
 
 	const candidates: { value: BotDecision; weight: number }[] = [];
+
+	for (const dinoz of playerData.dinoz.slice(0, 3)) {
+		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
+
+		const shamanStep = await getBotShamanProgressionStep(userId, dinoz.id);
+		if (!shamanStep) continue;
+
+		if (shamanStep.type === 'move') {
+			const nextHop = await findBotMissionNextHop(
+				userId,
+				dinoz.id,
+				dinoz.placeId,
+				shamanStep.placeId
+			);
+			if (nextHop != null) {
+				candidates.push({
+					value: {
+						dinozId: dinoz.id,
+						action: 'move',
+						targetPlaceId: nextHop
+					},
+					weight: 255
+				});
+			}
+		}
+
+		if (shamanStep.type === 'dialog') {
+			candidates.push({
+				value: {
+					dinozId: dinoz.id,
+					action: 'progression_dialog',
+					dialogId: shamanStep.dialogId,
+					preferredLinkIds: shamanStep.preferredLinkIds
+				},
+				weight: 265
+			});
+		}
+	}
 
 	for (const dinoz of playerData.dinoz.slice(0, 3)) {
 		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
