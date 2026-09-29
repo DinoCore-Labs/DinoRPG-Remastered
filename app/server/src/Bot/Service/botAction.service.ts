@@ -8,9 +8,15 @@ import { processFightForUser } from '../../Fight/Service/fight.service.js';
 import { resolveDinozLevelUp } from '../../Level/Service/learnSkill.service.js';
 import { BotStrategy } from '../../../../prisma/index.js';
 import type { BotDecision } from './botDecision.service.js';
+import { BOT_GATHER_ACTIONS, executeBotGather } from './botGather.service.js';
 import { chooseBotLevelUp } from './botLevelUp.service.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
+	if (decision.action !== 'move' && BOT_GATHER_ACTIONS.has(decision.action)) {
+		await executeBotGather(userId, decision.dinozId, decision.action);
+		return;
+	}
+
 	if (decision.action === 'move') {
 		if (decision.targetPlaceId === undefined) {
 			throw new ExpectedError('missingBotMoveTarget');

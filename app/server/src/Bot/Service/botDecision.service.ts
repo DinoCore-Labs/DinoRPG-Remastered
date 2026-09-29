@@ -4,6 +4,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { BotStrategy, DinozState } from '../../../../prisma/index.js';
 import { getDinozMenuRequest } from '../../Dinoz/Controller/getDinozMenu.controller.js';
 import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/getDinozActions.service.js';
+import { BOT_GATHER_ACTIONS } from './botGather.service.js';
 import { getBotMoveTargets } from './botMovement.service.js';
 
 export type BotDecision = {
@@ -12,7 +13,15 @@ export type BotDecision = {
 	targetPlaceId?: number;
 };
 
-const SUPPORTED_ACTIONS = new Set<Action>([Action.REST, Action.FIGHT, Action.ACTION, Action.IRMA, Action.IRMAS, Action.LEVEL_UP]);
+const SUPPORTED_ACTIONS = new Set<Action>([
+	Action.REST,
+	Action.FIGHT,
+	Action.ACTION,
+	Action.IRMA,
+	Action.IRMAS,
+	Action.LEVEL_UP,
+	...BOT_GATHER_ACTIONS
+]);
 
 const ACTION_WEIGHTS: Record<BotStrategy, Partial<Record<Action, number>>> = {
 	[BotStrategy.BALANCED]: {
@@ -98,6 +107,13 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		[BotStrategy.EXPLORER]: 80
 	};
 
+	const gatherWeight: Record<BotStrategy, number> = {
+		[BotStrategy.BALANCED]: 35,
+		[BotStrategy.FIGHTER]: 10,
+		[BotStrategy.GATHERER]: 100,
+		[BotStrategy.EXPLORER]: 25
+	};
+
 	for (const dinoz of playerData.dinoz) {
 		const actions = await getAvailableActions(
 			dinoz,
@@ -126,7 +142,9 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					dinozId: dinoz.id,
 					action: actionName
 				},
-				weight: ACTION_WEIGHTS[strategy][actionName] ?? 1
+				weight: BOT_GATHER_ACTIONS.has(actionName)
+					? gatherWeight[strategy]
+					: ACTION_WEIGHTS[strategy][actionName] ?? 1
 			});
 		}
 	}
