@@ -16,6 +16,7 @@ import { getBotDinozActivityScore } from './botDinozSelector.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
 import { getBotLanternProgressionStep } from './botProgressionPlanner.service.js';
 import { getBotShamanProgressionStep } from './botShamanProgression.service.js';
+import { shouldBotDigOldStone } from './botProgressionOpportunity.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
@@ -231,6 +232,16 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	};
 
 	for (const dinoz of playerData.dinoz) {
+		if (await shouldBotDigOldStone(userId, dinoz.id)) {
+			candidates.push({
+				value: {
+					dinozId: dinoz.id,
+					action: 'progression_dig'
+				},
+				weight: 320
+			});
+		}
+
 		const actions = await getAvailableActions(
 			dinoz,
 			playerData,
