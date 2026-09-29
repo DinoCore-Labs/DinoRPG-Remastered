@@ -27,9 +27,18 @@ import type { MoveDinozInput } from '../Schema/dinoz.schema.js';
 
 type Req = FastifyRequest<{ Body: MoveDinozInput }>;
 
-export async function moveDinozUnlocked(req: Req, _reply: FastifyReply) {
-	const { dinozId, placeId, autoReequip } = req.body;
-	const authedId = req.user.id;
+type MoveDinozCommand = MoveDinozInput & {
+	userId: string;
+	log?: { error: Function };
+};
+
+export async function moveDinozForUserUnlocked({
+	userId: authedId,
+	dinozId,
+	placeId,
+	autoReequip,
+	log
+}: MoveDinozCommand) {
 	const dayOfWeek = new Date().getDay();
 	const user = await getDinozFightDataRequest(dinozId, authedId);
 	if (!user) throw new ExpectedError('userNotFound', { params: { authedId } });
@@ -246,7 +255,7 @@ export async function moveDinozUnlocked(req: Req, _reply: FastifyReply) {
 					monsters: encounteredMonsters
 				}
 			},
-			req.log
+			log
 		);
 	}
 	// Consume fight action
@@ -294,11 +303,25 @@ export async function moveDinozUnlocked(req: Req, _reply: FastifyReply) {
 				fightTriggered: Boolean(fight?.result)
 			}
 		},
-		req.log
+		log
 	);
 	return fight;
 }
 
-export async function moveDinozHandler(req: Req, reply: FastifyReply) {
-	return withUserGameplayLock(req.user.id, () => moveDinozUnlocked(req, reply));
+export async function moveDinozForUser(
+	userId: string,
+	input: MoveDinozInput,
+	log?: { error: Function }
+) {
+	return withUserGameplayLock(userId, () =>
+		moveDinozForUserUnlocked({
+			...input,
+			userId,
+			log
+		})
+	);
+}
+
+export async function moveDinozHandler(req: Req, _reply: FastifyReply) {
+	return moveDinozForUser(req.user.id, req.body, req.log);
 }
