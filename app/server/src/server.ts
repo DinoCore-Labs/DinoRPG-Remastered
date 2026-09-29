@@ -24,6 +24,7 @@ import {
 import { Role } from '../../prisma/index.js';
 import { adminRoutes } from './Admin/Routes/admin.routes.js';
 import { bankRoutes } from './Bank/Routes/bank.routes.js';
+import { botRoutes } from './Bot/Routes/bot.routes.js';
 import { clanRoutes } from './Clan/Routes/clan.routes.js';
 import { loadConfig } from './config/config.js';
 import { healthcheckResponseSchema } from './config/healthcheck.schema.js';
@@ -46,6 +47,7 @@ import { expireDueMarketOffersJob } from './jobs/handlers/expireMarketOffers.js'
 import { gameLogMaintenanceJob } from './jobs/handlers/gameLogMaintenance.js';
 import { healFountainPearlDinozJob } from './jobs/handlers/healFountainPearlDinoz.js';
 import { itinerantMerchantMoveJob } from './jobs/handlers/itinerantMerchantMove.js';
+import { playerBotsJob } from './jobs/handlers/playerBots.js';
 import { refreshBankExchangeRateJob } from './jobs/handlers/refreshBankExchangeRate.js';
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
 import { resetDojoChallenge } from './jobs/handlers/resetDojoChallenge.js';
@@ -404,6 +406,7 @@ async function buildServer(options: BuildServerOptions = {}) {
 	server.register(roadmapRoutes, { prefix: 'api/roadmap' });
 	server.register(dialogRoutes, { prefix: 'api/dialog' });
 	server.register(adminRoutes, { prefix: 'api/admin' });
+	server.register(botRoutes, { prefix: 'api/admin/bots' });
 	server.register(missionsRoutes, { prefix: 'api/missions' });
 	server.register(messagingRoutes, { prefix: 'api/messaging' });
 	server.register(reportRoutes, { prefix: 'api/reports' });
@@ -443,6 +446,9 @@ async function buildServer(options: BuildServerOptions = {}) {
 				[BANK_EXCHANGE_RATE_JOB_KEY]: () => refreshBankExchangeRateJob(server.log),
 				'reset-dojo-challenge': () => resetDojoChallenge(),
 				'check-event-news': () => checkEventNews(),
+				'player-bots': async () => {
+					await playerBotsJob(server.log);
+				},
 				...TournamentManager.HANDLERS,
 				...MonsterHuntManager.HANDLERS
 			},

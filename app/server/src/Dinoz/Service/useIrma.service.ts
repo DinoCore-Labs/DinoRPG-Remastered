@@ -15,13 +15,11 @@ type UseIrmaParams = {
 	id: string;
 };
 
-export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, reply: FastifyReply) {
-	const dinozId = Number(req.params.id);
+export async function restoreDinozAction(userId: string, dinozId: number) {
 	if (!Number.isFinite(dinozId)) {
 		throw new ExpectedError('invalidId', { statusCode: 400 });
 	}
-	const userId = req.user.id;
-	// Check ownership
+
 	const isOwner = await ownsDinoz(userId, dinozId);
 	if (!isOwner) {
 		throw new ExpectedError('dinozDoesNotBelongToUser', {
@@ -31,6 +29,7 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 			}
 		});
 	}
+
 	const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },
 		select: {
@@ -47,6 +46,7 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 			}
 		}
 	});
+
 	if (!dinoz || !dinoz.user) {
 		throw new ExpectedError('dinozNotFound', {
 			statusCode: 404,
@@ -55,38 +55,47 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 			}
 		});
 	}
+
 	const team = [dinoz, ...(dinoz.followers ?? [])];
 	for (const teamDinoz of team) {
 		await assertDinozNotConcentrating(teamDinoz.id);
 	}
+
 	const irmaItemId = itemList[Item.POTION_IRMA].itemId;
 	const irmaQuantity = dinoz.user.items?.find(i => i.itemId === irmaItemId);
-	// On consomme une Irma seulement quand remaining === 0 ET (fight=false OU gather=false)
 	const neededIrma = team.filter(d => d.remaining === 0 && (!d.fight || !d.gather)).length;
+
 	if (neededIrma > 0 && (!irmaQuantity || irmaQuantity.quantity < neededIrma)) {
 		throw new ExpectedError('notEnoughIrma', { statusCode: 400 });
 	}
-	// Réactive fight/gather. Si remaining > 0, on décrémente.
-	for (const dino of team.filter(d => !d.fight || !d.gather)) {
-		if (dino.remaining > 0) {
-			await updateDinoz(dino.id, {
+
+	for (const teamDinoz of team.filter(d => !d.fight || !d.gather)) {
+		if (teamDinoz.remaining > 0) {
+			await updateDinoz(teamDinoz.id, {
 				fight: true,
 				gather: true,
 				remaining: { decrement: 1 }
 			});
 		} else {
-			await updateDinoz(dino.id, {
+			await updateDinoz(teamDinoz.id, {
 				fight: true,
 				gather: true
 			});
 		}
 	}
+
 	if (neededIrma > 0) {
 		await removeItem(dinoz.user.id, irmaItemId, neededIrma);
 		await incrementUserStat(StatTracking.ITEM_USED, dinoz.user.id, neededIrma);
 	}
-	return reply.send({
+
+	return {
 		category: ItemEffect.ACTION,
 		value: neededIrma
-	});
+	};
+}
+
+export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, reply: FastifyReply) {
+	const result = await restoreDinozAction(req.user.id, Number(req.params.id));
+	return reply.send(result);
 }

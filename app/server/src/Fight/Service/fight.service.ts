@@ -77,18 +77,39 @@ import { movementListener } from './movementListener.service.js';
  * @param req
  * @return FightResult
  */
-export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput }>, reply: FastifyReply) {
-	const dinozId = req.body.dinozId;
-	const autoReequip = req.body.autoReequip ?? false;
+export async function processFightForUser(
+	userId: string,
+	dinozId: number,
+	options: {
+		autoReequip?: boolean;
+		log?: {
+			error: Function;
+			info?: Function;
+		};
+		requestId?: string;
+	} = {}
+) {
+	const autoReequip = options.autoReequip ?? false;
 	const dayOfWeek = new Date().getDay();
-	const authed = req.user;
-	// Get Dinoz info
-	const user = await getDinozFightDataRequest(dinozId, authed.id);
-	if (!user) throw new ExpectedError('userNotFound', { params: { id: authed.id } });
+
+	const user = await getDinozFightDataRequest(dinozId, userId);
+
+	if (!user) {
+		throw new ExpectedError('userNotFound', {
+			params: { id: userId }
+		});
+	}
+
 	const dinozData = user.dinoz.find(d => d.id === dinozId);
-	if (!dinozData) throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
+
+	if (!dinozData) {
+		throw new ExpectedError('dinozNotFound', {
+			params: { id: dinozId }
+		});
+	}
+
 	await assertDinozNotConcentrating(dinozId);
-	// Marais Collant - No fight days
+
 	if (
 		gameConfig.world.disableSwampFightRules &&
 		SWAMP_FOG_DAYS.includes(dayOfWeek) &&
@@ -96,49 +117,66 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 	) {
 		throw new ExpectedError('noFight');
 	}
+
 	if (dinozData.canRename) {
 		throw new ExpectedError(`Dinoz has to be named.`);
 	}
+
 	if (dinozData.state !== null) {
 		throw new ExpectedError(`Dinoz is not able to fight.`);
 	}
+
 	let team = orderFightTeamByActiveDinoz(user.dinoz, dinozId);
-	// Go through followers and make those that are unavailable leave the group.
+
 	const unavailableFollowers = team.filter(d => d.life <= 0 || d.state !== null);
+
 	if (unavailableFollowers.length > 0) {
 		for (const d of unavailableFollowers) {
-			await updateDinoz(d.id, { leader: { disconnect: true } });
+			await updateDinoz(d.id, {
+				leader: {
+					disconnect: true
+				}
+			});
 		}
+
 		team = orderFightTeamByActiveDinoz(
 			team.filter(d => d.life > 0 && d.state === null),
 			dinozId
 		);
 	}
+
 	if (team.some(d => !d.fight)) {
 		throw new ExpectedError(`missingIrma`);
 	}
+
 	if (!isAlive(dinozData)) {
 		throw new ExpectedError(`dead`);
 	}
-	// Look for a special action that happens on the fight.
-	let fight = await movementListener(user, team, dinozData.placeId, dinozId, { autoReequip });
-	// If no fight happened, trigger a regular fight.
+
+	let fight = await movementListener(user, team, dinozData.placeId, dinozId, {
+		autoReequip
+	});
+
 	if (!fight) {
-		fight = await fightMonstersAtPlace(team, dinozData.placeId, user, { autoReequip });
+		fight = await fightMonstersAtPlace(team, dinozData.placeId, user, {
+			autoReequip
+		});
 	}
-	// Consume fight action
+
 	for (const dino of team) {
 		await updateDinoz(dino.id, {
 			fight: false
 		});
 	}
-	// Update player stats
+
 	const monsterKillCount =
 		fight.monsterKillCount ??
 		fight.fighters.filter(fighter => fighter.type === FighterType.MONSTER || fighter.type === FighterType.BOSS).length;
+
 	if (fight.result) {
 		await incrementUserStat(StatTracking.KILL_M, user.id, monsterKillCount);
 	}
+
 	safeCreateGameLog(
 		{
 			type: fight.result ? GameLogType.FightWon : GameLogType.FightLost,
@@ -151,9 +189,10 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 				monsterCount: monsterKillCount
 			}
 		},
-		req.log
+		options.log
 	);
-	req.log.info(
+
+	options.log?.info?.(
 		{
 			category: 'fight',
 			action: 'fight_completed',
@@ -164,10 +203,21 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 			teamSize: team.length,
 			won: fight.result,
 			monsterCount: monsterKillCount,
-			requestId: req.id
+			requestId: options.requestId
 		},
 		'Fight completed'
 	);
+
+	return fight;
+}
+
+export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput }>, reply: FastifyReply) {
+	const fight = await processFightForUser(req.user.id, req.body.dinozId, {
+		autoReequip: req.body.autoReequip ?? false,
+		log: req.log,
+		requestId: req.id
+	});
+
 	return reply.send(fight);
 }
 

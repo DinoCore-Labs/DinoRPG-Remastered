@@ -10,44 +10,58 @@ export const regexName = /^(?=.{1,32}$)[A-Za-zÀ-ÿ0-9'-]+( [A-Za-zÀ-ÿ0-9'-]+)
 type Params = { id: string };
 type Body = { name: string };
 
-export async function setDinozName(req: FastifyRequest<{ Params: Params; Body: Body }>, reply: FastifyReply) {
-	const dinozId = Number(req.params.id);
+type RenameDinozInput = {
+	userId: string;
+	dinozId: number;
+	name: string;
+};
+
+export async function renameDinoz({ userId, dinozId, name }: RenameDinozInput) {
 	if (!Number.isFinite(dinozId)) {
 		throw new ExpectedError('invalidId');
 	}
-	// newName (trim important pour éviter " Dino" / "Dino ")
-	const name = (req.body?.name ?? '').trim();
-	const authedUserId = req.user.id;
+
+	const trimmedName = name.trim();
 	const dinoz = await canDinozRename(dinozId);
 	if (!dinoz) {
 		throw new ExpectedError('dinozNotFound', { params: { dinozId } });
 	}
-	// Check ownership
-	if (!dinoz.user || dinoz.user.id !== authedUserId) {
+
+	if (!dinoz.user || dinoz.user.id !== userId) {
 		throw new ExpectedError('dinozDoesNotBelongToUser', {
 			params: {
 				dinozId: dinoz.id,
-				userId: authedUserId
+				userId
 			}
 		});
 	}
-	// Check rename rights
+
 	if (!dinoz.canRename) {
 		throw new ExpectedError(`Can't update dinoz name`);
 	}
-	// Check regex
-	if (!regexName.test(name)) {
+
+	if (!regexName.test(trimmedName)) {
 		throw new ExpectedError('OnlyLettersAndNumbers');
 	}
-	await updateDinoz(+req.params.id, {
-		name: req.body.name,
+
+	await updateDinoz(dinozId, {
+		name: trimmedName,
 		canRename: false
 	});
-	// Tutorial
+
 	await handleTutorialEvent({
-		userId: authedUserId,
+		userId,
 		dinozId,
 		event: 'DINOZ_ADOPTED'
+	});
+}
+
+export async function setDinozName(req: FastifyRequest<{ Params: Params; Body: Body }>, reply: FastifyReply) {
+	const dinozId = Number(req.params.id);
+	await renameDinoz({
+		userId: req.user.id,
+		dinozId,
+		name: req.body?.name ?? ''
 	});
 	return reply.send({ ok: true });
 }
