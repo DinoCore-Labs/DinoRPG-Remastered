@@ -719,17 +719,42 @@ model SignupIpMonthCounter {
   @@index([expiresAt])
 }
 
+model BotProfile {
+  id String @id @default(uuid()) @db.Uuid
+
+  userId String @unique @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  enabled  Boolean     @default(true)
+  strategy BotStrategy @default(BALANCED)
+
+  minDelaySeconds Int @default(60)
+  maxDelaySeconds Int @default(600)
+
+  lastActionAt DateTime? @db.Timestamptz(3)
+  nextActionAt DateTime? @db.Timestamptz(3)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([enabled, nextActionAt])
+  @@map("bot_profile")
+}
+
 model User {
   id          String    @id @default(uuid()) @db.Uuid
   name        String    @unique
   password    String
   role        Role      @default(PLAYER)
+  isBot       Boolean   @default(false)
   createdDate DateTime  @default(now()) @db.Timestamptz(3)
   updatedAt   DateTime? @updatedAt @db.Timestamptz(3)
   lastLogin   DateTime  @default(now()) @db.Timestamptz(3)
 
   gameRulesAcceptedVersion String?
   gameRulesAcceptedAt      DateTime?
+
+  botProfile BotProfile?
 
   clanId          Int?
   clan            Clan?            @relation(fields: [clanId], references: [id], onDelete: SetNull)
@@ -931,6 +956,13 @@ model UserWallet {
   user   User      @relation(fields: [userId], references: [id])
 
   @@unique([userId, type])
+}
+
+enum BotStrategy {
+  BALANCED
+  FIGHTER
+  GATHERER
+  EXPLORER
 }
 
 enum ConversationType {
