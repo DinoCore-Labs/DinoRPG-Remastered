@@ -79,7 +79,7 @@ export async function chooseBotLevelUp(
 		throw new ExpectedError('dinozNotFound', { params: { id: dinozId } });
 	}
 
-	const race = raceList[dinoz.raceId];
+	const race = Object.values(raceList).find(entry => entry.raceId === dinoz.raceId);
 	if (!race) {
 		throw new ExpectedError('dinozRaceNotFound', { params: { raceId: dinoz.raceId } });
 	}
