@@ -6648,5 +6648,15 @@
 				"content": "Félicitations pour votre participation à l'événement de Noël ! En guise de remerciement pour vos exploits face aux Piglous, vous avez reçu vos récompenses directement dans votre inventaire.\n\n{items}\n\nMerci de votre participation, le Père Joël."
 			}
 		}
+	},
+	"events": {
+		"announcePopup": {
+			"text1": "Brrr... ",
+			"text2": "Le vent se lève, ",
+			"text3": "les neiges éternelles descendent de la montagne et de petites boules de poils blanches font leur apparition dans certaines ruelles... ",
+			"text4": "Ça y est !",
+			"title": "Les Piglous sont de retour dans Dinoville !",
+			"viewEvent": "Voir l'Event"
+		}
 	}
 }
