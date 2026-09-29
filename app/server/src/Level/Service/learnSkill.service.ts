@@ -80,7 +80,7 @@ export async function learnSkill(req: LearnSkillReq, _reply: FastifyReply): Prom
 		throw new ExpectedError(`Dinoz race ${dinozRaceId} doesn't exist.`, { statusCode: 500 });
 	}
 	// --- compute learnables/unlockables for this tryNumber ---
-	const skills = getDinozLearnableSkills(req, dinozSkills, dinozRace, dinozId, tryNumber);
+	const skills = getDinozLearnableSkills(dinozSkills, dinozRace, dinozId, tryNumber);
 	const isLearnableSkills =
 		skillIdList.length === 1 && skillIdList.every(skillId => skills.learnableSkills.some(s => s.skillId === skillId));
 	const isUnlockableSkills =
