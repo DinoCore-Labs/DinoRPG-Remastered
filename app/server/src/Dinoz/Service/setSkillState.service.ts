@@ -8,25 +8,19 @@ import { canChangeSkillState, knowSkillId } from '../../utils/dinoz/dinozFiche.m
 type Params = { id: string };
 type Body = { skillId: string | number; skillState: boolean };
 
-/**
- * @summary Activate or desactivate a skill from a dinoz
- * @param req.params.id {string} DinozId
- * @param req.body.skillId {string} SkillId
- * @param req.body.skillState {boolean} State of the skill
- * @return boolean
- */
-export async function setSkillStateHandler(req: FastifyRequest<{ Params: Params; Body: Body }>, reply: FastifyReply) {
-	const authed = req.user;
-	const dinozId = Number.parseInt(req.params.id, 10);
-	const skillToUpdate = typeof req.body.skillId === 'string' ? Number.parseInt(req.body.skillId, 10) : req.body.skillId;
-	const skillStateToUpdate = !!req.body.skillState;
+export async function setDinozSkillStateForUser(
+	userId: string,
+	dinozId: number,
+	skillId: number,
+	skillState: boolean
+) {
 	if (!Number.isFinite(dinozId)) {
 		throw new ExpectedError('invalidId');
 	}
-	if (!Number.isFinite(skillToUpdate)) {
+	if (!Number.isFinite(skillId)) {
 		throw new ExpectedError('invalidSkillId');
 	}
-	// 1) Fetch minimal dinoz state (ownership + skills known + status)
+
 	const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },
 		select: {
@@ -39,31 +33,47 @@ export async function setSkillStateHandler(req: FastifyRequest<{ Params: Params;
 	if (!dinoz) {
 		throw new ExpectedError('dinozNotFound', { params: { dinozId } });
 	}
-	// 2) Skill exists + activatable
-	const skill = Object.values(skillList).find(s => s.id === skillToUpdate);
-	if (!skill) throw new ExpectedError(`Skill ${skillToUpdate} doesn't know exist`);
-	if (!skill.activatable) throw new ExpectedError(`Skill ${skillToUpdate} cannot be activated`);
-	// 3) Ownership
-	if (!dinoz.user || dinoz.user.id !== authed.id) {
+
+	const skill = Object.values(skillList).find(entry => entry.id === skillId);
+	if (!skill) throw new ExpectedError(`Skill ${skillId} doesn't know exist`);
+	if (!skill.activatable) throw new ExpectedError(`Skill ${skillId} cannot be activated`);
+
+	if (!dinoz.user || dinoz.user.id !== userId) {
 		throw new ExpectedError('dinozDoesNotBelongToUser', {
 			params: {
 				dinozId: dinoz.id,
-				userId: authed.id
+				userId
 			}
 		});
 	}
-	// 4) Status allows changing skill state
+
 	if (!canChangeSkillState(dinoz)) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't have the right status`);
 	}
-	// 5) Dinoz knows the skill
-	if (!knowSkillId(dinoz, skillToUpdate)) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't know skill : ${skillToUpdate}`);
+
+	if (!knowSkillId(dinoz, skillId)) {
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't know skill : ${skillId}`);
 	}
-	// 6) Update state
+
 	await prisma.dinozSkills.update({
-		where: { skillId_dinozId: { dinozId, skillId: skillToUpdate } },
-		data: { state: skillStateToUpdate }
+		where: { skillId_dinozId: { dinozId, skillId } },
+		data: { state: skillState }
 	});
-	return !skillStateToUpdate;
+
+	return !skillState;
+}
+
+/**
+ * @summary Activate or desactivate a skill from a dinoz
+ * @param req.params.id {string} DinozId
+ * @param req.body.skillId {string} SkillId
+ * @param req.body.skillState {boolean} State of the skill
+ * @return boolean
+ */
+export async function setSkillStateHandler(req: FastifyRequest<{ Params: Params; Body: Body }>, reply: FastifyReply) {
+	const dinozId = Number.parseInt(req.params.id, 10);
+	const skillId = typeof req.body.skillId === 'string' ? Number.parseInt(req.body.skillId, 10) : req.body.skillId;
+	const skillState = !!req.body.skillState;
+	const result = await setDinozSkillStateForUser(req.user.id, dinozId, skillId, skillState);
+	return reply.send(result);
 }

@@ -5,6 +5,7 @@ import { startDinozMissionService } from '../../Mission/Controller/startDinozMis
 import { prisma } from '../../prisma.js';
 import { selectDialogLink, startDialog } from '../../Dialog/Service/dialog.service.js';
 import { processDialogFightForUser } from '../../Fight/Service/processDialogFight.service.js';
+import { prepareBotSkillsForCombat } from './botSkillStrategy.service.js';
 
 const MAX_DIALOG_STEPS = 12;
 
@@ -87,6 +88,7 @@ export async function executeBotDialog(
 		}
 
 		if (phase.actions.startFight) {
+			await prepareBotSkillsForCombat(userId, dinozId, strategy);
 			await processDialogFightForUser({
 				userId,
 				dinozId,
