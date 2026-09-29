@@ -18,11 +18,12 @@ import { getBotLanternProgressionStep } from './botProgressionPlanner.service.js
 import { getBotShamanProgressionStep } from './botShamanProgression.service.js';
 import { shouldBotDigOldStone } from './botProgressionOpportunity.service.js';
 import { getBotForcebrutUnlockStep } from './botForcebrutProgression.service.js';
+import { canBotFightForcebrut } from './botForcebrut.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'progression_dialog' | 'progression_dig' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'forcebrut' | 'progression_dialog' | 'progression_dig' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	shopId?: number;
 	dialogId?: string;
 	preferredLinkIds?: string[];
@@ -265,6 +266,16 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	};
 
 	for (const dinoz of playerData.dinoz) {
+		if (await canBotFightForcebrut(userId, dinoz.id)) {
+			candidates.push({
+				value: {
+					dinozId: dinoz.id,
+					action: 'forcebrut'
+				},
+				weight: strategy === BotStrategy.FIGHTER ? 210 : 130
+			});
+		}
+
 		if (await shouldBotDigOldStone(userId, dinoz.id)) {
 			candidates.push({
 				value: {
