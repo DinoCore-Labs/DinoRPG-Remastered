@@ -19,16 +19,15 @@ type GetGatherGridParams = {
 	type: string;
 };
 
-export async function getGatherGridHandler(
-	req: FastifyRequest<{ Params: GetGatherGridParams }>,
-	_reply: FastifyReply
+export async function getGatherGrid(
+	userId: string,
+	dinozId: number,
+	requestedType: string
 ): Promise<GatherPublicGrid> {
-	const authed = req.user;
-	const dinozId = Number(req.params.id);
 
-	const user = await getDinozGatherData(dinozId, authed.id);
+	const user = await getDinozGatherData(dinozId, userId);
 	if (!user) {
-		throw new ExpectedError('userNotFound', { params: { userId: authed.id } });
+		throw new ExpectedError('userNotFound', { params: { userId: userId } });
 	}
 
 	const dinozData = user.dinoz.find(d => d.id === dinozId);
@@ -38,7 +37,7 @@ export async function getGatherGridHandler(
 
 	const place = actualPlace(dinozData);
 	const availableGatherTypes = place.gathers ?? [];
-	const requestedGatherAction = req.params.type.toString().toLowerCase();
+	const requestedGatherAction = requestedType.toString().toLowerCase();
 
 	const gather = availableGatherTypes
 		.map(type => getCompiledGather(type))
@@ -56,20 +55,20 @@ export async function getGatherGridHandler(
 		throw new ExpectedError(`Dinoz don't have the required conditions to gather at this place`);
 	}
 
-	const userGrid = await getCommonGatherInfo(authed.id);
+	const userGrid = await getCommonGatherInfo(userId);
 
 	let myGrid = userGrid.find(grid => grid.place === place.placeId && grid.type === gather.type) ?? null;
 
 	if (!myGrid) {
-		myGrid = await createGrid(initializeGatherGrid(authed.id, place.placeId, gather, conditionContext));
+		myGrid = await createGrid(initializeGatherGrid(userId, place.placeId, gather, conditionContext));
 	}
 
 	if (myGrid.grid.every(box => box === -1)) {
 		myGrid = await updateGrid(
-			authed.id,
+			userId,
 			dinozId,
 			myGrid.id,
-			initializeGatherGrid(authed.id, place.placeId, gather, conditionContext)
+			initializeGatherGrid(userId, place.placeId, gather, conditionContext)
 		);
 	}
 
@@ -86,4 +85,11 @@ export async function getGatherGridHandler(
 		gatherTurn: getNumberOfGatheringTries(dinozData, gather),
 		gatherType: gather.apparence.toLowerCase()
 	};
+}
+
+export async function getGatherGridHandler(
+	req: FastifyRequest<{ Params: GetGatherGridParams }>,
+	_reply: FastifyReply
+): Promise<GatherPublicGrid> {
+	return getGatherGrid(req.user.id, Number(req.params.id), req.params.type);
 }

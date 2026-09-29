@@ -69,15 +69,24 @@ const sanitizeBoxesToOpen = (boxes: number[][], grid: number[], size: number): [
 	return sanitizedBoxes;
 };
 
-export async function gatherWithDinozHandler(
-	req: FastifyRequest<{ Params: GatherWithDinozParams; Body: GatherWithDinozBody }>,
-	_reply: FastifyReply
-) {
-	const authed = req.user;
-	const dinozId = Number(req.params.id);
-	const user = await getDinozGatherData(dinozId, authed.id);
+type GatherWithDinozCommand = {
+	userId: string;
+	dinozId: number;
+	type: string;
+	box: number[][];
+	log?: { error: Function };
+};
+
+export async function gatherWithDinoz({
+	userId,
+	dinozId,
+	type,
+	box,
+	log
+}: GatherWithDinozCommand) {
+	const user = await getDinozGatherData(dinozId, userId);
 	if (!user) {
-		throw new ExpectedError('userNotFound', { params: { userId: authed.id } });
+		throw new ExpectedError('userNotFound', { params: { userId: userId } });
 	}
 	const dinozData = user.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
@@ -85,7 +94,7 @@ export async function gatherWithDinozHandler(
 	}
 	const place = actualPlace(dinozData);
 	const availableGatherTypes = place.gathers ?? [];
-	const requestedGatherAction = req.body.type.toString().toLowerCase();
+	const requestedGatherAction = type.toString().toLowerCase();
 	const gather = availableGatherTypes
 		.map(type => getCompiledGather(type))
 		.find(entry => {
@@ -95,7 +104,7 @@ export async function gatherWithDinozHandler(
 	if (!gather) {
 		throw new ExpectedError(`This type of grid doesn't exist`);
 	}
-	const userGrid = await getCommonGatherInfo(authed.id);
+	const userGrid = await getCommonGatherInfo(userId);
 	const myGrid = userGrid.find(grid => grid.place === place.placeId && grid.type === gather.type);
 	if (!myGrid) {
 		throw new ExpectedError(`You don't have generated any grid.`);
@@ -117,7 +126,7 @@ export async function gatherWithDinozHandler(
 		await incrementUserStat(StatTracking.ITEM_USED, user.id, 1);
 	}
 	const size = getGridSize(myGrid);
-	const boxToOpen = sanitizeBoxesToOpen(req.body.box, myGrid.grid, size);
+	const boxToOpen = sanitizeBoxesToOpen(box, myGrid.grid, size);
 	if (boxToOpen.length > getNumberOfGatheringTries(dinozData, gather)) {
 		throw new ExpectedError(`You have selected too many square`);
 	}
@@ -236,7 +245,7 @@ export async function gatherWithDinozHandler(
 						reward: GRID_FINISHED_GOLD_REWARD
 					}
 				},
-				req.log
+				log
 			);
 		}
 	}
@@ -255,7 +264,7 @@ export async function gatherWithDinozHandler(
 			break;
 	}
 	// Explicit stats mapping
-	if (String(gather.action).toLowerCase() === String(req.body.type).toLowerCase()) {
+	if (String(gather.action).toLowerCase() === String(type).toLowerCase()) {
 		switch (String(gather.action).toLowerCase()) {
 			case 'cueille':
 				await incrementUserStat(StatTracking.CUEILLE, user.id, 1);
@@ -280,4 +289,17 @@ export async function gatherWithDinozHandler(
 		}
 	}
 	return returnGrid;
+}
+
+export async function gatherWithDinozHandler(
+	req: FastifyRequest<{ Params: GatherWithDinozParams; Body: GatherWithDinozBody }>,
+	_reply: FastifyReply
+) {
+	return gatherWithDinoz({
+		userId: req.user.id,
+		dinozId: Number(req.params.id),
+		type: req.body.type,
+		box: req.body.box,
+		log: req.log
+	});
 }
