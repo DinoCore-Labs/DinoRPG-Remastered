@@ -60,5 +60,5 @@ export async function getLearnableAndUnlockableSkills(
 		throw new ExpectedError(`Dinoz race ${dinozSkills.raceId} doesn't exist.`, { statusCode: 500 });
 	}
 
-	return getDinozLearnableSkills(req, dinozSkills, dinozRace, dinozId, tryNumber /*event*/);
+	return getDinozLearnableSkills(dinozSkills, dinozRace, dinozId, tryNumber /*event*/);
 }

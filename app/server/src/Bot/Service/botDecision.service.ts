@@ -10,10 +10,11 @@ export type BotDecision = {
 	action: Action;
 };
 
-const SUPPORTED_ACTIONS = new Set<Action>([Action.REST, Action.FIGHT, Action.ACTION, Action.IRMA, Action.IRMAS]);
+const SUPPORTED_ACTIONS = new Set<Action>([Action.REST, Action.FIGHT, Action.ACTION, Action.IRMA, Action.IRMAS, Action.LEVEL_UP]);
 
 const ACTION_WEIGHTS: Record<BotStrategy, Partial<Record<Action, number>>> = {
 	[BotStrategy.BALANCED]: {
+		[Action.LEVEL_UP]: 120,
 		[Action.IRMA]: 70,
 		[Action.IRMAS]: 70,
 		[Action.ACTION]: 80,
@@ -21,6 +22,7 @@ const ACTION_WEIGHTS: Record<BotStrategy, Partial<Record<Action, number>>> = {
 		[Action.REST]: 100
 	},
 	[BotStrategy.FIGHTER]: {
+		[Action.LEVEL_UP]: 120,
 		[Action.IRMA]: 70,
 		[Action.IRMAS]: 70,
 		[Action.ACTION]: 80,
@@ -28,6 +30,7 @@ const ACTION_WEIGHTS: Record<BotStrategy, Partial<Record<Action, number>>> = {
 		[Action.REST]: 100
 	},
 	[BotStrategy.GATHERER]: {
+		[Action.LEVEL_UP]: 120,
 		[Action.IRMA]: 70,
 		[Action.IRMAS]: 70,
 		[Action.ACTION]: 80,
@@ -35,6 +38,7 @@ const ACTION_WEIGHTS: Record<BotStrategy, Partial<Record<Action, number>>> = {
 		[Action.REST]: 100
 	},
 	[BotStrategy.EXPLORER]: {
+		[Action.LEVEL_UP]: 120,
 		[Action.IRMA]: 70,
 		[Action.IRMAS]: 70,
 		[Action.ACTION]: 80,
@@ -109,6 +113,11 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				weight: ACTION_WEIGHTS[strategy][actionName] ?? 1
 			});
 		}
+	}
+
+	const levelUpDecision = candidates.find(candidate => candidate.value.action === Action.LEVEL_UP);
+	if (levelUpDecision) {
+		return levelUpDecision.value;
 	}
 
 	const restDecision = candidates.find(candidate => candidate.value.action === Action.REST);

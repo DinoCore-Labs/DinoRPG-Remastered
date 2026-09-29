@@ -4,10 +4,24 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { restDinoz } from '../../Dinoz/Service/restDinoz.service.js';
 import { restoreDinozAction } from '../../Dinoz/Service/useIrma.service.js';
 import { processFightForUser } from '../../Fight/Service/fight.service.js';
+import { resolveDinozLevelUp } from '../../Level/Service/learnSkill.service.js';
+import { BotStrategy } from '../../../../prisma/index.js';
 import type { BotDecision } from './botDecision.service.js';
+import { chooseBotLevelUp } from './botLevelUp.service.js';
 
-export async function executeBotDecision(userId: string, decision: BotDecision) {
+export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
 	switch (decision.action) {
+		case Action.LEVEL_UP: {
+			const choice = await chooseBotLevelUp(decision.dinozId, strategy);
+			await resolveDinozLevelUp({
+				userId,
+				dinozId: decision.dinozId,
+				skillIdList: choice.skillIdList,
+				tryNumber: choice.tryNumber
+			});
+			return;
+		}
+
 		case Action.REST:
 			await restDinoz(userId, decision.dinozId);
 			return;
