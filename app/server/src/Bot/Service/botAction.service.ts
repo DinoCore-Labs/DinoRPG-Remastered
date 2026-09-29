@@ -15,6 +15,14 @@ import { executeBotDialog } from './botDialog.service.js';
 import { executeBotMissionInteraction, executeBotMissionWait } from './botMissionAction.service.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
+	if (decision.action === 'dialog') {
+		if (!decision.dialogId) {
+			throw new ExpectedError('missingBotDialogId');
+		}
+		await executeBotDialog(userId, decision.dinozId, decision.dialogId);
+		return;
+	}
+
 	if (decision.action === 'mission_dialog') {
 		if (!decision.dialogId) {
 			throw new ExpectedError('missingBotDialogId');
