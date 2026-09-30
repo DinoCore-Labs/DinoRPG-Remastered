@@ -30,13 +30,6 @@ describe('bot level up', () => {
 			nextUpElementId: ElementType.FIRE,
 			nextUpAltElementId: ElementType.WOOD
 		});
-		await prisma.ranking.update({
-			where: { userId: user.id },
-			data: {
-				dinozCount: 1,
-				average: 0
-			}
-		});
 
 		vi.spyOn(Math, 'random').mockReturnValue(0);
 
