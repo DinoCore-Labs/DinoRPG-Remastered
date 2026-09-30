@@ -3,7 +3,7 @@ import { getDinozMissionGroup } from '../../Mission/Controller/getDinozMission.c
 import { getMissionDefinitionByKey } from '../../Mission/Controller/mission.registry.js';
 import { startDinozMissionService } from '../../Mission/Controller/startDinozMission.controller.js';
 import { prisma } from '../../prisma.js';
-import { selectDialogLink, startDialog } from '../../Dialog/Service/dialog.service.js';
+import { resumeDialogPhase, selectDialogLink, startDialog } from '../../Dialog/Service/dialog.service.js';
 import { processDialogFightForUser } from '../../Fight/Service/processDialogFight.service.js';
 import { prepareBotSkillsForCombat } from './botSkillStrategy.service.js';
 
@@ -89,13 +89,22 @@ export async function executeBotDialog(
 
 		if (phase.actions.startFight) {
 			await prepareBotSkillsForCombat(userId, dinozId, strategy);
-			await processDialogFightForUser({
+			const fight = await processDialogFightForUser({
 				userId,
 				dinozId,
 				dialogId,
 				phaseId: phase.phaseId,
 				autoReequip: false
 			});
+			if (fight.dialogReturn) {
+				phase = await resumeDialogPhase({
+					userId,
+					dinozId,
+					dialogId: fight.dialogReturn.dialogId,
+					phaseId: fight.dialogReturn.phaseId
+				});
+				continue;
+			}
 			return phase;
 		}
 

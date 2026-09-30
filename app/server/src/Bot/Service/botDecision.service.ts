@@ -7,7 +7,7 @@ import { getDinozMenuRequest } from '../../Dinoz/Controller/getDinozMenu.control
 import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/getDinozActions.service.js';
 import { BOT_GATHER_ACTIONS, isBotGatherAction } from './botGather.service.js';
 import { getBotMoveTargets } from './botMovement.service.js';
-import { getBotTutorialAction, type BotTutorialAction } from './botTutorial.service.js';
+import { getBotTutorialPlan } from './botTutorial.service.js';
 import { getBotMissionIntent } from './botMission.service.js';
 import { canBotBuyAnotherDinoz } from './botEconomy.service.js';
 import { getBotGroupPlan, getBotUngroupPlan } from './botGroup.service.js';
@@ -31,11 +31,34 @@ import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'market_sell' | 'itinerant_sell' | 'forcebrut' | 'enter_dark_portal' | 'progression_dialog' | 'progression_dig' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action:
+		| Action
+		| 'move'
+		| 'dialog'
+		| 'heal'
+		| 'buy_dinoz'
+		| 'group'
+		| 'ungroup'
+		| 'equip'
+		| 'shop'
+		| 'market_sell'
+		| 'itinerant_sell'
+		| 'forcebrut'
+		| 'enter_dark_portal'
+		| 'progression_dialog'
+		| 'progression_dig'
+		| 'mission_dialog'
+		| 'mission_interact'
+		| 'mission_wait'
+		| 'tutorial_event'
+		| 'tutorial_dialog'
+		| 'tutorial_buy_burger'
+		| 'tutorial_use_burger';
 	shopId?: number;
 	dialogId?: string;
 	preferredLinkIds?: string[];
 	targetPlaceId?: number;
+	tutorialEvent?: 'DINOZ_ADOPTED' | 'GUIDE_MICHEL_SPOKEN' | 'CLAN_PAGE_VISITED' | 'ACCOUNT_PAGE_VISITED' | 'TUTORIAL_FINISHED';
 };
 
 const SUPPORTED_ACTIONS = new Set<Action>([
@@ -110,6 +133,59 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		throw new ExpectedError('userNotFound', { params: { userId } });
 	}
 
+	const tutorialDinoz = playerData.dinoz[0];
+	if (tutorialDinoz) {
+		const tutorialPlan = await getBotTutorialPlan(userId, tutorialDinoz.id);
+		if (tutorialPlan) {
+			switch (tutorialPlan.type) {
+				case 'event':
+					return {
+						dinozId: tutorialDinoz.id,
+						action: 'tutorial_event',
+						tutorialEvent: tutorialPlan.event
+					};
+				case 'move': {
+					const nextHop = await findBotMissionNextHop(
+						userId,
+						tutorialDinoz.id,
+						tutorialDinoz.placeId,
+						tutorialPlan.placeId
+					);
+					if (nextHop != null) {
+						return {
+							dinozId: tutorialDinoz.id,
+							action: 'move',
+							targetPlaceId: nextHop
+						};
+					}
+					return null;
+				}
+				case 'dialog':
+					return {
+						dinozId: tutorialDinoz.id,
+						action: 'tutorial_dialog',
+						dialogId: tutorialPlan.dialogId,
+						preferredLinkIds: tutorialPlan.preferredLinkIds
+					};
+				case 'buy_burger':
+					return {
+						dinozId: tutorialDinoz.id,
+						action: 'tutorial_buy_burger'
+					};
+				case 'use_burger':
+					return {
+						dinozId: tutorialDinoz.id,
+						action: 'tutorial_use_burger'
+					};
+				case 'fight':
+					return {
+						dinozId: tutorialDinoz.id,
+						action: Action.FIGHT
+					};
+			}
+		}
+	}
+
 	const activeDinozCount = playerData.dinoz.filter(dinoz => isActiveDinozState(dinoz.state)).length;
 	const itinerantPlaceId = await getItinerantPlaceId();
 	const followableDinozCandidates = playerData.dinoz.map(dinoz => ({
@@ -128,14 +204,6 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		nbrUpLightning: dinoz.nbrUpLightning,
 		nbrUpAir: dinoz.nbrUpAir
 	}));
-
-	const tutorialAction = await getBotTutorialAction(userId);
-	if (tutorialAction && playerData.dinoz.length > 0) {
-		return {
-			dinozId: playerData.dinoz[0].id,
-			action: tutorialAction
-		};
-	}
 
 	const candidates: { value: BotDecision; weight: number }[] = [];
 	const progressionGoals = new Map<number, BotProgressionGoal | null>();

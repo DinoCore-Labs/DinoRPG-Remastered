@@ -24,12 +24,19 @@ describe('bot tutorial', () => {
 		const decision = await chooseBotDecision(created.user.id, BotStrategy.BALANCED);
 		expect(decision).toMatchObject({
 			dinozId: created.dinoz.id,
-			action: 'tutorial_speak'
+			action: 'tutorial_event',
+			tutorialEvent: 'GUIDE_MICHEL_SPOKEN'
 		});
 
 		await executeBotDecision(created.user.id, BotStrategy.BALANCED, decision!);
 
 		const after = await getCurrentTutorial(created.user.id);
 		expect(after?.objective?.id).toBe('move');
+
+		const moveDecision = await chooseBotDecision(created.user.id, BotStrategy.BALANCED);
+		expect(moveDecision).toMatchObject({
+			dinozId: created.dinoz.id,
+			action: 'move'
+		});
 	});
 });
