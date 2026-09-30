@@ -20,7 +20,6 @@ import { assertTutorialMovementAllowed } from '../../Tutorial/Controller/tutoria
 import { withUserGameplayLock } from '../../utils/database/userGameplayLock.js';
 import { canGoToThisPlace, isAlive } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { UserForConditionCheck } from '../../utils/user/userConditionCheck.js';
-import { addStatusToDinoz } from '../Controller/dinozStatus.controller.js';
 import { getDinozFightDataRequest } from '../Controller/getDinozFight.controller.js';
 import { updateDinoz, updateMultipleDinoz } from '../Controller/updateDinoz.controller.js';
 import type { MoveDinozInput } from '../Schema/dinoz.schema.js';
@@ -99,9 +98,6 @@ export async function moveDinozUnlocked(req: Req, _reply: FastifyReply) {
 		SWAMP_FLOODED_DAYS.includes(dayOfWeek) &&
 		currentPlace.placeId === PlaceEnum.MARAIS_COLLANT
 	) {
-		if (!dinoz.status.some(s => s.statusId === DinozStatusId.WEIRD_SWAMP_SEEN)) {
-			await addStatusToDinoz(dinoz.id, DinozStatusId.WEIRD_SWAMP_SEEN);
-		}
 		throw new ExpectedError('noMovement', { params: { placeName: currentPlace.name } });
 	}
 	let fight: FightResult | false;
