@@ -1,5 +1,6 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Ingredient } from '@dinorpg/core/models/ingredients/ingredientList.js';
+import { missionList } from '@dinorpg/core/models/missions/data/index.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -10,6 +11,7 @@ import {
 	getBotMarketOfferPlan
 } from '../../src/Bot/Service/botMarket.service.js';
 import { getBotItinerantSalePlan } from '../../src/Bot/Service/botItinerantMerchant.service.js';
+import { getBotInventoryForecast } from '../../src/Bot/Service/botInventoryForecast.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
@@ -161,4 +163,116 @@ describe('bot itinerant merchant economy', () => {
 		);
 		expect(plan?.totalGold).toBe(700);
 	});
+	it('reserves all remaining ingredient needs from an active mission', async () => {
+		const user = await createTestUser({
+			name: 'MarketMissionForecastBot',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			canRename: false
+		});
+		const mission = missionList.find(definition => definition.key === 'elmaair')!;
+		const firstUseIngredient = mission.goals.findIndex(goal => goal.type === 'USE_INGREDIENT');
+
+		await prisma.dinozMissions.create({
+			data: {
+				dinozId: dinoz.id,
+				missionKey: 'elmaair',
+				progression: 0,
+				tracking: 0,
+				isCompleted: false
+			}
+		});
+
+		const forecast = await getBotInventoryForecast(user.id);
+		expect(forecast.ingredients.get(Ingredient.ENERGIE_AIR)).toBe(5);
+
+		await prisma.dinozMissions.updateMany({
+			where: {
+				dinozId: dinoz.id,
+				missionKey: 'elmaair'
+			},
+			data: {
+				progression: firstUseIngredient + 1
+			}
+		});
+
+		const remainingForecast = await getBotInventoryForecast(user.id);
+		expect(remainingForecast.ingredients.get(Ingredient.ENERGIE_AIR)).toBe(3);
+	});
+
+	it('does not sell mission-reserved ingredients on the market', async () => {
+		const user = await createTestUser({
+			name: 'MarketMissionReserveBot',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			canRename: false
+		});
+		await prisma.dinozMissions.create({
+			data: {
+				dinozId: dinoz.id,
+				missionKey: 'elmaair',
+				progression: 0,
+				tracking: 0,
+				isCompleted: false
+			}
+		});
+		await prisma.userIngredients.create({
+			data: {
+				userId: user.id,
+				ingredientId: Ingredient.ENERGIE_AIR,
+				quantity: 10
+			}
+		});
+
+		const plan = await getBotMarketOfferPlan(user.id);
+
+		expect(plan?.ingredients ?? []).not.toContainEqual(
+			expect.objectContaining({
+				ingredientId: Ingredient.ENERGIE_AIR
+			})
+		);
+	});
+
+	it('keeps mission-reserved ingredients when meeting the itinerant merchant', async () => {
+		const user = await createTestUser({
+			name: 'ItinerantMissionReserveBot',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			canRename: false
+		});
+		await prisma.dinozMissions.create({
+			data: {
+				dinozId: dinoz.id,
+				missionKey: 'elmaair',
+				progression: 0,
+				tracking: 0,
+				isCompleted: false
+			}
+		});
+		await prisma.userIngredients.create({
+			data: {
+				userId: user.id,
+				ingredientId: Ingredient.ENERGIE_AIR,
+				quantity: 10
+			}
+		});
+
+		const plan = await getBotItinerantSalePlan(
+			user.id,
+			shopListV2.ITINERANT_MERCHANT_MONDAY.shopId
+		);
+
+		expect(plan?.ingredients ?? []).not.toContainEqual(
+			expect.objectContaining({
+				itemId: Ingredient.ENERGIE_AIR
+			})
+		);
+	});
+
 });
