@@ -64,7 +64,7 @@ describe('bot Sylvenoire progression', () => {
 
 		await expect(
 			getOrAssignBotProgressionGoal(user.id, dinoz[0].id)
-		).resolves.toBe(BotProgressionGoal.STEPPES_ACCESS);
+		).resolves.toBeNull();
 	});
 
 	it('assigns Sylvenoire progression when seven flipper-equipped Dinoz are available', async () => {
@@ -124,7 +124,7 @@ describe('bot Sylvenoire progression', () => {
 		});
 	});
 
-	it('advances to Steppes access after obtaining the Sylvenoire key', async () => {
+	it('finishes the chapter after obtaining the Sylvenoire key', async () => {
 		const { user, dinoz } = await createBotRoster('SylvenoireDoneBot', 7);
 		await addStatus(dinoz[0].id, DinozStatusId.SYLVENOIRE_KEY);
 
