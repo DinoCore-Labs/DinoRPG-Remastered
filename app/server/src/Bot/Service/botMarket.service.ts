@@ -26,7 +26,7 @@ function getItemReserve(itemId: number): number {
 	return 1;
 }
 
-function getIngredientReserve(ingredientId: number): number {
+export function getBotIngredientReserve(ingredientId: number): number {
 	const ingredient = Object.values(ingredientList).find(entry => entry.ingredientId === ingredientId);
 	if (!ingredient) return Number.POSITIVE_INFINITY;
 	if (ingredient.maxQuantity <= 5) return 2;
@@ -93,7 +93,7 @@ export async function getBotMarketOfferPlan(userId: string): Promise<BotMarketOf
 		const ingredient = Object.values(ingredientList).find(entry => entry.ingredientId === owned.ingredientId);
 		if (!ingredient) continue;
 
-		const reserve = getIngredientReserve(owned.ingredientId);
+		const reserve = getBotIngredientReserve(owned.ingredientId);
 		const quantity = Math.max(0, owned.quantity - reserve);
 		if (quantity <= 0) continue;
 
