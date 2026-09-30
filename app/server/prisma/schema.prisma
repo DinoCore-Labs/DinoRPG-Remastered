@@ -988,6 +988,7 @@ enum BotProgressionGoal {
   LANTERN
   KORGON_FLIPPERS
   SYLVENOIRE_KEY
+  STEPPES_ACCESS
 }
 
 enum ConversationType {
