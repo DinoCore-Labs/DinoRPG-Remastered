@@ -87,9 +87,6 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 		SWAMP_FOG_DAYS.includes(dayOfWeek) &&
 		dinozData.placeId === PlaceEnum.MARAIS_COLLANT
 	) {
-		if (!dinozData.status.some(s => s.statusId === DinozStatusId.WEIRD_SWAMP_SEEN)) {
-			await addStatusToDinoz(dinozData.id, DinozStatusId.WEIRD_SWAMP_SEEN);
-		}
 		throw new ExpectedError('noFight');
 	}
 	if (dinozData.canRename) {
@@ -188,11 +185,6 @@ export async function fightMonstersAtPlace(
 		placeId === PlaceEnum.MARAIS_COLLANT
 	) {
 		monsters = [];
-		for (const dinoz of team) {
-			if (!dinoz.status.some(s => s.statusId === DinozStatusId.WEIRD_SWAMP_SEEN)) {
-				await addStatusToDinoz(dinoz.id, DinozStatusId.WEIRD_SWAMP_SEEN);
-			}
-		}
 	}
 	const fightResult = calculateFightVsMonsters(team, user, placeId, monsters);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, placeId, user, options);

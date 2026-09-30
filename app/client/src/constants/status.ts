@@ -86,11 +86,7 @@ export const statusList: {
 		65: 'cuzmal',
 		66: 'mcapt',
 		67: 'joze',
-		68: 'sphere',
-		70: 'wswmps',
-		71: 'swmk',
-		72: 'swbuoy',
-		73: 'swlant'
+		68: 'sphere'
 	},
 	id: {
 		bouee: 1,
@@ -160,9 +156,7 @@ export const statusList: {
 		cuzmal: 65,
 		mcapt: 66,
 		joze: 67,
-		sphere: 68,
-		swbuoy: 72,
-		swlant: 73
+		sphere: 68
 	},
 	displayed: {
 		1: true,

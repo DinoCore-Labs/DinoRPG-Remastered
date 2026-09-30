@@ -1927,9 +1927,7 @@
 			"62": "Maudit !",
 			"63": "Démon",
 			"65": "Malédiction de Cuzcous",
-			"66": "Gant de Capture",
-			"72": "Bouée du Marais",
-			"73": "Lanterne du Marais"
+			"66": "Gant de Capture"
 		},
 		"description": {
 			"1": "La Bouée permet à ce Dinoz de traverser certaines petites étendues d'eau sans aucun risque de noyade.",
@@ -1981,9 +1979,7 @@
 			"62": "Cette malédiction empêche votre Dinoz de gagner de l'expérience en combat !",
 			"63": "Ce Dinoz est un véritable Démon, mais d'où peuvent-ils bien venir ? ...",
 			"65": "Votre Dinoz a été Maudit par le Gardien de Cuzcous...",
-			"66": "Grâce à cet outil très utile, votre Dinoz peut capturer des Monstres qui viendront l'aider dans tous ses combats !",
-			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est inondé ou non.",
-			"73": "L'intensité de cette lanterne permet à votre Dinoz de savoir si le Marais Collant est embrumé ou non."
+			"66": "Grâce à cet outil très utile, votre Dinoz peut capturer des Monstres qui viendront l'aider dans tous ses combats !"
 		}
 	},
 	"levelup": {

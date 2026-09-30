@@ -48,30 +48,6 @@
 						theme: 'small'
 					}"
 				/>
-				<template v-if="place.placeId === PlaceEnum.MARAIS_COLLANT && showFloodedSwamp">
-					<div class="flooded-swamp" :style="{ left: place.posLeft - 4 + 'px', top: place.posTop - 30 + 'px' }">
-						<img
-							:src="getImgURL('icons', 'act_move')"
-							alt="flooded swamp"
-							v-tippy="{
-								content: formatContent($t(`place.hint.marais.flooded`)),
-								theme: 'small'
-							}"
-						/>
-					</div>
-				</template>
-				<template v-if="place.placeId === PlaceEnum.MARAIS_COLLANT && showFoggedSwamp">
-					<div class="foggy-swamp" :style="{ left: place.posLeft - 4 + 'px', top: place.posTop - 30 + 'px' }">
-						<img
-							:src="getImgURL('icons', 'act_fight')"
-							alt="flooded swamp"
-							v-tippy="{
-								content: formatContent($t(`place.hint.marais.foggy`)),
-								theme: 'small'
-							}"
-						/>
-					</div>
-				</template>
 			</template>
 			<svg
 				version="1.1"
@@ -398,26 +374,6 @@ export default defineComponent({
 	computed: {
 		isMouseDevice() {
 			return window.matchMedia('(pointer:fine)').matches;
-		},
-		showFloodedSwamp() {
-			if (!this.dinozData.status.some(status => status.statusId === DinozStatusId.SWAMP_BUOY)) {
-				return false;
-			}
-			const day = new Date().getDay();
-			if (!SWAMP_FLOODED_DAYS.includes(day)) {
-				return false;
-			}
-			return true;
-		},
-		showFoggedSwamp() {
-			if (!this.dinozData.status.some(status => status.statusId === DinozStatusId.SWAMP_LANTERN)) {
-				return false;
-			}
-			const day = new Date().getDay();
-			if (!SWAMP_FOG_DAYS.includes(day)) {
-				return false;
-			}
-			return true;
 		}
 	},
 	mounted(): void {
