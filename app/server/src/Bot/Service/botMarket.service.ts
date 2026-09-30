@@ -6,6 +6,7 @@ import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import { OfferStatus } from '../../../../prisma/index.js';
 import { createMarketOfferForUser } from '../../Market/Service/createMarketOffer.service.js';
 import { prisma } from '../../prisma.js';
+import { getBotInventoryForecast } from './botInventoryForecast.service.js';
 
 const BOT_MARKET_MAX_LINES = 5;
 const BOT_MARKET_MIN_VALUE = 1000;
@@ -35,7 +36,7 @@ export function getBotIngredientReserve(ingredientId: number): number {
 }
 
 export async function getBotMarketOfferPlan(userId: string): Promise<BotMarketOfferPlan | null> {
-	const [existingOffer, user] = await Promise.all([
+	const [existingOffer, user, forecast] = await Promise.all([
 		prisma.offer.findFirst({
 			where: {
 				sellerId: userId,
@@ -59,7 +60,8 @@ export async function getBotMarketOfferPlan(userId: string): Promise<BotMarketOf
 					}
 				}
 			}
-		})
+		}),
+		getBotInventoryForecast(userId)
 	]);
 
 	if (existingOffer || !user) return null;
@@ -76,7 +78,7 @@ export async function getBotMarketOfferPlan(userId: string): Promise<BotMarketOf
 		const item = Object.values(itemList).find(entry => entry.itemId === owned.itemId);
 		if (!item?.price || item.sellable === false) continue;
 
-		const reserve = getItemReserve(owned.itemId);
+		const reserve = getItemReserve(owned.itemId) + (forecast.items.get(owned.itemId) ?? 0);
 		const quantity = Math.max(0, owned.quantity - reserve);
 		if (quantity <= 0) continue;
 
@@ -93,7 +95,9 @@ export async function getBotMarketOfferPlan(userId: string): Promise<BotMarketOf
 		const ingredient = Object.values(ingredientList).find(entry => entry.ingredientId === owned.ingredientId);
 		if (!ingredient) continue;
 
-		const reserve = getBotIngredientReserve(owned.ingredientId);
+		const reserve =
+			getBotIngredientReserve(owned.ingredientId) +
+			(forecast.ingredients.get(owned.ingredientId) ?? 0);
 		const quantity = Math.max(0, owned.quantity - reserve);
 		if (quantity <= 0) continue;
 

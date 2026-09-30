@@ -5,6 +5,7 @@ import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { sellIngredientsToItinerantForUser } from '../../Shop/Service/sellIngredients.service.js';
 import { prisma } from '../../prisma.js';
 import { getBotIngredientReserve } from './botMarket.service.js';
+import { getBotInventoryForecast } from './botInventoryForecast.service.js';
 
 export type BotItinerantSale = {
 	ingredients: Array<{
@@ -21,7 +22,8 @@ export async function getBotItinerantSalePlan(
 	const shop = Object.values(shopListV2).find(entry => entry.shopId === shopId);
 	if (!shop || shop.type !== ShopType.ITINERANT) return null;
 
-	const user = await prisma.user.findUnique({
+	const [user, forecast] = await Promise.all([
+		prisma.user.findUnique({
 		where: { id: userId },
 		select: {
 			ingredients: {
@@ -31,7 +33,9 @@ export async function getBotItinerantSalePlan(
 				}
 			}
 		}
-	});
+		}),
+		getBotInventoryForecast(userId)
+	]);
 	if (!user) return null;
 
 	const ingredients: BotItinerantSale['ingredients'] = [];
@@ -45,7 +49,9 @@ export async function getBotItinerantSalePlan(
 		);
 		if (!owned) continue;
 
-		const reserve = getBotIngredientReserve(sold.id);
+		const reserve =
+			getBotIngredientReserve(sold.id) +
+			(forecast.ingredients.get(sold.id) ?? 0);
 		const quantity = Math.max(0, owned.quantity - reserve);
 		if (quantity <= 0) continue;
 
