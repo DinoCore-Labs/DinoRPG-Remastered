@@ -465,13 +465,15 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		return healDecision.value;
 	}
 
-	const progressionDecision = candidates.find(
-		candidate =>
-			candidate.weight >= 230 &&
-			(candidate.value.action === 'progression_dialog' ||
-				candidate.value.action === 'progression_dig' ||
-				candidate.value.action === 'move')
-	);
+	const progressionDecision = candidates
+		.filter(
+			candidate =>
+				candidate.weight >= 230 &&
+				(candidate.value.action === 'progression_dialog' ||
+					candidate.value.action === 'progression_dig' ||
+					candidate.value.action === 'move')
+		)
+		.sort((a, b) => b.weight - a.weight)[0];
 	if (progressionDecision) {
 		return progressionDecision.value;
 	}
