@@ -226,10 +226,6 @@ export const statusList: {
 		65: true,
 		66: true,
 		67: false,
-		68: false,
-		70: false,
-		71: false,
-		72: true,
-		73: true
+		68: false
 	}
 };
