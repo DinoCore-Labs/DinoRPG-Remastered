@@ -104,4 +104,93 @@ describe('bot Forcebrut progression', () => {
 
 		await expect(canBotFightForcebrut(user.id, dinoz.id, BotStrategy.FIGHTER)).resolves.toBe(true);
 	});
+	it('keeps an Irma reserve for balanced bots', async () => {
+		const user = await createTestUser({
+			name: 'ForcebrutReserveBot',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			level: 10,
+			placeId: PlaceEnum.FORCEBRUT,
+			canRename: false
+		});
+		await addStatus(dinoz.id, DinozStatusId.TOURNA);
+		await prisma.userItems.create({
+			data: {
+				userId: user.id,
+				itemId: itemList[Item.POTION_IRMA].itemId,
+				quantity: 1
+			}
+		});
+		await prisma.forcebrutTournamentOpponent.create({
+			data: {
+				step: 1,
+				name: 'Reserve Opponent',
+				display: 'A00000000000000',
+				raceId: 1,
+				level: 10,
+				maxLife: 50,
+				nbrUpFire: 1,
+				nbrUpWood: 1,
+				nbrUpWater: 1,
+				nbrUpLightning: 1,
+				nbrUpAir: 1,
+				skillIds: [],
+				enabled: true
+			}
+		});
+
+		await expect(
+			canBotFightForcebrut(user.id, dinoz.id, BotStrategy.BALANCED)
+		).resolves.toBe(false);
+		await expect(
+			canBotFightForcebrut(user.id, dinoz.id, BotStrategy.FIGHTER)
+		).resolves.toBe(true);
+	});
+
+	it('avoids Forcebrut when health is too low or the opponent is too strong', async () => {
+		const user = await createTestUser({
+			name: 'ForcebrutRiskBot',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			level: 8,
+			life: 55,
+			maxLife: 100,
+			placeId: PlaceEnum.FORCEBRUT,
+			canRename: false
+		});
+		await addStatus(dinoz.id, DinozStatusId.TOURNA);
+		await prisma.userItems.create({
+			data: {
+				userId: user.id,
+				itemId: itemList[Item.POTION_IRMA].itemId,
+				quantity: 3
+			}
+		});
+		await prisma.forcebrutTournamentOpponent.create({
+			data: {
+				step: 1,
+				name: 'Risky Opponent',
+				display: 'A00000000000000',
+				raceId: 1,
+				level: 12,
+				maxLife: 50,
+				nbrUpFire: 1,
+				nbrUpWood: 1,
+				nbrUpWater: 1,
+				nbrUpLightning: 1,
+				nbrUpAir: 1,
+				skillIds: [],
+				enabled: true
+			}
+		});
+
+		await expect(
+			canBotFightForcebrut(user.id, dinoz.id, BotStrategy.BALANCED)
+		).resolves.toBe(false);
+	});
+
 });
