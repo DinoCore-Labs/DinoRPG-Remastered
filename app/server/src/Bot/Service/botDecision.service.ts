@@ -21,11 +21,12 @@ import { getBotForcebrutUnlockStep } from './botForcebrutProgression.service.js'
 import { canBotFightForcebrut } from './botForcebrut.service.js';
 import { getOrAssignBotProgressionGoal } from './botProgressionMemory.service.js';
 import { getBotKorgonProgressionStep } from './botKorgonProgression.service.js';
+import { getBotSylvenoireProgressionStep } from './botSylvenoireProgression.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'forcebrut' | 'progression_dialog' | 'progression_dig' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'forcebrut' | 'enter_dark_portal' | 'progression_dialog' | 'progression_dig' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	shopId?: number;
 	dialogId?: string;
 	preferredLinkIds?: string[];
@@ -138,6 +139,57 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 			dinoz.id,
 			await getOrAssignBotProgressionGoal(userId, dinoz.id)
 		);
+	}
+
+	for (const dinoz of playerData.dinoz) {
+		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
+
+		const sylvenoireStep = await getBotSylvenoireProgressionStep(userId, dinoz.id);
+		if (!sylvenoireStep || sylvenoireStep.type === 'wait') continue;
+
+		const memoryBonus =
+			progressionGoals.get(dinoz.id) === BotProgressionGoal.SYLVENOIRE_KEY ? 140 : 0;
+
+		if (sylvenoireStep.type === 'enter_portal') {
+			candidates.push({
+				value: {
+					dinozId: dinoz.id,
+					action: 'enter_dark_portal'
+				},
+				weight: 420 + memoryBonus
+			});
+			continue;
+		}
+
+		if (sylvenoireStep.type === 'move') {
+			const nextHop = await findBotMissionNextHop(
+				userId,
+				dinoz.id,
+				dinoz.placeId,
+				sylvenoireStep.placeId
+			);
+			if (nextHop != null) {
+				candidates.push({
+					value: {
+						dinozId: dinoz.id,
+						action: 'move',
+						targetPlaceId: nextHop
+					},
+					weight: 390 + memoryBonus
+				});
+			}
+			continue;
+		}
+
+		candidates.push({
+			value: {
+				dinozId: dinoz.id,
+				action: 'progression_dialog',
+				dialogId: sylvenoireStep.dialogId,
+				preferredLinkIds: sylvenoireStep.preferredLinkIds
+			},
+			weight: 410 + memoryBonus
+		});
 	}
 
 	for (const dinoz of playerData.dinoz.slice(0, 3)) {
