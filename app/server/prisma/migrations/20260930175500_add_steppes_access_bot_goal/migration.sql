@@ -1,0 +1,1 @@
+ALTER TYPE "BotProgressionGoal" ADD VALUE 'STEPPES_ACCESS';
