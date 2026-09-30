@@ -274,7 +274,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	};
 
 	for (const dinoz of playerData.dinoz) {
-		if (await canBotFightForcebrut(userId, dinoz.id)) {
+		if (await canBotFightForcebrut(userId, dinoz.id, strategy)) {
 			candidates.push({
 				value: {
 					dinozId: dinoz.id,
