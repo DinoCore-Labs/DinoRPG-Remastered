@@ -275,4 +275,51 @@ describe('bot itinerant merchant economy', () => {
 		);
 	});
 
+	it('reserves mission items from the market as well', async () => {
+		const user = await createTestUser({
+			name: 'MarketMissionItemReserveBot',
+			withTutorial: false
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			canRename: false
+		});
+		await prisma.dinozMissions.create({
+			data: {
+				dinozId: dinoz.id,
+				missionKey: 'skul1',
+				progression: 0,
+				tracking: 0,
+				isCompleted: false
+			}
+		});
+
+		const mission = missionList.find(definition => definition.key === 'skul1')!;
+		const itemGoal = mission.goals.find(goal => goal.type === 'USE_ITEM');
+		expect(itemGoal?.type).toBe('USE_ITEM');
+		if (!itemGoal || itemGoal.type !== 'USE_ITEM') {
+			throw new Error('Expected skul1 to contain a USE_ITEM goal');
+		}
+
+		const item = Object.values(itemList).find(entry => entry.name === itemGoal.itemKey)!;
+		await prisma.userItems.create({
+			data: {
+				userId: user.id,
+				itemId: item.itemId,
+				quantity: 10
+			}
+		});
+
+		const forecast = await getBotInventoryForecast(user.id);
+		expect(forecast.items.get(item.itemId)).toBe(itemGoal.quantity);
+
+		const plan = await getBotMarketOfferPlan(user.id);
+		const soldQuantity =
+			plan?.items.find(entry => entry.itemId === item.itemId)?.quantity ?? 0;
+
+		expect(soldQuantity).toBeLessThanOrEqual(
+			10 - itemGoal.quantity
+		);
+	});
+
 });
