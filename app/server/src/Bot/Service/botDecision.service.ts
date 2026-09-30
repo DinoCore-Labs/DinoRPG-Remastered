@@ -22,6 +22,7 @@ import { canBotFightForcebrut } from './botForcebrut.service.js';
 import { getOrAssignBotProgressionGoal } from './botProgressionMemory.service.js';
 import { getBotKorgonProgressionStep } from './botKorgonProgression.service.js';
 import { getBotSylvenoireProgressionStep } from './botSylvenoireProgression.service.js';
+import { getBotForestGuardianProgressionStep } from './botForestGuardianProgression.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
@@ -264,6 +265,38 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 
 	for (const dinoz of playerData.dinoz.slice(0, 3)) {
 		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
+
+		const forestStep = await getBotForestGuardianProgressionStep(userId, dinoz.id);
+		if (forestStep) {
+			if (forestStep.type === 'move') {
+				const nextHop = await findBotMissionNextHop(
+					userId,
+					dinoz.id,
+					dinoz.placeId,
+					forestStep.placeId
+				);
+				if (nextHop != null) {
+					candidates.push({
+						value: {
+							dinozId: dinoz.id,
+							action: 'move',
+							targetPlaceId: nextHop
+						},
+						weight: 235
+					});
+				}
+			} else {
+				candidates.push({
+					value: {
+						dinozId: dinoz.id,
+						action: 'progression_dialog',
+						dialogId: forestStep.dialogId,
+						preferredLinkIds: forestStep.preferredLinkIds
+					},
+					weight: 245
+				});
+			}
+		}
 
 		const korgonStep = await getBotKorgonProgressionStep(userId, dinoz.id);
 		if (korgonStep) {
