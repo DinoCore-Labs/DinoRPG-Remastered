@@ -113,19 +113,20 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import { BotStrategy } from '../../../prisma/index.js';
 import DZButton from '../../components/utils/DZButton.vue';
 import DZTable from '../../components/utils/DZTable.vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import {
 	AdminBotsService,
+	BOT_STRATEGIES,
 	type AdminBotListItem,
+	type BotStrategyValue,
 	type UpdateAdminBotInput
 } from '../../services/adminBots.service.js';
 
 type BotDraft = {
 	enabled: boolean;
-	strategy: BotStrategy;
+	strategy: BotStrategyValue;
 	minDelaySeconds: number;
 	maxDelaySeconds: number;
 };
@@ -141,10 +142,10 @@ export default defineComponent({
 		return {
 			bots: [] as AdminBotListItem[],
 			drafts: {} as Record<string, BotDraft>,
-			strategies: Object.values(BotStrategy),
+			strategies: BOT_STRATEGIES,
 			createForm: {
 				name: '',
-				strategy: BotStrategy.BALANCED,
+				strategy: 'BALANCED' as BotStrategyValue,
 				minDelaySeconds: 60,
 				maxDelaySeconds: 600
 			},
