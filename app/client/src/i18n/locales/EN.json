@@ -39,8 +39,8 @@
 	"notifications": {
 		"title": "Notifications",
 		"newClanJoinRequest": "Player {name} requested to join the clan.",
-		"newReward": "Vous avez reçu une récompense : {rewards}",
-		"xmasReward": "Fin de l'évènement, Joyeux Noël !<br><br>{rewards}",
+		"newReward": "You received a reward: {rewards}",
+		"xmasReward": "End of the event, Merry Christmas!<br><br>{rewards}",
 		"marketOfferWin": "Vous avez remporté une enchère pour un montant de {price} bons !",
 		"marketOfferSold": "Votre enchère a été vendue ! Vous avez gagné {price} pièces d'or.",
 		"marketOfferUnsold": "Votre enchère est terminée sans trouver d'acheteur.",
