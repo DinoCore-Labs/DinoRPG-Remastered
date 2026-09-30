@@ -3,6 +3,8 @@ import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import { BotStrategy } from '../../../prisma/index.js';
+
 import { getBotForcebrutUnlockStep } from '../../src/Bot/Service/botForcebrutProgression.service.js';
 import { canBotFightForcebrut } from '../../src/Bot/Service/botForcebrut.service.js';
 import { prisma } from '../../src/prisma.js';
@@ -100,6 +102,6 @@ describe('bot Forcebrut progression', () => {
 			}
 		});
 
-		await expect(canBotFightForcebrut(user.id, dinoz.id)).resolves.toBe(true);
+		await expect(canBotFightForcebrut(user.id, dinoz.id, BotStrategy.FIGHTER)).resolves.toBe(true);
 	});
 });
