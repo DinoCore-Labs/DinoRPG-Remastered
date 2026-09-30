@@ -1,7 +1,7 @@
 import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { BotStrategy, DinozState } from '../../../../prisma/index.js';
+import { BotProgressionGoal, BotStrategy, DinozState } from '../../../../prisma/index.js';
 import { getDinozMenuRequest } from '../../Dinoz/Controller/getDinozMenu.controller.js';
 import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/getDinozActions.service.js';
 import { BOT_GATHER_ACTIONS, isBotGatherAction } from './botGather.service.js';
@@ -19,6 +19,7 @@ import { getBotShamanProgressionStep } from './botShamanProgression.service.js';
 import { shouldBotDigOldStone } from './botProgressionOpportunity.service.js';
 import { getBotForcebrutUnlockStep } from './botForcebrutProgression.service.js';
 import { canBotFightForcebrut } from './botForcebrut.service.js';
+import { getOrAssignBotProgressionGoal } from './botProgressionMemory.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
@@ -130,6 +131,13 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}
 
 	const candidates: { value: BotDecision; weight: number }[] = [];
+	const progressionGoals = new Map<number, BotProgressionGoal | null>();
+	for (const dinoz of playerData.dinoz.slice(0, 3)) {
+		progressionGoals.set(
+			dinoz.id,
+			await getOrAssignBotProgressionGoal(userId, dinoz.id)
+		);
+	}
 
 	for (const dinoz of playerData.dinoz.slice(0, 3)) {
 		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
@@ -150,7 +158,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 							action: 'move',
 							targetPlaceId: nextHop
 						},
-						weight: 275
+						weight: 275 + (progressionGoals.get(dinoz.id) === BotProgressionGoal.FORCEBRUT_TRAINING ? 100 : 0)
 					});
 				}
 			} else {
@@ -161,7 +169,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 						dialogId: forcebrutUnlock.dialogId,
 						preferredLinkIds: forcebrutUnlock.preferredLinkIds
 					},
-					weight: 285
+					weight: 285 + (progressionGoals.get(dinoz.id) === BotProgressionGoal.FORCEBRUT_TRAINING ? 100 : 0)
 				});
 			}
 		}
@@ -183,7 +191,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 						action: 'move',
 						targetPlaceId: nextHop
 					},
-					weight: 255
+					weight: 255 + (progressionGoals.get(dinoz.id) === BotProgressionGoal.SHAMAN_STRATEGY ? 100 : 0)
 				});
 			}
 		}
@@ -196,7 +204,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					dialogId: shamanStep.dialogId,
 					preferredLinkIds: shamanStep.preferredLinkIds
 				},
-				weight: 265
+				weight: 265 + (progressionGoals.get(dinoz.id) === BotProgressionGoal.SHAMAN_STRATEGY ? 100 : 0)
 			});
 		}
 	}
@@ -222,7 +230,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 							action: 'move',
 							targetPlaceId: nextHop
 						},
-						weight: 230
+						weight: 230 + (progressionGoals.get(dinoz.id) === BotProgressionGoal.LANTERN ? 100 : 0)
 					});
 				}
 				break;
@@ -235,7 +243,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 						dialogId: progressionStep.dialogId,
 						preferredLinkIds: progressionStep.preferredLinkIds
 					},
-					weight: 240
+					weight: 240 + (progressionGoals.get(dinoz.id) === BotProgressionGoal.LANTERN ? 100 : 0)
 				});
 				break;
 			case 'dig':
@@ -244,7 +252,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 						dinozId: dinoz.id,
 						action: 'progression_dig'
 					},
-					weight: 240
+					weight: 240 + (progressionGoals.get(dinoz.id) === BotProgressionGoal.LANTERN ? 100 : 0)
 				});
 				break;
 			case 'level':
@@ -282,7 +290,9 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					dinozId: dinoz.id,
 					action: 'progression_dig'
 				},
-				weight: 320
+				weight:
+					320 +
+					(progressionGoals.get(dinoz.id) === BotProgressionGoal.FORCEBRUT_TRAINING ? 100 : 0)
 			});
 		}
 
