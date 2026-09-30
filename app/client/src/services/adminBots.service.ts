@@ -1,8 +1,19 @@
-import type { BotProfile, BotStrategy } from '../../../prisma/index.js';
-
 import { api } from '../utils/http';
 
-export type AdminBotListItem = BotProfile & {
+export const BOT_STRATEGIES = ['BALANCED', 'FIGHTER', 'GATHERER', 'EXPLORER'] as const;
+export type BotStrategyValue = (typeof BOT_STRATEGIES)[number];
+
+export type AdminBotListItem = {
+	id: string;
+	enabled: boolean;
+	strategy: BotStrategyValue;
+	minDelaySeconds: number;
+	maxDelaySeconds: number;
+	lastActionAt: string | null;
+	nextActionAt: string | null;
+	createdAt: string;
+	updatedAt: string;
+	userId: string;
 	user: {
 		id: string;
 		name: string;
@@ -16,13 +27,13 @@ export type AdminBotListItem = BotProfile & {
 
 export type CreateAdminBotInput = {
 	name: string;
-	strategy: BotStrategy;
+	strategy: BotStrategyValue;
 	minDelaySeconds: number;
 	maxDelaySeconds: number;
 };
 
 export type UpdateAdminBotInput = Partial<
-	Pick<BotProfile, 'enabled' | 'strategy' | 'minDelaySeconds' | 'maxDelaySeconds'>
+	Pick<AdminBotListItem, 'enabled' | 'strategy' | 'minDelaySeconds' | 'maxDelaySeconds'>
 >;
 
 export const AdminBotsService = {
