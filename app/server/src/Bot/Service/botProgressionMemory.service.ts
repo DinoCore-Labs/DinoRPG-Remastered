@@ -11,6 +11,8 @@ function isGoalComplete(goal: BotProgressionGoal, statusIds: Set<number>): boole
 			return statusIds.has(DinozStatusId.TOURNA);
 		case BotProgressionGoal.LANTERN:
 			return statusIds.has(DinozStatusId.LANTERN);
+		case BotProgressionGoal.KORGON_FLIPPERS:
+			return statusIds.has(DinozStatusId.FLIPPERS);
 	}
 }
 
@@ -23,6 +25,9 @@ function chooseNextGoal(statusIds: Set<number>): BotProgressionGoal | null {
 	}
 	if (!statusIds.has(DinozStatusId.LANTERN)) {
 		return BotProgressionGoal.LANTERN;
+	}
+	if (!statusIds.has(DinozStatusId.FLIPPERS)) {
+		return BotProgressionGoal.KORGON_FLIPPERS;
 	}
 	return null;
 }
