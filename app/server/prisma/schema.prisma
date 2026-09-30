@@ -986,6 +986,7 @@ enum BotProgressionGoal {
   SHAMAN_STRATEGY
   FORCEBRUT_TRAINING
   LANTERN
+  KORGON_FLIPPERS
 }
 
 enum ConversationType {
