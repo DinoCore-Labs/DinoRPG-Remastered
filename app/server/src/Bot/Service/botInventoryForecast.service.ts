@@ -37,20 +37,21 @@ export async function getBotInventoryForecast(userId: string): Promise<BotInvent
 	for (const member of dinoz) {
 		for (const missionState of member.missions) {
 			const definition = missionList.find(mission => mission.key === missionState.missionKey);
-			const goal = definition?.goals[missionState.progression];
-			if (!goal) continue;
+			if (!definition) continue;
 
-			if (goal.type === 'USE_ITEM') {
-				const item = Object.values(itemList).find(entry => entry.name === goal.itemKey);
-				if (item) {
-					addReserve(items, item.itemId, goal.quantity);
+			for (const goal of definition.goals.slice(missionState.progression)) {
+				if (goal.type === 'USE_ITEM') {
+					const item = Object.values(itemList).find(entry => entry.name === goal.itemKey);
+					if (item) {
+						addReserve(items, item.itemId, goal.quantity);
+					}
 				}
-			}
 
-			if (goal.type === 'USE_INGREDIENT') {
-				const ingredient = Object.values(ingredientList).find(entry => entry.name === goal.ingredientKey);
-				if (ingredient) {
-					addReserve(ingredients, ingredient.ingredientId, goal.quantity);
+				if (goal.type === 'USE_INGREDIENT') {
+					const ingredient = Object.values(ingredientList).find(entry => entry.name === goal.ingredientKey);
+					if (ingredient) {
+						addReserve(ingredients, ingredient.ingredientId, goal.quantity);
+					}
 				}
 			}
 		}
