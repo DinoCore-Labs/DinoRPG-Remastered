@@ -10,7 +10,8 @@ export async function getClassicRanking(page: number) {
 			user: {
 				select: {
 					id: true,
-					name: true
+					name: true,
+					isBot: true
 				}
 			}
 		},
