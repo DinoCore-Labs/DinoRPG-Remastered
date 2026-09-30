@@ -71,7 +71,7 @@ describe('bot progression memory', () => {
 		);
 	});
 
-	it('clears progression memory once the current chapters are complete', async () => {
+	it('advances to Korgon flippers after completing the Lantern chapter', async () => {
 		const { user, dinoz } = await createBotWithDinoz('MemoryCompleteBot');
 
 		for (const statusId of [
@@ -89,11 +89,12 @@ describe('bot progression memory', () => {
 			}
 		});
 
-		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBeNull();
-		expect(
-			await prisma.botDinozMemory.count({
-				where: { dinozId: dinoz.id }
-			})
-		).toBe(0);
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(
+			BotProgressionGoal.KORGON_FLIPPERS
+		);
+		const memory = await prisma.botDinozMemory.findUniqueOrThrow({
+			where: { dinozId: dinoz.id }
+		});
+		expect(memory.goal).toBe(BotProgressionGoal.KORGON_FLIPPERS);
 	});
 });
