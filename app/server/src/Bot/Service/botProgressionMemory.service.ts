@@ -13,10 +13,15 @@ function isGoalComplete(goal: BotProgressionGoal, statusIds: Set<number>): boole
 			return statusIds.has(DinozStatusId.LANTERN);
 		case BotProgressionGoal.KORGON_FLIPPERS:
 			return statusIds.has(DinozStatusId.FLIPPERS);
+		case BotProgressionGoal.SYLVENOIRE_KEY:
+			return statusIds.has(DinozStatusId.SYLVENOIRE_KEY);
 	}
 }
 
-function chooseNextGoal(statusIds: Set<number>): BotProgressionGoal | null {
+function chooseNextGoal(
+	statusIds: Set<number>,
+	canAttemptSylvenoire: boolean
+): BotProgressionGoal | null {
 	if (!statusIds.has(DinozStatusId.STRATEGY_IN_130_LESSONS)) {
 		return BotProgressionGoal.SHAMAN_STRATEGY;
 	}
@@ -28,6 +33,12 @@ function chooseNextGoal(statusIds: Set<number>): BotProgressionGoal | null {
 	}
 	if (!statusIds.has(DinozStatusId.FLIPPERS)) {
 		return BotProgressionGoal.KORGON_FLIPPERS;
+	}
+	if (
+		canAttemptSylvenoire &&
+		!statusIds.has(DinozStatusId.SYLVENOIRE_KEY)
+	) {
+		return BotProgressionGoal.SYLVENOIRE_KEY;
 	}
 	return null;
 }
@@ -61,12 +72,33 @@ export async function getOrAssignBotProgressionGoal(
 
 	const statusIds = new Set(dinoz.status.map(status => status.statusId));
 	const currentGoal = dinoz.botMemory?.goal ?? null;
+	const eligibleDinozCount = await prisma.dinoz.count({
+		where: {
+			userId,
+			life: { gt: 0 },
+			state: null,
+			status: {
+				some: {
+					statusId: DinozStatusId.FLIPPERS
+				}
+			}
+		}
+	});
+	const canAttemptSylvenoire = eligibleDinozCount >= 7;
 
-	if (currentGoal && !isGoalComplete(currentGoal, statusIds)) {
+	if (
+		currentGoal &&
+		currentGoal === BotProgressionGoal.SYLVENOIRE_KEY &&
+		!canAttemptSylvenoire
+	) {
+		await prisma.botDinozMemory.deleteMany({
+			where: { dinozId }
+		});
+	} else if (currentGoal && !isGoalComplete(currentGoal, statusIds)) {
 		return currentGoal;
 	}
 
-	const nextGoal = chooseNextGoal(statusIds);
+	const nextGoal = chooseNextGoal(statusIds, canAttemptSylvenoire);
 	if (!nextGoal) {
 		if (currentGoal) {
 			await prisma.botDinozMemory.deleteMany({

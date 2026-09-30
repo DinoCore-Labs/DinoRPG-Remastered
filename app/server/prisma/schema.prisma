@@ -1005,6 +1005,7 @@ enum BotProgressionGoal {
   FORCEBRUT_TRAINING
   LANTERN
   KORGON_FLIPPERS
+  SYLVENOIRE_KEY
 }
 
 enum ConversationType {
