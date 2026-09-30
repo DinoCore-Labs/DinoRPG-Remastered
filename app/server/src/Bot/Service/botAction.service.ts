@@ -21,8 +21,14 @@ import { buyBotUsefulItem } from './botShop.service.js';
 import { prepareBotSkillsForCombat } from './botSkillStrategy.service.js';
 import { fightForcebrutOpponentForUser } from '../../Forcebrut/Service/forcebrutTournament.service.js';
 import { digWithDinoz } from '../../Dinoz/Service/dig.service.js';
+import { enterDarkPortal } from '../../Dinoz/Controller/concentrationDinoz.controller.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
+	if (decision.action === 'enter_dark_portal') {
+		await enterDarkPortal(userId, decision.dinozId);
+		return;
+	}
+
 	if (decision.action === 'forcebrut') {
 		await prepareBotSkillsForCombat(userId, decision.dinozId, strategy);
 		await fightForcebrutOpponentForUser(userId, decision.dinozId);
