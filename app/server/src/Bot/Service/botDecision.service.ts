@@ -24,6 +24,7 @@ import { getOrAssignBotProgressionGoal } from './botProgressionMemory.service.js
 import { getBotKorgonProgressionStep } from './botKorgonProgression.service.js';
 import { getBotSylvenoireProgressionStep } from './botSylvenoireProgression.service.js';
 import { getBotForestGuardianProgressionStep } from './botForestGuardianProgression.service.js';
+import { getBotSteppesProgressionStep } from './botSteppesProgression.service.js';
 import { getBotMarketOfferPlan, shouldBotGoToMarket } from './botMarket.service.js';
 import { getBotItinerantSalePlan } from './botItinerantMerchant.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
@@ -268,6 +269,28 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 
 	for (const dinoz of playerData.dinoz.slice(0, 3)) {
 		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
+
+		const steppesStep = await getBotSteppesProgressionStep(userId, dinoz.id);
+		if (steppesStep) {
+			const nextHop = await findBotMissionNextHop(
+				userId,
+				dinoz.id,
+				dinoz.placeId,
+				steppesStep.placeId
+			);
+			if (nextHop != null) {
+				candidates.push({
+					value: {
+						dinozId: dinoz.id,
+						action: 'move',
+						targetPlaceId: nextHop
+					},
+					weight:
+						310 +
+						(progressionGoals.get(dinoz.id) === BotProgressionGoal.STEPPES_ACCESS ? 140 : 0)
+				});
+			}
+		}
 
 		const forestStep = await getBotForestGuardianProgressionStep(userId, dinoz.id);
 		if (forestStep) {
