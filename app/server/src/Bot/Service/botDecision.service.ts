@@ -25,11 +25,12 @@ import { getBotKorgonProgressionStep } from './botKorgonProgression.service.js';
 import { getBotSylvenoireProgressionStep } from './botSylvenoireProgression.service.js';
 import { getBotForestGuardianProgressionStep } from './botForestGuardianProgression.service.js';
 import { getBotMarketOfferPlan, shouldBotGoToMarket } from './botMarket.service.js';
+import { getBotItinerantSalePlan } from './botItinerantMerchant.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'market_sell' | 'forcebrut' | 'enter_dark_portal' | 'progression_dialog' | 'progression_dig' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'market_sell' | 'itinerant_sell' | 'forcebrut' | 'enter_dark_portal' | 'progression_dialog' | 'progression_dig' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	shopId?: number;
 	dialogId?: string;
 	preferredLinkIds?: string[];
@@ -559,6 +560,20 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				}
 				continue;
 			}
+			if (action.name === Action.ITINERANTSHOP && typeof action.prop === 'number') {
+				if (await getBotItinerantSalePlan(userId, action.prop)) {
+					candidates.push({
+						value: {
+							dinozId: dinoz.id,
+							action: 'itinerant_sell',
+							shopId: action.prop
+						},
+						weight: 115
+					});
+				}
+				continue;
+			}
+
 			if (!SUPPORTED_ACTIONS.has(action.name as Action)) continue;
 			const actionName = action.name as Action;
 
