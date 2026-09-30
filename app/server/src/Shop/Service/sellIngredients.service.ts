@@ -49,17 +49,17 @@ const normalizeIngredientsToSell = (ingredients: SellIngredientBody['ingredients
 	}));
 };
 
-export async function sellIngredient(
-	req: FastifyRequest<{ Params: DinozParams; Body: SellIngredientBody }>
+export async function sellIngredientsToItinerantForUser(
+	userId: string,
+	dinozId: number,
+	input: SellIngredientBody['ingredients'],
+	log?: { error: Function }
 ): Promise<{ gold: number }> {
-	const authed = req.user;
+	const ingredients = normalizeIngredientsToSell(input);
 
-	const dinozId = Number(req.params.dinozId);
-	const ingredients = normalizeIngredientsToSell(req.body.ingredients);
-
-	const playerIngredients = await getUserIngredientDataRequest(authed.id);
+	const playerIngredients = await getUserIngredientDataRequest(userId);
 	if (!playerIngredients) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(`Player ${userId} doesn't exist.`);
 	}
 
 	// Lock negative / zero quantities
@@ -67,9 +67,9 @@ export async function sellIngredient(
 		throw new ExpectedError('wrongQuantity');
 	}
 
-	const player = await getDinozFromItinerantShop(dinozId, authed.id);
+	const player = await getDinozFromItinerantShop(dinozId, userId);
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist`);
+		throw new ExpectedError(`Player ${userId} doesn't exist`);
 	}
 
 	const itinerant = await getSpecificSecret('itinerant');
@@ -131,16 +131,16 @@ export async function sellIngredient(
 			totalGold
 		});
 
-		await decreaseIngredientQuantity(authed.id, ingre.id, ingre.quantity);
+		await decreaseIngredientQuantity(userId, ingre.id, ingre.quantity);
 	}
 
-	const updated = await addMoney(authed.id, gold);
+	const updated = await addMoney(userId, gold);
 
 	for (const sold of soldIngredients) {
 		safeCreateGameLog(
 			{
 				type: GameLogType.IngredientSold,
-				userId: authed.id,
+				userId: userId,
 				dinozId,
 				values: [String(sold.quantity), String(sold.ingredientId), String(sold.totalGold)],
 				metadata: {
@@ -152,9 +152,20 @@ export async function sellIngredient(
 					reason: 'ITINERANT_SHOP_SELL'
 				}
 			},
-			req.log
+			log
 		);
 	}
 
 	return { gold: updated.amount };
+}
+
+export async function sellIngredient(
+	req: FastifyRequest<{ Params: DinozParams; Body: SellIngredientBody }>
+): Promise<{ gold: number }> {
+	return sellIngredientsToItinerantForUser(
+		req.user.id,
+		Number(req.params.dinozId),
+		req.body.ingredients,
+		req.log
+	);
 }
