@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { BotProgressionGoal } from '../../../prisma/index.js';
 import { getOrAssignBotProgressionGoal } from '../../src/Bot/Service/botProgressionMemory.service.js';
+import { moveDinozForUser } from '../../src/Dinoz/Service/moveDinoz.service.js';
 import { getBotSteppesProgressionStep } from '../../src/Bot/Service/botSteppesProgression.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
@@ -117,4 +118,24 @@ describe('bot Steppes progression', () => {
 			})
 		).toBe(0);
 	});
+	it('crosses the Sylvenoire gate into the Crackling Frontier', async () => {
+		const { user, dinoz } = await createBotDinoz(
+			'SteppesCrossingBot',
+			PlaceEnum.PORTE_DE_SYLVENOIRE
+		);
+		await addStatus(dinoz.id, DinozStatusId.SYLVENOIRE_KEY);
+
+		await moveDinozForUser(user.id, {
+			dinozId: dinoz.id,
+			placeId: PlaceEnum.GO_TO_STEPPES,
+			autoReequip: false
+		});
+
+		const updated = await prisma.dinoz.findUniqueOrThrow({
+			where: { id: dinoz.id },
+			select: { placeId: true }
+		});
+		expect(updated.placeId).toBe(PlaceEnum.FRONTIERE_CREPITANTE);
+	});
+
 });
