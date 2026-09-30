@@ -110,6 +110,14 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		throw new ExpectedError('userNotFound', { params: { userId } });
 	}
 
+	const tutorialAction = await getBotTutorialAction(userId);
+	if (tutorialAction && playerData.dinoz.length > 0) {
+		return {
+			dinozId: playerData.dinoz[0].id,
+			action: tutorialAction
+		};
+	}
+
 	const activeDinozCount = playerData.dinoz.filter(dinoz => isActiveDinozState(dinoz.state)).length;
 	const itinerantPlaceId = await getItinerantPlaceId();
 	const followableDinozCandidates = playerData.dinoz.map(dinoz => ({
@@ -128,14 +136,6 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		nbrUpLightning: dinoz.nbrUpLightning,
 		nbrUpAir: dinoz.nbrUpAir
 	}));
-
-	const tutorialAction = await getBotTutorialAction(userId);
-	if (tutorialAction && playerData.dinoz.length > 0) {
-		return {
-			dinozId: playerData.dinoz[0].id,
-			action: tutorialAction
-		};
-	}
 
 	const candidates: { value: BotDecision; weight: number }[] = [];
 	const progressionGoals = new Map<number, BotProgressionGoal | null>();
