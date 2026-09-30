@@ -30,7 +30,8 @@ function isGoalComplete(
 
 function chooseNextGoal(
 	statusIds: Set<number>,
-	canAttemptSylvenoire: boolean
+	canAttemptSylvenoire: boolean,
+	placeId: number
 ): BotProgressionGoal | null {
 	if (!statusIds.has(DinozStatusId.STRATEGY_IN_130_LESSONS)) {
 		return BotProgressionGoal.SHAMAN_STRATEGY;
@@ -51,7 +52,10 @@ function chooseNextGoal(
 		return BotProgressionGoal.SYLVENOIRE_KEY;
 	}
 	if (statusIds.has(DinozStatusId.SYLVENOIRE_KEY)) {
-		return BotProgressionGoal.STEPPES_ACCESS;
+		const place = Object.values(placeListv2).find(entry => entry.placeId === placeId);
+		if (place?.map !== MapZone.STEPPE) {
+			return BotProgressionGoal.STEPPES_ACCESS;
+		}
 	}
 	return null;
 }
@@ -112,7 +116,7 @@ export async function getOrAssignBotProgressionGoal(
 		return currentGoal;
 	}
 
-	const nextGoal = chooseNextGoal(statusIds, canAttemptSylvenoire);
+	const nextGoal = chooseNextGoal(statusIds, canAttemptSylvenoire, dinoz.placeId);
 	if (!nextGoal) {
 		if (currentGoal) {
 			await prisma.botDinozMemory.deleteMany({
