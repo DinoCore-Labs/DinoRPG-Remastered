@@ -42,10 +42,23 @@ export async function findBestBotHealingItem(userId: string, dinozId: number): P
 				item: NonNullable<(typeof value)['item']>;
 			} => Boolean(value.item?.effect && value.item.effect.category === ItemEffect.HEAL)
 		)
-		.map(({ entry, item }) => ({
-			itemId: entry.itemId,
-			heal: item.effect!.category === ItemEffect.HEAL ? item.effect.value : 0
-		}))
+		.map(({ entry, item }) => {
+			const effect = item.effect;
+			if (!effect || effect.category !== ItemEffect.HEAL) {
+				return null;
+			}
+
+			return {
+				itemId: entry.itemId,
+				heal: effect.value
+			};
+		})
+		.filter(
+			(value): value is {
+				itemId: number;
+				heal: number;
+			} => value !== null
+		)
 		.sort((a, b) => {
 			const aWaste = Math.abs(missingLife - a.heal);
 			const bWaste = Math.abs(missingLife - b.heal);
