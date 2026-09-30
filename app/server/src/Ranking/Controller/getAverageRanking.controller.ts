@@ -7,7 +7,7 @@ export async function getAverageRanking(page: number) {
 			points: true,
 			average: true,
 			dinozCount: true,
-			user: { select: { id: true, name: true } }
+			user: { select: { id: true, name: true, isBot: true } }
 		},
 		orderBy: [{ average: 'desc' }, { user: { name: 'asc' } }],
 		take: 20,
