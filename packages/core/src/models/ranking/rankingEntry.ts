@@ -6,7 +6,7 @@ export interface RankingEntry {
 	average: number;
 	completion: number;
 	dinozCount: number;
-	user: Pick<UserData, 'id' | 'name'>;
+	user: Pick<UserData, 'id' | 'name'> & { isBot: boolean };
 }
 
 export type RankingPositionResponse = {

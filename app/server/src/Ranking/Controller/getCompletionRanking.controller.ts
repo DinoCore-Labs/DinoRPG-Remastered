@@ -7,7 +7,7 @@ export async function getCompletionRanking(page: number) {
 			points: true,
 			completion: true,
 			dinozCount: true,
-			user: { select: { id: true, name: true } }
+			user: { select: { id: true, name: true, isBot: true } }
 		},
 		orderBy: [{ completion: 'desc' }, { user: { name: 'asc' } }],
 		take: 20,

@@ -4,6 +4,7 @@ import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import AccountPage from '../pages/AccountPage.vue';
+import AdminBotsPage from '../pages/Admin/AdminBotsPage.vue';
 import AdminClanPage from '../pages/Admin/AdminClanPage.vue';
 import AdminDinozPage from '../pages/Admin/AdminDinozPage.vue';
 import AdminEventPage from '../pages/Admin/AdminEventPage.vue';
@@ -577,6 +578,12 @@ const routes: RouteRecord[] = [
 						path: '/admin/news/:id',
 						name: 'AdminNewsEdit',
 						component: AdminNewsEditPage,
+						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
+					},
+					{
+						path: '/admin/bots',
+						name: 'AdminBots',
+						component: AdminBotsPage,
 						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
 					},
 					{
