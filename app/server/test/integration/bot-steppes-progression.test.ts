@@ -123,19 +123,6 @@ describe('bot Steppes progression', () => {
 			'SteppesCrossingBot',
 			PlaceEnum.PORTE_DE_SYLVENOIRE
 		);
-		await prisma.dinoz.update({
-			where: { id: dinoz.id },
-			data: {
-				level: 100,
-				life: 10000,
-				maxLife: 10000,
-				nbrUpFire: 100,
-				nbrUpWood: 100,
-				nbrUpWater: 100,
-				nbrUpLightning: 100,
-				nbrUpAir: 100
-			}
-		});
 		await addStatus(dinoz.id, DinozStatusId.SYLVENOIRE_KEY);
 
 		await moveDinozForUser(user.id, {
