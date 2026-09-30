@@ -29,6 +29,7 @@ export interface CreateTestDinozOptions {
 	fight?: boolean;
 	gather?: boolean;
 	order?: number | null;
+	leaderId?: number | null;
 	seed?: string;
 }
 
@@ -59,6 +60,7 @@ export async function createTestDinoz(options: CreateTestDinozOptions) {
 		fight = true,
 		gather = true,
 		order = null,
+		leaderId = null,
 		seed = randomUUID()
 	} = options;
 	return prisma.dinoz.create({
@@ -83,6 +85,7 @@ export async function createTestDinoz(options: CreateTestDinozOptions) {
 			fight,
 			gather,
 			order,
+			leaderId,
 			seed,
 			user: {
 				connect: {
