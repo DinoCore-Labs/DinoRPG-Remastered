@@ -11,12 +11,14 @@ import { assertUserOwnsOfferContent, removeOfferContentFromInventoryTx } from '.
 import { createMarketOfferBodySchema } from '../Schema/market.schema.js';
 import { scheduleNextMarketOfferExpiration } from './expireMarketOffers.service.js';
 
-export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply) {
-	const userId = req.user.id;
-
+export async function createMarketOfferForUser(
+	userId: string,
+	input: unknown,
+	log?: { error: Function }
+) {
 	await assertUserHasDinozAtMarket(userId);
 
-	const body = createMarketOfferBodySchema.parse(req.body);
+	const body = createMarketOfferBodySchema.parse(input);
 	const dinozId = body.dinozId ?? null;
 
 	if (!dinozId && body.items.length === 0 && body.ingredients.length === 0) {
@@ -146,11 +148,16 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 				ingredients: body.ingredients,
 				endDate: createdOffer.endDate.toISOString()
 			}
-		});
+		}, log);
 
 		return createdOffer;
 	});
 	await scheduleNextMarketOfferExpiration();
 
+	return offer;
+}
+
+export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply) {
+	const offer = await createMarketOfferForUser(req.user.id, req.body, req.log);
 	return reply.send(offer);
 }
