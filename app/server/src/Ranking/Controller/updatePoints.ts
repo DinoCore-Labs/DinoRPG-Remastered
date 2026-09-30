@@ -18,7 +18,6 @@ export async function updatePoints(userId: string, points: number) {
 	}
 
 	const newPoints = ranking.points + points;
-	const average = ranking.dinozCount > 0 ? Math.round(newPoints / ranking.dinozCount) : newPoints;
 
 	await prisma.ranking.update({
 		where: {
@@ -26,7 +25,7 @@ export async function updatePoints(userId: string, points: number) {
 		},
 		data: {
 			points: newPoints,
-			average
+			average: Math.round(newPoints / ranking.dinozCount)
 		}
 	});
 }
