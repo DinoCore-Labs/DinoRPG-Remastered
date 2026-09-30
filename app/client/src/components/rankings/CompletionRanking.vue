@@ -38,7 +38,16 @@
 					{{ (page - 1) * 20 + (index + 1) }}
 				</td>
 				<td class="tdOther">
-					<DZUser :user="ranking.user" :me="ranking.user.id === me" :friend="false" />
+					<span class="ranking-player">
+						<DZUser :user="ranking.user" :me="ranking.user.id === me" :friend="false" />
+						<span
+							v-if="uStore.isAdmin && ranking.user.isBot"
+							class="bot-badge"
+							title="Bot joueur"
+						>
+							🤖
+						</span>
+					</span>
 				</td>
 				<td class="tdOther">
 					{{ ranking.dinozCount }}
@@ -140,6 +149,15 @@ export default defineComponent({
 	background-image: url('../../assets/background/table_cell.webp');
 	background-position: -10px 0px;
 	max-width: 4px;
+}
+.ranking-player {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+.bot-badge {
+	font-size: 12px;
+	line-height: 1;
 }
 .select:hover {
 	td {
