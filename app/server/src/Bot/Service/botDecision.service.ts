@@ -1,4 +1,5 @@
 import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { BotProgressionGoal, BotStrategy, DinozState } from '../../../../prisma/index.js';
@@ -23,11 +24,13 @@ import { getOrAssignBotProgressionGoal } from './botProgressionMemory.service.js
 import { getBotKorgonProgressionStep } from './botKorgonProgression.service.js';
 import { getBotSylvenoireProgressionStep } from './botSylvenoireProgression.service.js';
 import { getBotForestGuardianProgressionStep } from './botForestGuardianProgression.service.js';
+import { getBotMarketOfferPlan, shouldBotGoToMarket } from './botMarket.service.js';
+import { getBotItinerantSalePlan } from './botItinerantMerchant.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 
 export type BotDecision = {
 	dinozId: number;
-	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'forcebrut' | 'enter_dark_portal' | 'progression_dialog' | 'progression_dig' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
+	action: Action | 'move' | 'dialog' | 'heal' | 'buy_dinoz' | 'group' | 'ungroup' | 'equip' | 'shop' | 'market_sell' | 'itinerant_sell' | 'forcebrut' | 'enter_dark_portal' | 'progression_dialog' | 'progression_dig' | 'mission_dialog' | 'mission_interact' | 'mission_wait' | BotTutorialAction;
 	shopId?: number;
 	dialogId?: string;
 	preferredLinkIds?: string[];
@@ -395,6 +398,48 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		[BotStrategy.EXPLORER]: 25
 	};
 
+	const marketPlan = await getBotMarketOfferPlan(userId);
+	if (marketPlan) {
+		const marketDinoz = playerData.dinoz.find(
+			dinoz =>
+				dinoz.placeId === PlaceEnum.PLACE_DU_MARCHE &&
+				isActiveDinozState(dinoz.state) &&
+				dinoz.life > 0
+		);
+
+		if (marketDinoz) {
+			candidates.push({
+				value: {
+					dinozId: marketDinoz.id,
+					action: 'market_sell'
+				},
+				weight: 90
+			});
+		} else if (await shouldBotGoToMarket(userId)) {
+			const mover = playerData.dinoz.find(
+				dinoz => isActiveDinozState(dinoz.state) && dinoz.life > 0
+			);
+			if (mover) {
+				const nextHop = await findBotMissionNextHop(
+					userId,
+					mover.id,
+					mover.placeId,
+					PlaceEnum.PLACE_DU_MARCHE
+				);
+				if (nextHop != null) {
+					candidates.push({
+						value: {
+							dinozId: mover.id,
+							action: 'move',
+							targetPlaceId: nextHop
+						},
+						weight: 85
+					});
+				}
+			}
+		}
+	}
+
 	for (const dinoz of playerData.dinoz) {
 		if (await canBotFightForcebrut(userId, dinoz.id, strategy)) {
 			candidates.push({
@@ -515,6 +560,20 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				}
 				continue;
 			}
+			if (action.name === Action.ITINERANTSHOP && typeof action.prop === 'number') {
+				if (await getBotItinerantSalePlan(userId, action.prop)) {
+					candidates.push({
+						value: {
+							dinozId: dinoz.id,
+							action: 'itinerant_sell',
+							shopId: action.prop
+						},
+						weight: 115
+					});
+				}
+				continue;
+			}
+
 			if (!SUPPORTED_ACTIONS.has(action.name as Action)) continue;
 			const actionName = action.name as Action;
 

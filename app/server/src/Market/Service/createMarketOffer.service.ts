@@ -11,22 +11,36 @@ import { assertUserOwnsOfferContent, removeOfferContentFromInventoryTx } from '.
 import { createMarketOfferBodySchema } from '../Schema/market.schema.js';
 import { scheduleNextMarketOfferExpiration } from './expireMarketOffers.service.js';
 
-export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply) {
-	const userId = req.user.id;
+type CreateMarketOfferOptions = {
+	log?: {
+		error: Function;
+		info?: Function;
+	};
+	requestId?: string;
+};
+
+export async function createMarketOfferForUser(userId: string, input: unknown, options: CreateMarketOfferOptions = {}) {
 	await assertUserHasDinozAtMarket(userId);
-	const body = createMarketOfferBodySchema.parse(req.body);
+
+	const body = createMarketOfferBodySchema.parse(input);
 	const dinozId = body.dinozId ?? null;
+
 	if (!dinozId && body.items.length === 0 && body.ingredients.length === 0) {
 		throw new ExpectedError('emptyOffer');
 	}
+
 	await assertUserOwnsOfferContent(userId, body.items, body.ingredients);
+
 	const user = await prisma.user.findUniqueOrThrow({
-		where: { id: userId },
+		where: {
+			id: userId
+		},
 		select: {
 			id: true,
 			name: true
 		}
 	});
+
 	if (dinozId) {
 		const dinoz = await prisma.dinoz.findFirst({
 			where: {
@@ -50,34 +64,47 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 				}
 			}
 		});
+
 		if (!dinoz) {
 			throw new ExpectedError('invalidDinoz');
 		}
+
 		if (dinoz.placeId !== PlaceEnum.PLACE_DU_MARCHE) {
 			throw new ExpectedError('dinozNotAtMarket');
 		}
+
 		if (dinoz.state === DinozState.selling) {
 			throw new ExpectedError('dinozAlreadySelling');
 		}
+
 		if (dinoz.state !== null) {
 			throw new ExpectedError('invalidDinozState');
 		}
+
 		if (dinoz.leaderId || dinoz.followers.length > 0) {
 			throw new ExpectedError('dinozInGroup');
 		}
+
 		if (dinoz.items.length > 0) {
 			throw new ExpectedError('equippedItems');
 		}
 	}
+
 	const offer = await prisma.$transaction(async tx => {
 		/*
-		 * Serialize offer creation for the same seller.
+		 * Sérialise la création d'offres
+		 * pour un même vendeur.
 		 *
-		 * An advisory transaction lock prevents two concurrent
-		 * requests from both creating an ONGOING offer without
-		 * locking the User row itself.
+		 * Cela évite que deux requêtes
+		 * concurrentes créent chacune une
+		 * offre ONGOING.
 		 */
-		await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`;
+		await tx.$executeRaw`
+				SELECT pg_advisory_xact_lock(
+					hashtextextended(${userId}, 0)
+				)
+			`;
+
 		const existingOffer = await tx.offer.findFirst({
 			where: {
 				sellerId: userId,
@@ -87,9 +114,11 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 				id: true
 			}
 		});
+
 		if (existingOffer) {
 			throw new ExpectedError('alreadyOffer');
 		}
+
 		const createdOffer = await tx.offer.create({
 			data: {
 				sellerId: userId,
@@ -114,32 +143,42 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 				}
 			}
 		});
+
 		if (dinozId) {
 			await tx.dinoz.update({
-				where: { id: dinozId },
+				where: {
+					id: dinozId
+				},
 				data: {
 					state: DinozState.selling
 				}
 			});
 		}
+
 		await removeOfferContentFromInventoryTx(tx, userId, body.items, body.ingredients);
-		await safeCreateGameLog({
-			type: GameLogType.OfferNew,
-			userId,
-			dinozId,
-			values: [],
-			metadata: {
-				offerId: createdOffer.id,
-				total: body.total,
+
+		safeCreateGameLog(
+			{
+				type: GameLogType.OfferNew,
+				userId,
 				dinozId,
-				items: body.items,
-				ingredients: body.ingredients,
-				endDate: createdOffer.endDate.toISOString()
-			}
-		});
+				values: [],
+				metadata: {
+					offerId: createdOffer.id,
+					total: body.total,
+					dinozId,
+					items: body.items,
+					ingredients: body.ingredients,
+					endDate: createdOffer.endDate.toISOString()
+				}
+			},
+			options.log
+		);
+
 		return createdOffer;
 	});
-	req.log.info(
+
+	options.log?.info?.(
 		{
 			category: 'market',
 			action: 'offer_created',
@@ -149,10 +188,21 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 			total: body.total,
 			itemCount: body.items.length,
 			ingredientCount: body.ingredients.length,
-			requestId: req.id
+			requestId: options.requestId
 		},
 		'Market offer created'
 	);
+
 	await scheduleNextMarketOfferExpiration();
+
+	return offer;
+}
+
+export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply) {
+	const offer = await createMarketOfferForUser(req.user.id, req.body, {
+		log: req.log,
+		requestId: req.id
+	});
+
 	return reply.send(offer);
 }

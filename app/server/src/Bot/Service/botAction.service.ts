@@ -22,8 +22,23 @@ import { prepareBotSkillsForCombat } from './botSkillStrategy.service.js';
 import { fightForcebrutOpponentForUser } from '../../Forcebrut/Service/forcebrutTournament.service.js';
 import { digWithDinoz } from '../../Dinoz/Service/dig.service.js';
 import { enterDarkPortal } from '../../Dinoz/Controller/concentrationDinoz.controller.js';
+import { createBotMarketOffer } from './botMarket.service.js';
+import { sellBotSurplusToItinerant } from './botItinerantMerchant.service.js';
 
 export async function executeBotDecision(userId: string, strategy: BotStrategy, decision: BotDecision) {
+	if (decision.action === 'itinerant_sell') {
+		if (decision.shopId === undefined) {
+			throw new ExpectedError('missingBotShopId');
+		}
+		await sellBotSurplusToItinerant(userId, decision.dinozId, decision.shopId);
+		return;
+	}
+
+	if (decision.action === 'market_sell') {
+		await createBotMarketOffer(userId);
+		return;
+	}
+
 	if (decision.action === 'enter_dark_portal') {
 		await enterDarkPortal(userId, decision.dinozId);
 		return;

@@ -1,0 +1,164 @@
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { Ingredient } from '@dinorpg/core/models/ingredients/ingredientList.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
+import { beforeEach, describe, expect, it } from 'vitest';
+
+import {
+	createBotMarketOffer,
+	getBotIngredientReserve,
+	getBotMarketOfferPlan
+} from '../../src/Bot/Service/botMarket.service.js';
+import { getBotItinerantSalePlan } from '../../src/Bot/Service/botItinerantMerchant.service.js';
+import { prisma } from '../../src/prisma.js';
+import { cleanDatabase } from '../helpers/database.js';
+import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
+import { createTestUser } from '../helpers/factories/user.factory.js';
+
+beforeEach(async () => {
+	await cleanDatabase();
+});
+
+describe('bot market economy', () => {
+	it('keeps inventory reserves and only sells real surplus', async () => {
+		const user = await createTestUser({
+			name: 'MarketReserveBot',
+			withTutorial: false
+		});
+
+		await prisma.userItems.create({
+			data: {
+				userId: user.id,
+				itemId: itemList[Item.SOS_HELMET].itemId,
+				quantity: 10
+			}
+		});
+		await prisma.userIngredients.create({
+			data: {
+				userId: user.id,
+				ingredientId: Ingredient.MEROU_LUJIDANE,
+				quantity: 20
+			}
+		});
+
+		const plan = await getBotMarketOfferPlan(user.id);
+
+		expect(plan).not.toBeNull();
+		expect(plan?.items).toContainEqual({
+			itemId: itemList[Item.SOS_HELMET].itemId,
+			quantity: 8
+		});
+		expect(plan?.ingredients).toContainEqual({
+			ingredientId: Ingredient.MEROU_LUJIDANE,
+			quantity: 10
+		});
+		expect(getBotIngredientReserve(Ingredient.MEROU_LUJIDANE)).toBe(10);
+	});
+
+	it('creates one real market offer and removes only offered surplus', async () => {
+		const user = await createTestUser({
+			name: 'MarketOfferBot',
+			withTutorial: false
+		});
+		await createTestDinoz({
+			userId: user.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE,
+			canRename: false
+		});
+		await prisma.userItems.create({
+			data: {
+				userId: user.id,
+				itemId: itemList[Item.SOS_HELMET].itemId,
+				quantity: 10
+			}
+		});
+
+		await expect(createBotMarketOffer(user.id)).resolves.toBe(true);
+
+		const offer = await prisma.offer.findFirstOrThrow({
+			where: {
+				sellerId: user.id
+			},
+			include: {
+				items: true
+			}
+		});
+		expect(offer.total).toBe(1200);
+		expect(offer.items).toEqual(
+			expect.arrayContaining([
+				expect.objectContaining({
+					itemId: itemList[Item.SOS_HELMET].itemId,
+					quantity: 8,
+					isIngredient: false
+				})
+			])
+		);
+
+		const remaining = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId: itemList[Item.SOS_HELMET].itemId
+				}
+			}
+		});
+		expect(remaining.quantity).toBe(2);
+		await expect(getBotMarketOfferPlan(user.id)).resolves.toBeNull();
+	});
+
+	it('does not create a market offer below the minimum useful value', async () => {
+		const user = await createTestUser({
+			name: 'MarketSmallSurplusBot',
+			withTutorial: false
+		});
+		await prisma.userItems.create({
+			data: {
+				userId: user.id,
+				itemId: itemList[Item.SOS_HELMET].itemId,
+				quantity: 3
+			}
+		});
+
+		await expect(getBotMarketOfferPlan(user.id)).resolves.toBeNull();
+	});
+});
+
+describe('bot itinerant merchant economy', () => {
+	it('sells only ingredient quantities above the shared reserve', async () => {
+		const user = await createTestUser({
+			name: 'ItinerantSurplusBot',
+			withTutorial: false
+		});
+		await prisma.userIngredients.create({
+			data: {
+				userId: user.id,
+				ingredientId: Ingredient.MEROU_LUJIDANE,
+				quantity: 17
+			}
+		});
+		await prisma.userIngredients.create({
+			data: {
+				userId: user.id,
+				ingredientId: Ingredient.POISSON_VENGEUR,
+				quantity: 5
+			}
+		});
+
+		const plan = await getBotItinerantSalePlan(
+			user.id,
+			shopListV2.ITINERANT_MERCHANT_FRIDAY.shopId
+		);
+
+		expect(plan).not.toBeNull();
+		expect(plan?.ingredients).toContainEqual({
+			itemId: Ingredient.MEROU_LUJIDANE,
+			quantity: 7
+		});
+		expect(plan?.ingredients).not.toContainEqual(
+			expect.objectContaining({
+				itemId: Ingredient.POISSON_VENGEUR
+			})
+		);
+		expect(plan?.totalGold).toBe(700);
+	});
+});
