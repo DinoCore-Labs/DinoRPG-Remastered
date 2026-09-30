@@ -570,6 +570,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				candidate.weight >= 230 &&
 				(candidate.value.action === 'progression_dialog' ||
 					candidate.value.action === 'progression_dig' ||
+					candidate.value.action === 'enter_dark_portal' ||
 					candidate.value.action === 'move')
 		)
 		.sort((a, b) => b.weight - a.weight)[0];
