@@ -1,5 +1,4 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
-import { MARKET_EXPIRATION_JOB_KEY } from '@dinorpg/core/models/market/constants.js';
 import { Ingredient } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { missionList } from '@dinorpg/core/models/missions/data/index.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
@@ -73,18 +72,6 @@ describe('bot market economy', () => {
 				userId: user.id,
 				itemId: itemList[Item.SOS_HELMET].itemId,
 				quantity: 10
-			}
-		});
-		await prisma.jobDefinition.create({
-			data: {
-				key: MARKET_EXPIRATION_JOB_KEY,
-				name: 'Expire market offers',
-				type: 'INTERVAL',
-				timezone: 'UTC',
-				intervalMs: null,
-				nextRunAt: null,
-				lockTimeoutS: 30,
-				enabled: true
 			}
 		});
 
