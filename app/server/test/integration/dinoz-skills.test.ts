@@ -1,5 +1,10 @@
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
-import { Skill } from '@dinorpg/core/models/skills/skillList.js';
+import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
+import { RaceEnum } from '@dinorpg/core/models/enums/Race.js';
+import { SkillTreeType } from '@dinorpg/core/models/enums/SkillTreeType.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
+import { getLevelXp } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
@@ -56,6 +61,48 @@ async function getSkillState(dinozId: number, skillId: Skill): Promise<boolean |
 		}
 	});
 	return skill?.state ?? null;
+}
+
+async function addStatus(dinozId: number, statusId: DinozStatusId): Promise<void> {
+	await prisma.dinozStatus.create({
+		data: {
+			dinozId,
+			statusId
+		}
+	});
+}
+
+async function equipDinozCube(dinozId: number): Promise<void> {
+	await prisma.dinozItems.create({
+		data: {
+			dinozId,
+			itemId: itemList[Item.DINOZ_CUBE].itemId
+		}
+	});
+}
+
+async function createLevelUpReadyDinoz(
+	userId: string,
+	options: {
+		name?: string;
+		level?: number;
+		raceId?: RaceEnum;
+		element?: ElementType;
+		altElement?: ElementType;
+	} = {}
+) {
+	const level = options.level ?? 1;
+
+	return createTestDinoz({
+		userId,
+		name: options.name ?? 'LevelUpDinoz',
+		canRename: false,
+		level,
+		experience: getLevelXp(level),
+		raceId: options.raceId ?? RaceEnum.MOUEFFE,
+		nextUpElementId: options.element ?? ElementType.FIRE,
+		nextUpAltElementId: options.altElement ?? ElementType.WATER
+	});
 }
 
 describe('Dinoz skills', () => {
@@ -306,6 +353,391 @@ describe('Dinoz skills', () => {
 				code: 'dinozDoesNotBelongToUser'
 			});
 			expect(await getSkillState(dinoz.id, Skill.COLERE)).toBe(true);
+		});
+	});
+
+	describe('learnable skills', () => {
+		it('returns the skills available for the first level-up roll', async () => {
+			const user = await createTestUser({
+				name: 'LearnableSkillsOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				element: ElementType.FIRE
+			});
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/level/learnableskills/${dinoz.id}/1`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			const body = response.json();
+			expect(body).toMatchObject({
+				element: ElementType.FIRE,
+				canRelaunch: false,
+				level: 1
+			});
+			const learnableIds = body.learnableSkills.map((skill: { skillId: number }) => skill.skillId);
+			/*
+			 * Compétences Feu de base,
+			 * sans prérequis.
+			 */
+			expect(learnableIds).toEqual(expect.arrayContaining([Skill.GRIFFES_ENFLAMMEES, Skill.COLERE, Skill.FORCE]));
+			/*
+			 * Les compétences sphériques ne
+			 * sont jamais proposées ici.
+			 */
+			expect(learnableIds).not.toContain(Skill.BRASERO);
+		});
+
+		it('requires enough experience before offering level-up skills', async () => {
+			const user = await createTestUser({
+				name: 'LowXpSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'LowXpDinoz',
+				canRename: false,
+				level: 1,
+				experience: getLevelXp(1) - 1,
+				nextUpElementId: ElementType.FIRE
+			});
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/level/learnableskills/${dinoz.id}/1`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dinozNotEnoughExperience'
+			});
+		});
+
+		it('prevents another player from reading level-up choices', async () => {
+			const owner = await createTestUser({
+				name: 'LevelSkillRealOwner',
+				withTutorial: false
+			});
+			const attacker = await createTestUser({
+				name: 'LevelSkillAttacker',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(owner.id);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/level/learnableskills/${dinoz.id}/1`,
+				headers: {
+					cookie: createAuthCookie(server, attacker)
+				}
+			});
+			expect(response.statusCode).toBe(403);
+		});
+
+		it('requires the Dinoz to be named before level-up', async () => {
+			const user = await createTestUser({
+				name: 'UnnamedLevelSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				canRename: true,
+				level: 1,
+				experience: getLevelXp(1),
+				nextUpElementId: ElementType.FIRE
+			});
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/level/learnableskills/${dinoz.id}/1`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+		});
+
+		it('rejects the second roll without Career Plan or Dinoz Cube', async () => {
+			const user = await createTestUser({
+				name: 'NoRerollSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				element: ElementType.FIRE,
+				altElement: ElementType.WATER
+			});
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/level/learnableskills/${dinoz.id}/2`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+		});
+
+		it('allows the second roll with Career Plan', async () => {
+			const user = await createTestUser({
+				name: 'CareerPlanSkillOwner',
+				withTutorial: false
+			});
+			/*
+			 * Niveau > 10 volontaire :
+			 * Plan de carrière n'a pas la
+			 * limitation du Cube Dinoz.
+			 */
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				level: 15,
+				element: ElementType.FIRE,
+				altElement: ElementType.WATER
+			});
+			await addSkill(dinoz.id, Skill.PLAN_DE_CARRIERE);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/level/learnableskills/${dinoz.id}/2`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			expect(response.json()).toMatchObject({
+				element: ElementType.WATER,
+				canRelaunch: true,
+				level: 15
+			});
+		});
+
+		it('allows the second roll with a Dinoz Cube through level 10', async () => {
+			const user = await createTestUser({
+				name: 'DinozCubeSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				level: 10,
+				element: ElementType.FIRE,
+				altElement: ElementType.AIR
+			});
+			await equipDinozCube(dinoz.id);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/level/learnableskills/${dinoz.id}/2`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			expect(response.json()).toMatchObject({
+				element: ElementType.AIR,
+				canRelaunch: true
+			});
+		});
+
+		it('does not allow the Dinoz Cube reroll above level 10', async () => {
+			const user = await createTestUser({
+				name: 'ExpiredCubeSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				level: 11,
+				altElement: ElementType.AIR
+			});
+			await equipDinozCube(dinoz.id);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/level/learnableskills/${dinoz.id}/2`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+		});
+
+		it('switches from the Vanilla tree to the Ether tree with Ether Drop', async () => {
+			const etherBaseSkill = Object.values(skillList).find(
+				skill =>
+					skill.tree === SkillTreeType.ETHER &&
+					skill.unlockedFrom?.length === 0 &&
+					!skill.isSphereSkill &&
+					!skill.raceId
+			);
+			expect(etherBaseSkill).toBeDefined();
+			if (!etherBaseSkill) {
+				return;
+			}
+			const element = etherBaseSkill.element[0];
+			expect(element).toBeDefined();
+			if (!element) {
+				return;
+			}
+			const user = await createTestUser({
+				name: 'EtherTreeSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				element
+			});
+			await addStatus(dinoz.id, DinozStatusId.ETHER_DROP);
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/level/learnableskills/${dinoz.id}/1`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			const body = response.json();
+			const learnableIds: Skill[] = (
+				body.learnableSkills as Array<{
+					skillId: Skill;
+				}>
+			).map(skill => skill.skillId);
+			expect(learnableIds).toContain(etherBaseSkill.id);
+			for (const skillId of learnableIds) {
+				expect(skillList[skillId].tree).toBe(SkillTreeType.ETHER);
+			}
+		});
+
+		it('only exposes a prerequisite skill after its prerequisite is known', async () => {
+			const user = await createTestUser({
+				name: 'PrerequisiteSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				element: ElementType.FIRE
+			});
+			const getChoices = () =>
+				server.inject({
+					method: 'GET',
+					url: `/api/level/learnableskills/${dinoz.id}/1`,
+					headers: {
+						cookie: createAuthCookie(server, user)
+					}
+				});
+			const before = await getChoices();
+			expect(before.statusCode).toBe(200);
+			expect(before.json().learnableSkills.map((skill: { skillId: number }) => skill.skillId)).not.toContain(
+				Skill.SOUFFLE_ARDENT
+			);
+			await addSkill(dinoz.id, Skill.GRIFFES_ENFLAMMEES);
+			const after = await getChoices();
+			expect(after.statusCode).toBe(200);
+			expect(after.json().learnableSkills.map((skill: { skillId: number }) => skill.skillId)).toContain(
+				Skill.SOUFFLE_ARDENT
+			);
+		});
+
+		it('returns stored unlockable skills separately from normal learnable skills', async () => {
+			const user = await createTestUser({
+				name: 'UnlockableSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				element: ElementType.FIRE
+			});
+			await prisma.dinozSkillsUnlockable.create({
+				data: {
+					dinozId: dinoz.id,
+					skillId: Skill.SOUFFLE_ARDENT
+				}
+			});
+			const response = await server.inject({
+				method: 'GET',
+				url: `/api/level/learnableskills/${dinoz.id}/1`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			const body = response.json();
+			expect(body.unlockableSkills.map((skill: { skillId: number }) => skill.skillId)).toContain(Skill.SOUFFLE_ARDENT);
+			/*
+			 * Une compétence déjà placée
+			 * dans unlockableSkills ne doit
+			 * plus apparaître dans la liste
+			 * d'apprentissage normale.
+			 */
+			expect(body.learnableSkills.map((skill: { skillId: number }) => skill.skillId)).not.toContain(
+				Skill.SOUFFLE_ARDENT
+			);
+		});
+
+		it('respects race restrictions on learnable skills', async () => {
+			const user = await createTestUser({
+				name: 'RaceRestrictedSkillOwner',
+				withTutorial: false
+			});
+			const moueffe = await createLevelUpReadyDinoz(user.id, {
+				name: 'MoueffeSkillRestriction',
+				raceId: RaceEnum.MOUEFFE,
+				element: ElementType.FIRE
+			});
+			const quetzu = await createLevelUpReadyDinoz(user.id, {
+				name: 'QuetzuSkillRestriction',
+				raceId: RaceEnum.QUETZU,
+				element: ElementType.FIRE
+			});
+			/*
+			 * Propulsion Divine nécessite Force
+			 * et est réservée au Quetzu.
+			 */
+			await addSkill(moueffe.id, Skill.FORCE);
+			await addSkill(quetzu.id, Skill.FORCE);
+			const [moueffeResponse, quetzuResponse] = await Promise.all([
+				server.inject({
+					method: 'GET',
+					url: `/api/level/learnableskills/${moueffe.id}/1`,
+					headers: {
+						cookie: createAuthCookie(server, user)
+					}
+				}),
+				server.inject({
+					method: 'GET',
+					url: `/api/level/learnableskills/${quetzu.id}/1`,
+					headers: {
+						cookie: createAuthCookie(server, user)
+					}
+				})
+			]);
+			expect(moueffeResponse.statusCode).toBe(200);
+			expect(quetzuResponse.statusCode).toBe(200);
+			const moueffeSkills = moueffeResponse.json().learnableSkills.map((skill: { skillId: number }) => skill.skillId);
+			const quetzuSkills = quetzuResponse.json().learnableSkills.map((skill: { skillId: number }) => skill.skillId);
+			expect(moueffeSkills).not.toContain(Skill.PROPULSION_DIVINE);
+			expect(quetzuSkills).toContain(Skill.PROPULSION_DIVINE);
+		});
+
+		it('blocks a level-limit threshold until its required status is obtained', async () => {
+			const user = await createTestUser({
+				name: 'LevelCapSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'LevelCapSkillDinoz',
+				canRename: false,
+				level: 50,
+				experience: getLevelXp(50),
+				nextUpElementId: ElementType.FIRE
+			});
+			const request = () =>
+				server.inject({
+					method: 'GET',
+					url: `/api/level/learnableskills/${dinoz.id}/1`,
+					headers: {
+						cookie: createAuthCookie(server, user)
+					}
+				});
+			const blocked = await request();
+			expect(blocked.statusCode).toBe(400);
+			expect(blocked.json()).toMatchObject({
+				code: 'dinozLevelCapReached'
+			});
+			await addStatus(dinoz.id, DinozStatusId.BROKEN_LIMIT_1);
+			const unlocked = await request();
+			expect(unlocked.statusCode).toBe(200);
 		});
 	});
 });
