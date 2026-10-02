@@ -128,6 +128,14 @@ export async function getOrAssignBotProgressionGoal(
 	const statusIds = new Set(dinoz.status.map(status => status.statusId));
 	const rewardIds = new Set(dinoz.user.rewards.map(reward => reward.rewardId));
 	const currentGoal = dinoz.botMemory?.goal ?? null;
+	const availableTrophyGoal =
+		dinoz.level >= 8 && !rewardIds.has(Reward.HIPPO)
+			? BotProgressionGoal.HIPPOCLAMP_TROPHY
+			: dinoz.level >= 8 && !rewardIds.has(Reward.PTEROZ)
+				? BotProgressionGoal.PTEROZ_TROPHY
+				: dinoz.level >= 13 && !rewardIds.has(Reward.ROCKY)
+					? BotProgressionGoal.ROCKY_TROPHY
+					: null;
 	const magnetiteScenario = await prisma.userScenario.findUnique({
 		where: {
 			scenarioKey_userId: {
@@ -173,7 +181,14 @@ export async function getOrAssignBotProgressionGoal(
 			magnetiteProgression
 		)
 	) {
-		return currentGoal;
+		const currentIsTrophyGoal =
+			currentGoal === BotProgressionGoal.HIPPOCLAMP_TROPHY ||
+			currentGoal === BotProgressionGoal.PTEROZ_TROPHY ||
+			currentGoal === BotProgressionGoal.ROCKY_TROPHY;
+
+		if (currentIsTrophyGoal || !availableTrophyGoal) {
+			return currentGoal;
+		}
 	}
 
 	const nextGoal = chooseNextGoal(
