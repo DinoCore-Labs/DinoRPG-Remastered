@@ -2,6 +2,7 @@ import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { MapZone } from '@dinorpg/core/models/enums/MapZone.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '@dinorpg/core/models/scenarios/data/magnetiteScenario.js';
+import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 
 import { BotProgressionGoal } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
@@ -9,6 +10,7 @@ import { prisma } from '../../prisma.js';
 function isGoalComplete(
 	goal: BotProgressionGoal,
 	statusIds: Set<number>,
+	rewardIds: Set<number>,
 	placeId: number,
 	magnetiteProgression: number
 ): boolean {
@@ -29,15 +31,32 @@ function isGoalComplete(
 		}
 		case BotProgressionGoal.MAGNETITE:
 			return magnetiteProgression >= MagnetiteProgression.COMPLETED;
+		case BotProgressionGoal.HIPPOCLAMP_TROPHY:
+			return rewardIds.has(Reward.HIPPO);
+		case BotProgressionGoal.PTEROZ_TROPHY:
+			return rewardIds.has(Reward.PTEROZ);
+		case BotProgressionGoal.ROCKY_TROPHY:
+			return rewardIds.has(Reward.ROCKY);
 	}
 }
 
 function chooseNextGoal(
 	statusIds: Set<number>,
+	rewardIds: Set<number>,
+	level: number,
 	canAttemptSylvenoire: boolean,
 	placeId: number,
 	magnetiteProgression: number
 ): BotProgressionGoal | null {
+	if (level >= 8 && !rewardIds.has(Reward.HIPPO)) {
+		return BotProgressionGoal.HIPPOCLAMP_TROPHY;
+	}
+	if (level >= 8 && !rewardIds.has(Reward.PTEROZ)) {
+		return BotProgressionGoal.PTEROZ_TROPHY;
+	}
+	if (level >= 13 && !rewardIds.has(Reward.ROCKY)) {
+		return BotProgressionGoal.ROCKY_TROPHY;
+	}
 	if (!statusIds.has(DinozStatusId.STRATEGY_IN_130_LESSONS)) {
 		return BotProgressionGoal.SHAMAN_STRATEGY;
 	}
@@ -82,6 +101,7 @@ export async function getOrAssignBotProgressionGoal(
 		},
 		select: {
 			placeId: true,
+			level: true,
 			status: {
 				select: {
 					statusId: true
@@ -91,12 +111,22 @@ export async function getOrAssignBotProgressionGoal(
 				select: {
 					goal: true
 				}
+			},
+			user: {
+				select: {
+					rewards: {
+						select: {
+							rewardId: true
+						}
+					}
+				}
 			}
 		}
 	});
 	if (!dinoz) return null;
 
 	const statusIds = new Set(dinoz.status.map(status => status.statusId));
+	const rewardIds = new Set(dinoz.user.rewards.map(reward => reward.rewardId));
 	const currentGoal = dinoz.botMemory?.goal ?? null;
 	const magnetiteScenario = await prisma.userScenario.findUnique({
 		where: {
@@ -135,13 +165,21 @@ export async function getOrAssignBotProgressionGoal(
 		});
 	} else if (
 		currentGoal &&
-		!isGoalComplete(currentGoal, statusIds, dinoz.placeId, magnetiteProgression)
+		!isGoalComplete(
+			currentGoal,
+			statusIds,
+			rewardIds,
+			dinoz.placeId,
+			magnetiteProgression
+		)
 	) {
 		return currentGoal;
 	}
 
 	const nextGoal = chooseNextGoal(
 		statusIds,
+		rewardIds,
+		dinoz.level,
 		canAttemptSylvenoire,
 		dinoz.placeId,
 		magnetiteProgression
