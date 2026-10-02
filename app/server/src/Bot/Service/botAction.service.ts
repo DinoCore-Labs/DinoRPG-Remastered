@@ -19,7 +19,7 @@ import { healBotDinoz } from './botHealing.service.js';
 import { buyBotDinoz } from './botEconomy.service.js';
 import { createBotGroup, ungroupBotDinoz } from './botGroup.service.js';
 import { equipBotDinoz } from './botEquipment.service.js';
-import { buyBotUsefulItem } from './botShop.service.js';
+import { buyBotIrma, buyBotUsefulItem } from './botShop.service.js';
 import { prepareBotSkillsForCombat } from './botSkillStrategy.service.js';
 import { fightForcebrutOpponentForUser } from '../../Forcebrut/Service/forcebrutTournament.service.js';
 import { digWithDinoz } from '../../Dinoz/Service/dig.service.js';
@@ -162,6 +162,11 @@ export async function executeBotDecision(userId: string, strategy: BotStrategy, 
 
 	if (decision.action === 'tutorial_buy_irma') {
 		await buyBotTutorialIrma(userId, decision.dinozId);
+		return;
+	}
+
+	if (decision.action === 'buy_irma') {
+		await buyBotIrma(userId);
 		return;
 	}
 
