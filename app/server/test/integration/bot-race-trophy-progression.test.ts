@@ -112,4 +112,37 @@ describe('bot race trophy progression', () => {
 		expect(goal).not.toBe(BotProgressionGoal.PTEROZ_TROPHY);
 		expect(goal).not.toBe(BotProgressionGoal.ROCKY_TROPHY);
 	});
+	it('preempts an older long-term goal when a trophy becomes available', async () => {
+		const { user, dinoz } = await createBotDinoz(8);
+
+		await prisma.botDinozMemory.create({
+			data: {
+				dinozId: dinoz.id,
+				goal: BotProgressionGoal.SHAMAN_STRATEGY
+			}
+		});
+
+		await expect(
+			getOrAssignBotProgressionGoal(user.id, dinoz.id)
+		).resolves.toBe(BotProgressionGoal.HIPPOCLAMP_TROPHY);
+	});
+
+	it('does not send a follower alone to unlock a trophy', async () => {
+		const { user, dinoz: leader } = await createBotDinoz(8);
+		const follower = await createTestDinoz({
+			userId: user.id,
+			level: 8,
+			placeId: PlaceEnum.DINOVILLE,
+			canRename: false
+		});
+		await prisma.dinoz.update({
+			where: { id: follower.id },
+			data: { leaderId: leader.id }
+		});
+
+		await expect(
+			getBotRaceTrophyProgressionStep(user.id, follower.id)
+		).resolves.toBeNull();
+	});
+
 });
