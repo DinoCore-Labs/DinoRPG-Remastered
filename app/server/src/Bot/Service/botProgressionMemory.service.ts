@@ -1,6 +1,7 @@
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { MapZone } from '@dinorpg/core/models/enums/MapZone.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '@dinorpg/core/models/scenarios/data/magnetiteScenario.js';
 
 import { BotProgressionGoal } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
@@ -8,7 +9,8 @@ import { prisma } from '../../prisma.js';
 function isGoalComplete(
 	goal: BotProgressionGoal,
 	statusIds: Set<number>,
-	placeId: number
+	placeId: number,
+	magnetiteProgression: number
 ): boolean {
 	switch (goal) {
 		case BotProgressionGoal.SHAMAN_STRATEGY:
@@ -25,13 +27,16 @@ function isGoalComplete(
 			const place = Object.values(placeListv2).find(entry => entry.placeId === placeId);
 			return place?.map === MapZone.STEPPE;
 		}
+		case BotProgressionGoal.MAGNETITE:
+			return magnetiteProgression >= MagnetiteProgression.COMPLETED;
 	}
 }
 
 function chooseNextGoal(
 	statusIds: Set<number>,
 	canAttemptSylvenoire: boolean,
-	placeId: number
+	placeId: number,
+	magnetiteProgression: number
 ): BotProgressionGoal | null {
 	if (!statusIds.has(DinozStatusId.STRATEGY_IN_130_LESSONS)) {
 		return BotProgressionGoal.SHAMAN_STRATEGY;
@@ -55,6 +60,9 @@ function chooseNextGoal(
 		const place = Object.values(placeListv2).find(entry => entry.placeId === placeId);
 		if (place?.map !== MapZone.STEPPE) {
 			return BotProgressionGoal.STEPPES_ACCESS;
+		}
+		if (magnetiteProgression < MagnetiteProgression.COMPLETED) {
+			return BotProgressionGoal.MAGNETITE;
 		}
 	}
 	return null;
@@ -90,6 +98,19 @@ export async function getOrAssignBotProgressionGoal(
 
 	const statusIds = new Set(dinoz.status.map(status => status.statusId));
 	const currentGoal = dinoz.botMemory?.goal ?? null;
+	const magnetiteScenario = await prisma.userScenario.findUnique({
+		where: {
+			scenarioKey_userId: {
+				userId,
+				scenarioKey: MAGNETITE_SCENARIO_KEY
+			}
+		},
+		select: {
+			progression: true
+		}
+	});
+	const magnetiteProgression =
+		magnetiteScenario?.progression ?? MagnetiteProgression.INITIAL_AMBUSH;
 	const eligibleDinozCount = await prisma.dinoz.count({
 		where: {
 			userId,
@@ -112,11 +133,19 @@ export async function getOrAssignBotProgressionGoal(
 		await prisma.botDinozMemory.deleteMany({
 			where: { dinozId }
 		});
-	} else if (currentGoal && !isGoalComplete(currentGoal, statusIds, dinoz.placeId)) {
+	} else if (
+		currentGoal &&
+		!isGoalComplete(currentGoal, statusIds, dinoz.placeId, magnetiteProgression)
+	) {
 		return currentGoal;
 	}
 
-	const nextGoal = chooseNextGoal(statusIds, canAttemptSylvenoire, dinoz.placeId);
+	const nextGoal = chooseNextGoal(
+		statusIds,
+		canAttemptSylvenoire,
+		dinoz.placeId,
+		magnetiteProgression
+	);
 	if (!nextGoal) {
 		if (currentGoal) {
 			await prisma.botDinozMemory.deleteMany({
