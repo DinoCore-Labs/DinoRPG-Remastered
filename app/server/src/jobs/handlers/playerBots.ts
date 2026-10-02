@@ -49,6 +49,14 @@ export async function playerBotsJob(log: BotJobLogger) {
 			if (decision) {
 				await executeBotDecision(bot.userId, bot.strategy, decision);
 				executed++;
+				await prisma.botActionLog.create({
+					data: {
+						botProfileId: bot.id,
+						dinozId: decision.dinozId,
+						action: String(decision.action),
+						success: true
+					}
+				});
 				log.info(
 					{
 						botProfileId: bot.id,
@@ -60,6 +68,13 @@ export async function playerBotsJob(log: BotJobLogger) {
 				);
 			} else {
 				idle++;
+				await prisma.botActionLog.create({
+					data: {
+						botProfileId: bot.id,
+						action: 'idle',
+						success: true
+					}
+				});
 			}
 
 			await prisma.botProfile.update({
@@ -71,6 +86,15 @@ export async function playerBotsJob(log: BotJobLogger) {
 			});
 		} catch (error) {
 			failed++;
+			const errorMessage = error instanceof Error ? error.message : String(error);
+			await prisma.botActionLog.create({
+				data: {
+					botProfileId: bot.id,
+					action: 'error',
+					success: false,
+					error: errorMessage
+				}
+			});
 			log.error(
 				{
 					error,
