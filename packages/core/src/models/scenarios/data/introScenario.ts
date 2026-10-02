@@ -9,7 +9,8 @@ export const IntroProgression = {
 	WAIKIKI_COMPLETED: 3,
 	SWAMP_COMPLETED: 4,
 	FALLS_REACHED: 5,
-	COMPLETED: 6
+	TAURUS_DEFEATED: 6,
+	COMPLETED: 7
 } as const;
 
 export const introScenario = defineScenario({
