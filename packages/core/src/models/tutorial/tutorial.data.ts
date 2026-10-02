@@ -1,3 +1,4 @@
+import { IntroProgression } from '../scenarios/data/introScenario.js';
 import { type TutorialObjective, type TutorialObjectiveKey, tutorialObjectiveKeys } from './tutorial.js';
 
 export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective> = {
@@ -189,7 +190,7 @@ export const tutorialObjectives: Record<TutorialObjectiveKey, TutorialObjective>
 			condition: {
 				type: 'scenario',
 				key: 'intro',
-				progression: 6,
+				progression: IntroProgression.COMPLETED,
 				compare: 'gte'
 			}
 		},
