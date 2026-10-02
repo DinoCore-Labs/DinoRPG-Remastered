@@ -1,6 +1,8 @@
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 
-import { getBotMoveTargets } from './botMovement.service.js';
+import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
+import { assertTutorialMovementAllowed } from '../../Tutorial/Controller/tutorial.movement.js';
+import { canGoToThisPlace } from '../../utils/dinoz/dinozFiche.mapper.js';
 
 export async function findBotMissionNextHop(
 	userId: string,
@@ -10,8 +12,22 @@ export async function findBotMissionNextHop(
 ): Promise<number | null> {
 	if (currentPlaceId === targetPlaceId) return null;
 
+	const user = await getDinozFightDataRequest(dinozId, userId);
+	if (!user) return null;
+
+	const dinoz = user.dinoz.find(entry => entry.id === dinozId);
+	if (!dinoz || dinoz.leaderId || dinoz.state !== null || dinoz.life <= 0 || !dinoz.fight) {
+		return null;
+	}
+
+	const team = user.dinoz.filter(member => member.id === dinoz.id || member.leaderId === dinoz.id);
 	const visited = new Set<number>([currentPlaceId]);
-	const queue: { placeId: number; firstHop: number | null }[] = [{ placeId: currentPlaceId, firstHop: null }];
+	const queue: { placeId: number; firstHop: number | null }[] = [
+		{
+			placeId: currentPlaceId,
+			firstHop: null
+		}
+	];
 
 	while (queue.length > 0) {
 		const current = queue.shift();
@@ -20,23 +36,51 @@ export async function findBotMissionNextHop(
 		const place = Object.values(placeListv2).find(entry => entry.placeId === current.placeId);
 		if (!place) continue;
 
-		let allowedTargets: number[];
-		if (current.placeId === currentPlaceId) {
-			allowedTargets = await getBotMoveTargets(userId, dinozId);
-		} else {
-			allowedTargets = place.moves.map(move => move.target);
-		}
+		for (const move of place.moves) {
+			try {
+				await assertTutorialMovementAllowed({
+					userId,
+					fromPlace: place.placeId,
+					toPlace: move.target
+				});
+			} catch {
+				continue;
+			}
 
-		for (const next of allowedTargets) {
-			if (visited.has(next)) continue;
-			visited.add(next);
+			if (move.condition) {
+				const teamCanMove = team.every(member =>
+					canGoToThisPlace(
+						{
+							...user,
+							dinoz: [member]
+						},
+						move.condition!,
+						member.id
+					)
+				);
+				if (!teamCanMove) continue;
+			}
 
-			const firstHop = current.firstHop ?? next;
-			if (next === targetPlaceId) {
+			const destination = Object.values(placeListv2).find(entry => entry.placeId === move.target);
+			const arrivalPlaceId = destination?.gotoPlaceId ?? move.target;
+			const firstHop = current.firstHop ?? move.target;
+
+			/*
+			 * Certains planners visent volontairement le nœud de
+			 * transition (GO_TO_*), tandis que d'autres visent le
+			 * lieu réel après gotoPlaceId. Les deux doivent être
+			 * considérés comme atteints par la même arête.
+			 */
+			if (move.target === targetPlaceId || arrivalPlaceId === targetPlaceId) {
 				return firstHop;
 			}
 
-			queue.push({ placeId: next, firstHop });
+			if (visited.has(arrivalPlaceId)) continue;
+			visited.add(arrivalPlaceId);
+			queue.push({
+				placeId: arrivalPlaceId,
+				firstHop
+			});
 		}
 	}
 
