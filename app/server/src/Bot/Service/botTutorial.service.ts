@@ -109,8 +109,9 @@ export async function getBotTutorialPlan(
 
 		case 'speak':
 			return {
-				type: 'event',
-				event: 'GUIDE_MICHEL_SPOKEN'
+				type: 'dialog',
+				dialogId: 'guide',
+				preferredLinkIds: ['pub']
 			};
 
 		case 'move':
