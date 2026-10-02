@@ -43,23 +43,21 @@
 		<section class="panel">
 			<h3>Bots existants</h3>
 
-			<DZTable>
+			<div class="table-wrap">
+				<DZTable>
 				<tr>
 					<th>Nom</th>
 					<th>Stratégie</th>
 					<th>État</th>
 					<th>Dinoz</th>
-					<th>Délai min</th>
-					<th>Délai max</th>
-					<th>Dernière action</th>
-					<th>Prochaine action</th>
-					<th></th>
+					<th>Délai (s)</th>
+					<th>Planning</th>
+					<th>Actions</th>
 				</tr>
 
 				<tr v-for="bot in bots" :key="bot.id">
-					<td>
+					<td class="bot-name">
 						<strong>{{ bot.user.name }}</strong>
-						<div class="mono secondary">{{ bot.id }}</div>
 					</td>
 					<td>
 						<select v-model="drafts[bot.id].strategy">
@@ -76,25 +74,30 @@
 					</td>
 					<td class="mono">{{ bot.user._count.dinoz }}</td>
 					<td>
-						<input
-							v-model.number="drafts[bot.id].minDelaySeconds"
-							class="delay"
-							type="number"
-							min="10"
-							max="86400"
-						/>
+						<div class="delay-range">
+							<input
+								v-model.number="drafts[bot.id].minDelaySeconds"
+								class="delay"
+								type="number"
+								min="10"
+								max="86400"
+								title="Délai minimum"
+							/>
+							<span>–</span>
+							<input
+								v-model.number="drafts[bot.id].maxDelaySeconds"
+								class="delay"
+								type="number"
+								min="10"
+								max="86400"
+								title="Délai maximum"
+							/>
+						</div>
 					</td>
-					<td>
-						<input
-							v-model.number="drafts[bot.id].maxDelaySeconds"
-							class="delay"
-							type="number"
-							min="10"
-							max="86400"
-						/>
+					<td class="mono planning">
+						<div title="Dernière action">← {{ formatDate(bot.lastActionAt) }}</div>
+						<div title="Prochaine action">→ {{ formatDate(bot.nextActionAt) }}</div>
 					</td>
-					<td class="mono">{{ formatDate(bot.lastActionAt) }}</td>
-					<td class="mono">{{ formatDate(bot.nextActionAt) }}</td>
 					<td>
 						<div class="row-actions">
 							<DZButton small :disabled="savingId === bot.id" @click="saveBot(bot.id)">
@@ -106,7 +109,8 @@
 						</div>
 					</td>
 				</tr>
-			</DZTable>
+				</DZTable>
+			</div>
 
 			<p v-if="!loading && bots.length === 0" class="empty">
 				Aucun bot joueur pour le moment.
@@ -338,7 +342,43 @@ select {
 	min-height: 28px;
 }
 .delay {
-	width: 82px;
+	width: 52px;
+}
+.delay-range {
+	display: flex;
+	align-items: center;
+	gap: 3px;
+	white-space: nowrap;
+}
+.planning {
+	min-width: 118px;
+	font-size: 11px;
+	line-height: 1.25;
+}
+.planning > div {
+	white-space: nowrap;
+}
+.table-wrap {
+	width: 100%;
+	overflow-x: auto;
+}
+.bot-name {
+	min-width: 90px;
+}
+.adminBots :deep(table) {
+	width: 100%;
+	table-layout: auto;
+}
+.adminBots :deep(th),
+.adminBots :deep(td) {
+	padding-left: 6px;
+	padding-right: 6px;
+}
+.adminBots :deep(th) {
+	white-space: nowrap;
+}
+.adminBots :deep(td) {
+	vertical-align: middle;
 }
 .toolbar {
 	display: flex;
@@ -349,7 +389,12 @@ select {
 .history-header {
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 6px;
+}
+.row-actions {
+	flex-direction: column;
+	align-items: stretch;
+	min-width: 92px;
 }
 .history-header {
 	justify-content: space-between;
