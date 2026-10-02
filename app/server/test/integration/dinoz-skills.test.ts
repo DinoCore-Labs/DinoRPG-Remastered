@@ -9,6 +9,7 @@ import { getLevelXp } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
+import { computeUSkillsForUser } from '../../src/Level/Controller/applySkillEffect.controller.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
 import { createAuthCookie } from '../helpers/auth.js';
@@ -32,6 +33,72 @@ beforeEach(async () => {
 afterAll(async () => {
 	await server.close();
 });
+
+type USkillField =
+	'leader' | 'engineer' | 'shopKeeper' | 'cooker' | 'merchant' | 'priest' | 'teacher' | 'messie' | 'matelasseur';
+
+const U_SKILL_CASES: Array<{
+	skillId: Skill;
+	field: USkillField;
+}> = [
+	{
+		skillId: Skill.LEADER,
+		field: 'leader'
+	},
+	{
+		skillId: Skill.INGENIEUR,
+		field: 'engineer'
+	},
+	{
+		skillId: Skill.MAGASINIER,
+		field: 'shopKeeper'
+	},
+	{
+		skillId: Skill.CUISINIER,
+		field: 'cooker'
+	},
+	{
+		skillId: Skill.MARCHAND,
+		field: 'merchant'
+	},
+	{
+		skillId: Skill.PRETRE,
+		field: 'priest'
+	},
+	{
+		skillId: Skill.PROFESSEUR,
+		field: 'teacher'
+	},
+	{
+		skillId: Skill.MESSIE,
+		field: 'messie'
+	},
+	{
+		skillId: Skill.MATELASSEUR,
+		field: 'matelasseur'
+	}
+];
+
+const U_SKILL_FIELDS: USkillField[] = U_SKILL_CASES.map(entry => entry.field);
+
+async function getUserUSkills(userId: string) {
+	return prisma.user.findUniqueOrThrow({
+		where: {
+			id: userId
+		},
+		select: {
+			leader: true,
+			engineer: true,
+			shopKeeper: true,
+			cooker: true,
+			merchant: true,
+			priest: true,
+			teacher: true,
+			messie: true,
+			matelasseur: true
+		}
+	});
+}
 
 async function addSkill(dinozId: number, skillId: Skill, state = true): Promise<void> {
 	await prisma.dinozSkills.create({
@@ -1137,6 +1204,190 @@ describe('Dinoz skills', () => {
 			expect(ranking.points).toBe(2);
 			expect(await getTrackingQuantity(user.id, StatTracking.LVL_UP)).toBe(1);
 			expect(await getTrackingQuantity(user.id, StatTracking.UP_FIRE)).toBe(1);
+		});
+	});
+
+	describe('user skills', () => {
+		it('activates the Leader account flag when Leader is learned through level-up', async () => {
+			const user = await createTestUser({
+				name: 'LeaderSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				level: 5,
+				element: ElementType.WOOD
+			});
+			await prepareLevelUpRanking(user.id, 5);
+			/*
+			 * Leader nécessite Charisme.
+			 *
+			 * On seed directement le prérequis
+			 * afin de tester ici le comportement
+			 * de la U-skill elle-même.
+			 */
+			await addSkill(dinoz.id, Skill.CHARISME);
+			expect((await getUserUSkills(user.id)).leader).toBe(false);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/level/learnskill/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				},
+				payload: {
+					skillIdList: [Skill.LEADER],
+					tryNumber: 1
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			const learnedSkill = await prisma.dinozSkills.findUnique({
+				where: {
+					skillId_dinozId: {
+						dinozId: dinoz.id,
+						skillId: Skill.LEADER
+					}
+				}
+			});
+			expect(learnedSkill).not.toBeNull();
+			const updatedUser = await getUserUSkills(user.id);
+			expect(updatedUser.leader).toBe(true);
+			/*
+			 * Apprendre Leader ne doit pas
+			 * activer les autres U-skills.
+			 */
+			for (const field of U_SKILL_FIELDS) {
+				if (field === 'leader') {
+					continue;
+				}
+				expect(updatedUser[field]).toBe(false);
+			}
+		});
+
+		it.each(U_SKILL_CASES)('recomputes $field from skill $skillId', async ({ skillId, field }) => {
+			const user = await createTestUser({
+				name: `USkillOwner-${skillId}`,
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: `USkillDinoz-${skillId}`,
+				canRename: false
+			});
+			await addSkill(dinoz.id, skillId);
+			/*
+			 * On force volontairement tous
+			 * les flags à false avant la
+			 * recomputation.
+			 */
+			await prisma.user.update({
+				where: {
+					id: user.id
+				},
+				data: {
+					leader: false,
+					engineer: false,
+					shopKeeper: false,
+					cooker: false,
+					merchant: false,
+					priest: false,
+					teacher: false,
+					messie: false,
+					matelasseur: false
+				}
+			});
+			await computeUSkillsForUser(user.id);
+			const updatedUser = await getUserUSkills(user.id);
+			for (const candidateField of U_SKILL_FIELDS) {
+				expect(updatedUser[candidateField]).toBe(candidateField === field);
+			}
+		});
+
+		it('keeps a U-skill active while another owned Dinoz still has it', async () => {
+			const user = await createTestUser({
+				name: 'SharedLeaderSkillOwner',
+				withTutorial: false
+			});
+			const first = await createTestDinoz({
+				userId: user.id,
+				name: 'FirstLeaderDinoz',
+				canRename: false
+			});
+			const second = await createTestDinoz({
+				userId: user.id,
+				name: 'SecondLeaderDinoz',
+				canRename: false
+			});
+			await addSkill(first.id, Skill.LEADER);
+			await addSkill(second.id, Skill.LEADER);
+			await computeUSkillsForUser(user.id);
+			expect((await getUserUSkills(user.id)).leader).toBe(true);
+			/*
+			 * Un premier Dinoz perd Leader.
+			 */
+			await prisma.dinozSkills.delete({
+				where: {
+					skillId_dinozId: {
+						dinozId: first.id,
+						skillId: Skill.LEADER
+					}
+				}
+			});
+			await computeUSkillsForUser(user.id);
+			/*
+			 * Le second l'a toujours :
+			 * le compte reste Leader.
+			 */
+			expect((await getUserUSkills(user.id)).leader).toBe(true);
+			await prisma.dinozSkills.delete({
+				where: {
+					skillId_dinozId: {
+						dinozId: second.id,
+						skillId: Skill.LEADER
+					}
+				}
+			});
+			await computeUSkillsForUser(user.id);
+			/*
+			 * Aucun Dinoz ne possède Leader :
+			 * le flag doit maintenant disparaître.
+			 */
+			expect((await getUserUSkills(user.id)).leader).toBe(false);
+		});
+
+		it('clears stale account U-skill flags when no owned Dinoz provides them anymore', async () => {
+			const user = await createTestUser({
+				name: 'StaleUSkillsOwner',
+				withTutorial: false
+			});
+			await createTestDinoz({
+				userId: user.id,
+				name: 'NoUSkillDinoz',
+				canRename: false
+			});
+			/*
+			 * Simulation d'un ancien état
+			 * incohérent du compte.
+			 */
+			await prisma.user.update({
+				where: {
+					id: user.id
+				},
+				data: {
+					leader: true,
+					engineer: true,
+					shopKeeper: true,
+					cooker: true,
+					merchant: true,
+					priest: true,
+					teacher: true,
+					messie: true,
+					matelasseur: true
+				}
+			});
+			await computeUSkillsForUser(user.id);
+			const updatedUser = await getUserUSkills(user.id);
+			for (const field of U_SKILL_FIELDS) {
+				expect(updatedUser[field]).toBe(false);
+			}
 		});
 	});
 });
