@@ -56,6 +56,7 @@ export async function getBotRaceTrophyProgressionStep(
 			level: true,
 			life: true,
 			state: true,
+			leaderId: true,
 			user: {
 				select: {
 					rewards: {
@@ -68,7 +69,7 @@ export async function getBotRaceTrophyProgressionStep(
 		}
 	});
 
-	if (!dinoz || dinoz.life <= 0 || dinoz.state !== null) {
+	if (!dinoz || dinoz.life <= 0 || dinoz.state !== null || dinoz.leaderId !== null) {
 		return null;
 	}
 
