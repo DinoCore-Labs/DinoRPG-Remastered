@@ -1009,6 +1009,9 @@ enum BotProgressionGoal {
   SYLVENOIRE_KEY
   STEPPES_ACCESS
   MAGNETITE
+  HIPPOCLAMP_TROPHY
+  PTEROZ_TROPHY
+  ROCKY_TROPHY
 }
 
 enum ConversationType {
