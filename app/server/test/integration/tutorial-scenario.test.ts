@@ -1,6 +1,7 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { IntroProgression } from '@dinorpg/core/models/scenarios/data/introScenario.js';
 import {
 	TUTORIAL_COMPLETED_PROGRESSION,
 	TUTORIAL_SCENARIO_KEY,
@@ -256,10 +257,10 @@ describe('Tutorial scenario', () => {
 			/*
 			 * 5 — baobob
 			 *
-			 * scenario(intro, 6+)
+			 * scenario(intro, 7+)
 			 * +1 Potion d'Irma.
 			 */
-			await setIntroProgression(user.id, 6);
+			await setIntroProgression(user.id, IntroProgression.COMPLETED);
 			const baobob = await refreshTutorialProgress({
 				userId: user.id,
 				dinozId: dinoz.id
