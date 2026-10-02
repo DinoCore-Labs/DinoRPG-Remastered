@@ -42,18 +42,22 @@ export async function playerBotsJob(log: BotJobLogger) {
 	let failed = 0;
 
 	for (const bot of bots) {
+		let attemptedAction: string | null = null;
+		let attemptedDinozId: number | null = null;
 		try {
 			await applyTimedDinozStates(bot.userId);
 			const decision = await chooseBotDecision(bot.userId, bot.strategy);
 
 			if (decision) {
+				attemptedAction = String(decision.action);
+				attemptedDinozId = decision.dinozId;
 				await executeBotDecision(bot.userId, bot.strategy, decision);
 				executed++;
 				await prisma.botActionLog.create({
 					data: {
 						botProfileId: bot.id,
 						dinozId: decision.dinozId,
-						action: String(decision.action),
+						action: attemptedAction,
 						success: true
 					}
 				});
@@ -90,7 +94,8 @@ export async function playerBotsJob(log: BotJobLogger) {
 			await prisma.botActionLog.create({
 				data: {
 					botProfileId: bot.id,
-					action: 'error',
+					dinozId: attemptedDinozId,
+					action: attemptedAction ?? 'unknown',
 					success: false,
 					error: errorMessage
 				}
