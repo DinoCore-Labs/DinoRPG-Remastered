@@ -1,4 +1,5 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { IntroProgression } from '@dinorpg/core/models/scenarios/data/introScenario.js';
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { loadDialogs } from '../../src/Dialog/Controller/dialog.registry.js';
@@ -56,7 +57,7 @@ describe('dialog post-fight resume', () => {
 		 * processDialogFight() applique normalement
 		 * cette progression en entrant dans fight_win.
 		 */
-		await setIntroProgression(user.id, 6);
+		await setIntroProgression(user.id, IntroProgression.TAURUS_DEFEATED);
 		await expect(
 			startDialog({
 				userId: user.id,
@@ -155,10 +156,32 @@ describe('dialog post-fight resume', () => {
 			}
 		});
 		expect(movedDinoz.placeId).toBe(PlaceEnum.DINOVILLE);
+		const introProgression = await prisma.userScenario.findUniqueOrThrow({
+			where: {
+				scenarioKey_userId: {
+					userId: user.id,
+					scenarioKey: 'intro'
+				}
+			},
+			select: {
+				progression: true
+			}
+		});
+		expect(introProgression.progression).toBe(IntroProgression.COMPLETED);
 		/*
-		 * Une fois le dialogue lu entièrement,
-		 * Taurus ne doit plus apparaître.
+		 * On replace volontairement le Dinoz aux Chutes Mutantes.
+		 *
+		 * La victoire contre Taurus ne doit plus suffire à
+		 * réactiver la passerelle une fois la conclusion consommée.
 		 */
+		await prisma.dinoz.update({
+			where: {
+				id: dinoz.id
+			},
+			data: {
+				placeId: PlaceEnum.CHUTES_MUTANTES
+			}
+		});
 		const dialogsAfterCompletion = await listAvailableDialogs({
 			userId: user.id,
 			dinozId: dinoz.id
@@ -174,7 +197,7 @@ describe('dialog post-fight resume', () => {
 			userId: user.id,
 			placeId: PlaceEnum.CHUTES_MUTANTES
 		});
-		await setIntroProgression(user.id, 5);
+		await setIntroProgression(user.id, IntroProgression.FALLS_REACHED);
 		await expect(
 			resumeDialogPhase({
 				userId: user.id,
