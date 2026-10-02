@@ -29,6 +29,27 @@ export async function listBotsHandler() {
 	});
 }
 
+export async function getBotHistoryHandler(req: FastifyRequest) {
+	const { id } = botIdParamsSchema.parse(req.params);
+	const bot = await prisma.botProfile.findUnique({
+		where: { id },
+		select: { id: true }
+	});
+	if (!bot) {
+		throw new ExpectedError('botNotFound', { statusCode: 404 });
+	}
+
+	return prisma.botActionLog.findMany({
+		where: {
+			botProfileId: id
+		},
+		orderBy: {
+			createdAt: 'desc'
+		},
+		take: 50
+	});
+}
+
 export async function createBotHandler(req: FastifyRequest, reply: FastifyReply) {
 	const body = createBotBodySchema.parse(req.body);
 	const bot = await createBotPlayer(body);

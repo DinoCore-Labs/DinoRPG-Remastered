@@ -42,13 +42,25 @@ export async function playerBotsJob(log: BotJobLogger) {
 	let failed = 0;
 
 	for (const bot of bots) {
+		let attemptedAction: string | null = null;
+		let attemptedDinozId: number | null = null;
 		try {
 			await applyTimedDinozStates(bot.userId);
 			const decision = await chooseBotDecision(bot.userId, bot.strategy);
 
 			if (decision) {
+				attemptedAction = String(decision.action);
+				attemptedDinozId = decision.dinozId;
 				await executeBotDecision(bot.userId, bot.strategy, decision);
 				executed++;
+				await prisma.botActionLog.create({
+					data: {
+						botProfileId: bot.id,
+						dinozId: decision.dinozId,
+						action: attemptedAction,
+						success: true
+					}
+				});
 				log.info(
 					{
 						botProfileId: bot.id,
@@ -60,6 +72,13 @@ export async function playerBotsJob(log: BotJobLogger) {
 				);
 			} else {
 				idle++;
+				await prisma.botActionLog.create({
+					data: {
+						botProfileId: bot.id,
+						action: 'idle',
+						success: true
+					}
+				});
 			}
 
 			await prisma.botProfile.update({
@@ -71,6 +90,16 @@ export async function playerBotsJob(log: BotJobLogger) {
 			});
 		} catch (error) {
 			failed++;
+			const errorMessage = error instanceof Error ? error.message : String(error);
+			await prisma.botActionLog.create({
+				data: {
+					botProfileId: bot.id,
+					dinozId: attemptedDinozId,
+					action: attemptedAction ?? 'unknown',
+					success: false,
+					error: errorMessage
+				}
+			});
 			log.error(
 				{
 					error,

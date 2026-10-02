@@ -36,6 +36,16 @@ export type UpdateAdminBotInput = Partial<
 	Pick<AdminBotListItem, 'enabled' | 'strategy' | 'minDelaySeconds' | 'maxDelaySeconds'>
 >;
 
+export type AdminBotActionLog = {
+	id: number;
+	botProfileId: string;
+	dinozId: number | null;
+	action: string;
+	success: boolean;
+	error: string | null;
+	createdAt: string;
+};
+
 export const AdminBotsService = {
 	list(): Promise<AdminBotListItem[]> {
 		return api.get<AdminBotListItem[]>('/admin/bots');
@@ -45,5 +55,8 @@ export const AdminBotsService = {
 	},
 	update(id: string, input: UpdateAdminBotInput): Promise<AdminBotListItem> {
 		return api.patch<AdminBotListItem>(`/admin/bots/${encodeURIComponent(id)}`, input);
+	},
+	history(id: string): Promise<AdminBotActionLog[]> {
+		return api.get<AdminBotActionLog[]>(`/admin/bots/${encodeURIComponent(id)}/history`);
 	}
 };

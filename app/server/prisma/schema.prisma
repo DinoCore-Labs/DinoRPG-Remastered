@@ -754,8 +754,27 @@ model BotProfile {
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
 
+  actionLogs BotActionLog[]
+
   @@index([enabled, nextActionAt])
   @@map("bot_profile")
+}
+
+model BotActionLog {
+  id Int @id @default(autoincrement())
+
+  botProfileId String     @db.Uuid
+  botProfile   BotProfile @relation(fields: [botProfileId], references: [id], onDelete: Cascade)
+
+  dinozId Int?
+  action  String   @db.VarChar(64)
+  success Boolean
+  error   String?  @db.Text
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@index([botProfileId, createdAt])
+  @@map("bot_action_log")
 }
 
 model User {
