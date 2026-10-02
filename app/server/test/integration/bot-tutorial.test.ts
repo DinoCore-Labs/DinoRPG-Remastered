@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { BotStrategy } from '../../../prisma/index.js';
+import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { executeBotDecision } from '../../src/Bot/Service/botAction.service.js';
 import { chooseBotDecision } from '../../src/Bot/Service/botDecision.service.js';
 import { createBotPlayer } from '../../src/Bot/Service/createBotPlayer.service.js';
@@ -50,4 +52,35 @@ describe('bot tutorial', () => {
 			action: 'move'
 		});
 	});
+	it('restores an action instead of idling between tutorial moves', async () => {
+		const created = await createBotPlayer({
+			name: 'TutorialRecoveryBot',
+			strategy: BotStrategy.BALANCED
+		});
+
+		const speakDecision = await chooseBotDecision(created.user.id, BotStrategy.BALANCED);
+		await executeBotDecision(created.user.id, BotStrategy.BALANCED, speakDecision!);
+
+		const firstMove = await chooseBotDecision(created.user.id, BotStrategy.BALANCED);
+		expect(firstMove).toMatchObject({
+			action: 'move',
+			targetPlaceId: PlaceEnum.FOUTAINE_DE_JOUVENCE
+		});
+		await executeBotDecision(created.user.id, BotStrategy.BALANCED, firstMove!);
+
+		await prisma.dinoz.update({
+			where: { id: created.dinoz.id },
+			data: {
+				fight: false,
+				remaining: 0
+			}
+		});
+
+		const recovery = await chooseBotDecision(created.user.id, BotStrategy.BALANCED);
+		expect(recovery).toMatchObject({
+			dinozId: created.dinoz.id,
+			action: Action.IRMA
+		});
+	});
+
 });
