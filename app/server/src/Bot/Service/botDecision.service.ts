@@ -1,4 +1,5 @@
 import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
@@ -909,24 +910,31 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	);
 
 	if (blockedLeader) {
-		const irmaItemId = 1;
+		const team = [blockedLeader, ...blockedLeader.followers];
+		const neededIrma = team.filter(
+			member =>
+				member.remaining === 0 &&
+				(!member.fight || !member.gather)
+		).length;
+		const irmaItemId = itemList[Item.POTION_IRMA].itemId;
 		const irmaQuantity =
 			playerData.items.find(item => item.itemId === irmaItemId)?.quantity ?? 0;
-		if (irmaQuantity > 0 || blockedLeader.remaining > 0) {
+
+		if (irmaQuantity < neededIrma) {
 			return {
 				dinozId: blockedLeader.id,
-				action:
-					blockedLeader.followers.length > 0
-						? Action.IRMAS
-						: blockedLeader.remaining > 0
-							? Action.ACTION
-							: Action.IRMA
+				action: 'buy_irma'
 			};
 		}
 
 		return {
 			dinozId: blockedLeader.id,
-			action: 'buy_irma'
+			action:
+				blockedLeader.followers.length > 0
+					? Action.IRMAS
+					: blockedLeader.remaining > 0
+						? Action.ACTION
+						: Action.IRMA
 		};
 	}
 
