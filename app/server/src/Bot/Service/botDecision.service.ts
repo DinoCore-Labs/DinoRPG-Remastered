@@ -25,6 +25,7 @@ import { getBotKorgonProgressionStep } from './botKorgonProgression.service.js';
 import { getBotSylvenoireProgressionStep } from './botSylvenoireProgression.service.js';
 import { getBotForestGuardianProgressionStep } from './botForestGuardianProgression.service.js';
 import { getBotSteppesProgressionStep } from './botSteppesProgression.service.js';
+import { getBotMagnetiteProgressionStep } from './botMagnetiteProgression.service.js';
 import { getBotMarketOfferPlan, shouldBotGoToMarket } from './botMarket.service.js';
 import { getBotItinerantSalePlan } from './botItinerantMerchant.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
@@ -337,6 +338,41 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 
 	for (const dinoz of playerData.dinoz.slice(0, 3)) {
 		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
+
+		const magnetiteStep = await getBotMagnetiteProgressionStep(userId, dinoz.id);
+		if (magnetiteStep) {
+			const memoryBonus =
+				progressionGoals.get(dinoz.id) === BotProgressionGoal.MAGNETITE ? 150 : 0;
+
+			if (magnetiteStep.type === 'move') {
+				const nextHop = await findBotMissionNextHop(
+					userId,
+					dinoz.id,
+					dinoz.placeId,
+					magnetiteStep.placeId
+				);
+				if (nextHop != null) {
+					candidates.push({
+						value: {
+							dinozId: dinoz.id,
+							action: 'move',
+							targetPlaceId: nextHop
+						},
+						weight: 360 + memoryBonus
+					});
+				}
+			} else {
+				candidates.push({
+					value: {
+						dinozId: dinoz.id,
+						action: 'progression_dialog',
+						dialogId: magnetiteStep.dialogId,
+						preferredLinkIds: magnetiteStep.preferredLinkIds
+					},
+					weight: 370 + memoryBonus
+				});
+			}
+		}
 
 		const steppesStep = await getBotSteppesProgressionStep(userId, dinoz.id);
 		if (steppesStep) {
