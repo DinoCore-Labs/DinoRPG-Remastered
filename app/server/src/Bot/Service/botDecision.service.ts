@@ -56,6 +56,7 @@ export type BotDecision = {
 		| 'tutorial_dialog'
 		| 'tutorial_buy_burger'
 		| 'tutorial_buy_irma'
+		| 'buy_irma'
 		| 'tutorial_use_burger';
 	shopId?: number;
 	dialogId?: string;
@@ -887,5 +888,47 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		return restDecision.value;
 	}
 
-	return weightedPick(candidates);
+	const picked = weightedPick(candidates);
+	if (picked) {
+		return picked;
+	}
+
+	/*
+	 * Filet de sécurité : si aucune action n'est disponible mais qu'un
+	 * Dinoz actif a consommé son action, on tente de le débloquer au
+	 * lieu de laisser le bot en idle indéfiniment.
+	 */
+	const blockedLeader = playerData.dinoz.find(
+		dinoz =>
+			!dinoz.leaderId &&
+			isActiveDinozState(dinoz.state) &&
+			dinoz.life > 0 &&
+			(!dinoz.fight ||
+				!dinoz.gather ||
+				dinoz.followers.some(follower => !follower.fight || !follower.gather))
+	);
+
+	if (blockedLeader) {
+		const irmaItemId = 1;
+		const irmaQuantity =
+			playerData.items.find(item => item.itemId === irmaItemId)?.quantity ?? 0;
+		if (irmaQuantity > 0 || blockedLeader.remaining > 0) {
+			return {
+				dinozId: blockedLeader.id,
+				action:
+					blockedLeader.followers.length > 0
+						? Action.IRMAS
+						: blockedLeader.remaining > 0
+							? Action.ACTION
+							: Action.IRMA
+			};
+		}
+
+		return {
+			dinozId: blockedLeader.id,
+			action: 'buy_irma'
+		};
+	}
+
+	return null;
 }
