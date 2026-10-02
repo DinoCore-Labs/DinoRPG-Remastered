@@ -96,15 +96,54 @@
 					<td class="mono">{{ formatDate(bot.lastActionAt) }}</td>
 					<td class="mono">{{ formatDate(bot.nextActionAt) }}</td>
 					<td>
-						<DZButton small :disabled="savingId === bot.id" @click="saveBot(bot.id)">
-							{{ savingId === bot.id ? 'Sauvegarde…' : 'Sauvegarder' }}
-						</DZButton>
+						<div class="row-actions">
+							<DZButton small :disabled="savingId === bot.id" @click="saveBot(bot.id)">
+								{{ savingId === bot.id ? 'Sauvegarde…' : 'Sauvegarder' }}
+							</DZButton>
+							<DZButton small :disabled="historyLoading && selectedBotId === bot.id" @click="showHistory(bot.id)">
+								Historique
+							</DZButton>
+						</div>
 					</td>
 				</tr>
 			</DZTable>
 
 			<p v-if="!loading && bots.length === 0" class="empty">
 				Aucun bot joueur pour le moment.
+			</p>
+		</section>
+
+		<section v-if="selectedBotId" class="panel">
+			<div class="history-header">
+				<h3>Historique — {{ selectedBotName }}</h3>
+				<DZButton small :disabled="historyLoading" @click="showHistory(selectedBotId)">
+					{{ historyLoading ? 'Chargement…' : 'Rafraîchir' }}
+				</DZButton>
+			</div>
+
+			<DZTable>
+				<tr>
+					<th>Date</th>
+					<th>Statut</th>
+					<th>Action</th>
+					<th>Dinoz</th>
+					<th>Erreur</th>
+				</tr>
+				<tr v-for="entry in history" :key="entry.id">
+					<td class="mono">{{ formatDate(entry.createdAt) }}</td>
+					<td>
+						<span :class="entry.success ? 'status-ok' : 'status-error'">
+							{{ entry.success ? 'OK' : 'ERREUR' }}
+						</span>
+					</td>
+					<td class="mono">{{ entry.action }}</td>
+					<td class="mono">{{ entry.dinozId ?? '—' }}</td>
+					<td class="history-error" :title="entry.error ?? ''">{{ entry.error ?? '—' }}</td>
+				</tr>
+			</DZTable>
+
+			<p v-if="!historyLoading && history.length === 0" class="empty">
+				Aucune action enregistrée pour ce bot.
 			</p>
 		</section>
 	</div>
@@ -119,6 +158,7 @@ import TitleHeader from '../../components/utils/TitleHeader.vue';
 import {
 	AdminBotsService,
 	BOT_STRATEGIES,
+	type AdminBotActionLog,
 	type AdminBotListItem,
 	type BotStrategyValue,
 	type UpdateAdminBotInput
@@ -152,11 +192,17 @@ export default defineComponent({
 			loading: false,
 			creating: false,
 			savingId: '',
+			selectedBotId: '',
+			history: [] as AdminBotActionLog[],
+			historyLoading: false,
 			error: '',
 			success: ''
 		};
 	},
 	computed: {
+		selectedBotName(): string {
+			return this.bots.find(bot => bot.id === this.selectedBotId)?.user.name ?? this.selectedBotId;
+		},
 		canCreate(): boolean {
 			return (
 				this.createForm.name.length >= 3 &&
@@ -210,6 +256,18 @@ export default defineComponent({
 				this.error = err?.message ?? String(err);
 			} finally {
 				this.creating = false;
+			}
+		},
+		async showHistory(id: string) {
+			this.error = '';
+			this.selectedBotId = id;
+			this.historyLoading = true;
+			try {
+				this.history = await AdminBotsService.history(id);
+			} catch (err: any) {
+				this.error = err?.message ?? String(err);
+			} finally {
+				this.historyLoading = false;
 			}
 		},
 		async saveBot(id: string) {
@@ -286,6 +344,31 @@ select {
 	display: flex;
 	gap: 10px;
 	margin-top: 12px;
+}
+.row-actions,
+.history-header {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.history-header {
+	justify-content: space-between;
+}
+.history-header h3 {
+	margin: 0;
+}
+.status-ok {
+	font-weight: bold;
+}
+.status-error {
+	font-weight: bold;
+	color: #b00020;
+}
+.history-error {
+	max-width: 320px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .toggle {
 	display: flex;
