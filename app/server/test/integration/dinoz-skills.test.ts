@@ -2,6 +2,7 @@ import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
 import { RaceEnum } from '@dinorpg/core/models/enums/Race.js';
 import { SkillTreeType } from '@dinorpg/core/models/enums/SkillTreeType.js';
+import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { getLevelXp } from '@dinorpg/core/utils/dinozUtils.js';
@@ -81,6 +82,31 @@ async function equipDinozCube(dinozId: number): Promise<void> {
 	});
 }
 
+async function prepareLevelUpRanking(userId: string, level: number): Promise<void> {
+	await prisma.ranking.update({
+		where: {
+			userId
+		},
+		data: {
+			dinozCount: 1,
+			points: level,
+			average: level
+		}
+	});
+}
+
+async function getTrackingQuantity(userId: string, stat: StatTracking): Promise<number> {
+	const tracking = await prisma.userTracking.findUnique({
+		where: {
+			stat_userId: {
+				userId,
+				stat
+			}
+		}
+	});
+	return tracking?.quantity ?? 0;
+}
+
 async function createLevelUpReadyDinoz(
 	userId: string,
 	options: {
@@ -92,7 +118,6 @@ async function createLevelUpReadyDinoz(
 	} = {}
 ) {
 	const level = options.level ?? 1;
-
 	return createTestDinoz({
 		userId,
 		name: options.name ?? 'LevelUpDinoz',
@@ -738,6 +763,380 @@ describe('Dinoz skills', () => {
 			await addStatus(dinoz.id, DinozStatusId.BROKEN_LIMIT_1);
 			const unlocked = await request();
 			expect(unlocked.statusCode).toBe(200);
+		});
+	});
+
+	describe('skill learning', () => {
+		it('learns an allowed skill and completes the level-up lifecycle', async () => {
+			const user = await createTestUser({
+				name: 'SkillLearningOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				level: 1,
+				element: ElementType.FIRE
+			});
+			await prepareLevelUpRanking(user.id, 1);
+			const initialFire = dinoz.nbrUpFire;
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/level/learnskill/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				},
+				payload: {
+					skillIdList: [Skill.GRIFFES_ENFLAMMEES],
+					tryNumber: 1
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			const body = response.json() as {
+				newMaxExperience: number;
+				discoveredSkill?: number;
+			};
+			expect(body.newMaxExperience).toBe(getLevelXp(2));
+			expect(body.discoveredSkill).toBe(Skill.GRIFFES_ENFLAMMEES);
+			const updated = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			/*
+			 * XP exact du niveau 1 :
+			 * tout est consommé.
+			 */
+			expect(updated.level).toBe(2);
+			expect(updated.experience).toBe(0);
+			/*
+			 * Le tirage était Feu :
+			 * le level-up ajoute +1 Feu.
+			 */
+			expect(updated.nbrUpFire).toBe(initialFire + 1);
+			const learnedSkill = await prisma.dinozSkills.findUnique({
+				where: {
+					skillId_dinozId: {
+						dinozId: dinoz.id,
+						skillId: Skill.GRIFFES_ENFLAMMEES
+					}
+				}
+			});
+			expect(learnedSkill).not.toBeNull();
+			expect(learnedSkill?.state).toBe(true);
+			/*
+			 * Griffes Enflammées ouvre notamment :
+			 *
+			 * - Souffle Ardent
+			 * - Chasseur de Goupignon
+			 */
+			const unlockables = await prisma.dinozSkillsUnlockable.findMany({
+				where: {
+					dinozId: dinoz.id
+				}
+			});
+			const unlockableIds = unlockables.map(skill => skill.skillId);
+			expect(unlockableIds).toEqual(expect.arrayContaining([Skill.SOUFFLE_ARDENT, Skill.CHASSEUR_DE_GOUPIGNON]));
+			/*
+			 * La compétence est également
+			 * découverte au niveau du compte.
+			 */
+			const updatedUser = await prisma.user.findUniqueOrThrow({
+				where: {
+					id: user.id
+				},
+				select: {
+					discoveredSkills: true
+				}
+			});
+			expect(updatedUser.discoveredSkills).toContain(Skill.GRIFFES_ENFLAMMEES);
+			const ranking = await prisma.ranking.findUniqueOrThrow({
+				where: {
+					userId: user.id
+				}
+			});
+			expect(ranking.points).toBe(2);
+			expect(ranking.average).toBe(2);
+			expect(await getTrackingQuantity(user.id, StatTracking.LVL_UP)).toBe(1);
+			expect(await getTrackingQuantity(user.id, StatTracking.UP_FIRE)).toBe(1);
+		});
+
+		it('applies persistent skill effects before resolving the level-up', async () => {
+			const user = await createTestUser({
+				name: 'PassiveEffectSkillOwner',
+				withTutorial: false
+			});
+			const level = 5;
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'PassiveEffectDinoz',
+				canRename: false,
+				level,
+				experience: getLevelXp(level),
+				nextUpElementId: ElementType.FIRE,
+				nextUpAltElementId: ElementType.WATER,
+
+				/*
+				 * Valeur volontairement facile
+				 * à suivre dans le test.
+				 */
+				nbrUpFire: 10
+			});
+			await prepareLevelUpRanking(user.id, level);
+			/*
+			 * Aura Incandescente nécessite Furie.
+			 */
+			await addSkill(dinoz.id, Skill.FURIE);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/level/learnskill/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				},
+				payload: {
+					skillIdList: [Skill.AURA_INCANDESCENTE],
+					tryNumber: 1
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			const updated = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(updated.level).toBe(6);
+			expect(updated.experience).toBe(0);
+			/*
+			 * 10
+			 * +2 Aura Incandescente
+			 * +1 montée de niveau Feu
+			 * = 13
+			 */
+			expect(updated.nbrUpFire).toBe(13);
+			expect(
+				await prisma.dinozSkills.findUnique({
+					where: {
+						skillId_dinozId: {
+							dinozId: dinoz.id,
+							skillId: Skill.AURA_INCANDESCENTE
+						}
+					}
+				})
+			).not.toBeNull();
+		});
+
+		it('rejects a forged skill that is not currently learnable without mutating the Dinoz', async () => {
+			const user = await createTestUser({
+				name: 'ForgedSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				level: 1,
+				element: ElementType.FIRE
+			});
+			await prepareLevelUpRanking(user.id, 1);
+			const initialExperience = dinoz.experience;
+			const initialFire = dinoz.nbrUpFire;
+			/*
+			 * Souffle Ardent nécessite
+			 * Griffes Enflammées.
+			 *
+			 * On tente volontairement de contourner
+			 * le client en envoyant directement l'id.
+			 */
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/level/learnskill/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				},
+				payload: {
+					skillIdList: [Skill.SOUFFLE_ARDENT],
+					tryNumber: 1
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			const unchanged = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(unchanged.level).toBe(1);
+			expect(unchanged.experience).toBe(initialExperience);
+			expect(unchanged.nbrUpFire).toBe(initialFire);
+			expect(
+				await prisma.dinozSkills.count({
+					where: {
+						dinozId: dinoz.id,
+						skillId: Skill.SOUFFLE_ARDENT
+					}
+				})
+			).toBe(0);
+			const ranking = await prisma.ranking.findUniqueOrThrow({
+				where: {
+					userId: user.id
+				}
+			});
+			expect(ranking.points).toBe(1);
+			expect(await getTrackingQuantity(user.id, StatTracking.LVL_UP)).toBe(0);
+			expect(await getTrackingQuantity(user.id, StatTracking.UP_FIRE)).toBe(0);
+		});
+
+		it('prevents another player from learning a skill for the Dinoz', async () => {
+			const owner = await createTestUser({
+				name: 'SkillLearningRealOwner',
+				withTutorial: false
+			});
+			const attacker = await createTestUser({
+				name: 'SkillLearningAttacker',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(owner.id, {
+				element: ElementType.FIRE
+			});
+			await prepareLevelUpRanking(owner.id, 1);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/level/learnskill/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, attacker)
+				},
+				payload: {
+					skillIdList: [Skill.GRIFFES_ENFLAMMEES],
+					tryNumber: 1
+				}
+			});
+			expect(response.statusCode).toBe(403);
+			expect(
+				(
+					await prisma.dinoz.findUniqueOrThrow({
+						where: {
+							id: dinoz.id
+						}
+					})
+				).level
+			).toBe(1);
+			expect(
+				await prisma.dinozSkills.count({
+					where: {
+						dinozId: dinoz.id
+					}
+				})
+			).toBe(0);
+		});
+
+		it('unlocks all stored unlockable skills as one level-up choice', async () => {
+			const user = await createTestUser({
+				name: 'UnlockSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				element: ElementType.FIRE
+			});
+			await prepareLevelUpRanking(user.id, 1);
+			await prisma.dinozSkillsUnlockable.createMany({
+				data: [
+					{
+						dinozId: dinoz.id,
+						skillId: Skill.SOUFFLE_ARDENT
+					},
+					{
+						dinozId: dinoz.id,
+						skillId: Skill.CHASSEUR_DE_GOUPIGNON
+					}
+				]
+			});
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/level/learnskill/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				},
+				payload: {
+					skillIdList: [Skill.SOUFFLE_ARDENT, Skill.CHASSEUR_DE_GOUPIGNON],
+					tryNumber: 1
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			/*
+			 * "Unlock" ne signifie pas apprendre
+			 * immédiatement les deux compétences.
+			 *
+			 * On retire leur verrou pour qu'elles
+			 * deviennent apprenables plus tard.
+			 */
+			expect(
+				await prisma.dinozSkillsUnlockable.count({
+					where: {
+						dinozId: dinoz.id
+					}
+				})
+			).toBe(0);
+			expect(
+				await prisma.dinozSkills.count({
+					where: {
+						dinozId: dinoz.id,
+						skillId: {
+							in: [Skill.SOUFFLE_ARDENT, Skill.CHASSEUR_DE_GOUPIGNON]
+						}
+					}
+				})
+			).toBe(0);
+			const updated = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(updated.level).toBe(2);
+			expect(updated.experience).toBe(0);
+		});
+
+		it('serializes concurrent skill learning so a level can only be gained once', async () => {
+			const user = await createTestUser({
+				name: 'ConcurrentSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				element: ElementType.FIRE
+			});
+			await prepareLevelUpRanking(user.id, 1);
+			const cookie = createAuthCookie(server, user);
+			const learn = () =>
+				server.inject({
+					method: 'POST',
+					url: `/api/level/learnskill/${dinoz.id}`,
+					headers: {
+						cookie
+					},
+					payload: {
+						skillIdList: [Skill.GRIFFES_ENFLAMMEES],
+						tryNumber: 1
+					}
+				});
+			const responses = await Promise.all([learn(), learn()]);
+			expect(responses.filter(response => response.statusCode === 200)).toHaveLength(1);
+			expect(responses.filter(response => response.statusCode === 400)).toHaveLength(1);
+			const updated = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			expect(updated.level).toBe(2);
+			expect(updated.experience).toBe(0);
+			expect(
+				await prisma.dinozSkills.count({
+					where: {
+						dinozId: dinoz.id,
+						skillId: Skill.GRIFFES_ENFLAMMEES
+					}
+				})
+			).toBe(1);
+			const ranking = await prisma.ranking.findUniqueOrThrow({
+				where: {
+					userId: user.id
+				}
+			});
+			expect(ranking.points).toBe(2);
+			expect(await getTrackingQuantity(user.id, StatTracking.LVL_UP)).toBe(1);
+			expect(await getTrackingQuantity(user.id, StatTracking.UP_FIRE)).toBe(1);
 		});
 	});
 });
