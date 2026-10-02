@@ -50,10 +50,8 @@
 					<th>Stratégie</th>
 					<th>État</th>
 					<th>Dinoz</th>
-					<th>Min</th>
-					<th>Max</th>
-					<th>Dernière</th>
-					<th>Prochaine</th>
+					<th>Délai (s)</th>
+					<th>Planning</th>
 					<th>Actions</th>
 				</tr>
 
@@ -76,25 +74,30 @@
 					</td>
 					<td class="mono">{{ bot.user._count.dinoz }}</td>
 					<td>
-						<input
-							v-model.number="drafts[bot.id].minDelaySeconds"
-							class="delay"
-							type="number"
-							min="10"
-							max="86400"
-						/>
+						<div class="delay-range">
+							<input
+								v-model.number="drafts[bot.id].minDelaySeconds"
+								class="delay"
+								type="number"
+								min="10"
+								max="86400"
+								title="Délai minimum"
+							/>
+							<span>–</span>
+							<input
+								v-model.number="drafts[bot.id].maxDelaySeconds"
+								class="delay"
+								type="number"
+								min="10"
+								max="86400"
+								title="Délai maximum"
+							/>
+						</div>
 					</td>
-					<td>
-						<input
-							v-model.number="drafts[bot.id].maxDelaySeconds"
-							class="delay"
-							type="number"
-							min="10"
-							max="86400"
-						/>
+					<td class="mono planning">
+						<div title="Dernière action">← {{ formatDate(bot.lastActionAt) }}</div>
+						<div title="Prochaine action">→ {{ formatDate(bot.nextActionAt) }}</div>
 					</td>
-					<td class="mono">{{ formatDate(bot.lastActionAt) }}</td>
-					<td class="mono">{{ formatDate(bot.nextActionAt) }}</td>
 					<td>
 						<div class="row-actions">
 							<DZButton small :disabled="savingId === bot.id" @click="saveBot(bot.id)">
@@ -339,7 +342,21 @@ select {
 	min-height: 28px;
 }
 .delay {
-	width: 64px;
+	width: 52px;
+}
+.delay-range {
+	display: flex;
+	align-items: center;
+	gap: 3px;
+	white-space: nowrap;
+}
+.planning {
+	min-width: 118px;
+	font-size: 11px;
+	line-height: 1.25;
+}
+.planning > div {
+	white-space: nowrap;
 }
 .table-wrap {
 	width: 100%;
@@ -375,8 +392,9 @@ select {
 	gap: 6px;
 }
 .row-actions {
-	flex-wrap: wrap;
-	min-width: 128px;
+	flex-direction: column;
+	align-items: stretch;
+	min-width: 92px;
 }
 .history-header {
 	justify-content: space-between;
