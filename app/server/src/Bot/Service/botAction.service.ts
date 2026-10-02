@@ -12,7 +12,7 @@ import { BotStrategy } from '../../../../prisma/index.js';
 import type { BotDecision } from './botDecision.service.js';
 import { executeBotGather, isBotGatherAction } from './botGather.service.js';
 import { chooseBotLevelUp } from './botLevelUp.service.js';
-import { buyBotTutorialBurger, executeBotTutorialEvent } from './botTutorial.service.js';
+import { buyBotTutorialBurger, buyBotTutorialIrma, executeBotTutorialEvent } from './botTutorial.service.js';
 import { executeBotDialog } from './botDialog.service.js';
 import { executeBotMissionInteraction, executeBotMissionWait } from './botMissionAction.service.js';
 import { healBotDinoz } from './botHealing.service.js';
@@ -157,6 +157,11 @@ export async function executeBotDecision(userId: string, strategy: BotStrategy, 
 
 	if (decision.action === 'tutorial_buy_burger') {
 		await buyBotTutorialBurger(userId, decision.dinozId);
+		return;
+	}
+
+	if (decision.action === 'tutorial_buy_irma') {
+		await buyBotTutorialIrma(userId, decision.dinozId);
 		return;
 	}
 
