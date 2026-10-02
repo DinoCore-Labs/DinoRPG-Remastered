@@ -134,7 +134,13 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		throw new ExpectedError('userNotFound', { params: { userId } });
 	}
 
-	const tutorialDinoz = playerData.dinoz[0];
+	const tutorialDinoz =
+		playerData.dinoz.find(
+			dinoz =>
+				!dinoz.leaderId &&
+				isActiveDinozState(dinoz.state) &&
+				dinoz.life > 0
+		) ?? playerData.dinoz[0];
 	if (tutorialDinoz) {
 		const tutorialPlan = await getBotTutorialPlan(userId, tutorialDinoz.id);
 		if (tutorialPlan) {
@@ -159,6 +165,33 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 							targetPlaceId: nextHop
 						};
 					}
+
+					/*
+					 * Un déplacement tutoriel peut être momentanément
+					 * impossible parce que l'action du Dinoz (ou d'un
+					 * follower) a déjà été consommée. Dans ce cas on
+					 * restaure uniquement cette capacité afin de
+					 * reprendre le tutoriel au prochain tick.
+					 */
+					if (
+						!tutorialDinoz.fight ||
+						tutorialDinoz.followers.some(follower => !follower.fight)
+					) {
+						const groupHasRemainingAction =
+							tutorialDinoz.remaining > 0 ||
+							tutorialDinoz.followers.some(follower => follower.remaining > 0);
+
+						return {
+							dinozId: tutorialDinoz.id,
+							action:
+								tutorialDinoz.followers.length > 0 && !groupHasRemainingAction
+									? Action.IRMAS
+									: groupHasRemainingAction
+										? Action.ACTION
+										: Action.IRMA
+						};
+					}
+
 					return null;
 				}
 				case 'dialog':
