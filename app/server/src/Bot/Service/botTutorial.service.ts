@@ -20,7 +20,9 @@ export type BotTutorialPlan =
 	| { type: 'move'; placeId: PlaceEnum }
 	| { type: 'dialog'; dialogId: string; preferredLinkIds?: string[] }
 	| { type: 'buy_burger' }
+	| { type: 'buy_irma' }
 	| { type: 'use_burger' }
+	| { type: 'restore_action' }
 	| { type: 'fight' };
 
 const INTRO_STEPS: Record<
@@ -110,13 +112,20 @@ export async function getBotTutorialPlan(
 			placeId: true,
 			life: true,
 			maxLife: true,
+			fight: true,
 			user: {
 				select: {
 					items: {
 						where: {
-							itemId: itemList[Item.CLOUD_BURGER].itemId
+							itemId: {
+								in: [
+									itemList[Item.CLOUD_BURGER].itemId,
+									itemList[Item.POTION_IRMA].itemId
+								]
+							}
 						},
 						select: {
+							itemId: true,
 							quantity: true
 						}
 					}
@@ -228,7 +237,15 @@ export async function getBotTutorialPlan(
 			};
 
 		case 'burger': {
-			const burgerQuantity = dinoz.user?.items[0]?.quantity ?? 0;
+			const burgerQuantity =
+				dinoz.user?.items.find(
+					entry => entry.itemId === itemList[Item.CLOUD_BURGER].itemId
+				)?.quantity ?? 0;
+			const irmaQuantity =
+				dinoz.user?.items.find(
+					entry => entry.itemId === itemList[Item.POTION_IRMA].itemId
+				)?.quantity ?? 0;
+
 			if (burgerQuantity <= 0) {
 				return {
 					type: 'buy_burger'
@@ -238,6 +255,11 @@ export async function getBotTutorialPlan(
 				return {
 					type: 'use_burger'
 				};
+			}
+			if (!dinoz.fight) {
+				return irmaQuantity > 0
+					? { type: 'restore_action' }
+					: { type: 'buy_irma' };
 			}
 			return {
 				type: 'fight'
@@ -279,11 +301,11 @@ export async function executeBotTutorialEvent(
 	});
 }
 
-export async function buyBotTutorialBurger(
+async function buyBotTutorialItem(
 	userId: string,
-	dinozId: number
+	dinozId: number,
+	itemId: number
 ): Promise<boolean> {
-	const itemId = itemList[Item.CLOUD_BURGER].itemId;
 	const playerShopData = await getUserShopOneItemDataRequest(userId, itemId);
 	if (!playerShopData) return false;
 
@@ -291,11 +313,14 @@ export async function buyBotTutorialBurger(
 	const sold = shop.listItemsSold.find(entry => entry.id === itemId);
 	if (!sold) return false;
 
-	const item = structuredClone(itemList[Item.CLOUD_BURGER]);
-	item.price =
-		playerShopData.merchant
-			? Math.round(sold.price * 0.9)
-			: sold.price;
+	const item = structuredClone(
+		Object.values(itemList).find(entry => entry.itemId === itemId)
+	);
+	if (!item) return false;
+
+	item.price = playerShopData.merchant
+		? Math.round(sold.price * 0.9)
+		: sold.price;
 	item.maxQuantity = getItemMaxQuantity(playerShopData, item);
 
 	await purchaseItemWithGold({
@@ -311,4 +336,26 @@ export async function buyBotTutorialBurger(
 		dinozId
 	});
 	return true;
+}
+
+export async function buyBotTutorialIrma(
+	userId: string,
+	dinozId: number
+): Promise<boolean> {
+	return buyBotTutorialItem(
+		userId,
+		dinozId,
+		itemList[Item.POTION_IRMA].itemId
+	);
+}
+
+export async function buyBotTutorialBurger(
+	userId: string,
+	dinozId: number
+): Promise<boolean> {
+	return buyBotTutorialItem(
+		userId,
+		dinozId,
+		itemList[Item.CLOUD_BURGER].itemId
+	);
 }

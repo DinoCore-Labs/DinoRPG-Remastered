@@ -55,6 +55,7 @@ export type BotDecision = {
 		| 'tutorial_event'
 		| 'tutorial_dialog'
 		| 'tutorial_buy_burger'
+		| 'tutorial_buy_irma'
 		| 'tutorial_use_burger';
 	shopId?: number;
 	dialogId?: string;
@@ -206,6 +207,16 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					return {
 						dinozId: tutorialDinoz.id,
 						action: 'tutorial_buy_burger'
+					};
+				case 'buy_irma':
+					return {
+						dinozId: tutorialDinoz.id,
+						action: 'tutorial_buy_irma'
+					};
+				case 'restore_action':
+					return {
+						dinozId: tutorialDinoz.id,
+						action: Action.IRMA
 					};
 				case 'use_burger':
 					return {

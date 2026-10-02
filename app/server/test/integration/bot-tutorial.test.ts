@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { BotStrategy } from '../../../prisma/index.js';
 import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { executeBotDecision } from '../../src/Bot/Service/botAction.service.js';
 import { chooseBotDecision } from '../../src/Bot/Service/botDecision.service.js';
 import { createBotPlayer } from '../../src/Bot/Service/createBotPlayer.service.js';
@@ -78,6 +79,64 @@ describe('bot tutorial', () => {
 
 		const recovery = await chooseBotDecision(created.user.id, BotStrategy.BALANCED);
 		expect(recovery).toMatchObject({
+			dinozId: created.dinoz.id,
+			action: Action.IRMA
+		});
+	});
+
+	it('buys an Irma before a tutorial fight when no action remains', async () => {
+		const created = await createBotPlayer({
+			name: 'TutorialIrmaBot',
+			strategy: BotStrategy.BALANCED
+		});
+
+		await prisma.userScenario.update({
+			where: {
+				scenarioKey_userId: {
+					userId: created.user.id,
+					scenarioKey: 'tutorial'
+				}
+			},
+			data: {
+				progression: 7
+			}
+		});
+
+		await prisma.userItems.create({
+			data: {
+				userId: created.user.id,
+				itemId: itemList[Item.CLOUD_BURGER].itemId,
+				quantity: 1
+			}
+		});
+
+		await prisma.dinoz.update({
+			where: { id: created.dinoz.id },
+			data: {
+				fight: false
+			}
+		});
+
+		const buyIrma = await chooseBotDecision(created.user.id, BotStrategy.BALANCED);
+		expect(buyIrma).toMatchObject({
+			dinozId: created.dinoz.id,
+			action: 'tutorial_buy_irma'
+		});
+
+		await executeBotDecision(created.user.id, BotStrategy.BALANCED, buyIrma!);
+
+		const irma = await prisma.userItems.findUnique({
+			where: {
+				itemId_userId: {
+					userId: created.user.id,
+					itemId: itemList[Item.POTION_IRMA].itemId
+				}
+			}
+		});
+		expect(irma?.quantity).toBeGreaterThan(0);
+
+		const restore = await chooseBotDecision(created.user.id, BotStrategy.BALANCED);
+		expect(restore).toMatchObject({
 			dinozId: created.dinoz.id,
 			action: Action.IRMA
 		});
