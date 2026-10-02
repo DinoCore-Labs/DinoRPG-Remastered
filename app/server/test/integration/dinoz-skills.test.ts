@@ -10,6 +10,7 @@ import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { computeUSkillsForUser } from '../../src/Level/Controller/applySkillEffect.controller.js';
+import { unlockDoubleSkills } from '../../src/Level/Controller/unlockDoubleSkills.controller.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
 import { createAuthCookie } from '../helpers/auth.js';
@@ -145,6 +146,15 @@ async function equipDinozCube(dinozId: number): Promise<void> {
 		data: {
 			dinozId,
 			itemId: itemList[Item.DINOZ_CUBE].itemId
+		}
+	});
+}
+
+async function equipFearFactor(dinozId: number): Promise<void> {
+	await prisma.dinozItems.create({
+		data: {
+			dinozId,
+			itemId: Item.FEAR_FACTOR
 		}
 	});
 }
@@ -1388,6 +1398,465 @@ describe('Dinoz skills', () => {
 			for (const field of U_SKILL_FIELDS) {
 				expect(updatedUser[field]).toBe(false);
 			}
+		});
+	});
+
+	describe('special skills', () => {
+		it('detaches the whole group when a leader learns Brave', async () => {
+			const user = await createTestUser({
+				name: 'BraveLearningOwner',
+				withTutorial: false
+			});
+			const leader = await createLevelUpReadyDinoz(user.id, {
+				level: 10,
+				raceId: RaceEnum.MOUEFFE,
+				element: ElementType.FIRE
+			});
+			const firstFollower = await createTestDinoz({
+				userId: user.id,
+				name: 'BraveFollowerOne',
+				canRename: false,
+				raceId: RaceEnum.PIGMOU
+			});
+			const secondFollower = await createTestDinoz({
+				userId: user.id,
+				name: 'BraveFollowerTwo',
+				canRename: false,
+				raceId: RaceEnum.PIGMOU
+			});
+			await prisma.dinoz.updateMany({
+				where: {
+					id: {
+						in: [firstFollower.id, secondFollower.id]
+					}
+				},
+				data: {
+					leaderId: leader.id
+				}
+			});
+			await addSkill(leader.id, Skill.SELF_CONTROL);
+			await prepareLevelUpRanking(user.id, 10);
+			const initialMaxLife = leader.maxLife;
+			const initialFire = leader.nbrUpFire;
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/level/learnskill/${leader.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				},
+				payload: {
+					skillIdList: [Skill.BRAVE],
+					tryNumber: 1
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			const updatedLeader = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: leader.id
+				}
+			});
+			expect(updatedLeader.level).toBe(11);
+			/*
+			 * BRAVE :
+			 * +50 PV max
+			 */
+			expect(updatedLeader.maxLife).toBe(initialMaxLife + 50);
+			/*
+			 * BRAVE :
+			 * +6 Feu
+			 *
+			 * level-up Feu :
+			 * +1
+			 */
+			expect(updatedLeader.nbrUpFire).toBe(initialFire + 7);
+			expect(
+				await prisma.dinozSkills.count({
+					where: {
+						dinozId: leader.id,
+						skillId: Skill.BRAVE
+					}
+				})
+			).toBe(1);
+			const followers = await prisma.dinoz.findMany({
+				where: {
+					id: {
+						in: [firstFollower.id, secondFollower.id]
+					}
+				},
+				select: {
+					id: true,
+					leaderId: true
+				}
+			});
+			/*
+			 * Apprendre Brave casse
+			 * immédiatement le groupe.
+			 */
+			expect(followers.every(follower => follower.leaderId === null)).toBe(true);
+		});
+
+		it('detaches a follower from its leader when the follower learns Brave', async () => {
+			const user = await createTestUser({
+				name: 'BraveFollowerLearningOwner',
+				withTutorial: false
+			});
+			const leader = await createTestDinoz({
+				userId: user.id,
+				name: 'ExistingLeader',
+				canRename: false,
+				raceId: RaceEnum.PIGMOU
+			});
+			const follower = await createLevelUpReadyDinoz(user.id, {
+				name: 'LearningBraveFollower',
+				level: 10,
+				raceId: RaceEnum.MOUEFFE,
+				element: ElementType.FIRE
+			});
+			await prisma.dinoz.update({
+				where: {
+					id: follower.id
+				},
+				data: {
+					leaderId: leader.id
+				}
+			});
+			await addSkill(follower.id, Skill.SELF_CONTROL);
+			await prepareLevelUpRanking(user.id, 11);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/level/learnskill/${follower.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				},
+				payload: {
+					skillIdList: [Skill.BRAVE],
+					tryNumber: 1
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			expect(
+				(
+					await prisma.dinoz.findUniqueOrThrow({
+						where: {
+							id: follower.id
+						}
+					})
+				).leaderId
+			).toBeNull();
+		});
+
+		it('prevents a Brave Dinoz without Fear Factor from following another Dinoz', async () => {
+			const user = await createTestUser({
+				name: 'BraveNoFearOwner',
+				withTutorial: false
+			});
+			const follower = await createTestDinoz({
+				userId: user.id,
+				name: 'BraveNoFearFollower',
+				canRename: false,
+				raceId: RaceEnum.MOUEFFE
+			});
+			const leader = await createTestDinoz({
+				userId: user.id,
+				name: 'BraveNoFearLeader',
+				canRename: false,
+				raceId: RaceEnum.PIGMOU
+			});
+			await addSkill(follower.id, Skill.BRAVE);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${follower.id}/follow/${leader.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dinozCannotFollowBrave'
+			});
+			expect(
+				(
+					await prisma.dinoz.findUniqueOrThrow({
+						where: {
+							id: follower.id
+						}
+					})
+				).leaderId
+			).toBeNull();
+		});
+
+		it('allows a Brave Dinoz with Fear Factor to follow a Dinoz with elemental affinity', async () => {
+			const user = await createTestUser({
+				name: 'BraveFearFactorOwner',
+				withTutorial: false
+			});
+			/*
+			 * Moueffe et Pigmou ont tous
+			 * les deux du Feu natif.
+			 */
+			const follower = await createTestDinoz({
+				userId: user.id,
+				name: 'BraveFearFollower',
+				canRename: false,
+				raceId: RaceEnum.MOUEFFE
+			});
+			const leader = await createTestDinoz({
+				userId: user.id,
+				name: 'BraveFearLeader',
+				canRename: false,
+				raceId: RaceEnum.PIGMOU
+			});
+			await addSkill(follower.id, Skill.BRAVE);
+			await equipFearFactor(follower.id);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${follower.id}/follow/${leader.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			expect(
+				(
+					await prisma.dinoz.findUniqueOrThrow({
+						where: {
+							id: follower.id
+						}
+					})
+				).leaderId
+			).toBe(leader.id);
+		});
+
+		it('still requires elemental affinity when Brave is neutralized by Fear Factor', async () => {
+			const user = await createTestUser({
+				name: 'BraveAffinityOwner',
+				withTutorial: false
+			});
+			/*
+			 * Moueffe :
+			 * Feu
+			 *
+			 * Gorilloz :
+			 * Bois
+			 *
+			 * => aucune affinité native.
+			 */
+			const follower = await createTestDinoz({
+				userId: user.id,
+				name: 'BraveAffinityFollower',
+				canRename: false,
+				raceId: RaceEnum.MOUEFFE
+			});
+			const leader = await createTestDinoz({
+				userId: user.id,
+				name: 'BraveAffinityLeader',
+				canRename: false,
+				raceId: RaceEnum.GORILLOZ
+			});
+			await addSkill(follower.id, Skill.BRAVE);
+			await equipFearFactor(follower.id);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/dinoz/${follower.id}/follow/${leader.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'dinozCannotFollowSharedElement'
+			});
+			expect(
+				(
+					await prisma.dinoz.findUniqueOrThrow({
+						where: {
+							id: follower.id
+						}
+					})
+				).leaderId
+			).toBeNull();
+		});
+
+		it('unlocks an eligible double skill when Competence Double is obtained', async () => {
+			const user = await createTestUser({
+				name: 'DoubleSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'DoubleSkillDinoz',
+				canRename: false
+			});
+			/*
+			 * SPRINT demande :
+			 *
+			 * - Kamikaze
+			 * - Voie de Kaos
+			 * - Compétence Double
+			 */
+			await prisma.dinozSkills.createMany({
+				data: [
+					{
+						dinozId: dinoz.id,
+						skillId: Skill.KAMIKAZE
+					},
+					{
+						dinozId: dinoz.id,
+						skillId: Skill.VOIE_DE_KAOS
+					},
+					{
+						dinozId: dinoz.id,
+						skillId: Skill.COMPETENCE_DOUBLE
+					}
+				]
+			});
+
+			await unlockDoubleSkills(dinoz.id);
+			const unlockables = await prisma.dinozSkillsUnlockable.findMany({
+				where: {
+					dinozId: dinoz.id
+				}
+			});
+			const unlockableIds = unlockables.map(skill => skill.skillId);
+			expect(unlockableIds).toContain(Skill.SPRINT);
+			/*
+			 * Armure de Basalte est également
+			 * une double skill, mais demande :
+			 *
+			 * - Waikikido
+			 * - Cocon
+			 * - Compétence Double
+			 *
+			 * Ces prérequis ne sont pas présents.
+			 */
+			expect(unlockableIds).not.toContain(Skill.ARMURE_DE_BASALTE);
+		});
+
+		it('does not unlock a double skill when another prerequisite is missing', async () => {
+			const user = await createTestUser({
+				name: 'IncompleteDoubleSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'IncompleteDoubleSkillDinoz',
+				canRename: false
+			});
+			/*
+			 * VOIE_DE_KAOS manque volontairement.
+			 */
+			await prisma.dinozSkills.createMany({
+				data: [
+					{
+						dinozId: dinoz.id,
+						skillId: Skill.KAMIKAZE
+					},
+					{
+						dinozId: dinoz.id,
+						skillId: Skill.COMPETENCE_DOUBLE
+					}
+				]
+			});
+			await unlockDoubleSkills(dinoz.id);
+			expect(
+				await prisma.dinozSkillsUnlockable.count({
+					where: {
+						dinozId: dinoz.id,
+						skillId: Skill.SPRINT
+					}
+				})
+			).toBe(0);
+		});
+
+		it('prevents learning a race-restricted skill through a forged request', async () => {
+			const user = await createTestUser({
+				name: 'ForgedRaceSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				level: 10,
+				raceId: RaceEnum.MOUEFFE,
+				element: ElementType.FIRE
+			});
+			await prepareLevelUpRanking(user.id, 10);
+			await addSkill(dinoz.id, Skill.FORCE);
+			/*
+			 * PROPULSION_DIVINE nécessite
+			 * Force, mais reste réservée
+			 * au Quetzu.
+			 */
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/level/learnskill/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				},
+				payload: {
+					skillIdList: [Skill.PROPULSION_DIVINE],
+					tryNumber: 1
+				}
+			});
+			expect(response.statusCode).toBe(400);
+			expect(
+				(
+					await prisma.dinoz.findUniqueOrThrow({
+						where: {
+							id: dinoz.id
+						}
+					})
+				).level
+			).toBe(10);
+			expect(
+				await prisma.dinozSkills.count({
+					where: {
+						dinozId: dinoz.id,
+						skillId: Skill.PROPULSION_DIVINE
+					}
+				})
+			).toBe(0);
+		});
+
+		it('allows the matching race to learn a race-restricted skill', async () => {
+			const user = await createTestUser({
+				name: 'ValidRaceSkillOwner',
+				withTutorial: false
+			});
+			const dinoz = await createLevelUpReadyDinoz(user.id, {
+				level: 10,
+				raceId: RaceEnum.QUETZU,
+				element: ElementType.FIRE
+			});
+			await prepareLevelUpRanking(user.id, 10);
+			await addSkill(dinoz.id, Skill.FORCE);
+			const response = await server.inject({
+				method: 'POST',
+				url: `/api/level/learnskill/${dinoz.id}`,
+				headers: {
+					cookie: createAuthCookie(server, user)
+				},
+				payload: {
+					skillIdList: [Skill.PROPULSION_DIVINE],
+					tryNumber: 1
+				}
+			});
+			expect(response.statusCode).toBe(200);
+			expect(
+				await prisma.dinozSkills.count({
+					where: {
+						dinozId: dinoz.id,
+						skillId: Skill.PROPULSION_DIVINE
+					}
+				})
+			).toBe(1);
+			expect(
+				(
+					await prisma.dinoz.findUniqueOrThrow({
+						where: {
+							id: dinoz.id
+						}
+					})
+				).level
+			).toBe(11);
 		});
 	});
 });
