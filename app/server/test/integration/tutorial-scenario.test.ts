@@ -433,7 +433,7 @@ describe('Tutorial scenario', () => {
 			await setTracking(user.id, StatTracking.MOVES, 1);
 			await setTracking(user.id, StatTracking.S_BUYER, 1);
 			await setTracking(user.id, StatTracking.HEAL_PV, 1);
-			await setIntroProgression(user.id, 6);
+			await setIntroProgression(user.id, IntroProgression.COMPLETED);
 			await prisma.dinozMissions.create({
 				data: {
 					dinozId: dinoz.id,
