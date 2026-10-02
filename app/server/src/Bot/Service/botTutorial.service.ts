@@ -75,6 +75,32 @@ export async function getBotTutorialPlan(
 		return null;
 	}
 
+	/*
+	 * Compatibilité avec les bots créés avant la prise en charge
+	 * complète du tutoriel : l'ancienne implémentation validait
+	 * GUIDE_MICHEL_SPOKEN directement et pouvait donc avancer le
+	 * tutoriel sans créer scenario(intro)=1.
+	 *
+	 * Les nouveaux bots passent par le vrai dialogue "guide".
+	 * Ce bloc ne sert qu'à réparer cet ancien état incohérent.
+	 */
+	if (!['dinoz', 'speak'].includes(tutorial.objective.id)) {
+		await prisma.userScenario.upsert({
+			where: {
+				scenarioKey_userId: {
+					userId,
+					scenarioKey: 'intro'
+				}
+			},
+			create: {
+				userId,
+				scenarioKey: 'intro',
+				progression: 1
+			},
+			update: {}
+		});
+	}
+
 	const dinoz = await prisma.dinoz.findFirst({
 		where: {
 			id: dinozId,
