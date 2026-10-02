@@ -18,6 +18,7 @@ import { prisma } from '../../prisma.js';
 import { updatePoints } from '../../Ranking/Controller/updatePoints.js';
 import { discoverUserSkillsTx } from '../../Skill/Controller/discoveredUserSkills.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
+import { withUserGameplayLock } from '../../utils/database/userGameplayLock.js';
 import TournamentManager from '../../utils/tournamentManager.js';
 import { applySkillEffect } from '../Controller/applySkillEffect.controller.js';
 import { getDinozForLevelUp } from '../Controller/getDinozForLevelUp.controller.js';
@@ -42,7 +43,7 @@ type LearnSkillReq = FastifyRequest<{
  *
  * @returns LearnSkillData
  */
-export async function learnSkill(req: LearnSkillReq, _reply: FastifyReply): Promise<LearnSkillData> {
+export async function learnSkillUnlocked(req: LearnSkillReq, _reply: FastifyReply): Promise<LearnSkillData> {
 	const authed = req.user;
 	const dinozId = Number(req.params.id);
 	const skillIdList = req.body.skillIdList ?? [];
@@ -228,4 +229,8 @@ export async function addSkillToDinozWithEffects(params: {
 		}
 	}
 	return updatedDinozSkills;
+}
+
+export async function learnSkill(req: LearnSkillReq, reply: FastifyReply): Promise<LearnSkillData> {
+	return withUserGameplayLock(req.user.id, () => learnSkillUnlocked(req, reply));
 }
