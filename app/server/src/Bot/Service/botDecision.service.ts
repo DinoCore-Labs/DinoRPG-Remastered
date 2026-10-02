@@ -28,6 +28,7 @@ import { getBotForestGuardianProgressionStep } from './botForestGuardianProgress
 import { getBotSteppesProgressionStep } from './botSteppesProgression.service.js';
 import { getBotMagnetiteProgressionStep } from './botMagnetiteProgression.service.js';
 import { getBotRaceTrophyProgressionStep } from './botRaceTrophyProgression.service.js';
+import { getBotLegacyIntroRepairStep } from './botLegacyIntroRepair.service.js';
 import { getBotMarketOfferPlan, shouldBotGoToMarket } from './botMarket.service.js';
 import { getBotItinerantSalePlan } from './botItinerantMerchant.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
@@ -58,7 +59,8 @@ export type BotDecision = {
 		| 'tutorial_buy_burger'
 		| 'tutorial_buy_irma'
 		| 'buy_irma'
-		| 'tutorial_use_burger';
+		| 'tutorial_use_burger'
+		| 'repair_taurus';
 	shopId?: number;
 	dialogId?: string;
 	preferredLinkIds?: string[];
@@ -230,6 +232,43 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 						dinozId: tutorialDinoz.id,
 						action: Action.FIGHT
 					};
+			}
+		}
+	}
+
+	if (tutorialDinoz) {
+		const legacyIntro = await getBotLegacyIntroRepairStep(userId, tutorialDinoz.id);
+		if (legacyIntro) {
+			if (legacyIntro.type === 'move') {
+				const nextHop = await findBotMissionNextHop(
+					userId,
+					tutorialDinoz.id,
+					tutorialDinoz.placeId,
+					legacyIntro.placeId
+				);
+				if (nextHop != null) {
+					return {
+						dinozId: tutorialDinoz.id,
+						action: 'move',
+						targetPlaceId: nextHop
+					};
+				}
+			}
+
+			if (legacyIntro.type === 'dialog') {
+				return {
+					dinozId: tutorialDinoz.id,
+					action: 'progression_dialog',
+					dialogId: legacyIntro.dialogId,
+					preferredLinkIds: legacyIntro.preferredLinkIds
+				};
+			}
+
+			if (legacyIntro.type === 'repair_taurus') {
+				return {
+					dinozId: tutorialDinoz.id,
+					action: 'repair_taurus'
+				};
 			}
 		}
 	}
