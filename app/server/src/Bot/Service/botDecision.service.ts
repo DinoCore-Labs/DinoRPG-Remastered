@@ -26,6 +26,7 @@ import { getBotSylvenoireProgressionStep } from './botSylvenoireProgression.serv
 import { getBotForestGuardianProgressionStep } from './botForestGuardianProgression.service.js';
 import { getBotSteppesProgressionStep } from './botSteppesProgression.service.js';
 import { getBotMagnetiteProgressionStep } from './botMagnetiteProgression.service.js';
+import { getBotRaceTrophyProgressionStep } from './botRaceTrophyProgression.service.js';
 import { getBotMarketOfferPlan, shouldBotGoToMarket } from './botMarket.service.js';
 import { getBotItinerantSalePlan } from './botItinerantMerchant.service.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
@@ -371,6 +372,46 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 
 	for (const dinoz of playerData.dinoz.slice(0, 3)) {
 		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
+
+		const trophyStep = await getBotRaceTrophyProgressionStep(userId, dinoz.id);
+		if (trophyStep) {
+			const trophyGoal = progressionGoals.get(dinoz.id);
+			const trophyMemoryBonus =
+				trophyGoal === BotProgressionGoal.HIPPOCLAMP_TROPHY ||
+				trophyGoal === BotProgressionGoal.PTEROZ_TROPHY ||
+				trophyGoal === BotProgressionGoal.ROCKY_TROPHY
+					? 160
+					: 0;
+
+			if (trophyStep.type === 'move') {
+				const nextHop = await findBotMissionNextHop(
+					userId,
+					dinoz.id,
+					dinoz.placeId,
+					trophyStep.placeId
+				);
+				if (nextHop != null) {
+					candidates.push({
+						value: {
+							dinozId: dinoz.id,
+							action: 'move',
+							targetPlaceId: nextHop
+						},
+						weight: 380 + trophyMemoryBonus
+					});
+				}
+			} else {
+				candidates.push({
+					value: {
+						dinozId: dinoz.id,
+						action: 'progression_dialog',
+						dialogId: trophyStep.dialogId,
+						preferredLinkIds: trophyStep.preferredLinkIds
+					},
+					weight: 390 + trophyMemoryBonus
+				});
+			}
+		}
 
 		const magnetiteStep = await getBotMagnetiteProgressionStep(userId, dinoz.id);
 		if (magnetiteStep) {
