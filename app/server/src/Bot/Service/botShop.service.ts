@@ -83,3 +83,33 @@ export async function buyBotUsefulItem(userId: string, shopId: number): Promise<
 	});
 	return true;
 }
+
+
+export async function buyBotIrma(userId: string): Promise<boolean> {
+	const shop = shopListV2.FLYING_SHOP;
+	const sold = shop.listItemsSold.find(
+		entry => entry.id === itemList[Item.POTION_IRMA].itemId
+	);
+	if (!sold || sold.type !== ItemShopType.ITEM) return false;
+
+	const user = await getUserShopItemsDataRequest(userId);
+	if (!user) return false;
+
+	const gold = user.wallets.find(wallet => wallet.type === MoneyType.GOLD)?.amount ?? 0;
+	const item = itemList[Item.POTION_IRMA];
+	const unitPrice =
+		user.merchant
+			? Math.round(sold.price * 0.9)
+			: sold.price;
+
+	if (gold < unitPrice) return false;
+
+	await purchaseItemWithGold({
+		userId,
+		itemId: item.itemId,
+		quantity: 1,
+		unitPrice,
+		maxQuantity: getItemMaxQuantity(user, item)
+	});
+	return true;
+}

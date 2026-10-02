@@ -142,4 +142,38 @@ describe('bot tutorial', () => {
 		});
 	});
 
+	it('falls back to Irma recovery instead of idling when no other action is available', async () => {
+		const created = await createBotPlayer({
+			name: 'GlobalIrmaRecoveryBot',
+			strategy: BotStrategy.BALANCED
+		});
+
+		await prisma.userScenario.update({
+			where: {
+				scenarioKey_userId: {
+					userId: created.user.id,
+					scenarioKey: 'tutorial'
+				}
+			},
+			data: {
+				progression: 999
+			}
+		});
+
+		await prisma.dinoz.updateMany({
+			where: {
+				userId: created.user.id
+			},
+			data: {
+				fight: false,
+				gather: false,
+				remaining: 0
+			}
+		});
+
+		const decision = await chooseBotDecision(created.user.id, BotStrategy.BALANCED);
+		expect(decision).not.toBeNull();
+		expect(['buy_irma', Action.IRMA, Action.IRMAS]).toContain(decision!.action);
+	});
+
 });
