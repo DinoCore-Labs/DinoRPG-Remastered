@@ -1,4 +1,5 @@
 import { PlaceEnum } from '../../enums/PlaceEnum.js';
+import { IntroProgression } from '../../scenarios/data/introScenario.js';
 import { parseCondition } from '../../utils/conditions/parseConditions.js';
 import { DialogDefinition } from '../dialog.js';
 
@@ -557,7 +558,7 @@ export const introFallsTaurusDialog: DialogDefinition = {
 				{
 					type: 'scenario',
 					scenario: 'intro',
-					phase: 6
+					phase: IntroProgression.TAURUS_DEFEATED
 				},
 				{
 					type: 'tutorialRefresh'
@@ -586,6 +587,14 @@ export const introFallsTaurusDialog: DialogDefinition = {
 			text: 'npc.intro.fallsTaurus.dialog.move',
 			next: [],
 			effects: [
+				{
+					type: 'scenario',
+					scenario: 'intro',
+					phase: IntroProgression.COMPLETED
+				},
+				{
+					type: 'tutorialRefresh'
+				},
 				{
 					type: 'moveRandom',
 					places: [PlaceEnum.DINOVILLE],
