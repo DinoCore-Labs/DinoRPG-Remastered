@@ -9,6 +9,7 @@ import { getLevelXp } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
+import { addItemToInventory } from '../../src/Inventory/Controller/addItem.controller.js';
 import { computeUSkillsForUser } from '../../src/Level/Controller/applySkillEffect.controller.js';
 import { unlockDoubleSkills } from '../../src/Level/Controller/unlockDoubleSkills.controller.js';
 import { prisma } from '../../src/prisma.js';
@@ -81,6 +82,45 @@ const U_SKILL_CASES: Array<{
 ];
 
 const U_SKILL_FIELDS: USkillField[] = U_SKILL_CASES.map(entry => entry.field);
+
+const SPHERE_CHAINS = [
+	{
+		name: 'fire',
+		element: ElementType.FIRE,
+		item: Item.FIRE_SPHERE,
+		skills: [Skill.BRASERO, Skill.DETONATION, Skill.COEUR_DU_PHOENIX]
+	},
+	{
+		name: 'wood',
+		element: ElementType.WOOD,
+		item: Item.WOOD_SPHERE,
+		skills: [Skill.LANCEUR_DE_GLAND, Skill.GRATTEUR, Skill.GROSSE_BEIGNE]
+	},
+	{
+		name: 'water',
+		element: ElementType.WATER,
+		item: Item.WATER_SPHERE,
+		skills: [Skill.VITALITE, Skill.MOIGNONS_LIQUIDES, Skill.DELUGE]
+	},
+	{
+		name: 'lightning',
+		element: ElementType.LIGHTNING,
+		item: Item.LIGHTNING_SPHERE,
+		skills: [Skill.REFLEX, Skill.ECLAIR_SINUEUX, Skill.SURVIE]
+	},
+	{
+		name: 'air',
+		element: ElementType.AIR,
+		item: Item.AIR_SPHERE,
+		skills: [Skill.AIGUILLON, Skill.AURA_PUANTE, Skill.HYPNOSE]
+	},
+	{
+		name: 'void',
+		element: ElementType.VOID,
+		item: Item.VOID_SPHERE,
+		skills: [Skill.GROS_DORMEUR, Skill.VEILLEUSE, Skill.MATELASSEUR]
+	}
+] as const;
 
 async function getUserUSkills(userId: string) {
 	return prisma.user.findUniqueOrThrow({
@@ -182,6 +222,28 @@ async function getTrackingQuantity(userId: string, stat: StatTracking): Promise<
 		}
 	});
 	return tracking?.quantity ?? 0;
+}
+
+async function getItemQuantity(userId: string, itemId: number): Promise<number> {
+	const item = await prisma.userItems.findUnique({
+		where: {
+			itemId_userId: {
+				userId,
+				itemId
+			}
+		}
+	});
+	return item?.quantity ?? 0;
+}
+
+async function useItem(user: Parameters<typeof createAuthCookie>[1], dinozId: number, itemId: number) {
+	return server.inject({
+		method: 'GET',
+		url: `/api/inventory/${dinozId}/${itemId}`,
+		headers: {
+			cookie: createAuthCookie(server, user)
+		}
+	});
 }
 
 async function createLevelUpReadyDinoz(
@@ -1857,6 +1919,245 @@ describe('Dinoz skills', () => {
 					})
 				).level
 			).toBe(11);
+		});
+	});
+
+	describe('sphere skills', () => {
+		it.each(SPHERE_CHAINS)('learns the $name sphere skill chain in order', async ({ item, skills }) => {
+			const user = await createTestUser({
+				name: `SphereOwner-${item}`,
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: `SphereDinoz-${item}`,
+				canRename: false
+			});
+			const itemId = itemList[item].itemId;
+			await addItemToInventory(user.id, itemId, skills.length);
+			for (const [index, expectedSkill] of skills.entries()) {
+				const response = await useItem(user, dinoz.id, itemId);
+				expect(response.statusCode).toBe(200);
+				const body = response.json() as {
+					effects: Array<{
+						value?: string;
+					}>;
+				};
+				expect(body.effects).toEqual(
+					expect.arrayContaining([
+						expect.objectContaining({
+							value: skillList[expectedSkill].name
+						})
+					])
+				);
+				expect(
+					await prisma.dinozSkills.count({
+						where: {
+							dinozId: dinoz.id,
+							skillId: expectedSkill
+						}
+					})
+				).toBe(1);
+				/*
+				 * La chaîne doit avancer
+				 * exactement d'une étape.
+				 */
+				const learnedSkills = await prisma.dinozSkills.findMany({
+					where: {
+						dinozId: dinoz.id,
+						skillId: {
+							in: [...skills]
+						}
+					}
+				});
+				expect(learnedSkills).toHaveLength(index + 1);
+				expect(await getItemQuantity(user.id, itemId)).toBe(skills.length - index - 1);
+			}
+			expect(await getTrackingQuantity(user.id, StatTracking.ITEM_USED)).toBe(skills.length);
+		});
+
+		it('applies the persistent effect of Vitality when learned from a Water Sphere', async () => {
+			const user = await createTestUser({
+				name: 'VitalitySphereOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'VitalitySphereDinoz',
+				canRename: false,
+				maxLife: 100,
+				life: 100
+			});
+			const itemId = itemList[Item.WATER_SPHERE].itemId;
+			await addItemToInventory(user.id, itemId, 1);
+			const response = await useItem(user, dinoz.id, itemId);
+			expect(response.statusCode).toBe(200);
+			expect(
+				await prisma.dinozSkills.count({
+					where: {
+						dinozId: dinoz.id,
+						skillId: Skill.VITALITE
+					}
+				})
+			).toBe(1);
+			const updated = await prisma.dinoz.findUniqueOrThrow({
+				where: {
+					id: dinoz.id
+				}
+			});
+			/*
+			 * Vitalité :
+			 * MAX_HP +10
+			 */
+			expect(updated.maxLife).toBe(110);
+			expect(await getItemQuantity(user.id, itemId)).toBe(0);
+		});
+
+		it('activates Matelasseur after completing the Void Sphere chain', async () => {
+			const user = await createTestUser({
+				name: 'MatelasseurSphereOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'MatelasseurSphereDinoz',
+				canRename: false
+			});
+			const itemId = itemList[Item.VOID_SPHERE].itemId;
+			await addItemToInventory(user.id, itemId, 3);
+			expect((await getUserUSkills(user.id)).matelasseur).toBe(false);
+			for (const expectedSkill of [Skill.GROS_DORMEUR, Skill.VEILLEUSE, Skill.MATELASSEUR]) {
+				const response = await useItem(user, dinoz.id, itemId);
+				expect(response.statusCode).toBe(200);
+				expect(
+					await prisma.dinozSkills.count({
+						where: {
+							dinozId: dinoz.id,
+							skillId: expectedSkill
+						}
+					})
+				).toBe(1);
+			}
+			expect((await getUserUSkills(user.id)).matelasseur).toBe(true);
+			expect(await getItemQuantity(user.id, itemId)).toBe(0);
+		});
+
+		it('does not consume a Sphere when the whole elemental chain is already known', async () => {
+			const user = await createTestUser({
+				name: 'KnownSphereOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'KnownSphereDinoz',
+				canRename: false
+			});
+			await prisma.dinozSkills.createMany({
+				data: [
+					{
+						dinozId: dinoz.id,
+						skillId: Skill.BRASERO
+					},
+					{
+						dinozId: dinoz.id,
+						skillId: Skill.DETONATION
+					},
+					{
+						dinozId: dinoz.id,
+						skillId: Skill.COEUR_DU_PHOENIX
+					}
+				]
+			});
+			const itemId = itemList[Item.FIRE_SPHERE].itemId;
+			await addItemToInventory(user.id, itemId, 1);
+			const response = await useItem(user, dinoz.id, itemId);
+			expect(response.statusCode).toBe(400);
+			expect(response.json()).toMatchObject({
+				code: 'knownSphereSkill'
+			});
+			/*
+			 * L'échec arrive avant la
+			 * consommation de l'objet.
+			 */
+			expect(await getItemQuantity(user.id, itemId)).toBe(1);
+			expect(await getTrackingQuantity(user.id, StatTracking.ITEM_USED)).toBe(0);
+		});
+
+		it('prevents using a Sphere on another player Dinoz', async () => {
+			const owner = await createTestUser({
+				name: 'SphereRealOwner',
+				withTutorial: false
+			});
+			const attacker = await createTestUser({
+				name: 'SphereAttacker',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: owner.id,
+				name: 'ProtectedSphereDinoz',
+				canRename: false
+			});
+			const itemId = itemList[Item.FIRE_SPHERE].itemId;
+			await addItemToInventory(owner.id, itemId, 1);
+			const response = await useItem(attacker, dinoz.id, itemId);
+			expect(response.statusCode).toBe(403);
+			expect(
+				await prisma.dinozSkills.count({
+					where: {
+						dinozId: dinoz.id,
+						skillId: Skill.BRASERO
+					}
+				})
+			).toBe(0);
+			expect(await getItemQuantity(owner.id, itemId)).toBe(1);
+		});
+
+		it('serializes concurrent Sphere usage when only one Sphere remains', async () => {
+			const user = await createTestUser({
+				name: 'ConcurrentSphereOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'ConcurrentSphereDinoz',
+				canRename: false
+			});
+			const itemId = itemList[Item.FIRE_SPHERE].itemId;
+			await addItemToInventory(user.id, itemId, 1);
+			const cookie = createAuthCookie(server, user);
+			const useSphere = () =>
+				server.inject({
+					method: 'GET',
+					url: `/api/inventory/${dinoz.id}/${itemId}`,
+					headers: {
+						cookie
+					}
+				});
+			const responses = await Promise.all([useSphere(), useSphere()]);
+			expect(responses.filter(response => response.statusCode === 200)).toHaveLength(1);
+			expect(responses.filter(response => response.statusCode === 400)).toHaveLength(1);
+			const rejected = responses.find(response => response.statusCode === 400);
+			expect(rejected?.json()).toMatchObject({
+				code: 'notEnoughItems'
+			});
+			expect(
+				await prisma.dinozSkills.count({
+					where: {
+						dinozId: dinoz.id,
+						skillId: Skill.BRASERO
+					}
+				})
+			).toBe(1);
+			expect(
+				await prisma.dinozSkills.count({
+					where: {
+						dinozId: dinoz.id,
+						skillId: Skill.DETONATION
+					}
+				})
+			).toBe(0);
+			expect(await getItemQuantity(user.id, itemId)).toBe(0);
+			expect(await getTrackingQuantity(user.id, StatTracking.ITEM_USED)).toBe(1);
 		});
 	});
 });
