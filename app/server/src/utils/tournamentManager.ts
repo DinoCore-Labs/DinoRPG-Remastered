@@ -35,6 +35,7 @@ import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { getDinozForDojoFight } from '../Dojo/Service/dojoTest.service.js';
 import { calculateFightBetweenPlayers } from '../Fight/Service/fight.service.js';
 import { addItemToInventory } from '../Inventory/Controller/addItem.controller.js';
+import { removeItemFromDinoz } from '../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { newsService } from '../News/Service/news.service.js';
 import { newNotif } from '../Notification/Service/notification.service.js';
 import { prisma } from '../prisma.js';
@@ -147,7 +148,7 @@ const TOURNAMENT_RULES: FightRules = {
 	enableStats: false,
 	poisonEnabled: false,
 	canUseEquipment: true,
-	canUsePermanentEquipmentOnly: true
+	canUsePermanentEquipmentOnly: false
 };
 
 const FINALS_STEP_OFFSET = 10;
@@ -1030,6 +1031,18 @@ export class TournamentManager {
 				rightUser: team2Dinoz.length > 0 && team2Dinoz[0].userId ? { connect: { id: team2Dinoz[0].userId } } : undefined
 			}
 		});
+
+		if (tournamentRules.itemsAllowed) {
+			for (const fighter of [...fight.attackers, ...fight.defenders]) {
+				for (const itemUsed of fighter.itemsUsed) {
+					const itemRef = itemList[itemUsed];
+					const isPermanentItem = itemUsed === Item.GOLDEN_NAPODINO || itemUsed === Item.BAMBOO_FRIEND;
+					if (itemRef && itemRef.itemType === ItemType.CLASSIC && !isPermanentItem) {
+						await removeItemFromDinoz(fighter.dinozId, itemUsed);
+					}
+				}
+			}
+		}
 
 		return leftWon;
 	}
