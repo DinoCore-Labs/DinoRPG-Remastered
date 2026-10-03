@@ -40,6 +40,7 @@ import { advanceStarScenarioWithRewardTx } from '../../Scenario/Controller/starS
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { refreshTutorialProgress } from '../../Tutorial/Controller/tutorial.controller.js';
 import { addMoney } from '../../User/Controller/money.controller.js';
+import { withUserGameplayLock } from '../../utils/database/userGameplayLock.js';
 import { toDinozFiche, UserForDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { generateDinozDisplay, getLetter, getRandomLetter, getRandomNumber } from '../../utils/dinoz/displayDinoz.js';
 import { initializeDinoz } from '../../utils/dinoz/initializeDinoz.js';
@@ -53,7 +54,7 @@ type Params = {
 	itemId: string;
 };
 
-export async function useItemHandler(
+export async function useItemUnlocked(
 	req: FastifyRequest<{ Params: Params }>,
 	_reply: FastifyReply
 ): Promise<UseItemResult> {
@@ -191,6 +192,15 @@ export async function useItemHandler(
 		effects,
 		createdDinoz
 	};
+}
+
+export async function useItemHandler(
+	req: FastifyRequest<{
+		Params: Params;
+	}>,
+	reply: FastifyReply
+): Promise<UseItemResult> {
+	return withUserGameplayLock(req.user.id, () => useItemUnlocked(req, reply));
 }
 
 async function hatchEgg(item: ItemFiche, authed: Pick<User, 'id'>) {
