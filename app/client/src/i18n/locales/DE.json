@@ -40,6 +40,7 @@
 		"title": "Notifications",
 		"newClanJoinRequest": "Le joueur {name} a demandé à rejoindre le clan.",
 		"newReward": "Vous avez reçu une récompense : {rewards}",
+		"xmasReward": "Fin de l'évènement, Joyeux Noël !<br><br>{rewards}",
 		"marketOfferWin": "Vous avez remporté une enchère pour un montant de {price} bons !",
 		"marketOfferSold": "Votre enchère a été vendue ! Vous avez gagné {price} pièces d'or.",
 		"marketOfferUnsold": "Votre enchère est terminée sans trouver d'acheteur.",
@@ -316,7 +317,8 @@
 	"clan": {
 		"icons": {
 			"members": "Nombre de membres",
-			"crown": "Chef du Clan"
+			"crown": "Chef du Clan",
+			"eventRank": "Classement à l'événement"
 		},
 		"header": {
 			"title": "Clan: {name}",
@@ -351,7 +353,8 @@
 			"th": {
 				"donation": "Dons",
 				"stats": "Stats",
-				"event": "Score d'événement"
+				"event": "Score d'événement",
+				"piglous": "Piglous"
 			},
 			"edit": {
 				"disclaimer": "Cette page vous permet de modifier les droits du joueur <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> dans le Clan.",
@@ -499,22 +502,6 @@
 			"startFight": "{gold} :gold:",
 			"doubleDinoz": "Vous ne pouvez pas faire combattre le même Dinoz avec lui-même."
 		},
-		"tournamentFormats": {
-			"uncommon": "Dinoz non communs",
-			"common": "Dinoz communs",
-			"fire": "Dinoz feu",
-			"water": "Dinoz eau",
-			"wood": "Dinoz bois",
-			"air": "Dinoz air",
-			"lightning": "Dinoz foudre",
-			"ffa": "Free for All",
-			"bipede": "Bipèdes",
-			"quadrupede": "Quadrupèdes",
-			"flying": "Volants et rampants",
-			"anti_poison": "Anti poisons",
-			"hippo": "Hippoclamp",
-			"demons": "Dinoz démoniaques"
-		},
 		"history": {
 			"myDinoz": "Mes combattants",
 			"ennemis": "Adversaires",
@@ -611,6 +598,20 @@
 			"items": {
 				"enabled": "Les objets sont activés",
 				"disabled": "les objets sont désactivés"
+			}
+		},
+		"event": {
+			"christmas": {
+				"start": {
+					"title": "La Grande Chasse de Noël est ouverte !",
+					"excerpt": "L'hiver s'installe sur Dinoland... et avec lui, l'invasion des terribles Piglous ! Battez-les et remportez de superbes cadeaux !",
+					"content": "L'hiver s'installe et les terribles Piglous avec ! Mais pas de panique, car qui dit Piglou dit aussi cadeaux de Noël !\n\n**Les Règles de la Chasse**\nL'événement est simple, mais quelques astuces feront de vous les meilleurs chasseurs :\n* Les Piglous : Pendant toute la durée de l'événement, ces monstres viendront pimenter vos combats sur les chemins de Dinoville. Et plus vos dinoz sont forts, plus les piglous le seront aussi.\n* Les cadeaux : En affrontant ces monstres, vous aurez la chance d'obtenir de précieux :xmas_ticket:. Attention, les Piglous se font plus timides après vos 100 premières rencontres de la journée, alors connectez-vous régulièrement pour maximiser vos chances !\n* La Grille de Noël : Une fois vos tickets en poche, rendez-vous vite à Dinoville pour tenter votre chance dans l'espoir de trouver des :xmas_egg:, des :smog_egg: ou pleins d'autres récompenses encore !\n\n**Récompenses Individuelles** \nLa grille regorge de trésors pour ceux qui auront le courage d'affronter le froid :\n* 1er au 5ème : 2 :napo: + 1 :feross_xmas_egg: + 1 :xmas_egg: + 15 :xmas_ticket: + 100 :ticket: \n* 6ème au 20ème : 1 :napo: + 1 :xmas_egg: + 10 :xmas_ticket: + 75 :ticket:\n* 21ème au 50ème : 1 :napo: + 1 :xmas_egg: + 10 :xmas_ticket: + 50 :ticket:\n* 51ème au 100ème : 10 :xmas_ticket: + 25 :ticket:\n* Pour tous les autres ayant tués au moins 500 piglous : 10 :xmas_ticket:\n\n**Récompenses de Clan**\nL'esprit d'équipe sera également récompensé ! À la fin de l'événement, le classement des meilleurs clans (basé sur le nombre total de Piglous vaincus) permettra de distribuer des lots épiques à tous les membres des clans victorieux :\n* 1er Clan : 2 :napo: + 1 :mahamuti_egg: + 1 :triceragnon_baby: + 150 :ticket: \n* 2ème et 3ème Clans : 1 :napo: + 1 :mahamuti_egg: + 1 :triceragnon_baby: + 100 :ticket:\n* 4ème au 10ème Clans : 1 :napo: + 1 :triceragnon_baby: + 50 :ticket:\n* 11ème au 20ème Clans : 1 :xmas_egg: + 25 :ticket:\n\n**Attention - Règle des Clans :** \nPour garantir l'équité du classement des clans pour cet événement, il sera strictement impossible de rejoindre un clan (ou d'accepter une candidature) durant les 10 derniers jours de l'événement. Soyez prévoyants et organisez vos équipes à l'avance !\n\nBonne chasse à tous, couvrez-vous bien, et que l'esprit de Noël soit avec vous !\n\nL'événement se terminera le **{eventEndDate} à 23h59**."
+				},
+				"end": {
+					"title": "Fin de l'événement de Noël !",
+					"excerpt": "Les Piglous ont tous été chassés, il est l'heure de distribuer les récompenses !",
+					"content": "La grande chasse aux Piglous est officiellement terminée !\n\nGrâce à vos efforts conjoints, la menace des Piglous a été repoussée (du moins pour l'instant...). Les récompenses individuelles et de clan ont été distribuées automatiquement et ajoutées dans vos inventaires. Vous devriez avoir reçu une notification détaillant vos gains lors de votre connexion.\n\n### :conts1: Top 3 Joueurs\n{topPlayers}\n\n### :cup1: Top 3 Clans\n{topClans}\n\nFélicitations à tous les participants, et merci pour votre incroyable engouement !\n\nÀ très bientôt pour de prochaines aventures !"
+				}
 			}
 		}
 	},
@@ -887,6 +888,7 @@
 		"buttonValidateAdvEditor": "Valider et envoyer le message"
 	},
 	"toast": {
+		"eventLock": "Vous ne pouvez pas faire cela avant la fin de l'événement en cours.",
 		"Account_banned_until": "Votre compte est banni jusqu'au {date} à {time} à cause de : {reason}.",
 		"Account_muted_until": "Vous êtes rendu muet jusqu'au {date} à {time} à cause de : {reason}.",
 		"Account_banned": "Votre compte est banni.",
@@ -1064,13 +1066,18 @@
 	"ranking": {
 		"tabs": {
 			"players": "Joueurs",
-			"average": "Moyenne"
+			"average": "Moyenne",
+			"event": "Événement - Noël",
+			"eventPlayers": "Événement de Noël - Joueurs",
+			"eventClans": "Événement de Noël - Clans"
 		},
 		"th": {
 			"pos": "Platz",
 			"points": "Pkte",
 			"average": "Schn.",
-			"completion": "Vollst."
+			"completion": "Vollst.",
+			"totalKills": "Total",
+			"dailyKills": "Jour"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -1920,9 +1927,7 @@
 			"62": "Maudit !",
 			"63": "Démon",
 			"65": "Malédiction de Cuzcous",
-			"66": "Gant de Capture",
-			"72": "Bouée du Marais",
-			"73": "Lanterne du Marais"
+			"66": "Gant de Capture"
 		},
 		"description": {
 			"1": "La Bouée permet à ce Dinoz de traverser certaines petites étendues d'eau sans aucun risque de noyade.",
@@ -1974,9 +1979,7 @@
 			"62": "Cette malédiction empêche votre Dinoz de gagner de l'expérience en combat !",
 			"63": "Ce Dinoz est un véritable Démon, mais d'où peuvent-ils bien venir ? ...",
 			"65": "Votre Dinoz a été Maudit par le Gardien de Cuzcous...",
-			"66": "Grâce à cet outil très utile, votre Dinoz peut capturer des Monstres qui viendront l'aider dans tous ses combats !",
-			"72": "L'état constamment changeant de cette bouée permet à votre Dinoz de savoir si le Marais Collant est inondé ou non.",
-			"73": "L'intensité de cette lanterne permet à votre Dinoz de savoir si le Marais Collant est embrumé ou non."
+			"66": "Grâce à cet outil très utile, votre Dinoz peut capturer des Monstres qui viendront l'aider dans tous ses combats !"
 		}
 	},
 	"levelup": {
@@ -6617,5 +6620,23 @@
 			}
 		}
 	},
-	"errors": {}
+	"errors": {},
+	"event": {
+		"christmas": {
+			"reward": {
+				"title": "Récompenses de Noël",
+				"content": "Félicitations pour votre participation à l'événement de Noël ! En guise de remerciement pour vos exploits face aux Piglous, vous avez reçu vos récompenses directement dans votre inventaire.\n\n{items}\n\nMerci de votre participation, le Père Joël."
+			}
+		}
+	},
+	"events": {
+		"announcePopup": {
+			"text1": "Brrr... ",
+			"text2": "Le vent se lève, ",
+			"text3": "les neiges éternelles descendent de la montagne et de petites boules de poils blanches font leur apparition dans certaines ruelles... ",
+			"text4": "Ça y est !",
+			"title": "Les Piglous sont de retour dans Dinoville !",
+			"viewEvent": "Voir l'Event"
+		}
+	}
 }
