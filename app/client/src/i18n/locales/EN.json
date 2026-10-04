@@ -39,15 +39,16 @@
 	"notifications": {
 		"title": "Notifications",
 		"newClanJoinRequest": "Player {name} requested to join the clan.",
-		"newReward": "Vous avez reçu une récompense : {rewards}",
-		"marketOfferWin": "Vous avez remporté une enchère pour un montant de {price} bons !",
-		"marketOfferSold": "Votre enchère a été vendue ! Vous avez gagné {price} pièces d'or.",
-		"marketOfferUnsold": "Votre enchère est terminée sans trouver d'acheteur.",
+		"newReward": "You received a reward: {rewards}",
+		"xmasReward": "End of the event, Merry Christmas!<br><br>{rewards}",
+		"marketOfferWin": "You won the auction with {price} :ticket:!",
+		"marketOfferSold": "Your auction has been sold! You earned {price} gold coins.",
+		"marketOfferUnsold": "Your offer did not have a buyer.",
 		"ok": "OK",
-		"forumTopicReply": "{name} a répondu au sujet « {topic} ».",
-		"devourerAttacked": "Quelqu'un tente de vous prendre le contrôle de la dévoreuse !",
-		"devourerSeedsGathered": "Vous avez récolté {amount} graine(s) de dévoreuse !",
-		"view": "Voir"
+		"forumTopicReply": "{name} replied to the topic “{topic}”.",
+		"devourerAttacked": "Someone is trying to take control of the Devourer from you!",
+		"devourerSeedsGathered": "You harvested {amount} Devourer seed(s)!",
+		"view": "View"
 	},
 	"homepage": {
 		"connexion": "Login",
@@ -134,7 +135,7 @@
 			"full": "Stock full",
 			"sortBy": "Sort By",
 			"confirmUse": "Do you confirm the use of {name} on your Dinoz?",
-			"confirmEquipMagicItem": "Êtes vous sur de vouloir équiper cet objet ?",
+			"confirmEquipMagicItem": "Are you sure you want to equip this item?",
 			"sort": {
 				"default": "By Default",
 				"nameAsc": "Name (A → Z)",
@@ -316,7 +317,8 @@
 	"clan": {
 		"icons": {
 			"members": "Number of members",
-			"crown": "Clan leader"
+			"crown": "Clan leader",
+			"eventRank": "Event ranking"
 		},
 		"header": {
 			"title": "Clan: {name}",
@@ -351,7 +353,8 @@
 			"th": {
 				"donation": "Donations",
 				"stats": "Stats",
-				"event": "Event Score"
+				"event": "Event Score",
+				"piglous": "Piglous"
 			},
 			"edit": {
 				"disclaimer": "This page allows you to edit the rights of clan member <a style=\"color: #ffee92; cursor: pointer;\">{name}</a>.",
@@ -454,142 +457,126 @@
 	},
 	"dojo": {
 		"welcome": "Welcome to your Dojo",
-		"markAsRead": "Marquer comme vus",
-		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournoi, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
-		"accessTournament": "Accéder au tournoi",
-		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis !",
-		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",
-		"reputation": "Réputation",
+		"markAsRead": "Set as watched",
+		"noTournament": "There is not enough Dinoz to start a tournament. Come back later when you'll have brought your friends to the game!",
+		"accessTournament": "Access tournament",
+		"disclaimer": "**No way to escape!** && The Black Hole skill and the Dimensional Powder item are not activated during tournament battles, nor in future challenges!",
+		"tidInProgress": "The final phases of the inter-dojo tournament are in progress.",
+		"reputation": "Reputation",
 		"points": "Points",
-		"worth": "Mérite",
-		"ranking": "Classement",
-		"position": "Position",
-		"accessChallenges": "Accéder aux défis",
-		"testDinoz": "Tester vos Dinoz",
-		"fightHistory": "Historique des combats",
-		"tournamentHistory": "Historique des tournois",
-		"tournaments": "Tournois",
-		"build": "Construire mon dojo",
-		"group": "Groupe {group}",
-		"seeFinal": "Voir la finale",
-		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer {max} vagues par jour au maximum.//",
-		"soon": "Bientôt",
-		"seeFight": "Voir le combat entre {playerA} et {playerB}",
-		"deleteTeam": "Supprimer mon équipe",
+		"worth": "Worth",
+		"ranking": "Ranking",
+		"position": "Rank",
+		"accessChallenges": "Access challenges",
+		"testDinoz": "Test your Dinoz",
+		"fightHistory": "Fight history",
+		"tournamentHistory": "Tournament History",
+		"tournaments": "Tournaments",
+		"build": "Build my Dojo",
+		"group": "Group {group}",
+		"seeFinal": "See the final",
+		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to {max} waves per day maximum.//",
+		"soon": "Soon",
+		"seeFight": "Watch the fight between {playerA} and {playerB}",
+		"deleteTeam": "Delete my team",
 		"poison": "Poison",
-		"on": "Activé",
-		"off": "Désactivé",
+		"on": "Enabled",
+		"off": "Disabled",
 		"timer": {
-			"qualification": ":chrono: Il reste encore {day} jours, {hours} heures et {minutes} minutes avant la fin des qualifications.",
-			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
-			"finals": ":chrono: Le prochain match des finales aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
-			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jours, {hours} heures et {minutes} minutes.",
-			"cashPrice": ":gold: La cagnotte pour ce tournoi est de {cashPrice} :gold: !!",
-			"noTeam": "Vous n'avez pas inscrit d'équipe pour ce tournoi."
+			"qualification": ":chrono: Qualifications will finish in {day} days, {hours} hours and {minutes} minutes.",
+			"pools": ":chrono:: Next group stage fight will happen in {day} days, {hours} hours and {minutes} minutes.",
+			"finals": ":chrono:: Next final stage fight will happen in {day} days, {hours} hours and {minutes} minutes.",
+			"nextQualif": ":chrono:: Next qualifications will start in {day} days, {hours} hours and {minutes} minutes.",
+			"cashPrice": ":gold: The cash prize for this tournament is {cashPrice} :gold:!!",
+			"noTeam": "You have not registered a team for this tournament."
 		},
-		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de **{team} Dinoz** étant au maximum **niveau {level}**. Les races de Dinoz acceptées sont **{races}**. Elles sont déjà filtrées pour vous.",
-		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
-		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&La cagnotte est maintenant de **{cashPrice}** :gold:.",
-		"finals": "Et voici les phases finales tant attendues.&&La cagnotte est à présent de **{cashPrice}** :gold:.",
-		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
+		"createTournamentTeam": "You do not have a team for the next tournament. The team must be made up of {team} Dinoz at maximum level {level}. Accepted Dinoz races are **{races}**. They have already been filtered for you.",
+		"qualification": "You have until **{qualificationEnd}** to be amongst the 64 first players in the Dojo ranking in order to qualify for the group phase of the tournament. The group phase will start at **{poolsStart}**, get ready!&&The cash prize is currently **{cashPrice}** :gold:.",
+		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash price is now **{cashPrice}** :gold:.",
+		"finals": "And here are the long-awaited final stages && The cash price has been set at **{cashPrice}** :gold:.",
+		"tournamentInfo": "**ATTENTION:**&& Your position is indicated in green, you can click on the participants of each fight to see it again. **Only group winners will participate in the final.**",
 		"challengeFriend": {
-			"disclaimer": "Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Les frais d'utilisation du dojo d'entrainement sont de **50 :gold: par Dinoz combattant**. Cet argent ira dans la cagnotte du tournoi en cours.",
-			"selectYourDinoz": "Sélectionnez jusqu'à **6 de vos Dinoz**.",
-			"selectOpponentDinoz": "Sélectionnez ici votre adversaire et jusqu'à **6 Dinoz** à affronter.",
+			"disclaimer": "No :pv: will be lost, no :xp: will be earned, no items will be used.&&The training fees are **50 :gold: per Dinoz selected**. The fees contribute to the cash price of the ongoing tournament.",
+			"selectYourDinoz": "Select up to **6 of your Dinoz**.",
+			"selectOpponentDinoz": "Select here your opponent and up to **6 of its Dinoz** to fight.",
 			"startFight": "{gold} :gold:",
-			"doubleDinoz": "Vous ne pouvez pas faire combattre le même Dinoz avec lui-même."
-		},
-		"tournamentFormats": {
-			"uncommon": "Dinoz non communs",
-			"common": "Dinoz communs",
-			"fire": "Dinoz feu",
-			"water": "Dinoz eau",
-			"wood": "Dinoz bois",
-			"air": "Dinoz air",
-			"lightning": "Dinoz foudre",
-			"ffa": "Free for All",
-			"bipede": "Bipèdes",
-			"quadrupede": "Quadrupèdes",
-			"flying": "Volants et rampants",
-			"anti_poison": "Anti poisons",
-			"hippo": "Hippoclamp",
-			"demons": "Dinoz démoniaques"
+			"doubleDinoz": "You cannot have the same Dinoz fight itself."
 		},
 		"history": {
-			"myDinoz": "Mes combattants",
-			"ennemis": "Adversaires",
-			"seeFight": "Voir le combat",
-			"link": "Lien",
-			"copyLink": "Copier le lien",
-			"tournamentType": "Type de tournois",
-			"startDate": "Date du début"
+			"myDinoz": "My fighters",
+			"ennemis": "Opponents",
+			"seeFight": "See the fight",
+			"link": "Link",
+			"copyLink": "Copy link",
+			"tournamentType": "Type of Tournament",
+			"startDate": "Start date"
 		},
 		"fightRecap": {
-			"hpLost": "Quantité de points de vie perdus :pv:",
-			"hpHealed": "Quantité de points de vie gagnés",
-			"attacks": "Quantité d'attaques",
-			"multiHit": "Nombre de multi-coups",
-			"assaults": "Nombre d'assauts",
-			"evasions": "Nombre d'esquives",
-			"counters": "Nombre de contres",
-			"criticalHits": "Nombre de coups critiques",
-			"poisoned": "Nombre d'adversaires empoisonnés",
-			"poison_damage": "Dégâts de poison infligés",
-			"burn_damage": "Dégâts de brûlure infligés",
-			"reinforcements": "Nombre de renforts appelés",
-			"petrified": "Nombre d'adversaires pétrifiés",
-			"damageFire": "Dégâts :fire: infligés",
-			"assaultFire": "Nombre d'assauts :fire: réalisés",
-			"damageWater": "Dégâts :water: infligés",
-			"assaultWater": "Nombre d'assauts :water: réalisés",
-			"damageWood": "Dégâts :wood: infligés",
-			"assaultWood": "Nombre d'assauts :wood: réalisés",
-			"damageLightning": "Dégâts :lightning: infligés",
-			"assaultLightning": "Nombre d'assauts :lightning: réalisés",
-			"damageAir": "Dégâts :air: infligés",
-			"assaultAir": "Nombre d'assauts :air: réalisés",
-			"damageVoid": "Dégâts :void: infligés",
-			"assaultVoid": "Nombre d'assauts :void: réalisés",
-			"hpRemaining": "Vie restante",
-			"times_poisoned": "Nombre de fois qu'un Dinoz est empoisonné",
-			"enemyTeam": "Équipe adverse"
+			"hpLost": "Quantity of health points lost :pv:",
+			"hpHealed": "Quantity of health points gained",
+			"attacks": "Quantity of attacks",
+			"multiHit": "Number of multi-hits",
+			"assaults": "Number of assaults",
+			"evasions": "Number of dodges",
+			"counters": "Number of counterattacks",
+			"criticalHits": "Number of Critical Hits",
+			"poisoned": "Number of poisoned opponents",
+			"poison_damage": "Poison damage dealt",
+			"burn_damage": "Burn damage dealt",
+			"reinforcements": "Number of reinforcements called",
+			"petrified": "Number of petrified opponents",
+			"damageFire": ":fire: Damage dealt",
+			"assaultFire": "Number of :fire: assaults carried out",
+			"damageWater": ":water: Damage dealt",
+			"assaultWater": "Number of :water: assaults carried out",
+			"damageWood": ":wood: Damage dealt",
+			"assaultWood": "Number of :wood: assaults carried out",
+			"damageLightning": ":lightning: Damage dealt",
+			"assaultLightning": "Number of :lightning: assaults carried out",
+			"damageAir": ":air: Damage dealt",
+			"assaultAir": "Number of :air: assaults carried out",
+			"damageVoid": ":void: Damage dealt",
+			"assaultVoid": "Number of :void: assaults carried out",
+			"hpRemaining": "Hit points left",
+			"times_poisoned": "Number of times a Dinoz has been poisoned",
+			"enemyTeam": "Opposing Team"
 		},
 		"challenge": {
-			"selectChampions": "Choisissez vos champions",
-			"selectTeam": "Sélectionnez votre équipe de Dinoz pour les défis d'aujourd'hui",
-			"disclaimer": "Vous devez sélectionner **entre 5 et 10** Dinoz d'un niveau supérieur ou égal à 10 pour votre équipe. Choisissez bien, vous ne pourrez modifier votre sélection que demain.",
-			"validate": "Valider ma sélection",
-			"edit": "Modifier ma sélection",
-			"launch": "Lancer le combat",
+			"selectChampions": "Choose your champions",
+			"selectTeam": "Select your Dinoz team for today's challenges",
+			"disclaimer": "You need to select **between 5 and 10** Dinoz level 10 or above for your team. Choose carefully, you won't be able to change your selection until tomorrow.",
+			"validate": "Validate selection",
+			"edit": "Modify my selection",
+			"launch": "Start the fight",
 			"challenge": {
-				"kill": "Remportez la victoire en anéantissant votre adversaire avant la fin du temps imparti, ne lui laissez aucune chance !",
-				"takeAttack": "Remportez la victoire en subissant au maximum {goal} attaques de votre adversaire.",
-				"takeRawDmg": "Remportez la victoire en encaissant au maximum {goal} points de vie.",
-				"takePrctDmg": "Remportez la victoire en encaissant tout au plus {goal}% de points de vie.",
-				"assault": "Remportez la victoire en réalisant au minimum {goal} assauts.",
-				"assaultPrct": "Remportez la victoire en réalisant au moins {goal}% d'assauts parmi l'ensemble de vos attaques.",
-				"maxDmg": "Remportez la victoire en ne faisant pas perdre plus de {goal} points de vie à votre adversaire.",
-				"minPrctDmg": "Remportez la victoire en faisant perdre au moins {goal}% de points de vie à votre adversaire.",
-				"counter": "Remportez la victoire en réalisant {goal} contre-attaque(s) ou plus.",
-				"dodge": "Remportez la victoire en réalisant au minimum {goal} esquive(s).",
-				"noPoison": "Remportez la victoire sans vous faire empoisonner.",
-				"poison": "Remportez la victoire en empoisonnant votre adversaire durant le combat.",
-				"undefined": "Erreur : aucun challenge sélectionné"
+				"kill": "Achieve victory by destroying your opponent before time runs out, don't give them a chance!",
+				"takeAttack": "Achieve victory by taking a maximum of {goal} attacks from your opponent.",
+				"takeRawDmg": "Achieve victory by losing a maximum of {goal} health points.",
+				"takePrctDmg": "Achieve victory by losing a maximum of {goal}% health points.",
+				"assault": "Achieve victory by landing at least {goal} assaults.",
+				"assaultPrct": "Achieve victory by completing at least {goal}% of all your attacks as assaults.",
+				"maxDmg": "Achieve victory by not causing your opponent to lose more than {goal} health points.",
+				"minPrctDmg": "Achieve victory by making your opponent lose at least {goal}% of his health points.",
+				"counter": "Achieve victory by landing {goal} counter-attack(s) or more.",
+				"dodge": "Achieve victory by dodging {goal} time(s) or more.",
+				"noPoison": "Achieve victory without being poisoned.",
+				"poison": "Achieve victory by poisoning your opponent during combat.",
+				"undefined": "Error: No challenge was selected."
 			},
 			"challengeExplanation": {
-				"kill": "Dommage, vous n'avez pas réussi à vaincre votre adversaire avant la fin du temps imparti.",
-				"takeAttack": "Dommage, vous avez subis {goal} attaques de trop.",
-				"takeRawDmg": "Dommage, vous avez encaissé {goal} dégâts de trop.",
-				"takePrctDmg": "Dommage, vous avez perdu {goal}% de vie en trop.",
-				"assault": "Dommage, il vous manquait {goal} assaut pour réussir.",
-				"assaultPrct": "Dommage, il vous manque {goal}% d'assauts.",
-				"maxDmg": "Dommage, vous avez infligé {goal} dégâts en trop.",
-				"minPrctDmg": "Dommage, il fallait faire {goal}% de dégâts en plus.",
-				"counter": "Dommage, il fallait faire {goal} contres supplémentaires.",
-				"dodge": "Dommage, il fallait faire {goal} esquives supplémentaires.",
-				"noPoison": "Dommage, vous avez été empoisonné {goal} fois.",
-				"poison": "Dommage, vous n'avez pas réussi à empoisonner votre adversaire.",
-				"looseFight": "Vous n'avez pas réussi à gagner le combat."
+				"kill": "Too bad, you didn't manage to defeat your opponent before time ran out.",
+				"takeAttack": "Too bad, you have suffered {goal} too many attacks.",
+				"takeRawDmg": "Too bad, you have taken {goal} too much damage.",
+				"takePrctDmg": "Too bad, you've lost {goal}% too much life.",
+				"assault": "Too bad, you are missing {goal} assault(s) to succeed.",
+				"assaultPrct": "Too bad, you're {goal}% short on assaults.",
+				"maxDmg": "Too bad, you have inflicted {goal} too much damage.",
+				"minPrctDmg": "Too bad, you should have done {goal}% more damage.",
+				"counter": "Too bad, you should have done {goal} more counters.",
+				"dodge": "Too bad, you had to do {goal} more dodges.",
+				"noPoison": "Too bad, you've been poisoned {goal} times.",
+				"poison": "Too bad, you failed to poison your opponent.",
+				"looseFight": "You failed to win the fight."
 			}
 		}
 	},
@@ -601,16 +588,30 @@
 	"news": {
 		"tournament": {
 			"start": {
-				"title": "Nouveau Tournoi inter Dojo",
-				"content": "## Tournois \n\nLes phases qualificatives auront lieux jusqu'au {endDate}. Les règles de créations d'équipes sont:\n\n* Les équipes sont constituées de {teamSize} membres avec au moins {raceMinimum} races différentes.\n* Les races autorisées à participer sont {races}.\n* {poisonStatus}.\n* {itemsStatus}.\n* La limite de niveau maximum est fixé à {levelLimit}.\n\n### Récompenses\n\nLes récompenses seront les suivantes:\n\n* Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 15% du cash price.\n* Pour les deuxième, un oeuf de toufufu, une boite légendaire et 10% du cash price.\n* Pour le troisième et quatrième, un oeuf de Toufufu, une boîte épique et 7,5% du cash price chacun.\n* Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n* Pour les 9 à 16ème, une boîte rare et 2% du cash price chacun.\n* Pour les 17 à 32ème, 1% du cash price chacun.\n* Pour les 33 à 48ème, 0,75% du cash price chacun.\n* Pour les 49 à 64ème, 0,625% du cash price chacun.\n\n### Récompenses de qualifications\n\nN'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications!\n\nBon tournois à tous !"
+				"title": "New Inter Dojo Tournament",
+				"content": "## Tournaments\n\nThe qualifying rounds will take place until {endDate}. The team creation rules are:\n\n* Teams consist of {teamSize} members with at least {raceMinimum} different races.\n* The races allowed to participate are {races}.\n* {poisonStatus}.\n* {itemsStatus}.\n* The maximum level limit is set to {levelLimit}.\n\n### Rewards\n\nThe rewards will be as follows:\n\n* For 1st place, a rare Toufufu egg, a legendary box, and 15% of the cash prize.\n* For 2nd place, a Toufufu egg, a legendary box, and 10% of the cash prize.\n* For 3rd and 4th place, a Toufufu egg, an epic box, and 7.5% of the cash prize each.\n* For 5th to 8th place, a rare box and 4% of the cash prize each.\n* For 9th to 16th place, a rare box and 2% of the cash prize each.\n* For 17th to 32nd place, 1% of the cash prize each.\n* For 33rd to 48th place, 0.75% of the cash prize each.\n* For 49th to 64th place, 0.625% of the cash prize each.\n\n### Qualification Rewards\n\nDon't forget that there are rewards for players who reach the 500, 750, 1000, 1200, 1300, and 1400 point milestones at the end of the qualifying rounds!\n\nGood luck to everyone in the tournament!"
 			},
 			"poison": {
-				"enabled": "Le poison est activé",
-				"disabled": "Le poison est désactivé"
+				"enabled": "Poison is enabled.",
+				"disabled": "Poison is disabled."
 			},
 			"items": {
-				"enabled": "Les objets sont activés",
-				"disabled": "les objets sont désactivés"
+				"enabled": "Items are enabled",
+				"disabled": "Items are disabled"
+			}
+		},
+		"event": {
+			"christmas": {
+				"start": {
+					"title": "The Great Christmas Hunt is open!",
+					"excerpt": "Winter is settling over Dinoland... and with it comes an invasion of the fearsome Piglous! Defeat them and win amazing rewards!",
+					"content": "Winter is settling in, and the fearsome Piglous are coming with it! But don't panic, because where there are Piglous, there are Christmas presents too!\n\n**The Hunt Rules**  \nThe event is simple, but a few tips will help you become the best hunters:\n* The Piglous: Throughout the event, these monsters will spice up your battles along the roads of Dinoville. And the stronger your Dinoz are, the stronger the Piglous will be too.\n* The gifts: By fighting these monsters, you'll have a chance to obtain precious :xmas_ticket:. Be careful though, Piglous become more elusive after your first 100 encounters of the day, so log in regularly to maximize your chances!\n* The Christmas Grid: Once you have your tickets, head straight to Dinoville and try your luck in the hope of finding :xmas_egg:, :smog_egg:, or many other rewards!\n\n**Individual Rewards**  \nThe grid is packed with treasures for those brave enough to face the cold:\n* 1st to 5th: 2 :napo: + 1 :feross_xmas_egg: + 1 :xmas_egg: + 15 :xmas_ticket: + 100 :ticket:\n* 6th to 20th: 1 :napo: + 1 :xmas_egg: + 10 :xmas_ticket: + 75 :ticket:\n* 21st to 50th: 1 :napo: + 1 :xmas_egg: + 10 :xmas_ticket: + 50 :ticket:\n* 51st to 100th: 10 :xmas_ticket: + 25 :ticket:\n* All other players who have defeated at least 500 Piglous: 10 :xmas_ticket:\n\n**Clan Rewards**  \nTeam spirit will also be rewarded! At the end of the event, the ranking of the best clans, based on the total number of Piglous defeated, will determine the epic rewards granted to all members of the victorious clans:\n* 1st Clan: 2 :napo: + 1 :mahamuti_egg: + 1 :triceragnon_baby: + 150 :ticket:\n* 2nd and 3rd Clans: 1 :napo: + 1 :mahamuti_egg: + 1 :triceragnon_baby: + 100 :ticket:\n* 4th to 10th Clans: 1 :napo: + 1 :triceragnon_baby: + 50 :ticket:\n* 11th to 20th Clans: 1 :xmas_egg: + 25 :ticket:\n\n**Warning - Clan Rule:**  \nTo ensure a fair clan ranking for this event, it will be strictly impossible to join a clan, or accept a clan application, during the final 10 days of the event. Plan ahead and organize your teams in advance!\n\nGood luck with the hunt, stay warm, and may the Christmas spirit be with you!\n\nThe event will end on **{eventEndDate} at 11:59 PM**."
+				},
+				"end": {
+					"title": "End of the Christmas event!",
+					"excerpt": "All the Piglous have been hunted down, and it’s time to hand out the rewards!",
+					"content": "The Great Piglou Hunt is officially over!\n\nThanks to your combined efforts, the Piglou threat has been pushed back (at least for now...). Individual and clan rewards have been distributed automatically and added to your inventories. You should have received a notification detailing your rewards when you logged in.\n\n### :conts1: Top 3 Players\n{topPlayers}\n\n### :cup1: Top 3 Clans\n{topClans}\n\nCongratulations to all participants, and thank you for your incredible enthusiasm!\n\nSee you very soon for more adventures!"
+				}
 			}
 		}
 	},
@@ -676,8 +677,8 @@
 			"save": "Save",
 			"follow": "Follow",
 			"unfollow": "Stop following",
-			"report": "Signaler",
-			"quote": "Citer"
+			"report": "Report",
+			"quote": "Quote"
 		},
 		"table": {
 			"subject": "Subject",
@@ -716,7 +717,7 @@
 			"admin": "Administrator"
 		},
 		"confirm": {
-			"deleteMessage": "Supprimer ce message ?"
+			"deleteMessage": "Delete this message?"
 		},
 		"loginToReply": "Log in to reply to this topic.",
 		"deleted": {
@@ -725,15 +726,15 @@
 		},
 		"moderation": {
 			"delete": "Delete",
-			"restore": "Restaurer",
-			"history": "Historique de modération",
+			"restore": "Restore",
+			"history": "Moderation history",
 			"historyShort": "History",
-			"loading": "Chargement de l'historique...",
+			"loading": "Loading history...",
 			"empty": "Aucune action de modération pour ce sujet.",
 			"reason": "Reason:",
 			"reasonRequired": "Une raison est obligatoire.",
 			"reasonPlaceholder": "Indiquez la raison de la suppression...",
-			"deleteTitle": "Supprimer ce message",
+			"deleteTitle": "Delete this message",
 			"deleteDescription": "Vous allez supprimer le message de {name}.",
 			"actions": {
 				"MESSAGE_DELETE": "a supprimé le message",
@@ -887,6 +888,7 @@
 		"buttonValidateAdvEditor": "Validate and send the message"
 	},
 	"toast": {
+		"eventLock": "Vous ne pouvez pas faire cela avant la fin de l'événement en cours.",
 		"Account_banned_until": "Your account is banned until {date} at {time} because of: {reason}.",
 		"Account_muted_until": "You muted until {date} {time} because of: {reason}.",
 		"Account_banned": "Your account is banned.",
@@ -1064,13 +1066,18 @@
 	"ranking": {
 		"tabs": {
 			"players": "Players",
-			"average": "Average"
+			"average": "Average",
+			"event": "Événement - Noël",
+			"eventPlayers": "Événement de Noël - Joueurs",
+			"eventClans": "Événement de Noël - Clans"
 		},
 		"th": {
 			"pos": "Pos.",
 			"points": "Pts",
 			"average": "Avg.",
-			"completion": "Comp."
+			"completion": "Comp.",
+			"totalKills": "Total",
+			"dailyKills": "Jour"
 		},
 		"disclaimer": {
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
@@ -1920,9 +1927,7 @@
 			"62": "Cursed!",
 			"63": "Demon",
 			"65": "Curse of Cuzcous",
-			"66": "Capture Glove",
-			"72": "Swamp Buoy",
-			"73": "Swamp Lantern"
+			"66": "Capture Glove"
 		},
 		"description": {
 			"1": "This Buoy enables your Dinoz to cross water without drowning.",
@@ -1974,9 +1979,7 @@
 			"62": "This curse prevents your Dinoz from gaining combat experience!",
 			"63": "This Dinoz is a real demon... but where do they come from? ...",
 			"65": "Your Dinoz has been Cursed by the Guardian of Cuzcous...",
-			"66": "Thanks to this very useful tool, your Dinoz can capture Monsters that will help him in all his fights!",
-			"72": "The constant changing state of this buoy allows your Dinoz to know if the Sticky Swamp is flooded.",
-			"73": "The special light of this lantern allows your Dinoz to know if the Sticky Swamp is covered in fog."
+			"66": "Thanks to this very useful tool, your Dinoz can capture Monsters that will help him in all his fights!"
 		}
 	},
 	"levelup": {
@@ -3134,7 +3137,7 @@
 			"tower_attack": "Another player already controls the Devourer. You will have to fight to take control of it and harvest its precious seeds.",
 			"tower_defend": "No one currently controls the Devourer. Take this opportunity to seize control!",
 			"stop_defend_tower": "If you relinquish control of the Devourer, you will have to fight again to regain it. Other players are surely waiting for the opportunity to seize it themselves!",
-			"build_dojo": "Construire votre Dojo"
+			"build_dojo": "Build your Dojo"
 		},
 		"name": {
 			"fight": "Fight",
@@ -3174,7 +3177,7 @@
 			"tower_attack": "Take Control of the Devourer",
 			"tower_defend": "Defend the Devourer",
 			"stop_defend_tower": "Relinquish Control",
-			"build_dojo": "Construire le Dojo"
+			"build_dojo": "Build your Dojo"
 		}
 	},
 	"fight": {
@@ -3387,7 +3390,7 @@
 	},
 	"guide": {
 		"title": "Game Guide:",
-		"stop": "Arrêter le guide"
+		"stop": "Stop Guide"
 	},
 	"gameRules": {
 		"title": "DinoRPG Remastered Rules",
@@ -6432,8 +6435,8 @@
 				"defense": "Défense",
 				"attack": "Attack",
 				"action": "Action",
-				"watchFight": "Voir le combat",
-				"copyLink": "Copier le lien",
+				"watchFight": "See the fight",
+				"copyLink": "Copy link",
 				"linkCopied": "Le lien du replay a été copié dans le presse-papier."
 			},
 			"shareFight": {
@@ -6617,5 +6620,23 @@
 			}
 		}
 	},
-	"errors": {}
+	"errors": {},
+	"event": {
+		"christmas": {
+			"reward": {
+				"title": "Récompenses de Noël",
+				"content": "Félicitations pour votre participation à l'événement de Noël ! En guise de remerciement pour vos exploits face aux Piglous, vous avez reçu vos récompenses directement dans votre inventaire.\n\n{items}\n\nMerci de votre participation, le Père Joël."
+			}
+		}
+	},
+	"events": {
+		"announcePopup": {
+			"text1": "Brrr... ",
+			"text2": "Le vent se lève, ",
+			"text3": "les neiges éternelles descendent de la montagne et de petites boules de poils blanches font leur apparition dans certaines ruelles... ",
+			"text4": "Ça y est !",
+			"title": "Les Piglous sont de retour dans Dinoville !",
+			"viewEvent": "Voir l'Event"
+		}
+	}
 }
