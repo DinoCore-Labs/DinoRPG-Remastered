@@ -8,6 +8,7 @@ import axios, {
 } from 'axios';
 
 import { useLoadingStore } from '../store/loadingStore';
+import { clearClientSession } from './clearSession';
 
 declare module 'axios' {
 	export interface AxiosRequestConfig {
@@ -71,8 +72,17 @@ apiClient.interceptors.response.use(
 	},
 	(error: AxiosError<ApiErrorResponse>): Promise<never> => {
 		stopLoader(error.config as InternalAxiosRequestConfig | undefined);
+		const status = error.response?.status;
 		const errorCode = error.response?.data?.code;
-		const mustAcceptGameRules = error.response?.status === 403 && errorCode === GAME_RULES_ACCEPTANCE_REQUIRED_CODE;
+		// Session expirée / token invalide
+		if (status === 401) {
+			clearClientSession();
+			if (window.location.pathname !== '/') {
+				window.location.replace('/');
+			}
+			return Promise.reject(error);
+		}
+		const mustAcceptGameRules = status === 403 && errorCode === GAME_RULES_ACCEPTANCE_REQUIRED_CODE;
 		const isAlreadyOnRulesPage = window.location.pathname === '/rules';
 		if (mustAcceptGameRules && !isAlreadyOnRulesPage) {
 			const redirect = window.location.pathname + window.location.search + window.location.hash;

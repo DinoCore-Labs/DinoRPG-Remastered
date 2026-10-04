@@ -2,9 +2,7 @@ import axios from 'axios';
 import type { ToastPluginApi } from 'vue-toast-notification';
 
 import { getI18n } from '../i18n';
-import router from '../router';
 import { useLoadingStore } from '../store/loadingStore';
-import { clearClientSession } from './clearSession';
 
 type BackendErrorPayload =
 	| string
@@ -15,8 +13,6 @@ type BackendErrorPayload =
 			code?: string;
 			errors?: Array<{ message?: string; code?: string; path?: string[] }>;
 	  };
-
-let isClearingSession = false;
 
 function extractBackendCode(data: BackendErrorPayload): string | null {
 	if (!data) return null;
@@ -68,13 +64,6 @@ export const errorHandler = {
 				const status = err.response?.status;
 				const data = err.response?.data as BackendErrorPayload | undefined;
 				if (status === 401) {
-					if (!isClearingSession) {
-						isClearingSession = true;
-						clearClientSession();
-						void router.replace({ name: 'HomePage' }).finally(() => {
-							isClearingSession = false;
-						});
-					}
 					toast.open({
 						message: translateToast('Invalid_credentials'),
 						type: 'error'
