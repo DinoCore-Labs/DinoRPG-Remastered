@@ -111,12 +111,10 @@ export default defineComponent({
 		formatDateTime,
 		translateNewsContent(rawContent: string): string {
 			if (!rawContent) return '';
-
 			if (rawContent.includes('|')) {
 				const [key, jsonParams] = rawContent.split(/\|(.+)/);
 				try {
 					const params = JSON.parse(jsonParams);
-
 					if (params.endDate) {
 						params.endDate = this.formatDateTime(params.endDate);
 					}
@@ -128,29 +126,23 @@ export default defineComponent({
 						const itemKey = params.itemsAllowed ? 'news.tournament.items.enabled' : 'news.tournament.items.disabled';
 						params.itemsStatus = this.$t(itemKey);
 					}
-
 					if (typeof params.races === 'string') {
 						params.races = params.races
 							.split(',')
 							.map((r: string) => {
 								const raceId = parseInt(r.trim(), 10);
-
 								const enumKey = RaceEnum[raceId]?.toLowerCase();
-
 								const i18nKey = `race.name.${enumKey}`;
-
 								return this.$te(i18nKey) ? this.$t(i18nKey) : enumKey || r.trim();
 							})
 							.join(', ');
 					}
-
 					return this.$t(key, params);
 				} catch (e) {
 					console.error('Erreur de parsing des paramètres i18n:', e);
 					return this.$t(key);
 				}
 			}
-
 			return this.$te(rawContent) ? this.$t(rawContent) : rawContent;
 		},
 		mapNewsBatch(newsList: PublicNewsListItem[]): NewsPageItem[] {
@@ -255,7 +247,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .hide {
-	max-height: 60px !important;
+	max-height: 80px !important;
 	overflow: hidden;
 	p {
 		display: none;
@@ -352,38 +344,32 @@ export default defineComponent({
 			font-size: 1rem;
 			font-weight: 500;
 		}
-
 		:deep(a) {
 			color: #ffd700;
 			text-decoration: none;
 			padding: 2px 4px;
 			border-radius: 4px;
 			transition: all 0.3s ease;
-
 			&:hover {
 				background: rgba(255, 215, 0, 0.2);
 				box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
 			}
 		}
-
 		:deep(ul),
 		:deep(ol) {
 			margin: 15px 0;
 			padding-left: 20px;
 		}
-
 		:deep(li) {
 			margin: 8px 0;
 			font-size: 1rem;
 		}
-
 		:deep(img) {
 			max-width: 100%;
 			height: auto;
 			border-radius: 10px;
 			margin: 15px 0;
 		}
-
 		:deep(code) {
 			background: rgba(0, 0, 0, 0.4);
 			padding: 2px 6px;
@@ -391,7 +377,6 @@ export default defineComponent({
 			font-family: 'Courier New', monospace;
 			color: #ffd700;
 		}
-
 		:deep(pre) {
 			background: rgba(0, 0, 0, 0.4);
 			padding: 15px;
@@ -399,14 +384,12 @@ export default defineComponent({
 			overflow-x: auto;
 			border: 1px solid rgba(255, 215, 0, 0.3);
 			margin: 15px 0;
-
 			code {
 				background: none;
 				border: none;
 				padding: 0;
 			}
 		}
-
 		:deep(blockquote) {
 			margin: 20px 0;
 			padding: 20px;
@@ -415,19 +398,16 @@ export default defineComponent({
 			border-radius: 8px;
 			font-style: italic;
 		}
-
 		:deep(hr) {
 			border: none;
 			height: 2px;
 			background: linear-gradient(to right, transparent, #ffd700, transparent);
 			margin: 30px 0;
 		}
-
 		:deep(strong) {
 			color: #ffd700;
 			font-weight: bold;
 		}
-
 		:deep(em) {
 			color: #ffa500;
 			font-style: italic;
@@ -462,11 +442,11 @@ export default defineComponent({
 					height: auto;
 					max-height: none;
 					text-align: left;
-					margin-bottom: 5px;
+					margin-top: 0;
+					margin-bottom: 8px;
 					font-size: 20pt;
 					font-weight: bold;
 					line-height: 1em;
-					opacity: 0.8;
 					background: transparent;
 					text-overflow: ellipsis;
 					overflow: hidden;
