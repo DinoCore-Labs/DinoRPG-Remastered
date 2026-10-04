@@ -47,10 +47,32 @@ export async function devourerMidnightResetJob() {
 
 	// 3. Clean up Devourer history older than 48 hours
 	const twoDaysAgo = new Date(Date.now() - 48 * 60 * 60 * 1000);
-	await prisma.fightArchive.deleteMany({
+	const expiredDevourerFights = await prisma.fightArchive.findMany({
 		where: {
 			devourerPlaceId: { not: null },
 			createdDate: { lt: twoDaysAgo }
+		},
+		select: {
+			id: true
 		}
 	});
+	const expiredFightIds = expiredDevourerFights.map(fight => fight.id);
+	if (expiredFightIds.length > 0) {
+		await prisma.$transaction([
+			prisma.fightWatched.deleteMany({
+				where: {
+					fightArchiveId: {
+						in: expiredFightIds
+					}
+				}
+			}),
+			prisma.fightArchive.deleteMany({
+				where: {
+					id: {
+						in: expiredFightIds
+					}
+				}
+			})
+		]);
+	}
 }
