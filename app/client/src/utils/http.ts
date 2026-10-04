@@ -74,9 +74,11 @@ apiClient.interceptors.response.use(
 		stopLoader(error.config as InternalAxiosRequestConfig | undefined);
 		const status = error.response?.status;
 		const errorCode = error.response?.data?.code;
+		const isLoginRequest = error.config?.url?.includes('/login');
 		// Session expirée / token invalide
-		if (status === 401) {
+		if (status === 401 && !isLoginRequest) {
 			clearClientSession();
+			sessionStorage.setItem('sessionExpired', 'true');
 			if (window.location.pathname !== '/') {
 				window.location.replace('/');
 			}

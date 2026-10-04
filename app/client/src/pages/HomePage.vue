@@ -17,8 +17,6 @@
 					<FightAnimation :key="$i18n.locale" :fight="getFight()" />
 					<template #fallback> <Loading /> </template>
 				</Suspense>
-				<!--<div id="last-news" class="homepage-lastNews">
-				</div>-->
 			</div>
 		</div>
 	</div>
@@ -43,6 +41,16 @@ export default defineComponent({
 	components: {
 		DZButton,
 		FightAnimation: defineAsyncComponent(() => import('../components/fight/FightAnimation.vue'))
+	},
+	mounted() {
+		const sessionExpired = sessionStorage.getItem('sessionExpired');
+		if (sessionExpired) {
+			sessionStorage.removeItem('sessionExpired');
+			this.$toast.open({
+				message: this.$t('toast.Session_expired'),
+				type: 'error'
+			});
+		}
 	},
 	methods: {
 		getImgURL,

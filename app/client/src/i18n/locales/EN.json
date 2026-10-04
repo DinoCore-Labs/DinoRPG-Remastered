@@ -1042,7 +1042,8 @@
 		"keepSeedReincarnationLimitReached": "Vous avez atteint la limite de {limit} réincarnations conservant la même destinée.",
 		"fearFactorDesequip": "Vous ne pouvez pas déséquiper le Trouillomètre tant que ce Dinoz est dans un groupe.",
 		"tutorialMovementRestricted": "Le tutoriel vous demande de suivre un autre chemin pour le moment.",
-		"tournamentMaxLevelLimitReached": "Votre dinoz ne peut pas dépasser le niveau maximum autorisé pour le tournoi."
+		"tournamentMaxLevelLimitReached": "Votre dinoz ne peut pas dépasser le niveau maximum autorisé pour le tournoi.",
+		"Session_expired": "Your session has expired. Please log in again."
 	},
 	"tooltip": {
 		"gold": "You can buy **Dinoz** or **items** in the various Dinoland shops using your gold coins.",

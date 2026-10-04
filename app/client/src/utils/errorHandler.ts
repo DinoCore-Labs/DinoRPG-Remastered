@@ -68,7 +68,6 @@ export const errorHandler = {
 						message: translateToast('Invalid_credentials'),
 						type: 'error'
 					});
-
 					return;
 				}
 				const code = data ? extractBackendCode(data) : null;
