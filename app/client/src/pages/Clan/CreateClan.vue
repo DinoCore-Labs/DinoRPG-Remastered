@@ -18,7 +18,7 @@
 		<div class="middle-content">
 			<div class="grid">
 				<p>{{ $t('createClan.clan_name') }}</p>
-				<DZInput type="text" v-model="clanName" />
+				<DZInput class="clan-name-input" type="text" v-model="clanName" />
 				<p>{{ $t('createClan.clan_langs') }}</p>
 				<LangSelector v-model="langs" class="lang-selector" />
 				<p>{{ $t('createClan.clan_description') }}</p>
@@ -170,6 +170,66 @@ export default defineComponent({
 	img {
 		margin: auto;
 		width: 190px;
+	}
+}
+@media (max-width: 450px) {
+	.disclaimer {
+		box-sizing: border-box;
+		width: 100%;
+		margin: 8px 0;
+	}
+	.grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		width: 100%;
+		max-width: 100%;
+		column-gap: 0;
+		row-gap: 5px;
+		p {
+			grid-column: 1;
+			width: 100%;
+			min-height: 28px;
+			height: auto;
+			padding: 5px;
+			box-sizing: border-box;
+		}
+		.clan-name-input {
+			grid-column: 1;
+			width: 100%;
+			min-width: 0;
+			:deep(input) {
+				width: 100%;
+				box-sizing: border-box;
+			}
+		}
+		.lang-selector {
+			grid-column: 1;
+			width: 100%;
+			height: auto;
+			min-height: 30px;
+			box-sizing: border-box;
+			justify-content: space-around;
+			gap: 5px;
+			padding: 4px 0;
+		}
+		textarea {
+			grid-column: 1;
+			width: 100%;
+			height: 120px;
+			box-sizing: border-box;
+		}
+	}
+	.end-content {
+		width: 100%;
+		.buttons {
+			width: 100%;
+			column-gap: 6px;
+			margin: 10px 0;
+		}
+		img {
+			width: 160px;
+			max-width: 60%;
+		}
 	}
 }
 </style>
