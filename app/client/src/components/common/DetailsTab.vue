@@ -13,22 +13,6 @@
 -->
 <template>
 	<div class="details">
-		<!--<DZSelect
-			v-if="playerStore.playerOptions.hasPAC && ownBuilds.length"
-			id="build-select"
-			:options="ownBuilds.map(build => ({ label: build.name, value: build.id }))"
-			:placeholder="$t('skillTrees.build')"
-			v-model="dinozBuild"
-			@change="changeDinozBuild"
-			class="build-select"
-		/>
-		<p
-			v-if="playerStore.playerOptions.hasPAC"
-			class="wrapperMenu"
-			@click="goTo($router, 'DinozSkills', { params: { id: dinozStore.currentDinozId } })"
-		>
-			{{ $t('skillTrees.title') }}
-		</p>-->
 		<p class="wrapperMenu" @click="hidden = !hidden">
 			{{ $t('dinozPage.details.sort.title') }}
 		</p>
@@ -112,7 +96,13 @@
 				</Tippy>
 			</p>
 			<ul class="stat-values">
-				<Tippy tag="li" v-for="stat in assaultStats" :key="stat.name" theme="normal">
+				<Tippy
+					tag="li"
+					v-for="stat in assaultStats"
+					:key="stat.name"
+					theme="normal"
+					:class="{ 'specialist-disabled': isSpecialistDisabled(stat) }"
+				>
 					<img :src="getImgURL('elements', `elem_${stat.name}`)" :alt="stat.name" />
 					<span>{{ stat.value }}</span>
 					<template #content>
@@ -317,7 +307,7 @@ import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
 import { AssaultElement, getAssaultStat } from '@dinorpg/core/models/skills/getAssaultStats.js';
 import { DefenseElement, getDefenseStat } from '@dinorpg/core/models/skills/getDefenseStats.js';
 import { SpecialStat, getSpecialStat } from '@dinorpg/core/models/skills/getSpecialStats.js';
-import { skillList } from '@dinorpg/core/models/skills/skillList.js';
+import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { dinozStore } from '../../store/dinozStore.js';
 import { userStore } from '../../store/userStore.js';
 import SkillTooltip from '../dinoz/SkillTooltip.vue';
@@ -327,10 +317,6 @@ import DZSelect from '../utils/DZSelect.vue';
 import DZTable from '../utils/DZTable.vue';
 import DZRadio from '../utils/DZRadio.vue';
 import { TIME_BASE } from '@dinorpg/core/utils/fightConstants.js';
-
-//import { GetOwnDinozBuildResponse } from '@drpg/core/returnTypes/DinozBuild';
-//import { DinozBuildService } from '../../services/DinozBuildService.js';
-//import { DinozBuild } from '@drpg/prisma';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -368,21 +354,17 @@ export default defineComponent({
 				{ label: this.$t('common.type'), value: 'Type' },
 				{ label: this.$t('dinozPage.details.sort.state'), value: 'State' }
 			]
-			//ownBuilds: [] as GetOwnDinozBuildResponse,
-			//dinozBuild: undefined as DinozBuild['id'] | undefined
 		};
 	},
 	methods: {
 		async changeState(skill: SkillDetails): Promise<void> {
 			const dinozId = this.$route.params.id as string;
-
 			try {
 				await DinozService.setSkillState(parseInt(dinozId), skill.id, !skill.state);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
-
 			skill.state = !skill.state;
 		},
 		hasAmulst(): boolean {
@@ -432,6 +414,16 @@ export default defineComponent({
 			const key = id as keyof typeof statusList.imgName;
 			return statusList.imgName[key] ?? 'unknown';
 		},
+		hasSpecialist(): boolean {
+			return this.dinozSkill.some(skill => skill.id === Skill.SPECIALISTE);
+		},
+		isSpecialistDisabled(stat: ReturnType<typeof getAssaultStat>): boolean {
+			if (!this.hasSpecialist()) {
+				return false;
+			}
+			const lowestBase = Math.min(...this.assaultStats.map(assault => assault.base));
+			return stat.base === lowestBase;
+		},
 		refreshStats() {
 			// Get stats
 			this.assaultStats = Object.values(AssaultElement).map(stat =>
@@ -442,7 +434,6 @@ export default defineComponent({
 					stat as AssaultElement
 				)
 			);
-
 			this.defenseStats = Object.values(DefenseElement).map(stat =>
 				getDefenseStat(
 					this.dinozData,
@@ -451,9 +442,7 @@ export default defineComponent({
 					stat as DefenseElement
 				)
 			);
-
 			const priest = this.userStore.isPriest;
-
 			// Find global speed value to compute it with elemental speed
 			const global_speed_special = getSpecialStat(
 				this.dinozData,
@@ -462,7 +451,6 @@ export default defineComponent({
 				SpecialStat.SPEED,
 				priest
 			);
-
 			// Find global critical value
 			const global_critical_hit = getSpecialStat(
 				this.dinozData,
@@ -471,12 +459,10 @@ export default defineComponent({
 				SpecialStat.CRITICAL_HIT_CHANCE,
 				priest
 			);
-
 			let global_speed = 1;
 			if (global_speed_special) {
 				global_speed = global_speed_special.value;
 			}
-
 			this.specialStats = Object.values(SpecialStat)
 				.map(stat => {
 					let special = getSpecialStat(
@@ -486,12 +472,10 @@ export default defineComponent({
 						stat as SpecialStat,
 						priest
 					);
-
 					// Add +1 to bubble for proper display
 					if (special && special.name.includes('bubble')) {
 						special.value += 1;
 					}
-
 					// Transform speed into the duration of a turn
 					if (special && special.name.toLowerCase().includes('speed')) {
 						special.percent = false;
@@ -527,12 +511,10 @@ export default defineComponent({
 							}
 						}
 					}
-
 					// Filter out other special stats that are at default value
 					if (special && !special.name.startsWith('speed') && special.value === 100) {
 						special = null;
 					}
-
 					// Filter out critical hit damage if critical hit chance is default (0%)
 					if (
 						special &&
@@ -542,7 +524,6 @@ export default defineComponent({
 					) {
 						special = null;
 					}
-
 					// Filter out stats with no details, with some exceptions
 					if (
 						special &&
@@ -563,50 +544,12 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
-
-			/*if (this.playerStore.playerOptions.hasPAC) {
-				try {
-					this.ownBuilds = await DinozBuildService.getOwn();
-
-					this.dinozBuild = this.dinozData.build?.id;
-				} catch (err) {
-					errorHandler.handle(err, this.$toast);
-				}
-			}*/
-
 			this.refreshStats();
-
 			// Refresh special stats on EventBus `refreshDinozStats`
 			eventBus.on('refreshDinozStats', () => {
 				this.refreshStats();
 			});
-		} /*,
-		async changeDinozBuild() {
-			if (!this.dinozBuild || !this.dinozStore.currentDinozId) {
-				return;
-			}
-
-			try {
-				await DinozService.assignBuild(this.dinozStore.currentDinozId, this.dinozBuild);
-				const currentDinoz = this.dinozStore.getDinoz(this.dinozStore.currentDinozId);
-
-				if (!currentDinoz) {
-					throw new Error('Dinoz not found in store after assigning build');
-				}
-
-				const build = this.ownBuilds.find(b => b.id === this.dinozBuild);
-
-				this.dinozStore.setDinoz({
-					...currentDinoz,
-					build
-				});
-
-				this.$toast.success(this.$t('toast.buildAssigned', { name: build?.name ?? '' }).toString());
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
-				return;
-			}
-		}*/
+		}
 	},
 	async mounted(): Promise<void> {
 		await this.loadComponent();
@@ -811,6 +754,13 @@ export default defineComponent({
 				}
 				span {
 					margin-left: 2px;
+				}
+			}
+			.specialist-disabled {
+				opacity: 0.4;
+				& > img,
+				& > span {
+					filter: grayscale(1);
 				}
 			}
 		}
