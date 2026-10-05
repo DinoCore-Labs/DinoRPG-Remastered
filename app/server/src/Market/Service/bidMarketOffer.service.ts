@@ -1,4 +1,3 @@
-import { MARKET_BID_EXTENSION_MS } from '@dinorpg/core/models/market/constants.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
@@ -11,12 +10,9 @@ import { scheduleNextMarketOfferExpiration } from './expireMarketOffers.service.
 
 export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;
-
 	await assertUserHasDinozAtMarket(userId);
-
 	const params = offerIdParamsSchema.parse(req.params);
 	const body = bidOfferBodySchema.parse(req.body);
-
 	await prisma.$transaction(async tx => {
 		const offer = await tx.offer.findFirst({
 			where: {
@@ -32,26 +28,20 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 				}
 			}
 		});
-
 		if (!offer || offer.sellerId === userId) {
 			throw new ExpectedError('invalidOffer');
 		}
-
 		if (offer.endDate <= new Date()) {
 			throw new ExpectedError('offerEnded');
 		}
-
 		const topBid = offer.bids[0];
 		const minimumBid = Math.ceil(offer.total / 1000);
-
 		if (body.value < minimumBid) {
 			throw new ExpectedError('bidIsLower');
 		}
-
 		if (topBid && body.value <= topBid.value) {
 			throw new ExpectedError('bidIsLower');
 		}
-
 		if (topBid?.userId) {
 			await tx.userWallet.update({
 				where: {
@@ -67,7 +57,6 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 				}
 			});
 		}
-
 		const wallet = await tx.userWallet.findUniqueOrThrow({
 			where: {
 				userId_type: {
@@ -80,18 +69,15 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 				amount: true
 			}
 		});
-
 		if (wallet.amount < body.value) {
 			throw new ExpectedError('notEnoughTickets');
 		}
-
 		const user = await tx.user.findUniqueOrThrow({
 			where: { id: userId },
 			select: {
 				name: true
 			}
 		});
-
 		await tx.userWallet.update({
 			where: { id: wallet.id },
 			data: {
@@ -100,7 +86,6 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 				}
 			}
 		});
-
 		const bid = await tx.offerBid.create({
 			data: {
 				offerId: offer.id,
@@ -109,7 +94,6 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 				value: body.value
 			}
 		});
-
 		await safeCreateGameLog({
 			type: GameLogType.OfferBid,
 			userId,
@@ -128,15 +112,7 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 					: null
 			}
 		});
-
-		await tx.offer.update({
-			where: { id: offer.id },
-			data: {
-				endDate: new Date(offer.endDate.getTime() + MARKET_BID_EXTENSION_MS)
-			}
-		});
 	});
 	await scheduleNextMarketOfferExpiration();
-
 	return reply.send({ ok: true });
 }
