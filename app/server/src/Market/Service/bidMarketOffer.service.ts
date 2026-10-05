@@ -14,6 +14,9 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 	const params = offerIdParamsSchema.parse(req.params);
 	const body = bidOfferBodySchema.parse(req.body);
 	await prisma.$transaction(async tx => {
+		await tx.$executeRaw`
+	SELECT pg_advisory_xact_lock(${params.offerId}::bigint)
+`;
 		const offer = await tx.offer.findFirst({
 			where: {
 				id: params.offerId,
@@ -57,33 +60,28 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 				}
 			});
 		}
-		const wallet = await tx.userWallet.findUniqueOrThrow({
+		const debited = await tx.userWallet.updateMany({
 			where: {
-				userId_type: {
-					userId,
-					type: MoneyType.TREASURE_TICKET
+				userId,
+				type: MoneyType.TREASURE_TICKET,
+				amount: {
+					gte: body.value
 				}
 			},
-			select: {
-				id: true,
-				amount: true
+			data: {
+				amount: {
+					decrement: body.value
+				}
 			}
 		});
-		if (wallet.amount < body.value) {
+
+		if (debited.count !== 1) {
 			throw new ExpectedError('notEnoughTickets');
 		}
 		const user = await tx.user.findUniqueOrThrow({
 			where: { id: userId },
 			select: {
 				name: true
-			}
-		});
-		await tx.userWallet.update({
-			where: { id: wallet.id },
-			data: {
-				amount: {
-					decrement: body.value
-				}
 			}
 		});
 		const bid = await tx.offerBid.create({
