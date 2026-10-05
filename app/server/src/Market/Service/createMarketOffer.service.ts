@@ -13,32 +13,13 @@ import { scheduleNextMarketOfferExpiration } from './expireMarketOffers.service.
 
 export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;
-
 	await assertUserHasDinozAtMarket(userId);
-
 	const body = createMarketOfferBodySchema.parse(req.body);
 	const dinozId = body.dinozId ?? null;
-
 	if (!dinozId && body.items.length === 0 && body.ingredients.length === 0) {
 		throw new ExpectedError('emptyOffer');
 	}
-
-	const existingOffer = await prisma.offer.findFirst({
-		where: {
-			sellerId: userId,
-			status: OfferStatus.ONGOING
-		},
-		select: {
-			id: true
-		}
-	});
-
-	if (existingOffer) {
-		throw new ExpectedError('alreadyOffer');
-	}
-
 	await assertUserOwnsOfferContent(userId, body.items, body.ingredients);
-
 	const user = await prisma.user.findUniqueOrThrow({
 		where: { id: userId },
 		select: {
@@ -46,7 +27,6 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 			name: true
 		}
 	});
-
 	if (dinozId) {
 		const dinoz = await prisma.dinoz.findFirst({
 			where: {
@@ -70,33 +50,46 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 				}
 			}
 		});
-
 		if (!dinoz) {
 			throw new ExpectedError('invalidDinoz');
 		}
-
 		if (dinoz.placeId !== PlaceEnum.PLACE_DU_MARCHE) {
 			throw new ExpectedError('dinozNotAtMarket');
 		}
-
 		if (dinoz.state === DinozState.selling) {
 			throw new ExpectedError('dinozAlreadySelling');
 		}
-
 		if (dinoz.state !== null) {
 			throw new ExpectedError('invalidDinozState');
 		}
-
 		if (dinoz.leaderId || dinoz.followers.length > 0) {
 			throw new ExpectedError('dinozInGroup');
 		}
-
 		if (dinoz.items.length > 0) {
 			throw new ExpectedError('equippedItems');
 		}
 	}
-
 	const offer = await prisma.$transaction(async tx => {
+		/*
+		 * Serialize offer creation for the same seller.
+		 *
+		 * An advisory transaction lock prevents two concurrent
+		 * requests from both creating an ONGOING offer without
+		 * locking the User row itself.
+		 */
+		await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`;
+		const existingOffer = await tx.offer.findFirst({
+			where: {
+				sellerId: userId,
+				status: OfferStatus.ONGOING
+			},
+			select: {
+				id: true
+			}
+		});
+		if (existingOffer) {
+			throw new ExpectedError('alreadyOffer');
+		}
 		const createdOffer = await tx.offer.create({
 			data: {
 				sellerId: userId,
@@ -121,7 +114,6 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 				}
 			}
 		});
-
 		if (dinozId) {
 			await tx.dinoz.update({
 				where: { id: dinozId },
@@ -130,9 +122,7 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 				}
 			});
 		}
-
 		await removeOfferContentFromInventoryTx(tx, userId, body.items, body.ingredients);
-
 		await safeCreateGameLog({
 			type: GameLogType.OfferNew,
 			userId,
@@ -147,10 +137,8 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 				endDate: createdOffer.endDate.toISOString()
 			}
 		});
-
 		return createdOffer;
 	});
 	await scheduleNextMarketOfferExpiration();
-
 	return reply.send(offer);
 }
