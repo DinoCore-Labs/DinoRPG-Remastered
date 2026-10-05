@@ -11,87 +11,93 @@ import { scheduleNextMarketOfferExpiration } from './expireMarketOffers.service.
 
 export async function cancelMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;
-
 	await assertUserHasDinozAtMarket(userId);
-
 	const params = offerIdParamsSchema.parse(req.params);
-
-	const offer = await prisma.offer.findFirst({
-		where: {
-			id: params.offerId,
-			status: OfferStatus.ONGOING
-		},
-		include: {
-			items: true,
-			bids: true,
-			dinoz: {
-				select: {
-					id: true,
-					userId: true
+	await prisma.$transaction(async tx => {
+		/*
+		 * Use the same offer lock as bidMarketOffer.
+		 *
+		 * A bid and a cancellation for the same offer must never
+		 * be processed simultaneously.
+		 */
+		await tx.$executeRaw`
+			SELECT pg_advisory_xact_lock(${params.offerId}::bigint)
+		`;
+		const currentOffer = await tx.offer.findFirst({
+			where: {
+				id: params.offerId,
+				status: OfferStatus.ONGOING
+			},
+			include: {
+				items: true,
+				bids: true,
+				dinoz: {
+					select: {
+						id: true,
+						userId: true
+					}
 				}
 			}
+		});
+		if (!currentOffer || currentOffer.sellerId !== userId) {
+			throw new ExpectedError('invalidOffer');
 		}
-	});
-
-	if (!offer || offer.sellerId !== userId) {
-		throw new ExpectedError('invalidOffer');
-	}
-
-	if (offer.bids.length > 0) {
-		throw new ExpectedError('offerInProgress');
-	}
-
-	const items = offer.items
-		.filter(item => !item.isIngredient)
-		.map(item => ({
-			itemId: item.itemId,
-			quantity: item.quantity
-		}));
-
-	const ingredients = offer.items
-		.filter(item => item.isIngredient)
-		.map(item => ({
-			ingredientId: item.itemId,
-			quantity: item.quantity
-		}));
-
-	await assertUserCanReceiveOfferContent(userId, {
-		items,
-		ingredients,
-		dinozId: offer.dinozId,
-		originalOwnerId: offer.dinoz?.userId ?? null
-	});
-
-	await prisma.$transaction(async tx => {
-		if (offer.dinozId) {
+		if (currentOffer.bids.length > 0) {
+			throw new ExpectedError('offerInProgress');
+		}
+		const items = currentOffer.items
+			.filter(item => !item.isIngredient)
+			.map(item => ({
+				itemId: item.itemId,
+				quantity: item.quantity
+			}));
+		const ingredients = currentOffer.items
+			.filter(item => item.isIngredient)
+			.map(item => ({
+				ingredientId: item.itemId,
+				quantity: item.quantity
+			}));
+		/*
+		 * Capacity validation is done before restoring the content.
+		 */
+		await assertUserCanReceiveOfferContent(userId, {
+			items,
+			ingredients,
+			dinozId: currentOffer.dinozId,
+			originalOwnerId: currentOffer.dinoz?.userId ?? null
+		});
+		if (currentOffer.dinozId) {
 			await tx.dinoz.update({
-				where: { id: offer.dinozId },
+				where: {
+					id: currentOffer.dinozId
+				},
 				data: {
 					state: null
 				}
 			});
 		}
-
 		await addOfferContentToInventoryTx(tx, userId, items, ingredients);
-
 		await safeCreateGameLog({
 			type: GameLogType.OfferCancelled,
 			userId,
-			dinozId: offer.dinozId,
+			dinozId: currentOffer.dinozId,
 			metadata: {
-				offerId: offer.id,
-				total: offer.total,
-				dinozId: offer.dinozId,
+				offerId: currentOffer.id,
+				total: currentOffer.total,
+				dinozId: currentOffer.dinozId,
 				items,
 				ingredients
 			}
 		});
-
 		await tx.offer.delete({
-			where: { id: offer.id }
+			where: {
+				id: currentOffer.id
+			}
 		});
+		return currentOffer;
 	});
 	await scheduleNextMarketOfferExpiration();
-
-	return reply.send({ ok: true });
+	return reply.send({
+		ok: true
+	});
 }

@@ -4,6 +4,8 @@ import { MARKET_EXPIRATION_JOB_KEY, MARKET_OFFER_DURATION_MS } from '@dinorpg/co
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
+import { OfferStatus } from '../../../prisma/index.js';
+import { expireDueMarketOffers, expireMarketOffer } from '../../src/Market/Service/expireMarketOffers.service.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
 import { createAuthCookie } from '../helpers/auth.js';
@@ -746,7 +748,6 @@ describe('market bidding', () => {
 				userId: bidder.id,
 				placeId: PlaceEnum.PLACE_DU_MARCHE
 			});
-
 			await setTreasureTickets(bidder.id, 20);
 		}
 		const bid = (bidder: typeof firstBidder) =>
@@ -760,7 +761,6 @@ describe('market bidding', () => {
 					value: MARKET_TEST_MINIMUM_BID
 				}
 			});
-
 		const [firstResponse, secondResponse] = await Promise.all([bid(firstBidder), bid(secondBidder)]);
 		const responses = [firstResponse, secondResponse];
 		expect(responses.filter(response => response.statusCode === 200)).toHaveLength(1);
@@ -787,5 +787,286 @@ describe('market bidding', () => {
 			expect(firstTickets).toBe(20);
 			expect(secondTickets).toBe(15);
 		}
+	});
+});
+
+describe('market offer cancellation', () => {
+	it('allows the seller to cancel an offer without bids', async () => {
+		const seller = await createTestUser({
+			name: 'CancelSeller'
+		});
+		const offer = await createMarketTestOffer(seller);
+		const response = await server.inject({
+			method: 'DELETE',
+			url: `/api/market/${offer.id}`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		expect(response.json()).toEqual({
+			ok: true
+		});
+		const deletedOffer = await prisma.offer.findUnique({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(deletedOffer).toBeNull();
+	});
+
+	it('restores the exact item quantity when an offer is cancelled', async () => {
+		const seller = await createTestUser({
+			name: 'CancelInventorySeller'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.userItems.create({
+			data: {
+				userId: seller.id,
+				itemId: MARKET_TEST_ITEM,
+				quantity: 5
+			}
+		});
+		const creationResponse = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [
+					{
+						itemId: MARKET_TEST_ITEM,
+						quantity: 3
+					}
+				],
+				ingredients: []
+			}
+		});
+		expect(creationResponse.statusCode).toBe(200);
+		const inventoryDuringOffer = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: seller.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(inventoryDuringOffer.quantity).toBe(2);
+		const offer = await prisma.offer.findFirstOrThrow({
+			where: {
+				sellerId: seller.id
+			}
+		});
+		const cancelResponse = await server.inject({
+			method: 'DELETE',
+			url: `/api/market/${offer.id}`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		expect(cancelResponse.statusCode).toBe(200);
+		const inventoryAfterCancel = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: seller.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(inventoryAfterCancel.quantity).toBe(5);
+	});
+
+	it('rejects cancellation when the offer already has a bid', async () => {
+		const seller = await createTestUser({
+			name: 'BidCancelSeller'
+		});
+		const bidder = await createTestUser({
+			name: 'BidCancelBidder'
+		});
+		const offer = await createMarketTestOffer(seller);
+		await createTestDinoz({
+			userId: bidder.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await setTreasureTickets(bidder.id, 20);
+		const bidResponse = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, bidder)
+			},
+			payload: {
+				value: MARKET_TEST_MINIMUM_BID
+			}
+		});
+		expect(bidResponse.statusCode).toBe(200);
+		const cancelResponse = await server.inject({
+			method: 'DELETE',
+			url: `/api/market/${offer.id}`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		expect(cancelResponse.statusCode).toBe(400);
+		expect(cancelResponse.json()).toMatchObject({
+			code: 'offerInProgress'
+		});
+		const existingOffer = await prisma.offer.findUnique({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(existingOffer).not.toBeNull();
+		expect(
+			await prisma.offerBid.count({
+				where: {
+					offerId: offer.id
+				}
+			})
+		).toBe(1);
+	});
+
+	it('prevents a cancelled offer from restoring its inventory twice', async () => {
+		const seller = await createTestUser({
+			name: 'ConcurrentCancelSeller'
+		});
+		const offer = await createMarketTestOffer(seller);
+		const cancelOffer = () =>
+			server.inject({
+				method: 'DELETE',
+				url: `/api/market/${offer.id}`,
+				headers: {
+					cookie: createAuthCookie(server, seller)
+				}
+			});
+		const [firstResponse, secondResponse] = await Promise.all([cancelOffer(), cancelOffer()]);
+		const responses = [firstResponse, secondResponse];
+		expect(responses.filter(response => response.statusCode === 200)).toHaveLength(1);
+		expect(responses.filter(response => response.statusCode === 400)).toHaveLength(1);
+		const rejectedResponse = responses.find(response => response.statusCode === 400);
+		expect(rejectedResponse?.json()).toMatchObject({
+			code: 'invalidOffer'
+		});
+		const inventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: seller.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(inventory.quantity).toBe(1);
+		expect(
+			await prisma.offer.count({
+				where: {
+					sellerId: seller.id
+				}
+			})
+		).toBe(0);
+	});
+});
+
+describe('market offer expiration', () => {
+	it('expires an ongoing offer when its end date has passed', async () => {
+		const seller = await createTestUser({
+			name: 'ExpiredOfferSeller'
+		});
+		const offer = await createMarketTestOffer(seller);
+		await prisma.offer.update({
+			where: {
+				id: offer.id
+			},
+			data: {
+				endDate: new Date(Date.now() - 1_000)
+			}
+		});
+		const expired = await expireMarketOffer(offer.id);
+		expect(expired).toBe(true);
+		const updatedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(updatedOffer.status).toBe(OfferStatus.ENDED);
+	});
+
+	it('does not expire an offer whose end date is still in the future', async () => {
+		const seller = await createTestUser({
+			name: 'FutureOfferSeller'
+		});
+		const offer = await createMarketTestOffer(seller);
+		const expired = await expireMarketOffer(offer.id);
+		expect(expired).toBe(false);
+		const unchangedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(unchangedOffer.status).toBe(OfferStatus.ONGOING);
+	});
+
+	it('processes due offers through the expiration batch', async () => {
+		const firstSeller = await createTestUser({
+			name: 'BatchExpiredSellerA'
+		});
+		const secondSeller = await createTestUser({
+			name: 'BatchExpiredSellerB'
+		});
+		const firstOffer = await createMarketTestOffer(firstSeller);
+		const secondOffer = await createMarketTestOffer(secondSeller);
+		await prisma.offer.updateMany({
+			where: {
+				id: {
+					in: [firstOffer.id, secondOffer.id]
+				}
+			},
+			data: {
+				endDate: new Date(Date.now() - 1_000)
+			}
+		});
+		const result = await expireDueMarketOffers();
+		expect(result).toEqual({
+			processed: 2
+		});
+		const offers = await prisma.offer.findMany({
+			where: {
+				id: {
+					in: [firstOffer.id, secondOffer.id]
+				}
+			}
+		});
+		expect(offers).toHaveLength(2);
+		for (const offer of offers) {
+			expect(offer.status).toBe(OfferStatus.ENDED);
+		}
+	});
+
+	it('expires the same offer only once when expiration is triggered concurrently', async () => {
+		const seller = await createTestUser({
+			name: 'ConcurrentExpirationSeller'
+		});
+		const offer = await createMarketTestOffer(seller);
+		await prisma.offer.update({
+			where: {
+				id: offer.id
+			},
+			data: {
+				endDate: new Date(Date.now() - 1_000)
+			}
+		});
+		const results = await Promise.all([expireMarketOffer(offer.id), expireMarketOffer(offer.id)]);
+		expect(results.filter(result => result === true)).toHaveLength(1);
+		expect(results.filter(result => result === false)).toHaveLength(1);
+		const updatedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(updatedOffer.status).toBe(OfferStatus.ENDED);
 	});
 });
