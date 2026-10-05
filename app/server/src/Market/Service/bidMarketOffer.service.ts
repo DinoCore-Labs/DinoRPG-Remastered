@@ -14,9 +14,7 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 	const params = offerIdParamsSchema.parse(req.params);
 	const body = bidOfferBodySchema.parse(req.body);
 	await prisma.$transaction(async tx => {
-		await tx.$executeRaw`
-	SELECT pg_advisory_xact_lock(${params.offerId}::bigint)
-`;
+		await tx.$executeRaw`SELECT pg_advisory_xact_lock(${params.offerId}::bigint)`;
 		const offer = await tx.offer.findFirst({
 			where: {
 				id: params.offerId,
