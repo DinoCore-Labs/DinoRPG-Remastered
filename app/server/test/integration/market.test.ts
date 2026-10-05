@@ -109,6 +109,31 @@ async function getTreasureTickets(userId: string) {
 	return wallet.amount;
 }
 
+async function getGold(userId: string) {
+	const wallet = await prisma.userWallet.findUniqueOrThrow({
+		where: {
+			userId_type: {
+				userId,
+				type: 'GOLD'
+			}
+		}
+	});
+	return wallet.amount;
+}
+
+async function expireTestOffer(offerId: number) {
+	await prisma.offer.update({
+		where: {
+			id: offerId
+		},
+		data: {
+			endDate: new Date(Date.now() - 1_000)
+		}
+	});
+	const expired = await expireMarketOffer(offerId);
+	expect(expired).toBe(true);
+}
+
 describe('market auction duration', () => {
 	it('creates a market offer with a fixed duration of 72 hours', async () => {
 		const user = await createTestUser({
@@ -1068,5 +1093,343 @@ describe('market offer expiration', () => {
 			}
 		});
 		expect(updatedOffer.status).toBe(OfferStatus.ENDED);
+	});
+});
+
+describe('market offer claim', () => {
+	it('transfers a won offer to the winning bidder and pays the seller', async () => {
+		const seller = await createTestUser({
+			name: 'ClaimSeller'
+		});
+		const winner = await createTestUser({
+			name: 'ClaimWinner'
+		});
+		const offer = await createMarketTestOffer(seller);
+		await createTestDinoz({
+			userId: winner.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await setTreasureTickets(winner.id, 20);
+		const sellerGoldBefore = await getGold(seller.id);
+		const bidResponse = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, winner)
+			},
+			payload: {
+				value: MARKET_TEST_MINIMUM_BID
+			}
+		});
+		expect(bidResponse.statusCode).toBe(200);
+		await expireTestOffer(offer.id);
+		const claimResponse = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/claim`,
+			headers: {
+				cookie: createAuthCookie(server, winner)
+			}
+		});
+		expect(claimResponse.statusCode).toBe(200);
+		expect(claimResponse.json()).toMatchObject({
+			ok: true
+		});
+		const claimedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(claimedOffer.status).toBe(OfferStatus.CLAIMED);
+		const winnerInventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: winner.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(winnerInventory.quantity).toBe(1);
+		const sellerInventory = await prisma.userItems.findUnique({
+			where: {
+				itemId_userId: {
+					userId: seller.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(sellerInventory).toBeNull();
+		/*
+		 * One treasure ticket represents 1000 gold.
+		 */
+		expect(await getGold(seller.id)).toBe(sellerGoldBefore + MARKET_TEST_MINIMUM_BID * 1000);
+	});
+
+	it('returns an unsold offer to the seller without paying gold', async () => {
+		const seller = await createTestUser({
+			name: 'UnsoldClaimSeller'
+		});
+		const offer = await createMarketTestOffer(seller);
+		const sellerGoldBefore = await getGold(seller.id);
+		await expireTestOffer(offer.id);
+		const response = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/claim`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		expect(response.json()).toMatchObject({
+			ok: true
+		});
+		const claimedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(claimedOffer.status).toBe(OfferStatus.CLAIMED);
+		const inventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: seller.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(inventory.quantity).toBe(1);
+		expect(await getGold(seller.id)).toBe(sellerGoldBefore);
+	});
+
+	it('allows the seller to claim a sold offer and still transfers the item to the winner', async () => {
+		const seller = await createTestUser({
+			name: 'SellerClaimSoldOffer'
+		});
+		const winner = await createTestUser({
+			name: 'SellerClaimWinner'
+		});
+		const offer = await createMarketTestOffer(seller);
+		await createTestDinoz({
+			userId: winner.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await setTreasureTickets(winner.id, 20);
+		const sellerGoldBefore = await getGold(seller.id);
+		const bidResponse = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, winner)
+			},
+			payload: {
+				value: MARKET_TEST_MINIMUM_BID
+			}
+		});
+		expect(bidResponse.statusCode).toBe(200);
+		await expireTestOffer(offer.id);
+		/*
+		 * Seller triggers the claim, but the content must still
+		 * go to the winning bidder.
+		 */
+		const response = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/claim`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const winnerInventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: winner.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(winnerInventory.quantity).toBe(1);
+		expect(await getGold(seller.id)).toBe(sellerGoldBefore + MARKET_TEST_MINIMUM_BID * 1000);
+	});
+
+	it('rejects a claim from a player who is neither the seller nor the winner', async () => {
+		const seller = await createTestUser({
+			name: 'UnauthorizedClaimSeller'
+		});
+		const winner = await createTestUser({
+			name: 'UnauthorizedClaimWinner'
+		});
+		const stranger = await createTestUser({
+			name: 'UnauthorizedClaimStranger'
+		});
+		const offer = await createMarketTestOffer(seller);
+		await createTestDinoz({
+			userId: winner.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await createTestDinoz({
+			userId: stranger.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await setTreasureTickets(winner.id, 20);
+		const bidResponse = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, winner)
+			},
+			payload: {
+				value: MARKET_TEST_MINIMUM_BID
+			}
+		});
+		expect(bidResponse.statusCode).toBe(200);
+		await expireTestOffer(offer.id);
+		const response = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/claim`,
+			headers: {
+				cookie: createAuthCookie(server, stranger)
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'invalidOffer'
+		});
+		const unchangedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(unchangedOffer.status).toBe(OfferStatus.ENDED);
+		const winnerInventory = await prisma.userItems.findUnique({
+			where: {
+				itemId_userId: {
+					userId: winner.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(winnerInventory).toBeNull();
+	});
+
+	it('prevents the same unsold offer from being claimed twice', async () => {
+		const seller = await createTestUser({
+			name: 'DoubleClaimSeller'
+		});
+		const offer = await createMarketTestOffer(seller);
+		await expireTestOffer(offer.id);
+		const claim = () =>
+			server.inject({
+				method: 'POST',
+				url: `/api/market/${offer.id}/claim`,
+				headers: {
+					cookie: createAuthCookie(server, seller)
+				}
+			});
+		const [firstResponse, secondResponse] = await Promise.all([claim(), claim()]);
+		const responses = [firstResponse, secondResponse];
+		expect(responses.filter(response => response.statusCode === 200)).toHaveLength(1);
+		expect(responses.filter(response => response.statusCode === 400)).toHaveLength(1);
+		const rejectedResponse = responses.find(response => response.statusCode === 400);
+		expect(rejectedResponse?.json()).toMatchObject({
+			code: 'invalidOffer'
+		});
+		const inventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: seller.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		/*
+		 * The item must have been restored exactly once.
+		 */
+		expect(inventory.quantity).toBe(1);
+		const claimedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(claimedOffer.status).toBe(OfferStatus.CLAIMED);
+	});
+
+	it('processes a simultaneous seller and winner claim exactly once', async () => {
+		const seller = await createTestUser({
+			name: 'ConcurrentClaimSeller'
+		});
+		const winner = await createTestUser({
+			name: 'ConcurrentClaimWinner'
+		});
+		const offer = await createMarketTestOffer(seller);
+		await createTestDinoz({
+			userId: winner.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await setTreasureTickets(winner.id, 20);
+		const sellerGoldBefore = await getGold(seller.id);
+		const bidResponse = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, winner)
+			},
+			payload: {
+				value: MARKET_TEST_MINIMUM_BID
+			}
+		});
+		expect(bidResponse.statusCode).toBe(200);
+		await expireTestOffer(offer.id);
+		const sellerClaim = server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/claim`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		const winnerClaim = server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/claim`,
+			headers: {
+				cookie: createAuthCookie(server, winner)
+			}
+		});
+		const [sellerResponse, winnerResponse] = await Promise.all([sellerClaim, winnerClaim]);
+		const responses = [sellerResponse, winnerResponse];
+		expect(responses.filter(response => response.statusCode === 200)).toHaveLength(1);
+		expect(responses.filter(response => response.statusCode === 400)).toHaveLength(1);
+		const rejectedResponse = responses.find(response => response.statusCode === 400);
+		expect(rejectedResponse?.json()).toMatchObject({
+			code: 'invalidOffer'
+		});
+		const claimedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(claimedOffer.status).toBe(OfferStatus.CLAIMED);
+		/*
+		 * Winner receives the item exactly once.
+		 */
+		const winnerInventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: winner.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(winnerInventory.quantity).toBe(1);
+		/*
+		 * Seller receives the gold exactly once.
+		 */
+		expect(await getGold(seller.id)).toBe(sellerGoldBefore + MARKET_TEST_MINIMUM_BID * 1000);
+		const sellerInventory = await prisma.userItems.findUnique({
+			where: {
+				itemId_userId: {
+					userId: seller.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(sellerInventory).toBeNull();
 	});
 });
