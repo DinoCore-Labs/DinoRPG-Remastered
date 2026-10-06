@@ -140,6 +140,48 @@ async function expireTestOffer(offerId: number) {
 	expect(expired).toBe(true);
 }
 
+async function createListedOffer(input: {
+	sellerId: string;
+	sellerName: string;
+	endDate: Date;
+	status?: OfferStatus;
+	dinozId?: number | null;
+	withItem?: boolean;
+}) {
+	const offer = await prisma.offer.create({
+		data: {
+			sellerId: input.sellerId,
+			sellerName: input.sellerName,
+			endDate: input.endDate,
+			dinozId: input.dinozId ?? null,
+			total: MARKET_TEST_TOTAL,
+			status: input.status ?? OfferStatus.ONGOING
+		}
+	});
+	if (input.withItem) {
+		await prisma.offerItem.create({
+			data: {
+				offerId: offer.id,
+				itemId: MARKET_TEST_ITEM,
+				quantity: 1,
+				isIngredient: false
+			}
+		});
+	}
+	return offer;
+}
+
+async function createListedBid(input: { offerId: number; userId: string; userName: string; value: number }) {
+	return prisma.offerBid.create({
+		data: {
+			offerId: input.offerId,
+			userId: input.userId,
+			userName: input.userName,
+			value: input.value
+		}
+	});
+}
+
 describe('market auction duration', () => {
 	it('creates a market offer with a fixed duration of 72 hours', async () => {
 		const user = await createTestUser({
@@ -2167,5 +2209,395 @@ describe('market Dinoz offers', () => {
 				}
 			})
 		).toBe(1);
+	});
+});
+
+describe('market offer listing', () => {
+	it('lists ongoing offers ordered by expiration date ascending', async () => {
+		const viewer = await createTestUser({
+			name: 'ListViewer'
+		});
+		await createTestDinoz({
+			userId: viewer.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const seller = await createTestUser({
+			name: 'ListSeller'
+		});
+		const lateOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() + 30_000),
+			withItem: true
+		});
+		const earlyOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() + 10_000),
+			withItem: true
+		});
+		const middleOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() + 20_000),
+			withItem: true
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: '/api/market/list/all',
+			headers: {
+				cookie: createAuthCookie(server, viewer)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(3);
+		expect(body.offers.map((offer: { id: number }) => offer.id)).toEqual([earlyOffer.id, middleOffer.id, lateOffer.id]);
+	});
+
+	it('filters item offers', async () => {
+		const viewer = await createTestUser({
+			name: 'ItemFilterViewer'
+		});
+		await createTestDinoz({
+			userId: viewer.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const seller = await createTestUser({
+			name: 'ItemFilterSeller'
+		});
+		const itemOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() + 10_000),
+			withItem: true
+		});
+		await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() + 20_000)
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: '/api/market/list/items',
+			headers: {
+				cookie: createAuthCookie(server, viewer)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(1);
+		expect(body.offers).toHaveLength(1);
+		expect(body.offers[0].id).toBe(itemOffer.id);
+	});
+
+	it('filters Dinoz offers', async () => {
+		const viewer = await createTestUser({
+			name: 'DinozFilterViewer'
+		});
+		await createTestDinoz({
+			userId: viewer.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const seller = await createTestUser({
+			name: 'DinozFilterSeller'
+		});
+		const soldDinoz = await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const dinozOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() + 10_000),
+			dinozId: soldDinoz.id
+		});
+		await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() + 20_000),
+			withItem: true
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: '/api/market/list/dinoz',
+			headers: {
+				cookie: createAuthCookie(server, viewer)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(1);
+		expect(body.offers).toHaveLength(1);
+		expect(body.offers[0].id).toBe(dinozOffer.id);
+	});
+
+	it('lists offers sold by or bid on by the current user with the own filter', async () => {
+		const viewer = await createTestUser({
+			name: 'OwnFilterViewer'
+		});
+		await createTestDinoz({
+			userId: viewer.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const otherSeller = await createTestUser({
+			name: 'OwnFilterOtherSeller'
+		});
+		const ownOffer = await createListedOffer({
+			sellerId: viewer.id,
+			sellerName: viewer.name,
+			endDate: new Date(Date.now() + 10_000),
+			withItem: true
+		});
+		const bidOffer = await createListedOffer({
+			sellerId: otherSeller.id,
+			sellerName: otherSeller.name,
+			endDate: new Date(Date.now() + 20_000),
+			withItem: true
+		});
+		await createListedBid({
+			offerId: bidOffer.id,
+			userId: viewer.id,
+			userName: viewer.name,
+			value: MARKET_TEST_MINIMUM_BID
+		});
+		await createListedOffer({
+			sellerId: otherSeller.id,
+			sellerName: otherSeller.name,
+			endDate: new Date(Date.now() + 30_000),
+			withItem: true
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: '/api/market/list/own',
+			headers: {
+				cookie: createAuthCookie(server, viewer)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(2);
+		expect(body.offers.map((offer: { id: number }) => offer.id)).toEqual([ownOffer.id, bidOffer.id]);
+	});
+
+	it('filters offers by sellerId', async () => {
+		const viewer = await createTestUser({
+			name: 'SellerFilterViewer'
+		});
+		await createTestDinoz({
+			userId: viewer.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const firstSeller = await createTestUser({
+			name: 'SellerFilterA'
+		});
+		const secondSeller = await createTestUser({
+			name: 'SellerFilterB'
+		});
+		const matchingOffer = await createListedOffer({
+			sellerId: firstSeller.id,
+			sellerName: firstSeller.name,
+			endDate: new Date(Date.now() + 10_000),
+			withItem: true
+		});
+		await createListedOffer({
+			sellerId: secondSeller.id,
+			sellerName: secondSeller.name,
+			endDate: new Date(Date.now() + 20_000),
+			withItem: true
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: `/api/market/list/all?sellerId=${firstSeller.id}`,
+			headers: {
+				cookie: createAuthCookie(server, viewer)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(1);
+		expect(body.offers).toHaveLength(1);
+		expect(body.offers[0].id).toBe(matchingOffer.id);
+	});
+
+	it('filters offers by bidderId', async () => {
+		const viewer = await createTestUser({
+			name: 'BidderFilterViewer'
+		});
+		await createTestDinoz({
+			userId: viewer.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const seller = await createTestUser({
+			name: 'BidderFilterSeller'
+		});
+		const bidder = await createTestUser({
+			name: 'BidderFilterUser'
+		});
+		const matchingOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() + 10_000),
+			withItem: true
+		});
+		const otherOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() + 20_000),
+			withItem: true
+		});
+		await createListedBid({
+			offerId: matchingOffer.id,
+			userId: bidder.id,
+			userName: bidder.name,
+			value: MARKET_TEST_MINIMUM_BID
+		});
+		await createListedBid({
+			offerId: otherOffer.id,
+			userId: viewer.id,
+			userName: viewer.name,
+			value: MARKET_TEST_MINIMUM_BID
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: `/api/market/list/all?bidderId=${bidder.id}`,
+			headers: {
+				cookie: createAuthCookie(server, viewer)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(1);
+		expect(body.offers).toHaveLength(1);
+		expect(body.offers[0].id).toBe(matchingOffer.id);
+	});
+});
+
+describe('market offer listing pagination and history', () => {
+	it('paginates market offers by 10', async () => {
+		const viewer = await createTestUser({
+			name: 'PaginationViewer'
+		});
+		await createTestDinoz({
+			userId: viewer.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const seller = await createTestUser({
+			name: 'PaginationSeller'
+		});
+		for (let index = 0; index < 12; index++) {
+			await createListedOffer({
+				sellerId: seller.id,
+				sellerName: seller.name,
+				endDate: new Date(Date.now() + (index + 1) * 10_000),
+				withItem: true
+			});
+		}
+		const firstPageResponse = await server.inject({
+			method: 'GET',
+			url: '/api/market/list/all?page=1',
+			headers: {
+				cookie: createAuthCookie(server, viewer)
+			}
+		});
+		const secondPageResponse = await server.inject({
+			method: 'GET',
+			url: '/api/market/list/all?page=2',
+			headers: {
+				cookie: createAuthCookie(server, viewer)
+			}
+		});
+		expect(firstPageResponse.statusCode).toBe(200);
+		expect(secondPageResponse.statusCode).toBe(200);
+		const firstPage = firstPageResponse.json();
+		const secondPage = secondPageResponse.json();
+		expect(firstPage.total).toBe(12);
+		expect(secondPage.total).toBe(12);
+		expect(firstPage.offers).toHaveLength(10);
+		expect(secondPage.offers).toHaveLength(2);
+	});
+
+	it('lists only ended or claimed offers when expired=true', async () => {
+		const viewer = await createTestUser({
+			name: 'ExpiredViewer'
+		});
+		await createTestDinoz({
+			userId: viewer.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const seller = await createTestUser({
+			name: 'ExpiredSeller'
+		});
+		await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() + 10_000),
+			status: OfferStatus.ONGOING,
+			withItem: true
+		});
+		const endedOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() - 10_000),
+			status: OfferStatus.ENDED,
+			withItem: true
+		});
+		const claimedOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() - 20_000),
+			status: OfferStatus.CLAIMED,
+			withItem: true
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: '/api/market/list/all?expired=true',
+			headers: {
+				cookie: createAuthCookie(server, viewer)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(2);
+		expect(body.offers.map((offer: { id: number }) => offer.id)).toEqual([claimedOffer.id, endedOffer.id]);
+	});
+
+	it('returns a total consistent with onlyMines filtering', async () => {
+		const viewer = await createTestUser({
+			name: 'OnlyMinesViewer'
+		});
+		await createTestDinoz({
+			userId: viewer.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const otherSeller = await createTestUser({
+			name: 'OnlyMinesOtherSeller'
+		});
+		const ownOffer = await createListedOffer({
+			sellerId: viewer.id,
+			sellerName: viewer.name,
+			endDate: new Date(Date.now() - 10_000),
+			status: OfferStatus.ENDED,
+			withItem: true
+		});
+		await createListedOffer({
+			sellerId: otherSeller.id,
+			sellerName: otherSeller.name,
+			endDate: new Date(Date.now() - 20_000),
+			status: OfferStatus.ENDED,
+			withItem: true
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: '/api/market/list/all?expired=true&onlyMines=true',
+			headers: {
+				cookie: createAuthCookie(server, viewer)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(1);
+		expect(body.offers).toHaveLength(1);
+		expect(body.offers[0].id).toBe(ownOffer.id);
 	});
 });
