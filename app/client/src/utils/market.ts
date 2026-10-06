@@ -1,19 +1,18 @@
 import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import { MARKET_MIN_VALUE } from '@dinorpg/core/models/market/constants.js';
 import type { EnhancedMarketOffer, MarketOffer } from '@dinorpg/core/models/market/market.js';
 
-export const MARKET_MIN_VALUE = 1_000;
+export { MARKET_MIN_VALUE };
 export const MARKET_MAX_ITEMS = 5;
 export const MARKET_PAGE_SIZE = 10;
 
 export function secondsToDhms(seconds: number) {
 	const safeSeconds = Math.max(0, seconds);
-
 	const days = Math.floor(safeSeconds / 86400);
 	const hours = Math.floor((safeSeconds % 86400) / 3600);
 	const minutes = Math.floor((safeSeconds % 3600) / 60);
 	const secs = safeSeconds % 60;
-
 	return {
 		days,
 		hours,
@@ -24,7 +23,6 @@ export function secondsToDhms(seconds: number) {
 
 export function formatMarketTime(seconds: number) {
 	const { days, hours, minutes, seconds: secs } = secondsToDhms(seconds);
-
 	if (days > 0) return `${days}j ${hours}h`;
 	if (hours > 0) return `${hours}h ${minutes}m`;
 	if (minutes > 0) return `${minutes}m ${secs}s`;
