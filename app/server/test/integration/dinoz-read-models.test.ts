@@ -86,7 +86,6 @@ describe('Dinoz read models', () => {
 			expect(Array.isArray(response.json().actions)).toBe(true);
 		});
 
-
 		it('keeps the Team W secret shop visible after completing the Magnetite scenario', async () => {
 			const user = await createTestUser({
 				name: 'SecretShopOwner',
@@ -125,9 +124,7 @@ describe('Dinoz read models', () => {
 					action => action.name === 'shop' && action.prop === shopListV2.STEPS_SECRET_SHOP.shopId
 				);
 			};
-
 			expect(await hasSecretShopAction()).toBe(false);
-
 			await prisma.userScenario.update({
 				where: {
 					scenarioKey_userId: {
@@ -140,7 +137,6 @@ describe('Dinoz read models', () => {
 				}
 			});
 			expect(await hasSecretShopAction()).toBe(true);
-
 			await prisma.userScenario.update({
 				where: {
 					scenarioKey_userId: {
