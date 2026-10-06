@@ -355,7 +355,7 @@ export const shopListV2: Readonly<Record<string, ShopFiche>> = {
 				type: ItemShopType.ITEM
 			}
 		],
-		condition: c(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.CLAIM_REWARD})`)
+		condition: c(`scenario(${MAGNETITE_SCENARIO_KEY},${MagnetiteProgression.CLAIM_REWARD}+)`)
 	},
 	// Elite Camp
 	ELITE_CAMP: {
