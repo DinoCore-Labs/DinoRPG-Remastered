@@ -30,26 +30,20 @@ const marketDinozSelect = {
 
 export async function listMarketOffers(req: FastifyRequest, reply: FastifyReply) {
 	const userId = req.user.id;
-
 	await assertUserHasDinozAtMarket(userId);
-
 	const params = marketListParamsSchema.parse(req.params);
 	const query = marketListQuerySchema.parse(req.query);
-
 	const where: Prisma.OfferWhereInput = {};
-
 	if (params.filter === 'dinoz') {
 		where.dinozId = {
 			not: null
 		};
 	}
-
 	if (params.filter === 'items') {
 		where.items = {
 			some: {}
 		};
 	}
-
 	if (params.filter === 'own') {
 		where.OR = [
 			{
@@ -64,11 +58,9 @@ export async function listMarketOffers(req: FastifyRequest, reply: FastifyReply)
 			}
 		];
 	}
-
 	if (query.sellerId) {
 		where.sellerId = query.sellerId;
 	}
-
 	if (query.bidderId) {
 		where.bids = {
 			some: {
@@ -76,12 +68,23 @@ export async function listMarketOffers(req: FastifyRequest, reply: FastifyReply)
 			}
 		};
 	}
-
+	if (query.onlyMines) {
+		where.OR = [
+			{
+				sellerId: userId
+			},
+			{
+				bids: {
+					some: {
+						userId
+					}
+				}
+			}
+		];
+	}
 	where.status = query.expired ? { in: [OfferStatus.ENDED, OfferStatus.CLAIMED] } : OfferStatus.ONGOING;
-
 	const pageSize = 10;
 	const page = query.page;
-
 	const [total, offers] = await Promise.all([
 		prisma.offer.count({ where }),
 		prisma.offer.findMany({
@@ -117,22 +120,12 @@ export async function listMarketOffers(req: FastifyRequest, reply: FastifyReply)
 			}
 		})
 	]);
-
 	const mappedOffers = offers.map(offer => ({
 		...offer,
 		dinoz: offer.dinozDetails ? JSON.parse(offer.dinozDetails) : offer.dinoz
 	}));
-
-	const filteredOffers = query.onlyMines
-		? mappedOffers.filter(offer => {
-				const topBid = offer.bids[0];
-
-				return offer.status === OfferStatus.ENDED && (offer.sellerId === userId || topBid?.userId === userId);
-			})
-		: mappedOffers;
-
 	return reply.send({
 		total,
-		offers: filteredOffers
+		offers: mappedOffers
 	});
 }
