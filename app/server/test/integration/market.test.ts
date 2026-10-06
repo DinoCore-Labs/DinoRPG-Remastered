@@ -2952,3 +2952,332 @@ describe('market Dinoz claim and capacity guards', () => {
 		expect(await getGold(seller.id)).toBe(sellerGoldBefore);
 	});
 });
+
+describe('market concurrent operations', () => {
+	it('keeps a consistent state when a bid and cancellation happen concurrently', async () => {
+		const seller = await createTestUser({
+			name: 'BidCancelRaceSeller'
+		});
+		const bidder = await createTestUser({
+			name: 'BidCancelRaceBidder'
+		});
+		const offer = await createMarketTestOffer(seller);
+		await createTestDinoz({
+			userId: bidder.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await setTreasureTickets(bidder.id, 20);
+		const bidRequest = server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, bidder)
+			},
+			payload: {
+				value: MARKET_TEST_MINIMUM_BID
+			}
+		});
+		const cancelRequest = server.inject({
+			method: 'DELETE',
+			url: `/api/market/${offer.id}`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		const [bidResponse, cancelResponse] = await Promise.all([bidRequest, cancelRequest]);
+		const bidSucceeded = bidResponse.statusCode === 200;
+		const cancelSucceeded = cancelResponse.statusCode === 200;
+		/*
+		 * Exactly one of the two operations must win.
+		 */
+		expect(Number(bidSucceeded) + Number(cancelSucceeded)).toBe(1);
+		if (bidSucceeded) {
+			expect(cancelResponse.statusCode).toBe(400);
+			expect(cancelResponse.json()).toMatchObject({
+				code: 'offerInProgress'
+			});
+			const existingOffer = await prisma.offer.findUniqueOrThrow({
+				where: {
+					id: offer.id
+				}
+			});
+			expect(existingOffer.status).toBe(OfferStatus.ONGOING);
+			expect(
+				await prisma.offerBid.count({
+					where: {
+						offerId: offer.id
+					}
+				})
+			).toBe(1);
+			expect(await getTreasureTickets(bidder.id)).toBe(20 - MARKET_TEST_MINIMUM_BID);
+			/*
+			 * The item is still locked in the offer.
+			 */
+			const sellerInventory = await prisma.userItems.findUnique({
+				where: {
+					itemId_userId: {
+						userId: seller.id,
+						itemId: MARKET_TEST_ITEM
+					}
+				}
+			});
+			expect(sellerInventory).toBeNull();
+		} else {
+			expect(cancelResponse.statusCode).toBe(200);
+			expect(bidResponse.statusCode).toBe(400);
+
+			expect(bidResponse.json()).toMatchObject({
+				code: 'invalidOffer'
+			});
+			const deletedOffer = await prisma.offer.findUnique({
+				where: {
+					id: offer.id
+				}
+			});
+			expect(deletedOffer).toBeNull();
+			expect(
+				await prisma.offerBid.count({
+					where: {
+						offerId: offer.id
+					}
+				})
+			).toBe(0);
+			/*
+			 * No bid was accepted, so no ticket was consumed.
+			 */
+			expect(await getTreasureTickets(bidder.id)).toBe(20);
+			/*
+			 * Cancellation restored the item exactly once.
+			 */
+			const sellerInventory = await prisma.userItems.findUniqueOrThrow({
+				where: {
+					itemId_userId: {
+						userId: seller.id,
+						itemId: MARKET_TEST_ITEM
+					}
+				}
+			});
+			expect(sellerInventory.quantity).toBe(1);
+		}
+	});
+
+	it('does not accept a bid when expiration races on an already due offer', async () => {
+		const seller = await createTestUser({
+			name: 'BidExpireRaceSeller'
+		});
+		const bidder = await createTestUser({
+			name: 'BidExpireRaceBidder'
+		});
+		const offer = await createMarketTestOffer(seller);
+		await createTestDinoz({
+			userId: bidder.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await setTreasureTickets(bidder.id, 20);
+		/*
+		 * Make the offer eligible for expiration.
+		 */
+		await prisma.offer.update({
+			where: {
+				id: offer.id
+			},
+			data: {
+				endDate: new Date(Date.now() - 1_000)
+			}
+		});
+		const bidRequest = server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, bidder)
+			},
+			payload: {
+				value: MARKET_TEST_MINIMUM_BID
+			}
+		});
+		const expirationRequest = expireMarketOffer(offer.id);
+		const [bidResponse, expired] = await Promise.all([bidRequest, expirationRequest]);
+		expect(expired).toBe(true);
+		expect(bidResponse.statusCode).toBe(400);
+		/*
+		 * Depending on which operation observes the offer first:
+		 *
+		 * - bid sees the expired date -> offerEnded
+		 * - expiration changes ONGOING -> ENDED first -> invalidOffer
+		 *
+		 * Both are valid outcomes.
+		 */
+		expect(['offerEnded', 'invalidOffer']).toContain(bidResponse.json().code);
+		const updatedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(updatedOffer.status).toBe(OfferStatus.ENDED);
+		expect(
+			await prisma.offerBid.count({
+				where: {
+					offerId: offer.id
+				}
+			})
+		).toBe(0);
+		/*
+		 * A rejected bid must not consume tickets.
+		 */
+		expect(await getTreasureTickets(bidder.id)).toBe(20);
+	});
+});
+
+describe('market bidding wallet invariants', () => {
+	it('keeps only the highest bid locked after several bidders outbid each other', async () => {
+		const seller = await createTestUser({
+			name: 'TicketInvariantSeller'
+		});
+		const firstBidder = await createTestUser({
+			name: 'TicketInvariantA'
+		});
+		const secondBidder = await createTestUser({
+			name: 'TicketInvariantB'
+		});
+		const thirdBidder = await createTestUser({
+			name: 'TicketInvariantC'
+		});
+		const offer = await createMarketTestOffer(seller);
+		for (const bidder of [firstBidder, secondBidder, thirdBidder]) {
+			await createTestDinoz({
+				userId: bidder.id,
+				placeId: PlaceEnum.PLACE_DU_MARCHE
+			});
+
+			await setTreasureTickets(bidder.id, 20);
+		}
+		const initialTotalTickets = 60;
+		const firstResponse = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, firstBidder)
+			},
+			payload: {
+				value: 5
+			}
+		});
+		expect(firstResponse.statusCode).toBe(200);
+		expect(await getTreasureTickets(firstBidder.id)).toBe(15);
+		const secondResponse = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, secondBidder)
+			},
+			payload: {
+				value: 6
+			}
+		});
+		expect(secondResponse.statusCode).toBe(200);
+		/*
+		 * A has been fully refunded.
+		 */
+		expect(await getTreasureTickets(firstBidder.id)).toBe(20);
+		expect(await getTreasureTickets(secondBidder.id)).toBe(14);
+		const thirdResponse = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, thirdBidder)
+			},
+			payload: {
+				value: 7
+			}
+		});
+		expect(thirdResponse.statusCode).toBe(200);
+		/*
+		 * A and B must both be fully refunded.
+		 * Only C's winning bid remains locked.
+		 */
+		expect(await getTreasureTickets(firstBidder.id)).toBe(20);
+		expect(await getTreasureTickets(secondBidder.id)).toBe(20);
+		expect(await getTreasureTickets(thirdBidder.id)).toBe(13);
+		const bids = await prisma.offerBid.findMany({
+			where: {
+				offerId: offer.id
+			},
+			orderBy: {
+				value: 'asc'
+			}
+		});
+		expect(bids.map(bid => bid.value)).toEqual([5, 6, 7]);
+		const walletsTotal =
+			(await getTreasureTickets(firstBidder.id)) +
+			(await getTreasureTickets(secondBidder.id)) +
+			(await getTreasureTickets(thirdBidder.id));
+		/*
+		 * No ticket was created or destroyed:
+		 *
+		 * wallets + current highest bid = initial total.
+		 */
+		expect(walletsTotal + 7).toBe(initialTotalTickets);
+	});
+
+	it('does not alter any wallet when a lower bid is rejected', async () => {
+		const seller = await createTestUser({
+			name: 'RejectedBidInvariantSeller'
+		});
+		const firstBidder = await createTestUser({
+			name: 'RejectedBidInvariantA'
+		});
+		const secondBidder = await createTestUser({
+			name: 'RejectedBidInvariantB'
+		});
+		const offer = await createMarketTestOffer(seller);
+		for (const bidder of [firstBidder, secondBidder]) {
+			await createTestDinoz({
+				userId: bidder.id,
+				placeId: PlaceEnum.PLACE_DU_MARCHE
+			});
+			await setTreasureTickets(bidder.id, 20);
+		}
+		const firstResponse = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, firstBidder)
+			},
+			payload: {
+				value: 7
+			}
+		});
+		expect(firstResponse.statusCode).toBe(200);
+		expect(await getTreasureTickets(firstBidder.id)).toBe(13);
+		const rejectedResponse = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/bid`,
+			headers: {
+				cookie: createAuthCookie(server, secondBidder)
+			},
+			payload: {
+				value: 6
+			}
+		});
+		expect(rejectedResponse.statusCode).toBe(400);
+		expect(rejectedResponse.json()).toMatchObject({
+			code: 'bidIsLower'
+		});
+		/*
+		 * Previous winner remains locked at 7.
+		 */
+		expect(await getTreasureTickets(firstBidder.id)).toBe(13);
+		/*
+		 * Rejected bidder keeps everything.
+		 */
+		expect(await getTreasureTickets(secondBidder.id)).toBe(20);
+		const bids = await prisma.offerBid.findMany({
+			where: {
+				offerId: offer.id
+			}
+		});
+		expect(bids).toHaveLength(1);
+		expect(bids[0].value).toBe(7);
+		expect((await getTreasureTickets(firstBidder.id)) + (await getTreasureTickets(secondBidder.id)) + 7).toBe(40);
+	});
+});
