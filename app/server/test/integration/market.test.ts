@@ -1,6 +1,6 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
-import { Ingredient } from '@dinorpg/core/models/ingredients/ingredientList.js';
-import { Item } from '@dinorpg/core/models/items/itemList.js';
+import { Ingredient, ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import {
 	MARKET_EXPIRATION_JOB_KEY,
 	MARKET_MIN_VALUE,
@@ -10,6 +10,7 @@ import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { DinozState, OfferStatus } from '../../../prisma/index.js';
+import gameConfig from '../../src/config/game.config.js';
 import { expireDueMarketOffers, expireMarketOffer } from '../../src/Market/Service/expireMarketOffers.service.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
@@ -180,6 +181,48 @@ async function createListedBid(input: { offerId: number; userId: string; userNam
 			value: input.value
 		}
 	});
+}
+
+async function createDinozMarketOffer(seller: Awaited<ReturnType<typeof createTestUser>>, dinozId: number) {
+	const response = await server.inject({
+		method: 'PUT',
+		url: '/api/market',
+		headers: {
+			cookie: createAuthCookie(server, seller)
+		},
+		payload: {
+			dinozId,
+			total: MARKET_TEST_TOTAL,
+			items: [],
+			ingredients: []
+		}
+	});
+	expect(response.statusCode).toBe(200);
+	return prisma.offer.findFirstOrThrow({
+		where: {
+			sellerId: seller.id,
+			status: OfferStatus.ONGOING
+		}
+	});
+}
+
+async function bidOnTestOffer(
+	bidder: Awaited<ReturnType<typeof createTestUser>>,
+	offerId: number,
+	value = MARKET_TEST_MINIMUM_BID
+) {
+	await setTreasureTickets(bidder.id, 100);
+	const response = await server.inject({
+		method: 'POST',
+		url: `/api/market/${offerId}/bid`,
+		headers: {
+			cookie: createAuthCookie(server, bidder)
+		},
+		payload: {
+			value
+		}
+	});
+	expect(response.statusCode).toBe(200);
 }
 
 describe('market auction duration', () => {
@@ -2599,5 +2642,313 @@ describe('market offer listing pagination and history', () => {
 		expect(body.total).toBe(1);
 		expect(body.offers).toHaveLength(1);
 		expect(body.offers[0].id).toBe(ownOffer.id);
+	});
+});
+
+describe('market Dinoz claim and capacity guards', () => {
+	it('transfers a sold Dinoz to the winning bidder', async () => {
+		const seller = await createTestUser({
+			name: 'DinozClaimSeller'
+		});
+		const winner = await createTestUser({
+			name: 'DinozClaimWinner'
+		});
+		const soldDinoz = await createTestDinoz({
+			userId: seller.id,
+			name: 'SoldDinoz',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await createTestDinoz({
+			userId: winner.id,
+			name: 'WinnerMarketDinoz',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const offer = await createDinozMarketOffer(seller, soldDinoz.id);
+		await bidOnTestOffer(winner, offer.id);
+		const sellerGoldBefore = await getGold(seller.id);
+		await expireTestOffer(offer.id);
+		const response = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/claim`,
+			headers: {
+				cookie: createAuthCookie(server, winner)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const transferredDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: soldDinoz.id
+			}
+		});
+		expect(transferredDinoz.userId).toBe(winner.id);
+		expect(transferredDinoz.state).toBeNull();
+		expect(transferredDinoz.leaderId).toBeNull();
+		expect(await getGold(seller.id)).toBe(sellerGoldBefore + MARKET_TEST_MINIMUM_BID * 1000);
+		const claimedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(claimedOffer.status).toBe(OfferStatus.CLAIMED);
+	});
+
+	it('keeps an unsold Dinoz with the seller after claim', async () => {
+		const seller = await createTestUser({
+			name: 'UnsoldDinozSeller'
+		});
+		const soldDinoz = await createTestDinoz({
+			userId: seller.id,
+			name: 'UnsoldDinoz',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const offer = await createDinozMarketOffer(seller, soldDinoz.id);
+		const sellingDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: soldDinoz.id
+			}
+		});
+		expect(sellingDinoz.state).toBe(DinozState.selling);
+		const sellerGoldBefore = await getGold(seller.id);
+		await expireTestOffer(offer.id);
+		const response = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/claim`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const returnedDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: soldDinoz.id
+			}
+		});
+		expect(returnedDinoz.userId).toBe(seller.id);
+		expect(returnedDinoz.state).toBeNull();
+		expect(await getGold(seller.id)).toBe(sellerGoldBefore);
+		const claimedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(claimedOffer.status).toBe(OfferStatus.CLAIMED);
+	});
+
+	it('rejects claiming a Dinoz when the winner is already at the Dinoz capacity limit', async () => {
+		const seller = await createTestUser({
+			name: 'FullDinozSeller'
+		});
+		const winner = await createTestUser({
+			name: 'FullDinozWinner'
+		});
+		const soldDinoz = await createTestDinoz({
+			userId: seller.id,
+			name: 'CapacitySaleDinoz',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		for (let index = 0; index < gameConfig.dinoz.maxQuantity; index++) {
+			await createTestDinoz({
+				userId: winner.id,
+				name: `CapacityWinnerDinoz${index}`,
+				placeId: index === 0 ? PlaceEnum.PLACE_DU_MARCHE : PlaceEnum.DINOVILLE
+			});
+		}
+		const offer = await createDinozMarketOffer(seller, soldDinoz.id);
+		await bidOnTestOffer(winner, offer.id);
+		const sellerGoldBefore = await getGold(seller.id);
+		await expireTestOffer(offer.id);
+		const response = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/claim`,
+			headers: {
+				cookie: createAuthCookie(server, winner)
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'tooMuchDinoz'
+		});
+		const unchangedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(unchangedOffer.status).toBe(OfferStatus.ENDED);
+		const unchangedDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: soldDinoz.id
+			}
+		});
+		expect(unchangedDinoz.userId).toBe(seller.id);
+		expect(unchangedDinoz.state).toBe(DinozState.selling);
+		expect(await getGold(seller.id)).toBe(sellerGoldBefore);
+	});
+
+	it('rejects claiming an item when the winner inventory is already full', async () => {
+		const seller = await createTestUser({
+			name: 'FullItemSeller'
+		});
+		const winner = await createTestUser({
+			name: 'FullItemWinner'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await createTestDinoz({
+			userId: winner.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.userItems.create({
+			data: {
+				userId: seller.id,
+				itemId: MARKET_TEST_ITEM,
+				quantity: 1
+			}
+		});
+		const creationResponse = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [
+					{
+						itemId: MARKET_TEST_ITEM,
+						quantity: 1
+					}
+				],
+				ingredients: []
+			}
+		});
+		expect(creationResponse.statusCode).toBe(200);
+		const offer = await prisma.offer.findFirstOrThrow({
+			where: {
+				sellerId: seller.id
+			}
+		});
+		await bidOnTestOffer(winner, offer.id);
+		await prisma.userItems.create({
+			data: {
+				userId: winner.id,
+				itemId: MARKET_TEST_ITEM,
+				quantity: itemList[MARKET_TEST_ITEM].maxQuantity
+			}
+		});
+		const sellerGoldBefore = await getGold(seller.id);
+		await expireTestOffer(offer.id);
+		const response = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/claim`,
+			headers: {
+				cookie: createAuthCookie(server, winner)
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'tooMuchItem'
+		});
+		const unchangedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(unchangedOffer.status).toBe(OfferStatus.ENDED);
+		const winnerInventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: winner.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(winnerInventory.quantity).toBe(itemList[MARKET_TEST_ITEM].maxQuantity);
+		expect(await getGold(seller.id)).toBe(sellerGoldBefore);
+	});
+
+	it('rejects claiming an ingredient when the winner inventory is already full', async () => {
+		const seller = await createTestUser({
+			name: 'FullIngredientSeller'
+		});
+		const winner = await createTestUser({
+			name: 'FullIngredientWinner'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await createTestDinoz({
+			userId: winner.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.userIngredients.create({
+			data: {
+				userId: seller.id,
+				ingredientId: MARKET_TEST_INGREDIENT,
+				quantity: 1
+			}
+		});
+		const creationResponse = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [],
+				ingredients: [
+					{
+						ingredientId: MARKET_TEST_INGREDIENT,
+						quantity: 1
+					}
+				]
+			}
+		});
+		expect(creationResponse.statusCode).toBe(200);
+		const offer = await prisma.offer.findFirstOrThrow({
+			where: {
+				sellerId: seller.id
+			}
+		});
+		await bidOnTestOffer(winner, offer.id);
+		await prisma.userIngredients.create({
+			data: {
+				userId: winner.id,
+				ingredientId: MARKET_TEST_INGREDIENT,
+				quantity: ingredientList[MARKET_TEST_INGREDIENT].maxQuantity
+			}
+		});
+		const sellerGoldBefore = await getGold(seller.id);
+		await expireTestOffer(offer.id);
+		const response = await server.inject({
+			method: 'POST',
+			url: `/api/market/${offer.id}/claim`,
+			headers: {
+				cookie: createAuthCookie(server, winner)
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'tooMuchIngredient'
+		});
+		const unchangedOffer = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: offer.id
+			}
+		});
+		expect(unchangedOffer.status).toBe(OfferStatus.ENDED);
+		const winnerInventory = await prisma.userIngredients.findUniqueOrThrow({
+			where: {
+				ingredientId_userId: {
+					userId: winner.id,
+					ingredientId: MARKET_TEST_INGREDIENT
+				}
+			}
+		});
+		expect(winnerInventory.quantity).toBe(ingredientList[MARKET_TEST_INGREDIENT].maxQuantity);
+		expect(await getGold(seller.id)).toBe(sellerGoldBefore);
 	});
 });
