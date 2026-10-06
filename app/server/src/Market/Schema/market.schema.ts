@@ -4,15 +4,12 @@ const queryBooleanSchema = z.preprocess(value => {
 	if (value === undefined) {
 		return false;
 	}
-
 	if (typeof value === 'boolean') {
 		return value;
 	}
-
 	if (typeof value === 'string') {
 		return value === 'true' || value === '1';
 	}
-
 	return false;
 }, z.boolean());
 
@@ -30,7 +27,7 @@ export const marketListQuerySchema = z.object({
 
 export const createMarketOfferBodySchema = z.object({
 	dinozId: z.number().int().positive().nullable().optional(),
-	total: z.number().int().positive(),
+	total: z.number().int().min(5000),
 	items: z
 		.array(
 			z.object({
