@@ -1,7 +1,11 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Ingredient } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
-import { MARKET_EXPIRATION_JOB_KEY, MARKET_OFFER_DURATION_MS } from '@dinorpg/core/models/market/constants.js';
+import {
+	MARKET_EXPIRATION_JOB_KEY,
+	MARKET_MIN_VALUE,
+	MARKET_OFFER_DURATION_MS
+} from '@dinorpg/core/models/market/constants.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
@@ -17,7 +21,7 @@ import { createTestUser } from '../helpers/factories/user.factory.js';
 let server: FastifyInstance;
 
 const MARKET_TEST_ITEM = Item.PAMPLEBOUM;
-const MARKET_TEST_TOTAL = 5000;
+const MARKET_TEST_TOTAL = MARKET_MIN_VALUE;
 const MARKET_TEST_MINIMUM_BID = 5;
 const MARKET_TEST_INGREDIENT = Ingredient.MEROU_LUJIDANE;
 
@@ -1459,7 +1463,7 @@ describe('market business validations', () => {
 				cookie: createAuthCookie(server, seller)
 			},
 			payload: {
-				total: 4999,
+				total: MARKET_MIN_VALUE - 1,
 				items: [
 					{
 						itemId: MARKET_TEST_ITEM,
