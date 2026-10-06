@@ -1,4 +1,6 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '@dinorpg/core/models/scenarios/data/magnetiteScenario.js';
+import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
@@ -82,6 +84,75 @@ describe('Dinoz read models', () => {
 				gather: false
 			});
 			expect(Array.isArray(response.json().actions)).toBe(true);
+		});
+
+
+		it('keeps the Team W secret shop visible after completing the Magnetite scenario', async () => {
+			const user = await createTestUser({
+				name: 'SecretShopOwner',
+				withTutorial: false
+			});
+			const dinoz = await createTestDinoz({
+				userId: user.id,
+				name: 'SecretShopDinoz',
+				canRename: false,
+				placeId: PlaceEnum.REPAIRE_DE_LA_TEAM_W
+			});
+			await prisma.userScenario.create({
+				data: {
+					userId: user.id,
+					scenarioKey: MAGNETITE_SCENARIO_KEY,
+					progression: MagnetiteProgression.FINAL_ASSAULT_WON
+				}
+			});
+			const cookie = createAuthCookie(server, user);
+			const hasSecretShopAction = async () => {
+				const response = await server.inject({
+					method: 'GET',
+					url: `/api/dinoz/fiche/${dinoz.id}`,
+					headers: {
+						cookie
+					}
+				});
+				expect(response.statusCode).toBe(200);
+				const body = response.json() as {
+					actions: Array<{
+						name: string;
+						prop?: number;
+					}>;
+				};
+				return body.actions.some(
+					action => action.name === 'shop' && action.prop === shopListV2.STEPS_SECRET_SHOP.shopId
+				);
+			};
+
+			expect(await hasSecretShopAction()).toBe(false);
+
+			await prisma.userScenario.update({
+				where: {
+					scenarioKey_userId: {
+						userId: user.id,
+						scenarioKey: MAGNETITE_SCENARIO_KEY
+					}
+				},
+				data: {
+					progression: MagnetiteProgression.CLAIM_REWARD
+				}
+			});
+			expect(await hasSecretShopAction()).toBe(true);
+
+			await prisma.userScenario.update({
+				where: {
+					scenarioKey_userId: {
+						userId: user.id,
+						scenarioKey: MAGNETITE_SCENARIO_KEY
+					}
+				},
+				data: {
+					progression: MagnetiteProgression.COMPLETED
+				}
+			});
+			expect(await hasSecretShopAction()).toBe(true);
 		});
 
 		it('returns dinozNotFound for an unknown Dinoz', async () => {
