@@ -1,6 +1,7 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Ingredient } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '@dinorpg/core/models/scenarios/data/magnetiteScenario.js';
 import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
@@ -1424,4 +1425,131 @@ describe('Filou shop exchanges', () => {
 			})
 			.toBe(1);
 	});
+});
+
+describe('conditional shop access', () => {
+	it('rejects direct access to the Team W secret shop before the Magnetite reward', async () => {
+		const user = await createTestUser({
+			name: 'LockedSecretShopBuyer',
+			withTutorial: false
+		});
+		await createTestDinoz({
+			userId: user.id,
+			placeId: PlaceEnum.REPAIRE_DE_LA_TEAM_W
+		});
+		await prisma.userScenario.create({
+			data: {
+				userId: user.id,
+				scenarioKey: MAGNETITE_SCENARIO_KEY,
+				progression: MagnetiteProgression.FINAL_ASSAULT_WON
+			}
+		});
+		const shop = shopListV2.STEPS_SECRET_SHOP;
+		const soldItem = shop.listItemsSold[0];
+		await prisma.userWallet.update({
+			where: {
+				userId_type: {
+					userId: user.id,
+					type: 'GOLD'
+				}
+			},
+			data: {
+				amount: soldItem.price + 1000
+			}
+		});
+		const cookie = createAuthCookie(server, user);
+		const getResponse = await server.inject({
+			method: 'GET',
+			url: `/api/shop/getshop/${shop.shopId}`,
+			headers: {
+				cookie
+			}
+		});
+		expect(getResponse.statusCode).toBe(400);
+		const buyResponse = await server.inject({
+			method: 'PUT',
+			url: `/api/shop/buyitem/${shop.shopId}`,
+			headers: {
+				cookie
+			},
+			payload: {
+				itemId: soldItem.id,
+				quantity: 1
+			}
+		});
+		expect(buyResponse.statusCode).toBe(400);
+		const inventoryItem = await prisma.userItems.findUnique({
+			where: {
+				itemId_userId: {
+					userId: user.id,
+					itemId: soldItem.id
+				}
+			}
+		});
+		expect(inventoryItem).toBeNull();
+	});
+
+	it.each([MagnetiteProgression.CLAIM_REWARD, MagnetiteProgression.COMPLETED])(
+		'allows direct access to the Team W secret shop at Magnetite progression %s',
+		async progression => {
+			const user = await createTestUser({
+				name: `UnlockedSecretShopBuyer${progression}`,
+				withTutorial: false
+			});
+			await createTestDinoz({
+				userId: user.id,
+				placeId: PlaceEnum.REPAIRE_DE_LA_TEAM_W
+			});
+			await prisma.userScenario.create({
+				data: {
+					userId: user.id,
+					scenarioKey: MAGNETITE_SCENARIO_KEY,
+					progression
+				}
+			});
+			const shop = shopListV2.STEPS_SECRET_SHOP;
+			const soldItem = shop.listItemsSold[0];
+			await prisma.userWallet.update({
+				where: {
+					userId_type: {
+						userId: user.id,
+						type: 'GOLD'
+					}
+				},
+				data: {
+					amount: soldItem.price + 1000
+				}
+			});
+			const cookie = createAuthCookie(server, user);
+			const getResponse = await server.inject({
+				method: 'GET',
+				url: `/api/shop/getshop/${shop.shopId}`,
+				headers: {
+					cookie
+				}
+			});
+			expect(getResponse.statusCode).toBe(200);
+			const buyResponse = await server.inject({
+				method: 'PUT',
+				url: `/api/shop/buyitem/${shop.shopId}`,
+				headers: {
+					cookie
+				},
+				payload: {
+					itemId: soldItem.id,
+					quantity: 1
+				}
+			});
+			expect(buyResponse.statusCode).toBe(200);
+			const inventoryItem = await prisma.userItems.findUniqueOrThrow({
+				where: {
+					itemId_userId: {
+						userId: user.id,
+						itemId: soldItem.id
+					}
+				}
+			});
+			expect(inventoryItem.quantity).toBe(1);
+		}
+	);
 });

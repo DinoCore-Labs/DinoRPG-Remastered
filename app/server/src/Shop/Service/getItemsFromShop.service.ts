@@ -6,6 +6,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { checkDinozPlace } from '../../Dinoz/Service/checkDinozPlace.service.js';
 import { getItemMaxQuantity } from '../../Inventory/Service/getAllItemsData.service.js';
+import { checkShopCondition } from '../Controller/checkShopCondition.controller.js';
 import { getUserShopItemsDataRequest } from '../Controller/getUserShopItemsData.controller.js';
 
 type GetItemsFromShopParams = {
@@ -18,23 +19,18 @@ export async function getItemsFromShopHandler(
 ) {
 	const userId = req.user?.id;
 	if (!userId) return reply.status(401).send({ error: 'Unauthorized' });
-
 	const shopId = Number(req.params.shopId);
 	if (!Number.isFinite(shopId)) {
 		return reply.status(400).send({ error: 'Invalid shopId' });
 	}
-
 	try {
 		const tempShop = Object.values(shopListV2).find(shop => shop.shopId === shopId);
-
 		// Throw an exception if the shop does not exist
 		if (!tempShop) {
 			throw new ExpectedError(`The shop ${shopId} does not exist`);
 		}
-
 		// Get the player's data (money, shopKeeper, list of dinoz not frozen or sacrificed (placeId), list of items (quantity))
 		const playerShopData = await getUserShopItemsDataRequest(userId);
-
 		if (!playerShopData) {
 			throw new ExpectedError('userNotFound', {
 				params: {
@@ -42,9 +38,8 @@ export async function getItemsFromShopHandler(
 				}
 			});
 		}
-
 		checkDinozPlace(tempShop, playerShopData, shopId);
-
+		await checkShopCondition(tempShop, userId);
 		// All checks passed, let's create the list of items with the proper values
 		const dto: ItemShopFiche[] = tempShop.listItemsSold.map(itemSold => {
 			const itemPlayer =
