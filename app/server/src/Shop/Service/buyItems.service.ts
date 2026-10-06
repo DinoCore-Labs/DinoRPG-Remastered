@@ -12,6 +12,7 @@ import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.j
 import { getItemMaxQuantity } from '../../Inventory/Service/getAllItemsData.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { refreshTutorialProgress } from '../../Tutorial/Controller/tutorial.controller.js';
+import { checkShopCondition } from '../Controller/checkShopCondition.controller.js';
 import { exchangeFilouIngredients } from '../Controller/exchangeFilou.controller.js';
 import { getUserShopOneItemDataRequest } from '../Controller/getUserShopOneItemData.controller.js';
 import { purchaseItemWithGold } from '../Controller/purchaseItemWithGold.controller.js';
@@ -49,6 +50,7 @@ export async function buyItemHandler(
 		const theShop: ShopFiche | undefined = Object.values(shopListV2).find(s => s.shopId === shopId);
 		if (!theShop) throw new ExpectedError(`The shop ${shopId} does not exist`);
 		checkDinozPlace(theShop, playerShopData, shopId);
+		await checkShopCondition(theShop, userId);
 		const itemSold = theShop.listItemsSold.find(i => i.id === itemId);
 		if (!itemSold) throw new ExpectedError(`The item ${itemId} does not exist in the shop ${shopId}`);
 		// Cas Filou => ingrédients contre tickets trésor
