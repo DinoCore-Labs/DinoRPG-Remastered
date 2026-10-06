@@ -1433,3 +1433,262 @@ describe('market offer claim', () => {
 		expect(sellerInventory).toBeNull();
 	});
 });
+
+describe('market business validations', () => {
+	it('rejects an offer below the minimum total of 5000', async () => {
+		const seller = await createTestUser({
+			name: 'LowTotalSeller'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.userItems.create({
+			data: {
+				userId: seller.id,
+				itemId: MARKET_TEST_ITEM,
+				quantity: 1
+			}
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				total: 4999,
+				items: [
+					{
+						itemId: MARKET_TEST_ITEM,
+						quantity: 1
+					}
+				],
+				ingredients: []
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(
+			await prisma.offer.count({
+				where: {
+					sellerId: seller.id
+				}
+			})
+		).toBe(0);
+		const inventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: seller.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(inventory.quantity).toBe(1);
+	});
+
+	it('rejects a non-sellable item', async () => {
+		const seller = await createTestUser({
+			name: 'NonSellableItemSeller'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.userItems.create({
+			data: {
+				userId: seller.id,
+				itemId: Item.DAILY_TICKET,
+				quantity: 1
+			}
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [
+					{
+						itemId: Item.DAILY_TICKET,
+						quantity: 1
+					}
+				],
+				ingredients: []
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'itemNotSellable'
+		});
+		const inventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: seller.id,
+					itemId: Item.DAILY_TICKET
+				}
+			}
+		});
+		expect(inventory.quantity).toBe(1);
+		expect(
+			await prisma.offer.count({
+				where: {
+					sellerId: seller.id
+				}
+			})
+		).toBe(0);
+	});
+
+	it('rejects offer creation when the seller has no Dinoz at the market', async () => {
+		const seller = await createTestUser({
+			name: 'NoMarketDinozSeller'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.DINOVILLE
+		});
+		await prisma.userItems.create({
+			data: {
+				userId: seller.id,
+				itemId: MARKET_TEST_ITEM,
+				quantity: 1
+			}
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [
+					{
+						itemId: MARKET_TEST_ITEM,
+						quantity: 1
+					}
+				],
+				ingredients: []
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'noDinozAtMarket'
+		});
+		expect(
+			await prisma.offer.count({
+				where: {
+					sellerId: seller.id
+				}
+			})
+		).toBe(0);
+	});
+
+	it('rejects an empty offer', async () => {
+		const seller = await createTestUser({
+			name: 'EmptyOfferSeller'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [],
+				ingredients: []
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'emptyOffer'
+		});
+		expect(
+			await prisma.offer.count({
+				where: {
+					sellerId: seller.id
+				}
+			})
+		).toBe(0);
+	});
+
+	it('rejects a second ongoing offer from the same seller', async () => {
+		const seller = await createTestUser({
+			name: 'SecondOfferSeller'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.userItems.create({
+			data: {
+				userId: seller.id,
+				itemId: MARKET_TEST_ITEM,
+				quantity: 2
+			}
+		});
+		const cookie = createAuthCookie(server, seller);
+		const firstResponse = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [
+					{
+						itemId: MARKET_TEST_ITEM,
+						quantity: 1
+					}
+				],
+				ingredients: []
+			}
+		});
+		expect(firstResponse.statusCode).toBe(200);
+		const secondResponse = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [
+					{
+						itemId: MARKET_TEST_ITEM,
+						quantity: 1
+					}
+				],
+				ingredients: []
+			}
+		});
+		expect(secondResponse.statusCode).toBe(400);
+		expect(secondResponse.json()).toMatchObject({
+			code: 'alreadyOffer'
+		});
+		expect(
+			await prisma.offer.count({
+				where: {
+					sellerId: seller.id,
+					status: OfferStatus.ONGOING
+				}
+			})
+		).toBe(1);
+		const inventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: seller.id,
+					itemId: MARKET_TEST_ITEM
+				}
+			}
+		});
+		expect(inventory.quantity).toBe(1);
+	});
+});
