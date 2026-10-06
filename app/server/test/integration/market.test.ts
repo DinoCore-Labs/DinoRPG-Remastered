@@ -1,10 +1,11 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { Ingredient } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { MARKET_EXPIRATION_JOB_KEY, MARKET_OFFER_DURATION_MS } from '@dinorpg/core/models/market/constants.js';
 import type { FastifyInstance } from 'fastify';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
-import { OfferStatus } from '../../../prisma/index.js';
+import { DinozState, OfferStatus } from '../../../prisma/index.js';
 import { expireDueMarketOffers, expireMarketOffer } from '../../src/Market/Service/expireMarketOffers.service.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
@@ -18,6 +19,7 @@ let server: FastifyInstance;
 const MARKET_TEST_ITEM = Item.PAMPLEBOUM;
 const MARKET_TEST_TOTAL = 5000;
 const MARKET_TEST_MINIMUM_BID = 5;
+const MARKET_TEST_INGREDIENT = Ingredient.MEROU_LUJIDANE;
 
 beforeAll(async () => {
 	server = await buildServer({
@@ -1690,5 +1692,476 @@ describe('market business validations', () => {
 			}
 		});
 		expect(inventory.quantity).toBe(1);
+	});
+});
+
+describe('market ingredient offers', () => {
+	it('creates an ingredient offer and removes the sold quantity from inventory', async () => {
+		const seller = await createTestUser({
+			name: 'IngredientSeller'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.userIngredients.create({
+			data: {
+				userId: seller.id,
+				ingredientId: MARKET_TEST_INGREDIENT,
+				quantity: 5
+			}
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [],
+				ingredients: [
+					{
+						ingredientId: MARKET_TEST_INGREDIENT,
+						quantity: 3
+					}
+				]
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const offer = await prisma.offer.findFirstOrThrow({
+			where: {
+				sellerId: seller.id
+			},
+			include: {
+				items: true
+			}
+		});
+		expect(offer.items).toHaveLength(1);
+		expect(offer.items[0]).toMatchObject({
+			itemId: MARKET_TEST_INGREDIENT,
+			quantity: 3,
+			isIngredient: true
+		});
+		const inventory = await prisma.userIngredients.findUniqueOrThrow({
+			where: {
+				ingredientId_userId: {
+					userId: seller.id,
+					ingredientId: MARKET_TEST_INGREDIENT
+				}
+			}
+		});
+		expect(inventory.quantity).toBe(2);
+	});
+
+	it('rejects an ingredient offer when the seller does not own enough quantity', async () => {
+		const seller = await createTestUser({
+			name: 'PoorIngredientSeller'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.userIngredients.create({
+			data: {
+				userId: seller.id,
+				ingredientId: MARKET_TEST_INGREDIENT,
+				quantity: 2
+			}
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [],
+				ingredients: [
+					{
+						ingredientId: MARKET_TEST_INGREDIENT,
+						quantity: 3
+					}
+				]
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'notEnoughIngredients'
+		});
+		const inventory = await prisma.userIngredients.findUniqueOrThrow({
+			where: {
+				ingredientId_userId: {
+					userId: seller.id,
+					ingredientId: MARKET_TEST_INGREDIENT
+				}
+			}
+		});
+		expect(inventory.quantity).toBe(2);
+		expect(
+			await prisma.offer.count({
+				where: {
+					sellerId: seller.id
+				}
+			})
+		).toBe(0);
+	});
+
+	it('restores the exact ingredient quantity when the offer is cancelled', async () => {
+		const seller = await createTestUser({
+			name: 'CancelIngredientSeller'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.userIngredients.create({
+			data: {
+				userId: seller.id,
+				ingredientId: MARKET_TEST_INGREDIENT,
+				quantity: 5
+			}
+		});
+		const creationResponse = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [],
+				ingredients: [
+					{
+						ingredientId: MARKET_TEST_INGREDIENT,
+						quantity: 3
+					}
+				]
+			}
+		});
+		expect(creationResponse.statusCode).toBe(200);
+		const duringOffer = await prisma.userIngredients.findUniqueOrThrow({
+			where: {
+				ingredientId_userId: {
+					userId: seller.id,
+					ingredientId: MARKET_TEST_INGREDIENT
+				}
+			}
+		});
+		expect(duringOffer.quantity).toBe(2);
+		const offer = await prisma.offer.findFirstOrThrow({
+			where: {
+				sellerId: seller.id
+			}
+		});
+		const cancelResponse = await server.inject({
+			method: 'DELETE',
+			url: `/api/market/${offer.id}`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		expect(cancelResponse.statusCode).toBe(200);
+		const afterCancel = await prisma.userIngredients.findUniqueOrThrow({
+			where: {
+				ingredientId_userId: {
+					userId: seller.id,
+					ingredientId: MARKET_TEST_INGREDIENT
+				}
+			}
+		});
+		expect(afterCancel.quantity).toBe(5);
+	});
+});
+
+describe('market Dinoz offers', () => {
+	it('creates a Dinoz offer and marks the Dinoz as selling', async () => {
+		const seller = await createTestUser({
+			name: 'DinozSeller'
+		});
+		const dinoz = await createTestDinoz({
+			userId: seller.id,
+			name: 'MarketDinoz',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				dinozId: dinoz.id,
+				total: MARKET_TEST_TOTAL,
+				items: [],
+				ingredients: []
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const offer = await prisma.offer.findFirstOrThrow({
+			where: {
+				sellerId: seller.id
+			}
+		});
+		expect(offer.dinozId).toBe(dinoz.id);
+		expect(offer.status).toBe(OfferStatus.ONGOING);
+		const updatedDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: dinoz.id
+			}
+		});
+		expect(updatedDinoz.state).toBe(DinozState.selling);
+	});
+
+	it('restores the Dinoz state when its offer is cancelled', async () => {
+		const seller = await createTestUser({
+			name: 'CancelDinozSeller'
+		});
+		const dinoz = await createTestDinoz({
+			userId: seller.id,
+			name: 'CancelledMarketDinoz',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const creationResponse = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				dinozId: dinoz.id,
+				total: MARKET_TEST_TOTAL,
+				items: [],
+				ingredients: []
+			}
+		});
+		expect(creationResponse.statusCode).toBe(200);
+		const sellingDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: dinoz.id
+			}
+		});
+		expect(sellingDinoz.state).toBe(DinozState.selling);
+		const offer = await prisma.offer.findFirstOrThrow({
+			where: {
+				sellerId: seller.id
+			}
+		});
+		const cancelResponse = await server.inject({
+			method: 'DELETE',
+			url: `/api/market/${offer.id}`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		expect(cancelResponse.statusCode).toBe(200);
+		const restoredDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: dinoz.id
+			}
+		});
+		expect(restoredDinoz.state).toBeNull();
+		expect(
+			await prisma.offer.count({
+				where: {
+					id: offer.id
+				}
+			})
+		).toBe(0);
+	});
+
+	it('rejects selling a Dinoz that is not at the market', async () => {
+		const seller = await createTestUser({
+			name: 'WrongPlaceDinozSeller'
+		});
+		/*
+		 * This Dinoz gives the player access to the market.
+		 */
+		await createTestDinoz({
+			userId: seller.id,
+			name: 'MarketAccessDinoz',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		/*
+		 * This is the Dinoz the player tries to sell.
+		 */
+		const dinoz = await createTestDinoz({
+			userId: seller.id,
+			name: 'DinovilleSaleDinoz',
+			placeId: PlaceEnum.DINOVILLE
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				dinozId: dinoz.id,
+				total: MARKET_TEST_TOTAL,
+				items: [],
+				ingredients: []
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'dinozNotAtMarket'
+		});
+		const unchangedDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: dinoz.id
+			}
+		});
+		expect(unchangedDinoz.state).toBeNull();
+		expect(
+			await prisma.offer.count({
+				where: {
+					sellerId: seller.id
+				}
+			})
+		).toBe(0);
+	});
+
+	it('rejects selling a Dinoz that belongs to a group', async () => {
+		const seller = await createTestUser({
+			name: 'GroupedDinozSeller'
+		});
+		const leader = await createTestDinoz({
+			userId: seller.id,
+			name: 'MarketGroupLeader',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const dinoz = await createTestDinoz({
+			userId: seller.id,
+			name: 'MarketGroupFollower',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.dinoz.update({
+			where: {
+				id: dinoz.id
+			},
+			data: {
+				leaderId: leader.id
+			}
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				dinozId: dinoz.id,
+				total: MARKET_TEST_TOTAL,
+				items: [],
+				ingredients: []
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'dinozInGroup'
+		});
+		const unchangedDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: dinoz.id
+			}
+		});
+		expect(unchangedDinoz.state).toBeNull();
+		expect(unchangedDinoz.leaderId).toBe(leader.id);
+	});
+
+	it('rejects selling a group leader that still has followers', async () => {
+		const seller = await createTestUser({
+			name: 'LeaderDinozSeller'
+		});
+		const leader = await createTestDinoz({
+			userId: seller.id,
+			name: 'SaleGroupLeader',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const follower = await createTestDinoz({
+			userId: seller.id,
+			name: 'SaleGroupFollower',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.dinoz.update({
+			where: {
+				id: follower.id
+			},
+			data: {
+				leaderId: leader.id
+			}
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				dinozId: leader.id,
+				total: MARKET_TEST_TOTAL,
+				items: [],
+				ingredients: []
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'dinozInGroup'
+		});
+		const unchangedLeader = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: leader.id
+			}
+		});
+		expect(unchangedLeader.state).toBeNull();
+	});
+
+	it('rejects selling a Dinoz that has equipped items', async () => {
+		const seller = await createTestUser({
+			name: 'EquippedDinozSeller'
+		});
+		const dinoz = await createTestDinoz({
+			userId: seller.id,
+			name: 'EquippedMarketDinoz',
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.dinozItems.create({
+			data: {
+				dinozId: dinoz.id,
+				itemId: MARKET_TEST_ITEM
+			}
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				dinozId: dinoz.id,
+				total: MARKET_TEST_TOTAL,
+				items: [],
+				ingredients: []
+			}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'equippedItems'
+		});
+		const unchangedDinoz = await prisma.dinoz.findUniqueOrThrow({
+			where: {
+				id: dinoz.id
+			}
+		});
+		expect(unchangedDinoz.state).toBeNull();
+		expect(
+			await prisma.dinozItems.count({
+				where: {
+					dinozId: dinoz.id
+				}
+			})
+		).toBe(1);
 	});
 });
