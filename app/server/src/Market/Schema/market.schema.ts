@@ -1,3 +1,4 @@
+import { MARKET_MIN_VALUE } from '@dinorpg/core/models/market/constants.js';
 import { z } from 'zod';
 
 const queryBooleanSchema = z.preprocess(value => {
@@ -27,7 +28,7 @@ export const marketListQuerySchema = z.object({
 
 export const createMarketOfferBodySchema = z.object({
 	dinozId: z.number().int().positive().nullable().optional(),
-	total: z.number().int().min(5000),
+	total: z.number().int().min(MARKET_MIN_VALUE),
 	items: z
 		.array(
 			z.object({
