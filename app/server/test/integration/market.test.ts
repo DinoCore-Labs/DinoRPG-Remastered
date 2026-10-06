@@ -11,7 +11,13 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { DinozState, OfferStatus } from '../../../prisma/index.js';
 import gameConfig from '../../src/config/game.config.js';
-import { expireDueMarketOffers, expireMarketOffer } from '../../src/Market/Service/expireMarketOffers.service.js';
+import { expireDueMarketOffersJob } from '../../src/jobs/handlers/expireMarketOffers.js';
+import {
+	expireDueMarketOffers,
+	expireMarketOffer,
+	getNextMarketOfferExpirationDate,
+	scheduleNextMarketOfferExpiration
+} from '../../src/Market/Service/expireMarketOffers.service.js';
 import { prisma } from '../../src/prisma.js';
 import buildServer from '../../src/server.js';
 import { createAuthCookie } from '../helpers/auth.js';
@@ -3279,5 +3285,232 @@ describe('market bidding wallet invariants', () => {
 		expect(bids).toHaveLength(1);
 		expect(bids[0].value).toBe(7);
 		expect((await getTreasureTickets(firstBidder.id)) + (await getTreasureTickets(secondBidder.id)) + 7).toBe(40);
+	});
+});
+
+describe('market expiration scheduler', () => {
+	it('schedules the expiration job when a market offer is created', async () => {
+		const seller = await createTestUser({
+			name: 'SchedulerCreationSeller'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await prisma.userItems.create({
+			data: {
+				userId: seller.id,
+				itemId: MARKET_TEST_ITEM,
+				quantity: 1
+			}
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: '/api/market',
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			},
+			payload: {
+				total: MARKET_TEST_TOTAL,
+				items: [
+					{
+						itemId: MARKET_TEST_ITEM,
+						quantity: 1
+					}
+				],
+				ingredients: []
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const offer = await prisma.offer.findFirstOrThrow({
+			where: {
+				sellerId: seller.id
+			}
+		});
+		const job = await prisma.jobDefinition.findUniqueOrThrow({
+			where: {
+				key: MARKET_EXPIRATION_JOB_KEY
+			}
+		});
+		expect(job.nextRunAt?.getTime()).toBe(offer.endDate.getTime());
+	});
+
+	it('always schedules the earliest ongoing market offer', async () => {
+		const firstSeller = await createTestUser({
+			name: 'SchedulerLaterSeller'
+		});
+		const secondSeller = await createTestUser({
+			name: 'SchedulerEarlierSeller'
+		});
+		const laterDate = new Date(Date.now() + 60_000);
+		const earlierDate = new Date(Date.now() + 30_000);
+		await createListedOffer({
+			sellerId: firstSeller.id,
+			sellerName: firstSeller.name,
+			endDate: laterDate,
+			status: OfferStatus.ONGOING
+		});
+		await createListedOffer({
+			sellerId: secondSeller.id,
+			sellerName: secondSeller.name,
+			endDate: earlierDate,
+			status: OfferStatus.ONGOING
+		});
+		const nextRunAt = await scheduleNextMarketOfferExpiration();
+		expect(nextRunAt?.getTime()).toBe(earlierDate.getTime());
+		const job = await prisma.jobDefinition.findUniqueOrThrow({
+			where: {
+				key: MARKET_EXPIRATION_JOB_KEY
+			}
+		});
+		expect(job.nextRunAt?.getTime()).toBe(earlierDate.getTime());
+	});
+
+	it('moves the scheduler to the next offer when the earliest offer is cancelled', async () => {
+		const firstSeller = await createTestUser({
+			name: 'SchedulerCancelFirstSeller'
+		});
+		const secondSeller = await createTestUser({
+			name: 'SchedulerCancelSecondSeller'
+		});
+		await createTestDinoz({
+			userId: firstSeller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const earlyOffer = await createMarketTestOffer(firstSeller);
+		const laterDate = new Date(earlyOffer.endDate.getTime() + 60_000);
+		await createListedOffer({
+			sellerId: secondSeller.id,
+			sellerName: secondSeller.name,
+			endDate: laterDate,
+			status: OfferStatus.ONGOING
+		});
+		const beforeCancel = await prisma.jobDefinition.findUniqueOrThrow({
+			where: {
+				key: MARKET_EXPIRATION_JOB_KEY
+			}
+		});
+		expect(beforeCancel.nextRunAt?.getTime()).toBe(earlyOffer.endDate.getTime());
+		const cancelResponse = await server.inject({
+			method: 'DELETE',
+			url: `/api/market/${earlyOffer.id}`,
+			headers: {
+				cookie: createAuthCookie(server, firstSeller)
+			}
+		});
+		expect(cancelResponse.statusCode).toBe(200);
+		const afterCancel = await prisma.jobDefinition.findUniqueOrThrow({
+			where: {
+				key: MARKET_EXPIRATION_JOB_KEY
+			}
+		});
+		expect(afterCancel.nextRunAt?.getTime()).toBe(laterDate.getTime());
+	});
+
+	it('clears nextRunAt when the last ongoing offer is cancelled', async () => {
+		const seller = await createTestUser({
+			name: 'SchedulerEmptySeller'
+		});
+		const offer = await createMarketTestOffer(seller);
+		const scheduledJob = await prisma.jobDefinition.findUniqueOrThrow({
+			where: {
+				key: MARKET_EXPIRATION_JOB_KEY
+			}
+		});
+		expect(scheduledJob.nextRunAt).not.toBeNull();
+		const response = await server.inject({
+			method: 'DELETE',
+			url: `/api/market/${offer.id}`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const job = await prisma.jobDefinition.findUniqueOrThrow({
+			where: {
+				key: MARKET_EXPIRATION_JOB_KEY
+			}
+		});
+		expect(job.nextRunAt).toBeNull();
+		expect(await getNextMarketOfferExpirationDate()).toBeNull();
+	});
+
+	it('ignores ended and claimed offers when calculating the next expiration', async () => {
+		const ongoingSeller = await createTestUser({
+			name: 'SchedulerOngoingSeller'
+		});
+		const endedSeller = await createTestUser({
+			name: 'SchedulerEndedSeller'
+		});
+		const claimedSeller = await createTestUser({
+			name: 'SchedulerClaimedSeller'
+		});
+		const ongoingDate = new Date(Date.now() + 60_000);
+		await createListedOffer({
+			sellerId: endedSeller.id,
+			sellerName: endedSeller.name,
+			endDate: new Date(Date.now() + 10_000),
+			status: OfferStatus.ENDED
+		});
+		await createListedOffer({
+			sellerId: claimedSeller.id,
+			sellerName: claimedSeller.name,
+			endDate: new Date(Date.now() + 20_000),
+			status: OfferStatus.CLAIMED
+		});
+		await createListedOffer({
+			sellerId: ongoingSeller.id,
+			sellerName: ongoingSeller.name,
+			endDate: ongoingDate,
+			status: OfferStatus.ONGOING
+		});
+		const nextRunAt = await getNextMarketOfferExpirationDate();
+		expect(nextRunAt?.getTime()).toBe(ongoingDate.getTime());
+		await scheduleNextMarketOfferExpiration();
+		const job = await prisma.jobDefinition.findUniqueOrThrow({
+			where: {
+				key: MARKET_EXPIRATION_JOB_KEY
+			}
+		});
+		expect(job.nextRunAt?.getTime()).toBe(ongoingDate.getTime());
+	});
+
+	it('returns the next future expiration after processing due offers', async () => {
+		const expiredSeller = await createTestUser({
+			name: 'SchedulerExpiredSeller'
+		});
+		const futureSeller = await createTestUser({
+			name: 'SchedulerFutureSeller'
+		});
+		const expiredOffer = await createListedOffer({
+			sellerId: expiredSeller.id,
+			sellerName: expiredSeller.name,
+			endDate: new Date(Date.now() - 1_000),
+			status: OfferStatus.ONGOING
+		});
+		const futureDate = new Date(Date.now() + 60_000);
+		const futureOffer = await createListedOffer({
+			sellerId: futureSeller.id,
+			sellerName: futureSeller.name,
+			endDate: futureDate,
+			status: OfferStatus.ONGOING
+		});
+		const result = await expireDueMarketOffersJob({
+			info: () => undefined,
+			error: () => undefined
+		});
+		expect(result.nextRunAt?.getTime()).toBe(futureDate.getTime());
+		const expired = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: expiredOffer.id
+			}
+		});
+		const future = await prisma.offer.findUniqueOrThrow({
+			where: {
+				id: futureOffer.id
+			}
+		});
+		expect(expired.status).toBe(OfferStatus.ENDED);
+		expect(future.status).toBe(OfferStatus.ONGOING);
 	});
 });
