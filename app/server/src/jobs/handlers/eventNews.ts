@@ -67,24 +67,6 @@ export async function checkEventNews() {
 					console.error(`Failed to create start news for event ${event.event}:`, e);
 				}
 			}
-			/*
-			 * Easter doesn't use monster-kill progression or rankings.
-			 * Its UserEventTracking entries are used for Urma purchases.
-			 */
-			if (event.event !== GameEvent.EASTER) {
-				try {
-					const { prisma } = await import('../../prisma.js');
-
-					await prisma.userEventTracking.deleteMany({
-						where: {
-							eventId: event.event
-						}
-					});
-					console.log(`[Events] Cleared previous tracking for ${event.event}`);
-				} catch (e) {
-					console.error(`Failed to clear tracking for event ${event.event}:`, e);
-				}
-			}
 		}
 		/*
 		 * Easter only needs its start announcement.
