@@ -81,8 +81,38 @@ export async function listMarketOffers(req: FastifyRequest, reply: FastifyReply)
 				}
 			}
 		];
+		where.status = OfferStatus.ENDED;
+	} else {
+		where.status = query.expired ? { in: [OfferStatus.ENDED, OfferStatus.CLAIMED] } : OfferStatus.ONGOING;
 	}
-	where.status = query.expired ? { in: [OfferStatus.ENDED, OfferStatus.CLAIMED] } : OfferStatus.ONGOING;
+	if (query.wonBy) {
+		const candidateOffers = await prisma.offer.findMany({
+			where: {
+				...where,
+				bids: {
+					some: {
+						userId: query.wonBy
+					}
+				}
+			},
+			select: {
+				id: true,
+				bids: {
+					orderBy: {
+						value: 'desc'
+					},
+					take: 1,
+					select: {
+						userId: true
+					}
+				}
+			}
+		});
+		const wonOfferIds = candidateOffers.filter(offer => offer.bids[0]?.userId === query.wonBy).map(offer => offer.id);
+		where.id = {
+			in: wonOfferIds
+		};
+	}
 	const pageSize = 10;
 	const page = query.page;
 	const [total, offers] = await Promise.all([

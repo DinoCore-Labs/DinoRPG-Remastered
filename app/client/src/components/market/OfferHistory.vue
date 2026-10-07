@@ -92,9 +92,12 @@ export default defineComponent({
 				const { offers, total } = await MarketService.getList(
 					this.filter,
 					this.filter === 'own' ? userId : null,
-					this.filter === 'bids' ? userId : null,
+					null,
 					true,
-					this.currentPage
+					this.currentPage,
+					false,
+					false,
+					this.filter === 'bids' ? userId : null
 				);
 				this.offers = formatMarketOffers(offers).sort((a, b) => b.endDate.getTime() - a.endDate.getTime());
 				this.totalOffer = total;

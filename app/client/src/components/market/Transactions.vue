@@ -144,6 +144,7 @@ export default defineComponent({
 	methods: {
 		async fetchOffers(silent = false) {
 			const userId = this.userStore.id;
+
 			if (!userId) {
 				this.$toast.open({
 					message: formatText(this.$t('toast.missingUser')),
@@ -152,12 +153,13 @@ export default defineComponent({
 				this.$router.push({ name: 'NewsPage' });
 				return;
 			}
+
 			try {
 				const { offers } = await MarketService.getList('all', null, userId, false, 1, false, silent);
 				this.offers = formatMarketOffers(offers);
 				const { offers: ownOffers } = await MarketService.getList('all', userId, null, false, 1, false, silent);
 				this.ownOffer = formatMarketOffers(ownOffers)[0] ?? null;
-				const { offers: wonOffers } = await MarketService.getList('all', null, userId, true, 1, true, silent);
+				const { offers: wonOffers } = await MarketService.getList('all', null, null, true, 1, true, silent, userId);
 				this.wonOffers = formatMarketOffers(wonOffers);
 				const { offers: myExpiredOffers } = await MarketService.getList('all', userId, null, true, 1, true, silent);
 				this.myExpiredOffers = formatMarketOffers(myExpiredOffers);

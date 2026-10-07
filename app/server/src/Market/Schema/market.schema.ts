@@ -23,7 +23,8 @@ export const marketListQuerySchema = z.object({
 	expired: queryBooleanSchema,
 	onlyMines: queryBooleanSchema,
 	sellerId: z.string().uuid().optional(),
-	bidderId: z.string().uuid().optional()
+	bidderId: z.string().uuid().optional(),
+	wonBy: z.string().uuid().optional()
 });
 
 export const createMarketOfferBodySchema = z.object({
