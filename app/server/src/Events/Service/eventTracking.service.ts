@@ -1,4 +1,3 @@
-import { Prisma } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
 /**
