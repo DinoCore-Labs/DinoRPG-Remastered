@@ -956,7 +956,8 @@
 			"box_legendary": "The legendary box contained {qty} {value} !",
 			"devil_ointment": "You have removed the cursed status from your Dinoz.",
 			"amnesic_rice": "Your Dinoz doesn't remember its name anymore and also lost all of its experience :xp:!",
-			"pampleboum": "Ouch! There was a pit in this grapeboom!"
+			"pampleboum": "Ouch! There was a pit in this grapeboom!",
+			"easter_egg": "Urma's Egg contained {qty} {value}!"
 		},
 		"Invalid_credentials": "Incorrect credentials.",
 		"Too_many_login_attempts": "Too many login attempts have been made. For security reasons, please wait 5 minutes before trying again.",
