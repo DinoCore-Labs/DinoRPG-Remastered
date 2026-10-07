@@ -1,23 +1,24 @@
-import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
-
 import gameConfig from '../../config/game.config.js';
+import { getGameEventDateRange } from '../../GameEvent/Service/gameEvent.service.js';
 import { prisma } from '../../prisma.js';
 
 function getDaysSinceEventStart(eventId: string): number {
-	const eventDetails = gameConfig.events.find((e: any) => e.event === eventId);
-	if (!eventDetails) return 1;
-	const now = new Date();
-	const startDate = new Date(now.getFullYear(), eventDetails.start.month - 1, eventDetails.start.day);
-
-	// If current month is before event start month, it probably started last year
-	if (now.getMonth() < eventDetails.start.month - 1) {
-		startDate.setFullYear(now.getFullYear() - 1);
+	const eventDetails = gameConfig.events.find(event => event.event === eventId);
+	if (!eventDetails) {
+		return 1;
 	}
-
-	const diffTime = now.getTime() - startDate.getTime();
-	if (diffTime < 0) return 1; // Event hasn't started yet according to date, fallback to 1
-
-	const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1; // +1 to count the first day as day 1
+	const now = new Date();
+	const range = getGameEventDateRange(eventDetails, now);
+	if (!range) {
+		return 1;
+	}
+	const startDate = Date.UTC(range.start.year, range.start.month - 1, range.start.day);
+	const currentDate = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+	const diffTime = currentDate - startDate;
+	if (diffTime < 0) {
+		return 1;
+	}
+	const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
 	return Math.max(1, diffDays);
 }
 

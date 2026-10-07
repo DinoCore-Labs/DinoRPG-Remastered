@@ -4,6 +4,7 @@ import { NewsType } from '@dinorpg/core/models/news/news.js';
 
 import gameConfig from '../../config/game.config.js';
 import { distributeChristmasRewards } from '../../Events/Service/eventChristmasRewards.service.js';
+import { getGameEventDateRange } from '../../GameEvent/Service/gameEvent.service.js';
 import { newsService } from '../../News/Service/news.service.js';
 
 export async function checkEventNews() {
@@ -16,16 +17,21 @@ export async function checkEventNews() {
 
 	for (const event of gameConfig.events) {
 		const eventNameLower = event.event.toLowerCase();
+		const range = getGameEventDateRange(event, now);
 
-		if (event.start.month === month && event.start.day === day) {
+		if (!range) {
+			console.warn(`[Events] Unable to resolve date range for ${event.event}`);
+			continue;
+		}
+		if (range.start.month === month && range.start.day === day) {
 			const newsType = (NewsType as any)[`EVENT_${event.event}`] || NewsType.ANNOUNCE;
 			const titleKey = `news.event.${eventNameLower}.start.title`;
 			const excerptKey = `news.event.${eventNameLower}.start.excerpt`;
 			const contentKey = `news.event.${eventNameLower}.start.content`;
 			const slug = `event-${eventNameLower}-${now.getFullYear()}`;
 
-			const endMonthStr = event.end.month.toString().padStart(2, '0');
-			const endDayStr = event.end.day.toString().padStart(2, '0');
+			const endMonthStr = range.end.month.toString().padStart(2, '0');
+			const endDayStr = range.end.day.toString().padStart(2, '0');
 			const params = JSON.stringify({ eventEndDate: `${endDayStr}/${endMonthStr}` });
 
 			try {
@@ -56,7 +62,7 @@ export async function checkEventNews() {
 			} catch (e) {
 				console.error(`Failed to clear tracking for event ${event.event}:`, e);
 			}
-		} else if (event.end.month === month && event.end.day === day) {
+		} else if (range.end.month === month && range.end.day === day) {
 			const newsType = (NewsType as any)[`EVENT_${event.event}`] || NewsType.ANNOUNCE;
 			const titleKey = `news.event.${eventNameLower}.end.title`;
 			const excerptKey = `news.event.${eventNameLower}.end.excerpt`;

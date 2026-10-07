@@ -1,23 +1,11 @@
 import { GameConfig } from '@dinorpg/core/models/game/gameConfig.js';
-import { GameEvent, GameTheme } from '@dinorpg/core/models/game/gameEvents.js';
+import { GameEvent, GameEventSchedule, GameTheme } from '@dinorpg/core/models/game/gameEvents.js';
 
 import { GLOBAL } from '../context.js';
 
 type GameEnv = 'development' | 'production';
 
 const events = [
-	{
-		event: GameEvent.VALENTINE,
-		start: {
-			month: 2,
-			day: 13
-		},
-		end: {
-			month: 2,
-			day: 15
-		},
-		softCap: 100
-	},
 	{
 		event: GameEvent.APRIL_FOOLS,
 		start: {
@@ -28,8 +16,26 @@ const events = [
 			month: 4,
 			day: 1
 		},
-		softCap: 100,
 		theme: GameTheme.APRIL_FOOLS
+	},
+	{
+		event: GameEvent.CHRISTMAS,
+		start: {
+			month: 12,
+			day: 1
+		},
+		end: {
+			month: 12,
+			day: 25
+		},
+		softCap: 100,
+		theme: GameTheme.CHRISTMAS
+	},
+	{
+		event: GameEvent.EASTER,
+		schedule: GameEventSchedule.EASTER,
+		softCap: 100,
+		theme: GameTheme.EASTER
 	},
 	{
 		event: GameEvent.HALLOWEEN,
@@ -45,17 +51,16 @@ const events = [
 		theme: GameTheme.HALLOWEEN
 	},
 	{
-		event: GameEvent.CHRISTMAS,
+		event: GameEvent.VALENTINE,
 		start: {
-			month: 12,
-			day: 1
+			month: 2,
+			day: 13
 		},
 		end: {
-			month: 12,
-			day: 25
+			month: 2,
+			day: 15
 		},
-		softCap: 100,
-		theme: GameTheme.CHRISTMAS
+		softCap: 100
 	}
 ] satisfies GameConfig['events'];
 
