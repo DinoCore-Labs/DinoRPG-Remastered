@@ -2242,12 +2242,12 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		itemId: 117,
 		name: 'easter_egg',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true,
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		sellable: true,
-		maxQuantity: 999, // TODO double check
-		price: 10000, // TODO double check
+		maxQuantity: 300,
+		price: 10000, // Market price: not related to Urma's 1000 gold purchase price
 		display: 'paques'
 	},
 	// Ticket for Batide day
