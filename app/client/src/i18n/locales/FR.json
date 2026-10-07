@@ -4737,20 +4737,31 @@
 			}
 		},
 		"urma": {
-			"name": "Madame Urma",
+			"name": "Urma",
 			"dialog": {
-				"begin": "Bonjour ! Pour Pâques, je peux vous vendre mes œufs surprises. Chaque œuf contient un objet choisi au hasard parmi les trésors de Dinoland.",
-				"buyOne": "Voilà votre œuf ! Bonne chance !",
-				"buyTen": "Voilà dix œufs ! J'espère que la chance sera avec vous !",
-				"soldOut": "Désolée, vous avez déjà acheté tous les œufs auxquels vous aviez droit.",
-				"leave": "À bientôt !"
+				"begin": "Salutations Maître Dinoz.\nTu dois surement connaître de nom ma soeur Irma, mais je te prierais de ne pas me confondre avec elle !\nJe suis beaucoup plus puissante, et je vais te le prouver !",
+				"suivant": "L'idée est tentante, mais il faut que j'écoule mon stock d'oeuf d'abord...",
+				"irma": "Humpff, je le savais, cette vieille bique me vole encore la vedette...\nIl faut toujours qu'elle se fasse remarquer.\nElle ne fait qu'une simple potion, mais moi j'ai créé un objet beaucoup plus intéressant !",
+				"popo": "Puisque je te dis que je ne suis pas IRMA !\nTu ne veux vraiment pas que je te vende mon Oeuf ?",
+				"oeuf": "Un oeuf très particulier !\nL'oeuf d'Urma, renferme n'importe quel objet de Dinoland !\nTu peux tomber sur un pain chaud, une monochromatique, ou même un dinoz de couleur spécial!\nLa chance sera ton seul moyen de trouver l'objet de tes rêves, soit donc raisonnable et pense à avoir de la place dans ton inventaire, sinon ton objet sera perdu !\nCet oeuf ne te coûtera que 1000 pièces d'or !",
+				"oui": "Merci bien Maître Dinoz, j'espère que tu trouveras ce que tu cherches dans cet oeuf.\nReviens me voir quand tu voudras, je resterais par ici quelque temps.",
+				"oui3": "Merci bien Maître Dinoz, j'espère que tu trouveras ce que tu cherches dans ces oeufs.\nReviens me voir quand tu voudras, je resterais par ici quelque temps.",
+				"bye": "Vous vous éloignez, la vieille Urma se frotte les mains, aura t'elle du succès avec son oeuf ?",
+				"bof": "Vous vous éloignez, la vieille Urma semble un peu déçu, peut-être aurait-elle dû vendre des potions comme sa soeur ?",
+				"soldOut": "Salutations Maître Dinoz.\nJe suis désolée, il ne me reste plus d'oeufs à te vendre, tu as déjà épuisé tout le stock que je pouvais te consacrer.\nJ'espère que tu as eu de la chance et trouvé des objets qui te seront utiles dans ta quête."
 			},
 			"choice": {
-				"buyOne": "Acheter 1 œuf pour 1 000 pièces",
-				"buyTen": "Acheter 10 œufs pour 10 000 pièces",
-				"soldOut": "Je ne peux plus acheter d'œufs...",
-				"back": "Encore !",
-				"leave": "Partir"
+				"suivant": "Qu'est ce que vous allez faire ? me transformer en Wanwan démon ?",
+				"irma": "Vous êtes Irma ? C'est vous qui faîtes les potions ?",
+				"non": "Non merci.",
+				"popo": "Vous pouvez me donner des potions ?",
+				"bof": "Non, merci, je préfère les potions.",
+				"oeuf": "Un oeuf ?",
+				"oui": "J'en prend un pour 1000 pièces d'or !",
+				"oui2": "Je voudrais vous acheter un oeuf d'Urma pour 1000 pièces d'or !",
+				"oui3": "Je voudrais vous acheter 10 oeufs d'Urma pour 10000 pièces d'or !",
+				"bye": "A une prochaine fois !",
+				"soldOut": "..."
 			}
 		},
 		"dialog": {
