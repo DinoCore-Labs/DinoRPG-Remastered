@@ -19,8 +19,71 @@ export const urmaDialog = defineDialog({
 		begin: {
 			id: 'begin',
 			text: 'npc.urma.dialog.begin',
+			next: ['buy_one', 'buy_ten', 'sold_out', 'leave']
+		},
+		buy_one: {
+			id: 'buy_one',
+			text: 'npc.urma.dialog.buyOne',
+			next: ['back'],
+			special: [
+				{
+					type: 'buyUrmaEggs',
+					count: 1
+				}
+			]
+		},
+		buy_ten: {
+			id: 'buy_ten',
+			text: 'npc.urma.dialog.buyTen',
+			next: ['back'],
+			special: [
+				{
+					type: 'buyUrmaEggs',
+					count: 10
+				}
+			]
+		},
+		sold_out: {
+			id: 'sold_out',
+			text: 'npc.urma.dialog.soldOut',
+			next: []
+		},
+		leave: {
+			id: 'leave',
+			text: 'npc.urma.dialog.leave',
 			next: []
 		}
 	},
-	links: {}
+	links: {
+		buy_one: {
+			id: 'buy_one',
+			text: 'npc.urma.choice.buyOne',
+			target: 'buy_one',
+			cond: parseCondition('uvar(paques,299-)'),
+			confirm: true
+		},
+		buy_ten: {
+			id: 'buy_ten',
+			text: 'npc.urma.choice.buyTen',
+			target: 'buy_ten',
+			cond: parseCondition('uvar(paques,290-)'),
+			confirm: true
+		},
+		sold_out: {
+			id: 'sold_out',
+			text: 'npc.urma.choice.soldOut',
+			target: 'sold_out',
+			cond: parseCondition('uvar(paques,300+)')
+		},
+		back: {
+			id: 'back',
+			text: 'npc.urma.choice.back',
+			target: 'begin'
+		},
+		leave: {
+			id: 'leave',
+			text: 'npc.urma.choice.leave',
+			target: 'leave'
+		}
+	}
 });

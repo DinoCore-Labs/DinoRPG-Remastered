@@ -34,7 +34,6 @@ const events = [
 	{
 		event: GameEvent.EASTER,
 		schedule: GameEventSchedule.EASTER,
-		softCap: 100,
 		theme: GameTheme.EASTER
 	},
 	{
@@ -47,7 +46,6 @@ const events = [
 			month: 10,
 			day: 31
 		},
-		softCap: 100,
 		theme: GameTheme.HALLOWEEN
 	},
 	{

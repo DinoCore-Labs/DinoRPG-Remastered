@@ -4739,7 +4739,18 @@
 		"urma": {
 			"name": "Madame Urma",
 			"dialog": {
-				"begin": "Bonjour ! J'ai quelque chose de très spécial à vous proposer pour Pâques..."
+				"begin": "Bonjour ! Pour Pâques, je peux vous vendre mes œufs surprises. Chaque œuf contient un objet choisi au hasard parmi les trésors de Dinoland.",
+				"buyOne": "Voilà votre œuf ! Bonne chance !",
+				"buyTen": "Voilà dix œufs ! J'espère que la chance sera avec vous !",
+				"soldOut": "Désolée, vous avez déjà acheté tous les œufs auxquels vous aviez droit.",
+				"leave": "À bientôt !"
+			},
+			"choice": {
+				"buyOne": "Acheter 1 œuf pour 1 000 pièces",
+				"buyTen": "Acheter 10 œufs pour 10 000 pièces",
+				"soldOut": "Je ne peux plus acheter d'œufs...",
+				"back": "Encore !",
+				"leave": "Partir"
 			}
 		},
 		"dialog": {
