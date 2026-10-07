@@ -45,6 +45,8 @@ export const GAME_THEMES: Partial<Record<GameTheme, typeof DEFAULT_GAME_THEME>> 
 		footer: bgFooter,
 		dinoz: dinozBg
 	},
+	// The Valentine-specific image asset has not yet been committed to this base branch.
+	[GameTheme.VALENTINE]: DEFAULT_GAME_THEME,
 	[GameTheme.HALLOWEEN]: {
 		sky: bgSky,
 		header: halloweenBgHeader,

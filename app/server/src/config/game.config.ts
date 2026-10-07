@@ -52,13 +52,13 @@ const events = [
 		event: GameEvent.VALENTINE,
 		start: {
 			month: 2,
-			day: 13
+			day: 14
 		},
 		end: {
 			month: 2,
-			day: 15
+			day: 14
 		},
-		softCap: 100
+		theme: GameTheme.VALENTINE
 	}
 ] satisfies GameConfig['events'];
 

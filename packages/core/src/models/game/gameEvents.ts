@@ -11,7 +11,8 @@ export enum GameTheme {
 	APRIL_FOOLS = 'april_fools',
 	CHRISTMAS = 'christmas',
 	EASTER = 'easter',
-	HALLOWEEN = 'halloween'
+	HALLOWEEN = 'halloween',
+	VALENTINE = 'valentine'
 }
 
 export enum GameEventSchedule {
