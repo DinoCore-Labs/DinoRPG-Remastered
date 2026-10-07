@@ -45,6 +45,12 @@ export const urmaDialog = defineDialog({
 			id: 'oui',
 			text: 'npc.urma.dialog.oui',
 			next: ['bye'],
+			effects: [
+				{
+					type: 'tag',
+					name: 'urma'
+				}
+			],
 			special: [
 				{
 					type: 'buyUrmaEggs',
@@ -103,13 +109,13 @@ export const urmaDialog = defineDialog({
 			id: 'suivant',
 			text: 'npc.urma.choice.suivant',
 			target: 'suivant',
-			cond: parseCondition('uvar(paques,0)')
+			cond: parseCondition('!tag(urma)')
 		},
 		irma: {
 			id: 'irma',
 			text: 'npc.urma.choice.irma',
 			target: 'irma',
-			cond: parseCondition('uvar(paques,0)')
+			cond: parseCondition('!tag(urma)')
 		},
 		non: {
 			id: 'non',
@@ -136,21 +142,21 @@ export const urmaDialog = defineDialog({
 			text: 'npc.urma.choice.oui',
 			target: 'oui',
 			confirm: true,
-			cond: parseCondition('uvar(paques,0)')
+			cond: parseCondition('!tag(urma)')
 		},
 		oui2: {
 			id: 'oui2',
 			text: 'npc.urma.choice.oui2',
 			target: 'oui2',
 			confirm: true,
-			cond: parseCondition('uvar(paques,1+)+uvar(paques,299-)')
+			cond: parseCondition('tag(urma)+uvar(paques,299-)')
 		},
 		oui3: {
 			id: 'oui3',
 			text: 'npc.urma.choice.oui3',
 			target: 'oui3',
 			confirm: true,
-			cond: parseCondition('uvar(paques,1+)+uvar(paques,290-)')
+			cond: parseCondition('tag(urma)+uvar(paques,290-)')
 		},
 		bye: {
 			id: 'bye',
