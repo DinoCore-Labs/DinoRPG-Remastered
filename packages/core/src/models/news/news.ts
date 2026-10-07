@@ -10,6 +10,7 @@ export enum NewsType {
 	TID_START = 'tid_start',
 	TID_END = 'tid_end',
 	EVENT_CHRISTMAS = 'event_christmas',
+	EVENT_EASTER = 'event_easter',
 	STORY = 'story',
 	ANNOUNCE = 'announce'
 }

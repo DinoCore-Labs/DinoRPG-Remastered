@@ -597,7 +597,7 @@
 			},
 			"items": {
 				"enabled": "Les objets sont activés",
-				"disabled": "les objets sont désactivés"
+				"disabled": "Les objets sont désactivés"
 			}
 		},
 		"event": {
@@ -611,6 +611,13 @@
 					"title": "Fin de l'événement de Noël !",
 					"excerpt": "Les Piglous ont tous été chassés, il est l'heure de distribuer les récompenses !",
 					"content": "La grande chasse aux Piglous est officiellement terminée !\n\nGrâce à vos efforts conjoints, la menace des Piglous a été repoussée (du moins pour l'instant...). Les récompenses individuelles et de clan ont été distribuées automatiquement et ajoutées dans vos inventaires. Vous devriez avoir reçu une notification détaillant vos gains lors de votre connexion.\n\n### :conts1: Top 3 Joueurs\n{topPlayers}\n\n### :cup1: Top 3 Clans\n{topClans}\n\nFélicitations à tous les participants, et merci pour votre incroyable engouement !\n\nÀ très bientôt pour de prochaines aventures !"
+				}
+			},
+			"easter": {
+				"start": {
+					"title": "Joyeuses Pâques !",
+					"excerpt": "Madame Urma est de retour à Dinoville !",
+					"content": "POUR LES FÊTES DE PÂQUES,\n\nGOÛTEZ UN OEUF DE MADAME URMA !\n\nElle a eu une nouvelle fois l'autorisation du Roi d'écouler son stock d'oeufs pendant le week-end et même jusqu'à lundi soir minuit, dans les rues de Dinoville. À l'intérieur, vous trouverez sûrement une surprise !\n\nJoyeuses fêtes à tous les maîtres Dinoz, faîtes trembler les chocolats sur votre passage !"
 				}
 			}
 		}
