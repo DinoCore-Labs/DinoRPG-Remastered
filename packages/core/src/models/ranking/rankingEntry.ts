@@ -24,3 +24,32 @@ export interface DojoRankingEntry {
 	user: Pick<UserData, 'id' | 'name'> & { worth: number };
 	dojo: number;
 }
+
+export interface EventPlayerRankingEntry {
+	position: number;
+	user: Pick<UserData, 'id' | 'name'>;
+	clanName?: string;
+	clanId?: number;
+	languages?: string[];
+	totalKills: number;
+	dailyKills: number;
+	averageKills: string;
+}
+
+export interface EventClanRankingEntry {
+	position: number;
+	clanName: string;
+	clanId: number;
+	languages: string[];
+	totalKills: number;
+	averageKills: string;
+}
+
+export interface EventRankingResponse<T> {
+	eventId: string;
+	edition: number;
+	total: number;
+	page: number;
+	pageSize: number;
+	ranking: T[];
+}

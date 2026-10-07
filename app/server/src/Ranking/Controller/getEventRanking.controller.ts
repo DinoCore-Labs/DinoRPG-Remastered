@@ -3,24 +3,28 @@ import { getEventEdition } from '../../Events/Service/eventTracking.service.js';
 import { getGameEventDateRange } from '../../GameEvent/Service/gameEvent.service.js';
 import { prisma } from '../../prisma.js';
 
-function getDaysSinceEventStart(eventId: string): number {
+function getDaysSinceEventStart(eventId: string, edition: number): number {
 	const eventDetails = gameConfig.events.find(event => event.event === eventId);
 	if (!eventDetails) {
 		return 1;
 	}
-	const now = new Date();
-	const range = getGameEventDateRange(eventDetails, now);
+	const referenceDate = new Date(Date.UTC(edition, 11, 31, 12));
+	const range = getGameEventDateRange(eventDetails, referenceDate);
 	if (!range) {
 		return 1;
 	}
 	const startDate = Date.UTC(range.start.year, range.start.month - 1, range.start.day);
-	const currentDate = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+	const endDate = Date.UTC(range.end.year, range.end.month - 1, range.end.day);
+	const now = new Date();
+	const currentDate =
+		edition === now.getUTCFullYear()
+			? Math.min(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()), endDate)
+			: endDate;
 	const diffTime = currentDate - startDate;
 	if (diffTime < 0) {
 		return 1;
 	}
-	const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-	return Math.max(1, diffDays);
+	return Math.max(1, Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1);
 }
 
 export async function getPlayerEventRanking(
@@ -48,8 +52,10 @@ export async function getPlayerEventRanking(
 		}
 	});
 	const totalCount = await prisma.userEventTracking.count({ where: { eventId, edition } });
-	const daysSinceStart = getDaysSinceEventStart(eventId);
+	const daysSinceStart = getDaysSinceEventStart(eventId, edition);
 	return {
+		eventId,
+		edition,
 		total: totalCount,
 		page,
 		pageSize,
@@ -92,8 +98,10 @@ export async function getClanEventRanking(
 			}
 		})
 	]);
-	const daysSinceStart = getDaysSinceEventStart(eventId);
+	const daysSinceStart = getDaysSinceEventStart(eventId, edition);
 	return {
+		eventId,
+		edition,
 		total: totalCount,
 		page,
 		pageSize,
