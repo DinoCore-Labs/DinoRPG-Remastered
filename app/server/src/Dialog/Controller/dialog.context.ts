@@ -315,10 +315,12 @@ export async function buildDialogContext(
 		});
 	}
 	const now = params.now ?? new Date();
+	const urmaEdition = now.getFullYear();
 	const urmaTracking = await tx.userEventTracking.findUnique({
 		where: {
-			eventId_userId: {
-				eventId: getUrmaTrackingKey(now.getFullYear()),
+			eventId_edition_userId: {
+				eventId: getUrmaTrackingKey(urmaEdition),
+				edition: urmaEdition,
 				userId: params.userId
 			}
 		},

@@ -476,8 +476,9 @@ async function buyUrmaEggs(tx: DialogTransaction, context: DialogContext, count:
 	const eventId = getUrmaTrackingKey(year);
 	const tracking = await tx.userEventTracking.findUnique({
 		where: {
-			eventId_userId: {
+			eventId_edition_userId: {
 				eventId,
+				edition: year,
 				userId: context.user.id
 			}
 		},
@@ -493,13 +494,15 @@ async function buyUrmaEggs(tx: DialogTransaction, context: DialogContext, count:
 	await addUserItem(tx, context, itemList[Item.EASTER_EGG].itemId, count);
 	await tx.userEventTracking.upsert({
 		where: {
-			eventId_userId: {
+			eventId_edition_userId: {
 				eventId,
+				edition: year,
 				userId: context.user.id
 			}
 		},
 		create: {
 			eventId,
+			edition: year,
 			userId: context.user.id,
 			daily: count,
 			total: count
