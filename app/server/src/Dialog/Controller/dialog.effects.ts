@@ -20,6 +20,7 @@ import { Prisma } from '../../../../prisma/index.js';
 import { addSkillToDinoz } from '../../Dinoz/Controller/addSkillToDinoz.controller.js';
 import { startDinozConcentration } from '../../Dinoz/Controller/concentrationDinoz.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
+import { getUrmaTrackingKey, URMA_EGG_PURCHASE_LIMIT } from '../../Events/Service/easterUrma.service.js';
 import { unlockDoubleSkills } from '../../Level/Controller/unlockDoubleSkills.controller.js';
 import { unlockDinozMission } from '../../Mission/Controller/mission.progress.js';
 import {
@@ -469,6 +470,52 @@ async function moveDialogDinoz(tx: DialogTransaction, context: DialogContext, pl
 	});
 }
 
+async function buyUrmaEggs(tx: DialogTransaction, context: DialogContext, count: 1 | 10): Promise<void> {
+	const price = count * 1000;
+	const year = context.now.getFullYear();
+	const eventId = getUrmaTrackingKey(year);
+	const tracking = await tx.userEventTracking.findUnique({
+		where: {
+			eventId_userId: {
+				eventId,
+				userId: context.user.id
+			}
+		},
+		select: {
+			total: true
+		}
+	});
+	const purchased = tracking?.total ?? 0;
+	if (purchased + count > URMA_EGG_PURCHASE_LIMIT) {
+		throw new ExpectedError('urmaEggPurchaseLimit');
+	}
+	await removeUserGold(tx, context, price);
+	await addUserItem(tx, context, itemList[Item.EASTER_EGG].itemId, count);
+	await tx.userEventTracking.upsert({
+		where: {
+			eventId_userId: {
+				eventId,
+				userId: context.user.id
+			}
+		},
+		create: {
+			eventId,
+			userId: context.user.id,
+			daily: count,
+			total: count
+		},
+		update: {
+			daily: {
+				increment: count
+			},
+			total: {
+				increment: count
+			}
+		}
+	});
+	context.user.userVars.set('paques', purchased + count);
+}
+
 async function applyDialogEffect(
 	tx: DialogTransaction,
 	context: DialogContext,
@@ -606,6 +653,9 @@ async function applyDialogSpecial(
 			return;
 		case 'missions':
 			actions.missionsGroup = special.group;
+			return;
+		case 'buyUrmaEggs':
+			await buyUrmaEggs(tx, context, special.count);
 			return;
 		case 'none':
 			return;

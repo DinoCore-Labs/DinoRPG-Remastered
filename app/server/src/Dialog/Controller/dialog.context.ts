@@ -4,6 +4,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma, Role } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
+import { getUrmaTrackingKey } from '../../Events/Service/easterUrma.service.js';
 import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 
 type DialogTransaction = Prisma.TransactionClient;
@@ -313,6 +314,18 @@ export async function buildDialogContext(
 			}
 		});
 	}
+	const now = params.now ?? new Date();
+	const urmaTracking = await tx.userEventTracking.findUnique({
+		where: {
+			eventId_userId: {
+				eventId: getUrmaTrackingKey(now.getFullYear()),
+				userId: params.userId
+			}
+		},
+		select: {
+			total: true
+		}
+	});
 	return {
 		user: {
 			id: user.id,
@@ -337,7 +350,7 @@ export async function buildDialogContext(
 			effects: buildEmptyStringSet(),
 			tags: buildEmptyStringSet(),
 			collections: buildRewardKeySet(userRewards),
-			userVars: buildStringNumberMap(userStats),
+			userVars: new Map([...buildStringNumberMap(userStats), ['paques', urmaTracking?.total ?? 0]]),
 			dinozCount: allUserDinoz.length
 		},
 		dinoz: {
@@ -362,6 +375,6 @@ export async function buildDialogContext(
 			activeFeatures: new Set(gameConfig.world.activeFeatures),
 			activeEvents: new Set(getActiveGameEvents(params.now ?? new Date()).map(event => event.event))
 		},
-		now: params.now ?? new Date()
+		now: now
 	};
 }
