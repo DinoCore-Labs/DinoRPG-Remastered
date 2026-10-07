@@ -11,8 +11,9 @@ export function getUrmaTrackingKey(year: number): string {
 export async function getUrmaEggPurchasedCount(userId: string, year: number): Promise<number> {
 	const tracking = await prisma.userEventTracking.findUnique({
 		where: {
-			eventId_userId: {
+			eventId_edition_userId: {
 				eventId: getUrmaTrackingKey(year),
+				edition: year,
 				userId
 			}
 		},
@@ -43,13 +44,15 @@ export async function incrementUrmaEggPurchasedCount(userId: string, year: numbe
 	const eventId = getUrmaTrackingKey(year);
 	const tracking = await prisma.userEventTracking.upsert({
 		where: {
-			eventId_userId: {
+			eventId_edition_userId: {
 				eventId,
+				edition: year,
 				userId
 			}
 		},
 		create: {
 			eventId,
+			edition: year,
 			userId,
 			daily: quantity,
 			total: quantity
