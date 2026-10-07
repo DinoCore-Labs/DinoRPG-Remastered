@@ -1072,6 +1072,9 @@
 		"serverTime": "Temps du serveur"
 	},
 	"ranking": {
+		"event": {
+			"edition": "Édition"
+		},
 		"tabs": {
 			"players": "Joueurs",
 			"average": "Moyenne",
