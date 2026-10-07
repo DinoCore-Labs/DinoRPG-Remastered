@@ -3,7 +3,11 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod';
 
 import { getClanEventRanking, getPlayerEventRanking } from '../Controller/getEventRanking.controller.js';
 import { getUserRankingSummary } from '../Controller/getUserPositionRanking.controller.js';
-import { rankingListParamsSchema, rankingPositionParamsSchema } from '../Schema/ranking.schema.js';
+import {
+	eventRankingQuerySchema,
+	rankingListParamsSchema,
+	rankingPositionParamsSchema
+} from '../Schema/ranking.schema.js';
 import { getRanking } from '../Service/ranking.service.js';
 
 export async function rankingRoutes(app: FastifyInstance) {
@@ -48,31 +52,39 @@ export async function rankingRoutes(app: FastifyInstance) {
 			return reply.send(data);
 		}
 	);
-
 	typedApp.get(
 		'/event/players/:eventId/:page',
 		{
 			schema: {
-				tags: ['Ranking']
+				tags: ['Ranking'],
+				querystring: eventRankingQuerySchema
 			}
 		},
 		async (req, reply) => {
-			const { eventId, page } = req.params as { eventId: string; page: string };
-			const res = await getPlayerEventRanking(eventId, parseInt(page, 10) || 1, 50);
+			const { eventId, page } = req.params as {
+				eventId: string;
+				page: string;
+			};
+			const { edition } = req.query;
+			const res = await getPlayerEventRanking(eventId, parseInt(page, 10) || 1, 50, edition);
 			reply.send(res);
 		}
 	);
-
 	typedApp.get(
 		'/event/clans/:eventId/:page',
 		{
 			schema: {
-				tags: ['Ranking']
+				tags: ['Ranking'],
+				querystring: eventRankingQuerySchema
 			}
 		},
 		async (req, reply) => {
-			const { eventId, page } = req.params as { eventId: string; page: string };
-			const res = await getClanEventRanking(eventId, parseInt(page, 10) || 1, 50);
+			const { eventId, page } = req.params as {
+				eventId: string;
+				page: string;
+			};
+			const { edition } = req.query;
+			const res = await getClanEventRanking(eventId, parseInt(page, 10) || 1, 50, edition);
 			reply.send(res);
 		}
 	);
