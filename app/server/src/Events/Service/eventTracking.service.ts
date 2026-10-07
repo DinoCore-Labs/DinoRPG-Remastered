@@ -19,6 +19,20 @@ export async function incrementUserEventProgression(
 	amount: number,
 	edition = getEventEdition()
 ) {
+	const user = await prisma.user.findUnique({
+		where: {
+			id: userId
+		},
+		select: {
+			clan: {
+				select: {
+					id: true,
+					name: true,
+					langs: true
+				}
+			}
+		}
+	});
 	const currentTrack = await prisma.userEventTracking.upsert({
 		where: {
 			eventId_edition_userId: {
@@ -38,13 +52,39 @@ export async function incrementUserEventProgression(
 	if (isNewDay(currentTrack.updatedAt)) {
 		newDaily = amount;
 	}
-	await prisma.userEventTracking.update({
-		where: {
-			id: currentTrack.id
-		},
-		data: {
-			daily: newDaily,
-			total: currentTrack.total + amount
+	await prisma.$transaction(async tx => {
+		await tx.userEventTracking.update({
+			where: {
+				id: currentTrack.id
+			},
+			data: {
+				daily: newDaily,
+				total: currentTrack.total + amount
+			}
+		});
+		if (user?.clan) {
+			await tx.clanEventTracking.upsert({
+				where: {
+					eventId_edition_clanId: {
+						eventId,
+						edition,
+						clanId: user.clan.id
+					}
+				},
+				create: {
+					eventId,
+					edition,
+					clanId: user.clan.id,
+					clanName: user.clan.name,
+					clanLangs: user.clan.langs,
+					total: amount
+				},
+				update: {
+					total: {
+						increment: amount
+					}
+				}
+			});
 		}
 	});
 }

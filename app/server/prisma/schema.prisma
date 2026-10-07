@@ -1454,3 +1454,23 @@ model UserEventTracking {
   @@map("user_event_tracking")
 }
 
+model ClanEventTracking {
+  id        Int      @id @default(autoincrement())
+
+  eventId   String
+  edition   Int
+
+  clanId    Int
+  clanName  String   @db.VarChar
+  clanLangs String[] @default([])
+
+  total     Int      @default(0)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([eventId, edition, clanId])
+  @@index([eventId, edition])
+  @@index([clanId])
+  @@map("clan_event_tracking")
+}
