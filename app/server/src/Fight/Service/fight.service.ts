@@ -15,6 +15,7 @@ import { DinozItems } from '@dinorpg/core/models/dinoz/dinozItems.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { MapZone } from '@dinorpg/core/models/enums/MapZone.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import { FightOutcome, FightProcessResult } from '@dinorpg/core/models/fight/fightResult.js';
@@ -23,7 +24,7 @@ import { ActiveGameEvent, GameEvent } from '@dinorpg/core/models/game/gameEvents
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { getMonsterKeyById } from '@dinorpg/core/models/monster/monsterKeyMap.js';
-import { monsterList } from '@dinorpg/core/models/monster/monsterList.js';
+import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
 import { placeListv2, SWAMP_FOG_DAYS } from '@dinorpg/core/models/place/placeListv2.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { calculatePvExp, getMaxXp } from '@dinorpg/core/utils/dinozUtils.js';
@@ -550,11 +551,6 @@ export async function rewardFightVsMonsters(
 						await addItemToInventory(userId, Item.CHRISTMAS_TICKET, 1);
 					}
 					break;
-				case GameEvent.VALENTINE:
-					if (Math.floor(Math.random() * 100) <= 15) {
-						// Future reward
-					}
-					break;
 				default:
 					break;
 			}
@@ -789,6 +785,8 @@ export async function generateMonsterList(
 	}
 	const activeEventNames = new Set(activeEvents.map(event => event.event));
 	const availableMonsters = Object.values(monsterList).filter(monster => {
+		// Febrez is inserted once per encounter using the original 30% event chance.
+		if (monster.id === Monster.FEBREZA) return false;
 		if (monster.places && !monster.places.includes(place.placeId)) {
 			return false;
 		}
@@ -879,6 +877,11 @@ export async function generateMonsterList(
 			break;
 		}
 		monsterLevel += mdelta;
+	}
+	// Valentine: one Febrez in 30% of regular encounters, only in the nine MT zones.
+	const valentineZones = [MapZone.DINOLAND, MapZone.DINOWEST, MapZone.JUNGLE, MapZone.ILES, MapZone.GTOUTCHAUD, MapZone.STEPPE, MapZone.NIMBAO, MapZone.ILEMONSTRE, MapZone.CAUSHEMESH];
+	if (activeEventNames.has(GameEvent.VALENTINE) && valentineZones.includes(place.map) && Math.random() < 0.3) {
+		monsterArray.push(monsterList[Monster.FEBREZA]);
 	}
 	return monsterArray;
 }

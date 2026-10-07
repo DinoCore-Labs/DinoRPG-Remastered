@@ -1192,7 +1192,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		resilience: 40,
 		odds: 30,
 		hp: 30,
-		xp: 100,
+		xp: 0,
 		skills: [Skill.M_FEBREZ],
 		canBeCaptured: false,
 		events: [GameEvent.VALENTINE]
