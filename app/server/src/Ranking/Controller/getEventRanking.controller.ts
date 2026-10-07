@@ -1,4 +1,5 @@
 import gameConfig from '../../config/game.config.js';
+import { getEventEdition } from '../../Events/Service/eventTracking.service.js';
 import { getGameEventDateRange } from '../../GameEvent/Service/gameEvent.service.js';
 import { prisma } from '../../prisma.js';
 
@@ -22,11 +23,15 @@ function getDaysSinceEventStart(eventId: string): number {
 	return Math.max(1, diffDays);
 }
 
-export async function getPlayerEventRanking(eventId: string, page: number = 1, pageSize: number = 50) {
+export async function getPlayerEventRanking(
+	eventId: string,
+	page: number = 1,
+	pageSize: number = 50,
+	edition = getEventEdition()
+) {
 	const skip = (page - 1) * pageSize;
-
 	const trackings = await prisma.userEventTracking.findMany({
-		where: { eventId },
+		where: { eventId, edition },
 		orderBy: { total: 'desc' },
 		skip,
 		take: pageSize,
@@ -42,10 +47,8 @@ export async function getPlayerEventRanking(eventId: string, page: number = 1, p
 			}
 		}
 	});
-
-	const totalCount = await prisma.userEventTracking.count({ where: { eventId } });
+	const totalCount = await prisma.userEventTracking.count({ where: { eventId, edition } });
 	const daysSinceStart = getDaysSinceEventStart(eventId);
-
 	return {
 		total: totalCount,
 		page,
@@ -63,72 +66,76 @@ export async function getPlayerEventRanking(eventId: string, page: number = 1, p
 	};
 }
 
-export async function getClanEventRanking(eventId: string, page: number = 1, pageSize: number = 50) {
+export async function getClanEventRanking(
+	eventId: string,
+	page: number = 1,
+	pageSize: number = 50,
+	edition = getEventEdition()
+) {
 	const skip = (page - 1) * pageSize;
-
-	const trackings = await prisma.userEventTracking.findMany({
-		where: { eventId, user: { clanId: { not: null } } },
-		include: {
-			user: {
-				select: {
-					clan: {
-						select: { name: true, id: true, langs: true }
-					}
-				}
+	const [trackings, totalCount] = await Promise.all([
+		prisma.clanEventTracking.findMany({
+			where: {
+				eventId,
+				edition
+			},
+			orderBy: {
+				total: 'desc'
+			},
+			skip,
+			take: pageSize
+		}),
+		prisma.clanEventTracking.count({
+			where: {
+				eventId,
+				edition
 			}
-		}
-	});
-
-	const clanTotals = new Map<number, { clanName: string; clanId: number; languages: string[]; totalKills: number }>();
-
-	for (const t of trackings) {
-		const clan = t.user.clan;
-		if (!clan) continue;
-
-		if (!clanTotals.has(clan.id)) {
-			clanTotals.set(clan.id, { clanName: clan.name, clanId: clan.id, languages: clan.langs, totalKills: 0 });
-		}
-		clanTotals.get(clan.id)!.totalKills += t.total;
-	}
-
-	const sortedClans = Array.from(clanTotals.values()).sort((a, b) => b.totalKills - a.totalKills);
-	const totalCount = sortedClans.length;
-	const daysSinceStart = getDaysSinceEventStart(eventId) || 1; // Prevent division by zero
-
-	const paginatedClans = sortedClans.slice(skip, skip + pageSize);
-
+		})
+	]);
+	const daysSinceStart = getDaysSinceEventStart(eventId);
 	return {
 		total: totalCount,
 		page,
 		pageSize,
-		ranking: paginatedClans.map((c, index) => ({
+		ranking: trackings.map((tracking, index) => ({
 			position: skip + index + 1,
-			clanName: c.clanName,
-			clanId: c.clanId,
-			languages: c.languages,
-			totalKills: c.totalKills,
-			averageKills: (c.totalKills / daysSinceStart).toFixed(1)
+			clanName: tracking.clanName,
+			clanId: tracking.clanId,
+			languages: tracking.clanLangs,
+			totalKills: tracking.total,
+			averageKills: (tracking.total / daysSinceStart).toFixed(1)
 		}))
 	};
 }
 
-export async function getSpecificClanEventRank(eventId: string, targetClanId: number): Promise<number | null> {
-	const trackings = await prisma.userEventTracking.findMany({
-		where: { eventId, user: { clanId: { not: null } } },
-		select: { total: true, user: { select: { clanId: true } } }
+export async function getSpecificClanEventRank(
+	eventId: string,
+	targetClanId: number,
+	edition = getEventEdition()
+): Promise<number | null> {
+	const target = await prisma.clanEventTracking.findUnique({
+		where: {
+			eventId_edition_clanId: {
+				eventId,
+				edition,
+				clanId: targetClanId
+			}
+		},
+		select: {
+			total: true
+		}
 	});
-
-	const clanTotals = new Map<number, number>();
-
-	for (const t of trackings) {
-		const clanId = t.user.clanId;
-		if (!clanId) continue;
-		clanTotals.set(clanId, (clanTotals.get(clanId) || 0) + t.total);
+	if (!target) {
+		return null;
 	}
-
-	const sortedClans = Array.from(clanTotals.entries()).sort((a, b) => b[1] - a[1]);
-
-	const rankIndex = sortedClans.findIndex(c => c[0] === targetClanId);
-	if (rankIndex === -1) return null; // Not participating or 0 kills
-	return rankIndex + 1;
+	const clansAhead = await prisma.clanEventTracking.count({
+		where: {
+			eventId,
+			edition,
+			total: {
+				gt: target.total
+			}
+		}
+	});
+	return clansAhead + 1;
 }
