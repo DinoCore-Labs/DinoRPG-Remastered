@@ -11,7 +11,7 @@
 				{{ $t('common.clans') }}
 			</RouterLink>
 		</li>
-		<li :class="{ active: isEventTab }" v-if="isEventActive || isEventTab">
+		<li :class="{ active: isEventTab }">
 			<RouterLink :to="{ name: 'RankingEventClans', params: { eventId: currentEventId, pageLoaded: 1 } }">
 				{{ $t('ranking.tabs.event') }}
 			</RouterLink>
@@ -62,6 +62,24 @@
 			</RouterLink>
 		</li>
 	</ul>
+	<DZDisclaimer v-if="isEventTab && !isEventActive" round help content="ranking.event.archiveOnly" />
+	<DZDisclaimer v-if="isEventTab && previousEventEdition" round help content="ranking.event.archiveDisclaimer">
+		<RouterLink
+			class="archive-link"
+			:to="{
+				name: $route.name,
+				params: {
+					eventId: currentEventId,
+					pageLoaded: 1
+				},
+				query: {
+					edition: previousEventEdition
+				}
+			}"
+		>
+			{{ $t('ranking.event.viewEdition', { edition: previousEventEdition }) }}
+		</RouterLink>
+	</DZDisclaimer>
 	<div v-if="isEventTab && eventEditionOptions.length > 0" class="event-edition-selector">
 		<span>{{ $t('ranking.event.edition') }}</span>
 		<DZSelect
@@ -83,20 +101,42 @@ import { RouterView } from 'vue-router';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { getImgURL } from '../utils/getImgURL';
 import DZSelect, { type SelectOption } from '../components/utils/DZSelect.vue';
+import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
 import { RankingService } from '../services';
+import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 
 export default defineComponent({
 	name: 'Ranking',
 	components: {
 		TitleHeader,
 		RouterView,
-		DZSelect
+		DZSelect,
+		DZDisclaimer
 	},
 	setup() {
 		const route = useRoute();
 		const router = useRouter();
 
+		const rankedEvents: GameEvent[] = [GameEvent.CHRISTMAS];
+
+		const isPlayerTab = computed(() =>
+			['RankingPlayers', 'RankingAverage', 'RankingCompletion'].includes(route.name as string)
+		);
+
+		const isClanTab = computed(() => ['RankingClans', 'RankingTreasure'].includes(route.name as string));
+
+		const isEventTab = computed(() => ['RankingEventPlayers', 'RankingEventClans'].includes(route.name as string));
+
+		const activeRankedEvent = computed(() =>
+			gameConfigStore().activeEvents.find(event => rankedEvents.includes(event.event))
+		);
+
+		const isEventActive = computed(() => activeRankedEvent.value !== undefined);
+
+		const currentEventId = computed(() => activeRankedEvent.value?.event ?? GameEvent.CHRISTMAS);
+
 		const eventEditions = ref<number[]>([]);
+
 		const selectedEventEdition = ref<number | undefined>(route.query.edition ? Number(route.query.edition) : undefined);
 
 		const eventEditionOptions = computed<SelectOption<number>[]>(() =>
@@ -106,16 +146,34 @@ export default defineComponent({
 			}))
 		);
 
+		const previousEventEdition = computed(() => {
+			const currentYear = new Date().getFullYear();
+			return eventEditions.value.find(edition => edition < currentYear);
+		});
+
 		const loadEventEditions = async () => {
 			const eventId = (route.params.eventId as string | undefined) ?? currentEventId.value;
-			if (!eventId) {
-				eventEditions.value = [];
-				return;
-			}
 			const response = await RankingService.getEventRankingEditions(eventId);
 			eventEditions.value = response.editions;
 			if (selectedEventEdition.value === undefined && response.editions.length > 0) {
 				selectedEventEdition.value = response.editions[0];
+				/*
+				 * Hors event actif, il faut réellement placer l'édition
+				 * la plus récente dans l'URL, sinon les composants enfants
+				 * demanderaient implicitement l'année courante.
+				 */
+				if (!isEventActive.value && isEventTab.value) {
+					await router.replace({
+						name: route.name ?? undefined,
+						params: {
+							...route.params
+						},
+						query: {
+							...route.query,
+							edition: response.editions[0].toString()
+						}
+					});
+				}
 			}
 		};
 
@@ -146,20 +204,12 @@ export default defineComponent({
 			}
 		);
 
-		const isPlayerTab = computed(() =>
-			['RankingPlayers', 'RankingAverage', 'RankingCompletion'].includes(route.name as string)
+		watch(
+			() => route.query.edition,
+			edition => {
+				selectedEventEdition.value = edition ? Number(edition) : undefined;
+			}
 		);
-
-		const isClanTab = computed(() => ['RankingClans', 'RankingTreasure'].includes(route.name as string));
-
-		const isEventTab = computed(() => ['RankingEventPlayers', 'RankingEventClans'].includes(route.name as string));
-
-		const isEventActive = computed(() => gameConfigStore().activeEvents.length > 0);
-
-		const currentEventId = computed(() => {
-			const events = gameConfigStore().activeEvents;
-			return events.length > 0 ? events[0].event : '';
-		});
 
 		const subHeader = computed(() => {
 			switch (route.name) {
@@ -181,6 +231,7 @@ export default defineComponent({
 					return 'ranking.tabs.players';
 			}
 		});
+
 		return {
 			subHeader,
 			isPlayerTab,
@@ -190,7 +241,8 @@ export default defineComponent({
 			currentEventId,
 			eventEditionOptions,
 			selectedEventEdition,
-			changeEventEdition
+			changeEventEdition,
+			previousEventEdition
 		};
 	},
 	methods: {
