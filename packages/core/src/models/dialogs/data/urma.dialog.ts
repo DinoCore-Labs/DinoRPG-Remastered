@@ -141,21 +141,18 @@ export const urmaDialog = defineDialog({
 			id: 'oui',
 			text: 'npc.urma.choice.oui',
 			target: 'oui',
-			confirm: true,
 			cond: parseCondition('!tag(urma)')
 		},
 		oui2: {
 			id: 'oui2',
 			text: 'npc.urma.choice.oui2',
 			target: 'oui2',
-			confirm: true,
 			cond: parseCondition('tag(urma)+uvar(paques,299-)')
 		},
 		oui3: {
 			id: 'oui3',
 			text: 'npc.urma.choice.oui3',
 			target: 'oui3',
-			confirm: true,
 			cond: parseCondition('tag(urma)+uvar(paques,290-)')
 		},
 		bye: {
