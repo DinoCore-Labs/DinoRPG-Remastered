@@ -1178,6 +1178,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	[Monster.FEBREZA]: {
 		id: Monster.FEBREZA,
 		name: 'febrez',
+		display: 'febrez',
 		zones: [MapZone.ALL],
 		level: 0,
 		elements: {
