@@ -2237,7 +2237,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 0, // TODO double check
 		display: 'DOUBLE'
 	},
-	// Use to obtain ??, obtained during Easter event
+	// Obtained during Easter event
 	[Item.EASTER_EGG]: {
 		itemId: 117,
 		name: 'easter_egg',
