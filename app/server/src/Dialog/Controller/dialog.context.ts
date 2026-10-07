@@ -4,7 +4,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma, Role } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
-import { getUrmaTrackingKey } from '../../Events/Service/easterUrma.service.js';
+import { getUrmaEdition, getUrmaTrackingKey } from '../../Events/Service/easterUrma.service.js';
 import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 
 type DialogTransaction = Prisma.TransactionClient;
@@ -315,7 +315,7 @@ export async function buildDialogContext(
 		});
 	}
 	const now = params.now ?? new Date();
-	const urmaEdition = now.getFullYear();
+	const urmaEdition = getUrmaEdition(now);
 	const urmaTracking = await tx.userEventTracking.findUnique({
 		where: {
 			eventId_edition_userId: {
