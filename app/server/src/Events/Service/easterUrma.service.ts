@@ -1,6 +1,7 @@
 import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 
 import { prisma } from '../../prisma.js';
+import { getEventEdition } from './eventTracking.service.js';
 
 export const URMA_EGG_PURCHASE_LIMIT = 300;
 
@@ -8,12 +9,16 @@ export function getUrmaTrackingKey(year: number): string {
 	return `${GameEvent.EASTER}_URMA_${year}`;
 }
 
-export async function getUrmaEggPurchasedCount(userId: string, year: number): Promise<number> {
+export function getUrmaEdition(date = new Date()): number {
+	return getEventEdition(date);
+}
+
+export async function getUrmaEggPurchasedCount(userId: string, edition: number): Promise<number> {
 	const tracking = await prisma.userEventTracking.findUnique({
 		where: {
 			eventId_edition_userId: {
-				eventId: getUrmaTrackingKey(year),
-				edition: year,
+				eventId: getUrmaTrackingKey(edition),
+				edition: edition,
 				userId
 			}
 		},
@@ -24,35 +29,39 @@ export async function getUrmaEggPurchasedCount(userId: string, year: number): Pr
 	return tracking?.total ?? 0;
 }
 
-export async function getRemainingUrmaEggPurchases(userId: string, year: number): Promise<number> {
-	const purchased = await getUrmaEggPurchasedCount(userId, year);
+export async function getRemainingUrmaEggPurchases(userId: string, edition: number): Promise<number> {
+	const purchased = await getUrmaEggPurchasedCount(userId, edition);
 	return Math.max(0, URMA_EGG_PURCHASE_LIMIT - purchased);
 }
 
-export async function canBuyUrmaEggs(userId: string, year: number, quantity: number): Promise<boolean> {
+export async function canBuyUrmaEggs(userId: string, edition: number, quantity: number): Promise<boolean> {
 	if (!Number.isInteger(quantity) || quantity <= 0) {
 		return false;
 	}
-	const purchased = await getUrmaEggPurchasedCount(userId, year);
+	const purchased = await getUrmaEggPurchasedCount(userId, edition);
 	return purchased + quantity <= URMA_EGG_PURCHASE_LIMIT;
 }
 
-export async function incrementUrmaEggPurchasedCount(userId: string, year: number, quantity: number): Promise<number> {
+export async function incrementUrmaEggPurchasedCount(
+	userId: string,
+	edition: number,
+	quantity: number
+): Promise<number> {
 	if (!Number.isInteger(quantity) || quantity <= 0) {
 		throw new Error(`Invalid Urma egg quantity: ${quantity}`);
 	}
-	const eventId = getUrmaTrackingKey(year);
+	const eventId = getUrmaTrackingKey(edition);
 	const tracking = await prisma.userEventTracking.upsert({
 		where: {
 			eventId_edition_userId: {
 				eventId,
-				edition: year,
+				edition: edition,
 				userId
 			}
 		},
 		create: {
 			eventId,
-			edition: year,
+			edition: edition,
 			userId,
 			daily: quantity,
 			total: quantity

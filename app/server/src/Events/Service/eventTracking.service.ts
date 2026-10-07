@@ -1,3 +1,4 @@
+import { getGameCalendarYear } from '../../GameEvent/Service/gameEvent.service.js';
 import { prisma } from '../../prisma.js';
 
 function isNewDay(updatedAt: Date): boolean {
@@ -10,7 +11,7 @@ function isNewDay(updatedAt: Date): boolean {
 }
 
 export function getEventEdition(date = new Date()): number {
-	return date.getUTCFullYear();
+	return getGameCalendarYear(date);
 }
 
 export async function incrementUserEventProgression(

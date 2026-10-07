@@ -20,7 +20,11 @@ import { Prisma } from '../../../../prisma/index.js';
 import { addSkillToDinoz } from '../../Dinoz/Controller/addSkillToDinoz.controller.js';
 import { startDinozConcentration } from '../../Dinoz/Controller/concentrationDinoz.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
-import { getUrmaTrackingKey, URMA_EGG_PURCHASE_LIMIT } from '../../Events/Service/easterUrma.service.js';
+import {
+	getUrmaEdition,
+	getUrmaTrackingKey,
+	URMA_EGG_PURCHASE_LIMIT
+} from '../../Events/Service/easterUrma.service.js';
 import { unlockDoubleSkills } from '../../Level/Controller/unlockDoubleSkills.controller.js';
 import { unlockDinozMission } from '../../Mission/Controller/mission.progress.js';
 import {
@@ -472,13 +476,13 @@ async function moveDialogDinoz(tx: DialogTransaction, context: DialogContext, pl
 
 async function buyUrmaEggs(tx: DialogTransaction, context: DialogContext, count: 1 | 10): Promise<void> {
 	const price = count * 1000;
-	const year = context.now.getFullYear();
-	const eventId = getUrmaTrackingKey(year);
+	const edition = getUrmaEdition(context.now);
+	const eventId = getUrmaTrackingKey(edition);
 	const tracking = await tx.userEventTracking.findUnique({
 		where: {
 			eventId_edition_userId: {
 				eventId,
-				edition: year,
+				edition: edition,
 				userId: context.user.id
 			}
 		},
@@ -496,13 +500,13 @@ async function buyUrmaEggs(tx: DialogTransaction, context: DialogContext, count:
 		where: {
 			eventId_edition_userId: {
 				eventId,
-				edition: year,
+				edition: edition,
 				userId: context.user.id
 			}
 		},
 		create: {
 			eventId,
-			edition: year,
+			edition: edition,
 			userId: context.user.id,
 			daily: count,
 			total: count
