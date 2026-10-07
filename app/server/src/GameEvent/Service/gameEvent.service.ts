@@ -36,6 +36,10 @@ function getCalendarDate(date: Date, timeZone: string): CalendarDate {
 	};
 }
 
+export function getGameCalendarYear(date = new Date()): number {
+	return getCalendarDate(date, gameConfig.general.gameTimeZone).year;
+}
+
 function toCalendarComparable(date: CalendarDate): number {
 	return date.year * 10000 + date.month * 100 + date.day;
 }
