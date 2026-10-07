@@ -4123,6 +4123,12 @@ const attackTarget = (
 			break_intangible = false;
 		}
 
+		// Febrez's landed attacks heal instead of dealing damage (MT Saint-Valentin).
+		const febrezHeal = damage > 0 && target.type === FighterType.DINOZ && hasSkill(attacker, Skill.M_FEBREZ)
+			? Math.round(target.maxHp * 0.05)
+			: 0;
+		if (febrezHeal > 0) damage = 0;
+
 		// Apply and log damage
 		target.hp -= damage;
 
@@ -4144,6 +4150,8 @@ const attackTarget = (
 			elements: elements,
 			skill
 		});
+
+		if (febrezHeal > 0) heal(fightData, target, febrezHeal);
 
 		// Break intangible if conditions met
 		if (break_intangible) {
@@ -4417,13 +4425,6 @@ const checkAfterAttackEffects = (
 	if (isCloseCombat && damage > 0 && hasSkill(attacker, Skill.HALEINE_FETIVE)) {
 		poison(fightData, target, attacker, Skill.HALEINE_FETIVE, FightStatusLength.LONG);
 	}
-
-	// TODO
-	// "M_FEBREZ" skill for Valentine?
-	// 		if (realOpponent.type === FighterType.DINOZ && hasSkill(attacker, Skill.M_FEBREZ)) {
-	// 			// Regen 5% HP
-	// 			heal(fightData, realOpponent, Math.round(realOpponent.maxHp * 0.05 + 0.5));
-	// 		}
 
 	// Burn opponent if fighter has Skill.GRIFFES_INFERNALES and landed a hit with an assault that was not dodged
 	if (isCloseCombat && !isDodged && hasSkill(attacker, Skill.GRIFFES_INFERNALES)) {
