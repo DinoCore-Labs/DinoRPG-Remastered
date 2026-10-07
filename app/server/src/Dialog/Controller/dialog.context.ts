@@ -4,6 +4,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma, Role } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
+import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 
 type DialogTransaction = Prisma.TransactionClient;
 
@@ -51,6 +52,7 @@ export type DialogContext = {
 	};
 	world: {
 		activeFeatures: Set<string>;
+		activeEvents: Set<string>;
 	};
 	now: Date;
 };
@@ -357,7 +359,8 @@ export async function buildDialogContext(
 			place: params.dialog.place
 		},
 		world: {
-			activeFeatures: new Set(gameConfig.world.activeFeatures)
+			activeFeatures: new Set(gameConfig.world.activeFeatures),
+			activeEvents: new Set(getActiveGameEvents(params.now ?? new Date()).map(event => event.event))
 		},
 		now: params.now ?? new Date()
 	};
