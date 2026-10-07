@@ -8,30 +8,33 @@ import { newNotif } from '../../Notification/Service/notification.service.js';
 import { prisma } from '../../prisma.js';
 import { getClanEventRanking } from '../../Ranking/Controller/getEventRanking.controller.js';
 import { addTreasureTicket } from '../../User/Controller/money.controller.js';
+import { getEventEdition } from './eventTracking.service.js';
 
-export async function distributeChristmasRewards() {
+export async function distributeChristmasRewards(edition = getEventEdition()) {
 	const eventId = GameEvent.CHRISTMAS;
-
-	console.log('[Christmas Event] Starting reward distribution...');
-
+	console.log(`[Christmas Event] Starting reward distribution for edition ${edition}...`);
 	// --- Individual Rewards ---
 	// Fetch all users sorted by total piglous killed (getEventRanking handles pagination, so we fetch all or in batches)
 	// Since we need to distribute up to rank 100+ (others >= 100 kills), let's fetch all participants.
 	const trackings = await prisma.userEventTracking.findMany({
-		where: { eventId, total: { gt: 0 } },
-		orderBy: { total: 'desc' }
+		where: {
+			eventId,
+			edition,
+			total: {
+				gt: 0
+			}
+		},
+		orderBy: {
+			total: 'desc'
+		}
 	});
-
-	console.log(`[Christmas Event] Found ${trackings.length} participants.`);
-
+	console.log(`[Christmas Event] Found ${trackings.length} participants for edition ${edition}.`);
 	let rank = 1;
 	for (const t of trackings) {
 		const userId = t.userId;
 		const kills = t.total;
-
 		const promises = [];
 		const rewards = [];
-
 		if (rank >= 1 && rank <= 5) {
 			promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 2));
 			promises.push(addItemToInventory(userId, Item.FEROSS_EGG_CHRISTMAS, 1));
@@ -82,23 +85,18 @@ export async function distributeChristmasRewards() {
 
 		rank++;
 	}
-
 	// --- Clan Rewards ---
 	// Re-use the existing logic or fetch the clan ranking
-	const clanData = await getClanEventRanking(eventId, 1, 1000);
+	const clanData = await getClanEventRanking(eventId, 1, 1000, edition);
 	let clanRank = 1;
-
 	for (const clan of clanData.ranking) {
 		const clanId = clan.clanId;
-
 		// Get all members of this clan
 		const members = await prisma.user.findMany({ where: { clanId } });
-
 		for (const member of members) {
 			const userId = member.id;
 			const promises = [];
 			const rewards = [];
-
 			if (clanRank === 1) {
 				promises.push(addItemToInventory(userId, Item.GOLDEN_NAPODINO, 2));
 				promises.push(addItemToInventory(userId, Item.TRICERAGNON_BABY, 1));
@@ -136,15 +134,12 @@ export async function distributeChristmasRewards() {
 				rewards.push({ rewardType: RewardEnum.ITEM, value: Item.CHRISTMAS_EGG, quantity: 1 });
 				rewards.push({ rewardType: RewardEnum.TREASURE_TICKET, value: 25, quantity: 25 });
 			}
-
 			if (promises.length > 0) {
 				promises.push(newNotif(userId, NotificationType.XMAS_REWARD, JSON.stringify(rewards)));
 				await Promise.all(promises);
 			}
 		}
-
 		clanRank++;
 	}
-
-	console.log('[Christmas Event] Distribution complete!');
+	console.log(`[Christmas Event] Distribution complete for edition ${edition}!`);
 }

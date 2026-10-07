@@ -127,7 +127,7 @@ export async function checkEventNews() {
 					}
 				}
 				if (event.event === GameEvent.CHRISTMAS) {
-					await distributeChristmasRewards();
+					await distributeChristmasRewards(year);
 				}
 			} catch (e) {
 				if ((e as Error).message && !(e as Error).message.includes('Unique constraint failed')) {
