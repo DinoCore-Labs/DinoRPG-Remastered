@@ -54,7 +54,7 @@ app.use(ConfirmPlugin);
 app.use(
 	createToastPlugin({
 		position: 'bottom',
-		duration: 20000
+		duration: 50000
 	})
 );
 app.use(VueTippy, vueTippyProps);

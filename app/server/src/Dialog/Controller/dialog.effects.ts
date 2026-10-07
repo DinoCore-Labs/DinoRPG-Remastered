@@ -523,6 +523,29 @@ async function buyUrmaEggs(tx: DialogTransaction, context: DialogContext, count:
 	context.user.userVars.set('paques', purchased + count);
 }
 
+async function addUserTag(tx: DialogTransaction, context: DialogContext, tag: string): Promise<void> {
+	await tx.userTag.createMany({
+		data: [
+			{
+				userId: context.user.id,
+				tag
+			}
+		],
+		skipDuplicates: true
+	});
+	context.user.tags.add(tag);
+}
+
+async function removeUserTag(tx: DialogTransaction, context: DialogContext, tag: string): Promise<void> {
+	await tx.userTag.deleteMany({
+		where: {
+			userId: context.user.id,
+			tag
+		}
+	});
+	context.user.tags.delete(tag);
+}
+
 async function applyDialogEffect(
 	tx: DialogTransaction,
 	context: DialogContext,
@@ -617,10 +640,14 @@ async function applyDialogEffect(
 		case 'moveRandom':
 			await moveDialogDinoz(tx, context, effect.places, effect.all);
 			return;
+		case 'tag':
+			await addUserTag(tx, context, effect.name);
+			return;
+		case 'removeTag':
+			await removeUserTag(tx, context, effect.name);
+			return;
 		case 'friend':
 		case 'dialect':
-		case 'tag':
-		case 'removeTag':
 		case 'gameVar':
 		case 'userVar':
 			notImplemented(

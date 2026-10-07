@@ -750,6 +750,7 @@ model User {
   rewards       UserRewards[]
   scenarios     UserScenario[]
   statsTracking UserTracking[]
+  tags          UserTag[]
   wallets       UserWallet[]
 
   marketOffers Offer[]    @relation("OfferSeller")
@@ -908,6 +909,20 @@ model UserScenario {
   @@index([userId])
   @@index([scenarioKey])
   @@map("user_scenario")
+}
+
+model UserTag {
+  id     Int    @id @default(autoincrement())
+  tag    String
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@unique([tag, userId])
+  @@index([userId])
+  @@index([tag])
+  @@map("user_tag")
 }
 
 model UserTracking {

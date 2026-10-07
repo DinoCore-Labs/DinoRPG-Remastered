@@ -186,6 +186,10 @@ function buildStringNumberMap(
 	return map;
 }
 
+function buildStringSet(entries: Array<{ tag: string }>): Set<string> {
+	return new Set(entries.map(entry => entry.tag));
+}
+
 export async function buildDialogContext(
 	tx: DialogTransaction,
 	params: BuildDialogContextParams
@@ -256,6 +260,14 @@ export async function buildDialogContext(
 		select: {
 			stat: true,
 			quantity: true
+		}
+	});
+	const userTags = await tx.userTag.findMany({
+		where: {
+			userId: params.userId
+		},
+		select: {
+			tag: true
 		}
 	});
 	const dinoz = await tx.dinoz.findUnique({
@@ -350,7 +362,7 @@ export async function buildDialogContext(
 				entry => entry.quantity
 			),
 			effects: buildEmptyStringSet(),
-			tags: buildEmptyStringSet(),
+			tags: buildStringSet(userTags),
 			collections: buildRewardKeySet(userRewards),
 			userVars: new Map([...buildStringNumberMap(userStats), ['paques', urmaTracking?.total ?? 0]]),
 			dinozCount: allUserDinoz.length
