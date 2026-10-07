@@ -10,5 +10,6 @@ export type DialogSpecial =
 	| { type: 'useIngredient'; ingredientId: number; count: number }
 	| { type: 'useGold'; amount: number }
 	| { type: 'startFight'; fightId: MonsterFiche[] }
+	| { type: 'buyUrmaEggs'; count: 1 | 10 }
 	| { type: 'popup' }
 	| { type: 'status'; status: string };
