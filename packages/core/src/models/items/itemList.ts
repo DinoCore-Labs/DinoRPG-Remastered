@@ -2237,7 +2237,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 0, // TODO double check
 		display: 'DOUBLE'
 	},
-	// Obtained during Easter event
+	// Madame Urma's Egg: contains one random item from the Easter reward pool
 	[Item.EASTER_EGG]: {
 		itemId: 117,
 		name: 'easter_egg',
@@ -2248,6 +2248,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		sellable: true,
 		maxQuantity: 300,
 		price: 10000, // Market price: not related to Urma's 1000 gold purchase price
+		effect: {
+			category: ItemEffect.SPECIAL,
+			value: 'urma_egg'
+		},
 		display: 'paques'
 	},
 	// Ticket for Batide day
