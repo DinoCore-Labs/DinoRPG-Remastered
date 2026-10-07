@@ -956,7 +956,8 @@
 			"box_legendary": "Die legendäre Box enthielt {qty} {value}!",
 			"devil_ointment": "Du hast den Status „Verflucht“ von deinem Dinoz aufgehoben.",
 			"amnesic_rice": "Dein Dinoz erinnert sich nicht mehr an seinen Namen und außerdem hat er all seine :xp: verloren!",
-			"pampleboum": "Autsch! Dieser Granatenapfel enthielt einen Kern!"
+			"pampleboum": "Autsch! Dieser Granatenapfel enthielt einen Kern!",
+			"easter_egg": "Urmas Ei enthielt {qty} {value}!"
 		},
 		"Invalid_credentials": "Identifiants incorrects.",
 		"Too_many_login_attempts": "Trop de tentatives de connexion ont été effectuées. Par sécurité, veuillez patienter 5 minutes avant de réessayer.",

@@ -963,7 +963,8 @@
 			"box_legendary": "La boîte légendaire contenait {qty} {value} !",
 			"devil_ointment": "Vous avez soigné le statut maudit de votre Dinoz.",
 			"amnesic_rice": "Votre Dinoz ne sait plus comment il se prénomme, il a également perdu toute son expérience :xp: !",
-			"pampleboum": "Ouille ! Il y avait un noyau dans ce pampleboum !"
+			"pampleboum": "Ouille ! Il y avait un noyau dans ce pampleboum !",
+			"easter_egg": "L'œuf d'Urma contenait {qty} {value} !"
 		},
 		"Invalid_credentials": "Identifiants incorrects.",
 		"Too_many_login_attempts": "Trop de tentatives de connexion ont été effectuées. Par sécurité, veuillez patienter 5 minutes avant de réessayer.",
