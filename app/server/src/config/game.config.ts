@@ -33,7 +33,15 @@ const events = [
 	},
 	{
 		event: GameEvent.EASTER,
-		schedule: GameEventSchedule.EASTER,
+		start: {
+			month: 10,
+			day: 7
+		},
+		end: {
+			month: 10,
+			day: 7
+		},
+		//schedule: GameEventSchedule.EASTER,
 		theme: GameTheme.EASTER
 	},
 	{
