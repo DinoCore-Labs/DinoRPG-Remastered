@@ -11,7 +11,8 @@ export const MarketService = {
 		expired = false,
 		page = 1,
 		onlyMines = false,
-		silent = false
+		silent = false,
+		wonBy: string | null = null
 	): Promise<MarketListResponse> {
 		const apiFilter = filter === 'bids' ? 'all' : filter;
 		return http()
@@ -22,7 +23,8 @@ export const MarketService = {
 					...(expired ? { expired } : {}),
 					...(onlyMines ? { onlyMines } : {}),
 					...(sellerId ? { sellerId } : {}),
-					...(bidderId ? { bidderId } : {})
+					...(bidderId ? { bidderId } : {}),
+					...(wonBy ? { wonBy } : {})
 				}
 			})
 			.then(res => res.data);

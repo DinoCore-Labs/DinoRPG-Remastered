@@ -3514,3 +3514,200 @@ describe('market expiration scheduler', () => {
 		expect(future.status).toBe(OfferStatus.ONGOING);
 	});
 });
+
+describe('market transaction listings', () => {
+	it('does not list claimed seller offers as claimable expired sales', async () => {
+		const seller = await createTestUser({
+			name: 'ClaimedSellerHistory'
+		});
+		await createTestDinoz({
+			userId: seller.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() - 20_000),
+			status: OfferStatus.CLAIMED,
+			withItem: true
+		});
+		const endedOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() - 10_000),
+			status: OfferStatus.ENDED,
+			withItem: true
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: `/api/market/list/all?expired=true&onlyMines=true&sellerId=${seller.id}`,
+			headers: {
+				cookie: createAuthCookie(server, seller)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(1);
+		expect(body.offers).toHaveLength(1);
+		expect(body.offers[0].id).toBe(endedOffer.id);
+	});
+
+	it('lists only auctions actually won by the player', async () => {
+		const viewer = await createTestUser({
+			name: 'RealWinner'
+		});
+		const seller = await createTestUser({
+			name: 'WinnerSeller'
+		});
+		const otherBidder = await createTestUser({
+			name: 'HigherBidder'
+		});
+		await createTestDinoz({
+			userId: viewer.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const wonOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() - 10_000),
+			status: OfferStatus.ENDED,
+			withItem: true
+		});
+		await createListedBid({
+			offerId: wonOffer.id,
+			userId: viewer.id,
+			userName: viewer.name,
+			value: 15
+		});
+		const lostOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() - 20_000),
+			status: OfferStatus.ENDED,
+			withItem: true
+		});
+		await createListedBid({
+			offerId: lostOffer.id,
+			userId: viewer.id,
+			userName: viewer.name,
+			value: 10
+		});
+		await createListedBid({
+			offerId: lostOffer.id,
+			userId: otherBidder.id,
+			userName: otherBidder.name,
+			value: 20
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: `/api/market/list/all?expired=true&onlyMines=true&wonBy=${viewer.id}`,
+			headers: {
+				cookie: createAuthCookie(server, viewer)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(1);
+		expect(body.offers).toHaveLength(1);
+		expect(body.offers[0].id).toBe(wonOffer.id);
+		expect(body.offers[0].bids[0].userId).toBe(viewer.id);
+	});
+
+	it('does not list an already claimed win as a claimable win', async () => {
+		const winner = await createTestUser({
+			name: 'AlreadyClaimedWinner'
+		});
+		const seller = await createTestUser({
+			name: 'AlreadyClaimedSeller'
+		});
+		await createTestDinoz({
+			userId: winner.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const offer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() - 10_000),
+			status: OfferStatus.CLAIMED,
+			withItem: true
+		});
+		await createListedBid({
+			offerId: offer.id,
+			userId: winner.id,
+			userName: winner.name,
+			value: 15
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: `/api/market/list/all?expired=true&onlyMines=true&wonBy=${winner.id}`,
+			headers: {
+				cookie: createAuthCookie(server, winner)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(0);
+		expect(body.offers).toEqual([]);
+	});
+
+	it('lists claimed purchases only when the player actually won them', async () => {
+		const buyer = await createTestUser({
+			name: 'HistoryBuyer'
+		});
+		const seller = await createTestUser({
+			name: 'HistorySeller'
+		});
+		const otherBidder = await createTestUser({
+			name: 'HistoryOtherBidder'
+		});
+		await createTestDinoz({
+			userId: buyer.id,
+			placeId: PlaceEnum.PLACE_DU_MARCHE
+		});
+		const wonOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() - 10_000),
+			status: OfferStatus.CLAIMED,
+			withItem: true
+		});
+		await createListedBid({
+			offerId: wonOffer.id,
+			userId: buyer.id,
+			userName: buyer.name,
+			value: 20
+		});
+		const lostOffer = await createListedOffer({
+			sellerId: seller.id,
+			sellerName: seller.name,
+			endDate: new Date(Date.now() - 20_000),
+			status: OfferStatus.CLAIMED,
+			withItem: true
+		});
+		await createListedBid({
+			offerId: lostOffer.id,
+			userId: buyer.id,
+			userName: buyer.name,
+			value: 10
+		});
+		await createListedBid({
+			offerId: lostOffer.id,
+			userId: otherBidder.id,
+			userName: otherBidder.name,
+			value: 35
+		});
+		const response = await server.inject({
+			method: 'GET',
+			url: `/api/market/list/all?expired=true&wonBy=${buyer.id}`,
+			headers: {
+				cookie: createAuthCookie(server, buyer)
+			}
+		});
+		expect(response.statusCode).toBe(200);
+		const body = response.json();
+		expect(body.total).toBe(1);
+		expect(body.offers).toHaveLength(1);
+		expect(body.offers[0].id).toBe(wonOffer.id);
+		expect(body.offers[0].bids[0].userId).toBe(buyer.id);
+	});
+});
