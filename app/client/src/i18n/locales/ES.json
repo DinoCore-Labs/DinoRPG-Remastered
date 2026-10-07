@@ -956,7 +956,8 @@
 			"box_legendary": "¡La caja legendaria contenía {qty} {value}!",
 			"devil_ointment": "Has eliminado el estado maldito de tu Dino.",
 			"amnesic_rice": "¡Tu Dino ha olvidado su nombre y además perdió todo su :xp: !",
-			"pampleboum": "¡Ay! ¡Había un hoyo en este Pomelum!"
+			"pampleboum": "¡Ay! ¡Había un hoyo en este Pomelum!",
+			"easter_egg": "¡El Huevo de Urma contenía {qty} {value}!"
 		},
 		"Invalid_credentials": "Identifiants incorrects.",
 		"Too_many_login_attempts": "Trop de tentatives de connexion ont été effectuées. Par sécurité, veuillez patienter 5 minutes avant de réessayer.",
