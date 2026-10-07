@@ -1,11 +1,9 @@
 <template>
 	<div class="admin-events-page">
 		<TitleHeader title="Admin" header="Events :" sub-header="Gestion manuelle des événements" />
-
 		<div class="card">
 			<h3>Noël (CHRISTMAS)</h3>
 			<div v-if="message" :class="['feedback', messageType]">{{ message }}</div>
-
 			<div class="events-list">
 				<div class="event-row">
 					<div class="event-meta">
@@ -18,7 +16,6 @@
 						</DZButton>
 					</div>
 				</div>
-
 				<div class="event-row">
 					<div class="event-meta">
 						<span class="event-title">News de fin</span>
@@ -30,24 +27,28 @@
 						</DZButton>
 					</div>
 				</div>
-
 				<div class="event-row">
 					<div class="event-meta">
-						<span class="event-title">Remise des scores à zéro</span>
-						<span class="event-desc"
-							>Supprime tous les monstres enregistrés pour cet événement. Action irréversible.</span
-						>
+						<span class="event-title">Remise à zéro de l'édition actuelle</span>
+						<span class="event-desc">
+							Supprime uniquement les scores joueurs et clans de l'édition en cours. Les classements des éditions
+							précédentes sont conservés.
+						</span>
 					</div>
 					<div class="event-actions">
 						<DZButton
 							:disabled="loading === 'resetScores'"
-							@click="confirmAction('resetScores', 'Remettre tous les scores à 0 ? Cette action est irréversible.')"
+							@click="
+								confirmAction(
+									'resetScores',
+									'Remettre à zéro les scores de l’édition actuelle ? Les anciennes éditions seront conservées.'
+								)
+							"
 						>
 							{{ loading === 'resetScores' ? 'En cours...' : 'Exécuter' }}
 						</DZButton>
 					</div>
 				</div>
-
 				<div class="event-row">
 					<div class="event-meta">
 						<span class="event-title">Distribution des récompenses</span>
