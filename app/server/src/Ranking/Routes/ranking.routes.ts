@@ -1,7 +1,11 @@
 import { FastifyInstance } from 'fastify';
 import { ZodTypeProvider } from 'fastify-type-provider-zod';
 
-import { getClanEventRanking, getPlayerEventRanking } from '../Controller/getEventRanking.controller.js';
+import {
+	getClanEventRanking,
+	getEventRankingEditions,
+	getPlayerEventRanking
+} from '../Controller/getEventRanking.controller.js';
 import { getUserRankingSummary } from '../Controller/getUserPositionRanking.controller.js';
 import {
 	eventRankingQuerySchema,
@@ -86,6 +90,24 @@ export async function rankingRoutes(app: FastifyInstance) {
 			const { edition } = req.query;
 			const res = await getClanEventRanking(eventId, parseInt(page, 10) || 1, 50, edition);
 			reply.send(res);
+		}
+	);
+	typedApp.get(
+		'/event/:eventId/editions',
+		{
+			schema: {
+				tags: ['Ranking']
+			}
+		},
+		async (req, reply) => {
+			const { eventId } = req.params as {
+				eventId: string;
+			};
+			const editions = await getEventRankingEditions(eventId);
+			reply.send({
+				eventId,
+				editions
+			});
 		}
 	);
 }

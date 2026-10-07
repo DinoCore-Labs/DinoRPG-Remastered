@@ -250,16 +250,10 @@ const routes: RouteRecord[] = [
 						component: () => import('../components/rankings/EventPlayersRanking.vue'),
 						props: route => ({
 							eventId: route.params.eventId,
-							pageLoaded: Number(route.params.pageLoaded)
+							pageLoaded: Number(route.params.pageLoaded),
+							edition: route.query.edition ? Number(route.query.edition) : undefined
 						}),
-						meta: { public: true, showLeftPanel: false },
-						beforeEnter: (_to, _from, next) => {
-							if (gameConfigStore().activeEvents.length === 0) {
-								next({ name: 'RankingPlayers', params: { pageLoaded: 1 } });
-							} else {
-								next();
-							}
-						}
+						meta: { public: true, showLeftPanel: false }
 					},
 					{
 						path: 'event/clans/:eventId/:pageLoaded',
@@ -267,16 +261,10 @@ const routes: RouteRecord[] = [
 						component: () => import('../components/rankings/EventClansRanking.vue'),
 						props: route => ({
 							eventId: route.params.eventId,
-							pageLoaded: Number(route.params.pageLoaded)
+							pageLoaded: Number(route.params.pageLoaded),
+							edition: route.query.edition ? Number(route.query.edition) : undefined
 						}),
-						meta: { public: true, showLeftPanel: false },
-						beforeEnter: (_to, _from, next) => {
-							if (gameConfigStore().activeEvents.length === 0) {
-								next({ name: 'RankingPlayers', params: { pageLoaded: 1 } });
-							} else {
-								next();
-							}
-						}
+						meta: { public: true, showLeftPanel: false }
 					}
 				]
 			},

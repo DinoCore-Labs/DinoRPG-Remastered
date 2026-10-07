@@ -147,3 +147,34 @@ export async function getSpecificClanEventRank(
 	});
 	return clansAhead + 1;
 }
+
+export async function getEventRankingEditions(eventId: string): Promise<number[]> {
+	const [playerEditions, clanEditions] = await Promise.all([
+		prisma.userEventTracking.findMany({
+			where: {
+				eventId
+			},
+			select: {
+				edition: true
+			},
+			distinct: ['edition']
+		}),
+		prisma.clanEventTracking.findMany({
+			where: {
+				eventId
+			},
+			select: {
+				edition: true
+			},
+			distinct: ['edition']
+		})
+	]);
+	const editions = new Set<number>();
+	for (const row of playerEditions) {
+		editions.add(row.edition);
+	}
+	for (const row of clanEditions) {
+		editions.add(row.edition);
+	}
+	return Array.from(editions).sort((a, b) => b - a);
+}

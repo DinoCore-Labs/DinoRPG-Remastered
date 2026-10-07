@@ -84,12 +84,16 @@ export default defineComponent({
 		pageLoaded: {
 			type: Number,
 			required: true
+		},
+		edition: {
+			type: Number,
+			required: false
 		}
 	},
 	methods: {
 		async getRanking(): Promise<void> {
 			try {
-				const response = await RankingService.getEventPlayersRanking(this.eventId, this.pageLoaded);
+				const response = await RankingService.getEventPlayersRanking(this.eventId, this.pageLoaded, this.edition);
 				this.rankings = response.ranking;
 				this.page = response.page;
 				this.pageSize = response.pageSize;
@@ -99,7 +103,15 @@ export default defineComponent({
 			}
 		},
 		changePage(i: number) {
-			this.$router.push({ name: this.$route.name ?? '', params: { pageLoaded: this.page + i } });
+			this.$router.push({
+				name: this.$route.name ?? '',
+				params: {
+					pageLoaded: this.page + i
+				},
+				query: {
+					...this.$route.query
+				}
+			});
 		},
 		goToClan(id: number | undefined) {
 			if (id) {
@@ -114,6 +126,9 @@ export default defineComponent({
 	watch: {
 		pageLoaded(val) {
 			this.page = val;
+			this.getRanking();
+		},
+		edition() {
 			this.getRanking();
 		}
 	}
