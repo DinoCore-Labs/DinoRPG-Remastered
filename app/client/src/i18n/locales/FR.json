@@ -1073,12 +1073,15 @@
 	},
 	"ranking": {
 		"event": {
-			"edition": "Édition"
+			"edition": "Édition",
+			"archiveDisclaimer": "Les classements des anciennes éditions sont conservés.",
+			"viewEdition": "Voir le classement de l'édition {edition}",
+			"archiveOnly": "Aucun événement classé n'est actuellement en cours. Vous consultez les archives des précédentes éditions."
 		},
 		"tabs": {
 			"players": "Joueurs",
 			"average": "Moyenne",
-			"event": "Événement - Noël",
+			"event": "Événements",
 			"eventPlayers": "Événement de Noël - Joueurs",
 			"eventClans": "Événement de Noël - Clans"
 		},
