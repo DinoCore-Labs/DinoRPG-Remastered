@@ -38,5 +38,11 @@ export const RankingService = {
 	): Promise<EventRankingResponse<EventClanRankingEntry>> {
 		const query = edition ? `?edition=${edition}` : '';
 		return api.get<EventRankingResponse<EventClanRankingEntry>>(`/ranking/event/clans/${eventId}/${page}${query}`);
+	},
+	getEventRankingEditions(eventId: string): Promise<{
+		eventId: string;
+		editions: number[];
+	}> {
+		return api.get(`/ranking/event/${eventId}/editions`);
 	}
 };

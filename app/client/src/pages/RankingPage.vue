@@ -1,6 +1,5 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.ranking')}`" :header="$t('common.ranking')" :sub-header="$t(subHeader)" />
-
 	<ul class="onglets main-tabs">
 		<li :class="{ active: isPlayerTab }">
 			<RouterLink :to="{ name: 'RankingPlayers', params: { pageLoaded: 1 } }">
@@ -12,13 +11,12 @@
 				{{ $t('common.clans') }}
 			</RouterLink>
 		</li>
-		<li :class="{ active: isEventTab }" v-if="isEventActive">
+		<li :class="{ active: isEventTab }" v-if="isEventActive || isEventTab">
 			<RouterLink :to="{ name: 'RankingEventClans', params: { eventId: currentEventId, pageLoaded: 1 } }">
 				{{ $t('ranking.tabs.event') }}
 			</RouterLink>
 		</li>
 	</ul>
-
 	<ul class="onglets sub-tabs" v-if="isPlayerTab">
 		<li :class="{ active: $route.name === 'RankingPlayers' }">
 			<RouterLink :to="{ name: 'RankingPlayers', params: { pageLoaded: 1 } }">
@@ -36,7 +34,6 @@
 			</RouterLink>
 		</li>
 	</ul>
-
 	<ul class="onglets sub-tabs" v-if="isClanTab">
 		<li :class="{ active: $route.name === 'RankingClans' }">
 			<RouterLink :to="{ name: 'RankingClans', params: { pageLoaded: 1 } }">
@@ -49,65 +46,105 @@
 			</RouterLink>
 		</li>
 	</ul>
-
 	<ul class="onglets sub-tabs" v-if="isEventTab">
 		<li :class="{ active: $route.name === 'RankingEventClans' }">
-			<RouterLink :to="{ name: 'RankingEventClans', params: { eventId: currentEventId, pageLoaded: 1 } }">
+			<RouterLink
+				:to="{ name: 'RankingEventClans', params: { eventId: currentEventId, pageLoaded: 1 }, query: $route.query }"
+			>
 				{{ $t('common.clans') }}
 			</RouterLink>
 		</li>
 		<li :class="{ active: $route.name === 'RankingEventPlayers' }">
-			<RouterLink :to="{ name: 'RankingEventPlayers', params: { eventId: currentEventId, pageLoaded: 1 } }">
+			<RouterLink
+				:to="{ name: 'RankingEventPlayers', params: { eventId: currentEventId, pageLoaded: 1 }, query: $route.query }"
+			>
 				{{ $t('ranking.tabs.players') }}
 			</RouterLink>
 		</li>
 	</ul>
-
+	<div v-if="isEventTab && eventEditionOptions.length > 0" class="event-edition-selector">
+		<span>{{ $t('ranking.event.edition') }}</span>
+		<DZSelect
+			id="event-ranking-edition"
+			v-model="selectedEventEdition"
+			:options="eventEditionOptions"
+			@change="changeEventEdition"
+		/>
+	</div>
 	<RouterView />
 </template>
-<!--<li>
-			<RouterLink
-				:to="{
-					name: 'RankingClans',
-					params: { pageLoaded: 1 }
-				}"
-				>{{ $t('tabs.clans') }}</RouterLink
-			>
-		</li>
-		<li>
-			<RouterLink
-				:to="{
-					name: 'RankingPantheon'
-				}"
-				>{{ $t('tabs.pantheon') }}</RouterLink
-			>
-		</li>
-		<li>
-			<RouterLink
-				:to="{
-					name: 'StatRanking'
-				}"
-				>{{ $t('tabs.stats') }}</RouterLink
-			>
-		</li>-->
 
 <script lang="ts">
 import type { UserData } from '@dinorpg/core/models/user/userData.js';
 import { gameConfigStore } from '../store/gameConfigStore.js';
-import { defineComponent, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { computed, defineComponent, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { RouterView } from 'vue-router';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { getImgURL } from '../utils/getImgURL';
+import DZSelect, { type SelectOption } from '../components/utils/DZSelect.vue';
+import { RankingService } from '../services';
 
 export default defineComponent({
 	name: 'Ranking',
 	components: {
 		TitleHeader,
-		RouterView
+		RouterView,
+		DZSelect
 	},
 	setup() {
 		const route = useRoute();
+		const router = useRouter();
+
+		const eventEditions = ref<number[]>([]);
+		const selectedEventEdition = ref<number | undefined>(route.query.edition ? Number(route.query.edition) : undefined);
+
+		const eventEditionOptions = computed<SelectOption<number>[]>(() =>
+			eventEditions.value.map(edition => ({
+				value: edition,
+				label: edition.toString()
+			}))
+		);
+
+		const loadEventEditions = async () => {
+			const eventId = (route.params.eventId as string | undefined) ?? currentEventId.value;
+			if (!eventId) {
+				eventEditions.value = [];
+				return;
+			}
+			const response = await RankingService.getEventRankingEditions(eventId);
+			eventEditions.value = response.editions;
+			if (selectedEventEdition.value === undefined && response.editions.length > 0) {
+				selectedEventEdition.value = response.editions[0];
+			}
+		};
+
+		const changeEventEdition = async () => {
+			if (!selectedEventEdition.value) {
+				return;
+			}
+			await router.push({
+				name: route.name ?? undefined,
+				params: {
+					...route.params,
+					pageLoaded: 1
+				},
+				query: {
+					...route.query,
+					edition: selectedEventEdition.value.toString()
+				}
+			});
+		};
+
+		watch(
+			() => route.params.eventId,
+			() => {
+				void loadEventEditions();
+			},
+			{
+				immediate: true
+			}
+		);
 
 		const isPlayerTab = computed(() =>
 			['RankingPlayers', 'RankingAverage', 'RankingCompletion'].includes(route.name as string)
@@ -144,8 +181,17 @@ export default defineComponent({
 					return 'ranking.tabs.players';
 			}
 		});
-
-		return { subHeader, isPlayerTab, isClanTab, isEventTab, isEventActive, currentEventId };
+		return {
+			subHeader,
+			isPlayerTab,
+			isClanTab,
+			isEventTab,
+			isEventActive,
+			currentEventId,
+			eventEditionOptions,
+			selectedEventEdition,
+			changeEventEdition
+		};
 	},
 	methods: {
 		getImgURL,
