@@ -4,6 +4,7 @@ import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { RaceEnum } from '@dinorpg/core/models/enums/Race.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
+import { URMA_EGG_REWARDS, URMA_EGG_TOTAL_WEIGHT } from '@dinorpg/core/models/events/easter/urmaEggRewards.js';
 import { ItemFeedBack, SpecialItemResult, UseItemResult } from '@dinorpg/core/models/items/itemFeedback.js';
 import { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
@@ -349,6 +350,38 @@ async function hatchEgg(item: ItemFiche, authed: Pick<User, 'id'>) {
 	};
 }
 
+function drawUrmaEggReward(): Item {
+	if (URMA_EGG_TOTAL_WEIGHT <= 0) {
+		throw new Error('Urma egg reward pool has an invalid total weight.');
+	}
+	const roll = Math.floor(Math.random() * URMA_EGG_TOTAL_WEIGHT);
+	let cumulativeWeight = 0;
+	for (const reward of URMA_EGG_REWARDS) {
+		cumulativeWeight += reward.weight;
+		if (roll < cumulativeWeight) {
+			return reward.item;
+		}
+	}
+	/*
+	 * This should never happen as long as URMA_EGG_TOTAL_WEIGHT
+	 * matches the sum of all configured weights.
+	 */
+	throw new Error('Unable to draw an Urma egg reward.');
+}
+
+function canAddItemToInventory(
+	user: {
+		shopKeeper: boolean;
+		items: Pick<UserItems, 'itemId' | 'quantity'>[];
+	},
+	item: Item
+): boolean {
+	const itemFiche = itemList[item];
+	const inventoryItem = user.items.find(entry => entry.itemId === itemFiche.itemId);
+	const maxQuantity = user.shopKeeper ? Math.round(itemFiche.maxQuantity * 1.5) : itemFiche.maxQuantity;
+	return !inventoryItem || inventoryItem.quantity < maxQuantity;
+}
+
 async function useSpecialItem(
 	dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife' | 'level' | 'raceId'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
@@ -430,6 +463,22 @@ async function useSpecialItem(
 					value: item.name.toLowerCase(),
 					effect: wonItem.name.toLowerCase(),
 					quantity: boxOpened.quantity
+				}
+			};
+		}
+		case 'urma_egg': {
+			const rewardItem = drawUrmaEggReward();
+			const rewardFiche = itemList[rewardItem];
+			const canReceiveReward = canAddItemToInventory(dinoz.user, rewardItem);
+			if (canReceiveReward) {
+				await addItemToInventory(dinoz.user.id, rewardFiche.itemId, 1);
+			}
+			return {
+				specialEffect: {
+					category: ItemEffect.SPECIAL,
+					value: item.name.toLowerCase(),
+					effect: rewardFiche.name.toLowerCase(),
+					quantity: canReceiveReward ? 1 : 0
 				}
 			};
 		}
