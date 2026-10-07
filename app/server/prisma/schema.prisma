@@ -1405,6 +1405,7 @@ enum NewsType {
   tid_start
   tid_end
   event_christmas
+  event_easter
   story
   announce
 }
