@@ -233,7 +233,7 @@ export const jeromeKDinovilleDialog = defineDialog({
 	first: 'begin',
 	pnj: {
 		image: false,
-		gfx: 'trader',
+		gfx: 'trader2',
 		frame: 'speak',
 		background: '1'
 	},
