@@ -145,8 +145,11 @@ export async function adminDistributeRewardsHandler(req: FastifyRequest, reply: 
 	const event = getEventConfig(eventId);
 	if (!event) return reply.status(404).send({ error: `Event "${eventId}" not found or not supported.` });
 	if (event.event === GameEvent.CHRISTMAS) {
-		await distributeChristmasRewards();
-		return { message: 'Récompenses Noël distribuées avec succès.' };
+		const edition = getEventEdition();
+		await distributeChristmasRewards(edition);
+		return {
+			message: `Récompenses Noël ${edition} distribuées avec succès.`
+		};
 	}
 	return reply.status(400).send({ error: `Aucun distributeur de récompenses défini pour l'événement ${eventId}.` });
 }
