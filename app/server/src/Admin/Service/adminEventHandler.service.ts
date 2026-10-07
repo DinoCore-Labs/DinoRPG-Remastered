@@ -5,7 +5,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import gameConfig from '../../config/game.config.js';
 import { distributeChristmasRewards } from '../../Events/Service/eventChristmasRewards.service.js';
-import { checkEventNews } from '../../jobs/handlers/eventNews.js';
+import { getGameEventDateRange } from '../../GameEvent/Service/gameEvent.service.js';
 import { newsService } from '../../News/Service/news.service.js';
 import { prisma } from '../../prisma.js';
 
@@ -32,10 +32,17 @@ export async function adminPublishStartNewsHandler(req: FastifyRequest, reply: F
 	const excerptKey = `news.event.${eventNameLower}.start.excerpt`;
 	const contentKey = `news.event.${eventNameLower}.start.content`;
 	const slug = `event-${eventNameLower}-${now.getFullYear()}`;
-	const endMonthStr = event.end.month.toString().padStart(2, '0');
-	const endDayStr = event.end.day.toString().padStart(2, '0');
-	const params = JSON.stringify({ eventEndDate: `${endDayStr}/${endMonthStr}` });
-
+	const range = getGameEventDateRange(event, now);
+	if (!range) {
+		return reply.status(500).send({
+			error: `Unable to resolve dates for event "${event.event}".`
+		});
+	}
+	const endMonthStr = range.end.month.toString().padStart(2, '0');
+	const endDayStr = range.end.day.toString().padStart(2, '0');
+	const params = JSON.stringify({
+		eventEndDate: `${endDayStr}/${endMonthStr}`
+	});
 	try {
 		await newsService.createAdminNews({
 			slug,
@@ -50,7 +57,6 @@ export async function adminPublishStartNewsHandler(req: FastifyRequest, reply: F
 	} catch (e: any) {
 		if (!e?.message?.includes('Unique constraint failed')) throw e;
 	}
-
 	return { message: `News de début publiée pour l'événement ${eventId}.` };
 }
 
@@ -115,11 +121,9 @@ export async function adminDistributeRewardsHandler(req: FastifyRequest, reply: 
 	const { eventId } = req.params as { eventId: string };
 	const event = getEventConfig(eventId);
 	if (!event) return reply.status(404).send({ error: `Event "${eventId}" not found or not supported.` });
-
 	if (event.event === GameEvent.CHRISTMAS) {
 		await distributeChristmasRewards();
 		return { message: 'Récompenses Noël distribuées avec succès.' };
 	}
-
 	return reply.status(400).send({ error: `Aucun distributeur de récompenses défini pour l'événement ${eventId}.` });
 }

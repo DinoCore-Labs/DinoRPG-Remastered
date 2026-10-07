@@ -1,6 +1,7 @@
 export enum GameEvent {
 	APRIL_FOOLS = 'APRIL_FOOLS',
 	CHRISTMAS = 'CHRISTMAS',
+	EASTER = 'EASTER',
 	HALLOWEEN = 'HALLOWEEN',
 	VALENTINE = 'VALENTINE'
 }
@@ -9,7 +10,13 @@ export enum GameTheme {
 	DEFAULT = 'default',
 	APRIL_FOOLS = 'april_fools',
 	CHRISTMAS = 'christmas',
+	EASTER = 'easter',
 	HALLOWEEN = 'halloween'
+}
+
+export enum GameEventSchedule {
+	FIXED = 'FIXED',
+	EASTER = 'EASTER'
 }
 
 export interface GameEventDate {
@@ -19,14 +26,15 @@ export interface GameEventDate {
 
 export interface GameEventConfig {
 	event: GameEvent;
-	start: GameEventDate;
-	end: GameEventDate;
-	softCap: number;
+	start?: GameEventDate;
+	end?: GameEventDate;
+	schedule?: GameEventSchedule;
+	softCap?: number;
 	theme?: GameTheme;
 }
 
 export interface ActiveGameEvent {
 	event: GameEvent;
-	softCap: number;
+	softCap?: number;
 	theme?: GameTheme;
 }

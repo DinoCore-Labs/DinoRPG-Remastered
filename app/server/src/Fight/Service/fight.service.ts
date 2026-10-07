@@ -715,8 +715,8 @@ function eventMonsterProba(
 	eventMonsterKilled: number
 ) {
 	let eventFactor = 1;
-	if (eventMonsterKilled > event.softCap) {
-		eventFactor = 0.3 * Math.exp(-0.069 * (eventMonsterKilled - event.softCap));
+	if (event.softCap !== undefined && eventMonsterKilled > event.softCap) {
+		eventFactor = 0.3 * Math.exp(-0.039 * (eventMonsterKilled - event.softCap));
 	}
 	let delta = dinozLevel - monsterLvl;
 	if (delta < 0) {
