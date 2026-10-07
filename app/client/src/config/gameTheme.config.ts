@@ -8,7 +8,6 @@ import aprilFoolsBgFooter from '../assets/background/events/april-fools/full_foo
 import bgSky2 from '../assets/background/events/christmas/bg_ciel.webp';
 import dinozBgNoel from '../assets/background/events/christmas/dinoz_bg_noel.webp';
 import christmasBgHeader from '../assets/background/events/christmas/full_bg_noel.webp';
-import dinozBgEaster from '../assets/background/events/easter/dinoz_bg_easter.webp';
 import easterBgHeader from '../assets/background/events/easter/full_bg_easter.webp';
 import halloweenBgHeader from '../assets/background/events/halloween/full_bg_halloween.webp';
 import bgHeader from '../assets/background/full_bg.webp';
@@ -44,7 +43,7 @@ export const GAME_THEMES: Partial<Record<GameTheme, typeof DEFAULT_GAME_THEME>> 
 		header: easterBgHeader,
 		core: bgCore,
 		footer: bgFooter,
-		dinoz: dinozBgEaster
+		dinoz: dinozBg
 	},
 	[GameTheme.HALLOWEEN]: {
 		sky: bgSky,
