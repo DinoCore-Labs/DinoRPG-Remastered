@@ -1,6 +1,9 @@
 import type {
 	ClanRankingEntry,
 	DojoRankingEntry,
+	EventClanRankingEntry,
+	EventPlayerRankingEntry,
+	EventRankingResponse,
 	RankingEntry,
 	RankingPositionResponse
 } from '@dinorpg/core/models/ranking/rankingEntry.js';
@@ -20,10 +23,20 @@ export const RankingService = {
 	getDojoRanking(sort: string, page: number): Promise<DojoRankingEntry[]> {
 		return api.get<DojoRankingEntry[]>(`/ranking/list/${sort}/${page}`);
 	},
-	getEventPlayersRanking(eventId: string, page: number): Promise<any> {
-		return api.get<any>(`/ranking/event/players/${eventId}/${page}`);
+	getEventPlayersRanking(
+		eventId: string,
+		page: number,
+		edition?: number
+	): Promise<EventRankingResponse<EventPlayerRankingEntry>> {
+		const query = edition ? `?edition=${edition}` : '';
+		return api.get<EventRankingResponse<EventPlayerRankingEntry>>(`/ranking/event/players/${eventId}/${page}${query}`);
 	},
-	getEventClansRanking(eventId: string, page: number): Promise<any> {
-		return api.get<any>(`/ranking/event/clans/${eventId}/${page}`);
+	getEventClansRanking(
+		eventId: string,
+		page: number,
+		edition?: number
+	): Promise<EventRankingResponse<EventClanRankingEntry>> {
+		const query = edition ? `?edition=${edition}` : '';
+		return api.get<EventRankingResponse<EventClanRankingEntry>>(`/ranking/event/clans/${eventId}/${page}${query}`);
 	}
 };
