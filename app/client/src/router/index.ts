@@ -50,7 +50,6 @@ import SkillTreesPage from '../pages/SkillTreesPage.vue';
 import TrainingCenterPage from '../pages/TrainingCenterPage.vue';
 import { UserService } from '../services/user.service.js';
 import { dinozStore } from '../store/dinozStore';
-import { gameConfigStore } from '../store/gameConfigStore.js';
 import { userStore } from '../store/userStore';
 import { clearClientSession, isLogoutSessionInProgress } from '../utils/clearSession';
 import { is_granted } from '../utils/permission';

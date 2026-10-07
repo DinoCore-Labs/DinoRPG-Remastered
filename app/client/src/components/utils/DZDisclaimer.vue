@@ -15,7 +15,10 @@
 	<div :class="['disclaimer', { round }]">
 		<img v-if="help" :src="getImgURL('icons', 'question', true)" class="icon" />
 		<img v-if="timer" :src="getImgURL('icons', 'small_chrono')" class="icon" />
-		<div v-html="formatContent($t(content, params))" />
+		<div class="content">
+			<div v-html="formatContent($t(content, params))" />
+			<slot />
+		</div>
 	</div>
 </template>
 
