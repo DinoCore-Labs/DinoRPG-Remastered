@@ -147,6 +147,8 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 			return context.world.activeFeatures.has(condition.key);
 		case 'hour':
 			return compareNumber(getGameHour(context.now), condition.value, condition.compare);
+		case 'event':
+			return context.world.activeEvents.has(condition.key.toUpperCase());
 		case 'date':
 		case 'day':
 		case 'caushrock':
@@ -158,7 +160,6 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'dungeon':
 		case 'clanact':
 		case 'friend':
-		case 'event':
 		case 'promo':
 		case 'war':
 		case 'config':

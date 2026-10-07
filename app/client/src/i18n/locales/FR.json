@@ -4736,6 +4736,12 @@
 				}
 			}
 		},
+		"urma": {
+			"name": "Madame Urma",
+			"dialog": {
+				"begin": "Bonjour ! J'ai quelque chose de très spécial à vous proposer pour Pâques..."
+			}
+		},
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
