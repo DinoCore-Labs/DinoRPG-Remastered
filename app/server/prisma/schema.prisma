@@ -1437,15 +1437,20 @@ model DevourerControl {
 model UserEventTracking {
   id        Int      @id @default(autoincrement())
   eventId   String
+  edition   Int
+
   userId    String   @db.Uuid
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   daily     Int      @default(0)
   total     Int      @default(0)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
 
-  @@unique([eventId, userId])
+  @@unique([eventId, edition, userId])
   @@index([userId])
-  @@index([eventId])
+  @@index([eventId, edition])
   @@map("user_event_tracking")
 }
 
