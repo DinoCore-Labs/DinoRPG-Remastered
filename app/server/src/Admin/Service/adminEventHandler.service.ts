@@ -5,6 +5,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import gameConfig from '../../config/game.config.js';
 import { distributeChristmasRewards } from '../../Events/Service/eventChristmasRewards.service.js';
+import { getEventEdition } from '../../Events/Service/eventTracking.service.js';
 import { getGameEventDateRange } from '../../GameEvent/Service/gameEvent.service.js';
 import { newsService } from '../../News/Service/news.service.js';
 import { prisma } from '../../prisma.js';
@@ -111,10 +112,32 @@ export async function adminPublishEndNewsHandler(req: FastifyRequest, reply: Fas
 export async function adminResetScoresHandler(req: FastifyRequest, reply: FastifyReply) {
 	const { eventId } = req.params as { eventId: string };
 	const event = getEventConfig(eventId);
-	if (!event) return reply.status(404).send({ error: `Event "${eventId}" not found or not supported.` });
-
-	const result = await prisma.userEventTracking.deleteMany({ where: { eventId: event.event } });
-	return { message: `${result.count} entrées de progression supprimées pour l'événement ${eventId}.` };
+	if (!event) {
+		return reply.status(404).send({
+			error: `Event "${eventId}" not found or not supported.`
+		});
+	}
+	const edition = getEventEdition();
+	const [userResult, clanResult] = await prisma.$transaction([
+		prisma.userEventTracking.deleteMany({
+			where: {
+				eventId: event.event,
+				edition
+			}
+		}),
+		prisma.clanEventTracking.deleteMany({
+			where: {
+				eventId: event.event,
+				edition
+			}
+		})
+	]);
+	return {
+		message:
+			`${userResult.count} progression(s) joueur et ` +
+			`${clanResult.count} progression(s) clan supprimée(s) ` +
+			`pour ${eventId} ${edition}.`
+	};
 }
 
 export async function adminDistributeRewardsHandler(req: FastifyRequest, reply: FastifyReply) {
