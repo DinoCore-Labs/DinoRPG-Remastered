@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.42.0
+
+### Minor Changes
+
+- 1f2b1dd: Add the new game event system with dynamic event scheduling, event editions, rankings archives, Easter event support, and event-specific themes.
+
 ## 0.41.0
 
 ### Minor Changes
@@ -722,6 +728,17 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.45.0
+
+### Minor Changes
+
+- 1f2b1dd: Add the new game event system with dynamic event scheduling, event editions, rankings archives, Easter event support, and event-specific themes.
+
+### Patch Changes
+
+- Updated dependencies [1f2b1dd]
+  - @dinorpg/core@0.42.0
 
 ## 0.44.0
 
@@ -1696,6 +1713,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.43.0
+
+### Minor Changes
+
+- 1f2b1dd: Add the new game event system with dynamic event scheduling, event editions, rankings archives, Easter event support, and event-specific themes.
 
 ## 0.42.0
 
