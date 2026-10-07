@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.43.0
+
+### Minor Changes
+
+- 1f2b1dd: Add the new game event system with dynamic event scheduling, event editions, rankings archives, Easter event support, and event-specific themes.
+
 ## 0.42.0
 
 ### Minor Changes

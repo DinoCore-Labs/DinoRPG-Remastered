@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.45.0
+
+### Minor Changes
+
+- 1f2b1dd: Add the new game event system with dynamic event scheduling, event editions, rankings archives, Easter event support, and event-specific themes.
+
+### Patch Changes
+
+- Updated dependencies [1f2b1dd]
+  - @dinorpg/core@0.42.0
+
 ## 0.44.0
 
 ### Minor Changes
