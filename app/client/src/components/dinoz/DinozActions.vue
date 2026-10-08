@@ -575,13 +575,12 @@ export default defineComponent({
 				case GatherType.XMAS:
 				case GatherType.TICTAC:
 				case GatherType.LABO:
-				case GatherType.ANNIV:
+				case Action.ANNIV:
 				case GatherType.PARTY:
 				case Action.DAILY:
 					{
 						const dId = action.forDinoz ? Number(action.forDinoz) : Number(this.dinozId);
 						const gType = String(action.name);
-
 						if (localStore().getBypassGatheringGrid) {
 							await this.handleDirectGathering(dId, gType);
 						} else {
