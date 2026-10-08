@@ -14,8 +14,8 @@
 import { DinozItems } from '@dinorpg/core/models/dinoz/dinozItems.js';
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
-import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { MapZone } from '@dinorpg/core/models/enums/MapZone.js';
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
 import { FightOutcome, FightProcessResult } from '@dinorpg/core/models/fight/fightResult.js';
@@ -879,7 +879,17 @@ export async function generateMonsterList(
 		monsterLevel += mdelta;
 	}
 	// Valentine: one Febrez in 30% of regular encounters, only in the nine MT zones.
-	const valentineZones = [MapZone.DINOLAND, MapZone.DINOWEST, MapZone.JUNGLE, MapZone.ILES, MapZone.GTOUTCHAUD, MapZone.STEPPE, MapZone.NIMBAO, MapZone.ILEMONSTRE, MapZone.CAUSHEMESH];
+	const valentineZones = [
+		MapZone.DINOLAND,
+		MapZone.DINOWEST,
+		MapZone.JUNGLE,
+		MapZone.ILES,
+		MapZone.GTOUTCHAUD,
+		MapZone.STEPPE,
+		MapZone.NIMBAO,
+		MapZone.ILEMONSTRE,
+		MapZone.CAUSHEMESH
+	];
 	if (activeEventNames.has(GameEvent.VALENTINE) && valentineZones.includes(place.map) && Math.random() < 0.3) {
 		monsterArray.push(monsterList[Monster.FEBREZA]);
 	}
