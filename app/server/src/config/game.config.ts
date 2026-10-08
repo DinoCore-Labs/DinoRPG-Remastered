@@ -52,11 +52,11 @@ const events = [
 		event: GameEvent.VALENTINE,
 		start: {
 			month: 2,
-			day: 14
+			day: 13
 		},
 		end: {
 			month: 2,
-			day: 14
+			day: 15
 		},
 		theme: GameTheme.VALENTINE
 	}

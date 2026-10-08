@@ -10,6 +10,8 @@ import dinozBgNoel from '../assets/background/events/christmas/dinoz_bg_noel.web
 import christmasBgHeader from '../assets/background/events/christmas/full_bg_noel.webp';
 import easterBgHeader from '../assets/background/events/easter/full_bg_easter.webp';
 import halloweenBgHeader from '../assets/background/events/halloween/full_bg_halloween.webp';
+import bgSky3 from '../assets/background/events/valentine/bg_ciel_rose.webp';
+import valentineBgHeader from '../assets/background/events/valentine/full_bg_valentine.webp';
 import bgHeader from '../assets/background/full_bg.webp';
 import bgCore from '../assets/background/full_core_bg.webp';
 import bgFooter from '../assets/background/full_footer.webp';
@@ -45,8 +47,13 @@ export const GAME_THEMES: Partial<Record<GameTheme, typeof DEFAULT_GAME_THEME>> 
 		footer: bgFooter,
 		dinoz: dinozBg
 	},
-	// The Valentine-specific image asset has not yet been committed to this base branch.
-	[GameTheme.VALENTINE]: DEFAULT_GAME_THEME,
+	[GameTheme.VALENTINE]: {
+		sky: bgSky3,
+		header: valentineBgHeader,
+		core: bgCore,
+		footer: bgFooter,
+		dinoz: dinozBg
+	},
 	[GameTheme.HALLOWEEN]: {
 		sky: bgSky,
 		header: halloweenBgHeader,
