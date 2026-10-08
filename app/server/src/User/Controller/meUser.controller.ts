@@ -1,4 +1,5 @@
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
+import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 import { GAME_RULES_VERSION } from '@dinorpg/core/models/game/gameRules.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
@@ -9,8 +10,8 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { GameLogType } from '../../../../prisma/index.js';
 import { ACCESS_TOKEN_COOKIE, authCookieOptions } from '../../config/cookie.js';
 import { getUserMaxDinoz } from '../../Dinoz/Controller/getActiveDinoz.js';
+import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
-import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { isSameDay } from '../../utils/dateHelpers.js';
@@ -57,7 +58,42 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			// Update stat
 			await incrementUserStat(StatTracking.P_DAYS, userId, 1);
 			// Give 1 daily ticket
-			await addItemToInventory(userId, Item.DAILY_TICKET, 1);
+			await tx.userItems.upsert({
+				where: {
+					itemId_userId: {
+						userId,
+						itemId: Item.DAILY_TICKET
+					}
+				},
+				create: {
+					userId,
+					itemId: Item.DAILY_TICKET,
+					quantity: 1
+				},
+				update: {
+					quantity: { increment: 1 }
+				}
+			});
+			// Give 1 birthday ticket during the anniversary event
+			const isBirthdayActive = getActiveGameEvents(connectedAt).some(event => event.event === GameEvent.BIRTHDAY);
+			if (isBirthdayActive) {
+				await tx.userItems.upsert({
+					where: {
+						itemId_userId: {
+							userId,
+							itemId: Item.CANDLE_CARD
+						}
+					},
+					create: {
+						userId,
+						itemId: Item.CANDLE_CARD,
+						quantity: 1
+					},
+					update: {
+						quantity: { increment: 1 }
+					}
+				});
+			}
 			// Tik bracelet regen (& alive)
 			const dinozWithTikBracelet = user.dinoz.filter(
 				d => d.life > 0 && d.items.some(i => i.itemId === Item.TIK_BRACELET)
@@ -172,7 +208,6 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				req.log
 			);
 		}
-
 		if (
 			user.gameRulesAcceptedVersion === GAME_RULES_VERSION &&
 			(req.user as any).gameRulesAcceptedVersion !== GAME_RULES_VERSION
@@ -192,7 +227,6 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				...authCookieOptions
 			});
 		}
-
 		const gold = user.wallets.find(w => w.type === 'GOLD')?.amount ?? 0;
 		const treasureTicket = user.wallets.find(w => w.type === 'TREASURE_TICKET')?.amount ?? 0;
 		const maxDinoz = getUserMaxDinoz({
