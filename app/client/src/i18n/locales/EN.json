@@ -612,6 +612,20 @@
 					"excerpt": "All the Piglous have been hunted down, and it’s time to hand out the rewards!",
 					"content": "The Great Piglou Hunt is officially over!\n\nThanks to your combined efforts, the Piglou threat has been pushed back (at least for now...). Individual and clan rewards have been distributed automatically and added to your inventories. You should have received a notification detailing your rewards when you logged in.\n\n### :conts1: Top 3 Players\n{topPlayers}\n\n### :cup1: Top 3 Clans\n{topClans}\n\nCongratulations to all participants, and thank you for your incredible enthusiasm!\n\nSee you very soon for more adventures!"
 				}
+			},
+			"easter": {
+				"start": {
+					"title": "Joyeuses Pâques !",
+					"excerpt": "Madame Urma est de retour à Dinoville !",
+					"content": "POUR LES FÊTES DE PÂQUES,\n\nGOÛTEZ UN OEUF DE MADAME URMA !\n\nElle a eu une nouvelle fois l'autorisation du Roi d'écouler son stock d'oeufs pendant le week-end et même jusqu'à lundi soir minuit, dans les rues de Dinoville. À l'intérieur, vous trouverez sûrement une surprise !\n\nJoyeuses fêtes à tous les maîtres Dinoz, faîtes trembler les chocolats sur votre passage !"
+				}
+			},
+			"birthday": {
+				"start": {
+					"title": "🎂 Happy Birthday DinoRPG!",
+					"excerpt": "From July 1 to 11, log in every day to receive a Birthday Ticket and try your luck at the Port of Prêche!",
+					"content": "On **July 4**, DinoRPG celebrates its birthday! 🎉\n\nTo celebrate, a special surprise awaits every Dinoz tamer!\n\n## 🎟️ A daily gift!\n\nFrom **July 1 to 7**, log in each day to receive **1 Birthday Ticket** directly in your inventory.\n\n## 🏖️ Head to the Port of Prêche!\n\nUse your tickets to play the **special birthday scratch grid** and discover amazing treasures and exclusive rewards!\n\nEach ticket lets you **scratch 3 squares**.\n\nDon't forget to log in every day to maximize your chances!\n\n🎉 The entire DinoRPG Remastered team thanks you for keeping this adventure alive. Happy Birthday DinoRPG!"
+				}
 			}
 		}
 	},

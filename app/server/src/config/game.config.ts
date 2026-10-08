@@ -21,8 +21,8 @@ const events = [
 	{
 		event: GameEvent.BIRTHDAY,
 		start: {
-			month: 6,
-			day: 30
+			month: 1,
+			day: 7
 		},
 		end: {
 			month: 7,

@@ -1419,6 +1419,7 @@ enum NewsType {
   championship
   tid_start
   tid_end
+  event_birthday
   event_christmas
   event_easter
   story
