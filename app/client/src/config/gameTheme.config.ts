@@ -5,6 +5,8 @@ import dinozBg from '../assets/background/dinoz_bg_cut.webp';
 import aprilFoolsBgHeader from '../assets/background/events/april-fools/full_bg_fish.webp';
 import aprilFoolsBgCore from '../assets/background/events/april-fools/full_core_bg_fish.webp';
 import aprilFoolsBgFooter from '../assets/background/events/april-fools/full_footer_fish.webp';
+import bgSky4 from '../assets/background/events/birthday/bg_nuit.webp';
+import birthdayBgHeader from '../assets/background/events/birthday/full_bg_birthday.webp';
 import bgSky2 from '../assets/background/events/christmas/bg_ciel.webp';
 import dinozBgNoel from '../assets/background/events/christmas/dinoz_bg_noel.webp';
 import christmasBgHeader from '../assets/background/events/christmas/full_bg_noel.webp';
@@ -31,6 +33,13 @@ export const GAME_THEMES: Partial<Record<GameTheme, typeof DEFAULT_GAME_THEME>> 
 		header: aprilFoolsBgHeader,
 		core: aprilFoolsBgCore,
 		footer: aprilFoolsBgFooter,
+		dinoz: dinozBg
+	},
+	[GameTheme.BIRTHDAY]: {
+		sky: bgSky4,
+		header: birthdayBgHeader,
+		core: bgCore,
+		footer: bgFooter,
 		dinoz: dinozBg
 	},
 	[GameTheme.CHRISTMAS]: {

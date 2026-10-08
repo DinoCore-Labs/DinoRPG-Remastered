@@ -12,7 +12,7 @@
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<footer>
+	<footer :style="themeStyle" :class="{ 'birthday-theme': isBirthdayTheme }">
 		<div class="wrapper">
 			<div class="footerMain">
 				<div class="box small">
@@ -157,9 +157,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, type StyleValue } from 'vue';
 import { developers, helpers } from '../../constants/index';
 import { getImgURL } from '../../utils/getImgURL';
+import { gameConfigStore } from '../../store/gameConfigStore';
+import { getGameTheme } from '../../config/gameTheme.config';
+import { GameTheme } from '@dinorpg/core/models/game/gameEvents.js';
 
 export default defineComponent({
 	name: 'FooterComp',
@@ -175,6 +178,21 @@ export default defineComponent({
 	},
 	methods: {
 		getImgURL
+	},
+	computed: {
+		themeStyle(): StyleValue {
+			const config = gameConfigStore();
+			const theme = getGameTheme(config.theme);
+			return {
+				'--main-bg-sky': `url("${theme.sky}")`,
+				'--main-bg-header': `url("${theme.header}")`,
+				'--main-bg-core': `url("${theme.core}")`,
+				'--main-bg-footer': `url("${theme.footer}")`
+			};
+		},
+		isBirthdayTheme(): boolean {
+			return gameConfigStore().theme === GameTheme.BIRTHDAY;
+		}
 	}
 });
 </script>
@@ -191,6 +209,9 @@ footer {
 	line-height: 1.2rem;
 	min-width: 100%;
 	color: $text-color;
+	&.birthday-theme {
+		background-color: black;
+	}
 	a,
 	button {
 		color: $link-color;
