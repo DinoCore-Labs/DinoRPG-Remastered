@@ -43,7 +43,6 @@ function placeKey(value: PlaceEnum): string {
 
 function ingredients(values: Ingredient | Ingredient[], count: number, condition?: string): GatherFound {
 	const list = Array.isArray(values) ? values : [values];
-
 	return {
 		reward: {
 			kind: 'ingredient',
@@ -56,7 +55,6 @@ function ingredients(values: Ingredient | Ingredient[], count: number, condition
 
 function items(values: Item | Item[], count: number, quantity = 1, condition?: string): GatherFound {
 	const list = Array.isArray(values) ? values : [values];
-
 	return {
 		reward: {
 			kind: 'item',
@@ -162,7 +160,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			)
 		]
 	},
-
 	[GatherType.CUEILLE3]: {
 		id: 'cu3',
 		action: Action.CUEILLE,
@@ -179,7 +176,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			ingredients(Ingredient.SPORE_ETHERAL, 5, `skill(${skillKey(Skill.OEIL_DE_LYNX)})+random(4)`)
 		]
 	},
-
 	[GatherType.CUEILLE4]: {
 		id: 'cu4',
 		action: Action.CUEILLE,
@@ -204,7 +200,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			)
 		]
 	},
-
 	[GatherType.ENERGY1]: {
 		id: 'en',
 		action: Action.ENERGY,
@@ -238,7 +233,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			)
 		]
 	},
-
 	[GatherType.ENERGY2]: {
 		id: 'en2',
 		action: Action.ENERGY,
@@ -256,7 +250,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			ingredients(Ingredient.ENERGIE_EAU, 1, `skill(${skillKey(Skill.FISSION_ELEMENTAIRE)})+random(6)`)
 		]
 	},
-
 	[GatherType.HUNT]: {
 		id: 'ch',
 		action: Action.HUNT,
@@ -291,7 +284,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			)
 		]
 	},
-
 	[GatherType.SEEK]: {
 		id: 'fo',
 		action: Action.SEEK,
@@ -321,7 +313,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			)
 		]
 	},
-
 	[GatherType.ANNIV]: {
 		id: 'anniv',
 		action: Action.ANNIV,
@@ -361,7 +352,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			items(Item.SMOG_EGG_ANNIVERSARY, 2)
 		]
 	},
-
 	[GatherType.XMAS]: {
 		id: 'xmas',
 		action: Action.XMAS,
@@ -401,7 +391,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			items(Item.SMOG_EGG_CHRISTMAS_BLUE, 1)
 		]
 	},
-
 	[GatherType.TICTAC]: {
 		id: 'papjar',
 		action: Action.DIG,
@@ -417,7 +406,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 		},
 		found: []
 	},
-
 	[GatherType.LABO]: {
 		id: 'labo',
 		action: Action.DIG,
@@ -433,7 +421,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 		},
 		found: []
 	},
-
 	[GatherType.PARTY]: {
 		id: 'party',
 		action: Action.DIG,
@@ -449,7 +436,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 		},
 		found: []
 	},
-
 	[GatherType.DAILY]: {
 		id: 'daily',
 		action: Action.DAILY,
