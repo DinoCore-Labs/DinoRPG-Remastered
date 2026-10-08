@@ -138,7 +138,7 @@ export enum Item {
 	CANDLE_CARD = 113,
 	CHRISTMAS_TICKET = 114,
 	TICTAC_TICKET = 115,
-	DOUBLE_NOT_USED = 116,
+	SPONSOR_TICKET = 116,
 	EASTER_EGG = 117,
 	FIRE_CRACKER = 118,
 	SPECIAL_IRMA_POTION = 119,
@@ -296,7 +296,7 @@ export const itemNames = [
 	'CANDLE_CARD',
 	'CHRISTMAS_TICKET',
 	'TICTAC_TICKET',
-	'DOUBLE_NOT_USED',
+	'SPONSOR_TICKET',
 	'EASTER_EGG',
 	'FIRE_CRACKER',
 	'SPECIAL_IRMA_POTION',
@@ -2203,12 +2203,12 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		itemId: 114,
 		name: 'christmas_ticket',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: false,
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: true,
-		price: 5000, // TODO double check
+		price: 5000,
 		display: 'xmtix'
 	},
 	// Tickets to use at ??
@@ -2224,10 +2224,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 5000, // TODO double check
 		display: 'tictac'
 	},
-	// Error
-	[Item.DOUBLE_NOT_USED]: {
+	// Sponsor ticket
+	[Item.SPONSOR_TICKET]: {
 		itemId: 116,
-		name: 'anniversary_ticket',
+		name: 'sponsor_ticket',
 		canBeEquipped: false,
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,

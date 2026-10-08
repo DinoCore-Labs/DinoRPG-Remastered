@@ -1,5 +1,6 @@
 export enum GameEvent {
 	APRIL_FOOLS = 'APRIL_FOOLS',
+	BIRTHDAY = 'BIRTHDAY',
 	CHRISTMAS = 'CHRISTMAS',
 	EASTER = 'EASTER',
 	HALLOWEEN = 'HALLOWEEN',
@@ -9,6 +10,7 @@ export enum GameEvent {
 export enum GameTheme {
 	DEFAULT = 'default',
 	APRIL_FOOLS = 'april_fools',
+	BIRTHDAY = 'birthday',
 	CHRISTMAS = 'christmas',
 	EASTER = 'easter',
 	HALLOWEEN = 'halloween',
