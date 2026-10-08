@@ -12,7 +12,7 @@
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<div class="mainpage" :style="themeStyle">
+	<div class="mainpage" :style="themeStyle" :class="{ 'birthday-theme': isBirthdayTheme }">
 		<div class="mainpage-header">
 			<a @click="goToNewsPage()" class="linkHome"></a>
 			<LeftPanel v-if="showLeftPanel" />
@@ -36,6 +36,7 @@ import TutorialHelpers from '../components/tutorial/TutorialHelpers.vue';
 import { getGameTheme } from '../config/gameTheme.config';
 import { gameConfigStore } from '../store/gameConfigStore';
 import { userStore } from '../store/userStore';
+import { GameTheme } from '@dinorpg/core/models/game/gameEvents.js';
 
 export default defineComponent({
 	name: 'MainPage',
@@ -59,6 +60,9 @@ export default defineComponent({
 				'--main-bg-core': `url("${theme.core}")`,
 				'--main-bg-footer': `url("${theme.footer}")`
 			};
+		},
+		isBirthdayTheme(): boolean {
+			return gameConfigStore().theme === GameTheme.BIRTHDAY;
 		}
 	},
 	methods: {
@@ -75,6 +79,9 @@ export default defineComponent({
 .mainpage {
 	background-image: var(--main-bg-sky);
 	background-repeat: repeat-x;
+	&.birthday-theme {
+		background-color: black;
+	}
 	&-header {
 		min-height: 100%;
 		background:
@@ -107,6 +114,9 @@ export default defineComponent({
 		background-position-x: calc(50% + 248px);
 		min-height: 128px;
 	}
+}
+.birthday-theme .mainpage-footer {
+	background-color: black;
 }
 @media (min-width: 875px) {
 	.mainpage-header {
