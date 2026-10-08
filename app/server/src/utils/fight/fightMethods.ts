@@ -4124,9 +4124,10 @@ const attackTarget = (
 		}
 
 		// Febrez's landed attacks heal instead of dealing damage (MT Saint-Valentin).
-		const febrezHeal = damage > 0 && target.type === FighterType.DINOZ && hasSkill(attacker, Skill.M_FEBREZ)
-			? Math.round(target.maxHp * 0.05)
-			: 0;
+		const febrezHeal =
+			damage > 0 && target.type === FighterType.DINOZ && hasSkill(attacker, Skill.M_FEBREZ)
+				? Math.round(target.maxHp * 0.05)
+				: 0;
 		if (febrezHeal > 0) damage = 0;
 
 		// Apply and log damage
