@@ -73,7 +73,7 @@ export async function checkEventNews() {
 		 *
 		 * There is no end ranking/news associated with Madame Urma.
 		 */
-		if (isEndDay && event.event !== GameEvent.EASTER) {
+		if (isEndDay && event.event !== GameEvent.EASTER && event.event !== GameEvent.BIRTHDAY) {
 			const newsType = (NewsType as any)[`EVENT_${event.event}`] || NewsType.ANNOUNCE;
 			const titleKey = `news.event.${eventNameLower}.end.title`;
 			const excerptKey = `news.event.${eventNameLower}.end.excerpt`;

@@ -619,6 +619,13 @@
 					"excerpt": "Madame Urma est de retour à Dinoville !",
 					"content": "POUR LES FÊTES DE PÂQUES,\n\nGOÛTEZ UN OEUF DE MADAME URMA !\n\nElle a eu une nouvelle fois l'autorisation du Roi d'écouler son stock d'oeufs pendant le week-end et même jusqu'à lundi soir minuit, dans les rues de Dinoville. À l'intérieur, vous trouverez sûrement une surprise !\n\nJoyeuses fêtes à tous les maîtres Dinoz, faîtes trembler les chocolats sur votre passage !"
 				}
+			},
+			"birthday": {
+				"start": {
+					"title": "🎂 Joyeux anniversaire DinoRPG !",
+					"excerpt": "Du 1er au 11 juillet, connectez-vous chaque jour pour recevoir un Ticket d'Anniversaire et tenter votre chance au Port de Prêche !",
+					"content": "Le **4 juillet**, DinoRPG fête son anniversaire ! 🎉\n\nPour célébrer cet événement, une surprise attend tous les éleveurs de Dinoland !\n\n## 🎟️ Un cadeau chaque jour !\n\nDu **1er au 7 juillet**, chaque jour où vous vous connecterez, vous recevrez **1 Ticket d'Anniversaire** directement dans votre inventaire.\n\n## 🏖️ Direction le Port de Prêche !\n\nUtilisez vos tickets pour participer à une **grille à gratter spéciale anniversaire** et tenter de remporter de nombreux trésors, ainsi que des récompenses exclusives !\n\nChaque ticket vous permettra de **gratter 3 cases**.\n\nN'oubliez pas de vous connecter quotidiennement pour multiplier vos chances !\n\n🎉 Toute l'équipe de DinoRPG Remastered vous remercie de faire vivre cette aventure. Joyeux anniversaire DinoRPG !"
+				}
 			}
 		}
 	},
