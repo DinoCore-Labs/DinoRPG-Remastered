@@ -256,7 +256,7 @@
 		"clansList": "DinoRPG [ Clans ]",
 		"dojo": "DinoRPG [ Dojo ]",
 		"forum": "DinoRPG [ Forum ]",
-		"missions": "Missions"
+		"missions": "DinoRPG [ Missions ]"
 	},
 	"adminPage": {
 		"news": {
@@ -1090,8 +1090,8 @@
 			"players": "Joueurs",
 			"average": "Moyenne",
 			"event": "Événements",
-			"eventPlayers": "Événement de Noël - Joueurs",
-			"eventClans": "Événement de Noël - Clans"
+			"eventPlayers": "Événement - Joueurs",
+			"eventClans": "Événement - Clans"
 		},
 		"th": {
 			"pos": "Pos.",
