@@ -4441,13 +4441,13 @@
 					"bye": "You are on the road again for new adventures..."
 				},
 				"magnet12": {
-					"begin": "Cher ami ! Nous sommes très heureux du dénouement de cet affrontement... Nous voulons vous remercier pour les nombreux services que vous avez rendus à la famille Royale, allant même jusqu'à risquer votre vie...",
-					"not": "Pensez-vous ! Grâce à ces événements, nous avons pu nous réconcilier avec les nomades de l'extrême-occident... Nous serons désormais plus attentionnés envers nos lointains sujets, car il semble que notre jugement à leur encontre ait été quelque peu hâtif.",
-					"not2": "Si, nous insistons pour vous récompenser correctement. Grâce à vous, nous avons pu capturer ces infâmes Goupignons Sombres qui semblent avoir tramé la tentative de vol de la Magnétite, la fabrication du Sehd Actif, l'empoisonnement de Grobourin et l'attaque de la Citadelle... Quel plan machiavélique !!",
-					"plan": "Mais ne vous inquiétez pas, tous les suspects ont été enfermés dans nos geôles les plus profondes et ils ne sont pas près d'en sortir, vous avez notre parole Royale...",
-					"ok": "Bien, bien... Pour vos services rendus, nous vous avons prévu une récompense... royale ! Nous souhaitons que vous l'acceptiez en remerciement de votre action à notre service...",
-					"accept": "Voilà pour vous... Nous vous confions cet Éclat de Magnétite Négative. Il a pour propriété d'annuler les effets de la Magnétite en certains endroits. C'est un objet extrêmement rare et nous souhaitons qu'il vous aide dans vos futurs voyages...",
-					"thanks": "Le Roi des Rockys vous a confié l'objet de collection : « l'Éclat de Magnétite Négative ». Mais à quoi cela peut-il bien servir ?"
+					"begin": "Young Dinoz master! We're very happy that this problem has now been solved... we want to thank you for the many services you have done for the Royal Family, whilst risking your own life...",
+					"not": "With these events, we were able to reconcile with the extreme West nomads... We will be more attentive to our distant subjects, because it seems that our mind on them was a bit hasty.",
+					"not2": "We insist that we must reward you correctly. Thanks to you, we've captured some infamous dark Smashrooms who, it seems, were responsible for stealing the Lodestone, making SEDH Active, Bigbeastly poisoning and the Citadel attack ... what a machiavellian plan!!",
+					"plan": "But don't worry, all the suspects have been locked up in our jail, and they won't be released for a long time, you have our Royal word...",
+					"ok": "Well well, as a thank you for all your services, we have prepared a little reward ... a royal one! We hope that you accept it as a sign of our gratitude...",
+					"accept": "Here you go ... we entrust you with this Negative Lodestone Shard. It can cancel the Lodestone effect in certain areas. It's a very rare item and we hope that it helps you in your future journeys.",
+					"thanks": "The Rockies King has entrusted you with the following item: 'The Negative Lodestone Shard'. But what is it used for?"
 				}
 			},
 			"choice": {
@@ -4481,12 +4481,12 @@
 					"bye": "Leave"
 				},
 				"magnet12": {
-					"not": "Ce n'était rien...",
-					"not2": "Ce n'était rien...",
+					"not": "That was nothing...",
+					"not2": "That was nothing...",
 					"plan": "Indeed...",
 					"ok": "....",
-					"accept": "J'accepte — chouette !",
-					"thanks": "Merci beaucoup !"
+					"accept": "Of course I accept it, thanks very much!",
+					"thanks": "Thanks a lot!"
 				}
 			}
 		},
@@ -4494,7 +4494,7 @@
 			"name": "Captain",
 			"dialog": {
 				"magnet6": {
-					"begin": "..... Pourquoi nous as-tu attaqué ? Est-ce pour te venger de notre attaque précédente ? Je pensais pourtant m'être excusé...",
+					"begin": "...Why did you attack us? Were you trying to get your revenge? I thought we already apologised for attacking you?",
 					"who": "Sorry, you're right, I haven't introduced myself. My name is Mulder, I'm the captain of Team-W ... Who sent you and why did you attack us?",
 					"dont": "I see ... you don't want to talk ... you must be one of his spies! I'm going to ask you for the last time: Who sent you? And why are we being targeted by the King?",
 					"dont2": "I see ... if you have nothing to say, leave! We can withstand the King's attacks for months, nothing is going to make us surrender!",
@@ -4512,32 +4512,32 @@
 					"begin": "Have you seen the King? Do you know how to cure Bigbeastly? ... We're all counting on you, make sure youn return with some good news!"
 				},
 				"magnet11": {
-					"begin": "Merci pour votre aide... Après votre départ, ces Goupignons sombres se sont emparés de Grobourin. Il semblait que le poison qu'ils utilisaient permettait de le contrôler...",
-					"ok": "Ils ont ensuite utilisé la puissance de Grobourin pour attaquer la Citadelle Royale et tenter de s'emparer de la Magnétite... Heureusement, nous sommes arrivés à temps...",
-					"thanks": "Oui, mais c'était naturel, nous ne pouvions pas laisser Grobourin tout détruire de cette façon. Et c'est grâce à votre Potion que le contrôle a pu être rompu...",
-					"how": "Nous l'avons rapatrié à notre campement. Il est bien amoché, mais il s'en sortira... grâce à vous...",
-					"not": "C'était déjà beaucoup. Le Grand Ver vous a protégé, semble-t-il... Venez nous voir quand vous le voulez au campement, nous vous donnerons accès à notre Boutique secrète...",
-					"thanks2": "Le Capitaine est reparti vers le campement de la Team-W..."
+					"begin": "Thanks for your help... After you left, the dark Smashrooms took Bigbeastly away. It looks like the poison they were using allowed them to control him...",
+					"ok": "They then used Bigbeastly's strength to attack the Royal Citadel and make off with the magnetite... Fortunately we got there just in time...",
+					"thanks": "No problem, that's just how I roll, we couldn't just let Bigbeastly destroy everything. It's all thanks to your potion that we managed to do it...",
+					"how": "We took him back to our campsite. He's in some mess, but he'll make it though... thanks to you...",
+					"not": "It was above and beyond the call of duty. It seems the Great Worm was watching over you... Come and see us any time at the campsite, we'll let you use our secret shop...",
+					"thanks2": "The captain sets off towards the Team-W campsite..."
 				}
 			},
 			"choice": {
-				"continue": "Continuer",
+				"continue": "Continue",
 				"magnet6": {
-					"who": "Qui êtes-vous ?",
-					"dont": "Ne rien raconter",
-					"tell": "Raconter que le Roi des Rockys vous envoie",
-					"dont2": "Se taire",
-					"ask": "Non merci, j'ai tout compris !",
-					"again": "Je n'ai pas tout suivi...",
+					"who": "Who are you?",
+					"dont": "Say nothing",
+					"tell": "Tell him that the Rockies King sent you",
+					"dont2": "Stay silent",
+					"ask": "No thanks, I understood everything!",
+					"again": "Yes please, I didn't understand a single thing...",
 					"yes": "Yes",
 					"no": "No"
 				},
 				"magnet11": {
-					"ok": "Je comprends...",
-					"thanks": "Merci de votre aide en combat !",
-					"how": "Comment va-t-il ?",
-					"not": "Ce n'était vraiment rien...",
-					"thanks2": "À bientôt !"
+					"ok": "I understand...",
+					"thanks": "Thanks for your help in the battle!",
+					"how": "How is he?",
+					"not": "It was nothing, really...",
+					"thanks2": "See you soon!"
 				}
 			}
 		},
@@ -4545,56 +4545,56 @@
 			"name": "Jérôme K.",
 			"dialog": {
 				"steppes": {
-					"begin": "Laisse-moi... je veux mourir...",
-					"ask": "Ça, tu peux le dire... J'avais tout ! Tout ! Tout : la richesse, les femmes, la célébrité... Le monde entier était à moi...",
-					"ask2": "Pfff... Je préfère ne plus y penser... mais je vais te répondre... J'ai tout perdu... à Warp Street...",
-					"ask3": "Oui... Tu ne connais peut-être pas, mais Warp Street est une petite rue de Dinoville... C'est un marché réservé aux élites, on y achète et vend des Produits Déguisés !",
-					"deriv": "Des produits déguisés ! Tu vois, quand le cours du Santaz augmente, le produit déguisé qui est lié au Santaz baisse. Sauf si, bien entendu, le Féross augmente lui aussi, auquel cas ça dépend alors du cours du Riz Amnésique du mois précédent... Enfin bref, avec les produits déguisés, tu peux te faire un max de thune très rapidement !",
-					"deriv2": "Oui, exactement ! Enfin, jusqu'à il y a quelques jours...",
-					"ask4": "C'est simple... Je n'ai pas vu venir la crise mobilière...",
-					"ask5": "Non ! Rien à voir ! L'immobilier, ce sont les bâtiments... Ça marche très fort en ce moment, avec tous ces châteaux à construire pour la Guerre des Clans ! Il y en a qui amassent des fortunes en quelques jours seulement !",
-					"ask6": "Oui. Le mobilier, avant, c'était l'avenir ! Tout le monde voulait son bureau en Bois de Grumhel ! Mais voilà, le réchauffement climatique et tout ça, la guérilla Gorilloz qui attaque ceux qui coupent les arbres... Enfin bref, l'effondrement du marché et ma ruine...",
-					"ask7": "Combien ? Euh... dans les quatre milliards de pièces d'or...",
-					"ask8": "Comme je te dis, quatre milliards... Oui, je sais, ça a l'air énorme pour quelqu'un qui ne fait pas partie de l'élite comme moi, mais crois-moi, aujourd'hui, avec quatre milliards, tu n'as plus rien...",
-					"ask9": "Mais bon... Le coup dur est passé, je vais me refaire, c'est cent pour cent certain ! J'ai trouvé ZE affaire, le truc de ouf qui va faire péter les thunes ! Mais pour cela, j'ai besoin d'un partenaire... Ça te tente ?",
-					"ask10": "Oui, toi ! Tu as l'air d'être plutôt un bon Maître Dinoz, assez puissant. Alors voilà, je te propose une affaire : tu t'occupes de la logistique et je m'occupe de la vente. Ensemble, on va réussir et gagner des millions... Et qui ne veut pas gagner des millions, hein ?",
-					"ask11": "C'est très simple, voilà le plan : tu me rapportes 100 Graines de la Dévoreuse, tu en trouveras dans les Steppes. Il m'en faut 100 au minimum. Ensuite, tu me les confies... En échange, je te laisse un truc super rare que j'ai trouvé. Ensuite, tu me donnes quelques jours pour tout revendre à Warp Street et on partage les bénéfices. Tu en dis quoi ?",
-					"no": "OK, comme tu veux, tant pis pour toi !",
-					"yes": "Super ! Alors, voilà ce qu'on va faire : tu réunis les 100 Graines puis tu reviens me voir ! Je t'attends, OK ?",
-					"ok": "Génial ! Tu es super ! Tiens, je te laisse mon objet rare. On se retrouve plus tard à Dinoville, le temps que je vende tout le stock !"
+					"begin": "Leave me alone... I just want to die...",
+					"ask": "You can say that again... I had it all! Everything! Everything: wealth, women, fame... The whole world was mine...",
+					"ask2": "I'd rather not talk about it anymore............ Argh! If you must know, I lost it all on Warp Street!",
+					"ask3": "Yup ... you haven't heard of it? Warp Street is a small street in Dinotown ... it's reserved to the elite. Disguised Products are bought and sold there!",
+					"deriv": "Some Disguised Products! You see, when the price of Santaz goes up, the disguised product linked to Santaz goes down. Except, of course, if the price of Feross goes up too, in which case it depends on what the price of Amnesiac Rice was last month ... In any case, you can make a lot of money in a short period of time on Warp Street!",
+					"deriv2": "Yes, exactly! Until just a few days ago...",
+					"ask4": "It's simple ... I didn't see the real statue crisis coming...",
+					"ask5": "Nope! it's not the same. The Dinoland real estate market is booming right now. Mainly due to all the castles that are being built during the Clan Wars! Some people are earning a fortune in a single day!",
+					"ask6": "Real statues were the future! Everybody wanted a bust of the Rockies King! But then global warming started to affect the market, Guerilla Piranhoz started to attack the people who were harvesting the clay. This eventually led to the market crashing and me filing for bankruptucy...",
+					"ask7": "How much did I lose? Phew! Around 4 billion gold coins.",
+					"ask8": "Yep, 4 billion gold coins. I know it seems a lot to someone who isn't part of the elite. But believe me, 4 billions isn't that much...",
+					"ask9": "The worst of it is over. I'm going to recover, I'm sure of it! I have a fantastic business idea. It's incredible and it's never been done before, all I need is a partner ... are you interested?",
+					"ask10": "Yes, you! You seems to be a powerful and capable Dinoz Master. Here's my offer: you manage the logistical part of the business and I'll handle the sales. Together, we are going to earn millions ... and who doesn't want to earn millions of gold coins?",
+					"ask11": "It's simple, here's the plan: Bring me 100 Devourer Seeds. You can find them at the Steppes. It's important that you bring me 100 seeds, no fewer. In exchange, I'll give you a very rare item I found recently. Give me a few days and I'll sell the seeds on Warp Street and we'll then share the profits, what do you think?",
+					"no": "Ok, it's your loss!",
+					"yes": "Great! Here's what we'll do next. Go and get the seeds and then come back here? I'll be waiting for you ok?",
+					"ok": "Great! Take this, it's the rare item i told you about earlier. We'll meet later in Dinotown, just in time for me to sell the stock!"
 				},
 				"dinoville": {
-					"begin": "Laisse-moi... je veux mourir...",
-					"ask": "Tout allait bien... au début... Les Graines partaient à des prix énormes, on gagnait beaucoup d'argent, tout le monde en voulait !",
-					"ask2": "Ensuite, ça a été l'horreur... Des concurrents ont fait courir le bruit que nos graines contenaient du xylophone, un produit dangereux qui fait des bruits bizarres dans l'estomac de celui qui l'avale... Ça a été la panique sur le marché, j'ai dû tout vendre en catastrophe pour limiter les pertes...",
-					"ask3": "Tiens... C'est ta part... C'est tout ce que j'ai pu sauver lors du krach... 800 Bons du trésor...",
-					"ask4": "Oui... Tu peux garder l'objet rare que je t'ai confié... Mais ne t'inquiète pas pour moi ! Je vais trouver un nouveau truc, et la prochaine fois, ça va marcher d'enfer !"
+					"begin": "Leave me alone... I just want to die.....",
+					"ask": "Everything was going so well. Everyone was bidding on the seeds, they were so popular.",
+					"ask2": "Some competitors started a vicious rumour that our seeds contained xylophone, a dangerous substance that makes strange noises in your stomach once you've eaten them. The price plummeted and everyone started to panic so i had to sell the rest of the stock at any price I could get...",
+					"ask3": "Take this... it's your share... it's all I managed to save during the panic... 800 treasure notes...",
+					"ask4": "Yes... you can keep the rare item I gave to you... but don't worry about me! I'll find something else to do next, and next time it will work!!!"
 				}
 			},
 			"choice": {
 				"steppes": {
-					"ask": "Ça n'a pas l'air d'aller fort...",
-					"ask2": "Et que s'est-il passé ?",
-					"ask3": "Warp Street ?",
-					"deriv": "Des... quoi ?",
-					"deriv2": "Comme vous ?",
-					"ask4": "Que s'est-il passé ?",
-					"ask5": "Vous voulez dire immobilière, non ?",
-					"ask6": "La crise mobilière, donc...",
-					"ask7": "Vous avez perdu combien ?",
-					"ask8": "COMBIEN ?",
-					"ask9": "Oui, mais quand même...",
-					"ask10": "Euh... moi ?",
-					"ask11": "Que faut-il faire ?",
-					"yes": "OK !",
+					"ask": "You don't seem too well, are you ok?",
+					"ask2": "What happened to you?",
+					"ask3": "Warp Street?",
+					"deriv": "Some... What?",
+					"deriv2": "Like you?",
+					"ask4": "What happened?",
+					"ask5": "Don't you mean real estate crisis?",
+					"ask6": "So what's the real statue crisis?",
+					"ask7": "How much did you lose?",
+					"ask8": "HOW MUCH?",
+					"ask9": "Yes, but still...",
+					"ask10": "Who....me?",
+					"ask11": "What do I have to do?",
+					"yes": "OK!",
 					"no": "No way",
-					"ok": "OK !"
+					"ok": "OK!"
 				},
 				"dinoville": {
-					"ask": "Encore ? Que s'est-il passé ?",
-					"ask2": "Et ensuite ?",
-					"ask3": "Et mes pièces ?",
-					"ask4": "C'est tout ?"
+					"ask": "Again?? What happened???",
+					"ask2": "So what happened?",
+					"ask3": "And my gold?",
+					"ask4": "That's all?"
 				}
 			}
 		},
