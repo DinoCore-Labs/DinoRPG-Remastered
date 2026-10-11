@@ -4803,8 +4803,8 @@
 		},
 		"accept": "Accept the Mission",
 		"giveUp": "Give up",
-		"already": "Une mission est déjà en cours, il vous faudra la terminer avant d'en accepter une autre.",
-		"lastDialog": "Dernière étape validée",
+		"already": "A mission is already in progress. You must complete it before accepting another one.",
+		"lastDialog": "Last step completed",
 		"goals": {
 			"atPlace": "Go to {place}",
 			"atHidden": "Find the right place",
@@ -4929,40 +4929,40 @@
 				"begin": "Yo... So, for the Strategy Guide, you have to translate it... in the Ashpouk ruins. You should be able to do it.",
 				"inspect": {
 					"name": "Inspect the guide",
-					"text": "Heu... t'y comprends quelque chose toi ? Moi j'pige que dalle... Si on avait un dictionnaire, on y arrivera sûrement..."
+					"text": "Hmmm ... do you understand anything? I don't. If only we had a dictionary it would be easy!"
 				},
 				"dictionary": {
 					"title": "Find the dictionary",
 					"name": "Ashpoukian Dictionary",
-					"text": "Vous trouvez un vieux dictionnaire verdi de moisissure dans les rayons de la bibliothèque. Il porte le titre \"Ashpouk-Dinozien, des Editions Petit Lamousse\"."
+					"text": "You find an old mould-covered dictionary in the library shelves. It's titled \"Ashpouk-Dinozish, Little Lamousse Edition\"."
 				},
 				"decipher": {
-					"name": "Déchiffrer les inscriptions",
-					"text": "Vous entreprenez de déchiffrer les mystérieuses inscriptions Ashpouk. Au terme de plusieurs heures de travail acharné, vous parvenez à en comprendre la quasi totalité : ça ressemble à s'y méprendre à une recette de cuisine..."
+					"name": "Decipher the guide",
+					"text": "You start to decipher the mysterious Ashpouk inscriptions. After many hours of hard work, you finally understand everything: it seems as though it's an ancient recipe."
 				},
-				"end": "Mmmm... On dirait une recette... celle des légendaires Merguez d'Archelion. Cool... J'vais m'en préparer tout de suite, ça me donnera p't'être la pêche... En tout cas, t'as réussi à traduire ce truc... T'es vachement doué."
+				"end": "Mmmm ... It looks like a recipe ... the famous legendary Archelion Merguez. Cool ... I'll cook some immediately. Congratulations on translating it, you really are skilled."
 			},
 			"init2": {
 				"name": "The Archelionscarer",
 				"begin": "Hmmm, these Archelion merguez really pack a punch! Well now that I know you're competent, if you do me one more favor I'll give you my Strategy Guide. The Big All-Hot is an ideal environment for Archelions of all sizes. Wild, very dry and constantly erupting! But we have to stay away from them as long as we want to live, otherwise they'll eat us for supper. I want you to make me an Archelion scarecrow! It needs some Sharpened Claws.",
 				"kill": {
 					"barche": "Baby Archelion",
-					"wave": "monstres"
+					"wave": "monsters"
 				},
 				"claws": {
-					"name": "Ramasser les griffes",
-					"text": "Vous récupérez deux grosses griffes de bébé Archelion. Il faut maintenant les tailler correctement."
+					"name": "Pick up the claws",
+					"text": "You pick up two large baby Archelion claws. They need to be sharpened."
 				},
 				"blacksmith": {
-					"name": "Forgeron",
-					"text": "Tailler des griffes d'Archelion ? Vous savez que c'est dangereux de se promener avec ce genre de choses ?! Même si ça les effraie un peu, ça attire TOUS les autres monstres !! Ah vraiment bravo ! En voilà déjà qui arrivent..."
+					"name": "Smith",
+					"text": "You need to sharpen some Archelion claws? You know that it's dangerous to walk around with those?! Even though it scares them slightly, it will attract ALL the other monsters!! Great job!! Some are already coming."
 				},
 				"forgeGuard": {
-					"name": "Garde des forges",
-					"text": "C'est vous le responsable de tout ce bazar ?! On ne vous félicite pas hein ! Comment ça, c'est ce filou de Shaman qui vous envoie ? Il veut un Epouvantarchelion ? C'est facile, il suffit de... OH ! Attention en voilà d'autres !!",
-					"text2": "Bon donnez-moi ces Griffes que je nous en débarrasse ! Pour ce qui est des Archélions, pour les éloigner, voici une pommade odorante à appliquer chaque matin. Je vous préviens, ça sent fort..."
+					"name": "Forges Guard",
+					"text": "You're responsible for this mess?! Don't expect any kindness! What's that?! The Shaman rascal sent you? He wants an Archelionscarer? They're easy to make, you just have to ... OH! Watch out! Others are coming!!",
+					"text2": "Well give me your claws so I can get rid of them! To scare the Archelion, apply this strong ointment each morning. I warn you, it has a very strong smell."
 				},
-				"end": "Ah ? Je ne savais pas pour les griffes ! Ben... Au temps pour moi... J'espère que le Garde des Forges ne vous a pas trop fait d'histoires. Merci pour la pommade, j'imagine que ça fera bien l'affaire ! Tenez voilà le Guide de Stratégie que j'ai en ma possession pour vous remercier."
+				"end": "Oh! I didn't know the claws did that! I'm so sorry! I hope that the Forges Guard didn't make too much of a fuss. Anyway, thanks for the ointment. I'll go and see if it works. Meanwhile, take my Strategy Guide as a thank you."
 			},
 			"burn": {
 				"name": "Fire !",
@@ -4971,186 +4971,186 @@
 					"flam": "Flamelet"
 				},
 				"inspectAshes": {
-					"name": "Examiner le tas de cendres",
-					"text": "Les cendres laissées par ces flammèches ont une odeur étrange... Ca ressemble fort à une odeur de friture ! Il faudrait enquêter à ce sujet..."
+					"name": "Inspect the Pile of Ashes",
+					"text": "The ashes left by these Flamelets have a strange smell, like ... barbecue. This needs to be investigated."
 				},
 				"artisan": {
-					"name": "Artisan des Forges",
-					"text": "Des flammèches qui sentent la friture vous dites ? Aucune idée. Mais il m'semble qu'il y a un genre d'odeur comme vous dites vers l'ouest..."
+					"name": "Forges Artisan",
+					"text": "Flamelets that smell like barbecue you say? Sorry, I've got no idea. But the smell is stronger in the west. Try looking in that direction."
 				},
 				"sniff": {
-					"name": "Renifler",
-					"text": "Snif, snif... Pas de doute ! L'odeur de friture ici est la même que celle des cendres de Flammèches que vous avez combattues ! Pas de temps à perdre, il va falloir se battre pour faire le ménage..."
+					"name": "Snif",
+					"text": "Sniff, sniff ... Yes! The smell of barbecue here is the same as the pile of Flamelet ashes. There's no time to waste. You have to fight them!"
 				},
 				"search": {
-					"name": "Fouiller les environs",
-					"text": "De toutes évidences, ces flammèches sortent du Barbecue même du vendeur de Merguez... Il faut signaler ce problème au Shaman Mou !"
+					"name": "Search around",
+					"text": "It seems these flamelets came from the Merguez seller's barbecue. The Soft Shaman must be informed about this!"
 				},
-				"end": "Tes actions ont partiellement rétabli l'équilibre dans la région, c'est un bon début ! Mais il va falloir faire quelque chose pour cette histoire de Barbecue... En attendant, voilà de quoi te récompenser."
+				"end": "Your actions have restored the region's equilibrium.....for now. It's a good start, but we have to do something about this barbecue business. Until then, here's a little reward for all your help."
 			},
 			"barbec": {
 				"name": "The crazy barbecue",
 				"begin": "It seems a certain merguez seller in the Ashpouk Ruins uses a special combustible which caused the influx of flamelets. Something must be done! However, we can't stop this poor merchant from doing his job, we will need to find a more subtle solution. Start by collecting some ingredients: a dry branch, a Dorogon scale and a piece of yellow basalt. Mix these ingredients up and grind them into a powder, then throw it onto the barbecue!",
 				"branch": {
-					"name": "Ramasser une branche",
-					"text": "Vous trouvez le premier ingrédient par terre: une branche d'arbre séchée (voire calcinée)."
+					"name": "Pick up a branch",
+					"text": "You find the first ingredient on the ground: a dried-up (or even charred) tree branch."
 				},
 				"stealScale": {
-					"name": "Voler une écaille au Vénérable",
-					"text": "Vous vous approchez du grand dorogon, mais celui-ci vous jette un regard noir et glacé qui ne laisse aucun doute: mieux vaut trouver un autre moyen !"
+					"name": "Steal a Venerable Scale",
+					"text": "You approach the huge Dorogon, but it gives you a dark-and-icy look. Better find another way to get a scale!"
 				},
 				"searchBrokenScales": {
-					"name": "Chercher par terre",
-					"text": "Vous fouillez le repaire, mais vous ne trouvez que des écailles brisées ou séchées..."
+					"name": "Search on the ground",
+					"text": "You search the lair, but you only find broken scales."
 				},
 				"inspectEntrance": {
-					"name": "Examiner l'entrée du repaire",
-					"text": "En sortant de la caverne du Vénérable vous apercevez une belle écaille brillante sous un tas de cailloux ! Voilà qui évitera bien des complications..."
+					"name": "Inspect the Lair Entrance",
+					"text": "Just outside the Venerable's lair, you see a beautiful and shiny scale tucked away under a pile of rocks. That solves your problem nicely."
 				},
 				"basalt": {
-					"name": "Chercher du basalte",
-					"text": "Vous cherchez pendant plusieurs minutes un morceau de basalte jaune. Vous finissez par en trouver un en contrebas des pentes."
+					"name": "Search for basalt",
+					"text": "You spend hours searching for a piece of yellow basalt. You finally find one on the slopes."
 				},
 				"grind": {
-					"name": "Broyer les ingrédients",
-					"text": "Vous broyez les différents ingrédients à grands coups de marteau: ça devrait faire l'affaire..."
+					"name": "Grind the ingredients into powder",
+					"text": "You use your hammer to grind the ingredients into a fine powder. That'll do!"
 				},
 				"mix": {
-					"name": "Utiliser le mélange",
-					"text": "Sitôt le mélange jeté dans les flammes, de grands éclairs multicolores jaillissent de partout et crépitent tout autour du barbecue. Aussi rapidement qu'ils sont venus, les éclairs cessent et tout redevient normal..."
+					"name": "Use the mix",
+					"text": "As soon as you throw the mix into the flames, streaks of multicoloured lightning shoot out from every direction and crackle all around the barbecue. But as quickly as they appeared, the streaks of lightning disappear and the barbecue returns to normal. Only the sound of faint crackles and pops reminds you that anything happened."
 				},
-				"end": "Bien joué ! Le mélange devrait réduire l'effet du combustible magique utilisé dans ce barbecue sans pour autant trop altérer le goût des délicieuses Merguez ! Tiens voilà une petite Flammèche apprivoisée pour te remercier."
+				"end": "Well done! The new mix should reduce the effects of the magic barbecue without altering the taste of the delicious Merguez. Take this tamed little Flamelet as a reward."
 			},
 			"joke": {
 				"name": "Quarrel",
 				"begin": "For many years, University Professor Eugene and I have had an on-going quarrel. In fact, we never agree on a subject, no matter what the subject is! Help me play a trick on this old curmydgeon. First of all I want you to find something with a pungent smell. I think Frish Port will be a good place to look...",
 				"fish": {
-					"name": "Prendre des restes de poisson",
-					"text": "Vous récupérez les pires morceaux de poisson parmi les invendus, notamment un terrifiant Poisson-Fétide !"
+					"name": "Take some leftover fish",
+					"text": "You pick up the worst-smelling fish you can find, including a horrible-smelling Fetid-Fish!"
 				},
 				"trap": {
-					"name": "Piéger le bureau du professeur",
-					"text": "Vous disposez les restes malodorants du Poisson-Fétide dans les tiroirs du bureau du professeur Eugène... Hi hi hi !"
+					"name": "Prank Professor",
+					"text": "You place the foul-smelling fish leftovers in the drawers of the Professor Eugene's desk. Ha ha!"
 				},
-				"end": "Ah ah ! C'est parfait ! Jamais je n'aurais imaginé que tu irais jusqu'à lui cacher un poisson Fétide dans son bureau... C'est machiavélique !"
+				"end": "Yes! That's perfect! I never thought you would hide a Fetid-Fish in his office. How cunning!"
 			},
 			"defend": {
 				"name": "Defense of the Forges!",
 				"begin": "I saw swarms of monsters moving towards the mountains this morning. It looked like they were heading for the forges of the Big All-Hot. Go and protect them!",
 				"forgeGuard": {
-					"name": "Garde des Forges",
-					"text": "Au rapport soldat ! Va falloir tenir le choc ! Tenez vos positions !! Là-bas, voilà des monstres !",
-					"text2": "Merci pour l'aide, soldat ! J'ai vu plusieurs de ces monstres se réfugier dans les Pentes, il faut les poursuivre et les éliminer une bonne fois pour toutes !",
-					"text3": "Beau travail, soldat ! La victoire est à nous, et c'est grâce à votre intervention héroïque. Transmettez cette lettre de recommandation au Shaman Mou, il saura vous récompenser. ROMPEZ !!"
+					"name": "Forges Guard",
+					"text": "Attention soldier! We have to hold on! Hold your positions! Monsters incoming!",
+					"text2": "Thanks for your help soldier! I've seen many monsters hiding at the Slopes, we must pursue and kill them this time!",
+					"text3": "Good job soldier! Thanks to your heroic efforts victory is ours. Give this recommendation letter to the Soft Shaman, he'll know how to reward you."
 				},
-				"kill": "monstres",
+				"kill": "monsters",
 				"scout": {
-					"name": "Eclaireur des Forges",
-					"text": "Ils se cachent dans les cavernes qui bordent les Pentes de Basalte m'sieur. Vous allez devoir les débusquer un à un !"
+					"name": "Forges Scout",
+					"text": "They're hiding in the caverns at the edge of the Basalt Slopes sir. You'll have to flush them out one by one!"
 				},
 				"banner": {
-					"name": "Ramasser leur bannière",
-					"text": "Vous trouvez la bannière de guerre portée par le chef de ces monstres ! Cela devrait faire plaisir au Garde des Forges..."
+					"name": "Pick up their banner",
+					"text": "You find the war banner worn by the monsters chief! This should please the Forges Guard..."
 				},
-				"end": "La lettre est élogieuse à ton sujet. Tu as bien mérité ta récompense pour cet acte de bravoure ! Et puisque tu as trouvé la Bannière de Guerre des monstres, je t'ajoute un petit quelque chose en bonus."
+				"end": "The letter is very complementary about you. It seems you more than deserve your reward! As you found the Monsters' War Banner, I've added a little something as a bonus."
 			},
 			"shipmt": {
 				"name": "The missing package",
 				"begin": "Some time ago, I ordered a new powder reserve for my rituals from Grandpa Joe, but my package never arrived! Maybe this is because of the recent attack on the Forges, it must be lost somewhere. The package is extremely important, can you find it for me? It's very urgent!",
 				"courier": {
-					"name": "Convoyeur de Dinoville",
-					"text": "Au secours !! Je devais livrer un important colis en haut de ce volcan, mais un groupe de Gobelins hargneux m'est tombé dessus ! Ils m'ont volé mon paquet et depuis je ne sais plus quoi faire... Bouhouhou ! On va me renvoyer si je ne trouve pas une solution...",
-					"text2": "Merci mille fois, vous m'avez sauvé la vie ! Hé je crois que c'est mon colis là-bas !",
-					"text3": "J'ai vu plusieurs d'entre eux filer vers le nord... Retrouvez-les puis rejoignez-moi à Fosselave quand vous aurez trouvé la marchandise !",
-					"text4": "Ah vous avez retrouvé la précieuse marchandise ! Génial ! Je ne sais comment vous remercier... Je parlerai de vous en bien au Shaman !"
+					"name": "Dinotown Courier",
+					"text": "Help!! I had to deliver an important package to the top of the volcano, but a group of aggressive goblins attacked me! They've stolen my package and I don't know what to do. I'll be fired unless I get the package back!",
+					"text2": "Thank you so much, you've saved my life! Hey! I think that my package is over there!",
+					"text3": "I saw loads of goblins running towards the north. Go and find them, then meet up with me again at the Lavapit once you have found the contents!",
+					"text4": "Ah you've found the contents of my package! Great! I don't know how to thank you. I will speak highly of you to the Soft Shaman!"
 				},
-				"kill": "Gobelins",
+				"kill": "Goblins",
 				"package": {
-					"name": "Ramasser le colis",
-					"text": "Vous trouvez le colis près d'un gobelin... Malheureusement celui-ci est vide ! Il faut trouver où ils ont emmené son contenu..."
+					"name": "Pick up the package",
+					"text": "You find the package near a goblin. Unfortunately it's empty! You have to find out what happened to it's contents."
 				},
 				"noises": {
-					"name": "Des bruits suspects...",
-					"text": "Vous entendez des ricanements venant des ombres de la caverne. Certainement la bande de gobelins que vous recherchez !"
+					"name": "Suspect Noises...",
+					"text": "You hear noises coming from the shadows of the cavern. It must be the goblins you are searching for!"
 				},
 				"goods": {
-					"name": "Récupérer la marchandise",
-					"text": "Vous ramassez des gourdes remplies de poudres multicolores, ce sont très certainement les produits commandés par le Shaman Mou."
+					"name": "Pick up the goods",
+					"text": "You pick up some gourds of multicoloured powders, these must be the items that the Soft Shaman ordered from Grandpa Joe."
 				},
-				"end": "Mon livreur vient juste de m'apporter ma commande. Il m'a expliqué toute l'aide précieuse que tu avais pu lui apporter et je t'en remercie ! Tiens voilà une potion et un petit pourboire en gage de ma gratitude !"
+				"end": "My courier just delivered my order. He explained that he wouldn't have been able to deliver the package without your help! Take this potion and a little reward as a token of my gratitude!"
 			},
 			"sales": {
 				"name": "(not) fair trade",
 				"begin": "I sell little trinkets from time to time at the Dinotown market to make a little money. Unfortunately I'm really busy at the moment, do you think that you could go there for me and sell some souvenirs? I'll give you a nice percentage of the profits! You'll see, my souvenirs sell very well.",
 				"collect": {
-					"name": "Ramasser des babioles",
-					"text": "Vous récupérez quelques objets \"typiques\" (des pièges à touristes) traînant dans les ruines pour les revendre au Marché de Dinoville."
+					"name": "Take the trinkets",
+					"text": "You get some old-looking objects from the ruins to flog as souvenirs at Dinotown market."
 				},
 				"sell": {
-					"name": "Marché de Dinoville",
-					"text": "Vous passez l'heure qui suit à revendre au plus offrant les babioles sans valeur ramassées dans les ruines... Tout le monde se les arrache au prix fort ! Le shaman avait raison, vous écoulez votre stock sans difficulté."
+					"name": "Dinotown Market",
+					"text": "You spend the next hour selling pieces of rubble and broken combat gear as souvenirs to the highest bidder. Everyone is bidding on the items! The Shaman was right, it seems you'll be able to sell all your stock without any difficulty at all."
 				},
-				"end": "Merci bien, voilà ta part des ventes !"
+				"end": "Thanks, here's your cut!"
 			},
 			"ritual": {
 				"name": "Ridiculous ritual",
 				"begin": "The Shamanic Congregation, where I learned my trade, wants me to perform a ritual each year as a way of paying them back for all my training. Of course, I have better things to do than this stupid ritual! Can you take care of this for me? The instructions are in my mailbox.",
 				"instructions": {
-					"name": "Prendre les instructions",
-					"text": "Vous récupérez la lettre de la Congrégation. Les instructions indiquent qu'il faut commencer par vaincre un Gobelin en combat singulier..."
+					"name": "Take the instructions",
+					"text": "You take the letter from the Congregation. The instructions state that you must begin the ritual by killing a Goblin in a single combat..."
 				},
-				"kill": "Gobelins",
+				"kill": "Goblins",
 				"read": {
-					"name": "Lire la suite des instructions",
-					"text": "La lettre indique qu'il faut crier (fort): \"SHAMANA MANA !\""
+					"name": "Follow the next instruction",
+					"text": "The letter says that you must chant: \"SHAMANA MANA!\""
 				},
 				"shamana": {
-					"name": "Crier shamana mana...",
-					"text": "SHAMANA MANA ! ... Oui bon passons à la suite..."
+					"name": "Chant Shamana Mana...",
+					"text": "SHAMANA MANA! ... Ok, well, let's go on to the next instruction."
 				},
 				"donga": {
-					"name": "Crier donga donga...",
-					"text": "DONGA ! DONGAAA ! ... Voilà, il ne reste qu'à finaliser le rituel sur le versant ouest du volcan."
+					"name": "Chant Donga Donga...",
+					"text": "DONGA! DONGAAA! ... All that's left now is to chant on the western face of the volcano."
 				},
 				"waaah": {
-					"name": "Crier waaah...",
-					"text": "WAAAAAAAAH ! ..."
+					"name": "Chant waaah...",
+					"text": "WAAAAAAAAH!..."
 				},
 				"crater": {
-					"name": "Jeter un caillou dans le cratère",
-					"text": "Vous jetez un caillou dans le grand cratère pour compléter le Rituel Ridicule."
+					"name": "Throw a Stone in the Crater",
+					"text": "You throw a stone into the huge crater to complete the Ridiculous Ritual."
 				},
-				"end": "A en juger par ta mine dépitée, tu dois maintenant comprendre pourquoi je n'avais aucune envie de m'occuper de ce rituel idiot... Enfin, merci pour le service, voilà de quoi couvrir le dérangement."
+				"end": "Judging by the forelorn look on your face, you probably understand why I had no desire to do this stupid ritual. Anyway, thanks for the favour, here's something to make up for your trouble."
 			},
 			"hiero": {
 				"name": "Hieroglyphs",
 				"begin": "I've heard that there are some hieroglyphics in the caverns to the west, en route to Grumhel Jungle. These hieroglyphics are very important for my mystical research! Go and copy them out for me. Be careful! To enter the caverns you will need to find something that will help you find your way back in the darkness!",
 				"copy": {
-					"name": "Copier les hiéroglyphes",
-					"text": "Vous recopiez tant bien que mal les hiéroglyphes sur le parchemin donné par le Shaman."
+					"name": "Copy out the Hieroglyphics",
+					"text": "You copy out the Hieroglyphics using the scroll given to you by the Shaman."
 				},
-				"end": "Hmmm... Très très intéressant... Hmmm... Voilà qui pourrait bien clouer le bec à ce vieux guignol de l'Université ! Merci en tous cas pour le petit service !"
+				"end": "Hmmm ... very interesting ... Hmmm ... Here's something that should gobsmack that old grumpy clown from the University! Thanks for your help!"
 			},
 			"pigeon": {
 				"name": "Homing pigeon",
 				"begin": "The recent discoveries in the caverns have provided me with an unexpected occasion to prove my theories to Professor Eugene! Imagine that, some ancient handwriting that talks of current events! We can't waste any time! Take this letter to him!",
 				"eugene": {
-					"name": "Eugène (donner la lettre)",
-					"text": "Je vois que ce magicien de pacotille a encore trouvé quelque chose à me coller sous la moustache. Hmm... Hmm... OH ! Ca par exemple ! Il faut que j'en ai le coeur net... Montrez cette lettre à ma bonne amie le docteur Yolande de l'île de Waïkiki !"
+					"name": "Talk to Professor Eugene",
+					"text": "I see that this crazy magician has found something else to bother me with! Hmm ... Hmm ... OH! Oh my god! It can't be! I have to be certain before I can comment any further. Show this letter to my dear friend Doctor Yolande on Waïkiki Island immediately!"
 				},
 				"yolande": {
-					"name": "Docteur Yolande",
-					"text": "Oh ben ça ! Et ça vient des cavernes des Gorges Profondes, vous dites ? Ca alors, c'est vraiment incroyable ! Et vous l'avez montré à monsieur Pelletée, l'archéologue à Forcebrut ?"
+					"name": "Doctor Yolande",
+					"text": "Wow! This came from the caverns of Deep Gorges you say? It's incredible! You must show this to Mister Shovel, The Brutforce Archeologist."
 				},
 				"findPelletee": {
-					"name": "Trouver l'archéologue",
-					"text": "L'archéologue Pelletée ne semble pas être ici. Vous apprenez rapidement qu'il travaille en ce moment sur un chantier dans les Gorges Profondes..."
+					"name": "Find the Archeologist",
+					"text": "Archeologist Shovel doesn't seem to be here. Apparently he is working on a construction site in the Deep Gorges."
 				},
 				"pelletee": {
-					"name": "Archéologue Pelletée",
-					"text": "Oh... C'est amusant, on dirait à s'y méprendre les notes que j'ai laissé sur les parois des cavernes. Comment ? Et ce Shaman a pris ça pour des textes anciens ? Oh, mais non ! Ce sont justes des notes personnelles ! Je les ai écrites moi-même..."
+					"name": "Archeologist Shovel",
+					"text": "Oh ... That's funny, this looks a lot like the notes I left on the cavern walls. What's that you say? The Shaman thought it was ancient texts?! Of course not! I wrote those, they're my personal notes."
 				},
-				"end": "J'aurais parié un de mes grigris qu'on tenait là une découverte fondamentale ! Dommage... En tous cas, merci pour la course et désolé pour le dérangement !"
+				"end": "Aargh! I was sure that we had stumbled upon a historical discovery! Don't worry ... thanks for your help in any case. Here, take this as a reward."
 			}
 		},
 		"rodeur": {
@@ -5158,20 +5158,20 @@
 				"name": "The Amnesiac Rice",
 				"begin": "I need some Amnesiac Rice to recharge my magic cape. I've been told that it grows in the Sticky Swamp of the Atlanteid Islands. Can you bring me enough Rice to recharge my cape so I can become invisible again? Hurry up, it's really important!",
 				"search": {
-					"name": "Chercher du Riz",
-					"text": "Aprés quelques recherches, vous trouvez un coin du Marais où pousse du Riz Amnésique, une variété trés rare de Riz aux propriétés étonnantes. Le seul problème c'est que des dizaines de Pirhanoz protègent l'accés. Il va falloir d'abord nettoyer le chemin !"
+					"name": "Search for Rice",
+					"text": "After searching the Swamp for several hours, you finally find an area full of Amnesiac Rice, a rare variety of Rice with amazing properties! The only problem is that hundreds of Pirhanoz are protecting the entrance. You'll have find a way past them!"
 				},
 				"kill": "Piranhoz",
 				"pick": {
-					"name": "Ramasser le Riz",
-					"text": "Félicitations ! Vous obtenez du Riz Amnésique !"
+					"name": "Gather the Rice",
+					"text": "Congratulations! You've found some Amnesiac Rice!"
 				},
-				"end": "Ah ! Uhm euh... En fait, j'avais mal compris. Un petit peu d'énergie foudre était seulement nécessaire pour recharger ma cape... Tiens, voilà pour toi, et tu peux garder le riz, je n'en ai pas besoin."
+				"end": "To be honest, I didn't need the Amnesiac Rice, sorry! I only needed a little bit of lightning energy to recharge my cape ... here, take this as a reward. You can keep the rice too, I don't need it anymore."
 			},
 			"rodlif": {
 				"name": "The Dark Dinoz",
 				"begin": "Three Dark Dinoz from Caushemesh are waiting for you at the Mutant Falls. Go and defeat them and then return to receive your reward ... take my advice, don't try to defeat them alone, your Dinoz could die!",
-				"end": "Pas mal pour un Dinoz faible de Dinoville... Tiens, voilà pour toi !"
+				"end": "Not bad for a weak Dinoz from Dinotown ... here take this!"
 			}
 		},
 		"baoBob": {
