@@ -12,7 +12,7 @@ import rateLimit from '@fastify/rate-limit';
 import swagger from '@fastify/swagger';
 import swaggerUI from '@fastify/swagger-ui';
 import { randomUUID } from 'crypto';
-import Fastify, { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
+import Fastify, { FastifyError, FastifyReply, FastifyRequest, LogController } from 'fastify';
 import {
 	jsonSchemaTransform,
 	jsonSchemaTransformObject,
@@ -82,9 +82,42 @@ export interface BuildServerOptions {
 async function buildServer(options: BuildServerOptions = {}) {
 	const { startBackgroundJobs = true } = options;
 	const server = Fastify({
-		logger: true,
+		logger: {
+			level: process.env.LOG_LEVEL ?? 'info',
+			redact: {
+				paths: ['req.headers.authorization', 'req.headers.cookie', 'res.headers["set-cookie"]'],
+				censor: '[REDACTED]'
+			}
+		},
+		logController: new LogController({
+			disableRequestLogging: true
+		}),
 		trustProxy: true
 	}).withTypeProvider<ZodTypeProvider>();
+	server.addHook('onResponse', async (request, reply) => {
+		const statusCode = reply.statusCode;
+		const responseTime = Math.round(reply.elapsedTime);
+		const pathname = request.url.split('?')[0];
+		// Les appels réussis et rapides ne sont pas journalisés.
+		if (statusCode < 400 && responseTime < 2000) {
+			return;
+		}
+		const details = {
+			category: 'http',
+			method: request.method,
+			path: pathname,
+			statusCode,
+			responseTime,
+			requestId: request.id
+		};
+		if (statusCode >= 500) {
+			request.log.error(details, 'HTTP server error');
+		} else if (statusCode >= 400) {
+			request.log.warn(details, 'HTTP client error');
+		} else {
+			request.log.warn(details, 'Slow HTTP request');
+		}
+	});
 	//-------------------------------------------------------
 	// Zod compilers
 	//-------------------------------------------------------
