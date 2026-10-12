@@ -4920,7 +4920,7 @@
 				"name": "Achievement of the month",
 				"begin": "I've planned another Golf party with the King next month, and he wants to hear more about your exploits .... what do you think about killing some Giant Chickens for me this time? As per usual, you will be richly rewarded!",
 				"end": "Ah! Fantastic! I'll embellish the story a bit to make it truly epic! This will surely please the King!",
-				"kill": "Coqs"
+				"kill": "Giant Chicken"
 			}
 		},
 		"shaman": {
@@ -5305,83 +5305,83 @@
 		"dian": {
 			"kswim": {
 				"name": "Like a Korgon in Water",
-				"begin": "La Jungle de Grumhel est un endroit fascinant ! Tenez, prenez les Korgons par exemple. Ils se sont adaptés à merveille à leur environnement ! Saviez-vous qu'ils fabriquaient leurs propres palmes afin de pouvoir traverser sans encombre le Fleuve Jumin ? Non ? Tenez, je veux bien vous en offrir une paire si vous me ramenez quelques fournitures de première nécessité...",
-				"end": "Voilà tout ce qu'il me fallait ! C'est parfait. Voici les Palmes des Korgons, comme convenu !",
+				"begin": "The Grumhel Jungle is a fascinating place! Just take a look at the Korgons. They've perfectly adapted to their environment! Did you know that they make their own fins which they use to cross the Jumin River? No? I'll give you this pair if you agree to bring me some much-needed supplies...",
+				"end": "Perfect! I've got everything I need! Here, take these Korgon fins as promised!",
 				"supplies": {
-					"name": "Examiner la liste de fournitures",
-					"description": "La liste de Dian Korgsey indique qu'elle a tout d'abord besoin de certains outils que l'on trouve aux Forges du Grand Tout-Chaud."
+					"name": "Check supply list",
+					"description": "Dian Korgsey's list shows that she really needs some tools. You can find them at the forges of the Big All-Hot."
 				},
 				"tools": {
-					"name": "Prendre des Outils",
-					"description": "Vous récupérez une Trousse à Outils. La suite de la liste indique : « Branches de la forêt du volcan »..."
+					"name": "Pick up the tools",
+					"description": "You pick up a pouch of tools. \"Branches from the Ashpouk Ruins\" are also on the list."
 				},
 				"wood": {
-					"name": "Couper du bois",
-					"description": "Vous récupérez quelques branches calcinées. La liste de fournitures se termine sur : « un grigri »..."
+					"name": "Cut down branches",
+					"description": "You pick up a few charred branches. Last on the list is \"a charm\"."
 				},
 				"grigri": {
-					"name": "Demander un grigri",
-					"description": "Le Shaman vous adresse un large sourire et vous tend un de ses grigris porte-bonheur. Merci !"
+					"name": "Ask the Shaman for a charm",
+					"description": "The Shaman grins and gives you one of his lucky charms. Thanks!"
 				}
 			},
 			"rivals": {
 				"name": "Korgons of the North, Korgons of the South",
-				"begin": "Si les Korgons de cette partie de la Jungle de Grumhel sont quasiment sociables, il en existe au Sud, sur les bords du Chemin Glauque, qui sont autrement moins gentils. Je pense que si tu m'apportais une preuve de victoire sur ceux du Sud, les Korgons d'ici nous apprécieraient beaucoup plus !",
-				"end": "Ah, bonne idée les griffes ! Les Korgons ici ont l'air d'apprécier... Tiens, voilà pour ta peine.",
-				"kill": "Korgons du sud",
+				"begin": "The Korgons found in this part of Grumhel Jungle are quite friendly. Southern Korgons from the Sinister Path are far less friendly. If you bring me proof of victory against the Southern Korgons, the Northern Korgons will like us a lot more!",
+				"end": "Ah! Good idea, Korgon Claws! the Northern Korgons seem to like it ... here, take this for your trouble.",
+				"kill": "Southern Korgons",
 				"trophy": {
-					"name": "Trouver un trophée",
-					"description": "Vous récupérez quelques Griffes de Korgons pour servir de trophée aux Korgons du nord..."
+					"name": "Find a trophy",
+					"description": "You pick up a few Korgon claws to use as a trophy for the Northern Korgons..."
 				}
 			},
 			"kfood": {
 				"name": "Wood Steak",
-				"begin": "Il existe quelque part dans Grumhel une espèce rare d'arbre que les Korgons adorent : le Fikoïa Cendré ! J'ignore où on peut en trouver, mais je te paierai bien si tu m'en apportes !",
-				"end": "Ils vont se régaler avec ça, merci bien !",
+				"begin": "The Ashy Fikoia is a very rare tree that grows somewhere in Grumhel Forest, the Korgons love it! I don't know where to find it, but I'll pay you well if you bring me some branches!",
+				"end": "The Korgons will love that, thanks a lot!",
 				"tree": {
-					"name": "Arbre étrange",
-					"description": "Vous remarquez un drôle d'arbre aux feuilles grises et qui sent le tabac froid... Sûrement un Fikoïa Cendré ! Mais tandis que vous vous apprêtez à en prendre quelques branches, des bruits se font entendre dans les fourrés..."
+					"name": "Strange Tree",
+					"description": "You notice an odd-looking tree with grey leaves which smells like stale tobacco ... this must be The Ashy Fikoia! But wait! while you're preparing to take a few branches, you hear noises coming from the undergrowth..."
 				},
-				"kill": "Monstres attirés par le Fikoïa",
+				"kill": "monsters",
 				"branches": {
-					"name": "Prendre quelques branches",
-					"description": "Mieux vaut ne pas trop tarder par ici : vous préparez un gros fagot de bois et vous vous éloignez des fourrés..."
+					"name": "Cut Down A Few Branches",
+					"description": "Better to not stay here for too long: you cut down a few branches and quickly move away from the tree."
 				}
 			},
 			"poison": {
 				"name": "Korgon Rivalries",
-				"begin": "Le Fikoïa Cendré que vous avez découvert va rapidement devenir un point stratégique pour les Korgons du sud... Il faut réagir vite ! Nous allons « piéger » quelques branches de cet arbre pour les dissuader de le manger... Évidemment, nous, nous saurons quelles branches ne pas toucher... Hi hi hi.",
-				"end": "C'est bien triste pour ce spécimen de Fikoïa, ils sont si rares ! Merci pour toute votre aide, on ne vous oubliera pas...",
+				"begin": "The Ashy Fikoia you found will quickly become a strategic point for the Southern Korgons ... We have to react quickly! We will \"booby-trap\" some of the trees' branches in order to stop them from eating it ... we'll be the only ones who know which branches are dangerous ... ha ha!",
+				"end": "Thanks for all your help, we won't forget it!",
 				"sap": {
-					"name": "Récupérer de la sève",
-					"description": "Vous récupérez de la Suintante Mordicus, une sève d'arbre au goût innommable. Le piège idéal pour ce travail."
+					"name": "Pick Up The Sap",
+					"description": "You pick up some Oozing Mordicus, tree sap with a disgusting taste. This will be ideal for our trap."
 				},
 				"trap": {
-					"name": "Piéger le Fikoïa",
-					"description": "Ça alors ! Le Fikoïa a disparu ! Les Korgons du sud sont probablement passés avant vous..."
+					"name": "Entrap The Fikoia",
+					"description": ">Noooo! The Fikoia has disappeared! The Southern Korgons must have got here before us!"
 				},
 				"ambush": {
-					"name": "Embuscade",
-					"description": "Tandis que vous avancez dans la Jungle Sauvage, un groupe de Korgons surgit tout autour de vous ! Il va falloir s'en débarrasser pour continuer..."
+					"name": "Ambush",
+					"description": "While travelling in the Wild Jungle, a group of Korgons ambushes you! You've got to get rid of them to continue..."
 				},
-				"ambushKill": "Korgons embusqués",
+				"ambushKill": "Covert Korgons",
 				"track": {
-					"name": "Traces au sol",
-					"description": "De larges traces dans le sol indiquent clairement qu'on a traîné quelque chose de très lourd depuis le Fleuve Jumin... Les traces continuent vers le sud.",
-					"description2": "La piste s'arrête ici... Mais à en juger par les grognements dans les buissons, on vous attendait de pied ferme !"
+					"name": "Tracks On The Ground",
+					"description": "The large tracks on the ground indicate that something very heavy has passed this way from Jumin River ... the tracks lead towards the south.",
+					"description2": "The tracks end here ... judging by the growls coming from the bushes, someone or something has been waiting for you to arrive!"
 				},
-				"korgonsOrAlliesKill": "Korgons ou alliés",
+				"korgonsOrAlliesKill": "Korgons or allies",
 				"fikoia": {
-					"name": "Fikoïa Cendré",
-					"description": "Le Fikoïa est dissimulé sous une pile de feuilles de bananiers. Il va falloir le traîner jusqu'au camp..."
+					"name": "Ashy Fikoia",
+					"description": "The Ashy Fikoia is hidden under a pile of banana tree leaves. You'll have to drag it back to camp..."
 				},
 				"dian": {
 					"name": "Dian Korgsey",
-					"text": "Ah vous voilà ! Quel dommage qu'ils aient coupé ce Fikoïa Cendré... C'est bien un travail de Korgon sudiste ça... Bon, impossible de remonter la rivière avec. Cachez-le ici, ça fera l'affaire. On se retrouve au Camp."
+					"text": "Here you are! It's a shame that they cut down The Ashy Fikoia ... it seems like the work of the Southern Korgons, without doubt ... well, we can't travel up river with it. Hide it here, it'll be safe enough. We'll meet up again at the camp."
 				},
 				"hideFikoia": {
-					"name": "Cacher le Fikoïa",
-					"description": "Vous dissimulez à votre tour l'arbre sous quelques feuilles de bananiers."
+					"name": "Hide The Fikoia",
+					"description": "You hide the tree under some banana tree leaves."
 				}
 			}
 		},
