@@ -5180,126 +5180,126 @@
 				"begin": "It's Sophie from Waikiki Island's birthday soon. Her favorite meal is made from Pirhanoz found in the Sticky Swamp. Can you bring her a few Pirhanoz for me?",
 				"kill": "Piranhos",
 				"sophie": {
-					"name": "La petite Sophie",
-					"text": "Oh ! Merci ! C'est très gentil de m'avoir apporté ces délicieux Piranhoz pour mon anniversaire ! Fait des gros bisoux à Monsieur Bao de ma part !"
+					"name": "Sophie",
+					"text": "Oh! You're so kind! Thank you for bringing me these delicious Piranhoz for my birthday! Give Mister Bao a kiss from me!"
 				},
-				"end": "J'aime bien faire des cadeaux... Tiens, voici ta récompense."
+				"end": "I like giving presents ... here, take this as a reward."
 			},
 			"troc": {
 				"name": "The Barter of the Atlanteid Islands",
 				"begin": "Bartering is common in the Islands. You can exchange goods for an item you desire. I'd like to exchange a banana for a coat rack. Do you think you can do that for me?",
 				"merchant": {
-					"name": "Un Marchand",
-					"text": "Cette banane a l'air délicieuse, je te l'échange contre ce cerf-volant !"
+					"name": "A Merchant",
+					"text": "This banana looks delicious! I'll give you my kite in exchange!"
 				},
 				"lover": {
-					"name": "Un Amoureux",
-					"text": "Pfff... je pars a la Fontaine de Jouvence, et si tu veux je t'échange ce cerf-volant contre cette bague de fiancailles toute neuve... jamais servie..."
+					"name": "A Lover",
+					"text": "Pfff ... I'm on my way to the Fountain of Youth, if you would like, I'll give you this brand new engagement ring in exchange for your kite."
 				},
 				"jeweler": {
-					"name": "Un Bijoutier",
-					"text": "Quoi ?!!??? Mais que vois-je ?!!?? Cette Bague fait partie d'une ancienne collection Royale ! Je vous l'échange contre ce que j'ai de plus cher au monde : ma villa sur l'Ile du Totem ! Tenez, voilà les clés, vous ne pouvez pas refuser !"
+					"name": "A jeweller",
+					"text": "What! I can't believe it! This ring is part of an ancient royal collection! I'll give you the most valuable thing I own in exchange for the ring, my villa on Totem Island! Take the keys, you can't refuse!"
 				},
 				"tourist": {
-					"name": "Un Touriste Enlisé",
-					"text": "J'en ai RAZ LE BOL de ce Marais de M...... !!!!! Ca fait trois fois que notre Camping-Car s'enlise, quelle idée à la c... de venir passer des VACANCES DANS UN MARAIS !!! Quoi ? Une villa sur l'Ile du Totem ? Ok, sans problème, je l'échange contre mon camping-car !"
+					"name": "A Stuck Tourist",
+					"text": "I am sick of this sss...swamp!!!!! This is the third time our Motor-Home has got stuck in the mud. What a stupid idea to go on vacation IN A SWAMP! What? A villa on Totem Island? Of course I'll exchange it for my Motor-Home!"
 				},
 				"artist": {
-					"name": "Un Artiste Enthousiaste",
-					"text": "S.u.p.e.r. !! Je suis archi content ! Regarde ces visages ? C'est une composition art-ist-ique ! Quoi comment ça c'est nul ? Toi, tu ne comprends rien à l'Art avec un grand \"A\" ! D'ailleurs, mon oeuvre vaut bien un camping car, voilà, je confirme l'échange !"
+					"name": "An Enthusiastic Artist",
+					"text": "Fantastic! I'm so happy! Look at these faces! It's a work of art! What? how can it be trashy? You don't even understand art! My work is easily worth the same as a motor-home. I'll exchange with you!"
 				},
 				"oldLady": {
-					"name": "Une Vieille Dame",
-					"text": "J'ai entendu que tu cherchais un porte-manteau ? Je te l'échange contre ce que tu veux... C'est quoi ça ? Des visages ? Ca ressemble a rien... mais bon, ça doit pas valoir grand chose, ce Monsieur Picassi est completement inconnu. Bon allez, prends ce porte-manteau en échange !"
+					"name": "An Old Woman",
+					"text": "I heard you're looking for a coat rack. I'll trade it for whatever you have ... wait, what is that? \"Faces\"? It looks like nothing. . . it can't be worth much. Besides, I've never heard of \"Picassi\". Don't worry, you can still have the coat rack in exchange."
 				},
-				"end": "Tu as trouvé mon porte-manteau ? J'espère que ce petit voyage t'auras appris que les plus grandes richesses sont éphémères !"
+				"end": "You found my coat rack? I hope this little journey has shown you that most valuable treasures have to be earned!"
 			},
 			"kilksk": {
 				"name": "The Kazkadine Hunt",
-				"begin": "J'ai reçu un appel urgent du Dome Soulaflotte. Les Atalantes s'inquiètent d'un grand nombre de Kazkadines des Profondeurs qui ont enhavi les lieux. Pourrais-tu emmener ton Dinoz faire un petit peu de nettoyage ? Attention à ne pas te faire électrocuter.",
+				"begin": "I just received an emergency call from the Underwater Dome. The Atalants are extremely worried about the number of invading Kazkadines. Can you take your Dinoz there to clean it up? Make sure you don't get electrocuted.",
 				"kill": "Kazkadine",
-				"end": "Bravo, c'était une mission branchée n'est-ce pas ?"
+				"end": "Well Done! You successfully sealed the Kazkadine leak in the Underwater Dome!"
 			},
 			"kilang": {
 				"name": "Eeloz with vinegar",
-				"begin": "Connais-tu le plat traditionnel des Anguilloz au Vinaigre ? C'est vraiment délicieux ! Peux-tu te procurer des Anguilloz fraîches et du vinaigre, puis apporter le tout à mon ami au Port de Prêche ? C'est pour un cadeau !",
+				"begin": "Do you know the traditional dish: Eeloz with vinegar? It's delicious! Can you get some fresh Eeloz and vinegar and take them to my friend at Frish Port? It's a present!",
 				"kill": "Eeloz",
 				"wineMerchant": {
-					"name": "Marchand de Vins",
-					"text": "Uhm ? Tu viens de la part de M. Bao ? Tu cherches du vinaigre ?? Tiens, j'ai ce vieux Chateau Forcebrut qui devrait être parfait pour la cuisine."
+					"name": "Wine Merchant",
+					"text": "Umm? You're here on behalf of Mr Bao, looking for vinegar? Here, I have this old Chateau BrutForce which is perfect for cooking with."
 				},
 				"fisher": {
-					"name": "Pêcheur",
-					"text": "Tu cherches l'ami de M. Bao ? Il me semble qu'il était parti rendre visite à Madame Seyche a Dinoville."
+					"name": "Fisherman",
+					"text": "Are you looking for Mr Bao's friend? I think he went to visit Miss Squyd in Dinotown."
 				},
 				"madameSeyche": {
 					"name": "Madam Squyd",
-					"text": "Ooooh le mignonn toupiti Dinoz !!! Quoi ? Vous cherchez l'ami de M. Bao ? Il est parti voir ce bon vieux Papy Joe, ils avaient des histoires d'hommes a discuter paraît-il !"
+					"text": "Ooooh the cute little Dinoz!!! What? You're looking for Mr Bao's friend? He went to see old Grandpa Joe, they had important things to talk about!"
 				},
 				"adamNature": {
 					"name": "Adam Nature",
-					"text": "Uhmmm ! Des anguilloz au vinaigre !! J'adoooore ! Désolé de ne pas avoir attendu au Port de Prêche, je vais prévenir ce cher Bob pour qu'il te récompense correctement !"
+					"text": "Yum! Eeloz with vinegar!! I love this dish! Sorry I didn't wait for you at Frish Port. I'll tell Bob to give you a reward!"
 				},
-				"end": "Alors comme ça on se balade un peu partout pendant une Mission ? Adam m'as tout raconté, voilà pour toi."
+				"end": "You're walking around during a mission? Adam told me everything. Here, take this, it's for you."
 			},
 			"bigpch": {
 				"name": "The Great Hunt",
-				"begin": "Je suis un petit peu embêté. J'ai promis à l'Archisage du Dome Soulaflotte que j'exterminerai 150 monstres des Iles Atlantéinées en à peine dix jours, mais je me suis cassé le bras et je ne peux pas trop me déplacer. Peux-tu t'occuper d'en tuer une trentaine pour moi ? Pour le reste, je me débrouillerai !",
-				"kill": "monstres",
-				"end": "Super ! Finalement, j'ai exterminé le reste moi-même, en me servant uniquement de mes pieds, mais je te remercie tout de même pour ton aide."
+				"begin": "I'm a bit embarrassed. I promised the Underwater Dome Archsage that I would exterminate 150 Atlanteid Island monsters in ten days. Unfortunately I've broken my arm and can't really move. Can you kill thirty monsters for me? I'll take care of the others!",
+				"kill": "monsters",
+				"end": "Fantastic! I can now exterminate the others on my own using my feet, thanks for your help."
 			},
 			"rally1": {
 				"name": "The Sardine Rally",
-				"begin": "Participe au Rallye des Sardines ! Rejoins le Port de Prêche le plus rapidement possible !",
+				"begin": "Take part in the Sardine Rally! Go to Frish Port as fast as possible!",
 				"step": {
-					"name": "Etape du Rallye",
-					"description": "Vous avez franchi une étape du Rallye, vous devez maintenant rentrer voir M. Bao Bob !"
+					"name": "Rally Checkpoint",
+					"description": "You pass the finish line, now return to Mr Bao Bob!"
 				},
-				"end": "Félicitations pour ce Rallye, voilà ton prix."
+				"end": "Congratulations for finishing the Rally. Here's your prize."
 			},
 			"rally2": {
 				"name": "The Fish Rally",
-				"begin": "Participe au Rallye des Poissons ! Rejoins le Port de Prêche le plus rapidement possible !",
+				"begin": "Take part in the Fishes Rally! Go to Frish Port as quickly as possible!",
 				"step": {
-					"name": "Etape du Rallye",
-					"description": "Vous avez franchi la première étape du Rallye, vous devez maintenant aller à l'Université !",
-					"description2": "Vous avez franchi la seconde étape du Rallye, vous devez maintenant retourner voir M. Bao Bob !"
+					"name": "Rally Checkpoint",
+					"description": "You pass the first Rally checkpoint, now you have to go to the University!",
+					"description2": "You pass the second checkpoint, now return to Mr Bao Bob!"
 				},
-				"end": "Félicitations pour ce Rallye, voilà ton prix."
+				"end": "Congratulations for finishing the Rally. Here's your prize."
 			},
 			"rally3": {
 				"name": "The Shark Rally",
-				"begin": "Participe au Rallye des Requins ! Rejoins les Mines de Corail le plus rapidement possible !",
+				"begin": "Take part in the Sharks Rally! Go to the Coral Mines as quickly as possible!",
 				"step": {
-					"name": "Etape du Rallye",
-					"description": "Vous avez franchi la première étape du Rallye, vous devez maintenant aller à Forcebrut !",
-					"description2": "Vous avez franchi la seconde étape du Rallye, vous devez maintenant aller sur les Pentes de Basalte !",
-					"description3": "Vous avez franchi la dernière étape du Rallye, vous devez maintenant retourner voir M. Bao Bob !"
+					"name": "Rally Checkpoint",
+					"description": "You pass the first Rally checkpoint, now you have to go to BrutForce!",
+					"description2": "You pass the second Rally checkpoint, now you have to go to the Basalt Slopes!",
+					"description3": "You pass the third checkpoint, now return to Mr Bao Bob!"
 				},
-				"end": "Félicitations pour ce Rallye, voilà ton prix."
+				"end": "Congratulations for finishing the Rally. Here's your prize."
 			},
 			"rally4": {
 				"name": "The Whale Rally",
-				"begin": "Participe au Rallye des Baleines ! Rejoins Fosselave puis reviens ici le plus rapidement possible !",
+				"begin": "Take part in the Whales Rally! Go to Lavapit and return as quickly as possible!",
 				"step": {
-					"name": "Etape du Rallye",
-					"description": "Vous avez franchi l'étape du Rallye, vous devez maintenant retourner chez M. Bao Bob au plus vite !"
+					"name": "Rally Checkpoint",
+					"description": "You pass the Rally checkpoint, now return to Mr Bao Bob as soon as possible!"
 				},
-				"end": "Félicitations pour ce Rallye, voilà ton prix."
+				"end": "Congratulations for finishing the Rally. Here's your prize."
 			},
 			"tour": {
 				"name": "The Dinoland Tour",
-				"begin": "Le Tour de Dinoland est la plus célebre des courses ! Faites le tour de Dinoland en moins de dix jours ! La première étape se situe sur l'Ile Waïkiki.",
+				"begin": "The DinoLand Tour is the most famous race in all of DinoLand! Race round Dinoland in less than ten days! The first checkpoint is on Waikiki Island.",
 				"step": {
-					"name": "Etape du Tour",
-					"description": "Félicitations pour avoir franchi la première étape du Tour de Dinoland. La prochaine étape se trouve à Forcebrut. Bon courage !",
-					"description2": "Félicitations pour avoir franchi la seconde étape du Tour de Dinoland. La prochaine étape se trouve aux Collines Escarpées. Bon courage dans les côtes !",
-					"description3": "Félicitations pour avoir franchi la troisième étape du Tour de Dinoland. La prochaine étape se trouve à Fosselave. Bonne chance pour l'escalade du Grand Tout-Chaud !",
-					"description4": "Félicitations pour avoir franchi la quatrième étape du Tour de Dinoland. La prochaine étape se trouve au Camp Korgon de la Forêt de Grumhel. Evitez de vous faire ralentir par ces sales bestioles !",
-					"description5": "Félicitations pour avoir franchi la cinquième étape du Tour de Dinoland. La prochaine étape se trouve à l'Orée de la Forêt ! Attention à ne pas vous perdre sur le Chemin Sombre...",
-					"description6": "Félicitations pour avoir franchi la sixième étape du Tour de Dinoland ! La dernière étape consiste à rejoindre M. Bao Bob pour remporter ce Tour !"
+					"name": "Tour Checkpoint",
+					"description": "Congratulations for passing the first checkpoint of the Dinoland Tour. The next checkpoint is located in BrutForce. Good luck!",
+					"description2": "Congratulations for passing the second checkpoint of the Dinoland Tour. The next checkpoint is in the Precipitous Hills. Good luck up there!",
+					"description3": "Congratulations for passing the third checkpoint of the Dinoland Tour. The next checkpoint is in Lavapit. Good luck climbing the Big All-Hot!",
+					"description4": "Congratulations for passing the fourth checkpoint of the Dinoland Tour. The next checkpoint is in the Korgons' Camp in Grumhel Forest. Avoid being slowed down by the monsters!",
+					"description5": "Congratulations for passing the fifth checkpoint of the Dinoland Tour. The next checkpoint is in Forest Threshold! Be careful! don't get lost on the Dark Path....",
+					"description6": "Congratulations for passing the sixth checkpoint of the Dinoland Tour! Now return to Bao Bob to win the Tour!"
 				},
-				"end": "Bravo ! C'était un magnifique Tour de Dinoland, voici une récompense digne de votre exploit !"
+				"end": "Bravo! That was a great performance. Here, take this, it's a reward for your success!"
 			}
 		},
 		"dian": {
