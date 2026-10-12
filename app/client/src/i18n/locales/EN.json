@@ -6453,71 +6453,71 @@
 	},
 	"scenarios": {
 		"star": {
-			"name": "La Plume Sidérale",
+			"name": "The Sidereal Feather",
 			"texts": {
-				"fightMegawolf": "Au moment où vous approchez, un immense loup apparait !",
-				"fightStarFound": "A la fin du combat, vous apercevez un objet brillant : il s'agit d'une des 7 étoiles magiques !",
-				"eatStarFound": "Après avoir avalé la Tarte, votre Dinoz aperçoit quelque chose qui brille à quelques mètres... Félicitations ! Vous avez trouvé l'une des 7 étoiles magiques !",
-				"digStarFound": "Au premier coup de pelle, vous entendez un bruit étrange. En creusant un peu vous trouvez l'une des 7 étoiles magiques ! Félicitations !",
-				"resurrectStarFound": "Alors qu'il se réveille à Dinoville, votre Dinoz s'aperçoit que quelqu'un lui a confié la dernière étoile magique ! Ses souvenirs sont troubles, mais il se rappelle de Dinoz étranges, inconnus jusque là, à l'allure de singes au pelage multicolore... Ce sont eux qui lui ont confié la 7ème étoile, mais qui sont-ils ?!?"
+				"fightMegawolf": "As you approach, a gigantic wolf appears!",
+				"fightStarFound": "After the battle, you spot a shiny object: it's one of the 7 magical stars!",
+				"eatStarFound": "After eating the Pie, your Dinoz notices something sparkling a few meters away... Congratulations! You've found one of the 7 magical stars!",
+				"digStarFound": "With the very first strike of your shovel, you hear a strange noise. After digging a little deeper, you discover one of the 7 magical stars! Congratulations!",
+				"resurrectStarFound": "As your Dinoz wakes up in Dinoville, it realizes that someone has entrusted it with the final magical star! Its memories are hazy, but it recalls strange Dinoz unlike any it has ever seen before, resembling monkeys with multicolored fur... They're the ones who gave it the 7th star, but who are they?!?"
 			}
 		},
 		"merguez": {
-			"name": "L'overdose de Merguez"
+			"name": "Merguez Overdose"
 		},
 		"pac": {
-			"name": "Le Parchemin des Aptitudes"
+			"name": "The Skill Scroll"
 		},
 		"devourer": {
-			"name": "La Dévoreuse",
+			"name": "The Devourer",
 			"texts": {
-				"tower_won": "Vous avez remporté le contrôle de la Dévoreuse ! Gardez-le jusqu'à minuit pour obtenir ses précieuses graînes !",
-				"grains_credited": "Félicitations ! Votre contrôle des Dévoreuses vous rapporte <b>::count::</b> graîne(s) qui ont été rajoutées à vos Ingrédients.",
-				"stop_defend_tower": "Vous avez relaché le contrôle de la Dévoreuse."
+				"tower_won": "You've taken control of the Devourer! Hold on to it until midnight to earn its precious seeds!",
+				"grains_credited": "Congratulations! Your control of the Devourers has earned you <b>::count::</b> seed(s), which have been added to your Ingredients.",
+				"stop_defend_tower": "You've relinquished control of the Devourer."
 			},
 			"journal": {
 				"tabLabel": "Journal",
 				"date": "Date",
-				"defense": "Défense",
+				"defense": "Defense",
 				"attack": "Attack",
 				"action": "Action",
-				"watchFight": "See the fight",
+				"watchFight": "Watch the fight",
 				"copyLink": "Copy link",
-				"linkCopied": "Le lien du replay a été copié dans le presse-papier."
+				"linkCopied": "The replay link has been copied to your clipboard."
 			},
 			"shareFight": {
-				"title": "Replay Dévoreuse"
+				"title": "Devourer Replay"
 			}
 		},
 		"magnet": {
-			"name": "La Magnétite",
+			"name": "Magnetite",
 			"texts": {
-				"initialAmbush": "Alors que vous approchez du Syphon Siffleur, trois membres de la Team W surgissent et attaquent votre groupe !",
-				"initialAmbushRescue": "Attendez ! Ce Dinoz est bien trop faible pour faire partie des troupes d'élite du Roi Rocky... Nous avons dû faire une erreur sur notre adversaire, excusez nous !",
-				"initialAmbushRegeneration": "Electrosoins",
-				"fightWTeamStart": "Alors que vous approchez, un Dinoz de la Team-W apparaît... vous l'attaquez !",
-				"fightWTeamLost": "Vous ne passerez pas !",
-				"fightWTeamWon1": "Pourquoi vous attaquez-nous ? Nous saurons nous venger !",
-				"fightWTeamWon2": "Vous êtes surement des espions du Roi Rocky ! Vous ne perdez rien pour attendre !",
-				"fightWTeamWon3": "Vous voulez nous exterminer ?!? Vite ! Refugions-nous au camp du sud !",
-				"fightWTeamEnd": "Attends ! Groubourin n'est pas dans son état normal... Puisque tu nous as suivi jusqu'ici, arrêtons de combattre un instant et parlons entre gens civilisés...",
-				"fightDarkDinoz": "Alors que vous arrivez dans les Steppes Magnétiques, d'étranges ombres vous entourent tout à coup. Il semblerait que vous veniez de tomber dans une embuscade...",
-				"fightPotionStolen": "C'est une catastrophe ! Ces drôles de Goupignons enragés se sont emparés de votre Potion Anti-Sehd !",
-				"fightSkingStart": "Vous reconnaissez le Wanwan Grobourin de la Team-W... Il semble être contrôlé par les Goupignons sombres... mais sont-ils suffisamment intelligents pour faire cela seuls ???",
-				"fightCaptainHelp": "Il semble que vous ayez besoin d'un peu d'aide... Team-W : à l'attaaaaaaque !",
-				"fightSkingEnd1": "Après le combat, vous retrouvez sur le sol la Potion Anti-Sehd que vous aviez confectionnée. Vous l'utilisez sur Grobourin afin qu'il retrouve ses esprits...",
-				"fightSkingEnd2": "Le Roi des Rockys et le Capitaine vous attendent pour vous remercier de votre vaillant combat...",
-				"syphonDeath": "Alors que votre Dinoz tente de franchir le Syphon, une violente décharge magnétique le frappe de plein fouet. Sans protection, il s'effondre instantanément..."
+				"initialAmbush": "As you approach the Whistling Siphon, three members of Team W suddenly appear and attack your group!",
+				"initialAmbushRescue": "Wait! This Dinoz is far too weak to be part of King Rocky's elite troops... We must have mistaken you for someone else. Please forgive us!",
+				"initialAmbushRegeneration": "Electrohealing",
+				"fightWTeamStart": "As you approach, a Dinoz from Team W appears... You attack!",
+				"fightWTeamLost": "You shall not pass!",
+				"fightWTeamWon1": "Why are you attacking us? We'll get our revenge!",
+				"fightWTeamWon2": "You must be spies working for King Rocky! You'll pay for this!",
+				"fightWTeamWon3": "Are you trying to wipe us out?!? Quick! Let's take refuge in the southern camp!",
+				"fightWTeamEnd": "Wait! Bigbeastly isn't himself... Since you've followed us all the way here, let's stop fighting for a moment and talk like civilized people...",
+				"fightDarkDinoz": "As you enter the Magnetic Steppes, strange shadows suddenly surround you. It looks like you've walked straight into an ambush...",
+				"fightPotionStolen": "This is a disaster! Those strange, enraged Smashrooms have stolen your Anti-Sehd Potion!",
+				"fightSkingStart": "You recognize Bigbeastly, the Wanwan from Team W... He seems to be under the control of the Dark Smashroom... But are they really intelligent enough to pull this off on their own???",
+				"fightCaptainHelp": "Looks like you could use a little help... Team W: ATTAAAAACK!",
+				"fightSkingEnd1": "After the battle, you find the Anti-Sehd Potion you prepared lying on the ground. You use it on Bigbeastly to bring him back to his senses...",
+				"fightSkingEnd2": "The King of the Rockys and the Captain are waiting to thank you for your courageous battle...",
+				"syphonDeath": "As your Dinoz attempts to cross the Siphon, a powerful magnetic discharge strikes it head-on. Without protection, it instantly collapses..."
 			}
 		},
 		"jeromeTrader": {
-			"name": "L'affaire Warp Street"
+			"name": "The Warp Street Affair"
 		},
 		"dojo": {
 			"name": "Dojo"
 		},
 		"intro": {
-			"name": "Taurus le Magnifique"
+			"name": "Taurus the Magnificent"
 		}
 	},
 	"reportModal": {
@@ -6540,15 +6540,15 @@
 			"banner": "Inappropriate banner",
 			"clanPages": "Inappropriate description / pages",
 			"other": "Other",
-			"forumSpam": "Spam ou flood",
-			"forumAbuse": "Insultes ou harcèlement",
-			"forumOffTopic": "Hors-sujet",
-			"forumInappropriate": "Contenu inapproprié"
+			"forumSpam": "Spam or flooding",
+			"forumAbuse": "Insults or harassment",
+			"forumOffTopic": "Off-topic",
+			"forumInappropriate": "Inappropriate content"
 		},
 		"reportUser": "Report this player",
 		"reportClan": "Report this clan",
 		"reportDinoz": "Report this Dinoz",
-		"reportingForumMessage": "Vous signalez un message de "
+		"reportingForumMessage": "You are reporting a message from "
 	},
 	"tutorial": {
 		"objective": "Objectif : {title}",
@@ -6666,23 +6666,22 @@
 			}
 		}
 	},
-	"errors": {},
 	"event": {
 		"christmas": {
 			"reward": {
-				"title": "Récompenses de Noël",
-				"content": "Félicitations pour votre participation à l'événement de Noël ! En guise de remerciement pour vos exploits face aux Piglous, vous avez reçu vos récompenses directement dans votre inventaire.\n\n{items}\n\nMerci de votre participation, le Père Joël."
+				"title": "Christmas Rewards",
+				"content": "Congratulations on taking part in the Christmas event! As a thank-you for your heroic efforts against the Piglous, your rewards have been added directly to your inventory.\n\n{items}\n\nThank you for participating!\nSanta Joël"
 			}
 		}
 	},
 	"events": {
 		"announcePopup": {
 			"text1": "Brrr... ",
-			"text2": "Le vent se lève, ",
-			"text3": "les neiges éternelles descendent de la montagne et de petites boules de poils blanches font leur apparition dans certaines ruelles... ",
-			"text4": "Ça y est !",
-			"title": "Les Piglous sont de retour dans Dinoville !",
-			"viewEvent": "Voir l'Event"
+			"text2": "The wind is picking up, ",
+			"text3": "the eternal snows are sweeping down from the mountains, and little white furballs are starting to appear in certain alleyways... ",
+			"text4": "It's happening!",
+			"title": "The Piglous are back in Dinoville!",
+			"viewEvent": "View Event"
 		}
 	}
 }
