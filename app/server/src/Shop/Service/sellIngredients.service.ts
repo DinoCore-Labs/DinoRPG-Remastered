@@ -156,5 +156,18 @@ export async function sellIngredient(
 		);
 	}
 
+	req.log.info(
+		{
+			category: 'economy',
+			action: 'ingredients_sold',
+			userId: authed.id,
+			dinozId,
+			shopId: itinerantShop.shopId,
+			ingredientTypes: soldIngredients.length,
+			goldReceived: gold,
+			requestId: req.id
+		},
+		'Ingredients sold to itinerant merchant'
+	);
 	return { gold: updated.amount };
 }
