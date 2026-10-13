@@ -70,7 +70,10 @@ export enum Boss {
 	INTRO_DARKI_1 = 'INTRO_DARKI_1',
 	INTRO_DARKI_2 = 'INTRO_DARKI_2',
 	INTRO_DARKI_3 = 'INTRO_DARKI_3',
-	TAURUS = 'TAURUS'
+	TAURUS = 'TAURUS',
+	MONSTER_HUNT_MIMIC = 'MONSTER_HUNT_MIMIC',
+	MONSTER_HUNT_MEGA_WOLF = 'MONSTER_HUNT_MEGA_WOLF',
+	MONSTER_HUNT_WEREZORE = 'MONSTER_HUNT_WEREZORE'
 }
 
 export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
@@ -388,7 +391,10 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		],
 		xp: 50,
 		skills: [Skill.M_FLIGHT],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'piraos',
+		dark: true,
+		size: 150
 	},
 	[Boss.TW_DESTROYER]: {
 		id: Boss.TW_DESTROYER,
@@ -790,7 +796,10 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		xp: 60,
 		skills: [Skill.M_CONTAMINATION],
 		zones: [],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'gropi',
+		dark: true,
+		size: 200
 	},
 	[Boss.MASKED_KORGON]: {
 		id: Boss.MASKED_KORGON,
@@ -1373,5 +1382,83 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		canBeCaptured: false,
 		skills: [Skill.BOULE_DE_FEU, Skill.COULEE_DE_LAVE, Skill.VULCAIN],
 		display: 'taurus'
+	},
+	[Boss.MONSTER_HUNT_MIMIC]: {
+		id: Boss.MONSTER_HUNT_MIMIC,
+		boss: true,
+		name: 'mimic3',
+		level: 35,
+		hp: 40,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 35,
+		bonus_defense: 50,
+		resilience: 40,
+		groups: [
+			{ quantity: 0, odds: 3 },
+			{ quantity: 1, odds: 1 },
+			{ quantity: 2, odds: 0 },
+			{ quantity: 3, odds: 0 }
+		],
+		odds: 0,
+		xp: 80,
+		zones: [],
+		canBeCaptured: false,
+		display: 'mimic',
+		dark: true,
+		size: 150
+	},
+	[Boss.MONSTER_HUNT_MEGA_WOLF]: {
+		id: Boss.MONSTER_HUNT_MEGA_WOLF,
+		boss: true,
+		name: 'megaw2',
+		level: 10,
+		hp: 80,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 7,
+		bonus_defense: 0,
+		resilience: 40,
+		odds: 0,
+		xp: 40,
+		zones: [],
+		canBeCaptured: false,
+		display: 'wolf',
+		dark: true,
+		size: 200,
+		skills: [Skill.COUP_DOUBLE]
+	},
+	[Boss.MONSTER_HUNT_WEREZORE]: {
+		id: Boss.MONSTER_HUNT_WEREZORE,
+		boss: true,
+		name: 'garou2',
+		level: 20,
+		hp: 50,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 30,
+		bonus_defense: 30,
+		resilience: 40,
+		odds: 0,
+		xp: 90,
+		zones: [],
+		canBeCaptured: false,
+		display: 'garouz',
+		size: 150
 	}
 };

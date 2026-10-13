@@ -118,6 +118,14 @@ export const monsterKeys = [
 	'darki2',
 	'darki3',
 	'taurus',
+	// Monster Hunt
+	'marca2',
+	'megou2',
+	'megaw2',
+	'pirao3',
+	'garou2',
+	'amanp3',
+	'mimic3',
 	'any'
 ] as const;
 

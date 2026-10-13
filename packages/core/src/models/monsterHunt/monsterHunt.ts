@@ -1,3 +1,5 @@
+import { MonsterKey } from '../monster/monsterKey.js';
+
 export enum MonsterHuntStatus {
 	DRAFT = 'DRAFT',
 	SCHEDULED = 'SCHEDULED',
@@ -48,7 +50,7 @@ export interface MonsterHuntMonsterConfig {
 	 * This key belongs to Monster Hunt and does not have to be an existing
 	 * MonsterKey yet. The fight integration will resolve it later.
 	 */
-	monsterKey: string;
+	monsterKey: MonsterKey;
 	/**
 	 * Stable key identifying the virtual hunt object.
 	 */
