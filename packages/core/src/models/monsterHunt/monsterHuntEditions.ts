@@ -1,4 +1,5 @@
 import { Item } from '../items/itemList.js';
+import { Reward } from '../rewards/rewardList.js';
 import { MonsterHuntEditionConfig, MonsterHuntLootRarity } from './monsterHunt.js';
 
 export const DARK_WORLD_INVASION_MONSTER_HUNT: MonsterHuntEditionConfig = {
@@ -194,6 +195,81 @@ export const DARK_WORLD_INVASION_MONSTER_HUNT: MonsterHuntEditionConfig = {
 					type: 'ITEM',
 					itemId: Item.GOLDEN_NAPODINO,
 					quantity: 1
+				}
+			]
+		}
+	],
+	rankingRewards: [
+		{
+			rankStart: 1,
+			rankEnd: 1,
+			rewards: [
+				{
+					type: 'ITEM',
+					itemId: Item.MAHAMUTI_EGG,
+					quantity: 1
+				},
+				{
+					type: 'ITEM',
+					itemId: Item.TOUFUFU_BABY,
+					quantity: 1
+				},
+				{
+					type: 'EPIC',
+					rewardId: Reward.HUNT1
+				}
+			]
+		},
+		{
+			rankStart: 2,
+			rankEnd: 5,
+			rewards: [
+				{
+					type: 'ITEM',
+					itemId: Item.TOUFUFU_BABY,
+					quantity: 1
+				}
+			]
+		},
+		{
+			rankStart: 6,
+			rankEnd: 10,
+			rewards: [
+				{
+					type: 'ITEM',
+					itemId: Item.KABUKI_EGG,
+					quantity: 1
+				}
+			]
+		},
+		{
+			rankStart: 11,
+			rankEnd: 20,
+			rewards: [
+				{
+					type: 'ITEM',
+					itemId: Item.TICTAC_TICKET,
+					quantity: 5
+				}
+			]
+		},
+		{
+			rankStart: 21,
+			rankEnd: 50,
+			rewards: [
+				{
+					type: 'TREASURE_TICKET',
+					quantity: 50
+				}
+			]
+		},
+		{
+			rankStart: 51,
+			rankEnd: 100,
+			rewards: [
+				{
+					type: 'TREASURE_TICKET',
+					quantity: 25
 				}
 			]
 		}
