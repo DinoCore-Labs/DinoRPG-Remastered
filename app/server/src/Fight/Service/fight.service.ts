@@ -46,6 +46,11 @@ import { removeItem } from '../../Inventory/Controller/removeItem.controller.js'
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { advanceDinozMissionOnFightWon, advanceDinozMissionOnMove } from '../../Mission/Controller/mission.progress.js';
 import { resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
+import {
+	ActiveMonsterHunt,
+	getActiveMonsterHunt,
+	getMonsterHuntDailyKills
+} from '../../MonsterHunt/Controller/monsterHunt.controller.js';
 import { prisma } from '../../prisma.js';
 import { advanceMerguezScenarioOnMerguezUsedTx } from '../../Scenario/Controller/merguezScenario.controller.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
@@ -741,6 +746,29 @@ function eventMonsterProba(
 	return Math.round(probability * eventFactor);
 }
 
+function monsterHuntMonsterProba(
+	dinozLevel: number,
+	spawnWeight: number,
+	monsterLvl: number,
+	hunt: ActiveMonsterHunt,
+	dailyKills: number
+): number {
+	let huntFactor = 1;
+	if (dailyKills > hunt.softCap) {
+		huntFactor = 0.3 * Math.exp(-0.039 * (dailyKills - hunt.softCap));
+	}
+	let delta = dinozLevel - monsterLvl;
+	if (delta < 0) {
+		if (delta < -3) {
+			return 0;
+		}
+		delta = -delta * 3;
+	}
+	delta = Math.pow(delta, 1.5);
+	const probability = Math.round((spawnWeight * 1000) / (3 + delta));
+	return Math.round(probability * huntFactor);
+}
+
 function getMonsterActiveEvent(monster: MonsterFiche, activeEvents: ActiveGameEvent[]): ActiveGameEvent | undefined {
 	if (!monster.events?.length) {
 		return undefined;
@@ -777,11 +805,18 @@ export async function generateMonsterList(
 	if (!place) {
 		throw new ExpectedError(`This place doesn't exist.`);
 	}
+	// Game Events
 	const activeEvents = getActiveGameEvents();
 	let eventMonsterKilled = 0;
 	if (activeEvents.length > 0 && team[0].userId) {
 		const playerEvent = await getUserEventTracking(team[0].userId, activeEvents[0].event);
 		eventMonsterKilled = playerEvent?.daily ?? 0;
+	}
+	// Monster Hunt
+	const activeMonsterHunt = await getActiveMonsterHunt();
+	let monsterHuntDailyKills = 0;
+	if (activeMonsterHunt && team[0].userId) {
+		monsterHuntDailyKills = await getMonsterHuntDailyKills(activeMonsterHunt.id, team[0].userId);
 	}
 	const missionSourceDinoz =
 		missionSourceDinozId != null ? team.find(dinoz => dinoz.id === missionSourceDinozId) : team[0];
@@ -810,6 +845,17 @@ export async function generateMonsterList(
 		}
 		return monster.zones.includes(place.map);
 	});
+	const availableMonsterHuntMonsters =
+		activeMonsterHunt?.monsters.filter(entry => {
+			if (entry.globalSpawn) {
+				return true;
+			}
+			const monster = entry.monster;
+			if (monster.places?.length && !monster.places.includes(place.placeId)) {
+				return false;
+			}
+			return monster.zones.includes(place.map);
+		}) ?? [];
 	const forcedMissionMonsterPool = availableMonsters.filter(monster => isLeaderMissionMonster(monster));
 	const monsters = availableMonsters.map(monster => {
 		if (isLeaderMissionMonster(monster)) {
@@ -837,10 +883,24 @@ export async function generateMonsterList(
 			p: monsterLevelProba(greatestFighterLevel, monster.odds, monster.level)
 		};
 	});
+	const monsterHuntMonsters =
+		activeMonsterHunt === null
+			? []
+			: availableMonsterHuntMonsters.map(entry => ({
+					monster: entry.monster,
+					p: monsterHuntMonsterProba(
+						greatestFighterLevel,
+						entry.spawnWeight,
+						entry.monster.level,
+						activeMonsterHunt,
+						monsterHuntDailyKills
+					)
+				}));
+	const encounterMonsters = [...monsters, ...monsterHuntMonsters];
 	let monsterLevel = 0;
 	const monsterArray: MonsterFiche[] = [];
 	let total = 0;
-	for (const monsterEntry of monsters) {
+	for (const monsterEntry of encounterMonsters) {
 		if (monsterEntry.p === null) {
 			monsterLevel += monsterEntry.monster.level;
 			monsterArray.push(monsterEntry.monster);
@@ -849,12 +909,12 @@ export async function generateMonsterList(
 		}
 	}
 	if (monsterArray.length === 0 && total === 0) {
-		for (const monsterEntry of monsters) {
+		for (const monsterEntry of encounterMonsters) {
 			monsterEntry.p = 100;
 		}
 	}
 	const mdelta = Math.max(Math.round(teamPowerLevel / 4), 2);
-	const ml = monsters
+	const ml = encounterMonsters
 		.filter(entry => entry.p > 0)
 		.map(entry => ({
 			monster: entry.monster,
@@ -873,6 +933,9 @@ export async function generateMonsterList(
 		).monster;
 		monsterArray.push(forcedMonster);
 		monsterLevel += forcedMonster.level;
+	}
+	if (ml.length === 0) {
+		return monsterArray;
 	}
 	while (monsterLevel < teamPowerLevel) {
 		const selectedMonster = weightedRandom(ml).monster;
