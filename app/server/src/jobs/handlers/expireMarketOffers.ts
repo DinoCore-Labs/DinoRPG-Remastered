@@ -8,7 +8,15 @@ export async function expireDueMarketOffersJob(log: { info: Function; error: Fun
 	const nextRunAt = await getNextMarketOfferExpirationDate();
 
 	if (result.processed > 0) {
-		log.info({ processed: result.processed, nextRunAt }, '[jobs] market-offer-expiration processed');
+		log.info(
+			{
+				category: 'market',
+				action: 'offers_expired',
+				processed: result.processed,
+				nextRunAt
+			},
+			'Market offers expired'
+		);
 	}
 
 	return {
