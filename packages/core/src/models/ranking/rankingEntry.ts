@@ -59,6 +59,7 @@ export interface MonsterHuntRankingEntry {
 	user: Pick<UserData, 'id' | 'name'>;
 	points: number;
 	objects: number;
+	loot: MonsterHuntRankingLootEntry[];
 }
 
 export interface MonsterHuntRankingEdition {
@@ -77,4 +78,13 @@ export interface MonsterHuntRankingResponse {
 	page: number;
 	pageSize: number;
 	ranking: MonsterHuntRankingEntry[];
+}
+
+export interface MonsterHuntRankingLootEntry {
+	lootKey: string;
+	nameKey: string;
+	icon: string | null;
+	points: number;
+	count: number;
+	pointsEarned: number;
 }

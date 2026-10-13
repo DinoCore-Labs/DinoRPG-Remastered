@@ -64,7 +64,29 @@ export async function getMonsterHuntRanking(
 					}
 				},
 				points: true,
-				objects: true
+				objects: true,
+				loot: {
+					where: {
+						count: {
+							gt: 0
+						}
+					},
+					orderBy: {
+						pointsEarned: 'desc'
+					},
+					select: {
+						count: true,
+						pointsEarned: true,
+						lootDefinition: {
+							select: {
+								lootKey: true,
+								nameKey: true,
+								icon: true,
+								points: true
+							}
+						}
+					}
+				}
 			}
 		}),
 		prisma.monsterHuntParticipant.count({
@@ -88,13 +110,20 @@ export async function getMonsterHuntRanking(
 		pageSize: safePageSize,
 		ranking: participants.map((participant, index) => ({
 			position: skip + index + 1,
-
 			user: {
 				id: participant.user.id,
 				name: participant.user.name
 			},
 			points: participant.points,
-			objects: participant.objects
+			objects: participant.objects,
+			loot: participant.loot.map(entry => ({
+				lootKey: entry.lootDefinition.lootKey,
+				nameKey: entry.lootDefinition.nameKey,
+				icon: entry.lootDefinition.icon,
+				points: entry.lootDefinition.points,
+				count: entry.count,
+				pointsEarned: entry.pointsEarned
+			}))
 		}))
 	};
 }

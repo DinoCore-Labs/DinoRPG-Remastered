@@ -2581,7 +2581,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: true,
 		dark: true,
-		size: 150
+		size: 150,
+		display: 'marca'
 	},
 	[Monster.ANY]: {
 		id: Monster.ANY,

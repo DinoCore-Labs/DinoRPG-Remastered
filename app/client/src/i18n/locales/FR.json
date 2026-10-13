@@ -1132,6 +1132,9 @@
 		"monsterHunt": {
 			"edition": "Édition :",
 			"objects": "Objets",
+			"lootDetails": "Objets trouvés",
+			"lootPoints": "{points} points obtenus",
+			"noLoot": "Aucun objet trouvé",
 			"archive": "Cette édition de la Chasse aux Monstres est terminée. Vous consultez son classement archivé.",
 			"period": "Du {start} au {end}",
 			"myRank": "Votre classement :",
@@ -3339,7 +3342,14 @@
 			"bao": "Baobob",
 			"gropi": "Gropignon",
 			"mimic": "Mimic",
-			"earth2": "Elémental jambes"
+			"earth2": "Elémental jambes",
+			"marca2": "Marcanglier",
+			"megou2": "Mégapignon Sombre",
+			"megaw2": "Mégaloup",
+			"pirao3": "Pirhan-os",
+			"garou2": "Garouzore",
+			"amanp3": "Amenpenne",
+			"mimic3": "Mimic"
 		},
 		"status": {
 			"asleep": "endormi",
