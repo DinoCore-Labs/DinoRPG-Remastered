@@ -180,6 +180,21 @@ export async function processDialogFightUnlocked(
 		 * Après une victoire, le scénario passe à magnet = 11.
 		 * Le joueur devra ensuite parler manuellement au Capitaine.
 		 */
+		req.log.info(
+			{
+				category: 'fight',
+				action: 'fight_completed',
+				source: 'dialog',
+				userId: authed.id,
+				dinozId,
+				dialogId,
+				phaseId,
+				teamSize: team.length,
+				won: result.result,
+				requestId: req.id
+			},
+			'Dialog fight completed'
+		);
 		return reply.send(result);
 	}
 	/**
@@ -229,6 +244,21 @@ export async function processDialogFightUnlocked(
 		StatTracking.KILL_M,
 		user.id,
 		fightResult.fighters.filter(f => !f.attacker && f.type === FighterType.MONSTER).length
+	);
+	req.log.info(
+		{
+			category: 'fight',
+			action: 'fight_completed',
+			source: 'dialog',
+			userId: authed.id,
+			dinozId,
+			dialogId,
+			phaseId,
+			teamSize: team.length,
+			won: result.result,
+			requestId: req.id
+		},
+		'Dialog fight completed'
 	);
 	return reply.send({
 		...result,
