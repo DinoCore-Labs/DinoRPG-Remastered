@@ -147,6 +147,21 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 		},
 		req.log
 	);
+	req.log.info(
+		{
+			category: 'fight',
+			action: 'fight_completed',
+			source: 'direct',
+			userId: user.id,
+			dinozId,
+			placeId: dinozData.placeId,
+			teamSize: team.length,
+			won: fight.result,
+			monsterCount: monsterKillCount,
+			requestId: req.id
+		},
+		'Fight completed'
+	);
 	return reply.send(fight);
 }
 
