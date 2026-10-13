@@ -53,3 +53,28 @@ export interface EventRankingResponse<T> {
 	pageSize: number;
 	ranking: T[];
 }
+
+export interface MonsterHuntRankingEntry {
+	position: number;
+	user: Pick<UserData, 'id' | 'name'>;
+	points: number;
+	objects: number;
+}
+
+export interface MonsterHuntRankingEdition {
+	id: string;
+	name: string;
+	slug: string;
+	status: string;
+	startAt: string;
+	endAt: string;
+	participantCount: number;
+}
+
+export interface MonsterHuntRankingResponse {
+	hunt: MonsterHuntRankingEdition;
+	total: number;
+	page: number;
+	pageSize: number;
+	ranking: MonsterHuntRankingEntry[];
+}
