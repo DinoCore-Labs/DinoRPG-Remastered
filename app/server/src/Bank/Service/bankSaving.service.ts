@@ -53,5 +53,18 @@ export async function claimBankSavingController(
 		return reply.status(401).send({ error: 'Unauthorized' });
 	}
 	const result = await claimBankSaving(userId, req.params.id);
+	req.log.info(
+		{
+			category: 'economy',
+			action: 'bank_saving_claimed',
+			userId,
+			savingId: result.saving.id,
+			amount: result.saving.amount,
+			interestGold: result.saving.interestGold,
+			totalGold: result.saving.totalGold,
+			requestId: req.id
+		},
+		'Bank saving claimed'
+	);
 	return reply.send(result);
 }
