@@ -6685,6 +6685,7 @@
 			}
 		},
 		"monsterHunt": {
+			"name": "Chasse aux Monstres",
 			"edition": {
 				"darkWorldInvasion": {
 					"name": "L'Invasion du Monde Sombre"

@@ -107,6 +107,13 @@ export interface MonsterHuntRewardTierConfig {
 
 export interface MonsterHuntEditionConfig {
 	slug: string;
+	/**
+	 * Historical/display name stored with the edition.
+	 */
+	name: string;
+	/**
+	 * Translation key used by clients when available.
+	 */
 	nameKey: string;
 	softCap: number;
 	monsters: readonly MonsterHuntMonsterConfig[];
