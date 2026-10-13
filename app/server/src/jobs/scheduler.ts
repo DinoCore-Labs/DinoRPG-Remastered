@@ -160,7 +160,19 @@ export function startScheduler(
 				);
 			} catch (err: any) {
 				const msg = String(err?.message ?? err);
-				log.error({ err }, `[jobs] failed ${job.key}`);
+				log.error(
+					{
+						category: 'jobs',
+						action: 'job_failed',
+						jobKey: job.key,
+						jobId: job.id,
+						jobRunId: run.id,
+						durationMs: Date.now() - startedAt,
+						instanceId: INSTANCE_ID,
+						err
+					},
+					'Job failed'
+				);
 				logSchedulerError('jobs.scheduler', err, {
 					jobKey: job.key,
 					jobId: job.id,
