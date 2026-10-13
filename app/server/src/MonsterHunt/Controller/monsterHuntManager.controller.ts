@@ -1,4 +1,5 @@
 import { Language } from '@dinorpg/core/models/config/language.js';
+import { RewardEnum } from '@dinorpg/core/models/enums/Parser.js';
 import type { MonsterHuntEditionConfig, MonsterHuntReward } from '@dinorpg/core/models/monsterHunt/monsterHunt.js';
 import { NewsType } from '@dinorpg/core/models/news/news.js';
 import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
@@ -26,6 +27,37 @@ function getMonsterHuntEndNewsSlug(huntSlug: string): string {
 
 function isUniqueConstraintError(error: unknown): boolean {
 	return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002';
+}
+
+function getMonsterHuntNotificationRewards(rewards: readonly MonsterHuntReward[]) {
+	return rewards.map(reward => {
+		switch (reward.type) {
+			case 'ITEM':
+				return {
+					rewardType: RewardEnum.ITEM,
+					value: reward.itemId,
+					quantity: reward.quantity
+				};
+			case 'TREASURE_TICKET':
+				return {
+					rewardType: RewardEnum.TREASURE_TICKET,
+					value: reward.quantity,
+					quantity: reward.quantity
+				};
+			case 'GOLD':
+				return {
+					rewardType: RewardEnum.GOLD,
+					value: reward.quantity,
+					quantity: reward.quantity
+				};
+			case 'EPIC':
+				return {
+					rewardType: RewardEnum.EPIC,
+					value: reward.rewardId,
+					quantity: 1
+				};
+		}
+	});
 }
 
 async function monsterHuntNewsExists(slug: string, prismaClient = prisma): Promise<boolean> {
@@ -109,25 +141,19 @@ function parseRankingRewards(value: unknown): MonsterHuntReward[] {
 	if (!Array.isArray(value)) {
 		return [];
 	}
-
 	return value.filter((reward): reward is MonsterHuntReward => {
 		if (!reward || typeof reward !== 'object') {
 			return false;
 		}
-
 		const candidate = reward as Record<string, unknown>;
-
 		switch (candidate.type) {
 			case 'ITEM':
 				return typeof candidate.itemId === 'number' && typeof candidate.quantity === 'number' && candidate.quantity > 0;
-
 			case 'TREASURE_TICKET':
 			case 'GOLD':
 				return typeof candidate.quantity === 'number' && candidate.quantity > 0;
-
 			case 'EPIC':
 				return typeof candidate.rewardId === 'number';
-
 			default:
 				return false;
 		}
@@ -160,7 +186,6 @@ async function applyMonsterHuntFinalReward(
 				}
 			});
 			return;
-
 		case 'TREASURE_TICKET':
 			await tx.userWallet.upsert({
 				where: {
@@ -181,7 +206,6 @@ async function applyMonsterHuntFinalReward(
 				}
 			});
 			return;
-
 		case 'GOLD':
 			await tx.userWallet.upsert({
 				where: {
@@ -202,7 +226,6 @@ async function applyMonsterHuntFinalReward(
 				}
 			});
 			return;
-
 		case 'EPIC':
 			await tx.userRewards.upsert({
 				where: {
@@ -730,17 +753,7 @@ export class MonsterHuntManager {
 		 */
 		await Promise.allSettled(
 			notificationPayloads.map(({ userId, rank, rewards }) =>
-				newNotif(
-					userId,
-					NotificationType.NEW_REWARD,
-					JSON.stringify({
-						source: 'monsterHuntRanking',
-
-						huntId,
-						rank,
-						rewards
-					})
-				)
+				newNotif(userId, NotificationType.NEW_REWARD, JSON.stringify(getMonsterHuntNotificationRewards(rewards)))
 			)
 		);
 

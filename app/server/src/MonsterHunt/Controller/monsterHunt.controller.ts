@@ -1,3 +1,4 @@
+import { RewardEnum } from '@dinorpg/core/models/enums/Parser.js';
 import type { MonsterHuntLootResult, MonsterHuntRewardResult } from '@dinorpg/core/models/fight/fightResult.js';
 import type { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import type { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
@@ -55,7 +56,6 @@ function parseRewardTier(value: unknown): MonsterHuntReward[] {
 		switch (candidate.type) {
 			case 'ITEM':
 				return typeof candidate.itemId === 'number' && typeof candidate.quantity === 'number' && candidate.quantity > 0;
-
 			case 'TREASURE_TICKET':
 			case 'GOLD':
 				return typeof candidate.quantity === 'number' && candidate.quantity > 0;
@@ -202,7 +202,6 @@ async function applyMonsterHuntReward(
 				}
 			});
 			return;
-
 		case 'GOLD':
 			await tx.userWallet.upsert({
 				where: {
@@ -305,7 +304,6 @@ async function claimMonsterHuntRewardTiers(
 							value: reward.itemId,
 							quantity: reward.quantity
 						};
-
 					case 'TREASURE_TICKET':
 					case 'GOLD':
 						return {
@@ -313,7 +311,6 @@ async function claimMonsterHuntRewardTiers(
 							value: reward.quantity,
 							quantity: reward.quantity
 						};
-
 					case 'EPIC':
 						return {
 							type: reward.type,
@@ -353,11 +350,9 @@ export async function rewardMonsterHuntFight(
 	const defeatedHuntMonsters = defeatedMonsters
 		.map(monster => {
 			const monsterKey = getMonsterKeyById(monster.id);
-
 			if (!monsterKey) {
 				return null;
 			}
-
 			return huntMonsterByKey.get(monsterKey) ?? null;
 		})
 		.filter((monster): monster is ActiveMonsterHuntMonster => monster !== null);
@@ -529,7 +524,37 @@ export async function rewardMonsterHuntFight(
 	 * l'attribution réelle des récompenses.
 	 */
 	if (result.rewards.length > 0) {
-		await newNotif(userId, NotificationType.NEW_REWARD, JSON.stringify(result.rewards));
+		const notificationRewards = result.rewards.flatMap(tier =>
+			tier.rewards.map(reward => {
+				switch (reward.type) {
+					case 'ITEM':
+						return {
+							rewardType: RewardEnum.ITEM,
+							value: reward.value,
+							quantity: reward.quantity
+						};
+					case 'TREASURE_TICKET':
+						return {
+							rewardType: RewardEnum.TREASURE_TICKET,
+							value: reward.value,
+							quantity: reward.quantity
+						};
+					case 'GOLD':
+						return {
+							rewardType: RewardEnum.GOLD,
+							value: reward.value,
+							quantity: reward.quantity
+						};
+					case 'EPIC':
+						return {
+							rewardType: RewardEnum.EPIC,
+							value: reward.value,
+							quantity: 1
+						};
+				}
+			})
+		);
+		await newNotif(userId, NotificationType.NEW_REWARD, JSON.stringify(notificationRewards));
 	}
 	return result;
 }
