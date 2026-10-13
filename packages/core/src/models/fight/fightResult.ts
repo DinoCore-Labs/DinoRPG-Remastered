@@ -41,6 +41,7 @@ export type FightScenarioReturn = {
 export interface MonsterHuntLootResult {
 	lootKey: string;
 	nameKey: string;
+	icon: string | null;
 	points: number;
 	count: number;
 }

@@ -16,6 +16,7 @@ export interface ActiveMonsterHuntMonster {
 	lootDefinitionId: string;
 	lootKey: string;
 	nameKey: string;
+	icon: string | null;
 	points: number;
 	dropRateBps: number;
 	spawnWeight: number;
@@ -110,6 +111,7 @@ export async function getActiveMonsterHunt(now = new Date()): Promise<ActiveMons
 			lootDefinitionId: definition.id,
 			lootKey: definition.lootKey,
 			nameKey: definition.nameKey,
+			icon: definition.icon,
 			points: definition.points,
 			dropRateBps: definition.dropRateBps,
 			spawnWeight: definition.spawnWeight,
@@ -487,6 +489,7 @@ export async function rewardMonsterHuntFight(
 			lootResults.push({
 				lootKey: definition.lootKey,
 				nameKey: definition.nameKey,
+				icon: definition.icon,
 				points: definition.points,
 				count
 			});
