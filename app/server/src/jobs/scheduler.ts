@@ -199,6 +199,15 @@ export function startScheduler(
 			}
 		}
 	}, tickMs);
-	log.info(`[jobs] scheduler started (tick=${tickMs}ms, instance=${INSTANCE_ID})`);
+	log.info(
+		{
+			category: 'jobs',
+			action: 'scheduler_started',
+			tickMs,
+			instanceId: INSTANCE_ID,
+			handlerCount: Object.keys(handlers).length
+		},
+		'Scheduler started'
+	);
 	return () => clearInterval(timer);
 }
