@@ -13,7 +13,7 @@ export async function cancelMarketOffer(req: FastifyRequest, reply: FastifyReply
 	const userId = req.user.id;
 	await assertUserHasDinozAtMarket(userId);
 	const params = offerIdParamsSchema.parse(req.params);
-	await prisma.$transaction(async tx => {
+	const cancelledOffer = await prisma.$transaction(async tx => {
 		/*
 		 * Use the same offer lock as bidMarketOffer.
 		 *
@@ -96,6 +96,18 @@ export async function cancelMarketOffer(req: FastifyRequest, reply: FastifyReply
 		});
 		return currentOffer;
 	});
+	req.log.info(
+		{
+			category: 'market',
+			action: 'offer_cancelled',
+			offerId: cancelledOffer.id,
+			sellerId: userId,
+			dinozId: cancelledOffer.dinozId,
+			total: cancelledOffer.total,
+			requestId: req.id
+		},
+		'Market offer cancelled'
+	);
 	await scheduleNextMarketOfferExpiration();
 	return reply.send({
 		ok: true
