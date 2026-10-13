@@ -11,6 +11,7 @@ import AdminForcebrutPage from '../pages/Admin/AdminForcebrutPage.vue';
 import AdminJobsPage from '../pages/Admin/AdminJobsPage.vue';
 import AdminLogsPage from '../pages/Admin/AdminLogsPage.vue';
 import AdminMaintenancePage from '../pages/Admin/AdminMaintenancePage.vue';
+import AdminMonsterHuntPage from '../pages/Admin/AdminMonsterHuntPage.vue';
 import AdminNewsEditPage from '../pages/Admin/AdminNewsEditPage.vue';
 import AdminNewsPage from '../pages/Admin/AdminNewsPage.vue';
 import AdminPage from '../pages/Admin/AdminPage.vue';
@@ -613,6 +614,15 @@ const routes: RouteRecord[] = [
 						name: 'AdminEvents',
 						component: AdminEventPage,
 						meta: { auth: true, roles: ['ADMIN', 'SUPER_ADMIN'] }
+					},
+					{
+						path: '/admin/monster-hunt',
+						name: 'AdminMonsterHunt',
+						component: AdminMonsterHuntPage,
+						meta: {
+							auth: true,
+							roles: ['ADMIN', 'SUPER_ADMIN']
+						}
 					}
 				]
 			},

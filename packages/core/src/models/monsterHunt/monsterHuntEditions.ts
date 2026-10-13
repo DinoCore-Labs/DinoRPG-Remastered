@@ -1,6 +1,6 @@
 import { Item } from '../items/itemList.js';
 import { Reward } from '../rewards/rewardList.js';
-import { MonsterHuntEditionConfig, MonsterHuntLootRarity } from './monsterHunt.js';
+import { MonsterHuntEditionConfig, MonsterHuntLootRarity, MonsterHuntPresetKey } from './monsterHunt.js';
 
 export const DARK_WORLD_INVASION_MONSTER_HUNT: MonsterHuntEditionConfig = {
 	slug: 'dark-world-invasion',
@@ -275,3 +275,7 @@ export const DARK_WORLD_INVASION_MONSTER_HUNT: MonsterHuntEditionConfig = {
 		}
 	]
 } as const;
+
+export const MONSTER_HUNT_PRESETS: Record<MonsterHuntPresetKey, MonsterHuntEditionConfig> = {
+	[MonsterHuntPresetKey.DARK_WORLD_INVASION]: DARK_WORLD_INVASION_MONSTER_HUNT
+};
