@@ -37,6 +37,14 @@ export type FightScenarioReturn = {
 	progressed: boolean;
 	progression: number;
 };
+
+export interface MonsterHuntLootResult {
+	lootKey: string;
+	nameKey: string;
+	points: number;
+	count: number;
+}
+
 export interface FightResult {
 	fighters: FighterRecap[];
 	goldEarned: number;
@@ -58,6 +66,7 @@ export interface FightResult {
 	endText?: FightText;
 	itemWon?: number;
 	itemWonQuantity?: number;
+	monsterHuntLoot?: MonsterHuntLootResult[];
 	statusReward?: DinozStatusId;
 	dialogReturn?: FightDialogReturn;
 	source?: FightSource;

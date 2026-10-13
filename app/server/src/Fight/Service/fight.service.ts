@@ -49,7 +49,8 @@ import { resolveCurrentMission } from '../../Mission/Service/missionCurrent.serv
 import {
 	ActiveMonsterHunt,
 	getActiveMonsterHunt,
-	getMonsterHuntDailyKills
+	getMonsterHuntDailyKills,
+	rewardMonsterHuntFight
 } from '../../MonsterHunt/Controller/monsterHunt.controller.js';
 import { prisma } from '../../prisma.js';
 import { advanceMerguezScenarioOnMerguezUsedTx } from '../../Scenario/Controller/merguezScenario.controller.js';
@@ -383,6 +384,8 @@ export async function rewardFightVsMonsters(
 
 	const userId = user.id;
 
+	const monsterHuntLoot = victory ? await rewardMonsterHuntFight(userId, monsters) : [];
+
 	const XP_NEWB_BONUS = [15, 10, 6.6, 4.3, 2.5];
 
 	// let teamLevel = 0;
@@ -699,6 +702,7 @@ export async function rewardFightVsMonsters(
 		place: place,
 		itemWon: itemWon,
 		itemWonQuantity: itemWonQuantity,
+		monsterHuntLoot: monsterHuntLoot.length > 0 ? monsterHuntLoot : undefined,
 		autoReequipped: Object.entries(autoReequippedItems).map(([id, count]) => ({ itemId: Number(id), count })),
 		missingReequip: Object.entries(missingReequipItems).map(([id, count]) => ({ itemId: Number(id), count }))
 	};
