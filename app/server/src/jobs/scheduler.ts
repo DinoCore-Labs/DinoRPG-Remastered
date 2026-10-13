@@ -107,8 +107,19 @@ export function startScheduler(
 			const run = await prisma.jobRun.create({
 				data: { jobId: job.id, triggeredBy: 'scheduler' }
 			});
+			const startedAt = Date.now();
 			try {
-				log.info(`[jobs] start ${job.key}`);
+				log.info(
+					{
+						category: 'jobs',
+						action: 'job_started',
+						jobKey: job.key,
+						jobId: job.id,
+						jobRunId: run.id,
+						instanceId: INSTANCE_ID
+					},
+					'Job started'
+				);
 				const result = await handler();
 				const nextRunAt = resolveNextRun(job as any, result);
 				await prisma.jobDefinition.update({
