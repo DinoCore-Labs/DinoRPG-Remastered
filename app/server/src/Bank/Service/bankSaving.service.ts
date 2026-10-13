@@ -29,6 +29,18 @@ export async function createBankSavingController(
 		return reply.status(401).send({ error: 'Unauthorized' });
 	}
 	const result = await createBankSaving(userId, req.body.amount, req.body.durationDays);
+	req.log.info(
+		{
+			category: 'economy',
+			action: 'bank_saving_created',
+			userId,
+			savingId: result.saving.id,
+			amount: result.saving.amount,
+			durationDays: result.saving.durationDays,
+			requestId: req.id
+		},
+		'Bank saving created'
+	);
 	return reply.send(result);
 }
 
