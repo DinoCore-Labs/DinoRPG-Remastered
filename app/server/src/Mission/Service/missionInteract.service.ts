@@ -17,6 +17,16 @@ export async function startMissionInteractionController(req: FastifyRequest, rep
 	const { id } = paramsSchema.parse(req.params);
 	const body = startBodySchema.parse(req.body ?? {});
 	const result = await startMissionInteraction(req.user.id, id, body.autoReequip);
+	req.log.info(
+		{
+			category: 'mission',
+			action: 'interaction_started',
+			userId: req.user.id,
+			dinozId: id,
+			requestId: req.id
+		},
+		'Mission interaction started'
+	);
 	return reply.send(result);
 }
 
@@ -28,5 +38,16 @@ export async function completeMissionInteractionController(req: FastifyRequest, 
 		dinozId: id,
 		trigger: body.trigger
 	});
+	req.log.info(
+		{
+			category: 'mission',
+			action: 'interaction_completed',
+			userId: req.user.id,
+			dinozId: id,
+			trigger: body.trigger,
+			requestId: req.id
+		},
+		'Mission interaction completed'
+	);
 	return reply.send(result);
 }
