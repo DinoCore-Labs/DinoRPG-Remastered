@@ -20,5 +20,15 @@ export async function convertTreasureTicketsController(
 		return reply.status(401).send({ error: 'Unauthorized' });
 	}
 	const result = await convertTreasureTicketsToGold(userId, req.body.quantity);
+	req.log.info(
+		{
+			category: 'economy',
+			action: 'bank_tickets_converted',
+			userId,
+			quantity: req.body.quantity,
+			requestId: req.id
+		},
+		'Bank treasure tickets converted'
+	);
 	return reply.send(result);
 }
