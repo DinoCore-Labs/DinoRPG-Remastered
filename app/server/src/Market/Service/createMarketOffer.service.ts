@@ -139,6 +139,20 @@ export async function createMarketOffer(req: FastifyRequest, reply: FastifyReply
 		});
 		return createdOffer;
 	});
+	req.log.info(
+		{
+			category: 'market',
+			action: 'offer_created',
+			offerId: offer.id,
+			sellerId: userId,
+			dinozId,
+			total: body.total,
+			itemCount: body.items.length,
+			ingredientCount: body.ingredients.length,
+			requestId: req.id
+		},
+		'Market offer created'
+	);
 	await scheduleNextMarketOfferExpiration();
 	return reply.send(offer);
 }
