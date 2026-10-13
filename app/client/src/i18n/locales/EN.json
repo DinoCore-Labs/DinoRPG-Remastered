@@ -627,6 +627,18 @@
 					"content": "On **July 4**, DinoRPG celebrates its birthday! 🎉\n\nTo celebrate, a special surprise awaits every Dinoz tamer!\n\n## 🎟️ A daily gift!\n\nFrom **July 1 to 7**, log in each day to receive **1 Birthday Ticket** directly in your inventory.\n\n## 🏖️ Head to the Port of Prêche!\n\nUse your tickets to play the **special birthday scratch grid** and discover amazing treasures and exclusive rewards!\n\nEach ticket lets you **scratch 3 squares**.\n\nDon't forget to log in every day to maximize your chances!\n\n🎉 The entire DinoRPG Remastered team thanks you for keeping this adventure alive. Happy Birthday DinoRPG!"
 				}
 			}
+		},
+		"monsterHunt": {
+			"start": {
+				"title": "The hunt is open! Hunt down the dark monsters!",
+				"excerpt": "The portal to the Dark World has opened and powerful monsters are invading Dinoland!",
+				"content": "The portal to the Dark World has opened!\n\nMany Dinoz Masters have apparently ventured into this nightmarish world with the help of a mysterious character. After so many incursions, powerful monsters have managed to escape and invade Dinoland!\n\nPrepare to defend Dinoland from the terrifying dark monsters! These monsters may sometimes drop a special object worth a certain number of points. Collect these objects to climb the Monster Hunt ranking.\n\n## Ranking rewards\n\n* **1st**: 1 Mahamuti Egg + 1 Toufufu Egg + the Ultimate Hunter distinction\n* **2nd to 5th**: 1 Toufufu Egg\n* **6th to 10th**: 1 Kabuki Egg\n* **11th to 20th**: 5 Taque Tickets\n* **21st to 50th**: 50 Treasure Tickets\n* **51st to 100th**: 25 Treasure Tickets\n\n## Personal rewards\n\nThe King will also reward you whenever you reach one of these milestones:\n\n* **500 points**: 5 Irma Potions\n* **1000 points**: 2 Hot Breads\n* **1500 points**: 2 Hot Breads + 3 Angel Potions + 10 Irma Potions\n* **2000 points**: 1 Nimbao item set\n* **3000 points**: 1 Taque Ticket + 1 Christmas Ticket\n* **4000 points**: 200 Demon Tickets\n* **5000 points**: 1 Napodino\n\nThe hunt will end on **{endDate}**.\n\n[View the Monster Hunt ranking]({rankingUrl})"
+			},
+			"end": {
+				"title": "The Monster Hunt is over!",
+				"excerpt": "The dark monsters have been driven back! Discover the three best hunters of this edition.",
+				"content": "The Monster Hunt is officially over!\n\nThanks to the efforts of the Dinoz Masters, the invasion of the dark monsters has been stopped. Final ranking rewards have been distributed to the eligible players.\n\n### Top 3 hunters\n\n**Position — Master — Points — Items**\n\n{topPlayers}\n\nCongratulations to everyone who took part and helped defend Dinoland!\n\n[View the full ranking]({rankingUrl})"
+			}
 		}
 	},
 	"newsPage": {

@@ -627,6 +627,18 @@
 					"content": "Le **4 juillet**, DinoRPG fête son anniversaire ! 🎉\n\nPour célébrer cet événement, une surprise attend tous les éleveurs de Dinoland !\n\n## 🎟️ Un cadeau chaque jour !\n\nDu **1er au 7 juillet**, chaque jour où vous vous connecterez, vous recevrez **1 Ticket d'Anniversaire** directement dans votre inventaire.\n\n## 🏖️ Direction le Port de Prêche !\n\nUtilisez vos tickets pour participer à une **grille à gratter spéciale anniversaire** et tenter de remporter de nombreux trésors, ainsi que des récompenses exclusives !\n\nChaque ticket vous permettra de **gratter 3 cases**.\n\nN'oubliez pas de vous connecter quotidiennement pour multiplier vos chances !\n\n🎉 Toute l'équipe de DinoRPG Remastered vous remercie de faire vivre cette aventure. Joyeux anniversaire DinoRPG !"
 				}
 			}
+		},
+		"monsterHunt": {
+			"start": {
+				"title": "La chasse est ouverte ! Sus aux monstres sombres !",
+				"excerpt": "Le portail du monde sombre s'est entrouvert et de puissants monstres envahissent Dinoland !",
+				"content": "Le portail du monde sombre s'est entrouvert !\n\nVisiblement, de nombreux maîtres Dinoz se sont faufilés dans ce monde cauchemardesque en profitant de l'assistance d'un étrange personnage. À force d'y pénétrer en masse, des monstres puissants ont réussi à s'échapper et à envahir Dinoland !\n\nPréparez-vous à l'invasion de Dinoland par les terrifiants monstres sombres ! Ces monstres pourront parfois abandonner un objet rapportant un certain nombre de points au maître Dinoz qui l'obtient. En cumulant ces objets, vous progresserez dans le classement de la Chasse aux Monstres.\n\n## Récompenses du classement\n\n* **1er** : 1 Œuf de Mahamuti + 1 Œuf de Toufufu + la distinction Chasseur ultime\n* **2ème à 5ème** : 1 Œuf de Toufufu\n* **6ème à 10ème** : 1 Œuf de Kabuki\n* **11ème à 20ème** : 5 Tickets Taque\n* **21ème à 50ème** : 50 Bons du Trésor\n* **51ème à 100ème** : 25 Bons du Trésor\n\n## Récompenses personnelles\n\nLe Roi offrira également des récompenses à chaque fois que vous atteindrez un palier :\n\n* **500 points** : 5 Potions d'Irma\n* **1000 points** : 2 Pains chauds\n* **1500 points** : 2 Pains chauds + 3 Potions d'Ange + 10 Potions d'Irma\n* **2000 points** : 1 set d'objets de Nimbao\n* **3000 points** : 1 Ticket Taque + 1 Ticket de Noël\n* **4000 points** : 200 Tickets Démon\n* **5000 points** : 1 Napodinoz\n\nLa chasse se terminera le **{endDate}**.\n\n[Voir le classement de la Chasse aux Monstres]({rankingUrl})"
+			},
+			"end": {
+				"title": "La Chasse aux Monstres est terminée !",
+				"excerpt": "Les monstres sombres ont été repoussés ! Découvrez les trois meilleurs chasseurs de cette édition.",
+				"content": "La Chasse aux Monstres est officiellement terminée !\n\nGrâce aux efforts des maîtres Dinoz, l'invasion des monstres sombres a été repoussée. Les récompenses finales du classement ont été distribuées aux joueurs concernés.\n\n### Top 3 des chasseurs\n\n**Position — Maître — Points — Objets**\n\n{topPlayers}\n\nFélicitations à tous les participants et merci d'avoir défendu Dinoland !\n\n[Consulter le classement complet]({rankingUrl})"
+			}
 		}
 	},
 	"newsPage": {
