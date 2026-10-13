@@ -35,6 +35,17 @@ export async function stopDinozMissionHandler(req: FastifyRequest<{ Params: Para
 			})
 		);
 
+		req.log.info(
+			{
+				category: 'mission',
+				action: 'mission_stopped',
+				userId,
+				dinozId,
+				missionKey,
+				requestId: req.id
+			},
+			'Mission stopped'
+		);
 		return reply.send(result);
 	} catch (error) {
 		if (error instanceof ExpectedError) {
