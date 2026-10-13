@@ -1091,7 +1091,8 @@
 			"average": "Moyenne",
 			"event": "Événements",
 			"eventPlayers": "Événement - Joueurs",
-			"eventClans": "Événement - Clans"
+			"eventClans": "Événement - Clans",
+			"monsterHunt": "Chasse aux Monstres"
 		},
 		"th": {
 			"pos": "Pos.",
@@ -1115,6 +1116,16 @@
 		"placeholder": {
 			"searchUser": "Rechercher un joueur",
 			"searchClan": "Rechercher un clan"
+		},
+		"monsterHunt": {
+			"edition": "Édition :",
+			"objects": "Objets",
+			"archive": "Cette édition de la Chasse aux Monstres est terminée. Vous consultez son classement archivé.",
+			"period": "Du {start} au {end}",
+			"myRank": "Votre classement :",
+			"myRankValue": "{position}e — {points} points — {objects} objets",
+			"empty": "Aucun maître Dinoz n'a encore participé à cette chasse.",
+			"noEdition": "Aucune édition de la Chasse aux Monstres n'est disponible."
 		}
 	},
 	"accountPage": {

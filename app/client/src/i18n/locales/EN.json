@@ -1091,7 +1091,8 @@
 			"average": "Average",
 			"event": "Event",
 			"eventPlayers": "Event - Players",
-			"eventClans": "Event - Clans"
+			"eventClans": "Event - Clans",
+			"monsterHunt": "Monster Hunt"
 		},
 		"th": {
 			"pos": "Pos.",
@@ -1115,6 +1116,16 @@
 		"placeholder": {
 			"searchUser": "Search a player",
 			"searchClan": "Search a clan"
+		},
+		"monsterHunt": {
+			"edition": "Edition:",
+			"objects": "Items",
+			"archive": "This Monster Hunt edition has ended. You are viewing its archived ranking.",
+			"period": "From {start} to {end}",
+			"myRank": "Your ranking:",
+			"myRankValue": "#{position} — {points} points — {objects} items",
+			"empty": "No Dinoz Master has participated in this hunt yet.",
+			"noEdition": "No Monster Hunt edition is available."
 		}
 	},
 	"accountPage": {

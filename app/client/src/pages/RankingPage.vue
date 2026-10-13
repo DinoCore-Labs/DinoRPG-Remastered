@@ -16,6 +16,18 @@
 				{{ $t('ranking.tabs.event') }}
 			</RouterLink>
 		</li>
+		<li :class="{ active: isMonsterHuntTab }">
+			<RouterLink
+				:to="{
+					name: 'RankingMonsterHunt',
+					params: {
+						pageLoaded: 1
+					}
+				}"
+			>
+				{{ $t('ranking.tabs.monsterHunt') }}
+			</RouterLink>
+		</li>
 	</ul>
 	<ul class="onglets sub-tabs" v-if="isPlayerTab">
 		<li :class="{ active: $route.name === 'RankingPlayers' }">
@@ -194,6 +206,8 @@ export default defineComponent({
 			});
 		};
 
+		const isMonsterHuntTab = computed(() => route.name === 'RankingMonsterHunt');
+
 		watch(
 			() => route.params.eventId,
 			() => {
@@ -227,6 +241,8 @@ export default defineComponent({
 					return 'ranking.tabs.eventPlayers';
 				case 'RankingEventClans':
 					return 'ranking.tabs.eventClans';
+				case 'RankingMonsterHunt':
+					return 'ranking.tabs.monsterHunt';
 				default:
 					return 'ranking.tabs.players';
 			}
@@ -242,7 +258,8 @@ export default defineComponent({
 			eventEditionOptions,
 			selectedEventEdition,
 			changeEventEdition,
-			previousEventEdition
+			previousEventEdition,
+			isMonsterHuntTab
 		};
 	},
 	methods: {
