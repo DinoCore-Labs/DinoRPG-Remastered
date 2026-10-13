@@ -45,6 +45,15 @@ export interface MonsterHuntLootResult {
 	count: number;
 }
 
+export interface MonsterHuntRewardResult {
+	points: number;
+	rewards: {
+		type: 'ITEM' | 'TREASURE_TICKET' | 'GOLD';
+		value: number;
+		quantity: number;
+	}[];
+}
+
 export interface FightResult {
 	fighters: FighterRecap[];
 	goldEarned: number;
@@ -67,6 +76,7 @@ export interface FightResult {
 	itemWon?: number;
 	itemWonQuantity?: number;
 	monsterHuntLoot?: MonsterHuntLootResult[];
+	monsterHuntRewards?: MonsterHuntRewardResult[];
 	statusReward?: DinozStatusId;
 	dialogReturn?: FightDialogReturn;
 	source?: FightSource;
