@@ -264,6 +264,18 @@ const routes: RouteRecord[] = [
 							edition: route.query.edition ? Number(route.query.edition) : undefined
 						}),
 						meta: { public: true, showLeftPanel: false }
+					},
+					{
+						path: 'monster-hunt/:pageLoaded',
+						name: 'RankingMonsterHunt',
+						component: () => import('../components/rankings/MonsterHuntRanking.vue'),
+						props: route => ({
+							pageLoaded: Number(route.params.pageLoaded)
+						}),
+						meta: {
+							public: true,
+							showLeftPanel: false
+						}
 					}
 				]
 			},
