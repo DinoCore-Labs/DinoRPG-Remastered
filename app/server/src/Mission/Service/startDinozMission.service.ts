@@ -35,6 +35,17 @@ export async function startDinozMissionHandler(req: FastifyRequest<{ Params: Par
 			})
 		);
 
+		req.log.info(
+			{
+				category: 'mission',
+				action: 'mission_started',
+				userId,
+				dinozId,
+				missionKey,
+				requestId: req.id
+			},
+			'Mission started'
+		);
 		return reply.send(result);
 	} catch (error) {
 		if (error instanceof ExpectedError) {
