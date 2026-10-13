@@ -4,6 +4,8 @@ import type {
 	EventClanRankingEntry,
 	EventPlayerRankingEntry,
 	EventRankingResponse,
+	MonsterHuntRankingEdition,
+	MonsterHuntRankingResponse,
 	RankingEntry,
 	RankingPositionResponse
 } from '@dinorpg/core/models/ranking/rankingEntry.js';
@@ -44,5 +46,23 @@ export const RankingService = {
 		editions: number[];
 	}> {
 		return api.get(`/ranking/event/${eventId}/editions`);
+	},
+	getMonsterHuntEditions(): Promise<{
+		editions: MonsterHuntRankingEdition[];
+	}> {
+		return api.get('/ranking/monster-hunt/editions');
+	},
+	getMonsterHuntRanking(huntId: string, page: number): Promise<MonsterHuntRankingResponse> {
+		return api.get(`/ranking/monster-hunt/${encodeURIComponent(huntId)}/${page}`);
+	},
+	getMonsterHuntUserRank(
+		huntId: string,
+		userId: string
+	): Promise<{
+		position: number;
+		points: number;
+		objects: number;
+	} | null> {
+		return api.get(`/ranking/monster-hunt/${encodeURIComponent(huntId)}/player/${encodeURIComponent(userId)}`);
 	}
 };

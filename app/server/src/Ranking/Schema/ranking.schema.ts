@@ -16,3 +16,15 @@ export const eventRankingQuerySchema = z.object({
 });
 
 export type EventRankingQuery = z.infer<typeof eventRankingQuerySchema>;
+
+export const monsterHuntRankingParamsSchema = z.object({
+	huntId: z.string().uuid(),
+	page: z.coerce.number().int().positive()
+});
+
+export type MonsterHuntRankingParams = z.infer<typeof monsterHuntRankingParamsSchema>;
+
+export const monsterHuntUserRankingParamsSchema = z.object({
+	huntId: z.string().uuid(),
+	userId: z.string().uuid()
+});

@@ -6,9 +6,16 @@ import {
 	getEventRankingEditions,
 	getPlayerEventRanking
 } from '../Controller/getEventRanking.controller.js';
+import {
+	getMonsterHuntRanking,
+	getMonsterHuntRankingEditions,
+	getMonsterHuntUserRank
+} from '../Controller/getMonsterHuntRanking.controller.js';
 import { getUserRankingSummary } from '../Controller/getUserPositionRanking.controller.js';
 import {
 	eventRankingQuerySchema,
+	monsterHuntRankingParamsSchema,
+	monsterHuntUserRankingParamsSchema,
 	rankingListParamsSchema,
 	rankingPositionParamsSchema
 } from '../Schema/ranking.schema.js';
@@ -108,6 +115,54 @@ export async function rankingRoutes(app: FastifyInstance) {
 				eventId,
 				editions
 			});
+		}
+	);
+	typedApp.get(
+		'/monster-hunt/editions',
+		{
+			schema: {
+				tags: ['Ranking']
+			}
+		},
+		async (_req, reply) => {
+			const editions = await getMonsterHuntRankingEditions();
+			return reply.send({
+				editions
+			});
+		}
+	);
+	typedApp.get(
+		'/monster-hunt/:huntId/:page',
+		{
+			schema: {
+				tags: ['Ranking'],
+				params: monsterHuntRankingParamsSchema
+			}
+		},
+		async (req, reply) => {
+			const { huntId, page } = req.params;
+			const ranking = await getMonsterHuntRanking(huntId, page, 50);
+			if (!ranking) {
+				return reply.code(404).send({
+					code: 'monsterHunt.notFound',
+					message: 'Monster Hunt edition not found'
+				});
+			}
+			return reply.send(ranking);
+		}
+	);
+	typedApp.get(
+		'/monster-hunt/:huntId/player/:userId',
+		{
+			schema: {
+				tags: ['Ranking'],
+				params: monsterHuntUserRankingParamsSchema
+			}
+		},
+		async (req, reply) => {
+			const { huntId, userId } = req.params;
+			const ranking = await getMonsterHuntUserRank(huntId, userId);
+			return reply.send(ranking);
 		}
 	);
 }
