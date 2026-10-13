@@ -6672,6 +6672,22 @@
 				"title": "Récompenses de Noël",
 				"content": "Félicitations pour votre participation à l'événement de Noël ! En guise de remerciement pour vos exploits face aux Piglous, vous avez reçu vos récompenses directement dans votre inventaire.\n\n{items}\n\nMerci de votre participation, le Père Joël."
 			}
+		},
+		"monsterHunt": {
+			"edition": {
+				"darkWorldInvasion": {
+					"name": "L'Invasion du Monde Sombre"
+				}
+			},
+			"loot": {
+				"darkBoarTusk": "Défense noircie",
+				"darkSpore": "Spore obscure",
+				"megaWolfFang": "Croc de Mégaloup",
+				"pirhanosTooth": "Dent de Pirhan-os",
+				"werezoreClaw": "Griffe de Garouzore",
+				"amenpenneFeather": "Plume d'Amenpenne",
+				"cursedMimicFragment": "Éclat de Mimic maudit"
+			}
 		}
 	},
 	"events": {
