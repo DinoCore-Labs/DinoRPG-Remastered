@@ -85,9 +85,30 @@ export interface MonsterHuntMonsterConfig {
 	globalSpawn: boolean;
 }
 
+export type MonsterHuntReward =
+	| {
+			type: 'ITEM';
+			itemId: number;
+			quantity: number;
+	  }
+	| {
+			type: 'TREASURE_TICKET';
+			quantity: number;
+	  }
+	| {
+			type: 'GOLD';
+			quantity: number;
+	  };
+
+export interface MonsterHuntRewardTierConfig {
+	points: number;
+	rewards: readonly MonsterHuntReward[];
+}
+
 export interface MonsterHuntEditionConfig {
 	slug: string;
 	nameKey: string;
 	softCap: number;
 	monsters: readonly MonsterHuntMonsterConfig[];
+	rewardTiers: readonly MonsterHuntRewardTierConfig[];
 }
