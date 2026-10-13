@@ -145,7 +145,19 @@ export function startScheduler(
 					nextRunAt,
 					instanceId: INSTANCE_ID
 				});
-				log.info(`[jobs] done ${job.key}`);
+				log.info(
+					{
+						category: 'jobs',
+						action: 'job_completed',
+						jobKey: job.key,
+						jobId: job.id,
+						jobRunId: run.id,
+						durationMs: Date.now() - startedAt,
+						nextRunAt,
+						instanceId: INSTANCE_ID
+					},
+					'Job completed'
+				);
 			} catch (err: any) {
 				const msg = String(err?.message ?? err);
 				log.error({ err }, `[jobs] failed ${job.key}`);
