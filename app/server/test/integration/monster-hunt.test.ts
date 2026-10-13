@@ -161,12 +161,19 @@ describe('Monster Hunt activation', () => {
 
 	it('can inject a global Monster Hunt monster into a normal Dinoland encounter', async () => {
 		await createActiveHunt();
+		const activeHunt = await getActiveMonsterHunt();
+		expect(activeHunt).not.toBeNull();
+		const huntMonsterIds = new Set(activeHunt!.monsters.map(entry => entry.monster.id));
 		/*
-		 * weightedRandom() uses Math.random().
-		 *
 		 * A value close to 1 selects the last weighted
-		 * candidate, which is the last configured Hunt
-		 * monster (mimic3).
+		 * candidate.
+		 *
+		 * We deliberately do not assert a specific Monster Hunt
+		 * monster here because Prisma does not guarantee the order
+		 * of lootDefinitions when no orderBy is specified.
+		 *
+		 * What matters is that a GLOBAL Monster Hunt monster can
+		 * enter a normal Dinoland encounter.
 		 */
 		const randomSpy = vi.spyOn(Math, 'random').mockReturnValue(0.999999);
 		try {
@@ -180,7 +187,7 @@ describe('Monster Hunt activation', () => {
 				],
 				PlaceEnum.DINOVILLE
 			);
-			expect(monsters.some(monster => monster.id === monsterByKey.mimic3.id)).toBe(true);
+			expect(monsters.some(monster => huntMonsterIds.has(monster.id))).toBe(true);
 		} finally {
 			randomSpy.mockRestore();
 		}
