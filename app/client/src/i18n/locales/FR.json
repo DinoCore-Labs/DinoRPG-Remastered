@@ -3406,6 +3406,9 @@
 		"event": {
 			"christmas_ticket": "Il semblerait que ce monstre possédait un ticket de Noël sur lui. Quelle aubaine !"
 		},
+		"monsterHunt": {
+			"points": "+{points} points de chasse"
+		},
 		"vs": "VS"
 	},
 	"gather": {
