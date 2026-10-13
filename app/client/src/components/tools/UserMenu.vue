@@ -445,7 +445,6 @@ export default defineComponent({
 						if (r.rewardType === 'item') {
 							const itemName = this.getItemName(r.value);
 							const qty = r.quantity || 1;
-
 							let iconStr = '';
 							if (r.value === Item.GOLDEN_NAPODINO) iconStr = ':napo:';
 							else if (r.value === Item.CHRISTMAS_TICKET) iconStr = ':xmas_ticket:';
@@ -455,8 +454,10 @@ export default defineComponent({
 							else if (r.value === Item.TRICERAGNON_BABY) iconStr = ':triceragnon_baby:';
 							else if (r.value === Item.SMOG_EGG) iconStr = ':smog_egg:';
 							else if (r.value === Item.DEMON_TICKET) iconStr = ':demon_ticket:';
-
 							return iconStr ? `${qty} ${iconStr}` : `${qty} ${itemName}`;
+						}
+						if (r.rewardType === 'epic') {
+							return this.$t('notifications.epicReward');
 						}
 						return '';
 					})
