@@ -148,6 +148,20 @@ export async function claimMarketOffer(req: FastifyRequest, reply: FastifyReply)
 		}
 		await addOfferContentToInventoryTx(tx, targetUserId, items, ingredients);
 	});
+	req.log.info(
+		{
+			category: 'market',
+			action: 'offer_claimed',
+			offerId: offer.id,
+			claimedBy: userId,
+			sellerId,
+			winnerId,
+			dinozId: offer.dinozId,
+			winningBidValue: winnerBid?.value ?? null,
+			requestId: req.id
+		},
+		'Market offer claimed'
+	);
 	return reply.send({
 		ok: true,
 		discoveredSkills,
