@@ -1,9 +1,12 @@
-import type { MonsterHuntLootResult } from '@dinorpg/core/models/fight/fightResult.js';
+import type { MonsterHuntLootResult, MonsterHuntRewardResult } from '@dinorpg/core/models/fight/fightResult.js';
 import type { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import type { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
 import { getMonsterKeyById, monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
+import { MonsterHuntReward } from '@dinorpg/core/models/monsterHunt/monsterHunt.js';
+import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 
 import { MonsterHuntStatus } from '../../../../prisma/index.js';
+import { newNotif } from '../../Notification/Service/notification.service.js';
 import { prisma } from '../../prisma.js';
 
 export interface ActiveMonsterHuntMonster {
@@ -38,6 +41,29 @@ function isSameUtcDay(left: Date, right: Date): boolean {
 
 function getUtcDayStart(date: Date): Date {
 	return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+}
+
+function parseRewardTier(value: unknown): MonsterHuntReward[] {
+	if (!Array.isArray(value)) {
+		return [];
+	}
+	return value.filter((reward): reward is MonsterHuntReward => {
+		if (!reward || typeof reward !== 'object') {
+			return false;
+		}
+		const candidate = reward as Partial<MonsterHuntReward>;
+		switch (candidate.type) {
+			case 'ITEM':
+				return typeof candidate.itemId === 'number' && typeof candidate.quantity === 'number' && candidate.quantity > 0;
+
+			case 'TREASURE_TICKET':
+			case 'GOLD':
+				return typeof candidate.quantity === 'number' && candidate.quantity > 0;
+
+			default:
+				return false;
+		}
+	});
 }
 
 /**
@@ -129,34 +155,179 @@ export async function getMonsterHuntDailyKills(huntId: string, userId: string, n
 	return participant.dailyKills;
 }
 
+async function applyMonsterHuntReward(
+	tx: Parameters<Parameters<typeof prisma.$transaction>[0]>[0],
+	userId: string,
+	reward: MonsterHuntReward
+): Promise<void> {
+	switch (reward.type) {
+		case 'ITEM':
+			await tx.userItems.upsert({
+				where: {
+					itemId_userId: {
+						itemId: reward.itemId,
+						userId
+					}
+				},
+				create: {
+					userId,
+					itemId: reward.itemId,
+					quantity: reward.quantity
+				},
+				update: {
+					quantity: {
+						increment: reward.quantity
+					}
+				}
+			});
+			return;
+		case 'TREASURE_TICKET':
+			await tx.user.update({
+				where: {
+					id: userId
+				},
+				data: {
+					treasureTicket: {
+						increment: reward.quantity
+					}
+				}
+			});
+			return;
+		case 'GOLD':
+			await tx.user.update({
+				where: {
+					id: userId
+				},
+				data: {
+					gold: {
+						increment: reward.quantity
+					}
+				}
+			});
+			return;
+	}
+}
+
+async function claimMonsterHuntRewardTiers(
+	tx: Parameters<Parameters<typeof prisma.$transaction>[0]>[0],
+	huntId: string,
+	participantId: string,
+	userId: string,
+	previousPoints: number,
+	newPoints: number
+): Promise<MonsterHuntRewardResult[]> {
+	if (newPoints <= previousPoints) {
+		return [];
+	}
+	const tiers = await tx.monsterHuntRewardTier.findMany({
+		where: {
+			huntId,
+			points: {
+				gt: previousPoints,
+				lte: newPoints
+			}
+		},
+		orderBy: {
+			points: 'asc'
+		}
+	});
+	const claimed: MonsterHuntRewardResult[] = [];
+	for (const tier of tiers) {
+		const rewards = parseRewardTier(tier.reward);
+		/*
+		 * An empty reward configuration must never be marked as claimed.
+		 * This is important for the historical 2000/3000 tiers while
+		 * their exact rewards are still being reconstructed.
+		 */
+		if (rewards.length === 0) {
+			continue;
+		}
+		const alreadyClaimed = await tx.monsterHuntClaimedReward.findUnique({
+			where: {
+				participantId_rewardTierId: {
+					participantId,
+					rewardTierId: tier.id
+				}
+			}
+		});
+		if (alreadyClaimed) {
+			continue;
+		}
+		for (const reward of rewards) {
+			await applyMonsterHuntReward(tx, userId, reward);
+		}
+		await tx.monsterHuntClaimedReward.create({
+			data: {
+				participantId,
+				rewardTierId: tier.id
+			}
+		});
+		claimed.push({
+			points: tier.points,
+			rewards: rewards.map(reward => {
+				switch (reward.type) {
+					case 'ITEM':
+						return {
+							type: reward.type,
+							value: reward.itemId,
+							quantity: reward.quantity
+						};
+					case 'TREASURE_TICKET':
+					case 'GOLD':
+						return {
+							type: reward.type,
+							value: reward.quantity,
+							quantity: reward.quantity
+						};
+				}
+			})
+		});
+	}
+	return claimed;
+}
+
 export async function rewardMonsterHuntFight(
 	userId: string,
 	defeatedMonsters: MonsterFiche[],
 	random = Math.random,
 	now = new Date()
-): Promise<MonsterHuntLootResult[]> {
+): Promise<{
+	loot: MonsterHuntLootResult[];
+	rewards: MonsterHuntRewardResult[];
+}> {
 	if (defeatedMonsters.length === 0) {
-		return [];
+		return {
+			loot: [],
+			rewards: []
+		};
 	}
 	const hunt = await getActiveMonsterHunt(now);
 	if (!hunt) {
-		return [];
+		return {
+			loot: [],
+			rewards: []
+		};
 	}
 	const huntMonsterByKey = new Map(hunt.monsters.map(monster => [monster.monsterKey, monster]));
 	const defeatedHuntMonsters = defeatedMonsters
 		.map(monster => {
 			const monsterKey = getMonsterKeyById(monster.id);
+
 			if (!monsterKey) {
 				return null;
 			}
+
 			return huntMonsterByKey.get(monsterKey) ?? null;
 		})
 		.filter((monster): monster is ActiveMonsterHuntMonster => monster !== null);
 	if (defeatedHuntMonsters.length === 0) {
-		return [];
+		return {
+			loot: [],
+			rewards: []
+		};
 	}
 	const dayStart = getUtcDayStart(now);
-	return prisma.$transaction(async tx => {
+	const result = await prisma.$transaction(async tx => {
 		const participant = await tx.monsterHuntParticipant.upsert({
 			where: {
 				huntId_userId: {
@@ -171,11 +342,12 @@ export async function rewardMonsterHuntFight(
 			},
 			update: {}
 		});
+		const previousPoints = participant.points;
 		/*
-		 * Reset the daily counter once when the UTC day changes.
+		 * Reset lazy du compteur quotidien.
 		 *
-		 * updateMany makes the reset conditional, which prevents two
-		 * concurrent fights from both blindly resetting the counter.
+		 * Si le joueur n'a encore rien fait aujourd'hui,
+		 * son ancien dailyKills est remis à zéro.
 		 */
 		await tx.monsterHuntParticipant.updateMany({
 			where: {
@@ -190,8 +362,8 @@ export async function rewardMonsterHuntFight(
 			}
 		});
 		/*
-		 * Every defeated Monster Hunt monster counts as a kill,
-		 * independently from whether its hunt object drops.
+		 * Tous les monstres Monster Hunt vaincus comptent,
+		 * qu'ils donnent un objet ou non.
 		 */
 		await tx.monsterHuntParticipant.update({
 			where: {
@@ -206,6 +378,13 @@ export async function rewardMonsterHuntFight(
 				}
 			}
 		});
+		/*
+		 * Agrégation des drops par lootDefinition.
+		 *
+		 * Exemple :
+		 * 2 Marcangliers qui droppent
+		 * => une entrée avec count = 2.
+		 */
 		const drops = new Map<
 			string,
 			{
@@ -215,7 +394,6 @@ export async function rewardMonsterHuntFight(
 		>();
 		for (const monster of defeatedHuntMonsters) {
 			const roll = Math.floor(random() * 10_000);
-
 			if (roll >= monster.dropRateBps) {
 				continue;
 			}
@@ -229,10 +407,10 @@ export async function rewardMonsterHuntFight(
 				});
 			}
 		}
-		if (drops.size === 0) {
-			return [];
-		}
-		const results: MonsterHuntLootResult[] = [];
+		const lootResults: MonsterHuntLootResult[] = [];
+		/*
+		 * Applique les objets trouvés et les points correspondants.
+		 */
 		for (const { definition, count } of drops.values()) {
 			const earnedPoints = definition.points * count;
 			await tx.monsterHuntParticipantLoot.upsert({
@@ -270,13 +448,47 @@ export async function rewardMonsterHuntFight(
 					}
 				}
 			});
-			results.push({
+			lootResults.push({
 				lootKey: definition.lootKey,
 				nameKey: definition.nameKey,
 				points: definition.points,
 				count
 			});
 		}
-		return results;
+		/*
+		 * Récupération du nouveau score après tous les drops.
+		 */
+		const updatedParticipant = await tx.monsterHuntParticipant.findUniqueOrThrow({
+			where: {
+				id: participant.id
+			},
+			select: {
+				points: true
+			}
+		});
+		/*
+		 * Déclenche tous les paliers franchis pendant ce combat.
+		 */
+		const claimedRewards = await claimMonsterHuntRewardTiers(
+			tx,
+			hunt.id,
+			participant.id,
+			userId,
+			previousPoints,
+			updatedParticipant.points
+		);
+		return {
+			loot: lootResults,
+			rewards: claimedRewards
+		};
 	});
+	/*
+	 * La notification est créée après la transaction.
+	 * Une erreur de notification ne remet donc pas en cause
+	 * l'attribution réelle des récompenses.
+	 */
+	if (result.rewards.length > 0) {
+		await newNotif(userId, NotificationType.NEW_REWARD, JSON.stringify(result.rewards));
+	}
+	return result;
 }
