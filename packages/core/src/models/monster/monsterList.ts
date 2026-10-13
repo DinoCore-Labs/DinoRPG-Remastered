@@ -120,6 +120,8 @@ export enum Monster {
 	SNOW_GROMSTER = 'SNOW_GROMSTER',
 	CHIMCHEREE = 'CHIMCHEREE',
 	LAPOUF = 'LAPOUF',
+	MONSTER_HUNT_AMENPENNE = 'MONSTER_HUNT_AMENPENNE',
+	MONSTER_HUNT_MARCANGLIER = 'MONSTER_HUNT_MARCANGLIER',
 	ANY = 'ANY'
 }
 
@@ -2528,6 +2530,58 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.OBSERVATOIRE
 		],
 		canBeCaptured: true
+	},
+	/* -------------------------------------------------
+	 * MONSTER HUNT
+	 * ------------------------------------------------- */
+	[Monster.MONSTER_HUNT_AMENPENNE]: {
+		id: Monster.MONSTER_HUNT_AMENPENNE,
+		name: 'amanp3',
+		level: 25,
+		hp: 50,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 50,
+		bonus_defense: 20,
+		resilience: 40,
+		groups: [
+			{ quantity: 0, odds: 2 },
+			{ quantity: 1, odds: 1 },
+			{ quantity: 2, odds: 0 }
+		],
+		odds: 0,
+		xp: 100,
+		zones: [],
+		canBeCaptured: false,
+		display: 'amanpe',
+		entrance: EntranceEffect.GROUND
+	},
+	[Monster.MONSTER_HUNT_MARCANGLIER]: {
+		id: Monster.MONSTER_HUNT_MARCANGLIER,
+		name: 'marca2',
+		level: 5,
+		hp: 50,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 3,
+		bonus_defense: 5,
+		resilience: 0,
+		odds: 0,
+		xp: 70,
+		zones: [],
+		canBeCaptured: true,
+		dark: true,
+		size: 150
 	},
 	[Monster.ANY]: {
 		id: Monster.ANY,
