@@ -67,11 +67,16 @@
 						</span>
 					</div>
 					<div class="resultItem">
-						<img v-if="!wonItemImgSrc" :src="getImgURL('design/fight', `large_empty`)" alt="empty" />
-						<div v-else class="result" style="display: flex; justify-content: center; align-items: center; gap: 2px">
+						<img v-if="!resultItemImgSrc" :src="getImgURL('design/fight', 'large_empty')" alt="empty" />
+						<!-- Objet classique -->
+						<div
+							v-else-if="wonItemImgSrc"
+							class="result"
+							style="display: flex; justify-content: center; align-items: center; gap: 2px"
+						>
 							<span
-								class="data"
 								v-if="fight.itemWonQuantity && fight.itemWonQuantity > 1"
+								class="data"
 								style="font-size: 16px; margin: 0; padding: 0"
 							>
 								{{ fight.itemWonQuantity }} x
@@ -85,6 +90,35 @@
 							>
 								<template #content>
 									<p v-html="formatContent($t(`fight.event.${wonItem!.name}`))" />
+								</template>
+							</Tippy>
+						</div>
+						<!-- Objet virtuel Monster Hunt -->
+						<div
+							v-else-if="monsterHuntLoot && monsterHuntLootImgSrc"
+							class="result"
+							style="display: flex; justify-content: center; align-items: center; gap: 2px"
+						>
+							<span v-if="monsterHuntLoot.count > 1" class="data" style="font-size: 16px; margin: 0; padding: 0">
+								{{ monsterHuntLoot.count }} x
+							</span>
+							<Tippy
+								theme="small"
+								tag="img"
+								:src="monsterHuntLootImgSrc"
+								:alt="$t(monsterHuntLoot.nameKey)"
+								style="width: 30px; height: 30px; margin: 0"
+							>
+								<template #content>
+									<strong>
+										{{ $t(monsterHuntLoot.nameKey) }}
+									</strong>
+									<br />
+									{{
+										$t('fight.monsterHunt.points', {
+											points: monsterHuntLoot.points * monsterHuntLoot.count
+										})
+									}}
 								</template>
 							</Tippy>
 						</div>
@@ -126,6 +160,18 @@ export default defineComponent({
 		},
 		wonItemImgSrc(): string | null {
 			return this.wonItemImgKey ? this.getImgURL('item', this.wonItemImgKey) : null;
+		},
+		monsterHuntLoot() {
+			return this.fight.monsterHuntLoot?.[0] ?? null;
+		},
+		monsterHuntLootImgSrc(): string | null {
+			if (!this.monsterHuntLoot?.icon) {
+				return null;
+			}
+			return this.getImgURL('monsterHunt', this.monsterHuntLoot.icon);
+		},
+		resultItemImgSrc(): string | null {
+			return this.wonItemImgSrc ?? this.monsterHuntLootImgSrc;
 		}
 	},
 	components: { DZButton },
