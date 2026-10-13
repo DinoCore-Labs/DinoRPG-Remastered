@@ -91,6 +91,19 @@ export async function buyItemHandler(
 				},
 				req.log
 			);
+			req.log.info(
+				{
+					category: 'economy',
+					action: 'filou_exchange_completed',
+					userId,
+					shopId,
+					ingredientId,
+					ingredientQuantity: exchange.ingredientQuantityUsed,
+					ticketsReceived: exchange.ticketQuantity,
+					requestId: req.id
+				},
+				'Filou exchange completed'
+			);
 			return reply.status(200).send({
 				wallet: 'TREASURE_TICKET',
 				quantity: exchange.ticketQuantity,
@@ -153,6 +166,20 @@ export async function buyItemHandler(
 				}
 			},
 			req.log
+		);
+		req.log.info(
+			{
+				category: 'economy',
+				action: 'shop_item_purchased',
+				userId,
+				shopId,
+				itemId: itemReference.itemId,
+				quantity: quantityBought,
+				totalPrice,
+				currency: isMagicShop ? 'GOLDEN_NAPODINO' : 'GOLD',
+				requestId: req.id
+			},
+			'Shop item purchased'
 		);
 		return reply.status(200).send({
 			itemId: itemReference.itemId,
