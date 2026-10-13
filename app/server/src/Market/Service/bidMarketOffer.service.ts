@@ -13,7 +13,7 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 	await assertUserHasDinozAtMarket(userId);
 	const params = offerIdParamsSchema.parse(req.params);
 	const body = bidOfferBodySchema.parse(req.body);
-	await prisma.$transaction(async tx => {
+	const bidDetails = await prisma.$transaction(async tx => {
 		await tx.$executeRaw`SELECT pg_advisory_xact_lock(${params.offerId}::bigint)`;
 		const offer = await tx.offer.findFirst({
 			where: {
@@ -108,7 +108,23 @@ export async function bidMarketOffer(req: FastifyRequest, reply: FastifyReply) {
 					: null
 			}
 		});
+		return { bidId: bid.id, sellerId: offer.sellerId, previousBidValue: topBid?.value ?? null };
 	});
+	req.log.info(
+		{
+			category: 'market',
+			action: 'bid_placed',
+			offerId: params.offerId,
+			bidId: bidDetails.bidId,
+			bidderId: userId,
+			sellerId: bidDetails.sellerId,
+			value: body.value,
+			previousBidValue: bidDetails.previousBidValue,
+			currency: MoneyType.TREASURE_TICKET,
+			requestId: req.id
+		},
+		'Market bid placed'
+	);
 	await scheduleNextMarketOfferExpiration();
 	return reply.send({ ok: true });
 }
