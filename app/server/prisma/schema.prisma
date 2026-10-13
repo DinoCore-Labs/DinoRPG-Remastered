@@ -1586,6 +1586,8 @@ model MonsterHuntLootDefinition {
 
   points Int
 
+  rarity String @db.VarChar(20)
+
   // Basis points: 10000 = 100%, 2500 = 25%, etc.
   dropRateBps Int
 
