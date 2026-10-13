@@ -4,7 +4,7 @@ import { MonsterHuntEditionConfig, MonsterHuntLootRarity, MonsterHuntPresetKey }
 
 export const DARK_WORLD_INVASION_MONSTER_HUNT: MonsterHuntEditionConfig = {
 	slug: 'dark-world-invasion',
-	name: 'event.monsterHunt.name',
+	name: 'event.monsterHunt.edition.darkWorldInvasion.name',
 	nameKey: 'event.monsterHunt.edition.darkWorldInvasion.name',
 	/**
 	 * Progressive encounter reduction starts after this amount

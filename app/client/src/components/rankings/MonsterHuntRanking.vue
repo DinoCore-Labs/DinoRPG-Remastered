@@ -2,7 +2,6 @@
 	<div class="monster-hunt-ranking">
 		<div v-if="editionOptions.length > 0" class="edition-selector">
 			<span>{{ $t('ranking.monsterHunt.edition') }}</span>
-
 			<DZSelect
 				id="monster-hunt-ranking-edition"
 				v-model="selectedHuntId"
@@ -17,7 +16,7 @@
 			content="ranking.monsterHunt.archive"
 		/>
 		<div v-if="selectedEdition" class="hunt-header">
-			<strong>{{ selectedEdition.name }}</strong>
+			<strong>{{ getEditionName(selectedEdition.name) }}</strong>
 			<span class="hunt-dates">
 				{{
 					$t('ranking.monsterHunt.period', {
@@ -73,7 +72,34 @@
 						{{ ranking.position }}
 					</td>
 					<td class="tdOther">
-						<DZUser :user="ranking.user" :me="ranking.user.id === user.id" :friend="false" />
+						<Tippy theme="normal">
+							<DZUser :user="ranking.user" :me="ranking.user.id === user.id" :friend="false" />
+							<template #content>
+								<div class="hunt-title">
+									<h1>
+										{{ $t('ranking.monsterHunt.lootDetails') }}
+									</h1>
+								</div>
+								<div v-if="ranking.loot.length > 0" class="hunt-loot-list">
+									<div v-for="loot in ranking.loot" :key="loot.lootKey" class="hunt-loot-line">
+										<p>
+											{{ loot.count }} ×
+											{{ $t(loot.nameKey) }}
+										</p>
+										<p>
+											{{
+												$t('ranking.monsterHunt.lootPoints', {
+													points: loot.pointsEarned
+												})
+											}}
+										</p>
+									</div>
+								</div>
+								<span v-else>
+									{{ $t('ranking.monsterHunt.noLoot') }}
+								</span>
+							</template>
+						</Tippy>
 					</td>
 					<td class="tdNumber">
 						{{ ranking.points }}
@@ -150,7 +176,7 @@ export default defineComponent({
 		editionOptions(): SelectOption<string>[] {
 			return this.editions.map(edition => ({
 				value: edition.id,
-				label: edition.name
+				label: this.getEditionName(edition.name)
 			}));
 		},
 		selectedEdition(): MonsterHuntRankingEdition | undefined {
@@ -227,6 +253,9 @@ export default defineComponent({
 			this.loaded = false;
 			await Promise.all([this.loadRanking(), this.loadMyRank()]);
 			this.loaded = true;
+		},
+		getEditionName(name: string): string {
+			return this.$te(name) ? this.$t(name).toString() : name;
 		},
 		async changeEdition(): Promise<void> {
 			if (!this.selectedHuntId) {
@@ -339,13 +368,11 @@ export default defineComponent({
 	width: 75px;
 }
 .tdPos {
-	background-image: url('../../assets/background/table_cell.webp');
 	background-position: 0 0;
 	padding-left: 1.2em;
 }
 .tdOther,
 .tdNumber {
-	background-image: url('../../assets/background/table_cell.webp');
 	background-position: -10px 0;
 }
 .tdOther {
@@ -356,7 +383,6 @@ export default defineComponent({
 }
 .pagination {
 	text-align: center;
-	background-image: url('../../assets/background/table_cell.webp');
 	cursor: pointer;
 }
 .select:hover td {
@@ -365,5 +391,23 @@ export default defineComponent({
 }
 .me td {
 	font-weight: bold;
+}
+.hunt-title {
+	display: flex;
+	padding-left: 140px;
+}
+.hunt-loot-list {
+	display: flex;
+	flex-direction: column;
+	padding: 6px;
+	gap: 4px;
+	color: #f9f1a6;
+}
+.hunt-loot-line {
+	display: flex;
+	flex-direction: column;
+	small {
+		opacity: 0.85;
+	}
 }
 </style>

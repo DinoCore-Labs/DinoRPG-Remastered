@@ -1132,6 +1132,9 @@
 		"monsterHunt": {
 			"edition": "Edition:",
 			"objects": "Items",
+			"lootDetails": "Objects found",
+			"lootPoints": "{points} points earned",
+			"noLoot": "No objects found",
 			"archive": "This Monster Hunt edition has ended. You are viewing its archived ranking.",
 			"period": "From {start} to {end}",
 			"myRank": "Your ranking:",
@@ -3339,7 +3342,14 @@
 			"bao": "Baobob",
 			"gropi": "Bigshroom",
 			"mimic": "Mimic",
-			"earth2": "Legs A'Leavin'"
+			"earth2": "Legs A'Leavin'",
+			"marca2": "Marcanglier",
+			"megou2": "Dark Megashroom",
+			"megaw2": "Mega-wolf",
+			"pirao3": "Pirhan-os",
+			"garou2": "Werezore",
+			"amanp3": "Amenpenne",
+			"mimic3": "Mimic"
 		},
 		"status": {
 			"asleep": "Asleep",
