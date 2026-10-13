@@ -48,7 +48,7 @@ export interface MonsterHuntLootResult {
 export interface MonsterHuntRewardResult {
 	points: number;
 	rewards: {
-		type: 'ITEM' | 'TREASURE_TICKET' | 'GOLD';
+		type: 'ITEM' | 'TREASURE_TICKET' | 'GOLD' | 'EPIC';
 		value: number;
 		quantity: number;
 	}[];

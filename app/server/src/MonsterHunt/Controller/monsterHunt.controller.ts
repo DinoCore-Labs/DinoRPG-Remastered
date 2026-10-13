@@ -5,7 +5,7 @@ import { getMonsterKeyById, monsterByKey } from '@dinorpg/core/models/monster/mo
 import { MonsterHuntReward } from '@dinorpg/core/models/monsterHunt/monsterHunt.js';
 import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 
-import { MonsterHuntStatus } from '../../../../prisma/index.js';
+import { MoneyType, MonsterHuntStatus } from '../../../../prisma/index.js';
 import { newNotif } from '../../Notification/Service/notification.service.js';
 import { prisma } from '../../prisma.js';
 
@@ -59,7 +59,8 @@ function parseRewardTier(value: unknown): MonsterHuntReward[] {
 			case 'TREASURE_TICKET':
 			case 'GOLD':
 				return typeof candidate.quantity === 'number' && candidate.quantity > 0;
-
+			case 'EPIC':
+				return typeof candidate.rewardId === 'number';
 			default:
 				return false;
 		}
@@ -182,27 +183,59 @@ async function applyMonsterHuntReward(
 			});
 			return;
 		case 'TREASURE_TICKET':
-			await tx.user.update({
+			await tx.userWallet.upsert({
 				where: {
-					id: userId
+					userId_type: {
+						userId,
+						type: MoneyType.TREASURE_TICKET
+					}
 				},
-				data: {
-					treasureTicket: {
+				create: {
+					userId,
+					type: MoneyType.TREASURE_TICKET,
+					amount: reward.quantity
+				},
+				update: {
+					amount: {
 						increment: reward.quantity
 					}
 				}
 			});
 			return;
+
 		case 'GOLD':
-			await tx.user.update({
+			await tx.userWallet.upsert({
 				where: {
-					id: userId
+					userId_type: {
+						userId,
+						type: MoneyType.GOLD
+					}
 				},
-				data: {
-					gold: {
+				create: {
+					userId,
+					type: MoneyType.GOLD,
+					amount: reward.quantity
+				},
+				update: {
+					amount: {
 						increment: reward.quantity
 					}
 				}
+			});
+			return;
+		case 'EPIC':
+			await tx.userRewards.upsert({
+				where: {
+					rewardId_userId: {
+						rewardId: reward.rewardId,
+						userId
+					}
+				},
+				create: {
+					userId,
+					rewardId: reward.rewardId
+				},
+				update: {}
 			});
 			return;
 	}
@@ -272,12 +305,20 @@ async function claimMonsterHuntRewardTiers(
 							value: reward.itemId,
 							quantity: reward.quantity
 						};
+
 					case 'TREASURE_TICKET':
 					case 'GOLD':
 						return {
 							type: reward.type,
 							value: reward.quantity,
 							quantity: reward.quantity
+						};
+
+					case 'EPIC':
+						return {
+							type: reward.type,
+							value: reward.rewardId,
+							quantity: 1
 						};
 				}
 			})
