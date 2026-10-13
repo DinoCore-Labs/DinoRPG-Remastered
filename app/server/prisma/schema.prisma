@@ -806,7 +806,10 @@ model User {
   LeftFightArchives  FightArchive[]      @relation("LeftUserRelation")
   RightFightArchives FightArchive[]      @relation("RightUserRelation")
   FightWatched       FightWatched[]
+
   userEventTrackings UserEventTracking[]
+
+  monsterHuntParticipants MonsterHuntParticipant[]
 }
 
 model Notification {
@@ -1411,6 +1414,14 @@ enum MoneyType {
   TREASURE_TICKET
 }
 
+enum MonsterHuntStatus {
+  DRAFT
+  SCHEDULED
+  ACTIVE
+  ENDED
+  REWARDED
+}
+
 enum NewsType {
   update
   information
@@ -1489,4 +1500,186 @@ model ClanEventTracking {
   @@index([eventId, edition])
   @@index([clanId])
   @@map("clan_event_tracking")
+}
+
+model MonsterHunt {
+  id     String @id @default(uuid()) @db.Uuid
+  name   String @db.VarChar(120)
+  slug   String @unique @db.VarChar(120)
+  status MonsterHuntStatus @default(DRAFT)
+
+  startAt DateTime @db.Timestamptz(3)
+  endAt   DateTime @db.Timestamptz(3)
+
+  // Number of event monsters a player can kill each day before
+  // the progressive spawn-rate reduction starts applying.
+  softCap Int @default(100)
+
+  participants   MonsterHuntParticipant[]
+  lootDefinitions MonsterHuntLootDefinition[]
+  rewardTiers    MonsterHuntRewardTier[]
+  rankingRewards MonsterHuntRankingReward[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([status])
+  @@index([startAt])
+  @@index([endAt])
+  @@index([status, startAt, endAt])
+  @@map("monster_hunt")
+}
+
+model MonsterHuntParticipant {
+  id String @id @default(uuid()) @db.Uuid
+
+  huntId String @db.Uuid
+  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
+
+  userId String @db.Uuid
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Main ranking value.
+  points Int @default(0)
+
+  // Number of hunt objects successfully found.
+  objects Int @default(0)
+
+  // Event monsters defeated, whether they dropped an object or not.
+  kills Int @default(0)
+
+  // Used by the soft-cap system.
+  dailyKills Int @default(0)
+
+  dailyResetAt DateTime @default(now()) @db.Timestamptz(3)
+
+  loot            MonsterHuntParticipantLoot[]
+  claimedRewards  MonsterHuntClaimedReward[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([huntId, userId])
+  @@index([huntId, points])
+  @@index([huntId, objects])
+  @@index([userId])
+  @@map("monster_hunt_participant")
+}
+
+model MonsterHuntLootDefinition {
+  id String @id @default(uuid()) @db.Uuid
+
+  huntId String @db.Uuid
+  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
+
+  // Stable internal identifier for this hunt object.
+  lootKey String @db.VarChar(80)
+
+  // Monster enum/key used by the game.
+  monsterKey String @db.VarChar(80)
+
+  // Translation / display key.
+  nameKey String @db.VarChar(120)
+
+  // Asset name, without forcing the object into the player's normal inventory.
+  icon String? @db.VarChar(120)
+
+  points Int
+
+  // Basis points: 10000 = 100%, 2500 = 25%, etc.
+  dropRateBps Int
+
+  // Optional per-edition encounter weighting.
+  spawnWeight Int @default(100)
+
+  // When true the monster can invade all eligible Dinoland maps.
+  globalSpawn Boolean @default(false)
+
+  participantLoot MonsterHuntParticipantLoot[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([huntId, lootKey])
+  @@index([huntId])
+  @@index([huntId, monsterKey])
+  @@map("monster_hunt_loot_definition")
+}
+
+model MonsterHuntParticipantLoot {
+  id String @id @default(uuid()) @db.Uuid
+
+  participantId String @db.Uuid
+  participant   MonsterHuntParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  lootDefinitionId String @db.Uuid
+  lootDefinition   MonsterHuntLootDefinition @relation(fields: [lootDefinitionId], references: [id], onDelete: Cascade)
+
+  count        Int @default(0)
+  pointsEarned Int @default(0)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([participantId, lootDefinitionId])
+  @@index([participantId])
+  @@index([lootDefinitionId])
+  @@map("monster_hunt_participant_loot")
+}
+
+model MonsterHuntRewardTier {
+  id String @id @default(uuid()) @db.Uuid
+
+  huntId String @db.Uuid
+  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
+
+  points Int
+
+  // Reward structure will use the normal DinoRPG reward system.
+  reward Json
+
+  claimedBy MonsterHuntClaimedReward[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([huntId, points])
+  @@index([huntId, points])
+  @@map("monster_hunt_reward_tier")
+}
+
+model MonsterHuntClaimedReward {
+  id String @id @default(uuid()) @db.Uuid
+
+  participantId String @db.Uuid
+  participant   MonsterHuntParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  rewardTierId String @db.Uuid
+  rewardTier   MonsterHuntRewardTier @relation(fields: [rewardTierId], references: [id], onDelete: Cascade)
+
+  claimedAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@unique([participantId, rewardTierId])
+  @@index([participantId])
+  @@index([rewardTierId])
+  @@map("monster_hunt_claimed_reward")
+}
+
+model MonsterHuntRankingReward {
+  id String @id @default(uuid()) @db.Uuid
+
+  huntId String @db.Uuid
+  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
+
+  rankStart Int
+  rankEnd   Int
+
+  reward Json
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([huntId, rankStart, rankEnd])
+  @@index([huntId, rankStart])
+  @@map("monster_hunt_ranking_reward")
 }
