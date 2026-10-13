@@ -23,6 +23,17 @@ export async function buyDinoz(
 		userId,
 		shopDinozId
 	});
+	req.log.info(
+		{
+			category: 'economy',
+			action: 'shop_dinoz_purchased',
+			userId,
+			shopDinozId,
+			dinozId: dinozCreated.id,
+			requestId: req.id
+		},
+		'Dinoz purchased'
+	);
 	const newDinoz: UserForDinozFiche = {
 		id: userId,
 		engineer: false,
