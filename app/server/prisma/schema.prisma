@@ -1433,6 +1433,8 @@ enum NewsType {
   event_birthday
   event_christmas
   event_easter
+  monster_hunt_start
+  monster_hunt_end
   story
   announce
 }
