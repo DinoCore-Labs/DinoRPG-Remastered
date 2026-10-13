@@ -6,6 +6,10 @@ import {
 import { MARKET_EXPIRATION_INTERVAL_MS, MARKET_EXPIRATION_JOB_KEY } from '@dinorpg/core/models/market/constants.js';
 
 import { getNextMarketOfferExpirationDate } from '../Market/Service/expireMarketOffers.service.js';
+import {
+	MONSTER_HUNT_LIFECYCLE_JOB_KEY,
+	MonsterHuntManager
+} from '../MonsterHunt/Controller/monsterHuntManager.controller.js';
 import { prisma } from '../prisma.js';
 import {
 	TOURNAMENT_FINALS_R0_JOB_KEY,
@@ -177,7 +181,40 @@ export async function ensureJobsExist() {
 			nextRunAt: nextDailyAtUtc(0, 1)
 		}
 	});
+	// Monster Hunt
+	const nextMonsterHuntLifecycle = await MonsterHuntManager.getNextLifecycleDate();
 
+	await prisma.jobDefinition.upsert({
+		where: {
+			key: MONSTER_HUNT_LIFECYCLE_JOB_KEY
+		},
+
+		create: {
+			key: MONSTER_HUNT_LIFECYCLE_JOB_KEY,
+			name: 'Monster Hunt — lifecycle',
+
+			type: 'INTERVAL',
+			timezone: 'UTC',
+
+			/*
+			 * The handler explicitly returns the next transition date.
+			 */
+			intervalMs: null,
+
+			nextRunAt: nextMonsterHuntLifecycle ?? new Date(Date.now() + 24 * 60 * 60 * 1000),
+
+			lockTimeoutS: 60,
+			enabled: true
+		},
+
+		update: {
+			type: 'INTERVAL',
+			intervalMs: null,
+			lockTimeoutS: 60,
+			enabled: true
+		}
+	});
+	// TID
 	const tournamentJobs = [
 		{ key: TOURNAMENT_INIT_JOB_KEY, name: 'Tournament — init qualifications', dayOfWeek: 1, hour: 0, minute: 0 },
 		{

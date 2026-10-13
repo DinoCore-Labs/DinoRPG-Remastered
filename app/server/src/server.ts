@@ -57,6 +57,7 @@ import { maintenanceRoutes } from './Maintenance/Routes/maintenance.routes.js';
 import { marketRoutes } from './Market/Routes/market.routes.js';
 import { messagingRoutes } from './Messaging/Routes/messaging.routes.js';
 import { missionsRoutes } from './Mission/Routes/mission.routes.js';
+import { MonsterHuntManager } from './MonsterHunt/Controller/monsterHuntManager.controller.js';
 import { newsRoutes } from './News/Routes/news.routes.js';
 import { notificationRoutes } from './Notification/Routes/notification.routes.js';
 import { prisma } from './prisma.js';
@@ -442,7 +443,8 @@ async function buildServer(options: BuildServerOptions = {}) {
 				[BANK_EXCHANGE_RATE_JOB_KEY]: () => refreshBankExchangeRateJob(server.log),
 				'reset-dojo-challenge': () => resetDojoChallenge(),
 				'check-event-news': () => checkEventNews(),
-				...TournamentManager.HANDLERS
+				...TournamentManager.HANDLERS,
+				...MonsterHuntManager.HANDLERS
 			},
 			server.log
 		);
