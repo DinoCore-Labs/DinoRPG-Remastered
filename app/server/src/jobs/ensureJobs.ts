@@ -210,6 +210,7 @@ export async function ensureJobsExist() {
 		update: {
 			type: 'INTERVAL',
 			intervalMs: null,
+			nextRunAt: nextMonsterHuntLifecycle ?? new Date(Date.now() + 24 * 60 * 60 * 1000),
 			lockTimeoutS: 60,
 			enabled: true
 		}

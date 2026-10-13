@@ -11,6 +11,9 @@ export enum NewsType {
 	TID_END = 'tid_end',
 	EVENT_CHRISTMAS = 'event_christmas',
 	EVENT_EASTER = 'event_easter',
+	EVENT_BIRTHDAY = 'event_birthday',
+	MONSTER_HUNT_START = 'monster_hunt_start',
+	MONSTER_HUNT_END = 'monster_hunt_end',
 	STORY = 'story',
 	ANNOUNCE = 'announce'
 }

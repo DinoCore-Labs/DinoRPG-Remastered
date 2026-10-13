@@ -1,13 +1,95 @@
+import { Language } from '@dinorpg/core/models/config/language.js';
 import type { MonsterHuntEditionConfig, MonsterHuntReward } from '@dinorpg/core/models/monsterHunt/monsterHunt.js';
+import { NewsType } from '@dinorpg/core/models/news/news.js';
 import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 
 import { MoneyType, MonsterHuntStatus, Prisma } from '../../../../prisma/index.js';
+import { newsService } from '../../News/Service/news.service.js';
 import { newNotif } from '../../Notification/Service/notification.service.js';
 import { prisma } from '../../prisma.js';
 
 export const MONSTER_HUNT_LIFECYCLE_JOB_KEY = 'monster-hunt-lifecycle';
 
 const MONSTER_HUNT_IDLE_CHECK_MS = 24 * 60 * 60 * 1000;
+
+function getMonsterHuntRankingUrl(huntId: string): string {
+	return `/ranking/monster-hunt/1?huntId=${encodeURIComponent(huntId)}`;
+}
+
+function getMonsterHuntStartNewsSlug(huntSlug: string): string {
+	return `monster-hunt-${huntSlug}-start`;
+}
+
+function getMonsterHuntEndNewsSlug(huntSlug: string): string {
+	return `monster-hunt-${huntSlug}-end`;
+}
+
+function isUniqueConstraintError(error: unknown): boolean {
+	return error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002';
+}
+
+async function monsterHuntNewsExists(slug: string, prismaClient = prisma): Promise<boolean> {
+	const news = await prismaClient.news.findUnique({
+		where: {
+			slug
+		},
+		select: {
+			id: true
+		}
+	});
+	return news !== null;
+}
+
+type MonsterHuntPodiumEntry = {
+	position: number;
+	name: string;
+	points: number;
+	objects: number;
+};
+
+async function getMonsterHuntTop3(huntId: string, prismaClient = prisma): Promise<MonsterHuntPodiumEntry[]> {
+	const participants = await prismaClient.monsterHuntParticipant.findMany({
+		where: {
+			huntId
+		},
+		orderBy: [
+			{
+				points: 'desc'
+			},
+			{
+				objects: 'desc'
+			},
+			{
+				createdAt: 'asc'
+			}
+		],
+		take: 3,
+		select: {
+			points: true,
+			objects: true,
+			user: {
+				select: {
+					name: true
+				}
+			}
+		}
+	});
+	return participants.map((participant, index) => ({
+		position: index + 1,
+		name: participant.user.name,
+		points: participant.points,
+		objects: participant.objects
+	}));
+}
+
+function formatMonsterHuntPodium(podium: MonsterHuntPodiumEntry[]): string {
+	if (podium.length === 0) {
+		return '—';
+	}
+	return podium
+		.map(player => `${player.position}. **${player.name}** — ${player.points} — ${player.objects}`)
+		.join('\n\n');
+}
 
 type MonsterHuntTransaction = Prisma.TransactionClient;
 
@@ -303,7 +385,7 @@ export class MonsterHuntManager {
 		 * transition earlier than the scheduler's current
 		 * nextRunAt.
 		 */
-		await MonsterHuntManager.rescheduleLifecycleJob(prismaClient);
+		await MonsterHuntManager.rescheduleLifecycleJob(prismaClient, status === MonsterHuntStatus.ACTIVE);
 
 		return hunt;
 	}
@@ -448,12 +530,13 @@ export class MonsterHuntManager {
 	 * If there is no scheduled/active edition, the job gets
 	 * a daily fallback wake-up.
 	 */
-	static async rescheduleLifecycleJob(prismaClient = prisma): Promise<void> {
+	static async rescheduleLifecycleJob(prismaClient = prisma, runImmediately = false): Promise<void> {
 		const now = new Date();
 
-		const nextRunAt =
-			(await MonsterHuntManager.getNextLifecycleDate(now, prismaClient)) ??
-			new Date(now.getTime() + MONSTER_HUNT_IDLE_CHECK_MS);
+		const nextRunAt = runImmediately
+			? now
+			: ((await MonsterHuntManager.getNextLifecycleDate(now, prismaClient)) ??
+				new Date(now.getTime() + MONSTER_HUNT_IDLE_CHECK_MS));
 
 		await prismaClient.jobDefinition.updateMany({
 			where: {
@@ -667,6 +750,164 @@ export class MonsterHuntManager {
 		};
 	}
 
+	static async ensureStartNews(huntId: string, prismaClient = prisma): Promise<boolean> {
+		const hunt = await prismaClient.monsterHunt.findUnique({
+			where: {
+				id: huntId
+			},
+			select: {
+				id: true,
+				slug: true,
+				status: true,
+				startAt: true,
+				endAt: true
+			}
+		});
+
+		if (!hunt) {
+			throw new Error(`Monster Hunt "${huntId}" does not exist.`);
+		}
+
+		const now = new Date();
+
+		/*
+		 * startAt/endAt remain the source of truth.
+		 *
+		 * We never publish a start announcement for a hunt
+		 * which is not currently active.
+		 */
+		if (hunt.status !== MonsterHuntStatus.ACTIVE || hunt.startAt > now || hunt.endAt <= now) {
+			return false;
+		}
+
+		const slug = getMonsterHuntStartNewsSlug(hunt.slug);
+
+		/*
+		 * News.slug is the persisted idempotency key.
+		 */
+		if (await monsterHuntNewsExists(slug, prismaClient)) {
+			return false;
+		}
+
+		const rankingUrl = getMonsterHuntRankingUrl(hunt.id);
+
+		const params = JSON.stringify({
+			endDate: hunt.endAt.toISOString(),
+			rankingUrl
+		});
+
+		try {
+			await newsService.createAdminNews({
+				slug,
+				type: NewsType.MONSTER_HUNT_START,
+				isPublished: true,
+				publishedAt: now,
+				translations: [
+					{
+						lang: Language.FR,
+						title: 'news.monsterHunt.start.title',
+						excerpt: 'news.monsterHunt.start.excerpt',
+						content: `news.monsterHunt.start.content|${params}`
+					},
+					{
+						lang: Language.EN,
+						title: 'news.monsterHunt.start.title',
+						excerpt: 'news.monsterHunt.start.excerpt',
+						content: `news.monsterHunt.start.content|${params}`
+					}
+				]
+			});
+
+			return true;
+		} catch (error) {
+			/*
+			 * Protect against two scheduler instances racing
+			 * between the existence check and INSERT.
+			 */
+			if (isUniqueConstraintError(error)) {
+				return false;
+			}
+
+			throw error;
+		}
+	}
+
+	static async ensureEndNews(huntId: string, prismaClient = prisma): Promise<boolean> {
+		const hunt = await prismaClient.monsterHunt.findUnique({
+			where: {
+				id: huntId
+			},
+			select: {
+				id: true,
+				slug: true,
+				status: true
+			}
+		});
+
+		if (!hunt) {
+			throw new Error(`Monster Hunt "${huntId}" does not exist.`);
+		}
+
+		/*
+		 * Do not announce the final ranking while final
+		 * rewards are still being distributed.
+		 *
+		 * REWARDED means:
+		 * - ranking frozen
+		 * - eligible players processed
+		 * - final rewards persisted
+		 */
+		if (hunt.status !== MonsterHuntStatus.REWARDED) {
+			return false;
+		}
+
+		const slug = getMonsterHuntEndNewsSlug(hunt.slug);
+
+		if (await monsterHuntNewsExists(slug, prismaClient)) {
+			return false;
+		}
+
+		const podium = await getMonsterHuntTop3(hunt.id, prismaClient);
+
+		const rankingUrl = getMonsterHuntRankingUrl(hunt.id);
+
+		const params = JSON.stringify({
+			topPlayers: formatMonsterHuntPodium(podium),
+			rankingUrl
+		});
+
+		try {
+			await newsService.createAdminNews({
+				slug,
+				type: NewsType.MONSTER_HUNT_END,
+				isPublished: true,
+				publishedAt: new Date(),
+				translations: [
+					{
+						lang: Language.FR,
+						title: 'news.monsterHunt.end.title',
+						excerpt: 'news.monsterHunt.end.excerpt',
+						content: `news.monsterHunt.end.content|${params}`
+					},
+					{
+						lang: Language.EN,
+						title: 'news.monsterHunt.end.title',
+						excerpt: 'news.monsterHunt.end.excerpt',
+						content: `news.monsterHunt.end.content|${params}`
+					}
+				]
+			});
+
+			return true;
+		} catch (error) {
+			if (isUniqueConstraintError(error)) {
+				return false;
+			}
+
+			throw error;
+		}
+	}
+
 	/**
 	 * Scheduler handler.
 	 *
@@ -679,27 +920,54 @@ export class MonsterHuntManager {
 	}> {
 		const now = new Date();
 
+		/*
+		 * First repair all temporal states:
+		 *
+		 * SCHEDULED → ACTIVE
+		 * ACTIVE/SCHEDULED expired → ENDED
+		 */
 		await MonsterHuntManager.syncStatuses(now, prismaClient);
 
 		/*
-		 * Any ENDED edition may represent:
+		 * Publish start announcements.
 		 *
-		 * - a hunt which just ended;
-		 * - a hunt whose reward distribution was interrupted;
-		 * - a hunt that ended while the server was offline.
+		 * A hunt that completely elapsed while the server was
+		 * offline is already ENDED here, therefore no obsolete
+		 * start announcement will be published.
+		 */
+		const activeHunts = await prismaClient.monsterHunt.findMany({
+			where: {
+				status: MonsterHuntStatus.ACTIVE,
+				startAt: {
+					lte: now
+				},
+				endAt: {
+					gt: now
+				}
+			},
+			select: {
+				id: true
+			}
+		});
+
+		for (const hunt of activeHunts) {
+			await MonsterHuntManager.ensureStartNews(hunt.id, prismaClient);
+		}
+
+		/*
+		 * Distribute final ranking rewards.
 		 *
-		 * distributeRankingRewards() is idempotent, so all three
-		 * cases are safe to retry.
+		 * distributeRankingRewards() is idempotent and only
+		 * switches ENDED → REWARDED when every eligible claim
+		 * has been successfully persisted.
 		 */
 		const endedHunts = await prismaClient.monsterHunt.findMany({
 			where: {
 				status: MonsterHuntStatus.ENDED
 			},
-
 			orderBy: {
 				endAt: 'asc'
 			},
-
 			select: {
 				id: true
 			}
@@ -709,12 +977,33 @@ export class MonsterHuntManager {
 			await MonsterHuntManager.distributeRankingRewards(hunt.id, prismaClient);
 		}
 
+		/*
+		 * Only announce the final podium after the edition is
+		 * fully rewarded.
+		 */
+		const rewardedHunts = await prismaClient.monsterHunt.findMany({
+			where: {
+				status: MonsterHuntStatus.REWARDED
+			},
+			orderBy: {
+				endAt: 'asc'
+			},
+			select: {
+				id: true
+			}
+		});
+
+		for (const hunt of rewardedHunts) {
+			await MonsterHuntManager.ensureEndNews(hunt.id, prismaClient);
+		}
+
 		const nextLifecycleDate = await MonsterHuntManager.getNextLifecycleDate(now, prismaClient);
 
 		return {
 			nextRunAt: nextLifecycleDate ?? new Date(now.getTime() + MONSTER_HUNT_IDLE_CHECK_MS)
 		};
 	}
+
 	/**
 	 * Job handlers exposed to the generic application
 	 * scheduler.
