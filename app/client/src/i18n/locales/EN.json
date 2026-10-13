@@ -6672,6 +6672,22 @@
 				"title": "Christmas Rewards",
 				"content": "Congratulations on taking part in the Christmas event! As a thank-you for your heroic efforts against the Piglous, your rewards have been added directly to your inventory.\n\n{items}\n\nThank you for participating!\nSanta Joël"
 			}
+		},
+		"monsterHunt": {
+			"edition": {
+				"darkWorldInvasion": {
+					"name": "The Dark World Invasion"
+				}
+			},
+			"loot": {
+				"darkBoarTusk": "Blackened Tusk",
+				"darkSpore": "Dark Spore",
+				"megaWolfFang": "Mega Wolf Fang",
+				"pirhanosTooth": "Pirhan-os Tooth",
+				"werezoreClaw": "Werezore Claw",
+				"amenpenneFeather": "Amenpenne Feather",
+				"cursedMimicFragment": "Cursed Mimic Fragment"
+			}
 		}
 	},
 	"events": {
