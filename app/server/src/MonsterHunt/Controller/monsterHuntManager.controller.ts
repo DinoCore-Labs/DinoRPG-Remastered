@@ -1,11 +1,15 @@
 import type { MonsterHuntEditionConfig, MonsterHuntReward } from '@dinorpg/core/models/monsterHunt/monsterHunt.js';
+import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 
-import { MonsterHuntStatus, Prisma } from '../../../../prisma/index.js';
+import { MoneyType, MonsterHuntStatus, Prisma } from '../../../../prisma/index.js';
+import { newNotif } from '../../Notification/Service/notification.service.js';
 import { prisma } from '../../prisma.js';
 
 export const MONSTER_HUNT_LIFECYCLE_JOB_KEY = 'monster-hunt-lifecycle';
 
 const MONSTER_HUNT_IDLE_CHECK_MS = 24 * 60 * 60 * 1000;
+
+type MonsterHuntTransaction = Prisma.TransactionClient;
 
 export type CreateMonsterHuntEditionInput = {
 	config: MonsterHuntEditionConfig;
@@ -17,6 +21,122 @@ function rewardsToJson(rewards: readonly MonsterHuntReward[]): Prisma.InputJsonV
 	return rewards.map(reward => ({
 		...reward
 	})) as Prisma.InputJsonValue;
+}
+
+function parseRankingRewards(value: unknown): MonsterHuntReward[] {
+	if (!Array.isArray(value)) {
+		return [];
+	}
+
+	return value.filter((reward): reward is MonsterHuntReward => {
+		if (!reward || typeof reward !== 'object') {
+			return false;
+		}
+
+		const candidate = reward as Record<string, unknown>;
+
+		switch (candidate.type) {
+			case 'ITEM':
+				return typeof candidate.itemId === 'number' && typeof candidate.quantity === 'number' && candidate.quantity > 0;
+
+			case 'TREASURE_TICKET':
+			case 'GOLD':
+				return typeof candidate.quantity === 'number' && candidate.quantity > 0;
+
+			case 'EPIC':
+				return typeof candidate.rewardId === 'number';
+
+			default:
+				return false;
+		}
+	});
+}
+
+async function applyMonsterHuntFinalReward(
+	tx: MonsterHuntTransaction,
+	userId: string,
+	reward: MonsterHuntReward
+): Promise<void> {
+	switch (reward.type) {
+		case 'ITEM':
+			await tx.userItems.upsert({
+				where: {
+					itemId_userId: {
+						itemId: reward.itemId,
+						userId
+					}
+				},
+				create: {
+					userId,
+					itemId: reward.itemId,
+					quantity: reward.quantity
+				},
+				update: {
+					quantity: {
+						increment: reward.quantity
+					}
+				}
+			});
+			return;
+
+		case 'TREASURE_TICKET':
+			await tx.userWallet.upsert({
+				where: {
+					userId_type: {
+						userId,
+						type: MoneyType.TREASURE_TICKET
+					}
+				},
+				create: {
+					userId,
+					type: MoneyType.TREASURE_TICKET,
+					amount: reward.quantity
+				},
+				update: {
+					amount: {
+						increment: reward.quantity
+					}
+				}
+			});
+			return;
+
+		case 'GOLD':
+			await tx.userWallet.upsert({
+				where: {
+					userId_type: {
+						userId,
+						type: MoneyType.GOLD
+					}
+				},
+				create: {
+					userId,
+					type: MoneyType.GOLD,
+					amount: reward.quantity
+				},
+				update: {
+					amount: {
+						increment: reward.quantity
+					}
+				}
+			});
+			return;
+
+		case 'EPIC':
+			await tx.userRewards.upsert({
+				where: {
+					rewardId_userId: {
+						rewardId: reward.rewardId,
+						userId
+					}
+				},
+				create: {
+					userId,
+					rewardId: reward.rewardId
+				},
+				update: {}
+			});
+			return;
+	}
 }
 
 export class MonsterHuntManager {
@@ -160,12 +280,21 @@ export class MonsterHuntManager {
 
 						reward: rewardsToJson(tier.rewards)
 					}))
+				},
+				rankingRewards: {
+					create: config.rankingRewards.map(reward => ({
+						rankStart: reward.rankStart,
+						rankEnd: reward.rankEnd,
+
+						reward: rewardsToJson(reward.rewards)
+					}))
 				}
 			},
 
 			include: {
 				lootDefinitions: true,
-				rewardTiers: true
+				rewardTiers: true,
+				rankingRewards: true
 			}
 		});
 
@@ -337,6 +466,207 @@ export class MonsterHuntManager {
 		});
 	}
 
+	static async distributeRankingRewards(
+		huntId: string,
+		prismaClient = prisma
+	): Promise<{
+		rewardedPlayers: number;
+		alreadyRewardedPlayers: number;
+	}> {
+		const hunt = await prismaClient.monsterHunt.findUnique({
+			where: {
+				id: huntId
+			},
+
+			select: {
+				id: true,
+				name: true,
+				status: true,
+
+				rankingRewards: {
+					orderBy: {
+						rankStart: 'asc'
+					}
+				}
+			}
+		});
+
+		if (!hunt) {
+			throw new Error(`Monster Hunt "${huntId}" does not exist.`);
+		}
+
+		if (hunt.status !== MonsterHuntStatus.ENDED && hunt.status !== MonsterHuntStatus.REWARDED) {
+			throw new Error(`Monster Hunt "${huntId}" must be ENDED before ranking rewards can be distributed.`);
+		}
+
+		if (hunt.status === MonsterHuntStatus.REWARDED) {
+			return {
+				rewardedPlayers: 0,
+				alreadyRewardedPlayers: 0
+			};
+		}
+
+		const participants = await prismaClient.monsterHuntParticipant.findMany({
+			where: {
+				huntId
+			},
+
+			orderBy: [
+				{
+					points: 'desc'
+				},
+				{
+					objects: 'desc'
+				},
+				{
+					createdAt: 'asc'
+				}
+			],
+
+			select: {
+				id: true,
+				userId: true
+			}
+		});
+
+		let rewardedPlayers = 0;
+		let alreadyRewardedPlayers = 0;
+
+		const notificationPayloads: Array<{
+			userId: string;
+			rank: number;
+			rewards: MonsterHuntReward[];
+		}> = [];
+
+		for (let index = 0; index < participants.length; index++) {
+			const participant = participants[index];
+			const rank = index + 1;
+
+			const rankingReward = hunt.rankingRewards.find(reward => rank >= reward.rankStart && rank <= reward.rankEnd);
+
+			if (!rankingReward) {
+				continue;
+			}
+
+			const rewards = parseRankingRewards(rankingReward.reward);
+
+			if (rewards.length === 0) {
+				throw new Error(`Monster Hunt ranking reward "${rankingReward.id}" has no valid rewards.`);
+			}
+
+			const result = await prismaClient.$transaction(async tx => {
+				const existing = await tx.monsterHuntRankingRewardClaim.findUnique({
+					where: {
+						participantId_rankingRewardId: {
+							participantId: participant.id,
+
+							rankingRewardId: rankingReward.id
+						}
+					}
+				});
+
+				if (existing) {
+					return false;
+				}
+
+				/*
+				 * Claim and rewards live in the same transaction.
+				 *
+				 * If any reward fails, everything rolls back.
+				 */
+				await tx.monsterHuntRankingRewardClaim.create({
+					data: {
+						huntId,
+
+						participantId: participant.id,
+
+						rankingRewardId: rankingReward.id,
+
+						rank
+					}
+				});
+
+				for (const reward of rewards) {
+					await applyMonsterHuntFinalReward(tx, participant.userId, reward);
+				}
+
+				return true;
+			});
+
+			if (!result) {
+				alreadyRewardedPlayers++;
+				continue;
+			}
+
+			rewardedPlayers++;
+
+			notificationPayloads.push({
+				userId: participant.userId,
+				rank,
+				rewards
+			});
+		}
+
+		/*
+		 * Before switching to REWARDED, verify that every
+		 * participant eligible for a ranking reward has a claim.
+		 */
+		const eligibleParticipants = participants.filter((_, index) => {
+			const rank = index + 1;
+
+			return hunt.rankingRewards.some(reward => rank >= reward.rankStart && rank <= reward.rankEnd);
+		});
+
+		const claimCount = await prismaClient.monsterHuntRankingRewardClaim.count({
+			where: {
+				huntId
+			}
+		});
+
+		if (claimCount !== eligibleParticipants.length) {
+			throw new Error(
+				`Monster Hunt "${huntId}" ranking reward distribution is incomplete: ${claimCount}/${eligibleParticipants.length} claims.`
+			);
+		}
+
+		await prismaClient.monsterHunt.update({
+			where: {
+				id: huntId
+			},
+			data: {
+				status: MonsterHuntStatus.REWARDED
+			}
+		});
+
+		/*
+		 * Notifications happen only after all database rewards
+		 * have been safely committed.
+		 *
+		 * A notification failure must not revert or duplicate
+		 * the actual ranking rewards.
+		 */
+		await Promise.allSettled(
+			notificationPayloads.map(({ userId, rank, rewards }) =>
+				newNotif(
+					userId,
+					NotificationType.NEW_REWARD,
+					JSON.stringify({
+						source: 'monsterHuntRanking',
+
+						huntId,
+						rank,
+						rewards
+					})
+				)
+			)
+		);
+
+		return {
+			rewardedPlayers,
+			alreadyRewardedPlayers
+		};
+	}
+
 	/**
 	 * Scheduler handler.
 	 *
@@ -351,7 +681,36 @@ export class MonsterHuntManager {
 
 		await MonsterHuntManager.syncStatuses(now, prismaClient);
 
+		/*
+		 * Any ENDED edition may represent:
+		 *
+		 * - a hunt which just ended;
+		 * - a hunt whose reward distribution was interrupted;
+		 * - a hunt that ended while the server was offline.
+		 *
+		 * distributeRankingRewards() is idempotent, so all three
+		 * cases are safe to retry.
+		 */
+		const endedHunts = await prismaClient.monsterHunt.findMany({
+			where: {
+				status: MonsterHuntStatus.ENDED
+			},
+
+			orderBy: {
+				endAt: 'asc'
+			},
+
+			select: {
+				id: true
+			}
+		});
+
+		for (const hunt of endedHunts) {
+			await MonsterHuntManager.distributeRankingRewards(hunt.id, prismaClient);
+		}
+
 		const nextLifecycleDate = await MonsterHuntManager.getNextLifecycleDate(now, prismaClient);
+
 		return {
 			nextRunAt: nextLifecycleDate ?? new Date(now.getTime() + MONSTER_HUNT_IDLE_CHECK_MS)
 		};

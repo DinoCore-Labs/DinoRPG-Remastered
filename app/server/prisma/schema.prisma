@@ -1519,6 +1519,7 @@ model MonsterHunt {
   lootDefinitions MonsterHuntLootDefinition[]
   rewardTiers    MonsterHuntRewardTier[]
   rankingRewards MonsterHuntRankingReward[]
+  rankingRewardClaims MonsterHuntRankingRewardClaim[]
 
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
@@ -1555,6 +1556,7 @@ model MonsterHuntParticipant {
 
   loot            MonsterHuntParticipantLoot[]
   claimedRewards  MonsterHuntClaimedReward[]
+  rankingRewardClaims MonsterHuntRankingRewardClaim[]
 
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
@@ -1678,10 +1680,35 @@ model MonsterHuntRankingReward {
 
   reward Json
 
+  claims MonsterHuntRankingRewardClaim[]
+
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
 
   @@unique([huntId, rankStart, rankEnd])
   @@index([huntId, rankStart])
   @@map("monster_hunt_ranking_reward")
+}
+
+model MonsterHuntRankingRewardClaim {
+  id String @id @default(uuid()) @db.Uuid
+
+  huntId String @db.Uuid
+  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
+
+  participantId String @db.Uuid
+  participant   MonsterHuntParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  rankingRewardId String @db.Uuid
+  rankingReward   MonsterHuntRankingReward @relation(fields: [rankingRewardId], references: [id], onDelete: Cascade)
+
+  rank Int
+
+  claimedAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@unique([participantId, rankingRewardId])
+  @@index([huntId])
+  @@index([participantId])
+  @@index([rankingRewardId])
+  @@map("monster_hunt_ranking_reward_claim")
 }

@@ -98,10 +98,20 @@ export type MonsterHuntReward =
 	| {
 			type: 'GOLD';
 			quantity: number;
+	  }
+	| {
+			type: 'EPIC';
+			rewardId: number;
 	  };
 
 export interface MonsterHuntRewardTierConfig {
 	points: number;
+	rewards: readonly MonsterHuntReward[];
+}
+
+export interface MonsterHuntRankingRewardConfig {
+	rankStart: number;
+	rankEnd: number;
 	rewards: readonly MonsterHuntReward[];
 }
 
@@ -118,4 +128,5 @@ export interface MonsterHuntEditionConfig {
 	softCap: number;
 	monsters: readonly MonsterHuntMonsterConfig[];
 	rewardTiers: readonly MonsterHuntRewardTierConfig[];
+	rankingRewards: readonly MonsterHuntRankingRewardConfig[];
 }
