@@ -31,6 +31,13 @@
 		<li :class="{ active: $route.path.startsWith('/admin/events') }">
 			<RouterLink to="/admin/events">Events</RouterLink>
 		</li>
+		<li
+			:class="{
+				active: $route.path.startsWith('/admin/monster-hunt')
+			}"
+		>
+			<RouterLink to="/admin/monster-hunt"> Monster Hunt </RouterLink>
+		</li>
 	</ul>
 	<RouterView />
 </template>

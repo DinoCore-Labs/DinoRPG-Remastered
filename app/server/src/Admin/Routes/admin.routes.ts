@@ -70,6 +70,17 @@ import {
 	updateAdminForcebrutOpponentHandler
 } from '../Service/adminForcebrutHandler.service.js';
 import {
+	createAdminMonsterHuntHandler,
+	deleteAdminMonsterHuntHandler,
+	distributeAdminMonsterHuntRewardsHandler,
+	endAdminMonsterHuntNowHandler,
+	getAdminMonsterHuntsHandler,
+	publishAdminMonsterHuntEndNewsHandler,
+	publishAdminMonsterHuntStartNewsHandler,
+	runAdminMonsterHuntLifecycleHandler,
+	startAdminMonsterHuntNowHandler
+} from '../Service/adminMonsterHuntHandler.service.js';
+import {
 	createAdminNewsHandler,
 	deleteNewsHandler,
 	getAdminNewsDetailsHandler,
@@ -606,5 +617,105 @@ export async function adminRoutes(app: FastifyInstance) {
 		'/events/:eventId/rewards/distribute',
 		{ preHandler: [app.authenticate, app.admin] },
 		adminDistributeRewardsHandler
+	);
+	// --- Monster Hunt Management ---
+
+	app.get(
+		'/monster-hunts',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		getAdminMonsterHuntsHandler
+	);
+
+	app.post(
+		'/monster-hunts',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		createAdminMonsterHuntHandler
+	);
+
+	app.post(
+		'/monster-hunts/lifecycle/run',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		runAdminMonsterHuntLifecycleHandler
+	);
+
+	app.post(
+		'/monster-hunts/:id/start-now',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		startAdminMonsterHuntNowHandler
+	);
+
+	app.post(
+		'/monster-hunts/:id/end-now',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		endAdminMonsterHuntNowHandler
+	);
+
+	app.post(
+		'/monster-hunts/:id/news/start',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		publishAdminMonsterHuntStartNewsHandler
+	);
+
+	app.post(
+		'/monster-hunts/:id/news/end',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		publishAdminMonsterHuntEndNewsHandler
+	);
+
+	app.post(
+		'/monster-hunts/:id/rewards/distribute',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		distributeAdminMonsterHuntRewardsHandler
+	);
+
+	app.delete(
+		'/monster-hunts/:id',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		deleteAdminMonsterHuntHandler
 	);
 }

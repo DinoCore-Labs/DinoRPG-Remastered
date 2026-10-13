@@ -8,6 +8,10 @@ export enum MonsterHuntStatus {
 	REWARDED = 'REWARDED'
 }
 
+export enum MonsterHuntPresetKey {
+	DARK_WORLD_INVASION = 'DARK_WORLD_INVASION'
+}
+
 export interface MonsterHuntEdition {
 	id: string;
 	name: string;
