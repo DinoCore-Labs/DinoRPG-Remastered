@@ -197,6 +197,103 @@ export const DARK_WORLD_INVASION_MONSTER_HUNT: MonsterHuntEditionConfig = {
 					quantity: 1
 				}
 			]
+		},
+		{
+			points: 7500,
+			rewards: [
+				{
+					type: 'TREASURE_TICKET',
+					quantity: 100
+				}
+			]
+		},
+		{
+			points: 10_000,
+			rewards: [
+				{
+					type: 'ITEM',
+					itemId: Item.KABUKI_EGG,
+					quantity: 1
+				},
+				{
+					type: 'ITEM',
+					itemId: Item.TOUFUFU_BABY,
+					quantity: 1
+				}
+			]
+		},
+		{
+			points: 12_500,
+			rewards: [
+				{
+					type: 'ITEM',
+					itemId: Item.TICTAC_TICKET,
+					quantity: 2
+				},
+				{
+					type: 'ITEM',
+					itemId: Item.CHRISTMAS_TICKET,
+					quantity: 2
+				}
+			]
+		},
+		{
+			points: 15_000,
+			rewards: [
+				{
+					type: 'GOLD',
+					quantity: 100_000
+				}
+			]
+		},
+		{
+			points: 20_000,
+			rewards: [
+				{
+					type: 'ITEM',
+					itemId: Item.TICTAC_TICKET,
+					quantity: 5
+				},
+				{
+					type: 'ITEM',
+					itemId: Item.CHRISTMAS_TICKET,
+					quantity: 5
+				}
+			]
+		},
+		{
+			points: 30_000,
+			rewards: [
+				{
+					type: 'ITEM',
+					itemId: Item.MAHAMUTI_EGG,
+					quantity: 1
+				}
+			]
+		},
+		{
+			points: 40_000,
+			rewards: [
+				{
+					type: 'TREASURE_TICKET',
+					quantity: 250
+				},
+				{
+					type: 'ITEM',
+					itemId: Item.DEMON_TICKET,
+					quantity: 250
+				}
+			]
+		},
+		{
+			points: 50_000,
+			rewards: [
+				{
+					type: 'ITEM',
+					itemId: Item.GOLDEN_NAPODINO,
+					quantity: 2
+				}
+			]
 		}
 	],
 	rankingRewards: [
