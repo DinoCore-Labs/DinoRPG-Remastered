@@ -412,6 +412,16 @@ describe('Monster Hunt final ranking rewards', () => {
 			}
 		});
 		expect(updatedHunt.status).toBe(MonsterHuntStatus.REWARDED);
+		/*
+		 * ==========================================
+		 * 1st place
+		 *
+		 * - 1 Mahamuti Egg
+		 * - 1 Toufufu
+		 * - HUNT1
+		 * - XHUNT3
+		 * ==========================================
+		 */
 		const winnerMahamuti = await prisma.userItems.findUniqueOrThrow({
 			where: {
 				itemId_userId: {
@@ -430,7 +440,7 @@ describe('Monster Hunt final ranking rewards', () => {
 			}
 		});
 		expect(winnerToufufu.quantity).toBe(1);
-		const winnerEpic = await prisma.userRewards.findUnique({
+		const winnerHuntEpic = await prisma.userRewards.findUnique({
 			where: {
 				rewardId_userId: {
 					userId: winner.id,
@@ -438,18 +448,74 @@ describe('Monster Hunt final ranking rewards', () => {
 				}
 			}
 		});
-		expect(winnerEpic).not.toBeNull();
-		for (const user of [second, third]) {
-			const toufufu = await prisma.userItems.findUniqueOrThrow({
-				where: {
-					itemId_userId: {
-						userId: user.id,
-						itemId: Item.TOUFUFU_BABY
-					}
+		expect(winnerHuntEpic).not.toBeNull();
+		const winnerPodiumEpic = await prisma.userRewards.findUnique({
+			where: {
+				rewardId_userId: {
+					userId: winner.id,
+					rewardId: Reward.XHUNT3
 				}
-			});
-			expect(toufufu.quantity).toBe(1);
-		}
+			}
+		});
+		expect(winnerPodiumEpic).not.toBeNull();
+		/*
+		 * ==========================================
+		 * 2nd place
+		 *
+		 * - 1 Toufufu
+		 * - XHUNT2
+		 * ==========================================
+		 */
+		const secondToufufu = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: second.id,
+					itemId: Item.TOUFUFU_BABY
+				}
+			}
+		});
+		expect(secondToufufu.quantity).toBe(1);
+		const secondPodiumEpic = await prisma.userRewards.findUnique({
+			where: {
+				rewardId_userId: {
+					userId: second.id,
+					rewardId: Reward.XHUNT2
+				}
+			}
+		});
+		expect(secondPodiumEpic).not.toBeNull();
+		/*
+		 * ==========================================
+		 * 3rd place
+		 *
+		 * - 1 Toufufu
+		 * - XHUNT1
+		 * ==========================================
+		 */
+		const thirdToufufu = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: third.id,
+					itemId: Item.TOUFUFU_BABY
+				}
+			}
+		});
+		expect(thirdToufufu.quantity).toBe(1);
+		const thirdPodiumEpic = await prisma.userRewards.findUnique({
+			where: {
+				rewardId_userId: {
+					userId: third.id,
+					rewardId: Reward.XHUNT1
+				}
+			}
+		});
+		expect(thirdPodiumEpic).not.toBeNull();
+		/*
+		 * One claim per participant/ranking tier.
+		 *
+		 * The winner receives several rewards from the same
+		 * ranking tier, but this still represents one claim.
+		 */
 		expect(
 			await prisma.monsterHuntRankingRewardClaim.count({
 				where: {
@@ -457,15 +523,36 @@ describe('Monster Hunt final ranking rewards', () => {
 				}
 			})
 		).toBe(3);
+		const claims = await prisma.monsterHuntRankingRewardClaim.findMany({
+			where: {
+				huntId: hunt.id
+			},
+			orderBy: {
+				rank: 'asc'
+			},
+			select: {
+				rank: true,
+				participantId: true
+			}
+		});
+		expect(claims.map(claim => claim.rank)).toEqual([1, 2, 3]);
 		/*
-		 * Second call:
-		 * the edition is already REWARDED.
+		 * ==========================================
+		 * Idempotence
+		 * ==========================================
+		 *
+		 * The edition is already REWARDED.
+		 * Calling the distribution again must not
+		 * grant any reward twice.
 		 */
 		const secondRun = await MonsterHuntManager.distributeRankingRewards(hunt.id);
 		expect(secondRun).toEqual({
 			rewardedPlayers: 0,
 			alreadyRewardedPlayers: 0
 		});
+		/*
+		 * Items must still have exactly the same quantity.
+		 */
 		const winnerMahamutiAfter = await prisma.userItems.findUniqueOrThrow({
 			where: {
 				itemId_userId: {
@@ -475,6 +562,72 @@ describe('Monster Hunt final ranking rewards', () => {
 			}
 		});
 		expect(winnerMahamutiAfter.quantity).toBe(1);
+		const winnerToufufuAfter = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: winner.id,
+					itemId: Item.TOUFUFU_BABY
+				}
+			}
+		});
+		expect(winnerToufufuAfter.quantity).toBe(1);
+		const secondToufufuAfter = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: second.id,
+					itemId: Item.TOUFUFU_BABY
+				}
+			}
+		});
+		expect(secondToufufuAfter.quantity).toBe(1);
+		const thirdToufufuAfter = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					userId: third.id,
+					itemId: Item.TOUFUFU_BABY
+				}
+			}
+		});
+		expect(thirdToufufuAfter.quantity).toBe(1);
+		/*
+		 * Epic rewards must also remain unique.
+		 */
+		expect(
+			await prisma.userRewards.count({
+				where: {
+					userId: winner.id,
+					rewardId: {
+						in: [Reward.HUNT1, Reward.XHUNT3]
+					}
+				}
+			})
+		).toBe(2);
+		expect(
+			await prisma.userRewards.count({
+				where: {
+					userId: second.id,
+					rewardId: Reward.XHUNT2
+				}
+			})
+		).toBe(1);
+		expect(
+			await prisma.userRewards.count({
+				where: {
+					userId: third.id,
+					rewardId: Reward.XHUNT1
+				}
+			})
+		).toBe(1);
+		/*
+		 * Claims must not have been duplicated either.
+		 */
+		expect(
+			await prisma.monsterHuntRankingRewardClaim.count({
+				where: {
+					huntId: hunt.id
+				}
+			})
+		).toBe(3);
 	});
 });
 
