@@ -292,6 +292,7 @@ import { localStore } from '../../store/localStore.js';
 import type { NotificationItem } from '../../services/notification.service.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { notificationStore } from '../../store/notificationStore.js';
+import { Reward, rewardList } from '@dinorpg/core/models/rewards/rewardList.js';
 
 interface ForumTopicReplyNotificationContent {
 	topicId: number;
@@ -420,6 +421,19 @@ export default defineComponent({
 			}
 			return translated;
 		},
+		getEpicRewardName(rewardId: number): string {
+			const reward = rewardList[rewardId as Reward];
+			if (!reward) {
+				return `Reward #${rewardId}`;
+			}
+			const translationKey = `rewards.name.${reward.name}`;
+			const translated = this.$t(translationKey);
+			if (translated === translationKey) {
+				console.warn(`Missing translation for epic reward: ${reward.name} (id: ${rewardId})`);
+				return reward.name;
+			}
+			return translated;
+		},
 		formatNotificationText(notification: NotificationItem): string {
 			if (notification.type === 'forumTopicReply') {
 				const content = this.getForumTopicReplyContent(notification);
@@ -457,14 +471,13 @@ export default defineComponent({
 							return iconStr ? `${qty} ${iconStr}` : `${qty} ${itemName}`;
 						}
 						if (r.rewardType === 'epic') {
-							return this.$t('notifications.epicReward');
+							return this.getEpicRewardName(r.value);
 						}
 						return '';
 					})
 					.filter(Boolean)
 					.map((text: string) => `- ${text}`)
 					.join('<br><br>');
-
 				const tKey = notification.type === 'xmasReward' ? 'notifications.xmasReward' : 'notifications.newReward';
 				return this.$t(tKey, { rewards: formattedRewards });
 			}
