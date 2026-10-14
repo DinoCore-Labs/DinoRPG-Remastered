@@ -13,7 +13,8 @@ export const rewardIdByKey: Record<string, Reward> = {
 	plume: Reward.PLUME,
 	merguez_card: Reward.MERGUEZ_CARD,
 	magnet: Reward.MAGNET,
-	taurus: Reward.TAURUS
+	taurus: Reward.TAURUS,
+	tid: Reward.TID1
 };
 
 export const rewardKeyById: Partial<Record<number, string>> = Object.fromEntries(
@@ -32,5 +33,6 @@ export const statTrackingByCollectionKey: Partial<Record<string, StatTracking>> 
 	plume: StatTracking.PLUME,
 	merguez_card: StatTracking.MERGUEZ_CARD,
 	magnet: StatTracking.MAGNET,
-	taurus: StatTracking.TAURUS
+	taurus: StatTracking.TAURUS,
+	tid: StatTracking.TID1
 };
