@@ -314,11 +314,45 @@ export const DARK_WORLD_INVASION_MONSTER_HUNT: MonsterHuntEditionConfig = {
 				{
 					type: 'EPIC',
 					rewardId: Reward.HUNT1
+				},
+				{
+					type: 'EPIC',
+					rewardId: Reward.XHUNT3
 				}
 			]
 		},
 		{
 			rankStart: 2,
+			rankEnd: 2,
+			rewards: [
+				{
+					type: 'ITEM',
+					itemId: Item.TOUFUFU_BABY,
+					quantity: 1
+				},
+				{
+					type: 'EPIC',
+					rewardId: Reward.XHUNT2
+				}
+			]
+		},
+		{
+			rankStart: 3,
+			rankEnd: 3,
+			rewards: [
+				{
+					type: 'ITEM',
+					itemId: Item.TOUFUFU_BABY,
+					quantity: 1
+				},
+				{
+					type: 'EPIC',
+					rewardId: Reward.XHUNT1
+				}
+			]
+		},
+		{
+			rankStart: 4,
 			rankEnd: 5,
 			rewards: [
 				{
