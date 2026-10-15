@@ -1,5 +1,16 @@
 # @dinorpg/server
 
+## 0.46.0
+
+### Minor Changes
+
+- 033fce5: Add the Monster Hunt event system with configurable editions, Dark World monster invasions, scoring and personal rewards, final ranking rewards, live rankings, lifecycle news, and admin management.
+
+### Patch Changes
+
+- Updated dependencies [033fce5]
+  - @dinorpg/core@0.43.0
+
 ## 0.45.0
 
 ### Minor Changes
