@@ -4860,7 +4860,7 @@
 				"kill": "Wolves"
 			},
 			"fflow": {
-				"name": "The Stamps",
+				"name": "The Rose Bush in danger",
 				"begin": "Madam Squyd's favorite rose bush is in a bad state following the heat wave. Can you go to the Fountain and get some Pure Water to bring to her?",
 				"end": "The charming Madam Squyd sends her appreciation for your work. You deserve your reward!",
 				"pureWater": {
@@ -5388,148 +5388,148 @@
 		"hulot": {
 			"seqact": {
 				"name": "Sinister Path",
-				"begin": "Pour pénétrer dans la jungle, il faut d'abord franchir un endroit qu'on appelle le Chemin Glauque... C'est une route dangereuse qui part au nord ! Pourriez-vous y faire un peu de ménage pour moi ?",
-				"end": "On n'entend plus rien grogner par là-bas... C'est bon signe non ?",
-				"kill": "Monstres du Chemin Glauque"
+				"begin": "To enter the jungle, you must take the Sinister Path ... it's a dangerous road that leads north. Can you make sure it's safe?",
+				"end": "I can't hear any more growling coming from the path ... that's a good sign, isn't it?",
+				"kill": "monsters"
 			},
 			"toxic": {
 				"name": "Allergies",
-				"begin": "Je suis victime d'allergies à certaines plantes de la Jungle... Mais j'ignore pour le moment lesquelles ! Pourriez-vous me trouver quelques plantes à l'air suspect, afin que je fasse quelques tests ?",
-				"end": "Ça m'a l'air d'aller... Je vais essayer de trouver laquelle de ces plantes provoque une allergie chez moi... Voilà pour le service.",
+				"begin": "I'm allergic to certain plants that are found in the jungle ... but I don't know which ones! Can you gather some suspicious-looking plants for me so I can carry out some tests?",
+				"end": "These are perfect! ... I'll try to find out which one causes my allergies ... Take this as a thank you.",
 				"figonicia": {
-					"name": "Figonicia Furonclée",
-					"text": "Vous cueillez une fleur boursouflée et toute poisseuse..."
+					"name": "Furuncle Figonicia",
+					"text": "You pick a blistered and sticky flower..."
 				},
 				"purulente": {
-					"name": "Purulente Noire",
-					"text": "La Purulente dégage un petit nuage de pollen malodorant vraiment suspect."
+					"name": "Black Purulent",
+					"text": "The Purulent emits a small cloud of suspicious, foul-smelling pollen....mmmm....very strange, better pick this one."
 				},
 				"visqueuse": {
-					"name": "Visqueuse des Boues",
-					"text": "Vous trouvez une sorte de gros nénuphar verdâtre étalé dans une large flaque d'eau croupie."
+					"name": "Mud Viscous",
+					"text": "You find a big greenish water lily lying in a puddle of stagnant water."
 				}
 			},
 			"map": {
 				"name": "Cartography",
-				"begin": "Une bonne carte, ça aide toujours, il paraît. Seulement voilà, il n'en existe aucune pour la Jungle de Grumhel ! Pourriez-vous partir vers le nord et prendre quelques notes pour moi ? Il y a des collines à l'Est, ça pourrait être un bon endroit pour avoir une vue d'ensemble !",
-				"end": "Ça m'a l'air pas mal du tout ! Je vais étudier un peu tout cela pour bien préparer mon expédition de l'extrême.",
-				"kill": "Fauve-Souris espiègle",
+				"begin": "A good map always helps. The only problem is there's no map available for the Grumhel Jungle! Can you head north and take some notes for me? The hills are located to the east, they'll provide you with the perfect viewpoint!",
+				"end": "It's not bad at all! I'll study this map in order to prepare my extreme expedition.",
+				"kill": "Mischievous Tawny-Bat",
 				"highPoint": {
-					"title": "Trouver un point élevé"
+					"title": "Find a high place"
 				},
 				"findBat": {
-					"title": "Retrouver la Fauve-Souris"
+					"title": "Find the Tawny-Bat"
 				},
 				"back": {
-					"title": "Retourner aux Collines Hantées"
+					"title": "Return to the Haunted Hills"
 				},
 				"draw": {
-					"name": "Tracer une carte",
-					"text": "Vous vous installez en haut d'une vieille souche pour tracer la carte des environs... Soudain, une Fauve-Souris hideuse jaillit de nulle part et s'empare de votre bloc-notes d'un coup de dents ! D'un battement d'aile, elle s'éloigne et se pose sur une branche haute..."
+					"name": "Draw a Map",
+					"text": "You set up on an old tree stump to start drawing the map of the surrounding area ... Suddenly, a hideous Tawny-Bat comes out of nowhere and grabs your notepad with its jaws! It flies away immediately and sits on a high branch..."
 				},
 				"catch": {
-					"name": "Attraper la Fauve-Souris",
-					"text": "Vous êtes presque certain de l'entendre ricaner du haut de son perchoir... Vous attrapez une branche que vous secouez pour tenter de la faire tomber, mais celle-ci s'envole et s'éloigne dans la jungle !"
+					"name": "Catch the Tawny-Bat",
+					"text": "You are sure you hear the bat giggling on it's perch ... you shake a branch to make the Bat fall, but it flies away and escapes into the jungle!"
 				},
 				"bat": {
-					"name": "Fauve-Souris",
-					"text": "La vilaine bestiole s'est perchée au sommet d'un énorme arbre ! Elle vous fixe impassiblement."
+					"name": "Tawny-Bat",
+					"text": "The tawny-bat finally settles on the top of a huge tree! It calmly stares down at you."
 				},
 				"stone": {
-					"name": "Lancer une pierre",
-					"text": "Vous faites mouche ! La Fauve-Souris pousse un cri et laisse tomber votre bloc-notes au pied de son arbre. Agacée, elle se pose alors juste à côté et vous adresse un regard de défi..."
+					"name": "Throw a Stone",
+					"text": "You've hit the bull's eye! The Tawny-Bat cries and your notepad falls to the bottom of the tree. Irritated, the bat crawls to your feet and glares at you..."
 				},
 				"notebook": {
-					"name": "Ramasser le carnet",
-					"text": "Vous récupérez finalement votre bloc-notes !"
+					"name": "Pick Up the Note Pad",
+					"text": "You've finally got your notepad back!"
 				},
 				"finish": {
-					"name": "Tracer la carte",
-					"text": "Vous finissez de tracer votre carte, en restant sur vos gardes cette fois-ci..."
+					"name": "Draw the Map",
+					"text": "You finish drawing the map, making sure to keep your guard up this time!"
 				}
 			},
 			"hucure": {
 				"name": "Remedy",
-				"begin": "F'est bien aimable de votre part... Ve pense que les Boines de l'île des Futes mutantes pourraient m'aider... Prenez les blantes que vous m'avez amenées et allez les voir de ma bart... Snirf...",
-				"end": "Glou glou ! Merfi bien... Efpérons que fa fasse effet... Fa devenait limite là... Tenez prenez fette pofion en gave de gratitude.",
+				"begin": "Vat's is nice from you... I vink the Bonks from mutant valls can help me... Take the blants you brought me and go to see them on my vehalf ...Sniff...",
+				"end": "Glou glou! Fanks... Jwust hopfe it wiwll work... Take fis pofion aws aw szign of gratifuwde.",
 				"plants": {
-					"name": "Prendre les plantes",
-					"text": "Vous récupérez les plantes toxiques de Nicolas Mulot. On dirait bien qu'il a essayé de s'en faire une infusion..."
+					"name": "Take the Plants",
+					"text": "You take Nicolas' toxic plants. It seems that he tried to infuse them..."
 				},
 				"monk": {
-					"name": "Moine médecin",
-					"text": "Vous lui avez donné des Figonicia Furonclées ? De la Purulente Noire ?! Une Visqueuse des Boues !! Ouh la la... Il vaut mieux ne pas tarder ! Apportez-moi un peu de poudre de corail pour commencer.",
-					"text2": "Ramenez-moi quelques crocs de Korgons du Chemin Glauque et quelques paires d'ailes de Fauve-Souris du nord.",
-					"text3": "Parfait ! Je vais pouvoir me préparer un délicieux pot-au-feu avec tout ça... Pardon ? Ah vous veniez pour le remède ? Oui c'est vrai. J'en avais déjà une pleine caisse à vrai dire, servez-vous. Je vous garde un peu de pot-au-feu ?"
+					"name": "Monk Doctor",
+					"text": "You gave him a Furuncle Figonicia? A Black Purulent?! A Mud Viscous!! Woaw ... We have to hurry! Bring me some coral powder immediately!",
+					"text2": "Bring me some Korgon fangs from the Sinister Path and some Tawny-Bat wings from the north.",
+					"text3": "Perfect! I can cook a delicious meal. Hmmm, sorry? Ahh! That's right you came for a remedy didn't you. Worry not, I have a crate full of remedy, take what you need. Shall I keep some soup for you?"
 				},
 				"coral": {
-					"name": "Morceau de corail",
-					"text": "Vous ramassez un bout de corail brisé : ça devrait bien faire l'affaire !"
+					"name": "Coral Piece",
+					"text": "You pick up a piece of broken coral: that should do."
 				},
 				"backCoral": {
-					"title": "Ramener le corail au moine"
+					"title": "Take coral back to the monk"
 				},
 				"backIngredients": {
-					"title": "Ramener les ingrédients aux Chutes"
+					"title": "Take the Ingredients back to the Falls"
 				},
 				"korgon": {
-					"kill": "Korgons du Chemin Glauque"
+					"kill": "Korgons"
 				},
 				"bat": {
-					"kill": "Fauve-Souris du nord"
+					"kill": "Nothern Tawny-Bats"
 				},
 				"fangs": {
-					"name": "Ramasser des crocs",
-					"text": "Vous récupérez quelques crocs de Korgons."
+					"name": "Pick up the Fangs",
+					"text": "You pick up some Korgon fangs."
 				},
 				"wings": {
-					"name": "Récupérer des ailes",
-					"text": "Vous récupérez une belle collection d'ailes de Fauve-Souris..."
+					"name": "Pick up the Wings",
+					"text": "You pick up a nice pair of Tawny-Bat wings..."
 				},
 				"antidote": {
-					"name": "Caisse de remèdes",
-					"text": "Vous emportez trois ou quatre flacons d'antidote pour Nicolas Mulot, sait-on jamais..."
+					"name": "Remedy Crates",
+					"text": "You take with you a few antidote vials for Nicolas Mulot, we never know..."
 				}
 			},
 			"bckpck": {
 				"name": "Survival Kit",
-				"begin": "Avant d'envisager mon voyage incroyable en terre inconnue, il me manque une chose primordiale ! Un bon sac à dos. J'ai perdu le mien en contournant les Chutes Mutantes... Pourriez-vous me le retrouver ?",
-				"end": "Euh vous allez rire... Figurez-vous que j'ai reçu justement un Sac à dos de rechange ! Je l'avais commandé en prévision de mon expédition... Bon écoutez, voilà ce qu'on va faire : je récupère mon vieux sac et je vous donne le nouveau ! Ça marche ?",
+				"begin": "Before starting my long and dangerous journey, there's one more thing I need, a good backpack. I lost mine when I was travelling through the Mutant Falls ... Can you find it for me?",
+				"end": "You won't believe this, I just received a spare backpack! I ordered it in anticipation of my journey ... No problem, I have a great idea! I'll take back my old backpack and give you the new one! It's a deal?",
 				"extremeFisher": {
-					"name": "Pêcheur de l'extrême",
-					"text": "Un sac d'os qu'vous dites ? Nan j'crois pas avoir pêché ça ! Faudrait p'têt voir s'il aurait pas été emporté plutôt vers le marais avec les courants ? C'est qu'ça coule dans un sens pas banal ici..."
+					"name": "Extreme Fisherman",
+					"text": "A bag pack y'say? Nope I don't remember fishing dat! Ya should mayb'see if it was carried away toward the swamp by the current?"
 				},
 				"seaweedCollector": {
-					"name": "Ramasseur d'algues",
-					"text": "Ah si j'm'en rappelle !! Un bin beau sac à dos qu'c'était celui-là, tout collé dans le bourbier d'une fougasse des marais qu'il était ! J'l'ai refilé à mon cousin de la mine, pour porter ses caillasses qu'c'est bin pratique ! Diou !"
+					"name": "Seaweed Harvester",
+					"text": "Ah, I remember!! It was a very nice backpack, it was stuck in a bog! I gave it to one of my cousins so that he could carry his stones, it's really practical! Gosh!"
 				},
 				"miners": {
-					"name": "Interroger les mineurs",
-					"text": "Vous questionnez quelques mineurs, on vous indique l'un d'eux du doigt..."
+					"name": "Interrogate the Miners",
+					"text": "You ask the miners some questions, they point to another miner..."
 				},
 				"restingMiner": {
-					"name": "Mineur qui prend sa pause",
-					"text": "Ouais. J'vois bien de quoi tu parles. Mais l'sac, je l'ai plus. [Il crache par terre] Ouais. Il a pas tenu deux jours le machin. Je l'ai envoyé à mon cousin du Port de Prêche. Ouais. Ça pouvait faire un bon filet, je me suis dit. [Il crache à nouveau]"
+					"name": "Miner taking a break",
+					"text": "Yup. I know what you're talking about. But I don't have it anymore. (He spits on the ground) Yup. I only had it for a couple of days. I sent it to my cousin in Frish Port. I thought he could use it as a good fishing net. (He spits again)"
 				},
 				"busyFisher": {
-					"name": "Pêcheur affairé",
-					"text": "Le sac ? Oui je l'ai toujours ! Mais il est en piteux état ! Tenez, si ça peut vous rendre service, je peux vous le réparer et vous le laisser, il ne me sert pas à grand chose ici... Mais pour ça il me faut une bobine de fil et des aiguilles. On en vend à Dinoville je pense.",
-					"text2": "Ah c'est tout ce qu'il me faut pour rafistoler votre sac. [Il s'en occupe pendant une petite heure...] Voila ! Il devrait tenir pendant un petit moment encore."
+					"name": "Busy Fisherman",
+					"text": "The bag? I still have it! But it's in terrible condition! I can fix it for you if you would like ... but I need a bobbin of thread and sewing needles. You can buy these items in Dinotown I think.",
+					"text2": "Ah, you brought exactly what I need to patch up your bag. (One hour later..........) Done!"
 				},
 				"sewingMaterial": {
-					"name": "Trouver une bobine",
-					"text": "Vous faites rapidement le tour des étalages du marché pour trouver du Matériel de Couture. Vous finissez par trouver la boutique d'une couturière..."
+					"name": "Find a Bobbin",
+					"text": "You check all the Dinotown shops to find the Sewing Material. You finally find a sewing shop..."
 				},
 				"seamstress": {
-					"name": "Couturière",
-					"text": "Bien le bonjour Maître des Dinoz, bienvenue dans mon échoppe ! Du fil et des aiguilles ? Oui j'en vends mais ça n'est pas donné... Mais je veux bien vous en laisser gratuitement si vous me rendez un petit service ! Ma maison se trouve près de la fontaine et il ne se passe pas un soir sans qu'on y soit attaqué par ces monstrueux CoqDurs ! Aidez-moi et le matériel est à vous.",
-					"text2": "Merci mille fois pour votre intervention ! Voici le matériel comme promis..."
+					"name": "Dressmaker",
+					"text": "Good day to you Dinoz Master, welcome to my shop! Needle and thread? Yes I have some, but they're not cheap ... if I agree to give it to you, will you do me a favour? I live near the fountain and every evening my house is attacked by monstrous Giant Chickens! If you help me I'll give you the material for free.",
+					"text2": "Thank you so much for all your help! Here's the material as I promised..."
 				},
 				"coq": {
-					"kill": "CoqDurs acharnés"
+					"kill": "Fierce Giant Chick"
 				},
 				"backDinoville": {
-					"title": "Faire votre rapport à Dinoville"
+					"title": "Report back to Dinotown"
 				}
 			}
 		},
