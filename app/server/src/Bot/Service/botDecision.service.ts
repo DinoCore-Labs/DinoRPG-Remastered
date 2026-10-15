@@ -8,7 +8,7 @@ import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import { getDinozMenuRequest } from '../../Dinoz/Controller/getDinozMenu.controller.js';
 import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/getDinozActions.service.js';
 import { getBotDinozActivityScore } from './botDinozSelector.service.js';
-import { canBotBuyAnotherDinoz } from './botEconomy.service.js';
+import { BOT_SYLVENOIRE_DINOZ_TARGET, canBotBuyAnotherDinoz } from './botEconomy.service.js';
 import { findBotEquipCandidate } from './botEquipment.service.js';
 import { canBotFightForcebrut } from './botForcebrut.service.js';
 import { getBotForcebrutUnlockStep } from './botForcebrutProgression.service.js';
@@ -287,7 +287,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 
 	const candidates: { value: BotDecision; weight: number }[] = [];
 	const progressionGoals = new Map<number, BotProgressionGoal | null>();
-	for (const dinoz of playerData.dinoz.slice(0, 3)) {
+	for (const dinoz of playerData.dinoz.slice(0, BOT_SYLVENOIRE_DINOZ_TARGET)) {
 		progressionGoals.set(dinoz.id, await getOrAssignBotProgressionGoal(userId, dinoz.id));
 	}
 
@@ -336,7 +336,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		});
 	}
 
-	for (const dinoz of playerData.dinoz.slice(0, 3)) {
+	for (const dinoz of playerData.dinoz.slice(0, BOT_SYLVENOIRE_DINOZ_TARGET)) {
 		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
 
 		const forcebrutUnlock = await getBotForcebrutUnlockStep(userId, dinoz.id);
@@ -396,7 +396,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		}
 	}
 
-	for (const dinoz of playerData.dinoz.slice(0, 3)) {
+	for (const dinoz of playerData.dinoz.slice(0, BOT_SYLVENOIRE_DINOZ_TARGET)) {
 		if (!isActiveDinozState(dinoz.state) || dinoz.life <= 0) continue;
 
 		const trophyStep = await getBotRaceTrophyProgressionStep(userId, dinoz.id);

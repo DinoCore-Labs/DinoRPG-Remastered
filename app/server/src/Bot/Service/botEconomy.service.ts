@@ -1,3 +1,4 @@
+import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { getRace } from '@dinorpg/core/utils/dinozUtils.js';
 
 import { DinozState, MoneyType } from '../../../../prisma/index.js';
@@ -9,10 +10,19 @@ import { purchaseDinoz } from '../../Shop/Controller/purchaseDinoz.controller.js
 
 const BOT_SECOND_DINOZ_GOLD_RESERVE = 1500;
 const BOT_THIRD_DINOZ_GOLD_RESERVE = 8000;
+const BOT_SYLVENOIRE_PREPARATION_THRESHOLD = 3;
 
-function getBotDinozPurchaseReserve(currentDinozCount: number): number | null {
+export const BOT_SYLVENOIRE_DINOZ_TARGET = 7;
+
+function getBotDinozPurchaseReserve(currentDinozCount: number, flipperCount: number): number | null {
 	if (currentDinozCount < 2) return BOT_SECOND_DINOZ_GOLD_RESERVE;
 	if (currentDinozCount < 3) return BOT_THIRD_DINOZ_GOLD_RESERVE;
+	if (
+		currentDinozCount < BOT_SYLVENOIRE_DINOZ_TARGET &&
+		flipperCount >= BOT_SYLVENOIRE_PREPARATION_THRESHOLD
+	) {
+		return BOT_THIRD_DINOZ_GOLD_RESERVE;
+	}
 	return null;
 }
 
@@ -30,14 +40,25 @@ export async function canBotBuyAnotherDinoz(userId: string): Promise<boolean> {
 				where: {
 					OR: [{ state: null }, { state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }]
 				},
-				select: { id: true }
+				select: {
+					id: true,
+					status: {
+						where: {
+							statusId: DinozStatusId.FLIPPERS
+						},
+						select: {
+							statusId: true
+						}
+					}
+				}
 			}
 		}
 	});
 	if (!user) return false;
 	if (user.dinoz.length >= getUserMaxDinoz(user)) return false;
 
-	const reserve = getBotDinozPurchaseReserve(user.dinoz.length);
+	const flipperCount = user.dinoz.filter(dinoz => dinoz.status.length > 0).length;
+	const reserve = getBotDinozPurchaseReserve(user.dinoz.length, flipperCount);
 	if (reserve == null) return false;
 
 	const gold = user.wallets[0]?.amount ?? 0;
@@ -59,13 +80,26 @@ export async function buyBotDinoz(userId: string) {
 
 	if (candidates.length === 0) return null;
 
-	const currentDinozCount = await prisma.dinoz.count({
+	const currentDinoz = await prisma.dinoz.findMany({
 		where: {
 			userId,
 			OR: [{ state: null }, { state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }]
+		},
+		select: {
+			id: true,
+			status: {
+				where: {
+					statusId: DinozStatusId.FLIPPERS
+				},
+				select: {
+					statusId: true
+				}
+			}
 		}
 	});
-	const reserve = getBotDinozPurchaseReserve(currentDinozCount);
+	const currentDinozCount = currentDinoz.length;
+	const flipperCount = currentDinoz.filter(dinoz => dinoz.status.length > 0).length;
+	const reserve = getBotDinozPurchaseReserve(currentDinozCount, flipperCount);
 	if (reserve == null) return null;
 
 	const wallet = await prisma.userWallet.findUnique({
