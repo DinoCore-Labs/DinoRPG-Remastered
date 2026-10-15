@@ -1,18 +1,20 @@
-import { beforeEach, describe, expect, it } from 'vitest';
-
-import { BotStrategy } from '../../../prisma/index.js';
 import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { beforeEach, describe, expect, it } from 'vitest';
+
+import { BotStrategy } from '../../../prisma/index.js';
 import { executeBotDecision } from '../../src/Bot/Service/botAction.service.js';
 import { chooseBotDecision } from '../../src/Bot/Service/botDecision.service.js';
 import { createBotPlayer } from '../../src/Bot/Service/createBotPlayer.service.js';
-import { getCurrentTutorial } from '../../src/Tutorial/Controller/tutorial.controller.js';
+import { loadDialogs } from '../../src/Dialog/Controller/dialog.registry.js';
 import { prisma } from '../../src/prisma.js';
+import { getCurrentTutorial } from '../../src/Tutorial/Controller/tutorial.controller.js';
 import { cleanDatabase } from '../helpers/database.js';
 
 beforeEach(async () => {
 	await cleanDatabase();
+	loadDialogs();
 });
 
 describe('bot tutorial', () => {
@@ -98,16 +100,23 @@ describe('bot tutorial', () => {
 				}
 			},
 			data: {
-				progression: 7
+				progression: 8
 			}
 		});
 
-		await prisma.userItems.create({
-			data: {
+		await prisma.userItems.upsert({
+			where: {
+				itemId_userId: {
+					userId: created.user.id,
+					itemId: itemList[Item.CLOUD_BURGER].itemId
+				}
+			},
+			create: {
 				userId: created.user.id,
 				itemId: itemList[Item.CLOUD_BURGER].itemId,
 				quantity: 1
-			}
+			},
+			update: {}
 		});
 
 		await prisma.dinoz.update({
@@ -170,10 +179,31 @@ describe('bot tutorial', () => {
 				remaining: 0
 			}
 		});
-
+		await prisma.userWallet.update({
+			where: {
+				userId_type: {
+					userId: created.user.id,
+					type: 'GOLD'
+				}
+			},
+			data: {
+				amount: 0
+			}
+		});
+		await prisma.secret.upsert({
+			where: {
+				key: 'itinerant'
+			},
+			create: {
+				key: 'itinerant',
+				value: String(PlaceEnum.NOWHERE)
+			},
+			update: {
+				value: String(PlaceEnum.NOWHERE)
+			}
+		});
 		const decision = await chooseBotDecision(created.user.id, BotStrategy.BALANCED);
 		expect(decision).not.toBeNull();
 		expect(['buy_irma', Action.IRMA, Action.IRMAS]).toContain(decision!.action);
 	});
-
 });

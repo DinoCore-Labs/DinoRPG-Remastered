@@ -62,21 +62,15 @@ describe('bot Sylvenoire progression', () => {
 	it('does not assign the Sylvenoire goal before seven eligible Dinoz exist', async () => {
 		const { user, dinoz } = await createBotRoster('SylvenoireSmallRosterBot', 6);
 
-		await expect(
-			getOrAssignBotProgressionGoal(user.id, dinoz[0].id)
-		).resolves.toBeNull();
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz[0].id)).resolves.toBeNull();
 	});
 
 	it('assigns Sylvenoire progression when seven flipper-equipped Dinoz are available', async () => {
 		const { user, dinoz } = await createBotRoster('SylvenoireReadyBot', 7);
 
-		await expect(
-			getOrAssignBotProgressionGoal(user.id, dinoz[0].id)
-		).resolves.toBe(BotProgressionGoal.SYLVENOIRE_KEY);
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz[0].id)).resolves.toBe(BotProgressionGoal.SYLVENOIRE_KEY);
 
-		await expect(
-			getBotSylvenoireProgressionStep(user.id, dinoz[0].id)
-		).resolves.toEqual({
+		await expect(getBotSylvenoireProgressionStep(user.id, dinoz[0].id)).resolves.toEqual({
 			type: 'dialog',
 			dialogId: 'bao_bob',
 			preferredLinkIds: ['question', 'quest3', 'where', 'how', 'concen', 'ok']
@@ -102,29 +96,21 @@ describe('bot Sylvenoire progression', () => {
 			});
 		}
 
-		await expect(
-			getBotSylvenoireProgressionStep(user.id, dinoz[0].id)
-		).resolves.toEqual({
+		await expect(getBotSylvenoireProgressionStep(user.id, dinoz[0].id)).resolves.toEqual({
 			type: 'enter_portal'
 		});
 	});
 
 	it('targets the dark tower entrance once inside the Dark World', async () => {
-		const { user, dinoz } = await createBotRoster(
-			'SylvenoireTowerBot',
-			7,
-			PlaceEnum.PORTAIL
-		);
+		const { user, dinoz } = await createBotRoster('SylvenoireTowerBot', 7, PlaceEnum.PORTAIL);
 
-		await expect(
-			getBotSylvenoireProgressionStep(user.id, dinoz[0].id)
-		).resolves.toEqual({
+		await expect(getBotSylvenoireProgressionStep(user.id, dinoz[0].id)).resolves.toEqual({
 			type: 'move',
 			placeId: PlaceEnum.TOUR_SOMBRE_ENTREE
 		});
 	});
 
-	it('finishes the chapter after obtaining the Sylvenoire key', async () => {
+	it('advances to Steppes access after obtaining the Sylvenoire key', async () => {
 		const { user, dinoz } = await createBotRoster('SylvenoireDoneBot', 7);
 		await addStatus(dinoz[0].id, DinozStatusId.SYLVENOIRE_KEY);
 
@@ -135,11 +121,7 @@ describe('bot Sylvenoire progression', () => {
 			}
 		});
 
-		await expect(
-			getBotSylvenoireProgressionStep(user.id, dinoz[0].id)
-		).resolves.toBeNull();
-		await expect(
-			getOrAssignBotProgressionGoal(user.id, dinoz[0].id)
-		).resolves.toBeNull();
+		await expect(getBotSylvenoireProgressionStep(user.id, dinoz[0].id)).resolves.toBeNull();
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz[0].id)).resolves.toBe(BotProgressionGoal.STEPPES_ACCESS);
 	});
 });

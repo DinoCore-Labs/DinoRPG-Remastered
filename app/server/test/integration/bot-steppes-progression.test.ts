@@ -4,8 +4,8 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { BotProgressionGoal } from '../../../prisma/index.js';
 import { getOrAssignBotProgressionGoal } from '../../src/Bot/Service/botProgressionMemory.service.js';
-import { moveDinozForUser } from '../../src/Dinoz/Service/moveDinoz.service.js';
 import { getBotSteppesProgressionStep } from '../../src/Bot/Service/botSteppesProgression.service.js';
+import { moveDinozForUser } from '../../src/Dinoz/Service/moveDinoz.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
@@ -43,51 +43,33 @@ beforeEach(async () => {
 
 describe('bot Steppes progression', () => {
 	it('does not target the Steppes without the Sylvenoire key', async () => {
-		const { user, dinoz } = await createBotDinoz(
-			'SteppesNoKeyBot',
-			PlaceEnum.PORTE_DE_SYLVENOIRE
-		);
+		const { user, dinoz } = await createBotDinoz('SteppesNoKeyBot', PlaceEnum.PORTE_DE_SYLVENOIRE);
 
-		await expect(
-			getBotSteppesProgressionStep(user.id, dinoz.id)
-		).resolves.toBeNull();
+		await expect(getBotSteppesProgressionStep(user.id, dinoz.id)).resolves.toBeNull();
 	});
 
 	it('heads to the Sylvenoire gate after obtaining the key', async () => {
-		const { user, dinoz } = await createBotDinoz(
-			'SteppesGateBot',
-			PlaceEnum.JUNGLE_SAUVAGE
-		);
+		const { user, dinoz } = await createBotDinoz('SteppesGateBot', PlaceEnum.JUNGLE_SAUVAGE);
 		await addStatus(dinoz.id, DinozStatusId.SYLVENOIRE_KEY);
 
-		await expect(
-			getBotSteppesProgressionStep(user.id, dinoz.id)
-		).resolves.toEqual({
+		await expect(getBotSteppesProgressionStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'move',
 			placeId: PlaceEnum.PORTE_DE_SYLVENOIRE
 		});
 	});
 
 	it('uses the Steppes transition from the Sylvenoire gate', async () => {
-		const { user, dinoz } = await createBotDinoz(
-			'SteppesTransitionBot',
-			PlaceEnum.PORTE_DE_SYLVENOIRE
-		);
+		const { user, dinoz } = await createBotDinoz('SteppesTransitionBot', PlaceEnum.PORTE_DE_SYLVENOIRE);
 		await addStatus(dinoz.id, DinozStatusId.SYLVENOIRE_KEY);
 
-		await expect(
-			getBotSteppesProgressionStep(user.id, dinoz.id)
-		).resolves.toEqual({
+		await expect(getBotSteppesProgressionStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'move',
 			placeId: PlaceEnum.GO_TO_STEPPES
 		});
 	});
 
-	it('finishes the Steppes access goal once inside the Steppe zone', async () => {
-		const { user, dinoz } = await createBotDinoz(
-			'SteppesDoneBot',
-			PlaceEnum.FRONTIERE_CREPITANTE
-		);
+	it('advances to Magnetite once inside the Steppe zone', async () => {
+		const { user, dinoz } = await createBotDinoz('SteppesDoneBot', PlaceEnum.FRONTIERE_CREPITANTE);
 		for (const statusId of [
 			DinozStatusId.STRATEGY_IN_130_LESSONS,
 			DinozStatusId.TOURNA,
@@ -105,24 +87,17 @@ describe('bot Steppes progression', () => {
 			}
 		});
 
-		await expect(
-			getBotSteppesProgressionStep(user.id, dinoz.id)
-		).resolves.toBeNull();
-		await expect(
-			getOrAssignBotProgressionGoal(user.id, dinoz.id)
-		).resolves.toBeNull();
+		await expect(getBotSteppesProgressionStep(user.id, dinoz.id)).resolves.toBeNull();
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(BotProgressionGoal.MAGNETITE);
 
-		expect(
-			await prisma.botDinozMemory.count({
-				where: { dinozId: dinoz.id }
-			})
-		).toBe(0);
+		const memory = await prisma.botDinozMemory.findUniqueOrThrow({
+			where: { dinozId: dinoz.id }
+		});
+
+		expect(memory.goal).toBe(BotProgressionGoal.MAGNETITE);
 	});
 	it('crosses the Sylvenoire gate into the Crackling Frontier', async () => {
-		const { user, dinoz } = await createBotDinoz(
-			'SteppesCrossingBot',
-			PlaceEnum.PORTE_DE_SYLVENOIRE
-		);
+		const { user, dinoz } = await createBotDinoz('SteppesCrossingBot', PlaceEnum.PORTE_DE_SYLVENOIRE);
 		await addStatus(dinoz.id, DinozStatusId.SYLVENOIRE_KEY);
 
 		await moveDinozForUser(user.id, {
@@ -137,5 +112,4 @@ describe('bot Steppes progression', () => {
 		});
 		expect(updated.placeId).toBe(PlaceEnum.FRONTIERE_CREPITANTE);
 	});
-
 });

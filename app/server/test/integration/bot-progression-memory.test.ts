@@ -41,12 +41,8 @@ describe('bot progression memory', () => {
 	it('keeps Shaman Mou as the medium-term goal until amulst is obtained', async () => {
 		const { user, dinoz } = await createBotWithDinoz('MemoryShamanBot');
 
-		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(
-			BotProgressionGoal.SHAMAN_STRATEGY
-		);
-		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(
-			BotProgressionGoal.SHAMAN_STRATEGY
-		);
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(BotProgressionGoal.SHAMAN_STRATEGY);
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(BotProgressionGoal.SHAMAN_STRATEGY);
 
 		const memory = await prisma.botDinozMemory.findUniqueOrThrow({
 			where: { dinozId: dinoz.id }
@@ -60,25 +56,17 @@ describe('bot progression memory', () => {
 		await getOrAssignBotProgressionGoal(user.id, dinoz.id);
 		await addStatus(dinoz.id, DinozStatusId.STRATEGY_IN_130_LESSONS);
 
-		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(
-			BotProgressionGoal.FORCEBRUT_TRAINING
-		);
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(BotProgressionGoal.FORCEBRUT_TRAINING);
 
 		await addStatus(dinoz.id, DinozStatusId.TOURNA);
 
-		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(
-			BotProgressionGoal.LANTERN
-		);
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(BotProgressionGoal.LANTERN);
 	});
 
-	it('clears progression memory once the current chapters are complete', async () => {
+	it('advances to Korgon flippers after completing the Lantern chapter', async () => {
 		const { user, dinoz } = await createBotWithDinoz('MemoryCompleteBot');
 
-		for (const statusId of [
-			DinozStatusId.STRATEGY_IN_130_LESSONS,
-			DinozStatusId.TOURNA,
-			DinozStatusId.LANTERN
-		]) {
+		for (const statusId of [DinozStatusId.STRATEGY_IN_130_LESSONS, DinozStatusId.TOURNA, DinozStatusId.LANTERN]) {
 			await addStatus(dinoz.id, statusId);
 		}
 
@@ -89,11 +77,12 @@ describe('bot progression memory', () => {
 			}
 		});
 
-		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBeNull();
-		expect(
-			await prisma.botDinozMemory.count({
-				where: { dinozId: dinoz.id }
-			})
-		).toBe(0);
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(BotProgressionGoal.KORGON_FLIPPERS);
+
+		const memory = await prisma.botDinozMemory.findUniqueOrThrow({
+			where: { dinozId: dinoz.id }
+		});
+
+		expect(memory.goal).toBe(BotProgressionGoal.KORGON_FLIPPERS);
 	});
 });

@@ -1,17 +1,18 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Ingredient } from '@dinorpg/core/models/ingredients/ingredientList.js';
-import { missionList } from '@dinorpg/core/models/missions/data/index.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { MARKET_EXPIRATION_JOB_KEY } from '@dinorpg/core/models/market/constants.js';
+import { missionList } from '@dinorpg/core/models/missions/data/index.js';
 import { shopListV2 } from '@dinorpg/core/models/shop/shopListV2.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import { getBotInventoryForecast } from '../../src/Bot/Service/botInventoryForecast.service.js';
+import { getBotItinerantSalePlan } from '../../src/Bot/Service/botItinerantMerchant.service.js';
 import {
 	createBotMarketOffer,
 	getBotIngredientReserve,
 	getBotMarketOfferPlan
 } from '../../src/Bot/Service/botMarket.service.js';
-import { getBotItinerantSalePlan } from '../../src/Bot/Service/botItinerantMerchant.service.js';
-import { getBotInventoryForecast } from '../../src/Bot/Service/botInventoryForecast.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
@@ -74,7 +75,18 @@ describe('bot market economy', () => {
 				quantity: 10
 			}
 		});
-
+		await prisma.jobDefinition.create({
+			data: {
+				key: MARKET_EXPIRATION_JOB_KEY,
+				name: 'Expire market offers',
+				type: 'INTERVAL',
+				timezone: 'UTC',
+				intervalMs: null,
+				nextRunAt: null,
+				lockTimeoutS: 30,
+				enabled: true
+			}
+		});
 		await expect(createBotMarketOffer(user.id)).resolves.toBe(true);
 
 		const offer = await prisma.offer.findFirstOrThrow({
@@ -146,10 +158,7 @@ describe('bot itinerant merchant economy', () => {
 			}
 		});
 
-		const plan = await getBotItinerantSalePlan(
-			user.id,
-			shopListV2.ITINERANT_MERCHANT_FRIDAY.shopId
-		);
+		const plan = await getBotItinerantSalePlan(user.id, shopListV2.ITINERANT_MERCHANT_FRIDAY.shopId);
 
 		expect(plan).not.toBeNull();
 		expect(plan?.ingredients).toContainEqual({
@@ -263,10 +272,7 @@ describe('bot itinerant merchant economy', () => {
 			}
 		});
 
-		const plan = await getBotItinerantSalePlan(
-			user.id,
-			shopListV2.ITINERANT_MERCHANT_MONDAY.shopId
-		);
+		const plan = await getBotItinerantSalePlan(user.id, shopListV2.ITINERANT_MERCHANT_MONDAY.shopId);
 
 		expect(plan?.ingredients ?? []).not.toContainEqual(
 			expect.objectContaining({
@@ -314,12 +320,8 @@ describe('bot itinerant merchant economy', () => {
 		expect(forecast.items.get(item.itemId)).toBe(itemGoal.quantity);
 
 		const plan = await getBotMarketOfferPlan(user.id);
-		const soldQuantity =
-			plan?.items.find(entry => entry.itemId === item.itemId)?.quantity ?? 0;
+		const soldQuantity = plan?.items.find(entry => entry.itemId === item.itemId)?.quantity ?? 0;
 
-		expect(soldQuantity).toBeLessThanOrEqual(
-			10 - itemGoal.quantity
-		);
+		expect(soldQuantity).toBeLessThanOrEqual(10 - itemGoal.quantity);
 	});
-
 });
