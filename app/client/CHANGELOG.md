@@ -1,5 +1,11 @@
 # @dinorpg/client
 
+## 0.44.0
+
+### Minor Changes
+
+- 033fce5: Add the Monster Hunt event system with configurable editions, Dark World monster invasions, scoring and personal rewards, final ranking rewards, live rankings, lifecycle news, and admin management.
+
 ## 0.43.0
 
 ### Minor Changes
