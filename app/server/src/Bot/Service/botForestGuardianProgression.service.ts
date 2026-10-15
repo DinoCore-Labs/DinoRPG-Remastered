@@ -11,15 +11,7 @@ export type BotForestGuardianProgressionStep =
 			preferredLinkIds: string[];
 	  };
 
-const FOREST_GUARDIAN_MISSIONS = new Set([
-	'unmute',
-	'orchid',
-	'licens',
-	'king',
-	'wishes',
-	'newplt',
-	'gshop'
-]);
+const FOREST_GUARDIAN_MISSIONS = new Set(['unmute', 'orchid', 'licens', 'king', 'wishes', 'newplt', 'gshop']);
 
 export async function getBotForestGuardianProgressionStep(
 	userId: string,

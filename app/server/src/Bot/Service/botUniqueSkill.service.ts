@@ -4,15 +4,7 @@ import { Skill, skillList, uSkillsToPlayerFieldMap } from '@dinorpg/core/models/
 import type { User } from '../../../../prisma/index.js';
 
 type UniqueSkillField =
-	| 'leader'
-	| 'engineer'
-	| 'shopKeeper'
-	| 'cooker'
-	| 'merchant'
-	| 'priest'
-	| 'teacher'
-	| 'messie'
-	| 'matelasseur';
+	'leader' | 'engineer' | 'shopKeeper' | 'cooker' | 'merchant' | 'priest' | 'teacher' | 'messie' | 'matelasseur';
 
 export const BOT_UNIQUE_SKILL_PRIORITY: Skill[] = [
 	Skill.LEADER,
@@ -42,11 +34,7 @@ export function getMissingBotUniqueSkills(
 	});
 }
 
-function isSkillOnPathToTarget(
-	skillId: Skill,
-	targetSkillId: Skill,
-	visited = new Set<Skill>()
-): boolean {
+function isSkillOnPathToTarget(skillId: Skill, targetSkillId: Skill, visited = new Set<Skill>()): boolean {
 	if (skillId === targetSkillId) return true;
 	if (visited.has(targetSkillId)) return false;
 	visited.add(targetSkillId);
@@ -54,9 +42,7 @@ function isSkillOnPathToTarget(
 	const target = skillList[targetSkillId];
 	if (!target?.unlockedFrom?.length) return false;
 
-	return target.unlockedFrom.some(parentSkillId =>
-		isSkillOnPathToTarget(skillId, parentSkillId as Skill, visited)
-	);
+	return target.unlockedFrom.some(parentSkillId => isSkillOnPathToTarget(skillId, parentSkillId as Skill, visited));
 }
 
 export function getUniqueProgressionWeight(skillId: number, missingUniqueSkills: Skill[]): number {
@@ -73,7 +59,6 @@ export function getUniqueProgressionWeight(skillId: number, missingUniqueSkills:
 
 	return 0;
 }
-
 
 export type BotUniqueSkillDinozProfile = {
 	id: number;

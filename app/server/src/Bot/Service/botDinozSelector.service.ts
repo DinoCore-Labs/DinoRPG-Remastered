@@ -11,10 +11,7 @@ export type BotDinozActivityScoreInput = {
 	items: { itemId: number }[];
 };
 
-export function getBotDinozActivityScore(
-	dinoz: BotDinozActivityScoreInput,
-	action: Action | 'mission'
-): number {
+export function getBotDinozActivityScore(dinoz: BotDinozActivityScoreInput, action: Action | 'mission'): number {
 	const lifeRatio = dinoz.maxLife > 0 ? dinoz.life / dinoz.maxLife : 0;
 	let score = dinoz.level * 10 + lifeRatio * 20;
 
@@ -54,7 +51,5 @@ export function chooseBestBotDinozForActivity<T extends BotDinozActivityScoreInp
 ): T | null {
 	if (dinozList.length === 0) return null;
 
-	return [...dinozList].sort(
-		(a, b) => getBotDinozActivityScore(b, action) - getBotDinozActivityScore(a, action)
-	)[0];
+	return [...dinozList].sort((a, b) => getBotDinozActivityScore(b, action) - getBotDinozActivityScore(a, action))[0];
 }

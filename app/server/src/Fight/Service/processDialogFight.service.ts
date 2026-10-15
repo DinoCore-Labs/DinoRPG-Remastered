@@ -2,7 +2,7 @@ import { RuntimeDialog, RuntimeDialogPhase } from '@dinorpg/core/models/dialogs/
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
-import { FightOutcome } from '@dinorpg/core/models/fight/fightResult.js';
+import { FightOutcome, FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';

@@ -1,37 +1,37 @@
 import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
-import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { BotProgressionGoal, BotStrategy, DinozState } from '../../../../prisma/index.js';
+import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import { getDinozMenuRequest } from '../../Dinoz/Controller/getDinozMenu.controller.js';
 import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/getDinozActions.service.js';
-import { BOT_GATHER_ACTIONS, isBotGatherAction } from './botGather.service.js';
-import { getBotMoveTargets } from './botMovement.service.js';
-import { getBotTutorialPlan } from './botTutorial.service.js';
-import { getBotMissionIntent } from './botMission.service.js';
-import { canBotBuyAnotherDinoz } from './botEconomy.service.js';
-import { getBotGroupPlan, getBotUngroupPlan } from './botGroup.service.js';
-import { findBotEquipCandidate } from './botEquipment.service.js';
-import { getBotShopPurchase } from './botShop.service.js';
 import { getBotDinozActivityScore } from './botDinozSelector.service.js';
-import { findBotMissionNextHop } from './botPathfinding.service.js';
-import { getBotLanternProgressionStep } from './botProgressionPlanner.service.js';
-import { getBotShamanProgressionStep } from './botShamanProgression.service.js';
-import { shouldBotDigOldStone } from './botProgressionOpportunity.service.js';
-import { getBotForcebrutUnlockStep } from './botForcebrutProgression.service.js';
+import { canBotBuyAnotherDinoz } from './botEconomy.service.js';
+import { findBotEquipCandidate } from './botEquipment.service.js';
 import { canBotFightForcebrut } from './botForcebrut.service.js';
-import { getOrAssignBotProgressionGoal } from './botProgressionMemory.service.js';
-import { getBotKorgonProgressionStep } from './botKorgonProgression.service.js';
-import { getBotSylvenoireProgressionStep } from './botSylvenoireProgression.service.js';
+import { getBotForcebrutUnlockStep } from './botForcebrutProgression.service.js';
 import { getBotForestGuardianProgressionStep } from './botForestGuardianProgression.service.js';
-import { getBotSteppesProgressionStep } from './botSteppesProgression.service.js';
-import { getBotMagnetiteProgressionStep } from './botMagnetiteProgression.service.js';
-import { getBotRaceTrophyProgressionStep } from './botRaceTrophyProgression.service.js';
-import { getBotLegacyIntroRepairStep } from './botLegacyIntroRepair.service.js';
-import { getBotMarketOfferPlan, shouldBotGoToMarket } from './botMarket.service.js';
+import { BOT_GATHER_ACTIONS, isBotGatherAction } from './botGather.service.js';
+import { getBotGroupPlan, getBotUngroupPlan } from './botGroup.service.js';
 import { getBotItinerantSalePlan } from './botItinerantMerchant.service.js';
-import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
+import { getBotKorgonProgressionStep } from './botKorgonProgression.service.js';
+import { getBotLegacyIntroRepairStep } from './botLegacyIntroRepair.service.js';
+import { getBotMagnetiteProgressionStep } from './botMagnetiteProgression.service.js';
+import { getBotMarketOfferPlan, shouldBotGoToMarket } from './botMarket.service.js';
+import { getBotMissionIntent } from './botMission.service.js';
+import { getBotMoveTargets } from './botMovement.service.js';
+import { findBotMissionNextHop } from './botPathfinding.service.js';
+import { getOrAssignBotProgressionGoal } from './botProgressionMemory.service.js';
+import { shouldBotDigOldStone } from './botProgressionOpportunity.service.js';
+import { getBotLanternProgressionStep } from './botProgressionPlanner.service.js';
+import { getBotRaceTrophyProgressionStep } from './botRaceTrophyProgression.service.js';
+import { getBotShamanProgressionStep } from './botShamanProgression.service.js';
+import { getBotShopPurchase } from './botShop.service.js';
+import { getBotSteppesProgressionStep } from './botSteppesProgression.service.js';
+import { getBotSylvenoireProgressionStep } from './botSylvenoireProgression.service.js';
+import { getBotTutorialPlan } from './botTutorial.service.js';
 
 export type BotDecision = {
 	dinozId: number;
@@ -65,7 +65,8 @@ export type BotDecision = {
 	dialogId?: string;
 	preferredLinkIds?: string[];
 	targetPlaceId?: number;
-	tutorialEvent?: 'DINOZ_ADOPTED' | 'GUIDE_MICHEL_SPOKEN' | 'CLAN_PAGE_VISITED' | 'ACCOUNT_PAGE_VISITED' | 'TUTORIAL_FINISHED';
+	tutorialEvent?:
+		'DINOZ_ADOPTED' | 'GUIDE_MICHEL_SPOKEN' | 'CLAN_PAGE_VISITED' | 'ACCOUNT_PAGE_VISITED' | 'TUTORIAL_FINISHED';
 };
 
 const SUPPORTED_ACTIONS = new Set<Action>([
@@ -141,12 +142,8 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}
 
 	const tutorialDinoz =
-		playerData.dinoz.find(
-			dinoz =>
-				!dinoz.leaderId &&
-				isActiveDinozState(dinoz.state) &&
-				dinoz.life > 0
-		) ?? playerData.dinoz[0];
+		playerData.dinoz.find(dinoz => !dinoz.leaderId && isActiveDinozState(dinoz.state) && dinoz.life > 0) ??
+		playerData.dinoz[0];
 	if (tutorialDinoz) {
 		const tutorialPlan = await getBotTutorialPlan(userId, tutorialDinoz.id);
 		if (tutorialPlan) {
@@ -179,13 +176,9 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					 * restaure uniquement cette capacité afin de
 					 * reprendre le tutoriel au prochain tick.
 					 */
-					if (
-						!tutorialDinoz.fight ||
-						tutorialDinoz.followers.some(follower => !follower.fight)
-					) {
+					if (!tutorialDinoz.fight || tutorialDinoz.followers.some(follower => !follower.fight)) {
 						const groupHasRemainingAction =
-							tutorialDinoz.remaining > 0 ||
-							tutorialDinoz.followers.some(follower => follower.remaining > 0);
+							tutorialDinoz.remaining > 0 || tutorialDinoz.followers.some(follower => follower.remaining > 0);
 
 						return {
 							dinozId: tutorialDinoz.id,
@@ -295,10 +288,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	const candidates: { value: BotDecision; weight: number }[] = [];
 	const progressionGoals = new Map<number, BotProgressionGoal | null>();
 	for (const dinoz of playerData.dinoz.slice(0, 3)) {
-		progressionGoals.set(
-			dinoz.id,
-			await getOrAssignBotProgressionGoal(userId, dinoz.id)
-		);
+		progressionGoals.set(dinoz.id, await getOrAssignBotProgressionGoal(userId, dinoz.id));
 	}
 
 	for (const dinoz of playerData.dinoz) {
@@ -307,8 +297,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		const sylvenoireStep = await getBotSylvenoireProgressionStep(userId, dinoz.id);
 		if (!sylvenoireStep || sylvenoireStep.type === 'wait') continue;
 
-		const memoryBonus =
-			progressionGoals.get(dinoz.id) === BotProgressionGoal.SYLVENOIRE_KEY ? 140 : 0;
+		const memoryBonus = progressionGoals.get(dinoz.id) === BotProgressionGoal.SYLVENOIRE_KEY ? 140 : 0;
 
 		if (sylvenoireStep.type === 'enter_portal') {
 			candidates.push({
@@ -322,12 +311,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		}
 
 		if (sylvenoireStep.type === 'move') {
-			const nextHop = await findBotMissionNextHop(
-				userId,
-				dinoz.id,
-				dinoz.placeId,
-				sylvenoireStep.placeId
-			);
+			const nextHop = await findBotMissionNextHop(userId, dinoz.id, dinoz.placeId, sylvenoireStep.placeId);
 			if (nextHop != null) {
 				candidates.push({
 					value: {
@@ -358,12 +342,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		const forcebrutUnlock = await getBotForcebrutUnlockStep(userId, dinoz.id);
 		if (forcebrutUnlock) {
 			if (forcebrutUnlock.type === 'move') {
-				const nextHop = await findBotMissionNextHop(
-					userId,
-					dinoz.id,
-					dinoz.placeId,
-					forcebrutUnlock.placeId
-				);
+				const nextHop = await findBotMissionNextHop(userId, dinoz.id, dinoz.placeId, forcebrutUnlock.placeId);
 				if (nextHop != null) {
 					candidates.push({
 						value: {
@@ -391,12 +370,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		if (!shamanStep) continue;
 
 		if (shamanStep.type === 'move') {
-			const nextHop = await findBotMissionNextHop(
-				userId,
-				dinoz.id,
-				dinoz.placeId,
-				shamanStep.placeId
-			);
+			const nextHop = await findBotMissionNextHop(userId, dinoz.id, dinoz.placeId, shamanStep.placeId);
 			if (nextHop != null) {
 				candidates.push({
 					value: {
@@ -436,12 +410,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					: 0;
 
 			if (trophyStep.type === 'move') {
-				const nextHop = await findBotMissionNextHop(
-					userId,
-					dinoz.id,
-					dinoz.placeId,
-					trophyStep.placeId
-				);
+				const nextHop = await findBotMissionNextHop(userId, dinoz.id, dinoz.placeId, trophyStep.placeId);
 				if (nextHop != null) {
 					candidates.push({
 						value: {
@@ -467,16 +436,10 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 
 		const magnetiteStep = await getBotMagnetiteProgressionStep(userId, dinoz.id);
 		if (magnetiteStep) {
-			const memoryBonus =
-				progressionGoals.get(dinoz.id) === BotProgressionGoal.MAGNETITE ? 150 : 0;
+			const memoryBonus = progressionGoals.get(dinoz.id) === BotProgressionGoal.MAGNETITE ? 150 : 0;
 
 			if (magnetiteStep.type === 'move') {
-				const nextHop = await findBotMissionNextHop(
-					userId,
-					dinoz.id,
-					dinoz.placeId,
-					magnetiteStep.placeId
-				);
+				const nextHop = await findBotMissionNextHop(userId, dinoz.id, dinoz.placeId, magnetiteStep.placeId);
 				if (nextHop != null) {
 					candidates.push({
 						value: {
@@ -502,12 +465,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 
 		const steppesStep = await getBotSteppesProgressionStep(userId, dinoz.id);
 		if (steppesStep) {
-			const nextHop = await findBotMissionNextHop(
-				userId,
-				dinoz.id,
-				dinoz.placeId,
-				steppesStep.placeId
-			);
+			const nextHop = await findBotMissionNextHop(userId, dinoz.id, dinoz.placeId, steppesStep.placeId);
 			if (nextHop != null) {
 				candidates.push({
 					value: {
@@ -515,9 +473,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 						action: 'move',
 						targetPlaceId: nextHop
 					},
-					weight:
-						310 +
-						(progressionGoals.get(dinoz.id) === BotProgressionGoal.STEPPES_ACCESS ? 140 : 0)
+					weight: 310 + (progressionGoals.get(dinoz.id) === BotProgressionGoal.STEPPES_ACCESS ? 140 : 0)
 				});
 			}
 		}
@@ -525,12 +481,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		const forestStep = await getBotForestGuardianProgressionStep(userId, dinoz.id);
 		if (forestStep) {
 			if (forestStep.type === 'move') {
-				const nextHop = await findBotMissionNextHop(
-					userId,
-					dinoz.id,
-					dinoz.placeId,
-					forestStep.placeId
-				);
+				const nextHop = await findBotMissionNextHop(userId, dinoz.id, dinoz.placeId, forestStep.placeId);
 				if (nextHop != null) {
 					candidates.push({
 						value: {
@@ -557,12 +508,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		const korgonStep = await getBotKorgonProgressionStep(userId, dinoz.id);
 		if (korgonStep) {
 			if (korgonStep.type === 'move') {
-				const nextHop = await findBotMissionNextHop(
-					userId,
-					dinoz.id,
-					dinoz.placeId,
-					korgonStep.placeId
-				);
+				const nextHop = await findBotMissionNextHop(userId, dinoz.id, dinoz.placeId, korgonStep.placeId);
 				if (nextHop != null) {
 					candidates.push({
 						value: {
@@ -570,9 +516,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 							action: 'move',
 							targetPlaceId: nextHop
 						},
-						weight:
-							245 +
-							(progressionGoals.get(dinoz.id) === BotProgressionGoal.KORGON_FLIPPERS ? 120 : 0)
+						weight: 245 + (progressionGoals.get(dinoz.id) === BotProgressionGoal.KORGON_FLIPPERS ? 120 : 0)
 					});
 				}
 			} else {
@@ -583,9 +527,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 						dialogId: korgonStep.dialogId,
 						preferredLinkIds: korgonStep.preferredLinkIds
 					},
-					weight:
-						255 +
-						(progressionGoals.get(dinoz.id) === BotProgressionGoal.KORGON_FLIPPERS ? 120 : 0)
+					weight: 255 + (progressionGoals.get(dinoz.id) === BotProgressionGoal.KORGON_FLIPPERS ? 120 : 0)
 				});
 			}
 		}
@@ -595,12 +537,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 
 		switch (progressionStep.type) {
 			case 'move': {
-				const nextHop = await findBotMissionNextHop(
-					userId,
-					dinoz.id,
-					dinoz.placeId,
-					progressionStep.placeId
-				);
+				const nextHop = await findBotMissionNextHop(userId, dinoz.id, dinoz.placeId, progressionStep.placeId);
 				if (nextHop != null) {
 					candidates.push({
 						value: {
@@ -654,10 +591,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	const marketPlan = await getBotMarketOfferPlan(userId);
 	if (marketPlan) {
 		const marketDinoz = playerData.dinoz.find(
-			dinoz =>
-				dinoz.placeId === PlaceEnum.PLACE_DU_MARCHE &&
-				isActiveDinozState(dinoz.state) &&
-				dinoz.life > 0
+			dinoz => dinoz.placeId === PlaceEnum.PLACE_DU_MARCHE && isActiveDinozState(dinoz.state) && dinoz.life > 0
 		);
 
 		if (marketDinoz) {
@@ -669,16 +603,9 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				weight: 90
 			});
 		} else if (await shouldBotGoToMarket(userId)) {
-			const mover = playerData.dinoz.find(
-				dinoz => isActiveDinozState(dinoz.state) && dinoz.life > 0
-			);
+			const mover = playerData.dinoz.find(dinoz => isActiveDinozState(dinoz.state) && dinoz.life > 0);
 			if (mover) {
-				const nextHop = await findBotMissionNextHop(
-					userId,
-					mover.id,
-					mover.placeId,
-					PlaceEnum.PLACE_DU_MARCHE
-				);
+				const nextHop = await findBotMissionNextHop(userId, mover.id, mover.placeId, PlaceEnum.PLACE_DU_MARCHE);
 				if (nextHop != null) {
 					candidates.push({
 						value: {
@@ -710,9 +637,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					dinozId: dinoz.id,
 					action: 'progression_dig'
 				},
-				weight:
-					320 +
-					(progressionGoals.get(dinoz.id) === BotProgressionGoal.FORCEBRUT_TRAINING ? 100 : 0)
+				weight: 320 + (progressionGoals.get(dinoz.id) === BotProgressionGoal.FORCEBRUT_TRAINING ? 100 : 0)
 			});
 		}
 
@@ -731,12 +656,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		if (missionIntent) {
 			switch (missionIntent.type) {
 				case 'move': {
-					const nextHop = await findBotMissionNextHop(
-						userId,
-						dinoz.id,
-						dinoz.placeId,
-						missionIntent.placeId
-					);
+					const nextHop = await findBotMissionNextHop(userId, dinoz.id, dinoz.placeId, missionIntent.placeId);
 					if (nextHop != null) {
 						candidates.push({
 							value: {
@@ -853,7 +773,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					? gatherWeight[strategy] + getBotDinozActivityScore(dinoz, actionName)
 					: actionName === Action.FIGHT
 						? (ACTION_WEIGHTS[strategy][actionName] ?? 1) + getBotDinozActivityScore(dinoz, actionName)
-						: ACTION_WEIGHTS[strategy][actionName] ?? 1
+						: (ACTION_WEIGHTS[strategy][actionName] ?? 1)
 			});
 		}
 	}
@@ -943,21 +863,14 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 			!dinoz.leaderId &&
 			isActiveDinozState(dinoz.state) &&
 			dinoz.life > 0 &&
-			(!dinoz.fight ||
-				!dinoz.gather ||
-				dinoz.followers.some(follower => !follower.fight || !follower.gather))
+			(!dinoz.fight || !dinoz.gather || dinoz.followers.some(follower => !follower.fight || !follower.gather))
 	);
 
 	if (blockedLeader) {
 		const team = [blockedLeader, ...blockedLeader.followers];
-		const neededIrma = team.filter(
-			member =>
-				member.remaining === 0 &&
-				(!member.fight || !member.gather)
-		).length;
+		const neededIrma = team.filter(member => member.remaining === 0 && (!member.fight || !member.gather)).length;
 		const irmaItemId = itemList[Item.POTION_IRMA].itemId;
-		const irmaQuantity =
-			playerData.items.find(item => item.itemId === irmaItemId)?.quantity ?? 0;
+		const irmaQuantity = playerData.items.find(item => item.itemId === irmaItemId)?.quantity ?? 0;
 
 		if (irmaQuantity < neededIrma) {
 			return {
@@ -969,11 +882,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		return {
 			dinozId: blockedLeader.id,
 			action:
-				blockedLeader.followers.length > 0
-					? Action.IRMAS
-					: blockedLeader.remaining > 0
-						? Action.ACTION
-						: Action.IRMA
+				blockedLeader.followers.length > 0 ? Action.IRMAS : blockedLeader.remaining > 0 ? Action.ACTION : Action.IRMA
 		};
 	}
 

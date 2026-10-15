@@ -25,12 +25,8 @@ export async function shouldBotDigOldStone(userId: string, dinozId: number): Pro
 	if (dinoz.placeId !== PlaceEnum.RUINES_ASHPOUK) return false;
 
 	const statusIds = new Set(dinoz.status.map(status => status.statusId));
-	const hasShovel =
-		statusIds.has(DinozStatusId.SHOVEL) ||
-		statusIds.has(DinozStatusId.ENHANCED_SHOVEL);
-	const alreadyResolved =
-		statusIds.has(DinozStatusId.OLD_STONE) ||
-		statusIds.has(DinozStatusId.ASHPOUK_TOTEM);
+	const hasShovel = statusIds.has(DinozStatusId.SHOVEL) || statusIds.has(DinozStatusId.ENHANCED_SHOVEL);
+	const alreadyResolved = statusIds.has(DinozStatusId.OLD_STONE) || statusIds.has(DinozStatusId.ASHPOUK_TOTEM);
 
 	return hasShovel && !alreadyResolved;
 }

@@ -47,15 +47,7 @@ describe('bot Korgon flippers progression', () => {
 		await expect(getBotKorgonProgressionStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'dialog',
 			dialogId: 'dian_korgsey',
-			preferredLinkIds: [
-				'korgons',
-				'why',
-				'wood',
-				'tame',
-				'interest',
-				'service',
-				'missions'
-			]
+			preferredLinkIds: ['korgons', 'why', 'wood', 'tame', 'interest', 'service', 'missions']
 		});
 	});
 

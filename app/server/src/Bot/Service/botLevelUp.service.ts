@@ -3,10 +3,14 @@ import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { BotStrategy } from '../../../../prisma/index.js';
-import { prisma } from '../../prisma.js';
-import { assignBotUniqueSkillTargets, getMissingBotUniqueSkills, getUniqueProgressionWeight } from './botUniqueSkill.service.js';
 import { getDinozForLevelUp } from '../../Level/Controller/getDinozForLevelUp.controller.js';
 import { getDinozLearnableSkills } from '../../Level/Service/getDinozLearnableSkills.service.js';
+import { prisma } from '../../prisma.js';
+import {
+	assignBotUniqueSkillTargets,
+	getMissingBotUniqueSkills,
+	getUniqueProgressionWeight
+} from './botUniqueSkill.service.js';
 
 const GATHERER_SKILLS = new Set<number>([
 	Skill.FOUILLE,
@@ -132,7 +136,13 @@ export async function chooseBotLevelUp(
 
 	if (choices.learnableSkills.length > 0) {
 		return {
-			skillIdList: [weightedPick(choices.learnableSkills.map(skill => skill.skillId), strategy, uniqueProgressionWeights)],
+			skillIdList: [
+				weightedPick(
+					choices.learnableSkills.map(skill => skill.skillId),
+					strategy,
+					uniqueProgressionWeights
+				)
+			],
 			tryNumber
 		};
 	}

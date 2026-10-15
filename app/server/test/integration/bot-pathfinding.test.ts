@@ -24,12 +24,7 @@ describe('bot pathfinding', () => {
 		});
 
 		await expect(
-			findBotMissionNextHop(
-				user.id,
-				dinoz.id,
-				PlaceEnum.FLEUVE_JUMIN,
-				PlaceEnum.CAMP_KORGON
-			)
+			findBotMissionNextHop(user.id, dinoz.id, PlaceEnum.FLEUVE_JUMIN, PlaceEnum.CAMP_KORGON)
 		).resolves.toBeNull();
 
 		await prisma.dinozStatus.create({
@@ -39,14 +34,9 @@ describe('bot pathfinding', () => {
 			}
 		});
 
-		await expect(
-			findBotMissionNextHop(
-				user.id,
-				dinoz.id,
-				PlaceEnum.FLEUVE_JUMIN,
-				PlaceEnum.CAMP_KORGON
-			)
-		).resolves.toBe(PlaceEnum.CAMP_KORGON);
+		await expect(findBotMissionNextHop(user.id, dinoz.id, PlaceEnum.FLEUVE_JUMIN, PlaceEnum.CAMP_KORGON)).resolves.toBe(
+			PlaceEnum.CAMP_KORGON
+		);
 	});
 
 	it('routes through goto transitions while returning the executable first hop', async () => {
@@ -66,12 +56,7 @@ describe('bot pathfinding', () => {
 		});
 
 		await expect(
-			findBotMissionNextHop(
-				user.id,
-				dinoz.id,
-				PlaceEnum.PORT_DE_PRECHE,
-				PlaceEnum.ILE_WAIKIKI
-			)
+			findBotMissionNextHop(user.id, dinoz.id, PlaceEnum.PORT_DE_PRECHE, PlaceEnum.ILE_WAIKIKI)
 		).resolves.toBe(PlaceEnum.GO_TO_ATLANTEINES_ISLAND);
 	});
 });

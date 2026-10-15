@@ -43,13 +43,7 @@
 				<td class="tdOther">
 					<span class="ranking-player">
 						<DZUser :user="ranking.user" :me="ranking.user.id === me" :friend="false" />
-						<span
-							v-if="uStore.isAdmin && ranking.user.isBot"
-							class="bot-badge"
-							title="Bot joueur"
-						>
-							🤖
-						</span>
+						<span v-if="uStore.isAdmin && ranking.user.isBot" class="bot-badge" title="Bot joueur"> 🤖 </span>
 					</span>
 				</td>
 				<td class="tdOther">

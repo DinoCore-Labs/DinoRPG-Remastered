@@ -31,7 +31,10 @@ export const BOT_LANTERN_PROGRESSION: BotProgressionNode[] = [
 	{
 		id: 'buoy',
 		provides: [{ type: 'status', key: 'bouee' }],
-		requires: [{ type: 'level', value: 5 }, { type: 'place', placeId: PlaceEnum.UNIVERSITE }],
+		requires: [
+			{ type: 'level', value: 5 },
+			{ type: 'place', placeId: PlaceEnum.UNIVERSITE }
+		],
 		action: {
 			type: 'dialog',
 			dialogId: 'professor_eugene',

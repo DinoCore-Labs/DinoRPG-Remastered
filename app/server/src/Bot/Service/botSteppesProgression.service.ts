@@ -32,9 +32,7 @@ export async function getBotSteppesProgressionStep(
 	});
 	if (!dinoz || dinoz.life <= 0 || dinoz.state !== null) return null;
 
-	const currentPlace = Object.values(placeListv2).find(
-		place => place.placeId === dinoz.placeId
-	);
+	const currentPlace = Object.values(placeListv2).find(place => place.placeId === dinoz.placeId);
 	if (currentPlace?.map === MapZone.STEPPE) return null;
 
 	const statusIds = new Set(dinoz.status.map(status => status.statusId));

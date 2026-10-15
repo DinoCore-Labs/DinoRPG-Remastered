@@ -34,23 +34,18 @@ type EquipItemCommand = {
 	equip: boolean;
 };
 
-export async function equipDinozItem({
-	userId,
-	dinozId,
-	itemId,
-	equip
-}: EquipItemCommand): Promise<EquipItemResponse> {
+export async function equipDinozItem({ userId, dinozId, itemId, equip }: EquipItemCommand): Promise<EquipItemResponse> {
 	if (!Number.isFinite(dinozId)) {
 		throw new ExpectedError('invalidId');
 	}
-		const dinoz = await getDinozEquipItemRequest(dinozId);
+	const dinoz = await getDinozEquipItemRequest(dinozId);
 	if (!dinoz) {
 		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 	}
 	if (dinoz.state === DinozState.selling) {
 		throw new ExpectedError('cannotEquipSellingDinoz');
 	}
-		const itemToEquip = Object.values(itemList).find(i => i.itemId === itemId);
+	const itemToEquip = Object.values(itemList).find(i => i.itemId === itemId);
 	if (!dinoz.user || dinoz.user.id !== userId) {
 		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${userId}`);
 	}

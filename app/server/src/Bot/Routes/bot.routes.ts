@@ -1,7 +1,12 @@
 import type { FastifyInstance } from 'fastify';
 
 import { botIdParamsSchema, createBotBodySchema, updateBotBodySchema } from '../Schema/bot.schema.js';
-import { createBotHandler, getBotHistoryHandler, listBotsHandler, updateBotHandler } from '../Service/adminBot.service.js';
+import {
+	createBotHandler,
+	getBotHistoryHandler,
+	listBotsHandler,
+	updateBotHandler
+} from '../Service/adminBot.service.js';
 
 export async function botRoutes(app: FastifyInstance) {
 	app.get(

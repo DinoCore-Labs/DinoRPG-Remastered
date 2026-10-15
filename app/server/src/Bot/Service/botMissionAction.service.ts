@@ -1,6 +1,9 @@
 import { BotStrategy } from '../../../../prisma/index.js';
-import { completeMissionInteraction, startMissionInteraction } from '../../Mission/Controller/missionInteract.controller.js';
 import { advanceDinozMissionOnWait } from '../../Mission/Controller/mission.progress.js';
+import {
+	completeMissionInteraction,
+	startMissionInteraction
+} from '../../Mission/Controller/missionInteract.controller.js';
 import { prisma } from '../../prisma.js';
 import { executeBotDialog } from './botDialog.service.js';
 

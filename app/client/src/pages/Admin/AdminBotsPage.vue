@@ -45,76 +45,74 @@
 
 			<div class="table-wrap">
 				<DZTable>
-				<tr>
-					<th>Nom</th>
-					<th>Stratégie</th>
-					<th>État</th>
-					<th>Dinoz</th>
-					<th>Délai (s)</th>
-					<th>Planning</th>
-					<th>Actions</th>
-				</tr>
+					<tr>
+						<th>Nom</th>
+						<th>Stratégie</th>
+						<th>État</th>
+						<th>Dinoz</th>
+						<th>Délai (s)</th>
+						<th>Planning</th>
+						<th>Actions</th>
+					</tr>
 
-				<tr v-for="bot in bots" :key="bot.id">
-					<td class="bot-name">
-						<strong>{{ bot.user.name }}</strong>
-					</td>
-					<td>
-						<select v-model="drafts[bot.id].strategy">
-							<option v-for="strategy in strategies" :key="strategy" :value="strategy">
-								{{ strategy }}
-							</option>
-						</select>
-					</td>
-					<td>
-						<label class="toggle">
-							<input v-model="drafts[bot.id].enabled" type="checkbox" />
-							<span>{{ drafts[bot.id].enabled ? 'Actif' : 'Inactif' }}</span>
-						</label>
-					</td>
-					<td class="mono">{{ bot.user._count.dinoz }}</td>
-					<td>
-						<div class="delay-range">
-							<input
-								v-model.number="drafts[bot.id].minDelaySeconds"
-								class="delay"
-								type="number"
-								min="10"
-								max="86400"
-								title="Délai minimum"
-							/>
-							<span>–</span>
-							<input
-								v-model.number="drafts[bot.id].maxDelaySeconds"
-								class="delay"
-								type="number"
-								min="10"
-								max="86400"
-								title="Délai maximum"
-							/>
-						</div>
-					</td>
-					<td class="mono planning">
-						<div title="Dernière action">← {{ formatDate(bot.lastActionAt) }}</div>
-						<div title="Prochaine action">→ {{ formatDate(bot.nextActionAt) }}</div>
-					</td>
-					<td>
-						<div class="row-actions">
-							<DZButton small :disabled="savingId === bot.id" @click="saveBot(bot.id)">
-								{{ savingId === bot.id ? 'Sauvegarde…' : 'Sauvegarder' }}
-							</DZButton>
-							<DZButton small :disabled="historyLoading && selectedBotId === bot.id" @click="showHistory(bot.id)">
-								Historique
-							</DZButton>
-						</div>
-					</td>
-				</tr>
+					<tr v-for="bot in bots" :key="bot.id">
+						<td class="bot-name">
+							<strong>{{ bot.user.name }}</strong>
+						</td>
+						<td>
+							<select v-model="drafts[bot.id].strategy">
+								<option v-for="strategy in strategies" :key="strategy" :value="strategy">
+									{{ strategy }}
+								</option>
+							</select>
+						</td>
+						<td>
+							<label class="toggle">
+								<input v-model="drafts[bot.id].enabled" type="checkbox" />
+								<span>{{ drafts[bot.id].enabled ? 'Actif' : 'Inactif' }}</span>
+							</label>
+						</td>
+						<td class="mono">{{ bot.user._count.dinoz }}</td>
+						<td>
+							<div class="delay-range">
+								<input
+									v-model.number="drafts[bot.id].minDelaySeconds"
+									class="delay"
+									type="number"
+									min="10"
+									max="86400"
+									title="Délai minimum"
+								/>
+								<span>–</span>
+								<input
+									v-model.number="drafts[bot.id].maxDelaySeconds"
+									class="delay"
+									type="number"
+									min="10"
+									max="86400"
+									title="Délai maximum"
+								/>
+							</div>
+						</td>
+						<td class="mono planning">
+							<div title="Dernière action">← {{ formatDate(bot.lastActionAt) }}</div>
+							<div title="Prochaine action">→ {{ formatDate(bot.nextActionAt) }}</div>
+						</td>
+						<td>
+							<div class="row-actions">
+								<DZButton small :disabled="savingId === bot.id" @click="saveBot(bot.id)">
+									{{ savingId === bot.id ? 'Sauvegarde…' : 'Sauvegarder' }}
+								</DZButton>
+								<DZButton small :disabled="historyLoading && selectedBotId === bot.id" @click="showHistory(bot.id)">
+									Historique
+								</DZButton>
+							</div>
+						</td>
+					</tr>
 				</DZTable>
 			</div>
 
-			<p v-if="!loading && bots.length === 0" class="empty">
-				Aucun bot joueur pour le moment.
-			</p>
+			<p v-if="!loading && bots.length === 0" class="empty">Aucun bot joueur pour le moment.</p>
 		</section>
 
 		<section v-if="selectedBotId" class="panel">
@@ -146,9 +144,7 @@
 				</tr>
 			</DZTable>
 
-			<p v-if="!historyLoading && history.length === 0" class="empty">
-				Aucune action enregistrée pour ce bot.
-			</p>
+			<p v-if="!historyLoading && history.length === 0" class="empty">Aucune action enregistrée pour ce bot.</p>
 		</section>
 	</div>
 </template>

@@ -51,9 +51,7 @@ export async function getBotShopPurchase(userId: string, shopId: number): Promis
 		if (!item) continue;
 
 		const unitPrice =
-			user.merchant && shop.shopId === shopListV2.FLYING_SHOP.shopId
-				? Math.round(sold.price * 0.9)
-				: sold.price;
+			user.merchant && shop.shopId === shopListV2.FLYING_SHOP.shopId ? Math.round(sold.price * 0.9) : sold.price;
 
 		if (gold - unitPrice < BOT_ITEM_GOLD_RESERVE) continue;
 
@@ -84,12 +82,9 @@ export async function buyBotUsefulItem(userId: string, shopId: number): Promise<
 	return true;
 }
 
-
 export async function buyBotIrma(userId: string): Promise<boolean> {
 	const shop = shopListV2.FLYING_SHOP;
-	const sold = shop.listItemsSold.find(
-		entry => entry.id === itemList[Item.POTION_IRMA].itemId
-	);
+	const sold = shop.listItemsSold.find(entry => entry.id === itemList[Item.POTION_IRMA].itemId);
 	if (!sold || sold.type !== ItemShopType.ITEM) return false;
 
 	const user = await getUserShopItemsDataRequest(userId);
@@ -97,10 +92,7 @@ export async function buyBotIrma(userId: string): Promise<boolean> {
 
 	const gold = user.wallets.find(wallet => wallet.type === MoneyType.GOLD)?.amount ?? 0;
 	const item = itemList[Item.POTION_IRMA];
-	const unitPrice =
-		user.merchant
-			? Math.round(sold.price * 0.9)
-			: sold.price;
+	const unitPrice = user.merchant ? Math.round(sold.price * 0.9) : sold.price;
 
 	if (gold < unitPrice) return false;
 

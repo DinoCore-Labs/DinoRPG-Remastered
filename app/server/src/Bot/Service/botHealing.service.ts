@@ -1,8 +1,8 @@
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 
-import { prisma } from '../../prisma.js';
 import { useItem } from '../../Inventory/Service/useItem.service.js';
+import { prisma } from '../../prisma.js';
 
 export async function findBestBotHealingItem(userId: string, dinozId: number): Promise<number | null> {
 	const dinoz = await prisma.dinoz.findFirst({
@@ -37,7 +37,9 @@ export async function findBestBotHealingItem(userId: string, dinozId: number): P
 			item: Object.values(itemList).find(item => item.itemId === entry.itemId)
 		}))
 		.filter(
-			(value): value is {
+			(
+				value
+			): value is {
 				entry: { itemId: number; quantity: number };
 				item: NonNullable<(typeof value)['item']>;
 			} => Boolean(value.item?.effect && value.item.effect.category === ItemEffect.HEAL)
@@ -54,7 +56,9 @@ export async function findBestBotHealingItem(userId: string, dinozId: number): P
 			};
 		})
 		.filter(
-			(value): value is {
+			(
+				value
+			): value is {
 				itemId: number;
 				heal: number;
 			} => value !== null

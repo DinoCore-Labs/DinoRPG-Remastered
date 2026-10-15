@@ -10,9 +10,7 @@ import {
 } from './botProgressionGraph.service.js';
 
 export type BotProgressionStep =
-	| BotProgressionAction
-	| { type: 'move'; placeId: number }
-	| { type: 'level'; value: number };
+	BotProgressionAction | { type: 'move'; placeId: number } | { type: 'level'; value: number };
 
 type BotProgressionState = {
 	level: number;
@@ -34,10 +32,7 @@ function requirementKey(requirement: BotProgressionRequirement): string {
 	}
 }
 
-function isRequirementSatisfied(
-	state: BotProgressionState,
-	requirement: BotProgressionRequirement
-): boolean {
+function isRequirementSatisfied(state: BotProgressionState, requirement: BotProgressionRequirement): boolean {
 	switch (requirement.type) {
 		case 'status':
 			return state.statusKeys.has(requirement.key);
@@ -54,16 +49,11 @@ function findProviderCandidates(
 	graph: BotProgressionNode[],
 	requirement: BotProgressionRequirement
 ): BotProgressionNode[] {
-	return graph.filter(node =>
-		node.provides.some(provided => requirementKey(provided) === requirementKey(requirement))
-	);
+	return graph.filter(node => node.provides.some(provided => requirementKey(provided) === requirementKey(requirement)));
 }
 
 function providerScore(state: BotProgressionState, node: BotProgressionNode): number {
-	return node.requires.reduce(
-		(score, requirement) => score + (isRequirementSatisfied(state, requirement) ? 10 : 0),
-		0
-	);
+	return node.requires.reduce((score, requirement) => score + (isRequirementSatisfied(state, requirement) ? 10 : 0), 0);
 }
 
 function resolveRequirement(
@@ -165,10 +155,5 @@ export async function getBotLanternProgressionStep(
 	const state = await getBotProgressionState(userId, dinozId);
 	if (!state) return null;
 
-	return resolveRequirement(
-		state,
-		BOT_LANTERN_PROGRESSION,
-		{ type: 'status', key: 'lantrn' },
-		new Set()
-	);
+	return resolveRequirement(state, BOT_LANTERN_PROGRESSION, { type: 'status', key: 'lantrn' }, new Set());
 }

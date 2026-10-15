@@ -4,8 +4,7 @@ import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { prisma } from '../../prisma.js';
 
 export type BotForcebrutUnlockStep =
-	| { type: 'move'; placeId: PlaceEnum }
-	| { type: 'dialog'; dialogId: string; preferredLinkIds: string[] };
+	{ type: 'move'; placeId: PlaceEnum } | { type: 'dialog'; dialogId: string; preferredLinkIds: string[] };
 
 export async function getBotForcebrutUnlockStep(
 	userId: string,

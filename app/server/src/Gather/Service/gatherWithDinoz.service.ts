@@ -77,13 +77,7 @@ type GatherWithDinozCommand = {
 	log?: { error: Function };
 };
 
-export async function gatherWithDinoz({
-	userId,
-	dinozId,
-	type,
-	box,
-	log
-}: GatherWithDinozCommand) {
+export async function gatherWithDinoz({ userId, dinozId, type, box, log }: GatherWithDinozCommand) {
 	const user = await getDinozGatherData(dinozId, userId);
 	if (!user) {
 		throw new ExpectedError('userNotFound', { params: { userId: userId } });

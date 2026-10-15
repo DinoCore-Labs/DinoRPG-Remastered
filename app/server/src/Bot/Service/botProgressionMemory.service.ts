@@ -1,8 +1,8 @@
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { MapZone } from '@dinorpg/core/models/enums/MapZone.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
-import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '@dinorpg/core/models/scenarios/data/magnetiteScenario.js';
 import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '@dinorpg/core/models/scenarios/data/magnetiteScenario.js';
 
 import { BotProgressionGoal } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
@@ -69,10 +69,7 @@ function chooseNextGoal(
 	if (!statusIds.has(DinozStatusId.FLIPPERS)) {
 		return BotProgressionGoal.KORGON_FLIPPERS;
 	}
-	if (
-		canAttemptSylvenoire &&
-		!statusIds.has(DinozStatusId.SYLVENOIRE_KEY)
-	) {
+	if (canAttemptSylvenoire && !statusIds.has(DinozStatusId.SYLVENOIRE_KEY)) {
 		return BotProgressionGoal.SYLVENOIRE_KEY;
 	}
 	if (statusIds.has(DinozStatusId.SYLVENOIRE_KEY)) {
@@ -147,8 +144,7 @@ export async function getOrAssignBotProgressionGoal(
 			progression: true
 		}
 	});
-	const magnetiteProgression =
-		magnetiteScenario?.progression ?? MagnetiteProgression.INITIAL_AMBUSH;
+	const magnetiteProgression = magnetiteScenario?.progression ?? MagnetiteProgression.INITIAL_AMBUSH;
 	const eligibleDinozCount = await prisma.dinoz.count({
 		where: {
 			userId,
@@ -163,24 +159,11 @@ export async function getOrAssignBotProgressionGoal(
 	});
 	const canAttemptSylvenoire = eligibleDinozCount >= 7;
 
-	if (
-		currentGoal &&
-		currentGoal === BotProgressionGoal.SYLVENOIRE_KEY &&
-		!canAttemptSylvenoire
-	) {
+	if (currentGoal && currentGoal === BotProgressionGoal.SYLVENOIRE_KEY && !canAttemptSylvenoire) {
 		await prisma.botDinozMemory.deleteMany({
 			where: { dinozId }
 		});
-	} else if (
-		currentGoal &&
-		!isGoalComplete(
-			currentGoal,
-			statusIds,
-			rewardIds,
-			dinoz.placeId,
-			magnetiteProgression
-		)
-	) {
+	} else if (currentGoal && !isGoalComplete(currentGoal, statusIds, rewardIds, dinoz.placeId, magnetiteProgression)) {
 		const currentIsTrophyGoal =
 			currentGoal === BotProgressionGoal.HIPPOCLAMP_TROPHY ||
 			currentGoal === BotProgressionGoal.PTEROZ_TROPHY ||

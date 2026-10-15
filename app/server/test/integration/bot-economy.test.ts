@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { canBotBuyAnotherDinoz, buyBotDinoz } from '../../src/Bot/Service/botEconomy.service.js';
+import { buyBotDinoz, canBotBuyAnotherDinoz } from '../../src/Bot/Service/botEconomy.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';

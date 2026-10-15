@@ -1,10 +1,10 @@
 import { BotStrategy } from '../../../../prisma/index.js';
+import { resumeDialogPhase, selectDialogLink, startDialog } from '../../Dialog/Service/dialog.service.js';
+import { processDialogFightForUser } from '../../Fight/Service/processDialogFight.service.js';
 import { getDinozMissionGroup } from '../../Mission/Controller/getDinozMission.controller.js';
 import { getMissionDefinitionByKey } from '../../Mission/Controller/mission.registry.js';
 import { startDinozMissionService } from '../../Mission/Controller/startDinozMission.controller.js';
 import { prisma } from '../../prisma.js';
-import { resumeDialogPhase, selectDialogLink, startDialog } from '../../Dialog/Service/dialog.service.js';
-import { processDialogFightForUser } from '../../Fight/Service/processDialogFight.service.js';
 import { prepareBotSkillsForCombat } from './botSkillStrategy.service.js';
 
 const MAX_DIALOG_STEPS = 12;

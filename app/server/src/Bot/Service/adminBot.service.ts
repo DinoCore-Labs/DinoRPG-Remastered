@@ -1,6 +1,5 @@
-import type { FastifyReply, FastifyRequest } from 'fastify';
-
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
+import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { prisma } from '../../prisma.js';
 import { botIdParamsSchema, createBotBodySchema, updateBotBodySchema } from '../Schema/bot.schema.js';
@@ -77,10 +76,7 @@ export async function updateBotHandler(req: FastifyRequest, reply: FastifyReply)
 		where: { id },
 		data: {
 			...body,
-			nextActionAt:
-				body.enabled === true && current.enabled === false
-					? new Date()
-					: undefined
+			nextActionAt: body.enabled === true && current.enabled === false ? new Date() : undefined
 		},
 		include: {
 			user: {

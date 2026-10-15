@@ -44,40 +44,30 @@ describe('bot race trophy progression', () => {
 	it('does not target race trophies before level 8', async () => {
 		const { user, dinoz } = await createBotDinoz(7);
 
-		await expect(
-			getBotRaceTrophyProgressionStep(user.id, dinoz.id)
-		).resolves.toBeNull();
+		await expect(getBotRaceTrophyProgressionStep(user.id, dinoz.id)).resolves.toBeNull();
 	});
 
 	it('targets Hippoclamp first at level 8', async () => {
 		const { user, dinoz } = await createBotDinoz(8);
 
-		await expect(
-			getBotRaceTrophyProgressionStep(user.id, dinoz.id)
-		).resolves.toEqual({
+		await expect(getBotRaceTrophyProgressionStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'move',
 			placeId: PlaceEnum.ILE_WAIKIKI
 		});
 
-		await expect(
-			getOrAssignBotProgressionGoal(user.id, dinoz.id)
-		).resolves.toBe(BotProgressionGoal.HIPPOCLAMP_TROPHY);
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(BotProgressionGoal.HIPPOCLAMP_TROPHY);
 	});
 
 	it('targets Pteroz after obtaining the Hippoclamp trophy', async () => {
 		const { user, dinoz } = await createBotDinoz(8);
 		await addReward(user.id, Reward.HIPPO);
 
-		await expect(
-			getBotRaceTrophyProgressionStep(user.id, dinoz.id)
-		).resolves.toEqual({
+		await expect(getBotRaceTrophyProgressionStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'move',
 			placeId: PlaceEnum.PENTES_DE_BASALTE
 		});
 
-		await expect(
-			getOrAssignBotProgressionGoal(user.id, dinoz.id)
-		).resolves.toBe(BotProgressionGoal.PTEROZ_TROPHY);
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(BotProgressionGoal.PTEROZ_TROPHY);
 	});
 
 	it('targets Rocky at level 13 after the first two trophies', async () => {
@@ -85,17 +75,13 @@ describe('bot race trophy progression', () => {
 		await addReward(user.id, Reward.HIPPO);
 		await addReward(user.id, Reward.PTEROZ);
 
-		await expect(
-			getBotRaceTrophyProgressionStep(user.id, dinoz.id)
-		).resolves.toEqual({
+		await expect(getBotRaceTrophyProgressionStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'dialog',
 			dialogId: 'strange_rocky',
 			preferredLinkIds: ['fight']
 		});
 
-		await expect(
-			getOrAssignBotProgressionGoal(user.id, dinoz.id)
-		).resolves.toBe(BotProgressionGoal.ROCKY_TROPHY);
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(BotProgressionGoal.ROCKY_TROPHY);
 	});
 
 	it('moves on from Rocky once all three shop trophies are owned', async () => {
@@ -122,9 +108,7 @@ describe('bot race trophy progression', () => {
 			}
 		});
 
-		await expect(
-			getOrAssignBotProgressionGoal(user.id, dinoz.id)
-		).resolves.toBe(BotProgressionGoal.HIPPOCLAMP_TROPHY);
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(BotProgressionGoal.HIPPOCLAMP_TROPHY);
 	});
 
 	it('does not send a follower alone to unlock a trophy', async () => {
@@ -140,9 +124,6 @@ describe('bot race trophy progression', () => {
 			data: { leaderId: leader.id }
 		});
 
-		await expect(
-			getBotRaceTrophyProgressionStep(user.id, follower.id)
-		).resolves.toBeNull();
+		await expect(getBotRaceTrophyProgressionStep(user.id, follower.id)).resolves.toBeNull();
 	});
-
 });

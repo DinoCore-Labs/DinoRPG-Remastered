@@ -28,10 +28,7 @@ export async function canBotBuyAnotherDinoz(userId: string): Promise<boolean> {
 			},
 			dinoz: {
 				where: {
-					OR: [
-						{ state: null },
-						{ state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }
-					]
+					OR: [{ state: null }, { state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }]
 				},
 				select: { id: true }
 			}
@@ -65,10 +62,7 @@ export async function buyBotDinoz(userId: string) {
 	const currentDinozCount = await prisma.dinoz.count({
 		where: {
 			userId,
-			OR: [
-				{ state: null },
-				{ state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }
-			]
+			OR: [{ state: null }, { state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }]
 		}
 	});
 	const reserve = getBotDinozPurchaseReserve(currentDinozCount);

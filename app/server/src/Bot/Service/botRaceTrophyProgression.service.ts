@@ -74,9 +74,7 @@ export async function getBotRaceTrophyProgressionStep(
 	}
 
 	const rewardIds = new Set(dinoz.user.rewards.map(reward => reward.rewardId));
-	const target = TROPHY_TARGETS.find(
-		entry => dinoz.level >= entry.minLevel && !rewardIds.has(entry.rewardId)
-	);
+	const target = TROPHY_TARGETS.find(entry => dinoz.level >= entry.minLevel && !rewardIds.has(entry.rewardId));
 
 	if (!target) {
 		return null;

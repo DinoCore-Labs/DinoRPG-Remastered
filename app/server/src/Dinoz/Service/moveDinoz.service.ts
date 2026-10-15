@@ -304,11 +304,7 @@ export async function moveDinozForUserUnlocked({
 	return fight;
 }
 
-export async function moveDinozForUser(
-	userId: string,
-	input: MoveDinozInput,
-	log?: { error: Function }
-) {
+export async function moveDinozForUser(userId: string, input: MoveDinozInput, log?: { error: Function }) {
 	return withUserGameplayLock(userId, () =>
 		moveDinozForUserUnlocked({
 			...input,

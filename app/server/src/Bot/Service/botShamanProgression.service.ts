@@ -50,12 +50,8 @@ export async function getBotShamanProgressionStep(
 		return SHAMAN_CORE_MISSIONS.has(activeMission.missionKey) ? null : null;
 	}
 
-	const hasInit1 = dinoz.missions.some(
-		mission => mission.missionKey === 'init1' && mission.isCompleted
-	);
-	const hasInit2 = dinoz.missions.some(
-		mission => mission.missionKey === 'init2' && mission.isCompleted
-	);
+	const hasInit1 = dinoz.missions.some(mission => mission.missionKey === 'init1' && mission.isCompleted);
+	const hasInit2 = dinoz.missions.some(mission => mission.missionKey === 'init2' && mission.isCompleted);
 	if (hasInit2) return null;
 
 	if (dinoz.placeId !== PlaceEnum.FOSSELAVE) {

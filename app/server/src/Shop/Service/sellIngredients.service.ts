@@ -25,8 +25,17 @@ type SellIngredientBody = {
 	}>;
 };
 
+type SellIngredientsOptions = {
+	log?: {
+		error: Function;
+		info?: Function;
+	};
+	requestId?: string;
+};
+
 const normalizeIngredientsToSell = (ingredients: SellIngredientBody['ingredients']) => {
 	const quantitiesByItemId = new Map<number, number>();
+
 	for (const ingredient of ingredients) {
 		if (
 			!Number.isInteger(ingredient.itemId) ||
@@ -36,13 +45,18 @@ const normalizeIngredientsToSell = (ingredients: SellIngredientBody['ingredients
 		) {
 			throw new ExpectedError('wrongQuantity');
 		}
+
 		const currentQuantity = quantitiesByItemId.get(ingredient.itemId) ?? 0;
+
 		const nextQuantity = currentQuantity + ingredient.quantity;
+
 		if (!Number.isSafeInteger(nextQuantity)) {
 			throw new ExpectedError('wrongQuantity');
 		}
+
 		quantitiesByItemId.set(ingredient.itemId, nextQuantity);
 	}
+
 	return Array.from(quantitiesByItemId.entries()).map(([itemId, quantity]) => ({
 		itemId,
 		quantity
@@ -53,27 +67,31 @@ export async function sellIngredientsToItinerantForUser(
 	userId: string,
 	dinozId: number,
 	input: SellIngredientBody['ingredients'],
-	log?: { error: Function }
+	options: SellIngredientsOptions = {}
 ): Promise<{ gold: number }> {
 	const ingredients = normalizeIngredientsToSell(input);
 
 	const playerIngredients = await getUserIngredientDataRequest(userId);
+
 	if (!playerIngredients) {
 		throw new ExpectedError(`Player ${userId} doesn't exist.`);
 	}
 
-	// Lock negative / zero quantities
-	if (ingredients.some(i => i.quantity <= 0)) {
+	if (ingredients.some(ingredient => ingredient.quantity <= 0)) {
 		throw new ExpectedError('wrongQuantity');
 	}
 
 	const player = await getDinozFromItinerantShop(dinozId, userId);
+
 	if (!player) {
 		throw new ExpectedError(`Player ${userId} doesn't exist`);
 	}
 
 	const itinerant = await getSpecificSecret('itinerant');
-	if (!itinerant) throw new ExpectedError(`No itinerant merchant place found.`);
+
+	if (!itinerant) {
+		throw new ExpectedError(`No itinerant merchant place found.`);
+	}
 
 	const conditionContext = buildConditionContext(player, dinozId, defaultConditionKeyMaps);
 
@@ -81,7 +99,7 @@ export async function sellIngredientsToItinerantForUser(
 		.filter(shop => shop.type === ShopType.ITINERANT)
 		.find(shop => checkCondition(shop.condition, conditionContext));
 
-	if (!itinerantShop || !player.dinoz.some(d => d.placeId === Number(itinerant.value))) {
+	if (!itinerantShop || !player.dinoz.some(dinoz => dinoz.placeId === Number(itinerant.value))) {
 		throw new ExpectedError(`This dinoz cannot access itinerant shop`);
 	}
 
@@ -89,10 +107,10 @@ export async function sellIngredientsToItinerantForUser(
 		throw new ExpectedError(`Wrong shop returned`);
 	}
 
-	// Validate all ingredients + map
-	const mappedIngredient = ingredients.map(i => {
-		const playerQuantity = player.ingredients.find(ing => ing.ingredientId === i.itemId);
-		const itemToMap = itinerantShop.listItemsSold.find(a => a.id === i.itemId);
+	const mappedIngredient = ingredients.map(ingredient => {
+		const playerQuantity = player.ingredients.find(entry => entry.ingredientId === ingredient.itemId);
+
+		const itemToMap = itinerantShop.listItemsSold.find(item => item.id === ingredient.itemId);
 
 		if (!playerQuantity || !itemToMap) {
 			throw new ExpectedError(`Player doesn't have this item in stock.`);
@@ -100,7 +118,7 @@ export async function sellIngredientsToItinerantForUser(
 
 		return {
 			...itemToMap,
-			quantity: i.quantity,
+			quantity: ingredient.quantity,
 			playerQuantity: playerQuantity.quantity
 		};
 	});
@@ -114,24 +132,27 @@ export async function sellIngredientsToItinerantForUser(
 		totalGold: number;
 	}> = [];
 
-	for (const ingre of mappedIngredient) {
-		if (!ingre.id || !ingre.price) throw new ExpectedError(`Undefined ingredient`);
-		if (ingre.playerQuantity - ingre.quantity < 0) {
+	for (const ingredient of mappedIngredient) {
+		if (!ingredient.id || !ingredient.price) {
+			throw new ExpectedError(`Undefined ingredient`);
+		}
+
+		if (ingredient.playerQuantity - ingredient.quantity < 0) {
 			throw new ExpectedError(`You cannot have less than 0 of this item.`);
 		}
 
-		const totalGold = ingre.price * ingre.quantity;
+		const totalGold = ingredient.price * ingredient.quantity;
 
 		gold += totalGold;
 
 		soldIngredients.push({
-			ingredientId: ingre.id,
-			quantity: ingre.quantity,
-			unitPrice: ingre.price,
+			ingredientId: ingredient.id,
+			quantity: ingredient.quantity,
+			unitPrice: ingredient.price,
 			totalGold
 		});
 
-		await decreaseIngredientQuantity(userId, ingre.id, ingre.quantity);
+		await decreaseIngredientQuantity(userId, ingredient.id, ingredient.quantity);
 	}
 
 	const updated = await addMoney(userId, gold);
@@ -140,7 +161,7 @@ export async function sellIngredientsToItinerantForUser(
 		safeCreateGameLog(
 			{
 				type: GameLogType.IngredientSold,
-				userId: userId,
+				userId,
 				dinozId,
 				values: [String(sold.quantity), String(sold.ingredientId), String(sold.totalGold)],
 				metadata: {
@@ -152,33 +173,37 @@ export async function sellIngredientsToItinerantForUser(
 					reason: 'ITINERANT_SHOP_SELL'
 				}
 			},
-			log
+			options.log
 		);
 	}
 
-	req.log.info(
+	options.log?.info?.(
 		{
 			category: 'economy',
 			action: 'ingredients_sold',
-			userId: authed.id,
+			userId,
 			dinozId,
 			shopId: itinerantShop.shopId,
 			ingredientTypes: soldIngredients.length,
 			goldReceived: gold,
-			requestId: req.id
+			requestId: options.requestId
 		},
 		'Ingredients sold to itinerant merchant'
 	);
-	return { gold: updated.amount };
+
+	return {
+		gold: updated.amount
+	};
 }
 
 export async function sellIngredient(
-	req: FastifyRequest<{ Params: DinozParams; Body: SellIngredientBody }>
+	req: FastifyRequest<{
+		Params: DinozParams;
+		Body: SellIngredientBody;
+	}>
 ): Promise<{ gold: number }> {
-	return sellIngredientsToItinerantForUser(
-		req.user.id,
-		Number(req.params.dinozId),
-		req.body.ingredients,
-		req.log
-	);
+	return sellIngredientsToItinerantForUser(req.user.id, Number(req.params.dinozId), req.body.ingredients, {
+		log: req.log,
+		requestId: req.id
+	});
 }

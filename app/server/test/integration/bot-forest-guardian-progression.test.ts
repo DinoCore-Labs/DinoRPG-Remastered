@@ -34,9 +34,7 @@ describe('bot forest guardian progression', () => {
 		});
 		await addStatus(dinoz.id, DinozStatusId.FLIPPERS);
 
-		await expect(
-			getBotForestGuardianProgressionStep(user.id, dinoz.id)
-		).resolves.toEqual({
+		await expect(getBotForestGuardianProgressionStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'dialog',
 			dialogId: 'forest_guardian',
 			preferredLinkIds: ['shake', 'item', 'missions']
@@ -65,9 +63,7 @@ describe('bot forest guardian progression', () => {
 			}
 		});
 
-		await expect(
-			getBotForestGuardianProgressionStep(user.id, dinoz.id)
-		).resolves.toBeNull();
+		await expect(getBotForestGuardianProgressionStep(user.id, dinoz.id)).resolves.toBeNull();
 	});
 
 	it('stops the forest guardian chapter after flowering branch is obtained', async () => {
@@ -83,8 +79,6 @@ describe('bot forest guardian progression', () => {
 		await addStatus(dinoz.id, DinozStatusId.FLIPPERS);
 		await addStatus(dinoz.id, DinozStatusId.FLOWERING_BRANCH);
 
-		await expect(
-			getBotForestGuardianProgressionStep(user.id, dinoz.id)
-		).resolves.toBeNull();
+		await expect(getBotForestGuardianProgressionStep(user.id, dinoz.id)).resolves.toBeNull();
 	});
 });

@@ -30,9 +30,7 @@ describe('bot legacy intro repair', () => {
 			canRename: false
 		});
 
-		await expect(
-			getBotLegacyIntroRepairStep(user.id, dinoz.id)
-		).resolves.toEqual({
+		await expect(getBotLegacyIntroRepairStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'move',
 			placeId: PlaceEnum.PORT_DE_PRECHE
 		});
@@ -69,9 +67,7 @@ describe('bot legacy intro repair', () => {
 			}
 		});
 
-		await expect(
-			getBotLegacyIntroRepairStep(user.id, dinoz.id)
-		).resolves.toEqual({
+		await expect(getBotLegacyIntroRepairStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'repair_taurus'
 		});
 
@@ -87,8 +83,6 @@ describe('bot legacy intro repair', () => {
 			})
 		).toBe(1);
 
-		await expect(
-			getBotLegacyIntroRepairStep(user.id, dinoz.id)
-		).resolves.toBeNull();
+		await expect(getBotLegacyIntroRepairStep(user.id, dinoz.id)).resolves.toBeNull();
 	});
 });

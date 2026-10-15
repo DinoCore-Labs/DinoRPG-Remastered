@@ -59,15 +59,7 @@ export async function getBotKorgonProgressionStep(
 		return {
 			type: 'dialog',
 			dialogId: 'dian_korgsey',
-			preferredLinkIds: [
-				'korgons',
-				'why',
-				'wood',
-				'tame',
-				'interest',
-				'service',
-				'missions'
-			]
+			preferredLinkIds: ['korgons', 'why', 'wood', 'tame', 'interest', 'service', 'missions']
 		};
 	}
 

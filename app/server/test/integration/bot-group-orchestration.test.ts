@@ -1,7 +1,12 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { createBotGroup, getBotGroupPlan, getBotUngroupPlan, ungroupBotDinoz } from '../../src/Bot/Service/botGroup.service.js';
+import {
+	createBotGroup,
+	getBotGroupPlan,
+	getBotUngroupPlan,
+	ungroupBotDinoz
+} from '../../src/Bot/Service/botGroup.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';

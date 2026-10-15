@@ -95,9 +95,7 @@ export async function getBotMarketOfferPlan(userId: string): Promise<BotMarketOf
 		const ingredient = Object.values(ingredientList).find(entry => entry.ingredientId === owned.ingredientId);
 		if (!ingredient) continue;
 
-		const reserve =
-			getBotIngredientReserve(owned.ingredientId) +
-			(forecast.ingredients.get(owned.ingredientId) ?? 0);
+		const reserve = getBotIngredientReserve(owned.ingredientId) + (forecast.ingredients.get(owned.ingredientId) ?? 0);
 		const quantity = Math.max(0, owned.quantity - reserve);
 		if (quantity <= 0) continue;
 

@@ -1,8 +1,8 @@
 import { actualPlace } from '@dinorpg/core/utils/dinozUtils.js';
 
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
-import { canGoToThisPlace } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { assertTutorialMovementAllowed } from '../../Tutorial/Controller/tutorial.movement.js';
+import { canGoToThisPlace } from '../../utils/dinoz/dinozFiche.mapper.js';
 
 export async function getBotMoveTargets(userId: string, dinozId: number): Promise<number[]> {
 	const user = await getDinozFightDataRequest(dinozId, userId);

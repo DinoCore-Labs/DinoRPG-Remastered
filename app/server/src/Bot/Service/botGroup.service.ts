@@ -1,6 +1,6 @@
-import { prisma } from '../../prisma.js';
 import { makeDinozFollow } from '../../Dinoz/Service/followDinoz.service.js';
 import { makeDinozUnfollow } from '../../Dinoz/Service/unfollowDinoz.service.js';
+import { prisma } from '../../prisma.js';
 import { getBotMissionIntent } from './botMission.service.js';
 
 export async function getBotGroupPlan(userId: string): Promise<{ leaderId: number; followerId: number } | null> {
@@ -59,7 +59,6 @@ export async function createBotGroup(userId: string): Promise<boolean> {
 	return true;
 }
 
-
 export async function getBotUngroupPlan(userId: string): Promise<number | null> {
 	const followers = await prisma.dinoz.findMany({
 		where: {
@@ -78,12 +77,7 @@ export async function getBotUngroupPlan(userId: string): Promise<number | null> 
 		const intent = await getBotMissionIntent(follower.id);
 		if (!intent) continue;
 
-		if (
-			intent.type === 'move' ||
-			intent.type === 'dialog' ||
-			intent.type === 'interact' ||
-			intent.type === 'wait'
-		) {
+		if (intent.type === 'move' || intent.type === 'dialog' || intent.type === 'interact' || intent.type === 'wait') {
 			return follower.id;
 		}
 	}

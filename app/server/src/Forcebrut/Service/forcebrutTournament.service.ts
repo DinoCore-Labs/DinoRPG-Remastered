@@ -426,10 +426,7 @@ export async function fightForcebrutOpponentForUser(userId: string, dinozId: num
 	};
 }
 
-export async function fightForcebrutOpponent(
-	req: FastifyRequest<{ Params: ForcebrutParams }>,
-	reply: FastifyReply
-) {
+export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: ForcebrutParams }>, reply: FastifyReply) {
 	const result = await fightForcebrutOpponentForUser(req.user.id, Number(req.params.id));
 	return reply.send(result);
 }

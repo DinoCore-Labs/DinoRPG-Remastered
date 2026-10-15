@@ -1,9 +1,6 @@
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
-import {
-	MAGNETITE_SCENARIO_KEY,
-	MagnetiteProgression
-} from '@dinorpg/core/models/scenarios/data/magnetiteScenario.js';
+import { MAGNETITE_SCENARIO_KEY, MagnetiteProgression } from '@dinorpg/core/models/scenarios/data/magnetiteScenario.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { getBotMagnetiteProgressionStep } from '../../src/Bot/Service/botMagnetiteProgression.service.js';
@@ -55,9 +52,7 @@ describe('bot Magnetite progression', () => {
 			canRename: false
 		});
 
-		await expect(
-			getBotMagnetiteProgressionStep(user.id, dinoz.id)
-		).resolves.toEqual({
+		await expect(getBotMagnetiteProgressionStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'move',
 			placeId: PlaceEnum.SYPHON_SIFFLEUR
 		});
@@ -74,9 +69,7 @@ describe('bot Magnetite progression', () => {
 		});
 		await setMagnetProgression(user.id, MagnetiteProgression.TALK_TO_KING);
 
-		await expect(
-			getBotMagnetiteProgressionStep(user.id, dinoz.id)
-		).resolves.toMatchObject({
+		await expect(getBotMagnetiteProgressionStep(user.id, dinoz.id)).resolves.toMatchObject({
 			type: 'dialog',
 			dialogId: 'rocky_king_magnet1'
 		});
@@ -93,18 +86,14 @@ describe('bot Magnetite progression', () => {
 		});
 		await setMagnetProgression(user.id, MagnetiteProgression.PREPARE_POTION);
 
-		await expect(
-			getBotMagnetiteProgressionStep(user.id, dinoz.id)
-		).resolves.toEqual({
+		await expect(getBotMagnetiteProgressionStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'move',
 			placeId: PlaceEnum.MINES_DE_CORAIL
 		});
 
 		await addStatus(dinoz.id, DinozStatusId.CORAIL);
 
-		await expect(
-			getBotMagnetiteProgressionStep(user.id, dinoz.id)
-		).resolves.toEqual({
+		await expect(getBotMagnetiteProgressionStep(user.id, dinoz.id)).resolves.toEqual({
 			type: 'move',
 			placeId: PlaceEnum.GORGES_PROFONDES
 		});
@@ -115,9 +104,7 @@ describe('bot Magnetite progression', () => {
 			data: { placeId: PlaceEnum.GORGES_PROFONDES }
 		});
 
-		await expect(
-			getBotMagnetiteProgressionStep(user.id, dinoz.id)
-		).resolves.toMatchObject({
+		await expect(getBotMagnetiteProgressionStep(user.id, dinoz.id)).resolves.toMatchObject({
 			type: 'dialog',
 			dialogId: 'speleleologue_ice'
 		});
@@ -134,8 +121,6 @@ describe('bot Magnetite progression', () => {
 		});
 		await setMagnetProgression(user.id, MagnetiteProgression.COMPLETED);
 
-		await expect(
-			getBotMagnetiteProgressionStep(user.id, dinoz.id)
-		).resolves.toBeNull();
+		await expect(getBotMagnetiteProgressionStep(user.id, dinoz.id)).resolves.toBeNull();
 	});
 });

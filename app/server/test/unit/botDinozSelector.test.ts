@@ -3,16 +3,18 @@ import { describe, expect, it } from 'vitest';
 
 import { chooseBestBotDinozForActivity } from '../../src/Bot/Service/botDinozSelector.service.js';
 
-function makeDinoz(input: Partial<{
-	id: number;
-	level: number;
-	life: number;
-	maxLife: number;
-	leaderId: number | null;
-	followers: { id: number }[];
-	skills: { skillId: number }[];
-	items: { itemId: number }[];
-}> = {}) {
+function makeDinoz(
+	input: Partial<{
+		id: number;
+		level: number;
+		life: number;
+		maxLife: number;
+		leaderId: number | null;
+		followers: { id: number }[];
+		skills: { skillId: number }[];
+		items: { itemId: number }[];
+	}> = {}
+) {
 	return {
 		id: input.id ?? 1,
 		level: input.level ?? 1,

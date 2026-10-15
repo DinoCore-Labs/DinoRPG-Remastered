@@ -31,11 +31,7 @@ const FORCEBRUT_POLICY: Record<
 	}
 };
 
-export async function canBotFightForcebrut(
-	userId: string,
-	dinozId: number,
-	strategy: BotStrategy
-): Promise<boolean> {
+export async function canBotFightForcebrut(userId: string, dinozId: number, strategy: BotStrategy): Promise<boolean> {
 	const dinoz = await prisma.dinoz.findFirst({
 		where: { id: dinozId, userId },
 		select: {

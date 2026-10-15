@@ -4,9 +4,8 @@ import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { BotStrategy } from '../../../prisma/index.js';
-
-import { getBotForcebrutUnlockStep } from '../../src/Bot/Service/botForcebrutProgression.service.js';
 import { canBotFightForcebrut } from '../../src/Bot/Service/botForcebrut.service.js';
+import { getBotForcebrutUnlockStep } from '../../src/Bot/Service/botForcebrutProgression.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
@@ -141,12 +140,8 @@ describe('bot Forcebrut progression', () => {
 			}
 		});
 
-		await expect(
-			canBotFightForcebrut(user.id, dinoz.id, BotStrategy.BALANCED)
-		).resolves.toBe(false);
-		await expect(
-			canBotFightForcebrut(user.id, dinoz.id, BotStrategy.FIGHTER)
-		).resolves.toBe(true);
+		await expect(canBotFightForcebrut(user.id, dinoz.id, BotStrategy.BALANCED)).resolves.toBe(false);
+		await expect(canBotFightForcebrut(user.id, dinoz.id, BotStrategy.FIGHTER)).resolves.toBe(true);
 	});
 
 	it('avoids Forcebrut when health is too low or the opponent is too strong', async () => {
@@ -188,9 +183,6 @@ describe('bot Forcebrut progression', () => {
 			}
 		});
 
-		await expect(
-			canBotFightForcebrut(user.id, dinoz.id, BotStrategy.BALANCED)
-		).resolves.toBe(false);
+		await expect(canBotFightForcebrut(user.id, dinoz.id, BotStrategy.BALANCED)).resolves.toBe(false);
 	});
-
 });

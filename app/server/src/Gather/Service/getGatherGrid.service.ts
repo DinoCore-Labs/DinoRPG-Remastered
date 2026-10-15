@@ -19,12 +19,7 @@ type GetGatherGridParams = {
 	type: string;
 };
 
-export async function getGatherGrid(
-	userId: string,
-	dinozId: number,
-	requestedType: string
-): Promise<GatherPublicGrid> {
-
+export async function getGatherGrid(userId: string, dinozId: number, requestedType: string): Promise<GatherPublicGrid> {
 	const user = await getDinozGatherData(dinozId, userId);
 	if (!user) {
 		throw new ExpectedError('userNotFound', { params: { userId: userId } });

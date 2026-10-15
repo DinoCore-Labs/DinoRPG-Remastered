@@ -43,9 +43,7 @@ export async function getBotSkillStatePlan(
 	});
 	if (!dinoz) return [];
 
-	const hasStrategyStatus = dinoz.status.some(
-		status => status.statusId === DinozStatusId.STRATEGY_IN_130_LESSONS
-	);
+	const hasStrategyStatus = dinoz.status.some(status => status.statusId === DinozStatusId.STRATEGY_IN_130_LESSONS);
 	if (!hasStrategyStatus) return [];
 
 	const energyBudget = BOT_SKILL_ENERGY_BUDGET[strategy];

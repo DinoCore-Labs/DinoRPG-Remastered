@@ -3,10 +3,7 @@ import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { BotStrategy } from '../../../prisma/index.js';
-import {
-	getBotSkillStatePlan,
-	prepareBotSkillsForCombat
-} from '../../src/Bot/Service/botSkillStrategy.service.js';
+import { getBotSkillStatePlan, prepareBotSkillsForCombat } from '../../src/Bot/Service/botSkillStrategy.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
@@ -47,9 +44,7 @@ describe('bot skill strategy', () => {
 		});
 		await addSkill(dinoz.id, Skill.METEORES, false);
 
-		await expect(
-			getBotSkillStatePlan(user.id, dinoz.id, BotStrategy.FIGHTER)
-		).resolves.toEqual([]);
+		await expect(getBotSkillStatePlan(user.id, dinoz.id, BotStrategy.FIGHTER)).resolves.toEqual([]);
 	});
 
 	it('enables expensive activatable skills for fighter bots', async () => {
@@ -64,18 +59,14 @@ describe('bot skill strategy', () => {
 		await addStatus(dinoz.id, DinozStatusId.STRATEGY_IN_130_LESSONS);
 		await addSkill(dinoz.id, Skill.METEORES, false);
 
-		await expect(
-			getBotSkillStatePlan(user.id, dinoz.id, BotStrategy.FIGHTER)
-		).resolves.toEqual([
+		await expect(getBotSkillStatePlan(user.id, dinoz.id, BotStrategy.FIGHTER)).resolves.toEqual([
 			{
 				skillId: Skill.METEORES,
 				state: true
 			}
 		]);
 
-		await expect(
-			prepareBotSkillsForCombat(user.id, dinoz.id, BotStrategy.FIGHTER)
-		).resolves.toBe(1);
+		await expect(prepareBotSkillsForCombat(user.id, dinoz.id, BotStrategy.FIGHTER)).resolves.toBe(1);
 
 		const updated = await prisma.dinozSkills.findUniqueOrThrow({
 			where: {
@@ -116,9 +107,7 @@ describe('bot skill strategy', () => {
 			])
 		);
 
-		await expect(
-			prepareBotSkillsForCombat(user.id, dinoz.id, BotStrategy.GATHERER)
-		).resolves.toBe(2);
+		await expect(prepareBotSkillsForCombat(user.id, dinoz.id, BotStrategy.GATHERER)).resolves.toBe(2);
 
 		const skills = await prisma.dinozSkills.findMany({
 			where: { dinozId: dinoz.id },

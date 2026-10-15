@@ -8,12 +8,7 @@ import { canChangeSkillState, knowSkillId } from '../../utils/dinoz/dinozFiche.m
 type Params = { id: string };
 type Body = { skillId: string | number; skillState: boolean };
 
-export async function setDinozSkillStateForUser(
-	userId: string,
-	dinozId: number,
-	skillId: number,
-	skillState: boolean
-) {
+export async function setDinozSkillStateForUser(userId: string, dinozId: number, skillId: number, skillState: boolean) {
 	if (!Number.isFinite(dinozId)) {
 		throw new ExpectedError('invalidId');
 	}
