@@ -2,6 +2,12 @@
 
 ## 🔹 Core
 
+## 0.43.0
+
+### Minor Changes
+
+- 033fce5: Add the Monster Hunt event system with configurable editions, Dark World monster invasions, scoring and personal rewards, final ranking rewards, live rankings, lifecycle news, and admin management.
+
 ## 0.42.0
 
 ### Minor Changes
@@ -728,6 +734,17 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.46.0
+
+### Minor Changes
+
+- 033fce5: Add the Monster Hunt event system with configurable editions, Dark World monster invasions, scoring and personal rewards, final ranking rewards, live rankings, lifecycle news, and admin management.
+
+### Patch Changes
+
+- Updated dependencies [033fce5]
+  - @dinorpg/core@0.43.0
 
 ## 0.45.0
 
@@ -1713,6 +1730,12 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.44.0
+
+### Minor Changes
+
+- 033fce5: Add the Monster Hunt event system with configurable editions, Dark World monster invasions, scoring and personal rewards, final ranking rewards, live rankings, lifecycle news, and admin management.
 
 ## 0.43.0
 
