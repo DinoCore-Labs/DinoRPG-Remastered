@@ -5643,128 +5643,128 @@
 		"skully": {
 			"skul1": {
 				"name": "Prologue",
-				"begin": "Mouldeur a été touché par ma bonnédiction, alors que l'on faisait de vieux os ensemble, il m'a tout à coup oubliée et s'en est allé loin d'ici, le ruffian ! Il a sûrement dû donner des nouvelles à son neveu le ptit'Joe... Va le voir et tiens moi au courant !",
+				"begin": "Years ago when we were living together, Moulder was affected by my curse. He forgot me instantly. It's not my fault, I have no way of controlling the curse. After he forgot me, Moulder moved far, far away, the ruffian! I'm sure he's still in contact with his nephew Little Joe. Go and see him, make sure to keep me informed!",
 				"papyJoe": {
-					"name": "Papy 'Ptit' Joe",
-					"text": "Oncle Mouldeur ? Ohlala ca fait des années que je n'ai pas entendu parler de lui... Si tu veux en savoir plus, ramène-moi trois merguez du Grand Tout Chaud !",
-					"text2": "Merci ! (crounch crounch) tout ce que je sais, c'est qu'oncle Mouldeur aimait beaucoup sa femme et a laissé un message pour elle gravé sur la Fontaine de Jouvence."
+					"name": "Grandpa Little Joe",
+					"text": "Uncle Moulder? It's been a long time since I've heard from him. If you want to know more, bring me three Goblin Merguez from the Big All-Hot!",
+					"text2": "Thanks! (munch, munch) all I know is that Uncle Moulder loved his wife. He engraved a message for her on the Fountain of Youth."
 				},
-				"giveMerguez": "Donner 3 Merguez",
+				"giveMerguez": "Give 3 Merguez",
 				"message": {
-					"name": "Lire le message",
-					"description": "Dans une des nombreuses gravures de la Fontaine de Jouvence, on peut lire le message suivant : \"Je t'attendrai sur le lieu de notre rencontre\""
+					"name": "Read the Message",
+					"description": "On one of the engravings on the Fountain of Youth, you read the following message: \"I'll be waiting for you at the place we first met\""
 				},
-				"end": "Merci, ce sont de précieuses informations que tu m'as rapporté là ! Mon Mouldeur chéri ne doit pas être très loin, nous serons bientôt réunis !"
+				"end": "Thanks. This information is priceless. My dear Moulder can't be far away, we'll be together again soon!"
 			},
 			"skul2": {
 				"name": "On Moulder's Trail",
-				"begin": "\"Je t'attendrai sur le lieu de notre rencontre\" Oh oh oh oh ! Comme c'est roooomantique mon Mouldeur chéri ! J'espère en tout cas qu'il m'attend encore là-bas ! Vite, rends toi dans ce magnifique lieu aux douces odeurs de nénuphars où nous nous sommes rencontrés, et ramène-moi mon amour !",
+				"begin": "\"I'll be waiting for you at the place we first met\" Oh oh oh oh! My Moulder is so romantic! I hope he's still waiting there for me! Go quickly to the magnificient place filled with the odour of waterillies where we first met and bring me back my love!",
 				"stuckTourist": {
-					"name": "Un Touriste Enlisé",
-					"text": "J'en ai RAZ LE BOL de ce Marais de M...... !!!!! Ca fait trois fois que notre Camping-Car s'enlise, quelle idée à la c... de venir passer des VACANCES DANS UN MARAIS !!! Quoi ? Si j'ai vu un dénommé Mouldeur ? Ah ! oui, il est parti assister à une réunion de l'Amicale des Anguilloz Anonymes ! Fait attention si tu vas là-bas car elles sont du genre susceptible..."
+					"name": "A Stuck Tourist",
+					"text": "I'm sick of this sh... Swamp!!!!! It's the third time our Motor-Home has got stuck here, what a dumb idea to come on VACATION IN A SWAMP!!! What? Have I seen someone called Moulder? Ah! Yes, he was going to an Anonymous Eeloz Association meeting! Be careful is you decide to go too, they can be very touchy..."
 				},
 				"aaa": {
-					"name": "Réunion des A.A.A.",
-					"begin": "Alors que votre Dinoz s'approche, certaines Anguilloz se rendent compte de sa présence et l'attaquent !",
-					"win": "Aprés la défaite des Anguilloz, vous observez des traces de pas qui s'éloignent en direction de l'ouest..."
+					"name": "A.E.A. Assembly",
+					"begin": "As you are approaching, some Eeloz notice your Dinoz and attack!",
+					"win": "After defeating the Eeloz, you notice some steep tracks heading towards the west..."
 				},
 				"fisherman": {
-					"name": "Pêcheur",
-					"text": "Ça mord bien dans l'coin : les poissons viennent voir les moines qui lévitent... Un gars qui s'appelle Mouldeur ? J'le connais bien : il est parti pêcher dans la baie aux Piranhoz. Fais gaffe mon gars, ça mordille ces saletés...",
-					"text2": "Mouldeur ? Il a dit qu'il retournait attendre sa femme au Marais... Pauv'gars, ça fait des années qu'il ne l'a pas revu... Remarquez à sa place je serais plutôt content..."
+					"name": "Fisherman",
+					"text": "This is a good place to fish. Fish come here to see the levitating monks... A guy named Moulder? I know him well: He went to Piranhoz Bay to go fishing. Take care man, those guys bite.",
+					"text2": "Moulder? He left, he told me he was going back to wait for his wife at the Swamp. Poor guy, he hasn't seen her in years. If I were him I'd be happy about that! Ha Ha!"
 				},
 				"piranhozBay": {
-					"name": "Baie aux Piranhoz",
-					"begin": "A peine vous entrez dans la baie que de nombreux Piranhoz se précipitent pour vous mordiller... Qui peut bien avoir envie de venir pêcher ici ???",
-					"win": "Une fois les Piranhoz vaincus, vous regardez aux alentours. Si Mouldeur est venu pêcher ici, il est déjà reparti..."
+					"name": "Piranhoz Bay",
+					"begin": "After entering the bay, many Piranhoz rush to bite you. Who would want to fish here???",
+					"win": "Once you've defeated the Piranhoz, you take a look around. If Moulder was fishing here, he's certainly not here anymore."
 				},
 				"swampSign": {
-					"name": "Panneau Indicateur",
-					"description": "Un panneau semble avoir été récemment dressé près d'un parterre de nénuphars. On peut y lire le message suivant : \"Marre des moustiques, rejoins moi là où je t'ai déclaré ma flamme. Mouldeur.\""
+					"name": "Sign",
+					"description": "A sign seems to have been placed near a bed of waterlilies. The sign reads: \"I'm sick of these mosquitos, meet me where I declared my love for you. Moulder x.\""
 				},
-				"end": "Ooohh oh oh oh oh ! Mouldeur chéri ! Je te sens plus proche de moi que jamais !"
+				"end": "Oh! My dear Moulder! I feel closer to you than ever!"
 			},
 			"skul3": {
 				"name": "Miss Bao",
-				"begin": "Oh oh oh ! J'ai pensé à quelque chose de... problématique. Même si je retrouve Mouldeur, il va oublier à nouveau nos retrouvailles et repartir m'attendre quelque part. Il faut absolument que tu trouves une solution à ce problème avant d'aller voir Mouldeur. Va trouver cette chère Mademoiselle Bao, elle aura certainement une solution !",
+				"begin": "Oh no! I've just realised something that could be a problem. Even if I find Moulder, he'll forget meeting me again and will go somewhere else to wait for me. You must find a solution before I see Moulder. Go and see Miss Bao, she should have a solution!",
 				"baoBob": {
-					"name": "Mademoiselle Bao ???",
-					"text": "Quoi ??? Mademoiselle Bao ?? Non mais... tu me prends pour qui au juste ? .......... Si tu cherches ma soeur, et bien elle se trouve en ce moment auprès du petit fils de l'ArchiDorogon : \"le Vénérable\" comme il aime se faire appeler maintenant... D'ailleurs si un jour son père l'apprend, il va passer un sale quart-d'heure..."
+					"name": "Miss Bao???",
+					"text": "What??? Miss Bao?? No ... don't you know who I am? .......... If you're looking for my sister, she's with the grandson of the ArchDorogon: \"The Venerable\" as he likes to be called nowadays. If his father finds out that he likes to be called that, there'll be trouble."
 				},
 				"baoBabe": {
 					"name": "Miss Bao",
-					"text": "Quoi ??? Mademoiselle Bao ?? Mais voyons.... celà fait une éternité que l'on ne m'a pas appellée comme celà. Je t'en prie, jeune homme, utilise mon prénom, appelle-moi Babe..."
+					"text": "What??? Miss Bao?? It's been years since anybody has called me that. Please call me by my first name young man, Babe."
 				},
 				"baoBabe2": {
 					"name": "Bao Babe",
-					"text": "Tu cherches mon conseil ? Ecoute, je dois d'abord finir ma partie de dames avec le petit-fils de l'ArchiDorogon. Son grand-père m'a fait promettre de venir lui tenir compagnie de temps-en-temps... Que dirais-tu d'aller chasser quelques gobelins en attendant que je finisse ?",
-					"text2": "Voilà ! J'ai fini ! Je l'ai battu à plate couture hi hi hi ! J'adooore le mettre en colère, il est tellement mignon quand ses narines commencent à souffler de la vapeur d'eau ! Mais tu voulais me demander un conseil ?",
-					"text3": ".......... Oh ? Vraiment ? ..... La solution à ce genre de bonnédiction est très simple : il suffit que quelqu'un garde une partie de Skully toujours avec lui pour ne rien oublier... A bientôt, jeune homme !"
+					"text": "If you want my advice, I'm afraid you're going to have to wait for a while. I need to finish my game of Draughts with the ArchDorogon's grandson. His grandfather made me promise to visit his grandson from time to time to keep him company. Why don't you go and hunt some goblins whilst you wait?",
+					"text2": "Finished! I beat him hands down. Hi hi hi! I love to make him lose his temper, he's so cute when his nostrils flare and start to blow vapour! You said you needed some advice?",
+					"text3": "Right. The solution to this kind of problem is really simple: Moulder must keep a piece of Skully with him at all times so that he never forgets her. See you later young man!"
 				},
-				"goblinKill": "Gobelins",
-				"end": "Oh oh oh oh oh ! En voilà une bonne solution pour ma bonnédiction ! Tiens, prends ça, de cette façon tu n'oublieras plus ni le chemin du Cimetière, ni ta chère Skully oh oh oh !"
+				"goblinKill": "Goblins",
+				"end": "Oh! Here's a nice solution for my problem! Here, take this, now you'll never forget the way to the cemetary, nor your dear Skully!"
 			},
 			"skul4": {
 				"name": "The Annoying Tourists",
-				"begin": "\"Rejoins moi là où je t'ai déclaré ma flamme\" Oh oh oh oh ! Mon Mouldeur a vraiment un coeur en oooor ! Je n'oublierai jamais ce lieu délicieux où il nous avait emmenés, alors que nos os étaient encore tous jeunes... Et ce moment où il m'a tendu une merguez bien grillée et m'a demandé de l'épouser !",
+				"begin": "\"Meet me where I declared my love for you\" Oh oh oh oh! My dear Moulder has a heart of gold! I'll never forget the place where he took us, while we were still young. Nor the moment he gave me a well grilled merguez and asked me if I would marry him!",
 				"merguezSeller": {
 					"name": "Merguez Seller",
-					"text": "Un client bizarre ? Oui, j'ai bien vu un type maigrichon qui est venu manger en lançant de grands soupirs... Il est parti se promener dans les ruines. Faites attention, on a des touristes d'un genre un peu particulier en ce moment...",
-					"text2": "Vous avez sauvé Jean-Claude ? Ah !! Merci beaucoup. Ces bandits des steppes génaient vraiment l'émergence du tourisme de masse dans ces ruines. Je ne sais pas comment vous remercier ! .... Mouldeur ? Il a promis de revenir si je lui préparais des crevettes au Napalm, mais je ne connais pas la recette..."
+					"text": "A strange customer? Yeah, there was a thin-looking guy who was here a while ago, he was letting out a lot of sighs. I remember he was on his way to the ruins. Be careful! There are some strange tourists around.",
+					"text2": "You saved Jean-Claude? Ah!! Thanks a lot. Those steppes bandits ruined the Ruins' tourist industry. I don't know how to thank you! Moulder? He promised to come back if I prepared him some Napalm shrimps, but I don't know the recipe."
 				},
 				"visitRuins": {
-					"name": "Visiter les Ruines",
-					"begin": "Que le pouvoir du Bambooz soit avec moi ! Sus aux infidèles !",
-					"win": "Avant de s'écrouler, Barababor vous souffle les mots suivants : \"Nous avons capturé votre ami : il sera emmené en bateau dans nos steppes natales où il sera vendu comme esclave !\""
+					"name": "Visit the Ruins",
+					"begin": "May the Bambooz power be with me! Come on!",
+					"win": "Before collapsing, Barababor whispers the following words: \"We've captured your friend: he will be taken to our native steppes by boat, where he will be sold into slavery!\""
 				},
 				"suspiciousBoat": {
-					"name": "Chercher un Bateau louche",
-					"description": "Après quelques recherches, vous trouvez un Bateau définitivement bizarre sur les quais."
+					"name": "Search for the strange boat",
+					"description": "After searching for a while, you finally find a strange-looking boat that matches your description."
 				},
 				"enterBoat": {
-					"name": "Entrer dans le Bateau",
-					"begin": "Que le pouvoir du Bambooz soit avec moi ! Je vengerais mon frère !!!",
-					"win": "Après avoir vaincu les Bandits, vous libérez un homme ligoté dans le bateau..."
+					"name": "Board the Boat",
+					"begin": "May the Bambooz power be with me! I will avenge my brother!!!",
+					"win": "After defeating the bandits, you free a hostage who was tied-up in the boat..."
 				},
 				"freedMan": {
-					"name": "Homme Libéré",
-					"text": "Mmmerr mmerrciii !! Jejejej'ai eu trtrtrès pepeupeur vous sasavez ! Mouldeur ?? Nonon, je m'apeppelle Jean-Claude... Jeje susuis un ami du vendeur dede merguez ! Mermerci en tout cas de vovotre aide !"
+					"name": "Freed Man",
+					"text": "Thhh Thhaannkksss!! I hahahave hahad fefefear you know! Moulder?? Nono, my nananame is Jean-Claude. I am a friefriend of the mermerguez seller! Ththanks anayway fofor your help!"
 				},
-				"end": "Oh oh oh ! Mouldeur n'est pas très loin, merci beaucoup de ton aide mon jeune ami !"
+				"end": "I can feel Moulder coming closer, thanks a lot for your help my young friend!"
 			},
 			"skul5": {
 				"name": "Napalm Shrimp",
-				"begin": "Des \"Crevettes au Napalm\" ? Oh oh oh oh ! Quel doux souvenir que ce plat délicieux ! Bien, il va falloir que tu me rapportes un certain nombre d'ingrédients pour que je puisse préparer tout cela...",
+				"begin": "\"Napalm Shrimp\"? Oh! That brings back sweet memories, what a delicious dish! You'll have to bring me specific ingredients so that I can properly prepare it.",
 				"skully": {
-					"text": "Bien, tout d'abord, il me faut bien entendu de bonnes crevettes. Tu pourras en trouver au Marché du Dôme Soulaflotte ! Fais-vite !",
-					"text2": "Oh oh oh ! Ma-gni-fi-que ! Ces crevettes sont d'une fraicheur incomparable ! Bon, passons à la suite. Deuxième ingrédient indispensable : du Napalm. Pour en fabriquer il nous faut de la lave de bonne qualité...",
-					"text3": "Oh ! oh oh oh ! Quel superbe Napalm ! Mais la recette ne peut être complète sans que l'on y rajoute un ingrédient ab-so-lu-ment nécessaire... Les poils d'un Korgon bien gras ! Normalement, il devrait y en avoir du coté du Grand Tout Chaud, mais fait attention à ne pas voler le repas de quelqu'un d'autre ou tu pourrais bien le regretter !",
-					"text4": "Oh oh oh oh ! Je touille je touille !!! Et voilà ! Un magnifique plat de Crevettes au Napalm !"
+					"text": "Well, first of all, I need some shrimp. You can find some at the Underwater Dome Market! Go quickly!",
+					"text2": "Oh oh oh! Ma-gni-fi-cient! These shrimp are so fresh! Now that we've got some shrimp, we need to gather the next ingredient. Some Napalm. To make it, we need some good quality lava.",
+					"text3": "Oh! Superb Napalm! But the recipe can't be completed without adding a vitally important ingredient. Some fatty Korgon's hair! You can often find some near the Big All-Hot, but make sure you don't end up stealing someone's dinner or else you'll live to regret it!",
+					"text4": "Stir stir! Here we are! A magnificient dish of Napalm Shrimp!"
 				},
 				"shrimpMerchant": {
-					"name": "Marchand de Crevettes",
-					"text": "Je suis désolé mais suite à des fraudes je n'accepte aucune pièce d'or en paiement de mes crevettes. Il va falloir me ramener 3 Bons du Trésor...",
-					"text2": "Merci, voici vos crevettes ! Bon appétit !"
+					"name": "Shrimp Merchant",
+					"text": "I'm sorry but following recent fraudulent transactions, I no longer accept gold coins as payment for my shrimp. You'll have to bring me 3 Treasury Notes...",
+					"text2": "Thanks, here are your shrimp! Bon appetit!"
 				},
 				"giveTreasureTickets": "Donner 3 Bons du Trésor",
 				"shamanMou": {
-					"text": "Du Napalm ? Uhmm... Pour cela, il va te falloir faire un mélange moitié Lave - moitié Flammèches. On ne manque pas de Lave par ici, alors apporte-moi 5 Boites de Flammèche pour que je te prépare le mélange...",
-					"text2": "A glou ! A glou ! A gadagagou glou ! Et voilà, du Napalm à faible densité tout chaud pour toi...."
+					"text": "Some Napalm? Mmmm ... you'll need to make a mixture of half-lava, half-flamelets. We have loads of lava here, so all you need to get are 5 boxes of Flamelets in order to prepare the mixture.",
+					"text2": "Glou glou! Here you are, some low density Napalm is ready and waiting for you."
 				},
-				"giveFlames": "Donner 5 Flammèches",
+				"giveFlames": "Give 5 Flames",
 				"korgonSearch": {
-					"name": "Chercher un Korgon",
+					"name": "Search for a Korgon",
 					"begin": "Kwwiiiiiiik !",
-					"win": "Vous avez capturé un Korgon bien gras... en espérant qu'il n'était pas destiné au diner de quelqu'un !"
+					"win": "You've captured a fatty Korgon. Let's hope it wasn't someone else's dinner!"
 				},
-				"end": "Merci pour ton aide ! oh oh oh ! Bientôt mes retrouvailles avec mon tendre Mouldeur !"
+				"end": "Thanks for your help! I can't wait to see my dear Moulder again!"
 			},
 			"skuend": {
 				"name": "The Reunion",
-				"begin": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !",
-				"merguezSeller": "Ooooohh !! Il s'agit donc des fameuses crevettes au Napalm ?!? Voyons voir.... uhmm.... cela manque un peu de graisse mais c'est succulent. Nul doute que Mouldeur devrait bientôt se montrer... Mais regarde qui voilà !",
-				"lock": "Discuter avec Mouldeur",
-				"end": "OOooooooh ! oh ! oh oh oh ! Mouldeur est revenu !!! Merci beaucoup !!"
+				"begin": "Your mission has reached it's conclusion. Take the Napalm Shrimp to my dear Moulder. He will recognise my cooking and will come back to me immediately! Oh oh oh! I can't wait for him to return!",
+				"merguezSeller": "Ooooohh!! So these are the famous Napalm Shrimp?!? Let's see ... mmmm ... it's missing a bit of fat but it's still incredibly succulent. Without a doubt Moulder sill arrive soon. Ahhhh! Look who's coming!",
+				"lock": "Talk to Moulder",
+				"end": "Ooooooooooooooohhh! He's back, he's back! My dear Moulder is back!!! Thank you so much for all your help young man!!"
 			}
 		},
 		"madameX": {
