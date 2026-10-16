@@ -1,7 +1,7 @@
 import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
 import { Skill, skillList, uSkillsToPlayerFieldMap } from '@dinorpg/core/models/skills/skillList.js';
 
-import type { User } from '../../../../prisma/index.js';
+import { BotDinozRole, type User } from '../../../../prisma/index.js';
 
 type UniqueSkillField =
 	'leader' | 'engineer' | 'shopKeeper' | 'cooker' | 'merchant' | 'priest' | 'teacher' | 'messie' | 'matelasseur';
@@ -67,7 +67,19 @@ export type BotUniqueSkillDinozProfile = {
 	nbrUpWater: number;
 	nbrUpLightning: number;
 	nbrUpAir: number;
+	role?: BotDinozRole | null;
 };
+
+function getPreferredRoleForUniqueSkill(skillId: Skill): BotDinozRole | null {
+	switch (skillId) {
+		case Skill.LEADER:
+			return BotDinozRole.FIGHTER;
+		case Skill.MARCHAND:
+			return BotDinozRole.GATHERER;
+		default:
+			return null;
+	}
+}
 
 function getElementAffinity(dinoz: BotUniqueSkillDinozProfile, skillId: Skill): number {
 	const element = skillList[skillId]?.element?.[0];
@@ -101,10 +113,12 @@ export function assignBotUniqueSkillTargets(
 		for (const dinoz of cohort) {
 			const assignedCount = assignments.get(dinoz.id)?.length ?? 0;
 			const affinity = getElementAffinity(dinoz, targetSkillId);
+			const preferredRole = getPreferredRoleForUniqueSkill(targetSkillId);
+			const roleBonus = preferredRole !== null && dinoz.role === preferredRole ? 360 : 0;
 
-			// Strongly prefer the Dinoz already progressing in the target element,
-			// but spread account roles instead of stacking every unique skill on one Dinoz.
-			const score = affinity * 12 - assignedCount * 18 - dinoz.id * 0.000001;
+			// Preserve elemental affinity while anchoring strategic account skills
+			// on the Dinoz whose persistent role actually benefits from them.
+			const score = affinity * 12 + roleBonus - assignedCount * 18 - dinoz.id * 0.000001;
 			if (score > bestScore) {
 				bestScore = score;
 				bestDinoz = dinoz;

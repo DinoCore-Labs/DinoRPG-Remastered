@@ -122,10 +122,26 @@ export async function chooseBotLevelUp(
 			nbrUpWood: true,
 			nbrUpWater: true,
 			nbrUpLightning: true,
-			nbrUpAir: true
+			nbrUpAir: true,
+			botMemory: {
+				select: {
+					role: true
+				}
+			}
 		}
 	});
-	const assignments = assignBotUniqueSkillTargets(firstDinoz, missingUniqueSkills);
+	const assignments = assignBotUniqueSkillTargets(
+		firstDinoz.map(entry => ({
+			id: entry.id,
+			nbrUpFire: entry.nbrUpFire,
+			nbrUpWood: entry.nbrUpWood,
+			nbrUpWater: entry.nbrUpWater,
+			nbrUpLightning: entry.nbrUpLightning,
+			nbrUpAir: entry.nbrUpAir,
+			role: entry.botMemory?.role ?? null
+		})),
+		missingUniqueSkills
+	);
 	const assignedUniqueSkills = assignments.get(dinozId) ?? [];
 	const uniqueProgressionWeights = new Map<number, number>(
 		choices.learnableSkills.map(skill => [
