@@ -16,6 +16,7 @@ import type { BotDecision } from './botDecision.service.js';
 import { executeBotDialog } from './botDialog.service.js';
 import { buyBotDinoz } from './botEconomy.service.js';
 import { equipBotDinoz } from './botEquipment.service.js';
+import { clearBotExplorationTarget } from './botExplorationMemory.service.js';
 import { executeBotGather, isBotGatherAction } from './botGather.service.js';
 import { createBotGroup, ungroupBotDinoz } from './botGroup.service.js';
 import { healBotDinoz } from './botHealing.service.js';
@@ -187,6 +188,7 @@ export async function executeBotDecision(userId: string, strategy: BotStrategy, 
 			placeId: decision.targetPlaceId,
 			autoReequip: false
 		});
+		await clearBotExplorationTarget(decision.dinozId);
 		return;
 	}
 

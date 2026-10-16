@@ -15,6 +15,7 @@ import {
 	isBotPreparingSylvenoireRoster
 } from './botEconomy.service.js';
 import { findBotEquipCandidate } from './botEquipment.service.js';
+import { getOrAssignBotExplorationTarget } from './botExplorationMemory.service.js';
 import { canBotFightForcebrut } from './botForcebrut.service.js';
 import { getBotForcebrutUnlockStep } from './botForcebrutProgression.service.js';
 import { getBotForestGuardianProgressionStep } from './botForestGuardianProgression.service.js';
@@ -727,12 +728,18 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		}
 
 		const moveTargets = await getBotMoveTargets(userId, dinoz.id);
+		const dinozRole = dinozRoles.get(dinoz.id) ?? null;
+		const rememberedExplorationTarget =
+			dinozRole === BotDinozRole.EXPLORER
+				? await getOrAssignBotExplorationTarget(userId, dinoz.id, moveTargets)
+				: null;
 		for (const targetPlaceId of moveTargets) {
 			candidates.push({
 				value: { dinozId: dinoz.id, action: 'move', targetPlaceId },
 				weight:
 					movementWeight[strategy] +
-					getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, 'move')
+					getBotDinozRoleActivityBonus(dinozRole, 'move') +
+					(targetPlaceId === rememberedExplorationTarget ? 70 : 0)
 			});
 		}
 
