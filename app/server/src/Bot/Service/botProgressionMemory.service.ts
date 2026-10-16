@@ -181,7 +181,11 @@ export async function getOrAssignBotProgressionGoal(
 			currentGoal === BotProgressionGoal.PTEROZ_TROPHY ||
 			currentGoal === BotProgressionGoal.ROCKY_TROPHY;
 
-		if (currentIsTrophyGoal || role !== BotDinozRole.FIGHTER || !availableTrophyGoal) {
+		if (currentIsTrophyGoal) {
+			if (role === BotDinozRole.FIGHTER || role === null) {
+				return currentGoal;
+			}
+		} else if (role !== BotDinozRole.FIGHTER || !availableTrophyGoal) {
 			return currentGoal;
 		}
 	}

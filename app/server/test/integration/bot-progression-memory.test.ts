@@ -115,4 +115,25 @@ describe('bot progression memory', () => {
 		);
 	});
 
+
+	it('replaces a legacy trophy goal when an explorer should prioritize access progression', async () => {
+		const { user, dinoz } = await createBotWithDinoz('ExplorerLegacyTrophyBot', 8);
+		await prisma.botDinozMemory.create({
+			data: {
+				dinozId: dinoz.id,
+				role: BotDinozRole.EXPLORER,
+				goal: BotProgressionGoal.HIPPOCLAMP_TROPHY
+			}
+		});
+
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(
+			BotProgressionGoal.SHAMAN_STRATEGY
+		);
+
+		const memory = await prisma.botDinozMemory.findUniqueOrThrow({
+			where: { dinozId: dinoz.id }
+		});
+		expect(memory.goal).toBe(BotProgressionGoal.SHAMAN_STRATEGY);
+	});
+
 });
