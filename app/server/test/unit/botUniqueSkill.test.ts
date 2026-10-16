@@ -1,9 +1,10 @@
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { describe, expect, it } from 'vitest';
 
-import { BotDinozRole } from '../../../prisma/index.js';
+import { BotDinozRole, BotRoleObjective } from '../../../prisma/index.js';
 import {
 	assignBotUniqueSkillTargets,
+	getRoleObjectiveSkillWeight,
 	getUniqueProgressionWeight
 } from '../../src/Bot/Service/botUniqueSkill.service.js';
 
@@ -54,4 +55,15 @@ describe('bot unique skill strategy', () => {
 			getUniqueProgressionWeight(Skill.FISSION_ELEMENTAIRE, [Skill.MARCHAND])
 		);
 	});
+
+	it('strongly reinforces the Marchand path while it is the gatherer objective', () => {
+		expect(getRoleObjectiveSkillWeight(Skill.PARATONNERRE, BotRoleObjective.GATHERER_MERCHANT)).toBeGreaterThan(0);
+		expect(getRoleObjectiveSkillWeight(Skill.FISSION_ELEMENTAIRE, BotRoleObjective.GATHERER_MERCHANT)).toBeGreaterThan(0);
+		expect(getRoleObjectiveSkillWeight(Skill.MARCHAND, BotRoleObjective.GATHERER_MERCHANT)).toBeGreaterThan(
+			getRoleObjectiveSkillWeight(Skill.FISSION_ELEMENTAIRE, BotRoleObjective.GATHERER_MERCHANT)
+		);
+		expect(getRoleObjectiveSkillWeight(Skill.FOUILLE, BotRoleObjective.GATHERER_MERCHANT)).toBe(0);
+		expect(getRoleObjectiveSkillWeight(Skill.PARATONNERRE, BotRoleObjective.GATHERER_HARVEST)).toBe(0);
+	});
+
 });

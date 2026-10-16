@@ -2,15 +2,17 @@ import { raceList } from '@dinorpg/core/models/dinoz/raceList.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { BotStrategy } from '../../../../prisma/index.js';
+import { BotRoleObjective, BotStrategy } from '../../../../prisma/index.js';
 import { getDinozForLevelUp } from '../../Level/Controller/getDinozForLevelUp.controller.js';
 import { getDinozLearnableSkills } from '../../Level/Service/getDinozLearnableSkills.service.js';
 import { prisma } from '../../prisma.js';
 import {
 	assignBotUniqueSkillTargets,
 	getMissingBotUniqueSkills,
+	getRoleObjectiveSkillWeight,
 	getUniqueProgressionWeight
 } from './botUniqueSkill.service.js';
+import { getOrAssignBotRoleObjective } from './botRoleObjective.service.js';
 
 const GATHERER_SKILLS = new Set<number>([
 	Skill.FOUILLE,
@@ -33,11 +35,16 @@ const EXPLORER_SKILLS = new Set<number>([
 	Skill.VITALITE
 ]);
 
-function getSkillWeight(skillId: number, strategy: BotStrategy, uniqueProgressionWeight = 0): number {
+function getSkillWeight(
+	skillId: number,
+	strategy: BotStrategy,
+	uniqueProgressionWeight = 0,
+	roleObjectiveWeight = 0
+): number {
 	const skill = skillList[skillId as Skill];
 	if (!skill) return 1;
 
-	let weight = 10 + uniqueProgressionWeight;
+	let weight = 10 + uniqueProgressionWeight + roleObjectiveWeight;
 
 	switch (strategy) {
 		case BotStrategy.FIGHTER:
@@ -63,11 +70,17 @@ function getSkillWeight(skillId: number, strategy: BotStrategy, uniqueProgressio
 function weightedPick(
 	skillIds: number[],
 	strategy: BotStrategy,
-	uniqueProgressionWeights: Map<number, number>
+	uniqueProgressionWeights: Map<number, number>,
+	roleObjectiveWeights: Map<number, number>
 ): number {
 	const entries = skillIds.map(skillId => ({
 		skillId,
-		weight: getSkillWeight(skillId, strategy, uniqueProgressionWeights.get(skillId) ?? 0)
+		weight: getSkillWeight(
+			skillId,
+			strategy,
+			uniqueProgressionWeights.get(skillId) ?? 0,
+			roleObjectiveWeights.get(skillId) ?? 0
+		)
 	}));
 	const total = entries.reduce((sum, entry) => sum + entry.weight, 0);
 	let cursor = Math.random() * total;
@@ -149,6 +162,13 @@ export async function chooseBotLevelUp(
 			getUniqueProgressionWeight(skill.skillId, assignedUniqueSkills)
 		])
 	);
+	const roleObjective = await getOrAssignBotRoleObjective(dinoz.user.id, dinozId);
+	const roleObjectiveWeights = new Map<number, number>(
+		choices.learnableSkills.map(skill => [
+			skill.skillId,
+			getRoleObjectiveSkillWeight(skill.skillId, roleObjective as BotRoleObjective | null)
+		])
+	);
 
 	if (choices.learnableSkills.length > 0) {
 		return {
@@ -156,7 +176,8 @@ export async function chooseBotLevelUp(
 				weightedPick(
 					choices.learnableSkills.map(skill => skill.skillId),
 					strategy,
-					uniqueProgressionWeights
+					uniqueProgressionWeights,
+					roleObjectiveWeights
 				)
 			],
 			tryNumber

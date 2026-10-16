@@ -1,7 +1,7 @@
 import { ElementType } from '@dinorpg/core/models/enums/ElementType.js';
 import { Skill, skillList, uSkillsToPlayerFieldMap } from '@dinorpg/core/models/skills/skillList.js';
 
-import { BotDinozRole, type User } from '../../../../prisma/index.js';
+import { BotDinozRole, BotRoleObjective, type User } from '../../../../prisma/index.js';
 
 type UniqueSkillField =
 	'leader' | 'engineer' | 'shopKeeper' | 'cooker' | 'merchant' | 'priest' | 'teacher' | 'messie' | 'matelasseur';
@@ -58,6 +58,15 @@ export function getUniqueProgressionWeight(skillId: number, missingUniqueSkills:
 	}
 
 	return 0;
+}
+
+export function getRoleObjectiveSkillWeight(skillId: number, objective: BotRoleObjective | null): number {
+	if (objective !== BotRoleObjective.GATHERER_MERCHANT) return 0;
+
+	const marchandPathWeight = getUniqueProgressionWeight(skillId, [Skill.MARCHAND]);
+	if (marchandPathWeight <= 0) return 0;
+
+	return 120 + marchandPathWeight;
 }
 
 export type BotUniqueSkillDinozProfile = {
