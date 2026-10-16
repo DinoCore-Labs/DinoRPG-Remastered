@@ -1,6 +1,91 @@
 import type { GatherResult } from '@dinorpg/core/models/gather/gatherResult.js';
+import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 
 import { prisma } from '../../prisma.js';
+
+export type BotPlaceExperienceSnapshot = {
+	placeId: number;
+	visits: number;
+	gatherAttempts: number;
+	gatherSuccesses: number;
+	gatherValue: number;
+	fights: number;
+	wins: number;
+	losses: number;
+	hpLost: number;
+	lastVisitedAt: Date | null;
+};
+
+function clamp(value: number, min: number, max: number): number {
+	return Math.max(min, Math.min(max, value));
+}
+
+function resolveArrivalPlaceId(placeId: number): number {
+	const place = Object.values(placeListv2).find(entry => entry.placeId === placeId);
+	return place?.gotoPlaceId ?? placeId;
+}
+
+export async function getBotPlaceExperienceMap(
+	dinozId: number
+): Promise<Map<number, BotPlaceExperienceSnapshot>> {
+	const memories = await prisma.botDinozPlaceMemory.findMany({
+		where: {
+			dinozId
+		},
+		select: {
+			placeId: true,
+			visits: true,
+			gatherAttempts: true,
+			gatherSuccesses: true,
+			gatherValue: true,
+			fights: true,
+			wins: true,
+			losses: true,
+			hpLost: true,
+			lastVisitedAt: true
+		}
+	});
+	return new Map(memories.map(memory => [memory.placeId, memory]));
+}
+
+export function getBotExplorationExperienceBonus(
+	experience: Map<number, BotPlaceExperienceSnapshot>,
+	targetPlaceId: number
+): number {
+	const placeId = resolveArrivalPlaceId(targetPlaceId);
+	const memory = experience.get(placeId);
+	if (!memory || memory.visits === 0) return 120;
+
+	const visitPenalty = Math.min(120, memory.visits * 25);
+	return 90 - visitPenalty;
+}
+
+export function getBotGatherExperienceBonus(
+	experience: Map<number, BotPlaceExperienceSnapshot>,
+	placeId: number
+): number {
+	const memory = experience.get(placeId);
+	if (!memory || memory.gatherAttempts === 0) return 0;
+
+	const averageValue = memory.gatherValue / memory.gatherAttempts;
+	const successRate = memory.gatherSuccesses / memory.gatherAttempts;
+	return clamp(Math.round(averageValue / 100) + Math.round(successRate * 40), 0, 120);
+}
+
+export function getBotFightExperienceBonus(
+	experience: Map<number, BotPlaceExperienceSnapshot>,
+	placeId: number,
+	maxLife: number
+): number {
+	const memory = experience.get(placeId);
+	if (!memory || memory.fights === 0) return 0;
+
+	const winRate = memory.wins / memory.fights;
+	const averageHpLost = memory.hpLost / memory.fights;
+	const damageRatio = averageHpLost / Math.max(1, maxLife);
+	const confidence = Math.round((winRate - 0.5) * 120 - damageRatio * 70);
+	return clamp(confidence, -90, 70);
+}
 
 async function getBotDinozPlace(dinozId: number): Promise<number | null> {
 	const dinoz = await prisma.dinoz.findFirst({

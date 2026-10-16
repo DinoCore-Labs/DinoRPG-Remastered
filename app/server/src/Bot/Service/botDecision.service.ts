@@ -35,6 +35,13 @@ import { getBotMarketOfferPlan, shouldBotGoToMarket } from './botMarket.service.
 import { getBotMissionIntent } from './botMission.service.js';
 import { getBotMoveTargets } from './botMovement.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
+import {
+	type BotPlaceExperienceSnapshot,
+	getBotExplorationExperienceBonus,
+	getBotFightExperienceBonus,
+	getBotGatherExperienceBonus,
+	getBotPlaceExperienceMap
+} from './botPlaceExperience.service.js';
 import { getOrAssignBotProgressionGoal } from './botProgressionMemory.service.js';
 import {
 	getBotRoleObjectiveActivityBonus,
@@ -304,9 +311,11 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	const candidates: { value: BotDecision; weight: number }[] = [];
 	const dinozRoles = new Map<number, BotDinozRole | null>();
 	const roleObjectives = new Map<number, BotRoleObjective | null>();
+	const placeExperiences = new Map<number, Map<number, BotPlaceExperienceSnapshot>>();
 	for (const dinoz of playerData.dinoz) {
 		dinozRoles.set(dinoz.id, await getOrAssignBotDinozRole(userId, dinoz.id));
 		roleObjectives.set(dinoz.id, await getOrAssignBotRoleObjective(userId, dinoz.id));
+		placeExperiences.set(dinoz.id, await getBotPlaceExperienceMap(dinoz.id));
 	}
 
 	const progressionGoals = new Map<number, BotProgressionGoal | null>();
@@ -748,17 +757,24 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 
 		const moveTargets = await getBotMoveTargets(userId, dinoz.id);
 		const dinozRole = dinozRoles.get(dinoz.id) ?? null;
+		const roleObjective = roleObjectives.get(dinoz.id) ?? null;
+		const placeExperience = placeExperiences.get(dinoz.id) ?? new Map<number, BotPlaceExperienceSnapshot>();
 		const rememberedExplorationTarget =
 			dinozRole === BotDinozRole.EXPLORER
 				? await getOrAssignBotExplorationTarget(userId, dinoz.id, moveTargets)
 				: null;
 		for (const targetPlaceId of moveTargets) {
+			const explorationExperienceBonus =
+				roleObjective === BotRoleObjective.EXPLORER_DISCOVERY
+					? getBotExplorationExperienceBonus(placeExperience, targetPlaceId)
+					: 0;
 			candidates.push({
 				value: { dinozId: dinoz.id, action: 'move', targetPlaceId },
 				weight:
 					movementWeight[strategy] +
 					getBotDinozRoleActivityBonus(dinozRole, 'move') +
-					getBotRoleObjectiveActivityBonus(roleObjectives.get(dinoz.id) ?? null, 'move') +
+					getBotRoleObjectiveActivityBonus(roleObjective, 'move') +
+					explorationExperienceBonus +
 					(targetPlaceId === rememberedExplorationTarget ? 70 : 0)
 			});
 		}
@@ -808,6 +824,15 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				continue;
 			}
 
+			const gatherExperienceBonus =
+				roleObjective === BotRoleObjective.GATHERER_HARVEST
+					? getBotGatherExperienceBonus(placeExperience, dinoz.placeId)
+					: 0;
+			const fightExperienceBonus =
+				roleObjective === BotRoleObjective.FIGHTER_POWER
+					? getBotFightExperienceBonus(placeExperience, dinoz.placeId, dinoz.maxLife)
+					: 0;
+
 			candidates.push({
 				value: {
 					dinozId: dinoz.id,
@@ -817,12 +842,14 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					? gatherWeight[strategy] +
 						getBotDinozActivityScore(dinoz, actionName) +
 						getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, actionName) +
-						getBotRoleObjectiveActivityBonus(roleObjectives.get(dinoz.id) ?? null, 'gather')
+						getBotRoleObjectiveActivityBonus(roleObjective, 'gather') +
+						gatherExperienceBonus
 					: actionName === Action.FIGHT
 						? (ACTION_WEIGHTS[strategy][actionName] ?? 1) +
 							getBotDinozActivityScore(dinoz, actionName) +
 							getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, actionName) +
-							getBotRoleObjectiveActivityBonus(roleObjectives.get(dinoz.id) ?? null, 'fight')
+							getBotRoleObjectiveActivityBonus(roleObjective, 'fight') +
+							fightExperienceBonus
 						: (ACTION_WEIGHTS[strategy][actionName] ?? 1)
 			});
 		}

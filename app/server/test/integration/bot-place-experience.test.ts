@@ -1,6 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import {
+	getBotExplorationExperienceBonus,
+	getBotFightExperienceBonus,
+	getBotGatherExperienceBonus,
 	recordBotFightExperience,
 	recordBotGatherExperience,
 	recordBotPlaceVisit
@@ -115,4 +118,92 @@ describe('bot place experience', () => {
 		expect(memory.losses).toBe(1);
 		expect(memory.hpLost).toBe(57);
 	});
+
+	it('prefers unexplored destinations over repeatedly visited places', () => {
+		const experience = new Map([
+			[
+				10,
+				{
+					placeId: 10,
+					visits: 5,
+					gatherAttempts: 0,
+					gatherSuccesses: 0,
+					gatherValue: 0,
+					fights: 0,
+					wins: 0,
+					losses: 0,
+					hpLost: 0,
+					lastVisitedAt: new Date()
+				}
+			]
+		]);
+
+		expect(getBotExplorationExperienceBonus(experience, 11)).toBeGreaterThan(
+			getBotExplorationExperienceBonus(experience, 10)
+		);
+	});
+
+	it('rewards gather places that proved valuable', () => {
+		const experience = new Map([
+			[
+				12,
+				{
+					placeId: 12,
+					visits: 1,
+					gatherAttempts: 4,
+					gatherSuccesses: 4,
+					gatherValue: 8000,
+					fights: 0,
+					wins: 0,
+					losses: 0,
+					hpLost: 0,
+					lastVisitedAt: null
+				}
+			]
+		]);
+
+		expect(getBotGatherExperienceBonus(experience, 12)).toBeGreaterThan(0);
+		expect(getBotGatherExperienceBonus(experience, 99)).toBe(0);
+	});
+
+	it('distinguishes safe winning combat zones from dangerous losing zones', () => {
+		const safe = new Map([
+			[
+				20,
+				{
+					placeId: 20,
+					visits: 1,
+					gatherAttempts: 0,
+					gatherSuccesses: 0,
+					gatherValue: 0,
+					fights: 4,
+					wins: 4,
+					losses: 0,
+					hpLost: 40,
+					lastVisitedAt: null
+				}
+			]
+		]);
+		const dangerous = new Map([
+			[
+				20,
+				{
+					placeId: 20,
+					visits: 1,
+					gatherAttempts: 0,
+					gatherSuccesses: 0,
+					gatherValue: 0,
+					fights: 4,
+					wins: 0,
+					losses: 4,
+					hpLost: 300,
+					lastVisitedAt: null
+				}
+			]
+		]);
+
+		expect(getBotFightExperienceBonus(safe, 20, 100)).toBeGreaterThan(0);
+		expect(getBotFightExperienceBonus(dangerous, 20, 100)).toBeLessThan(0);
+	});
+
 });
