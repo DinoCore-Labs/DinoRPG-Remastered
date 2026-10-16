@@ -73,11 +73,7 @@ export function getBotDinozRoleActivityBonus(
 		case BotDinozRole.FIGHTER:
 			return activity === Action.FIGHT ? 55 : 0;
 		case BotDinozRole.GATHERER:
-			return typeof activity !== 'string' || activity === 'mission' || activity === 'move'
-				? GATHER_ACTIONS.has(activity as Action)
-					? 55
-					: 0
-				: 0;
+			return GATHER_ACTIONS.has(activity as Action) ? 55 : 0;
 		case BotDinozRole.EXPLORER:
 			return activity === 'move' ? 45 : activity === 'mission' ? 30 : 0;
 	}
