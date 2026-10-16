@@ -1,7 +1,10 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { BotDinozRole, BotRoleObjective } from '../../../prisma/index.js';
-import { getOrAssignBotRoleObjective } from '../../src/Bot/Service/botRoleObjective.service.js';
+import {
+	getBotRoleObjectiveActivityBonus,
+	getOrAssignBotRoleObjective
+} from '../../src/Bot/Service/botRoleObjective.service.js';
 import { clearBotProgressionGoal } from '../../src/Bot/Service/botProgressionMemory.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
@@ -72,4 +75,17 @@ describe('bot role objectives', () => {
 		});
 		expect(memory.objective).toBe(BotRoleObjective.GATHERER_MERCHANT);
 	});
+
+	it('turns role objectives into distinct action priorities', () => {
+		expect(getBotRoleObjectiveActivityBonus(BotRoleObjective.FIGHTER_POWER, 'forcebrut')).toBeGreaterThan(
+			getBotRoleObjectiveActivityBonus(BotRoleObjective.FIGHTER_POWER, 'move')
+		);
+		expect(getBotRoleObjectiveActivityBonus(BotRoleObjective.GATHERER_HARVEST, 'gather')).toBeGreaterThan(
+			getBotRoleObjectiveActivityBonus(BotRoleObjective.GATHERER_HARVEST, 'fight')
+		);
+		expect(getBotRoleObjectiveActivityBonus(BotRoleObjective.EXPLORER_DISCOVERY, 'move')).toBeGreaterThan(
+			getBotRoleObjectiveActivityBonus(BotRoleObjective.EXPLORER_DISCOVERY, 'fight')
+		);
+	});
+
 });

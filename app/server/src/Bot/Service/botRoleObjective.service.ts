@@ -2,6 +2,37 @@ import { BotDinozRole, BotRoleObjective } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 import { getOrAssignBotDinozRole } from './botDinozRole.service.js';
 
+export type BotRoleObjectiveActivity = 'fight' | 'gather' | 'move' | 'mission' | 'forcebrut' | 'trophy';
+
+export function getBotRoleObjectiveActivityBonus(
+	objective: BotRoleObjective | null,
+	activity: BotRoleObjectiveActivity
+): number {
+	switch (objective) {
+		case BotRoleObjective.FIGHTER_POWER:
+			if (activity === 'forcebrut') return 110;
+			if (activity === 'trophy') return 90;
+			if (activity === 'fight') return 45;
+			if (activity === 'mission') return 15;
+			return 0;
+		case BotRoleObjective.GATHERER_MERCHANT:
+			if (activity === 'gather') return 20;
+			if (activity === 'mission') return 15;
+			return 0;
+		case BotRoleObjective.GATHERER_HARVEST:
+			if (activity === 'gather') return 80;
+			if (activity === 'mission') return 20;
+			return 0;
+		case BotRoleObjective.EXPLORER_DISCOVERY:
+			if (activity === 'move') return 70;
+			if (activity === 'mission') return 40;
+			return 0;
+		case null:
+		default:
+			return 0;
+	}
+}
+
 function getDesiredRoleObjective(role: BotDinozRole, merchantUnlocked: boolean): BotRoleObjective {
 	switch (role) {
 		case BotDinozRole.FIGHTER:

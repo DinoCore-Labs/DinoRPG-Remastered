@@ -3,7 +3,13 @@ import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { BotDinozRole, BotProgressionGoal, BotStrategy, DinozState } from '../../../../prisma/index.js';
+import {
+	BotDinozRole,
+	BotProgressionGoal,
+	BotRoleObjective,
+	BotStrategy,
+	DinozState
+} from '../../../../prisma/index.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import { getDinozMenuRequest } from '../../Dinoz/Controller/getDinozMenu.controller.js';
 import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/getDinozActions.service.js';
@@ -30,6 +36,10 @@ import { getBotMissionIntent } from './botMission.service.js';
 import { getBotMoveTargets } from './botMovement.service.js';
 import { findBotMissionNextHop } from './botPathfinding.service.js';
 import { getOrAssignBotProgressionGoal } from './botProgressionMemory.service.js';
+import {
+	getBotRoleObjectiveActivityBonus,
+	getOrAssignBotRoleObjective
+} from './botRoleObjective.service.js';
 import { shouldBotDigOldStone } from './botProgressionOpportunity.service.js';
 import { getBotLanternProgressionStep } from './botProgressionPlanner.service.js';
 import { getBotRaceTrophyProgressionStep } from './botRaceTrophyProgression.service.js';
@@ -298,8 +308,10 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}
 
 	const dinozRoles = new Map<number, BotDinozRole | null>();
+	const roleObjectives = new Map<number, BotRoleObjective | null>();
 	for (const dinoz of playerData.dinoz) {
 		dinozRoles.set(dinoz.id, await getOrAssignBotDinozRole(userId, dinoz.id));
+		roleObjectives.set(dinoz.id, await getOrAssignBotRoleObjective(userId, dinoz.id));
 	}
 
 	for (const dinoz of playerData.dinoz) {
@@ -419,6 +431,10 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				trophyGoal === BotProgressionGoal.ROCKY_TROPHY
 					? 160
 					: 0;
+			const trophyObjectiveBonus = getBotRoleObjectiveActivityBonus(
+				roleObjectives.get(dinoz.id) ?? null,
+				'trophy'
+			);
 
 			if (trophyStep.type === 'move') {
 				const nextHop = await findBotMissionNextHop(userId, dinoz.id, dinoz.placeId, trophyStep.placeId);
@@ -429,7 +445,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 							action: 'move',
 							targetPlaceId: nextHop
 						},
-						weight: 380 + trophyMemoryBonus
+						weight: 380 + trophyMemoryBonus + trophyObjectiveBonus
 					});
 				}
 			} else {
@@ -440,7 +456,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 						dialogId: trophyStep.dialogId,
 						preferredLinkIds: trophyStep.preferredLinkIds
 					},
-					weight: 390 + trophyMemoryBonus
+					weight: 390 + trophyMemoryBonus + trophyObjectiveBonus
 				});
 			}
 		}
@@ -640,7 +656,8 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				},
 				weight:
 					(strategy === BotStrategy.FIGHTER ? 210 : 130) +
-					getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, Action.FIGHT)
+					getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, Action.FIGHT) +
+					getBotRoleObjectiveActivityBonus(roleObjectives.get(dinoz.id) ?? null, 'forcebrut')
 			});
 		}
 
@@ -678,7 +695,8 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 								targetPlaceId: nextHop
 							},
 							weight: 160 + getBotDinozActivityScore(dinoz, 'mission') +
-								getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, 'mission')
+								getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, 'mission') +
+								getBotRoleObjectiveActivityBonus(roleObjectives.get(dinoz.id) ?? null, 'mission')
 						});
 					}
 					break;
@@ -705,7 +723,8 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 								dialogId: missionIntent.dialogId
 							},
 							weight: 180 + getBotDinozActivityScore(dinoz, 'mission') +
-								getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, 'mission')
+								getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, 'mission') +
+								getBotRoleObjectiveActivityBonus(roleObjectives.get(dinoz.id) ?? null, 'mission')
 						});
 					}
 					break;
@@ -739,6 +758,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				weight:
 					movementWeight[strategy] +
 					getBotDinozRoleActivityBonus(dinozRole, 'move') +
+					getBotRoleObjectiveActivityBonus(roleObjectives.get(dinoz.id) ?? null, 'move') +
 					(targetPlaceId === rememberedExplorationTarget ? 70 : 0)
 			});
 		}
@@ -796,11 +816,13 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				weight: isBotGatherAction(actionName)
 					? gatherWeight[strategy] +
 						getBotDinozActivityScore(dinoz, actionName) +
-						getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, actionName)
+						getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, actionName) +
+						getBotRoleObjectiveActivityBonus(roleObjectives.get(dinoz.id) ?? null, 'gather')
 					: actionName === Action.FIGHT
 						? (ACTION_WEIGHTS[strategy][actionName] ?? 1) +
 							getBotDinozActivityScore(dinoz, actionName) +
-							getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, actionName)
+							getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, actionName) +
+							getBotRoleObjectiveActivityBonus(roleObjectives.get(dinoz.id) ?? null, 'fight')
 						: (ACTION_WEIGHTS[strategy][actionName] ?? 1)
 			});
 		}
