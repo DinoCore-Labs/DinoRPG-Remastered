@@ -726,13 +726,15 @@ model BotDinozMemory {
   dinozId Int   @unique
   dinoz   Dinoz @relation(fields: [dinozId], references: [id], onDelete: Cascade)
 
-  goal BotProgressionGoal
+  goal BotProgressionGoal?
+  role BotDinozRole?
 
   targetPlaceId Int?
   assignedAt    DateTime @default(now()) @db.Timestamptz(3)
   updatedAt     DateTime @updatedAt @db.Timestamptz(3)
 
   @@index([goal])
+  @@index([role])
   @@map("bot_dinoz_memory")
 }
 
@@ -1014,6 +1016,12 @@ model UserWallet {
 
 enum BotStrategy {
   BALANCED
+  FIGHTER
+  GATHERER
+  EXPLORER
+}
+
+enum BotDinozRole {
   FIGHTER
   GATHERER
   EXPLORER

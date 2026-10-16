@@ -160,8 +160,12 @@ export async function getOrAssignBotProgressionGoal(
 	const canAttemptSylvenoire = eligibleDinozCount >= 7;
 
 	if (currentGoal && currentGoal === BotProgressionGoal.SYLVENOIRE_KEY && !canAttemptSylvenoire) {
-		await prisma.botDinozMemory.deleteMany({
-			where: { dinozId }
+		await prisma.botDinozMemory.updateMany({
+			where: { dinozId },
+			data: {
+				goal: null,
+				targetPlaceId: null
+			}
 		});
 	} else if (currentGoal && !isGoalComplete(currentGoal, statusIds, rewardIds, dinoz.placeId, magnetiteProgression)) {
 		const currentIsTrophyGoal =
@@ -184,8 +188,12 @@ export async function getOrAssignBotProgressionGoal(
 	);
 	if (!nextGoal) {
 		if (currentGoal) {
-			await prisma.botDinozMemory.deleteMany({
-				where: { dinozId }
+			await prisma.botDinozMemory.updateMany({
+				where: { dinozId },
+				data: {
+					goal: null,
+					targetPlaceId: null
+				}
 			});
 		}
 		return null;
@@ -208,7 +216,11 @@ export async function getOrAssignBotProgressionGoal(
 }
 
 export async function clearBotProgressionGoal(dinozId: number): Promise<void> {
-	await prisma.botDinozMemory.deleteMany({
-		where: { dinozId }
+	await prisma.botDinozMemory.updateMany({
+		where: { dinozId },
+		data: {
+			goal: null,
+			targetPlaceId: null
+		}
 	});
 }

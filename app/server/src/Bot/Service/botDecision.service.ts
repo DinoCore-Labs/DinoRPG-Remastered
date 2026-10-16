@@ -3,11 +3,12 @@ import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { BotProgressionGoal, BotStrategy, DinozState } from '../../../../prisma/index.js';
+import { BotDinozRole, BotProgressionGoal, BotStrategy, DinozState } from '../../../../prisma/index.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import { getDinozMenuRequest } from '../../Dinoz/Controller/getDinozMenu.controller.js';
 import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/getDinozActions.service.js';
 import { getBotDinozActivityScore } from './botDinozSelector.service.js';
+import { getBotDinozRoleActivityBonus, getOrAssignBotDinozRole } from './botDinozRole.service.js';
 import {
 	BOT_SYLVENOIRE_DINOZ_TARGET,
 	canBotBuyAnotherDinoz,
@@ -293,6 +294,11 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	const progressionGoals = new Map<number, BotProgressionGoal | null>();
 	for (const dinoz of playerData.dinoz.slice(0, BOT_SYLVENOIRE_DINOZ_TARGET)) {
 		progressionGoals.set(dinoz.id, await getOrAssignBotProgressionGoal(userId, dinoz.id));
+	}
+
+	const dinozRoles = new Map<number, BotDinozRole | null>();
+	for (const dinoz of playerData.dinoz) {
+		dinozRoles.set(dinoz.id, await getOrAssignBotDinozRole(userId, dinoz.id));
 	}
 
 	for (const dinoz of playerData.dinoz) {
@@ -631,7 +637,9 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					dinozId: dinoz.id,
 					action: 'forcebrut'
 				},
-				weight: strategy === BotStrategy.FIGHTER ? 210 : 130
+				weight:
+					(strategy === BotStrategy.FIGHTER ? 210 : 130) +
+					getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, Action.FIGHT)
 			});
 		}
 
@@ -668,7 +676,8 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 								action: 'move',
 								targetPlaceId: nextHop
 							},
-							weight: 160 + getBotDinozActivityScore(dinoz, 'mission')
+							weight: 160 + getBotDinozActivityScore(dinoz, 'mission') +
+								getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, 'mission')
 						});
 					}
 					break;
@@ -677,7 +686,8 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					if (actions.some(action => action.name === Action.FIGHT)) {
 						candidates.push({
 							value: { dinozId: dinoz.id, action: Action.FIGHT },
-							weight: 170 + getBotDinozActivityScore(dinoz, Action.FIGHT)
+							weight: 170 + getBotDinozActivityScore(dinoz, Action.FIGHT) +
+								getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, Action.FIGHT)
 						});
 					}
 					break;
@@ -693,7 +703,8 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 								action: 'mission_dialog',
 								dialogId: missionIntent.dialogId
 							},
-							weight: 180 + getBotDinozActivityScore(dinoz, 'mission')
+							weight: 180 + getBotDinozActivityScore(dinoz, 'mission') +
+								getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, 'mission')
 						});
 					}
 					break;
@@ -719,7 +730,9 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		for (const targetPlaceId of moveTargets) {
 			candidates.push({
 				value: { dinozId: dinoz.id, action: 'move', targetPlaceId },
-				weight: movementWeight[strategy]
+				weight:
+					movementWeight[strategy] +
+					getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, 'move')
 			});
 		}
 
@@ -774,9 +787,13 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 					action: actionName
 				},
 				weight: isBotGatherAction(actionName)
-					? gatherWeight[strategy] + getBotDinozActivityScore(dinoz, actionName)
+					? gatherWeight[strategy] +
+						getBotDinozActivityScore(dinoz, actionName) +
+						getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, actionName)
 					: actionName === Action.FIGHT
-						? (ACTION_WEIGHTS[strategy][actionName] ?? 1) + getBotDinozActivityScore(dinoz, actionName)
+						? (ACTION_WEIGHTS[strategy][actionName] ?? 1) +
+							getBotDinozActivityScore(dinoz, actionName) +
+							getBotDinozRoleActivityBonus(dinozRoles.get(dinoz.id) ?? null, actionName)
 						: (ACTION_WEIGHTS[strategy][actionName] ?? 1)
 			});
 		}
