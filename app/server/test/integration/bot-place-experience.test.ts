@@ -4,6 +4,8 @@ import {
 	getBotExplorationExperienceBonus,
 	getBotFightExperienceBonus,
 	getBotGatherExperienceBonus,
+	getBotPreferredFightPlace,
+	getBotPreferredGatherPlace,
 	recordBotFightExperience,
 	recordBotGatherExperience,
 	recordBotPlaceVisit
@@ -204,6 +206,81 @@ describe('bot place experience', () => {
 
 		expect(getBotFightExperienceBonus(safe, 20, 100)).toBeGreaterThan(0);
 		expect(getBotFightExperienceBonus(dangerous, 20, 100)).toBeLessThan(0);
+	});
+
+
+	it('selects the best proven gather place as a learned destination', () => {
+		const experience = new Map([
+			[
+				30,
+				{
+					placeId: 30,
+					visits: 2,
+					gatherAttempts: 3,
+					gatherSuccesses: 2,
+					gatherValue: 1200,
+					fights: 0,
+					wins: 0,
+					losses: 0,
+					hpLost: 0,
+					lastVisitedAt: null
+				}
+			],
+			[
+				31,
+				{
+					placeId: 31,
+					visits: 2,
+					gatherAttempts: 3,
+					gatherSuccesses: 3,
+					gatherValue: 9000,
+					fights: 0,
+					wins: 0,
+					losses: 0,
+					hpLost: 0,
+					lastVisitedAt: null
+				}
+			]
+		]);
+
+		expect(getBotPreferredGatherPlace(experience)).toBe(31);
+	});
+
+	it('selects a proven safe fight place and ignores losing zones', () => {
+		const experience = new Map([
+			[
+				40,
+				{
+					placeId: 40,
+					visits: 2,
+					gatherAttempts: 0,
+					gatherSuccesses: 0,
+					gatherValue: 0,
+					fights: 4,
+					wins: 4,
+					losses: 0,
+					hpLost: 30,
+					lastVisitedAt: null
+				}
+			],
+			[
+				41,
+				{
+					placeId: 41,
+					visits: 2,
+					gatherAttempts: 0,
+					gatherSuccesses: 0,
+					gatherValue: 0,
+					fights: 4,
+					wins: 1,
+					losses: 3,
+					hpLost: 250,
+					lastVisitedAt: null
+				}
+			]
+		]);
+
+		expect(getBotPreferredFightPlace(experience, 100)).toBe(40);
 	});
 
 });

@@ -40,7 +40,9 @@ import {
 	getBotExplorationExperienceBonus,
 	getBotFightExperienceBonus,
 	getBotGatherExperienceBonus,
-	getBotPlaceExperienceMap
+	getBotPlaceExperienceMap,
+	getBotPreferredFightPlace,
+	getBotPreferredGatherPlace
 } from './botPlaceExperience.service.js';
 import { getOrAssignBotProgressionGoal } from './botProgressionMemory.service.js';
 import {
@@ -759,6 +761,34 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 		const dinozRole = dinozRoles.get(dinoz.id) ?? null;
 		const roleObjective = roleObjectives.get(dinoz.id) ?? null;
 		const placeExperience = placeExperiences.get(dinoz.id) ?? new Map<number, BotPlaceExperienceSnapshot>();
+
+		if (!missionIntent) {
+			const learnedTargetPlaceId =
+				roleObjective === BotRoleObjective.GATHERER_HARVEST
+					? getBotPreferredGatherPlace(placeExperience)
+					: roleObjective === BotRoleObjective.FIGHTER_POWER
+						? getBotPreferredFightPlace(placeExperience, dinoz.maxLife)
+						: null;
+			if (learnedTargetPlaceId !== null && learnedTargetPlaceId !== dinoz.placeId) {
+				const nextHop = await findBotMissionNextHop(
+					userId,
+					dinoz.id,
+					dinoz.placeId,
+					learnedTargetPlaceId
+				);
+				if (nextHop !== null) {
+					candidates.push({
+						value: {
+							dinozId: dinoz.id,
+							action: 'move',
+							targetPlaceId: nextHop
+						},
+						weight: roleObjective === BotRoleObjective.GATHERER_HARVEST ? 195 : 180
+					});
+				}
+			}
+		}
+
 		const rememberedExplorationTarget =
 			dinozRole === BotDinozRole.EXPLORER
 				? await getOrAssignBotExplorationTarget(userId, dinoz.id, moveTargets)

@@ -90,6 +90,41 @@ export function getBotFightExperienceBonus(
 	return clamp(confidence, -90, 70);
 }
 
+export function getBotPreferredGatherPlace(
+	experience: Map<number, BotPlaceExperienceSnapshot>
+): number | null {
+	let bestPlaceId: number | null = null;
+	let bestScore = 0;
+
+	for (const memory of experience.values()) {
+		if (memory.gatherAttempts < 2) continue;
+		const score = getBotGatherExperienceBonus(experience, memory.placeId);
+		if (score <= bestScore) continue;
+		bestScore = score;
+		bestPlaceId = memory.placeId;
+	}
+
+	return bestPlaceId;
+}
+
+export function getBotPreferredFightPlace(
+	experience: Map<number, BotPlaceExperienceSnapshot>,
+	maxLife: number
+): number | null {
+	let bestPlaceId: number | null = null;
+	let bestScore = 0;
+
+	for (const memory of experience.values()) {
+		if (memory.fights < 2) continue;
+		const score = getBotFightExperienceBonus(experience, memory.placeId, maxLife);
+		if (score <= bestScore) continue;
+		bestScore = score;
+		bestPlaceId = memory.placeId;
+	}
+
+	return bestPlaceId;
+}
+
 async function getBotDinozPlace(dinozId: number): Promise<number | null> {
 	const dinoz = await prisma.dinoz.findFirst({
 		where: {
