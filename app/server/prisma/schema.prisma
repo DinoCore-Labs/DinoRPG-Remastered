@@ -90,7 +90,8 @@ model Dinoz {
   DojoOpponents  DojoOpponents[]
   DojoTeam       DojoTeam[]
   TournamentTeam TournamentTeam[]
-  botMemory      BotDinozMemory?
+  botMemory       BotDinozMemory?
+  botPlaceMemories BotDinozPlaceMemory[]
 
   userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
@@ -738,6 +739,36 @@ model BotDinozMemory {
   @@index([role])
   @@index([objective])
   @@map("bot_dinoz_memory")
+}
+
+model BotDinozPlaceMemory {
+  id Int @id @default(autoincrement())
+
+  dinozId Int
+  dinoz   Dinoz @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+
+  placeId Int
+
+  visits          Int @default(0)
+  gatherAttempts  Int @default(0)
+  gatherSuccesses Int @default(0)
+  gatherValue     Int @default(0)
+  fights          Int @default(0)
+  wins            Int @default(0)
+  losses          Int @default(0)
+  hpLost          Int @default(0)
+
+  lastVisitedAt DateTime? @db.Timestamptz(3)
+  lastGatherAt  DateTime? @db.Timestamptz(3)
+  lastFightAt   DateTime? @db.Timestamptz(3)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([dinozId, placeId])
+  @@index([dinozId])
+  @@index([placeId])
+  @@map("bot_dinoz_place_memory")
 }
 
 model BotProfile {

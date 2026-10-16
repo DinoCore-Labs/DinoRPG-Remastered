@@ -22,6 +22,11 @@ import { createBotGroup, ungroupBotDinoz } from './botGroup.service.js';
 import { healBotDinoz } from './botHealing.service.js';
 import { sellBotSurplusToItinerant } from './botItinerantMerchant.service.js';
 import { repairLegacyTaurusReward } from './botLegacyIntroRepair.service.js';
+import {
+	recordBotFightExperience,
+	recordBotGatherExperience,
+	recordBotPlaceVisit
+} from './botPlaceExperience.service.js';
 import { chooseBotLevelUp } from './botLevelUp.service.js';
 import { createBotMarketOffer } from './botMarket.service.js';
 import { executeBotMissionInteraction, executeBotMissionWait } from './botMissionAction.service.js';
@@ -175,7 +180,10 @@ export async function executeBotDecision(userId: string, strategy: BotStrategy, 
 	}
 
 	if (isBotGatherAction(decision.action)) {
-		await executeBotGather(userId, decision.dinozId, decision.action);
+		const result = await executeBotGather(userId, decision.dinozId, decision.action);
+		if (result) {
+			await recordBotGatherExperience(decision.dinozId, result);
+		}
 		return;
 	}
 
@@ -188,6 +196,7 @@ export async function executeBotDecision(userId: string, strategy: BotStrategy, 
 			placeId: decision.targetPlaceId,
 			autoReequip: false
 		});
+		await recordBotPlaceVisit(decision.dinozId);
 		await clearBotExplorationTarget(decision.dinozId);
 		return;
 	}
@@ -208,10 +217,12 @@ export async function executeBotDecision(userId: string, strategy: BotStrategy, 
 			await restDinoz(userId, decision.dinozId);
 			return;
 
-		case Action.FIGHT:
+		case Action.FIGHT: {
 			await prepareBotSkillsForCombat(userId, decision.dinozId, strategy);
-			await processFightForUser(userId, decision.dinozId);
+			const result = await processFightForUser(userId, decision.dinozId);
+			await recordBotFightExperience(decision.dinozId, result.place, result.result, result.totalHpLost);
 			return;
+		}
 
 		case Action.ACTION:
 		case Action.IRMA:
