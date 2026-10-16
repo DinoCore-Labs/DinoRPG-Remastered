@@ -1,4 +1,5 @@
 import { prisma } from '../../prisma.js';
+import { getBotPlaceExperienceMap, resolveBotArrivalPlaceId } from './botPlaceExperience.service.js';
 
 export async function getOrAssignBotExplorationTarget(
 	userId: string,
@@ -33,7 +34,22 @@ export async function getOrAssignBotExplorationTarget(
 		return rememberedTarget;
 	}
 
-	const targetPlaceId = availableTargets[Math.floor(Math.random() * availableTargets.length)] ?? null;
+	const experience = await getBotPlaceExperienceMap(dinozId);
+	const rankedTargets = availableTargets.map(targetPlaceId => {
+		const arrivalPlaceId = resolveBotArrivalPlaceId(targetPlaceId);
+		const memory = experience.get(arrivalPlaceId);
+		return {
+			targetPlaceId,
+			visits: memory?.visits ?? 0,
+			lastVisitedAt: memory?.lastVisitedAt?.getTime() ?? 0
+		};
+	});
+	const minimumVisits = Math.min(...rankedTargets.map(target => target.visits));
+	const leastVisited = rankedTargets.filter(target => target.visits === minimumVisits);
+	const oldestVisit = Math.min(...leastVisited.map(target => target.lastVisitedAt));
+	const bestTargets = leastVisited.filter(target => target.lastVisitedAt === oldestVisit);
+	const targetPlaceId =
+		bestTargets[Math.floor(Math.random() * bestTargets.length)]?.targetPlaceId ?? null;
 	if (targetPlaceId === null) return null;
 
 	await prisma.botDinozMemory.upsert({

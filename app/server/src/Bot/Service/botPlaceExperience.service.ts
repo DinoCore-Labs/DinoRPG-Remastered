@@ -20,7 +20,7 @@ function clamp(value: number, min: number, max: number): number {
 	return Math.max(min, Math.min(max, value));
 }
 
-function resolveArrivalPlaceId(placeId: number): number {
+export function resolveBotArrivalPlaceId(placeId: number): number {
 	const place = Object.values(placeListv2).find(entry => entry.placeId === placeId);
 	return place?.gotoPlaceId ?? placeId;
 }
@@ -52,12 +52,15 @@ export function getBotExplorationExperienceBonus(
 	experience: Map<number, BotPlaceExperienceSnapshot>,
 	targetPlaceId: number
 ): number {
-	const placeId = resolveArrivalPlaceId(targetPlaceId);
+	const placeId = resolveBotArrivalPlaceId(targetPlaceId);
 	const memory = experience.get(placeId);
 	if (!memory || memory.visits === 0) return 120;
 
 	const visitPenalty = Math.min(120, memory.visits * 25);
-	return 90 - visitPenalty;
+	const recentlyVisited =
+		memory.lastVisitedAt !== null && Date.now() - memory.lastVisitedAt.getTime() < 30 * 60 * 1000;
+	const recencyPenalty = recentlyVisited ? 60 : 0;
+	return 90 - visitPenalty - recencyPenalty;
 }
 
 export function getBotGatherExperienceBonus(

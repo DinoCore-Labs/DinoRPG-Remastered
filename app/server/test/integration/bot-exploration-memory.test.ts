@@ -90,4 +90,67 @@ describe('bot exploration memory', () => {
 		});
 		expect(memory.targetPlaceId).toBeNull();
 	});
+
+	it('chooses an unvisited target before a repeatedly visited one', async () => {
+		const user = await createTestUser({
+			name: 'ExplorerNoveltyBot',
+			withTutorial: false
+		});
+		await prisma.user.update({
+			where: { id: user.id },
+			data: { isBot: true }
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			canRename: false
+		});
+		await prisma.botDinozPlaceMemory.create({
+			data: {
+				dinozId: dinoz.id,
+				placeId: 10,
+				visits: 5,
+				lastVisitedAt: new Date()
+			}
+		});
+
+		vi.spyOn(Math, 'random').mockReturnValue(0);
+
+		await expect(getOrAssignBotExplorationTarget(user.id, dinoz.id, [10, 20])).resolves.toBe(20);
+	});
+
+	it('uses the least recently visited target when visit counts are equal', async () => {
+		const user = await createTestUser({
+			name: 'ExplorerOldestRouteBot',
+			withTutorial: false
+		});
+		await prisma.user.update({
+			where: { id: user.id },
+			data: { isBot: true }
+		});
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			canRename: false
+		});
+		await prisma.botDinozPlaceMemory.createMany({
+			data: [
+				{
+					dinozId: dinoz.id,
+					placeId: 10,
+					visits: 2,
+					lastVisitedAt: new Date('2026-01-01T00:00:00.000Z')
+				},
+				{
+					dinozId: dinoz.id,
+					placeId: 20,
+					visits: 2,
+					lastVisitedAt: new Date('2026-10-01T00:00:00.000Z')
+				}
+			]
+		});
+
+		vi.spyOn(Math, 'random').mockReturnValue(0.99);
+
+		await expect(getOrAssignBotExplorationTarget(user.id, dinoz.id, [10, 20])).resolves.toBe(10);
+	});
+
 });
