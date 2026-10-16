@@ -302,16 +302,16 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}));
 
 	const candidates: { value: BotDecision; weight: number }[] = [];
-	const progressionGoals = new Map<number, BotProgressionGoal | null>();
-	for (const dinoz of playerData.dinoz.slice(0, BOT_SYLVENOIRE_DINOZ_TARGET)) {
-		progressionGoals.set(dinoz.id, await getOrAssignBotProgressionGoal(userId, dinoz.id));
-	}
-
 	const dinozRoles = new Map<number, BotDinozRole | null>();
 	const roleObjectives = new Map<number, BotRoleObjective | null>();
 	for (const dinoz of playerData.dinoz) {
 		dinozRoles.set(dinoz.id, await getOrAssignBotDinozRole(userId, dinoz.id));
 		roleObjectives.set(dinoz.id, await getOrAssignBotRoleObjective(userId, dinoz.id));
+	}
+
+	const progressionGoals = new Map<number, BotProgressionGoal | null>();
+	for (const dinoz of playerData.dinoz.slice(0, BOT_SYLVENOIRE_DINOZ_TARGET)) {
+		progressionGoals.set(dinoz.id, await getOrAssignBotProgressionGoal(userId, dinoz.id));
 	}
 
 	for (const dinoz of playerData.dinoz) {

@@ -1,7 +1,7 @@
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { BotProgressionGoal } from '../../../prisma/index.js';
+import { BotDinozRole, BotProgressionGoal } from '../../../prisma/index.js';
 import { getOrAssignBotProgressionGoal } from '../../src/Bot/Service/botProgressionMemory.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
@@ -17,7 +17,7 @@ async function addStatus(dinozId: number, statusId: DinozStatusId) {
 	});
 }
 
-async function createBotWithDinoz(name: string) {
+async function createBotWithDinoz(name: string, level = 1) {
 	const user = await createTestUser({
 		name,
 		withTutorial: false
@@ -28,6 +28,7 @@ async function createBotWithDinoz(name: string) {
 	});
 	const dinoz = await createTestDinoz({
 		userId: user.id,
+		level,
 		canRename: false
 	});
 	return { user, dinoz };
@@ -85,4 +86,33 @@ describe('bot progression memory', () => {
 
 		expect(memory.goal).toBe(BotProgressionGoal.KORGON_FLIPPERS);
 	});
+
+	it('lets fighter Dinoz pursue trophies as soon as they become eligible', async () => {
+		const { user, dinoz } = await createBotWithDinoz('FighterProgressionBot', 8);
+		await prisma.botDinozMemory.create({
+			data: {
+				dinozId: dinoz.id,
+				role: BotDinozRole.FIGHTER
+			}
+		});
+
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(
+			BotProgressionGoal.HIPPOCLAMP_TROPHY
+		);
+	});
+
+	it('keeps explorer Dinoz focused on access prerequisites before optional trophies', async () => {
+		const { user, dinoz } = await createBotWithDinoz('ExplorerProgressionBot', 8);
+		await prisma.botDinozMemory.create({
+			data: {
+				dinozId: dinoz.id,
+				role: BotDinozRole.EXPLORER
+			}
+		});
+
+		await expect(getOrAssignBotProgressionGoal(user.id, dinoz.id)).resolves.toBe(
+			BotProgressionGoal.SHAMAN_STRATEGY
+		);
+	});
+
 });
