@@ -75,7 +75,7 @@ export async function getBotGroupPlan(userId: string): Promise<{ leaderId: numbe
 		}
 	});
 
-	const candidates = [];
+	const candidates: typeof dinoz = [];
 	for (const entry of dinoz) {
 		if (entry.life <= 0 || entry.followers.length > 0) continue;
 		if (entry.botMemory?.role === BotDinozRole.EXPLORER) continue;

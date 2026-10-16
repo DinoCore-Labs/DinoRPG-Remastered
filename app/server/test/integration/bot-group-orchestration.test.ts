@@ -63,7 +63,17 @@ describe('bot group orchestration', () => {
 		expect(regroupPlan).toEqual({
 			leaderId: leader.id,
 			followerId: follower.id
-			it('prefers a fighter as group leader even when another Dinoz has a higher level', async () => {
+		});
+
+		await expect(createBotGroup(user.id)).resolves.toBe(true);
+
+		const regrouped = await prisma.dinoz.findUniqueOrThrow({
+			where: { id: follower.id }
+		});
+		expect(regrouped.leaderId).toBe(leader.id);
+	});
+
+	it('prefers a fighter as group leader even when another Dinoz has a higher level', async () => {
 		const user = await createTestUser({
 			name: 'GroupRoleLeaderBot',
 			withTutorial: false
@@ -201,14 +211,5 @@ describe('bot group orchestration', () => {
 		});
 
 		await expect(getBotGroupPlan(user.id)).resolves.toBeNull();
-	});
-});
-
-		await expect(createBotGroup(user.id)).resolves.toBe(true);
-
-		const regrouped = await prisma.dinoz.findUniqueOrThrow({
-			where: { id: follower.id }
-		});
-		expect(regrouped.leaderId).toBe(leader.id);
 	});
 });
