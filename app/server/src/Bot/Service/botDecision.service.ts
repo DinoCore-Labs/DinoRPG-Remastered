@@ -8,7 +8,11 @@ import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import { getDinozMenuRequest } from '../../Dinoz/Controller/getDinozMenu.controller.js';
 import { getAvailableActions, getItinerantPlaceId } from '../../Dinoz/Service/getDinozActions.service.js';
 import { getBotDinozActivityScore } from './botDinozSelector.service.js';
-import { BOT_SYLVENOIRE_DINOZ_TARGET, canBotBuyAnotherDinoz } from './botEconomy.service.js';
+import {
+	BOT_SYLVENOIRE_DINOZ_TARGET,
+	canBotBuyAnotherDinoz,
+	isBotPreparingSylvenoireRoster
+} from './botEconomy.service.js';
 import { findBotEquipCandidate } from './botEquipment.service.js';
 import { canBotFightForcebrut } from './botForcebrut.service.js';
 import { getBotForcebrutUnlockStep } from './botForcebrutProgression.service.js';
@@ -813,9 +817,10 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}
 
 	if (await canBotBuyAnotherDinoz(userId)) {
+		const preparingSylvenoireRoster = await isBotPreparingSylvenoireRoster(userId);
 		candidates.push({
 			value: { dinozId: playerData.dinoz[0]?.id ?? 0, action: 'buy_dinoz' },
-			weight: 35
+			weight: preparingSylvenoireRoster ? 405 : 35
 		});
 	}
 
@@ -836,6 +841,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				(candidate.value.action === 'progression_dialog' ||
 					candidate.value.action === 'progression_dig' ||
 					candidate.value.action === 'enter_dark_portal' ||
+					candidate.value.action === 'buy_dinoz' ||
 					candidate.value.action === 'move')
 		)
 		.sort((a, b) => b.weight - a.weight)[0];

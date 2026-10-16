@@ -26,6 +26,33 @@ function getBotDinozPurchaseReserve(currentDinozCount: number, flipperCount: num
 	return null;
 }
 
+export async function isBotPreparingSylvenoireRoster(userId: string): Promise<boolean> {
+	const dinoz = await prisma.dinoz.findMany({
+		where: {
+			userId,
+			OR: [{ state: null }, { state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }]
+		},
+		select: {
+			id: true,
+			status: {
+				where: {
+					statusId: DinozStatusId.FLIPPERS
+				},
+				select: {
+					statusId: true
+				}
+			}
+		}
+	});
+
+	const flipperCount = dinoz.filter(entry => entry.status.length > 0).length;
+	return (
+		dinoz.length >= BOT_SYLVENOIRE_PREPARATION_THRESHOLD &&
+		dinoz.length < BOT_SYLVENOIRE_DINOZ_TARGET &&
+		flipperCount >= BOT_SYLVENOIRE_PREPARATION_THRESHOLD
+	);
+}
+
 export async function canBotBuyAnotherDinoz(userId: string): Promise<boolean> {
 	const user = await prisma.user.findUnique({
 		where: { id: userId },

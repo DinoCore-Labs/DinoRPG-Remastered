@@ -1,7 +1,11 @@
 import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { buyBotDinoz, canBotBuyAnotherDinoz } from '../../src/Bot/Service/botEconomy.service.js';
+import {
+	buyBotDinoz,
+	canBotBuyAnotherDinoz,
+	isBotPreparingSylvenoireRoster
+} from '../../src/Bot/Service/botEconomy.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
@@ -84,6 +88,7 @@ describe('bot economy', () => {
 		await setGold(user.id, 100_000);
 
 		await expect(canBotBuyAnotherDinoz(user.id)).resolves.toBe(false);
+		await expect(isBotPreparingSylvenoireRoster(user.id)).resolves.toBe(false);
 	});
 
 	it('expands the roster beyond three once the initial trio has Korgon flippers', async () => {
@@ -106,6 +111,7 @@ describe('bot economy', () => {
 		await setGold(user.id, 100_000);
 
 		await expect(canBotBuyAnotherDinoz(user.id)).resolves.toBe(true);
+		await expect(isBotPreparingSylvenoireRoster(user.id)).resolves.toBe(true);
 		const created = await buyBotDinoz(user.id);
 		expect(created).not.toBeNull();
 
@@ -136,6 +142,6 @@ describe('bot economy', () => {
 		await setGold(user.id, 100_000);
 
 		await expect(canBotBuyAnotherDinoz(user.id)).resolves.toBe(false);
+		await expect(isBotPreparingSylvenoireRoster(user.id)).resolves.toBe(false);
 	});
-
 });
