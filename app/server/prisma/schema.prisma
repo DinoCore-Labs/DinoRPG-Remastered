@@ -726,8 +726,9 @@ model BotDinozMemory {
   dinozId Int   @unique
   dinoz   Dinoz @relation(fields: [dinozId], references: [id], onDelete: Cascade)
 
-  goal BotProgressionGoal?
-  role BotDinozRole?
+  goal      BotProgressionGoal?
+  role      BotDinozRole?
+  objective BotRoleObjective?
 
   targetPlaceId Int?
   assignedAt    DateTime @default(now()) @db.Timestamptz(3)
@@ -735,6 +736,7 @@ model BotDinozMemory {
 
   @@index([goal])
   @@index([role])
+  @@index([objective])
   @@map("bot_dinoz_memory")
 }
 
@@ -1025,6 +1027,13 @@ enum BotDinozRole {
   FIGHTER
   GATHERER
   EXPLORER
+}
+
+enum BotRoleObjective {
+  FIGHTER_POWER
+  GATHERER_MERCHANT
+  GATHERER_HARVEST
+  EXPLORER_DISCOVERY
 }
 
 enum BotProgressionGoal {
