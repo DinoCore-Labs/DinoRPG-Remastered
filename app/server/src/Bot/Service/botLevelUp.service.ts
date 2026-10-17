@@ -2,7 +2,7 @@ import { raceList } from '@dinorpg/core/models/dinoz/raceList.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { BotRoleObjective, BotStrategy } from '../../../../prisma/index.js';
+import { BotDinozRole, BotRoleObjective, BotStrategy } from '../../../../prisma/index.js';
 import { getDinozForLevelUp } from '../../Level/Controller/getDinozForLevelUp.controller.js';
 import { getDinozLearnableSkills } from '../../Level/Service/getDinozLearnableSkills.service.js';
 import { prisma } from '../../prisma.js';
@@ -12,6 +12,7 @@ import {
 	getRoleObjectiveSkillWeight,
 	getUniqueProgressionWeight
 } from './botUniqueSkill.service.js';
+import { getOrAssignBotDinozRole } from './botDinozRole.service.js';
 import { getOrAssignBotRoleObjective } from './botRoleObjective.service.js';
 
 const GATHERER_SKILLS = new Set<number>([
@@ -35,16 +36,47 @@ const EXPLORER_SKILLS = new Set<number>([
 	Skill.VITALITE
 ]);
 
+export function getBotRoleSkillWeight(
+	skillId: number,
+	role: BotDinozRole | null,
+	objective: BotRoleObjective | null
+): number {
+	const skill = skillList[skillId as Skill];
+	if (!skill || role === null) return 0;
+
+	switch (role) {
+		case BotDinozRole.FIGHTER: {
+			let weight = 0;
+			if (skill.activatable) weight += 25;
+			if (skill.effects && Object.keys(skill.effects).length > 0) weight += 18;
+			if (objective === BotRoleObjective.FIGHTER_POWER) {
+				if (skill.activatable) weight += 15;
+				if (skill.effects && Object.keys(skill.effects).length > 0) weight += 10;
+			}
+			return weight;
+		}
+		case BotDinozRole.GATHERER: {
+			if (!GATHERER_SKILLS.has(skillId)) return 0;
+			return objective === BotRoleObjective.GATHERER_HARVEST ? 65 : 45;
+		}
+		case BotDinozRole.EXPLORER: {
+			if (!EXPLORER_SKILLS.has(skillId)) return 0;
+			return objective === BotRoleObjective.EXPLORER_DISCOVERY ? 65 : 45;
+		}
+	}
+}
+
 function getSkillWeight(
 	skillId: number,
 	strategy: BotStrategy,
 	uniqueProgressionWeight = 0,
-	roleObjectiveWeight = 0
+	roleObjectiveWeight = 0,
+	roleSkillWeight = 0
 ): number {
 	const skill = skillList[skillId as Skill];
 	if (!skill) return 1;
 
-	let weight = 10 + uniqueProgressionWeight + roleObjectiveWeight;
+	let weight = 10 + uniqueProgressionWeight + roleObjectiveWeight + roleSkillWeight;
 
 	switch (strategy) {
 		case BotStrategy.FIGHTER:
@@ -71,7 +103,8 @@ function weightedPick(
 	skillIds: number[],
 	strategy: BotStrategy,
 	uniqueProgressionWeights: Map<number, number>,
-	roleObjectiveWeights: Map<number, number>
+	roleObjectiveWeights: Map<number, number>,
+	roleSkillWeights: Map<number, number>
 ): number {
 	const entries = skillIds.map(skillId => ({
 		skillId,
@@ -79,7 +112,8 @@ function weightedPick(
 			skillId,
 			strategy,
 			uniqueProgressionWeights.get(skillId) ?? 0,
-			roleObjectiveWeights.get(skillId) ?? 0
+			roleObjectiveWeights.get(skillId) ?? 0,
+			roleSkillWeights.get(skillId) ?? 0
 		)
 	}));
 	const total = entries.reduce((sum, entry) => sum + entry.weight, 0);
@@ -162,11 +196,18 @@ export async function chooseBotLevelUp(
 			getUniqueProgressionWeight(skill.skillId, assignedUniqueSkills)
 		])
 	);
+	const role = await getOrAssignBotDinozRole(dinoz.user.id, dinozId);
 	const roleObjective = await getOrAssignBotRoleObjective(dinoz.user.id, dinozId);
 	const roleObjectiveWeights = new Map<number, number>(
 		choices.learnableSkills.map(skill => [
 			skill.skillId,
 			getRoleObjectiveSkillWeight(skill.skillId, roleObjective as BotRoleObjective | null)
+		])
+	);
+	const roleSkillWeights = new Map<number, number>(
+		choices.learnableSkills.map(skill => [
+			skill.skillId,
+			getBotRoleSkillWeight(skill.skillId, role, roleObjective)
 		])
 	);
 
@@ -177,7 +218,8 @@ export async function chooseBotLevelUp(
 					choices.learnableSkills.map(skill => skill.skillId),
 					strategy,
 					uniqueProgressionWeights,
-					roleObjectiveWeights
+					roleObjectiveWeights,
+					roleSkillWeights
 				)
 			],
 			tryNumber
