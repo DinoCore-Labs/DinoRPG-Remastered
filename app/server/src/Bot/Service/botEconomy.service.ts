@@ -14,7 +14,7 @@ const BOT_SYLVENOIRE_PREPARATION_THRESHOLD = 3;
 
 export const BOT_SYLVENOIRE_DINOZ_TARGET = 7;
 
-function getBotDinozPurchaseReserve(currentDinozCount: number, flipperCount: number): number | null {
+export function getBotDinozPurchaseReserve(currentDinozCount: number, flipperCount: number): number | null {
 	if (currentDinozCount < 2) return BOT_SECOND_DINOZ_GOLD_RESERVE;
 	if (currentDinozCount < 3) return BOT_THIRD_DINOZ_GOLD_RESERVE;
 	if (
@@ -24,6 +24,28 @@ function getBotDinozPurchaseReserve(currentDinozCount: number, flipperCount: num
 		return BOT_THIRD_DINOZ_GOLD_RESERVE;
 	}
 	return null;
+}
+
+export async function getBotStrategicGoldReserve(userId: string): Promise<number> {
+	const dinoz = await prisma.dinoz.findMany({
+		where: {
+			userId,
+			OR: [{ state: null }, { state: { not: { in: [DinozState.frozen, DinozState.sacrificed] } } }]
+		},
+		select: {
+			status: {
+				where: {
+					statusId: DinozStatusId.FLIPPERS
+				},
+				select: {
+					statusId: true
+				}
+			}
+		}
+	});
+
+	const flipperCount = dinoz.filter(entry => entry.status.length > 0).length;
+	return getBotDinozPurchaseReserve(dinoz.length, flipperCount) ?? 0;
 }
 
 export async function isBotPreparingSylvenoireRoster(userId: string): Promise<boolean> {

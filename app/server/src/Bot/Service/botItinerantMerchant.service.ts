@@ -6,6 +6,7 @@ import { prisma } from '../../prisma.js';
 import { sellIngredientsToItinerantForUser } from '../../Shop/Service/sellIngredients.service.js';
 import { getBotInventoryForecast } from './botInventoryForecast.service.js';
 import { getBotIngredientReserve } from './botMarket.service.js';
+import { getBotShopRoleCounts } from './botShop.service.js';
 
 export type BotItinerantSale = {
 	ingredients: Array<{
@@ -19,7 +20,7 @@ export async function getBotItinerantSalePlan(userId: string, shopId: number): P
 	const shop = Object.values(shopListV2).find(entry => entry.shopId === shopId);
 	if (!shop || shop.type !== ShopType.ITINERANT) return null;
 
-	const [user, forecast] = await Promise.all([
+	const [user, forecast, roles] = await Promise.all([
 		prisma.user.findUnique({
 			where: { id: userId },
 			select: {
@@ -31,7 +32,8 @@ export async function getBotItinerantSalePlan(userId: string, shopId: number): P
 				}
 			}
 		}),
-		getBotInventoryForecast(userId)
+		getBotInventoryForecast(userId),
+		getBotShopRoleCounts(userId)
 	]);
 	if (!user) return null;
 
@@ -44,7 +46,9 @@ export async function getBotItinerantSalePlan(userId: string, shopId: number): P
 		const owned = user.ingredients.find(ingredient => ingredient.ingredientId === sold.id);
 		if (!owned) continue;
 
-		const reserve = getBotIngredientReserve(sold.id) + (forecast.ingredients.get(sold.id) ?? 0);
+		const reserve =
+			getBotIngredientReserve(sold.id, roles.gatherer) +
+			(forecast.ingredients.get(sold.id) ?? 0);
 		const quantity = Math.max(0, owned.quantity - reserve);
 		if (quantity <= 0) continue;
 
