@@ -5,7 +5,7 @@ import { BotStrategy } from '../../../../prisma/index.js';
 export const createBotBodySchema = z
 	.object({
 		name: z.string().min(3).max(20),
-		strategy: z.nativeEnum(BotStrategy).default(BotStrategy.BALANCED),
+		strategy: z.nativeEnum(BotStrategy).optional(),
 		minDelaySeconds: z.number().int().min(10).max(86_400).default(60),
 		maxDelaySeconds: z.number().int().min(10).max(86_400).default(600)
 	})

@@ -1,9 +1,10 @@
 import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { BotDinozRole, BotProgressionGoal } from '../../../prisma/index.js';
+import { BotDinozRole, BotProgressionGoal, BotStrategy } from '../../../prisma/index.js';
 import {
 	getBotDinozRoleActivityBonus,
+	getBotRoleStrategyBonus,
 	getOrAssignBotDinozRole
 } from '../../src/Bot/Service/botDinozRole.service.js';
 import { clearBotProgressionGoal } from '../../src/Bot/Service/botProgressionMemory.service.js';
@@ -81,4 +82,48 @@ describe('bot Dinoz strategic roles', () => {
 		expect(getBotDinozRoleActivityBonus(BotDinozRole.FIGHTER, Action.SEEK)).toBe(0);
 		expect(getBotDinozRoleActivityBonus(BotDinozRole.GATHERER, Action.FIGHT)).toBe(0);
 	});
+
+	it('biases roster composition toward the account strategy without removing role diversity', async () => {
+		const user = await createTestUser({
+			name: 'FighterRosterBot',
+			withTutorial: false
+		});
+		await prisma.user.update({
+			where: { id: user.id },
+			data: { isBot: true }
+		});
+		await prisma.botProfile.create({
+			data: {
+				userId: user.id,
+				strategy: BotStrategy.FIGHTER
+			}
+		});
+
+		const dinoz = [];
+		for (let index = 0; index < 7; index += 1) {
+			dinoz.push(
+				await createTestDinoz({
+					userId: user.id,
+					canRename: false
+				})
+			);
+		}
+
+		const roles = [];
+		for (const member of dinoz) {
+			roles.push(await getOrAssignBotDinozRole(user.id, member.id));
+		}
+
+		expect(roles.filter(role => role === BotDinozRole.FIGHTER)).toHaveLength(3);
+		expect(roles.filter(role => role === BotDinozRole.GATHERER)).toHaveLength(2);
+		expect(roles.filter(role => role === BotDinozRole.EXPLORER)).toHaveLength(2);
+	});
+
+	it('maps each global strategy to its matching preferred Dinoz role', () => {
+		expect(getBotRoleStrategyBonus(BotStrategy.FIGHTER, BotDinozRole.FIGHTER)).toBeGreaterThan(0);
+		expect(getBotRoleStrategyBonus(BotStrategy.GATHERER, BotDinozRole.GATHERER)).toBeGreaterThan(0);
+		expect(getBotRoleStrategyBonus(BotStrategy.EXPLORER, BotDinozRole.EXPLORER)).toBeGreaterThan(0);
+		expect(getBotRoleStrategyBonus(BotStrategy.BALANCED, BotDinozRole.FIGHTER)).toBe(0);
+	});
+
 });

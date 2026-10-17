@@ -16,9 +16,25 @@ export type CreateBotPlayerInput = {
 	maxDelaySeconds?: number;
 };
 
+const DEFAULT_BOT_STRATEGIES = [
+	BotStrategy.BALANCED,
+	BotStrategy.FIGHTER,
+	BotStrategy.GATHERER,
+	BotStrategy.EXPLORER
+] as const;
+
+export function getDefaultBotStrategy(name: string): BotStrategy {
+	let hash = 2166136261;
+	for (const char of name) {
+		hash ^= char.charCodeAt(0);
+		hash = Math.imul(hash, 16777619);
+	}
+	return DEFAULT_BOT_STRATEGIES[(hash >>> 0) % DEFAULT_BOT_STRATEGIES.length];
+}
+
 export async function createBotPlayer({
 	name,
-	strategy = BotStrategy.BALANCED,
+	strategy,
 	minDelaySeconds = 60,
 	maxDelaySeconds = 600
 }: CreateBotPlayerInput) {
@@ -34,6 +50,7 @@ export async function createBotPlayer({
 		throw new ExpectedError('userAlreadyExists');
 	}
 
+	const resolvedStrategy = strategy ?? getDefaultBotStrategy(name);
 	const password = randomBytes(32).toString('base64url');
 	const user = await createPlayerAccount({
 		name,
@@ -45,7 +62,7 @@ export async function createBotPlayer({
 	const botProfile = await prisma.botProfile.create({
 		data: {
 			userId: user.id,
-			strategy,
+			strategy: resolvedStrategy,
 			minDelaySeconds,
 			maxDelaySeconds,
 			nextActionAt: new Date()

@@ -1,7 +1,7 @@
 import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 
-import { BotDinozRole } from '../../../../prisma/index.js';
+import { BotDinozRole, BotStrategy } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
 const GATHERER_SKILLS = new Set<number>([
@@ -34,6 +34,20 @@ const GATHER_ACTIONS = new Set<Action>([
 ]);
 
 export type BotDinozRoleActivity = Action | 'mission' | 'move';
+
+export function getBotRoleStrategyBonus(strategy: BotStrategy, role: BotDinozRole): number {
+	switch (strategy) {
+		case BotStrategy.FIGHTER:
+			return role === BotDinozRole.FIGHTER ? 65 : 0;
+		case BotStrategy.GATHERER:
+			return role === BotDinozRole.GATHERER ? 65 : 0;
+		case BotStrategy.EXPLORER:
+			return role === BotDinozRole.EXPLORER ? 65 : 0;
+		case BotStrategy.BALANCED:
+		default:
+			return 0;
+	}
+}
 
 function getRoleCount(memories: { role: BotDinozRole | null }[], role: BotDinozRole): number {
 	return memories.filter(memory => memory.role === role).length;
@@ -90,6 +104,15 @@ export async function getOrAssignBotDinozRole(userId: string, dinozId: number): 
 		},
 		select: {
 			level: true,
+			user: {
+				select: {
+					botProfile: {
+						select: {
+							strategy: true
+						}
+					}
+				}
+			},
 			skills: {
 				select: {
 					skillId: true
@@ -119,13 +142,15 @@ export async function getOrAssignBotDinozRole(userId: string, dinozId: number): 
 		}
 	});
 
+	const strategy = dinoz.user.botProfile?.strategy ?? BotStrategy.BALANCED;
 	const roles = [BotDinozRole.FIGHTER, BotDinozRole.GATHERER, BotDinozRole.EXPLORER];
 	let selectedRole = roles[0];
 	let selectedScore = Number.NEGATIVE_INFINITY;
 
 	for (const role of roles) {
 		const balancePenalty = getRoleCount(memories, role) * 100;
-		const score = getRoleAffinity(role, dinoz) - balancePenalty;
+		const strategyBonus = getBotRoleStrategyBonus(strategy, role);
+		const score = getRoleAffinity(role, dinoz) + strategyBonus - balancePenalty;
 		if (score > selectedScore) {
 			selectedScore = score;
 			selectedRole = role;
