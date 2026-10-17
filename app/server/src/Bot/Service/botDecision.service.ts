@@ -27,6 +27,7 @@ import { getBotForcebrutUnlockStep } from './botForcebrutProgression.service.js'
 import { getBotForestGuardianProgressionStep } from './botForestGuardianProgression.service.js';
 import { BOT_GATHER_ACTIONS, isBotGatherAction } from './botGather.service.js';
 import { getBotGroupPlan, getBotUngroupPlan } from './botGroup.service.js';
+import { getBotHealingThreshold } from './botHealing.service.js';
 import { getBotItinerantSalePlan } from './botItinerantMerchant.service.js';
 import { getBotKorgonProgressionStep } from './botKorgonProgression.service.js';
 import { getBotLegacyIntroRepairStep } from './botLegacyIntroRepair.service.js';
@@ -886,10 +887,20 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}
 
 	for (const dinoz of playerData.dinoz) {
-		if (dinoz.life > 0 && dinoz.life < Math.round(dinoz.maxLife * 0.35)) {
+		if (dinoz.life <= 0) continue;
+
+		const placeExperience = placeExperiences.get(dinoz.id) ?? new Map<number, BotPlaceExperienceSnapshot>();
+		const fightExperienceBonus = getBotFightExperienceBonus(placeExperience, dinoz.placeId, dinoz.maxLife);
+		const healingThreshold = getBotHealingThreshold(
+			dinozRoles.get(dinoz.id) ?? null,
+			roleObjectives.get(dinoz.id) ?? null,
+			fightExperienceBonus
+		);
+
+		if (dinoz.life < Math.round(dinoz.maxLife * healingThreshold)) {
 			candidates.unshift({
 				value: { dinozId: dinoz.id, action: 'heal' },
-				weight: 200
+				weight: 200 + Math.round(healingThreshold * 100)
 			});
 		}
 	}

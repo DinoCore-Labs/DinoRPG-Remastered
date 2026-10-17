@@ -1,8 +1,39 @@
 import { ItemEffect } from '@dinorpg/core/models/enums/ItemEffect.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 
+import { BotDinozRole, BotRoleObjective } from '../../../../prisma/index.js';
 import { useItem } from '../../Inventory/Service/useItem.service.js';
 import { prisma } from '../../prisma.js';
+
+export function getBotHealingThreshold(
+	role: BotDinozRole | null,
+	objective: BotRoleObjective | null,
+	fightExperienceBonus = 0
+): number {
+	let threshold =
+		role === BotDinozRole.FIGHTER
+			? 0.3
+			: role === BotDinozRole.GATHERER
+				? 0.5
+				: role === BotDinozRole.EXPLORER
+					? 0.45
+					: 0.35;
+
+	if (objective === BotRoleObjective.GATHERER_MERCHANT || objective === BotRoleObjective.GATHERER_HARVEST) {
+		threshold += 0.05;
+	}
+	if (objective === BotRoleObjective.EXPLORER_DISCOVERY) {
+		threshold += 0.05;
+	}
+
+	if (fightExperienceBonus <= -60) {
+		threshold += 0.15;
+	} else if (fightExperienceBonus <= -30) {
+		threshold += 0.1;
+	}
+
+	return Math.max(0.25, Math.min(0.7, threshold));
+}
 
 export async function findBestBotHealingItem(userId: string, dinozId: number): Promise<number | null> {
 	const dinoz = await prisma.dinoz.findFirst({

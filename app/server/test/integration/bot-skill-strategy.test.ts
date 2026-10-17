@@ -2,8 +2,12 @@ import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { BotStrategy } from '../../../prisma/index.js';
-import { getBotSkillStatePlan, prepareBotSkillsForCombat } from '../../src/Bot/Service/botSkillStrategy.service.js';
+import { BotDinozRole, BotRoleObjective, BotStrategy } from '../../../prisma/index.js';
+import {
+	getBotCombatEnergyBudget,
+	getBotSkillStatePlan,
+	prepareBotSkillsForCombat
+} from '../../src/Bot/Service/botSkillStrategy.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
@@ -117,4 +121,79 @@ describe('bot skill strategy', () => {
 		expect(stateBySkill.get(Skill.METEORES)).toBe(false);
 		expect(stateBySkill.get(Skill.BENEDICTION)).toBe(true);
 	});
+
+	it('uses the Dinoz role over the account strategy when preparing combat skills', async () => {
+		const user = await createTestUser({
+			name: 'RoleSkillBudgetBot',
+			withTutorial: false
+		});
+		await prisma.user.update({
+			where: { id: user.id },
+			data: { isBot: true }
+		});
+		const fighter = await createTestDinoz({
+			userId: user.id,
+			canRename: false
+		});
+		await prisma.botDinozMemory.create({
+			data: {
+				dinozId: fighter.id,
+				role: BotDinozRole.FIGHTER
+			}
+		});
+		await addStatus(fighter.id, DinozStatusId.STRATEGY_IN_130_LESSONS);
+		await addSkill(fighter.id, Skill.METEORES, false);
+
+		await expect(getBotSkillStatePlan(user.id, fighter.id, BotStrategy.GATHERER)).resolves.toContainEqual({
+			skillId: Skill.METEORES,
+			state: true
+		});
+	});
+
+	it('keeps gatherer combat energy conservative even on a fighter account strategy', async () => {
+		const user = await createTestUser({
+			name: 'GathererSkillBudgetBot',
+			withTutorial: false
+		});
+		await prisma.user.update({
+			where: { id: user.id },
+			data: { isBot: true }
+		});
+		const gatherer = await createTestDinoz({
+			userId: user.id,
+			canRename: false
+		});
+		await prisma.botDinozMemory.create({
+			data: {
+				dinozId: gatherer.id,
+				role: BotDinozRole.GATHERER
+			}
+		});
+		await addStatus(gatherer.id, DinozStatusId.STRATEGY_IN_130_LESSONS);
+		await addSkill(gatherer.id, Skill.METEORES, true);
+
+		await expect(getBotSkillStatePlan(user.id, gatherer.id, BotStrategy.FIGHTER)).resolves.toContainEqual({
+			skillId: Skill.METEORES,
+			state: false
+		});
+	});
+
+	it('raises explorer preparation in a place remembered as dangerous', () => {
+		expect(
+			getBotCombatEnergyBudget(
+				BotStrategy.BALANCED,
+				BotDinozRole.EXPLORER,
+				BotRoleObjective.EXPLORER_DISCOVERY,
+				-60
+			)
+		).toBeGreaterThan(
+			getBotCombatEnergyBudget(
+				BotStrategy.BALANCED,
+				BotDinozRole.EXPLORER,
+				BotRoleObjective.EXPLORER_DISCOVERY,
+				20
+			)
+		);
+	});
+
 });
