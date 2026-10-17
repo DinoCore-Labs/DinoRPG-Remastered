@@ -6593,111 +6593,111 @@
 		"objectives": {
 			"dinoz": {
 				"title": "Adopting a Dinoz",
-				"begin": "Bienvenue sur DinoRPG. Je serai ton guide pour ces premières étapes. Tout d'abord, il te faut adopter un Dinoz ! Prends ton temps pour le choisir, il sera ton compagnon pour un bon moment.",
-				"end": "Félicitations, vous voilà maintenant plongé dans un immense univers que nous allons continuer à vous présenter !",
+				"begin": "Welcome to DinoRPG. I'll be your guide for the first few steps. First of all, you need to get yourself a Dinoz! Take your time to choose one you really like, as they'll be with you for a while.",
+				"end": "Congratulations! Now let's get involved - I'll show you around a little part of this vast universe!",
 				"helpers": {
-					"shopDinoz": "C'est par ici !",
-					"compare": "Compare les caractéristiques de chaque race !",
-					"name": "Très bon choix ! Maintenant, donne un nom à ce Dinoz !"
+					"shopDinoz": "It's here!",
+					"compare": "Take a look at the skills and characteristics of each one! We'll learn more about these later!",
+					"name": "Good choice! Now you need to give your Dinoz a name!"
 				}
 			},
 			"speak": {
-				"title": "Discussion enflammée",
-				"begin": "Bienvenue à Dinoland, je vais t'apprendre à parler avec les personnages du jeu ! <strong>Si tu es bloqué, appuie sur le bouton Nouvelle Action !</strong><br>Appuie sur <strong>Leguide Michel</strong> (c'est moi !) dans la partie <strong>actions</strong>, que tu trouveras en dessous de ton Dinoz.",
-				"end": "Tu viens de parler à l'un des premiers habitants de Dinoland. Tu rencontreras encore beaucoup de personnages tout au long de ton aventure !",
+				"title": "Overheated Discussion",
+				"begin": "Welcome to Dinoland, I'm going to teach you how to speak to the characters in the game! <strong>If you are stuck, click on the New Action button!</strong> Click on <strong>Michael the Guide</strong> (that's me!) in the <strong>actions</strong> area, which you'll find underneath your dinoz.",
+				"end": "You have just spoken to your first Dinoland resident. You'll meet many, many more in the course of your adventures here!",
 				"helpers": {
-					"dinoz": "C'est par ici !",
-					"answers": "C'est par ici !",
-					"michel": "C'est par ici !"
+					"dinoz": "It's here!",
+					"answers": "It's here!",
+					"michel": "It's here!"
 				}
 			},
 			"move": {
-				"title": "À l'aube d'une grande aventure",
-				"begin": "Il est temps maintenant de découvrir les autres lieux. <strong>Si tu es bloqué, appuie sur le bouton Nouvelle Action !</strong><br>Dans la section <strong>Carte</strong>, appuie sur la destination de ton choix en cliquant sur un <strong>des lieux clignotants</strong>, et pars à l'aventure !<br>Je te conseille de te diriger vers la Fontaine de Jouvence dans un premier temps.",
-				"end": "Félicitations, te voilà arrivé dans un nouveau lieu de Dinoland ! Il existe de nombreux lieux à découvrir, tu les verras tous un jour, l'âme d'un aventurier sommeille en toi !",
+				"title": "The gateway to adventure",
+				"begin": "It is now time to discover some new places.<strong>If you are stuck, click on the New Action button!</strong> In the <strong>Map</strong> section, choose your destination by clicking on one of the <strong>flashing places</strong>, and be ready for adventure! I would advise you to go to the Fountain of Youth first of all.",
+				"end": "Congratulations, you have made it to a new place in Dinoland! There are loads of places to discover, and one day you'll have seen them all, the soul of an adventure is dormant within you!",
 				"helpers": {
-					"map": "Direction : La Fontaine de Jouvence !",
-					"combat": "Lorsque tu te déplaces, tu rencontreras différents monstres. Ton Dinoz va combattre seul, ton but sera de le dresser pour lui faire apprendre des techniques plus puissantes !"
+					"map": "Direction: The Fountain of Youth!",
+					"combat": "When you move around, you will meet all kinds of monsters. Your Dinoz will fight alone, and as you progress, you should train it and teach it the most powerful skills!"
 				}
 			},
 			"port": {
-				"title": "Aller au Port de Prêche",
-				"begin": "Ton Dinoz a retrouvé ses forces, et il va lui en falloir pour traverser les terres du Royaume de Dinoville. Dirige-toi vers le Port de Prêche. Tu pourras discuter avec les autochtones locaux et peut-être en savoir plus sur le monde dans lequel tu viens d'arriver !",
-				"end": "Te voilà arrivé à bon port ! (oui oui...)",
+				"title": "Go to Frish Port",
+				"begin": "Your Dinoz feels great, and it will have to if it wants to traverse the lands of this vast Kingdom. Set out for Frish Port. You can chat to the locals there and maybe you can learn more about the world in which you have arrived!",
+				"end": "There you are - Frish Port! (Oh Yeah...)",
 				"helpers": {
-					"map": "Direction : Le Port de Prêche !"
+					"map": "Direction: Frish Port!"
 				}
 			},
 			"pub": {
-				"title": "Vivre une aventure",
-				"begin": "Discute avec les autochtones locaux pour peut-être en savoir plus sur le monde dans lequel tu viens d'arriver !",
-				"end": "Suis Baobob vers cette nouvelle aventure, il t'apprendra sûrement beaucoup de choses...",
+				"title": "Live the adventure",
+				"begin": "Chat to the locals there and maybe you can learn more about the world in which you have arrived!",
+				"end": "Follow baobob on this new adventure, you're sure to learn a lot...",
 				"helpers": {
-					"pilier": "C'est lui !"
+					"pilier": "Look who it is!"
 				}
 			},
 			"baobob": {
-				"title": "Suivez Bao Bob",
+				"title": "Follow Bao Bob",
 				"begin": "",
-				"end": "Suis Baobob vers cette nouvelle aventure, il t'apprendra sûrement beaucoup de choses...",
+				"end": "Follow baobob on this new adventure, you're sure to learn a lot...",
 				"helpers": {
-					"intro4": "C'est ici !",
-					"intro5": "C'est ici !",
-					"intro6": "C'est ici !",
-					"intro7": "Gloups...",
-					"levelup": "Félicitations !",
-					"skill": "Tu viens de gagner un niveau ! Il est maintenant temps de choisir une compétence à faire apprendre à ton Dinoz. Choisis bien ! Ces choix caractérisent le futur de ton compagnon.",
-					"heal": "Utilise un Nuage Burger avant d'être à bout de force pour continuer ton aventure."
+					"intro4": "It's here!",
+					"intro5": "It's here!",
+					"intro6": "It's here!",
+					"intro7": "Gulp...",
+					"levelup": "Congratulations!",
+					"skill": "You have levelled up! It is now time for you to choose a new skill to teach your Dinoz. Choose carefully! These choices will shape your companion's destiny.",
+					"heal": "Use a Cloud Burger to get your strength back before you continue your adventure."
 				}
 			},
 			"papy": {
-				"title": "Rendre service pour un monde meilleur",
-				"begin": "L'heure est venue de réaliser ta première mission. Va voir Papy Joe dans sa maison en passant par l'Université, il aura sûrement des missions à te proposer.<br>Rejoins la maison de Papy Joe et accepte ta première mission ! Au-dessus de tes actions, tu retrouveras les étapes de ta mission pour ne pas oublier où tu en es !",
-				"end": "Félicitations, tu as accepté ta première mission. Réaliser des missions est important pour progresser dans le jeu.<br>En plus des missions, certains personnages t'entraîneront dans leurs aventures : des <strong>quêtes</strong> incroyables qui te feront visiter de nouveaux lieux et combattre des monstres terrifiants !",
+				"title": "Help to make the world a better place",
+				"begin": "The time has come for your first mission, Go and see Papy Joe at his home on the other side of the university, he'll surely have some missions for you. Go to Papy Joe's house and accept your first mission! Above your actions, you will see the steps required to complete the mission so you always know where you are!",
+				"end": "Congratulations, you have accepted your first mission. Completing missions is important to advance in DinoRPG. Over and above missions, some characters will accompany you on adventures, and incredible <strong>quests</strong> which will lead you to new locations and terrifying monsters!",
 				"helpers": {
-					"dinoz": "C'est par ici !",
-					"map": "Direction : Chez Papy Joe !",
-					"papy": "Parler à Papy Joe !",
-					"mission": "Choisis une mission parmi celles disponibles."
+					"dinoz": "It's here!",
+					"map": "Direction: Papy Joe's House!",
+					"papy": "Talk to Grandpa Joe !",
+					"mission": "Choose a mission from those available"
 				}
 			},
 			"shop": {
-				"title": "L'excitation de l'achat",
-				"begin": "Une fois tous tes objets consommés, il faudra en racheter dans la boutique grâce à l'or que tu auras gagné lors des combats !<br>Appuie sur le bouton <strong>Boutique</strong> en haut à gauche, juste en dessous de ta réserve d'or. Tu découvriras la boutique, il ne te reste plus qu'à choisir <strong>un Nuage Burger</strong> par exemple !",
-				"end": "Bien, ton achat figure désormais dans ton inventaire !",
+				"title": "Purchasing power",
+				"begin": "Once you have used up all your objects, you can use the gold which you have earned in combat to buy more! Click on the <strong>shop button, at the top left</strong>, just underneath your gold coin total. This will take you to the shop, now all you have to do is choose... <strong>a cloud burger</strong> for example!",
+				"end": "Good, your purchase will now appear in your inventory!",
 				"helpers": {
-					"shop": "C'est par ici !",
-					"burger": "C'est par ici !"
+					"shop": "It's here!",
+					"burger": "It's here!"
 				}
 			},
 			"burger": {
-				"title": "Un petit creux",
-				"begin": "Durant les combats, ton Dinoz perd des points de vie. Pour le guérir, il te faut utiliser des objets. Utilise par exemple un <strong>Nuage Burger</strong> sur ton Dinoz pour lui redonner de la vie.",
-				"end": "Bien, tu as redonné de la vie à ton Dinoz, ton périple peut continuer.",
+				"title": "Somewhat peckish",
+				"begin": "During combats, your Dinoz loses health points. To heal it, you need to use objects. For example, using a <strong>cloud burger</strong> on your dinoz will restore health points.",
+				"end": "Good, you have restore some of your Dinoz' health points, your adventure can continue.",
 				"helpers": {
-					"burger": "Clique ici pour utiliser l'objet."
+					"burger": "Click here to use the object."
 				}
 			},
 			"clan": {
-				"title": "Les clans surpuissants",
-				"begin": "Tu es bientôt prêt à partir à l'aventure. Si tu te sens seul et ne sais pas trop où aller, je te conseille de rejoindre un clan pour discuter et échanger des astuces avec d'autres Maîtres Dinoz.<br>Dans le menu, tu trouveras un bouton <strong>Clans</strong> qui te permettra de découvrir les clans de Dinoland.",
-				"end": "Tu trouveras de nombreux Maîtres Dinoz dans les clans qui se livrent des batailles farouches lors des terrifiantes Guerres de Clans et autres Championnats.",
+				"title": "All-Powerful Clans",
+				"begin": "You are almost ready to set out on adventure. If you feel a bit lonely or don't really know what to do, I'd recommend you to join a clan where you can discuss your adventures and exchange advice with other Dinoz masters.",
+				"end": "You will find the best Dinoz masters in clans which take part in ferocious battles in the Clan Wars and Championships of the Clans.",
 				"helpers": {
-					"clan": "C'est ici !"
+					"clan": "It's here!"
 				}
 			},
 			"user": {
-				"title": "Se connaître soi-même",
-				"begin": "Sais-tu que tu peux accéder aux informations de ton compte à travers la page <strong>Mon Compte</strong> ? Tu pourras y voir tes informations publiques, tes Dinoz, tes titres et tes récompenses épiques !",
-				"end": "N'oublie pas que tu peux éditer tes informations personnelles depuis cette page !",
+				"title": "Look inside yourself",
+				"begin": "Did you know that you can access all your details by going to the <strong>My Account</strong> page? In the right-hand menu, you will see a <strong>My Account</strong> which allows you to see all your public information, your dinoz, your titles and your Epic Rewards!",
+				"end": "Don't forget that you can edit all your information by clicking on the <strong>Modify my Information</strong> button!",
 				"helpers": {
-					"account": "C'est ici !"
+					"account": "It's here!"
 				}
 			},
 			"end": {
-				"title": "Fin",
-				"begin": "Voilà, je vais maintenant te laisser partir à l'aventure. Si tu as encore besoin de moi, tu peux venir me parler à Dinoville, je serai toujours là pour te conseiller.",
-				"end": "Nous te souhaitons une excellente et longue aventure sur les terres de Dinoland ! Bon courage Maître Dinoz !",
+				"title": "End",
+				"begin": "Wnd there you have it, I'm going to leave you to discover your own path now, but if you need me, you can come and talk to me any time at Dinotown, I'm always there to help out!",
+				"end": "I wish you a long and exciting adventure throughout the universe of Dinoland! Good luck Dinoz Master!",
 				"helpers": {}
 			}
 		}
