@@ -5805,181 +5805,181 @@
 		},
 		"madameX": {
 			"mmex1": {
-				"name": "La Mallette Noire",
-				"begin": "Un bateau est arrivé la nuit dernière au Port de Prêche, il a déposé une petite malette noire pour moi. Peux-tu me la ramener ? Surtout ne l'ouvre pas !",
+				"name": "The Black Briefcase",
+				"begin": "Last night a ship delivered a Black Briefcase for me at Frish Port. Can you go and pick it up for me? Make sure you don't open it!",
 				"take": {
-					"name": "Prendre la Malette Noire",
-					"text": "Vous avez obtenu la Malette Noire auprès d'un homme avec un long imperméable. Cette mission semble plutôt facile !"
+					"name": "Take the Black Briefcase",
+					"text": "You've been given the Black Briefcase from a man dressed in a long trench coat. This mission seems too easy!"
 				},
 				"madameX": {
 					"name": "Miss X",
-					"text": "C'est étrange... Cette malette... ELLE A ETE PIEGEE !"
+					"text": "That's strange ... the briefcase ... IT WAS BOOBY-TRAPPED!"
 				},
 				"trap": {
-					"name": "Piège !",
-					"begin": "Un Gluon avait été glissé dans la malette, sans doute dans le but d'attaquer Madame X !",
-					"win": "Madame X est ravie que vous ayez déminé la malette a sa place !"
+					"name": "Trap!",
+					"begin": "A Gluon has been put in the briefcase to attack Madam X!",
+					"win": "Miss X is pleased that you disarmed the briefcase!"
 				},
-				"end": "Merci pour ta précieuse aide, voici ta récompense !"
+				"end": "Thanks for your help! Take your reward, you've earned it!"
 			},
 			"mmex2": {
-				"name": "Le Marchand Traître",
-				"begin": "Il semblerait qu'il y ait un traître à la cour du Roi. Il fait passer ses informations grâce à un marchand qui se présente de temps en temps à Dinoville. Arrête ce marchand et amène-le moi pour que je puisse l'interroger !",
+				"name": "The Merchant Traitor",
+				"begin": "It seems that there's a traitor in the king's court. This traitor passes his information using a merchant who visits Dinotown from time to time. Arrest the merchant and bring him here so I can interrogate him!",
 				"search1": {
-					"name": "Chercher le Marchand",
-					"text": "Vous avez trouvé un marchand particulièrement louche qui semble correspondre à la description..."
+					"name": "Find The Merchant",
+					"text": "You have found a suspicious-looking merchant who seems to match the description..."
 				},
 				"attack1": {
-					"name": "A l'Attaaaaque !",
-					"begin": "Au secourrrss !!!",
-					"win": "Après vérification, ce Marchand était innocent ! Le pauvre..."
+					"name": "Fighhhht!",
+					"begin": "Heellllppp!!!",
+					"win": "After questioning it seems that this merchant was in fact innocent! Poor man."
 				},
 				"search2": {
-					"name": "Chercher le Marchand",
-					"text": "Vous avez trouvé LE marchand qui correspond exactement à la description... Il ne peut pas y avoir d'erreur cette fois ! (a priori)"
+					"name": "Find The Merchant",
+					"text": "This time you are certain that you have found the merchant who matches the description..."
 				},
 				"attack2": {
-					"name": "A l'Attaaaaque !",
-					"begin": "Aarrrgg !!!",
-					"win": "Vous avez capturé le marchand ! Il va falloir le ramener à Madame X"
+					"name": "Fighhhht!",
+					"begin": "Aarrrgg!!!",
+					"win": "You've captured the merchant! Take him to Miss X!"
 				},
-				"end": "Merci d'avoir ramené ce traître au Royaume ! Ne t'inquiete pas je sais comment je vais le faire avouer !! J'espère par contre que tu ne t'es pas trompé de personne..."
+				"end": "Thanks for arresting this traitor! Don't worry, I know how to make him confess!! But I hope that you were not wrong about this person..."
 			},
 			"mmex3": {
-				"name": "La Course-Poursuite",
-				"begin": "J'ai reçu un rapport de police comme quoi un Dinoz avait attaqué des marchands à Dinoville récemment. Pourrais-tu enquêter sur cette étrange affaire ?",
+				"name": "Police Chase",
+				"begin": "I've received a police report saying that a Dinoz has been attacking merchants in Dinotown. Can you investigate this strange case for me?",
 				"portrait": {
-					"name": "Portrait-Robot",
-					"text": "Le Portrait-Robot du Dinoz accusé d'avoir attaqué les marchands ressemble étrangement à votre Dinoz. Simple coïncidence ou complot ?"
+					"name": "Facial Composite Image",
+					"text": "The Facial Composite of the suspected Dinoz looks a lot like one of your Dinoz. Coincidence or conspiracy?"
 				},
 				"investigate": {
-					"name": "Enquêter",
-					"begin": "Alors que vous cherchiez des indices, des marchands en colère trouvent et attaquent votre Dinoz !",
-					"win": "La situation va devenir complexe à expliquer... mieux vaut peut-être en informer Madame X ?"
+					"name": "Investigate",
+					"begin": "While you are searching for clues, angry merchants attack your Dinoz!",
+					"win": "This situation is becoming far too complicated ... maybe it's better to just explain everything to Miss X?"
 				},
 				"madameX": {
 					"name": "Miss X",
-					"text": ".... (vous expliquez toute l'histoire) ... Quoi ! Alors c'était vraiment ton Dinoz qu'ils recherchaient ?!? hmm... je comprends. Il va me falloir du temps pour faire enterrer cette affaire. En attendant, va te planquer aux Collines Escarpées !"
+					"text": "...(you explain the entire story)... What? So it really was your Dinoz they were looking for?! Mmmm... I understand. But it will take me some time for me to bury this case. In the meantime, go and hide in the Precipitous Hills!"
 				},
 				"wait": {
 					"name": "Wait",
-					"text": "Vous attendez que Madame X vous contacte..."
+					"text": "You wait to hear from Miss X..."
 				},
 				"messagemx": {
 					"name": "Message MX",
-					"text": "Un message signé \"MX\" vous attend, il précise juste \"Retourne à Dinoville au plus vite\""
+					"text": "A message signed \"MX\" is waiting for you. It reads \"Return to Dinotown as soon as possible\""
 				},
 				"merchant": {
 					"name": "Merchant",
-					"text": "Oh ! Alors c'est vous qui êtes le maître du fameux jumeau ?!? Ah ah ah ! C'est vrai que votre Dinoz ressemble beaucoup à celui qu'on a attrapé hier ! Mais ne vous inquiétez pas, le vrai coupable a été capturé par la Police d'Elite Royale, donc vous ne craignez plus rien !"
+					"text": "So you are the master of the famous twin?!? Ha ha ha! That's right! Your Dinoz looks just like the one we caught yesterday! Yeah, the real culprit was captured by the Elite Royal Police. You don't have to worry anymore!"
 				},
-				"end": "J'ai réussi à te couvrir pour cette fois, grâce à mes relations. Mais si jamais tu fais une seule fois une telle faute dans une mission, je serais obligée de te lâcher, et tu n'auras alors jamais travaillé pour moi. Capito ?"
+				"end": "I've successfully covered you for this time, using my connections, but if you ever make a mistake like that again during a mission, I will have to disown you, understand?"
 			},
 			"mmex4": {
-				"name": "Les Iles c'est Kool",
-				"begin": "Nous avons isolé un groupe d'individu qui cultive des herbes illégales dans le Marais Collant et les exporte ensuite vers la capitale. Nous devons envoyer un agent sur place. Il faut bien entendu que ton Dinoz soit capable de se déplacer aux Iles Atlantéinées.",
+				"name": "Island it's Cool",
+				"begin": "We've found a group of people growing illegal drugs in the Sticky Swamp. They then export them to the capital. We need someone to go and investigate. This means you must go to the Atlanteid Islands.",
 				"investigate": {
-					"name": "Enquêter",
-					"text": "L'odeur assez forte et les sons du Djembé qu'on entend depuis très loin vous permettent de facilement localiser une bande de délinquants aux cheveux longs et gras."
+					"name": "Investigate",
+					"text": "Following the strong scent and the Djembe sounds, you find a group delinquents with long, greasy hair."
 				},
 				"fight": {
-					"name": "Les Neutraliser",
-					"begin": "Aarrg !! Un Borg ! Je pense qu'il vaudrait mieux combattre ensemble pour cette fois !!",
-					"win": "Après votre victoire commune, il semblerait que les trois délinquants veuillent discuter avec vous..."
+					"name": "Fight them",
+					"begin": "Aarrg!! A Borg! I think we need to fight together this time!!",
+					"win": "After having defeated them, the three delinquants want to talk with you..."
 				},
 				"jeanH1": {
 					"name": "Jean-Hubert",
-					"text": "Yo mec ! Je comprends que tu kiff trop pas ce qu'on fait ici, mais c'est trop kool, alors abuse pas mec !"
+					"text": "Yo man! I understand that you don't really like what we're doing here, but it's all cool. So don't abuse us, man!"
 				},
 				"charlesE": {
 					"name": "Charles Edward",
-					"text": "Eh mon pote ! Tu t'es battu à donf là ! Trop kool ! Mais nous dénonce pas, les keufs me gavent, et la beach c'est trop kool !"
+					"text": "Hey man! You're not a bad fighter! But you need to chill out. Cops annoy me and the beach is so cool!"
 				},
 				"louisS1": {
 					"name": "Louis Stanislas",
-					"text": "Mes deux associés voulaient exprimer leur gratitude à votre encontre, et vous demander humblement si un arrangement n'était pas possible pour que nous puissions éviter les affres de la prison qui nous feraient gâcher ce que tous les grand poêtes ont surnommé \"nos plus belles années\". Merci de votre compréhension."
+					"text": "My friends wanted to show their gratitude, and ask humbly if we can make a plea deal to avoid the horrors of prison. These horrors will make us waste what all the poets refer to as \"our most beautiful years\"!"
 				},
 				"madameX1": {
 					"name": "Miss X",
-					"text": "QUOI ? Tu as sympathisé avec des hors-la-loi ? ... Je ne suis pas certain que tu fasses un très bon agent après-tout... Enfin bref : ils ont enfreint la loi, et même s'ils sont très gentils ils n'en sont pas moins coupables !"
+					"text": "WHAT? You sympathize with these outlaws? ... I'm not so sure you'll be a good agent after all ... Even if they are nice, they've broken the law. They need to be punished!"
 				},
 				"madameX2": {
 					"name": "Miss X",
-					"text": "Puisque tu insistes, je vais m'arranger pour que les circonstances atténuantes leurs soient accordées, mais ils devront quand même faire des travaux d'intêret public, comme le rangement de la bibliothèque de l'Université ! Et tu vas les aider, puisque tu les aimes bien !"
+					"text": "Due to your insistance, I'll make arrangements so that they're granted mitigating circumstances. But they'll still be required to perform community service, comprising tasks such as organising books in the University Library. Will you help them since you're such a big fan of theirs!"
 				},
 				"louisS2": {
 					"name": "Louis Stanislas",
-					"text": "Je vous remercie de nous avoir aidé à éviter le pire. Nous serons ravis de ranger la bibliothèque de l'Université, surtout si vous êtes avec nous pour nous soutenir le moral pendant ces longues heures de labeur !"
+					"text": "Thank you so much for keeping us out of prison. We'd be happy to organise the University Library, especially with you there at our side to help us!"
 				},
 				"organize": {
-					"name": "Ranger la Bibliothèque",
-					"text": "Votre Dinoz aide Jean-Hubert, Charles-Edouard et Louis-Stanislas à ranger la grande bibliothèque de l'Université..."
+					"name": "Organize the Library",
+					"text": "Your Dinoz helps Jean-Hubert, Charles-Edouard and Louis-Stanislas to organize the University's huge library..."
 				},
 				"jeanH2": {
 					"name": "Jean-Hubert",
-					"text": "Trop kool mec ! Nous on retourne aux Iles, car c'est trop kool ! Mais promis on déconnera plus ! Tchaw !!"
+					"text": "Thanks a lot man! We gonna go back to the Islands now! We promise we won't mess around again! Ciao!!"
 				},
-				"end": "La loi est la loi, et toute infraction mérite sanction."
+				"end": "The law is the law. All violations must be punished."
 			},
 			"mmex5": {
-				"name": "Le Complot Ashpouk",
-				"begin": "Un trafic de fausses reliques de la civilisation Ashpouk semble avoir lieu, et il se pourrait que des notables y soient mêlés. Nous devons envoyer un agent sur place pour enquêter. Il faut bien entendu que ton Dinoz soit capable de se déplacer jusqu'au Grand-Tout-Chaud.",
+				"name": "The Ashpouk Conspiracy",
+				"begin": "Recently we've seen a rise in the trafficking of fake relics from Ashpouk. We need your Dinoz to go to the Big All-Hot and investigate.",
 				"informer": {
-					"name": "L'Indic",
-					"text": "Je suis le responsable de la collecte de renseignements pour Madame X dans ce quartier. On nous a signalé que des choses étranges se passaient la nuit du côté des Ruines Ashpouk..."
+					"name": "The Informer",
+					"text": "I'm responsible for gathering information for Madam X here. We've been informed that strange things occur at night near the Ashpouk Ruins..."
 				},
 				"hide1": {
-					"name": "Se Planquer",
-					"text": "Votre Dinoz prend la planque, et se prépare à prendre en filature les suspects qui viennent trafiquer dans le coin."
+					"name": "Hide",
+					"text": "Your Dinoz hides, and prepares to follow possible suspects."
 				},
 				"suspects1": {
-					"name": "Suspects !",
-					"text": "Votre Dinoz a repéré des suspects, qui semblent rassembler de la terre prise dans les Ruines pour la stocker dans de grands sacs... Pour quelle raison ? Vous décidez de les suivre."
+					"name": "Suspects!",
+					"text": "Your Dinoz has located the suspects. They seem to gather earth from the Ashpouk Ruins and store it in large bags... You decide to follow them to find out why."
 				},
 				"stalking1": {
-					"name": "Filature",
-					"text": "Les suspects s'éloignent en direction du Nord"
+					"name": "Stalking",
+					"text": "The suspects travel north"
 				},
 				"stalking2": {
-					"name": "Filature",
-					"text": "Apparemment les suspects se sont doutés de quelque chose car ils ont accéléré et se sont évanouis dans la nature..."
+					"name": "Stalking",
+					"text": "It seems the suspects have spotted us, they've disappeared..."
 				},
 				"suspects2": {
-					"name": "Suspects !",
-					"text": "Vous reconnaissez l'un des suspects dans une rue de Fosselave !"
+					"name": "Suspects!",
+					"text": "You recognise one of the suspects in a street near the Lavapit!"
 				},
 				"challenge": {
-					"name": "Lui foncer dessus !"
+					"name": "Challenge Him!"
 				},
 				"search": {
 					"name": "Search",
-					"text": "Après avoir vaincu le suspect, vous trouvez sur lui plusieurs sachets de terre en provenance des ruines ainsi qu'une carte de visite au nom de \"El Signor Don Fuego\". Il est temps de faire votre rapport a Madame X !"
+					"text": "After defeating the suspect, you find many little bags filled with earth from the ruins as well as an access card with the name of \"El Signor Don Fuego\". Report to Miss X!"
 				},
 				"madameX": {
 					"name": "Miss X",
-					"text": "El Signor Don Fuego ? Tiens c'est une drôle de coïncidence... c'est l'un des marchands les plus en vue à Fosselave, et il dispose de nombreux soutiens à la Cour. Pour le faire tomber, il faudrait trouver des preuves qui l'impliquent directement !"
+					"text": "El Signor Don Fuego? That's a funny coincidence ... He is one of the most famous Lavapit merchants, and he has many connections in the Court. In order to expose him, we need to find proof that directly implicates him!"
 				},
 				"hide2": {
-					"name": "Se Planquer",
-					"text": "\"Les planques c'est toujours la partie la moins drôle du métier...\" C'est toujours ce que vous avait raconté votre Grand Père Der'hik. Maintenant vous comprenez ce qu'il voulait dire..."
+					"name": "Stakeout",
+					"text": "Grandpa Der'hik used to always say, \"A stakeout is the most boring part of the job...\". Now you understand why..."
 				},
 				"suspects3": {
-					"name": "Suspects !",
-					"text": "Des hommes ressemblant étrangement aux suspects arrivent, discutent avec le vendeur de Merguez, avant de repartir..."
+					"name": "Suspects!",
+					"text": "Some suspiscious looking men arrive and talk with the merguez seller, they leave soon after..."
 				},
 				"merguezSeller": {
 					"name": "Merguez Seller",
-					"text": "Ce que me voulaient ces touristes ? Ils voulaient juste pouvoir utiliser mon nouveau Four-à-Pain avec lequel je compte fabriquer prochainement mes Sandwichs de Gobelin... Apparemment, ils y ont fait cuire des poteries. Ils sont retournés à Fosselave pour les amener à leur patron."
+					"text": "What did the tourists want you ask? They just wanted to use my new Bread-Oven which I use to make my Goblin Sandwiches... apparently they use it to heat pottery. They went to the Lavapit to take it to their boss."
 				},
 				"suspects4": {
-					"name": "Suspects !",
-					"text": "Vous reconnaissez les trois suspects dans une rue de Fosselave !"
+					"name": "Suspects!",
+					"text": "You recognise the three suspects in a street near the Lavapit!"
 				},
 				"challenge2": {
-					"name": "Leur foncer dessus !",
-					"win": "Après avoir vaincu les suspects, ils vous avouent fabriquer des fausses reliques à l'aide de la terre des Ruines Ashpouk ! Il vaut mieux les amener à Madame X..."
+					"name": "Challenge Them!",
+					"win": "After defeating the suspects, they admit that they made fake relics with the earth from the Ashpouk Ruins! You better take them to Miss X..."
 				},
-				"end": "Super, des pigeons ! Je vais m'arranger pour qu'ils témoignent contre Don Fuego. Cela tombe bien, il commencait justement à devenir beaucoup trop riche, et il était trop populaire à la Cour pour qu'on se débarrasse de lui par les moyens classiques... Merci pour le coup de main !"
+				"end": "Great! I will make sure that they testify against Don Fuego. Great timing, he was becoming far too rich and powerful in the Court ... Thanks for your help as always!"
 			}
 		},
 		"elMaster": {
