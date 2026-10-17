@@ -895,10 +895,13 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}
 
 	for (const dinoz of playerData.dinoz) {
-		if (await findBotEquipCandidate(dinoz.id)) {
+		const equipCandidate = await findBotEquipCandidate(dinoz.id, dinozRoles.get(dinoz.id) ?? null);
+		if (equipCandidate) {
 			candidates.push({
 				value: { dinozId: dinoz.id, action: 'equip' },
-				weight: strategy === BotStrategy.FIGHTER ? 45 : 25
+				weight:
+					(strategy === BotStrategy.FIGHTER ? 45 : 25) +
+					Math.min(80, Math.max(0, equipCandidate.score))
 			});
 		}
 	}
