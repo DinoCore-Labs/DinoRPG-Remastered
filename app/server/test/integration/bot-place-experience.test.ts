@@ -1,11 +1,14 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import { BotDinozRole } from '../../../prisma/index.js';
+
 import {
 	getBotExplorationExperienceBonus,
 	getBotFightExperienceBonus,
 	getBotGatherExperienceBonus,
 	getBotPreferredFightPlace,
 	getBotPreferredGatherPlace,
+	getBotRoleFightExperienceAdjustment,
 	recordBotFightExperience,
 	recordBotGatherExperience,
 	recordBotPlaceVisit
@@ -281,6 +284,29 @@ describe('bot place experience', () => {
 		]);
 
 		expect(getBotPreferredFightPlace(experience, 100)).toBe(40);
+	});
+
+
+	it('makes gatherers and explorers more reluctant to repeat dangerous free fights', () => {
+		const dangerous = -60;
+
+		expect(getBotRoleFightExperienceAdjustment(BotDinozRole.GATHERER, dangerous)).toBeLessThan(
+			getBotRoleFightExperienceAdjustment(BotDinozRole.FIGHTER, dangerous)
+		);
+		expect(getBotRoleFightExperienceAdjustment(BotDinozRole.EXPLORER, dangerous)).toBeLessThan(
+			getBotRoleFightExperienceAdjustment(BotDinozRole.FIGHTER, dangerous)
+		);
+	});
+
+	it('lets fighters exploit safe combat zones more aggressively than other roles', () => {
+		const safe = 60;
+
+		expect(getBotRoleFightExperienceAdjustment(BotDinozRole.FIGHTER, safe)).toBeGreaterThan(
+			getBotRoleFightExperienceAdjustment(BotDinozRole.EXPLORER, safe)
+		);
+		expect(getBotRoleFightExperienceAdjustment(BotDinozRole.EXPLORER, safe)).toBeGreaterThan(
+			getBotRoleFightExperienceAdjustment(BotDinozRole.GATHERER, safe)
+		);
 	});
 
 });

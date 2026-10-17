@@ -1,6 +1,7 @@
 import type { GatherResult } from '@dinorpg/core/models/gather/gatherResult.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 
+import { BotDinozRole } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
 export type BotPlaceExperienceSnapshot = {
@@ -88,6 +89,26 @@ export function getBotFightExperienceBonus(
 	const damageRatio = averageHpLost / Math.max(1, maxLife);
 	const confidence = Math.round((winRate - 0.5) * 120 - damageRatio * 70);
 	return clamp(confidence, -90, 70);
+}
+
+export function getBotRoleFightExperienceAdjustment(
+	role: BotDinozRole | null,
+	fightExperienceBonus: number
+): number {
+	switch (role) {
+		case BotDinozRole.FIGHTER:
+			return fightExperienceBonus;
+		case BotDinozRole.GATHERER:
+			return fightExperienceBonus < 0
+				? clamp(Math.round(fightExperienceBonus * 1.4), -120, 70)
+				: Math.round(fightExperienceBonus * 0.2);
+		case BotDinozRole.EXPLORER:
+			return fightExperienceBonus < 0
+				? clamp(Math.round(fightExperienceBonus * 1.2), -110, 70)
+				: Math.round(fightExperienceBonus * 0.35);
+		case null:
+			return Math.round(fightExperienceBonus * 0.5);
+	}
 }
 
 export function getBotPreferredGatherPlace(

@@ -2,7 +2,7 @@ import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 
-import { BotStrategy } from '../../../../prisma/index.js';
+import { BotDinozRole, BotStrategy } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
 const FORCEBRUT_POLICY: Record<
@@ -31,7 +31,27 @@ const FORCEBRUT_POLICY: Record<
 	}
 };
 
-export async function canBotFightForcebrut(userId: string, dinozId: number, strategy: BotStrategy): Promise<boolean> {
+export function getBotForcebrutPolicy(
+	strategy: BotStrategy,
+	role: BotDinozRole | null
+): { minLifeRatio: number; maxOpponentLevelDelta: number; minIrmaQuantity: number } {
+	const policyStrategy =
+		role === BotDinozRole.FIGHTER
+			? BotStrategy.FIGHTER
+			: role === BotDinozRole.GATHERER
+				? BotStrategy.GATHERER
+				: role === BotDinozRole.EXPLORER
+					? BotStrategy.EXPLORER
+					: strategy;
+	return FORCEBRUT_POLICY[policyStrategy];
+}
+
+export async function canBotFightForcebrut(
+	userId: string,
+	dinozId: number,
+	strategy: BotStrategy,
+	role: BotDinozRole | null = null
+): Promise<boolean> {
 	const dinoz = await prisma.dinoz.findFirst({
 		where: { id: dinozId, userId },
 		select: {
@@ -49,7 +69,7 @@ export async function canBotFightForcebrut(userId: string, dinozId: number, stra
 	if (dinoz.life <= 0 || dinoz.state !== null) return false;
 	if (!dinoz.status.some(status => status.statusId === DinozStatusId.TOURNA)) return false;
 
-	const policy = FORCEBRUT_POLICY[strategy];
+	const policy = getBotForcebrutPolicy(strategy, role);
 	if (dinoz.life / Math.max(dinoz.maxLife, 1) < policy.minLifeRatio) return false;
 
 	const [opponent, irma] = await Promise.all([

@@ -43,7 +43,8 @@ import {
 	getBotGatherExperienceBonus,
 	getBotPlaceExperienceMap,
 	getBotPreferredFightPlace,
-	getBotPreferredGatherPlace
+	getBotPreferredGatherPlace,
+	getBotRoleFightExperienceAdjustment
 } from './botPlaceExperience.service.js';
 import { getOrAssignBotProgressionGoal } from './botProgressionMemory.service.js';
 import {
@@ -660,7 +661,7 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}
 
 	for (const dinoz of playerData.dinoz) {
-		if (await canBotFightForcebrut(userId, dinoz.id, strategy)) {
+		if (await canBotFightForcebrut(userId, dinoz.id, strategy, dinozRoles.get(dinoz.id) ?? null)) {
 			candidates.push({
 				value: {
 					dinozId: dinoz.id,
@@ -859,10 +860,15 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 				roleObjective === BotRoleObjective.GATHERER_HARVEST
 					? getBotGatherExperienceBonus(placeExperience, dinoz.placeId)
 					: 0;
-			const fightExperienceBonus =
-				roleObjective === BotRoleObjective.FIGHTER_POWER
-					? getBotFightExperienceBonus(placeExperience, dinoz.placeId, dinoz.maxLife)
-					: 0;
+			const rawFightExperienceBonus = getBotFightExperienceBonus(
+				placeExperience,
+				dinoz.placeId,
+				dinoz.maxLife
+			);
+			const fightExperienceBonus = getBotRoleFightExperienceAdjustment(
+				dinozRole,
+				rawFightExperienceBonus
+			);
 
 			candidates.push({
 				value: {
