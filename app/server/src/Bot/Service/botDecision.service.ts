@@ -906,7 +906,13 @@ export async function chooseBotDecision(userId: string, strategy: BotStrategy): 
 	}
 
 	for (const dinoz of playerData.dinoz) {
-		const equipCandidate = await findBotEquipCandidate(dinoz.id, dinozRoles.get(dinoz.id) ?? null);
+		const placeExperience = placeExperiences.get(dinoz.id) ?? new Map<number, BotPlaceExperienceSnapshot>();
+		const fightExperienceBonus = getBotFightExperienceBonus(placeExperience, dinoz.placeId, dinoz.maxLife);
+		const equipCandidate = await findBotEquipCandidate(
+			dinoz.id,
+			dinozRoles.get(dinoz.id) ?? null,
+			fightExperienceBonus
+		);
 		if (equipCandidate) {
 			candidates.push({
 				value: { dinozId: dinoz.id, action: 'equip' },

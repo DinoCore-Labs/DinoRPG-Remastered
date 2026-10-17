@@ -28,4 +28,37 @@ describe('bot equipment scoring', () => {
 			Number.NEGATIVE_INFINITY
 		);
 	});
+
+	it('raises survival equipment value after bad combat experience', () => {
+		const safeScore = getBotEquipmentScore(
+			itemList[Item.CLOUD_BURGER],
+			BotDinozRole.EXPLORER,
+			20
+		);
+		const dangerousScore = getBotEquipmentScore(
+			itemList[Item.CLOUD_BURGER],
+			BotDinozRole.EXPLORER,
+			-60
+		);
+
+		expect(dangerousScore).toBeGreaterThan(safeScore);
+	});
+
+	it('allows a gatherer to sacrifice a slot for emergency healing only in dangerous zones', () => {
+		expect(
+			getBotEquipmentScore(itemList[Item.CLOUD_BURGER], BotDinozRole.GATHERER, 0)
+		).toBeLessThan(35);
+		expect(
+			getBotEquipmentScore(itemList[Item.CLOUD_BURGER], BotDinozRole.GATHERER, -60)
+		).toBeGreaterThanOrEqual(35);
+	});
+
+
+	it('never auto-equips cursed items', () => {
+		const cursedItem = Object.values(itemList).find(item => item.itemType === 'cursed' && item.canBeEquipped);
+		if (!cursedItem) return;
+
+		expect(getBotEquipmentScore(cursedItem, BotDinozRole.FIGHTER)).toBe(Number.NEGATIVE_INFINITY);
+	});
+
 });

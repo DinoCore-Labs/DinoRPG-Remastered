@@ -9,6 +9,7 @@ import { getDinozEquipItemRequest } from '../../Dinoz/Controller/getDinozEquipIt
 import { equipDinozItem } from '../../Inventory/Service/equipItem.service.js';
 import { backpackSlot } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { getOrAssignBotDinozRole } from './botDinozRole.service.js';
+import { getBotFightExperienceBonus, getBotPlaceExperienceMap } from './botPlaceExperience.service.js';
 
 const BOT_MIN_EQUIPMENT_SCORE: Record<BotDinozRole, number> = {
 	[BotDinozRole.FIGHTER]: 20,
@@ -37,6 +38,19 @@ const FIGHTER_PASSIVE_STATS = new Set<Stat>([
 ]);
 
 const GATHERER_PASSIVE_STATS = new Set<Stat>([
+	Stat.MAX_HP,
+	Stat.HP_REGEN,
+	Stat.ARMOR,
+	Stat.EVASION,
+	Stat.SUPER_EVASION,
+	Stat.FIRE_DEFENSE,
+	Stat.WOOD_DEFENSE,
+	Stat.WATER_DEFENSE,
+	Stat.LIGHTNING_DEFENSE,
+	Stat.AIR_DEFENSE
+]);
+
+const SURVIVAL_PASSIVE_STATS = new Set<Stat>([
 	Stat.MAX_HP,
 	Stat.HP_REGEN,
 	Stat.ARMOR,
@@ -84,8 +98,14 @@ function getPassiveRoleBonus(item: ItemFiche, role: BotDinozRole): number {
 	return 55 + relevantEffectCount * 45;
 }
 
-export function getBotEquipmentScore(item: ItemFiche, role: BotDinozRole): number {
-	if (!item.canBeEquipped || item.itemType === ItemType.MAGICAL) return Number.NEGATIVE_INFINITY;
+export function getBotEquipmentScore(
+	item: ItemFiche,
+	role: BotDinozRole,
+	fightExperienceBonus = 0
+): number {
+	if (!item.canBeEquipped || item.itemType === ItemType.MAGICAL || item.itemType === ItemType.CURSED) {
+		return Number.NEGATIVE_INFINITY;
+	}
 
 	let score = role === BotDinozRole.GATHERER ? 0 : 5;
 	score += getPassiveRoleBonus(item, role);
@@ -112,18 +132,41 @@ export function getBotEquipmentScore(item: ItemFiche, role: BotDinozRole): numbe
 		score += Math.min(25, item.priority * 5);
 	}
 
+	if (fightExperienceBonus <= -30) {
+		const survivalEffectCount = item.passiveEffect
+			? Object.keys(item.passiveEffect).filter(stat => SURVIVAL_PASSIVE_STATS.has(stat as Stat)).length
+			: 0;
+		score += survivalEffectCount * (role === BotDinozRole.EXPLORER ? 35 : 25);
+
+		if (item.effect?.category === ItemEffect.HEAL) {
+			score +=
+				role === BotDinozRole.EXPLORER
+					? 45
+					: role === BotDinozRole.GATHERER
+						? 45
+						: 25;
+		}
+		if (item.fightCondition && role !== BotDinozRole.GATHERER) {
+			score += role === BotDinozRole.EXPLORER ? 15 : 10;
+		}
+	}
+
 	return score;
 }
 
 export async function findBotEquipCandidate(
 	dinozId: number,
-	role: BotDinozRole | null = null
+	role: BotDinozRole | null = null,
+	fightExperienceBonus?: number
 ): Promise<{ itemId: number; score: number } | null> {
 	const dinoz = await getDinozEquipItemRequest(dinozId);
 	if (!dinoz || !dinoz.user) return null;
 	if (dinoz.items.length >= backpackSlot(dinoz.user.engineer, dinoz)) return null;
 
 	const effectiveRole = role ?? BotDinozRole.FIGHTER;
+	const effectiveFightExperienceBonus =
+		fightExperienceBonus ??
+		getBotFightExperienceBonus(await getBotPlaceExperienceMap(dinozId), dinoz.placeId, dinoz.maxLife);
 	const equipped = new Set(dinoz.items.map(item => item.itemId));
 
 	const candidates = dinoz.user.items
@@ -132,7 +175,7 @@ export async function findBotEquipCandidate(
 		.filter((item): item is NonNullable<typeof item> => Boolean(item))
 		.map(item => ({
 			itemId: item.itemId,
-			score: getBotEquipmentScore(item, effectiveRole)
+			score: getBotEquipmentScore(item, effectiveRole, effectiveFightExperienceBonus)
 		}))
 		.filter(candidate => candidate.score >= BOT_MIN_EQUIPMENT_SCORE[effectiveRole])
 		.sort((a, b) => b.score - a.score || a.itemId - b.itemId);

@@ -6,6 +6,7 @@ export async function getDinozEquipItemRequest(dinozId: number) {
 		select: {
 			id: true,
 			placeId: true,
+			maxLife: true,
 			user: {
 				select: {
 					id: true,
