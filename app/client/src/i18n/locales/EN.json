@@ -6587,9 +6587,9 @@
 		"reportingForumMessage": "You are reporting a message from "
 	},
 	"tutorial": {
-		"objective": "Objectif : {title}",
-		"close": "Masquer",
-		"finish": "Terminer le tutoriel",
+		"objective": "Objective: {title}",
+		"close": "Hide",
+		"finish": "Finish tutorial",
 		"objectives": {
 			"dinoz": {
 				"title": "Adopting a Dinoz",
