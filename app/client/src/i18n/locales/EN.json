@@ -6462,28 +6462,28 @@
 		},
 		"michel": {
 			"move": {
-				"name": "Découvert bucolique",
-				"begin": "Bienvenue à Dinoland, je vais t'apprendre à parcourir les vertes contrées de notre monde, tiens-toi prêt... Essaie d'aller à l'université et parle moi là-bas !",
-				"end": "LeGuide Michel semble satisfait, il te donne une potion d'irma en cadeau, tu pourras te déplacer une fois de plus !",
+				"name": "Voyage of Discovery",
+				"begin": "Welcome to Dinoland, I'm going to teach you how to travel around the green wilderness of these parts, brace yourself... Try to lake it to the University and I'll speak to you there!",
+				"end": "Mitchell Starr seems impressed, he gives you an Irma's potion as a gift, this gives you an extra move!",
 				"guideMichel": {
-					"text": "Bravo, tu as réussi à venir jusqu'ici, il ne te reste plus qu'à valider la mission en revenant me voir à Dinoville"
+					"text": "Bravo, you made it, all you need to do now is confirm that you've completed the mission by meeting me in Dinotown again"
 				},
 				"madameSeyche": {
 					"name": "Madam Squyd",
-					"text": "Bien joué ! On peut passer à la suite."
+					"text": "Well played! Let's move on to the next one."
 				}
 			},
 			"atk": {
-				"name": "Bataille dangeureuse",
-				"begin": "Tu as du combattre précédemment pour atteindre l'Université, maintenant, tu vas déclencher un combat ici-même !",
-				"kill": "Monstres sauvages",
-				"end": "Bravo, tu as battu des monstres à toi seul ! Tu feras de nombreuses rencontres lors de tes aventures, plus tu combattras, plus tu deviendras fort !"
+				"name": "Dangerous Battle",
+				"begin": "You had to fight before to get to the University, now, you're going to fight right here!",
+				"kill": "Savage monsters",
+				"end": "Excellent, you've killed all the monsters on your own! You will meet many of them as you carry out missions and explore! The more you exlpore, the more powerful you become!"
 			},
 			"boutik": {
-				"name": "Prenons de l'altitude",
-				"begin": "Tu vas maintenant acheter une potion d'ange à la boutique volante, elle sert à ressuciter ton dinoz s'il vient à succomber aux blessures infligés par les monstres !\nPour ce faire, il faut que tu cliques sur le bouton \"Boutique\" en haut à gauche de l'interface, tu pourras ensuite me donner l'objet que tu auras acheté !",
+				"name": "One Step Beyond",
+				"begin": "Now you're going to buy an Angel Potion at the flying shop, this potion revives your Dinoz if they are overcome by injuries sustained when fighting monsters! To do this, simply click on the \"Shop\" button at the top left of the interface. You can then give me the object you have bought!",
 				"angel": "Angel Potion",
-				"end": "Félicitations ! Tu as su te servir correctement de la boutique, elle est accessible à n'importe quel endroit du jeu, n'hésite pas à l'utiliser en cas de besoin !"
+				"end": "Congratulations! You have successfully used the shop, and it can be accessed from wherever you are in the game, Don't hesitate to use it if need be!"
 			}
 		}
 	},
