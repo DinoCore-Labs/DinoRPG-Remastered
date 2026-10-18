@@ -20,12 +20,12 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { sdino } from '@eternaltwin/dinorpg_animations';
 import type { MtDungeonScene } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
-import { Application, Assets, BlurFilter, Container, Graphics, Sprite, type Texture } from 'pixi.js';
+import { AnimatedSprite, Application, Assets, BlurFilter, Container, Graphics, Sprite, type Texture } from 'pixi.js';
 
 import { createMtSpritePlan, type MtRandomFrameSource } from './mtOriginalSpriteCatalog.js';
 import { mtWallBounds, placeMtWall } from './mtDungeonWallPlacement.js';
+import { loadMtDungeonActorFrames } from './mtDungeonActorFrames.js';
 
 export interface MtDungeonActor {
 	id: number;
@@ -61,12 +61,10 @@ let fogLayer: Container;
 let diagnosticsLayer: Container;
 
 const textures = new Map<string, Texture>();
-interface AnimatedContainer extends Container {
-	playAnim?: (name: string) => void;
-	flip?: (direction: number) => void;
-}
 interface ActorState {
-	visual: AnimatedContainer;
+	visual: Container;
+	/** Avoid applying an asynchronous result to a removed or replaced actor. */
+	animationLoading: boolean;
 	code: string;
 	x: number;
 	y: number;
@@ -86,23 +84,48 @@ function palette(color: number): number {
 	return color & 0xffffff;
 }
 
-/** Used only for a testable display fallback; no fictitious Dinoz is created. */
-function createVisual(code: string): AnimatedContainer {
-	try {
-		if (!code) throw new Error('Données visuelles du Dinoz indisponibles');
-		const visual = new sdino({
-			data: code,
-			flip: props.facingRight === false ? 0 : 1,
-			pflag: true
-		}) as unknown as AnimatedContainer;
-		// The original actor is roughly 2 tiles tall, as in View.hx/Dino.hx.
-		visual.scale.set(80 / 90);
-		return visual;
-	} catch (error) {
-		diagnostics.value = [...diagnostics.value, `Animation Dinoz non disponible : ${String(error)}`];
-		const marker = new Graphics().circle(0, -10, 10).fill({ color: 0xf8dc96 });
-		return marker as AnimatedContainer;
-	}
+/** A native PixiJS 8 placeholder. No legacy Pixi display object goes on the stage. */
+function createPlaceholder(): Graphics {
+	return new Graphics().circle(0, -10, 10).fill({ color: 0xf8dc96 });
+}
+
+/**
+ * Turn independently rasterized legacy sdino frames into native PixiJS 8
+ * AnimatedSprite textures. Never add an @eternaltwin/dinorpg_animations
+ * display object to the PixiJS 8 scene: its transform API is incompatible.
+ */
+function loadActorAnimation(id: number, state: ActorState): void {
+	if (!state.code || state.animationLoading || disposed) return;
+	state.animationLoading = true;
+	void loadMtDungeonActorFrames(state.code)
+		.then(frames => {
+			if (disposed || !app || actorNodes.get(id) !== state) return;
+			const visual = new AnimatedSprite([...frames]);
+			visual.anchor.set(0.5, 0.75);
+			visual.width = 70;
+			visual.height = 70;
+			visual.animationSpeed = 0.35;
+			visual.loop = true;
+			visual.scale.x = props.facingRight === false ? -Math.abs(visual.scale.x) : Math.abs(visual.scale.x);
+			visual.position.set(state.x, state.y);
+			visual.zIndex = state.visual.zIndex;
+			actorsLayer.removeChild(state.visual);
+			state.visual.destroy({ children: true });
+			state.visual = visual;
+			actorsLayer.addChild(visual);
+			if (state.progress < 1) visual.play();
+			else visual.gotoAndStop(0);
+		})
+		.catch(error => {
+			if (disposed || actorNodes.get(id) !== state) return;
+			diagnostics.value = [
+				...diagnostics.value.filter(message => !message.startsWith(`Dinoz ${id} :`)),
+				`Dinoz ${id} : images d’animation indisponibles (${String(error)}). Repère affiché.`
+			];
+		})
+		.finally(() => {
+			state.animationLoading = false;
+		});
 }
 
 function syncActors(): void {
@@ -122,11 +145,23 @@ function syncActors(): void {
 			state = undefined;
 		}
 		if (!state) {
-			const visual = createVisual(actor.display);
+			const visual = createPlaceholder();
 			actorsLayer.addChild(visual);
 			visual.position.set(x, y);
-			state = { visual, code: actor.display, x, y, startX: x, startY: y, targetX: x, targetY: y, progress: 1 };
+			state = {
+				visual,
+				animationLoading: false,
+				code: actor.display,
+				x,
+				y,
+				startX: x,
+				startY: y,
+				targetX: x,
+				targetY: y,
+				progress: 1
+			};
 			actorNodes.set(actor.id, state);
+			loadActorAnimation(actor.id, state);
 		} else if (state.targetX !== x || state.targetY !== y) {
 			// A new stage or reload should snap rather than fly across the map.
 			const distance = Math.hypot(state.x - x, state.y - y);
@@ -139,12 +174,14 @@ function syncActors(): void {
 				state.x = x;
 				state.y = y;
 				state.visual.position.set(x, y);
-			} else state.visual.playAnim?.('walk');
+			} else if (state.visual instanceof AnimatedSprite) state.visual.play();
 		}
 		// Closer Dinoz are painted above more distant group members.
 		state.visual.zIndex = actor.y;
 		// Facing is cosmetic and comes from an accepted move in the parent page.
-		if (state.visual.flip) state.visual.flip(props.facingRight === false ? 0 : 1);
+		if (state.visual instanceof AnimatedSprite)
+			state.visual.scale.x =
+				props.facingRight === false ? -Math.abs(state.visual.scale.x) : Math.abs(state.visual.scale.x);
 	}
 	for (const [id, state] of actorNodes) {
 		if (latest.has(id)) continue;
@@ -162,6 +199,7 @@ function animate(deltaMS: number): void {
 		state.x = state.startX + (state.targetX - state.startX) * k;
 		state.y = state.startY + (state.targetY - state.startY) * k;
 		state.visual.position.set(state.x, state.y);
+		if (state.progress === 1 && state.visual instanceof AnimatedSprite) state.visual.gotoAndStop(0);
 	}
 }
 
@@ -299,6 +337,9 @@ watch(
 onBeforeUnmount(() => {
 	disposed = true;
 	++generation;
+	for (const state of actorNodes.values()) {
+		if (state.visual instanceof AnimatedSprite) state.visual.stop();
+	}
 	actorNodes.clear();
 	app?.destroy(true, { children: true });
 	app = null;
