@@ -1,10 +1,13 @@
 /** Wiring against existing Remastered auth, conditions and locks. */
+import { defaultConditionKeyMaps } from '@dinorpg/core/models/conditions/defaultConditionKeyMaps.js';
 import { mtDungeonEntryCondition } from '@dinorpg/core/models/dungeon/dungeon.definition.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
+import { evalCondition } from '@dinorpg/core/models/utils/conditions/evalConditions.js';
 
+import gameConfig from '../../config/game.config.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
+import { buildConditionContext } from '../../utils/conditions/buildConditionContext.js';
 import { withUserGameplayLock } from '../../utils/database/userGameplayLock.js';
-import { canGoToThisPlace } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { prismaMtDungeonRunRepository } from '../Repository/prismaMtDungeonRun.repository.js';
 import { MtDungeonArchive } from './mtDungeonArchive.service.js';
 import type { MtDungeonSessionDependencies, MtSessionIdentity } from './mtDungeonSession.service.js';
@@ -43,8 +46,10 @@ export async function assertMtDungeonEntry(
 		throw new MtDungeonEntryError('group-unavailable');
 	const condition = mtDungeonEntryCondition(def.condition);
 	for (const member of user.dinoz) {
-		if (!canGoToThisPlace({ ...user, dinoz: [member] }, condition, member.id))
-			throw new MtDungeonEntryError('condition-not-met');
+		const context = buildConditionContext({ ...user, dinoz: [member] }, member.id, defaultConditionKeyMaps, {
+			activeFeatures: gameConfig.world.activeFeatures
+		});
+		if (!evalCondition(context, condition)) throw new MtDungeonEntryError('condition-not-met');
 	}
 }
 
