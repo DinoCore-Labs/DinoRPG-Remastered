@@ -31,12 +31,18 @@
 				</div>
 
 				<div class="mt-test__viewport">
-					<MtOriginalDungeonCanvas v-if="view" :scene="view.scene" :actors="visualParty" :facing-right="facingRight" />
+					<MtOriginalDungeonCanvas
+						v-if="view"
+						:scene="view.scene"
+						:stage-key="session.mapId"
+						:actors="visualParty"
+						:facing-right="facingRight"
+					/>
 					<div v-else class="mt-test__placeholder">Chargement de la vue…</div>
 				</div>
 				<p class="mt-test__caption">
-					PixiJS : murs en profondeur, Dinoz intégrés à la scène et sprites MT à taille native. Le brouillard et les
-					points d’ancrage PNG restent une reconstruction graphique à comparer au SWF original.
+					PixiJS : caméra amortie selon View.hx, murs en profondeur et Dinoz intégrés à la scène. Le flou du brouillard
+					et certains ancrages PNG restent à comparer au SWF original.
 				</p>
 
 				<div class="mt-test__controls" aria-label="Déplacements dans le donjon">
@@ -228,6 +234,13 @@ async function refresh(): Promise<void> {
 	errorMessage.value = '';
 	try {
 		const current = await MtDungeonService.getSession(leaderId);
+		// Do not render actors from the new session on a view from the old revision.
+		// A rejected move or a browser-tab resync must not produce a fake walk.
+		const latestView = current.mapId.startsWith('stepp_') ? await MtDungeonService.getView(leaderId) : null;
+		if (latestView && (latestView.revision !== current.revision || latestView.mapId !== current.mapId))
+			throw new Error('La vue du donjon a changé pendant le chargement : actualise pour synchroniser.');
+		const latestEncounter =
+			current.pending && latestView ? (await MtDungeonService.getEncounter(leaderId, language.value)).encounter : null;
 		if (
 			session.value &&
 			(session.value.mapId !== current.mapId ||
@@ -235,16 +248,8 @@ async function refresh(): Promise<void> {
 		)
 			movementTrail.value = [];
 		session.value = current;
-		if (current.mapId.startsWith('stepp_')) {
-			view.value = await MtDungeonService.getView(leaderId);
-			if (current.pending) {
-				const result = await MtDungeonService.getEncounter(leaderId, language.value);
-				encounter.value = result.encounter;
-			} else encounter.value = null;
-		} else {
-			view.value = null;
-			encounter.value = null;
-		}
+		view.value = latestView;
+		encounter.value = latestEncounter;
 	} catch (error) {
 		if (axios.isAxiosError(error) && error.response?.status === 404) {
 			session.value = null;
@@ -256,9 +261,17 @@ async function refresh(): Promise<void> {
 	}
 }
 async function afterMutation(next: MtDungeonSession): Promise<void> {
+	const latestView = await MtDungeonService.getView(leaderId);
+	if (latestView.revision !== next.revision || latestView.mapId !== next.mapId)
+		throw new Error('La session a changé pendant le déplacement : une actualisation est nécessaire.');
+	const latestEncounter = next.pending
+		? (await MtDungeonService.getEncounter(leaderId, language.value)).encounter
+		: null;
+	// Commit both reactive values synchronously so Pixi receives a matching
+	// authoritative position and 9x9 viewport for the camera interpolation.
 	session.value = next;
-	view.value = await MtDungeonService.getView(leaderId);
-	encounter.value = next.pending ? (await MtDungeonService.getEncounter(leaderId, language.value)).encounter : null;
+	view.value = latestView;
+	encounter.value = latestEncounter;
 }
 async function execute(action: () => Promise<void>): Promise<void> {
 	if (busy.value) return;
