@@ -2,6 +2,7 @@
  * Remastered transport (JSON). This is NOT MT's historical Haxe Serializer.
  * Combat endpoints accept only revision/token; never outcome or monsters.
  */
+import { mtDungeonBlockStates } from '@dinorpg/core/models/dungeon/dungeon.blocks.js';
 import { normalizeMtDungeonLanguage } from '@dinorpg/core/models/dungeon/dungeon.catalog.js';
 import { MtDungeonEncounterError } from '@dinorpg/core/models/dungeon/dungeon.encounter.js';
 import { MtDungeonFightIntentError } from '@dinorpg/core/models/dungeon/dungeon.fight.js';
@@ -108,6 +109,19 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 				};
 			})
 		);
+	});
+	/** Authenticated, current-stage only: tell the renderer which MT block icons clear. */
+	app.get('/:leaderDinozId/blocks', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		if (!params.success) return reply.code(400).send({ code: 'invalid-leader' });
+		const run = await mtDungeonDependencies().repository.load({ userId: req.user.id, leaderDinozId: params.data });
+		if (!run) return reply.code(404).send({ code: 'not-found' });
+		const cfg = getMtDungeonArchive().configuration(run.mapId);
+		return reply.send({
+			mapId: run.mapId,
+			revision: run.revision,
+			blocks: mtDungeonBlockStates(cfg.blockRules, run.flags)
+		});
 	});
 	/** Only inspect the server-owned encounter the leader has just triggered. */
 	app.get('/:leaderDinozId/encounter', { preHandler: app.authenticate }, async (req, reply) => {
