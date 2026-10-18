@@ -93,6 +93,22 @@
 						Combattre
 					</button>
 					<button
+						v-if="session.pending.kind === 'guardian' && devCapabilities?.guardianSkip"
+						type="button"
+						:disabled="busy"
+						@click="skipGuardian"
+					>
+						Franchir le gardien (test local, sans combat)
+					</button>
+					<button
+						v-if="session.pending.kind === 'boundary-start' && stage === 0 && devCapabilities?.surfaceExit"
+						type="button"
+						:disabled="busy"
+						@click="leaveToSurface"
+					>
+						Retour à la surface (terminer la session de test)
+					</button>
+					<button
 						v-if="session.pending.kind === 'boundary-exit' && stage < 3"
 						type="button"
 						:disabled="busy"
@@ -134,7 +150,12 @@ import { useRoute, useRouter } from 'vue-router';
 import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanvas.vue';
 import { advanceMtTrail, mtFollowerPositions, type MtTrailPoint } from '../components/dungeon/dungeonPartyTrail.js';
 import { DinozService } from '../services/dinoz.service.js';
-import { MtDungeonService, type MtDungeonCurrentView, type MtDungeonEncounter } from '../services/mtDungeon.service.js';
+import {
+	MtDungeonService,
+	type MtDungeonCurrentView,
+	type MtDungeonEncounter,
+	type MtDungeonDevCapabilities
+} from '../services/mtDungeon.service.js';
 import { sessionStore } from '../store/sessionStore';
 import { localStore } from '../store/localStore';
 import type { MtDungeonSession } from '@dinorpg/core/models/dungeon/dungeon.session.js';
@@ -148,6 +169,7 @@ const view = ref<MtDungeonCurrentView | null>(null);
 const encounter = ref<MtDungeonEncounter | null>(null);
 const errorMessage = ref('');
 const notice = ref('');
+const devCapabilities = ref<MtDungeonDevCapabilities | null>(null);
 const loading = ref(true);
 const busy = ref(false);
 const visualMembers = ref<{ id: number; display: string }[]>([]);
@@ -212,7 +234,9 @@ const actionAvailable = computed(() => {
 	const pending = session.value?.pending;
 	if (!pending) return false;
 	if (pending.kind === 'boundary-exit') return stage.value < 3;
-	if (pending.kind === 'boundary-start') return stage.value > 0;
+	if (pending.kind === 'boundary-start')
+		return stage.value > 0 || (stage.value === 0 && !!devCapabilities.value?.surfaceExit);
+	if (pending.kind === 'guardian') return !!devCapabilities.value?.guardianSkip;
 	if (pending.kind !== 'scenario') return false;
 	return (
 		encounter.value?.kind === 'scenario' ||
@@ -360,6 +384,49 @@ function fight() {
 		await router.push({ name: 'FightPage', params: { dinozId: String(leaderId) } });
 	});
 }
+async function loadDevCapabilities(): Promise<void> {
+	if (!import.meta.env.DEV) return;
+	try {
+		devCapabilities.value = await MtDungeonService.getDevCapabilities();
+	} catch {
+		// 404 is expected when the server has not opted in to local dev tools.
+		devCapabilities.value = null;
+	}
+}
+function skipGuardian(): void {
+	if (!session.value || session.value.pending?.kind !== 'guardian' || !devCapabilities.value?.guardianSkip) return;
+	void execute(async () => {
+		const previous = session.value!;
+		const next = await MtDungeonService.devSkipGuardian(leaderId, previous.revision);
+		movementTrail.value = advanceMtTrail(
+			movementTrail.value,
+			asTrailPoint(previous),
+			asTrailPoint(next),
+			Math.max(0, visualMembers.value.length - 1)
+		);
+		await afterMutation(next);
+		notice.value = 'Gardien franchi en mode test : aucun combat, XP ou récompense.';
+	});
+}
+function leaveToSurface(): void {
+	if (
+		!session.value ||
+		session.value.mapId !== 'stepp_0' ||
+		session.value.pending?.kind !== 'boundary-start' ||
+		!devCapabilities.value?.surfaceExit
+	)
+		return;
+	if (!window.confirm('Terminer et supprimer cette session de test ? Les Dinoz resteront aux Pylônes.')) return;
+	void execute(async () => {
+		await MtDungeonService.devLeaveToSurface(leaderId, session.value!.revision);
+		session.value = null;
+		view.value = null;
+		encounter.value = null;
+		movementTrail.value = [];
+		notice.value = 'Retour aux Pylônes : session de test terminée sans récompenses.';
+		await router.push({ name: 'DinozPage', params: { id: String(leaderId) } });
+	});
+}
 function onKeyDown(event: KeyboardEvent): void {
 	if (event.altKey || event.ctrlKey || event.metaKey || cannotMove.value) return;
 	const el = event.target;
@@ -385,6 +452,7 @@ function onKeyDown(event: KeyboardEvent): void {
 onMounted(() => {
 	window.addEventListener('keydown', onKeyDown);
 	void loadVisualParty();
+	void loadDevCapabilities();
 	void refresh();
 });
 onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));

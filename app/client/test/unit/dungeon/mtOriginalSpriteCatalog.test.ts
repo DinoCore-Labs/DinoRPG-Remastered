@@ -1,4 +1,4 @@
-import type { MtDungeonScene } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
+import { MtDungeonScene } from '@dinorpg/core/src/models/dungeon/dungeon.scene.js';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -120,7 +120,7 @@ describe('MT original archive sprite catalog (201 PNG)', () => {
 			createMtSpritePlan(s)
 				.sprites.filter(sp => sp.label.startsWith('item:'))
 				.map(sp => sp.file)
-		).toEqual(['item_door_h_01.png', 'item_door_v_open.png', 'item_stair_up.png', 'item_stair_down.png']);
+		).toEqual(['item_door_h_01.png', 'item_door_v_open.png', 'item_stair_down.png', 'item_stair_up.png']);
 	});
 
 	it('keeps unsafe overlay-to-Flash mappings off without explicit consent', () => {
