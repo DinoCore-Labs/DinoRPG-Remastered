@@ -3,10 +3,12 @@
  * No untrusted combat/item/scenario resolution endpoint is exposed.
  */
 import { normalizeMtDungeonLanguage } from '@dinorpg/core/models/dungeon/dungeon.catalog.js';
+import { MtDungeonEncounterError } from '@dinorpg/core/models/dungeon/dungeon.encounter.js';
 import { MtStageTransitionError } from '@dinorpg/core/models/dungeon/dungeon.stageTransition.js';
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 
+import { getMtDungeonPendingEncounter } from '../Service/mtDungeonEncounter.service.js';
 import {
 	getMtDungeonArchive,
 	mtDungeonDependencies,
@@ -46,6 +48,7 @@ const moveSchema = z
 
 function handleKnownError(error: unknown): { status: number; code: string } | null {
 	if (error instanceof MtDungeonEntryError) return { status: 403, code: error.reason };
+	if (error instanceof MtDungeonEncounterError) return { status: 409, code: error.code };
 	if (error instanceof MtStageTransitionError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonSessionError) {
 		const status =
@@ -79,6 +82,29 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 				};
 			})
 		);
+	});
+	/** Only inspect the server-owned encounter the leader has just triggered. */
+	app.get('/:leaderDinozId/encounter', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		const query = z
+			.object({ lang: z.string().max(12).optional() })
+			.strict()
+			.safeParse(req.query);
+		if (!params.success || !query.success) return reply.code(400).send({ code: 'invalid-encounter-request' });
+		try {
+			const encounter = await getMtDungeonPendingEncounter(
+				{
+					userId: req.user.id,
+					leaderDinozId: params.data
+				},
+				query.data.lang
+			);
+			return reply.send({ encounter });
+		} catch (error) {
+			const known = handleKnownError(error);
+			if (known) return reply.code(known.status).send({ code: known.code });
+			throw error;
+		}
 	});
 	app.get('/:leaderDinozId', { preHandler: app.authenticate }, async (req, reply) => {
 		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
