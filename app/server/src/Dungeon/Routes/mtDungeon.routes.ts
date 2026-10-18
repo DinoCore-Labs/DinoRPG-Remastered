@@ -1,14 +1,20 @@
 /**
  * Remastered transport (JSON). This is NOT MT's historical Haxe Serializer.
- * No untrusted combat/item/scenario resolution endpoint is exposed.
+ * Combat endpoints accept only revision/token; never outcome or monsters.
  */
 import { normalizeMtDungeonLanguage } from '@dinorpg/core/models/dungeon/dungeon.catalog.js';
 import { MtDungeonEncounterError } from '@dinorpg/core/models/dungeon/dungeon.encounter.js';
+import { MtDungeonFightIntentError } from '@dinorpg/core/models/dungeon/dungeon.fight.js';
 import { MtStageTransitionError } from '@dinorpg/core/models/dungeon/dungeon.stageTransition.js';
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 
 import { getMtDungeonPendingEncounter } from '../Service/mtDungeonEncounter.service.js';
+import {
+	MtDungeonFightError,
+	prepareMtDungeonFight,
+	resolveMtDungeonFight
+} from '../Service/mtDungeonFight.service.js';
 import {
 	getMtDungeonArchive,
 	mtDungeonDependencies,
@@ -47,6 +53,16 @@ const moveSchema = z
 	.strict();
 
 function handleKnownError(error: unknown): { status: number; code: string } | null {
+	if (error instanceof MtDungeonFightIntentError) return { status: 409, code: error.code };
+	if (error instanceof MtDungeonFightError) {
+		const status =
+			error.code === 'not-found'
+				? 404
+				: error.code === 'unknown-monster' || error.code === 'unsupported-guardian'
+					? 422
+					: 409;
+		return { status, code: error.code };
+	}
 	if (error instanceof MtDungeonEntryError) return { status: 403, code: error.reason };
 	if (error instanceof MtDungeonEncounterError) return { status: 409, code: error.code };
 	if (error instanceof MtStageTransitionError) return { status: 409, code: error.code };
@@ -106,6 +122,36 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 			throw error;
 		}
 	});
+	/** MT scenario battles: clients provide a revision, not monsters or a result. */
+	app.post('/:leaderDinozId/fight/prepare', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		const body = z.object({ revision: z.number().int().nonnegative() }).strict().safeParse(req.body);
+		if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-fight-request' });
+		try {
+			return reply.send(
+				await prepareMtDungeonFight({ userId: req.user.id, leaderDinozId: params.data }, body.data.revision)
+			);
+		} catch (error) {
+			const known = handleKnownError(error);
+			if (known) return reply.code(known.status).send({ code: known.code });
+			throw error;
+		}
+	});
+	app.post('/:leaderDinozId/fight/resolve', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		const body = z.object({ token: z.string().uuid() }).strict().safeParse(req.body);
+		if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-fight-request' });
+		try {
+			return reply.send(
+				await resolveMtDungeonFight({ userId: req.user.id, leaderDinozId: params.data }, body.data.token)
+			);
+		} catch (error) {
+			const known = handleKnownError(error);
+			if (known) return reply.code(known.status).send({ code: known.code });
+			throw error;
+		}
+	});
+
 	app.get('/:leaderDinozId', { preHandler: app.authenticate }, async (req, reply) => {
 		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
 		if (!params.success) return reply.code(400).send({ code: 'invalid-leader' });
