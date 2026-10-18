@@ -5,6 +5,7 @@
 import { normalizeMtDungeonLanguage } from '@dinorpg/core/models/dungeon/dungeon.catalog.js';
 import { MtDungeonEncounterError } from '@dinorpg/core/models/dungeon/dungeon.encounter.js';
 import { MtDungeonFightIntentError } from '@dinorpg/core/models/dungeon/dungeon.fight.js';
+import { MtDungeonScenarioRewardError } from '@dinorpg/core/models/dungeon/dungeon.scenarioReward.js';
 import { MtStageTransitionError } from '@dinorpg/core/models/dungeon/dungeon.stageTransition.js';
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
@@ -20,6 +21,10 @@ import {
 	mtDungeonDependencies,
 	MtDungeonEntryError
 } from '../Service/mtDungeonRuntime.service.js';
+import {
+	MtDungeonScenarioSettlementError,
+	resolveMtDungeonScenarioReward
+} from '../Service/mtDungeonScenarioReward.service.js';
 import {
 	moveMtDungeonToAdjacentStage,
 	MtDungeonSessionError,
@@ -53,6 +58,11 @@ const moveSchema = z
 	.strict();
 
 function handleKnownError(error: unknown): { status: number; code: string } | null {
+	if (error instanceof MtDungeonScenarioRewardError) return { status: 409, code: error.code };
+	if (error instanceof MtDungeonScenarioSettlementError) {
+		const status = error.code === 'not-found' ? 404 : error.code === 'unsupported-original-reward' ? 422 : 409;
+		return { status, code: error.code };
+	}
 	if (error instanceof MtDungeonFightIntentError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonFightError) {
 		const status =
@@ -122,6 +132,32 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 			throw error;
 		}
 	});
+	/** Stage 11: resolve a trusted MT text/chest/collection event atomically. */
+	app.post('/:leaderDinozId/scenario/resolve', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		const body = z
+			.object({
+				revision: z.number().int().nonnegative(),
+				lang: z.string().max(12).optional()
+			})
+			.strict()
+			.safeParse(req.body);
+		if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-scenario-request' });
+		try {
+			return reply.send(
+				await resolveMtDungeonScenarioReward(
+					{ userId: req.user.id, leaderDinozId: params.data },
+					body.data.revision,
+					body.data.lang
+				)
+			);
+		} catch (error) {
+			const known = handleKnownError(error);
+			if (known) return reply.code(known.status).send({ code: known.code });
+			throw error;
+		}
+	});
+
 	/** MT scenario battles: clients provide a revision, not monsters or a result. */
 	app.post('/:leaderDinozId/fight/prepare', { preHandler: app.authenticate }, async (req, reply) => {
 		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
