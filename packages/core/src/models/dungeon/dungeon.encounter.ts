@@ -8,6 +8,7 @@
  *
  * This function is an inspection boundary, NOT a victory/reward mechanism.
  */
+import { isMtDungeonBlockUnlocked } from './dungeon.blocks.js';
 import type { MtDungeonDefinition, MtDungeonScenarioDefinition } from './dungeon.definition.js';
 import { getMtFlagIndex } from './dungeon.scene.js';
 import { isValidMtDungeonSession, type MtDungeonSession, type MtSessionConfiguration } from './dungeon.session.js';
@@ -157,7 +158,8 @@ export function describeMtDungeonPendingEncounter(input: {
 		)
 			throw new MtDungeonEncounterError('invalid-definition');
 		// The original View blocks this type before the player can enter its cell.
-		if (scenario.kind.type === 'block') throw new MtDungeonEncounterError('inconsistent-pending');
+		if (scenario.kind.type === 'block' && !isMtDungeonBlockUnlocked(cfg.blockRules, itemValue, session.flags))
+			throw new MtDungeonEncounterError('inconsistent-pending');
 		const details = { ...base, text: translated.text, messageIcon: scenario.messageIcon, languageUsed };
 		if (scenario.kind.type === 'monsters') {
 			if (scenario.kind.keys.length === 0 || scenario.kind.keys.some(k => !k || typeof k !== 'string'))

@@ -64,6 +64,7 @@ export function mtScenarioRewardIntent(input: {
 	let effect: MtScenarioRewardEffect;
 	switch (scenario.kind.type) {
 		case 'none':
+		case 'block':
 			effect = { type: 'none' };
 			break;
 		case 'object':
@@ -79,10 +80,9 @@ export function mtScenarioRewardIntent(input: {
 			if (!/^[a-z][a-z0-9_]*$/.test(scenario.kind.key)) throw new MtDungeonScenarioRewardError('invalid-scenario');
 			effect = { type: 'collection', key: scenario.kind.key };
 			break;
-		// Monster fights must use stage 10's persistent fight attempt. Block
-		// scenarios are impassable until their own original unlock logic exists.
+		// Monster fights must use stage 10's persistent fight attempt.
+		// Block scenarios are accepted only AFTER encounter checks prerequisites.
 		case 'monsters':
-		case 'block':
 			throw new MtDungeonScenarioRewardError('unsupported-kind');
 	}
 	return {
