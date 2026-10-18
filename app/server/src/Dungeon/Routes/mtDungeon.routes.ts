@@ -3,6 +3,7 @@
  * No untrusted combat/item/scenario resolution endpoint is exposed.
  */
 import { normalizeMtDungeonLanguage } from '@dinorpg/core/models/dungeon/dungeon.catalog.js';
+import { MtStageTransitionError } from '@dinorpg/core/models/dungeon/dungeon.stageTransition.js';
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 
@@ -12,6 +13,7 @@ import {
 	MtDungeonEntryError
 } from '../Service/mtDungeonRuntime.service.js';
 import {
+	moveMtDungeonToAdjacentStage,
 	MtDungeonSessionError,
 	openMtDungeonSession,
 	submitMtDungeonCommands
@@ -32,6 +34,9 @@ const oneCommandSchema = z
 	})
 	.strict()
 	.refine((c: { dx: number; dy: number; dl: number }) => Math.abs(c.dx) + Math.abs(c.dy) + Math.abs(c.dl) <= 1);
+const transitionSchema = z
+	.object({ revision: z.number().int().nonnegative(), action: z.enum(['forward', 'backward']) })
+	.strict();
 const moveSchema = z
 	.object({
 		revision: z.number().int().nonnegative(),
@@ -41,6 +46,7 @@ const moveSchema = z
 
 function handleKnownError(error: unknown): { status: number; code: string } | null {
 	if (error instanceof MtDungeonEntryError) return { status: 403, code: error.reason };
+	if (error instanceof MtStageTransitionError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonSessionError) {
 		const status =
 			error.code === 'not-found' ? 404 : error.code === 'conflict' || error.code === 'already-exists' ? 409 : 400;
@@ -96,6 +102,28 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 				`${body.data.dungeonId}_0`
 			);
 			return reply.code(201).send(session);
+		} catch (error) {
+			const known = handleKnownError(error);
+			if (known) return reply.code(known.status).send({ code: known.code });
+			throw error;
+		}
+	});
+
+	app.post('/:leaderDinozId/transition', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		const body = transitionSchema.safeParse(req.body);
+		if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-transition' });
+		try {
+			const session = await moveMtDungeonToAdjacentStage(
+				mtDungeonDependencies(),
+				{
+					userId: req.user.id,
+					leaderDinozId: params.data
+				},
+				body.data.action,
+				body.data.revision
+			);
+			return reply.send(session);
 		} catch (error) {
 			const known = handleKnownError(error);
 			if (known) return reply.code(known.status).send({ code: known.code });

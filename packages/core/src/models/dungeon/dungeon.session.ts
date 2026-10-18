@@ -1,3 +1,18 @@
+/**
+ * Server-side validator for the original Motion Twin dungeon command sequence.
+ *
+ * Source of *historical facts*:
+ *   DinoRPG/gfx/dungeon/View.hx: move, openDoor, getItem, updateFog
+ *   DinoRPG/src/com/DungeonData.hx: DungeonCommand (_x,_y,_l,_dx,_dy,_dl)
+ *   DinoRPG/src/com/DungeonCodec.hx: doors, items, level topology
+ *
+ * This is a Remastered security/persistence adapter, NOT a copy of MT's
+ * original server (that server controller is absent from WebGamesArchives).
+ * In particular, economy and fight effects MUST be supplied by trusted
+ * existing game services, never inferred from a client command.
+ *
+ * Original game material (c) Motion Twin — CC BY-NC-SA 4.0.
+ */
 import type { MtCellEvent, MtDirection, MtExplorerState } from './dungeon.exploration.js';
 import {
 	applyMtDungeonArrival,
@@ -21,6 +36,13 @@ export interface MtPendingInteraction {
 	itemValue: number | null;
 }
 
+/** Saved navigation state of one historical MT map, independent of other stages. */
+export interface MtDungeonStageState {
+	keys: boolean[];
+	flags: number[];
+	fog: number[] | null;
+}
+
 export interface MtDungeonSession {
 	/** Immutable server-issued dungeon identity (e.g. 'stepp_0'). */
 	mapId: string;
@@ -32,6 +54,8 @@ export interface MtDungeonSession {
 	locked: boolean;
 	/** Server-managed pending event; never supplied by the client. */
 	pending: MtPendingInteraction | null;
+	/** Per-map navigation snapshots; JSONB in Remastered, never trusted from HTTP. */
+	stageStates: Record<string, MtDungeonStageState>;
 	/** To support optimistic storage compare-and-swap. */
 	revision: number;
 }
@@ -98,6 +122,16 @@ function copy(session: MtDungeonSession): MtDungeonSession {
 		keys: [...session.keys],
 		flags: [...session.flags],
 		fog: session.fog === null ? null : [...session.fog],
+		stageStates: Object.fromEntries(
+			Object.entries(session.stageStates).map(([mapId, value]) => [
+				mapId,
+				{
+					keys: [...value.keys],
+					flags: [...value.flags],
+					fog: value.fog === null ? null : [...value.fog]
+				}
+			])
+		),
 		pending:
 			session.pending === null
 				? null
@@ -108,13 +142,16 @@ function copy(session: MtDungeonSession): MtDungeonSession {
 					}
 	};
 }
-function validSession(session: MtDungeonSession, cfg: MtSessionConfiguration): boolean {
+export function isValidMtDungeonSession(session: MtDungeonSession, cfg: MtSessionConfiguration): boolean {
 	const { map } = cfg;
 	return (
 		session.mapId === cfg.mapId &&
 		validPoint(session.position, map) &&
 		Number.isSafeInteger(session.revision) &&
 		session.revision >= 0 &&
+		session.stageStates !== null &&
+		typeof session.stageStates === 'object' &&
+		!Array.isArray(session.stageStates) &&
 		typeof session.locked === 'boolean' &&
 		Array.isArray(session.keys) &&
 		session.keys.every(k => typeof k === 'boolean') &&
@@ -186,6 +223,7 @@ export function createMtDungeonSession(cfg: MtSessionConfiguration, fogEnabled =
 		fog: fogEnabled ? [...createMtDungeonFog(cfg.map)] : null,
 		locked: false,
 		pending: null,
+		stageStates: {},
 		revision: 0
 	};
 	return withFog(cfg.map, base);
@@ -209,7 +247,7 @@ export function applyMtDungeonCommandBatch(
 		commandIndex,
 		session: copy(original)
 	});
-	if (!validSession(original, cfg)) return fail('invalid-state', -1);
+	if (!isValidMtDungeonSession(original, cfg)) return fail('invalid-state', -1);
 	if (original.pending) return fail('pending-interaction', -1);
 	if (!Array.isArray(commands) || commands.length < 1 || commands.length > 10) return fail('invalid-batch', -1);
 	let result = copy(original);
@@ -277,9 +315,14 @@ export function settleMtDungeonInteraction(
 	original: MtDungeonSession,
 	succeeded: boolean
 ): MtDungeonSession {
-	if (!validSession(original, cfg) || !original.pending) throw new Error('No valid pending MT dungeon interaction.');
+	if (!isValidMtDungeonSession(original, cfg) || !original.pending)
+		throw new Error('No valid pending MT dungeon interaction.');
 	const result = copy(original);
 	const event = result.pending!;
+	// Exterior stairs are NOT ordinary pickups; do not allow a generic result
+	// handler to bypass the stage/world transition policy.
+	if (event.kind === 'boundary-start' || event.kind === 'boundary-exit')
+		throw new Error('Boundary requires the dedicated MT dungeon transition handler.');
 	result.pending = null;
 	result.locked = false;
 	if (succeeded) {
