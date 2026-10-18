@@ -1,14 +1,4 @@
-/**
- * MT dungeon PNG scene catalog, sourced from the archived original dungeon/gfx PNG exports.
- *
- * This file intentionally does NOT infer missing Flash timeline-symbol mappings,
- * registration points, PRNG results, Perlin pixels or filters. Missing art is
- * reported instead of substituting procedurally drawn or unrelated textures.
- *
- * Original source: DinoRPG/gfx/dungeon/gfx (Motion Twin, CC BY-NC-SA 4.0).
- * Logic reference: gfx/dungeon/View.hx (displayLevel), revision
- * 8b8e2f202e1fa8cdf1d96e4140dad0cba458054e.
- */
+import { mtDungeonTileFrame } from '@dinorpg/core/models/dungeon/dungeon.rand.js';
 import type {
 	MtDungeonScene,
 	MtFloorTile,
@@ -16,7 +6,13 @@ import type {
 	MtWallTile
 } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
 
-/** The exact 44 PNGs already held in the user's client.zip archive. */
+import originalPngList from './mtOriginalGfxManifest.json';
+
+/** All 201 PNG filenames present in the archived gfx/dungeon/gfx directory. */
+export const MT_ORIGINAL_PNG: readonly string[] = Object.freeze([...originalPngList]);
+const originals = new Set(MT_ORIGINAL_PNG);
+
+/** Kept only for compatibility with the step-3 test/consumers. */
 export const MT_BUNDLED_PNG = [
 	'back_cavern_01.png',
 	'back_ruin_01.png',
@@ -64,18 +60,20 @@ export const MT_BUNDLED_PNG = [
 	'side_cavern_01.png',
 	'side_ruin_01.png'
 ] as const;
-const bundled = new Set<string>(MT_BUNDLED_PNG);
 
 export type MtRandomFrameSource = (tile: MtFloorTile | MtWallTile, availableVariants: number) => number;
 
-/**
- * The absence of a resolver permits an *explicit* first-frame-only diagnostic
- * preview. It must NOT be presented as historical frame-selection fidelity.
- */
 export interface MtSpriteOptions {
+	/** Overrides the built-in port of mt.Rand for verification/debugging. */
 	frameFor?: MtRandomFrameSource;
-	/** URL prefix for public assets, without trailing slash. */
+	/** Vite public asset URL prefix. Defaults to /dungeon/mt. */
 	assetBase?: string;
+	/**
+	 * EXPLICIT opt-in. These same-named PNG groups are archived, but the exact
+	 * Flash subclip timeline order for masks 1..15 is not proven from gfx.swf.
+	 * Leave false for archive-faithful conservative rendering.
+	 */
+	showUnverifiedSameNameOverlays?: boolean;
 }
 
 export interface MtSpriteCommand {
@@ -83,189 +81,214 @@ export interface MtSpriteCommand {
 	url: string;
 	x: number;
 	y: number;
-	/** Original Flash depth-manager layers 0 / 1 / 3. */
 	layer: 0 | 1 | 3;
-	/** Stable ordering within one depth. */
 	order: number;
-	/** Known scene origin; final SWF registration offsets are not yet validated. */
 	label: string;
 }
 
 export interface MtSpritePlan {
 	sprites: MtSpriteCommand[];
-	/** Explicit list of the artwork/symbols not yet faithfully resolved. */
 	unresolved: string[];
 	previewOnly: true;
-	/** Fog and guards are deliberately NOT approximated. */
 	originalFogSupported: false;
 }
 
 const TILE = 40;
-const FLOOR_GROUP: Readonly<Record<string, string>> = {
+/** View.hx skin.g -> archived graphic frame export family. */
+const GROUND_GROUP: Readonly<Record<string, string>> = {
+	cavern: 'cavern',
+	crypt: 'crypt',
+	desert: 'sand',
+	grass: 'grass',
 	hell: 'hell',
-	desert: 'sand'
+	sewer: 'sewer'
 };
-const WALL_GROUP = new Set(['ruin', 'cavern']);
+const WALL_GROUP = new Set(['cavern', 'crypt', 'egypt', 'forest', 'hell', 'ruin', 'sewer']);
 
 function frameName(type: string, group: string, frame: number): string {
 	return `${type}_${group}_${String(frame).padStart(2, '0')}.png`;
 }
-
-function available(type: string, group: string): number {
-	// The archived exports have consecutive numbered variants.
+function frames(type: string, group: string): number {
 	let n = 0;
-	while (bundled.has(frameName(type, group, n + 1))) n++;
+	while (originals.has(frameName(type, group, n + 1))) n++;
 	return n;
+}
+function wallType(part: MtWallTile['part']): string {
+	if (part === 'front') return 'front';
+	if (part === 'back') return 'back';
+	if (part.startsWith('side')) return 'side';
+	return 'corner';
+}
+
+interface NumberedFrame {
+	tile: MtFloorTile | MtWallTile;
+	kind: string;
+	group: string;
+	count: number;
 }
 
 /**
- * Returns a texture selection *only* when the original exported PNG is present.
- * The fallback first frame is explicitly annotated as non-faithful preview.
+ * Original View.hx calls rseed.initSeed(py * height + px), then draws ONE
+ * ground random and one random for EACH wall in attach order. A later frame
+ * therefore depends on the preceding *groups' actual frame counts*.
  */
-function selectVariant(
-	type: string,
-	group: string,
-	tile: MtFloorTile | MtWallTile,
-	frameFor: MtRandomFrameSource | undefined,
+function originalFrameSelection(
+	scene: MtDungeonScene,
 	unresolved: Set<string>
-): string | null {
-	const count = available(type, group);
-	if (!count) {
-		unresolved.add(`Sprite original absent : ${type}_${group}_*.png`);
-		return null;
-	}
-	if (!frameFor && count > 1) {
-		unresolved.add('Sélection des variantes mt.Rand non portée : aperçu avec la première image seulement');
-	}
-	const frame = frameFor?.(tile, count) ?? 1;
-	if (!Number.isInteger(frame) || frame < 1 || frame > count) {
-		throw new Error(`Frame MT invalide (${frame}) pour ${type}_${group} (1..${count})`);
-	}
-	return frameName(type, group, frame);
+): (tile: MtFloorTile | MtWallTile, count: number) => number | null {
+	const tiles = new Map<number, Map<number, NumberedFrame>>();
+	const add = (tile: MtFloorTile | MtWallTile, kind: string, group: string) => {
+		const count = frames(kind, group);
+		let draws = tiles.get(tile.frameSeed);
+		if (!draws) {
+			draws = new Map();
+			tiles.set(tile.frameSeed, draws);
+		}
+		draws.set(tile.randomDrawIndex, { tile, kind, group, count });
+	};
+	for (const floor of scene.floor) add(floor, 'ground', GROUND_GROUP[floor.ground] ?? 'unresolved');
+	for (const wall of scene.walls) add(wall, wallType(wall.part), wall.symbol);
+
+	const cache = new Map<string, number | null>();
+	return (tile, count) => {
+		const key = `${tile.frameSeed}:${tile.randomDrawIndex}`;
+		if (cache.has(key)) return cache.get(key)!;
+		const draws = tiles.get(tile.frameSeed);
+		const counts: number[] = [];
+		for (let i = 0; i <= tile.randomDrawIndex; i++) {
+			const previous = draws?.get(i);
+			if (!previous || previous.count < 1) {
+				unresolved.add(`Séquence mt.Rand incomplète à seed ${tile.frameSeed} (tirage ${i}) : frame Flash manquante`);
+				cache.set(key, null);
+				return null;
+			}
+			counts.push(previous.count);
+		}
+		const selected = mtDungeonTileFrame(tile.frameSeed, counts);
+		if (selected > count) {
+			unresolved.add(`Frame mt.Rand non exportée : ${key}, frame ${selected}/${count}`);
+			cache.set(key, null);
+			return null;
+		}
+		cache.set(key, selected);
+		return selected;
+	};
 }
 
-function selectWall(
-	tile: MtWallTile,
-	frameFor: MtRandomFrameSource | undefined,
-	unresolved: Set<string>
-): string | null {
-	if (!WALL_GROUP.has(tile.symbol)) {
-		unresolved.add(`Mur original sans sprite vérifié pour le symbole Flash « ${tile.symbol} »`);
-		return null;
+function itemArt(feature: MtSceneFeature, unresolved: Set<string>): string | null {
+	switch (feature.kind) {
+		case 'gold':
+			return 'item_gold.png';
+		case 'key':
+			return frameName('item', 'key', 1 + (feature.keyId % 8));
+		case 'door': {
+			// View.hx: smc frame 1 if north passable, 2 otherwise.
+			// h/v naming corresponds to the archived PNG groups. Registration
+			// inside SWF still needs measurement against the original timeline.
+			const dir = feature.orientation === 1 ? 'h' : 'v';
+			unresolved.add('Ancrage des objets de porte (PNG 40×54) encore à comparer à gfx.swf');
+			return `item_door_${dir}_${feature.opened ? 'open' : '01'}.png`;
+		}
+		case 'stair':
+			// View.hx assigns timeline frame 5 or 6. The historical exports name
+			// the corresponding images stair_up / stair_down (direction from frame).
+			unresolved.add('Orientation/ancrage de l’escalier à vérifier avec gfx.swf (frame 5/6)');
+			return feature.frame === 5 ? 'item_stair_up.png' : 'item_stair_down.png';
+		case 'heal':
+			unresolved.add('Objet de soin (frames 7/8) : correspondance à confirmer dans gfx.swf');
+			return null;
+		case 'scenario-icon':
+			unresolved.add(`Scénario : symbole Flash DIIcon « ${feature.icon} » à extraire de gfx.swf`);
+			return null;
+		case 'guardian':
+			unresolved.add('Gardien Dinoz : rendu externe _smonster SWF non encore porté');
+			return null;
 	}
-	const kind =
-		tile.part === 'front' ? 'front' : tile.part === 'back' ? 'back' : tile.part.startsWith('side') ? 'side' : 'corner';
-	if (tile.part === 'side-right') {
-		unresolved.add('Orientation du symbole wall_side_right à comparer au SWF original');
-	}
-	if (tile.part.startsWith('corner') && tile.part.endsWith('right')) {
-		unresolved.add('Enregistrement et orientation des coins droits à comparer au SWF original');
-	}
-	return selectVariant(kind, tile.symbol, tile, frameFor, unresolved);
 }
 
-/** Build visible *original-PNG-only* draw commands; no generated textures. */
 export function createMtSpritePlan(scene: MtDungeonScene, options: MtSpriteOptions = {}): MtSpritePlan {
 	const unresolved = new Set<string>();
+	const assetBase = (options.assetBase ?? '/dungeon/mt').replace(/\/+$/, '');
 	const sprites: MtSpriteCommand[] = [];
-	const assetBase = (options.assetBase ?? '/dungeon/mt').replace(/\/$/, '');
 	let order = 0;
 	const push = (file: string | null, x: number, y: number, layer: 0 | 1 | 3, label: string) => {
 		if (!file) return;
-		if (!bundled.has(file)) {
-			unresolved.add(`PNG original non inclus : ${file}`);
+		if (!originals.has(file)) {
+			unresolved.add(`PNG absent de l'archive Motion Twin : ${file}`);
 			return;
 		}
 		sprites.push({ file, url: `${assetBase}/${file}`, x, y, layer, order: order++, label });
 	};
+	const select = originalFrameSelection(scene, unresolved);
+	const resolveFrame = (tile: MtFloorTile | MtWallTile, kind: string, group: string): string | null => {
+		const count = frames(kind, group);
+		if (!count) {
+			unresolved.add(`Aucun PNG exporté pour le symbole ${kind}_${group} (présent éventuellement dans gfx.swf)`);
+			return null;
+		}
+		const index = options.frameFor ? options.frameFor(tile, count) : select(tile, count);
+		if (index == null) return null;
+		if (!Number.isInteger(index) || index < 1 || index > count) {
+			throw new Error(`Frame MT invalide (${index}) pour ${kind}_${group} (1..${count})`);
+		}
+		return frameName(kind, group, index);
+	};
 
 	for (const tile of scene.floor) {
-		const group = FLOOR_GROUP[tile.ground];
+		const group = GROUND_GROUP[tile.ground];
 		if (!group) {
-			unresolved.add(`Sol Flash non résolu vers le PNG original : « ${tile.ground} »`);
+			unresolved.add(`Sol Flash « ${tile.ground} » non exporté en PNG (gfx.swf à examiner)`);
 			continue;
 		}
-		push(
-			selectVariant('ground', group, tile, options.frameFor, unresolved),
-			tile.x * TILE,
-			tile.y * TILE,
-			0,
-			`ground:${tile.ground}`
-		);
+		push(resolveFrame(tile, 'ground', group), tile.x * TILE, tile.y * TILE, 0, `ground:${tile.ground}`);
 	}
-
-	// The 2 bitmap overground layers in View.hx require a verified symbol-to-PNG
-	// correspondence (ruinPurple/square/dirt/etc). None is invented here.
-	for (const overlay of scene.overlays) {
-		unresolved.add(`Overground Flash non résolu : « ${overlay.symbol} »`);
+	for (const tile of scene.overlays) {
+		// Only identical named families are candidates. Even here, timeline
+		// frame index is not proven, hence must be explicitly enabled.
+		if (options.showUnverifiedSameNameOverlays && (tile.symbol === 'grass' || tile.symbol === 'creep')) {
+			unresolved.add('Recouvrement exploratoire : numérotation des 16 frames non vérifiée dans gfx.swf');
+			push(
+				frameName('overground', tile.symbol, tile.mask),
+				tile.x * TILE,
+				tile.y * TILE,
+				0,
+				`overground:${tile.symbol}:${tile.layer}`
+			);
+		} else {
+			unresolved.add(`Recouvrement Flash « ${tile.symbol} » : correspondance PNG/timeline non vérifiée`);
+		}
 	}
-
 	for (const tile of scene.walls) {
+		if (!WALL_GROUP.has(tile.symbol)) {
+			unresolved.add(`Mur Flash « ${tile.symbol} » sans PNG exporté dans l'archive`);
+			continue;
+		}
+		if (tile.part === 'side-right') unresolved.add('Orientation du mur latéral droit encore à confirmer dans gfx.swf');
+		if (tile.part.includes('right') && tile.part.startsWith('corner')) {
+			unresolved.add('Orientation/enregistrement du coin droit encore à confirmer dans gfx.swf');
+		}
 		push(
-			selectWall(tile, options.frameFor, unresolved),
+			resolveFrame(tile, wallType(tile.part), tile.symbol),
 			tile.x * TILE + tile.offsetX,
 			tile.y * TILE + tile.offsetY,
 			tile.depth,
 			`wall:${tile.part}`
 		);
 	}
-
 	for (const feature of scene.features) {
-		const { file, note } = selectItem(feature);
-		if (note) unresolved.add(note);
-		push(file, feature.x * TILE, feature.y * TILE, 1, `item:${feature.kind}`);
+		push(itemArt(feature, unresolved), feature.x * TILE, feature.y * TILE, 1, `item:${feature.kind}`);
 	}
-
-	if (scene.fog.length > 0) {
-		unresolved.add('Brouillard Flash original : sprites fog + BlurFilter 32 px non encore portés');
-	}
-	// The archived PNG exports do not represent the native monster / Dinoz SWFs.
+	if (scene.fog.length) unresolved.add('Brouillard original fog + BlurFilter(32,32) non encore porté');
+	// Native Flash depth layers. The floor/overground bitmap and front walls
+	// occupy depth 0; items depth 1; sides/back walls depth 3.
 	sprites.sort((a, b) => a.layer - b.layer || a.order - b.order);
-	return {
-		sprites,
-		unresolved: [...unresolved],
-		previewOnly: true,
-		originalFogSupported: false
-	};
+	return { sprites, unresolved: [...unresolved], previewOnly: true, originalFogSupported: false };
 }
 
-function selectItem(feature: MtSceneFeature): { file: string | null; note?: string } {
-	switch (feature.kind) {
-		case 'gold':
-			return { file: 'item_gold.png' };
-		case 'key': {
-			const frame = 1 + (feature.keyId % 8);
-			return { file: frameName('item', 'key', frame) };
-		}
-		case 'heal':
-			return {
-				file: null,
-				note: 'Symbole item de soin : frames 7/8 du SWF non encore associés aux PNG originaux'
-			};
-		case 'door':
-			return {
-				file: null,
-				note: 'Orientation et frame d’une porte : correspondance SWF non encore vérifiée'
-			};
-		case 'stair':
-			return {
-				file: null,
-				note: 'Orientation et frame d’un escalier : correspondance SWF non encore vérifiée'
-			};
-		case 'scenario-icon':
-			return {
-				file: null,
-				note: `Icône scénario Flash non portée : ${feature.icon}`
-			};
-		case 'guardian':
-			return {
-				file: null,
-				note: 'Gardien original : symbole SWF _smonster non disponible au format PNG'
-			};
-	}
+export function isOriginalMtPng(name: string): boolean {
+	return originals.has(name);
 }
-
-/** Exposed for the local-file provenance test. */
+/** Compatibility with step 3's initial bundled subset. */
 export function isBundledMtPng(name: string): boolean {
-	return bundled.has(name);
+	return (MT_BUNDLED_PNG as readonly string[]).includes(name);
 }
