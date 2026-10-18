@@ -502,7 +502,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 	flex-direction: column;
 	gap: 0.65rem;
 	width: 100%;
-	max-width: 530px;
 	margin: 0 auto 1rem;
 	color: #37291b;
 }
@@ -526,8 +525,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 }
 .mt-test__viewport {
 	position: relative;
-	width: min(360px, 100%);
-	aspect-ratio: 1;
+	width: 100%;
 	overflow: hidden;
 	background: #3d3325;
 	border: 5px solid #5f4123;

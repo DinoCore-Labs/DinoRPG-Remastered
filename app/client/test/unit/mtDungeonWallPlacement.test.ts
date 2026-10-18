@@ -4,7 +4,11 @@ import { mtWallBounds, placeMtWall } from '../../src/components/dungeon/mtDungeo
 
 describe('MT exported wall calibration for local diagnostics', () => {
 	it('preserves unmodified MT placement by default', () => {
-		expect(placeMtWall('corner-bottom-right', 3, 4)).toMatchObject({ x: 168, y: 208, flipX: true });
+		expect(placeMtWall('corner-bottom-right', 3, 4)).toMatchObject({ x: 160, y: 208, flipX: true });
+	});
+	it('keeps the calibrated right corners on their previous visual position', () => {
+		expect(placeMtWall('corner-top-right', 3, 4, 40, { x: 1, y: -3 }).x).toBe(161);
+		expect(placeMtWall('corner-bottom-right', 3, 4, 40, { x: 1, y: 0 }).x).toBe(161);
 	});
 	it('moves only PNG registration coordinates, never stretches the bitmap', () => {
 		const unmodified = placeMtWall('side-right', 3, 4);
