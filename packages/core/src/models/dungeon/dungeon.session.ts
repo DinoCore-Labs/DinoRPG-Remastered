@@ -13,6 +13,8 @@
  *
  * Original game material (c) Motion Twin — CC BY-NC-SA 4.0.
  */
+import type { MtDungeonBlockRule } from './dungeon.blocks.js';
+import { effectiveMtDungeonScenarioIcons } from './dungeon.blocks.js';
 import type { MtCellEvent, MtDirection, MtExplorerState } from './dungeon.exploration.js';
 import {
 	applyMtDungeonArrival,
@@ -78,6 +80,8 @@ export interface MtSessionConfiguration {
 	map: DungeonStructure;
 	mapId: string;
 	scenarioIcons?: readonly DungeonIcon[];
+	/** Compiled exclusively from MT map positions + canonical <scenario block=...>. */
+	blockRules?: readonly MtDungeonBlockRule[];
 	tower?: boolean;
 }
 
@@ -261,7 +265,7 @@ export function applyMtDungeonCommandBatch(
 				map: cfg.map,
 				state: asExplorer(result),
 				direction: directionFor(command, !!cfg.tower),
-				scenarioIcons: cfg.scenarioIcons,
+				scenarioIcons: effectiveMtDungeonScenarioIcons(cfg.scenarioIcons, cfg.blockRules, result.flags),
 				tower: cfg.tower,
 				pendingCommands: index
 			});
