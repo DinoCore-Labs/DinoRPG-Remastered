@@ -1,0 +1,48 @@
+/**
+ * Authenticated, viewport-limited MT test renderer.
+ * The original Flash perlinNoise pixels have not been recovered; this endpoint
+ * intentionally uses a neutral/no-overlay surface rather than inventing noise.
+ * Never return the complete DungeonStructure or hidden event coordinates.
+ */
+import { effectiveMtDungeonScenarioIcons } from '@dinorpg/core/models/dungeon/dungeon.blocks.js';
+import { buildMtDungeonScene } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
+import { getDungeonSkin } from '@dinorpg/core/models/dungeon/dungeon.skins.js';
+import { redactMtDungeonViewport } from '@dinorpg/core/models/dungeon/dungeon.viewport.js';
+
+import { getMtDungeonArchive, mtDungeonDependencies } from './mtDungeonRuntime.service.js';
+import { MtDungeonSessionError, type MtSessionIdentity } from './mtDungeonSession.service.js';
+
+export async function getMtDungeonCurrentView(identity: MtSessionIdentity) {
+	const session = await mtDungeonDependencies().repository.load(identity);
+	if (!session) throw new MtDungeonSessionError('not-found');
+	const archive = getMtDungeonArchive();
+	const cfg = archive.configuration(session.mapId);
+	const dungeonId = session.mapId.slice(0, session.mapId.lastIndexOf('_'));
+	const stage = Number(session.mapId.slice(session.mapId.lastIndexOf('_') + 1));
+	const skinName = archive.definition(dungeonId).stages[stage]?.skin;
+	const skin = skinName && getDungeonSkin(skinName);
+	if (!skin) throw new Error(`Original MT skin missing for ${session.mapId}`);
+	const { position, flags, fog } = session;
+	const scene = buildMtDungeonScene({
+		map: cfg.map,
+		level: position.l,
+		viewX: position.x - 4,
+		viewY: position.y - 4,
+		skin,
+		// Neutral fallback until original Flash perlinNoise implementation is ported.
+		noiseAt: () => 255,
+		flags: new Set(flags),
+		scenarioIcons: effectiveMtDungeonScenarioIcons(cfg.scenarioIcons, cfg.blockRules, flags),
+		tower: cfg.tower,
+		fog: fog === null ? null : Uint8Array.from(fog)
+	});
+	return {
+		mapId: session.mapId,
+		revision: session.revision,
+		position: { ...position },
+		skin: skinName,
+		stage,
+		scene: redactMtDungeonViewport(scene, cfg.map, fog),
+		limitations: ['neutral-perlin-noise', 'flash-actor-not-yet-ported'] as const
+	};
+}

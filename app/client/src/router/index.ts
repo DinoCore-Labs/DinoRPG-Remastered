@@ -41,6 +41,7 @@ import ManageDinoz from '../pages/ManageDinoz.vue';
 import MarketPage from '../pages/MarketPage.vue';
 import MissionsPage from '../pages/MissionsPage.vue';
 import ModerationPage from '../pages/Moderation/ModerationPage.vue';
+import MtMagneticCavernsPage from '../pages/MtMagneticCavernsPage.vue';
 import NewsPage from '../pages/NewsPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
 import RulesPage from '../pages/RulesPage.vue';
@@ -126,6 +127,13 @@ const routes: RouteRecord[] = [
 				name: 'MyIngredients',
 				component: Ingredients,
 				meta: { auth: true }
+			},
+			{
+				path: '/dinoz/:id/dungeon/stepp',
+				name: 'MtMagneticCavernsPage',
+				component: MtMagneticCavernsPage,
+				meta: { auth: true },
+				beforeEnter: requireOwnedDinozByParam('id')
 			},
 			{
 				path: '/dinoz/:id',
