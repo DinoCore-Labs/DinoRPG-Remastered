@@ -34,6 +34,7 @@ import {
 	openMtDungeonSession,
 	submitMtDungeonCommands
 } from '../Service/mtDungeonSession.service.js';
+import { getMtDungeonCurrentView } from '../Service/mtDungeonView.service.js';
 
 const leaderIdSchema = z.coerce.number().int().positive();
 const startSchema = z
@@ -224,6 +225,18 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 		}
 	});
 
+	/** Only current discovered tiles; never return whole map or hidden items. */
+	app.get('/:leaderDinozId/view', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		if (!params.success) return reply.code(400).send({ code: 'invalid-leader' });
+		try {
+			return reply.send(await getMtDungeonCurrentView({ userId: req.user.id, leaderDinozId: params.data }));
+		} catch (error) {
+			const known = handleKnownError(error);
+			if (known) return reply.code(known.status).send({ code: known.code });
+			throw error;
+		}
+	});
 	app.get('/:leaderDinozId', { preHandler: app.authenticate }, async (req, reply) => {
 		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
 		if (!params.success) return reply.code(400).send({ code: 'invalid-leader' });
