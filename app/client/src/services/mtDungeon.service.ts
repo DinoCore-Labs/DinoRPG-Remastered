@@ -23,12 +23,30 @@ export interface MtDungeonEncounter {
 	languageUsed?: string;
 }
 
+export interface MtGuardianTrialPreview {
+	mapId: string;
+	revision: number;
+	monsterKey: string;
+	experimental: true;
+	note: string;
+}
+
 export interface MtDungeonDevCapabilities {
+	guardianFight?: boolean;
 	guardianSkip: boolean;
 	surfaceExit: boolean;
 }
 
 export const MtDungeonService = {
+	getGuardianTrialPreview(id: number): Promise<MtGuardianTrialPreview> {
+		return api.get(`/dungeon/mt/${id}/dev/guardian/fight/preview`, { silent: true });
+	},
+	prepareGuardianTrial(id: number, revision: number): Promise<{ token: string; experimental: true }> {
+		return api.post(`/dungeon/mt/${id}/dev/guardian/fight/prepare`, { revision });
+	},
+	resolveGuardianTrial(id: number, token: string): Promise<FightResult> {
+		return api.post(`/dungeon/mt/${id}/dev/guardian/fight/resolve`, { token });
+	},
 	getDevCapabilities(): Promise<MtDungeonDevCapabilities> {
 		return api.get('/dungeon/mt/dev/capabilities', { silent: true });
 	},
