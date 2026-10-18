@@ -1,7 +1,22 @@
+/**
+ * Reads the user's locally archived, unmodified Motion Twin XML files.
+ * No runtime download, regenerated map, or invented dungeon metadata.
+ * MT sources: xml/{fr,en,es,de}/dungeons.xml; xml/dungeons/<id>_<stage>.xml;
+ *              src/data/Dungeon.hx and gfx/dungeon/View.hx.
+ */
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
+import {
+	groupMtDungeonDefinitions,
+	localizeMtDungeonDefinition,
+	MT_DUNGEON_DEFINITIONS_SHA,
+	MT_DUNGEON_LANGUAGES,
+	MT_DUNGEON_MAPS,
+	type MtDungeonLanguage,
+	normalizeMtDungeonLanguage
+} from '@dinorpg/core/models/dungeon/dungeon.catalog.js';
 import { decodeMtDungeon } from '@dinorpg/core/models/dungeon/dungeon.codec.js';
 import {
 	type MtDungeonDefinition,
@@ -10,15 +25,6 @@ import {
 import { ORIGINAL_MT_DUNGEON_MAP_SHA } from '@dinorpg/core/models/dungeon/dungeon.mapManifest.js';
 import type { MtSessionConfiguration } from '@dinorpg/core/models/dungeon/dungeon.session.js';
 import type { DungeonIcon } from '@dinorpg/core/models/dungeon/dungeon.types.js';
-
-const EXPECTED_STAGES: Readonly<Record<string, number>> = {
-	stepp: 4,
-	katak: 1,
-	mbegin: 1,
-	mquetz: 1,
-	mcuzco: 3,
-	labo: 1
-};
 
 export class MtDungeonArchiveError extends Error {
 	constructor(message: string) {
@@ -31,16 +37,14 @@ export class MtDungeonArchiveError extends Error {
 export function findMtDungeonArchiveDirectory(): string {
 	const override = process.env.MT_DUNGEON_MAPS_DIR;
 	if (override) {
-		if (existsSync(join(override, 'dungeons.xml'))) return resolve(override);
-		throw new MtDungeonArchiveError(`dungeons.xml introuvable dans MT_DUNGEON_MAPS_DIR=${override}`);
+		if (existsSync(join(override, 'stepp_0.xml'))) return resolve(override);
+		throw new MtDungeonArchiveError(`Cartes introuvables dans MT_DUNGEON_MAPS_DIR=${override}`);
 	}
 	for (const parent of ['.', '..', '../..', '../../..']) {
 		const candidate = resolve(process.cwd(), parent, 'packages/core/src/models/dungeon/maps');
-		if (existsSync(join(candidate, 'dungeons.xml'))) return candidate;
+		if (existsSync(join(candidate, 'stepp_0.xml'))) return candidate;
 	}
-	throw new MtDungeonArchiveError(
-		'Copier le fichier MT original xml/fr/dungeons.xml dans packages/core/src/models/dungeon/maps/dungeons.xml'
-	);
+	throw new MtDungeonArchiveError('Cartes MT manquantes dans packages/core/src/models/dungeon/maps/');
 }
 
 export function mtGitBlobSha(content: Uint8Array): string {
@@ -64,32 +68,65 @@ function iconsForStage(definition: MtDungeonDefinition, stageIndex: number): Dun
 	});
 }
 
-export class MtDungeonArchive {
-	private definitionsCache: MtDungeonDefinition[] | null = null;
-	private readonly mapCache = new Map<string, MtSessionConfiguration>();
-	constructor(private readonly directory: string = findMtDungeonArchiveDirectory()) {}
+/** Original metadata is deliberately outside `maps/`, which contains exactly 11 layouts. */
+export function findMtDungeonDefinitionsDirectory(mapDirectory: string): string {
+	return resolve(process.env.MT_DUNGEON_DEFINITIONS_DIR ?? join(mapDirectory, '..', 'definitions'));
+}
 
-	definitions(): readonly MtDungeonDefinition[] {
-		if (!this.definitionsCache) {
-			const bytes = readFileSync(join(this.directory, 'dungeons.xml'));
-			if (mtGitBlobSha(bytes) !== '82f6f047231953c08f4bec923ca8d39f67d847e4')
-				throw new MtDungeonArchiveError(
-					'dungeons.xml n’est pas le fichier MT français original (empreinte Git différente).'
-				);
-			const definitions = parseMtDungeonDefinitions(bytes.toString('utf8'));
-			const found = Object.fromEntries(definitions.map(d => [d.id, d.stages.length]));
-			if (JSON.stringify(Object.entries(found).sort()) !== JSON.stringify(Object.entries(EXPECTED_STAGES).sort())) {
-				throw new MtDungeonArchiveError('dungeons.xml ne correspond pas aux six donjons MT français originaux.');
+export class MtDungeonArchive {
+	private readonly definitionsCache = new Map<MtDungeonLanguage, readonly MtDungeonDefinition[]>();
+	private readonly mapCache = new Map<string, MtSessionConfiguration>();
+	constructor(
+		private readonly directory: string = findMtDungeonArchiveDirectory(),
+		private readonly definitionsDirectory: string = findMtDungeonDefinitionsDirectory(directory)
+	) {}
+
+	/** Loads an entire *original* locale file, checks byte integrity and mechanics. */
+	definitions(language: MtDungeonLanguage = 'fr'): readonly MtDungeonDefinition[] {
+		const cached = this.definitionsCache.get(language);
+		if (cached) return cached;
+		if (!MT_DUNGEON_LANGUAGES.includes(language)) throw new MtDungeonArchiveError(`Langue MT inconnue: ${language}`);
+		const path = join(this.definitionsDirectory, language, 'dungeons.xml');
+		if (!existsSync(path)) throw new MtDungeonArchiveError(`Métadonnées MT manquantes: ${path}`);
+		const bytes = readFileSync(path);
+		if (mtGitBlobSha(bytes) !== MT_DUNGEON_DEFINITIONS_SHA[language])
+			throw new MtDungeonArchiveError(`${language}/dungeons.xml: empreinte Git MT invalide.`);
+		const definitions = parseMtDungeonDefinitions(bytes.toString('utf8'));
+		const indexed = groupMtDungeonDefinitions(definitions);
+		const expectedIds = Object.keys(MT_DUNGEON_MAPS)
+			.filter(id => language !== 'de' || id !== 'labo')
+			.sort();
+		if (JSON.stringify([...indexed.keys()].sort()) !== JSON.stringify(expectedIds))
+			throw new MtDungeonArchiveError(`${language}/dungeons.xml: inventaire historique inattendu.`);
+		if (language !== 'fr') {
+			const originals = groupMtDungeonDefinitions(this.definitions('fr'));
+			for (const [id, translated] of indexed) {
+				// Validation also detects any change to a scenario index or reward payload.
+				localizeMtDungeonDefinition(originals.get(id)!, translated, language);
 			}
-			this.definitionsCache = definitions;
 		}
-		return this.definitionsCache;
+		this.definitionsCache.set(language, definitions);
+		return definitions;
 	}
 
 	definition(id: string): MtDungeonDefinition {
-		const def = this.definitions().find(d => d.id === id);
+		const def = this.definitions('fr').find(d => d.id === id);
 		if (!def) throw new MtDungeonArchiveError(`Donjon MT inconnu: ${id}`);
 		return def;
+	}
+
+	localizedDefinition(
+		id: string,
+		inputLanguage: unknown
+	): {
+		definition: MtDungeonDefinition;
+		languageUsed: MtDungeonLanguage;
+	} {
+		const language = normalizeMtDungeonLanguage(inputLanguage);
+		const canonical = this.definition(id);
+		if (language === 'fr') return { definition: canonical, languageUsed: 'fr' };
+		const translation = this.definitions(language).find(d => d.id === id);
+		return localizeMtDungeonDefinition(canonical, translation, language);
 	}
 
 	configuration(mapId: string): MtSessionConfiguration {
