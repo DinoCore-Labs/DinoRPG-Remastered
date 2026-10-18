@@ -26,6 +26,7 @@ import { AnimatedSprite, Application, Assets, BlurFilter, Container, Graphics, S
 import { createMtSpritePlan, type MtRandomFrameSource } from './mtOriginalSpriteCatalog.js';
 import { mtWallBounds, placeMtWall } from './mtDungeonWallPlacement.js';
 import { loadMtDungeonActorFrames } from './mtDungeonActorFrames.js';
+import { easeMtCameraOffset, mtCameraShift, type MtCameraViewport } from './mtDungeonCamera.js';
 
 export interface MtDungeonActor {
 	id: number;
@@ -37,6 +38,8 @@ export interface MtDungeonActor {
 
 const props = defineProps<{
 	scene: MtDungeonScene;
+	/** Identifies a stage to prevent camera pans between different maps. */
+	stageKey?: string;
 	actors?: readonly MtDungeonActor[];
 	facingRight?: boolean;
 	frameFor?: MtRandomFrameSource;
@@ -59,6 +62,10 @@ let actorsLayer: Container;
 let nearWalls: Container;
 let fogLayer: Container;
 let diagnosticsLayer: Container;
+/** Holds all world layers. One offset lets the camera move without disturbing depth ordering. */
+let worldLayer: Container;
+let renderedViewport: MtCameraViewport | null = null;
+let renderedScene: MtDungeonScene | null = null;
 
 const textures = new Map<string, Texture>();
 interface ActorState {
@@ -128,7 +135,7 @@ function loadActorAnimation(id: number, state: ActorState): void {
 		});
 }
 
-function syncActors(): void {
+function syncActors(snap = false): void {
 	if (!app) return;
 	const scene = props.scene;
 	const latest = new Set<number>();
@@ -163,13 +170,14 @@ function syncActors(): void {
 			actorNodes.set(actor.id, state);
 			loadActorAnimation(actor.id, state);
 		} else if (state.targetX !== x || state.targetY !== y) {
-			// A new stage or reload should snap rather than fly across the map.
+			// Never interpolate across a different map, layer or a server resync.
 			const distance = Math.hypot(state.x - x, state.y - y);
-			state.startX = distance > 90 ? x : state.x;
-			state.startY = distance > 90 ? y : state.y;
+			const instant = snap || distance > 90;
+			state.startX = instant ? x : state.x;
+			state.startY = instant ? y : state.y;
 			state.targetX = x;
 			state.targetY = y;
-			state.progress = distance > 90 ? 1 : 0;
+			state.progress = instant ? 1 : 0;
 			if (state.progress === 1) {
 				state.x = x;
 				state.y = y;
@@ -192,6 +200,12 @@ function syncActors(): void {
 }
 
 function animate(deltaMS: number): void {
+	if (worldLayer) {
+		worldLayer.position.set(
+			easeMtCameraOffset(worldLayer.position.x, deltaMS),
+			easeMtCameraOffset(worldLayer.position.y, deltaMS)
+		);
+	}
 	for (const state of actorNodes.values()) {
 		if (state.progress >= 1) continue;
 		state.progress = Math.min(1, state.progress + deltaMS / 220);
@@ -252,7 +266,7 @@ function paintFog(scene: MtDungeonScene): void {
 	}
 	marks.fill({ color: palette(scene.fogColor) });
 	// Visual approximation only: original uses Flash BlurFilter(32,32,1).
-	marks.filters = [new BlurFilter({ strength: 12, quality: 2 })];
+	marks.filters = [new BlurFilter({ strength: 16, quality: 3 })];
 	fogLayer.addChild(marks);
 }
 
@@ -282,12 +296,39 @@ async function repaint(): Promise<void> {
 	fetched.forEach((result, index) => {
 		if (result.status === 'rejected') errors.add(`PNG inaccessible : ${paths[index]}`);
 	});
+	const viewport: MtCameraViewport = {
+		ix: scene.viewport.ix,
+		iy: scene.viewport.iy,
+		level: scene.level,
+		mapId: props.stageKey ?? ''
+	};
+	const shift = mtCameraShift(renderedViewport, viewport, {
+		x: worldLayer.position.x,
+		y: worldLayer.position.y
+	});
+	if (shift.deltaX || shift.deltaY) {
+		// Every actor is still expressed in the OLD viewport coordinates.
+		// Rebase both its interpolated position and its target to the new origin
+		// before placing the camera at the matching compensating offset.
+		for (const state of actorNodes.values()) {
+			state.x -= shift.deltaX;
+			state.y -= shift.deltaY;
+			state.startX -= shift.deltaX;
+			state.startY -= shift.deltaY;
+			state.targetX -= shift.deltaX;
+			state.targetY -= shift.deltaY;
+			state.visual.position.set(state.x, state.y);
+		}
+	}
+	worldLayer.position.set(shift.offsetX, shift.offsetY);
 	for (const layer of [ground, northernWalls, items, nearWalls, fogLayer, diagnosticsLayer]) clear(layer);
 	app.renderer.background.color = palette(scene.fogColor);
 	for (const sprite of plan.sprites) paintSprite(sprite, scene);
 	paintFog(scene);
 	diagnostics.value = [...errors];
-	syncActors();
+	renderedViewport = viewport;
+	renderedScene = scene;
+	syncActors(shift.snap);
 }
 
 async function setup(): Promise<void> {
@@ -300,6 +341,7 @@ async function setup(): Promise<void> {
 		}
 		app = created;
 		mount.value.appendChild(created.canvas);
+		worldLayer = new Container();
 		ground = new Container();
 		northernWalls = new Container();
 		items = new Container();
@@ -308,7 +350,8 @@ async function setup(): Promise<void> {
 		nearWalls = new Container();
 		fogLayer = new Container();
 		diagnosticsLayer = new Container();
-		created.stage.addChild(ground, northernWalls, items, actorsLayer, nearWalls, fogLayer, diagnosticsLayer);
+		worldLayer.addChild(ground, northernWalls, items, actorsLayer, nearWalls, fogLayer, diagnosticsLayer);
+		created.stage.addChild(worldLayer);
 		created.ticker.add(ticker => animate(ticker.deltaMS));
 		await repaint();
 	} catch (error) {
@@ -321,7 +364,14 @@ onMounted(() => {
 	void setup();
 });
 watch(
-	() => [props.scene, props.frameFor, props.assetBase, props.showUnverifiedSameNameOverlays, debugWalls.value],
+	() => [
+		props.scene,
+		props.stageKey,
+		props.frameFor,
+		props.assetBase,
+		props.showUnverifiedSameNameOverlays,
+		debugWalls.value
+	],
 	() => {
 		void repaint().catch(error => {
 			diagnostics.value = [`Erreur de rendu : ${String(error)}`];
@@ -331,7 +381,9 @@ watch(
 watch(
 	() => [props.actors, props.facingRight],
 	() => {
-		if (app) syncActors();
+		// Do not mix a NEW actor coordinate system with an OLD rendered viewport
+		// while a new server view is still waiting for its textures.
+		if (app && renderedScene === props.scene) syncActors();
 	}
 );
 onBeforeUnmount(() => {
@@ -341,6 +393,8 @@ onBeforeUnmount(() => {
 		if (state.visual instanceof AnimatedSprite) state.visual.stop();
 	}
 	actorNodes.clear();
+	renderedViewport = null;
+	renderedScene = null;
 	app?.destroy(true, { children: true });
 	app = null;
 });
