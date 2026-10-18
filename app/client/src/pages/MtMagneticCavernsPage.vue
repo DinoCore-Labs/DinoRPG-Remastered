@@ -92,6 +92,17 @@
 					>
 						Combattre
 					</button>
+					<template v-if="session.pending.kind === 'guardian' && devCapabilities?.guardianFight">
+						<p v-if="guardianTrial" class="mt-test__caption">
+							Gardien de test : <strong>{{ guardianTrial.monsterKey }}</strong> — composition provisoire issue du
+							catalogue MT.
+						</p>
+						<p class="mt-test__caption">
+							Le combat utilise le moteur Remastered ; il peut modifier la vie des Dinoz et attribuer de l'XP ou des
+							objets.
+						</p>
+						<button type="button" :disabled="busy" @click="fightGuardian">Combattre le gardien (test)</button>
+					</template>
 					<button
 						v-if="session.pending.kind === 'guardian' && devCapabilities?.guardianSkip"
 						type="button"
@@ -154,7 +165,8 @@ import {
 	MtDungeonService,
 	type MtDungeonCurrentView,
 	type MtDungeonEncounter,
-	type MtDungeonDevCapabilities
+	type MtDungeonDevCapabilities,
+	type MtGuardianTrialPreview
 } from '../services/mtDungeon.service.js';
 import { sessionStore } from '../store/sessionStore';
 import { localStore } from '../store/localStore';
@@ -170,6 +182,7 @@ const encounter = ref<MtDungeonEncounter | null>(null);
 const errorMessage = ref('');
 const notice = ref('');
 const devCapabilities = ref<MtDungeonDevCapabilities | null>(null);
+const guardianTrial = ref<MtGuardianTrialPreview | null>(null);
 const loading = ref(true);
 const busy = ref(false);
 const visualMembers = ref<{ id: number; display: string }[]>([]);
@@ -236,7 +249,8 @@ const actionAvailable = computed(() => {
 	if (pending.kind === 'boundary-exit') return stage.value < 3;
 	if (pending.kind === 'boundary-start')
 		return stage.value > 0 || (stage.value === 0 && !!devCapabilities.value?.surfaceExit);
-	if (pending.kind === 'guardian') return !!devCapabilities.value?.guardianSkip;
+	if (pending.kind === 'guardian')
+		return !!devCapabilities.value?.guardianSkip || !!devCapabilities.value?.guardianFight;
 	if (pending.kind !== 'scenario') return false;
 	return (
 		encounter.value?.kind === 'scenario' ||
@@ -274,11 +288,13 @@ async function refresh(): Promise<void> {
 		session.value = current;
 		view.value = latestView;
 		encounter.value = latestEncounter;
+		await loadGuardianTrial(current);
 	} catch (error) {
 		if (axios.isAxiosError(error) && error.response?.status === 404) {
 			session.value = null;
 			view.value = null;
 			encounter.value = null;
+			guardianTrial.value = null;
 		} else errorMessage.value = formatError(error);
 	} finally {
 		loading.value = false;
@@ -296,6 +312,7 @@ async function afterMutation(next: MtDungeonSession): Promise<void> {
 	session.value = next;
 	view.value = latestView;
 	encounter.value = latestEncounter;
+	await loadGuardianTrial(next);
 }
 async function execute(action: () => Promise<void>): Promise<void> {
 	if (busy.value) return;
@@ -374,6 +391,24 @@ function resolveScenario() {
 		notice.value = outcome.message ?? 'Événement traité par le serveur.';
 	});
 }
+async function loadGuardianTrial(run: MtDungeonSession): Promise<void> {
+	guardianTrial.value = null;
+	if (!run.pending || run.pending.kind !== 'guardian' || !import.meta.env.DEV) return;
+	try {
+		guardianTrial.value = await MtDungeonService.getGuardianTrialPreview(leaderId);
+	} catch {
+		/* Not enabled or no valid guardian: keep the original pending state. */
+	}
+}
+function fightGuardian() {
+	if (session.value?.pending?.kind !== 'guardian' || !devCapabilities.value?.guardianFight) return;
+	void execute(async () => {
+		const { token } = await MtDungeonService.prepareGuardianTrial(leaderId, session.value!.revision);
+		const result = await MtDungeonService.resolveGuardianTrial(leaderId, token);
+		sessionStore().setFightResult(result);
+		await router.push({ name: 'FightPage', params: { dinozId: String(leaderId) } });
+	});
+}
 function fight() {
 	if (encounter.value?.kind !== 'scenario-combat' || encounter.value.status !== 'ready-for-combat' || !session.value)
 		return;
@@ -388,6 +423,7 @@ async function loadDevCapabilities(): Promise<void> {
 	if (!import.meta.env.DEV) return;
 	try {
 		devCapabilities.value = await MtDungeonService.getDevCapabilities();
+		if (session.value) await loadGuardianTrial(session.value);
 	} catch {
 		// 404 is expected when the server has not opted in to local dev tools.
 		devCapabilities.value = null;
@@ -422,6 +458,7 @@ function leaveToSurface(): void {
 		session.value = null;
 		view.value = null;
 		encounter.value = null;
+		guardianTrial.value = null;
 		movementTrail.value = [];
 		notice.value = 'Retour aux Pylônes : session de test terminée sans récompenses.';
 		await router.push({ name: 'DinozPage', params: { id: String(leaderId) } });
