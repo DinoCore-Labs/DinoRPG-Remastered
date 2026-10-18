@@ -201,8 +201,8 @@ function itemArt(feature: MtSceneFeature, unresolved: Set<string>): string | nul
 			unresolved.add(`Scénario : symbole Flash DIIcon « ${feature.icon} » à extraire de gfx.swf`);
 			return null;
 		case 'guardian':
-			unresolved.add('Gardien Dinoz : rendu externe _smonster SWF non encore porté');
-			return null;
+			unresolved.add('Gardien : marqueur item_skel temporaire (le vrai _smonster SWF reste à porter)');
+			return 'item_skel.png'; // Temporary original MT marker
 	}
 }
 
