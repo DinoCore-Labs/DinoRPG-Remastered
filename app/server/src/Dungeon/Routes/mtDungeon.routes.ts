@@ -6,6 +6,7 @@ import { mtDungeonBlockStates } from '@dinorpg/core/models/dungeon/dungeon.block
 import { normalizeMtDungeonLanguage } from '@dinorpg/core/models/dungeon/dungeon.catalog.js';
 import { MtDungeonEncounterError } from '@dinorpg/core/models/dungeon/dungeon.encounter.js';
 import { MtDungeonFightIntentError } from '@dinorpg/core/models/dungeon/dungeon.fight.js';
+import { MtDungeonEvidenceError } from '@dinorpg/core/models/dungeon/dungeon.originalEvidence.js';
 import { MtDungeonScenarioRewardError } from '@dinorpg/core/models/dungeon/dungeon.scenarioReward.js';
 import { MtStageTransitionError } from '@dinorpg/core/models/dungeon/dungeon.stageTransition.js';
 import type { FastifyInstance } from 'fastify';
@@ -17,6 +18,7 @@ import {
 	prepareMtDungeonFight,
 	resolveMtDungeonFight
 } from '../Service/mtDungeonFight.service.js';
+import { getMtDungeonOriginalPendingEvidence } from '../Service/mtDungeonOriginalEvidence.service.js';
 import {
 	getMtDungeonArchive,
 	mtDungeonDependencies,
@@ -59,6 +61,7 @@ const moveSchema = z
 	.strict();
 
 function handleKnownError(error: unknown): { status: number; code: string } | null {
+	if (error instanceof MtDungeonEvidenceError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonScenarioRewardError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonScenarioSettlementError) {
 		const status = error.code === 'not-found' ? 404 : error.code === 'unsupported-original-reward' ? 422 : 409;
@@ -122,6 +125,25 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 			revision: run.revision,
 			blocks: mtDungeonBlockStates(cfg.blockRules, run.flags)
 		});
+	});
+	/** Diagnostic MT facts about the already-triggered guardian/gold/heal tile.
+	 * Not a loot or fight endpoint: cannot mark a flag or award anything.
+	 */
+	app.get('/:leaderDinozId/encounter/original-evidence', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		if (!params.success) return reply.code(400).send({ code: 'invalid-leader' });
+		try {
+			return reply.send(
+				await getMtDungeonOriginalPendingEvidence({
+					userId: req.user.id,
+					leaderDinozId: params.data
+				})
+			);
+		} catch (error) {
+			const known = handleKnownError(error);
+			if (known) return reply.code(known.status).send({ code: known.code });
+			throw error;
+		}
 	});
 	/** Only inspect the server-owned encounter the leader has just triggered. */
 	app.get('/:leaderDinozId/encounter', { preHandler: app.authenticate }, async (req, reply) => {
