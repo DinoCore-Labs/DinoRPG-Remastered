@@ -8,6 +8,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
+import { compileMtDungeonBlockRules } from '@dinorpg/core/models/dungeon/dungeon.blocks.js';
 import {
 	groupMtDungeonDefinitions,
 	localizeMtDungeonDefinition,
@@ -156,7 +157,8 @@ export class MtDungeonArchive {
 					throw new MtDungeonArchiveError(`${filename}: IScenario #${room.item.value} hors des définitions MT.`);
 			}
 		}
-		const cfg: MtSessionConfiguration = { map, mapId, tower: def.tower, scenarioIcons };
+		const blockRules = compileMtDungeonBlockRules(map, def.stages[stageIndex]!.scenarios);
+		const cfg: MtSessionConfiguration = { map, mapId, tower: def.tower, scenarioIcons, blockRules };
 		this.mapCache.set(mapId, cfg);
 		return cfg;
 	}
