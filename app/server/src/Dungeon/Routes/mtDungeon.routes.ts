@@ -12,6 +12,12 @@ import { MtStageTransitionError } from '@dinorpg/core/models/dungeon/dungeon.sta
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 
+import {
+	leaveMtCavernsInDevelopment,
+	mtDungeonDevToolsEnabled,
+	MtDungeonDevToolsError,
+	skipMtGuardianInDevelopment
+} from '../Service/mtDungeonDevTools.service.js';
 import { getMtDungeonPendingEncounter } from '../Service/mtDungeonEncounter.service.js';
 import {
 	MtDungeonFightError,
@@ -90,6 +96,50 @@ function handleKnownError(error: unknown): { status: number; code: string } | nu
 }
 
 export async function mtDungeonRoutes(app: FastifyInstance) {
+	// These routes are NOT present unless explicitly opted in on a development server.
+	if (mtDungeonDevToolsEnabled()) {
+		const devRevision = z.object({ revision: z.number().int().nonnegative() }).strict();
+		app.get('/dev/capabilities', { preHandler: app.authenticate }, async () => ({
+			guardianSkip: true,
+			surfaceExit: true
+		}));
+		app.post('/:leaderDinozId/dev/guardian/skip', { preHandler: app.authenticate }, async (req, reply) => {
+			const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+			const body = devRevision.safeParse(req.body);
+			if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-dev-request' });
+			try {
+				return reply.send(
+					await skipMtGuardianInDevelopment({ userId: req.user.id, leaderDinozId: params.data }, body.data.revision)
+				);
+			} catch (error) {
+				if (error instanceof MtDungeonDevToolsError)
+					return reply
+						.code(error.code === 'not-found' || error.code === 'disabled' ? 404 : 409)
+						.send({ code: error.code });
+				const known = handleKnownError(error);
+				if (known) return reply.code(known.status).send({ code: known.code });
+				throw error;
+			}
+		});
+		app.post('/:leaderDinozId/dev/surface/exit', { preHandler: app.authenticate }, async (req, reply) => {
+			const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+			const body = devRevision.safeParse(req.body);
+			if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-dev-request' });
+			try {
+				await leaveMtCavernsInDevelopment({ userId: req.user.id, leaderDinozId: params.data }, body.data.revision);
+				return reply.send({ ok: true });
+			} catch (error) {
+				if (error instanceof MtDungeonDevToolsError)
+					return reply
+						.code(error.code === 'not-found' || error.code === 'disabled' ? 404 : 409)
+						.send({ code: error.code });
+				const known = handleKnownError(error);
+				if (known) return reply.code(known.status).send({ code: known.code });
+				throw error;
+			}
+		});
+	}
+
 	// Public-facing metadata are limited to introduction/exit strings and titles;
 	// do not leak reward contents, hidden scenario texts, or map geometry.
 	app.get('/catalog', { preHandler: app.authenticate }, async (req, reply) => {

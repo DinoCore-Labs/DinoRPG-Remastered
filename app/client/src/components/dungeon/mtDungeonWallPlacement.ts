@@ -24,29 +24,39 @@ export interface MtWallPlacement {
 }
 
 /** x/y are the source *tile* coordinates (not a PNG's top-left pixel). */
-export function placeMtWall(part: MtWallPart, x: number, y: number, cell = 40): MtWallPlacement {
+export function placeMtWall(
+	part: MtWallPart,
+	x: number,
+	y: number,
+	cell = 40,
+	calibration: Readonly<{ x: number; y: number }> = { x: 0, y: 0 }
+): MtWallPlacement {
+	if (![calibration.x, calibration.y].every(v => Number.isInteger(v) && Math.abs(v) <= 20))
+		throw new Error('MT wall calibration must use whole pixels within ±20.');
 	const l = x * cell;
 	const t = y * cell;
 	const foot = t + cell + cell * (8 / 40);
 	// Corners to the east are attached by View.hx at (SIZE+8, 0|SIZE+8).
 	const east = l + cell + cell * (8 / 40);
+	const dx = calibration.x;
+	const dy = calibration.y;
 	switch (part) {
 		case 'front':
-			return { x: l, y: t, anchorX: 0, anchorY: 1, flipX: false, plane: 'behind-actors' };
+			return { x: l + dx, y: t + dy, anchorX: 0, anchorY: 1, flipX: false, plane: 'behind-actors' };
 		case 'corner-top-left':
-			return { x: l, y: t, anchorX: 1, anchorY: 1, flipX: false, plane: 'behind-actors' };
+			return { x: l + dx, y: t + dy, anchorX: 1, anchorY: 1, flipX: false, plane: 'behind-actors' };
 		case 'corner-top-right':
-			return { x: east, y: t, anchorX: 1, anchorY: 1, flipX: true, plane: 'behind-actors' };
+			return { x: east + dx, y: t + dy, anchorX: 1, anchorY: 1, flipX: true, plane: 'behind-actors' };
 		case 'side-left':
-			return { x: l, y: foot, anchorX: 1, anchorY: 1, flipX: false, plane: 'in-front-of-actors' };
+			return { x: l + dx, y: foot + dy, anchorX: 1, anchorY: 1, flipX: false, plane: 'in-front-of-actors' };
 		case 'side-right':
-			return { x: l + cell, y: foot, anchorX: 1, anchorY: 1, flipX: true, plane: 'in-front-of-actors' };
+			return { x: l + cell + dx, y: foot + dy, anchorX: 1, anchorY: 1, flipX: true, plane: 'in-front-of-actors' };
 		case 'back':
-			return { x: l, y: t + cell, anchorX: 0, anchorY: 0, flipX: false, plane: 'in-front-of-actors' };
+			return { x: l + dx, y: t + cell + dy, anchorX: 0, anchorY: 0, flipX: false, plane: 'in-front-of-actors' };
 		case 'corner-bottom-left':
-			return { x: l, y: foot, anchorX: 1, anchorY: 1, flipX: false, plane: 'in-front-of-actors' };
+			return { x: l + dx, y: foot + dy, anchorX: 1, anchorY: 1, flipX: false, plane: 'in-front-of-actors' };
 		case 'corner-bottom-right':
-			return { x: east, y: foot, anchorX: 1, anchorY: 1, flipX: true, plane: 'in-front-of-actors' };
+			return { x: east + dx, y: foot + dy, anchorX: 1, anchorY: 1, flipX: true, plane: 'in-front-of-actors' };
 	}
 }
 

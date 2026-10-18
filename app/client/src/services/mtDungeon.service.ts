@@ -23,7 +23,21 @@ export interface MtDungeonEncounter {
 	languageUsed?: string;
 }
 
+export interface MtDungeonDevCapabilities {
+	guardianSkip: boolean;
+	surfaceExit: boolean;
+}
+
 export const MtDungeonService = {
+	getDevCapabilities(): Promise<MtDungeonDevCapabilities> {
+		return api.get('/dungeon/mt/dev/capabilities', { silent: true });
+	},
+	devSkipGuardian(id: number, revision: number): Promise<MtDungeonSession> {
+		return api.post(`/dungeon/mt/${id}/dev/guardian/skip`, { revision });
+	},
+	devLeaveToSurface(id: number, revision: number): Promise<{ ok: true }> {
+		return api.post(`/dungeon/mt/${id}/dev/surface/exit`, { revision });
+	},
 	getSession(id: number): Promise<MtDungeonSession> {
 		return api.get(`/dungeon/mt/${id}`, { silent: true });
 	},

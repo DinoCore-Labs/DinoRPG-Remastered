@@ -9,6 +9,23 @@
 		<div class="mt-dungeon-renderer__tools">
 			<label v-if="isDevelopment"> <input v-model="debugWalls" type="checkbox" /> Diagnostic des murs </label>
 		</div>
+		<div v-if="isDevelopment && debugWalls" class="mt-dungeon-renderer__calibration">
+			<label for="mt-wall-part">Ajustement temporaire des murs</label>
+			<select id="mt-wall-part" v-model="selectedWallPart">
+				<option v-for="part in wallParts" :key="part" :value="part">{{ part }}</option>
+			</select>
+			<div class="mt-dungeon-renderer__nudge">
+				<button type="button" @click="nudgeWall(-1, 0)" aria-label="Décaler à gauche">←</button>
+				<button type="button" @click="nudgeWall(1, 0)" aria-label="Décaler à droite">→</button>
+				<button type="button" @click="nudgeWall(0, -1)" aria-label="Décaler vers le haut">↑</button>
+				<button type="button" @click="nudgeWall(0, 1)" aria-label="Décaler vers le bas">↓</button>
+				<button type="button" @click="resetWall" aria-label="Réinitialiser le décalage">0</button>
+			</div>
+			<span
+				>{{ currentWallOffset.x > 0 ? '+' : '' }}{{ currentWallOffset.x }} px / {{ currentWallOffset.y > 0 ? '+' : ''
+				}}{{ currentWallOffset.y }} px</span
+			>
+		</div>
 		<details v-if="diagnostics.length" class="mt-dungeon-renderer__diagnostics">
 			<summary>{{ diagnostics.length }} limite(s) graphiques à vérifier</summary>
 			<ul>
@@ -19,8 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import type { MtDungeonScene } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import type { MtDungeonScene, MtWallPart } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
 import { AnimatedSprite, Application, Assets, BlurFilter, Container, Graphics, Sprite, type Texture } from 'pixi.js';
 
 import { createMtSpritePlan, type MtRandomFrameSource } from './mtOriginalSpriteCatalog.js';
@@ -49,6 +66,36 @@ const props = defineProps<{
 
 const mount = ref<HTMLDivElement | null>(null);
 const debugWalls = ref(false);
+const wallParts: MtWallPart[] = [
+	'front',
+	'side-left',
+	'side-right',
+	'back',
+	'corner-top-left',
+	'corner-top-right',
+	'corner-bottom-left',
+	'corner-bottom-right'
+];
+const selectedWallPart = ref<MtWallPart>('side-left');
+// Visually measured corrections only. This does not change MT map data or collision.
+const wallOffsets = ref<Partial<Record<MtWallPart, { x: number; y: number }>>>({});
+const calibrationVersion = ref(0);
+const currentWallOffset = computed(() => wallOffsets.value[selectedWallPart.value] ?? { x: 0, y: 0 });
+function nudgeWall(dx: number, dy: number): void {
+	const current = currentWallOffset.value;
+	wallOffsets.value = {
+		...wallOffsets.value,
+		[selectedWallPart.value]: {
+			x: Math.max(-20, Math.min(20, current.x + dx)),
+			y: Math.max(-20, Math.min(20, current.y + dy))
+		}
+	};
+	calibrationVersion.value++;
+}
+function resetWall(): void {
+	wallOffsets.value = { ...wallOffsets.value, [selectedWallPart.value]: { x: 0, y: 0 } };
+	calibrationVersion.value++;
+}
 const isDevelopment = import.meta.env.DEV;
 const diagnostics = ref<string[]>([]);
 
@@ -235,7 +282,7 @@ function paintSprite(sprite: ReturnType<typeof createMtSpritePlan>['sprites'][nu
 			visual.destroy();
 			return;
 		}
-		const position = placeMtWall(wall.part, wall.x, wall.y);
+		const position = placeMtWall(wall.part, wall.x, wall.y, 40, wallOffsets.value[wall.part]);
 		visual.anchor.set(position.anchorX, position.anchorY);
 		visual.scale.x = position.flipX ? -1 : 1;
 		visual.position.set(position.x - originX, position.y - originY);
@@ -370,7 +417,8 @@ watch(
 		props.frameFor,
 		props.assetBase,
 		props.showUnverifiedSameNameOverlays,
-		debugWalls.value
+		debugWalls.value,
+		calibrationVersion.value
 	],
 	() => {
 		void repaint().catch(error => {
@@ -444,5 +492,33 @@ onBeforeUnmount(() => {
 }
 .mt-dungeon-renderer__diagnostics ul {
 	padding-left: 1.2rem;
+}
+.mt-dungeon-renderer__calibration {
+	position: absolute;
+	top: 26px;
+	right: 4px;
+	z-index: 3;
+	background: #211c19ef;
+	color: #f9e3be;
+	padding: 5px;
+	font-size: 0.65rem;
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+	border-radius: 3px;
+	max-width: 220px;
+}
+.mt-dungeon-renderer__calibration select {
+	font-size: 0.72rem;
+	max-width: 205px;
+}
+.mt-dungeon-renderer__nudge {
+	display: flex;
+	gap: 2px;
+}
+.mt-dungeon-renderer__nudge button {
+	min-width: 28px;
+	padding: 2px;
+	cursor: pointer;
 }
 </style>
