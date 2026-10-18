@@ -9,8 +9,8 @@
 			aria-label="Vue de donjon composée uniquement avec les PNG originaux Motion Twin disponibles"
 		/>
 		<p class="mt-dungeon-preview__caption">
-			Aperçu partiel — PNG Motion Twin authentiques. Les variantes Flash, effets et symboles non encore portés ne sont
-			pas simulés.
+			Aperçu partiel — catalogue des 201 PNG originaux disponibles. Les variantes de sols et murs suivent mt.Rand. Les
+			symboles Flash, les points d’ancrage et les filtres restant à vérifier ne sont pas simulés.
 		</p>
 		<details v-if="diagnostics.length" class="mt-dungeon-preview__diagnostics">
 			<summary>{{ diagnostics.length }} point(s) de fidélité encore à résoudre</summary>
@@ -28,9 +28,11 @@ import { createMtSpritePlan, type MtRandomFrameSource } from './mtOriginalSprite
 
 const props = defineProps<{
 	scene: MtDungeonScene;
-	/** Supply a proven mt.Rand implementation later; otherwise first-frame preview. */
+	/** Optional override of the ported original mt.Rand selector (normally not needed). */
 	frameFor?: MtRandomFrameSource;
 	assetBase?: string;
+	/** Optional exploratory overlay frames; disabled until Flash timeline is confirmed. */
+	showUnverifiedSameNameOverlays?: boolean;
 }>();
 
 const canvas = ref<HTMLCanvasElement | null>(null);
@@ -49,7 +51,12 @@ function loadOriginalImage(url: string): Promise<HTMLImageElement> {
 		image.onerror = () => reject(new Error(`PNG MT inaccessible : ${url}`));
 		image.src = url;
 	});
+	// Evict unsuccessful loads, allowing the user to add a missing asset
+	// without having to fully reload the page.
 	imagePromises.set(url, imagePromise);
+	void imagePromise.catch(() => {
+		if (imagePromises.get(url) === imagePromise) imagePromises.delete(url);
+	});
 	return imagePromise;
 }
 
@@ -66,7 +73,8 @@ async function paint(): Promise<void> {
 	try {
 		plan = createMtSpritePlan(scene, {
 			frameFor: props.frameFor,
-			assetBase: props.assetBase
+			assetBase: props.assetBase,
+			showUnverifiedSameNameOverlays: props.showUnverifiedSameNameOverlays
 		});
 	} catch (error) {
 		diagnostics.value = [error instanceof Error ? error.message : 'Échec du catalogue MT'];
@@ -108,7 +116,7 @@ onMounted(() => {
 	void paint();
 });
 watch(
-	() => [props.scene, props.frameFor, props.assetBase],
+	() => [props.scene, props.frameFor, props.assetBase, props.showUnverifiedSameNameOverlays],
 	() => {
 		void paint();
 	}
