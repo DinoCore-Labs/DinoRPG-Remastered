@@ -22,6 +22,19 @@
 			:dinozData="dinozData"
 			:key="dinozData.display" /><template #fallback> <Loading /> </template
 	></Suspense>
+	<div
+		v-if="
+			isReady &&
+			nameChoosen === true &&
+			dinozData.leaderId === null &&
+			dinozData.placeId === PlaceEnum.PYLONES_DE_MAGNETITES
+		"
+		class="mt-caverns-entry"
+	>
+		<RouterLink :to="{ name: 'MtMagneticCavernsPage', params: { id: dinozData.id } }">
+			Explorer les Cavernes Magnétiques (test MT)
+		</RouterLink>
+	</div>
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions v-show="isReady" :dinoz="dinozData" :refreshDinoz="refreshDinoz" />
 		<TabPanels v-if="isReady" :key="dinozData.id" :dinozData="dinozData" />
@@ -37,6 +50,7 @@ import { DinozService } from '../services/dinoz.service';
 import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import DinozName from '../components/dinoz/DinozName.vue';
 import DinozActions from '../components/dinoz/DinozActions.vue';
 import TabPanels from '../components/common/TabPanels.vue';
@@ -50,6 +64,7 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
+			PlaceEnum,
 			userStore: userStore(),
 			nameChoosen: undefined as boolean | undefined,
 			dinozData: {} as DinozFiche,
@@ -175,6 +190,18 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.mt-caverns-entry {
+	text-align: center;
+	width: 100%;
+	padding: 0.55rem 0;
+}
+.mt-caverns-entry a {
+	display: inline-block;
+	padding: 0.45rem 0.7rem;
+	border: 1px solid #8b6839;
+	background: #e9d09f;
+	color: #4c2f16;
+}
 .dinozPanels {
 	display: flex;
 	flex-wrap: wrap;
