@@ -1731,6 +1731,7 @@ model MtDungeonRun {
   fog           Bytes?
   locked        Boolean  @default(false)
   pending       Json?
+  stageStates   Json     @default("{}")
   createdAt     DateTime @default(now()) @db.Timestamptz(3)
   updatedAt     DateTime @updatedAt @db.Timestamptz(3)
 

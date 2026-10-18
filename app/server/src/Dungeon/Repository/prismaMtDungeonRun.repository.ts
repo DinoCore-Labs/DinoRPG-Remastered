@@ -1,3 +1,4 @@
+/** PostgreSQL implementation of the stage-6 compare-and-swap contract. */
 import { randomUUID } from 'node:crypto';
 
 import type { MtDungeonSession, MtPendingInteraction } from '@dinorpg/core/models/dungeon/dungeon.session.js';
@@ -34,6 +35,30 @@ function readPending(value: unknown): MtPendingInteraction | null {
 	};
 }
 
+function readStageStates(value: unknown): MtDungeonSession['stageStates'] {
+	if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error('Corrupt MT dungeon stageStates.');
+	const result: MtDungeonSession['stageStates'] = {};
+	for (const [mapId, state] of Object.entries(value)) {
+		if (!/^[a-z][a-z0-9]*_(0|[1-9][0-9]*)$/.test(mapId) || !state || typeof state !== 'object' || Array.isArray(state))
+			throw new Error('Corrupt MT dungeon stage snapshot.');
+		const v = state as Record<string, unknown>;
+		if (
+			!Array.isArray(v.keys) ||
+			!v.keys.every(k => typeof k === 'boolean') ||
+			!Array.isArray(v.flags) ||
+			!v.flags.every(k => Number.isSafeInteger(k) && k >= 0) ||
+			!(v.fog === null || (Array.isArray(v.fog) && v.fog.every(b => Number.isSafeInteger(b) && b >= 0 && b <= 255)))
+		)
+			throw new Error('Corrupt MT dungeon stage snapshot.');
+		result[mapId] = {
+			keys: [...v.keys] as boolean[],
+			flags: [...v.flags] as number[],
+			fog: v.fog === null ? null : [...(v.fog as number[])]
+		};
+	}
+	return result;
+}
+
 function readRow(row: NonNullable<Row>): MtDungeonSession {
 	const pending = readPending(row.pending);
 	const fog = row.fog === null ? null : [...row.fog];
@@ -45,7 +70,8 @@ function readRow(row: NonNullable<Row>): MtDungeonSession {
 		flags: [...row.flags],
 		fog,
 		locked: row.locked,
-		pending
+		pending,
+		stageStates: readStageStates(row.stageStates)
 	};
 }
 
@@ -60,6 +86,7 @@ function data(session: MtDungeonSession) {
 		flags: [...session.flags],
 		fog: session.fog === null ? null : Uint8Array.from(session.fog),
 		locked: session.locked,
+		stageStates: session.stageStates as unknown as Prisma.InputJsonValue,
 		pending:
 			session.pending === null
 				? Prisma.DbNull
