@@ -58,6 +58,7 @@ export function mtDungeonDependencies(): MtDungeonSessionDependencies {
 	return {
 		repository: prismaMtDungeonRunRepository,
 		getConfiguration: mapId => archive.configuration(mapId),
+		getStageCount: dungeonId => archive.definition(dungeonId).stages.length,
 		withLock: withUserGameplayLock,
 		beforeOpen: (identity, mapId) => assertMtDungeonEntry(archive, identity, mapId)
 	};
