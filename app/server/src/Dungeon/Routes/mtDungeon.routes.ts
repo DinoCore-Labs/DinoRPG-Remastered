@@ -1,7 +1,16 @@
+/**
+ * Remastered transport (JSON). This is NOT MT's historical Haxe Serializer.
+ * No untrusted combat/item/scenario resolution endpoint is exposed.
+ */
+import { normalizeMtDungeonLanguage } from '@dinorpg/core/models/dungeon/dungeon.catalog.js';
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 
-import { mtDungeonDependencies, MtDungeonEntryError } from '../Service/mtDungeonRuntime.service.js';
+import {
+	getMtDungeonArchive,
+	mtDungeonDependencies,
+	MtDungeonEntryError
+} from '../Service/mtDungeonRuntime.service.js';
 import {
 	MtDungeonSessionError,
 	openMtDungeonSession,
@@ -41,6 +50,30 @@ function handleKnownError(error: unknown): { status: number; code: string } | nu
 }
 
 export async function mtDungeonRoutes(app: FastifyInstance) {
+	// Public-facing metadata are limited to introduction/exit strings and titles;
+	// do not leak reward contents, hidden scenario texts, or map geometry.
+	app.get('/catalog', { preHandler: app.authenticate }, async (req, reply) => {
+		const query = z
+			.object({ lang: z.string().max(12).optional() })
+			.strict()
+			.safeParse(req.query);
+		if (!query.success) return reply.code(400).send({ code: 'invalid-language' });
+		const language = normalizeMtDungeonLanguage(query.data.lang);
+		const archive = getMtDungeonArchive();
+		return reply.send(
+			archive.definitions().map(d => {
+				const { definition, languageUsed } = archive.localizedDefinition(d.id, language);
+				return {
+					id: d.id,
+					name: definition.name,
+					enter: definition.enter,
+					exit: definition.exit,
+					stageCount: d.stages.length,
+					languageUsed
+				};
+			})
+		);
+	});
 	app.get('/:leaderDinozId', { preHandler: app.authenticate }, async (req, reply) => {
 		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
 		if (!params.success) return reply.code(400).send({ code: 'invalid-leader' });
