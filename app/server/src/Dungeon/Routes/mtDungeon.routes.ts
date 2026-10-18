@@ -24,6 +24,13 @@ import {
 	prepareMtDungeonFight,
 	resolveMtDungeonFight
 } from '../Service/mtDungeonFight.service.js';
+import {
+	getMtGuardianTrialPreview,
+	mtDungeonGuardianTrialEnabled,
+	MtDungeonGuardianTrialError,
+	prepareMtGuardianTrial,
+	resolveMtGuardianTrial
+} from '../Service/mtDungeonGuardianTrial.service.js';
 import { getMtDungeonOriginalPendingEvidence } from '../Service/mtDungeonOriginalEvidence.service.js';
 import {
 	getMtDungeonArchive,
@@ -101,8 +108,58 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 		const devRevision = z.object({ revision: z.number().int().nonnegative() }).strict();
 		app.get('/dev/capabilities', { preHandler: app.authenticate }, async () => ({
 			guardianSkip: true,
-			surfaceExit: true
+			surfaceExit: true,
+			guardianFight: mtDungeonGuardianTrialEnabled()
 		}));
+		// Genuine Remastered fights with a provisional ONE-monster guardian team.
+		// Hidden completely when the explicit extra development flag is absent.
+		if (mtDungeonGuardianTrialEnabled()) {
+			const handleGuardianTrialError = (error: unknown) => {
+				if (!(error instanceof MtDungeonGuardianTrialError)) return null;
+				const status =
+					error.code === 'not-found' || error.code === 'disabled' ? 404 : error.code === 'unknown-monster' ? 422 : 409;
+				return { status, code: error.code };
+			};
+			app.get('/:leaderDinozId/dev/guardian/fight/preview', { preHandler: app.authenticate }, async (req, reply) => {
+				const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+				if (!params.success) return reply.code(400).send({ code: 'invalid-leader' });
+				try {
+					return reply.send(await getMtGuardianTrialPreview({ userId: req.user.id, leaderDinozId: params.data }));
+				} catch (error) {
+					const known = handleGuardianTrialError(error);
+					if (known) return reply.code(known.status).send({ code: known.code });
+					throw error;
+				}
+			});
+			app.post('/:leaderDinozId/dev/guardian/fight/prepare', { preHandler: app.authenticate }, async (req, reply) => {
+				const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+				const body = z.object({ revision: z.number().int().nonnegative() }).strict().safeParse(req.body);
+				if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-guardian-trial' });
+				try {
+					return reply.send(
+						await prepareMtGuardianTrial({ userId: req.user.id, leaderDinozId: params.data }, body.data.revision)
+					);
+				} catch (error) {
+					const known = handleGuardianTrialError(error);
+					if (known) return reply.code(known.status).send({ code: known.code });
+					throw error;
+				}
+			});
+			app.post('/:leaderDinozId/dev/guardian/fight/resolve', { preHandler: app.authenticate }, async (req, reply) => {
+				const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+				const body = z.object({ token: z.string().uuid() }).strict().safeParse(req.body);
+				if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-guardian-trial' });
+				try {
+					return reply.send(
+						await resolveMtGuardianTrial({ userId: req.user.id, leaderDinozId: params.data }, body.data.token)
+					);
+				} catch (error) {
+					const known = handleGuardianTrialError(error);
+					if (known) return reply.code(known.status).send({ code: known.code });
+					throw error;
+				}
+			});
+		}
 		app.post('/:leaderDinozId/dev/guardian/skip', { preHandler: app.authenticate }, async (req, reply) => {
 			const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
 			const body = devRevision.safeParse(req.body);
