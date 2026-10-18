@@ -1,3 +1,15 @@
+/**
+ * Remastered server integration boundary for MT dungeon command replay.
+ *
+ * Unlike `View.hx`, the original server handler and its DB schema are NOT
+ * contained in the archived sources; this file deliberately does not invent
+ * either. The repository, map registry, entry authorization, rewards and
+ * battle settlement must be supplied by the existing game services.
+ *
+ * The `withLock` dependency must use the app's existing gameplay lock.
+ * `compareAndSwap` MUST be atomic (WHERE revision = expectedRevision).
+ * No HTTP route exposes settleInteraction; only trusted server code calls it.
+ */
 import {
 	applyMtDungeonCommandBatch,
 	createMtDungeonSession,
@@ -28,6 +40,8 @@ export interface MtDungeonSessionDependencies {
 	getConfiguration(mapId: string): MtSessionConfiguration;
 	/** Bind this to withUserGameplayLock(userId, callback). */
 	withLock<T>(userId: string, fn: () => Promise<T>): Promise<T>;
+	/** Optional entry gate executed UNDER gameplay lock, before creation. Public routes MUST supply it. */
+	beforeOpen?(identity: MtSessionIdentity, mapId: string): Promise<void>;
 }
 
 export class MtDungeonSessionError extends Error {
@@ -49,6 +63,7 @@ export async function openMtDungeonSession(
 ): Promise<MtDungeonSession> {
 	checkIdentity(identity);
 	return deps.withLock(identity.userId, async () => {
+		if (deps.beforeOpen) await deps.beforeOpen(identity, mapId);
 		const cfg = deps.getConfiguration(mapId);
 		if (cfg.mapId !== mapId) throw new MtDungeonSessionError('invalid-run');
 		const run = createMtDungeonSession(cfg, fogEnabled);
@@ -60,12 +75,15 @@ export async function openMtDungeonSession(
 export async function submitMtDungeonCommands(
 	deps: MtDungeonSessionDependencies,
 	identity: MtSessionIdentity,
-	commands: readonly DungeonCommand[]
+	commands: readonly DungeonCommand[],
+	expectedRevision?: number
 ): Promise<MtSessionBatchResult> {
 	checkIdentity(identity);
 	return deps.withLock(identity.userId, async () => {
 		const run = await deps.repository.load(identity);
 		if (!run) throw new MtDungeonSessionError('not-found');
+		if (expectedRevision !== undefined && run.revision !== expectedRevision)
+			throw new MtDungeonSessionError('conflict');
 		const cfg = deps.getConfiguration(run.mapId);
 		const result = applyMtDungeonCommandBatch(cfg, run, commands);
 		if (!result.ok) return result;
