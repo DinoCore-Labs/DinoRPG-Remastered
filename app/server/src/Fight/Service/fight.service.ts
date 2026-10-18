@@ -399,12 +399,13 @@ export async function rewardFightVsMonsters(
 
 	const userId = user.id;
 
-	const monsterHuntResult = victory
-		? await rewardMonsterHuntFight(userId, monsters)
-		: {
-				loot: [],
-				rewards: []
-			};
+	const monsterHuntResult =
+		victory && !options.disableMonsterHuntReward
+			? await rewardMonsterHuntFight(userId, monsters)
+			: {
+					loot: [],
+					rewards: []
+				};
 
 	const XP_NEWB_BONUS = [15, 10, 6.6, 4.3, 2.5];
 
